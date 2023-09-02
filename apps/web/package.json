@@ -1,0 +1,51 @@
+{
+  "name": "web_",
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "dev:expose": "HTTPS=true astro dev --host",
+    "build": "astro build",
+    "astro": "astro",
+    "check": "astro check",
+    "sync": "astro sync",
+    "lint": "eslint --fix . --ext='js,cjs,mjs,jsx,ts,tsx,astro,md,mdx,json' --cache",
+    "format": "prettier --write . --ignore-path='.eslintignore' --ignore-unknown --cache",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf .astro dist "
+  },
+  "dependencies": {
+    "@astrojs/prefetch": "^0.4.0",
+    "@astrojs/rss": "^3.0.0",
+    "astro": "^3.0.7",
+    "valibot": "^0.13.1",
+    "viem": "^1.9.5"
+  },
+  "devDependencies": {
+    "linters": "workspace:*",
+    "tsconfig": "workspace:*",
+    "@astrojs/check": "^0.2.0",
+    "@astrojs/partytown": "^2.0.0",
+    "@astrojs/sitemap": "^3.0.0",
+    "@astrojs/vercel": "^4.0.3",
+    "@iconify-json/ph": "^1.1.6",
+    "@types/eslint": "^8.44.2",
+    "@types/node": "^20.5.8",
+    "@typescript-eslint/eslint-plugin": "^6.5.0",
+    "@typescript-eslint/parser": "^6.5.0",
+    "@unocss/astro": "^0.55.4",
+    "@unocss/reset": "^0.55.4",
+    "@unocss/transformer-attributify-jsx": "^0.55.4",
+    "@unocss/transformer-variant-group": "^0.55.4",
+    "@vitejs/plugin-basic-ssl": "^1.0.1",
+    "astro-compress": "^2.0.15",
+    "astro-critters": "^2.0.11",
+    "astro-robots-txt": "^0.5.0",
+    "astro-seo": "^0.8.0",
+    "eslint-plugin-astro": "^0.29.0",
+    "prettier-plugin-astro": "^0.12.0",
+    "typed-query-selector": "^2.11.0",
+    "typescript": "^5.2.2",
+    "unocss": "^0.55.4"
+  }
+}

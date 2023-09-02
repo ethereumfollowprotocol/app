@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  CI: true
+  ACTIONS_RUNNER_DEBUG: true
+
+jobs:
+  deploy:
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        node-version: ['lts/*']
+        pnpm-version: ['latest']
+        os: ['ubuntu-latest']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: 🔑 Checkout
+        uses: actions/checkout@v3
+
+      - name: 🥐 Setup pnpm [${{ matrix.pnpm-version }}]
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: ${{ matrix.pnpm-version }}
+
+      - name: ⎔ Setup Node.js [${{ matrix.node-version }}]
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - name: '📦 Install Dependencies'
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm add --global wrangler@beta
+
+      - name: '🧹 Lint'
+        run: pnpm lint
+
+      - name: '🧹 Format'
+        run: pnpm format
+
+      - name: '🧪 Typecheck'
+        run: pnpm typecheck
+
+      - name: '🔧 Build'
+        run: pnpm build

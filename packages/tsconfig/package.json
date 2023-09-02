@@ -1,0 +1,17 @@
+{
+  "name": "tsconfig",
+  "version": "0.0.1",
+  "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
+  "types": "reset.d.ts",
+  "files": [
+    "reset.d.ts",
+    "base.json"
+  ],
+  "dependencies": {
+    "@total-typescript/ts-reset": "^0.5.1",
+    "@types/node": "^20.5.8"
+  }
+}

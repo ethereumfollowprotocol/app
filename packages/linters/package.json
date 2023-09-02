@@ -1,0 +1,40 @@
+{
+  "name": "linters",
+  "version": "0.0.1",
+  "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
+  "types": "./index.d.ts",
+  "exports": {
+    "./eslint": "./eslint.cjs",
+    "./prettier": "./prettier.cjs"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./index.d.ts"
+      ]
+    }
+  },
+  "scripts": {
+    "clean": "rm -rf node_modules dist .turbo",
+    "lint": "eslint --fix . --ext='cjs,d.ts,json' --config='./eslint.cjs' --cache",
+    "format": "prettier . --write './**/*.{js,cjs,mjs,ts,json}' --config='./prettier.cjs' --ignore-unknown --cache",
+    "reinstall": "pnpm clean && pnpm install"
+  },
+  "dependencies": {
+    "@types/eslint": "^8.44.2",
+    "@typescript-eslint/eslint-plugin": "^6.5.0",
+    "@typescript-eslint/parser": "^6.5.0",
+    "eslint": "^8.48.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "eslint-plugin-toml": "^0.5.0",
+    "eslint-plugin-unicorn": "^48.0.1",
+    "eslint-plugin-yml": "^1.8.0",
+    "prettier-plugin-sh": "^0.13.1",
+    "toml-eslint-parser": "^0.6.0"
+  }
+}

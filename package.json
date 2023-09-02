@@ -1,0 +1,42 @@
+{
+  "name": "root",
+  "version": "0.0.1",
+  "description": "Ethereum Follow Protocol App",
+  "repository": "github:ethereumfollowprotocol/app",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "type": "module",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --no-cache --continue",
+    "start": "turbo run start",
+    "lint": "turbo run lint",
+    "format": "turbo run format",
+    "postlint": "eslint --fix . --ext='js,cjs,mjs,ts,d.ts,json,yml,yaml,toml' --ignore-path='./.eslintignore' --cache",
+    "postformat": "prettier . --write '*/**.{js,cjs,mjs,jsx,ts,d.ts,json,md,sh}' --ignore-path='./.eslintignore' --ignore-unknown --cache",
+    "typecheck": "turbo run typecheck && tsc --noEmit",
+    "turbo-codemod": "./node_modules/@turbo/codemod/dist/cli.js --force",
+    "clean": "/bin/bash ./scripts/clean.sh",
+    "preinstall": "npm_config_yes=true npx only-allow pnpm"
+  },
+  "devDependencies": {
+    "@turbo/codemod": "^1.10.13",
+    "@types/node": "^20.5.8",
+    "linters": "workspace:*",
+    "tsconfig": "workspace:*",
+    "turbo": "^1.10.13",
+    "typescript": "^5.2.2"
+  },
+  "packageManager": "pnpm@8.7.1",
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=8.7.0",
+    "npm": "use-pnpm",
+    "yarn": "use-pnpm"
+  },
+  "author": "omaraziz.dev@gmail.com",
+  "bugs": "github:ethereumfollowprotocol/app/issues",
+  "homepage": "github:ethereumfollowprotocol/app/README.md"
+}

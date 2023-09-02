@@ -1,0 +1,21 @@
+---
+import Layout from '#/layouts/Layout.astro'
+
+export const prerender = true
+---
+
+<Layout
+  title='404'
+  description='Page not found'
+  viewTransitions={true}
+>
+  <main class='text-center space-y-8 h-full'>
+    <p class='text-9xl font-extrabold mb-4'>404</p>
+    <a
+      class='text-4xl font-extrabold text-blue-500 hover:text-blue-600'
+      href='/'
+    >
+      GO BACK HOME
+    </a>
+  </main>
+</Layout>

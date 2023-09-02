@@ -1,0 +1,28 @@
+{
+  "schema": "https://json.schemastore.org/tsconfig",
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "strict": true,
+    "module": "ESNext",
+    "target": "ESNext",
+    "alwaysStrict": true,
+    "strictNullChecks": true,
+    "verbatimModuleSyntax": true,
+    "noUncheckedIndexedAccess": true,
+    "allowImportingTsExtensions": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "paths": {
+      "#/*": ["./src/*"]
+    }
+  },
+  "include": ["./src/**/*", "../web_/src/middleware.ts"],
+  "files": [
+    "reset.d.ts",
+    ".eslintrc.cjs",
+    "astro.config.ts",
+    ".prettierrc.cjs"
+  ],
+  "exclude": ["node_modules"]
+}

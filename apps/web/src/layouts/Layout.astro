@@ -1,0 +1,96 @@
+---
+import '#/styles/global.css'
+import { SEO } from 'astro-seo'
+import { ViewTransitions } from 'astro:transitions'
+import { emojis } from '#/lib/emojis'
+import Header from '#/components/Header.astro'
+import Footer from '#/components/Footer.astro'
+import { randomArrayElement } from '#/lib/utilities'
+
+const favicon = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+  <text y='.9em' font-size='90'>${randomArrayElement([...emojis])}</text>
+</svg>`
+
+export interface Props {
+  title?: string
+  description?: string
+  image?: {
+    url?: string
+    alt: string
+  }
+  disableIndexing?: boolean
+  viewTransitions?: boolean
+}
+
+const defaultTitle = 'Omar Aziz'
+
+const { title, description = 'thinking out loud', image, viewTransitions = false } = Astro.props
+
+/**
+ * Temporarily disable globally until it works on iOS Safari
+ */
+const __GLOBAL_ENABLE_VIEW_TRANSITIONS__ = false
+
+const viewTransitionsEnabled = viewTransitions && __GLOBAL_ENABLE_VIEW_TRANSITIONS__
+
+const _title = title ? `${title} | ${defaultTitle}` : defaultTitle
+const _image = image?.url ?? '/public/assets/og-placeholder.jpeg'
+const _description = description ?? 'Ethereum Follow Protocol'
+---
+
+<html
+  lang='en'
+  class='m-auto h-full min-h-full scroll-smooth w-full overflow-x-hidden'
+>
+  <head>
+    <SEO
+      title={_title}
+      titleDefault={_title}
+      charset='utf8'
+      description={description}
+      openGraph={{
+        basic: {
+          title: _title,
+          type: 'website',
+          image: _image,
+          url: Astro.url.href,
+        },
+      }}
+      twitter={{ creator: '@ethfollowpr' }}
+      extend={{
+        link: [{ rel: 'icon', href: `data:image/svg+xml,${encodeURIComponent(favicon)}` }],
+        // extending the default meta tags
+        meta: [
+          { name: 'title', content: _title },
+          { name: 'description', content: _description },
+          { name: 'image', content: _image },
+          { name: 'twitter:card', content: 'summary_large_image' },
+          { name: 'twitter:url', content: Astro.url.href },
+          { name: 'twitter:creator', content: '@ethfollowpr' },
+          { name: 'twitter:site', content: '@ethfollowpr' },
+          { name: 'twitter:image', content: _image },
+          { name: 'twitter:title', content: _title },
+          { name: 'twitter:description', content: _description },
+          { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=5.0' },
+          { name: 'generator', content: Astro.generator },
+          { name: 'sitemap', content: '/sitemap-index.xml' },
+        ],
+      }}
+    />
+    {viewTransitionsEnabled && <ViewTransitions fallback='animate' />}
+  </head>
+
+  <body
+    class:list={[
+      'items-center w-full min-w-full',
+    ]}
+  >
+    <div class='flex flex-col h-screen max-h-screen'>
+      <Header />
+      <div class='flex-1 overflow-y-visible'>
+        <slot />
+      </div>
+      <Footer />
+    </div>
+  </body>
+</html>
