@@ -1,16 +1,9 @@
 ---
 import '#/styles/global.css'
 import { SEO } from 'astro-seo'
-import { emojis } from '#/lib/emojis'
 import Header from '#/components/Header.astro'
 import Footer from '#/components/Footer.astro'
 import { ViewTransitions } from 'astro:transitions'
-
-import { randomArrayElement } from '#/lib/utilities'
-
-const favicon = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
-  <text y='.9em' font-size='90'>${randomArrayElement([...emojis])}</text>
-</svg>`
 
 export interface Properties {
   title?: string
@@ -72,21 +65,21 @@ const _image = image?.url ?? '/public/assets/og-placeholder.jpeg'
             rel: 'icon',
             type: 'image/png',
             // sizes: '16x16',
-            href: '/public/assets/favicon-16x16.png',
+            href: '/assets/favicon-16x16.png',
           },
           {
             rel: 'icon',
             type: 'image/png',
             // sizes: '32x32',
-            href: '/public/assets/favicon-32x32.png',
+            href: '/assets/favicon-32x32.png',
           },
           {
             rel: 'manifest',
-            href: '/public/assets/site.webmanifest',
+            href: '/assets/site.webmanifest',
           },
           {
             rel: 'mask-icon',
-            href: '/public/assets/safari-pinned-tab.svg',
+            href: '/assets/safari-pinned-tab.svg',
             // color: '#5bbad5',
           },
         ],

@@ -3,8 +3,12 @@
   "globalDependencies": [],
   "pipeline": {
     "build": {
+      "dependsOn": ["^build"]
+    },
+    "web#build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "env": ["WALLET_CONNECT_PROJECT_ID", "PUBLIC_WALLET_CONNECT_PROJECT_ID"],
+      "outputs": ["dist/**"]
     },
     "lint": {},
     "format": {},
@@ -13,5 +17,6 @@
       "cache": false,
       "persistent": true
     }
-  }
+  },
+  "globalEnv": []
 }

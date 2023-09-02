@@ -19,6 +19,6 @@
     }
   },
   "include": ["./src/**/*"],
-  "files": [".eslintrc.cjs", "astro.config.ts", ".prettierrc.cjs"],
+  "files": [".eslintrc.cjs", "astro.config.ts", ".prettierrc.cjs", "uno.config.ts"],
   "exclude": ["node_modules"]
 }

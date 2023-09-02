@@ -16,7 +16,7 @@ import { pageRoutes } from '#/lib/constants'
     </div>
     <ul class='w-full text-right text-pink-400 space-x-4 text-lg font-semibold pb-3 my-auto'>
       {
-        pageRoutes.map((route, index) => (
+        pageRoutes.map(route => (
           <li class='inline'>
             <a
               href={route.href}
@@ -30,7 +30,7 @@ import { pageRoutes } from '#/lib/constants'
     </ul>
     <CartButton />
 
-    <div class="my-auto pb-3.5">
+    <div class='my-auto pb-3.5'>
       <w3m-core-button></w3m-core-button>
     </div>
   </nav>

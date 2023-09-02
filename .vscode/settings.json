@@ -34,5 +34,8 @@
     ".eslintcache": true,
     ".prettiercache": true,
     "_": true
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }

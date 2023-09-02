@@ -12,10 +12,7 @@ import transformerVariantGroup from '@unocss/transformer-variant-group'
 import transformerAttributifyJsx from '@unocss/transformer-attributify-jsx'
 
 export default defineConfig({
-  rules: [
-    //
-
-  ],
+  rules: [],
   presets: [
     presetUno(),
     presetMini(),
