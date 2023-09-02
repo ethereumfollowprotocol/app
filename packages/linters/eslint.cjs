@@ -30,6 +30,21 @@ module.exports = {
       files: ['*.toml'],
       parser: 'toml-eslint-parser',
     },
+    {
+      files: ['*.astro'],
+      parser: 'astro-eslint-parser',
+      parserOptions: {
+        parser: '@typescript-eslint/parser',
+        extraFileExtensions: ['.astro'],
+      },
+      extends: [
+        'eslint:recommended',
+        'plugin:@typescript-eslint/recommended',
+        'prettier',
+        'plugin:astro/recommended',
+      ],
+      rules: {},
+    },
   ],
   rules: {
     'prettier/prettier': [
@@ -66,6 +81,7 @@ module.exports = {
       },
     ],
     '@typescript-eslint/no-var-requires': ['off'],
+    '@typescript-eslint/triple-slash-reference': ['off'],
     '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
     '@typescript-eslint/no-import-type-side-effects': ['error'],
     '@typescript-eslint/explicit-module-boundary-types': 'off',

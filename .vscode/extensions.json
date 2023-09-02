@@ -1,8 +1,11 @@
 {
   "recommendations": [
+    "antfu.unocss",
+    "mikestead.dotenv",
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
-    "ms-vscode.remote-explorer",
-    "github.vscode-github-actions"
+    "astro-build.astro-vscode",
+    "EditorConfig.EditorConfig",
+    "yzhang.markdown-all-in-one"
   ]
 }

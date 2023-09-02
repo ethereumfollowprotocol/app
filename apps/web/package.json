@@ -1,5 +1,5 @@
 {
-  "name": "web_",
+  "name": "web",
   "version": "0.0.1",
   "type": "module",
   "scripts": {
@@ -9,7 +9,7 @@
     "astro": "astro",
     "check": "astro check",
     "sync": "astro sync",
-    "lint": "eslint --fix . --ext='js,cjs,mjs,jsx,ts,tsx,astro,md,mdx,json' --cache",
+    "lint": "eslint --fix . --ext='js,cjs,mjs,jsx,ts,tsx,astro,json' --cache",
     "format": "prettier --write . --ignore-path='.eslintignore' --ignore-unknown --cache",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf .astro dist "
@@ -31,8 +31,6 @@
     "@iconify-json/ph": "^1.1.6",
     "@types/eslint": "^8.44.2",
     "@types/node": "^20.5.8",
-    "@typescript-eslint/eslint-plugin": "^6.5.0",
-    "@typescript-eslint/parser": "^6.5.0",
     "@unocss/astro": "^0.55.4",
     "@unocss/reset": "^0.55.4",
     "@unocss/transformer-attributify-jsx": "^0.55.4",

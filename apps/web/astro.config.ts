@@ -1,4 +1,3 @@
-
 import UnoCSS from 'unocss/astro'
 import compress from 'astro-compress'
 import Critters from 'astro-critters'
@@ -11,9 +10,6 @@ import basicSsl from '@vitejs/plugin-basic-ssl'
 import vercel from '@astrojs/vercel/serverless'
 import { defineConfig, squooshImageService } from 'astro/config'
 
-const SITE_URL =
-  process.env['NODE_ENV'] === 'development' ? 'http://localhost:4321' : ''
-
 const productionAstroIntegrations = [
   partytown(),
   sitemap(),
@@ -24,7 +20,6 @@ const productionAstroIntegrations = [
 
 // https://astro.build/config
 export default defineConfig({
-  site: SITE_URL,
   compressHTML: true,
   output: 'server',
   adapter: vercel({

@@ -11,7 +11,7 @@ const favicon = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
   <text y='.9em' font-size='90'>${randomArrayElement([...emojis])}</text>
 </svg>`
 
-export interface Props {
+export interface Properties {
   title?: string
   description?: string
   image?: {
@@ -24,7 +24,12 @@ export interface Props {
 
 const defaultTitle = 'Omar Aziz'
 
-const { title, description = 'thinking out loud', image, viewTransitions = false } = Astro.props
+const {
+  title,
+  description = 'Ethereum Follow Protocol',
+  image,
+  viewTransitions = false,
+} = Astro.props
 
 /**
  * Temporarily disable globally until it works on iOS Safari
@@ -35,7 +40,6 @@ const viewTransitionsEnabled = viewTransitions && __GLOBAL_ENABLE_VIEW_TRANSITIO
 
 const _title = title ? `${title} | ${defaultTitle}` : defaultTitle
 const _image = image?.url ?? '/public/assets/og-placeholder.jpeg'
-const _description = description ?? 'Ethereum Follow Protocol'
 ---
 
 <html
@@ -62,7 +66,7 @@ const _description = description ?? 'Ethereum Follow Protocol'
         // extending the default meta tags
         meta: [
           { name: 'title', content: _title },
-          { name: 'description', content: _description },
+          { name: 'description', content: description },
           { name: 'image', content: _image },
           { name: 'twitter:card', content: 'summary_large_image' },
           { name: 'twitter:url', content: Astro.url.href },
@@ -70,7 +74,7 @@ const _description = description ?? 'Ethereum Follow Protocol'
           { name: 'twitter:site', content: '@ethfollowpr' },
           { name: 'twitter:image', content: _image },
           { name: 'twitter:title', content: _title },
-          { name: 'twitter:description', content: _description },
+          { name: 'twitter:description', content: description },
           { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=5.0' },
           { name: 'generator', content: Astro.generator },
           { name: 'sitemap', content: '/sitemap-index.xml' },
@@ -80,11 +84,7 @@ const _description = description ?? 'Ethereum Follow Protocol'
     {viewTransitionsEnabled && <ViewTransitions fallback='animate' />}
   </head>
 
-  <body
-    class:list={[
-      'items-center w-full min-w-full',
-    ]}
-  >
+  <body class:list={['items-center w-full min-w-full']}>
     <div class='flex flex-col h-screen max-h-screen'>
       <Header />
       <div class='flex-1 overflow-y-visible'>

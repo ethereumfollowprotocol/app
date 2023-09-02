@@ -36,7 +36,6 @@
     "npm": "use-pnpm",
     "yarn": "use-pnpm"
   },
-  "author": "omaraziz.dev@gmail.com",
   "bugs": "github:ethereumfollowprotocol/app/issues",
   "homepage": "github:ethereumfollowprotocol/app/README.md"
 }

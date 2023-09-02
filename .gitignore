@@ -60,3 +60,6 @@ tokens.json
 lib
 .turbo
 _
+.vercel
+.astro
+dist
