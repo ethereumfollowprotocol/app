@@ -1,8 +1,10 @@
 * {
-  -webkit-tap-highlight-color: transparent;
+  scrollbar-width: none;
+  /* border: 1px solid rgba(255, 0, 0, 0.452); */
+  /* x: #ffffff47; */
   box-sizing: border-box;
   text-rendering: optimizeLegibility;
-  scrollbar-width: none;
+  -webkit-tap-highlight-color: transparent;
   scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
 }
 

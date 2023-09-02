@@ -1,1 +1,37 @@
-<header></header>
+---
+import AppLogo from './Logo.astro'
+import SearchBar from './SearchBar.astro'
+import CartButton from './CartButton.astro'
+import { pageRoutes } from '#/lib/constants'
+---
+
+<header class='w-full p-5 font-sans'>
+  <nav class='w-full flex justify-between'>
+    <div class='flex space-x-1'>
+      <AppLogo />
+      <div class='w-28 h-20 text-pink-400 text-lg font-semibold leading-5.5'>
+        Ethereum<br />Follow<br />Protocol
+      </div>
+      <SearchBar />
+    </div>
+    <ul class='w-full text-right text-pink-400 space-x-4 text-lg font-semibold pb-3 my-auto'>
+      {
+        pageRoutes.map((route, index) => (
+          <li class='inline'>
+            <a
+              href={route.href}
+              class=''
+            >
+              {route.text}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <CartButton />
+
+    <div class="my-auto pb-3.5">
+      <w3m-core-button></w3m-core-button>
+    </div>
+  </nav>
+</header>

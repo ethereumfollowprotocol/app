@@ -6,8 +6,7 @@
   "typescript.preferences.quoteStyle": "single",
   "files.associations": {
     // tells vscode that the file can take comments
-    "base.json": "jsonc",
-    "wrangler.json": "jsonc"
+    "base.json": "jsonc"
   },
   // git settings
   "git.enableCommitSigning": true,
@@ -26,11 +25,14 @@
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode"
   },
+  "unocss.underline": true,
+  "unocss.root": ["apps/web"],
   "search.exclude": {
     "**/node_modules": true,
     "pnpm-lock.yaml": true,
     "**/.turbo": true,
     ".eslintcache": true,
-    ".prettiercache": true
+    ".prettiercache": true,
+    "_": true
   }
 }

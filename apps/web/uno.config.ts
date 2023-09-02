@@ -14,7 +14,7 @@ import transformerAttributifyJsx from '@unocss/transformer-attributify-jsx'
 export default defineConfig({
   rules: [
     //
-    [/^m-([\d.]+)$/, ([_, number_]) => ({ margin: `${number_}px` })],
+
   ],
   presets: [
     presetUno(),
