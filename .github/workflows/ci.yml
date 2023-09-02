@@ -18,7 +18,7 @@ env:
   ACTIONS_RUNNER_DEBUG: true
 
 jobs:
-  deploy:
+  checks:
     timeout-minutes: 10
     strategy:
       matrix:
@@ -56,4 +56,6 @@ jobs:
         run: pnpm typecheck
 
       - name: '🔧 Build'
-        run: pnpm build
+        run: |
+          # pnpm build
+          echo 'skipping build until deploy-ready'

@@ -22,9 +22,7 @@ const productionAstroIntegrations = [
 export default defineConfig({
   compressHTML: true,
   output: 'server',
-  adapter: vercel({
-    analytics: true,
-  }),
+  adapter: vercel(),
   image: {
     service: squooshImageService(),
   },
