@@ -37,12 +37,7 @@ module.exports = {
         parser: '@typescript-eslint/parser',
         extraFileExtensions: ['.astro'],
       },
-      extends: [
-        'eslint:recommended',
-        'plugin:@typescript-eslint/recommended',
-        'prettier',
-        'plugin:astro/recommended',
-      ],
+      extends: ['plugin:astro/recommended'],
       rules: {},
     },
   ],
@@ -89,7 +84,7 @@ module.exports = {
       'warn',
       {
         argsIgnorePattern: '^_',
-        varsIgnorePattern: '^(?:_.*|NodeJS|ProcessEnv)$',
+        varsIgnorePattern: '^(?:_.*|NodeJS|ProcessEnv|web3modal)$',
         caughtErrorsIgnorePattern: '^_',
       },
     ],

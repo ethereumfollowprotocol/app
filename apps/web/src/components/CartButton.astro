@@ -1,0 +1,22 @@
+---
+import { Icon } from 'astro-icon'
+---
+
+<div
+  class:list={[
+    'sm:(flex)',
+    'bg-[#ffffff47] border-gray-500/10 border-1 rounded-xl w-10 h-10 my-auto mr-2',
+  ]}
+>
+  <a
+    class:list={['m-auto w-full h-full w-10 h-10 text-center', '']}
+    href='/cart'
+  >
+    <Icon
+      size={24}
+      name='pencil'
+      fill='#424242'
+      class='m-auto mt-1.8'
+    />
+  </a>
+</div>

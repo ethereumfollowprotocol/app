@@ -1,5 +1,5 @@
-import type { APIRoute } from 'astro'
 import { getAddress } from 'viem'
+import type { APIRoute } from 'astro'
 
 export const prerender = false
 

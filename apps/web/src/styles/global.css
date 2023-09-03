@@ -1,8 +1,8 @@
 * {
-  -webkit-tap-highlight-color: transparent;
+  scrollbar-width: none;
   box-sizing: border-box;
   text-rendering: optimizeLegibility;
-  scrollbar-width: none;
+  -webkit-tap-highlight-color: transparent;
   scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
 }
 
@@ -38,7 +38,7 @@ main {
 
 body::-webkit-scrollbar {
   width: 0.15em;
-  background-color: hsl(0, 0%, 100%);
+  background-color: transparent;
 }
 
 body::-webkit-scrollbar-track {
@@ -128,13 +128,11 @@ light-mode {
 *::-webkit-scrollbar-track {
   -ms-overflow-style: none;
   overflow: -moz-scrollbars-none;
-  @apply h-[0.3rem] bg-zinc-800;
 }
 
 *::-webkit-scrollbar-thumb {
   -ms-overflow-style: none;
   overflow: -moz-scrollbars-none;
-  @apply border-20 h-2 rounded-xl border-2 border-red-500 bg-gray-600;
 }
 
 @supports (scrollbar-gutter: stable) {

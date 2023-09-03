@@ -5,36 +5,46 @@ import sitemap from '@astrojs/sitemap'
 import robotsTxt from 'astro-robots-txt'
 import prefetch from '@astrojs/prefetch'
 import partytown from '@astrojs/partytown'
+import webmanifest from 'astro-webmanifest'
 import type { AstroIntegration } from 'astro'
-import basicSsl from '@vitejs/plugin-basic-ssl'
 import vercel from '@astrojs/vercel/serverless'
 import { defineConfig, squooshImageService } from 'astro/config'
 
-const productionAstroIntegrations = [
-  partytown(),
-  sitemap(),
-  robotsTxt(),
-  Critters(),
-  compress(),
-] satisfies AstroIntegration[]
+const IS_PRODUCTION = import.meta.env['NODE_ENV'] === 'production'
 
 // https://astro.build/config
 export default defineConfig({
-  compressHTML: true,
   output: 'server',
   adapter: vercel(),
-  image: {
-    service: squooshImageService(),
-  },
+  image: { service: squooshImageService() },
   integrations: [
-    prefetch(),
-    UnoCSS({
-      injectReset: true,
-    }),
+    UnoCSS({ injectReset: true }),
     // has to be last
-    ...(process.env['NODE_ENV'] === 'production' ? productionAstroIntegrations : []),
+    ...productionAstroIntegrations(),
   ],
-  vite: {
-    plugins: [...(process.env['NODE_ENV'] === 'production' ? [basicSsl()] : [])],
-  },
+  compressHTML: IS_PRODUCTION,
 })
+
+function productionAstroIntegrations(): Array<AstroIntegration> {
+  if (!IS_PRODUCTION) return []
+  return [
+    sitemap(),
+    prefetch(),
+    Critters(),
+    compress(),
+    partytown(),
+    robotsTxt(),
+    webmanifest({
+      name: 'EFP',
+      start_url: '/',
+      display: 'standalone',
+      icon: '/assets/favicon.svg',
+      short_name: 'Ethereum Follow Protocol',
+      description: 'Ethereum Follow Protocol',
+      /**
+       * TODO: fill out the rest of the manifest and remove relevant items from Layout.astro
+       * @see https://github.com/alextim/astro-lib/tree/main/packages/astro-webmanifest#readme
+       */
+    }),
+  ]
+}

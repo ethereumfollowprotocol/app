@@ -1,1 +1,22 @@
-<footer></footer>
+---
+import { pageRoutes } from '#/lib/constants'
+
+/**
+ * TODO: Add header links to this footer and make under `sm` size breakpoint
+ */
+---
+
+<footer hidden>
+  {
+    pageRoutes.map((route, index) => (
+      <li class='inline'>
+        <a
+          href={route.href}
+          class='capitalize'
+        >
+          <span>{route.text}</span>
+        </a>
+      </li>
+    ))
+  }
+</footer>

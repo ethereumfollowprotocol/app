@@ -1,18 +1,17 @@
 {
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "typescript.updateImportsOnFileMove.enabled": "always",
-  "typescript.preferences.importModuleSpecifier": "relative",
-  "typescript.preferences.quoteStyle": "single",
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  // astro requires this
+  "typescript.inlayHints.parameterNames.enabled": "all",
   "files.associations": {
     // tells vscode that the file can take comments
-    "base.json": "jsonc",
-    "wrangler.json": "jsonc"
+    "base.json": "jsonc"
   },
   // git settings
-  "git.enableCommitSigning": true,
   "git.autofetch": true,
   "git.confirmSync": false,
+  "git.enableCommitSigning": true,
   // format & lint settings
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
@@ -26,11 +25,23 @@
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode"
   },
+  "unocss.underline": true,
+  "unocss.root": ["apps/web"],
   "search.exclude": {
     "**/node_modules": true,
     "pnpm-lock.yaml": true,
     "**/.turbo": true,
     ".eslintcache": true,
-    ".prettiercache": true
+    ".prettiercache": true,
+    "_": true
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[plaintext]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }

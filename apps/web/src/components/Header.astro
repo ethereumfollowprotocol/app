@@ -1,1 +1,62 @@
-<header></header>
+---
+import { Icon } from 'astro-icon'
+import SearchBar from './SearchBar.astro'
+import CartButton from './CartButton.astro'
+import { pageRoutes } from '#/lib/constants'
+---
+
+<header class:list={['w-full px-2.5 font-sans', 'sm:(px-3) md:(px-4) lg:(px-5) xl:(px-6)']}>
+  <nav class='w-full flex justify-between'>
+    <div class:list={['flex space-x-3 my-auto w-full']}>
+      <a
+        href='/'
+        class='mt-2'
+      >
+        <Icon
+          name='logo'
+          class='w-12 h-12'
+        />
+      </a>
+      <p class:list={['w-22 h-20 text-pink-400 text-lg font-semibold leading-4 pt-3']}>
+        Ethereum<br />Follow<br />Protocol
+      </p>
+      <SearchBar />
+    </div>
+    <ul
+      class:list={[
+        'text-pink-400 my-auto flex space-x-0 text-lg font-semibold px-2.25 py-0.15',
+        'sm:(space-x-3 p-0 bg-transparent pr-5)',
+      ]}
+    >
+      {
+        pageRoutes.map((route, index) => (
+          <li class='inline'>
+            <a
+              href={route.href}
+              class='capitalize'
+            >
+              <span
+                class:list={[
+                  //
+                  'hidden mb-2',
+                  'md:(block)',
+                ]}
+              >
+                {route.text}
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class:list={['my-auto flex items-center pl-2 pb-2.5']}>
+      <CartButton />
+      <w3m-core-button
+        label='Connect'
+        icon='show'
+        balance='hide'
+      ></w3m-core-button>
+    </div>
+  </nav>
+</header>
