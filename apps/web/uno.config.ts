@@ -8,7 +8,6 @@ import {
   transformerDirectives,
 } from 'unocss'
 import transformerVariantGroup from '@unocss/transformer-variant-group'
-import transformerAttributifyJsx from '@unocss/transformer-attributify-jsx'
 
 export default defineConfig({
   theme: {
@@ -23,7 +22,6 @@ export default defineConfig({
       '4xl': '2560px',
     },
   },
-  rules: [],
   presets: [
     presetUno(),
     presetMini(),
@@ -36,8 +34,7 @@ export default defineConfig({
       },
     }),
     presetAttributify(),
-    presetTypography({}),
+    presetTypography(),
   ],
-  transformers: [transformerDirectives(), transformerAttributifyJsx(), transformerVariantGroup()],
-  extendTheme: [],
+  transformers: [transformerDirectives(), transformerVariantGroup()],
 })

@@ -5,12 +5,7 @@ import CartButton from './CartButton.astro'
 import { pageRoutes } from '#/lib/constants'
 ---
 
-<header
-  class:list={[
-    'w-full px-2.5 font-sans',
-    'sm:(px-3) md:(px-4) lg:(px-5) xl:(px-6)',
-  ]}
->
+<header class:list={['w-full px-2.5 font-sans', 'sm:(px-3) md:(px-4) lg:(px-5) xl:(px-6)']}>
   <nav class='w-full flex justify-between'>
     <div class:list={['flex space-x-3 my-auto w-full']}>
       <a

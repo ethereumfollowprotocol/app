@@ -6,9 +6,8 @@ import robotsTxt from 'astro-robots-txt'
 import prefetch from '@astrojs/prefetch'
 import partytown from '@astrojs/partytown'
 import webmanifest from 'astro-webmanifest'
-import basicSsl from '@vitejs/plugin-basic-ssl'
+import type { AstroIntegration } from 'astro'
 import vercel from '@astrojs/vercel/serverless'
-import type { AstroIntegration, AstroUserConfig } from 'astro'
 import { defineConfig, squooshImageService } from 'astro/config'
 
 const IS_PRODUCTION = import.meta.env['NODE_ENV'] === 'production'
@@ -24,18 +23,7 @@ export default defineConfig({
     ...productionAstroIntegrations(),
   ],
   compressHTML: IS_PRODUCTION,
-  vite: {
-    plugins: [
-      //
-      ...productionVitePlugins(),
-    ],
-  },
 })
-
-function productionVitePlugins(): Array<(typeof AstroUserConfig)['vite']['plugins']> {
-  if (!IS_PRODUCTION) return []
-  return [basicSsl()]
-}
 
 function productionAstroIntegrations(): Array<AstroIntegration> {
   if (!IS_PRODUCTION) return []
