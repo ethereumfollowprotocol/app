@@ -35,15 +35,7 @@ import { pageRoutes } from '#/lib/constants'
               href={route.href}
               class='capitalize'
             >
-              <span
-                class:list={[
-                  //
-                  'hidden mb-2',
-                  'md:(block)',
-                ]}
-              >
-                {route.text}
-              </span>
+              <span class:list={['hidden mb-2', 'md:(block)']}>{route.text}</span>
             </a>
           </li>
         ))

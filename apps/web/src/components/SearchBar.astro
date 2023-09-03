@@ -7,12 +7,15 @@ import { Icon } from 'astro-icon'
     placeholder='Search ENS or 0x address'
     class:list={[
       'rounded-xl border-none bg-[#ffffff47] bg-opacity-45 border-gray-500/10 border-1 h-10 pl-4 hidden text-sm',
-      'lg:(w-92 max-w-full grow block) xl:(text-md)',
+      'lg:(w-94 max-w-full grow block) xl:(text-md)',
       'font-serif text-black/80 text-left font-semibold placeholder:text-black/20',
     ]}
+    spellcheck='false'
   />
 
   <button
+    name='search'
+    aria-label='search'
     class:list={[
       'bg-[#ffffff47] border-gray-500/10 border-1 rounded-xl h-10 w-10 flex items-center justify-center m-auto',
       'lg:(hidden)',

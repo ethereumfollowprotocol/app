@@ -1,0 +1,18 @@
+---
+/**
+ * This page is for current user profile and for visiting anyone's page
+ *
+ * /<user-wallet-address|user-ens-name>
+ */
+import BaseLayout from '#/layouts/Layout.astro'
+
+const { user } = Astro.params
+---
+
+<BaseLayout viewTransitions={true}>
+  <main
+    class='mt-8 sm:mt-18 relative flex flex-col items-center text-center mx-auto w-full space-y-6'
+  >
+    {user}
+  </main>
+</BaseLayout>

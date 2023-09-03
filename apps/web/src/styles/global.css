@@ -12,7 +12,6 @@
 }
 
 html {
-  margin: 100px;
   overflow-y: overlay;
 }
 
@@ -27,13 +26,6 @@ body {
 /* Disable zoom in iOS Safari when double tapping an element */
 button {
   touch-action: manipulation;
-}
-
-main {
-  font-family:
-    IBM Plex Sans,
-    sans-serif;
-  @apply mt-15;
 }
 
 body::-webkit-scrollbar {
@@ -61,10 +53,6 @@ iframe {
   max-inline-size: 100%;
   block-size: auto;
   object-fit: contain;
-}
-
-p {
-  line-height: 1.5;
 }
 
 [data-font='ibm-plex-sans'] {
@@ -108,12 +96,6 @@ input:-webkit-autofill::first-line {
   pointer-events: none;
 }
 
-/* These elements get removed before hydration but they can look funny before hydrating */
-dark-mode,
-light-mode {
-  display: none;
-}
-
 @media (prefers-reduced-motion: no-preference) {
   :focus {
     transition: outline-offset 0.1s ease;
@@ -122,7 +104,8 @@ light-mode {
 }
 
 *::-webkit-scrollbar {
-  @apply h-[0.3rem] w-[0.5rem];
+  height: 0.3rem;
+  width: 0.5rem;
 }
 
 *::-webkit-scrollbar-track {

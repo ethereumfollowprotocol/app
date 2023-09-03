@@ -11,9 +11,6 @@ importers:
       '@turbo/codemod':
         specifier: ^1.10.13
         version: 1.10.13
-      '@types/node':
-        specifier: ^20.5.8
-        version: 20.5.8
       linters:
         specifier: workspace:*
         version: link:packages/linters
@@ -23,9 +20,6 @@ importers:
       turbo:
         specifier: ^1.10.13
         version: 1.10.13
-      typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
 
   apps/web:
     dependencies:

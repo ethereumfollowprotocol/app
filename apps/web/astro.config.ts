@@ -17,12 +17,16 @@ export default defineConfig({
   output: 'server',
   adapter: vercel(),
   image: { service: squooshImageService() },
+
   integrations: [
     UnoCSS({ injectReset: true }),
     // has to be last
     ...productionAstroIntegrations(),
   ],
   compressHTML: IS_PRODUCTION,
+  experimental: {
+    optimizeHoistedScript: true,
+  },
 })
 
 function productionAstroIntegrations(): Array<AstroIntegration> {
