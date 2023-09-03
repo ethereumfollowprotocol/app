@@ -29,10 +29,10 @@
     "@astrojs/sitemap": "^3.0.0",
     "@astrojs/vercel": "^4.0.3",
     "@types/eslint": "^8.44.2",
-    "@types/node": "^20.5.8",
-    "@unocss/astro": "^0.55.4",
-    "@unocss/reset": "^0.55.4",
-    "@unocss/transformer-variant-group": "^0.55.4",
+    "@types/node": "^20.5.9",
+    "@unocss/astro": "^0.55.6",
+    "@unocss/reset": "^0.55.6",
+    "@unocss/transformer-variant-group": "^0.55.6",
     "@vitejs/plugin-basic-ssl": "^1.0.1",
     "astro-compress": "^2.0.15",
     "astro-critters": "^2.0.11",
@@ -45,6 +45,6 @@
     "tsconfig": "workspace:*",
     "typed-query-selector": "^2.11.0",
     "typescript": "^5.2.2",
-    "unocss": "^0.55.4"
+    "unocss": "^0.55.6"
   }
 }

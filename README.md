@@ -1,4 +1,4 @@
-![EFP Banner](<banner.png>)
+![EFP Banner](banner.png)
 
 <div align="center">
 
