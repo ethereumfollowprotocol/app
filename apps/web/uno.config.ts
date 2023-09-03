@@ -1,7 +1,6 @@
 import {
   presetUno,
   presetMini,
-  presetIcons,
   defineConfig,
   presetWebFonts,
   presetTypography,
@@ -12,6 +11,18 @@ import transformerVariantGroup from '@unocss/transformer-variant-group'
 import transformerAttributifyJsx from '@unocss/transformer-attributify-jsx'
 
 export default defineConfig({
+  theme: {
+    screen: {
+      xs: '480px',
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '1536px',
+      '3xl': '1920px',
+      '4xl': '2560px',
+    },
+  },
   rules: [],
   presets: [
     presetUno(),
@@ -25,28 +36,7 @@ export default defineConfig({
       },
     }),
     presetAttributify(),
-    presetIcons({
-      customizations: {
-        customize: properties => {
-          properties.width = '5em'
-          properties.height = '5em'
-          return properties
-        },
-      },
-      prefix: 'i-',
-      extraProperties: {
-        display: 'inline-block',
-        'vertical-align': 'middle',
-      },
-    }),
-    presetTypography({
-      selectorName: 'markdown',
-      cssExtend: {
-        code: { color: '#8b5cf6' },
-        'a:hover': { color: '#f43f5e' },
-        'a:visited': { color: '#14b8a6' },
-      },
-    }),
+    presetTypography({}),
   ],
   transformers: [transformerDirectives(), transformerAttributifyJsx(), transformerVariantGroup()],
   extendTheme: [],

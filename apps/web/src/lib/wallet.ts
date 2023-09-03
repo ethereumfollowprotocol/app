@@ -26,11 +26,19 @@ const ethereumClient = new EthereumClient(wagmiConfig, chains)
 const web3modal = new Web3Modal(
   {
     projectId,
+    defaultChain: mainnet,
+
+    themeMode: 'light',
     themeVariables: {
-      '--w3m-font-family': 'IBM Plex Mono, sans-serif',
-      '--w3m-font-feature-settings': 'tnums',
+      // connect button background
       '--w3m-accent-color': '#ffffff47',
-      '--w3m-accent-fill-color': '#000000',
+      '--w3m-background-color': '#E990A3',
+      '--w3m-accent-fill-color': '#222022',
+      '--w3m-font-feature-settings': 'tnums',
+      '--w3m-overlay-background-color': '#e990a344',
+      '--w3m-font-family': 'IBM Plex Mono, sans-serif',
+      '--w3m-text-big-bold-font-family': 'IBM Plex Mono, sans-serif',
+      '--w3m-text-medium-regular-font-family': 'IBM Plex Mono, sans-serif',
     },
   },
   ethereumClient,

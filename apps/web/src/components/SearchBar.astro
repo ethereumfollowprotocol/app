@@ -1,13 +1,27 @@
 ---
-
+import { Icon } from 'astro-icon'
 ---
 
-<div class='my-auto pb-2.5'>
+<div class:list={['my-auto font-mono', 'sm:(pb-2.5 pl-1)']}>
   <input
     placeholder='Search ENS or 0x address'
     class:list={[
-      'rounded-xl border-none bg-white bg-opacity-50 w-96 h-10 pl-4',
-      'text-md font-serif text-black/80 text-left font-semibold placeholder:text-black/20',
+      'rounded-xl border-none bg-white bg-opacity-50 h-10 pl-4 hidden text-sm',
+      'lg:(w-92 max-w-full grow block) xl:(w-104 text-md)',
+      'font-serif text-black/80 text-left font-semibold placeholder:text-black/20',
     ]}
   />
+
+  <button
+    class:list={[
+      'bg-[#ffffff47] border-gray-500/10 border-1 rounded-xl h-10 w-10 flex items-center justify-center m-auto',
+      'lg:(hidden)',
+    ]}
+  >
+    <Icon
+      name='mag-glass'
+      size={32}
+      fill='#424242'
+    />
+  </button>
 </div>

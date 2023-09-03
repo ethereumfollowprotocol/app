@@ -5,36 +5,58 @@ import sitemap from '@astrojs/sitemap'
 import robotsTxt from 'astro-robots-txt'
 import prefetch from '@astrojs/prefetch'
 import partytown from '@astrojs/partytown'
-import type { AstroIntegration } from 'astro'
+import webmanifest from 'astro-webmanifest'
 import basicSsl from '@vitejs/plugin-basic-ssl'
 import vercel from '@astrojs/vercel/serverless'
+import type { AstroIntegration, AstroUserConfig } from 'astro'
 import { defineConfig, squooshImageService } from 'astro/config'
 
-const productionAstroIntegrations = [
-  partytown(),
-  sitemap(),
-  robotsTxt(),
-  Critters(),
-  compress(),
-] satisfies AstroIntegration[]
+const IS_PRODUCTION = import.meta.env['NODE_ENV'] === 'production'
 
 // https://astro.build/config
 export default defineConfig({
-  compressHTML: true,
   output: 'server',
   adapter: vercel(),
-  image: {
-    service: squooshImageService(),
-  },
+  image: { service: squooshImageService() },
   integrations: [
-    prefetch(),
-    UnoCSS({
-      injectReset: true,
-    }),
+    UnoCSS({ injectReset: true }),
     // has to be last
-    ...(process.env['NODE_ENV'] === 'production' ? productionAstroIntegrations : []),
+    ...productionAstroIntegrations(),
   ],
+  compressHTML: IS_PRODUCTION,
   vite: {
-    plugins: [...(process.env['NODE_ENV'] === 'production' ? [basicSsl()] : [])],
+    plugins: [
+      //
+      ...productionVitePlugins(),
+    ],
   },
 })
+
+function productionVitePlugins(): Array<(typeof AstroUserConfig)['vite']['plugins']> {
+  if (!IS_PRODUCTION) return []
+  return [basicSsl()]
+}
+
+function productionAstroIntegrations(): Array<AstroIntegration> {
+  if (!IS_PRODUCTION) return []
+  return [
+    sitemap(),
+    prefetch(),
+    Critters(),
+    compress(),
+    partytown(),
+    robotsTxt(),
+    webmanifest({
+      name: 'EFP',
+      start_url: '/',
+      display: 'standalone',
+      icon: '/assets/favicon.svg',
+      short_name: 'Ethereum Follow Protocol',
+      description: 'Ethereum Follow Protocol',
+      /**
+       * TODO: fill out the rest of the manifest and remove relevant items from Layout.astro
+       * @see https://github.com/alextim/astro-lib/tree/main/packages/astro-webmanifest#readme
+       */
+    }),
+  ]
+}

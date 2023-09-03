@@ -21,6 +21,7 @@
     "@web3modal/ethereum": "^2.7.1",
     "@web3modal/html": "^2.7.1",
     "astro": "^3.0.7",
+    "astro-icon": "^0.8.1",
     "viem": "^1.9.5"
   },
   "devDependencies": {
@@ -40,6 +41,7 @@
     "astro-critters": "^2.0.11",
     "astro-robots-txt": "^0.5.0",
     "astro-seo": "^0.8.0",
+    "astro-webmanifest": "^0.6.0",
     "eslint-plugin-astro": "^0.29.0",
     "linters": "workspace:*",
     "prettier-plugin-astro": "^0.12.0",

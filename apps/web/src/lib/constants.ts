@@ -7,14 +7,14 @@ interface PageRoute {
 export const pageRoutes = [
   {
     href: '/',
-    text: 'Home',
+    text: 'home',
   },
   {
     href: '/profile',
-    text: 'My Profile',
+    text: 'profile',
   },
   {
     href: '/leaderboard',
-    text: 'Leaderboard',
+    text: 'leaderboard',
   },
 ] satisfies ReadonlyArray<PageRoute>
