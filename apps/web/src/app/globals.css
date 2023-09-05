@@ -1,3 +1,130 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  scrollbar-width: none;
+  box-sizing: border-box;
+  text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: transparent;
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+}
+
+*:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+html {
+  overflow-y: overlay;
+}
+
+body {
+  overflow-x: hidden;
+  justify-items: center;
+  width: 100%;
+  min-height: 100%;
+  min-width: 100%;
+}
+
+/* Disable zoom in iOS Safari when double tapping an element */
+button {
+  touch-action: manipulation;
+}
+
+body::-webkit-scrollbar {
+  width: 0.15em;
+  background-color: transparent;
+}
+
+body::-webkit-scrollbar-track {
+  width: 0.3em;
+  background-color: hsl(218, 14%, 11%);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+body::-webkit-scrollbar-thumb {
+  width: 0.3em;
+  background-color: rgb(70, 70, 75);
+  outline: 1px solid rgb(58, 62, 67);
+  scrollbar-color: rgb(0, 0, 0) rgb(0, 5, 10);
+}
+
+img,
+video,
+iframe {
+  max-inline-size: 100%;
+  block-size: auto;
+  object-fit: contain;
+}
+
+[data-font='ibm-plex-sans'] {
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: black !important;
+  -webkit-box-shadow: 0 0 0 999px var(--color-gray-100) inset !important;
+  box-shadow: 0 0 0 999px var(--color-gray-100) inset !important;
+  background-clip: content-box !important;
+}
+
+.dark input:-webkit-autofill,
+.dark input:-webkit-autofill:hover,
+.dark input:-webkit-autofill:focus,
+.dark input:-webkit-autofill:active {
+  -webkit-text-fill-color: white !important;
+  -webkit-box-shadow: 0 0 0 999px var(--color-gray-800) inset !important;
+  box-shadow: 0 0 0 999px var(--color-gray-800) inset !important;
+  background-clip: content-box !important;
+}
+
+input:-webkit-autofill::first-line {
+  font-size: 1.125rem;
+  font-weight: 500;
+  font-family:
+    IBM Plex Sans,
+    sans-serif;
+}
+
+/* I kinda feel like this should be the default... 🤷‍♂️ */
+[hidden] {
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :focus {
+    transition: outline-offset 0.1s ease;
+    outline-offset: 4px;
+  }
+}
+
+*::-webkit-scrollbar {
+  height: 0.3rem;
+  width: 0.5rem;
+}
+
+*::-webkit-scrollbar-track {
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;
+}
+
+*::-webkit-scrollbar-thumb {
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;
+}
+
+@supports (scrollbar-gutter: stable) {
+  html {
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+  }
+}

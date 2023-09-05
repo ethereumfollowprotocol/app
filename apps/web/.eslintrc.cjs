@@ -1,4 +1,3 @@
 const eslintConfig = require('linters/eslint')
-/** @type {import('linters').ESLintConfig} */
-// "next/core-web-vitals"
+/** @type {import('linters').Linter.Config} */
 module.exports = eslintConfig

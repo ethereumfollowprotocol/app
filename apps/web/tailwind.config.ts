@@ -4,7 +4,7 @@ import type { Config } from 'tailwindcss'
 import typography from '@tailwindcss/typography'
 
 export default {
-  content: ['./src/**/*.{js,jsx,tsx,mdx,html}'],
+  content: ['./src/**/*.{js,jsx,tsx,mdx,html}', './src/app/**/*.{js,jsx,tsx,mdx,html}'],
   future: {
     hoverOnlyWhenSupported: true,
   },

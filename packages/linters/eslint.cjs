@@ -14,6 +14,7 @@ module.exports = {
     'plugin:unicorn/all',
     'plugin:yml/standard',
     'plugin:@typescript-eslint/recommended',
+    'eslint-config-turbo',
     'prettier',
   ],
   plugins: ['@typescript-eslint', 'prettier'],
@@ -25,6 +26,10 @@ module.exports = {
       rules: {
         'yml/quotes': ['off'],
       },
+    },
+    {
+      files: ['*.jsx', '*.tsx'],
+      extends: ['eslint:recommended', 'next'],
     },
     {
       files: ['*.toml'],

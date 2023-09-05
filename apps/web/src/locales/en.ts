@@ -1,7 +1,6 @@
-console.log('Loaded EN')
-
 export default {
-  hello: 'Hello',
-  welcome: 'Hello {name}!',
-  'about.you': 'Hello {name}! You have {age} yo',
+  APP_NAME: {
+    SHORT: 'EFP',
+    LONG: 'Ethereum Follow Protocol',
+  },
 } as const

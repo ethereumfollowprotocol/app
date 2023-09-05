@@ -14,6 +14,9 @@ find . -name '.eslintcache' -exec rm -rf {} \;
 echo "Removing all .turbo files..."
 find . -name '.turbo' -exec rm -rf {} \;
 
+echo "Removing all .next files..."
+find . -name '.next' -exec rm -rf {} \;
+
 rm -rf pnpm-out out
 
 echo "Done."

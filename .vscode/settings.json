@@ -6,7 +6,14 @@
   "typescript.inlayHints.parameterNames.enabled": "all",
   "files.associations": {
     // tells vscode that the file can take comments
-    "base.json": "jsonc"
+    "base.json": "jsonc",
+    "*.css": "tailwindcss"
+  },
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+  "tailwindCSS.includeLanguages": {
+    "plaintext": "html"
   },
   // git settings
   "git.autofetch": true,

@@ -7,8 +7,13 @@
     },
     "web#build": {
       "dependsOn": ["^build"],
-      "env": ["WALLET_CONNECT_PROJECT_ID", "PUBLIC_WALLET_CONNECT_PROJECT_ID"],
-      "outputs": ["dist/**"]
+      "env": [
+        "WALLET_CONNECT_PROJECT_ID",
+        "NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID",
+        "ALCHEMY_ID",
+        "ANALYZE"
+      ],
+      "outputs": [".next/**", "!.next/cache/**"]
     },
     "lint": {},
     "format": {},
@@ -18,5 +23,5 @@
       "persistent": true
     }
   },
-  "globalEnv": []
+  "globalEnv": ["NODE_ENV"]
 }
