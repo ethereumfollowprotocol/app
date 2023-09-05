@@ -1,3 +1,12 @@
-import { defineMiddleware } from 'astro:middleware'
+import { createI18nMiddleware } from 'next-international/middleware'
+import { NextRequest } from 'next/server'
 
-export const onRequest = defineMiddleware((_context, next) => next())
+const I18nMiddleware = createI18nMiddleware(['en', 'fr'] as const, 'fr')
+
+export function middleware(request: NextRequest) {
+  return I18nMiddleware(request)
+}
+
+export const config = {
+  matcher: ['/((?!api|static|.*\\..*|_next|favicon.ico|robots.txt).*)'],
+}

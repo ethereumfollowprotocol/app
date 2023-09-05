@@ -1,7 +1,7 @@
 {
   "recommendations": [
-    "antfu.unocss",
     "mikestead.dotenv",
+    "gruntfuggly.todo-tree",
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "astro-build.astro-vscode",
