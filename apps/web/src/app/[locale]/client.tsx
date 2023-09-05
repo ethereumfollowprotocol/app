@@ -1,4 +1,5 @@
 'use client'
+// import '@radix-ui/themes/styles.css'
 
 import en from '#/locales/en'
 import type { ReactNode } from 'react'
@@ -7,6 +8,8 @@ import { Header } from '#/app/components/Header.tsx'
 import { Footer } from '#/app/components/Footer.tsx'
 import { WagmiConfig, createConfig } from 'wagmi'
 import { I18nProviderClient } from '#/locales/client'
+import { Theme } from '@radix-ui/themes'
+
 import { ConnectKitProvider, getDefaultConfig } from 'connectkit'
 
 const config = createConfig(
@@ -35,9 +38,11 @@ export default function Layout({
     >
       <WagmiConfig config={config}>
         <ConnectKitProvider mode='light'>
-          <Header />
-          {children}
-          <Footer />
+          <Theme>
+            <Header />
+            {children}
+            <Footer />
+          </Theme>
         </ConnectKitProvider>
       </WagmiConfig>
     </I18nProviderClient>

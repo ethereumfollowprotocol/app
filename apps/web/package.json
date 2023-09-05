@@ -12,6 +12,7 @@
     "clean": "rm -rf .astro dist"
   },
   "dependencies": {
+    "@radix-ui/themes": "^1.1.2",
     "connectkit": "^1.5.2",
     "next": "^13.4.19",
     "react": "18.2.0",

@@ -1,6 +1,8 @@
 import '#/app/globals.css'
+import '@radix-ui/themes/styles.css'
 import * as React from 'react'
 import type { Metadata } from 'next'
+import { Theme } from '@radix-ui/themes'
 import ClientLayout from '#/app/[locale]/client.tsx'
 
 export const metadata = {
@@ -29,7 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             },
           }}
         >
-          {children}
+{children}
         </ClientLayout>
       </body>
     </html>
