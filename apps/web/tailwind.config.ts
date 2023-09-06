@@ -1,15 +1,22 @@
-import forms from '@tailwindcss/forms'
 import plugin from 'tailwindcss/plugin'
+import animate from 'tailwindcss-animate'
 import type { Config } from 'tailwindcss'
 import typography from '@tailwindcss/typography'
+// import { radixThemePreset } from 'radix-themes-tw'
 
 export default {
-  content: ['./src/**/*.{js,jsx,tsx,mdx,html}', './src/app/**/*.{js,jsx,tsx,mdx,html}'],
+  content: [
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,ts,jsx,tsx,mdx}',
+  ],
+  important: true,
   future: {
     hoverOnlyWhenSupported: true,
   },
   theme: {
     extend: {
+      colors: {},
       fontFamily: {
         display: ['var(--font-sf)', 'system-ui', 'sans-serif'],
         default: ['var(--font-inter)', 'system-ui', 'sans-serif'],
@@ -26,7 +33,7 @@ export default {
     },
   },
   plugins: [
-    forms,
+    animate,
     typography,
     plugin(({ addVariant }) => {
       addVariant('radix-side-top', '&[data-side="top"]')

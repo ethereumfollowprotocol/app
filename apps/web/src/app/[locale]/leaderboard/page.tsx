@@ -1,7 +1,8 @@
 'use client'
+
 import * as React from 'react'
-import { useCurrentLocale } from '#/locales/client'
 import { usePathname } from 'next/navigation'
+import { useCurrentLocale } from '#/locales/client'
 
 export default function LeaderboardPage() {
   const currentLocale = useCurrentLocale()
