@@ -6,6 +6,8 @@ interface EnvironmentVariables {
   readonly NEXT_PUBLIC_ALCHEMY_ID: string
   readonly LLAMAFOLIO_ID: string
   readonly NEXT_PUBLIC_LLAMAFOLIO_ID: string
+  readonly INFURA_ID: string
+  readonly NEXT_PUBLIC_INFURA_ID: string
 }
 
 declare module NodeJS {

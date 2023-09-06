@@ -1,13 +1,17 @@
 import { getI18n, getCurrentLocale } from '#/locales/server'
+import { FollowButton } from '#/components/FollowButton'
 
 export default async function Home() {
   const t = await getI18n()
+
+  const follow = t('FOLLOW')
+
+
   const locale = getCurrentLocale()
 
   return (
     <main className='flex flex-col items-center text-center mx-auto w-full h-full'>
-      TODO {t('APP_NAME.SHORT')}
-      <p>{locale}</p>
+
     </main>
   )
 }
