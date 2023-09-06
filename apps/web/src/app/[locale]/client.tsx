@@ -1,6 +1,5 @@
 'use client'
 
-import en from '#/locales/en'
 import { WagmiConfig } from 'wagmi'
 import type { ReactNode } from 'react'
 import { Theme } from '@radix-ui/themes'
@@ -10,20 +9,15 @@ import { Header } from '#/components/Header'
 import { Footer } from '#/components/Footer'
 import { I18nProviderClient } from '#/locales/client'
 
-
-
-export default function Layout({
-  children,
-  params: { locale },
-}: {
-  children: ReactNode
-  params: { locale: string }
-}) {
+export default function Layout({ children }: { children: ReactNode }) {
   return (
     <I18nProviderClient
-      locale={locale}
-      fallback={<p> Loading...</p>}
-      fallbackLocale={en}
+      fallback={
+        /**
+         * TODO: add proper loading state
+         */
+        <p> Loading...</p>
+      }
     >
       <WagmiConfig config={wagmiConfig}>
         <ConnectKitProvider mode='light'>

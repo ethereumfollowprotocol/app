@@ -1,6 +1,5 @@
 'use client'
 
-import clsx from 'clsx'
 import * as React from 'react'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import { TextField, Flex, IconButton } from '@radix-ui/themes'
@@ -44,7 +43,7 @@ export function Search() {
         color='gray'
         size={'3'}
         className='sm:hidden'
-        onClick={event => {}}
+        // onClick={event => {}}
       >
         <MagnifyingGlassIcon
           height={24}

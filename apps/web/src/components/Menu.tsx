@@ -1,7 +1,19 @@
+import { pageRoutes } from '#/lib/constants.ts'
 import { HamburgerMenuIcon } from '@radix-ui/react-icons'
 import { DropdownMenu, IconButton } from '@radix-ui/themes'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+
+export const emojis = {
+  home: '🏠',
+  profile: '👤',
+  leaderboard: '🏆',
+  settings: '⚙️',
+} satisfies Record<string, string>
 
 export function Menu() {
+  const pathname = usePathname()
+
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
@@ -14,8 +26,24 @@ export function Menu() {
         </IconButton>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content>
-        <DropdownMenu.Item shortcut='⌘ E'>Edit</DropdownMenu.Item>
-        <DropdownMenu.Item shortcut='⌘ D'>Duplicate</DropdownMenu.Item>
+        {pageRoutes.map((route, index) => {
+          return (
+            <DropdownMenu.Item
+              color={pathname === route.href ? 'blue' : 'gray'}
+              asChild
+              className='capitalize'
+              key={`route-${index}`}
+            >
+              <Link
+                prefetch
+                href={route.href}
+              >
+                {route.text}
+                <span>{emojis[route.text.toLowerCase() as keyof typeof emojis]}</span>
+              </Link>
+            </DropdownMenu.Item>
+          )
+        })}
         <DropdownMenu.Separator />
         <DropdownMenu.Item shortcut='⌘ N'>Archive</DropdownMenu.Item>
 

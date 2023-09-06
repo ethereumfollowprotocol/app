@@ -34,7 +34,7 @@
     "eslint": "^8.48.0",
     "eslint-config-next": "13.4.19",
     "linters": "workspace:*",
-    "next-international": "^0.9.5",
+    "next-international": "^1.0.0-rc.5",
     "postcss": "^8.4.29",
     "postcss-import": "^15.1.0",
     "prettier-plugin-tailwindcss": "^0.5.4",
@@ -44,5 +44,6 @@
     "tsconfig": "workspace:*",
     "typescript": "^5.2.2",
     "webpack": "^5.88.2"
-  }
+  },
+  "sideEffects": false
 }

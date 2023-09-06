@@ -47,3 +47,28 @@ export const pageRoutes = [
     text: 'leaderboard',
   },
 ] satisfies ReadonlyArray<PageRoute>
+
+export const chains = ['mainnet', 'optimism', 'arbitrum', 'polygon', 'zkSync'] as const
+
+export type Chain = (typeof chains)[number]
+
+export interface EVMTransport {
+  chain: Chain
+  name: string
+  url: string
+}
+
+export const mainnetTransports = [
+  {
+    name: 'Alchemy Mainnet',
+    chain: 'mainnet',
+    url: process.env.NEXT_PUBLIC_ALCHEMY_ID,
+  },
+  {
+    name: 'LlamaNodes',
+    chain: 'mainnet',
+    url: 'https://rpc.llama.fi/mainnet',
+  },
+] satisfies ReadonlyArray<EVMTransport>
+
+export const evmTransports = [...mainnetTransports] satisfies ReadonlyArray<EVMTransport>

@@ -39,4 +39,6 @@ const nextConfig = {
   // TODO: add headers for security
 }
 
-export default () => plugins.reduce((_, plugin) => plugin(_), nextConfig)
+const nextConfigWithPlugins = () => plugins.reduce((_, plugin) => plugin(_), nextConfig)
+
+export default nextConfigWithPlugins

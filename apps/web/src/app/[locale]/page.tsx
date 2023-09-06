@@ -8,7 +8,6 @@ export default async function Home() {
     <main className='flex flex-col items-center text-center mx-auto w-full h-full'>
       TODO {t('APP_NAME.SHORT')}
       <p>{locale}</p>
-
     </main>
   )
 }

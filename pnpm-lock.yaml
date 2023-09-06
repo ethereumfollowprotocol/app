@@ -91,8 +91,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/linters
       next-international:
-        specifier: ^0.9.5
-        version: 0.9.5
+        specifier: ^1.0.0-rc.5
+        version: 1.0.0-rc.5
       postcss:
         specifier: ^8.4.29
         version: 8.4.29
@@ -5711,8 +5711,8 @@ packages:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: true
 
-  /next-international@0.9.5:
-    resolution: {integrity: sha512-yS6DnuNAK+2EO5KWLgw2FPGwBkQ8gylrG0vNSeJD0/BAHSyIpPCn6E+1KPzawQffB5r6wVP6vHjDoSlUOxWWew==}
+  /next-international@1.0.0-rc.5:
+    resolution: {integrity: sha512-gPBNtmo5V4PkO/eOiE3GMc3yrruHa7JhF/8x189G3VMgnCl+BYqLjDwV8CPbygpWQ47vZK3hvjRgM9Tx06K9yw==}
     dependencies:
       client-only: 0.0.1
       international-types: 0.8.0

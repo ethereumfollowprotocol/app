@@ -1,12 +1,12 @@
 'use client'
 
 import clsx from 'clsx'
+import Image from 'next/image'
+import { Text } from '@radix-ui/themes'
+import { Menu, Search } from '#/components'
 import { ConnectKitButton } from 'connectkit'
 import { usePathname } from 'next/navigation'
 import { pageRoutes } from '#/lib/constants.ts'
-import { Menu } from './Menu.tsx'
-import { Search } from './Search.tsx'
-import { Text } from '@radix-ui/themes'
 
 export function Header() {
   const pathname = usePathname()
@@ -19,10 +19,12 @@ export function Header() {
             href='/'
             className='w-15 h-15'
           >
-            <img
+            <Image
+              width={48}
+              height={48}
               alt='EFP Logo'
-              src='/assets/logo.png'
               className='w-12'
+              src='/assets/logo.png'
             />
           </a>
           <Text

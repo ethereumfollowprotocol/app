@@ -30,6 +30,9 @@ module.exports = {
     {
       files: ['*.jsx', '*.tsx'],
       extends: ['eslint:recommended', 'next'],
+      rules: {
+        'no-unused-vars': ['warn'],
+      },
     },
     {
       files: ['*.toml'],
@@ -84,15 +87,26 @@ module.exports = {
     '@typescript-eslint/triple-slash-reference': ['off'],
     '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
     '@typescript-eslint/no-import-type-side-effects': ['error'],
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-unused-vars': [
+    '@typescript-eslint/explicit-module-boundary-types': ['off'],
+    'no-unused-vars': [
       'warn',
       {
         argsIgnorePattern: '^_',
-        varsIgnorePattern: '^(?:_.*|NodeJS|ProcessEnv|web3modal)$',
+        varsIgnorePattern: '^(?:_.*|NodeJS|ProcessEnv)$',
         caughtErrorsIgnorePattern: '^_',
       },
     ],
+    '@typescript-eslint/no-unused-vars':
+      process.env.NODE_ENV === 'production'
+        ? [
+            'warn',
+            {
+              argsIgnorePattern: '^_',
+              varsIgnorePattern: '^(?:_.*|NodeJS|ProcessEnv)$',
+              caughtErrorsIgnorePattern: '^_',
+            },
+          ]
+        : ['off'],
     '@typescript-eslint/consistent-type-imports': ['warn', { prefer: 'type-imports' }],
     '@typescript-eslint/ban-ts-comment': ['off'],
     '@typescript-eslint/no-empty-interface': ['error', { allowSingleExtends: true }],
