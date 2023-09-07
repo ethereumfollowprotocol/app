@@ -6,33 +6,35 @@ import { useRouter } from 'next/navigation'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import { TextField, Flex, IconButton, Dialog } from '@radix-ui/themes'
 import type { PropsWithChildren, ComponentPropsWithoutRef } from 'react'
+import clsx from 'clsx'
 
-export function SearchBar(
-  props: PropsWithChildren<ComponentPropsWithoutRef<typeof TextField.Input>>,
-) {
+export function SearchBar({
+  _className,
+  ...properties
+}: PropsWithChildren<ComponentPropsWithoutRef<typeof TextField.Input>> & {
+  _className?: string
+}) {
   return (
     <TextField.Root
-      className='hidden lg:flex w-[390px]'
+      className={_className}
       size={{
-        initial: '2',
-        sm: '2',
-        md: '3',
+        initial: '3',
       }}
     >
-      <TextField.Slot className='pr-1.5'>
-        <MagnifyingGlassIcon
-          height={16}
-          width={16}
-        />
-      </TextField.Slot>
       <TextField.Input
         radius='large'
         color='gray'
         variant='soft'
         // TODO: remove cursed ring
-        className='focus:ring-0 focus:outline-none outline-none shadow-none lowercase text-sm'
+        className={clsx([
+          'focus:ring-0 focus:outline-none outline-none shadow-none text-sm rounded-xl',
+          /**
+           * TODO: fix so that invalid style only shows up when submitting
+           */
+          // 'invalid:border-2 invalid:border-salmon-400',
+        ])}
         type='search'
-        {...props}
+        {...properties}
       />
     </TextField.Root>
   )
@@ -41,7 +43,7 @@ export function SearchBar(
 export function Search() {
   const t = useI18n()
   const router = useRouter()
-  const [search, setSearch] = React.useState<string | null>(null)
+  const [search, setSearch] = React.useState<string | undefined>()
 
   const onInputChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value)
@@ -51,7 +53,7 @@ export function Search() {
     if (event.key !== 'Enter') return
     event.preventDefault()
     // TODO: validate search
-    router.push(`/account/${search}`)
+    router.push(`/search?q=${search}`)
   }
 
   return (
@@ -61,9 +63,19 @@ export function Search() {
       className='w-full max-w-sm'
     >
       <SearchBar
-        placeholder={t('SEARCH_PLACEHOLDER')}
+        className='hidden lg:flex w-full max-w-[364px]'
+        name='search'
+        id='search'
+        aria-label='Search'
+        inputMode='search'
         onChange={onInputChanged}
         onKeyDown={onEnterPressed}
+        placeholder={t('SEARCH_PLACEHOLDER')}
+        minLength={7}
+        maxLength={64}
+        width={'100%'}
+        autoComplete='off'
+        pattern='0x[a-fA-F0-9]{40}|.{7,64}'
       />
       <Dialog.Root>
         <Dialog.Trigger className='lg:hidden w-10'>
@@ -82,36 +94,24 @@ export function Search() {
         </Dialog.Trigger>
 
         <Dialog.Content
-          style={{ maxWidth: 450 }}
-          className='p-0 mx-4'
-          size={'1'}
+          size={'3'}
+          className='max-w-[364px] w-full p-0 mx-4 mb-42'
         >
-          <TextField.Root
-            className='w-full'
-            size={{
-              initial: '2',
-              sm: '2',
-              md: '3',
-            }}
-          >
-            <TextField.Slot>
-              <MagnifyingGlassIcon
-                height={16}
-                width={16}
-              />
-            </TextField.Slot>
-            <TextField.Input
-              placeholder={t('SEARCH_PLACEHOLDER')}
-              radius='large'
-              color='gray'
-              variant='soft'
-              // TODO: remove cursed ring
-              className='focus:ring-0 focus:outline-none outline-none shadow-none lowercase'
-              type='search'
-              onChange={onInputChanged}
-              onKeyDown={onEnterPressed}
-            />
-          </TextField.Root>
+          <SearchBar
+            name='search'
+            id='search'
+            aria-label='Search'
+            inputMode='search'
+            onChange={onInputChanged}
+            onKeyDown={onEnterPressed}
+            className='w-full max-w-[364px]'
+            placeholder={t('SEARCH_PLACEHOLDER')}
+            minLength={7}
+            maxLength={64}
+            width={'100%'}
+            autoComplete='off'
+            pattern='0x[a-fA-F0-9]{40}|.{7,64}'
+          />
         </Dialog.Content>
       </Dialog.Root>
     </Flex>

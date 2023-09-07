@@ -1,8 +1,8 @@
 'use client'
 
-import { Badge, IconButton } from '@radix-ui/themes'
-import { Pencil1Icon } from '@radix-ui/react-icons'
 import Link from 'next/link'
+import { IconButton } from '@radix-ui/themes'
+import { Pencil1Icon } from '@radix-ui/react-icons'
 
 export function CartButton() {
   return (

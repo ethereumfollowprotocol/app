@@ -10,29 +10,20 @@ interface ProjectLink {
 
 export const projectLinks = [
   {
-    text: 'docs',
-    // TODO: update this link once we have docs
-    href: 'https://github.com/ethereumfollowprotocol',
-  },
-  {
-    text: 'team',
-    href: 'https://github.com/orgs/ethereumfollowprotocol/people',
-  },
-  {
     text: 'X',
     href: 'https://x.com/ethfollowpr',
   },
   {
-    text: 'github',
+    text: 'GitHub',
     href: 'https://github.com/ethereumfollowprotocol',
   },
   /**
    * TODO: add Discord link once we have one
    */
   {
-    text: 'discord',
+    text: 'Discord',
     href: '',
-  }
+  },
 ] satisfies ReadonlyArray<ProjectLink>
 
 interface PageRoute {

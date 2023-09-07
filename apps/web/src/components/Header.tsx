@@ -16,9 +16,10 @@ export function Header() {
         <div className={clsx(['flex space-x-3 pr-3 my-auto w-full items-center'])}>
           <a
             href='/'
-            className='w-15 h-15 mb-2'
+            className='mb-3.5'
           >
             <Avatar
+              size={'4'}
               src='/assets/logo.png'
               fallback='EFP'
             />
@@ -43,7 +44,7 @@ export function Header() {
         <ul
           className={clsx([
             'my-auto flex space-x-0 text-lg font-semibold px-2.25 py-0.15',
-            'sm:space-x-3 sm:p-0 sm:bg-transparent sm:pr-2',
+            'sm:space-x-3 sm:p-0 sm:bg-transparent',
             'hidden sm:flex',
           ])}
         >
@@ -64,7 +65,7 @@ export function Header() {
             </li>
           ))}
         </ul>
-        <div className='my-auto mr-2.5 pb-0.5'>
+        <div className='my-auto mx-4 pb-0.5'>
           <CartButton />
         </div>
         <div className={clsx(['my-auto flex items-center pb-1'])}>

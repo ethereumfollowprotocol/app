@@ -19,6 +19,9 @@ export const en = {
     UNMUTE: 'Unmute',
   },
   SEARCH_PLACEHOLDER: 'Search ENS or 0x address…',
+  REPORT_BUG: 'Report a bug',
+  CONTRIBUTE: 'Contribute',
+  LIST: 'List',
 } as const
 
 export default en

@@ -72,7 +72,7 @@ export function FollowButton({
   text,
   pending,
   loading,
-  ...props
+  ...properties
 }: PropsWithChildren<ComponentPropsWithoutRef<typeof Button>> & {
   text: string
   pending?: boolean
@@ -86,7 +86,7 @@ export function FollowButton({
         pending ? 'bg-gray-200' : theme[text as FollowButtonState].bg,
         theme[text as FollowButtonState].text,
       ])}
-      {...props}
+      {...properties}
     >
       <svg
         width='15'

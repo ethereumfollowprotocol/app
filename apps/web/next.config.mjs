@@ -1,4 +1,4 @@
-/** 
+/**
  * @typedef {import('next').NextConfig} NextConfig
  * @typedef {Array<((config: NextConfig) => NextConfig)>} NextConfigPlugins
  **/
@@ -7,7 +7,7 @@ import webpack from 'webpack'
 /** @type {NextConfigPlugins} */
 const plugins = []
 
-if (Boolean(process.env['ANALYZE'])) {
+if (process.env['ANALYZE']) {
   const { default: withBundleAnalyzer } = await import('@next/bundle-analyzer')
   plugins.push(withBundleAnalyzer({ enabled: true }))
 }
