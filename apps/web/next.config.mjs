@@ -1,18 +1,26 @@
+/** 
+ * @typedef {import('next').NextConfig} NextConfig
+ * @typedef {Array<((config: NextConfig) => NextConfig)>} NextConfigPlugins
+ **/
 import webpack from 'webpack'
-import withBundleAnalyzer from '@next/bundle-analyzer'
 
-/********************
- * Add plugins here *
- * ******************/
-const plugins = [
-  // https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer
-  withBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' }),
-]
+/** @type {NextConfigPlugins} */
+const plugins = []
 
-/** @type {import('next').NextConfig} */
+if (Boolean(process.env['ANALYZE'])) {
+  const { default: withBundleAnalyzer } = await import('@next/bundle-analyzer')
+  plugins.push(withBundleAnalyzer({ enabled: true }))
+}
+
+if (process.env['NODE_ENV'] === 'production') {
+  const { default: withPWA } = await import('next-pwa')
+  plugins.push(withPWA({ dest: 'public' }))
+}
+
+/** @type {NextConfig} */
 const nextConfig = {
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
+    removeConsole: process.env['NODE_ENV'] === 'production',
   },
   swcMinify: true,
   reactStrictMode: true,
@@ -23,7 +31,7 @@ const nextConfig = {
     serverActions: true,
     scrollRestoration: true,
   },
-  /** @param {import('webpack').Configuration} config */
+  /** @param {webpack.Configuration} config */
   webpack: config => {
     if (!config?.resolve?.fallback || !config?.plugins) return config
     config.resolve.fallback = { fs: false, net: false, tls: false, crypto: false }

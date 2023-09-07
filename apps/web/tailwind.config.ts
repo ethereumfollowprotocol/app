@@ -2,7 +2,6 @@ import plugin from 'tailwindcss/plugin'
 import animate from 'tailwindcss-animate'
 import type { Config } from 'tailwindcss'
 import typography from '@tailwindcss/typography'
-// import { radixThemePreset } from 'radix-themes-tw'
 
 export default {
   content: [

@@ -21,6 +21,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href='/assets/favicon.ico'
           sizes='any'
         />
+        <meta
+          content='#fde047'
+          name='theme-color'
+        />
+        <meta
+          content='#fde047'
+          name='msapplication-TileColor'
+        />
+        <link
+          href='/site.webmanifest'
+          rel='manifest'
+        />
       </head>
       <body className='items-center w-full min-w-full bg-gradient-to-b from-yellow-300 to-pink-400'>
         <ClientLayout
