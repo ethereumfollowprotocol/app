@@ -95,7 +95,6 @@ input:-webkit-autofill::first-line {
     sans-serif;
 }
 
-/* I kinda feel like this should be the default... 🤷‍♂️ */
 [hidden] {
   pointer-events: none;
 }
@@ -127,4 +126,9 @@ input:-webkit-autofill::first-line {
     overflow-y: auto;
     scrollbar-gutter: stable;
   }
+}
+
+#search-clear, #text-field-container {
+  margin-right: 22px !important;
+  padding-right: 22px !important;
 }

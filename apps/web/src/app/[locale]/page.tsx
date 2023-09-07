@@ -4,9 +4,6 @@ import { FollowButton } from '#/components/FollowButton'
 export default async function Home() {
   const t = await getI18n()
 
-  const follow = t('FOLLOW')
-
-
   const locale = getCurrentLocale()
 
   return (

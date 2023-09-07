@@ -1,6 +1,7 @@
 import { pageRoutes } from '#/lib/constants.ts'
 import { HamburgerMenuIcon } from '@radix-ui/react-icons'
-import { DropdownMenu, IconButton } from '@radix-ui/themes'
+import { DropdownMenu, IconButton, Button, Flex } from '@radix-ui/themes'
+import clsx from 'clsx'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -9,6 +10,7 @@ export const emojis = {
   profile: '👤',
   leaderboard: '🏆',
   settings: '⚙️',
+  bug: '🐛',
 } satisfies Record<string, string>
 
 export function Menu() {
@@ -19,19 +21,45 @@ export function Menu() {
       <DropdownMenu.Trigger>
         <IconButton
           variant='soft'
-          color='gray'
+          // color='gray'
+          radius='large'
           size={'3'}
         >
           <HamburgerMenuIcon color='gray' />
         </IconButton>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content>
+        <Flex
+          my={'1'}
+          gap={'2'}
+          mx={'auto'}
+        >
+          <Button
+            color='orange'
+            variant='outline'
+            radius='full'
+            size={'2'}
+          >
+            Cool
+          </Button>
+          <Button
+            color='gray'
+            variant='outline'
+            radius='full'
+            size={'2'}
+          >
+            Lame
+          </Button>
+        </Flex>
+
         {pageRoutes.map((route, index) => {
           return (
             <DropdownMenu.Item
-              color={pathname === route.href ? 'blue' : 'gray'}
               asChild
-              className='capitalize'
+              className={clsx([
+                'capitalize my-0.5 sm:hidden flex',
+                pathname === route.href ? 'bg-orange-500 text-white' : '',
+              ])}
               key={`route-${index}`}
             >
               <Link
@@ -44,30 +72,30 @@ export function Menu() {
             </DropdownMenu.Item>
           )
         })}
-        <DropdownMenu.Separator />
-        <DropdownMenu.Item shortcut='⌘ N'>Archive</DropdownMenu.Item>
+        <DropdownMenu.Separator className='block sm:hidden' />
 
         <DropdownMenu.Sub>
-          <DropdownMenu.SubTrigger>More</DropdownMenu.SubTrigger>
+          <DropdownMenu.SubTrigger>List #2,932</DropdownMenu.SubTrigger>
           <DropdownMenu.SubContent>
-            <DropdownMenu.Item>Move to project…</DropdownMenu.Item>
-            <DropdownMenu.Item>Move to folder…</DropdownMenu.Item>
-
-            <DropdownMenu.Separator />
-            <DropdownMenu.Item>Advanced options…</DropdownMenu.Item>
+            <DropdownMenu.Item>List #3</DropdownMenu.Item>
+            <DropdownMenu.Item>List #2,932</DropdownMenu.Item>
           </DropdownMenu.SubContent>
         </DropdownMenu.Sub>
 
         <DropdownMenu.Separator />
-        <DropdownMenu.Item>Share</DropdownMenu.Item>
-        <DropdownMenu.Item>Add to favorites</DropdownMenu.Item>
+        <DropdownMenu.Sub>
+          <DropdownMenu.SubTrigger>English</DropdownMenu.SubTrigger>
+          <DropdownMenu.SubContent>
+            <DropdownMenu.Item>Lorem…</DropdownMenu.Item>
+            <DropdownMenu.Item>Ipsum…</DropdownMenu.Item>
+
+            <DropdownMenu.Separator />
+            <DropdownMenu.Item>Dolor…</DropdownMenu.Item>
+          </DropdownMenu.SubContent>
+        </DropdownMenu.Sub>
+
         <DropdownMenu.Separator />
-        <DropdownMenu.Item
-          shortcut='⌘ ⌫'
-          color='red'
-        >
-          Delete
-        </DropdownMenu.Item>
+        <DropdownMenu.Item shortcut={emojis['bug']}>Report bug</DropdownMenu.Item>
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   )
