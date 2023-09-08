@@ -44,6 +44,9 @@ const nextConfig = {
     return config
   },
   poweredByHeader: false,
+  env: {
+    NEXT_TELEMETRY_DISABLED: '1',
+  },
   // TODO: add headers for security
 }
 

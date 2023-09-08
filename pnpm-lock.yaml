@@ -42,8 +42,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       connectkit:
-        specifier: ^1.5.2
-        version: 1.5.2(@babel/core@7.22.15)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(viem@1.10.4)(wagmi@1.4.1)
+        specifier: ^1.5.3
+        version: 1.5.3(@babel/core@7.22.15)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(viem@1.10.4)(wagmi@1.4.1)
       next:
         specifier: ^13.4.19
         version: 13.4.19(@babel/core@7.22.15)(react-dom@18.2.0)(react@18.2.0)
@@ -4819,8 +4819,8 @@ packages:
   /concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
-  /connectkit@1.5.2(@babel/core@7.22.15)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(viem@1.10.4)(wagmi@1.4.1):
-    resolution: {integrity: sha512-H3sRZjd8u2DG68+eQ7OUcTCA8fgTiZx7N6s06seZcC+PV47luevljzTX8nkkdLAcU+zhUJknL2gmko340+f8RA==}
+  /connectkit@1.5.3(@babel/core@7.22.15)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(viem@1.10.4)(wagmi@1.4.1):
+    resolution: {integrity: sha512-vXneVOa+oit5Migoxca2QkgVBHaROItzb2kW13o7aUrcEcecYIGZjsizsVM2YvIdKihyWs+zJFrlED4g8zAMew==}
     engines: {node: '>=12.4'}
     peerDependencies:
       react: 17.x || 18.x

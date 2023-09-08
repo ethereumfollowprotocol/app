@@ -1,14 +1,23 @@
 'use client'
 
+import clsx from 'clsx'
 import Link from 'next/link'
+import { useAccount } from 'wagmi'
 import { IconButton } from '@radix-ui/themes'
 import { Pencil1Icon } from '@radix-ui/react-icons'
 
 export function CartButton() {
+  const { isConnected, isDisconnected } = useAccount()
+
   return (
     <IconButton
+      hidden
+      disabled
       radius='full'
-      className='bg-zinc-50 relative flex'
+      className={clsx([
+        'bg-zinc-50 relative flex',
+        !isConnected || isDisconnected ? 'hidden' : 'flex',
+      ])}
       variant='solid'
       size={'3'}
       asChild

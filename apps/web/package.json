@@ -16,7 +16,7 @@
     "@radix-ui/themes": "^1.1.2",
     "@uidotdev/usehooks": "^2.2.0",
     "clsx": "^2.0.0",
-    "connectkit": "^1.5.2",
+    "connectkit": "^1.5.3",
     "next": "^13.4.19",
     "react": "18.2.0",
     "react-dom": "18.2.0",

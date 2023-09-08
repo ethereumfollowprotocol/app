@@ -20,7 +20,15 @@ export default function Layout({ children }: { children: ReactNode }) {
       }
     >
       <WagmiConfig config={wagmiConfig}>
-        <ConnectKitProvider mode='light'>
+        <ConnectKitProvider
+          mode='light'
+          options={{
+            /**
+             * TODO: detect locale and move this outside
+             */
+            language: 'en-US',
+          }}
+        >
           <Theme>
             <Header />
             {children}

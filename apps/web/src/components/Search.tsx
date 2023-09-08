@@ -27,7 +27,7 @@ export function SearchBar({
         variant='soft'
         // TODO: remove cursed ring
         className={clsx([
-          'focus:ring-0 focus:outline-none outline-none shadow-none text-sm rounded-xl',
+          'focus:ring-0 focus:outline-none outline-none shadow-none rounded-xl',
           /**
            * TODO: fix so that invalid style only shows up when submitting
            */
@@ -60,10 +60,10 @@ export function Search() {
     <Flex
       direction='column'
       gap='3'
-      className='w-full max-w-sm'
+      className='w-full max-w-[420px]'
     >
       <SearchBar
-        className='hidden lg:flex w-full max-w-[364px]'
+        className='hidden lg:flex w-full max-w-[420px] lg:text-md text-sm'
         name='search'
         id='search'
         aria-label='Search'
@@ -78,7 +78,7 @@ export function Search() {
         pattern='0x[a-fA-F0-9]{40}|.{7,64}'
       />
       <Dialog.Root>
-        <Dialog.Trigger className='lg:hidden w-10'>
+        <Dialog.Trigger className='lg:hidden w-10 mb-3'>
           <IconButton
             variant='soft'
             color='gray'
