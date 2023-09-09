@@ -33,14 +33,21 @@ const nextConfig = {
   },
   /** @param {webpack.Configuration} config */
   webpack: config => {
-    if (!config?.resolve?.fallback || !config?.plugins) return config
-    config.resolve.fallback = { fs: false, net: false, tls: false, crypto: false }
-    if (!config?.plugins) return config
-    config.plugins.push(
-      new webpack.NormalModuleReplacementPlugin(/node:/, resource => {
-        resource.request = resource.request.replace(/^node:/, '')
-      }),
-    )
+    if (config.resolve) {
+      config.resolve.fallback = { fs: false, net: false, tls: false, crypto: false }
+    }
+    if (config.plugins) {
+      config.plugins.push(
+        new webpack.IgnorePlugin({
+          resourceRegExp: /^(lokijs|pino-pretty|encoding)$/,
+        }),
+      )
+      config.plugins.push(
+        new webpack.NormalModuleReplacementPlugin(/node:/, resource => {
+          resource.request = resource.request.replace(/^node:/, '')
+        }),
+      )
+    }
     return config
   },
   poweredByHeader: false,
