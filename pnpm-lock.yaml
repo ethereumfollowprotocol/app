@@ -47,6 +47,9 @@ importers:
       next:
         specifier: ^13.4.19
         version: 13.4.19(@babel/core@7.22.15)(react-dom@18.2.0)(react@18.2.0)
+      next-international:
+        specifier: ^1.0.0-rc.6
+        version: 1.0.0-rc.6
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -93,9 +96,6 @@ importers:
       linters:
         specifier: workspace:*
         version: link:../../packages/linters
-      next-international:
-        specifier: ^1.0.0-rc.5
-        version: 1.0.0-rc.5
       next-pwa:
         specifier: ^5.6.0
         version: 5.6.0(@babel/core@7.22.15)(next@13.4.19)(webpack@5.88.2)
@@ -6262,7 +6262,7 @@ packages:
 
   /international-types@0.8.0:
     resolution: {integrity: sha512-cJwagIBzMG0FTK81TABeSBU0eReIXWmvW18m/URn8ZA+GLoWIcdL43kfjArwHVmZJ1n+IFchsBj8tQLYUqmwnA==}
-    dev: true
+    dev: false
 
   /invariant@2.2.4:
     resolution: {integrity: sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==}
@@ -7011,13 +7011,13 @@ packages:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: true
 
-  /next-international@1.0.0-rc.5:
-    resolution: {integrity: sha512-gPBNtmo5V4PkO/eOiE3GMc3yrruHa7JhF/8x189G3VMgnCl+BYqLjDwV8CPbygpWQ47vZK3hvjRgM9Tx06K9yw==}
+  /next-international@1.0.0-rc.6:
+    resolution: {integrity: sha512-SZN7vYJxu+wWjvN63TBrS7gDrkbtqWYzsb+buEaDf4LYgCUErEwGjJeertZJCz54uLPVDMp4qRbE/0bDxyKPzQ==}
     dependencies:
       client-only: 0.0.1
       international-types: 0.8.0
       server-only: 0.0.1
-    dev: true
+    dev: false
 
   /next-pwa@5.6.0(@babel/core@7.22.15)(next@13.4.19)(webpack@5.88.2):
     resolution: {integrity: sha512-XV8g8C6B7UmViXU8askMEYhWwQ4qc/XqJGnexbLV68hzKaGHZDMtHsm2TNxFcbR7+ypVuth/wwpiIlMwpRJJ5A==}
@@ -8183,7 +8183,7 @@ packages:
 
   /server-only@0.0.1:
     resolution: {integrity: sha512-qepMx2JxAa5jjfzxG79yPPq+8BuFToHd1hm7kI+Z4zAq1ftQiP7HcxMhDDItrbtwVeLg/cY2JnKnrcFkmiswNA==}
-    dev: true
+    dev: false
 
   /set-blocking@2.0.0:
     resolution: {integrity: sha512-KiKBS8AnWGEyLzofFfmvKwpdPzqiy16LvQfK3yv/fVH7Bj13/wl3JSR1J+rfgRE9q7xUJK4qvgS8raSOeLUehw==}

@@ -19,6 +19,7 @@
     "connectkit": "^1.5.3",
     "next": "^13.4.19",
     "react": "18.2.0",
+    "next-international": "^1.0.0-rc.6",
     "react-dom": "18.2.0",
     "viem": "^1.10.4",
     "wagmi": "^1.4.1"
@@ -35,7 +36,6 @@
     "eslint": "^8.48.0",
     "eslint-config-next": "13.4.19",
     "linters": "workspace:*",
-    "next-international": "^1.0.0-rc.5",
     "next-pwa": "^5.6.0",
     "postcss": "^8.4.29",
     "postcss-import": "^15.1.0",
