@@ -1,8 +1,8 @@
 'use client'
 
 import clsx from 'clsx'
-import { Menu } from '#/components/Menu'
-import { Search } from '#/components/Search'
+import { Menu } from '#/components/menu'
+import { Search } from '#/components/search'
 import { CartButton } from '#/components/cart-button.tsx'
 import { ConnectKitButton } from 'connectkit'
 import { usePathname } from 'next/navigation'
