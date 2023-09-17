@@ -1,16 +1,16 @@
 {
   "name": "web",
   "version": "0.0.1",
+  "homepage": "github:ethereumfollowprotocol/app/apps/web/readme.md",
   "private": true,
-  "type": "module",
   "scripts": {
     "dev": "next dev --port 4321",
     "build": "next build",
     "start": "next start",
     "lint": "eslint --fix . --ext='js,cjs,mjs,jsx,ts,tsx,json' --cache",
     "format": "prettier --write . --ignore-path='.eslintignore' --ignore-unknown --cache",
-    "typecheck": "tsc --noEmit",
-    "clean": "rm -rf .astro dist"
+    "typecheck": "tsc --project=tsconfig.json --noEmit",
+    "clean": "rm -rf .next"
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.0",
