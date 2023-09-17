@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "eslint --fix . --ext='js,cjs,mjs,jsx,ts,tsx,json' --cache",
     "format": "prettier --write . --ignore-path='.eslintignore' --ignore-unknown --cache",
-    "typecheck": "tsc --project=tsconfig.json --noEmit",
+    "typecheck": "tsc --project tsconfig.json --noEmit",
     "clean": "rm -rf .next"
   },
   "dependencies": {
