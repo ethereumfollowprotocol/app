@@ -42,9 +42,7 @@ jobs:
           cache: 'pnpm'
 
       - name: '📦 Install Dependencies'
-        run: |
-          pnpm install --frozen-lockfile
-          pnpm add --global wrangler@beta
+        run: pnpm install --frozen-lockfile
 
       - name: '🧹 Lint'
         run: pnpm lint

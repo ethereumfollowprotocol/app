@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { Button } from '@radix-ui/themes'
 import type { PropsWithChildren, ComponentPropsWithoutRef } from 'react'
-import { Spinner } from '#/components/Spinner'
+import { Spinner } from './spinner.tsx'
 
 export type FollowButtonState =
   | 'Follow'

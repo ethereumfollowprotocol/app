@@ -1,7 +1,9 @@
 'use client'
 
 import clsx from 'clsx'
-import { Menu, Search, CartButton } from '#/components'
+import { Menu } from '#/components/menu.tsx'
+import { Search } from '#/components/search.tsx'
+import { CartButton } from '#/components/cart-button.tsx'
 import { ConnectKitButton } from 'connectkit'
 import { usePathname } from 'next/navigation'
 import { Text, Avatar } from '@radix-ui/themes'

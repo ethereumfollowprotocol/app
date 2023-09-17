@@ -1,6 +1,7 @@
 /**
  * @typedef {import('next').NextConfig} NextConfig
  * @typedef {Array<((config: NextConfig) => NextConfig)>} NextConfigPlugins
+ * @typedef {import('webpack').Configuration} WebpackConfiguration
  **/
 import webpack from 'webpack'
 
@@ -12,7 +13,7 @@ if (process.env['ANALYZE']) {
   plugins.push(withBundleAnalyzer({ enabled: true }))
 }
 
-if (process.env['NODE_ENV'] === 'production') {
+if (process.env['DISABLE_PWA'] === 'false' && process.env['NODE_ENV'] === 'production') {
   const { default: withPWA } = await import('next-pwa')
   plugins.push(withPWA({ dest: 'public' }))
 }
@@ -31,7 +32,7 @@ const nextConfig = {
     serverActions: true,
     scrollRestoration: true,
   },
-  /** @param {webpack.Configuration} config */
+  /** @param {WebpackConfiguration} config */
   webpack: config => {
     if (config.resolve) {
       config.resolve.fallback = { fs: false, net: false, tls: false, crypto: false }
@@ -41,8 +42,7 @@ const nextConfig = {
         new webpack.IgnorePlugin({
           resourceRegExp: /^(lokijs|pino-pretty|encoding)$/,
         }),
-      )
-      config.plugins.push(
+
         new webpack.NormalModuleReplacementPlugin(/node:/, resource => {
           resource.request = resource.request.replace(/^node:/, '')
         }),

@@ -70,7 +70,7 @@ export function Search() {
         inputMode='search'
         onChange={onInputChanged}
         onKeyDown={onEnterPressed}
-        placeholder={t('SEARCH_PLACEHOLDER')}
+        placeholder={t('Search ENS or 0x address…')}
         minLength={7}
         maxLength={64}
         width={'100%'}
@@ -105,7 +105,7 @@ export function Search() {
             onChange={onInputChanged}
             onKeyDown={onEnterPressed}
             className='w-full max-w-[364px]'
-            placeholder={t('SEARCH_PLACEHOLDER')}
+            placeholder={t('Search ENS or 0x address…')}
             minLength={7}
             maxLength={64}
             width={'100%'}

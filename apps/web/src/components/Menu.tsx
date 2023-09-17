@@ -1,6 +1,7 @@
+'use-client'
+
 import clsx from 'clsx'
 import Link from 'next/link'
-import { useCurrentLocale, useI18n } from '#/locales/client'
 import { usePathname } from 'next/navigation'
 import { pageRoutes, projectLinks } from '#/lib/constants.ts'
 import {
@@ -10,6 +11,7 @@ import {
   TwitterLogoIcon,
 } from '@radix-ui/react-icons'
 import { DropdownMenu, IconButton, Button, Flex } from '@radix-ui/themes'
+import { useCurrentLocale, useI18n } from '#/locales/client.ts'
 
 export const emojis = {
   home: '🏠',

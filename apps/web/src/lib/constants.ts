@@ -1,7 +1,11 @@
+// import { env } from '#/lib/environment'
+
 export const APP_NAME = 'EFP'
 export const APP_DESCRIPTION = 'Ethereum Follow Protocol'
 export const APP_URL =
-  process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://efp.vercel.app'
+  process.env['NEXT_PUBLIC_VERCEL_URL'] ||
+  process.env['NEXT_PUBLIC_SITE_URL'] ||
+  'http://localhost:4321'
 
 interface ProjectLink {
   href: string
@@ -61,12 +65,12 @@ export const mainnetTransports = [
   {
     name: 'Alchemy Mainnet',
     chain: 'mainnet',
-    url: process.env.NEXT_PUBLIC_ALCHEMY_ID,
+    url: `https://eth-mainnet.alchemyapi.io/v2/${process.env['NEXT_PUBLIC_ALCHEMY_ID']}`,
   },
   {
     name: 'LlamaNodes',
     chain: 'mainnet',
-    url: 'https://rpc.llama.fi/mainnet',
+    url: `https://eth.llamarpc.com/rpc/${process.env['NEXT_PUBLIC_LLAMAFOLIO_ID']}`,
   },
 ] satisfies ReadonlyArray<EVMTransport>
 
