@@ -5,8 +5,8 @@ import type { ReactNode } from 'react'
 import { Theme } from '@radix-ui/themes'
 import { wagmiConfig } from '#/lib/wallet'
 import { ConnectKitProvider } from 'connectkit'
-import { Header } from '#/components/header.tsx'
-import { Footer } from '#/components/footer.tsx'
+import { Header } from '#/components/Header'
+import { Footer } from '#/components/Footer'
 import { I18nProviderClient } from '#/locales/client'
 
 export default function Layout({ children }: { children: ReactNode }) {

@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "homepage": "github:ethereumfollowprotocol/app/apps/web/readme.md",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev --port 4321",
     "build": "next build",
