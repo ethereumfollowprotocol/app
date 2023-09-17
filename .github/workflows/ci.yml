@@ -54,6 +54,4 @@ jobs:
         run: pnpm typecheck
 
       - name: '🔧 Build'
-        run: |
-          # pnpm build
-          echo 'skipping build until deploy-ready'
+        run: pnpm build
