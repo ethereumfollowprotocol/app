@@ -62,3 +62,4 @@ _
 .vercel
 .astro
 dist
+web/public/*.js
