@@ -8,7 +8,7 @@ find . -name 'node_modules' -exec rm -rf {} \;
 echo "Removing all dist folders..."
 find . -name 'dist' -exec rm -rf {} \;
 
-echo "Removing all .turbo folders..."
+echo "Removing all .eslintcache folders..."
 find . -name '.eslintcache' -exec rm -rf {} \;
 
 echo "Removing all .turbo files..."

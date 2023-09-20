@@ -20,6 +20,20 @@
       ],
       "outputs": [".next/**", "!.next/cache/**"]
     },
+    "web#start": {
+      "dependsOn": ["web#build"],
+      "env": [
+        "WALLET_CONNECT_PROJECT_ID",
+        "NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID",
+        "ALCHEMY_ID",
+        "NEXT_PUBLIC_ALCHEMY_ID",
+        "INFURA_ID",
+        "NEXT_PUBLIC_INFURA_ID",
+        "LLAMAFOLIO_ID",
+        "NEXT_PUBLIC_LLAMAFOLIO_ID",
+        "ANALYZE"
+      ]
+    },
     "lint": {},
     "format": {},
     "typecheck": {

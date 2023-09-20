@@ -1,6 +1,4 @@
 {
-  "name": "root",
-  "version": "0.0.1",
   "description": "Ethereum Follow Protocol App",
   "repository": "github:ethereumfollowprotocol/app",
   "workspaces": [
@@ -19,6 +17,7 @@
     "typecheck": "turbo run typecheck && tsc --noEmit",
     "turbo-codemod": "./node_modules/@turbo/codemod/dist/cli.js --force",
     "clean": "/bin/bash ./scripts/clean.sh",
+    "upgrade-dependencies": "pnpm upgrade --latest --recursive",
     "preinstall": "npm_config_yes=true npx only-allow pnpm"
   },
   "devDependencies": {
@@ -29,7 +28,7 @@
     "turbo": "^1.10.14",
     "typescript": "^5.2.2"
   },
-  "packageManager": "pnpm@8.7.4",
+  "packageManager": "pnpm@8.7.6",
   "engines": {
     "node": ">=18",
     "pnpm": ">=8.7.0",
