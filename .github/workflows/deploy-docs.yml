@@ -1,4 +1,4 @@
-name: CI
+name: 'Deploy Docs'
 
 on:
   workflow_dispatch:
@@ -7,8 +7,11 @@ on:
       - main
       - docs-*
 
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: "pages"
+  cancel-in-progress: false
 
 # Allow this job to clone the repo and create a page deployment
 permissions:
@@ -27,8 +30,11 @@ env:
 
 jobs:
   build:
-    name: Build Docs
+    name: 'Build Docs'
     timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: docs
     strategy:
       matrix:
         node-version: ['lts/*']
@@ -36,9 +42,9 @@ jobs:
         os: ['ubuntu-latest']
     runs-on: ${{ matrix.os }}
     steps:
-      - name: 🔑 Checkout
+      - name: '🔑 Checkout'
         uses: actions/checkout@v3
-      - name: Install, Build, & Upload Site
+      - name: 'Install, Build, & Upload Site'
         uses: withastro/action@v0.3.0
         with:
           node-version: ${{ matrix.node-version }}
@@ -47,8 +53,11 @@ jobs:
 
   deploy:
     needs: build
-    name: Deploy Docs
+    name: 'Deploy Docs'
     timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: docs
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -57,6 +66,6 @@ jobs:
         os: ['ubuntu-latest']
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
+      - name: 'Deploy to GitHub Pages'
+        id: 'deployment'
         uses: actions/deploy-pages@v2.0.4

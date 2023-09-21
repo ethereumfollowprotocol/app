@@ -19,7 +19,7 @@ env:
 
 jobs:
   checks:
-    if: ${{ !contains(github.event.head_commit.message, '_skip_checks_') }}
+    if: ${{ !contains(github.event.head_commit.message, '[skip-checks]') }}
     timeout-minutes: 5
     strategy:
       matrix:
