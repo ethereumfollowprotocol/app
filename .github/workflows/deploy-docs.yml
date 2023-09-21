@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - docs-*
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+# Allow this job to clone the repo and create a page deployment
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+defaults:
+  run:
+    shell: bash
+    working-directory: docs
+
+env:
+  CI: true
+  ACTIONS_RUNNER_DEBUG: true
+
+jobs:
+  build:
+    name: Build Docs
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        node-version: ['lts/*']
+        pnpm-version: ['latest']
+        os: ['ubuntu-latest']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: 🔑 Checkout
+        uses: actions/checkout@v3
+
+      - name: Install, Build, & Upload Site
+        uses: withastro/action@v0.3.0
+        with:
+          - node-version: ${{ matrix.node-version }}
+          - package-manager: pnpm
+          - pnpm-version: ${{ matrix.pnpm-version }}
+
+  deploy:
+    needs: build
+    name: Deploy Docs
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    strategy:
+      matrix:
+        os: ['ubuntu-latest']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2.0.4
