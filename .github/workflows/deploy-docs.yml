@@ -47,6 +47,8 @@ jobs:
       - name: 'Install, Build, & Upload Site'
         uses: withastro/action@v0.3.0
         with:
+          path: docs
+          resolve-dep-from-path: true
           node-version: ${{ matrix.node-version }}
           package-manager: pnpm
           pnpm-version: ${{ matrix.pnpm-version }}
