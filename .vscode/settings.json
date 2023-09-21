@@ -1,4 +1,12 @@
 {
+  "search.exclude": {
+    "**/node_modules": true,
+    "pnpm-lock.yaml": true,
+    "**/.turbo": true,
+    ".eslintcache": true,
+    ".prettiercache": true,
+    "_": true
+  },
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.preferences.importModuleSpecifier": "non-relative",
@@ -32,16 +40,6 @@
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode"
   },
-  "unocss.underline": true,
-  "unocss.root": ["apps/web"],
-  "search.exclude": {
-    "**/node_modules": true,
-    "pnpm-lock.yaml": true,
-    "**/.turbo": true,
-    ".eslintcache": true,
-    ".prettiercache": true,
-    "_": true
-  },
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -50,5 +48,5 @@
   },
   "[css]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
 }

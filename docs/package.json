@@ -1,0 +1,24 @@
+{
+  "name": "docs",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev --port 4322",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.10.0",
+    "@fontsource/ibm-plex-serif": "^5.0.8",
+    "@fontsource/inter": "^5.0.8",
+    "astro": "^3.1.1"
+  },
+  "devDependencies": {
+    "@astrojs/starlight-tailwind": "^2.0.0",
+    "@astrojs/tailwind": "^5.0.0",
+    "sharp": "^0.32.6",
+    "tailwindcss": "^3.3.3"
+  }
+}

@@ -20,6 +20,7 @@ if (process.env['DISABLE_PWA'] === 'false' && process.env['NODE_ENV'] === 'produ
 
 /** @type {NextConfig} */
 const nextConfig = {
+  productionBrowserSourceMaps: true,
   compiler: {
     removeConsole: process.env['NODE_ENV'] === 'production',
   },
@@ -54,6 +55,23 @@ const nextConfig = {
   env: {
     NEXT_TELEMETRY_DISABLED: '1',
   },
+  redirects: async () => [
+    {
+      source: '/(twitter|x)',
+      destination: 'https://x.com/ethfollowpr',
+      permanent: true,
+    },
+    {
+      source: '/github',
+      destination: 'https://github.com/ethereumfollowprotocol',
+      permanent: true,
+    },
+    // {
+    //   source: '/docs',
+    //   destination: 'https:',
+    //   permanent: true,
+    // }
+  ],
   // TODO: add headers for security
 }
 

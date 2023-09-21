@@ -1,0 +1,131 @@
+:root {
+  --sl-font: 'IBM Plex Mono', sans-serif;
+  --sl-sidebar-width: 16rem;
+}
+
+/* Dark mode colors. */
+:root {
+  --sl-color-text: #fafafafa;
+  --sl-color-accent-low: #2c230a;
+  --sl-color-accent: #846500;
+  --sl-color-accent-high: #ffff96;
+  --sl-color-white: #ffffff;
+  --sl-color-gray-1: #eceef2;
+  --sl-color-gray-2: #c0c2c7;
+  --sl-color-gray-3: #b4b6bb;
+  --sl-color-gray-4: #545861;
+  --sl-color-gray-5: #353841;
+  --sl-color-gray-6: #24272f;
+  --sl-color-black: #17181c;
+}
+/* Light mode colors. */
+:root[data-theme='light'] {
+  --sl-color-bg: #fafafafa;
+  --sl-color-text: #17181c;
+  --sl-color-accent-low: #dfd6c0;
+  --sl-color-accent: #ff63c1;
+  --sl-color-accent-high: #ff79c9;
+  --sl-color-white: #17181c;
+  --sl-color-gray-1: #24272f;
+  --sl-color-gray-2: #353841;
+  --sl-color-gray-3: #545861;
+  --sl-color-gray-4: #888b96;
+  --sl-color-gray-5: #c0c2c7;
+  --sl-color-gray-6: #eceef2;
+  --sl-color-gray-7: #f5f6f8;
+  --sl-color-black: #ffffff;
+}
+
+:root {
+  --purple-hsl: 205, 60%, 60%;
+  --overlay-blurple: hsla(var(--purple-hsl), 0.4);
+}
+
+:root[data-theme='light'] {
+  --purple-hsl: 255, 85%, 65%;
+}
+
+p {
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+/* TODO: nice bg */
+/* [data-has-hero] .page {
+} */
+
+[data-has-hero] header {
+  border-bottom: 1px solid transparent;
+  background-color: transparent;
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+
+[data-has-hero] .hero > img {
+  filter: drop-shadow(0 0 3rem var(--overlay-blurple));
+}
+
+[data-page-title] {
+  font-size: 7rem;
+  font-family: Inter, sans-serif;
+  font-weight: 700;
+}
+
+.tagline {
+  font-size: 2.5rem;
+  font-family: Inter, sans-serif;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* date page title onl 2.5rem on mobile devices */
+@media (max-width: 768px) {
+  [data-page-title] {
+    font-size: 4rem;
+  }
+
+  .tagline {
+    font-size: 1.5rem;
+  }
+}
+
+.card-grid > .card {
+  border-radius: 10px;
+}
+
+.card > .title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+a.action, a.primary {
+  background-image: linear-gradient(
+    45deg,
+    #ff79c9,
+    #ffff96
+  ) !important;
+}
+
+/** scrollbar */
+*::-webkit-scrollbar {
+  height: 0.3rem;
+  width: 0.5rem;
+}
+
+*::-webkit-scrollbar-track {
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;
+}
+
+*::-webkit-scrollbar-thumb {
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;
+}
+
+@supports (scrollbar-gutter: stable) {
+  html {
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+  }
+}
