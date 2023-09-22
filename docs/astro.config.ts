@@ -1,11 +1,16 @@
 import starlight from '@astrojs/starlight'
 import tailwind from '@astrojs/tailwind'
+import vercelAdapter from '@astrojs/vercel/serverless'
 import expressiveCode from 'astro-expressive-code'
 import { defineConfig, passthroughImageService } from 'astro/config'
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://docs.ethfollow.xyz',
+  output: 'hybrid',
+  adapter: vercelAdapter({
+    webAnalytics: { enabled: true },
+  }),
   integrations: [
     expressiveCode({
       theme: 'dracula-soft',
