@@ -1,11 +1,9 @@
 import { defineConfig, passthroughImageService } from 'astro/config'
 import starlight from '@astrojs/starlight'
+import tailwind from '@astrojs/tailwind'
 
 // https://astro.build/config
 export default defineConfig({
-  image: {
-    service: passthroughImageService(),
-  },
   integrations: [
     starlight({
       title: 'EFP',
@@ -28,12 +26,19 @@ export default defineConfig({
       ],
       customCss: [
         './src/styles/custom.css',
-        // Fontsource files for to regular and semi-bold font weights.
+        './src/styles/tailwind.css',
         '@fontsource/inter/400.css',
         '@fontsource/inter/700.css',
         '@fontsource/ibm-plex-serif/400.css',
         '@fontsource/ibm-plex-serif/600.css',
       ],
     }),
+    tailwind({
+      applyBaseStyles: false,
+      configFile: './tailwind.config.ts',
+    }),
   ],
+  image: {
+    service: passthroughImageService(),
+  },
 })

@@ -20,7 +20,7 @@
 }
 /* Light mode colors. */
 :root[data-theme='light'] {
-  --sl-color-bg: #fafafafa;
+  --sl-color-bg: #fbfbfbfa;
   --sl-color-text: #17181c;
   --sl-color-accent-low: #dfd6c0;
   --sl-color-accent: #ff63c1;
@@ -45,8 +45,15 @@
   --purple-hsl: 255, 85%, 65%;
 }
 
+.site-title {
+  font-size: 2rem;
+  font-family: IBM Plex Mono, sans-serif;
+  font-weight: 900;
+}
+
 p {
   font-size: 1.1rem;
+  font-family: IBM Plex Mono, sans-serif;
   line-height: 1.5;
 }
 
@@ -76,6 +83,11 @@ p {
   font-family: Inter, sans-serif;
   font-weight: 600;
   line-height: 1.2;
+}
+
+::selection {
+  background-color: #f9a8d4;
+  color: rgb(36, 36, 36);
 }
 
 /* date page title onl 2.5rem on mobile devices */

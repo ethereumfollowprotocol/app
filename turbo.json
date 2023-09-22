@@ -34,6 +34,7 @@
         "ANALYZE"
       ]
     },
+    "docs#dev": {},
     "lint": {},
     "format": {},
     "typecheck": {
