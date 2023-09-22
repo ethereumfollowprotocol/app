@@ -38,6 +38,9 @@ importers:
       '@expressive-code/plugin-collapsible-sections':
         specifier: ^0.24.0
         version: 0.24.0
+      '@fontsource/ibm-plex-mono':
+        specifier: ^5.0.8
+        version: 5.0.8
       '@fontsource/ibm-plex-serif':
         specifier: ^5.0.8
         version: 5.0.8
@@ -2094,6 +2097,10 @@ packages:
 
   /@floating-ui/utils@0.1.4:
     resolution: {integrity: sha512-qprfWkn82Iw821mcKofJ5Pk9wgioHicxcQMxx+5zt5GSKoqdWvgG5AxVmpmUUjzTLPVSH5auBrhI93Deayn/DA==}
+    dev: false
+
+  /@fontsource/ibm-plex-mono@5.0.8:
+    resolution: {integrity: sha512-AoR7K2YtlGKy3LApyLYjqjyz0o8XtkRvbB/juMsGSGNayBBAly140ykZls+VxcXjZSLQpp2RyxKo6lYOuHPmUw==}
     dev: false
 
   /@fontsource/ibm-plex-serif@5.0.8:
