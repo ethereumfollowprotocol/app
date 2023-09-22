@@ -1,13 +1,19 @@
-import { defineConfig, passthroughImageService } from 'astro/config'
 import starlight from '@astrojs/starlight'
 import tailwind from '@astrojs/tailwind'
 import expressiveCode from 'astro-expressive-code'
+import { defineConfig, passthroughImageService } from 'astro/config'
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://docs.ethfollow.xyz',
   integrations: [
-    expressiveCode(),
+    expressiveCode({
+      theme: 'dracula-soft',
+    }),
+    tailwind({
+      applyBaseStyles: false,
+      configFile: './tailwind.config.ts',
+    }),
     starlight({
       title: 'EFP',
       description: 'Ethereum Follow Protocol',
@@ -35,10 +41,6 @@ export default defineConfig({
         '@fontsource/ibm-plex-serif/400.css',
         '@fontsource/ibm-plex-serif/600.css',
       ],
-    }),
-    tailwind({
-      applyBaseStyles: false,
-      configFile: './tailwind.config.ts',
     }),
   ],
   image: {
