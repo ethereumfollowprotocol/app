@@ -1,10 +1,13 @@
 import { defineConfig, passthroughImageService } from 'astro/config'
 import starlight from '@astrojs/starlight'
 import tailwind from '@astrojs/tailwind'
+import expressiveCode from 'astro-expressive-code'
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://docs.ethfollow.xyz',
   integrations: [
+    expressiveCode(),
     starlight({
       title: 'EFP',
       description: 'Ethereum Follow Protocol',
