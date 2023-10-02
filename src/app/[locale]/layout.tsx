@@ -2,35 +2,8 @@ import '#/app/globals.css'
 import '@radix-ui/themes/styles.css'
 
 import * as React from 'react'
-import type { Metadata } from 'next'
 import ClientLayout from './client.tsx'
 import { APP_NAME, APP_DESCRIPTION } from '#/lib/constants.ts'
-
-export const metadata = {
-  title: APP_NAME,
-  description: APP_DESCRIPTION,
-  manifest: '/site.webmanifest',
-  appleWebApp: {
-    title: 'EFP',
-    capable: true,
-    statusBarStyle: 'default',
-  },
-  applicationName: 'EFP',
-  viewport: 'width=device-width, initial-scale=1',
-  colorScheme: 'light',
-  twitter: {
-    creator: '@ethfollowpr',
-    site: '@ethfollowpr',
-    card: 'summary_large_image',
-    title: 'EFP',
-    description: APP_DESCRIPTION,
-    images: 'https://github.com/ethereumfollowprotocol/app/raw/main/banner.png',
-  },
-  authors: {
-    name: 'Ethereum Follow Protocol Team',
-    url: 'https://x.com/ethfollowpr',
-  },
-} satisfies Metadata
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -39,6 +12,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className='m-auto h-full min-h-full scroll-smooth w-full overflow-x-hidden'
     >
       <head>
+        <title>{APP_NAME}</title>
+        <meta
+          name='description'
+          content={APP_DESCRIPTION}
+        />
+        <link
+          rel='manifest'
+          href='/site.webmanifest'
+        />
         <link
           rel='icon'
           href='/assets/favicon.ico'
@@ -76,9 +58,49 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           name='msapplication-TileColor'
           content='#fde047'
         />
-        <link
-          rel='manifest'
-          href='/site.webmanifest'
+        <meta
+          name='author'
+          content='Ethereum Follow Protocol Team'
+        />
+        <meta
+          name='twitter:creator'
+          content='@ethfollowpr'
+        />
+        <meta
+          name='twitter:site'
+          content='@ethfollowpr'
+        />
+        <meta
+          name='twitter:card'
+          content='summary_large_image'
+        />
+        <meta
+          name='twitter:title'
+          content='EFP'
+        />
+        <meta
+          name='twitter:description'
+          content={APP_DESCRIPTION}
+        />
+        <meta
+          name='twitter:image'
+          content='/banner.png'
+        />
+        <meta
+          property='og:title'
+          content='EFP'
+        />
+        <meta
+          property='og:description'
+          content={APP_DESCRIPTION}
+        />
+        <meta
+          property='og:image'
+          content='/banner.png'
+        />
+        <meta
+          property='og:url'
+          content='https://x.com/ethfollowpr'
         />
       </head>
       <body className='items-center w-full min-w-full bg-gradient-to-b from-yellow-300 to-pink-400'>

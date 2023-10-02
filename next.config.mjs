@@ -20,7 +20,6 @@ if (process.env['DISABLE_PWA'] === 'false' && process.env['NODE_ENV'] === 'produ
 
 /** @type {NextConfig} */
 const nextConfig = {
-  productionBrowserSourceMaps: true,
   compiler: {
     removeConsole: process.env['NODE_ENV'] === 'production',
   },
@@ -66,11 +65,11 @@ const nextConfig = {
       destination: 'https://github.com/ethereumfollowprotocol',
       permanent: true,
     },
-    // {
-    //   source: '/docs',
-    //   destination: 'https:',
-    //   permanent: true,
-    // }
+    {
+      source: '/docs',
+      destination: 'https://docs.ethfollow.xyz',
+      permanent: true,
+    },
   ],
   // TODO: add headers for security
 }
