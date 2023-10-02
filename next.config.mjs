@@ -34,6 +34,9 @@ const nextConfig = {
   },
   /** @param {WebpackConfiguration} config */
   webpack: config => {
+    if (config.name === 'server' && config.optimization) {
+      config.optimization.concatenateModules = false
+    }
     if (config.resolve) {
       config.resolve.fallback = { fs: false, net: false, tls: false, crypto: false }
     }

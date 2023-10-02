@@ -9,7 +9,7 @@ export default function LeaderboardPage() {
   const currentLocale = useCurrentLocale()
 
   return (
-    <main className='flex flex-col items-center text-center mx-auto w-full h-full'>
+    <main className='mx-auto flex h-full w-full flex-col items-center text-center'>
       TODO - {pathname}
       <p></p>
       <p>{currentLocale}</p>

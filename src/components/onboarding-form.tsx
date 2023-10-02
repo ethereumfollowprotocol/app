@@ -74,21 +74,21 @@ export function OnboardingForm() {
   }
 
   return (
-    <form className='w-full sm:w-[500px] h-full bg-zinc-100 rounded-2xl p-8 flex flex-col'>
+    <form className='flex h-full w-full flex-col rounded-2xl bg-zinc-100 p-8 sm:w-[500px]'>
       {formStep === 0 ? (
         <>
           <Heading className='text-xl font-bold sm:px-2'>
             {scopedT('Where would you like to store your EFP List?')}
           </Heading>
-          <Text className='text-gray-600 py-2'>{scopedT('You can always change this later')}</Text>
+          <Text className='py-2 text-gray-600'>{scopedT('You can always change this later')}</Text>
 
-          <Text className='font-bold pt-3'>{scopedT('Select one')}</Text>
-          <ul className='text-left mx-auto py-4 space-y-2'>
+          <Text className='pt-3 font-bold'>{scopedT('Select one')}</Text>
+          <ul className='mx-auto space-y-2 py-4 text-left'>
             {storeLocation.map((location, index) => (
               <li
                 key={`store-location-${index}`}
                 className={clsx([
-                  'rounded-2xl border-2 border-transparent hover:border-lime-200 px-2 py-1.5',
+                  'rounded-2xl border-2 border-transparent px-2 py-1.5 hover:border-lime-200',
                   selectedStoreLocation?.name === location.name ? 'bg-lime-100' : 'bg-transparent',
                 ])}
               >
@@ -99,7 +99,7 @@ export function OnboardingForm() {
                   }}
                   variant='ghost'
                   className={clsx([
-                    'text-left flex items-center space-x-8 text-black px-4 rounded-xl hover:bg-transparent',
+                    'flex items-center space-x-8 rounded-xl px-4 text-left text-black hover:bg-transparent',
                   ])}
                 >
                   <Image
@@ -132,7 +132,7 @@ export function OnboardingForm() {
               size='3'
               radius='full'
               color='gray'
-              className='w-24 font-bold text-black bg-gray-300'
+              className='w-24 bg-gray-300 font-bold text-black'
               onClick={previousStep}
             >
               {scopedT('BUTTON.CANCEL')}
@@ -157,10 +157,10 @@ export function OnboardingForm() {
       ) : formStep === 1 ? (
         <>
           <Heading className='text-2xl font-bold sm:px-12'>{scopedT('Onchain Update')}</Heading>
-          <Text className='text-gray-600 py-2'>{scopedT('SUMMARY')}</Text>
-          <Text className='font-bold pt-3'>{scopedT('ACTIONS')}</Text>
+          <Text className='py-2 text-gray-600'>{scopedT('SUMMARY')}</Text>
+          <Text className='pt-3 font-bold'>{scopedT('ACTIONS')}</Text>
 
-          <ul className='text-left mx-auto py-4 space-y-5'>
+          <ul className='mx-auto space-y-5 py-4 text-left'>
             <li className='flex'>
               <CheckIcon
                 color='lime'
@@ -178,10 +178,10 @@ export function OnboardingForm() {
               <span>24 edits to List Records</span>
             </li>
           </ul>
-          <Separator className='w-full my-4' />
+          <Separator className='my-4 w-full' />
           <section className='mx-auto'>
             <Text className='font-bold'>{scopedT('Required Transactions')}</Text>
-            <ul className='flex flex-col justify-center mx-auto py-4 space-y-5'>
+            <ul className='mx-auto flex flex-col justify-center space-y-5 py-4'>
               <li className='flex'>
                 1 tx
                 <Image
@@ -222,7 +222,7 @@ export function OnboardingForm() {
               radius='full'
               color='pink'
               size='3'
-              className='w-24 font-bold text-black bg-gradient-to-b from-amber-300 to-red-300'
+              className='w-24 bg-gradient-to-b from-amber-300 to-red-300 font-bold text-black'
               onClick={event => {
                 event.preventDefault()
                 sendTransaction()
@@ -270,7 +270,7 @@ function FormStep({
           radius='full'
           color='pink'
           size='3'
-          className='w-24 font-bold text-black bg-gradient-to-b from-amber-300 to-red-300'
+          className='w-24 bg-gradient-to-b from-amber-300 to-red-300 font-bold text-black'
           onClick={step === 3 ? () => {} : nextStep}
         >
           Next

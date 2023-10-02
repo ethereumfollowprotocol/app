@@ -9,5 +9,9 @@ module.exports = {
   jsxSingleQuote: true,
   arrowParens: 'avoid',
   singleAttributePerLine: true,
-  plugins: [require.resolve('prettier-plugin-sh')],
+  plugins: [
+    //
+    require.resolve('prettier-plugin-tailwindcss'),
+    require.resolve('prettier-plugin-sh'),
+  ],
 }

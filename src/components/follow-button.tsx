@@ -82,7 +82,7 @@ export function FollowButton({
     <Button
       size={'3'}
       className={clsx([
-        'px-4 py-4 !rounded-xl font-bold text-base',
+        '!rounded-xl px-4 py-4 text-base font-bold',
         pending ? 'bg-gray-200' : theme[text as FollowButtonState].bg,
         theme[text as FollowButtonState].text,
       ])}
@@ -94,7 +94,7 @@ export function FollowButton({
         viewBox='0 0 15 21'
         fill='none'
         xmlns='http://www.w3.org/2000/svg'
-        className='inline-block -mr-2 text-black opacity-100'
+        className='-mr-2 inline-block text-black opacity-100'
       >
         <path
           d='M0 9.21289L5.35156 0.306641L10.6641 9.21289L5.35156 12.4551L0 9.21289Z'

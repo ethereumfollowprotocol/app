@@ -57,13 +57,21 @@ module.exports = {
     'unicorn/numeric-separators-style': ['error', { number: { minimumDigits: 4 } }],
     'unicorn/no-array-callback-reference': ['off'],
     'unicorn/prefer-top-level-await': ['off'],
+    'unicorn/no-null': ['off'],
+
     'unicorn/no-array-for-each': ['off'],
+    'unicorn/no-keyword-prefix': [
+      'error',
+      {
+        disallowedPrefixes: ['new', 'for'],
+      },
+    ],
     'unicorn/prefer-event-target': ['off'],
     'unicorn/prevent-abbreviations': [
       'error',
       {
         allowList: {
-          Env: true,
+          props: true,
           ProcessEnv: true,
         },
         checkFilenames: false,

@@ -3,13 +3,14 @@ import '@radix-ui/themes/styles.css'
 
 import * as React from 'react'
 import ClientLayout from './client.tsx'
+import { Providers } from '#/lib/providers.tsx'
 import { APP_NAME, APP_DESCRIPTION } from '#/lib/constants.ts'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang='en'
-      className='m-auto h-full min-h-full scroll-smooth w-full overflow-x-hidden'
+      className='m-auto h-full min-h-full w-full overflow-x-hidden scroll-smooth'
     >
       <head>
         <title>{APP_NAME}</title>
@@ -103,8 +104,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           content='https://x.com/ethfollowpr'
         />
       </head>
-      <body className='items-center w-full min-w-full bg-gradient-to-b from-yellow-300 to-pink-400'>
-        <ClientLayout>{children}</ClientLayout>
+      <body className='w-full min-w-full items-center bg-gradient-to-b from-yellow-300 to-pink-400'>
+        <ClientLayout>
+          <Providers>{children}</Providers>
+        </ClientLayout>
       </body>
     </html>
   )

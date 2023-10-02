@@ -14,6 +14,15 @@ importers:
       '@radix-ui/themes':
         specifier: 2.0.0
         version: 2.0.0(@types/react-dom@18.2.8)(@types/react@18.2.24)(react-dom@18.2.0)(react@18.2.0)
+      '@tanstack/query-core':
+        specifier: ^4.35.7
+        version: 4.35.7
+      '@tanstack/react-query':
+        specifier: 5.0.0-rc.4
+        version: 5.0.0-rc.4(react-dom@18.2.0)(react@18.2.0)
+      '@tanstack/react-query-next-experimental':
+        specifier: 5.0.0-alpha.80
+        version: 5.0.0-alpha.80(@tanstack/react-query@5.0.0-rc.4)(next@13.5.3)(react-dom@18.2.0)(react@18.2.0)
       '@uidotdev/usehooks':
         specifier: ^2.3.1
         version: 2.3.1(react-dom@18.2.0)(react@18.2.0)
@@ -57,6 +66,9 @@ importers:
       '@tailwindcss/typography':
         specifier: ^0.5.10
         version: 0.5.10(tailwindcss@3.3.3)
+      '@tanstack/react-query-devtools':
+        specifier: 5.0.0-rc.4
+        version: 5.0.0-rc.4(@tanstack/react-query@5.0.0-rc.4)(react-dom@18.2.0)(react@18.2.0)
       '@total-typescript/ts-reset':
         specifier: ^0.5.1
         version: 0.5.1
@@ -123,6 +135,9 @@ importers:
       postcss-import:
         specifier: ^15.1.0
         version: 15.1.0(postcss@8.4.31)
+      prettier:
+        specifier: ^3.0.3
+        version: 3.0.3
       prettier-plugin-sh:
         specifier: ^0.13.1
         version: 0.13.1(prettier@3.0.3)
@@ -3488,6 +3503,13 @@ packages:
     resolution: {integrity: sha512-PgDJtX75ubFS0WCYFM7DqEoJ4QbxU3S5OH3gJSI40xr7UVVax3/J4CM3XUMOTs+EOT5YGEfssi3tfRVGte4DEw==}
     dev: false
 
+  /@tanstack/query-core@5.0.0-rc.4:
+    resolution: {integrity: sha512-d5QHSpR+kmutkJfXmyaiNvchVQctuY3d3vWBbAS4M3JTEQuOt+Gg2v7oghnDG05Ks7M0pq7ofNFuAJZ3s7p1yg==}
+
+  /@tanstack/query-devtools@5.0.0-rc.1:
+    resolution: {integrity: sha512-33ECTglWAllVT6IfUhqvgKbJulOtOP8+z9W/i0FlmWKNaEwzaR8lpa4pOCyLCZA2p5XW97nSJ/JfPOzeYQN/jQ==}
+    dev: true
+
   /@tanstack/query-persist-client-core@4.35.7:
     resolution: {integrity: sha512-RhnvVtjR2owK50XosSWJh3SD7516c/cQZO3FhPOPKfnCP7b7NqJbeiznKqxIIR88rvNlIOmZ2BIerdvvW7WQ5g==}
     dependencies:
@@ -3498,6 +3520,33 @@ packages:
     resolution: {integrity: sha512-LwOV4FfbRQmCH3MUXU2xngnws5AzRJ8mtc9JlDogRVwutlDEeY2bYSiu7xV6NDRLPf0/+0KCMzWeBx6Tlgnkgw==}
     dependencies:
       '@tanstack/query-persist-client-core': 4.35.7
+    dev: false
+
+  /@tanstack/react-query-devtools@5.0.0-rc.4(@tanstack/react-query@5.0.0-rc.4)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-ILdxaONmNW7hWC6S9oL99NhrBbK/Iv8juA7O3JhtdwF/DxDnnt/KihhzalRNtVLC8P/E2k5fDfwV4r/ofJ2QGQ==}
+    peerDependencies:
+      '@tanstack/react-query': ^5.0.0-rc.4
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    dependencies:
+      '@tanstack/query-devtools': 5.0.0-rc.1
+      '@tanstack/react-query': 5.0.0-rc.4(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: true
+
+  /@tanstack/react-query-next-experimental@5.0.0-alpha.80(@tanstack/react-query@5.0.0-rc.4)(next@13.5.3)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-J+rHrE+5BVEAoZVlvp5wryBdusKDBRrzysfpgOa4t6vcVRWHgzNlmWJFHelgipdHJrA3/4D6wSir8xmkp8ijtA==}
+    peerDependencies:
+      '@tanstack/react-query': 5.0.0-alpha.71
+      next: ^13.0.0
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    dependencies:
+      '@tanstack/react-query': 5.0.0-rc.4(react-dom@18.2.0)(react@18.2.0)
+      next: 13.5.3(@babel/core@7.23.0)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /@tanstack/react-query-persist-client@4.35.7(@tanstack/react-query@4.35.7):
@@ -3526,6 +3575,23 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
+
+  /@tanstack/react-query@5.0.0-rc.4(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-nN88B6SFvLneav7ZWegjHRhjv46SSAgGnjE/m1aeG9IcfjBGLTP32YkimoDw71F3tRFYzJyrtQ1y6FwB+UymGA==}
+    peerDependencies:
+      react: ^18.0.0
+      react-dom: ^18.0.0
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@tanstack/query-core': 5.0.0-rc.4
+      client-only: 0.0.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
 
   /@total-typescript/ts-reset@0.5.1:
     resolution: {integrity: sha512-AqlrT8YA1o7Ff5wPfMOL0pvL+1X+sw60NN6CcOCqs658emD6RfiXhF7Gu9QcfKBH7ELY2nInLhKSCWVoNL70MQ==}

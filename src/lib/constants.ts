@@ -14,12 +14,20 @@ interface ProjectLink {
 
 export const projectLinks = [
   {
-    text: 'X',
-    href: 'https://x.com/ethfollowpr',
+    text: 'Docs',
+    href: 'https://docs.ethfollow.xyz',
+  },
+  {
+    text: 'Team',
+    href: '',
   },
   {
     text: 'GitHub',
     href: 'https://github.com/ethereumfollowprotocol',
+  },
+  {
+    text: 'X',
+    href: 'https://x.com/ethfollowpr',
   },
   /**
    * TODO: add Discord link once we have one

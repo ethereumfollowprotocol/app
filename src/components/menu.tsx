@@ -74,7 +74,7 @@ export function Menu() {
             <DropdownMenu.Item
               asChild
               className={clsx([
-                'capitalize my-0.5 sm:hidden flex',
+                'my-0.5 flex capitalize sm:hidden',
                 pathname === route.href ? 'bg-orange-500 text-white' : '',
               ])}
               key={`route-${index}`}
@@ -105,7 +105,7 @@ export function Menu() {
           <DropdownMenu.SubContent>
             <DropdownMenu.Item
               className={
-                currentLocale === 'en' ? 'underline decoration-pink-300 decoration-4 font-bold' : ''
+                currentLocale === 'en' ? 'font-bold underline decoration-pink-300 decoration-4' : ''
               }
             >
               English
@@ -146,7 +146,7 @@ export function Menu() {
                 key={`link-${index}`}
                 radius='full'
                 variant='soft'
-                className='text-black bg-transparent hover:bg-pink-200'
+                className='bg-transparent text-black hover:bg-pink-200'
                 asChild
               >
                 <a

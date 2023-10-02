@@ -3,7 +3,7 @@ import clsx from 'clsx'
 export function Spinner({ _className = 'h-4 w-4 text-white' }) {
   return (
     <svg
-      className={clsx(['animate-spin -ml-1', _className])}
+      className={clsx(['-ml-1 animate-spin', _className])}
       xmlns='http://www.w3.org/2000/svg'
       fill='none'
       viewBox='0 0 24 24'

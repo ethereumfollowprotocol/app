@@ -46,6 +46,12 @@ export const en = {
     'Required Transactions': 'Required Transactions',
     'Create new EFP List': 'Create new EFP List',
   },
+  "It's about who you know.": "It's about who you know.",
+  'The social graph': 'The social graph',
+  'for Ethereum.': 'for Ethereum.',
+  'A follower list you own': 'A follower list you own',
+  'Follow your friends.': 'Follow your friends.',
+  'Ghost your enemies.': 'Ghost your enemies.',
 } as const
 
 export default en
