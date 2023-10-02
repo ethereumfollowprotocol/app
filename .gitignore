@@ -63,3 +63,8 @@ _
 .astro
 dist
 web/public/*.js
+_
+*.tsbuildinfo
+next-env.d.ts
+public/*.js
+public/*.webmanifest

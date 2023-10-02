@@ -5,6 +5,7 @@
     "**/.turbo": true,
     ".eslintcache": true,
     ".prettiercache": true,
+    "public/*.js": true,
     "_": true
   },
   "typescript.tsdk": "node_modules/typescript/lib",
@@ -14,7 +15,6 @@
   "typescript.inlayHints.parameterNames.enabled": "all",
   "files.associations": {
     // tells vscode that the file can take comments
-    "base.json": "jsonc",
     "*.css": "tailwindcss"
   },
   "editor.quickSuggestions": {
@@ -36,9 +36,6 @@
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[astro]": {
-    "editor.defaultFormatter": "astro-build.astro-vscode"
   },
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"

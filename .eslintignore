@@ -26,4 +26,5 @@ _
 apps
 packages
 .vercel
-web/public/*.js
+public/*.js
+_

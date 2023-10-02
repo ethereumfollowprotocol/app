@@ -3,10 +3,6 @@
   "globalDependencies": [],
   "pipeline": {
     "build": {
-      "dependsOn": ["^build"]
-    },
-    "web#build": {
-      "dependsOn": ["^build"],
       "env": [
         "WALLET_CONNECT_PROJECT_ID",
         "NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID",
@@ -20,8 +16,8 @@
       ],
       "outputs": [".next/**", "!.next/cache/**"]
     },
-    "web#start": {
-      "dependsOn": ["web#build"],
+    "start": {
+      "dependsOn": ["build"],
       "env": [
         "WALLET_CONNECT_PROJECT_ID",
         "NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID",
@@ -34,7 +30,6 @@
         "ANALYZE"
       ]
     },
-    "docs#dev": {},
     "lint": {},
     "format": {},
     "typecheck": {
