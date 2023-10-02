@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@turbo/codemod": "^1.10.14",
-    "@types/node": "^20.7.0",
+    "@types/node": "^20.8.0",
     "linters": "workspace:*",
     "tsconfig": "workspace:*",
     "turbo": "^1.10.14",
