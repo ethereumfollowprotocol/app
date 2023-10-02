@@ -6,7 +6,7 @@
   "bugs": "github:ethereumfollowprotocol/app/issues",
   "type": "module",
   "scripts": {
-    "dev": "next dev --port 4321 --turbo",
+    "dev": "next dev --port 4321",
     "build": "next build",
     "start": "next start",
     "lint": "eslint --fix . --ext='js,cjs,mjs,jsx,ts,tsx,json' --cache",
@@ -69,7 +69,6 @@
   "packageManager": "pnpm@8.7.6",
   "engines": {
     "node": ">=18",
-    "pnpm": ">=8.7.0",
     "npm": "use-pnpm",
     "yarn": "use-pnpm"
   }
