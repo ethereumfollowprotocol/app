@@ -3,7 +3,7 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { pageRoutes, projectLinks } from '#/lib/constants.ts'
+import { pageRoutes } from '#/lib/constants.ts'
 import {
   DiscordLogoIcon,
   GitHubLogoIcon,
@@ -21,11 +21,26 @@ export const emojis = {
   bug: '🐛',
 } satisfies Record<string, string>
 
-export const projectLinkIcons = {
-  GitHub: GitHubLogoIcon,
-  Discord: DiscordLogoIcon,
-  X: TwitterLogoIcon,
-}
+export const projectLinkItems = [
+  {
+    text: 'GitHub',
+    href: 'https://github.com/ethereumfollowprotocol',
+    icon: GitHubLogoIcon,
+  },
+  {
+    text: 'X',
+    href: 'https://x.com/ethfollowpr',
+    icon: TwitterLogoIcon,
+  },
+  /**
+   * TODO: add Discord link once we have one
+   */
+  {
+    text: 'Discord',
+    href: 'https://x.com/ethfollowpr',
+    icon: DiscordLogoIcon,
+  },
+]
 
 export function Menu() {
   const t = useI18n()
@@ -37,6 +52,8 @@ export function Menu() {
       <DropdownMenu.Trigger>
         <IconButton
           variant='soft'
+          color='gray'
+          className='bg-gray-100 opacity-60 hover:cursor-pointer hover:opacity-100'
           radius='large'
           size={'3'}
         >
@@ -139,8 +156,7 @@ export function Menu() {
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
         <DropdownMenu.Item className='bg-transparent'>
-          {projectLinks.map((link, index) => {
-            const Icon = projectLinkIcons[link.text as keyof typeof projectLinkIcons]
+          {projectLinkItems.map((link, index) => {
             return (
               <IconButton
                 key={`link-${index}`}
@@ -154,7 +170,7 @@ export function Menu() {
                   target='_blank'
                   rel='noopener noreferrer'
                 >
-                  <Icon />
+                  <link.icon />
                 </a>
               </IconButton>
             )

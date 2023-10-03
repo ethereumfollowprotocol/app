@@ -17,9 +17,12 @@ export const projectLinks = [
     text: 'Docs',
     href: 'https://docs.ethfollow.xyz',
   },
+  /**
+   * TODO: update with proper link
+   */
   {
     text: 'Team',
-    href: '',
+    href: 'https://github.com/orgs/ethereumfollowprotocol/people',
   },
   {
     text: 'GitHub',
@@ -34,7 +37,7 @@ export const projectLinks = [
    */
   {
     text: 'Discord',
-    href: '',
+    href: 'https://x.com/ethfollowpr',
   },
 ] satisfies ReadonlyArray<ProjectLink>
 

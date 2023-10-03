@@ -1,16 +1,34 @@
 import '#/app/globals.css'
 import '@radix-ui/themes/styles.css'
 
+import clsx from 'clsx'
 import * as React from 'react'
 import ClientLayout from './client.tsx'
 import { Providers } from '#/lib/providers.tsx'
+import { Inter, IBM_Plex_Mono } from 'next/font/google'
 import { APP_NAME, APP_DESCRIPTION } from '#/lib/constants.ts'
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '700', '900'],
+  variable: '--font-inter',
+})
+
+const ibm_plex_mono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  variable: '--font-ibm-plex-mono',
+})
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang='en'
-      className='m-auto h-full min-h-full w-full overflow-x-hidden scroll-smooth'
+      className={clsx([
+        inter.variable,
+        ibm_plex_mono.variable,
+        'm-auto h-full min-h-full w-full overflow-x-hidden scroll-smooth',
+      ])}
     >
       <head>
         <title>{APP_NAME}</title>

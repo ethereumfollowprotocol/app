@@ -170,8 +170,8 @@ export default {
       ...extendedTheme.borderRadius,
       ...extendedTheme.fontSize,
       fontFamily: {
-        display: ['var(--font-sf)', 'system-ui', 'sans-serif'],
-        default: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-inter)'],
+        mono: ['var(--font-ibm-plex-mono)'],
       },
       animation: {
         ...extendedTheme.animation,
