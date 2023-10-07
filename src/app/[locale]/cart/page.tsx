@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import { usePathname } from 'next/navigation'
-import { useCurrentLocale } from '#/locales/client'
+import { useCurrentLocale } from '#locales/client'
 
 export default function CartPage() {
   const currentLocale = useCurrentLocale()

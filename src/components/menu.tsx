@@ -3,7 +3,7 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { pageRoutes } from '#/lib/constants.ts'
+import { pageRoutes } from '#lib/constants.ts'
 import {
   DiscordLogoIcon,
   GitHubLogoIcon,
@@ -11,7 +11,7 @@ import {
   TwitterLogoIcon,
 } from '@radix-ui/react-icons'
 import { DropdownMenu, IconButton, Button, Flex } from '@radix-ui/themes'
-import { useCurrentLocale, useI18n } from '#/locales/client.ts'
+import { useCurrentLocale, useI18n } from '#locales/client.ts'
 
 export const emojis = {
   home: '🏠',

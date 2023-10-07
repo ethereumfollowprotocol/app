@@ -1,4 +1,4 @@
-import { getENSProfile } from '#/lib/ens.ts'
+import { getENSProfile } from '#lib/ens.ts'
 
 type Runtime = 'node' | 'edge'
 

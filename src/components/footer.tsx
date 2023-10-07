@@ -1,4 +1,4 @@
-import { useI18n } from '#/locales/client.ts'
+import { useI18n } from '#locales/client.ts'
 import { Avatar, Text, Box, Flex, Section } from '@radix-ui/themes'
 
 const footerLinks = [

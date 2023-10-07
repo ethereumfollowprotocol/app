@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { usePathname } from 'next/navigation'
-import { getCurrentLocale } from '#/locales/server.ts'
+import { getCurrentLocale } from '#locales/server.ts'
 
 export default async function ProfilePage() {
   const pathname = usePathname()

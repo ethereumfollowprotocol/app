@@ -1,6 +1,6 @@
-import en from '#/locales/en.ts'
+import en from '#locales/en.ts'
 import { createConfig } from 'wagmi'
-import { APP_URL } from '#/lib/constants.ts'
+import { APP_URL } from '#lib/constants.ts'
 import { getDefaultConfig } from 'connectkit'
 
 export const wagmiConfig = createConfig(

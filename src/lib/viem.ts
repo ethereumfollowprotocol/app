@@ -1,5 +1,5 @@
 import { mainnet } from 'viem/chains'
-import { mainnetTransports } from '#/lib/constants.ts'
+import { mainnetTransports } from '#lib/constants.ts'
 import { createPublicClient, http, fallback } from 'viem'
 
 export const mainnetClient = () =>

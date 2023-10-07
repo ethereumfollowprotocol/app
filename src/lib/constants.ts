@@ -1,4 +1,4 @@
-// import { env } from '#/lib/environment'
+// import { env } from '#lib/environment'
 
 export const APP_NAME = 'EFP'
 export const APP_DESCRIPTION = 'Ethereum Follow Protocol'
