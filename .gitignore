@@ -68,3 +68,4 @@ _
 next-env.d.ts
 public/*.js
 public/*.webmanifest
+.open-next

@@ -30,10 +30,16 @@
     "verbatimModuleSyntax": true,
     "allowSyntheticDefaultImports": true,
     "checkJs": true,
-
     "types": ["node"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "files": [".eslintrc.cjs", ".prettierrc.cjs", "environment.d.ts", "next.config.mjs"],
-  "exclude": ["node_modules"]
+  "files": [
+    ".eslintrc.cjs",
+    ".prettierrc.cjs",
+    "environment.d.ts",
+    "next.config.mjs",
+    "sst.config.ts",
+    "sst-env.d.ts"
+  ],
+  "exclude": ["node_modules", ".open-next"]
 }
