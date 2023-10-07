@@ -1,6 +1,6 @@
 import { getAddress } from 'viem'
 import { normalize } from 'viem/ens'
-import { mainnetClient } from '#/lib/viem.ts'
+import { mainnetClient } from '#lib/viem.ts'
 
 export async function getAddressFromENS(name: string) {
   if (!name.includes('.eth')) return

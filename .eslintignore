@@ -28,3 +28,4 @@ packages
 .vercel
 public/*.js
 _
+.open-next

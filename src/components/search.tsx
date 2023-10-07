@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { useI18n } from '#/locales/client'
+import { useI18n } from '#locales/client'
 import { useRouter } from 'next/navigation'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import { TextField, Flex, IconButton, Dialog } from '@radix-ui/themes'

@@ -1,13 +1,13 @@
 'use client'
 
 import clsx from 'clsx'
-import { Menu } from '#/components/menu.tsx'
-import { Search } from '#/components/search'
+import { Menu } from '#components/menu.tsx'
+import { Search } from '#components/search'
 import { ConnectKitButton } from 'connectkit'
 import { usePathname } from 'next/navigation'
 import { Text, Avatar } from '@radix-ui/themes'
-import { pageRoutes } from '#/lib/constants.ts'
-import { CartButton } from '#/components/cart-button.tsx'
+import { pageRoutes } from '#lib/constants.ts'
+import { CartButton } from '#components/cart-button.tsx'
 
 export function Header() {
   const pathname = usePathname()

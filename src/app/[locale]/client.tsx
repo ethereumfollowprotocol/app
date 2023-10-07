@@ -3,11 +3,11 @@
 import { WagmiConfig } from 'wagmi'
 import type { ReactNode } from 'react'
 import { Theme } from '@radix-ui/themes'
-import { wagmiConfig } from '#/lib/wallet'
-import { Header } from '#/components/header'
-import { Footer } from '#/components/footer'
+import { wagmiConfig } from '#lib/wallet'
+import { Header } from '#components/header'
+import { Footer } from '#components/footer'
 import { ConnectKitProvider } from 'connectkit'
-import { I18nProviderClient } from '#/locales/client'
+import { I18nProviderClient } from '#locales/client'
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (

@@ -53,6 +53,7 @@ const nextConfig = {
     }
     return config
   },
+  cleanDistDir: true,
   poweredByHeader: false,
   env: {
     NEXT_TELEMETRY_DISABLED: '1',

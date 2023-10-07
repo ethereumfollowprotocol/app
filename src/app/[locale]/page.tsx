@@ -1,6 +1,6 @@
 import { Flex, Text, Box, Avatar, Section } from '@radix-ui/themes'
 
-import { getI18n } from '#/locales/server'
+import { getI18n } from '#locales/server'
 import Image from 'next/image'
 
 export default async function Home() {
