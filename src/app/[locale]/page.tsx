@@ -1,13 +1,12 @@
-import { Flex, Text, Box, Avatar, Section } from '@radix-ui/themes'
-
-import { getI18n } from '#locales/server'
 import Image from 'next/image'
+import { getI18n } from '#locales/server.ts'
+import { Flex, Text } from '@radix-ui/themes'
 
 export default async function Home() {
   const t = await getI18n()
   return (
-    <main className='mx-auto flex h-full w-full flex-col items-center px-4 pt-8 text-center'>
-      <Text className='text-4xl font-bold text-white'>{t("It's about who you know.")} 😜</Text>
+    <main className='mx-auto flex h-full min-h-full w-full flex-col items-center overflow-scroll px-4 pt-8 text-center'>
+      <Text className='text-4xl font-bold text-white'>{t("It's about who you know.")}</Text>
       <Flex direction={'column'}>
         <Text className='text-4xl font-bold text-white'>{t('The social graph')}</Text>
         <Text className='text-4xl font-bold text-[#FEF305]'>{t('for Ethereum.')}</Text>

@@ -1,5 +1,6 @@
+import Image from 'next/image'
 import { useI18n } from '#locales/client.ts'
-import { Avatar, Text, Box, Flex, Section } from '@radix-ui/themes'
+import { Text, Box, Flex, Section } from '@radix-ui/themes'
 
 const footerLinks = [
   {
@@ -33,8 +34,9 @@ const footerLinks = [
 export function Footer() {
   const t = useI18n()
 
+  // if (true) return null
   return (
-    <footer className='fixed bottom-0 mx-auto mt-4 h-60 w-full overflow-hidden font-sans'>
+    <footer className='fixed bottom-0 mx-auto mt-4 w-full font-sans'>
       <Flex
         direction={'row'}
         align={'center'}
@@ -49,11 +51,11 @@ export function Footer() {
               {t('APP_NAME.LONG')}
             </Text>
           </Box>
-          <Avatar
-            size={'9'}
+          <Image
             src='/assets/logo.png'
-            fallback='EFP'
-            className=''
+            width={160}
+            height={160}
+            alt='Ethereum Follow Protocol'
           />
         </Section>
         <Section

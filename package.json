@@ -4,7 +4,7 @@
   "repository": "github:ethereumfollowprotocol/app",
   "type": "module",
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint --fix . --ext='js,cjs,mjs,jsx,ts,tsx,json' --cache",

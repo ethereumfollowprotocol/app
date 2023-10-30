@@ -3,8 +3,7 @@ import '@radix-ui/themes/styles.css'
 
 import clsx from 'clsx'
 import * as React from 'react'
-import ClientLayout from './client.tsx'
-import { Providers } from '#lib/providers.tsx'
+import { Providers } from './providers.tsx'
 import { Inter, IBM_Plex_Mono } from 'next/font/google'
 import { APP_NAME, APP_DESCRIPTION } from '#lib/constants.ts'
 
@@ -19,8 +18,15 @@ const ibm_plex_mono = IBM_Plex_Mono({
   weight: ['400', '500', '700'],
   variable: '--font-ibm-plex-mono',
 })
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  params: { locale },
+  children,
+}: {
+  params: {
+    locale: string
+  }
+  children: React.ReactNode
+}) {
   return (
     <html
       lang='en'
@@ -123,9 +129,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className='w-full min-w-full items-center bg-gradient-to-b from-yellow-300 to-pink-400'>
-        <ClientLayout>
-          <Providers>{children}</Providers>
-        </ClientLayout>
+        <Providers locale={locale}>{children}</Providers>
       </body>
     </html>
   )

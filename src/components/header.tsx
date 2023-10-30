@@ -1,11 +1,12 @@
 'use client'
 
 import clsx from 'clsx'
+import Image from 'next/image'
+import { Text } from '@radix-ui/themes'
 import { Menu } from '#components/menu.tsx'
 import { Search } from '#components/search'
 import { ConnectKitButton } from 'connectkit'
 import { usePathname } from 'next/navigation'
-import { Text, Avatar } from '@radix-ui/themes'
 import { pageRoutes } from '#lib/constants.ts'
 import { CartButton } from '#components/cart-button.tsx'
 
@@ -20,10 +21,11 @@ export function Header() {
             href='/'
             className='mb-3.5'
           >
-            <Avatar
-              size={'4'}
+            <Image
               src='/assets/logo.png'
-              fallback='EFP'
+              width={58}
+              height={58}
+              alt='Ethereum Follow Protocol'
             />
           </a>
           <Text
