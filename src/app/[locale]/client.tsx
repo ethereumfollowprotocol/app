@@ -1,7 +1,7 @@
 'use client'
 
+import * as React from 'react'
 import { WagmiConfig } from 'wagmi'
-import type { ReactNode } from 'react'
 import { Theme } from '@radix-ui/themes'
 import { wagmiConfig } from '#lib/wallet'
 import { Header } from '#components/header'
@@ -9,7 +9,13 @@ import { Footer } from '#components/footer'
 import { ConnectKitProvider } from 'connectkit'
 import { I18nProviderClient } from '#locales/client'
 
-export default function Layout({ children }: { children: ReactNode }) {
+export default function Layout({
+  params: { locale },
+  children,
+}: {
+  params: { locale: string }
+  children: React.ReactElement
+}) {
   return (
     <I18nProviderClient
       fallback={
@@ -18,6 +24,7 @@ export default function Layout({ children }: { children: ReactNode }) {
          */
         <p> Loading...</p>
       }
+      locale={locale}
     >
       <WagmiConfig config={wagmiConfig}>
         <ConnectKitProvider

@@ -15,21 +15,20 @@ if (process.env['ANALYZE']) {
 
 if (process.env['DISABLE_PWA'] === 'false' && process.env['NODE_ENV'] === 'production') {
   const { default: withPWA } = await import('next-pwa')
-  plugins.push(withPWA({ dest: 'public' }))
+  plugins.push(
+    // @ts-ignore
+    withPWA({ dest: 'public' }),
+  )
 }
 
 /** @type {NextConfig} */
 const nextConfig = {
-  compiler: {
-    removeConsole: process.env['NODE_ENV'] === 'production',
-  },
   swcMinify: true,
   reactStrictMode: true,
   transpilePackages: ['next-international', 'international-types'],
   // we run using `prebuild` script
   eslint: { ignoreDuringBuilds: true },
   experimental: {
-    serverActions: true,
     scrollRestoration: true,
   },
   /** @param {WebpackConfiguration} config */

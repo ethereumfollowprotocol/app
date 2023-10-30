@@ -8,9 +8,7 @@
       }
     ],
     "paths": {
-      "#*": [
-        "./src/*"
-      ]
+      "#*": ["./src/*"]
     },
     "noEmit": true,
     "esModuleInterop": true,
@@ -25,37 +23,16 @@
     "noUncheckedIndexedAccess": true,
     "module": "ESNext",
     "moduleResolution": "Node",
-    "lib": [
-      "ESNext",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "target": "ESNext",
     "allowImportingTsExtensions": true,
     "alwaysStrict": true,
     "verbatimModuleSyntax": true,
     "allowSyntheticDefaultImports": true,
     "checkJs": true,
-    "types": [
-      "node"
-    ]
+    "types": ["node"]
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts"
-  ],
-  "files": [
-    ".eslintrc.cjs",
-    ".prettierrc.cjs",
-    "environment.d.ts",
-    "next.config.mjs",
-    "sst.config.ts",
-    "sst-env.d.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    ".open-next"
-  ]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "files": [".eslintrc.cjs", ".prettierrc.cjs", "environment.d.ts", "next.config.mjs"],
+  "exclude": ["node_modules", "_"]
 }

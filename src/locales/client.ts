@@ -1,3 +1,4 @@
+import en from './en.ts'
 import { createI18nClient } from 'next-international/client'
 
 export const {
@@ -7,6 +8,11 @@ export const {
   useChangeLocale,
   useCurrentLocale,
   I18nProviderClient,
-} = createI18nClient({
-  en: () => import('./en'),
-})
+} = createI18nClient(
+  {
+    en: () => import('./en'),
+  },
+  {
+    fallbackLocale: en,
+  },
+)
