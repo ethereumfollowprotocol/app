@@ -16,7 +16,7 @@ export async function GET(request: Request) {
 
   const profile = await getENSProfile({ ensNameOrAddress: id })
 
-  return new Response(JSON.stringify(profile), {
+  return Response.json(profile, {
     status: 200,
   })
 }

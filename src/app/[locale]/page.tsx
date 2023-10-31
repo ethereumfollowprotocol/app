@@ -2,6 +2,8 @@ import Image from 'next/image'
 import { getI18n } from '#locales/server.ts'
 import { Flex, Text } from '@radix-ui/themes'
 
+export const runtime = 'edge' // 'nodejs' (default) | 'edge'
+
 export default async function Home() {
   const t = await getI18n()
   return (

@@ -1,5 +1,6 @@
 import '#app/globals.css'
 import '@radix-ui/themes/styles.css'
+import '@rainbow-me/rainbowkit/styles.css'
 
 import clsx from 'clsx'
 import * as React from 'react'

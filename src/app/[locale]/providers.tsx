@@ -3,11 +3,11 @@
 import * as React from 'react'
 import { WagmiConfig } from 'wagmi'
 import { Theme } from '@radix-ui/themes'
-import { wagmiConfig } from '#lib/wallet'
 import { Header } from '#components/header'
 import { Footer } from '#components/footer'
-import { ConnectKitProvider } from 'connectkit'
+import { chains, wagmiConfig } from '#lib/wallet.ts'
 import { I18nProviderClient } from '#locales/client'
+import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental'
@@ -20,35 +20,24 @@ export function Providers({
   children: React.ReactNode
 }) {
   const [queryClient] = React.useState(() => new QueryClient())
-
+  const [mounted, setMounted] = React.useState(false)
+  React.useEffect(() => setMounted(true), [])
   return (
     <I18nProviderClient
-      fallback={
-        /**
-         * TODO: add proper loading state
-         */
-        <p> Loading...</p>
-      }
       locale={locale}
+      // TODO: add proper loading state
+      fallback={<p> Loading...</p>}
     >
       <QueryClientProvider client={queryClient}>
         <ReactQueryStreamedHydration>
           <WagmiConfig config={wagmiConfig}>
-            <ConnectKitProvider
-              mode='light'
-              options={{
-                /**
-                 * TODO: detect locale and move this outside
-                 */
-                language: 'en-US',
-              }}
-            >
+            <RainbowKitProvider chains={chains}>
               <Theme>
                 <Header />
-                {children}
+                {mounted && children}
                 {/* <Footer /> */}
               </Theme>
-            </ConnectKitProvider>
+            </RainbowKitProvider>
           </WagmiConfig>
         </ReactQueryStreamedHydration>
         <ReactQueryDevtools initialIsOpen={false} />

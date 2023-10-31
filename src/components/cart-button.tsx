@@ -19,7 +19,7 @@ export function CartButton(props: { cartItemsCount: number }) {
       hidden
       disabled={props.cartItemsCount === 0 || notConnected}
       radius='full'
-      className={clsx(['relative flex bg-zinc-50', notConnected ? 'hidden' : 'flex'])}
+      className={clsx(['relative mx-4 flex bg-zinc-50', notConnected ? 'hidden' : 'flex'])}
       variant='solid'
       size={'3'}
       asChild

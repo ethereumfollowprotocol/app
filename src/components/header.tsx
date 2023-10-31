@@ -1,13 +1,14 @@
 'use client'
 
 import clsx from 'clsx'
+import Link from 'next/link'
 import Image from 'next/image'
 import { Text } from '@radix-ui/themes'
 import { Menu } from '#components/menu.tsx'
-import { Search } from '#components/search'
-import { ConnectKitButton } from 'connectkit'
 import { usePathname } from 'next/navigation'
 import { pageRoutes } from '#lib/constants.ts'
+import { Search } from '#components/search.tsx'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { CartButton } from '#components/cart-button.tsx'
 
 export function Header() {
@@ -17,7 +18,7 @@ export function Header() {
     <header className={clsx(['w-full px-2.5 font-sans sm:px-3 md:px-4 lg:px-5 xl:px-6'])}>
       <nav className='my-auto flex w-full flex-row justify-between'>
         <div className={clsx(['my-auto flex w-full items-center space-x-3 pr-3'])}>
-          <a
+          <Link
             href='/'
             className='mb-3.5'
           >
@@ -27,7 +28,7 @@ export function Header() {
               height={58}
               alt='Ethereum Follow Protocol'
             />
-          </a>
+          </Link>
           <Text
             className={clsx(['w-22 mx-auto h-20 pt-4 font-bold !leading-4 text-pink-400'])}
             trim={'both'}
@@ -57,7 +58,8 @@ export function Header() {
               className='inline font-bold'
               key={`route-${index}`}
             >
-              <a
+              <Link
+                passHref
                 href={route.href}
                 className={clsx([
                   'capitalize',
@@ -65,15 +67,19 @@ export function Header() {
                 ])}
               >
                 <span className={clsx(['hidden', 'sm:block'])}>{route.text}</span>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
-        <div className='mx-4 my-auto pb-0.5'>
+        <div className='my-auto ml-2 pb-0.5'>
           <CartButton cartItemsCount={24} />
         </div>
         <div className={clsx(['my-auto flex items-center pb-1'])}>
-          <ConnectKitButton />
+          <ConnectButton
+            showBalance={false}
+            chainStatus={'none'}
+            label='Connect'
+          />
         </div>
         <div className='my-auto pb-0.5 pl-2.5'>
           <Menu />
