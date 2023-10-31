@@ -13,11 +13,13 @@ module.exports = {
     'eslint:recommended',
     'plugin:unicorn/all',
     'plugin:yml/standard',
-    'plugin:@typescript-eslint/recommended',
     'eslint-config-turbo',
+    'plugin:@tanstack/eslint-plugin-query/recommended',
+    'next',
+    'plugin:@typescript-eslint/recommended',
     'prettier',
   ],
-  plugins: ['@typescript-eslint', 'prettier'],
+  plugins: ['@typescript-eslint', '@tanstack/query', 'prettier'],
   settings: {},
   overrides: [
     {

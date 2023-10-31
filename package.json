@@ -7,7 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint --fix . --ext='js,cjs,mjs,jsx,ts,tsx,json' --cache",
+    "lint": "eslint --fix . --ext='js,cjs,mjs,ts,tsx,json,yml,yaml' --cache",
     "format": "prettier --write . --ignore-path='.eslintignore' --ignore-unknown --cache",
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "turbo-codemod": "./node_modules/@turbo/codemod/dist/cli.js --force",
@@ -32,14 +32,13 @@
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^14.0.1",
-    "@next/eslint-plugin-next": "^14.0.1",
     "@tailwindcss/forms": "^0.5.6",
     "@tailwindcss/typography": "^0.5.10",
+    "@tanstack/eslint-plugin-query": "^5.0.5",
     "@tanstack/react-query-devtools": "5.4.3",
     "@total-typescript/ts-reset": "^0.5.1",
     "@turbo/codemod": "^1.10.16",
     "@types/eslint": "^8.44.6",
-    "@types/next-pwa": "^5.6.8",
     "@types/node": "^20.8.9",
     "@types/react": "^18.2.33",
     "@types/react-dom": "^18.2.14",
@@ -47,7 +46,7 @@
     "@typescript-eslint/parser": "^6.9.1",
     "autoprefixer": "^10.4.16",
     "eslint": "^8.52.0",
-    "eslint-config-next": "14.0.1",
+    "eslint-config-next": "^14.0.1",
     "eslint-config-prettier": "^9.0.0",
     "eslint-config-turbo": "^1.10.16",
     "eslint-plugin-prettier": "^5.0.1",
@@ -55,7 +54,6 @@
     "eslint-plugin-turbo": "^1.10.16",
     "eslint-plugin-unicorn": "^49.0.0",
     "eslint-plugin-yml": "^1.10.0",
-    "next-pwa": "^5.6.0",
     "postcss": "^8.4.31",
     "postcss-import": "^15.1.0",
     "prettier": "^3.0.3",
@@ -68,12 +66,6 @@
     "webpack": "^5.89.0"
   },
   "sideEffects": false,
-  "packageManager": "pnpm@8.7.6",
-  "engines": {
-    "node": ">=18",
-    "npm": "use-pnpm",
-    "yarn": "use-pnpm"
-  },
   "homepage": "github:ethereumfollowprotocol/app/README.md",
   "bugs": "github:ethereumfollowprotocol/app/issues"
 }

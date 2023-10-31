@@ -13,24 +13,14 @@ if (process.env['ANALYZE']) {
   plugins.push(withBundleAnalyzer({ enabled: true }))
 }
 
-if (process.env['DISABLE_PWA'] === 'false' && process.env['NODE_ENV'] === 'production') {
-  const { default: withPWA } = await import('next-pwa')
-  plugins.push(
-    // @ts-ignore
-    withPWA({ dest: 'public' }),
-  )
-}
-
 /** @type {NextConfig} */
 const nextConfig = {
   swcMinify: true,
   reactStrictMode: true,
+  experimental: {},
   transpilePackages: ['next-international', 'international-types'],
   // we run using `prebuild` script
   eslint: { ignoreDuringBuilds: true },
-  experimental: {
-    scrollRestoration: true,
-  },
   /** @param {WebpackConfiguration} config */
   webpack: config => {
     if (config.name === 'server' && config.optimization) {

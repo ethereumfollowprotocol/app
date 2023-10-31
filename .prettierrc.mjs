@@ -1,5 +1,5 @@
 /** @type {import('prettier').Config} */
-module.exports = {
+export default {
   semi: false,
   tabWidth: 2,
   printWidth: 100,
@@ -11,7 +11,7 @@ module.exports = {
   singleAttributePerLine: true,
   plugins: [
     //
-    require.resolve('prettier-plugin-tailwindcss'),
-    require.resolve('prettier-plugin-sh'),
+    'prettier-plugin-tailwindcss',
+    'prettier-plugin-sh',
   ],
 }

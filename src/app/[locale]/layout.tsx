@@ -18,15 +18,7 @@ const ibm_plex_mono = IBM_Plex_Mono({
   weight: ['400', '500', '700'],
   variable: '--font-ibm-plex-mono',
 })
-export default function RootLayout({
-  params: { locale },
-  children,
-}: {
-  params: {
-    locale: string
-  }
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang='en'
@@ -129,7 +121,7 @@ export default function RootLayout({
         />
       </head>
       <body className='w-full min-w-full items-center bg-gradient-to-b from-yellow-300 to-pink-400'>
-        <Providers locale={locale}>{children}</Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   )

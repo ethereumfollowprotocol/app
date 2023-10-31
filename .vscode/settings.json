@@ -1,13 +1,4 @@
 {
-  "search.exclude": {
-    "**/node_modules": true,
-    "pnpm-lock.yaml": true,
-    "**/.turbo": true,
-    ".eslintcache": true,
-    ".prettiercache": true,
-    "public/*.js": true,
-    "_": true
-  },
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.preferences.importModuleSpecifier": "non-relative",
@@ -33,8 +24,21 @@
     "source.fixAll.eslint": true
   },
   "eslint.enable": true,
-  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "eslint.format.enable": true,
+  "eslint.validate": [
+    "javascript",
+    "typescript",
+    "javascriptreact",
+    "typescriptreact",
+    "json",
+    "jsonc",
+    "json5"
+  ],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[json]": {
@@ -45,5 +49,14 @@
   },
   "[css]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "pnpm-lock.yaml": true,
+    "**/.turbo": true,
+    ".eslintcache": true,
+    ".prettiercache": true,
+    "public/*.js": true,
+    "_": true
   }
 }

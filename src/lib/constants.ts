@@ -1,5 +1,3 @@
-// import { env } from '#lib/environment'
-
 export const APP_NAME = 'EFP'
 export const APP_DESCRIPTION = 'Ethereum Follow Protocol'
 export const APP_URL =
@@ -74,14 +72,14 @@ export interface EVMTransport {
 
 export const mainnetTransports = [
   {
-    name: 'Alchemy Mainnet',
-    chain: 'mainnet',
-    url: `https://eth-mainnet.alchemyapi.io/v2/${process.env['NEXT_PUBLIC_ALCHEMY_ID']}`,
-  },
-  {
     name: 'LlamaNodes',
     chain: 'mainnet',
     url: `https://eth.llamarpc.com/rpc/${process.env['NEXT_PUBLIC_LLAMAFOLIO_ID']}`,
+  },
+  {
+    name: 'Alchemy Mainnet',
+    chain: 'mainnet',
+    url: `https://eth-mainnet.alchemyapi.io/v2/${process.env['NEXT_PUBLIC_ALCHEMY_ID']}`,
   },
 ] satisfies ReadonlyArray<EVMTransport>
 
