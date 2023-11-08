@@ -6,7 +6,15 @@
     "clientKind": "git"
   },
   "files": {
-    "include": ["./**/*.ts", "./**/*.js", "./**/*.tsx", "./**/*.d.ts"],
+    "include": [
+      "./**/*.ts",
+      "./**/*.js",
+      "./**/*.cjs",
+      "./**/*.tsx",
+      "./**/*.d.ts",
+      "./**/*.json",
+      "./**/*.jsonc"
+    ],
     "ignore": ["node_modules", "dist", "_"],
     "ignoreUnknown": true
   },
@@ -19,7 +27,15 @@
     "indentWidth": 2,
     "indentStyle": "space",
     "formatWithErrors": true,
-    "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.json"]
+    "include": [
+      "./**/*.ts",
+      "./**/*.js",
+      "./**/*.cjs",
+      "./**/*.tsx",
+      "./**/*.d.ts",
+      "./**/*.json",
+      "./**/*.jsonc"
+    ]
   },
   "linter": {
     "enabled": true,
