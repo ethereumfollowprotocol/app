@@ -35,7 +35,6 @@ const nextConfig = {
         new webpack.IgnorePlugin({
           resourceRegExp: /^(lokijs|pino-pretty|encoding)$/
         }),
-
         new webpack.NormalModuleReplacementPlugin(/node:/, resource => {
           resource.request = resource.request.replace(/^node:/, '')
         })
@@ -70,6 +69,4 @@ const nextConfig = {
 
 const nextConfigWithPlugins = () => plugins.reduce((_, plugin) => plugin(_), nextConfig)
 
-export default million.next(nextConfigWithPlugins, {
-  auto: true
-})
+export default million.next(nextConfigWithPlugins, { auto: true })
