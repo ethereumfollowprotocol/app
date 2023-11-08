@@ -1,12 +1,9 @@
 {
   "recommendations": [
+    "biomejs.biome",
     "mikestead.dotenv",
     "gruntfuggly.todo-tree",
-    "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
-    "astro-build.astro-vscode",
     "bradlc.vscode-tailwindcss",
-    "EditorConfig.EditorConfig",
-    "yzhang.markdown-all-in-one"
+    "EditorConfig.EditorConfig"
   ]
 }

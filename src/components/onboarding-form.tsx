@@ -15,32 +15,32 @@ const storeLocation = [
     name: 'optimism',
     label: 'Ethereum L2',
     gas: 'Low gas fees',
-    image: '/assets/chains/optimism.svg',
+    image: '/assets/chains/optimism.svg'
   },
   {
     name: 'arbitrum',
     label: 'Ethereum L2',
     gas: 'Low gas fees',
-    image: '/assets/chains/arbitrum.svg',
+    image: '/assets/chains/arbitrum.svg'
   },
   {
     name: 'base',
     label: 'Ethereum L2',
     gas: 'Low gas fees',
-    image: '/assets/chains/base.svg',
+    image: '/assets/chains/base.svg'
   },
   {
     name: 'ethereum',
     label: undefined,
     gas: 'High gas fees',
-    image: '/assets/chains/ethereum.svg',
+    image: '/assets/chains/ethereum.svg'
   },
   {
     name: 'custom',
     label: undefined,
     gas: undefined,
-    image: '/assets/gradient-circle.svg',
-  },
+    image: '/assets/gradient-circle.svg'
+  }
 ] as const
 
 export function OnboardingForm() {
@@ -50,18 +50,18 @@ export function OnboardingForm() {
     error: sendTransactionError,
     status: sendTransactionStatus,
     sendTransaction,
-    sendTransactionAsync,
+    sendTransactionAsync
   } = useSendTransaction({
     account: address,
     to: '0xf4212614C7Fe0B3feef75057E88b2E77a7E23e83',
-    value: parseEther('0.1'),
+    value: parseEther('0.1')
   })
 
   const t = useI18n()
   const scopedT = useScopedI18n('ONBOARDING')
   const [formStep, setFormStep] = React.useState(0)
   const [selectedStoreLocation, setSelectedStoreLocation] = React.useState<
-    (typeof storeLocation)[number] | undefined
+    typeof storeLocation[number] | undefined
   >()
 
   const nextStep = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -89,7 +89,7 @@ export function OnboardingForm() {
                 key={`store-location-${index}`}
                 className={clsx([
                   'rounded-2xl border-2 border-transparent px-2 py-1.5 hover:border-lime-200',
-                  selectedStoreLocation?.name === location.name ? 'bg-lime-100' : 'bg-transparent',
+                  selectedStoreLocation?.name === location.name ? 'bg-lime-100' : 'bg-transparent'
                 ])}
               >
                 <Button
@@ -99,15 +99,10 @@ export function OnboardingForm() {
                   }}
                   variant='ghost'
                   className={clsx([
-                    'flex items-center space-x-8 rounded-xl px-4 text-left text-black hover:bg-transparent',
+                    'flex items-center space-x-8 rounded-xl px-4 text-left text-black hover:bg-transparent'
                   ])}
                 >
-                  <Image
-                    width={62}
-                    height={62}
-                    alt={location.name}
-                    src={location.image}
-                  />
+                  <Image width={62} height={62} alt={location.name} src={location.image} />
                   <div className='ml-3'>
                     <span className='text-xs'>{location.label}</span>
                     <p className='text-lg font-bold capitalize'>{location.name}</p>
@@ -116,7 +111,7 @@ export function OnboardingForm() {
                         'text-xs',
                         location.gas === scopedT('Low gas fees')
                           ? 'text-lime-500'
-                          : 'text-salmon-500',
+                          : 'text-salmon-500'
                       ])}
                     >
                       {location.gas}
@@ -144,9 +139,7 @@ export function OnboardingForm() {
               size='3'
               className={clsx([
                 'w-24 font-bold text-black',
-                selectedStoreLocation
-                  ? 'bg-gradient-to-b from-amber-300 to-red-300'
-                  : 'bg-gray-300',
+                selectedStoreLocation ? 'bg-gradient-to-b from-amber-300 to-red-300' : 'bg-gray-300'
               ])}
               onClick={nextStep}
             >
@@ -162,19 +155,11 @@ export function OnboardingForm() {
 
           <ul className='mx-auto space-y-5 py-4 text-left'>
             <li className='flex'>
-              <CheckIcon
-                color='lime'
-                width={26}
-                height={26}
-              />
+              <CheckIcon color='lime' width={26} height={26} />
               <span>{scopedT('Create new EFP List')}</span>
             </li>
             <li className='flex'>
-              <CheckIcon
-                color='lime'
-                width={26}
-                height={26}
-              />
+              <CheckIcon color='lime' width={26} height={26} />
               <span>24 edits to List Records</span>
             </li>
           </ul>
@@ -242,7 +227,7 @@ function FormStep({
   step,
   currentStep,
   previousStep,
-  nextStep,
+  nextStep
 }: {
   children: React.ReactNode
   step: number

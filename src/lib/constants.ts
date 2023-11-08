@@ -13,30 +13,30 @@ interface ProjectLink {
 export const projectLinks = [
   {
     text: 'Docs',
-    href: 'https://docs.ethfollow.xyz',
+    href: 'https://docs.ethfollow.xyz'
   },
   /**
    * TODO: update with proper link
    */
   {
     text: 'Team',
-    href: 'https://github.com/orgs/ethereumfollowprotocol/people',
+    href: 'https://github.com/orgs/ethereumfollowprotocol/people'
   },
   {
     text: 'GitHub',
-    href: 'https://github.com/ethereumfollowprotocol',
+    href: 'https://github.com/ethereumfollowprotocol'
   },
   {
     text: 'X',
-    href: 'https://x.com/ethfollowpr',
+    href: 'https://x.com/ethfollowpr'
   },
   /**
    * TODO: add Discord link once we have one
    */
   {
     text: 'Discord',
-    href: 'https://x.com/ethfollowpr',
-  },
+    href: 'https://x.com/ethfollowpr'
+  }
 ] satisfies ReadonlyArray<ProjectLink>
 
 interface PageRoute {
@@ -48,21 +48,21 @@ interface PageRoute {
 export const pageRoutes = [
   {
     href: '/',
-    text: 'home',
+    text: 'home'
   },
   {
     href: '/profile',
-    text: 'profile',
+    text: 'profile'
   },
   {
     href: '/leaderboard',
-    text: 'leaderboard',
-  },
+    text: 'leaderboard'
+  }
 ] satisfies ReadonlyArray<PageRoute>
 
 export const chains = ['mainnet', 'optimism', 'arbitrum', 'polygon', 'zkSync'] as const
 
-export type Chain = (typeof chains)[number]
+export type Chain = typeof chains[number]
 
 export interface EVMTransport {
   chain: Chain
@@ -74,13 +74,13 @@ export const mainnetTransports = [
   {
     name: 'LlamaNodes',
     chain: 'mainnet',
-    url: `https://eth.llamarpc.com/rpc/${process.env['NEXT_PUBLIC_LLAMAFOLIO_ID']}`,
+    url: `https://eth.llamarpc.com/rpc/${process.env['NEXT_PUBLIC_LLAMAFOLIO_ID']}`
   },
   {
     name: 'Alchemy Mainnet',
     chain: 'mainnet',
-    url: `https://eth-mainnet.alchemyapi.io/v2/${process.env['NEXT_PUBLIC_ALCHEMY_ID']}`,
-  },
+    url: `https://eth-mainnet.alchemyapi.io/v2/${process.env['NEXT_PUBLIC_ALCHEMY_ID']}`
+  }
 ] satisfies ReadonlyArray<EVMTransport>
 
 export const evmTransports = [...mainnetTransports] satisfies ReadonlyArray<EVMTransport>

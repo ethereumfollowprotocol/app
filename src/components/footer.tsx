@@ -5,30 +5,30 @@ import { Text, Box, Flex, Section } from '@radix-ui/themes'
 const footerLinks = [
   {
     text: 'Docs',
-    href: 'https://docs.ethfollow.xyz',
+    href: 'https://docs.ethfollow.xyz'
   },
   /**
    * TODO: update with proper link
    */
   {
     text: 'Team',
-    href: 'https://github.com/orgs/ethereumfollowprotocol/people',
+    href: 'https://github.com/orgs/ethereumfollowprotocol/people'
   },
   {
     text: 'GitHub',
-    href: 'https://github.com/ethereumfollowprotocol',
+    href: 'https://github.com/ethereumfollowprotocol'
   },
   {
     text: 'X',
-    href: 'https://x.com/ethfollowpr',
+    href: 'https://x.com/ethfollowpr'
   },
   /**
    * TODO: add Discord link once we have one
    */
   {
     text: 'Discord',
-    href: 'https://x.com/ethfollowpr',
-  },
+    href: 'https://x.com/ethfollowpr'
+  }
 ]
 
 export function Footer() {
@@ -51,27 +51,13 @@ export function Footer() {
               {t('APP_NAME.LONG')}
             </Text>
           </Box>
-          <Image
-            src='/assets/logo.png'
-            width={160}
-            height={160}
-            alt='Ethereum Follow Protocol'
-          />
+          <Image src='/assets/logo.png' width={160} height={160} alt='Ethereum Follow Protocol' />
         </Section>
-        <Section
-          className='my-auto flex align-middle'
-          p='0'
-        >
+        <Section className='my-auto flex align-middle' p='0'>
           <ul className='my-auto flex flex-col space-y-1 text-center'>
             {footerLinks.map((route, index) => (
-              <li
-                className='inline font-extrabold'
-                key={`route-${index}`}
-              >
-                <a
-                  href={route.href}
-                  className={`text-pink-400`}
-                >
+              <li className='inline font-extrabold' key={`route-${index}`}>
+                <a href={route.href} className={`text-pink-400`}>
                   <span>{route.text}</span>
                 </a>
               </li>

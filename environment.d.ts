@@ -14,8 +14,9 @@ interface EnvironmentVariables {
   readonly VERCEL_URL?: string
   readonly NEXT_PUBLIC_VERCEL_URL?: string
   readonly DISABLE_PWA: 'true' | 'false'
+  readonly ANALYZE: 'true' | 'false'
 }
 
-declare module NodeJS {
-  interface ProcessEnv extends EnvironmentVariables {}
+declare namespace NodeJS {
+  type ProcessEnv = EnvironmentVariables
 }

@@ -14,14 +14,14 @@ import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experime
 
 export function Providers({
   locale = 'en',
-  children,
+  children
 }: {
   locale?: string
   children: React.ReactNode
 }) {
   const [queryClient] = React.useState(() => new QueryClient())
   const [mounted, setMounted] = React.useState(false)
-  React.useEffect(() => setMounted(true), [])
+  React.useEffect(() => setMounted(true), [setMounted])
   return (
     <I18nProviderClient
       locale={locale}

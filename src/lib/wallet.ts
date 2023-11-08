@@ -14,23 +14,23 @@ export const { chains, publicClient } = configureChains(
   [
     jsonRpcProvider({
       rpc: _chain => ({
-        http: `https://eth.llamarpc.com/rpc/${process.env['NEXT_PUBLIC_LLAMAFOLIO_ID']}`,
-      }),
+        http: `https://eth.llamarpc.com/rpc/${process.env['NEXT_PUBLIC_LLAMAFOLIO_ID']}`
+      })
     }),
     alchemyProvider({ apiKey: process.env.ALCHEMY_ID }),
     infuraProvider({ apiKey: process.env.INFURA_ID }),
-    publicProvider(),
-  ],
+    publicProvider()
+  ]
 )
 
 const { connectors } = getDefaultWallets({
   appName: en.APP_NAME.SHORT,
   projectId,
-  chains,
+  chains
 })
 
 export const wagmiConfig = createConfig({
   autoConnect: true,
   connectors,
-  publicClient,
+  publicClient
 })

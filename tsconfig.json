@@ -33,6 +33,8 @@
     "types": ["node"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "files": [".eslintrc.cjs", ".prettierrc.mjs", "environment.d.ts", "next.config.mjs"],
+  "files": [
+    "biome.json",
+    "environment.d.ts", "next.config.mjs"],
   "exclude": ["node_modules", "_"]
 }

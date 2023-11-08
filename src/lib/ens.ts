@@ -28,18 +28,18 @@ export async function getENSProfile({ ensNameOrAddress }: { ensNameOrAddress?: s
     providedId === 'address'
       ? {
           address: getAddress(ensNameOrAddress),
-          name: await client.getEnsName({ address: getAddress(ensNameOrAddress) }),
+          name: await client.getEnsName({ address: getAddress(ensNameOrAddress) })
         }
       : {
           name: normalize(ensNameOrAddress),
-          address: await client.getEnsAddress({ name: normalize(ensNameOrAddress) }),
+          address: await client.getEnsAddress({ name: normalize(ensNameOrAddress) })
         }
 
   if (!name) return { address }
 
   const [resolverAddress, avatar] = await Promise.all([
     client.getEnsResolver({ name }),
-    client.getEnsAvatar({ name }),
+    client.getEnsAvatar({ name })
   ])
 
   return { address, name, avatar, resolverAddress }

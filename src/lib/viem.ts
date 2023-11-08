@@ -9,8 +9,8 @@ export const mainnetClient = () =>
       mainnetTransports.map(transport =>
         http(transport.url, {
           batch: true,
-          name: transport.name,
-        }),
-      ),
-    ),
+          name: transport.name
+        })
+      )
+    )
   })

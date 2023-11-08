@@ -33,12 +33,12 @@ const nextConfig = {
     if (config.plugins) {
       config.plugins.push(
         new webpack.IgnorePlugin({
-          resourceRegExp: /^(lokijs|pino-pretty|encoding)$/,
+          resourceRegExp: /^(lokijs|pino-pretty|encoding)$/
         }),
 
         new webpack.NormalModuleReplacementPlugin(/node:/, resource => {
           resource.request = resource.request.replace(/^node:/, '')
-        }),
+        })
       )
     }
     return config
@@ -46,30 +46,30 @@ const nextConfig = {
   cleanDistDir: true,
   poweredByHeader: false,
   env: {
-    NEXT_TELEMETRY_DISABLED: '1',
+    NEXT_TELEMETRY_DISABLED: '1'
   },
   redirects: async () => [
     {
       source: '/(twitter|x)',
       destination: 'https://x.com/ethfollowpr',
-      permanent: true,
+      permanent: true
     },
     {
       source: '/github',
       destination: 'https://github.com/ethereumfollowprotocol',
-      permanent: true,
+      permanent: true
     },
     {
       source: '/docs',
       destination: 'https://docs.ethfollow.xyz',
-      permanent: true,
-    },
-  ],
+      permanent: true
+    }
+  ]
   // TODO: add headers for security
 }
 
 const nextConfigWithPlugins = () => plugins.reduce((_, plugin) => plugin(_), nextConfig)
 
 export default million.next(nextConfigWithPlugins, {
-  auto: true,
+  auto: true
 })

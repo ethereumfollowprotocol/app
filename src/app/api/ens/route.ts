@@ -10,13 +10,13 @@ export async function GET(request: Request) {
 
   if (!id) {
     return new Response(JSON.stringify({ error: 'id is required' }), {
-      status: 400,
+      status: 400
     })
   }
 
   const profile = await getENSProfile({ ensNameOrAddress: id })
 
   return Response.json(profile, {
-    status: 200,
+    status: 200
   })
 }

@@ -1,7 +1,7 @@
 export const en = {
   APP_NAME: {
     SHORT: 'EFP',
-    LONG: 'Ethereum Follow Protocol',
+    LONG: 'Ethereum Follow Protocol'
   },
   ACTION: {
     FOLLOW: 'Follow',
@@ -16,7 +16,7 @@ export const en = {
     UNBLOCK: 'Unblock',
     MUTE: 'Mute',
     MUTED: 'Muted',
-    UNMUTE: 'Unmute',
+    UNMUTE: 'Unmute'
   },
   TRANSACTION: 'Transaction',
   'Search ENS or 0x address…': 'Search ENS or 0x address…',
@@ -30,7 +30,7 @@ export const en = {
       NEXT: 'Next',
       CANCEL: 'Cancel',
       BACK: 'Back',
-      FINISH: 'Finish',
+      FINISH: 'Finish'
     },
     'Transaction approved': 'Transaction approved',
     'Transaction needs approval': 'Transaction needs approval',
@@ -44,14 +44,14 @@ export const en = {
     'Select one': 'Select one',
     'Onchain Update': 'Onchain Update',
     'Required Transactions': 'Required Transactions',
-    'Create new EFP List': 'Create new EFP List',
+    'Create new EFP List': 'Create new EFP List'
   },
   "It's about who you know.": "It's about who you know.",
   'The social graph': 'The social graph',
   'for Ethereum.': 'for Ethereum.',
   'A follower list you own': 'A follower list you own',
   'Follow your friends.': 'Follow your friends.',
-  'Ghost your enemies.': 'Ghost your enemies.',
+  'Ghost your enemies.': 'Ghost your enemies.'
 } as const
 
 export default en

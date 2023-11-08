@@ -20,52 +20,52 @@ export type FollowButtonState =
 const theme = {
   Follow: {
     bg: 'bg-kournikova-300',
-    text: 'text-zinc-800',
+    text: 'text-zinc-800'
   },
   Following: {
     bg: 'bg-lime-400',
-    text: 'text-zinc-800',
+    text: 'text-zinc-800'
   },
   Unfollow: {
     bg: 'bg-salmon-500',
-    text: 'text-gray-900',
+    text: 'text-gray-900'
   },
   Subscribe: {
     bg: 'bg-kournikova-300',
-    text: 'text-zinc-800',
+    text: 'text-zinc-800'
   },
   Subscribed: {
     bg: 'bg-lime-400',
-    text: 'text-zinc-800',
+    text: 'text-zinc-800'
   },
   Unsubscribe: {
     bg: 'bg-salmon-500',
-    text: 'text-gray-900',
+    text: 'text-gray-900'
   },
   Block: {
     bg: 'bg-kournikova-300',
-    text: 'text-zinc-800',
+    text: 'text-zinc-800'
   },
   Blocked: {
     bg: 'bg-gray-200',
-    text: 'text-salmon-500',
+    text: 'text-salmon-500'
   },
   Unblock: {
     bg: 'bg-salmon-500',
-    text: 'text-zinc-800',
+    text: 'text-zinc-800'
   },
   Mute: {
     bg: 'bg-kournikova-300',
-    text: 'text-salmon-500',
+    text: 'text-salmon-500'
   },
   Muted: {
     bg: 'bg-gray-200',
-    text: 'text-salmon-500',
+    text: 'text-salmon-500'
   },
   Unmute: {
     bg: 'bg-salmon-500',
-    text: 'text-red-700',
-  },
+    text: 'text-red-700'
+  }
 } satisfies Record<FollowButtonState, { bg: string; text: string }>
 
 export function FollowButton({
@@ -84,7 +84,7 @@ export function FollowButton({
       className={clsx([
         '!rounded-xl px-4 py-4 text-base font-bold',
         pending ? 'bg-gray-200' : theme[text as FollowButtonState].bg,
-        theme[text as FollowButtonState].text,
+        theme[text as FollowButtonState].text
       ])}
       {...properties}
     >

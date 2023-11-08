@@ -6,7 +6,7 @@ export async function Skeleton(props: { className?: string; children?: React.Rea
     <Container
       className={clsx([
         props.className,
-        'container mx-auto mt-8 w-full max-w-sm animate-pulse rounded-lg border bg-gray-50/50 p-4 shadow',
+        'container mx-auto mt-8 w-full max-w-sm animate-pulse rounded-lg border bg-gray-50/50 p-4 shadow'
       ])}
     >
       {props.children}

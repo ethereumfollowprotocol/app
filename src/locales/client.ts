@@ -7,12 +7,12 @@ export const {
   useScopedI18n,
   useChangeLocale,
   useCurrentLocale,
-  I18nProviderClient,
+  I18nProviderClient
 } = createI18nClient(
   {
-    en: () => import('./en'),
+    en: () => import('./en')
   },
   {
-    fallbackLocale: en,
-  },
+    fallbackLocale: en
+  }
 )

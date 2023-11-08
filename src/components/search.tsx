@@ -18,7 +18,7 @@ export function SearchBar({
     <TextField.Root
       className={_className}
       size={{
-        initial: '3',
+        initial: '3'
       }}
     >
       <TextField.Input
@@ -27,7 +27,7 @@ export function SearchBar({
         variant='soft'
         // TODO: remove cursed ring
         className={clsx([
-          'rounded-xl shadow-none outline-none focus:outline-none focus:ring-0',
+          'rounded-xl shadow-none outline-none focus:outline-none focus:ring-0'
           /**
            * TODO: fix so that invalid style only shows up when submitting
            */
@@ -57,11 +57,7 @@ export function Search() {
   }
 
   return (
-    <Flex
-      direction='column'
-      gap='3'
-      className='w-full max-w-[420px]'
-    >
+    <Flex direction='column' gap='3' className='w-full max-w-[420px]'>
       <SearchBar
         className='lg:text-md hidden w-full max-w-[420px] text-sm lg:flex'
         name='search'
@@ -79,24 +75,12 @@ export function Search() {
       />
       <Dialog.Root>
         <Dialog.Trigger className='mb-3 w-10 lg:hidden'>
-          <IconButton
-            variant='soft'
-            color='gray'
-            size={'3'}
-            radius='large'
-            className='lg:hidden'
-          >
-            <MagnifyingGlassIcon
-              height={24}
-              width={24}
-            />
+          <IconButton variant='soft' color='gray' size={'3'} radius='large' className='lg:hidden'>
+            <MagnifyingGlassIcon height={24} width={24} />
           </IconButton>
         </Dialog.Trigger>
 
-        <Dialog.Content
-          size={'3'}
-          className='mb-42 mx-4 w-full max-w-[364px] p-0'
-        >
+        <Dialog.Content size={'3'} className='mb-42 mx-4 w-full max-w-[364px] p-0'>
           <SearchBar
             name='search'
             id='search'
