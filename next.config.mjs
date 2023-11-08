@@ -4,6 +4,7 @@
  * @typedef {import('webpack').Configuration} WebpackConfiguration
  **/
 import webpack from 'webpack'
+import million from 'million/compiler'
 
 /** @type {NextConfigPlugins} */
 const plugins = []
@@ -69,4 +70,6 @@ const nextConfig = {
 
 const nextConfigWithPlugins = () => plugins.reduce((_, plugin) => plugin(_), nextConfig)
 
-export default nextConfigWithPlugins
+export default million.next(nextConfigWithPlugins, {
+  auto: true,
+})
