@@ -70,3 +70,4 @@ public/*.js
 public/*.webmanifest
 .open-next
 .sst
+.sentryclirc
