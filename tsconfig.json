@@ -16,6 +16,7 @@
     "isolatedModules": true,
     "strictNullChecks": true,
     "allowJs": true,
+    "useUnknownInCatchVariables": true,
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -32,9 +33,7 @@
     "checkJs": true,
     "types": ["node"]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "files": [
-    "biome.json",
-    "environment.d.ts", "next.config.mjs"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.jsx", ".next/types/**/*.ts"],
+  "files": ["biome.json", "environment.d.ts", "next.config.mjs"],
   "exclude": ["node_modules", "_"]
 }

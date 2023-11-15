@@ -20,6 +20,11 @@ if (process.env['ANALYZE']) {
 
 /** @type {NextConfig} */
 const nextConfig = {
+  experimental: {
+    // https://nextjs.org/docs/app/api-reference/next-config-js/serverComponentsExternalPackages
+    serverComponentsExternalPackages: ['@sentry/nextjs'],
+    instrumentationHook: true
+  },
   swcMinify: true,
   cleanDistDir: true,
   reactStrictMode: true,
@@ -42,6 +47,11 @@ const nextConfig = {
     {
       source: '/docs',
       destination: 'https://docs.ethfollow.xyz',
+      permanent: true
+    },
+    {
+      source: '/discord',
+      destination: 'https://discord.ethfollow.xyz',
       permanent: true
     }
   ],
@@ -74,9 +84,12 @@ const nextConfig = {
    * @type {SentryUserOptions}
    */
   sentry: {
-    // default is false
+    // Hides source maps from generated client bundles. Default is false
     hideSourceMaps: true,
-    tunnelRoute: '/monitoring-tunnel',
+    // Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
+    tunnelRoute: '/monitoring',
+    // Automatically tree-shake Sentry logger statements to reduce bundle size
+    disableLogger: true,
     disableServerWebpackPlugin: false,
     disableClientWebpackPlugin: false,
     autoInstrumentMiddleware: true,
@@ -85,19 +98,12 @@ const nextConfig = {
   // TODO: add headers for security
 }
 
+// https://github.com/getsentry/sentry-webpack-plugin#options
 const nextConfigWithSentry = withSentryConfig(nextConfig, {
   authToken: process.env['SENTRY_AUTH_TOKEN'],
   org: 'efp',
   project: 'web',
   silent: process.env['NODE_ENV'] !== 'development'
-},{
-    // default is false
-    hideSourceMaps: true,
-    tunnelRoute: '/monitoring-tunnel',
-    disableServerWebpackPlugin: false,
-    disableClientWebpackPlugin: false,
-    autoInstrumentMiddleware: true,
-    autoInstrumentServerFunctions: true
 })
 
 const nextConfigWithPlugins = () => plugins.reduce((_, plugin) => plugin(_), nextConfigWithSentry)

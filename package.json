@@ -7,7 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "format": "biome format . --write",
+   "format": "biome format . --write",
     "lint": "biome check --apply .",
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "clean": "/bin/bash ./scripts/clean.sh"
@@ -55,7 +55,6 @@
   },
   "packageManager": "pnpm@8.10.5",
   "engines": {
-    "node": ">=20",
     "npm": "use-pnpm",
     "yarn": "use-pnpm"
   },

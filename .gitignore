@@ -71,3 +71,6 @@ public/*.webmanifest
 .open-next
 .sst
 .sentryclirc
+
+# Sentry Config File
+.sentryclirc

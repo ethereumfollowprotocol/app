@@ -20,26 +20,21 @@ env:
 jobs:
   checks:
     if: ${{ !contains(github.event.head_commit.message, '[skip-checks]') }}
-    timeout-minutes: 5
-    strategy:
-      matrix:
-        node-version: ['lts/*']
-        pnpm-version: ['latest']
-        os: ['ubuntu-latest']
-    runs-on: ${{ matrix.os }}
+    timeout-minutes: 3
+    runs-on: ['ubuntu-latest']
     steps:
       - name: 🔑 Checkout
         uses: actions/checkout@v3
 
-      - name: 🥐 Setup pnpm [${{ matrix.pnpm-version }}]
+      - name: 🥐 Setup pnpm
         uses: pnpm/action-setup@v2.2.4
         with:
-          version: ${{ matrix.pnpm-version }}
+          version: 'latest'
 
-      - name: ⎔ Setup Node.js [${{ matrix.node-version }}]
+      - name: ⎔ Setup Node.js LTS
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 'lts/*'
           cache: 'pnpm'
 
       - name: '📦 Install Dependencies'
