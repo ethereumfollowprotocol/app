@@ -1,4 +1,3 @@
-import en from '#locales/en.ts'
 import { getDefaultWallets } from '@rainbow-me/rainbowkit'
 import { configureChains, createConfig } from 'wagmi'
 import { mainnet, optimism, arbitrum } from 'wagmi/chains'
@@ -24,7 +23,7 @@ export const { chains, publicClient } = configureChains(
 )
 
 const { connectors } = getDefaultWallets({
-  appName: en.APP_NAME.SHORT,
+  appName: 'Ethereum Follow Protocol',
   projectId,
   chains
 })

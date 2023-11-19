@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import { useI18n } from '#locales/client.ts'
 import { Text, Box, Flex, Section } from '@radix-ui/themes'
 
 const footerLinks = [
@@ -32,8 +31,6 @@ const footerLinks = [
 ]
 
 export function Footer() {
-  const t = useI18n()
-
   // if (true) return null
   return (
     <footer className='fixed bottom-0 mx-auto mt-4 w-full font-sans'>
@@ -48,7 +45,7 @@ export function Footer() {
         <Section className='flex space-x-5 align-middle'>
           <Box className='my-auto'>
             <Text className='table-caption max-w-md text-4xl font-extrabold text-pink-400'>
-              {t('APP_NAME.LONG')}
+              {'APP_NAME.LONG'}
             </Text>
           </Box>
           <Image src='/assets/logo.png' width={160} height={160} alt='Ethereum Follow Protocol' />

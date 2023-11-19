@@ -29,7 +29,6 @@ const nextConfig = {
   cleanDistDir: true,
   reactStrictMode: true,
   poweredByHeader: false,
-  transpilePackages: ['next-international', 'international-types'],
   env: {
     NEXT_TELEMETRY_DISABLED: '1'
   },
@@ -45,12 +44,12 @@ const nextConfig = {
       permanent: true
     },
     {
-      source: '/docs',
+      source: '/(docs|documentation)',
       destination: 'https://docs.ethfollow.xyz',
       permanent: true
     },
     {
-      source: '/discord',
+      source: '/(chat|discord)',
       destination: 'https://discord.ethfollow.xyz',
       permanent: true
     }
@@ -65,12 +64,12 @@ const nextConfig = {
       config.resolve.fallback = { fs: false, net: false, tls: false }
     }
     if (Array.isArray(config.externals)) {
-      config.externals.push('lokijs', 'pino-pretty', 'encoding')
+      config.externals.push('lokijs', 'pino', 'pino-pretty', 'encoding')
     }
     if (config.plugins) {
       config.plugins.push(
         new webpack.IgnorePlugin({
-          resourceRegExp: /^(lokijs|pino-pretty|encoding)$/
+          resourceRegExp: /^(lokijs|pino|pino-pretty|encoding)$/
         }),
         new webpack.NormalModuleReplacementPlugin(/node:/, resource => {
           resource.request = resource.request.replace(/^node:/, '')

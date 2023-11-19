@@ -4,7 +4,6 @@ import * as React from 'react'
 import Image from 'next/image'
 import { Heading, Text, Button, Separator, Callout } from '@radix-ui/themes'
 import { CheckIcon, InfoCircledIcon } from '@radix-ui/react-icons'
-import { useI18n, useScopedI18n } from '#locales/client'
 import { useSearchParams } from 'next/navigation'
 import clsx from 'clsx'
 import { useAccount, useSendTransaction } from 'wagmi'
@@ -57,8 +56,6 @@ export function OnboardingForm() {
     value: parseEther('0.1')
   })
 
-  const t = useI18n()
-  const scopedT = useScopedI18n('ONBOARDING')
   const [formStep, setFormStep] = React.useState(0)
   const [selectedStoreLocation, setSelectedStoreLocation] = React.useState<
     typeof storeLocation[number] | undefined
@@ -78,11 +75,11 @@ export function OnboardingForm() {
       {formStep === 0 ? (
         <>
           <Heading className='text-xl font-bold sm:px-2'>
-            {scopedT('Where would you like to store your EFP List?')}
+            Where would you like to store your EFP List?
           </Heading>
-          <Text className='py-2 text-gray-600'>{scopedT('You can always change this later')}</Text>
+          <Text className='py-2 text-gray-600'>{'You can always change this later'}</Text>
 
-          <Text className='pt-3 font-bold'>{scopedT('Select one')}</Text>
+          <Text className='pt-3 font-bold'>{'Select one'}</Text>
           <ul className='mx-auto space-y-2 py-4 text-left'>
             {storeLocation.map((location, index) => (
               <li
@@ -109,9 +106,7 @@ export function OnboardingForm() {
                     <span
                       className={clsx([
                         'text-xs',
-                        location.gas === scopedT('Low gas fees')
-                          ? 'text-lime-500'
-                          : 'text-salmon-500'
+                        location.gas === 'Low gas fees' ? 'text-lime-500' : 'text-salmon-500'
                       ])}
                     >
                       {location.gas}
@@ -130,7 +125,7 @@ export function OnboardingForm() {
               className='w-24 bg-gray-300 font-bold text-black'
               onClick={previousStep}
             >
-              {scopedT('BUTTON.CANCEL')}
+              {'BUTTON.CANCEL'}
             </Button>
             <Button
               variant={selectedStoreLocation ? 'classic' : 'soft'}
@@ -143,20 +138,20 @@ export function OnboardingForm() {
               ])}
               onClick={nextStep}
             >
-              {scopedT('BUTTON.NEXT')}
+              {'BUTTON.NEXT'}
             </Button>
           </section>
         </>
       ) : formStep === 1 ? (
         <>
-          <Heading className='text-2xl font-bold sm:px-12'>{scopedT('Onchain Update')}</Heading>
-          <Text className='py-2 text-gray-600'>{scopedT('SUMMARY')}</Text>
-          <Text className='pt-3 font-bold'>{scopedT('ACTIONS')}</Text>
+          <Heading className='text-2xl font-bold sm:px-12'>{'Onchain Update'}</Heading>
+          <Text className='py-2 text-gray-600'>{'SUMMARY'}</Text>
+          <Text className='pt-3 font-bold'>{'ACTIONS'}</Text>
 
           <ul className='mx-auto space-y-5 py-4 text-left'>
             <li className='flex'>
               <CheckIcon color='lime' width={26} height={26} />
-              <span>{scopedT('Create new EFP List')}</span>
+              <span>{'Create new EFP List'}</span>
             </li>
             <li className='flex'>
               <CheckIcon color='lime' width={26} height={26} />
@@ -165,7 +160,7 @@ export function OnboardingForm() {
           </ul>
           <Separator className='my-4 w-full' />
           <section className='mx-auto'>
-            <Text className='font-bold'>{scopedT('Required Transactions')}</Text>
+            <Text className='font-bold'>{'Required Transactions'}</Text>
             <ul className='mx-auto flex flex-col justify-center space-y-5 py-4'>
               <li className='flex'>
                 1 tx

@@ -6,7 +6,6 @@ import { Theme } from '@radix-ui/themes'
 import { Header } from '#components/header'
 import { Footer } from '#components/footer'
 import { chains, wagmiConfig } from '#lib/wallet.ts'
-import { I18nProviderClient } from '#locales/client'
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -23,25 +22,19 @@ export function Providers({
   const [mounted, setMounted] = React.useState(false)
   React.useEffect(() => setMounted(true), [setMounted])
   return (
-    <I18nProviderClient
-      locale={locale}
-      // TODO: add proper loading state
-      fallback={<p> Loading...</p>}
-    >
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryStreamedHydration>
-          <WagmiConfig config={wagmiConfig}>
-            <RainbowKitProvider chains={chains}>
-              <Theme>
-                <Header />
-                {mounted && children}
-                {/* <Footer /> */}
-              </Theme>
-            </RainbowKitProvider>
-          </WagmiConfig>
-        </ReactQueryStreamedHydration>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </I18nProviderClient>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryStreamedHydration>
+        <WagmiConfig config={wagmiConfig}>
+          <RainbowKitProvider chains={chains}>
+            <Theme>
+              <Header />
+              {mounted && children}
+              {/* <Footer /> */}
+            </Theme>
+          </RainbowKitProvider>
+        </WagmiConfig>
+      </ReactQueryStreamedHydration>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   )
 }

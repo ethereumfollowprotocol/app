@@ -1,7 +1,6 @@
 'use client'
 
 import * as React from 'react'
-import { useI18n } from '#locales/client'
 import { useRouter } from 'next/navigation'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import { TextField, Flex, IconButton, Dialog } from '@radix-ui/themes'
@@ -41,7 +40,6 @@ export function SearchBar({
 }
 
 export function Search() {
-  const t = useI18n()
   const router = useRouter()
   const [search, setSearch] = React.useState<string | undefined>()
 
@@ -66,7 +64,7 @@ export function Search() {
         inputMode='search'
         onChange={onInputChanged}
         onKeyDown={onEnterPressed}
-        placeholder={t('Search ENS or 0x address…')}
+        placeholder={'Search ENS or 0x address…'}
         minLength={7}
         maxLength={64}
         width={'100%'}
@@ -89,7 +87,7 @@ export function Search() {
             onChange={onInputChanged}
             onKeyDown={onEnterPressed}
             className='w-full max-w-[364px]'
-            placeholder={t('Search ENS or 0x address…')}
+            placeholder={'Search ENS or 0x address…'}
             minLength={7}
             maxLength={64}
             width={'100%'}

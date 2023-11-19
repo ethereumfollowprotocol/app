@@ -11,7 +11,6 @@ import {
   TwitterLogoIcon
 } from '@radix-ui/react-icons'
 import { DropdownMenu, IconButton, Button, Flex } from '@radix-ui/themes'
-import { useCurrentLocale, useI18n } from '#locales/client.ts'
 
 export const emojis = {
   home: '🏠',
@@ -43,8 +42,6 @@ export const projectLinkItems = [
 ]
 
 export function Menu() {
-  const t = useI18n()
-  const currentLocale = useCurrentLocale()
   const pathname = usePathname()
 
   return (
@@ -53,7 +50,7 @@ export function Menu() {
         <IconButton
           variant='soft'
           color='gray'
-          className='bg-gray-100 opacity-60 hover:cursor-pointer hover:opacity-100'
+          className='bg-white hover:cursor-pointer hover:opacity-100'
           radius='large'
           size={'3'}
         >
@@ -110,29 +107,16 @@ export function Menu() {
         </DropdownMenu.Sub>
 
         <DropdownMenu.Separator />
-        <DropdownMenu.Sub>
-          <DropdownMenu.SubTrigger>English</DropdownMenu.SubTrigger>
-          <DropdownMenu.SubContent>
-            <DropdownMenu.Item
-              className={
-                currentLocale === 'en' ? 'font-bold underline decoration-pink-300 decoration-4' : ''
-              }
-            >
-              English
-            </DropdownMenu.Item>
-            <DropdownMenu.Separator />
-            <DropdownMenu.Item asChild>
-              <a
-                href='https://github.com/ethereumfollowprotocol/app'
-                target='_blank'
-                rel='noopener noreferrer'
-              >
-                {t('CONTRIBUTE')}
-                <GitHubLogoIcon className='ml-2.5' />
-              </a>
-            </DropdownMenu.Item>
-          </DropdownMenu.SubContent>
-        </DropdownMenu.Sub>
+        <DropdownMenu.Item asChild>
+          <a
+            href='https://github.com/ethereumfollowprotocol/app'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            Contribute
+            <GitHubLogoIcon className='ml-2.5' />
+          </a>
+        </DropdownMenu.Item>
 
         <DropdownMenu.Separator />
         <DropdownMenu.Item shortcut={emojis['bug']} asChild>
@@ -141,7 +125,7 @@ export function Menu() {
             target='_blank'
             rel='noopener noreferrer'
           >
-            {t('REPORT_BUG')}
+            Report a bug
           </a>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
