@@ -7,7 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-   "format": "biome format . --write",
+    "format": "biome format . --write",
     "lint": "biome check --apply .",
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "clean": "/bin/bash ./scripts/clean.sh"
@@ -50,6 +50,7 @@
     "tailwindcss": "^3.3.5",
     "tailwindcss-animate": "^1.0.7",
     "turbo": "^1.10.16",
+    "typed-query-selector": "^2.11.0",
     "typescript": "^5.2.2",
     "webpack": "^5.89.0"
   },

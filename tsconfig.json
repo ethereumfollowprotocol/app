@@ -31,7 +31,7 @@
     "verbatimModuleSyntax": true,
     "allowSyntheticDefaultImports": true,
     "checkJs": true,
-    "types": ["node"]
+    "types": ["node", "typed-query-selector/strict"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.jsx", ".next/types/**/*.ts"],
   "files": ["biome.json", "environment.d.ts", "next.config.mjs"],

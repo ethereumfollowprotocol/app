@@ -114,6 +114,9 @@ importers:
       turbo:
         specifier: ^1.10.16
         version: 1.10.16
+      typed-query-selector:
+        specifier: ^2.11.0
+        version: 2.11.0
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -12712,6 +12715,10 @@ packages:
       call-bind: 1.0.5
       for-each: 0.3.3
       is-typed-array: 1.1.12
+
+  /typed-query-selector@2.11.0:
+    resolution: {integrity: sha512-qBs4sfmnLlPOyo2oSdvHbIFHe2CPgU54/1UGfSNceb7LARpIEVxUaeRX0Doje6oKpuySS2stqy90R3YrynR8Kg==}
+    dev: true
 
   /typedarray-to-buffer@3.1.5:
     resolution: {integrity: sha512-zdu8XMNEDepKKR+XYOXAVPtWui0ly0NtohUscw+UmaHiAWT8hrV1rr//H6V+0DvJ3OQ19S979M0laLfX8rm82Q==}
