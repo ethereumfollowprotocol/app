@@ -20,11 +20,6 @@ if (process.env['ANALYZE']) {
 
 /** @type {NextConfig} */
 const nextConfig = {
-  experimental: {
-    // https://nextjs.org/docs/app/api-reference/next-config-js/serverComponentsExternalPackages
-    serverComponentsExternalPackages: ['@sentry/nextjs'],
-    instrumentationHook: true
-  },
   swcMinify: true,
   cleanDistDir: true,
   reactStrictMode: true,
@@ -59,8 +54,8 @@ const nextConfig = {
     if (config.name === 'server' && config.optimization) {
       config.optimization.concatenateModules = false
     }
-    /* WalletConnect x wagmi needed configuration */
     if (config.resolve) {
+      /* WalletConnect x wagmi needed configuration */
       config.resolve.fallback = { fs: false, net: false, tls: false }
     }
     if (Array.isArray(config.externals)) {

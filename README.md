@@ -29,7 +29,6 @@
 ### Prerequisites
 
 - [Node.js LTS](https://nodejs.org/en)
-- [pnpm](https://pnpm.io/)
 
 ____
 TODO: Continue documentation
