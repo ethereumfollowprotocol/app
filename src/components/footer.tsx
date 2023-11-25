@@ -33,7 +33,7 @@ const footerLinks = [
 export function Footer() {
   // if (true) return null
   return (
-    <footer className='fixed bottom-0 mx-auto mt-4 w-full font-sans'>
+    <footer className='bottom-0 mx-auto mt-4 w-full font-sans'>
       <Flex
         direction={'row'}
         align={'center'}
@@ -45,7 +45,7 @@ export function Footer() {
         <Section className='flex space-x-5 align-middle'>
           <Box className='my-auto'>
             <Text className='table-caption max-w-md text-4xl font-extrabold text-pink-400'>
-              {'APP_NAME.LONG'}
+              Ethereum Follow Protocol
             </Text>
           </Box>
           <Image src='/assets/logo.png' width={160} height={160} alt='Ethereum Follow Protocol' />

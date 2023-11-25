@@ -25,7 +25,7 @@ export function Providers({
             <Theme>
               <Header />
               {children}
-              {/* <Footer /> */}
+              <Footer />
             </Theme>
           </RainbowKitProvider>
         </WagmiConfig>

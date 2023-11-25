@@ -7,7 +7,7 @@ export default function ProfilePage() {
   const pathname = usePathname()
 
   return (
-    <main className='mx-auto flex h-full w-full flex-col items-center text-center'>
+    <main className='mx-auto flex min-h-full h-full w-full flex-col items-center text-center'>
       TODO <p>{pathname}</p>
     </main>
   )
