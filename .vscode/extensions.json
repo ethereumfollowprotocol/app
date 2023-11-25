@@ -5,5 +5,10 @@
     "gruntfuggly.todo-tree",
     "bradlc.vscode-tailwindcss",
     "EditorConfig.EditorConfig"
+  ],
+  "unwantedRecommendations": [
+    // we use Biome for linting and formatting so we don't need these
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode"
   ]
 }

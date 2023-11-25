@@ -3,6 +3,7 @@
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "typescript.inlayHints.parameterNames.enabled": "all",
+  "typescript.preferences.preferTypeOnlyAutoImports": true,
   "files.associations": {
     // tells vscode that the file can take comments
     "*.css": "tailwindcss"
@@ -34,7 +35,6 @@
   "search.exclude": {
     "**/node_modules": true,
     "pnpm-lock.yaml": true,
-    "**/.turbo": true,
     "public/*.js": true,
     "_": true
   }
