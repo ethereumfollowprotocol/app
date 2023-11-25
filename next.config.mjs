@@ -24,7 +24,7 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   env: {
-    NEXT_TELEMETRY_DISABLED: '1',
+    NEXT_TELEMETRY_DISABLED: '1'
   },
   redirects: async () => [
     {

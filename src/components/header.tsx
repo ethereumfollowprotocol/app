@@ -18,7 +18,14 @@ export function Header() {
       <nav className='my-auto flex w-full flex-row justify-between'>
         <div className={clsx(['my-auto flex w-full items-center space-x-3 pr-3'])}>
           <Link href='/' className='select-none'>
-            <Avatar src='/assets/logo.png' fallback='' radius='full' size='4' mb='2' className='select-none' />
+            <Avatar
+              src='/assets/logo.png'
+              fallback=''
+              radius='full'
+              size='4'
+              mb='2'
+              className='select-none'
+            />
           </Link>
           <Text
             className={clsx(['w-22 mx-auto h-20 pt-5 font-bold !leading-4 text-black'])}

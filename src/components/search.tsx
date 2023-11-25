@@ -1,11 +1,11 @@
 'use client'
 
+import clsx from 'clsx'
 import * as React from 'react'
 import { useRouter } from 'next/navigation'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import { TextField, Flex, IconButton, Dialog } from '@radix-ui/themes'
 import type { PropsWithChildren, ComponentPropsWithoutRef } from 'react'
-import clsx from 'clsx'
 
 export function SearchBar({
   _className,
@@ -39,7 +39,7 @@ export function SearchBar({
   )
 }
 
-export function Search() {
+export function Search({ className }: { className?: string }) {
   const router = useRouter()
   const [search, setSearch] = React.useState<string | undefined>()
 
@@ -55,7 +55,7 @@ export function Search() {
   }
 
   return (
-    <Flex direction='column' gap='3' className='w-full max-w-[420px]'>
+    <Flex direction='column' gap='3' className={clsx(['w-full max-w-[420px]', className])}>
       <SearchBar
         className='lg:text-md hidden w-full rounded-lg max-w-[420px] text-sm lg:flex placeholder:font-semibold !placeholder-zinc-500 bg-white/70'
         name='search'

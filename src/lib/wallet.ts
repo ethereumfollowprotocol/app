@@ -29,9 +29,9 @@ const { connectors } = getDefaultWallets({
 })
 
 export const wagmiConfig = createConfig({
-  autoConnect: true,
   connectors,
-  publicClient
+  publicClient,
+  autoConnect: true
 })
 
 export const rainbowTheme = {

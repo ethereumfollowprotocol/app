@@ -80,21 +80,24 @@ export function FollowButton({
 }) {
   return (
     <Button
-      size={'3'}
+      size={'2'}
       className={clsx([
-        '!rounded-xl px-4 py-4 text-base font-bold',
-        pending ? 'bg-gray-200' : theme[text as FollowButtonState].bg,
+        // follows ? 'bg-[#ffe065]' : 'bg-white'
+        'bg-[#ffe065]',
+        '!rounded-xl px-4 text-sm sm:text-base font-bold',
+        pending ? 'cursor-not-allowed' : theme[text as FollowButtonState].bg,
         theme[text as FollowButtonState].text
       ])}
+      disabled={pending}
       {...properties}
     >
       <svg
-        width='15'
-        height='21'
+        width='13'
+        height='20'
         viewBox='0 0 15 21'
         fill='none'
         xmlns='http://www.w3.org/2000/svg'
-        className='-mr-2 inline-block text-black opacity-100'
+        className='-mr-1 mt-0.5 inline-block text-black opacity-100'
       >
         <path
           d='M0 9.21289L5.35156 0.306641L10.6641 9.21289L5.35156 12.4551L0 9.21289Z'

@@ -8,6 +8,8 @@
   text-rendering: optimizeLegibility;
   -webkit-tap-highlight-color: transparent;
   scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
 }
 
 *:focus {
@@ -153,4 +155,9 @@ input[type="search"]::-webkit-search-results-decoration {
 ::selection {
   background-color: rgba(231, 189, 243, 0.913);
   color: rgb(36, 3, 16);
+}
+
+/* radix ui table */
+.rt-TableRootTable {
+  --table-row-box-shadow: unset !important;
 }
