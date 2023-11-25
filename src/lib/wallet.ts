@@ -6,7 +6,7 @@ import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { mainnet, optimism, arbitrum } from 'wagmi/chains'
 import { darkTheme, getDefaultWallets } from '@rainbow-me/rainbowkit'
 
-const projectId = process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || ''
+const projectId = '8432b61498678159cf0d8e0c90a75da4'
 
 export const { chains, publicClient } = configureChains(
   [mainnet, optimism, arbitrum],
