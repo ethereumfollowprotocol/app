@@ -77,10 +77,10 @@ function TeamCard(props: TeamMember) {
             </Badge>
             <Flex gap='3' className='ml-12' my='3'>
               <Button
+                my='1'
                 size='2'
-                my='3'
                 className={clsx([
-                  'text-black rounded-lg px-5',
+                  'text-black rounded-lg px-4 shaddow font-bold',
                   // follows ? 'bg-[#ffe065]' : 'bg-white'
                   'bg-[#ffe065]'
                 ])}
@@ -108,7 +108,7 @@ function TeamCard(props: TeamMember) {
                 Follow
               </Button>
               <IconButton
-                className='bg-white text-black align-middle my-auto py-0 h-5'
+                className='bg-white text-black align-middle my-auto py-0 h-5 font-bold'
                 radius='full'
               >
                 <DotsHorizontalIcon />

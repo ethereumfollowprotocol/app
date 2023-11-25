@@ -57,7 +57,7 @@ export function Search() {
   return (
     <Flex direction='column' gap='3' className='w-full max-w-[420px]'>
       <SearchBar
-        className='lg:text-md hidden w-full max-w-[420px] text-sm lg:flex font-semibold !placeholder-zinc-500'
+        className='lg:text-md hidden w-full rounded-lg max-w-[420px] text-sm lg:flex placeholder:font-semibold !placeholder-zinc-500 bg-white/70'
         name='search'
         id='search'
         aria-label='Search'

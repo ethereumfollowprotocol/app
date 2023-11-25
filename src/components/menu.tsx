@@ -117,7 +117,12 @@ export function Menu() {
             <DropdownMenu.Item>List #2,932</DropdownMenu.Item>
           </DropdownMenu.SubContent>
         </DropdownMenu.Sub>
-
+        <DropdownMenu.Separator />
+        <DropdownMenu.Item asChild>
+          <Link prefetch href='/team'>
+            Team
+          </Link>
+        </DropdownMenu.Item>
         <DropdownMenu.Separator />
         <DropdownMenu.Item asChild>
           <a
@@ -131,8 +136,6 @@ export function Menu() {
             </IconButton>
           </a>
         </DropdownMenu.Item>
-
-        <DropdownMenu.Separator />
         <DropdownMenu.Item shortcut={emojis['bug']} asChild>
           <a
             href='https://github.com/ethereumfollowprotocol/app/issues/new'

@@ -45,6 +45,10 @@ button {
   touch-action: manipulation;
 }
 
+button:hover {
+  cursor: pointer;
+}
+
 body::-webkit-scrollbar {
   width: 0.15em;
   background-color: transparent;
@@ -144,4 +148,9 @@ input[type="search"]::-webkit-search-results-decoration {
     overflow-y: auto;
     scrollbar-gutter: stable;
   }
+}
+
+::selection {
+  background-color: rgba(231, 189, 243, 0.913);
+  color: rgb(36, 3, 16);
 }
