@@ -14,7 +14,6 @@ defaults:
     shell: bash
 
 env:
-  CI: true
   ACTIONS_RUNNER_DEBUG: true
 
 jobs:
@@ -24,30 +23,24 @@ jobs:
     runs-on: ['ubuntu-latest']
     steps:
       - name: 🔑 Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.1
 
-      - name: 🥐 Setup pnpm
-        uses: pnpm/action-setup@v2.2.4
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v1
         with:
-          version: 'latest'
-
-      - name: ⎔ Setup Node.js LTS
-        uses: actions/setup-node@v3
-        with:
-          node-version: 'lts/*'
-          cache: 'pnpm'
+          bun-version: 'latest'
 
       - name: '📦 Install Dependencies'
-        run: pnpm install --frozen-lockfile
+        run: bun install
 
       - name: '🧹 Lint'
-        run: pnpm lint
+        run: bun lint
 
       - name: '🧹 Format'
-        run: pnpm format
+        run: bun format
 
       - name: '🧪 Typecheck'
-        run: pnpm typecheck
+        run: bun typecheck
 
       - name: '🔧 Build'
-        run: pnpm build
+        run: bun build
