@@ -1,10 +1,10 @@
-import { getDefaultWallets } from '@rainbow-me/rainbowkit'
 import { configureChains, createConfig } from 'wagmi'
-import { mainnet, optimism, arbitrum } from 'wagmi/chains'
-import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { infuraProvider } from 'wagmi/providers/infura'
-import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { publicProvider } from 'wagmi/providers/public'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
+import { mainnet, optimism, arbitrum } from 'wagmi/chains'
+import { darkTheme, getDefaultWallets } from '@rainbow-me/rainbowkit'
 
 const projectId = process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID
 
@@ -33,3 +33,17 @@ export const wagmiConfig = createConfig({
   connectors,
   publicClient
 })
+
+export const rainbowTheme = {
+  blurs: darkTheme().blurs,
+  fonts: darkTheme().fonts,
+  radii: darkTheme().radii,
+  colors: {
+    ...darkTheme().colors,
+    accentColor: '#f9f9f9',
+    accentColorForeground: '#000',
+    connectButtonBackground: '#f9f9f9',
+    connectButtonText: '#000'
+  },
+  shadows: darkTheme().shadows
+}

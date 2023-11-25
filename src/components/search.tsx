@@ -57,7 +57,7 @@ export function Search() {
   return (
     <Flex direction='column' gap='3' className='w-full max-w-[420px]'>
       <SearchBar
-        className='lg:text-md hidden w-full max-w-[420px] text-sm lg:flex'
+        className='lg:text-md hidden w-full max-w-[420px] text-sm lg:flex font-semibold !placeholder-zinc-500'
         name='search'
         id='search'
         aria-label='Search'
@@ -68,15 +68,18 @@ export function Search() {
         minLength={7}
         maxLength={64}
         width={'100%'}
+        radius='large'
         autoComplete='off'
         pattern='0x[a-fA-F0-9]{40}|.{7,64}'
       />
       <Dialog.Root>
-        <Dialog.Trigger className='mb-3 w-10 lg:hidden'>
-          <IconButton variant='soft' color='gray' size={'3'} radius='large' className='lg:hidden'>
-            <MagnifyingGlassIcon height={24} width={24} />
-          </IconButton>
-        </Dialog.Trigger>
+        <div className='lg:hidden'>
+          <Dialog.Trigger className='mb-3 w-10'>
+            <IconButton variant='soft' color='gray' size={'3'} radius='large'>
+              <MagnifyingGlassIcon height={24} width={24} />
+            </IconButton>
+          </Dialog.Trigger>
+        </div>
 
         <Dialog.Content size={'3'} className='mb-42 mx-4 w-full max-w-[364px] p-0'>
           <SearchBar

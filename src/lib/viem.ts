@@ -1,9 +1,9 @@
 import { mainnet } from 'viem/chains'
 import { mainnetTransports } from '#lib/constants.ts'
-import { createPublicClient, http, fallback } from 'viem'
+import { http, fallback, createWalletClient, publicActions } from 'viem'
 
 export const mainnetClient = () =>
-  createPublicClient({
+  createWalletClient({
     chain: mainnet,
     transport: fallback(
       mainnetTransports.map(transport =>
@@ -13,4 +13,4 @@ export const mainnetClient = () =>
         })
       )
     )
-  })
+  }).extend(publicActions)

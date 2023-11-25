@@ -8,6 +8,7 @@
 
 import webpack from 'webpack'
 import million from 'million/compiler'
+import childProcess from 'node:child_process'
 import { withSentryConfig } from '@sentry/nextjs'
 
 /** @type {NextConfigPlugins} */
@@ -20,12 +21,13 @@ if (process.env['ANALYZE']) {
 
 /** @type {NextConfig} */
 const nextConfig = {
-  swcMinify: true,
   cleanDistDir: true,
   reactStrictMode: true,
   poweredByHeader: false,
   env: {
-    NEXT_TELEMETRY_DISABLED: '1'
+    NEXT_TELEMETRY_DISABLED: '1',
+    NODE_OPTIONS: '--no-warnings --experimental-import-meta-resolve',
+    APP_VERSION: childProcess.execSync('git rev-parse --short HEAD').toString().trim()
   },
   redirects: async () => [
     {

@@ -3,10 +3,10 @@
 import * as React from 'react'
 import { WagmiConfig } from 'wagmi'
 import { Theme } from '@radix-ui/themes'
-import { Header } from '#components/header.tsx'
-import { Footer } from '#components/footer.tsx'
-import { chains, wagmiConfig } from '#lib/wallet.ts'
-import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
+import { Header } from '#components/header'
+import { Footer } from '#components/footer'
+import { chains, rainbowTheme, wagmiConfig } from '#lib/wallet.ts'
+import { RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental'
@@ -21,11 +21,11 @@ export function Providers({
     <QueryClientProvider client={queryClient}>
       <ReactQueryStreamedHydration>
         <WagmiConfig config={wagmiConfig}>
-          <RainbowKitProvider chains={chains}>
-            <Theme>
+          <RainbowKitProvider coolMode chains={chains} theme={rainbowTheme}>
+            <Theme scaling='100%'>
               <Header />
               {children}
-              <Footer />
+              {/* <Footer /> */}
             </Theme>
           </RainbowKitProvider>
         </WagmiConfig>

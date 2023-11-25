@@ -2,12 +2,11 @@
 
 import clsx from 'clsx'
 import Link from 'next/link'
-import Image from 'next/image'
-import { Text } from '@radix-ui/themes'
 import { Menu } from '#components/menu.tsx'
 import { usePathname } from 'next/navigation'
 import { pageRoutes } from '#lib/constants.ts'
 import { Search } from '#components/search.tsx'
+import { Avatar, Text } from '@radix-ui/themes'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { CartButton } from '#components/cart-button.tsx'
 
@@ -18,11 +17,11 @@ export function Header() {
     <header className={clsx(['w-full px-2.5 font-sans sm:px-3 md:px-4 lg:px-5 xl:px-6'])}>
       <nav className='my-auto flex w-full flex-row justify-between'>
         <div className={clsx(['my-auto flex w-full items-center space-x-3 pr-3'])}>
-          <Link href='/' className='mb-3.5'>
-            <Image src='/assets/logo.png' width={58} height={58} alt='Ethereum Follow Protocol' />
+          <Link href='/'>
+            <Avatar src='/assets/logo.png' fallback='' radius='full' size='4' mb='2' />
           </Link>
           <Text
-            className={clsx(['w-22 mx-auto h-20 pt-4 font-bold !leading-4 text-pink-400'])}
+            className={clsx(['w-22 mx-auto h-20 pt-5 font-bold !leading-4 text-black'])}
             trim={'both'}
             weight={'bold'}
             size={{
@@ -37,12 +36,11 @@ export function Header() {
           </Text>
           <Search />
         </div>
-
         <ul
           className={clsx([
-            'px-2.25 py-0.15 my-auto flex space-x-0 text-lg font-semibold',
-            'sm:space-x-3 sm:bg-transparent sm:p-0',
-            'hidden sm:flex'
+            'px-2.25 py-0.15 my-auto flex space-x-0 text-lg font-semibold mx-2',
+            'sm:space-x-5 sm:bg-transparent sm:p-0',
+            'hidden md:flex'
           ])}
         >
           {pageRoutes.map((route, index) => (

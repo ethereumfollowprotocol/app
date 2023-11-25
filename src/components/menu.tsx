@@ -24,20 +24,32 @@ export const projectLinkItems = [
   {
     text: 'GitHub',
     href: 'https://github.com/ethereumfollowprotocol',
-    icon: GitHubLogoIcon
+    icon: () => (
+      <IconButton size='1' variant='outline' className='shadow-none'>
+        <GitHubLogoIcon width='28' height='28' className='text-black' />
+      </IconButton>
+    )
   },
   {
     text: 'X',
     href: 'https://x.com/ethfollowpr',
-    icon: TwitterLogoIcon
+    icon: () => (
+      <IconButton size='1' variant='outline' className='shadow-none'>
+        <TwitterLogoIcon width='28' height='28' className='text-black' />
+      </IconButton>
+    )
   },
   /**
    * TODO: add Discord link once we have one
    */
   {
     text: 'Discord',
-    href: 'https://x.com/ethfollowpr',
-    icon: DiscordLogoIcon
+    href: 'https://docs.ethfollow.xyz',
+    icon: () => (
+      <IconButton size='1' variant='outline' className='shadow-none'>
+        <DiscordLogoIcon width='28' height='28' className='text-black' />
+      </IconButton>
+    )
   }
 ]
 
@@ -114,7 +126,9 @@ export function Menu() {
             rel='noopener noreferrer'
           >
             Contribute
-            <GitHubLogoIcon className='ml-2.5' />
+            <IconButton size='1' variant='outline' className='shadow-none'>
+              <GitHubLogoIcon width='20' height='20' className='text-black' />
+            </IconButton>
           </a>
         </DropdownMenu.Item>
 

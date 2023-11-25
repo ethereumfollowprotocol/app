@@ -19,16 +19,10 @@ const ibm_plex_mono = IBM_Plex_Mono({
   weight: ['400', '500', '700'],
   variable: '--font-ibm-plex-mono'
 })
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang='en'
-      className={clsx([
-        inter.variable,
-        ibm_plex_mono.variable,
-        'm-auto h-full min-h-full w-full overflow-x-hidden scroll-smooth'
-      ])}
-    >
+    <html lang='en' className={clsx([inter.variable, ibm_plex_mono.variable, 'light'])}>
       <head>
         <title>{APP_NAME}</title>
         <meta name='description' content={APP_DESCRIPTION} />
@@ -54,7 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta property='og:image' content='/banner.png' />
         <meta property='og:url' content='https://x.com/ethfollowpr' />
       </head>
-      <body className='w-full min-w-full items-center bg-gradient-to-b from-yellow-300 to-pink-400'>
+      <body className='w-full min-w-full items-center'>
         <Providers>{children}</Providers>
       </body>
     </html>
