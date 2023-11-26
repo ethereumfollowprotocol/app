@@ -1,8 +1,8 @@
 import { ImageResponse } from 'next/og'
+import type { NextRequest } from 'next/server'
 import type { ExtractTypeFromUnion } from '#lib/types.ts'
 
 export const runtime = 'edge'
-export const contentType = 'image/png'
 
 type ImageOptionsType = NonNullable<
   ExtractTypeFromUnion<ConstructorParameters<typeof ImageResponse>[1], ResponseInit>
@@ -10,7 +10,7 @@ type ImageOptionsType = NonNullable<
 
 type FontsType = ImageOptionsType['fonts']
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   const url = new URL(request.url)
   try {
     const name = url.searchParams.get('name')
