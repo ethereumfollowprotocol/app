@@ -101,7 +101,6 @@ const nextConfigWithSentry = withSentryConfig(nextConfig, {
 
 const nextConfigWithPlugins = () => plugins.reduce((_, plugin) => plugin(_), nextConfigWithSentry)
 
-export default () =>
-  process.env.NODE_ENV === 'development'
-    ? nextConfigWithPlugins()
-    : million.next(nextConfigWithPlugins, { auto: true })
+export default process.env.NODE_ENV === 'development'
+  ? nextConfigWithPlugins()
+  : million.next(nextConfigWithPlugins, { auto: true })

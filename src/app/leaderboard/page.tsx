@@ -85,11 +85,11 @@ export default async function LeaderboardPage({
       </Text>
       <Flex direction='column' width='100%' className='max-w-5xl'>
         <Flex direction='row' justify='between' my='4' pr='1'>
-          <Box className='max-w-sm'>
+          <Box className='max-w-sm sm:w-64 w-48'>
             <LeaderboardSearch />
           </Box>
           <FilterList />
-          <Box mt='2'>
+          <Box mt='1'>
             <Text as='p' className='h-2 font-semibold'>
               {filteredLeaderboard.length} account{filteredLeaderboard.length === 1 ? '' : 's'}
             </Text>

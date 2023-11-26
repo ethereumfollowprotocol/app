@@ -30,6 +30,7 @@ interface EnvironmentVariables {
   readonly SENTRY_PROJECT: string
   readonly SENTRY_RELEASE: string
   readonly SENTRY_DISABLED: 'true' | 'false'
+  readonly NEXT_PUBLIC_REPORT_WEB_VITALS: 'true' | 'false'
 }
 
 declare namespace NodeJS {

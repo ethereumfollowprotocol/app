@@ -14,6 +14,16 @@ export function FilterList({
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+
+  // Set default filter to quality
+  React.useEffect(() => {
+    if (!searchParams.get('filter')) {
+      const params = new URLSearchParams(window.location.search)
+      params.set('filter', 'quality')
+      router.replace(`${pathname}?${params.toString()}`)
+    }
+  }, [searchParams, router, pathname])
+
   const selectedFilter = searchParams.get('filter') ?? 'quality'
   const [isPending, startTransition] = React.useTransition()
 
@@ -149,7 +159,7 @@ export function LeaderboardSearch({ disabled }: { disabled?: boolean }) {
           disabled={disabled}
           placeholder='Search…'
           onChange={event => handleSearch(event.target.value)}
-          className='lowercase h-11 block w-full rounded-xl border-0 border-transparent pl-9 sm:text-sm bg-white/70'
+          className='lowercase h-9 block w-full rounded-xl border-0 border-transparent pl-9 sm:text-sm bg-white/70'
         />
       </div>
 

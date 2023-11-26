@@ -4,9 +4,13 @@ import '@rainbow-me/rainbowkit/styles.css'
 
 import clsx from 'clsx'
 import * as React from 'react'
+
 import { Providers } from './providers.tsx'
 import { Inter, IBM_Plex_Mono } from 'next/font/google'
 import { APP_NAME, APP_DESCRIPTION } from '#lib/constants.ts'
+import dynamic from 'next/dynamic'
+
+const WebVitals = dynamic(() => import('./web-vitals.ts'), { ssr: false })
 
 const inter = Inter({
   subsets: ['latin'],
@@ -49,6 +53,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta property='og:url' content='https://x.com/ethfollowpr' />
       </head>
       <body className='w-full min-w-full items-center'>
+        <WebVitals />
         <Providers>{children}</Providers>
       </body>
     </html>
