@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { DotsHorizontalIcon } from '@radix-ui/react-icons'
-import { Avatar, Badge, Box, Button, Card, Flex, IconButton, Section, Text } from '@radix-ui/themes'
-import clsx from 'clsx'
+import { FollowButton } from 'src/components/follow-button.tsx'
+import { Avatar, Badge, Box, Button, Flex, IconButton, Text } from '@radix-ui/themes'
 
 const efpTeam = [
   {
@@ -76,37 +76,7 @@ function TeamCard(props: TeamMember) {
               Follows you
             </Badge>
             <Flex gap='3' className='ml-12' my='3'>
-              <Button
-                my='1'
-                size='2'
-                className={clsx([
-                  'text-black rounded-lg px-4 shaddow font-bold',
-                  // follows ? 'bg-[#ffe065]' : 'bg-white'
-                  'bg-[#ffe065]'
-                ])}
-              >
-                <svg
-                  width='15'
-                  height='20'
-                  viewBox='0 0 15 20'
-                  fill='none'
-                  xmlns='http://www.w3.org/2000/svg'
-                >
-                  <path
-                    d='M0 8.90625L5.35156 0L10.6641 8.90625L5.35156 12.1484L0 8.90625Z'
-                    fill='#333333'
-                  />
-                  <path
-                    d='M5.35156 13.125L0 9.88281L5.35156 17.4219L10.6641 9.88281L5.35156 13.125Z'
-                    fill='#333333'
-                  />
-                  <path
-                    d='M12.1875 13.9844H10.6641V16.25H8.55469V17.6562H10.6641V20H12.1875V17.6562H14.2578V16.25H12.1875V13.9844Z'
-                    fill='#333333'
-                  />
-                </svg>
-                Follow
-              </Button>
+              <FollowButton text='Follow' />
               <IconButton
                 className='bg-white text-black align-middle my-auto py-0 h-5 font-bold'
                 radius='full'
