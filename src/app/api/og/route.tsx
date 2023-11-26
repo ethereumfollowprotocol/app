@@ -1,16 +1,27 @@
 import { ImageResponse } from 'next/og'
-import type { NextRequest } from 'next/server'
-import type { ExtractTypeFromUnion } from '#lib/types.ts'
+import { raise } from 'src/lib/utilities.ts'
+import type { ExtractTypeFromUnion, Pretty, Flatten } from '#lib/types.ts'
+import { cacheHeader } from 'pretty-cache-header'
 
 export const runtime = 'edge'
 
+const VERCEL_BLOB_STORE_ID =
+  process.env.VERCEL_BLOB_STORE_ID ?? raise('Missing VERCEL_BLOB_STORE_ID environment variable')
+
+const VERCEL_STORAGE_URL = `https://${VERCEL_BLOB_STORE_ID}.public.blob.vercel-storage.com`
+
+/**
+ * this typescript gymnastics is to extract the ImageOptions type from the ImageResponse constructor
+ * If `next/og` exposed the types of the underlying library `@vercel/og` or the under-underlying library `satori`,
+ * then we would have been able to import `ImageResposeOptions` which is a super set of `ImageOptions`
+ */
 type ImageOptionsType = NonNullable<
   ExtractTypeFromUnion<ConstructorParameters<typeof ImageResponse>[1], ResponseInit>
 >
 
-type FontsType = ImageOptionsType['fonts']
+type Font = Pretty<Flatten<NonNullable<ImageOptionsType['fonts']>>>
 
-export async function GET(request: NextRequest) {
+export async function GET(request: Request) {
   const url = new URL(request.url)
   try {
     const name = url.searchParams.get('name')
@@ -21,7 +32,20 @@ export async function GET(request: NextRequest) {
     if (!followers) throw new Error('Missing followers query parameter')
     if (!following) throw new Error('Missing following query parameter')
 
-    const fonts = await fetchFonts()
+    // const fonts = await fetchFonts()
+    const fonts = await Promise.all([
+      fetchFont({
+        name: 'Inter SemiBold',
+        url: `${VERCEL_STORAGE_URL}/fonts/Inter-SemiBold-X6pEYu4El8UegrVwtw999muAJqhTkJ.ttf`,
+        weight: 400
+      }),
+      fetchFont({
+        name: 'Inter Bold',
+
+        url: `${VERCEL_STORAGE_URL}/fonts/Inter-Bold-R79VslsfzAtaEUfBWkAW6Xc8AuAaZb.ttf`,
+        weight: 700
+      })
+    ])
 
     return new ImageResponse(
       <div
@@ -53,6 +77,7 @@ export async function GET(request: NextRequest) {
         >
           <div
             style={{
+              gap: 1,
               display: 'flex',
               fontWeight: '500',
               alignItems: 'center',
@@ -65,12 +90,12 @@ export async function GET(request: NextRequest) {
           </div>
           <div
             style={{
+              gap: 1,
               display: 'flex',
               fontWeight: '500',
               alignItems: 'center',
               flexDirection: 'column',
-              justifyContent: 'center',
-              gap: 1
+              justifyContent: 'center'
             }}
           >
             <p style={{ padding: 0, margin: 0 }}>{following}</p>
@@ -103,19 +128,24 @@ export async function GET(request: NextRequest) {
   }
 }
 
-async function fetchFonts(): Promise<FontsType> {
-  const fontResponse = await fetch(
-    new URL('../../assets/fonts/Inter-SemiBold.ttf', import.meta.url)
-  )
+async function fetchFont({
+  url,
+  name,
+  weight = 400,
+  style = 'normal'
+}: {
+  url: string
+  name: string
+} & Partial<Pick<Font, 'weight' | 'style'>>): Promise<Font> {
+  const fontResponse = await fetch(url, {
+    headers: {
+      'Content-Type': 'font/ttf',
+      'Cache-Control': cacheHeader({
+        maxAge: '1y',
+        staleWhileRevalidate: '1d'
+      })
+    }
+  })
   const font = await fontResponse.arrayBuffer()
-
-  const fontBoldResponse = await fetch(
-    new URL('../../assets/fonts/Inter-Bold.ttf', import.meta.url)
-  )
-  const fontBold = await fontBoldResponse.arrayBuffer()
-
-  return [
-    { name: 'IBM Plex Mono SemiBold', data: font, weight: 400, style: 'normal' },
-    { name: 'IBM Plex Mono Bold', data: fontBold, weight: 700, style: 'normal' }
-  ]
+  return { name, data: font, weight, style }
 }

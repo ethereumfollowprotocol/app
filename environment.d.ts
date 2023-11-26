@@ -31,6 +31,8 @@ interface EnvironmentVariables {
   readonly SENTRY_RELEASE: string
   readonly SENTRY_DISABLED: 'true' | 'false'
   readonly NEXT_PUBLIC_REPORT_WEB_VITALS: 'true' | 'false'
+  readonly VERCEL_BLOB_STORE_ID: string
+  readonly VERCEL_BLOB_READ_WRITE_TOKEN: string
 }
 
 declare namespace NodeJS {
