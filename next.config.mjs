@@ -26,6 +26,30 @@ const nextConfig = {
   env: {
     NEXT_TELEMETRY_DISABLED: '1'
   },
+  /** @param {WebpackConfiguration} config */
+  webpack: config => {
+    if (config.name === 'server' && config.optimization) {
+      config.optimization.concatenateModules = false
+    }
+    if (config.resolve) {
+      /* WalletConnect x wagmi needed configuration */
+      config.resolve.fallback = { fs: false, net: false, tls: false }
+    }
+    if (Array.isArray(config.externals)) {
+      config.externals.push('lokijs', 'pino', 'pino-pretty', 'encoding')
+    }
+    if (config.plugins) {
+      config.plugins.push(
+        new webpack.IgnorePlugin({
+          resourceRegExp: /^(lokijs|pino|pino-pretty|encoding)$/
+        }),
+        new webpack.NormalModuleReplacementPlugin(/node:/, resource => {
+          resource.request = resource.request.replace(/^node:/, '')
+        })
+      )
+    }
+    return config
+  },
   redirects: async () => [
     {
       source: '/(twitter|x)',
@@ -54,6 +78,10 @@ const nextConfig = {
       source: '/(.*)',
       headers: [
         {
+          key: 'X-DNS-Prefetch-Control',
+          value: 'on'
+        },
+        {
           key: 'X-Frame-Options',
           value: 'SAMEORIGIN'
         },
@@ -70,6 +98,19 @@ const nextConfig = {
           value: 'origin-when-cross-origin'
         },
         {
+          key: 'Content-Security-Policy',
+          value: [
+            "default-src 'self' vercel.live;",
+            "script-src 'self' 'unsafe-eval' 'unsafe-inline' cdn.vercel-insights.com vercel.live va.vercel-scripts.com;",
+            "style-src 'self' 'unsafe-inline' *.vercel-storage.com;",
+            'img-src * blob: data: *.vercel-storage.com;',
+            "media-src 'none';",
+            'connect-src *;',
+            "font-src 'self' data: *.public.blob.vercel-storage.com *.vercel-storage.com;",
+            "frame-ancestors 'self';"
+          ].join(' ')
+        },
+        {
           key: 'Feature-Policy',
           value: "geolocation 'none'; microphone 'none'; camera 'none'"
         },
@@ -80,38 +121,10 @@ const nextConfig = {
         {
           key: 'Strict-Transport-Security',
           value: 'max-age=63072000; includeSubDomains; preload'
-        },
-        {
-          key: 'Content-Security-Policy',
-          value: "frame-ancestors 'self';"
         }
       ]
     }
   ],
-  /** @param {WebpackConfiguration} config */
-  webpack: config => {
-    if (config.name === 'server' && config.optimization) {
-      config.optimization.concatenateModules = false
-    }
-    if (config.resolve) {
-      /* WalletConnect x wagmi needed configuration */
-      config.resolve.fallback = { fs: false, net: false, tls: false }
-    }
-    if (Array.isArray(config.externals)) {
-      config.externals.push('lokijs', 'pino', 'pino-pretty', 'encoding')
-    }
-    if (config.plugins) {
-      config.plugins.push(
-        new webpack.IgnorePlugin({
-          resourceRegExp: /^(lokijs|pino|pino-pretty|encoding)$/
-        }),
-        new webpack.NormalModuleReplacementPlugin(/node:/, resource => {
-          resource.request = resource.request.replace(/^node:/, '')
-        })
-      )
-    }
-    return config
-  },
   /**
    * @link https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup
    * @type {SentryUserOptions}
@@ -128,7 +141,6 @@ const nextConfig = {
     autoInstrumentMiddleware: true,
     autoInstrumentServerFunctions: true
   }
-  // TODO: add headers for security
 }
 
 // https://github.com/getsentry/sentry-webpack-plugin#options
