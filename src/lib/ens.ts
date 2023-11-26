@@ -1,13 +1,11 @@
 import { getAddress } from 'viem'
 import { normalize } from 'viem/ens'
-import { mainnetClient } from '#lib/viem.ts'
+import { viemClients } from '#lib/viem.ts'
 
 export async function getAddressFromENS(name: string) {
   if (!name.includes('.eth')) return
 
-  const client = mainnetClient()
-
-  return client.getEnsAddress({ name: normalize(name) })
+  return viemClients.mainnet().getEnsAddress({ name: normalize(name) })
 }
 
 export async function getENSProfile({ ensNameOrAddress }: { ensNameOrAddress?: string }) {
@@ -22,7 +20,7 @@ export async function getENSProfile({ ensNameOrAddress }: { ensNameOrAddress?: s
 
   if (!providedId) return
 
-  const client = mainnetClient()
+  const client = viemClients.mainnet()
 
   const { address, name } =
     providedId === 'address'

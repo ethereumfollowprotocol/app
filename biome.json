@@ -49,6 +49,7 @@
       "a11y": { "noSvgWithoutTitle": "off" },
       "nursery": { "noUnusedImports": "off" },
       "complexity": { "useLiteralKeys": "off" },
+      "performance": { "noAccumulatingSpread": "off" },
       "correctness": { "noUndeclaredVariables": "off" },
       "suspicious": { "noExplicitAny": "off", "noEmptyInterface": "off" }
     }

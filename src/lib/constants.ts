@@ -63,24 +63,3 @@ export const pageRoutes = [
 export const chains = ['mainnet', 'optimism', 'arbitrum', 'polygon', 'zkSync'] as const
 
 export type Chain = typeof chains[number]
-
-export interface EVMTransport {
-  chain: Chain
-  name: string
-  url: string
-}
-
-export const mainnetTransports = [
-  {
-    name: 'LlamaNodes',
-    chain: 'mainnet',
-    url: `https://eth.llamarpc.com/rpc/${process.env['NEXT_PUBLIC_LLAMAFOLIO_ID']}`
-  },
-  {
-    name: 'Alchemy Mainnet',
-    chain: 'mainnet',
-    url: `https://eth-mainnet.alchemyapi.io/v2/${process.env['NEXT_PUBLIC_ALCHEMY_ID']}`
-  }
-] satisfies ReadonlyArray<EVMTransport>
-
-export const evmTransports = [...mainnetTransports] satisfies ReadonlyArray<EVMTransport>

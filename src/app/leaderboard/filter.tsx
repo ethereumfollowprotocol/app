@@ -149,7 +149,7 @@ export function LeaderboardSearch({ disabled }: { disabled?: boolean }) {
           disabled={disabled}
           placeholder='Search…'
           onChange={event => handleSearch(event.target.value)}
-          className='h-11 block w-full rounded-xl border-0 border-transparent pl-9 sm:text-sm bg-white/70'
+          className='lowercase h-11 block w-full rounded-xl border-0 border-transparent pl-9 sm:text-sm bg-white/70'
         />
       </div>
 

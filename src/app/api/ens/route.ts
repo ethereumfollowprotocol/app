@@ -1,4 +1,5 @@
 import { getENSProfile } from '#lib/ens.ts'
+import { cacheHeader } from 'pretty-cache-header'
 
 type Runtime = 'node' | 'edge'
 
@@ -17,6 +18,13 @@ export async function GET(request: Request) {
   const profile = await getENSProfile({ ensNameOrAddress: id })
 
   return Response.json(profile, {
-    status: 200
+    status: 200,
+    headers: {
+      'Cache-Control': cacheHeader({
+        maxAge: '7d',
+        sMaxage: '7d',
+        staleWhileRevalidate: '1h'
+      })
+    }
   })
 }
