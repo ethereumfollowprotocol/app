@@ -5,9 +5,7 @@ import { cacheHeader } from 'pretty-cache-header'
 
 export const runtime = 'edge'
 
-const VERCEL_BLOB_STORE_ID =
-  process.env.VERCEL_BLOB_STORE_ID ?? raise('Missing VERCEL_BLOB_STORE_ID environment variable')
-
+const VERCEL_BLOB_STORE_ID = process.env.VERCEL_BLOB_STORE_ID
 const VERCEL_STORAGE_URL = `https://${VERCEL_BLOB_STORE_ID}.public.blob.vercel-storage.com`
 
 /**

@@ -48,6 +48,46 @@ const nextConfig = {
       permanent: true
     }
   ],
+  /** @link https://nextjs.org/docs/app/api-reference/next-config-js/headers#options */
+  headers: async () => [
+    {
+      source: '/(.*)',
+      headers: [
+        {
+          key: 'X-Frame-Options',
+          value: 'SAMEORIGIN'
+        },
+        {
+          key: 'X-Content-Type-Options',
+          value: 'nosniff'
+        },
+        {
+          key: 'X-XSS-Protection',
+          value: '1; mode=block'
+        },
+        {
+          key: 'Referrer-Policy',
+          value: 'origin-when-cross-origin'
+        },
+        {
+          key: 'Feature-Policy',
+          value: "geolocation 'none'; microphone 'none'; camera 'none'"
+        },
+        {
+          key: 'Permissions-Policy',
+          value: 'camera=(), microphone=(), geolocation=(), browsing-topics=()'
+        },
+        {
+          key: 'Strict-Transport-Security',
+          value: 'max-age=63072000; includeSubDomains; preload'
+        },
+        {
+          key: 'Content-Security-Policy',
+          value: "frame-ancestors 'self';"
+        }
+      ]
+    }
+  ],
   /** @param {WebpackConfiguration} config */
   webpack: config => {
     if (config.name === 'server' && config.optimization) {
