@@ -109,7 +109,7 @@ export default async function LeaderboardPage({
         <Table.Root
           size='2'
           variant='ghost'
-          className='bg-white/50 rounded-xl px-2 sm:px-12 py-4'
+          className='bg-white/60 rounded-xl px-2 sm:px-12 py-4'
           hidden={filteredLeaderboard.length === 0}
         >
           <Table.Header hidden>
