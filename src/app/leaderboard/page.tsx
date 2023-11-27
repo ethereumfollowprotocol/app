@@ -75,7 +75,9 @@ export default async function LeaderboardPage({
       <Flex direction='column' width='100%' className='max-w-5xl'>
         <Flex direction='row' justify='between' my='4' pr='2'>
           <Box className='max-w-sm w-52'>
-            <LeaderboardSearch />
+            <React.Suspense>
+              <LeaderboardSearch />
+            </React.Suspense>
           </Box>
           <FilterList />
           <Tooltip content='lorem ipsum' className=''>

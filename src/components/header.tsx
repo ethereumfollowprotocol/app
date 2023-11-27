@@ -2,6 +2,7 @@
 
 import clsx from 'clsx'
 import Link from 'next/link'
+import * as React from 'react'
 import { Menu } from '#components/menu.tsx'
 import { usePathname } from 'next/navigation'
 import { pageRoutes } from '#lib/constants.ts'
@@ -48,7 +49,9 @@ export function Header() {
             Follow <br />
             Protocol
           </Text>
-          <Search />
+          <React.Suspense>
+            <Search />
+          </React.Suspense>
         </div>
         <ul
           className={clsx([
@@ -60,7 +63,7 @@ export function Header() {
           {pageRoutes.map((route, index) => (
             <li className='inline font-bold' key={`route-${index}`}>
               <Link
-                passHref
+                prefetch={true}
                 href={route.href}
                 className={clsx([
                   'capitalize',
