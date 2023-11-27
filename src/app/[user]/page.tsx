@@ -13,9 +13,14 @@ interface ENStateResponse {
   errors: { [key: string]: string }
 }
 
-export default async function Page({ params }: { params: { user: string } }) {
-  const response = await fetch(`https://enstate.rs/n/${params.user}`, { cache: 'default' })
+async function ensData(user: string) {
+  const response = await fetch(`https://enstate.rs/n/${user}`, { cache: 'default' })
   const data = (await response.json()) as ENStateResponse
+  return data
+}
+
+export default async function Page({ params }: { params: { user: string } }) {
+  const data = await ensData(params.user)
   return (
     <main className='font-sans mx-auto flex h-full min-h-full w-full flex-col items-center overflow-scroll mb-12 px-4 pt-6 text-center'>
       <img src={data['avatar']} alt='env ave' width={200} height={200} className='rounded-xl' />

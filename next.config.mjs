@@ -158,4 +158,4 @@ const nextConfigWithPlugins = () => plugins.reduce((_, plugin) => plugin(_), nex
 
 export default process.env.NODE_ENV === 'development'
   ? nextConfigWithPlugins()
-  : million.next(nextConfigWithPlugins, { auto: true })
+  : million.next(nextConfigWithPlugins, { auto: { rsc: true } })
