@@ -52,7 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta property='og:image' content='/banner.png' />
         <meta property='og:url' content='https://x.com/ethfollowpr' />
       </head>
-      <body className='w-full min-w-full items-center'>
+      <body className='w-full min-w-full items-center font-serif'>
         <WebVitals />
         <Providers>{children}</Providers>
       </body>

@@ -1,11 +1,4 @@
-<svg
-  width="13"
-  height="20"
-  viewBox="0 0 15 21"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
-  className="inline-block text-black opacity-100"
->
+<svg width="13" height="20" viewBox="0 0 15 21" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M0 9.21289L5.35156 0.306641L10.6641 9.21289L5.35156 12.4551L0 9.21289Z" fill="#333333" />
   <path
     d="M5.35156 13.4316L0 10.1895L5.35156 17.7285L10.6641 10.1895L5.35156 13.4316Z"

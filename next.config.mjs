@@ -6,7 +6,6 @@
  * @typedef {import('@sentry/nextjs').SentryWebpackPluginOptions} SentryWebpackPluginOptions
  */
 
-import webpack from 'webpack'
 import million from 'million/compiler'
 import { withSentryConfig } from '@sentry/nextjs'
 
@@ -21,13 +20,14 @@ if (process.env['ANALYZE']) {
 /** @type {NextConfig} */
 const nextConfig = {
   cleanDistDir: true,
+  trailingSlash: false,
   reactStrictMode: true,
   poweredByHeader: false,
   env: {
     NEXT_TELEMETRY_DISABLED: '1'
   },
   /** @param {WebpackConfiguration} config */
-  webpack: config => {
+  webpack: (config, context) => {
     if (config.name === 'server' && config.optimization) {
       config.optimization.concatenateModules = false
     }
@@ -40,12 +40,15 @@ const nextConfig = {
     }
     if (config.plugins) {
       config.plugins.push(
-        new webpack.IgnorePlugin({
+        new context.webpack.IgnorePlugin({
           resourceRegExp: /^(lokijs|pino|pino-pretty|encoding)$/
         }),
-        new webpack.NormalModuleReplacementPlugin(/node:/, resource => {
-          resource.request = resource.request.replace(/^node:/, '')
-        })
+        new context.webpack.NormalModuleReplacementPlugin(
+          /node:/,
+          (/** @type {{ request: string; }} */ resource) => {
+            resource.request = resource.request.replace(/^node:/, '')
+          }
+        )
       )
     }
     return config
@@ -102,11 +105,11 @@ const nextConfig = {
           value: [
             "default-src 'self' vercel.live;",
             "script-src 'self' 'unsafe-eval' 'unsafe-inline' cdn.vercel-insights.com vercel.live va.vercel-scripts.com;",
-            "style-src 'self' 'unsafe-inline' *.vercel-storage.com;",
+            "style-src 'self' 'unsafe-inline' *.vercel-storage.com fonts.googleapis.com;",
             'img-src * blob: data: *.vercel-storage.com;',
             "media-src 'none';",
             'connect-src *;',
-            "font-src 'self' data: *.public.blob.vercel-storage.com *.vercel-storage.com;",
+            "font-src 'self' *.public.blob.vercel-storage.com *.vercel-storage.com fonts.googleapis.com fonts.gstatic.com;",
             "frame-ancestors 'self';"
           ].join(' ')
         },

@@ -7,7 +7,7 @@ import { Header } from '#components/header.tsx'
 import { Footer } from '#components/footer.tsx'
 import { chains, rainbowTheme, wagmiConfig } from '#lib/wallet.ts'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit'
+import { RainbowKitProvider, lightTheme } from '@rainbow-me/rainbowkit'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental'
 
@@ -21,7 +21,12 @@ export function Providers({
     <QueryClientProvider client={queryClient}>
       <ReactQueryStreamedHydration>
         <WagmiConfig config={wagmiConfig}>
-          <RainbowKitProvider coolMode chains={chains} theme={rainbowTheme}>
+          <RainbowKitProvider
+            coolMode
+            chains={chains}
+            showRecentTransactions
+            theme={lightTheme({ overlayBlur: 'small' })}
+          >
             <Theme scaling='100%'>
               <Header />
               {children}
