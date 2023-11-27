@@ -1,6 +1,8 @@
 import plugin from 'tailwindcss/plugin'
 import type { Config } from 'tailwindcss'
 import radixPlugin from 'tailwindcss-radix'
+import typographyPlugin from '@tailwindcss/typography'
+import containerQueriesPlugin from '@tailwindcss/container-queries'
 
 // from https://github.com/epicweb-dev/epic-stack/blob/main/app/utils/extended-theme.ts
 const extendedTheme = {
@@ -110,7 +112,7 @@ export default {
   content: [
     './src/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,ts,jsx,tsx,mdx}'
   ],
   darkMode: 'class',
   important: true,
@@ -186,10 +188,22 @@ export default {
     }
   },
   plugins: [
+    containerQueriesPlugin,
+    typographyPlugin,
     radixPlugin,
-    plugin(({ addVariant }) => {
+    plugin(({ addVariant, matchUtilities, theme }) => {
       addVariant('radix-side-top', '&[data-side="top"]')
       addVariant('radix-side-bottom', '&[data-side="bottom"]')
+      matchUtilities(
+        {
+          'animation-delay': value => {
+            return { 'animation-delay': value }
+          }
+        },
+        {
+          values: theme('transitionDelay')
+        }
+      )
     })
   ]
 } satisfies Config

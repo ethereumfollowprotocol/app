@@ -4,8 +4,7 @@ import * as React from 'react'
 import { WagmiConfig } from 'wagmi'
 import { Theme } from '@radix-ui/themes'
 import { Header } from '#components/header.tsx'
-import { Footer } from '#components/footer.tsx'
-import { chains, rainbowTheme, wagmiConfig } from '#lib/wallet.ts'
+import { chains, wagmiConfig } from '#lib/wallet.ts'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { RainbowKitProvider, lightTheme } from '@rainbow-me/rainbowkit'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -25,12 +24,17 @@ export function Providers({
             coolMode
             chains={chains}
             showRecentTransactions
-            theme={lightTheme({ overlayBlur: 'small' })}
+            theme={lightTheme({
+              overlayBlur: 'small',
+              accentColor: '#ffffff',
+              accentColorForeground: '#000000'
+            })}
           >
             <Theme scaling='100%'>
-              <Header />
+              <React.Suspense>
+                <Header />
+              </React.Suspense>
               {children}
-              {/* <Footer /> */}
             </Theme>
           </RainbowKitProvider>
         </WagmiConfig>
