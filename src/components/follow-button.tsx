@@ -74,7 +74,7 @@ export function FollowButton({
   loading,
   ...properties
 }: PropsWithChildren<ComponentPropsWithoutRef<typeof Button>> & {
-  text: string
+  text: FollowButtonState
   pending?: boolean
   loading?: boolean
 }) {
@@ -82,18 +82,15 @@ export function FollowButton({
     <Button
       size={'2'}
       className={clsx([
-        // follows ? 'bg-[#ffe065]' : 'bg-white'
-        'bg-[#ffe065]',
-        '!rounded-xl px-4 text-sm sm:text-base font-bold',
+        text === 'Follow' ? 'bg-[#ffe065]' : 'bg-white',
+        'rounded-lg text-xs font-bold w-[90px]',
         pending ? 'cursor-not-allowed' : theme[text as FollowButtonState].bg,
         theme[text as FollowButtonState].text
       ])}
       disabled={pending}
       {...properties}
     >
-      <div className='mt-0.5 -mr-1'>
-        <img alt='mainnet logo' src='/assets/mainnet-black.svg' />
-      </div>
+      <img alt='mainnet logo' src='/assets/mainnet-black.svg' className='mt-0.5 -mr-1' />
       {text}
       {loading && <Spinner />}
     </Button>

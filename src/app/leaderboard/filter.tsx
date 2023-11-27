@@ -37,15 +37,18 @@ export function FilterList({
     })
   }
   return (
-    <Box className='space-x-3' my='auto'>
+    <Box className='space-x-3 lg:ml-0 ml-auto' my='auto'>
       <div
         className={clsx([
           //
-          'block lg:hidden'
+          'block lg:hidden mr-4'
         ])}
       >
         <Select.Root defaultValue={selectedFilter.toLowerCase()} onValueChange={handleFilter}>
-          <Select.Trigger variant='soft' className='rounded-lg bg-white/70 p-4 font-semibold' />
+          <Select.Trigger
+            variant='soft'
+            className='rounded-lg bg-white/70 p-4 font-semibold !border-none'
+          />
           <Select.Content>
             <Select.Group>
               <Select.Item value='quality'>Quality</Select.Item>
@@ -156,6 +159,7 @@ export function LeaderboardSearch({ disabled }: { disabled?: boolean }) {
           id='search'
           name='search'
           spellCheck={false}
+          autoComplete='off'
           disabled={disabled}
           placeholder='Search…'
           onChange={event => handleSearch(event.target.value)}

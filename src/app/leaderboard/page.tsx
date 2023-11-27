@@ -1,18 +1,7 @@
 import * as React from 'react'
 import { FollowButton } from '#components/follow-button.tsx'
 import { LeaderboardSearch, FilterList } from './filter.tsx'
-import {
-  Text,
-  Table,
-  Flex,
-  Badge,
-  Avatar,
-  Box,
-  Button,
-  Card,
-  TextField,
-  Code
-} from '@radix-ui/themes'
+import { Box, Text, Flex, Code, Table, Badge, Tooltip, IconButton } from '@radix-ui/themes'
 
 interface LeaderboardEntry {
   rank: number
@@ -84,12 +73,24 @@ export default async function LeaderboardPage({
         Leaderboard
       </Text>
       <Flex direction='column' width='100%' className='max-w-5xl'>
-        <Flex direction='row' justify='between' my='4' pr='1'>
-          <Box className='max-w-sm sm:w-64 w-48'>
+        <Flex direction='row' justify='between' my='4' pr='2'>
+          <Box className='max-w-sm w-52'>
             <LeaderboardSearch />
           </Box>
           <FilterList />
-          <Box mt='1'>
+          <Tooltip content='lorem ipsum' className=''>
+            <IconButton
+              radius='full'
+              mr='2'
+              size='1'
+              variant='soft'
+              my='auto'
+              className='bg-white font-bold text-gray-400'
+            >
+              ?
+            </IconButton>
+          </Tooltip>
+          <Box mt='2'>
             <Text as='p' className='h-2 font-semibold'>
               {filteredLeaderboard.length} account{filteredLeaderboard.length === 1 ? '' : 's'}
             </Text>
@@ -108,7 +109,7 @@ export default async function LeaderboardPage({
         <Table.Root
           size='2'
           variant='ghost'
-          className='bg-white/70 rounded-xl px-2 sm:px-12 py-4'
+          className='bg-white/50 rounded-xl px-2 sm:px-12 py-4'
           hidden={filteredLeaderboard.length === 0}
         >
           <Table.Header hidden>

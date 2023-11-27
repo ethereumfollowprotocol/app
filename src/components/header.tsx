@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Menu } from '#components/menu.tsx'
 import { usePathname } from 'next/navigation'
 import { pageRoutes } from '#lib/constants.ts'
+import { useAccount, useEnsName } from 'wagmi'
 import { Search } from '#components/search.tsx'
 import { Avatar, Text } from '@radix-ui/themes'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
@@ -13,6 +14,12 @@ import { CartButton } from '#components/cart-button.tsx'
 export function Header() {
   const pathname = usePathname()
 
+  const account = useAccount()
+  const {
+    data: ensName,
+    error: ensError,
+    status: ensStatus
+  } = useEnsName({ address: account.address, cacheTime: 4206942069 })
   return (
     <header className={clsx(['w-full px-2.5 font-sans sm:px-3 md:px-4 lg:px-5 xl:px-6'])}>
       <nav className='my-auto flex w-full flex-row justify-between'>
@@ -22,8 +29,8 @@ export function Header() {
               src='/assets/logo.png'
               fallback=''
               radius='full'
-              size='4'
-              mb='2'
+              size='5'
+              mb='1'
               className='select-none'
             />
           </Link>
@@ -68,8 +75,17 @@ export function Header() {
         <div className='my-auto ml-2 pb-0.5'>
           <CartButton cartItemsCount={24} />
         </div>
-        <div className={clsx(['my-auto flex items-center pb-1'])}>
-          <ConnectButton showBalance={false} chainStatus={'none'} label='Connect' />
+        <div
+          className={clsx([
+            'my-auto flex items-center justify-end pb-1 w-72 max-w-context text-sm'
+          ])}
+        >
+          <ConnectButton
+            showBalance={false}
+            chainStatus={'none'}
+            label='Connect'
+            accountStatus={ensName ? 'full' : 'address'}
+          />
         </div>
         <div className='my-auto pb-0.5 pl-2.5'>
           <Menu />
