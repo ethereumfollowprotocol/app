@@ -1,32 +1,13 @@
-interface ENStateResponse {
-  name: string
-  address: string
-  avatar: string
-  display: string
-  records: {
-    avatar: string
-    [key: string]: string
-  }
-  chains: { [key: string]: string }
-  fresh: number
-  resolver: string
-  errors: { [key: string]: string }
-}
-
-async function ensData(user: string) {
-  const response = await fetch(`https://enstate.rs/n/${user}`, { cache: 'default' })
-  const data = (await response.json()) as ENStateResponse
-  return data
-}
+import { getEnsProfile } from 'src/app/actions.ts'
 
 export default async function Page({ params }: { params: { user: string } }) {
-  const data = await ensData(params.user)
+  const profile = await getEnsProfile(params.user)
   return (
     <main className='font-sans mx-auto flex h-full min-h-full w-full flex-col items-center overflow-scroll mb-12 px-4 pt-6 text-center'>
-      <img src={data['avatar']} alt='env ave' width={200} height={200} className='rounded-xl' />
+      <img src={profile['avatar']} alt='env ave' width={200} height={200} className='rounded-xl' />
       <section className='max-w-xl'>
         <pre className='text-left text-black text-clip overflow-clip'>
-          {JSON.stringify(data, undefined, 2)}
+          {JSON.stringify(profile, undefined, 2)}
         </pre>
       </section>
     </main>
