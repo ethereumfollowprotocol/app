@@ -4,6 +4,17 @@ import * as React from 'react'
 import { isAddress } from 'viem'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import {
+  Avatar,
+  Box,
+  Button,
+  Checkbox,
+  Flex,
+  IconButton,
+  Popover,
+  TextArea,
+  Text
+} from '@radix-ui/themes'
 
 // ens min is 3 letters
 function validateInput(value: string) {
@@ -53,7 +64,7 @@ export function Search({ disabled }: { disabled?: boolean }) {
         <label htmlFor='search' className='sr-only'>
           Search
         </label>
-        <div className='rounded-md shadow-sm'>
+        <div className='rounded-md shadow-sm hidden sm:block'>
           <div
             className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3'
             aria-hidden='true'
@@ -72,7 +83,43 @@ export function Search({ disabled }: { disabled?: boolean }) {
             className='lowercase h-9 block w-full rounded-xl border-0 border-transparent pl-9 sm:text-sm bg-white/70'
           />
         </div>
+        {/* <IconButton>
+          <MagnifyingGlassIcon className='mr-3 h-4 w-4 text-gray-400' aria-hidden='true' />
+        </IconButton> */}
+        <div className='sm:hidden'>
+          <Popover.Root>
+            <Popover.Trigger>
+              <IconButton variant='soft' size='3' radius='full'>
+                <MagnifyingGlassIcon className='h-6 w-6 text-gray-400' aria-hidden='true' />
+              </IconButton>
+            </Popover.Trigger>
+            <Popover.Content style={{ width: 360 }}>
+              <Flex gap='3'>
+                <Avatar
+                  size='2'
+                  src='https://images.unsplash.com/photo-1607346256330-dee7af15f7c5?&w=64&h=64&dpr=2&q=70&crop=focalpoint&fp-x=0.67&fp-y=0.5&fp-z=1.4&fit=crop'
+                  fallback='A'
+                  radius='full'
+                />
+                <Box grow='1'>
+                  <TextArea placeholder='Write a comment…' style={{ height: 80 }} />
+                  <Flex gap='3' mt='3' justify='between'>
+                    <Flex align='center' gap='2' asChild>
+                      <Text as='label' size='2'>
+                        <Checkbox />
+                        <Text>Send to group</Text>
+                      </Text>
+                    </Flex>
 
+                    <Popover.Close>
+                      <Button size='1'>Comment</Button>
+                    </Popover.Close>
+                  </Flex>
+                </Box>
+              </Flex>
+            </Popover.Content>
+          </Popover.Root>
+        </div>
         {isPending && (
           <div className='absolute right-0 top-0 bottom-0 flex items-center justify-center'>
             <svg

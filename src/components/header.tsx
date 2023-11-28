@@ -24,13 +24,13 @@ export function Header() {
   return (
     <header className={clsx(['w-full px-2.5 font-sans sm:px-3 md:px-4 lg:px-5 xl:px-6'])}>
       <nav className='my-auto flex w-full flex-row justify-between'>
-        <div className={clsx(['my-auto flex w-full items-center space-x-3 pr-3'])}>
+        <div className={clsx(['my-auto flex w-full items-center space-x-3 sm:pr-3'])}>
           <Link href='/' className='select-none'>
             <Avatar
               src='/assets/logo.png'
               fallback=''
               radius='full'
-              size='5'
+              size='4'
               mb='1'
               className='select-none'
             />
@@ -75,12 +75,15 @@ export function Header() {
             </li>
           ))}
         </ul>
-        <div className='my-auto ml-2 pb-0.5'>
-          <CartButton cartItemsCount={24} />
-        </div>
+        {account.isConnected && (
+          <div className='my-auto ml-2 pb-0.5 mr-3'>
+            <CartButton cartItemsCount={24} />
+          </div>
+        )}
         <div
           className={clsx([
-            'my-auto flex items-center justify-end pb-1 w-72 max-w-context text-sm'
+            !account.isConnected && 'w-min',
+            'my-auto flex items-center justify-end pb-1 w-[225px] max-w-context text-xs sm:text-sm'
           ])}
         >
           <ConnectButton

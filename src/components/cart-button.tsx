@@ -3,26 +3,16 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import * as React from 'react'
-import { useAccount } from 'wagmi'
 import { IconButton } from '@radix-ui/themes'
 import { Pencil1Icon } from '@radix-ui/react-icons'
 
-export function CartButton(props: { cartItemsCount: number }) {
-  const { isConnected, isDisconnected, isConnecting, isReconnecting } = useAccount()
-
-  const notConnected = !isConnected || isDisconnected || isConnecting || isReconnecting
-
-  if (notConnected) return null
-
+export function CartButton(props: { cartItemsCount: number; disabled?: boolean }) {
   return (
     <IconButton
       hidden
-      disabled={props.cartItemsCount === 0 || notConnected}
+      disabled={props.cartItemsCount === 0 || props.disabled}
       radius='full'
-      className={clsx([
-        'bg-white hover:cursor-pointer hover:opacity-100 relative mx-4 flex',
-        notConnected ? 'hidden' : 'flex'
-      ])}
+      className={clsx(['bg-white hover:cursor-pointer hover:opacity-100 relative flex'])}
       variant='solid'
       size={'3'}
       asChild

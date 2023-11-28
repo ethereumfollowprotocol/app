@@ -1,7 +1,6 @@
 import { ImageResponse } from 'next/og'
-import { raise } from 'src/lib/utilities.ts'
-import type { ExtractTypeFromUnion, Pretty, Flatten } from '#lib/types.ts'
 import { cacheHeader } from 'pretty-cache-header'
+import type { ExtractTypeFromUnion, Pretty, Flatten } from '#lib/types.ts'
 
 export const runtime = 'edge'
 

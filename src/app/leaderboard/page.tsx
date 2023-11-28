@@ -166,12 +166,12 @@ function TableRow({
           alt='1'
           src='/assets/leaderboard/1.png'
           width='38'
-          className='m-auto overflow-hidden '
+          className='m-auto overflow-hidden select-none'
         />
       ) : rank === 2 ? (
-        <img alt='2' src='/assets/leaderboard/2.png' width='26' className='m-auto' />
+        <img alt='2' src='/assets/leaderboard/2.png' width='26' className='m-auto select-none' />
       ) : rank === 3 ? (
-        <img alt='3' src='/assets/leaderboard/3.png' width='20' className='m-auto' />
+        <img alt='3' src='/assets/leaderboard/3.png' width='20' className='m-auto select-none' />
       ) : (
         <Text size='7' as='p' className='font-bold' my='auto' mb='3'>
           {rank}
@@ -182,7 +182,7 @@ function TableRow({
 
   return (
     <Table.Row style={{ height: '1px' }} align='center'>
-      <Table.RowHeaderCell justify='center' className='pt-1 sm:pr-6'>
+      <Table.RowHeaderCell justify='center' className='pt-1 sm:pr-6 select-none'>
         <Box height='max-content' my='auto'>
           {rowNumber}
         </Box>
