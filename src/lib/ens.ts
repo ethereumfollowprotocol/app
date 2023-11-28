@@ -15,8 +15,8 @@ export async function getENSProfile({ ensNameOrAddress }: { ensNameOrAddress?: s
     ensNameOrAddress.indexOf('0x') === 0
       ? 'address'
       : ensNameOrAddress.includes('.eth')
-      ? 'name'
-      : undefined
+        ? 'name'
+        : undefined
 
   if (!providedId) return
 

@@ -1,13 +1,13 @@
 'use client'
 
+import clsx from 'clsx'
 import * as React from 'react'
 import Image from 'next/image'
-import { Heading, Text, Button, Separator, Callout } from '@radix-ui/themes'
-import { CheckIcon, InfoCircledIcon } from '@radix-ui/react-icons'
-import { useSearchParams } from 'next/navigation'
-import clsx from 'clsx'
-import { useAccount, useSendTransaction } from 'wagmi'
 import { parseEther } from 'viem'
+import { useSearchParams } from 'next/navigation'
+import { useAccount, useSendTransaction } from 'wagmi'
+import { CheckIcon, InfoCircledIcon } from '@radix-ui/react-icons'
+import { Heading, Text, Button, Separator, Callout } from '@radix-ui/themes'
 
 const storeLocation = [
   {
@@ -58,7 +58,7 @@ export function OnboardingForm() {
 
   const [formStep, setFormStep] = React.useState(0)
   const [selectedStoreLocation, setSelectedStoreLocation] = React.useState<
-    typeof storeLocation[number] | undefined
+    (typeof storeLocation)[number] | undefined
   >()
 
   const nextStep = (event: React.MouseEvent<HTMLButtonElement>) => {

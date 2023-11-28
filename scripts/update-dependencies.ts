@@ -19,7 +19,7 @@ async function main() {
   else console.log('Dependencies are up to date')
 
   const { stdout, success } = bun.spawnSync(['bun', 'install', '--no-cache', '--force'])
-  console.log({ success }, stdout.toString())
+  console.log(`success: ${success}`, stdout.toString())
 }
 
 async function bumpDependencies() {

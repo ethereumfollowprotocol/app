@@ -62,4 +62,4 @@ export const pageRoutes = [
 
 export const chains = ['mainnet', 'optimism', 'arbitrum', 'polygon', 'zkSync'] as const
 
-export type Chain = typeof chains[number]
+export type Chain = (typeof chains)[number]
