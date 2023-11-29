@@ -193,8 +193,8 @@ function TableRow({
       </Table.RowHeaderCell>
       <Table.Cell data-name='name-column'>
         <Flex direction='column' className='text-left mr-0 sm:mr-2' justify='start' align='start'>
-          <Link href={`/${name}`} target='_blank'>
-            <Text className='font-bold sm:text-xl text-sm hover:text-pink-400'>{name}</Text>
+          <Link href={`/${name}`} className='font-bold sm:text-xl text-sm hover:text-pink-400'>
+            {name}
           </Link>
           <Badge className='font-bold text-[10px]' size='1' radius='full'>
             Follows you
