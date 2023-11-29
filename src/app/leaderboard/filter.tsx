@@ -41,13 +41,13 @@ export function FilterList({
       <div
         className={clsx([
           //
-          'block lg:hidden mr-4'
+          'block lg:hidden mr-2'
         ])}
       >
         <Select.Root defaultValue={selectedFilter.toLowerCase()} onValueChange={handleFilter}>
           <Select.Trigger
             variant='soft'
-            className='rounded-lg bg-white/70 p-4 font-semibold !border-none'
+            className='rounded-lg bg-white/70 p-4 font-semibold !border-none text-sm ml-2'
           />
           <Select.Content>
             <Select.Group>

@@ -12,6 +12,8 @@ import { Avatar, Text } from '@radix-ui/themes'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { CartButton } from '#components/cart-button.tsx'
 
+export default Header
+
 export function Header() {
   const pathname = usePathname()
 
@@ -49,9 +51,7 @@ export function Header() {
             Follow <br />
             Protocol
           </Text>
-          <React.Suspense>
-            <Search />
-          </React.Suspense>
+          <Search />
         </div>
         <ul
           className={clsx([
@@ -80,19 +80,21 @@ export function Header() {
             <CartButton cartItemsCount={24} />
           </div>
         )}
-        <div
-          className={clsx([
-            !account.isConnected && 'w-min',
-            'my-auto flex items-center justify-end pb-1 w-[225px] max-w-context text-xs sm:text-sm'
-          ])}
-        >
-          <ConnectButton
-            showBalance={false}
-            chainStatus={'none'}
-            label='Connect'
-            accountStatus={ensName ? 'full' : 'address'}
-          />
-        </div>
+        <React.Suspense fallback={<React.Fragment>TODO: Loading</React.Fragment>}>
+          <div
+            className={clsx([
+              !account.isConnected && 'w-min',
+              'my-auto flex items-center justify-end pb-1 w-[225px] max-w-context text-xs sm:text-sm'
+            ])}
+          >
+            <ConnectButton
+              showBalance={false}
+              chainStatus={'none'}
+              label='Connect'
+              accountStatus={ensName ? 'full' : 'address'}
+            />
+          </div>
+        </React.Suspense>
         <div className='my-auto pb-0.5 pl-2.5'>
           <Menu />
         </div>

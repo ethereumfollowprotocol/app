@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.3.3/schema.json",
+  "$schema": "https://biomejs.dev/schemas/1.4.0/schema.json",
   "vcs": {
     "root": ".",
     "enabled": true,
@@ -48,10 +48,10 @@
       },
       "a11y": { "noSvgWithoutTitle": "off" },
       "nursery": { "noUnusedImports": "off" },
-      "complexity": { "useLiteralKeys": "off" },
       "performance": { "noAccumulatingSpread": "off" },
       "correctness": { "noUndeclaredVariables": "off" },
-      "suspicious": { "noExplicitAny": "off", "noEmptyInterface": "off" }
+      "suspicious": { "noExplicitAny": "off", "noEmptyInterface": "off" },
+      "complexity": { "useLiteralKeys": "off", "noUselessFragments": "off" }
     }
   },
   "json": {

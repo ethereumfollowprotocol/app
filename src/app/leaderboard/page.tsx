@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import * as React from 'react'
 import { FollowButton } from '#components/follow-button.tsx'
 import { LeaderboardSearch, FilterList } from './filter.tsx'
@@ -73,7 +74,7 @@ export default async function LeaderboardPage({
         Leaderboard
       </Text>
       <Flex direction='column' width='100%' className='max-w-5xl'>
-        <Flex direction='row' justify='between' my='4' pr='2'>
+        <Flex direction='row' justify='between' my='4'>
           <Box className='max-w-sm w-52'>
             <React.Suspense>
               <LeaderboardSearch />
@@ -93,7 +94,10 @@ export default async function LeaderboardPage({
             </IconButton>
           </Tooltip>
           <Box mt='2'>
-            <Text as='p' className='h-2 font-semibold'>
+            <Text
+              as='p'
+              className='h-2 font-semibold text-sm sm:text-md w-full leading-none sm:leading-normal'
+            >
               {filteredLeaderboard.length} account{filteredLeaderboard.length === 1 ? '' : 's'}
             </Text>
           </Box>
@@ -181,7 +185,7 @@ function TableRow({
   )
 
   return (
-    <Table.Row style={{ height: '1px' }} align='center'>
+    <Table.Row align='center'>
       <Table.RowHeaderCell justify='center' className='pt-1 sm:pr-6 select-none'>
         <Box height='max-content' my='auto'>
           {rowNumber}
@@ -189,9 +193,9 @@ function TableRow({
       </Table.RowHeaderCell>
       <Table.Cell data-name='name-column'>
         <Flex direction='column' className='text-left mr-0 sm:mr-2' justify='start' align='start'>
-          <Text className='font-bold sm:text-xl' as='p'>
-            {name}
-          </Text>
+          <Link href={`/${name}`} target='_blank'>
+            <Text className='font-bold sm:text-xl text-sm hover:text-pink-400'>{name}</Text>
+          </Link>
           <Badge className='font-bold text-[10px]' size='1' radius='full'>
             Follows you
           </Badge>

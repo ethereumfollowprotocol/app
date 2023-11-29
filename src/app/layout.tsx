@@ -9,8 +9,6 @@ import { Providers } from './providers.tsx'
 import { Inter, IBM_Plex_Mono } from 'next/font/google'
 import { APP_NAME, APP_DESCRIPTION } from '#lib/constants.ts'
 
-const WebVitals = dynamic(() => import('./web-vitals.ts'), { ssr: false })
-
 const inter = Inter({
   subsets: ['latin'],
   weight: ['400', '500', '700', '900'],
@@ -52,7 +50,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta property='og:url' content='https://x.com/ethfollowpr' />
       </head>
       <body className='w-full min-w-full items-center font-serif'>
-        <WebVitals />
         <Providers>{children}</Providers>
       </body>
     </html>

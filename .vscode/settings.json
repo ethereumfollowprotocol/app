@@ -6,7 +6,8 @@
   "typescript.preferences.preferTypeOnlyAutoImports": true,
   "files.associations": {
     // tells vscode that the file can take comments
-    "*.css": "tailwindcss"
+    "*.css": "tailwindcss",
+    "biome.json": "jsonc"
   },
   "editor.quickSuggestions": {
     "strings": "on"
