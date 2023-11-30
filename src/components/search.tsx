@@ -6,9 +6,9 @@ import { isAddress } from 'viem'
 import { PendingIcon } from './pending.tsx'
 import { useQuery } from '@tanstack/react-query'
 import { ENS_SUBGRAPH } from '#lib/constants.ts'
-import { useThrottle } from '@uidotdev/usehooks'
 import { getQueryClient } from '#lib/query-client.ts'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
+import { useClickAway, useThrottle } from '@uidotdev/usehooks'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { IconButton, Dialog, TextField, DropdownMenu } from '@radix-ui/themes'
 
@@ -52,7 +52,13 @@ async function searchEnsSubgraph({ search }: { search: string }): Promise<Array<
 }
 
 export function Search({ disabled }: { disabled?: boolean }) {
+  const [dropdownMenuOpen, setDropdownMenuOpen] = React.useState(false)
   const searchBarRef = React.useRef<HTMLInputElement>(null)
+
+  const ref = useClickAway<HTMLDivElement>(event => {
+    event.preventDefault()
+    setDropdownMenuOpen(false)
+  })
 
   const router = useRouter()
   const pathname = usePathname()
@@ -66,12 +72,11 @@ export function Search({ disabled }: { disabled?: boolean }) {
     if (term) params.set('search', term)
     else params.delete('search')
 
+    setDropdownMenuOpen(!!term && term.length >= 3)
     startTransition(() => {
       router.replace(`${pathname}?${params.toString()}`)
     })
   }
-
-  // const debounceHandleSearch = React.useCallback(useDebounce(handleSearch, 500), [])
 
   function onSubmit(event?: React.FormEvent<HTMLFormElement>) {
     event?.preventDefault()
@@ -107,7 +112,7 @@ export function Search({ disabled }: { disabled?: boolean }) {
         <label htmlFor='search' className='sr-only'>
           Search
         </label>
-        <div className='rounded-md shadow-sm hidden md:block'>
+        <div className='rounded-md shadow-sm hidden sm:block'>
           <div
             className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2'
             aria-hidden='true'
@@ -117,6 +122,15 @@ export function Search({ disabled }: { disabled?: boolean }) {
           <input
             ref={searchBarRef}
             type='text'
+            onClick={event => {
+              event.preventDefault()
+              setDropdownMenuOpen(
+                event.currentTarget.value.length >= 3 &&
+                  !!throttledSearchParams &&
+                  throttledSearchParams.length >= 3 &&
+                  !!searchResult
+              )
+            }}
             id='search'
             name='search'
             spellCheck={false}
@@ -127,15 +141,15 @@ export function Search({ disabled }: { disabled?: boolean }) {
             className='lowercase h-9 block w-full rounded-xl border-0 border-transparent pl-7 text-xs sm:text-sm bg-white/70'
           />
         </div>
-        <div className='md:hidden'>
-          <Dialog.Root>
+        <div className='block sm:hidden'>
+          <Dialog.Root defaultOpen={false}>
             <Dialog.Trigger>
               <IconButton variant='soft' size='3' radius='full' className='bg-white'>
                 <MagnifyingGlassIcon className='h-6 w-6 text-black' aria-hidden='true' />
               </IconButton>
             </Dialog.Trigger>
 
-            <Dialog.Content style={{ maxWidth: 450 }} className='p-0'>
+            <Dialog.Content style={{ maxWidth: 450 }} className='p-0 sm:hidden block'>
               <TextField.Root>
                 <TextField.Input
                   size='3'
@@ -145,6 +159,17 @@ export function Search({ disabled }: { disabled?: boolean }) {
                   disabled={disabled}
                   onChange={handleSearch}
                   placeholder='Search ENS or 0x address…'
+                  autoComplete='off'
+                  ref={searchBarRef}
+                  onClick={event => {
+                    event.preventDefault()
+                    setDropdownMenuOpen(
+                      event.currentTarget.value.length >= 3 &&
+                        !!throttledSearchParams &&
+                        throttledSearchParams.length >= 3 &&
+                        !!searchResult
+                    )
+                  }}
                 />
                 <TextField.Slot>
                   {isPending && (
@@ -154,6 +179,45 @@ export function Search({ disabled }: { disabled?: boolean }) {
                   )}
                 </TextField.Slot>
               </TextField.Root>
+              <DropdownMenu.Root
+                modal={false}
+                defaultOpen={false}
+                open={
+                  dropdownMenuOpen &&
+                  !!throttledSearchParams &&
+                  throttledSearchParams.length >= 3 &&
+                  searchResult &&
+                  searchResult.length > 0
+                }
+              >
+                <DropdownMenu.Trigger className='w-full' data-state='closed'>
+                  <div />
+                </DropdownMenu.Trigger>
+                <DropdownMenu.Content
+                  className='max-w-xl w-80 min-w-full text-lg py-0 sm:hidden block'
+                  autoFocus={false}
+                  ref={ref}
+                  hideWhenDetached
+                  onFocusCapture={event => {
+                    event.preventDefault()
+                    event.stopPropagation()
+                    searchBarRef.current?.focus()
+                  }}
+                >
+                  {searchResult?.map((result, index) => (
+                    <DropdownMenu.Item
+                      key={`${index}`}
+                      asChild
+                      className='w-full text-md py-0 hover:bg-pink-50'
+                      tabIndex={0 + 1}
+                    >
+                      <Link href={result} className='hover:cursor-pointer'>
+                        {result}
+                      </Link>
+                    </DropdownMenu.Item>
+                  ))}
+                </DropdownMenu.Content>
+              </DropdownMenu.Root>
               <label className='sr-only'>Search</label>
             </Dialog.Content>
           </Dialog.Root>
@@ -164,33 +228,47 @@ export function Search({ disabled }: { disabled?: boolean }) {
           </div>
         )}
       </div>
-      <DropdownMenu.Root modal={false} open={searchResult && searchResult.length > 0}>
-        <DropdownMenu.Trigger className='w-full'>
-          <div />
-        </DropdownMenu.Trigger>
-        <DropdownMenu.Content
-          className='max-w-xl w-80 min-w-full text-lg py-0 hidden sm:block'
-          autoFocus={false}
-          onFocusCapture={event => {
-            event.preventDefault()
-            event.stopPropagation()
-            searchBarRef.current?.focus()
-          }}
+      <div className='sm:hidden block'>
+        <DropdownMenu.Root
+          modal={false}
+          defaultOpen={false}
+          open={
+            dropdownMenuOpen &&
+            !!throttledSearchParams &&
+            throttledSearchParams.length >= 3 &&
+            searchResult &&
+            searchResult.length > 0
+          }
         >
-          {searchResult?.map((result, index) => (
-            <DropdownMenu.Item
-              key={`${index}`}
-              asChild
-              className='w-full text-md py-0 hover:bg-pink-50'
-              tabIndex={0 + 1}
-            >
-              <Link href={result} className='hover:cursor-pointer'>
-                {result}
-              </Link>
-            </DropdownMenu.Item>
-          ))}
-        </DropdownMenu.Content>
-      </DropdownMenu.Root>
+          <DropdownMenu.Trigger className='w-full' data-state='closed'>
+            <div />
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content
+            className='max-w-xl w-60 md:w-80 min-w-full text-lg py-0 hidden sm:block'
+            autoFocus={false}
+            ref={ref}
+            hideWhenDetached
+            onFocusCapture={event => {
+              event.preventDefault()
+              event.stopPropagation()
+              searchBarRef.current?.focus()
+            }}
+          >
+            {searchResult?.map((result, index) => (
+              <DropdownMenu.Item
+                key={`${index}`}
+                asChild
+                className='w-full text-md py-0 hover:bg-pink-50'
+                tabIndex={0 + 1}
+              >
+                <Link href={result} className='hover:cursor-pointer'>
+                  {result}
+                </Link>
+              </DropdownMenu.Item>
+            ))}
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
+      </div>
     </form>
   )
 }

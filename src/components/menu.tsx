@@ -96,8 +96,8 @@ export function Menu() {
             <DropdownMenu.Item
               asChild
               className={clsx([
-                'my-0.5 flex capitalize sm:hidden',
-                pathname === route.href ? 'bg-orange-500 text-white' : ''
+                'my-0.5 flex capitalize lg:hidden',
+                pathname === route.href ? 'bg-pink-400 text-white' : ''
               ])}
               key={`route-${index}`}
             >
@@ -108,7 +108,7 @@ export function Menu() {
             </DropdownMenu.Item>
           )
         })}
-        <DropdownMenu.Separator className='block sm:hidden' />
+        <DropdownMenu.Separator className='block lg:hidden' />
 
         <DropdownMenu.Sub>
           <DropdownMenu.SubTrigger>List #2,932</DropdownMenu.SubTrigger>

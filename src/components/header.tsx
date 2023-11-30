@@ -57,9 +57,9 @@ export function Header() {
         </div>
         <ul
           className={clsx([
-            'px-2.25 py-0.15 my-auto flex space-x-0 text-lg font-semibold mx-2',
-            'sm:space-x-5 sm:bg-transparent sm:p-0',
-            'hidden md:flex'
+            'px-2.25 py-0.15 my-auto flex space-x-0 md:text-lg text-sm font-semibold mx-2',
+            'sm:space-x-3.5 sm:bg-transparent sm:p-0',
+            'hidden lg:flex'
           ])}
         >
           {pageRoutes.map((route, index) => (
@@ -78,7 +78,7 @@ export function Header() {
           ))}
         </ul>
 
-        <div className='my-auto ml-2 pb-0.5 mr-3'>
+        <div className='my-auto ml-2 pb-0.5 mr-4'>
           <CartButton cartItemsCount={24} />
         </div>
 
@@ -86,7 +86,7 @@ export function Header() {
           <div
             className={clsx([
               !account.isConnected && 'w-min',
-              'my-auto flex items-center justify-end pb-1 w-[225px] max-w-context text-xs sm:text-sm'
+              'my-auto flex items-center justify-end pb-1  max-w-context text-xs sm:text-sm'
             ])}
           >
             <ConnectButton
