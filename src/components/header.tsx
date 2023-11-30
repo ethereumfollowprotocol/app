@@ -11,11 +11,13 @@ import { Search } from '#components/search.tsx'
 import { Avatar, Text } from '@radix-ui/themes'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { CartButton } from '#components/cart-button.tsx'
+import { useIsMounted } from 'src/hooks/use-is-mounted.ts'
 
 export default Header
 
 export function Header() {
   const pathname = usePathname()
+  const isMounted = useIsMounted()
 
   const account = useAccount()
   const {
@@ -51,7 +53,7 @@ export function Header() {
             Follow <br />
             Protocol
           </Text>
-          <Search />
+          {isMounted && <Search />}
         </div>
         <ul
           className={clsx([
@@ -75,12 +77,12 @@ export function Header() {
             </li>
           ))}
         </ul>
-        {account.isConnected && (
-          <div className='my-auto ml-2 pb-0.5 mr-3'>
-            <CartButton cartItemsCount={24} />
-          </div>
-        )}
-        <React.Suspense fallback={<React.Fragment>TODO: Loading</React.Fragment>}>
+
+        <div className='my-auto ml-2 pb-0.5 mr-3'>
+          <CartButton cartItemsCount={24} />
+        </div>
+
+        {isMounted && (
           <div
             className={clsx([
               !account.isConnected && 'w-min',
@@ -94,7 +96,8 @@ export function Header() {
               accountStatus={ensName ? 'full' : 'address'}
             />
           </div>
-        </React.Suspense>
+        )}
+
         <div className='my-auto pb-0.5 pl-2.5'>
           <Menu />
         </div>

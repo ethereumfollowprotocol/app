@@ -4,7 +4,6 @@ import '@rainbow-me/rainbowkit/styles.css'
 
 import clsx from 'clsx'
 import * as React from 'react'
-import dynamic from 'next/dynamic'
 import { Providers } from './providers.tsx'
 import { Inter, IBM_Plex_Mono } from 'next/font/google'
 import { APP_NAME, APP_DESCRIPTION } from '#lib/constants.ts'

@@ -38,12 +38,7 @@ export function FilterList({
   }
   return (
     <Box className='space-x-3 lg:ml-0 ml-auto' my='auto'>
-      <div
-        className={clsx([
-          //
-          'block lg:hidden mr-2'
-        ])}
-      >
+      <div className='block lg:hidden mr-2'>
         <Select.Root defaultValue={selectedFilter.toLowerCase()} onValueChange={handleFilter}>
           <Select.Trigger
             variant='soft'
@@ -51,9 +46,8 @@ export function FilterList({
           />
           <Select.Content>
             <Select.Group>
-              <Select.Item value='quality'>Quality</Select.Item>
-              <Select.Item value='followers'>Followers</Select.Item>
               <Select.Item value='following'>Following</Select.Item>
+              <Select.Item value='followers'>Followers</Select.Item>
               <Select.Item value='mutuals'>Mutuals</Select.Item>
               <Select.Item value='blocked-muted'>Blocked+Muted</Select.Item>
             </Select.Group>
@@ -67,12 +61,12 @@ export function FilterList({
           radius='full'
           className={clsx([
             'text-sm px-4 font-semibold text-black',
-            selectedFilter === 'quality' ? 'bg-white' : 'bg-[#CDCDCD] text-gray-500'
+            selectedFilter === 'following' ? 'bg-white' : 'bg-[#CDCDCD] text-gray-500'
           ])}
           disabled={disabled}
-          onClick={() => handleFilter('quality')}
+          onClick={() => handleFilter('following')}
         >
-          Quality Followers
+          Following
         </Button>
         <Button
           size='2'
@@ -85,18 +79,6 @@ export function FilterList({
           onClick={() => handleFilter('followers')}
         >
           Followers
-        </Button>
-        <Button
-          size='2'
-          radius='full'
-          className={clsx([
-            'text-sm px-4 font-semibold text-black',
-            selectedFilter === 'following' ? 'bg-white' : 'bg-[#CDCDCD] text-gray-500'
-          ])}
-          disabled={disabled}
-          onClick={() => handleFilter('following')}
-        >
-          Following
         </Button>
         <Button
           size='2'
@@ -163,7 +145,7 @@ export function LeaderboardSearch({ disabled }: { disabled?: boolean }) {
           disabled={disabled}
           placeholder='Search…'
           onChange={event => handleSearch(event.target.value)}
-          className='lowercase h-9 block w-full rounded-xl border-0 border-transparent pl-9 sm:text-sm bg-white/70'
+          className='lowercase h-10 block w-full rounded-xl border-0 border-transparent pl-9 sm:text-sm bg-white/50'
         />
       </div>
 

@@ -31,10 +31,8 @@ const nextConfig = {
     if (config.name === 'server' && config.optimization) {
       config.optimization.concatenateModules = false
     }
-    if (config.resolve) {
-      /* WalletConnect x wagmi needed configuration */
-      config.resolve.fallback = { fs: false, net: false, tls: false }
-    }
+    /* WalletConnect x wagmi needed configuration */
+    if (config.resolve) config.resolve.fallback = { fs: false, net: false, tls: false }
     if (Array.isArray(config.externals)) {
       config.externals.push('lokijs', 'pino', 'pino-pretty', 'encoding')
     }

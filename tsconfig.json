@@ -36,7 +36,7 @@
       {
         "name": "next"
       }
-    ],
+    ]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.jsx", ".next/types/**/*.ts"],
   "files": ["biome.json", "environment.d.ts", "next.config.mjs"],

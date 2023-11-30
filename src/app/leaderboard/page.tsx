@@ -1,13 +1,13 @@
+import clsx from 'clsx'
 import Link from 'next/link'
 import * as React from 'react'
 import { FollowButton } from '#components/follow-button.tsx'
 import { LeaderboardSearch, FilterList } from './filter.tsx'
-import { Box, Text, Flex, Code, Table, Badge, Tooltip, IconButton } from '@radix-ui/themes'
+import { Box, Text, Flex, Code, Table, Badge, Tooltip, IconButton, Avatar } from '@radix-ui/themes'
 
 interface LeaderboardEntry {
   rank: number
   name: string
-  quality: string
   following: string
   followers: string
   mutuals: string
@@ -18,7 +18,6 @@ const leaderboard = [
   {
     rank: 1,
     name: 'dr3a.eth',
-    quality: '943',
     following: '12.4k',
     followers: '495',
     mutuals: '495',
@@ -27,7 +26,6 @@ const leaderboard = [
   {
     rank: 2,
     name: 'anon.eth',
-    quality: '943',
     following: '12.4k',
     followers: '495',
     mutuals: '495',
@@ -36,7 +34,6 @@ const leaderboard = [
   {
     rank: 3,
     name: 'dragonite.eth',
-    quality: '943',
     following: '12.4k',
     followers: '495',
     mutuals: '495',
@@ -45,7 +42,103 @@ const leaderboard = [
   {
     rank: 4,
     name: 'dcj.eth',
-    quality: '943',
+    following: '12.4k',
+    followers: '495',
+    mutuals: '495',
+    blockedMuted: '495'
+  },
+  {
+    rank: 5,
+    name: 'dr3a.eth',
+    following: '12.4k',
+    followers: '495',
+    mutuals: '495',
+    blockedMuted: '495'
+  },
+  {
+    rank: 6,
+    name: 'anon.eth',
+    following: '12.4k',
+    followers: '495',
+    mutuals: '495',
+    blockedMuted: '495'
+  },
+  {
+    rank: 7,
+    name: 'dragonite.eth',
+    following: '12.4k',
+    followers: '495',
+    mutuals: '495',
+    blockedMuted: '495'
+  },
+  {
+    rank: 8,
+    name: 'dcj.eth',
+    following: '12.4k',
+    followers: '495',
+    mutuals: '495',
+    blockedMuted: '495'
+  },
+  {
+    rank: 9,
+    name: 'dr3a.eth',
+    following: '12.4k',
+    followers: '495',
+    mutuals: '495',
+    blockedMuted: '495'
+  },
+  {
+    rank: 10,
+    name: 'anon.eth',
+    following: '12.4k',
+    followers: '495',
+    mutuals: '495',
+    blockedMuted: '495'
+  },
+  {
+    rank: 11,
+    name: 'dragonite.eth',
+    following: '12.4k',
+    followers: '495',
+    mutuals: '495',
+    blockedMuted: '495'
+  },
+  {
+    rank: 12,
+    name: 'dcj.eth',
+    following: '12.4k',
+    followers: '495',
+    mutuals: '495',
+    blockedMuted: '495'
+  },
+  {
+    rank: 13,
+    name: 'dr3a.eth',
+    following: '12.4k',
+    followers: '495',
+    mutuals: '495',
+    blockedMuted: '495'
+  },
+  {
+    rank: 14,
+    name: 'anon.eth',
+    following: '12.4k',
+    followers: '495',
+    mutuals: '495',
+    blockedMuted: '495'
+  },
+  {
+    rank: 15,
+    name: 'dragonite.eth',
+    following: '12.4k',
+    followers: '495',
+    mutuals: '495',
+    blockedMuted: '495'
+  },
+  {
+    rank: 16,
+    name: 'dcj.eth',
+
     following: '12.4k',
     followers: '495',
     mutuals: '495',
@@ -115,14 +208,13 @@ export default async function LeaderboardPage({
         <Table.Root
           size='2'
           variant='ghost'
-          className='bg-white/60 rounded-xl px-2 sm:px-12 py-4'
+          className='bg-white/50 rounded-xl px-2 sm:px-12 py-4'
           hidden={filteredLeaderboard.length === 0}
         >
           <Table.Header hidden>
             <Table.Row>
               <Table.ColumnHeaderCell>#</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>Name</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>Quality</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>Following</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>Followers</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>Mutuals</Table.ColumnHeaderCell>
@@ -140,7 +232,6 @@ export default async function LeaderboardPage({
                 key={`${entry.name}-${index}`}
                 rank={entry.rank}
                 name={entry.name}
-                quality={entry.quality}
                 following={entry.following}
                 followers={entry.followers}
                 mutuals={entry.mutuals}
@@ -154,30 +245,26 @@ export default async function LeaderboardPage({
   )
 }
 
-function TableRow({
-  rank,
-  name,
-  quality,
-  following,
-  followers,
-  mutuals,
-  blockedMuted
-}: LeaderboardEntry) {
+function TableRow({ rank, name, following, followers, mutuals, blockedMuted }: LeaderboardEntry) {
   const rowNumber = (
     <React.Fragment>
       {rank === 1 ? (
         <img
           alt='1'
           src='/assets/leaderboard/1.png'
-          width='38'
-          className='m-auto overflow-hidden select-none'
+          width='40'
+          className='mx-auto overflow-hidden select-none -mb-1'
         />
       ) : rank === 2 ? (
-        <img alt='2' src='/assets/leaderboard/2.png' width='26' className='m-auto select-none' />
+        <img alt='2' src='/assets/leaderboard/2.png' width='28' className='mx-auto select-none' />
       ) : rank === 3 ? (
-        <img alt='3' src='/assets/leaderboard/3.png' width='20' className='m-auto select-none' />
+        <img alt='3' src='/assets/leaderboard/3.png' width='23' className='mx-auto select-none' />
+      ) : rank <= 10 ? (
+        <Text size='7' as='p' className='font-bold w-min' mx='auto' my='auto'>
+          {rank}
+        </Text>
       ) : (
-        <Text size='7' as='p' className='font-bold' my='auto' mb='3'>
+        <Text size='4' as='p' className='font-bold w-min' mx='auto' my='auto'>
           {rank}
         </Text>
       )}
@@ -187,25 +274,34 @@ function TableRow({
   return (
     <Table.Row align='center'>
       <Table.RowHeaderCell justify='center' className='pt-1 sm:pr-6 select-none'>
-        <Box height='max-content' my='auto'>
+        <Box height='max-content' my='auto' className='tabular-nums text-right'>
           {rowNumber}
         </Box>
       </Table.RowHeaderCell>
       <Table.Cell data-name='name-column'>
-        <Flex direction='column' className='text-left mr-0 sm:mr-2' justify='start' align='start'>
-          <Link href={`/${name}`} className='font-bold sm:text-xl text-sm hover:text-pink-400'>
-            {name}
-          </Link>
-          <Badge className='font-bold text-[10px]' size='1' radius='full'>
-            Follows you
-          </Badge>
-        </Flex>
-      </Table.Cell>
-      <Table.Cell data-name='quality-column'>
-        <Box className='text-center mt-1'>
-          <Text className='font-bold text-sm sm:text-md'>{quality}</Text>
-          <p className='text-[#888888] font-semibold text-sm sm:text-md'>Quality</p>
-        </Box>
+        <Link href={`/${name}`}>
+          <Flex gap='2' className='-mt-2'>
+            <Avatar
+              src={`https://metadata.ens.domains/mainnet/avatar/${name}`}
+              fallback=''
+              my='auto'
+              size='4'
+              radius='full'
+            />
+            <Flex direction='column' className='text-left' justify='start' align='start'>
+              <Text as='p' className='font-bold sm:text-lg text-sm hover:text-pink-400'>
+                {name}
+              </Text>
+              <Badge
+                size='1'
+                radius='full'
+                className='font-bold text-[10px] bg-[#CDCDCD] text-[#333333]'
+              >
+                Follows you
+              </Badge>
+            </Flex>
+          </Flex>
+        </Link>
       </Table.Cell>
       <Table.Cell data-name='following-column'>
         <Box className='text-center mt-1'>
@@ -231,7 +327,10 @@ function TableRow({
           <p className='text-[#888888] font-semibold text-sm sm:text-md'>Blocked+Muted</p>
         </Box>
       </Table.Cell>
-      <Table.Cell className='flex mt-3 sm:ml-6' data-name='action-column'>
+      <Table.Cell
+        className={clsx([rank === 1 ? 'mt-5' : 'mt-2', 'flex sm:ml-6'])}
+        data-name='action-column'
+      >
         <FollowButton text='Follow' pending />
       </Table.Cell>
     </Table.Row>

@@ -5,6 +5,8 @@ export const APP_URL =
   process.env['NEXT_PUBLIC_SITE_URL'] ||
   'http://localhost:4321'
 
+export const ENS_SUBGRAPH = `https://api.thegraph.com/subgraphs/name/ensdomains/ens`
+
 interface ProjectLink {
   href: string
   text: string
