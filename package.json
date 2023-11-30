@@ -30,6 +30,7 @@
     "clsx": "^2.0.0",
     "million": "^2.6.4",
     "next": "^14.0.3",
+    "pretty-cache-header": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwindcss-radix": "^2.8.0",
