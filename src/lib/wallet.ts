@@ -37,7 +37,8 @@ export const { chains, publicClient } = configureChains(
   ],
   {
     rank: true,
-    batch: { multicall: true }
+    batch: { multicall: true },
+    pollingInterval: 5_000
   }
 )
 

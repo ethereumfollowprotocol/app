@@ -15,7 +15,14 @@ export default async function Home() {
           <Text className='text-4xl font-bold text-[#FEF305]'>for Ethereum.</Text>
         </Flex>
 
-        <Image src={'/assets/landing-graph.png'} width={500} height={500} alt='Landing graph' />
+        <Image
+          src={'/assets/landing-graph.png'}
+          width={500}
+          height={500}
+          alt='Landing graph'
+          loading='lazy'
+          decoding='async'
+        />
         <Flex direction={'column'}>
           <Text className='text-4xl font-bold text-white'>Follow your friends.</Text>
           <Text className='text-4xl font-bold text-[#FEF305]'>Ghost your enemies.</Text>
