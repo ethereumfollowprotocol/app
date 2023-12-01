@@ -24,8 +24,8 @@ export function FilterList({
     }
   }, [searchParams, router, pathname])
 
-  const selectedFilter = searchParams.get('filter') ?? 'quality'
-  const [isPending, startTransition] = React.useTransition()
+  const selectedFilter = searchParams.get('filter') || undefined
+  const [, startTransition] = React.useTransition()
 
   function handleFilter(filter: string) {
     const params = new URLSearchParams(window.location.search)
@@ -39,7 +39,7 @@ export function FilterList({
   return (
     <Box className='space-x-3 lg:ml-0 ml-auto' my='auto'>
       <div className='block lg:hidden mr-2'>
-        <Select.Root defaultValue={selectedFilter.toLowerCase()} onValueChange={handleFilter}>
+        <Select.Root defaultValue={selectedFilter?.toLowerCase()} onValueChange={handleFilter}>
           <Select.Trigger
             variant='soft'
             className='rounded-lg bg-white/70 p-4 font-semibold !border-none text-sm ml-2'

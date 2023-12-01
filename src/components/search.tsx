@@ -2,28 +2,17 @@
 
 import Link from 'next/link'
 import * as React from 'react'
-import { isAddress } from 'viem'
 import { PendingIcon } from './pending.tsx'
 import { useRouter } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
 import { ENS_SUBGRAPH } from '#lib/constants.ts'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
+import { checkAddressOrEnsValid } from 'src/lib/utilities.ts'
 import { useClickAway, useDebounce } from '@uidotdev/usehooks'
 import { IconButton, Dialog, TextField, DropdownMenu } from '@radix-ui/themes'
 import { useIsomorphicLayoutEffect } from 'src/hooks/use-isomorphic-layout-effect.ts'
 
-function checkEnsValid(value?: string) {
-  if (!value) return false
-  const ens = value.trim().toLowerCase()
-  return ens.endsWith('.eth') && ens.length >= 7 && /^[^.]*\.?[^.]*$/.test(ens)
-}
-
-// ens min is 3 letters
-function checkInputValid(value: string) {
-  return isAddress(value) || checkEnsValid(value)
-}
-
-// autocomplete searchsuggestions
+// autocomplete search suggestions
 async function searchEnsSubgraph({ search }: { search: string }): Promise<Array<string>> {
   const sanitizedSearch = search.trim().toLowerCase()
   if (sanitizedSearch.length < 3) return []
@@ -81,9 +70,7 @@ export function Search({ disabled }: { disabled?: boolean }) {
   useIsomorphicLayoutEffect(() => {
     if (searchResultStatus === 'success' && searchResult.length > 0) {
       setDropdownMenuOpen(true)
-    } else {
-      setDropdownMenuOpen(false)
-    }
+    } else setDropdownMenuOpen(false)
   }, [searchResult])
 
   function handleSearch(event?: React.ChangeEvent<HTMLInputElement>) {
@@ -107,7 +94,7 @@ export function Search({ disabled }: { disabled?: boolean }) {
     const search = debouncedSearchTerm ?? domAccessedSearch
     if (!search) return
 
-    const inputIsValid = checkInputValid(search)
+    const inputIsValid = checkAddressOrEnsValid(search)
     if (!inputIsValid) return
 
     router.push(`/${search}`)

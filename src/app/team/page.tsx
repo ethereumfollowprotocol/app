@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { FollowButton } from 'src/components/follow-button.tsx'
-import { Avatar, Badge, Box, Button, Flex, IconButton, Text } from '@radix-ui/themes'
+import { Avatar, Badge, Box, Flex, IconButton, Text } from '@radix-ui/themes'
 
 const efpTeam = [
   {

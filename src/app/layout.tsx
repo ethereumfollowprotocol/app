@@ -33,9 +33,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name='apple-mobile-web-app-title' content='EFP' />
         <meta name='mobile-web-app-capable' content='yes' />
         <meta name='viewport' content='width=device-width, initial-scale=1' />
-        <meta name='theme-color' content='#fde047' />
-        <meta name='apple-mobile-web-app-status-bar-style' content='#fde047' />
-        <meta name='msapplication-TileColor' content='#fde047' />
+        <meta name='theme-color' content='#fef305' />
+        <meta name='apple-mobile-web-app-status-bar-style' content='#fef305' />
+        <meta name='msapplication-TileColor' content='#fef305' />
         <meta name='author' content='Ethereum Follow Protocol Team' />
         <meta name='twitter:creator' content='@ethfollowpr' />
         <meta name='twitter:site' content='@ethfollowpr' />
