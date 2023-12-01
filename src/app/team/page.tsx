@@ -43,7 +43,7 @@ export default async function TeamPage() {
       </Text>
       <Flex
         mx='auto'
-        className='flex-col lg:flex-row lg:gap-y-0 gap-y-6 space-x-0 lg:space-x-12 align-middle justify-center items-center'
+        className='flex-col lg:flex-row lg:gap-y-0 gap-y-6 space-x-0 md:space-x-12 align-middle justify-center items-center'
       >
         {efpTeam.map(({ ens, address, efp, x, github }) => (
           <div key={ens}>
@@ -59,7 +59,7 @@ function TeamCard(props: TeamMember) {
   const { ens, address, efp, x, github } = props
   return (
     <Flex direction='column'>
-      <Flex mx='auto' className='bg-white/70 border-0 w-80 min-w-60 rounded-xl p-3'>
+      <Flex mx='auto' className='bg-white/70 border-0 max-w-80 w-[295px] min-w-60 rounded-xl p-3'>
         <Flex direction='column' align='start' width='100%' height='100%' justify='center'>
           <Badge>#132</Badge>
           <Flex direction='column' justify='center' align='center' mx='auto' mt='3'>

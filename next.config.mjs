@@ -26,6 +26,17 @@ const nextConfig = {
   env: {
     NEXT_TELEMETRY_DISABLED: '1'
   },
+  images: {
+    remotePatterns: [
+      /**
+       * Temporarily accept all domains during development
+       */
+      {
+        protocol: 'https',
+        hostname: '*'
+      }
+    ]
+  },
   /** @param {WebpackConfiguration} config */
   webpack: (config, context) => {
     if (config.name === 'server' && config.optimization) {
