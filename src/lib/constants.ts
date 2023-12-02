@@ -44,21 +44,24 @@ export const projectLinks = [
 interface PageRoute {
   href: string
   text: string | Record<string, unknown>
-  hidden?: boolean
+  public: boolean
 }
 
 export const pageRoutes = [
   {
     href: '/',
-    text: 'home'
+    text: 'home',
+    public: true
   },
   {
     href: '/profile',
-    text: 'profile'
+    text: 'profile',
+    public: false
   },
   {
     href: '/leaderboard',
-    text: 'leaderboard'
+    text: 'leaderboard',
+    public: true
   }
 ] satisfies ReadonlyArray<PageRoute>
 

@@ -1,3 +1,10 @@
+declare global {
+  interface Window {
+    // access via `window._APP_VERSION_`. The value is commit hash
+    readonly _APP_VERSION_: string
+  }
+}
+
 export type Flatten<T> = T extends any[] ? T[number] : T
 
 export type ExtractTypeFromUnion<T, Excluded> = T extends (infer U & Excluded) | undefined

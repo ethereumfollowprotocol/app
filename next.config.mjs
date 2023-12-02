@@ -5,8 +5,8 @@
  * @typedef {import('@sentry/nextjs/types/config/types.ts').UserSentryOptions} SentryUserOptions
  * @typedef {import('@sentry/nextjs').SentryWebpackPluginOptions} SentryWebpackPluginOptions
  */
-
 import million from 'million/compiler'
+import childProcess from 'node:child_process'
 import { withSentryConfig } from '@sentry/nextjs'
 
 /** @type {NextConfigPlugins} */
@@ -17,6 +17,10 @@ if (process.env['ANALYZE']) {
   plugins.push(withBundleAnalyzer({ enabled: true }))
 }
 
+const APP_VERSION = childProcess.execSync('git rev-parse --short HEAD').toString().trim()
+const APP_VERSION_SHORT = APP_VERSION.slice(0, 7)
+console.info(`\nBuilding with app version: ${APP_VERSION}\n`)
+
 /** @type {NextConfig} */
 const nextConfig = {
   cleanDistDir: true,
@@ -26,6 +30,12 @@ const nextConfig = {
   env: {
     NEXT_TELEMETRY_DISABLED: '1'
   },
+  experimental: {
+    ppr: true,
+    typedRoutes: true,
+    deploymentId: APP_VERSION_SHORT
+  },
+  generateBuildId: () => APP_VERSION_SHORT,
   images: {
     remotePatterns: [
       /**
