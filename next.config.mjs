@@ -17,7 +17,11 @@ if (process.env['ANALYZE']) {
   plugins.push(withBundleAnalyzer({ enabled: true }))
 }
 
-const APP_VERSION = childProcess.execSync('git rev-parse --short HEAD').toString().trim()
+// curl https://api.github.com/repos/ethereumfollowprotocol/app/commits/develop | jq --raw-output '.sha'
+const APP_VERSION = childProcess
+  .execSync('git rev-parse --short HEAD || echo "no-git"')
+  .toString()
+  .trim()
 const APP_VERSION_SHORT = APP_VERSION.slice(0, 7)
 console.info(`\nBuilding with app version: ${APP_VERSION}\n`)
 
@@ -28,9 +32,10 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   env: {
-    NEXT_TELEMETRY_DISABLED: '1'
+    NEXT_TELEMETRY_DISABLED: '1',
+    APP_VERSION,
+    APP_VERSION_SHORT
   },
-  generateBuildId: () => APP_VERSION_SHORT,
   images: {
     remotePatterns: [
       /**
