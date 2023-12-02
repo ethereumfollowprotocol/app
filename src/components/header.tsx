@@ -20,11 +20,12 @@ export function Header() {
   const isMounted = useIsMounted()
 
   const account = useAccount()
-  const {
-    data: ensName,
-    error: ensError,
-    status: ensStatus
-  } = useEnsName({ address: account.address, cacheTime: 4206942069 })
+  const { data: ensName } = useEnsName({ address: account.address, cacheTime: 4206942069 })
+
+  const navItems = React.useMemo(
+    () => pageRoutes.filter(route => route.public || account.isConnected),
+    [account.isConnected]
+  )
   return (
     <header className={clsx(['w-full px-2.5 font-sans sm:px-3 md:px-4 lg:px-5 xl:px-6'])}>
       <nav className='my-auto flex w-full flex-row justify-between'>
@@ -62,7 +63,7 @@ export function Header() {
             'hidden lg:flex'
           ])}
         >
-          {pageRoutes.map((route, index) => (
+          {navItems.map((route, index) => (
             <li className='inline font-bold' key={`route-${index}`}>
               <Link
                 prefetch={true}
@@ -99,7 +100,7 @@ export function Header() {
         )}
 
         <div className='my-auto pb-0.5 pl-2.5'>
-          <Menu />
+          <Menu navItems={navItems} />
         </div>
       </nav>
     </header>

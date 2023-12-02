@@ -30,11 +30,6 @@ const nextConfig = {
   env: {
     NEXT_TELEMETRY_DISABLED: '1'
   },
-  experimental: {
-    ppr: true,
-    typedRoutes: true,
-    deploymentId: APP_VERSION_SHORT
-  },
   generateBuildId: () => APP_VERSION_SHORT,
   images: {
     remotePatterns: [

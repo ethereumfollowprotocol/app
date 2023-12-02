@@ -154,7 +154,7 @@ export default async function LeaderboardPage({
     query?: string
   }
 }) {
-  const filter = searchParams.filter ?? 'quality'
+  // const filter = searchParams.filter
   const search = searchParams.query ?? ''
 
   const filteredLeaderboard = leaderboard.filter(entry =>
@@ -174,14 +174,14 @@ export default async function LeaderboardPage({
             </React.Suspense>
           </Box>
           <FilterList />
-          <Tooltip content='lorem ipsum' className=''>
+          <Tooltip content='lorem ipsum' className='w-min'>
             <IconButton
               radius='full'
               mr='2'
               size='1'
               variant='soft'
               my='auto'
-              className='bg-white font-bold text-gray-400'
+              className='bg-white font-bold text-gray-400 ml-auto'
             >
               ?
             </IconButton>

@@ -53,7 +53,7 @@ export const projectLinkItems = [
   }
 ]
 
-export function Menu() {
+export function Menu({ navItems }: { navItems: typeof pageRoutes }) {
   const pathname = usePathname()
 
   return (
@@ -91,23 +91,21 @@ export function Menu() {
           </Button>
         </Flex>
 
-        {pageRoutes.map((route, index) => {
-          return (
-            <DropdownMenu.Item
-              asChild
-              className={clsx([
-                'my-0.5 flex capitalize lg:hidden',
-                pathname === route.href ? 'bg-pink-400 text-white' : ''
-              ])}
-              key={`route-${index}`}
-            >
-              <Link prefetch href={route.href}>
-                {route.text}
-                <span>{emojis[route.text.toLowerCase() as keyof typeof emojis]}</span>
-              </Link>
-            </DropdownMenu.Item>
-          )
-        })}
+        {navItems.map((route, index) => (
+          <DropdownMenu.Item
+            asChild
+            className={clsx([
+              'my-0.5 flex capitalize lg:hidden',
+              pathname === route.href ? 'bg-pink-400 text-white' : ''
+            ])}
+            key={`route-${index}`}
+          >
+            <Link prefetch href={route.href}>
+              {route.text}
+              <span>{emojis[route.text.toLowerCase() as keyof typeof emojis]}</span>
+            </Link>
+          </DropdownMenu.Item>
+        ))}
         <DropdownMenu.Separator className='block lg:hidden' />
 
         <DropdownMenu.Sub>
