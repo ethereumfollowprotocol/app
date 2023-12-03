@@ -3,8 +3,9 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { pageRoutes } from '#lib/constants.ts'
+import { type pageRoutes, projectSocials } from '#lib/constants/routes.ts'
 import {
+  BackpackIcon,
   DiscordLogoIcon,
   GitHubLogoIcon,
   HamburgerMenuIcon,
@@ -20,40 +21,28 @@ export const emojis = {
   bug: '🐛'
 } satisfies Record<string, string>
 
-export const projectLinkItems = [
-  {
-    text: 'GitHub',
-    href: 'https://github.com/ethereumfollowprotocol',
-    icon: () => (
-      <IconButton size='1' variant='outline' className='shadow-none'>
-        <GitHubLogoIcon width='28' height='28' className='text-black' />
-      </IconButton>
-    )
-  },
-  {
-    text: 'X',
-    href: 'https://x.com/ethfollowpr',
-    icon: () => (
-      <IconButton size='1' variant='outline' className='shadow-none'>
-        <TwitterLogoIcon width='28' height='28' className='text-black' />
-      </IconButton>
-    )
-  },
-  /**
-   * TODO: add Discord link once we have one
-   */
-  {
-    text: 'Discord',
-    href: 'https://docs.ethfollow.xyz',
-    icon: () => (
-      <IconButton size='1' variant='outline' className='shadow-none'>
-        <DiscordLogoIcon width='28' height='28' className='text-black' />
-      </IconButton>
-    )
-  }
-]
+export const projectLinkIcons = {
+  GitHub: () => (
+    <IconButton size='1' variant='outline' className='shadow-none'>
+      <GitHubLogoIcon width='28' height='28' className='text-black' />
+    </IconButton>
+  ),
+
+  X: () => (
+    <IconButton size='1' variant='outline' className='shadow-none'>
+      <TwitterLogoIcon width='28' height='28' className='text-black' />
+    </IconButton>
+  ),
+
+  Discord: () => (
+    <IconButton size='1' variant='outline' className='shadow-none'>
+      <DiscordLogoIcon width='28' height='28' className='text-black' />
+    </IconButton>
+  )
+}
 
 export function Menu({ navItems }: { navItems: typeof pageRoutes }) {
+  // console.log(JSON.stringify(navItems, undefined, 2))
   const pathname = usePathname()
 
   return (
@@ -101,8 +90,8 @@ export function Menu({ navItems }: { navItems: typeof pageRoutes }) {
             key={`route-${index}`}
           >
             <Link prefetch href={route.href}>
-              {route.text}
-              <span>{emojis[route.text.toLowerCase() as keyof typeof emojis]}</span>
+              {route.name}
+              <span>{emojis[route.name.toLowerCase() as keyof typeof emojis] || route.emoji}</span>
             </Link>
           </DropdownMenu.Item>
         ))}
@@ -123,29 +112,34 @@ export function Menu({ navItems }: { navItems: typeof pageRoutes }) {
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
         <DropdownMenu.Item asChild>
+          <a href='https://docs.ethfollow.xyz' target='_blank' rel='noopener noreferrer'>
+            <span className='text-sm pr-4'>Docs</span>
+            <span className='text-xl'>📚</span>
+          </a>
+        </DropdownMenu.Item>
+        <DropdownMenu.Item asChild>
           <a
             href='https://github.com/ethereumfollowprotocol/app'
             target='_blank'
             rel='noopener noreferrer'
           >
-            Contribute
-            <IconButton size='1' variant='outline' className='shadow-none'>
-              <GitHubLogoIcon width='20' height='20' className='text-black' />
-            </IconButton>
+            <span className='text-sm pr-4'>Contribute</span>
+            <span className='text-xl'>🤝</span>
           </a>
         </DropdownMenu.Item>
-        <DropdownMenu.Item shortcut={emojis['bug']} asChild>
+        <DropdownMenu.Item asChild>
           <a
             href='https://github.com/ethereumfollowprotocol/app/issues/new'
             target='_blank'
             rel='noopener noreferrer'
           >
-            Report a bug
+            <span className='text-sm pr-4'>Report a bug</span>
+            <span className='text-xl'>🐛</span>
           </a>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
         <DropdownMenu.Item className='bg-transparent'>
-          {projectLinkItems.map((link, index) => {
+          {projectSocials.map((link, index) => {
             return (
               <IconButton
                 key={`link-${index}`}
@@ -154,8 +148,12 @@ export function Menu({ navItems }: { navItems: typeof pageRoutes }) {
                 className='bg-transparent text-black hover:bg-pink-200'
                 asChild
               >
-                <a href={link.href} target='_blank' rel='noopener noreferrer'>
-                  <link.icon />
+                <a
+                  href={link.href}
+                  target={link.external === true ? '_blank' : '_self'}
+                  rel='noopener noreferrer'
+                >
+                  {projectLinkIcons[link.name]()}
                 </a>
               </IconButton>
             )

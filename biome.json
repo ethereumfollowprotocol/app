@@ -51,7 +51,7 @@
       "performance": { "noAccumulatingSpread": "off" },
       "correctness": { "noUndeclaredVariables": "off" },
       "suspicious": { "noExplicitAny": "off", "noEmptyInterface": "off" },
-      "complexity": { "useLiteralKeys": "off", "noUselessFragments": "off" }
+      "complexity": { "useLiteralKeys": "off", "noUselessFragments": "off", "noBannedTypes": "off" }
     }
   },
   "json": {

@@ -2,44 +2,47 @@
 
 import clsx from 'clsx'
 import * as React from 'react'
+import { SECOND } from '#lib/constants/index.ts'
+import { useSearchParams } from 'next/navigation'
+import { useQueryState } from 'next-usequerystate'
 import { Box, Button, Select } from '@radix-ui/themes'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useEffectOnce } from 'src/hooks/use-effect-once.ts'
 
 export function FilterList({
   disabled
 }: {
   disabled?: boolean
 }) {
-  const router = useRouter()
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
-
-  // Set default filter to quality
-  React.useEffect(() => {
-    if (!searchParams.get('filter')) {
-      const params = new URLSearchParams(window.location.search)
-      params.set('filter', 'quality')
-      router.replace(`${pathname}?${params.toString()}`)
-    }
-  }, [searchParams, router, pathname])
-
-  const selectedFilter = searchParams.get('filter') || undefined
   const [, startTransition] = React.useTransition()
+  const [filter, setFilter] = useQueryState('filter', {
+    throttleMs: SECOND / 2
+  })
+  const filterParam = useSearchParams()
 
-  function handleFilter(filter: string) {
-    const params = new URLSearchParams(window.location.search)
-    if (filter) params.set('filter', filter)
-    else params.delete('filter')
-
+  // On first visit: check url search param and set filter state
+  useEffectOnce(() => {
     startTransition(() => {
-      router.replace(`${pathname}?${params.toString()}`)
+      setFilter(filterParam.get('filter'))
+    })
+  })
+
+  function handleFilterChange(event?: React.MouseEvent<HTMLButtonElement>) {
+    const newFilter = event?.currentTarget.name ?? null
+    startTransition(() => {
+      if (filter === newFilter) setFilter(null)
+      else if (filter) setFilter(newFilter)
+      else setFilter(newFilter)
     })
   }
+
   return (
-    <Box className='space-x-3 lg:ml-0 ml-auto' my='auto'>
+    <Box className='space-x-3 lg:ml-0 mr-auto' my='auto'>
       <div className='block lg:hidden mr-2'>
-        <Select.Root defaultValue={selectedFilter?.toLowerCase()} onValueChange={handleFilter}>
+        <Select.Root
+          defaultValue={filter?.toLowerCase()}
+          onValueChange={newFilter => setFilter(newFilter)}
+        >
           <Select.Trigger
             variant='soft'
             className='rounded-lg bg-white/70 p-4 font-semibold !border-none text-sm ml-2'
@@ -61,10 +64,11 @@ export function FilterList({
           radius='full'
           className={clsx([
             'text-sm px-4 font-semibold text-black',
-            selectedFilter === 'following' ? 'bg-white' : 'bg-[#CDCDCD] text-gray-500'
+            filter === 'following' ? 'bg-white' : 'bg-[#CDCDCD] text-gray-500'
           ])}
           disabled={disabled}
-          onClick={() => handleFilter('following')}
+          name='following'
+          onClick={handleFilterChange}
         >
           Following
         </Button>
@@ -73,10 +77,11 @@ export function FilterList({
           radius='full'
           className={clsx([
             'text-sm px-4 font-semibold text-black',
-            selectedFilter === 'followers' ? 'bg-white' : 'bg-[#CDCDCD] text-gray-500'
+            filter === 'followers' ? 'bg-white' : 'bg-[#CDCDCD] text-gray-500'
           ])}
           disabled={disabled}
-          onClick={() => handleFilter('followers')}
+          name='followers'
+          onClick={handleFilterChange}
         >
           Followers
         </Button>
@@ -85,10 +90,11 @@ export function FilterList({
           radius='full'
           className={clsx([
             'text-sm px-4 font-semibold text-black',
-            selectedFilter === 'mutuals' ? 'bg-white' : 'bg-[#CDCDCD] text-gray-500'
+            filter === 'mutuals' ? 'bg-white' : 'bg-[#CDCDCD] text-gray-500'
           ])}
           disabled={disabled}
-          onClick={() => handleFilter('mutuals')}
+          name='mutuals'
+          onClick={handleFilterChange}
         >
           Mutuals
         </Button>
@@ -97,10 +103,11 @@ export function FilterList({
           radius='full'
           className={clsx([
             'text-sm px-4 font-semibold text-black',
-            selectedFilter === 'muted-blocked' ? 'bg-white' : 'bg-[#CDCDCD] text-gray-500'
+            filter === 'muted-blocked' ? 'bg-white' : 'bg-[#CDCDCD] text-gray-500'
           ])}
           disabled={disabled}
-          onClick={() => handleFilter('muted-blocked')}
+          name='muted-blocked'
+          onClick={handleFilterChange}
         >
           Blocked+Muted
         </Button>
@@ -110,17 +117,17 @@ export function FilterList({
 }
 
 export function LeaderboardSearch({ disabled }: { disabled?: boolean }) {
-  const router = useRouter()
-  const pathname = usePathname()
   const [isPending, startTransition] = React.useTransition()
+  const [query, setQuery] = useQueryState('query', {
+    throttleMs: SECOND / 2,
+    shallow: false
+  })
 
-  function handleSearch(term: string) {
-    const params = new URLSearchParams(window.location.search)
-    if (term) params.set('query', term)
-    else params.delete('query')
-
+  function handleSearchEvent(event: React.ChangeEvent<HTMLInputElement>) {
+    const term = event.target.value
     startTransition(() => {
-      router.replace(`${pathname}?${params.toString()}`)
+      if (term) setQuery(term)
+      else setQuery(null)
     })
   }
 
@@ -144,7 +151,8 @@ export function LeaderboardSearch({ disabled }: { disabled?: boolean }) {
           autoComplete='off'
           disabled={disabled}
           placeholder='Search…'
-          onChange={event => handleSearch(event.target.value)}
+          onChange={handleSearchEvent}
+          value={query ?? ''}
           className='lowercase h-10 block w-full rounded-xl border-0 border-transparent pl-9 sm:text-sm bg-white/50'
         />
       </div>

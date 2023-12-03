@@ -3,14 +3,16 @@
 import Link from 'next/link'
 import * as React from 'react'
 import { PendingIcon } from './pending.tsx'
-import { useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
-import { ENS_SUBGRAPH } from '#lib/constants.ts'
+import { useClickAway } from '@uidotdev/usehooks'
+import { useQueryState } from 'next-usequerystate'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import { checkAddressOrEnsValid } from 'src/lib/utilities.ts'
-import { useClickAway, useDebounce } from '@uidotdev/usehooks'
+import { ENS_SUBGRAPH, SECOND } from '#lib/constants/index.ts'
 import { IconButton, Dialog, TextField, DropdownMenu } from '@radix-ui/themes'
 import { useIsomorphicLayoutEffect } from 'src/hooks/use-isomorphic-layout-effect.ts'
+import clsx from 'clsx'
 
 // autocomplete search suggestions
 async function searchEnsSubgraph({ search }: { search: string }): Promise<Array<string>> {
@@ -47,61 +49,69 @@ async function searchEnsSubgraph({ search }: { search: string }): Promise<Array<
 }
 
 export function Search({ disabled }: { disabled?: boolean }) {
-  const router = useRouter()
-  const [dropdownMenuOpen, setDropdownMenuOpen] = React.useState(false)
-
+  const pathname = usePathname()
   const searchBarRef = React.useRef<HTMLInputElement>(null)
-  const [searchValue, setSearchValue] = React.useState<string | undefined>()
-  const debouncedSearchTerm = useDebounce(searchValue, 500)
-
-  const clickAwayRef = useClickAway<HTMLDivElement>(_ => setDropdownMenuOpen(false))
+  const [dropdownMenuOpen, setDropdownMenuOpen] = React.useState(false)
+  const [dialogOpen, setDialogOpen] = React.useState<undefined | boolean>(undefined)
+  const clickAwayRef = useClickAway<HTMLInputElement>(_ => {
+    setDropdownMenuOpen(false)
+    setDialogOpen(false)
+  })
+  const [selectedItem, setSelectedItem] = React.useState<string | null>(null)
   const [isPending, startTransition] = React.useTransition()
 
-  const { data: searchResult, status: searchResultStatus } = useQuery({
-    queryKey: ['ens-subgraph-search', { search: debouncedSearchTerm }],
-    queryFn: async () => searchEnsSubgraph({ search: debouncedSearchTerm ?? '' }),
+  const [search, setSearch] = useQueryState('search', {
+    throttleMs: SECOND / 2,
+    history: 'push'
+  })
+
+  const { data, status: searchResultStatus } = useQuery({
+    queryKey: ['ens-subgraph-search', { search }],
+    queryFn: async () => searchEnsSubgraph({ search: search ?? '' }),
     refetchOnMount: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
     refetchIntervalInBackground: false,
-    enabled: !!debouncedSearchTerm && debouncedSearchTerm.length >= 3
+    enabled: !!search && search.length >= 3
   })
 
-  useIsomorphicLayoutEffect(() => {
-    if (searchResultStatus === 'success' && searchResult.length > 0) {
-      setDropdownMenuOpen(true)
-    } else setDropdownMenuOpen(false)
-  }, [searchResult])
+  const searchResult = searchResultStatus === 'success' ? data : []
 
-  function handleSearch(event?: React.ChangeEvent<HTMLInputElement>) {
-    searchBarRef.current?.focus()
+  useIsomorphicLayoutEffect(() => {
+    setDropdownMenuOpen(searchResult.length > 0)
+  }, [searchResult, searchResultStatus])
+
+  useIsomorphicLayoutEffect(() => {
+    if (pathname.slice(1) === selectedItem) {
+      setDropdownMenuOpen(false)
+      console.log({ dialogOpen })
+      if (searchBarRef.current) searchBarRef.current.value = ''
+    }
+  }, [pathname])
+
+  function handleSearchEvent(event: React.ChangeEvent<HTMLInputElement>) {
     const term = event?.target.value
     startTransition(() => {
-      setSearchValue(term)
+      if (term) setSearch(term)
+      else setSearch(null)
     })
   }
 
-  function onSubmit(event?: React.FormEvent<HTMLFormElement>) {
-    event?.preventDefault()
+  function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
     /**
      * checking the html element for value to catch an edge case:
      * - when typing a search term then navigating to another page,
      *   the search term is gone from the url but is still in the search input
      */
-    const searchElement = event?.currentTarget.elements.namedItem('search')
-    const domAccessedSearch = searchElement instanceof HTMLInputElement ? searchElement.value : ''
-
-    const search = debouncedSearchTerm ?? domAccessedSearch
-    if (!search) return
-
-    const inputIsValid = checkAddressOrEnsValid(search)
+    const searchTerm = search
+    if (!searchTerm) return
+    const inputIsValid = checkAddressOrEnsValid(searchTerm)
     if (!inputIsValid) return
-
-    router.push(`/${search}`)
   }
 
   return (
-    <form onSubmit={onSubmit} className='w-full'>
+    <form onSubmit={onSubmit} className='w-full max-w-[400px]'>
       <div className='relative max-w-[400px] w-full'>
         <label htmlFor='search' className='sr-only'>
           Search
@@ -122,7 +132,16 @@ export function Search({ disabled }: { disabled?: boolean }) {
             autoComplete='off'
             disabled={disabled}
             placeholder='Search ENS or 0x address…'
-            onChange={handleSearch}
+            onChange={handleSearchEvent}
+            onClick={event => {
+              event.preventDefault()
+              setDropdownMenuOpen(
+                event.currentTarget.value.length >= 3 &&
+                  !!search &&
+                  search.length >= 3 &&
+                  !!searchResult
+              )
+            }}
             className='lowercase h-9 block w-full rounded-xl border-0 border-transparent pl-7 text-xs sm:text-sm bg-white/70'
           />
         </div>
@@ -130,13 +149,14 @@ export function Search({ disabled }: { disabled?: boolean }) {
           <DropdownMenu.Root
             modal={false}
             defaultOpen={false}
-            open={searchResultStatus === 'success' && searchResult.length > 0 && dropdownMenuOpen}
+            open={dropdownMenuOpen}
+            onOpenChange={() => setDropdownMenuOpen(searchResult.length > 0)}
           >
             <DropdownMenu.Trigger className='w-full' data-state='closed'>
               <div />
             </DropdownMenu.Trigger>
             <DropdownMenu.Content
-              className='max-w-xl w-60 md:w-80 min-w-full text-lg py-0 hidden sm:block'
+              className={clsx(['max-w-xl w-80 min-w-full text-lg py-0 hidden sm:block'])}
               autoFocus={false}
               ref={clickAwayRef}
               hideWhenDetached
@@ -152,8 +172,9 @@ export function Search({ disabled }: { disabled?: boolean }) {
                   asChild
                   className='w-full text-md py-0 hover:bg-pink-50'
                   tabIndex={0 + 1}
+                  onClick={() => setSelectedItem(result)}
                 >
-                  <Link href={result} className='hover:cursor-pointer'>
+                  <Link href={{ pathname: result }} className='hover:cursor-pointer'>
                     {result}
                   </Link>
                 </DropdownMenu.Item>
@@ -167,10 +188,16 @@ export function Search({ disabled }: { disabled?: boolean }) {
           </div>
         )}
 
-        <div className='block sm:hidden'>
-          <Dialog.Root defaultOpen={false}>
+        <div className='block sm:hidden' hidden={dialogOpen}>
+          <Dialog.Root defaultOpen={false} open={dialogOpen}>
             <Dialog.Trigger>
-              <IconButton variant='soft' size='3' radius='full' className='bg-white'>
+              <IconButton
+                variant='soft'
+                size='3'
+                radius='full'
+                className='bg-white'
+                onClick={() => setDialogOpen(true)}
+              >
                 <MagnifyingGlassIcon className='h-6 w-6 text-black' aria-hidden='true' />
               </IconButton>
             </Dialog.Trigger>
@@ -183,19 +210,19 @@ export function Search({ disabled }: { disabled?: boolean }) {
                   className='h-11 px-1'
                   spellCheck={false}
                   disabled={disabled}
-                  onChange={handleSearch}
-                  placeholder='Search ENS or 0x address…'
-                  autoComplete='off'
-                  ref={searchBarRef}
+                  onChange={handleSearchEvent}
                   onClick={event => {
                     event.preventDefault()
                     setDropdownMenuOpen(
                       event.currentTarget.value.length >= 3 &&
-                        !!debouncedSearchTerm &&
-                        debouncedSearchTerm.length >= 3 &&
+                        !!search &&
+                        search.length >= 3 &&
                         !!searchResult
                     )
                   }}
+                  placeholder='Search ENS or 0x address…'
+                  autoComplete='off'
+                  ref={clickAwayRef}
                 />
                 <TextField.Slot>
                   {isPending && (
@@ -205,13 +232,7 @@ export function Search({ disabled }: { disabled?: boolean }) {
                   )}
                 </TextField.Slot>
               </TextField.Root>
-              <DropdownMenu.Root
-                modal={false}
-                defaultOpen={false}
-                open={
-                  searchResultStatus === 'success' && searchResult.length > 0 && dropdownMenuOpen
-                }
-              >
+              <DropdownMenu.Root modal={false} defaultOpen={false} open={dropdownMenuOpen}>
                 <DropdownMenu.Trigger className='w-full' data-state='closed'>
                   <div />
                 </DropdownMenu.Trigger>
@@ -233,8 +254,12 @@ export function Search({ disabled }: { disabled?: boolean }) {
                       asChild
                       className='w-full text-md py-0 hover:bg-pink-50'
                       tabIndex={0 + 1}
+                      onClick={() => {
+                        setSelectedItem(result)
+                        setDialogOpen(false)
+                      }}
                     >
-                      <Link href={result} className='hover:cursor-pointer'>
+                      <Link href={{ pathname: result }} className='hover:cursor-pointer'>
                         {result}
                       </Link>
                     </DropdownMenu.Item>

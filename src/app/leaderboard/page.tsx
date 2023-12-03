@@ -148,17 +148,11 @@ const leaderboard = [
 
 export default async function LeaderboardPage({
   searchParams
-}: {
-  searchParams: {
-    filter?: string
-    query?: string
-  }
-}) {
-  // const filter = searchParams.filter
-  const search = searchParams.query ?? ''
+}: { searchParams: { filter?: string; query?: string } }) {
+  const query = searchParams.query || ''
 
   const filteredLeaderboard = leaderboard.filter(entry =>
-    entry.name.toLowerCase().includes(search.toLowerCase())
+    entry.name.toLowerCase().includes(query.toLowerCase())
   )
 
   return (
@@ -200,7 +194,7 @@ export default async function LeaderboardPage({
             <Text align='center' as='p' my='4' size='6' className='font-semibold'>
               No results for
               <Code variant='outline' color='gray' ml='2'>
-                {search}
+                {query}
               </Code>
             </Text>
           </Box>

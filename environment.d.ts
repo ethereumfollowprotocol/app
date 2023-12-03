@@ -16,7 +16,6 @@ interface EnvironmentVariables {
   readonly NEXT_PUBLIC_ANKR_ID: string
   readonly SITE_URL: string
   readonly NEXT_PUBLIC_SITE_URL: string
-  readonly DISABLE_PWA: 'true' | 'false'
   readonly ANALYZE: 'true' | 'false'
   /* automatically added by Vercel */
   readonly VERCEL_URL?: string

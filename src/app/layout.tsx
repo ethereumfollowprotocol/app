@@ -6,7 +6,7 @@ import clsx from 'clsx'
 import * as React from 'react'
 import { Providers } from './providers.tsx'
 import { Inter, IBM_Plex_Mono } from 'next/font/google'
-import { APP_NAME, APP_DESCRIPTION } from '#lib/constants.ts'
+import { APP_NAME, APP_DESCRIPTION } from '#lib/constants/index.ts'
 
 const inter = Inter({
   subsets: ['latin'],

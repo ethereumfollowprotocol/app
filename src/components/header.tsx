@@ -5,13 +5,20 @@ import Link from 'next/link'
 import * as React from 'react'
 import { Menu } from '#components/menu.tsx'
 import { usePathname } from 'next/navigation'
-import { pageRoutes } from '#lib/constants.ts'
 import { useAccount, useEnsName } from 'wagmi'
 import { Search } from '#components/search.tsx'
 import { Avatar, Text } from '@radix-ui/themes'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { pageRoutes } from 'src/lib/constants/routes.ts'
 import { CartButton } from '#components/cart-button.tsx'
 import { useIsMounted } from 'src/hooks/use-is-mounted.ts'
+
+export function shouldHidePath({
+  connected,
+  privatePath
+}: { connected: boolean; privatePath?: boolean }) {
+  return !connected && privatePath ? true : false
+}
 
 export default Header
 
@@ -22,10 +29,16 @@ export function Header() {
   const account = useAccount()
   const { data: ensName } = useEnsName({ address: account.address, cacheTime: 4206942069 })
 
-  const navItems = React.useMemo(
-    () => pageRoutes.filter(route => route.public || account.isConnected),
+  const navItems = React.useMemo<typeof pageRoutes>(
+    () =>
+      pageRoutes.filter(
+        route =>
+          route.displayLocation === 'header' &&
+          !shouldHidePath({ connected: account.isConnected, privatePath: route.private })
+      ),
     [account.isConnected]
   )
+
   return (
     <header className={clsx(['w-full px-2.5 font-sans sm:px-3 md:px-4 lg:px-5 xl:px-6'])}>
       <nav className='my-auto flex w-full flex-row justify-between'>
@@ -63,7 +76,9 @@ export function Header() {
             'hidden lg:flex'
           ])}
         >
-          {navItems.map((route, index) => (
+          {navItems
+
+          .map((route, index) => (
             <li className='inline font-bold' key={`route-${index}`}>
               <Link
                 prefetch={true}
@@ -73,7 +88,7 @@ export function Header() {
                   pathname === route.href ? 'text-black' : 'text-pink-400'
                 ])}
               >
-                <span className={clsx(['hidden', 'sm:block'])}>{route.text}</span>
+                <span className={clsx(['hidden', 'sm:block'])}>{route.name}</span>
               </Link>
             </li>
           ))}
