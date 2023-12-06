@@ -123,9 +123,6 @@ export default ({
     transparent: 'transparent',
     current: 'currentColor',
     extend: {
-      // width: {
-      //   md: '668px'
-      // },
       /**
        * @see https://uicolors.app/create
        */
