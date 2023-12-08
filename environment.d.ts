@@ -2,6 +2,8 @@ interface EnvironmentVariables {
   readonly NODE_ENV: 'development' | 'production' | 'test'
   readonly WALLET_CONNECT_PROJECT_ID: string
   readonly NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID: string
+  readonly LOCAL_RPC: string
+  readonly NEXT_PUBLIC_LOCAL_RPC: string
   readonly MAINNET_ALCHEMY_ID: string
   readonly NEXT_PUBLIC_MAINNET_ALCHEMY_ID: string
   readonly OPTIMISM_ALCHEMY_ID: string
@@ -14,6 +16,8 @@ interface EnvironmentVariables {
   readonly NEXT_PUBLIC_INFURA_ID: string
   readonly ANKR_ID: string
   readonly NEXT_PUBLIC_ANKR_ID: string
+  readonly ANVIL_ACCOUNT_PRIVATE_KEY: `0x${string}`
+  readonly NEXT_PUBLIC_ANVIL_ACCOUNT_PRIVATE_KEY: `0x${string}`
   readonly SITE_URL: string
   readonly NEXT_PUBLIC_SITE_URL: string
   readonly ANALYZE: 'true' | 'false'

@@ -1,7 +1,28 @@
-import { mainnet, optimism, sepolia, optimismSepolia } from 'viem/chains'
-import { http, fallback, walletActions, createPublicClient, webSocket } from 'viem'
+import {
+  http,
+  fallback,
+  webSocket,
+  walletActions,
+  publicActions,
+  createTestClient,
+  createPublicClient
+} from 'viem'
+import { privateKeyToAccount } from 'viem/accounts'
+import { mainnet, optimism, sepolia, optimismSepolia, foundry } from 'viem/chains'
 
 export const viemClients = {
+  '31337': () =>
+    createTestClient({
+      chain: foundry,
+      mode: 'anvil',
+      transport: http(process.env.NEXT_PUBLIC_LOCAL_RPC),
+      account: privateKeyToAccount(
+        process.env.NEXT_PUBLIC_ANVIL_ACCOUNT_PRIVATE_KEY ||
+          '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80'
+      )
+    })
+      .extend(publicActions)
+      .extend(walletActions),
   mainnet: () =>
     createPublicClient({
       key: 'mainnet-client',
