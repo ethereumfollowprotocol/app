@@ -6,7 +6,18 @@
 import bun from 'bun'
 import packageJson from '../package.json' with { type: 'json' }
 
-const { dependencies, devDependencies, sideEffects, bugs, ...rest } = packageJson
+const {
+  name,
+  version,
+  description,
+  repository,
+  type,
+  imports,
+  scripts,
+  dependencies,
+  devDependencies,
+  ...rest
+} = packageJson
 
 main().catch(error => {
   console.error(error)
@@ -59,11 +70,16 @@ async function bumpDependencies() {
   }
 
   const updatedPackageJson = {
-    ...rest,
+    name,
+    version,
+    description,
+    repository,
+    type,
+    imports,
+    scripts,
     dependencies: updatedDependencies,
     devDependencies: updatedDevDependencies,
-    bugs,
-    sideEffects
+    ...rest
   }
 
   const write = await bun.write(
