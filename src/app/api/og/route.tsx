@@ -1,4 +1,5 @@
 import { ImageResponse } from 'next/og'
+import type { NextRequest } from 'next/server'
 import { cacheHeader } from 'pretty-cache-header'
 import type { ExtractTypeFromUnion, Pretty, Flatten } from '#lib/types.ts'
 
@@ -18,7 +19,7 @@ type ImageOptionsType = NonNullable<
 
 type Font = Pretty<Flatten<NonNullable<ImageOptionsType['fonts']>>>
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   const url = new URL(request.url)
   try {
     const name = url.searchParams.get('name')
@@ -29,7 +30,6 @@ export async function GET(request: Request) {
     if (!followers) throw new Error('Missing followers query parameter')
     if (!following) throw new Error('Missing following query parameter')
 
-    // const fonts = await fetchFonts()
     const fonts = await Promise.all([
       fetchFont({
         name: 'Inter SemiBold',
@@ -47,14 +47,14 @@ export async function GET(request: Request) {
     return new ImageResponse(
       <div
         style={{
-          fontSize: 52,
+          fontSize: 54,
           width: '100%',
           height: '100%',
           display: 'flex',
           alignItems: 'center',
           flexDirection: 'column',
           justifyContent: 'center',
-          background: 'linear-gradient(180deg,#fef305 10%,#ff79c9 95%)'
+          background: 'linear-gradient(119deg, #FEF305 32.34%, #FF79C9 100%)'
         }}
       >
         <img
@@ -62,28 +62,28 @@ export async function GET(request: Request) {
           width='225'
           height='225'
           alt='ens avatar'
-          style={{ borderRadius: '50%', marginTop: '25px' }}
+          style={{ borderRadius: '50%', marginTop: '35px' }}
         />
-        <p style={{ fontWeight: 'bolder' }}>{name}</p>
+        <p style={{ fontSize: '62', fontWeight: '900', marginTop: '16px' }}>{name}</p>
         <section
           style={{
             width: '100%',
             display: 'flex',
-            justifyContent: 'space-around'
+            justifyContent: 'center',
+            gap: 120
           }}
         >
           <div
             style={{
               gap: 1,
               display: 'flex',
-              fontWeight: '500',
               alignItems: 'center',
               flexDirection: 'column',
               justifyContent: 'center'
             }}
           >
-            <p style={{ padding: 0, margin: 0 }}>{followers}</p>
-            <p style={{ marginTop: '10px' }}>followers</p>
+            <p style={{ padding: 0, margin: 0, fontWeight: '700' }}>{following}</p>
+            <p style={{ marginTop: '10px', fontWeight: '400' }}>following</p>
           </div>
           <div
             style={{
@@ -95,8 +95,8 @@ export async function GET(request: Request) {
               justifyContent: 'center'
             }}
           >
-            <p style={{ padding: 0, margin: 0 }}>{following}</p>
-            <p style={{ marginTop: '10px' }}>following</p>
+            <p style={{ padding: 0, margin: 0, fontWeight: '700' }}>{followers}</p>
+            <p style={{ marginTop: '10px' }}>followers</p>
           </div>
         </section>
       </div>,

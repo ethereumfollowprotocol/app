@@ -1,9 +1,6 @@
 import * as React from 'react'
 import Image from 'next/image'
 import { Flex, Text } from '@radix-ui/themes'
-import { Footer } from 'src/components/footer.tsx'
-
-export const runtime = 'edge'
 
 export default async function Home() {
   return (

@@ -75,14 +75,8 @@ function TeamCard(props: TeamMember) {
             <Badge color='blue' radius='full' className='px-3' size='1'>
               Follows you
             </Badge>
-            <Flex gap='3' className='ml-12' my='3'>
+            <Flex gap='3' className='' my='3'>
               <FollowButton text='Follow' />
-              <IconButton
-                className='bg-white text-black align-middle my-auto py-0 h-5 font-bold'
-                radius='full'
-              >
-                <DotsHorizontalIcon />
-              </IconButton>
             </Flex>
           </Flex>
           <Flex justify='center' mx='auto' className='text-center' gap='8'>
