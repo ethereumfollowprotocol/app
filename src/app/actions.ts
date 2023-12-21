@@ -6,7 +6,6 @@ import type { EnsProfile } from '#lib/types.ts'
 import { headers, cookies } from 'next/headers'
 import { revalidateTag, revalidatePath } from 'next/cache'
 
-
 export async function getEnsProfile(ensOrAddress: string) {
   const path = isAddress(ensOrAddress) ? `a/${ensOrAddress}` : `n/${ensOrAddress}`
   const response = await fetch(`https://ens.ethfollow.xyz/${path}`, { cache: 'default' })

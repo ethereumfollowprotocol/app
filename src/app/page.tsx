@@ -1,7 +1,6 @@
 import * as React from 'react'
 import Image from 'next/image'
 import { Flex, Text } from '@radix-ui/themes'
-import { getBase64FromUrl } from 'src/lib/image-to-base64'
 
 export default async function Home() {
   return (

@@ -5,7 +5,18 @@ import { useAccount } from 'wagmi'
 import { ProfileCard } from '#components/profile.tsx'
 import { FollowButton } from '#components/follow-button.tsx'
 import { useEnsProfile } from 'src/hooks/use-ens-profile'
-import { Avatar, Badge, Box, DropdownMenu, Flex, Grid, IconButton, Table, Text } from '@radix-ui/themes'
+import {
+  Avatar,
+  Badge,
+  Box,
+  DropdownMenu,
+  Flex,
+  Grid,
+  IconButton,
+  Select,
+  Table,
+  Text
+} from '@radix-ui/themes'
 import Link from 'next/link'
 import clsx from 'clsx'
 import { DropdownMenuIcon, MagnifyingGlassIcon } from '@radix-ui/react-icons'
@@ -161,9 +172,11 @@ export default function ProfilePage() {
         width='100%'
         height='100%'
         justify='center'
-        className='lg:flex-row flex-col min-h-full border-2 border-kournikova-50'
+        gap='3'
+        mx='auto'
+        className='lg:flex-row justify-center flex-col min-h-full lg:max-w-[1400px] max-w-2xl  border-kournikova-50'
       >
-        <Box height='100%' width='min-content' p='2' className='border-2 border-green-300'>
+        <Box height='100%' width='min-content' p='2' mx='auto' className=' border-green-300'>
           <ProfileCard
             profile={{
               name: 'esm.eth',
@@ -172,20 +185,35 @@ export default function ProfilePage() {
             }}
           />
         </Box>
-        <Box height='100%' width='100%' p='2' className='max-w-[500px] border-2 border-green-300'>
-          <Flex mb='2'>
+        <Box height='100%' width='100%' p='2' mx='auto' className=' border-green-300'>
+          <Flex mb='2' justify='between'>
             <Box className='space-x-2'>
               <Text my='auto' weight='bold'>
                 Following
               </Text>
-              <IconButton variant='solid' radius='full' size='1' className='bg-white'>
-                <MagnifyingGlassIcon fontSize='12px' color='gray' />
+              <IconButton variant='solid' radius='full' size='2' className='bg-white'>
+                <MagnifyingGlassIcon fontSize='16px' color='gray' />
               </IconButton>
             </Box>
             <Box>
-              <IconButton>
-                <DropdownMenuIcon />
-              </IconButton>
+              <Select.Root
+                defaultValue={'follower-count'}
+                value={'follower-count'}
+                onValueChange={newValue => console.log(newValue)}
+              >
+                <Select.Trigger
+                  variant='soft'
+                  className='rounded-lg bg-white/70 p-4 font-semibold !border-none text-sm ml-2'
+                />
+                <Select.Content>
+                  <Select.Group>
+                    <Select.Item value='follower-count'>Follower Count</Select.Item>
+                    <Select.Item value='latest-first'>Latest first</Select.Item>
+                    <Select.Item value='earliest-first'>Earliest first</Select.Item>
+                    <Select.Item value='alphabetical'>Alphabetical</Select.Item>
+                  </Select.Group>
+                </Select.Content>
+              </Select.Root>
             </Box>
           </Flex>
           <Table.Root size='2' variant='ghost' className='bg-white/50 rounded-xl py-4'>
@@ -206,7 +234,38 @@ export default function ProfilePage() {
             </Table.Body>
           </Table.Root>
         </Box>
-        <Box height='100%' width='100%' p='2' className='max-w-[500px] border-2 border-green-300'>
+
+        <Box height='100%' width='100%' p='2' mx='auto' className=' border-green-300'>
+          <Flex mb='2' justify='between'>
+            <Box className='space-x-2'>
+              <Text my='auto' weight='bold'>
+                Followers
+              </Text>
+              <IconButton variant='solid' radius='full' size='2' className='bg-white'>
+                <MagnifyingGlassIcon fontSize='16px' color='gray' />
+              </IconButton>
+            </Box>
+            <Box>
+              <Select.Root
+                defaultValue={'follower-count'}
+                value={'follower-count'}
+                onValueChange={newValue => console.log(newValue)}
+              >
+                <Select.Trigger
+                  variant='soft'
+                  className='rounded-lg bg-white/70 p-4 font-semibold !border-none text-sm ml-2'
+                />
+                <Select.Content>
+                  <Select.Group>
+                    <Select.Item value='follower-count'>Follower Count</Select.Item>
+                    <Select.Item value='latest-first'>Latest first</Select.Item>
+                    <Select.Item value='earliest-first'>Earliest first</Select.Item>
+                    <Select.Item value='alphabetical'>Alphabetical</Select.Item>
+                  </Select.Group>
+                </Select.Content>
+              </Select.Root>
+            </Box>
+          </Flex>
           <Table.Root size='2' variant='ghost' className='bg-white/50 rounded-xl py-4'>
             <Table.Header hidden>
               <Table.Row>
@@ -235,7 +294,7 @@ function TableRow({ name }: { name: string }) {
     <Table.Row align='center' className='w-full'>
       <Table.Cell width='100%' pl='4' data-name='name-column'>
         <Link href={`/${name}`}>
-          <Flex gap='2' className='-mt-2'>
+          <Flex gap='2' className=''>
             <Avatar
               src={`https://metadata.ens.domains/mainnet/avatar/${name}`}
               fallback=''

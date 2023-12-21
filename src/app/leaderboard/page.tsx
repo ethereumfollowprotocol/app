@@ -200,41 +200,41 @@ export default async function LeaderboardPage({
           </Box>
         )}
         <div className='overflow-auto'>
-               <Table.Root
-          size='2'
-          variant='surface'
-          className='bg-white/50 rounded-xl px-2 lg:px-8 py-4 relative'
-          hidden={filteredLeaderboard.length === 0}
-        >
-          <Table.Header>
-            <Table.Row className='top-0 sticky'>
-              <Table.ColumnHeaderCell className='top-0 sticky pl-4'>Rank</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell className='top-0 sticky pl-6'>Name</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell className='top-0 sticky'>Following</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell className='top-0 sticky'>Followers</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell className='top-0 sticky'>Mutuals</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell className='top-0 sticky text-center'>
-                Blocked+Muted
-              </Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell className='top-0 sticky text-center'>
-                Action
-              </Table.ColumnHeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {filteredLeaderboard.map((entry, index) => (
-              <TableRow
-                key={`${entry.name}-${index}`}
-                rank={entry.rank}
-                name={entry.name}
-                following={entry.following}
-                followers={entry.followers}
-                mutuals={entry.mutuals}
-                blockedMuted={entry.blockedMuted}
-              />
-            ))}
-          </Table.Body>
-        </Table.Root>
+          <Table.Root
+            size='2'
+            variant='surface'
+            className='bg-white/50 rounded-xl px-2 lg:px-8 py-4 relative'
+            hidden={filteredLeaderboard.length === 0}
+          >
+            <Table.Header>
+              <Table.Row className='top-0 sticky'>
+                <Table.ColumnHeaderCell className='top-0 sticky pl-4'>Rank</Table.ColumnHeaderCell>
+                <Table.ColumnHeaderCell className='top-0 sticky pl-6'>Name</Table.ColumnHeaderCell>
+                <Table.ColumnHeaderCell className='top-0 sticky'>Following</Table.ColumnHeaderCell>
+                <Table.ColumnHeaderCell className='top-0 sticky'>Followers</Table.ColumnHeaderCell>
+                <Table.ColumnHeaderCell className='top-0 sticky'>Mutuals</Table.ColumnHeaderCell>
+                <Table.ColumnHeaderCell className='top-0 sticky text-center'>
+                  Blocked+Muted
+                </Table.ColumnHeaderCell>
+                <Table.ColumnHeaderCell className='top-0 sticky text-center'>
+                  Action
+                </Table.ColumnHeaderCell>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              {filteredLeaderboard.map((entry, index) => (
+                <TableRow
+                  key={`${entry.name}-${index}`}
+                  rank={entry.rank}
+                  name={entry.name}
+                  following={entry.following}
+                  followers={entry.followers}
+                  mutuals={entry.mutuals}
+                  blockedMuted={entry.blockedMuted}
+                />
+              ))}
+            </Table.Body>
+          </Table.Root>
         </div>
       </Flex>
     </main>
