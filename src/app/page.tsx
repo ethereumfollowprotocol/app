@@ -1,6 +1,7 @@
 import * as React from 'react'
 import Image from 'next/image'
 import { Flex, Text } from '@radix-ui/themes'
+import { getBase64FromUrl } from 'src/lib/image-to-base64'
 
 export default async function Home() {
   return (
@@ -13,12 +14,14 @@ export default async function Home() {
         </Flex>
 
         <Image
-          src={'/assets/landing-graph.png'}
+          src={'/assets/landing-graph.webp'}
           width={500}
           height={500}
           alt='Landing graph'
           loading='lazy'
+          priority={false}
           decoding='async'
+          placeholder='empty'
         />
         <Flex direction={'column'}>
           <Text className='text-4xl font-bold text-white'>Follow your friends.</Text>

@@ -134,11 +134,11 @@ const nextConfig = {
         },
         {
           key: 'Feature-Policy',
-          value: "geolocation 'none'; microphone 'none'; camera 'none'"
+          value: "geolocation 'none'; microphone 'none'; camera 'none';"
         },
         {
           key: 'Permissions-Policy',
-          value: 'camera=(), microphone=(), geolocation=(), browsing-topics=()'
+          value: 'browsing-topics=()'
         },
         {
           key: 'Strict-Transport-Security',

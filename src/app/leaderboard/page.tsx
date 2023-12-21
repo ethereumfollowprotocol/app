@@ -180,7 +180,7 @@ export default async function LeaderboardPage({
               ?
             </IconButton>
           </Tooltip>
-          <Box mt='2'>
+          <Box className='mt-2.5'>
             <Text
               as='p'
               className='h-2 font-semibold text-sm sm:text-md w-full leading-none sm:leading-normal'
@@ -199,24 +199,25 @@ export default async function LeaderboardPage({
             </Text>
           </Box>
         )}
-        <Table.Root
+        <div className='overflow-auto'>
+               <Table.Root
           size='2'
-          variant='ghost'
-          className='bg-white/50 rounded-xl px-2 sm:px-12 py-4'
+          variant='surface'
+          className='bg-white/50 rounded-xl px-2 lg:px-8 py-4 relative'
           hidden={filteredLeaderboard.length === 0}
         >
-          <Table.Header hidden>
-            <Table.Row>
-              <Table.ColumnHeaderCell>#</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>Name</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>Following</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>Followers</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>Mutuals</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>Blocked+Muted</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>
-                <Text as='p' className='sm:ml-6'>
-                  Action
-                </Text>
+          <Table.Header>
+            <Table.Row className='top-0 sticky'>
+              <Table.ColumnHeaderCell className='top-0 sticky pl-4'>Rank</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell className='top-0 sticky pl-6'>Name</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell className='top-0 sticky'>Following</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell className='top-0 sticky'>Followers</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell className='top-0 sticky'>Mutuals</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell className='top-0 sticky text-center'>
+                Blocked+Muted
+              </Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell className='top-0 sticky text-center'>
+                Action
               </Table.ColumnHeaderCell>
             </Table.Row>
           </Table.Header>
@@ -234,6 +235,7 @@ export default async function LeaderboardPage({
             ))}
           </Table.Body>
         </Table.Root>
+        </div>
       </Flex>
     </main>
   )
@@ -298,31 +300,27 @@ function TableRow({ rank, name, following, followers, mutuals, blockedMuted }: L
         </Link>
       </Table.Cell>
       <Table.Cell data-name='following-column'>
-        <Box className='text-center mt-1'>
-          <Text className='font-bold text-sm sm:text-md'>{following}</Text>
-          <p className='text-[#888888] font-semibold text-sm sm:text-md'>Following</p>
+        <Box className='text-center'>
+          <Text className='font-bold text-sm sm:text-lg'>{following}</Text>
         </Box>
       </Table.Cell>
       <Table.Cell data-name='followers-column'>
-        <Box className='text-center mt-1'>
-          <Text className='font-bold text-sm sm:text-md'>{followers}</Text>
-          <p className='text-[#888888] font-semibold text-sm sm:text-md'>Followers</p>
+        <Box className='text-center'>
+          <Text className='font-bold text-sm sm:text-lg'>{followers}</Text>
         </Box>
       </Table.Cell>
       <Table.Cell data-name='mutuals-column'>
-        <Box className='text-center mt-1'>
-          <Text className='font-bold text-sm sm:text-md'>{mutuals}</Text>
-          <p className='text-[#888888] font-semibold text-sm sm:text-md'>Mutuals</p>
+        <Box className='text-center'>
+          <Text className='font-bold text-sm sm:text-lg'>{mutuals}</Text>
         </Box>
       </Table.Cell>
       <Table.Cell data-name='blocked-muted-column'>
-        <Box className='text-center mt-1'>
-          <Text className='font-bold text-sm sm:text-md'>{blockedMuted}</Text>
-          <p className='text-[#888888] font-semibold text-sm sm:text-md'>Blocked+Muted</p>
+        <Box className='text-center'>
+          <Text className='font-bold text-sm sm:text-lg'>{blockedMuted}</Text>
         </Box>
       </Table.Cell>
       <Table.Cell
-        className={clsx([rank === 1 ? 'mt-5' : 'mt-2', 'flex sm:ml-6'])}
+        className={clsx([rank === 1 ? 'mt-5' : 'mt-2', 'flex lg:ml-6'])}
         data-name='action-column'
       >
         <FollowButton text='Follow' pending />

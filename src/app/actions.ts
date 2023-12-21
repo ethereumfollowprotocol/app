@@ -1,15 +1,16 @@
 'use server'
 
-import { redirect } from 'next/navigation'
-import { headers, cookies } from 'next/headers'
-import type { ENStateResponse } from '#lib/types.ts'
-import { revalidateTag, revalidatePath } from 'next/cache'
 import { isAddress } from 'viem'
+import { redirect } from 'next/navigation'
+import type { EnsProfile } from '#lib/types.ts'
+import { headers, cookies } from 'next/headers'
+import { revalidateTag, revalidatePath } from 'next/cache'
+
 
 export async function getEnsProfile(ensOrAddress: string) {
   const path = isAddress(ensOrAddress) ? `a/${ensOrAddress}` : `n/${ensOrAddress}`
   const response = await fetch(`https://ens.ethfollow.xyz/${path}`, { cache: 'default' })
-  const data = (await response.json()) as ENStateResponse
+  const data = (await response.json()) as EnsProfile
   return data
 }
 

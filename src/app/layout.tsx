@@ -48,7 +48,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta property='og:image' content='/banner.png' />
         <meta property='og:url' content='https://x.com/ethfollowpr' />
       </head>
-      <body className='w-full min-w-full items-center font-serif'>
+      <body
+        className='w-full min-w-full items-center font-serif'
+        // TODO: figure out what extension is adding `data-extension-installed` prop
+      >
         <Providers>{children}</Providers>
       </body>
     </html>

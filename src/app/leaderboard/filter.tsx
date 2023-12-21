@@ -6,8 +6,8 @@ import { SECOND } from '#lib/constants/index.ts'
 import { useSearchParams } from 'next/navigation'
 import { useQueryState } from 'next-usequerystate'
 import { Box, Button, Select } from '@radix-ui/themes'
+import { useEffectOnce } from '#hooks/use-effect-once.ts'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
-import { useEffectOnce } from 'src/hooks/use-effect-once.ts'
 
 export function FilterList({
   disabled
@@ -18,6 +18,7 @@ export function FilterList({
   const [filter, setFilter] = useQueryState('filter', {
     throttleMs: SECOND / 2
   })
+
   const filterParam = useSearchParams()
 
   // On first visit: check url search param and set filter state
@@ -27,21 +28,27 @@ export function FilterList({
     })
   })
 
-  function handleFilterChange(event?: React.MouseEvent<HTMLButtonElement>) {
-    const newFilter = event?.currentTarget.name ?? null
+  function handleChange(newFilter: string | null) {
     startTransition(() => {
-      if (filter === newFilter) setFilter(null)
+      if (newFilter === filter) setFilter(null)
       else if (filter) setFilter(newFilter)
       else setFilter(newFilter)
     })
   }
 
+  function handleChangeEvent(event?: React.MouseEvent<HTMLButtonElement>) {
+    const newFilter = event?.currentTarget.name ?? null
+    handleChange(newFilter)
+  }
+
+  console.log(filter)
   return (
     <Box className='space-x-3 lg:ml-0 mr-auto' my='auto'>
       <div className='block lg:hidden mr-2'>
         <Select.Root
           defaultValue={filter?.toLowerCase()}
-          onValueChange={newFilter => setFilter(newFilter)}
+          value={filter?.toLowerCase()}
+          onValueChange={handleChange}
         >
           <Select.Trigger
             variant='soft'
@@ -68,7 +75,7 @@ export function FilterList({
           ])}
           disabled={disabled}
           name='following'
-          onClick={handleFilterChange}
+          onClick={handleChangeEvent}
         >
           Following
         </Button>
@@ -81,7 +88,7 @@ export function FilterList({
           ])}
           disabled={disabled}
           name='followers'
-          onClick={handleFilterChange}
+          onClick={handleChangeEvent}
         >
           Followers
         </Button>
@@ -94,7 +101,7 @@ export function FilterList({
           ])}
           disabled={disabled}
           name='mutuals'
-          onClick={handleFilterChange}
+          onClick={handleChangeEvent}
         >
           Mutuals
         </Button>
@@ -103,11 +110,11 @@ export function FilterList({
           radius='full'
           className={clsx([
             'text-sm px-4 font-semibold text-black',
-            filter === 'muted-blocked' ? 'bg-white' : 'bg-[#CDCDCD] text-gray-500'
+            filter === 'blocked-muted' ? 'bg-white' : 'bg-[#CDCDCD] text-gray-500'
           ])}
           disabled={disabled}
-          name='muted-blocked'
-          onClick={handleFilterChange}
+          name='blocked-muted'
+          onClick={handleChangeEvent}
         >
           Blocked+Muted
         </Button>

@@ -15,7 +15,7 @@ export type Pretty<T> = {
   [K in keyof T]: T[K]
 } & {}
 
-export interface ENStateResponse {
+export interface EnsProfile {
   name: string
   address: string
   avatar: string
