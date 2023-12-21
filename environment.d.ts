@@ -1,5 +1,6 @@
 interface EnvironmentVariables {
   readonly NODE_ENV: 'development' | 'production' | 'test'
+  readonly NEXT_PUBLIC_BASE_URL: string
   readonly WALLET_CONNECT_PROJECT_ID: string
   readonly NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID: string
   readonly LOCAL_RPC: string

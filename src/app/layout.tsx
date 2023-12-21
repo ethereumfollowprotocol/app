@@ -42,10 +42,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name='twitter:card' content='summary_large_image' />
         <meta name='twitter:title' content='EFP' />
         <meta name='twitter:description' content={APP_DESCRIPTION} />
-        <meta name='twitter:image' content='/banner.png' />
         <meta property='og:title' content='EFP' />
         <meta property='og:description' content={APP_DESCRIPTION} />
-        <meta property='og:image' content='/banner.png' />
         <meta property='og:url' content='https://x.com/ethfollowpr' />
       </head>
       <body

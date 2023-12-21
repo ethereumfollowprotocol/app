@@ -1,7 +1,31 @@
+import { ogImageURL } from 'src/lib/og'
 import { Avatar } from '@radix-ui/themes'
 import { getEnsProfile } from 'src/app/actions.ts'
+import type { Metadata, ResolvedMetadata } from 'next'
 
-export default async function Page({ params }: { params: { user: string } }) {
+interface Props {
+  params: { user: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
+
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvedMetadata
+): Promise<Metadata> {
+  const { user } = params
+  const images = parent.openGraph?.images
+
+  return {
+    title: `${user} | EFP`,
+    metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL),
+    openGraph: {
+      title: `${user} | EFP`,
+      images: [ogImageURL({ name: user, followers: 100, following: 10 })]
+    }
+  }
+}
+
+export default async function Page({ params, searchParams }: Props) {
   const profile = await getEnsProfile(params.user)
 
   return (

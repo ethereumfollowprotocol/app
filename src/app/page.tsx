@@ -1,6 +1,16 @@
 import * as React from 'react'
 import Image from 'next/image'
+import type { Metadata } from 'next'
 import { Flex, Text } from '@radix-ui/themes'
+
+export const metadata = {
+  openGraph: {
+    images: [{ url: '/banner.png', alt: 'Ethereum Follow Protocol' }]
+  },
+  twitter: {
+    images: [{ url: '/banner.png', alt: 'Ethereum Follow Protocol' }]
+  }
+} satisfies Metadata
 
 export default async function Home() {
   return (

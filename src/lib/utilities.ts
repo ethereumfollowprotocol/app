@@ -4,6 +4,18 @@ export function raise(error: unknown): never {
   throw typeof error === 'string' ? new Error(error) : error
 }
 
+export function urlSearchParams(
+  params: Record<string, string | number | boolean | undefined | null>
+) {
+  return new URLSearchParams(
+    JSON.parse(
+      JSON.stringify({
+        ...params
+      })
+    ) as Record<string, string>
+  )
+}
+
 export const valueIsNotFalsy = <T>(param: T | null | undefined | false | '' | 0 | 0n): param is T =>
   !!param
 
