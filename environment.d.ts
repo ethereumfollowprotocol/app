@@ -2,7 +2,7 @@ interface EnvironmentVariables {
   readonly NODE_ENV: 'development' | 'production' | 'test'
   /** `git rev-parse HEAD`. Generated in next.config.mjs */
   readonly APP_VERSION: string
-  readonly VERCEL_GIT_COMMIT_SHA: string
+  readonly NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA: string
   readonly NEXT_PUBLIC_BASE_URL: string
   readonly WALLET_CONNECT_PROJECT_ID: string
   readonly NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID: string

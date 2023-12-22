@@ -18,10 +18,9 @@ if (process.env['ANALYZE']) {
 }
 
 // curl https://api.github.com/repos/ethereumfollowprotocol/app/commits/develop | jq --raw-output '.sha'
-const APP_VERSION = childProcess
-  .execSync('git rev-parse --short HEAD || echo "no-git"')
-  .toString()
-  .trim()
+const APP_VERSION =
+  process.env['NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA'] ||
+  childProcess.execSync('git rev-parse --short HEAD || echo "no-git"').toString().trim()
 
 console.info(`\nBuilding with app version: ${APP_VERSION}\n`)
 
@@ -33,8 +32,8 @@ const nextConfig = {
   poweredByHeader: false,
   env: {
     NEXT_TELEMETRY_DISABLED: '1',
-    APP_VERSION: process.env['VERCEL_GIT_COMMIT_SHA'] || APP_VERSION,
-    APP_VERSION_SHORT: (process.env['VERCEL_GIT_COMMIT_SHA'] || APP_VERSION).slice(0, 7)
+    APP_VERSION,
+    APP_VERSION_SHORT: APP_VERSION?.slice(0, 7)
   },
   images: {
     remotePatterns: [
@@ -101,7 +100,7 @@ const nextConfig = {
       headers: [
         {
           key: 'X-EFP-App-Version',
-          value: process.env['VERCEL_GIT_COMMIT_SHA'] || APP_VERSION
+          value: APP_VERSION
         },
         {
           key: 'X-DNS-Prefetch-Control',

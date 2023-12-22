@@ -40,6 +40,10 @@ export const projectLinkIcons = {
   )
 }
 
+const APP_VERSION = (
+  process.env['NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA'] || process.env['APP_VERSION']
+)?.slice(0, 7)
+
 export function Menu({ navItems }: { navItems: typeof pageRoutes }) {
   const pathname = usePathname()
 
@@ -169,7 +173,7 @@ export function Menu({ navItems }: { navItems: typeof pageRoutes }) {
             className='hover:text-black'
             href={`https://github.com/ethereumfollowprotocol/app/tree/${process.env.APP_VERSION}`}
           >
-            {process.env.VERCEL_GIT_COMMIT_SHA.slice(0, 7)}
+            {APP_VERSION}
           </RadixLink>
         </DropdownMenu.Item>
       </DropdownMenu.Content>
