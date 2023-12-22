@@ -4,10 +4,9 @@ import clsx from 'clsx'
 import * as React from 'react'
 import Image from 'next/image'
 import { parseEther } from 'viem'
-import { useSearchParams } from 'next/navigation'
+import { CheckIcon } from '@radix-ui/react-icons'
 import { useAccount, useSendTransaction } from 'wagmi'
-import { CheckIcon, InfoCircledIcon } from '@radix-ui/react-icons'
-import { Heading, Text, Button, Separator, Callout } from '@radix-ui/themes'
+import { Heading, Text, Button, Separator } from '@radix-ui/themes'
 
 const storeLocation = [
   {
@@ -99,7 +98,12 @@ export function OnboardingForm() {
                     'flex items-center space-x-8 rounded-xl px-4 text-left text-black hover:bg-transparent'
                   ])}
                 >
-                  <Image width={62} height={62} alt={location.name} src={location.image} />
+                  <Image
+                    width={62}
+                    height={62}
+                    alt={`${location.name} location`}
+                    src={location.image}
+                  />
                   <div className='ml-3'>
                     <span className='text-xs'>{location.label}</span>
                     <p className='text-lg font-bold capitalize'>{location.name}</p>
@@ -180,7 +184,7 @@ export function OnboardingForm() {
                   width={24}
                   height={24}
                   className='mx-2'
-                  alt={`${selectedStoreLocation}`}
+                  alt={`${selectedStoreLocation} logo`}
                 />
                 <label className='capitalize'>{selectedStoreLocation?.name}</label>
               </li>

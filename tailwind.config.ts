@@ -1,6 +1,5 @@
 import plugin from 'tailwindcss/plugin'
 import type { Config } from 'tailwindcss'
-import radixPlugin from 'tailwindcss-radix'
 import tailwindAnimate from 'tailwindcss-animate'
 import typographyPlugin from '@tailwindcss/typography'
 import containerQueriesPlugin from '@tailwindcss/container-queries'
@@ -192,7 +191,6 @@ export default ({
     containerQueriesPlugin,
     typographyPlugin,
     tailwindAnimate,
-    radixPlugin,
     plugin(({ addVariant, matchUtilities, theme }) => {
       addVariant('radix-side-top', '&[data-side="top"]')
       addVariant('radix-side-bottom', '&[data-side="bottom"]')

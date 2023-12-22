@@ -3,6 +3,8 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import * as React from 'react'
+import { isAddress } from 'viem'
+import dynamic from 'next/dynamic'
 import { Menu } from '#components/menu.tsx'
 import { usePathname } from 'next/navigation'
 import { useAccount, useEnsName } from 'wagmi'
@@ -10,8 +12,9 @@ import { Search } from '#components/search.tsx'
 import { Avatar, Text } from '@radix-ui/themes'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { pageRoutes } from 'src/lib/constants/routes.ts'
-import { CartButton } from '#components/cart-button.tsx'
 import { useIsMounted } from 'src/hooks/use-is-mounted.ts'
+
+const CartButton = dynamic(() => import('#components/cart-button.tsx'), { ssr: false })
 
 export function shouldHidePath({
   connected,
@@ -20,14 +23,17 @@ export function shouldHidePath({
   return !connected && privatePath ? true : false
 }
 
-export default Header
-
 export function Header() {
   const pathname = usePathname()
   const isMounted = useIsMounted()
 
   const account = useAccount()
-  const { data: ensName } = useEnsName({ address: account.address, cacheTime: 4206942069 })
+  const { data: ensName } = useEnsName({
+    // @ts-ignore
+    address: `${account.address}`,
+    cacheTime: 4206942069,
+    enabled: account.address && isAddress(account?.address)
+  })
 
   const navItems = React.useMemo<typeof pageRoutes>(
     () =>
@@ -43,7 +49,7 @@ export function Header() {
     <header className={clsx(['w-full px-2.5 font-sans sm:px-3 md:px-4 lg:px-5 xl:px-6'])}>
       <nav className='my-auto flex w-full flex-row justify-between'>
         <div className={clsx(['my-auto flex w-full items-center space-x-3 sm:pr-3'])}>
-          <Link href='/' className='select-none'>
+          <Link href='/' className='select-none' aria-label='Ethereum Follow Protocol Logo link'>
             <Avatar
               src='/assets/logo.png'
               fallback=''
@@ -51,6 +57,7 @@ export function Header() {
               size='4'
               mb='1'
               className='select-none'
+              alt='Ethereum Follow Protocol Logo'
             />
           </Link>
           <Text

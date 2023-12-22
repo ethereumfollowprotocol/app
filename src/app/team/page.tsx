@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { getEnsProfile } from '#app/actions.ts'
-import { teamAddresses } from 'src/lib/constants'
-import { FollowButton } from 'src/components/follow-button.tsx'
+import { teamAddresses } from '#lib/constants/index.ts'
+import { FollowButton } from '#components/follow-button.tsx'
 import { Avatar, Badge, Box, Flex, Text } from '@radix-ui/themes'
 
 interface TeamMember {

@@ -1,10 +1,11 @@
 'use client'
 
+import clsx from 'clsx'
 import * as React from 'react'
 import { useAccount } from 'wagmi'
 import { ProfileCard } from '#components/profile.tsx'
+import { useEnsProfile } from '#hooks/use-ens-profile.ts'
 import { FollowButton } from '#components/follow-button.tsx'
-import { useEnsProfile } from 'src/hooks/use-ens-profile'
 import {
   Avatar,
   Badge,
@@ -18,7 +19,6 @@ import {
   Text
 } from '@radix-ui/themes'
 import Link from 'next/link'
-import clsx from 'clsx'
 import { DropdownMenuIcon, MagnifyingGlassIcon } from '@radix-ui/react-icons'
 
 const profiles = [

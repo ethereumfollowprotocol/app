@@ -31,7 +31,7 @@
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "forceConsistentCasingInFileNames": true,
     "noPropertyAccessFromIndexSignature": true,
-    "types": ["node", "bun-types", "typed-query-selector/strict"],
+    "types": ["node", "bun", "typed-query-selector/strict"],
     "plugins": [
       {
         "name": "next"
