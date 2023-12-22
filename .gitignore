@@ -67,7 +67,6 @@ _
 *.tsbuildinfo
 next-env.d.ts
 public/*.js
-public/*.webmanifest
 .open-next
 .sst
 .sentryclirc
