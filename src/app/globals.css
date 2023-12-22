@@ -154,8 +154,8 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 ::selection {
-  background-color: rgba(231, 189, 243, 0.913);
-  color: rgb(36, 3, 16);
+  background-color: rgb(255, 255, 255) !important;
+  color: rgb(0, 0, 0);
 }
 
 /* radix ui table */

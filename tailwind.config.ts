@@ -1,6 +1,7 @@
 import plugin from 'tailwindcss/plugin'
 import type { Config } from 'tailwindcss'
 import radixPlugin from 'tailwindcss-radix'
+import tailwindAnimate from 'tailwindcss-animate'
 import typographyPlugin from '@tailwindcss/typography'
 import containerQueriesPlugin from '@tailwindcss/container-queries'
 
@@ -190,19 +191,14 @@ export default ({
   plugins: [
     containerQueriesPlugin,
     typographyPlugin,
+    tailwindAnimate,
     radixPlugin,
     plugin(({ addVariant, matchUtilities, theme }) => {
       addVariant('radix-side-top', '&[data-side="top"]')
       addVariant('radix-side-bottom', '&[data-side="bottom"]')
       matchUtilities(
-        {
-          'animation-delay': value => {
-            return { 'animation-delay': value }
-          }
-        },
-        {
-          values: theme('transitionDelay')
-        }
+        { 'animation-delay': value => ({ 'animation-delay': value }) },
+        { values: theme('transitionDelay') }
       )
     })
   ]

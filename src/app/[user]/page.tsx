@@ -1,19 +1,15 @@
+import type { Metadata } from 'next'
 import { ogImageURL } from 'src/lib/og'
 import { Avatar } from '@radix-ui/themes'
-import { getEnsProfile } from 'src/app/actions.ts'
-import type { Metadata, ResolvedMetadata } from 'next'
+import { getEnsProfile } from '#app/actions.ts'
 
 interface Props {
   params: { user: string }
   searchParams: { [key: string]: string | string[] | undefined }
 }
 
-export async function generateMetadata(
-  { params }: Props,
-  parent: ResolvedMetadata
-): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { user } = params
-  const images = parent.openGraph?.images
 
   return {
     title: `${user} | EFP`,

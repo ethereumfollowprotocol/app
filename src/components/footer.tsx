@@ -31,7 +31,6 @@ const footerLinks = [
 ]
 
 export function Footer() {
-  // if (true) return null
   return (
     <footer className='bottom-0 mx-auto mt-4 w-full font-sans'>
       <Flex

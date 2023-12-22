@@ -31,6 +31,7 @@ export default async function Home() {
           priority={false}
           decoding='async'
           placeholder='empty'
+          className='select-none pointer-events-none'
         />
         <Flex direction={'column'}>
           <Text className='text-4xl font-bold text-white'>Follow your friends.</Text>

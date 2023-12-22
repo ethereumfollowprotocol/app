@@ -2,16 +2,15 @@
 
 import clsx from 'clsx'
 import Link from 'next/link'
+import {
+  GitHubLogoIcon,
+  DiscordLogoIcon,
+  TwitterLogoIcon,
+  HamburgerMenuIcon
+} from '@radix-ui/react-icons'
 import { usePathname } from 'next/navigation'
 import { type pageRoutes, projectSocials } from '#lib/constants/routes.ts'
-import {
-  BackpackIcon,
-  DiscordLogoIcon,
-  GitHubLogoIcon,
-  HamburgerMenuIcon,
-  TwitterLogoIcon
-} from '@radix-ui/react-icons'
-import { DropdownMenu, IconButton, Button, Flex } from '@radix-ui/themes'
+import { DropdownMenu, IconButton, Button, Flex, Badge, Link as RadixLink } from '@radix-ui/themes'
 
 export const emojis = {
   home: '🏠',
@@ -42,7 +41,6 @@ export const projectLinkIcons = {
 }
 
 export function Menu({ navItems }: { navItems: typeof pageRoutes }) {
-  // console.log(JSON.stringify(navItems, undefined, 2))
   const pathname = usePathname()
 
   return (
@@ -158,6 +156,21 @@ export function Menu({ navItems }: { navItems: typeof pageRoutes }) {
               </IconButton>
             )
           })}
+        </DropdownMenu.Item>
+        <DropdownMenu.Item className='p-0 hover:bg-transparent'>
+          <RadixLink
+            size='1'
+            mx='auto'
+            color='gray'
+            weight='medium'
+            underline='always'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='hover:text-black'
+            href={`https://github.com/ethereumfollowprotocol/app/tree/${process.env.APP_VERSION}`}
+          >
+            {process.env.APP_VERSION}
+          </RadixLink>
         </DropdownMenu.Item>
       </DropdownMenu.Content>
     </DropdownMenu.Root>
