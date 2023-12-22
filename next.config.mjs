@@ -22,7 +22,7 @@ const APP_VERSION = childProcess
   .execSync('git rev-parse --short HEAD || echo "no-git"')
   .toString()
   .trim()
-const APP_VERSION_SHORT = APP_VERSION.slice(0, 7)
+
 console.info(`\nBuilding with app version: ${APP_VERSION}\n`)
 
 /** @type {NextConfig} */
@@ -33,8 +33,8 @@ const nextConfig = {
   poweredByHeader: false,
   env: {
     NEXT_TELEMETRY_DISABLED: '1',
-    APP_VERSION,
-    APP_VERSION_SHORT
+    APP_VERSION: process.env['VERCEL_GIT_COMMIT_SHA'] || APP_VERSION,
+    APP_VERSION_SHORT: (process.env['VERCEL_GIT_COMMIT_SHA'] || APP_VERSION).slice(0, 7)
   },
   images: {
     remotePatterns: [
@@ -99,6 +99,10 @@ const nextConfig = {
     {
       source: '/(.*)',
       headers: [
+        {
+          key: 'efp-build-version',
+          value: (process.env['VERCEL_GIT_COMMIT_SHA'] || APP_VERSION).slice(0, 7)
+        },
         {
           key: 'X-DNS-Prefetch-Control',
           value: 'on'
