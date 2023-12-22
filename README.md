@@ -28,8 +28,30 @@
 
 ### Prerequisites
 
-- [Node.js LTS](https://nodejs.org/en)
+- [Node.js LTS](https://nodejs.org/en) (LTS which is currently 20.x)
+- [Bun runtime](https://bun.sh/) (latest version)
 
+### Installation
+
+```bash
+git clone https://github.com/ethereumfollowprotocol/app.git && cd efp-app
+```
+
+> [!NOTE]
+> If vscode extensions behave weirdly or you stop getting type hints, run ⌘+⇧+P and type `> Developer: Restart Extension Host` to restart the extension host.
+
+```bash
+# upgrade bun to make sure you have the latest version
+bun upgrade
+# then install dependencies
+bun install
+```
+
+### Environment Variables
+
+```bash
+cp .env.example .env
+```
 ____
 TODO: Continue documentation
 ____

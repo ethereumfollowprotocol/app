@@ -11,17 +11,6 @@ const projectId = '8432b61498678159cf0d8e0c90a75da4'
 export const { chains, publicClient } = configureChains(
   [mainnet, optimism],
   [
-    alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_MAINNET_ALCHEMY_ID }),
-    infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_ID }),
-    jsonRpcProvider({
-      rpc: chain => {
-        const chainIdentifier = chain.id === 1 ? 'eth' : 'optimism'
-        return {
-          http: `https://${chainIdentifier}.llamarpc.com/rpc/${process.env.NEXT_PUBLIC_LLAMAFOLIO_ID}`,
-          webSocket: `wss://${chainIdentifier}.llamarpc.com/rpc/${process.env.NEXT_PUBLIC_LLAMAFOLIO_ID}`
-        }
-      }
-    }),
     jsonRpcProvider({
       rpc: chain => {
         const chainIdentifier = chain.id === 1 ? 'eth' : 'optimism'
@@ -32,6 +21,17 @@ export const { chains, publicClient } = configureChains(
     }),
     jsonRpcProvider({
       rpc: () => ({ http: 'https://ethereum.ethfollow.xyz/v1/mainnet' })
+    }),
+    alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_MAINNET_ALCHEMY_ID }),
+    infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_ID }),
+    jsonRpcProvider({
+      rpc: chain => {
+        const chainIdentifier = chain.id === 1 ? 'eth' : 'optimism'
+        return {
+          http: `https://${chainIdentifier}.llamarpc.com/rpc/${process.env.NEXT_PUBLIC_LLAMAFOLIO_ID}`,
+          webSocket: `wss://${chainIdentifier}.llamarpc.com/rpc/${process.env.NEXT_PUBLIC_LLAMAFOLIO_ID}`
+        }
+      }
     }),
     publicProvider()
   ],
