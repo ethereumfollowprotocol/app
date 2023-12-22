@@ -100,8 +100,8 @@ const nextConfig = {
       source: '/(.*)',
       headers: [
         {
-          key: 'efp-build-version',
-          value: (process.env['VERCEL_GIT_COMMIT_SHA'] || APP_VERSION).slice(0, 7)
+          key: 'X-EFP-App-Version',
+          value: process.env['VERCEL_GIT_COMMIT_SHA'] || APP_VERSION
         },
         {
           key: 'X-DNS-Prefetch-Control',

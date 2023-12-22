@@ -169,7 +169,7 @@ export function Menu({ navItems }: { navItems: typeof pageRoutes }) {
             className='hover:text-black'
             href={`https://github.com/ethereumfollowprotocol/app/tree/${process.env.APP_VERSION}`}
           >
-            {process.env.APP_VERSION}
+            {process.env.VERCEL_GIT_COMMIT_SHA.slice(0, 7)}
           </RadixLink>
         </DropdownMenu.Item>
       </DropdownMenu.Content>
