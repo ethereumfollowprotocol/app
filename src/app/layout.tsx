@@ -5,6 +5,7 @@ import '@rainbow-me/rainbowkit/styles.css'
 import clsx from 'clsx'
 import * as React from 'react'
 import { Providers } from './providers.tsx'
+import { Analytics } from '@vercel/analytics/react'
 import { Inter, IBM_Plex_Mono } from 'next/font/google'
 import { APP_NAME, APP_DESCRIPTION } from '#lib/constants/index.ts'
 
@@ -51,6 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         // TODO: figure out what extension is adding `data-extension-installed` prop
       >
         <Providers>{children}</Providers>
+        <Analytics />
       </body>
     </html>
   )
