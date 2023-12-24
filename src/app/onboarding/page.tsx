@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { usePathname } from 'next/navigation'
 
-export default function ProfilePage() {
+export default function OnboardingPage() {
   const pathname = usePathname()
 
   return (

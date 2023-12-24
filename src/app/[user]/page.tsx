@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { ogImageURL } from 'src/lib/og'
+import { ogImageURL } from '#lib/og.ts'
 import { Avatar } from '@radix-ui/themes'
 import { getEnsProfile } from '#app/actions.ts'
 
@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default async function Page({ params, searchParams }: Props) {
+export default async function UserPage({ params, searchParams }: Props) {
   const profile = await getEnsProfile(params.user)
 
   return (

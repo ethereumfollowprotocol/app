@@ -1,7 +1,7 @@
 {
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "typescript.preferences.importModuleSpecifier": "shortest",
+  "typescript.preferences.importModuleSpecifier": "non-relative",
   "typescript.inlayHints.parameterNames.enabled": "all",
   "typescript.preferences.preferTypeOnlyAutoImports": true,
   "files.associations": {
@@ -35,7 +35,6 @@
   "[jsonc]": { "editor.defaultFormatter": "biomejs.biome" },
   "search.exclude": {
     "**/node_modules": true,
-    "pnpm-lock.yaml": true,
     "public/*.js": true,
     "_": true
   }

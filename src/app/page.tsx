@@ -2,6 +2,7 @@ import * as React from 'react'
 import Image from 'next/image'
 import type { Metadata } from 'next'
 import { Flex, Text } from '@radix-ui/themes'
+import LandingGraphImage from '#app/assets/images/landing-graph.webp'
 
 export const metadata = {
   openGraph: {
@@ -12,7 +13,7 @@ export const metadata = {
   }
 } satisfies Metadata
 
-export default async function Home() {
+export default async function HomePage() {
   return (
     <React.Fragment>
       <main className='mx-auto flex h-full min-h-full w-full flex-col items-center overflow-scroll px-4 pt-8 text-center font-sans'>
@@ -23,13 +24,11 @@ export default async function Home() {
         </Flex>
 
         <Image
-          src={'/assets/landing-graph.webp'}
+          src={LandingGraphImage}
           width={500}
           height={500}
           alt='Landing graph'
-          loading='lazy'
-          priority={false}
-          decoding='async'
+          priority={true}
           placeholder='empty'
           className='select-none pointer-events-none'
         />

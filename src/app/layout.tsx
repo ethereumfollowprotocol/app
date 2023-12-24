@@ -26,6 +26,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang='en' className={clsx([inter.variable, ibm_plex_mono.variable, 'light'])}>
       <head>
+        <meta charSet='utf-8' />
+        <meta name='viewport' content='width=device-width, initial-scale=1' />
         <title>{APP_NAME}</title>
         <meta name='description' content={APP_DESCRIPTION} />
         <link rel='manifest' href='/site.webmanifest' />
@@ -34,7 +36,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name='apple-mobile-web-app-status-bar-style' content='default' />
         <meta name='apple-mobile-web-app-title' content='EFP' />
         <meta name='mobile-web-app-capable' content='yes' />
-        <meta name='viewport' content='width=device-width, initial-scale=1' />
         <meta name='theme-color' content='#fef305' />
         <meta name='apple-mobile-web-app-status-bar-style' content='#fef305' />
         <meta name='msapplication-TileColor' content='#fef305' />
@@ -48,14 +49,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta property='og:description' content={APP_DESCRIPTION} />
         <meta property='og:url' content='https://x.com/ethfollowpr' />
       </head>
-      <body
-        className='w-full min-w-full items-center font-serif'
-        // TODO: figure out what extension is adding `data-extension-installed` prop
-      >
+
+      <body className='w-full min-w-full items-center font-serif'>
         <Providers>{children}</Providers>
-        <Analytics />
-        <SpeedInsights />
+        <ProductionScripts />
       </body>
     </html>
+  )
+}
+
+function ProductionScripts() {
+  if (process.env.NODE_ENV !== 'production') return null
+  return (
+    <React.Fragment>
+      <Analytics />
+      <SpeedInsights />
+    </React.Fragment>
   )
 }

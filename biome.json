@@ -15,7 +15,7 @@
       "./**/*.json",
       "./**/*.jsonc"
     ],
-    "ignore": ["node_modules", "dist", "_"],
+    "ignore": ["node_modules", "dist", "_", "public/capo.js"],
     "ignoreUnknown": true
   },
   "organizeImports": {

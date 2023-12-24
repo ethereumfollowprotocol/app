@@ -15,7 +15,7 @@ const allIndexibleRoutes = fs
   .filter(
     file =>
       validRoutes.includes(file.name) &&
-      // exclude api routes routes and dynamic pages
+      // exclude api routes and dynamic pages
       file.path.matchAll(/[\[\]\(\)]|\/api\//g).next().done
   )
   .map(file => file.path.replace(appDirectoryPath, '').replaceAll(/[\\\/]/g, ''))

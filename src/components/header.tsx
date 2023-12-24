@@ -4,17 +4,15 @@ import clsx from 'clsx'
 import Link from 'next/link'
 import * as React from 'react'
 import { isAddress } from 'viem'
-import dynamic from 'next/dynamic'
 import { Menu } from '#components/menu.tsx'
 import { usePathname } from 'next/navigation'
 import { useAccount, useEnsName } from 'wagmi'
 import { Search } from '#components/search.tsx'
 import { Avatar, Text } from '@radix-ui/themes'
+import CartButton from '#components/cart-button.tsx'
+import { pageRoutes } from '#lib/constants/routes.ts'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { pageRoutes } from 'src/lib/constants/routes.ts'
-import { useIsMounted } from 'src/hooks/use-is-mounted.ts'
-
-const CartButton = dynamic(() => import('#components/cart-button.tsx'), { ssr: false })
+import { useIsMounted } from '#hooks/use-is-mounted.ts'
 
 export function shouldHidePath({
   connected,
@@ -28,11 +26,14 @@ export function Header() {
   const isMounted = useIsMounted()
 
   const account = useAccount()
-  const { data: ensName } = useEnsName({
-    // @ts-ignore
-    address: `${account.address}`,
+  const {
+    data: ensName,
+    error: ensNameError,
+    status: ensNameStatus
+  } = useEnsName({
+    address: account?.address,
     cacheTime: 4206942069,
-    enabled: account.address && isAddress(account?.address)
+    enabled: account?.address && isAddress(account?.address)
   })
 
   const navItems = React.useMemo<typeof pageRoutes>(

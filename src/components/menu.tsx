@@ -10,7 +10,7 @@ import {
 } from '@radix-ui/react-icons'
 import { usePathname } from 'next/navigation'
 import { type pageRoutes, projectSocials } from '#lib/constants/routes.ts'
-import { DropdownMenu, IconButton, Button, Flex, Badge, Link as RadixLink } from '@radix-ui/themes'
+import { DropdownMenu, IconButton, Button, Flex, Link as RadixLink } from '@radix-ui/themes'
 
 export const emojis = {
   home: '🏠',
