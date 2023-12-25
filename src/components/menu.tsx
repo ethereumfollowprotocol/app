@@ -171,7 +171,7 @@ export function Menu({ navItems }: { navItems: typeof pageRoutes }) {
             target='_blank'
             rel='noopener noreferrer'
             className='hover:text-black'
-            href={`https://github.com/ethereumfollowprotocol/app/tree/${process.env.APP_VERSION}`}
+            href={`https://github.com/ethereumfollowprotocol/app/tree/${APP_VERSION}`}
           >
             {APP_VERSION}
           </RadixLink>
