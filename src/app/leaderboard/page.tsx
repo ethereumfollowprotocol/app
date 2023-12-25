@@ -1,18 +1,8 @@
-import clsx from 'clsx'
-import Link from 'next/link'
 import * as React from 'react'
-import { FollowButton } from '#components/follow-button.tsx'
-import { LeaderboardSearch, FilterList } from './filter.tsx'
-import { Box, Text, Flex, Code, Table, Badge, Tooltip, IconButton, Avatar } from '@radix-ui/themes'
-
-interface LeaderboardEntry {
-  rank: number
-  name: string
-  following: string
-  followers: string
-  mutuals: string
-  blockedMuted: string
-}
+import { TableRow } from './row.tsx'
+import { Searchbar } from '#components/searchbar.tsx'
+import { SelectWithFilter } from '#components/select-with-filter.tsx'
+import { Box, Text, Flex, Code, Table, Tooltip, IconButton } from '@radix-ui/themes'
 
 const leaderboard = [
   {
@@ -49,106 +39,19 @@ const leaderboard = [
   },
   {
     rank: 5,
-    name: 'dr3a.eth',
-    following: '12.4k',
-    followers: '495',
-    mutuals: '495',
-    blockedMuted: '495'
-  },
-  {
-    rank: 6,
-    name: 'anon.eth',
-    following: '12.4k',
-    followers: '495',
-    mutuals: '495',
-    blockedMuted: '495'
-  },
-  {
-    rank: 7,
-    name: 'dragonite.eth',
-    following: '12.4k',
-    followers: '495',
-    mutuals: '495',
-    blockedMuted: '495'
-  },
-  {
-    rank: 8,
-    name: 'dcj.eth',
-    following: '12.4k',
-    followers: '495',
-    mutuals: '495',
-    blockedMuted: '495'
-  },
-  {
-    rank: 9,
-    name: 'dr3a.eth',
-    following: '12.4k',
-    followers: '495',
-    mutuals: '495',
-    blockedMuted: '495'
-  },
-  {
-    rank: 10,
-    name: 'anon.eth',
-    following: '12.4k',
-    followers: '495',
-    mutuals: '495',
-    blockedMuted: '495'
-  },
-  {
-    rank: 11,
-    name: 'dragonite.eth',
-    following: '12.4k',
-    followers: '495',
-    mutuals: '495',
-    blockedMuted: '495'
-  },
-  {
-    rank: 12,
-    name: 'dcj.eth',
-    following: '12.4k',
-    followers: '495',
-    mutuals: '495',
-    blockedMuted: '495'
-  },
-  {
-    rank: 13,
-    name: 'dr3a.eth',
-    following: '12.4k',
-    followers: '495',
-    mutuals: '495',
-    blockedMuted: '495'
-  },
-  {
-    rank: 14,
-    name: 'anon.eth',
-    following: '12.4k',
-    followers: '495',
-    mutuals: '495',
-    blockedMuted: '495'
-  },
-  {
-    rank: 15,
-    name: 'dragonite.eth',
-    following: '12.4k',
-    followers: '495',
-    mutuals: '495',
-    blockedMuted: '495'
-  },
-  {
-    rank: 16,
-    name: 'dcj.eth',
-
+    name: 'esm.eth',
     following: '12.4k',
     followers: '495',
     mutuals: '495',
     blockedMuted: '495'
   }
-] satisfies Array<LeaderboardEntry>
+] satisfies Array<React.ComponentProps<typeof TableRow>>
 
 export default async function LeaderboardPage({
   searchParams
-}: { searchParams: { filter?: string; query?: string } }) {
+}: {
+  searchParams: { query?: string }
+}) {
   const query = searchParams.query || ''
 
   const filteredLeaderboard = leaderboard.filter(entry =>
@@ -161,13 +64,19 @@ export default async function LeaderboardPage({
         Leaderboard
       </Text>
       <Flex direction='column' width='100%' className='max-w-5xl'>
-        <Flex direction='row' justify='between' my='4'>
+        <Flex direction='row' justify='between' my='3'>
           <Box className='max-w-sm w-52'>
             <React.Suspense>
-              <LeaderboardSearch />
+              <Searchbar queryKey='query' placeholder='Search...' />
             </React.Suspense>
           </Box>
-          <FilterList />
+
+          <SelectWithFilter
+            queryKey='filter'
+            dropdownOnly={false}
+            items={['following', 'followers', 'mutuals', 'blocked+muted']}
+          />
+
           <Tooltip content='lorem ipsum' className='w-min'>
             <IconButton
               radius='full'
@@ -180,7 +89,7 @@ export default async function LeaderboardPage({
               ?
             </IconButton>
           </Tooltip>
-          <Box className='mt-2.5'>
+          <Box className='mt-2'>
             <Text
               as='p'
               className='h-2 font-semibold text-sm sm:text-md w-full leading-none sm:leading-normal'
@@ -203,7 +112,7 @@ export default async function LeaderboardPage({
           <Table.Root
             size='2'
             variant='surface'
-            className='bg-white/50 rounded-xl px-2 lg:px-8 py-4 relative'
+            className='bg-white/50 rounded-xl px-2 lg:px-8 py-4 relative border-transparent'
             hidden={filteredLeaderboard.length === 0}
           >
             <Table.Header>
@@ -238,93 +147,5 @@ export default async function LeaderboardPage({
         </div>
       </Flex>
     </main>
-  )
-}
-
-function TableRow({ rank, name, following, followers, mutuals, blockedMuted }: LeaderboardEntry) {
-  const rowNumber = (
-    <React.Fragment>
-      {rank === 1 ? (
-        <img
-          alt='1'
-          src='/assets/leaderboard/1.png'
-          width='40'
-          className='mx-auto overflow-hidden select-none -mb-1'
-        />
-      ) : rank === 2 ? (
-        <img alt='2' src='/assets/leaderboard/2.png' width='28' className='mx-auto select-none' />
-      ) : rank === 3 ? (
-        <img alt='3' src='/assets/leaderboard/3.png' width='23' className='mx-auto select-none' />
-      ) : rank <= 10 ? (
-        <Text size='7' as='p' className='font-bold w-min' mx='auto' my='auto'>
-          {rank}
-        </Text>
-      ) : (
-        <Text size='4' as='p' className='font-bold w-min' mx='auto' my='auto'>
-          {rank}
-        </Text>
-      )}
-    </React.Fragment>
-  )
-
-  return (
-    <Table.Row align='center'>
-      <Table.RowHeaderCell justify='center' className='pt-1 sm:pr-6 select-none'>
-        <Box height='max-content' my='auto' className='tabular-nums text-right'>
-          {rowNumber}
-        </Box>
-      </Table.RowHeaderCell>
-      <Table.Cell data-name='name-column'>
-        <Link href={`/${name}`}>
-          <Flex gap='2' className='-mt-2'>
-            <Avatar
-              src={`https://metadata.ens.domains/mainnet/avatar/${name}`}
-              fallback=''
-              my='auto'
-              size='4'
-              radius='full'
-            />
-            <Flex direction='column' className='text-left' justify='start' align='start'>
-              <Text as='p' className='font-bold sm:text-lg text-sm hover:text-pink-400'>
-                {name}
-              </Text>
-              <Badge
-                size='1'
-                radius='full'
-                className='font-bold text-[10px] bg-[#CDCDCD] text-[#333333]'
-              >
-                Follows you
-              </Badge>
-            </Flex>
-          </Flex>
-        </Link>
-      </Table.Cell>
-      <Table.Cell data-name='following-column'>
-        <Box className='text-center'>
-          <Text className='font-bold text-sm sm:text-lg'>{following}</Text>
-        </Box>
-      </Table.Cell>
-      <Table.Cell data-name='followers-column'>
-        <Box className='text-center'>
-          <Text className='font-bold text-sm sm:text-lg'>{followers}</Text>
-        </Box>
-      </Table.Cell>
-      <Table.Cell data-name='mutuals-column'>
-        <Box className='text-center'>
-          <Text className='font-bold text-sm sm:text-lg'>{mutuals}</Text>
-        </Box>
-      </Table.Cell>
-      <Table.Cell data-name='blocked-muted-column'>
-        <Box className='text-center'>
-          <Text className='font-bold text-sm sm:text-lg'>{blockedMuted}</Text>
-        </Box>
-      </Table.Cell>
-      <Table.Cell
-        className={clsx([rank === 1 ? 'mt-5' : 'mt-2', 'flex lg:ml-6'])}
-        data-name='action-column'
-      >
-        <FollowButton text='Follow' pending />
-      </Table.Cell>
-    </Table.Row>
   )
 }

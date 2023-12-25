@@ -10,7 +10,6 @@ import { useAccount, useEnsName } from 'wagmi'
 import { Search } from '#components/search.tsx'
 import { Avatar, Text } from '@radix-ui/themes'
 import CartButton from '#components/cart-button.tsx'
-import { pageRoutes } from '#lib/constants/routes.ts'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useIsMounted } from '#hooks/use-is-mounted.ts'
 
@@ -20,6 +19,27 @@ export function shouldHidePath({
 }: { connected: boolean; privatePath?: boolean }) {
   return !connected && privatePath ? true : false
 }
+
+const navItems = [
+  {
+    href: '/',
+    emoji: '🏠',
+    name: 'home',
+    private: false
+  },
+  {
+    href: '/profile',
+    emoji: '👤',
+    name: 'profile',
+    private: true
+  },
+  {
+    href: '/leaderboard',
+    emoji: '🏆',
+    name: 'leaderboard',
+    private: false
+  }
+]
 
 export function Header() {
   const pathname = usePathname()
@@ -35,16 +55,6 @@ export function Header() {
     cacheTime: 4206942069,
     enabled: account?.address && isAddress(account?.address)
   })
-
-  const navItems = React.useMemo<typeof pageRoutes>(
-    () =>
-      pageRoutes.filter(
-        route =>
-          route.displayLocation === 'header' &&
-          !shouldHidePath({ connected: account.isConnected, privatePath: route.private })
-      ),
-    [account.isConnected]
-  )
 
   return (
     <header className={clsx(['w-full px-2.5 font-sans sm:px-3 md:px-4 lg:px-5 xl:px-6'])}>
@@ -84,19 +94,17 @@ export function Header() {
             'hidden lg:flex'
           ])}
         >
-          {navItems
-
-          .map((route, index) => (
-            <li className='inline font-bold' key={`route-${index}`}>
+          {navItems.map((item, index) => (
+            <li className='inline font-bold' key={`${index}`}>
               <Link
                 prefetch={true}
-                href={route.href}
+                href={item.href}
                 className={clsx([
                   'capitalize',
-                  pathname === route.href ? 'text-black' : 'text-pink-400'
+                  pathname === item.href ? 'text-black' : 'text-pink-400'
                 ])}
               >
-                <span className={clsx(['hidden', 'sm:block'])}>{route.name}</span>
+                <span className='hidden sm:block'>{item.name}</span>
               </Link>
             </li>
           ))}
@@ -123,7 +131,7 @@ export function Header() {
         )}
 
         <div className='my-auto pb-0.5 pl-2.5'>
-          <Menu navItems={navItems} />
+          <Menu />
         </div>
       </nav>
     </header>

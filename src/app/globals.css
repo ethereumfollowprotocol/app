@@ -162,3 +162,7 @@ input[type="search"]::-webkit-search-results-decoration {
 .rt-TableRootTable {
   --table-row-box-shadow: unset !important;
 }
+
+.rt-SelectTriggerInner {
+  text-transform: capitalize;
+}

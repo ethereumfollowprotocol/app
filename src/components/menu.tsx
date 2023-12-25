@@ -9,7 +9,7 @@ import {
   HamburgerMenuIcon
 } from '@radix-ui/react-icons'
 import { usePathname } from 'next/navigation'
-import { type pageRoutes, projectSocials } from '#lib/constants/routes.ts'
+import { projectSocials } from '#lib/constants/routes.ts'
 import { DropdownMenu, IconButton, Button, Flex, Link as RadixLink } from '@radix-ui/themes'
 
 export const emojis = {
@@ -44,7 +44,32 @@ const APP_VERSION = (
   process.env['NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA'] || process.env['APP_VERSION']
 )?.slice(0, 7)
 
-export function Menu({ navItems }: { navItems: typeof pageRoutes }) {
+const navItems = [
+  {
+    href: '/',
+    emoji: '🏠',
+    name: 'home',
+    external: false,
+    displayLocation: 'header'
+  },
+  {
+    href: '/profile',
+    emoji: '👤',
+    name: 'profile',
+    private: true,
+    external: false,
+    displayLocation: 'header'
+  },
+  {
+    href: '/leaderboard',
+    emoji: '🏆',
+    name: 'leaderboard',
+    external: false,
+    displayLocation: 'header'
+  }
+]
+
+export function Menu() {
   const pathname = usePathname()
 
   return (
