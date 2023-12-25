@@ -161,8 +161,8 @@ const nextConfig = {
     tunnelRoute: '/monitoring',
     // Automatically tree-shake Sentry logger statements to reduce bundle size
     disableLogger: true,
-    disableServerWebpackPlugin: false,
-    disableClientWebpackPlugin: false,
+    disableServerWebpackPlugin: true,
+    disableClientWebpackPlugin: true,
     autoInstrumentMiddleware: true,
     autoInstrumentServerFunctions: true
   }

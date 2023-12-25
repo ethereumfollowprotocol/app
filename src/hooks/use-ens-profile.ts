@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 
 export function useEnsProfile(addressOrName: string) {
   return useQuery({
-    queryKey: ['ensProfile', addressOrName],
+    queryKey: ['ens-profile', addressOrName],
     queryFn: async () => getEnsProfile(addressOrName),
     enabled: Boolean(addressOrName) && isAddress(addressOrName),
     refetchOnWindowFocus: false

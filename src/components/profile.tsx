@@ -1,13 +1,12 @@
-import type { EnsProfile } from '#lib/types.ts'
+import { getEnsProfile } from 'src/app/actions'
 import { Flex, Badge, Avatar, Box, Text } from '@radix-ui/themes'
 
-export function ProfileCard({
-  profile
-}: { profile?: Pick<EnsProfile, 'address' | 'avatar' | 'name'> }) {
-  if (!profile) return null
-  const { address, avatar, name } = profile
+export async function ProfileCard({ addressOrName }: { addressOrName: string }) {
+  if (!addressOrName) return null
+
+  const { address, name, avatar } = await getEnsProfile(addressOrName)
   return (
-    <Flex mx='auto' className='bg-white/70 border-0 max-w-80 w-[265px] min-w-60 rounded-xl p-3'>
+    <Flex mx='auto' className='bg-white/50 border-0 max-w-80 w-[265px] min-w-60 rounded-xl p-3'>
       <Flex direction='column' align='start' width='100%' height='100%' justify='center'>
         <Badge>#132</Badge>
         <Flex direction='column' justify='center' align='center' mx='auto' mt='3'>

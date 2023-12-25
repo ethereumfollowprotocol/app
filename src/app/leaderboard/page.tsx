@@ -55,7 +55,7 @@ export default async function LeaderboardPage({
   const query = searchParams.query || ''
 
   const filteredLeaderboard = leaderboard.filter(entry =>
-    entry.name.toLowerCase().includes(query.toLowerCase())
+    entry.name.toLowerCase().replaceAll('.eth', '').includes(query.toLowerCase())
   )
 
   return (

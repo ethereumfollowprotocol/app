@@ -6,7 +6,7 @@ import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { darkTheme, getDefaultWallets } from '@rainbow-me/rainbowkit'
 
-const projectId = '8432b61498678159cf0d8e0c90a75da4'
+const WALLET_CONNECT_PROJECT_ID = '8432b61498678159cf0d8e0c90a75da4'
 
 export const { chains, publicClient } = configureChains(
   [mainnet, optimism],
@@ -44,7 +44,7 @@ export const { chains, publicClient } = configureChains(
 
 const { connectors } = getDefaultWallets({
   appName: 'Ethereum Follow Protocol',
-  projectId,
+  projectId: WALLET_CONNECT_PROJECT_ID,
   chains
 })
 
