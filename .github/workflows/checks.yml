@@ -32,14 +32,16 @@ jobs:
         with:
           bun-version: 'latest'
 
-      - name: '📦 Install Dependencies'
-        run: bun install
+      - name: 'Setup Biome'
+        uses: biomejs/setup-biome@v1
+        with:
+          version: 'latest'
 
       - name: '🧹 Lint'
-        run: bun lint
+        run: biome ci .
 
-      - name: '🧹 Format'
-        run: bun format
+      - name: '📦 Install Dependencies'
+        run: bun install --frozen-lockfile
 
       - name: '🧪 Typecheck'
         run: bun typecheck

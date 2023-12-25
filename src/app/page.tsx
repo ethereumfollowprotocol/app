@@ -24,7 +24,7 @@ export default async function HomePage() {
         </Flex>
 
         <Image
-          src={LandingGraphImage}
+          src='/assets/landing-graph.webp'
           width={500}
           height={500}
           alt='Landing graph'
