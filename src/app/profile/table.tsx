@@ -2,8 +2,9 @@ import Link from 'next/link'
 import * as React from 'react'
 import { Searchbar } from '#components/searchbar.tsx'
 import { FollowButton } from '#components/follow-button.tsx'
+import { ChevronDownIcon, DotsHorizontalIcon, PlusIcon } from '@radix-ui/react-icons'
 import { SelectWithFilter } from '#components/select-with-filter.tsx'
-import { Box, Code, Flex, Table, Text, Avatar, Badge } from '@radix-ui/themes'
+import { Box, Code, Flex, Table, Text, Avatar, Badge, IconButton, Button } from '@radix-ui/themes'
 
 export function ProfilePageTable({
   title,
@@ -33,12 +34,21 @@ export function ProfilePageTable({
   return (
     <Box height='100%' width='100%' p='2' mx='auto'>
       <Flex mb='2' justify='between'>
-        <Box className='space-x-2 flex items-end'>
+        <Box className='space-x-2 flex items-end' mr='2'>
           <Text my='auto' weight='bold' className='h-full inline mt-1.5' as='p'>
             {title}
           </Text>
           <Searchbar queryKey={searchQueryKey} placeholder='Search...' />
         </Box>
+        <IconButton
+          className='text-black font-semibold text-sm ml-auto '
+          radius='large'
+          variant='ghost'
+          my='auto'
+          size='1'
+        >
+          Tags <ChevronDownIcon />
+        </IconButton>
         <Box px='0'>
           <SelectWithFilter
             dropdownOnly
@@ -67,6 +77,7 @@ export function ProfilePageTable({
         <Table.Header hidden>
           <Table.Row>
             <Table.ColumnHeaderCell>Name</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell>Tags</Table.ColumnHeaderCell>
             <Table.ColumnHeaderCell>Action</Table.ColumnHeaderCell>
           </Table.Row>
         </Table.Header>
@@ -82,33 +93,59 @@ export function ProfilePageTable({
 
 function TableRow({ name, type }: { name: string; type: string }) {
   return (
-    <Table.Row align='center' className='w-full'>
-      <Table.Cell width='100%' pl='4' data-name='name-column'>
-        <Link href={`/${name}`}>
-          <Flex gap='2'>
-            <Avatar
-              src={`https://metadata.ens.domains/mainnet/avatar/${name}`}
-              fallback=''
-              my='auto'
-              size='4'
-              radius='full'
-            />
-            <Flex direction='column' className='text-left' justify='start' align='start'>
-              <Text as='p' className='font-bold sm:text-lg text-sm hover:text-pink-400'>
+    <Table.Row align='center' className='w-full hover:bg-white/30'>
+      <Table.Cell pl='4' data-name='name-column'>
+        <Flex gap='2'>
+          <Avatar
+            src={`https://metadata.ens.domains/mainnet/avatar/${name}`}
+            fallback='/assets/gradient-circle.svg'
+            my='auto'
+            radius='full'
+          />
+          <Flex direction='column' className='text-left' justify='center' align='start'>
+            <Link href={`/${name}`}>
+              <Text as='p' className='font-bold xl:text-lg lg:text-md text-sm hover:text-pink-400'>
                 {name}
               </Text>
-              <Badge
-                size='1'
-                radius='full'
-                className='font-bold text-[10px] bg-[#CDCDCD] text-[#333333]'
-              >
+            </Link>
+            {type === 'following' && (
+              <Badge size='1' radius='full' className='font-bold text-[10px] text-black'>
                 Follows you
               </Badge>
-            </Flex>
+            )}
           </Flex>
-        </Link>
+        </Flex>
       </Table.Cell>
-
+      <Table.Cell className='my-auto'>
+        <Flex className='space-x-2'>
+          {type === 'following' && (
+            <IconButton
+              radius='full'
+              variant='soft'
+              size='1'
+              className='w-5 h-5 text-black font-black'
+              my='auto'
+              mr='1'
+            >
+              <PlusIcon fontWeight={900} />
+            </IconButton>
+          )}
+          <Badge variant='solid' className='bg-white text-black' radius='full'>
+            ens
+          </Badge>
+          <Badge variant='solid' className='bg-white text-black' radius='full'>
+            eth
+          </Badge>
+          <IconButton
+            variant='soft'
+            size='1'
+            className='bg-white text-black font-extrabold rounded-lg h-4 my-auto'
+            my='auto'
+          >
+            <DotsHorizontalIcon />
+          </IconButton>
+        </Flex>
+      </Table.Cell>
       <Table.Cell pr='4' data-name='action-column'>
         <FollowButton text={type === 'following' ? 'Unfollow' : 'Follow'} pending />
       </Table.Cell>

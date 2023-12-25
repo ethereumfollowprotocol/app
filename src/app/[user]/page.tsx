@@ -1,27 +1,11 @@
-import type { Metadata } from 'next'
-import { ogImageURL } from '#lib/og.ts'
 import { Avatar } from '@radix-ui/themes'
 import { getEnsProfile } from '#app/actions.ts'
 
 interface Props {
   params: { user: string }
-  searchParams: { [key: string]: string | string[] | undefined }
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { user } = params
-
-  return {
-    title: `${user} | EFP`,
-    metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL),
-    openGraph: {
-      title: `${user} | EFP`,
-      images: [ogImageURL({ name: user, followers: 100, following: 10 })]
-    }
-  }
-}
-
-export default async function UserPage({ params, searchParams }: Props) {
+export default async function UserPage({ params }: Props) {
   const profile = await getEnsProfile(params.user)
 
   return (

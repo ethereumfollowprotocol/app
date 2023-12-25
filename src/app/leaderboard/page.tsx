@@ -75,6 +75,7 @@ export default async function LeaderboardPage({
             queryKey='filter'
             dropdownOnly={false}
             items={['following', 'followers', 'mutuals', 'blocked+muted']}
+            placeholder='Select a filter'
           />
 
           <Tooltip content='lorem ipsum' className='w-min'>

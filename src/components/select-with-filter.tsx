@@ -13,13 +13,15 @@ export function SelectWithFilter({
   dropdownOnly = true,
   queryKey,
   items,
-  defaultValue
+  defaultValue,
+  placeholder
 }: {
   dropdownOnly?: boolean
   disabled?: boolean
   queryKey: string
   items: Array<string>
   defaultValue?: string
+  placeholder?: string
 }) {
   const [, startTransition] = React.useTransition()
   const [filter, setFilter] = useQueryState(queryKey, {
@@ -58,7 +60,8 @@ export function SelectWithFilter({
         >
           <Select.Trigger
             variant='soft'
-            className='rounded-lg bg-white/70 p-4 font-semibold !border-none text-sm ml-2'
+            className='rounded-lg bg-white/50 p-4 font-semibold !border-none text-sm ml-2'
+            placeholder={placeholder}
           />
           <Select.Content>
             <Select.Group>
@@ -81,7 +84,7 @@ export function SelectWithFilter({
               radius='full'
               className={clsx([
                 'text-sm px-4 font-semibold text-black capitalize',
-                filter === item.toLowerCase() ? 'bg-white' : 'bg-[#CDCDCD] text-gray-500'
+                filter === item.toLowerCase() ? 'bg-white' : 'bg-gray-300/80 text-gray-500'
               ])}
               disabled={disabled}
               name={item.toLowerCase()}

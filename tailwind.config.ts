@@ -57,6 +57,7 @@ const extendedTheme = {
   },
   fontSize: {
     // 1rem = 16px
+    'text-md': ['1rem', { lineHeight: '1.5rem' }],
     /** 80px size / 84px high / bold */
     mega: ['5rem', { lineHeight: '5.25rem', fontWeight: '700' }],
     /** 56px size / 62px high / bold */

@@ -72,7 +72,7 @@ export default async function ProfilePage({
         justify='center'
         gap='3'
         mx='auto'
-        className='lg:flex-row justify-center flex-col min-h-full lg:max-w-[1400px] max-w-2xl  border-kournikova-50'
+        className='lg:flex-row justify-center gap-y-0 xl:gap-x-2 gap-x-0 flex-col min-h-full lg:max-w-[1400px] max-w-2xl border-kournikova-50'
       >
         <Box height='100%' width='min-content' p='2' mx='auto'>
           <ProfileCard addressOrName='dr3a.eth' />
