@@ -2,7 +2,6 @@ import * as React from 'react'
 import Image from 'next/image'
 import type { Metadata } from 'next'
 import { Flex, Text } from '@radix-ui/themes'
-import LandingGraphImage from '#app/assets/images/landing-graph.webp'
 
 export const metadata = {
   openGraph: {
