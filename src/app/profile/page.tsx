@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { ProfilePageTable } from './table.tsx'
+import { ProfileCard } from './profile-card.tsx'
 import { AdvancedList } from './advanced-list.tsx'
 import { Box, Flex, Text } from '@radix-ui/themes'
-import { ProfileCard } from '#components/profile.tsx'
 
 const profiles = [
   {
@@ -65,12 +65,11 @@ export default async function ProfilePage({
   const followersFilter = searchParams['followers-filter'] || 'follower count'
 
   return (
-    <main className='mx-auto flex min-h-full h-full w-full flex-col items-center text-center p-4'>
+    <main className='mx-auto flex min-h-full h-full w-full flex-col items-center text-center pt-2 pb-4 px-2'>
       <Flex
         width='100%'
         height='100%'
         justify='center'
-        gap='3'
         mx='auto'
         className='lg:flex-row justify-center gap-y-0 xl:gap-x-2 gap-x-0 flex-col min-h-full lg:max-w-[1400px] max-w-2xl border-kournikova-50'
       >

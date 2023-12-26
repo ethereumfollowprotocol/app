@@ -4,7 +4,7 @@ import { infuraProvider } from 'wagmi/providers/infura'
 import { publicProvider } from 'wagmi/providers/public'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
-import { darkTheme, getDefaultWallets } from '@rainbow-me/rainbowkit'
+import { lightTheme, getDefaultWallets } from '@rainbow-me/rainbowkit'
 
 const WALLET_CONNECT_PROJECT_ID = '8432b61498678159cf0d8e0c90a75da4'
 
@@ -55,15 +55,15 @@ export const wagmiConfig = createConfig({
 })
 
 export const rainbowTheme = {
-  blurs: darkTheme().blurs,
-  fonts: darkTheme().fonts,
-  radii: darkTheme().radii,
+  blurs: lightTheme().blurs,
+  fonts: lightTheme().fonts,
+  radii: lightTheme().radii,
   colors: {
-    ...darkTheme().colors,
+    ...lightTheme().colors,
     accentColor: '#f9f9f9',
     accentColorForeground: '#000',
     connectButtonBackground: '#f9f9f9',
     connectButtonText: '#000'
   },
-  shadows: darkTheme().shadows
+  shadows: lightTheme().shadows
 }

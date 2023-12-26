@@ -27,7 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang='en' className={clsx([inter.variable, ibm_plex_mono.variable, 'light'])}>
       <head>
         <meta charSet='utf-8' />
-        <meta name='viewport' content='width=device-width, initial-scale=1' />
+        <meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no' />
         <title>{APP_NAME}</title>
         <meta name='description' content={APP_DESCRIPTION} />
         <link rel='manifest' href='/site.webmanifest' />

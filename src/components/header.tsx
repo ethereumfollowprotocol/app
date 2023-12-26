@@ -118,7 +118,7 @@ export function Header() {
           <div
             className={clsx([
               !account.isConnected && 'w-min',
-              'my-auto flex items-center justify-end pb-1  max-w-context text-xs sm:text-sm'
+              'my-auto flex items-center justify-end pb-1 min-w-fit'
             ])}
           >
             <ConnectButton

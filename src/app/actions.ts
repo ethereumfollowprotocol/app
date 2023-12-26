@@ -3,10 +3,8 @@
 import { cookies } from 'next/headers'
 import { revalidateTag } from 'next/cache'
 import type { EnsProfile } from '#lib/types.ts'
-import { checkAddressOrEnsValid } from '#lib/utilities.ts'
 
 export async function getEnsProfile(ensOrAddress: string) {
-  checkAddressOrEnsValid(ensOrAddress)
   const response = await fetch(`https://ens.ethfollow.xyz/u/${ensOrAddress}`, { cache: 'default' })
   const data = await response.json()
   return data as EnsProfile

@@ -2,10 +2,11 @@ import plugin from 'tailwindcss/plugin'
 import type { Config } from 'tailwindcss'
 import tailwindAnimate from 'tailwindcss-animate'
 import typographyPlugin from '@tailwindcss/typography'
+import tailwindcssRadixPlugin from 'tailwindcss-radix'
+import aspectRatioPlugin from '@tailwindcss/aspect-ratio'
 import containerQueriesPlugin from '@tailwindcss/container-queries'
 
-// from https://github.com/epicweb-dev/epic-stack/blob/main/app/utils/extended-theme.ts
-const extendedTheme = {
+const { colors, fontFamily, fontSize, keyframes, animation, spacing } = {
   colors: {
     border: 'hsl(var(--border))',
     input: {
@@ -48,12 +49,53 @@ const extendedTheme = {
     card: {
       DEFAULT: 'hsl(var(--card))',
       foreground: 'hsl(var(--card-foreground))'
+    },
+    /**
+     * @see https://uicolors.app/create
+     */
+    lime: {
+      '50': 'hsl(98, 100%, 95%)',
+      '100': 'hsl(99, 100%, 88%)',
+      '200': 'hsl(100, 100%, 78%)',
+      '300': 'hsl(102, 100%, 66%)',
+      '400': 'hsl(104, 100%, 61%)',
+      '500': 'hsl(106, 100%, 45%)',
+      '600': 'hsl(107, 100%, 36%)',
+      '700': 'hsl(107, 100%, 27%)',
+      '800': 'hsl(108, 88%, 23%)',
+      '900': 'hsl(109, 79%, 20%)',
+      '950': 'hsl(112, 100%, 10%)'
+    },
+    salmon: {
+      '50': 'hsl(0, 100%, 97%)',
+      '100': 'hsl(0, 100%, 94%)',
+      '200': 'hsl(0, 100%, 89%)',
+      '300': 'hsl(0, 100%, 81%)',
+      '400': 'hsl(0, 100%, 74%)',
+      '500': 'hsl(0, 93%, 60%)',
+      '600': 'hsl(0, 79%, 51%)',
+      '700': 'hsl(0, 81%, 42%)',
+      '800': 'hsl(0, 78%, 35%)',
+      '900': 'hsl(0, 69%, 31%)',
+      '950': 'hsl(0, 82%, 15%)'
+    },
+    kournikova: {
+      '50': 'hsl(52, 92%, 95%)',
+      '100': 'hsl(52, 100%, 88%)',
+      '200': 'hsl(50, 100%, 77%)',
+      '300': 'hsl(48, 100%, 70%)',
+      '400': 'hsl(45, 98%, 53%)',
+      '500': 'hsl(43, 95%, 47%)',
+      '600': 'hsl(38, 98%, 40%)',
+      '700': 'hsl(33, 94%, 33%)',
+      '800': 'hsl(29, 82%, 29%)',
+      '900': 'hsl(26, 74%, 26%)',
+      '950': 'hsl(23, 86%, 14%)'
     }
   },
-  borderRadius: {
-    lg: 'var(--radius)',
-    md: 'calc(var(--radius) - 2px)',
-    sm: 'calc(var(--radius) - 4px)'
+  fontFamily: {
+    sans: ['var(--font-inter)'],
+    mono: ['var(--font-ibm-plex-mono)']
   },
   fontSize: {
     // 1rem = 16px
@@ -94,6 +136,10 @@ const extendedTheme = {
     button: ['0.75rem', { lineHeight: '1rem', fontWeight: '700' }]
   },
   keyframes: {
+    wiggle: {
+      '0%, 100%': { transform: 'rotate(-3deg)' },
+      '50%': { transform: 'rotate(3deg)' }
+    },
     'accordion-down': {
       from: { height: '0' },
       to: { height: 'var(--radix-accordion-content-height)' }
@@ -105,8 +151,21 @@ const extendedTheme = {
   },
   animation: {
     'accordion-down': 'accordion-down 0.2s ease-out',
-    'accordion-up': 'accordion-up 0.2s ease-out'
-  }
+    'accordion-up': 'accordion-up 0.2s ease-out',
+    'spin-slow': 'spin 2s linear infinite'
+  },
+  spacing: {
+    '68': '17rem',
+    '76': '19rem',
+    '86': '22rem',
+    '92': '24rem',
+    '100': '26rem',
+    '108': '28rem',
+    '116': '30rem',
+    '128': '32rem',
+    '144': '36rem'
+  },
+  screens: {}
 } satisfies Config['theme']
 
 export default ({
@@ -117,88 +176,40 @@ export default ({
   ],
   darkMode: 'class',
   important: true,
-  future: {
-    hoverOnlyWhenSupported: true
-  },
+  future: { hoverOnlyWhenSupported: true },
   theme: {
     transparent: 'transparent',
     current: 'currentColor',
     extend: {
-      /**
-       * @see https://uicolors.app/create
-       */
-      colors: {
-        lime: {
-          '50': 'hsl(98, 100%, 95%)',
-          '100': 'hsl(99, 100%, 88%)',
-          '200': 'hsl(100, 100%, 78%)',
-          '300': 'hsl(102, 100%, 66%)',
-          '400': 'hsl(104, 100%, 61%)',
-          '500': 'hsl(106, 100%, 45%)',
-          '600': 'hsl(107, 100%, 36%)',
-          '700': 'hsl(107, 100%, 27%)',
-          '800': 'hsl(108, 88%, 23%)',
-          '900': 'hsl(109, 79%, 20%)',
-          '950': 'hsl(112, 100%, 10%)'
-        },
-        salmon: {
-          '50': 'hsl(0, 100%, 97%)',
-          '100': 'hsl(0, 100%, 94%)',
-          '200': 'hsl(0, 100%, 89%)',
-          '300': 'hsl(0, 100%, 81%)',
-          '400': 'hsl(0, 100%, 74%)',
-          '500': 'hsl(0, 93%, 60%)',
-          '600': 'hsl(0, 79%, 51%)',
-          '700': 'hsl(0, 81%, 42%)',
-          '800': 'hsl(0, 78%, 35%)',
-          '900': 'hsl(0, 69%, 31%)',
-          '950': 'hsl(0, 82%, 15%)'
-        },
-        kournikova: {
-          '50': 'hsl(52, 92%, 95%)',
-          '100': 'hsl(52, 100%, 88%)',
-          '200': 'hsl(50, 100%, 77%)',
-          '300': 'hsl(48, 100%, 70%)',
-          '400': 'hsl(45, 98%, 53%)',
-          '500': 'hsl(43, 95%, 47%)',
-          '600': 'hsl(38, 98%, 40%)',
-          '700': 'hsl(33, 94%, 33%)',
-          '800': 'hsl(29, 82%, 29%)',
-          '900': 'hsl(26, 74%, 26%)',
-          '950': 'hsl(23, 86%, 14%)'
-        },
-        ...extendedTheme.colors
-      },
-      ...extendedTheme.borderRadius,
-      ...extendedTheme.fontSize,
-      fontFamily: {
-        sans: ['var(--font-inter)'],
-        mono: ['var(--font-ibm-plex-mono)']
-      },
-      animation: {
-        ...extendedTheme.animation,
-        'spin-slow': 'spin 2s linear infinite'
-      },
-      keyframes: {
-        ...extendedTheme.keyframes,
-        wiggle: {
-          '0%, 100%': { transform: 'rotate(-3deg)' },
-          '50%': { transform: 'rotate(3deg)' }
-        }
-      }
+      spacing,
+      colors,
+      fontSize,
+      fontFamily,
+      animation,
+      keyframes
     }
   },
   plugins: [
-    containerQueriesPlugin,
-    typographyPlugin,
     tailwindAnimate,
-    plugin(({ addVariant, matchUtilities, theme }) => {
+    typographyPlugin,
+    aspectRatioPlugin,
+    containerQueriesPlugin,
+    tailwindcssRadixPlugin,
+    plugin(({ addVariant, addUtilities, matchUtilities, theme }) => {
       addVariant('radix-side-top', '&[data-side="top"]')
       addVariant('radix-side-bottom', '&[data-side="bottom"]')
       matchUtilities(
         { 'animation-delay': value => ({ 'animation-delay': value }) },
         { values: theme('transitionDelay') }
       )
+      addVariant('optional', '&:optional')
+      addVariant('hocus', ['&:hover', '&:focus'])
+      addVariant('inverted-colors', '@media (inverted-colors: inverted)')
+      addUtilities({
+        '.content-auto': { 'content-visibility': 'auto' },
+        '.content-hidden': { 'content-visibility': 'hidden' },
+        '.content-visible': { 'content-visibility': 'visible' }
+      })
     })
   ]
 } satisfies Config)

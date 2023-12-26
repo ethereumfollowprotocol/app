@@ -2,9 +2,9 @@ import Link from 'next/link'
 import * as React from 'react'
 import { Searchbar } from '#components/searchbar.tsx'
 import { FollowButton } from '#components/follow-button.tsx'
-import { ChevronDownIcon, DotsHorizontalIcon, PlusIcon } from '@radix-ui/react-icons'
 import { SelectWithFilter } from '#components/select-with-filter.tsx'
-import { Box, Code, Flex, Table, Text, Avatar, Badge, IconButton, Button } from '@radix-ui/themes'
+import { ChevronDownIcon, DotsHorizontalIcon, PlusIcon } from '@radix-ui/react-icons'
+import { Box, Code, Flex, Table, Text, Avatar, Badge, IconButton } from '@radix-ui/themes'
 
 export function ProfilePageTable({
   title,
@@ -32,7 +32,7 @@ export function ProfilePageTable({
   )
 
   return (
-    <Box height='100%' width='100%' p='2' mx='auto'>
+    <Box height='100%' width='100%' px='2' pb='4' mx='auto'>
       <Flex mb='2' justify='between'>
         <Box className='space-x-2 flex items-end' mr='2'>
           <Text my='auto' weight='bold' className='h-full inline mt-1.5' as='p'>
@@ -94,7 +94,7 @@ export function ProfilePageTable({
 function TableRow({ name, type }: { name: string; type: string }) {
   return (
     <Table.Row align='center' className='w-full hover:bg-white/30'>
-      <Table.Cell pl='4' data-name='name-column'>
+      <Table.Cell pl='4' pr='0' data-name='name-column'>
         <Flex gap='2'>
           <Avatar
             src={`https://metadata.ens.domains/mainnet/avatar/${name}`}

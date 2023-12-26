@@ -40,11 +40,11 @@
     "wagmi": "^1.4.12"
   },
   "devDependencies": {
-    "@tailwindcss/container-queries": "^0.1.1",
-    "@tailwindcss/typography": "^0.5.10",
-    "tailwindcss-radix": "^2.8.0",
     "@biomejs/biome": "^1.4.1",
     "@next/bundle-analyzer": "^14.0.4",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/container-queries": "^0.1.1",
+    "@tailwindcss/typography": "^0.5.10",
     "@tanstack/react-query-devtools": "^5.14.6",
     "@total-typescript/ts-reset": "^0.5.1",
     "@types/bun": "^1.0.0",
@@ -60,6 +60,7 @@
     "sharp": "^0.33.1",
     "tailwindcss": "^3.4.0",
     "tailwindcss-animate": "^1.0.7",
+    "tailwindcss-radix": "^2.8.0",
     "tsx": "^4.7.0",
     "typed-query-selector": "^2.11.0",
     "typescript": "^5.3.3",

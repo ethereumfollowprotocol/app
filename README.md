@@ -52,9 +52,6 @@ bun install
 ```bash
 cp .env.example .env
 ```
-____
-TODO: Continue documentation
-____
 
 Now you should be able to run the following without getting any errors:
 
@@ -63,6 +60,10 @@ bun lint && bun format && bun typecheck && bun run build
 ```
 
 <br />
+
+____
+TODO: Continue documentation
+____
 
 Follow [**@ethfollowpr**](https://x.com/ethfollowpr) on **𝕏** for updates and join the [**Discord**](https://discord.ethfollow.xyz) to get involved.
  

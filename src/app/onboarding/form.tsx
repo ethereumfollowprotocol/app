@@ -5,7 +5,7 @@ import * as React from 'react'
 import Image from 'next/image'
 import { parseEther } from 'viem'
 import { CheckIcon } from '@radix-ui/react-icons'
-import { useAccount, useSendTransaction } from 'wagmi'
+import { useAccount, usePrepareSendTransaction, useSendTransaction } from 'wagmi'
 import { Heading, Text, Button, Separator } from '@radix-ui/themes'
 
 const storeLocation = [
@@ -43,17 +43,18 @@ const storeLocation = [
 
 export function OnboardingForm() {
   const { address } = useAccount()
+  const { data, status } = usePrepareSendTransaction({
+    account: address,
+    to: '0xf4212614C7Fe0B3feef75057E88b2E77a7E23e83',
+    value: parseEther('0.1')
+  })
   const {
     data: sendTransactionData,
     error: sendTransactionError,
     status: sendTransactionStatus,
     sendTransaction,
     sendTransactionAsync
-  } = useSendTransaction({
-    account: address,
-    to: '0xf4212614C7Fe0B3feef75057E88b2E77a7E23e83',
-    value: parseEther('0.1')
-  })
+  } = useSendTransaction(data)
 
   const [formStep, setFormStep] = React.useState(0)
   const [selectedStoreLocation, setSelectedStoreLocation] = React.useState<
@@ -70,7 +71,7 @@ export function OnboardingForm() {
   }
 
   return (
-    <form className='flex h-full w-full flex-col rounded-2xl bg-zinc-100 p-8 sm:w-[500px]'>
+    <form className='flex h-full w-full flex-col rounded-2xl bg-white/80 p-8 sm:w-[500px]'>
       {formStep === 0 ? (
         <>
           <Heading className='text-xl font-bold sm:px-2'>
@@ -129,12 +130,11 @@ export function OnboardingForm() {
               className='w-24 bg-gray-300 font-bold text-black'
               onClick={previousStep}
             >
-              {'BUTTON.CANCEL'}
+              CANCEL
             </Button>
             <Button
-              variant={selectedStoreLocation ? 'classic' : 'soft'}
+              variant='soft'
               radius='full'
-              color='pink'
               size='3'
               className={clsx([
                 'w-24 font-bold text-black',
@@ -142,7 +142,7 @@ export function OnboardingForm() {
               ])}
               onClick={nextStep}
             >
-              {'BUTTON.NEXT'}
+              NEXT
             </Button>
           </section>
         </>
@@ -202,14 +202,13 @@ export function OnboardingForm() {
               Back
             </Button>
             <Button
-              variant='classic'
+              variant='soft'
               radius='full'
-              color='pink'
               size='3'
               className='w-24 bg-gradient-to-b from-amber-300 to-red-300 font-bold text-black'
               onClick={event => {
                 event.preventDefault()
-                sendTransaction()
+                sendTransaction?.()
               }}
             >
               Initiate

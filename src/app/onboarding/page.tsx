@@ -1,12 +1,10 @@
 import * as React from 'react'
-import { usePathname } from 'next/navigation'
+import { OnboardingForm } from './form.tsx'
 
-export default function OnboardingPage() {
-  const pathname = usePathname()
-
+export default async function OnboardingPage() {
   return (
-    <main className='mx-auto flex h-full w-full flex-col items-center text-center'>
-      TODO <p>{pathname}</p>
+    <main className='mx-auto flex h-full w-full flex-col items-center text-center mt-6'>
+      <OnboardingForm />
     </main>
   )
 }
