@@ -8,7 +8,7 @@
     "#*": "./src/*"
   },
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "next dev",
     "build": "NODE_OPTIONS='--no-warnings' NODE_ENV='production' next build",
     "start": "next start",
     "format": "biome format . --write",
@@ -34,6 +34,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "server-only": "^0.0.1",
+    "tailwind-merge": "^2.2.0",
     "vaul": "^0.8.0",
     "viem": "^1.21.1",
     "wagmi": "^1.4.12"

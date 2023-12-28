@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { Flex, Text } from '@radix-ui/themes'
 
 export const metadata = {
+  metadataBase: new URL('https://app.ethfollow.xyz'),
   openGraph: {
     images: [{ url: '/banner.png', alt: 'Ethereum Follow Protocol' }]
   },

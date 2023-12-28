@@ -1,7 +1,16 @@
 import { isAddress } from 'viem/utils'
+import { clsx, type ClassValue } from 'clsx'
+import { twMerge as tailwindMerge } from 'tailwind-merge'
 
 export function raise(error: unknown): never {
   throw typeof error === 'string' ? new Error(error) : error
+}
+
+/**
+ * @see https://www.youtube.com/watch?v=re2JFITR7TI
+ */
+export function cn(...args: Array<ClassValue>): string {
+  return tailwindMerge(clsx(...args))
 }
 
 export function urlSearchParams(
