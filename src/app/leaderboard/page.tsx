@@ -8,34 +8,26 @@ const leaderboard = [
   {
     rank: 1,
     name: 'dr3a.eth',
-    following: '12.4k',
-    followers: '495',
-    mutuals: '495',
-    blockedMuted: '495'
+    following: '420',
+    followers: '12.4k',
+    mutuals: '1k',
+    blockedMuted: '777'
   },
   {
     rank: 2,
     name: 'anon.eth',
-    following: '12.4k',
-    followers: '495',
+    following: '2371',
+    followers: '4537',
     mutuals: '495',
     blockedMuted: '495'
   },
   {
     rank: 3,
     name: 'dragonite.eth',
-    following: '12.4k',
-    followers: '495',
-    mutuals: '495',
-    blockedMuted: '495'
-  },
-  {
-    rank: 4,
-    name: 'dcj.eth',
-    following: '12.4k',
-    followers: '495',
-    mutuals: '495',
-    blockedMuted: '495'
+    following: '500',
+    followers: '822',
+    mutuals: '4',
+    blockedMuted: '69'
   },
   {
     rank: 5,
@@ -55,7 +47,7 @@ export default async function LeaderboardPage({
   const query = searchParams.query || ''
 
   const filteredLeaderboard = leaderboard.filter(entry =>
-    entry.name.toLowerCase().replaceAll('.eth', '').includes(query.toLowerCase())
+    entry.name.toLowerCase().includes(query.toLowerCase())
   )
 
   return (

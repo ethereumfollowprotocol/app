@@ -30,6 +30,10 @@ const nextConfig = {
   trailingSlash: false,
   reactStrictMode: true,
   poweredByHeader: false,
+  experimental: {
+    useLightningcss: true
+  },
+  generateBuildId: async () => APP_VERSION,
   env: {
     NEXT_TELEMETRY_DISABLED: '1',
     APP_VERSION,
@@ -132,6 +136,7 @@ const nextConfig = {
             "media-src 'none';",
             'connect-src *;',
             "font-src 'self' *.public.blob.vercel-storage.com *.vercel-storage.com fonts.googleapis.com fonts.gstatic.com;",
+            "frame-src 'self' https://verify.walletconnect.com/ https://verify.walletconnect.org/;",
             "frame-ancestors 'self';"
           ].join(' ')
         },

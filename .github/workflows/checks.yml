@@ -20,7 +20,6 @@ env:
 
 jobs:
   checks:
-    if: ${{ !contains(github.event.head_commit.message, '[skip-checks]') }}
     timeout-minutes: 3
     runs-on: ['ubuntu-latest']
     steps:
