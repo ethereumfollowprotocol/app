@@ -8,7 +8,8 @@ import { redirect } from 'next/navigation'
 export async function GET(request: Request) {
   const url = new URL(request.url)
   const queryParameters = new URLSearchParams(url.search)
-  console.log(queryParameters)
+  const forwardedProto = request.headers.get('x-forwarded-proto')
+  console.log(url.pathname, forwardedProto)
   draftMode().disable()
-  return new Response('Draft mode is disabled', { status: 200 })
+  return redirect('/')
 }

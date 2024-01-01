@@ -46,6 +46,8 @@ export default async function LeaderboardPage({
 }) {
   const query = searchParams.query || ''
 
+  // const leaderboard = await fetchLeaderboard({ filter: 'following' })
+
   const filteredLeaderboard = leaderboard.filter(entry =>
     entry.name.toLowerCase().includes(query.toLowerCase())
   )
@@ -55,7 +57,7 @@ export default async function LeaderboardPage({
       <Text size='7' className='font-bold' mb='5'>
         Leaderboard
       </Text>
-      <Flex direction='column' width='100%' className='max-w-5xl'>
+      <Flex direction='column' width='100%' className='max-w-[860px]'>
         <Flex direction='row' justify='between' my='3'>
           <Box className='max-w-sm w-52'>
             <React.Suspense>
@@ -82,7 +84,7 @@ export default async function LeaderboardPage({
               ?
             </IconButton>
           </Tooltip>
-          <Box className='mt-2'>
+          <Box className='mt-2 min-w-fit'>
             <Text
               as='p'
               className='h-2 font-semibold text-sm sm:text-md w-full leading-none sm:leading-normal'

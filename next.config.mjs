@@ -127,20 +127,6 @@ const nextConfig = {
           value: 'origin-when-cross-origin'
         },
         {
-          key: 'Content-Security-Policy',
-          value: [
-            "default-src 'self' vercel.live;",
-            "script-src 'self' 'unsafe-eval' 'unsafe-inline' cdn.vercel-insights.com vercel.live va.vercel-scripts.com;",
-            "style-src 'self' 'unsafe-inline' *.vercel-storage.com fonts.googleapis.com;",
-            'img-src * blob: data: *.vercel-storage.com;',
-            "media-src 'none';",
-            'connect-src *;',
-            "font-src 'self' *.public.blob.vercel-storage.com *.vercel-storage.com fonts.googleapis.com fonts.gstatic.com;",
-            "frame-src 'self' https://verify.walletconnect.com/ https://verify.walletconnect.org/;",
-            "frame-ancestors 'self';"
-          ].join(' ')
-        },
-        {
           key: 'Feature-Policy',
           value: "geolocation 'none'; microphone 'none'; camera 'none';"
         },

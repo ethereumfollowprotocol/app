@@ -31,7 +31,7 @@
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "forceConsistentCasingInFileNames": true,
     "noPropertyAccessFromIndexSignature": true,
-    "types": ["node", "bun", "typed-query-selector/strict"],
+    "types": ["node", "typed-query-selector/strict"],
     "plugins": [
       {
         "name": "next"
@@ -40,5 +40,5 @@
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.jsx", ".next/types/**/*.ts"],
   "files": ["biome.json", "environment.d.ts", "next.config.mjs"],
-  "exclude": ["node_modules", "_"]
+  "exclude": ["node_modules", "./src/lib/generated", "_"]
 }
