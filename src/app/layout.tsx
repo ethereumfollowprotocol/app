@@ -6,6 +6,7 @@ import clsx from 'clsx'
 import * as React from 'react'
 import { Providers } from './providers.tsx'
 import { Analytics } from '@vercel/analytics/react'
+import { Production } from 'src/app/production.tsx'
 import { Inter, IBM_Plex_Mono } from 'next/font/google'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { APP_NAME, APP_DESCRIPTION } from '#lib/constants/index.ts'
@@ -28,19 +29,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <HeadTag />
       <body className='w-full min-w-full items-center font-serif'>
         <Providers>{children}</Providers>
-        <ProductionScripts />
+        <Production>
+          <Analytics />
+          <SpeedInsights />
+        </Production>
       </body>
     </html>
-  )
-}
-
-function ProductionScripts() {
-  if (process.env.NODE_ENV !== 'production') return null
-  return (
-    <React.Fragment>
-      <Analytics />
-      <SpeedInsights />
-    </React.Fragment>
   )
 }
 

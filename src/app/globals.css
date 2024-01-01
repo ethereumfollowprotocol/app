@@ -134,6 +134,8 @@ input[type="search"]::-webkit-search-results-decoration {
   height: 0rem;
   width: 0rem;
   -webkit-appearance: none;
+  color: transparent;
+  background: transparent;
 }
 
 *::-webkit-scrollbar-track {
@@ -158,7 +160,49 @@ input[type="search"]::-webkit-search-results-decoration {
   color: rgb(0, 0, 0);
 }
 
+.prose > :first-child {
+  /* Override removing top margin, causing layout shift */
+  margin-top: 1.25em !important;
+  margin-bottom: 1.25em !important;
+}
+
+pre::-webkit-scrollbar {
+  display: none;
+}
+
+pre {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Remove Safari input shadow on mobile */
+input[type='text'],
+input[type='email'] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* table {
+  max-width: fit-content;
+  overflow-x: auto;
+  white-space: nowrap;
+} */
+
+.prose .callout > p {
+  margin: 0 !important;
+}
+
+.title {
+  text-wrap: balance;
+}
+
 /* radix ui table */
+/* .rt-TableRoot {
+  width: fit-content;
+  margin: auto;
+} */
+
 .rt-TableRootTable {
   --table-row-box-shadow: unset !important;
 }

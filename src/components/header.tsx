@@ -52,7 +52,7 @@ export function Header() {
     status: ensNameStatus
   } = useEnsName({
     address: account?.address,
-    cacheTime: 4206942069,
+    cacheTime: 420_69_420_69,
     enabled: account?.address && isAddress(account?.address)
   })
 
@@ -85,7 +85,7 @@ export function Header() {
             Follow <br />
             Protocol
           </Text>
-          {isMounted && <Search />}
+          <Search />
         </div>
         <ul
           className={clsx([
