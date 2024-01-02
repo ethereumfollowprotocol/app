@@ -59,11 +59,19 @@ Now you should be able to run the following without getting any errors:
 bun lint && bun format && bun typecheck && bun run build
 ```
 
-<br />
-
 ### Directory Structure
 
-
+```bash
+├─ public # static assets - https://nextjs.org/docs/app/building-your-application/optimizing/static-assets
+├─ src
+│  ├─ components # reusable/shared components
+│  ├─ lib # reusable/shared non-jsx functions
+|  ├─ hooks # reusable/shared hooks
+│  ├─ app # https://nextjs.org/docs/getting-started/project-structure#app-routing-conventions
+|    ├─ api/<pathname>/route.ts # https://nextjs.org/docs/app/api-reference/file-conventions/route
+│    ├─ [<route>]/layout.tsx # https://nextjs.org/docs/app/api-reference/file-conventions/layout
+│    ├─ [<route>]/page.tsx # https://nextjs.org/docs/app/api-reference/file-conventions/page
+```
 
 ____
 TODO: Continue documentation

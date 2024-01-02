@@ -26,7 +26,6 @@
     "@tanstack/react-query": "^5.17.0",
     "@tanstack/react-query-next-experimental": "^5.17.0",
     "@uidotdev/usehooks": "^2.4.1",
-    "@wagmi/cli": "rc",
     "clsx": "^2.1.0",
     "million": "^2.6.4",
     "next": "^14.0.4",
