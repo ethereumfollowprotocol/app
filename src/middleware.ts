@@ -7,7 +7,7 @@ export function middleware(request: NextRequest) {
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64')
   const cspHeader = `
     default-src 'self' vercel.live;
-    script-src 'self' 'unsafe-eval' 'unsafe-inline' cdn.vercel-insights.com vercel.live va.vercel-scripts.com;
+    script-src 'self' 'unsafe-eval' 'unsafe-inline' *.cloudflareinsights.com cdn.vercel-insights.com vercel.live va.vercel-scripts.com;
     style-src 'self' 'unsafe-inline' *.vercel-storage.com fonts.googleapis.com;
     img-src * blob: data: *.vercel-storage.com;
     media-src 'none';
@@ -16,7 +16,7 @@ export function middleware(request: NextRequest) {
     base-uri 'none';
     form-action 'self';
     font-src 'self' *.public.blob.vercel-storage.com *.vercel-storage.com fonts.googleapis.com fonts.gstatic.com;
-    frame-src 'self' https://verify.walletconnect.com/ https://verify.walletconnect.org/;
+    frame-src 'self' https://verify.walletconnect.com/ https://verify.walletconnect.org/ https://vercel.live/;
     frame-ancestors 'self';
     block-all-mixed-content;
     upgrade-insecure-requests;
