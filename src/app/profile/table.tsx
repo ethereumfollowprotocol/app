@@ -52,8 +52,8 @@ export function ProfilePageTable({
         <Box px='0'>
           <SelectWithFilter
             dropdownOnly
-            queryKey={selectQueryKey}
             defaultValue={selectQuery}
+            filterQueryKey={selectQueryKey}
             items={['follower count', 'latest first', 'earliest first', 'alphabetical']}
           />
         </Box>

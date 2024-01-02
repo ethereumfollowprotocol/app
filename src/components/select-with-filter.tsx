@@ -11,21 +11,23 @@ import { useEffectOnce } from '#hooks/use-effect-once.ts'
 export function SelectWithFilter({
   disabled,
   dropdownOnly = true,
-  queryKey,
+  filterQueryKey,
   items,
-  defaultValue,
+  defaultValue = null,
   placeholder
 }: {
   dropdownOnly?: boolean
   disabled?: boolean
-  queryKey: string
+  filterQueryKey: string
   items: Array<string>
-  defaultValue?: string
+  defaultValue?: string | null
   placeholder?: string
 }) {
   const [, startTransition] = React.useTransition()
-  const [filter, setFilter] = useQueryState(queryKey, {
-    throttleMs: SECOND / 2
+  const [filter, setFilter] = useQueryState(filterQueryKey, {
+    throttleMs: SECOND / 2,
+    // @ts-ignore TODO: why does it not like null?
+    defaultValue
   })
 
   const filterParam = useSearchParams()
@@ -33,7 +35,7 @@ export function SelectWithFilter({
   // On first visit: check url search param and set filter state
   useEffectOnce(() => {
     startTransition(() => {
-      setFilter(filterParam.get(queryKey))
+      setFilter(filterParam.get(filterQueryKey))
     })
   })
 
@@ -53,11 +55,7 @@ export function SelectWithFilter({
   return (
     <Box className='space-x-3 lg:ml-0 mr-auto' px='0' my='auto'>
       <div className={clsx(['block capitalize', dropdownOnly ? 'block' : 'block lg:hidden mr-2'])}>
-        <Select.Root
-          defaultValue={defaultValue}
-          value={filter?.toLowerCase()}
-          onValueChange={handleChange}
-        >
+        <Select.Root value={filter?.toLowerCase()} onValueChange={handleChange}>
           <Select.Trigger
             variant='soft'
             className='rounded-lg bg-white/50 p-4 font-semibold !border-none text-sm ml-2'

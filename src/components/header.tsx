@@ -34,7 +34,7 @@ const navItems = [
     private: true
   },
   {
-    href: '/leaderboard',
+    href: '/leaderboard?filter=followers',
     emoji: '🏆',
     name: 'leaderboard',
     private: false

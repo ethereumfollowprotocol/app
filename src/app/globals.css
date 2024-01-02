@@ -40,6 +40,7 @@ body,
   background-attachment: fixed;
   min-width: 100%;
   background: linear-gradient(180deg, #fef305 0%, #ff79c9 55%), #333;
+  font-variant-numeric: tabular-nums;
 }
 
 /* Disable zoom in iOS Safari when double tapping an element */

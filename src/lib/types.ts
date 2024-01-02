@@ -5,6 +5,8 @@ declare global {
   }
 }
 
+export type Address = `0x${string}`
+
 export type Flatten<T> = T extends any[] ? T[number] : T
 
 export type ExtractTypeFromUnion<T, Excluded> = T extends (infer U & Excluded) | undefined
@@ -29,3 +31,9 @@ export interface EnsProfile {
   resolver: string
   errors: { [key: string]: string }
 }
+
+export type NoRepetition<U extends string, ResultT extends any[] = []> =
+  | ResultT
+  | {
+      [k in U]: NoRepetition<Exclude<U, k>, [k, ...ResultT]>
+    }[U]

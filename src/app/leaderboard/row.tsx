@@ -4,23 +4,16 @@ import * as React from 'react'
 import { FollowButton } from '#components/follow-button.tsx'
 import { Box, Text, Flex, Table, Badge, Avatar } from '@radix-ui/themes'
 
-export interface LeaderboardEntry {
+interface Row {
   rank: number
   name: string
-  following: string
-  followers: string
-  mutuals: string
-  blockedMuted: string
+  following: number
+  followers: number
+  mutuals: number
+  blockedMuted: number
 }
 
-export function TableRow({
-  rank,
-  name,
-  following,
-  followers,
-  mutuals,
-  blockedMuted
-}: LeaderboardEntry) {
+export function TableRow({ rank, name, following, followers, mutuals, blockedMuted }: Row) {
   const rowNumber = (
     <React.Fragment>
       {rank === 1 ? (
