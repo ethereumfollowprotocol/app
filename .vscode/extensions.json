@@ -3,7 +3,6 @@
     "biomejs.biome",
     "mikestead.dotenv",
     "gruntfuggly.todo-tree",
-    "quick-lint.quick-lint-js",
     "bradlc.vscode-tailwindcss",
     "EditorConfig.EditorConfig"
   ],
