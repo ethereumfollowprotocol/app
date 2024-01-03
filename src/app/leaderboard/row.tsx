@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import * as React from 'react'
-import { FollowButton } from '#components/follow-button.tsx'
+import { FollowButton } from '#/components/follow-button.tsx'
 import { Box, Text, Flex, Table, Badge, Avatar } from '@radix-ui/themes'
 
 interface Row {

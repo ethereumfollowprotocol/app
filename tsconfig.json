@@ -12,6 +12,9 @@
     "module": "ESNext",
     "incremental": true,
     "skipLibCheck": true,
+    "paths": {
+      "#/*": ["./src/*"],
+    },
     "alwaysStrict": true,
     "esModuleInterop": true,
     "isolatedModules": true,
@@ -22,8 +25,6 @@
     "useDefineForClassFields": true,
     "allowArbitraryExtensions": true,
     "noUncheckedIndexedAccess": true,
-    "resolvePackageJsonImports": true,
-    "resolvePackageJsonExports": true,
     "useUnknownInCatchVariables": true,
     "allowImportingTsExtensions": true,
     "noFallthroughCasesInSwitch": true,

@@ -1,5 +1,5 @@
 import { isAddress } from 'viem'
-import { getEnsProfile } from '#app/actions.ts'
+import { getEnsProfile } from '#/app/actions.ts'
 import { useQuery } from '@tanstack/react-query'
 
 export function useEnsProfile(addressOrName: string) {

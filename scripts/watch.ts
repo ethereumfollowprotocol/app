@@ -2,7 +2,7 @@
 import { decodeEventLog } from 'viem'
 import { evmClient } from 'src/lib/viem'
 import * as abi from 'src/lib/abi'
-import { efpContracts } from '#lib/constants/contracts.ts'
+import { efpContracts } from '#/lib/constants/contracts.ts'
 
 watchEfpEvents().catch(error => {
   console.error(error)

@@ -9,7 +9,7 @@ import {
   HamburgerMenuIcon
 } from '@radix-ui/react-icons'
 import { usePathname } from 'next/navigation'
-import { projectSocials } from '#lib/constants/routes.ts'
+import { projectSocials } from '#/lib/constants/routes.ts'
 import { DropdownMenu, IconButton, Button, Flex, Link as RadixLink } from '@radix-ui/themes'
 
 export const emojis = {

@@ -4,14 +4,14 @@ import clsx from 'clsx'
 import Link from 'next/link'
 import * as React from 'react'
 import { isAddress } from 'viem'
-import { Menu } from '#components/menu.tsx'
+import { Menu } from '#/components/menu.tsx'
 import { usePathname } from 'next/navigation'
 import { useAccount, useEnsName } from 'wagmi'
-import { Search } from '#components/search.tsx'
+import { Search } from '#/components/search.tsx'
 import { Avatar, Text } from '@radix-ui/themes'
-import CartButton from '#components/cart-button.tsx'
+import CartButton from '#/components/cart-button.tsx'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { useIsMounted } from '#hooks/use-is-mounted.ts'
+import { useIsMounted } from '#/hooks/use-is-mounted.ts'
 
 export function shouldHidePath({
   connected,

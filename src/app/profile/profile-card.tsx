@@ -1,4 +1,4 @@
-import { getEnsProfile } from '#app/actions.ts'
+import { getEnsProfile } from '#/app/actions.ts'
 import { Flex, Badge, Avatar, Box, Text } from '@radix-ui/themes'
 import clsx from 'clsx'
 

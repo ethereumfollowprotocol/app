@@ -1,5 +1,5 @@
 import { Avatar } from '@radix-ui/themes'
-import { getEnsProfile } from '#app/actions.ts'
+import { getEnsProfile } from '#/app/actions.ts'
 
 interface Props {
   params: { user: string }

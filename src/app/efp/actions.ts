@@ -1,9 +1,9 @@
-import * as abi from '#lib/abi.ts'
+import * as abi from '#/lib/abi.ts'
 import { encodePacked } from 'viem'
-import { raise } from '#lib/utilities.ts'
-import type { Address } from '#lib/types.ts'
-import type { EVMClient } from '#lib/viem.ts'
-import { efpContracts } from '#lib/constants/contracts.ts'
+import { raise } from '#/lib/utilities.ts'
+import type { Address } from '#/lib/types.ts'
+import type { EVMClient } from '#/lib/viem.ts'
+import { efpContracts } from '#/lib/constants/contracts.ts'
 
 /**
  * The nonce has to be the same as the nonce used to mint the list record

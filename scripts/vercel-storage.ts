@@ -2,7 +2,7 @@
 import bun from 'bun'
 import fs from 'node:fs'
 import * as vblob from '@vercel/blob'
-import { raise } from '#lib/utilities.ts'
+import { raise } from '#/lib/utilities.ts'
 
 const VERCEL_BLOB_READ_WRITE_TOKEN = process.env.VERCEL_BLOB_READ_WRITE_TOKEN
 if (!VERCEL_BLOB_READ_WRITE_TOKEN) raise('VERCEL_BLOB_READ_WRITE_TOKEN is not defined')

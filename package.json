@@ -4,9 +4,6 @@
   "description": "Ethereum Follow Protocol App",
   "repository": "github:ethereumfollowprotocol/app",
   "type": "module",
-  "imports": {
-    "#*": "./src/*"
-  },
   "scripts": {
     "dev": "next dev --turbo",
     "build": "NODE_OPTIONS='--no-warnings' NODE_ENV='production' next build",

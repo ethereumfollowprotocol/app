@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 import type { NextRequest } from 'next/server'
 import { cacheHeader } from 'pretty-cache-header'
-import type { ExtractTypeFromUnion, Pretty, Flatten } from '#lib/types.ts'
+import type { ExtractTypeFromUnion, Pretty, Flatten } from '#/lib/types.ts'
 
 export const runtime = 'edge'
 

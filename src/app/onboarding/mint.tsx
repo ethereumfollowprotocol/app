@@ -6,7 +6,7 @@ import { encodePacked } from 'viem'
 import { Box, Button, Flex } from '@radix-ui/themes'
 import { useIsMounted } from 'src/hooks/use-is-mounted'
 import { efpContracts } from 'src/lib/constants/contracts'
-import { mint, claimList, follow } from '#app/efp/actions.ts'
+import { mint, claimList, follow } from '#/app/efp/actions.ts'
 import { useAccount, useChainId, useContractWrite, usePrepareContractWrite } from 'wagmi'
 
 export function Mint() {

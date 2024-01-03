@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useIsFirstRender } from '#hooks/use-is-first-render.ts'
+import { useIsFirstRender } from '#/hooks/use-is-first-render.ts'
 
 export function SkipRenderOnClient({
   children,

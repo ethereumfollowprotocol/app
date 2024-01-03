@@ -1,7 +1,7 @@
 'use server'
 
 import { raise } from 'src/lib/utilities'
-import type { NoRepetition } from '#lib/types.ts'
+import type { NoRepetition } from '#/lib/types.ts'
 import type { LeaderboardFilter, LeaderboardEntry } from './types.ts'
 
 export async function fetchLeaderboard({

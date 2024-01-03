@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import * as React from 'react'
-import { Searchbar } from '#components/searchbar.tsx'
-import { FollowButton } from '#components/follow-button.tsx'
-import { SelectWithFilter } from '#components/select-with-filter.tsx'
+import { Searchbar } from '#/components/searchbar.tsx'
+import { FollowButton } from '#/components/follow-button.tsx'
+import { SelectWithFilter } from '#/components/select-with-filter.tsx'
 import { ChevronDownIcon, DotsHorizontalIcon, PlusIcon } from '@radix-ui/react-icons'
 import { Box, Code, Flex, Table, Text, Avatar, Badge, IconButton } from '@radix-ui/themes'
 

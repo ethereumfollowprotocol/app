@@ -9,10 +9,10 @@ import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useQueryState } from 'next-usequerystate'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
-import { checkAddressOrEnsValid } from '#lib/utilities.ts'
-import { ENS_SUBGRAPH, SECOND } from '#lib/constants/index.ts'
+import { checkAddressOrEnsValid } from '#/lib/utilities.ts'
+import { ENS_SUBGRAPH, SECOND } from '#/lib/constants/index.ts'
 import { IconButton, Dialog, TextField, DropdownMenu } from '@radix-ui/themes'
-import { useIsomorphicLayoutEffect } from '#hooks/use-isomorphic-layout-effect.ts'
+import { useIsomorphicLayoutEffect } from '#/hooks/use-isomorphic-layout-effect.ts'
 
 // autocomplete search suggestions
 async function searchEnsSubgraph({ search }: { search: string }): Promise<Array<string>> {

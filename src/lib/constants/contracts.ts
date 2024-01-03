@@ -1,4 +1,4 @@
-import type { Address } from '#lib/types.ts'
+import type { Address } from '#/lib/types.ts'
 
 export const efpContracts: {
   EFPAccountMetadata: Address

@@ -1,4 +1,4 @@
-import '#app/globals.css'
+import '#/app/globals.css'
 import '@radix-ui/themes/styles.css'
 import '@rainbow-me/rainbowkit/styles.css'
 
@@ -10,7 +10,7 @@ import { Production } from 'src/app/production.tsx'
 import { VercelToolbar } from '@vercel/toolbar/next'
 import { Inter, IBM_Plex_Mono } from 'next/font/google'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-import { APP_NAME, APP_DESCRIPTION } from '#lib/constants/index.ts'
+import { APP_NAME, APP_DESCRIPTION } from '#/lib/constants/index.ts'
 
 const inter = Inter({
   subsets: ['latin'],

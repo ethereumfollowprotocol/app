@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { TeamCard } from './card.tsx'
 import { Flex, Text } from '@radix-ui/themes'
-import { getEnsProfile } from '#app/actions.ts'
-import { teamAddresses } from '#lib/constants/index.ts'
+import { getEnsProfile } from '#/app/actions.ts'
+import { teamAddresses } from '#/lib/constants/index.ts'
 
 export default async function TeamPage() {
   const efpTeam = await Promise.all(teamAddresses.map(getEnsProfile))

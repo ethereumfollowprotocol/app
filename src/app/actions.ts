@@ -1,9 +1,9 @@
 'use server'
 
 import * as abi from 'src/lib/abi'
-import type { EVMClient } from '#lib/viem.ts'
-import type { ENSProfile } from '#lib/types.ts'
-import { efpContracts } from '#lib/constants/contracts.ts'
+import type { EVMClient } from '#/lib/viem.ts'
+import type { ENSProfile } from '#/lib/types.ts'
+import { efpContracts } from '#/lib/constants/contracts.ts'
 
 export async function efpTotalSupply(client: EVMClient) {
   return await client.readContract({

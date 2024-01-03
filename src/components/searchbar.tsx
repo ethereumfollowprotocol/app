@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { SECOND } from '#lib/constants/index.ts'
+import { SECOND } from '#/lib/constants/index.ts'
 import { useQueryState } from 'next-usequerystate'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 

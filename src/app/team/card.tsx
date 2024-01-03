@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Badge, Box, Flex, Text } from '@radix-ui/themes'
-import { FollowButton } from '#components/follow-button.tsx'
-import { ImageWithFallback } from '#components/image-with-fallback.tsx'
+import { FollowButton } from '#/components/follow-button.tsx'
+import { ImageWithFallback } from '#/components/image-with-fallback.tsx'
 
 export interface TeamMember {
   ens: string

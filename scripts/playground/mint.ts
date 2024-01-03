@@ -1,6 +1,6 @@
 import { isHex } from 'viem'
-import { evmClient } from '#lib/viem.ts'
-import { mint, claimList, follow } from '#app/efp/actions.ts'
+import { evmClient } from '#/lib/viem.ts'
+import { mint, claimList, follow } from '#/app/efp/actions.ts'
 
 const client = evmClient['31337']()
 
