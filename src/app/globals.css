@@ -184,12 +184,6 @@ input[type='email'] {
   appearance: none;
 }
 
-/* table {
-  max-width: fit-content;
-  overflow-x: auto;
-  white-space: nowrap;
-} */
-
 .prose .callout > p {
   margin: 0 !important;
 }
@@ -197,12 +191,6 @@ input[type='email'] {
 .title {
   text-wrap: balance;
 }
-
-/* radix ui table */
-/* .rt-TableRoot {
-  width: fit-content;
-  margin: auto;
-} */
 
 .rt-TableRootTable {
   --table-row-box-shadow: unset !important;

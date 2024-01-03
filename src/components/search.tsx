@@ -62,7 +62,9 @@ export function Search({ disabled }: { disabled?: boolean }) {
 
   const [search, setSearch] = useQueryState('search', {
     throttleMs: SECOND / 2,
-    history: 'push'
+    history: 'push',
+    parse: value => value?.trim().toLowerCase(),
+    serialize: value => value.trim().toLowerCase()
   })
 
   const { data, status: searchResultStatus } = useQuery({
@@ -72,7 +74,7 @@ export function Search({ disabled }: { disabled?: boolean }) {
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
     refetchIntervalInBackground: false,
-    enabled: !!search && search.length >= 3
+    enabled: Boolean(search && search.length >= 3)
   })
 
   const searchResult = searchResultStatus === 'success' ? data : []

@@ -17,7 +17,9 @@ export function Searchbar({
   const [isPending, startTransition] = React.useTransition()
   const [query, setQuery] = useQueryState(queryKey, {
     throttleMs: SECOND / 2,
-    shallow: false
+    shallow: false,
+    parse: value => value?.trim().toLowerCase(),
+    serialize: value => value.trim().toLowerCase()
   })
 
   function handleSearchEvent(event: React.ChangeEvent<HTMLInputElement>) {
