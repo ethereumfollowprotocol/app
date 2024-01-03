@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <HeadTag />
       <body className='w-full min-w-full items-center font-serif'>
         <Providers>{children}</Providers>
-        {/* <VercelToolbar /> */}
+        <VercelToolbar />
         <Production>
           <Analytics />
           <SpeedInsights />

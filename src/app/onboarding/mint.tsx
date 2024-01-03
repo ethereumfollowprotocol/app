@@ -8,6 +8,7 @@ import { useIsMounted } from 'src/hooks/use-is-mounted'
 import { efpContracts } from 'src/lib/constants/contracts'
 import { mint, claimList, follow } from '#/app/efp/actions.ts'
 import { useAccount, useChainId, useContractWrite, usePrepareContractWrite } from 'wagmi'
+import { generateNonce } from '#/app/efp/utilities'
 
 export function Mint() {
   const account = useAccount()
@@ -25,23 +26,54 @@ export function Mint() {
     args: [
       encodePacked(
         ['uint8', 'uint8', 'uint256', 'address', 'uint'],
-        [1, 1, BigInt(chainId), efpContracts['EFPListRecords'], 123n]
+        [1, 1, BigInt(chainId), efpContracts['EFPListRegistry'], 123n]
       )
     ]
   })
 
   const {
-    write,
+    write: writeMint,
     data: writeMintData,
     status: writeMintStatus,
     error: writeMintError
   } = useContractWrite(prepareMintConfig)
 
+  const {
+    config: followConfig,
+    error: followError,
+    status: followStatus
+  } = usePrepareContractWrite({
+    address: efpContracts['EFPListRecords'],
+    abi: abi.efpListRecordsAbi,
+    functionName: 'applyListOp',
+    args: [
+      22n,
+      encodePacked(
+        ['uint8', 'uint8', 'bytes'],
+        [
+          1,
+          1,
+          encodePacked(
+            ['uint8', 'uint8', 'address'],
+            [1, 1, '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266']
+          )
+        ]
+      )
+    ]
+  })
+
+  const {
+    write: writeFollow,
+    data: writeFollowData,
+    status: writeFollowStatus,
+    error: writeFollowError
+  } = useContractWrite(followConfig)
+
   if (!isMounted) return null
   return (
     <Flex direction='column'>
       {chainId}
-      <Button variant='classic' disabled={!write} onClick={() => write?.()}>
+      <Button variant='classic' disabled={!writeMint} onClick={() => writeMint?.()}>
         Mint
       </Button>
 
@@ -50,7 +82,14 @@ export function Mint() {
       <Box>{writeMintError && <Box>{writeMintError.message}</Box>}</Box>
       {prepareMintError && <Box>{prepareMintError.message}</Box>}
 
-      <Button variant='soft'></Button>
+      <Button variant='classic' disabled={!writeFollow} onClick={() => writeFollow?.()}>
+        Follow
+      </Button>
+
+      <Box>{writeFollowStatus}</Box>
+      <pre>{JSON.stringify(writeFollowData)}</pre>
+      <Box>{writeFollowError && <Box>{writeFollowError.message}</Box>}</Box>
+      {followError && <Box>{followError.message}</Box>}
     </Flex>
   )
 }

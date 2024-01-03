@@ -58,7 +58,7 @@ export async function GET(request: NextRequest) {
         }}
       >
         <img
-          src='https://metadata.ens.domains/mainnet/avatar/brantly.eth'
+          src='https://ens.ethfollow.xyz/i/brantly.eth'
           width='225'
           height='225'
           alt='ens avatar'

@@ -50,7 +50,7 @@ export function TableRow({ rank, name, following, followers, mutuals, blockedMut
         <Link href={`/${name}`}>
           <Flex gap='2' className='-mt-2'>
             <Avatar
-              src={`https://metadata.ens.domains/mainnet/avatar/${name}`}
+              src={`https://ens.ethfollow.xyz/i/${name}`}
               fallback=''
               my='auto'
               size='4'
