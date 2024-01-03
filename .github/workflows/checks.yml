@@ -20,30 +20,7 @@ env:
 
 jobs:
   checks:
-    timeout-minutes: 3
-    runs-on: ['ubuntu-latest']
-    steps:
-      - name: '🔑 Checkout'
-        uses: actions/checkout@v4.1.1
-
-      - name: '🐰 Setup Bun'
-        uses: oven-sh/setup-bun@v1
-        with:
-          bun-version: 'latest'
-
-      - name: 'Setup Biome'
-        uses: biomejs/setup-biome@v1
-        with:
-          version: 'latest'
-
-      - name: '🧹 Lint'
-        run: biome ci .
-
-      - name: '📦 Install Dependencies'
-        run: bun install --frozen-lockfile
-
-      - name: '🧪 Typecheck'
-        run: bun typecheck
-
-      - name: '🔧 Build'
-        run: bun run build
+    uses: ethereumfollowprotocol/actions/.github/workflows/checks.yml@main
+    with:
+      bun-version: 'latest'
+      install-dependencies: true

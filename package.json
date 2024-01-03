@@ -33,6 +33,7 @@
     "pretty-cache-header": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "@wagmi/cli": "2.0.0-rc.2",
     "server-only": "^0.0.1",
     "tailwind-merge": "^2.2.0",
     "vaul": "^0.8.0",
