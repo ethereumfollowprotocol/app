@@ -50,9 +50,7 @@ export function Mint() {
       <Box>{writeMintError && <Box>{writeMintError.message}</Box>}</Box>
       {prepareMintError && <Box>{prepareMintError.message}</Box>}
 
-      <Button
-      variant='soft'
-      ></Button>
+      <Button variant='soft'></Button>
     </Flex>
   )
 }

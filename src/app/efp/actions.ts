@@ -1,9 +1,14 @@
+import * as abi from '#lib/abi.ts'
 import { encodePacked } from 'viem'
 import { raise } from '#lib/utilities.ts'
-import * as abi from 'src/lib/abi'
 import type { Address } from '#lib/types.ts'
 import type { EVMClient } from '#lib/viem.ts'
 import { efpContracts } from '#lib/constants/contracts.ts'
+
+/**
+ * The nonce has to be the same as the nonce used to mint the list record
+ * https://docs.ethfollow.xyz/design/list-storage-location/#onchain-storage
+ */
 
 export async function mint({
   client,
@@ -32,6 +37,9 @@ export async function mint({
   return hash
 }
 
+/**
+ * Not required to call this
+ */
 export async function claimList({ client, nonce }: { client: EVMClient; nonce: bigint }) {
   const { request } = await client.simulateContract({
     address: efpContracts['EFPListRecords'],
