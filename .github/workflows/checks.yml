@@ -20,8 +20,19 @@ env:
 
 jobs:
   checks:
-    uses: ethereumfollowprotocol/actions/.github/workflows/checks.yml@main
-    with:
-      bun-version: 'latest'
-      install-dependencies: true
-      skip-steps: 'test'
+    timeout-minutes: 3
+    runs-on: ['ubuntu-latest']
+    steps:
+      - name: 🔑 Checkout
+        uses: actions/checkout@v4
+
+      - name: 'Install Dependencies'
+        uses: ethereumfollowprotocol/actions/.github/actions/setup@main
+        with:
+          bun-version: 'latest'
+          install-dependencies: true
+
+      - name: 'Lint / Build / Test'
+        uses: ethereumfollowprotocol/actions/.github/actions/checks@main
+        with:
+          skip-steps: 'test'

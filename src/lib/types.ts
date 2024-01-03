@@ -6,6 +6,7 @@ declare global {
 }
 
 export type Address = `0x${string}`
+export type Hex = `0x${string}`
 
 export type Flatten<T> = T extends any[] ? T[number] : T
 
@@ -17,7 +18,7 @@ export type Pretty<T> = {
   [K in keyof T]: T[K]
 } & {}
 
-export interface EnsProfile {
+export interface ENSProfile {
   name: string
   address: string
   avatar: string

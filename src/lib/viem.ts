@@ -1,3 +1,4 @@
+import './patch.ts'
 import {
   http,
   fallback,
@@ -10,12 +11,12 @@ import {
 import { privateKeyToAccount } from 'viem/accounts'
 import { mainnet, optimism, sepolia, optimismSepolia, foundry } from 'viem/chains'
 
-export const viemClients = {
+export const evmClient = {
   '31337': () =>
     createTestClient({
       chain: foundry,
       mode: 'anvil',
-      transport: http(process.env.NEXT_PUBLIC_LOCAL_RPC),
+      transport: http(process.env.NEXT_PUBLIC_LOCAL_RPC || 'http://0.0.0.0:8545'),
       account: privateKeyToAccount(
         process.env.NEXT_PUBLIC_ANVIL_ACCOUNT_PRIVATE_KEY ||
           '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80'
@@ -112,3 +113,5 @@ export const viemClients = {
       batch: { multicall: true }
     }).extend(walletActions)
 }
+
+export type EVMClient = ReturnType<(typeof evmClient)['31337'] | (typeof evmClient)['mainnet']>

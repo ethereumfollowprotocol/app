@@ -125,16 +125,6 @@ export const efpAccountMetadataAbi = [
     type: 'event',
     anonymous: false,
     inputs: [
-      { name: 'addr', internalType: 'address', type: 'address', indexed: true },
-      { name: 'key', internalType: 'string', type: 'string', indexed: false },
-      { name: 'value', internalType: 'bytes', type: 'bytes', indexed: false }
-    ],
-    name: 'NewAccountMetadataValue'
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
       {
         name: 'previousOwner',
         internalType: 'address',
@@ -175,6 +165,16 @@ export const efpAccountMetadataAbi = [
       }
     ],
     name: 'ProxyRemoved'
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'addr', internalType: 'address', type: 'address', indexed: true },
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'value', internalType: 'bytes', type: 'bytes', indexed: false }
+    ],
+    name: 'UpdateAccountMetadata'
   }
 ] as const
 
@@ -210,17 +210,10 @@ export const efpListMinterAbi = [
     ]
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'listRecordsL1',
-    outputs: [{ name: '', internalType: 'contract IEFPListRecords', type: 'address' }]
-  },
-  {
     stateMutability: 'payable',
     type: 'function',
     inputs: [{ name: 'listStorageLocation', internalType: 'bytes', type: 'bytes' }],
-    name: 'mintAndSetAsDefaultList',
+    name: 'easyMint',
     outputs: []
   },
   {
@@ -230,8 +223,15 @@ export const efpListMinterAbi = [
       { name: 'to', internalType: 'address', type: 'address' },
       { name: 'listStorageLocation', internalType: 'bytes', type: 'bytes' }
     ],
-    name: 'mintToAndSetAsDefaultList',
+    name: 'easyMintTo',
     outputs: []
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'listRecordsL1',
+    outputs: [{ name: '', internalType: 'contract IEFPListRecords', type: 'address' }]
   },
   {
     stateMutability: 'view',
@@ -498,21 +498,6 @@ export const efpListRecordsAbi = [
     anonymous: false,
     inputs: [
       {
-        name: 'nonce',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: true
-      },
-      { name: 'key', internalType: 'string', type: 'string', indexed: false },
-      { name: 'value', internalType: 'bytes', type: 'bytes', indexed: false }
-    ],
-    name: 'NewListMetadataValue'
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
         name: 'previousOwner',
         internalType: 'address',
         type: 'address',
@@ -526,6 +511,29 @@ export const efpListRecordsAbi = [
       }
     ],
     name: 'OwnershipTransferred'
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'nonce',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: true
+      },
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'value', internalType: 'bytes', type: 'bytes', indexed: false }
+    ],
+    name: 'UpdateListMetadata'
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'manager', internalType: 'address', type: 'address' }
+    ],
+    name: 'NonceAlreadyClaimed'
   }
 ] as const
 
@@ -852,25 +860,6 @@ export const efpListRegistryAbi = [
     anonymous: false,
     inputs: [
       {
-        name: 'tokenId',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: true
-      },
-      {
-        name: 'listStorageLocation',
-        internalType: 'bytes',
-        type: 'bytes',
-        indexed: false
-      }
-    ],
-    name: 'ListStorageLocationChange'
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
         name: 'maxMintBatchSize',
         internalType: 'uint256',
         type: 'uint256',
@@ -938,6 +927,25 @@ export const efpListRegistryAbi = [
       }
     ],
     name: 'Transfer'
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'tokenId',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: true
+      },
+      {
+        name: 'listStorageLocation',
+        internalType: 'bytes',
+        type: 'bytes',
+        indexed: false
+      }
+    ],
+    name: 'UpdateListStorageLocation'
   },
   { type: 'error', inputs: [], name: 'ApprovalCallerNotOwnerNorApproved' },
   { type: 'error', inputs: [], name: 'ApprovalQueryForNonexistentToken' },
@@ -1081,7 +1089,7 @@ export const iefpListRegistryErc721Abi = [
         indexed: false
       }
     ],
-    name: 'ListStorageLocationChange'
+    name: 'UpdateListStorageLocation'
   }
 ] as const
 
@@ -1203,7 +1211,15 @@ export const listMetadataAbi = [
       { name: 'key', internalType: 'string', type: 'string', indexed: false },
       { name: 'value', internalType: 'bytes', type: 'bytes', indexed: false }
     ],
-    name: 'NewListMetadataValue'
+    name: 'UpdateListMetadata'
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'manager', internalType: 'address', type: 'address' }
+    ],
+    name: 'NonceAlreadyClaimed'
   }
 ] as const
 
@@ -1404,6 +1420,14 @@ export const listRecordsAbi = [
       { name: 'key', internalType: 'string', type: 'string', indexed: false },
       { name: 'value', internalType: 'bytes', type: 'bytes', indexed: false }
     ],
-    name: 'NewListMetadataValue'
+    name: 'UpdateListMetadata'
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'manager', internalType: 'address', type: 'address' }
+    ],
+    name: 'NonceAlreadyClaimed'
   }
 ] as const

@@ -1,11 +1,23 @@
 'use server'
 
-import type { EnsProfile } from '#lib/types.ts'
+import * as abi from 'src/lib/abi'
+import type { EVMClient } from '#lib/viem.ts'
+import type { ENSProfile } from '#lib/types.ts'
+import { efpContracts } from '#lib/constants/contracts.ts'
+
+export async function efpTotalSupply(client: EVMClient) {
+  return await client.readContract({
+    abi: abi.efpListRegistryAbi,
+    functionName: 'getMintState',
+    address: efpContracts['EFPListRegistry'],
+    args: undefined
+  })
+}
 
 export async function getEnsProfile(ensOrAddress: string) {
   const response = await fetch(`https://ens.ethfollow.xyz/u/${ensOrAddress}`, { cache: 'default' })
   const data = await response.json()
-  return data as EnsProfile
+  return data as ENSProfile
 }
 
 /**

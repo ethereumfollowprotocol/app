@@ -13,6 +13,11 @@ export function cn(...args: Array<ClassValue>): string {
   return tailwindMerge(clsx(...args))
 }
 
+export function toBufferBigEndian(value: bigint, length: number) {
+  const hex = value.toString(16).padStart(length * 2, '0')
+  return Buffer.from(hex, 'hex')
+}
+
 export function urlSearchParams(
   params: Record<string, string | number | boolean | undefined | null>
 ) {

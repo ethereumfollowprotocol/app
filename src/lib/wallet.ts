@@ -1,18 +1,19 @@
-import { mainnet, optimism } from 'wagmi/chains'
 import { configureChains, createConfig } from 'wagmi'
 import { infuraProvider } from 'wagmi/providers/infura'
 import { publicProvider } from 'wagmi/providers/public'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { lightTheme, getDefaultWallets } from '@rainbow-me/rainbowkit'
+import { mainnet, optimism, sepolia, optimismSepolia, foundry } from 'wagmi/chains'
 
 const WALLET_CONNECT_PROJECT_ID = '8432b61498678159cf0d8e0c90a75da4'
 
 export const { chains, publicClient } = configureChains(
-  [mainnet, optimism],
+  [mainnet, optimism, sepolia, optimismSepolia, foundry],
   [
     jsonRpcProvider({
       rpc: chain => {
+        if (chain.id === 31337) return { http: 'http://127.0.0.1:8545' }
         const chainIdentifier = chain.id === 1 ? 'eth' : 'optimism'
         return {
           http: `https://rpc.ankr.com/${chainIdentifier}/${process.env.NEXT_PUBLIC_ANKR_ID}`

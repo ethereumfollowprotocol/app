@@ -1,9 +1,9 @@
-import type { Address, EnsProfile } from '#lib/types.ts'
+import type { Address, ENSProfile } from '#lib/types.ts'
 
 export interface LeaderboardEntry {
   rank: number
   address: Address
-  ens?: EnsProfile
+  ens?: ENSProfile
   followers_count: number
   following_count: number
   mutuals_count: number

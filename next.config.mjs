@@ -32,8 +32,7 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   experimental: {
-    useLightningcss: true,
-    windowHistorySupport: true
+    useLightningcss: true
   },
   generateBuildId: async () => APP_VERSION,
   env: {
