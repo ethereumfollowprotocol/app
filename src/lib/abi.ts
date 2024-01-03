@@ -475,6 +475,25 @@ export const efpListRecordsAbi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
+    inputs: [
+      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      {
+        name: 'records',
+        internalType: 'struct IEFPListMetadata.KeyValue[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'key', internalType: 'string', type: 'string' },
+          { name: 'value', internalType: 'bytes', type: 'bytes' }
+        ]
+      },
+      { name: 'ops', internalType: 'bytes[]', type: 'bytes[]' }
+    ],
+    name: 'setMetadataValuesAndApplyListOps',
+    outputs: []
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
     inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
     name: 'transferOwnership',
     outputs: []
@@ -1391,6 +1410,25 @@ export const listRecordsAbi = [
       }
     ],
     name: 'setMetadataValues',
+    outputs: []
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      {
+        name: 'records',
+        internalType: 'struct IEFPListMetadata.KeyValue[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'key', internalType: 'string', type: 'string' },
+          { name: 'value', internalType: 'bytes', type: 'bytes' }
+        ]
+      },
+      { name: 'ops', internalType: 'bytes[]', type: 'bytes[]' }
+    ],
+    name: 'setMetadataValuesAndApplyListOps',
     outputs: []
   },
   {
