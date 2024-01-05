@@ -1,4 +1,3 @@
-
 > [!NOTE]
 > The project is under active development.
 
@@ -43,7 +42,7 @@ git clone https://github.com/ethereumfollowprotocol/app.git && cd efp-app
 ```bash
 # upgrade bun to make sure you have the latest version
 bun upgrade
-# then install dependencies
+# then install all dependencies
 bun install
 ```
 
@@ -73,9 +72,10 @@ bun lint && bun format && bun typecheck && bun run build
 │    ├─ [<route>]/page.tsx # https://nextjs.org/docs/app/api-reference/file-conventions/page
 ```
 
-____
+---
+
 TODO: Continue documentation
-____
+
+---
 
 Follow [**@ethfollowpr**](https://x.com/ethfollowpr) on **𝕏** for updates and join the [**Discord**](https://discord.ethfollow.xyz) to get involved.
- 
