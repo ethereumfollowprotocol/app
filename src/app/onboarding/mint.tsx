@@ -3,12 +3,19 @@
 import * as React from 'react'
 import * as abi from 'src/lib/abi'
 import { encodePacked } from 'viem'
+import { generateNonce } from '#/app/efp/utilities'
 import { Box, Button, Flex } from '@radix-ui/themes'
 import { useIsMounted } from 'src/hooks/use-is-mounted'
 import { efpContracts } from 'src/lib/constants/contracts'
 import { mint, claimList, follow } from '#/app/efp/actions.ts'
-import { useAccount, useChainId, useContractWrite, usePrepareContractWrite } from 'wagmi'
-import { generateNonce } from '#/app/efp/utilities'
+import {
+  useAccount,
+  useChainId,
+  useSimulateContract,
+  useWriteContract,
+  useEstimateGas,
+  useEstimateFeesPerGas
+} from 'wagmi'
 
 export function Mint() {
   const account = useAccount()
@@ -16,10 +23,11 @@ export function Mint() {
   const isMounted = useIsMounted()
 
   const {
-    config: prepareMintConfig,
-    error: prepareMintError,
-    status: prepareMintStatus
-  } = usePrepareContractWrite({
+    data: simulateMintData,
+    error: simulateMintError,
+    status: simulateMintStatus
+  } = useSimulateContract({
+    chainId: 31337,
     address: efpContracts['EFPListRegistry'],
     abi: abi.efpListRegistryAbi,
     functionName: 'mint',
@@ -32,17 +40,19 @@ export function Mint() {
   })
 
   const {
-    write: writeMint,
+    writeContract: writeMint,
+    writeContractAsync: writeMintAsync,
     data: writeMintData,
     status: writeMintStatus,
     error: writeMintError
-  } = useContractWrite(prepareMintConfig)
+  } = useWriteContract()
 
   const {
-    config: followConfig,
-    error: followError,
-    status: followStatus
-  } = usePrepareContractWrite({
+    data: simulateFollowData,
+    error: simulateFollowError,
+    status: simulateFollowStatus
+  } = useSimulateContract({
+    chainId: 31337,
     address: efpContracts['EFPListRecords'],
     abi: abi.efpListRecordsAbi,
     functionName: 'applyListOp',
@@ -63,33 +73,50 @@ export function Mint() {
   })
 
   const {
-    write: writeFollow,
     data: writeFollowData,
+    writeContract: writeFollow,
+    writeContractAsync: writeFollowAsync,
+    context: writeFollowContext,
+    failureCount: writeFollowFailureCount,
     status: writeFollowStatus,
     error: writeFollowError
-  } = useContractWrite(followConfig)
+  } = useWriteContract()
 
   if (!isMounted) return null
   return (
     <Flex direction='column'>
       {chainId}
-      <Button variant='classic' disabled={!writeMint} onClick={() => writeMint?.()}>
+      <Button
+        variant='classic'
+        disabled={!simulateMintData?.request}
+        onClick={() => {
+          if (!simulateMintData?.request) return
+          return writeMint(simulateMintData?.request)
+        }}
+      >
         Mint
       </Button>
 
       <Box>{writeMintStatus}</Box>
       <pre>{JSON.stringify(writeMintData)}</pre>
       <Box>{writeMintError && <Box>{writeMintError.message}</Box>}</Box>
-      {prepareMintError && <Box>{prepareMintError.message}</Box>}
+      {simulateMintStatus === 'error' && <Box>{simulateMintError.message}</Box>}
 
-      <Button variant='classic' disabled={!writeFollow} onClick={() => writeFollow?.()}>
+      <Button
+        variant='classic'
+        disabled={!simulateFollowData?.request}
+        onClick={() => {
+          if (!simulateFollowData?.request) return
+          return writeFollow(simulateFollowData?.request)
+        }}
+      >
         Follow
       </Button>
 
       <Box>{writeFollowStatus}</Box>
       <pre>{JSON.stringify(writeFollowData)}</pre>
       <Box>{writeFollowError && <Box>{writeFollowError.message}</Box>}</Box>
-      {followError && <Box>{followError.message}</Box>}
+      {writeFollowError && <Box>{writeFollowError.message}</Box>}
     </Flex>
   )
 }

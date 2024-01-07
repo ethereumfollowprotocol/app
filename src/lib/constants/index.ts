@@ -1,5 +1,7 @@
-export const APP_NAME = 'EFP'
-export const APP_DESCRIPTION = 'Ethereum Follow Protocol'
+export const APP_NAME = 'Ethereum Follow Protocol'
+export const APP_NAME_SHORT = 'EFP'
+export const APP_DESCRIPTION =
+  'A native Ethereum protocol for following and tagging Ethereum accounts.'
 export const APP_URL =
   process.env['NEXT_PUBLIC_VERCEL_URL'] ||
   process.env['NEXT_PUBLIC_SITE_URL'] ||

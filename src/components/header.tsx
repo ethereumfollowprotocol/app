@@ -1,17 +1,15 @@
-'use client'
-
 import clsx from 'clsx'
 import Link from 'next/link'
 import * as React from 'react'
-import { isAddress } from 'viem'
 import { Menu } from '#/components/menu.tsx'
 import { usePathname } from 'next/navigation'
 import { useAccount, useEnsName } from 'wagmi'
 import { Search } from '#/components/search.tsx'
 import { Avatar, Text } from '@radix-ui/themes'
 import CartButton from '#/components/cart-button.tsx'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
+// import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useIsMounted } from '#/hooks/use-is-mounted.ts'
+import { Connect } from '#/components/connect.tsx'
 
 export function shouldHidePath({
   connected,
@@ -51,9 +49,9 @@ export function Header() {
     error: ensNameError,
     status: ensNameStatus
   } = useEnsName({
-    address: account?.address,
-    cacheTime: 420_69_420_69,
-    enabled: account?.address && isAddress(account?.address)
+    address: account?.address
+    // cacheTime: 420_69_420_69,
+    // enabled: account?.address && isAddress(account?.address)
   })
 
   return (
@@ -121,12 +119,13 @@ export function Header() {
               'my-auto flex items-center justify-end pb-1 min-w-fit'
             ])}
           >
-            <ConnectButton
+            {/* <ConnectButton
               showBalance={false}
               chainStatus={'none'}
               label='Connect'
               accountStatus={ensName ? 'full' : 'address'}
-            />
+            /> */}
+            <Connect />
           </div>
         )}
 

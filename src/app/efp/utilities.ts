@@ -1,4 +1,6 @@
-import { keccak256 } from 'viem/utils'
-import type { Address } from '#/lib/types.ts'
+import { keccak256, toHex } from 'viem/utils'
 
-export const generateNonce = () => keccak256(Date.now().toString() as Address)
+export function generateNonce() {
+  const hash = keccak256(toHex(Date.now().toString()))
+  return BigInt(hash.slice(0, 64)) & ((1n << 255n) - 1n)
+}

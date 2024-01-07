@@ -1,8 +1,8 @@
 import * as abi from '#/lib/abi.ts'
-import { encodePacked } from 'viem'
+import { encodePacked, type Account } from 'viem'
 import { raise } from '#/lib/utilities.ts'
 import type { Address } from '#/lib/types.ts'
-import type { EVMClient } from '#/lib/viem.ts'
+import { evmClient, type EVMClient } from '#/lib/viem.ts'
 import { efpContracts } from '#/lib/constants/contracts.ts'
 
 /**
@@ -11,11 +11,13 @@ import { efpContracts } from '#/lib/constants/contracts.ts'
  */
 
 export async function mint({
+  account,
   client,
   version,
   locationType,
   nonce
 }: {
+  account: Address | Account
   client: EVMClient
   version: number
   locationType: number
@@ -23,6 +25,7 @@ export async function mint({
 }) {
   const chainId = await client.getChainId()
   const { request } = await client.simulateContract({
+    account,
     address: efpContracts['EFPListRegistry'],
     abi: abi.efpListRegistryAbi,
     functionName: 'mint',
@@ -40,8 +43,17 @@ export async function mint({
 /**
  * Not required to call this
  */
-export async function claimList({ client, nonce }: { client: EVMClient; nonce: bigint }) {
+export async function claimList({
+  account,
+  client,
+  nonce
+}: {
+  account: Address | Account
+  client: EVMClient
+  nonce: bigint
+}) {
   const { request } = await client.simulateContract({
+    account,
     address: efpContracts['EFPListRecords'],
     abi: abi.efpListRecordsAbi,
     functionName: 'claimListManager',
@@ -53,11 +65,13 @@ export async function claimList({ client, nonce }: { client: EVMClient; nonce: b
 }
 
 export async function follow({
+  account,
   listClaimCompleted,
   client,
   address,
   nonce
 }: {
+  account: Address | Account
   listClaimCompleted: boolean
   client: EVMClient
   address: Address
@@ -67,6 +81,7 @@ export async function follow({
 
   const listRecordToFollow = encodePacked(['uint8', 'uint8', 'address'], [1, 1, address])
   const { request } = await client.simulateContract({
+    account,
     address: efpContracts['EFPListRecords'],
     abi: abi.efpListRecordsAbi,
     functionName: 'applyListOp',
@@ -85,14 +100,17 @@ export async function getMintState({ client }: { client: EVMClient }) {
 }
 
 export async function setMintState({
+  account,
   client,
   mintState
 }: {
+  account: Address | Account
   client: EVMClient
   mintState: 'disabled' | 'owner-only' | 'public-mint' | 'public-batch'
 }) {
   const mintStateRecord = { disabled: 0, 'owner-only': 1, 'public-mint': 2, 'public-batch': 3 }
   const { request } = await client.simulateContract({
+    account,
     abi: abi.efpListRegistryAbi,
     functionName: 'setMintState',
     address: efpContracts['EFPListRegistry'],
@@ -102,3 +120,11 @@ export async function setMintState({
   const writeResult = await client.writeContract(request)
   return writeResult
 }
+
+// getMintState({ client: evmClient['31337']() }).then(console.log)
+
+// setMintState({
+//   account: '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
+//   client: evmClient['31337'](),
+//   mintState: 'public-mint'
+// }).then(console.log)

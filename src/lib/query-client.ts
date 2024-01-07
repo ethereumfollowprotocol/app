@@ -1,4 +1,4 @@
-import { cache } from 'react'
+import * as React from 'react'
 import { QueryClient } from '@tanstack/react-query'
 
-export const getQueryClient = cache(() => new QueryClient())
+export const getQueryClient = React.cache(() => new QueryClient())
