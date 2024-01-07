@@ -122,8 +122,10 @@ export function Menu() {
             </Link>
           </DropdownMenu.Item>
         ))}
-        <DropdownMenu.Separator className='block lg:hidden' />
-
+        <DropdownMenu.Item asChild>
+          <Link href='/onboarding'>Get started</Link>
+        </DropdownMenu.Item>
+        <DropdownMenu.Separator />
         <DropdownMenu.Sub>
           <DropdownMenu.SubTrigger>List #2,932</DropdownMenu.SubTrigger>
           <DropdownMenu.SubContent>

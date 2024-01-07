@@ -1,8 +1,8 @@
 import { UserRejectedRequestError } from 'viem'
 import { APP_DESCRIPTION, APP_NAME, APP_URL } from '#/lib/constants'
-import { http, fallback, webSocket, createConfig, unstable_connector } from 'wagmi'
 import { mainnet, sepolia, foundry, optimism, optimismSepolia } from 'wagmi/chains'
 import { coinbaseWallet, injected, mock, walletConnect, safe } from 'wagmi/connectors'
+import { http, fallback, webSocket, createConfig, unstable_connector, createStorage } from 'wagmi'
 
 declare module 'wagmi' {
   interface Register {
@@ -56,16 +56,20 @@ const unstableConnector = unstable_connector(injected, {
 })
 
 export const wagmiConfig = createConfig({
-  ssr: true,
+  // ssr: true,
   connectors,
   cacheTime: 4_000,
   pollingInterval: 4_000,
   syncConnectedChain: true,
   batch: { multicall: true },
   multiInjectedProviderDiscovery: true,
+  // storage: createStorage({ key: 'wagmi', storage: window.localStorage }),
   chains: [mainnet, sepolia, foundry, optimism, optimismSepolia],
   transports: {
-    [foundry.id]: http(process.env.NEXT_PUBLIC_LOCAL_RPC || 'http://0.0.0.0:8545'),
+    [foundry.id]: fallback([
+      unstableConnector,
+      http(process.env.NEXT_PUBLIC_LOCAL_RPC || 'http://0.0.0.0:8545', { batch: true })
+    ]),
     [mainnet.id]: fallback(
       [
         unstableConnector,

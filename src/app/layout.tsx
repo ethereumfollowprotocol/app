@@ -4,6 +4,7 @@ import '@rainbow-me/rainbowkit/styles.css'
 
 import clsx from 'clsx'
 import * as React from 'react'
+import { Toaster } from 'sonner'
 import { Providers } from './providers.tsx'
 import { Analytics } from '@vercel/analytics/react'
 import { Production } from 'src/app/production.tsx'
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang='en' className={clsx([inter.variable, ibm_plex_mono.variable, 'light'])}>
       <HeadTag />
       <body className='w-full min-w-full items-center font-serif'>
+        <Toaster />
         <Providers>{children}</Providers>
         {/* <VercelToolbar /> */}
         <Production>

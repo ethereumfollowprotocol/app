@@ -7,7 +7,6 @@ import { DAY, HOUR, MINUTE } from '#/lib/constants'
 import { wagmiConfig } from '#/lib/wallet/config.ts'
 // import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-// import { chains, rainbowTheme, wagmiConfig } from '#/lib/wallet.ts'
 import { WagmiProvider, type State, serialize, deserialize } from 'wagmi'
 import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental'
 import { QueryClient, QueryClientProvider, type QueryClientConfig } from '@tanstack/react-query'
@@ -41,9 +40,9 @@ const queryClientConfig = {
 export function Providers({ children, initialState }: Props) {
   const [queryClient] = React.useState(() => new QueryClient(queryClientConfig))
   return (
-    <WagmiProvider config={wagmiConfig} reconnectOnMount={true} initialState={initialState}>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryStreamedHydration>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryStreamedHydration>
+        <WagmiProvider config={wagmiConfig} reconnectOnMount={true} initialState={initialState}>
           {/* <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}> */}
           {/* <RainbowKitProvider coolMode chains={chains} theme={rainbowTheme}> */}
           <Theme scaling='100%' appearance='inherit' accentColor='gray'>
@@ -54,9 +53,9 @@ export function Providers({ children, initialState }: Props) {
           </Theme>
           {/* </RainbowKitProvider> */}
           {/* </PersistQueryClientProvider> */}
-        </ReactQueryStreamedHydration>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </WagmiProvider>
+        </WagmiProvider>
+      </ReactQueryStreamedHydration>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   )
 }
