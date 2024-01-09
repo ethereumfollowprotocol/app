@@ -161,7 +161,7 @@ export function Search({ disabled }: { disabled?: boolean }) {
               className={clsx(['max-w-xl w-80 min-w-full text-lg py-0 hidden sm:block'])}
               autoFocus={false}
               ref={clickAwayRef}
-              hideWhenDetached
+              hideWhenDetached={true}
               onFocusCapture={event => {
                 event.preventDefault()
                 event.stopPropagation()
@@ -171,7 +171,7 @@ export function Search({ disabled }: { disabled?: boolean }) {
               {searchResult?.map((result, index) => (
                 <DropdownMenu.Item
                   key={`${index}`}
-                  asChild
+                  asChild={true}
                   className='w-full text-md py-0 hover:bg-pink-50'
                   tabIndex={0 + 1}
                   onClick={() => setSelectedItem(result)}
@@ -243,7 +243,7 @@ export function Search({ disabled }: { disabled?: boolean }) {
                   autoFocus={false}
                   sticky='always'
                   ref={clickAwayRef}
-                  hideWhenDetached
+                  hideWhenDetached={true}
                   onFocusCapture={event => {
                     event.preventDefault()
                     event.stopPropagation()
@@ -253,7 +253,7 @@ export function Search({ disabled }: { disabled?: boolean }) {
                   {searchResult?.map((result, index) => (
                     <DropdownMenu.Item
                       key={`${index}`}
-                      asChild
+                      asChild={true}
                       className='w-full text-md py-0 hover:bg-pink-50'
                       tabIndex={0 + 1}
                       onClick={() => {

@@ -3,7 +3,6 @@ import '@radix-ui/themes/styles.css'
 import '@rainbow-me/rainbowkit/styles.css'
 
 import clsx from 'clsx'
-import * as React from 'react'
 import { Toaster } from 'sonner'
 import { Providers } from './providers.tsx'
 import { Analytics } from '@vercel/analytics/react'

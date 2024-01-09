@@ -1,3 +1,4 @@
 * text=auto eol=lf
 .vscode/*.json linguist-language=JSON-with-Comments
 biome.json linguist-language=JSON-with-Comments
+*.lockb binary diff=lockb

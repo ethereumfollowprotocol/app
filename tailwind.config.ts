@@ -168,7 +168,7 @@ const { colors, fontFamily, fontSize, keyframes, animation, spacing } = {
   screens: {}
 } satisfies Config['theme']
 
-export default ({
+export default {
   content: [
     './src/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
@@ -212,4 +212,4 @@ export default ({
       })
     })
   ]
-} satisfies Config)
+} satisfies Config

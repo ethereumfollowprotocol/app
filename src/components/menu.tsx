@@ -109,20 +109,20 @@ export function Menu() {
 
         {navItems.map((route, index) => (
           <DropdownMenu.Item
-            asChild
+            asChild={true}
             className={clsx([
               'my-0.5 flex capitalize lg:hidden',
               pathname === route.href ? 'bg-pink-400 text-white' : ''
             ])}
             key={`route-${index}`}
           >
-            <Link prefetch href={route.href}>
+            <Link prefetch={true} href={route.href}>
               {route.name}
               <span>{emojis[route.name.toLowerCase() as keyof typeof emojis] || route.emoji}</span>
             </Link>
           </DropdownMenu.Item>
         ))}
-        <DropdownMenu.Item asChild>
+        <DropdownMenu.Item asChild={true}>
           <Link href='/onboarding'>Get started</Link>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
@@ -134,19 +134,19 @@ export function Menu() {
           </DropdownMenu.SubContent>
         </DropdownMenu.Sub>
         <DropdownMenu.Separator />
-        <DropdownMenu.Item asChild>
-          <Link prefetch href='/team'>
+        <DropdownMenu.Item asChild={true}>
+          <Link prefetch={true} href='/team'>
             Team
           </Link>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
-        <DropdownMenu.Item asChild>
+        <DropdownMenu.Item asChild={true}>
           <a href='https://docs.ethfollow.xyz' target='_blank' rel='noopener noreferrer'>
             <span className='text-sm pr-4'>Docs</span>
             <span className='text-xl'>📚</span>
           </a>
         </DropdownMenu.Item>
-        <DropdownMenu.Item asChild>
+        <DropdownMenu.Item asChild={true}>
           <a
             href='https://github.com/ethereumfollowprotocol/app'
             target='_blank'
@@ -156,7 +156,7 @@ export function Menu() {
             <span className='text-xl'>🤝</span>
           </a>
         </DropdownMenu.Item>
-        <DropdownMenu.Item asChild>
+        <DropdownMenu.Item asChild={true}>
           <a
             href='https://github.com/ethereumfollowprotocol/app/issues/new'
             target='_blank'
@@ -175,7 +175,7 @@ export function Menu() {
                 radius='full'
                 variant='soft'
                 className='bg-transparent text-black hover:bg-pink-200'
-                asChild
+                asChild={true}
               >
                 <a
                   href={link.href}

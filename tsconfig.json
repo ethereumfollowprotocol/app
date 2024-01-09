@@ -31,7 +31,7 @@
     "allowSyntheticDefaultImports": true,
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "forceConsistentCasingInFileNames": true,
-    "noPropertyAccessFromIndexSignature": true,
+    "noPropertyAccessFromIndexSignature": false,
     "types": ["node", "typed-query-selector/strict"],
     "plugins": [
       {

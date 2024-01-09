@@ -9,13 +9,13 @@ import { Pencil1Icon } from '@radix-ui/react-icons'
 export function CartButton(props: { cartItemsCount: number; disabled?: boolean }) {
   return (
     <IconButton
-      hidden
+      hidden={true}
       disabled={props.cartItemsCount === 0 || props.disabled}
       radius='full'
       className={clsx(['bg-white hover:cursor-pointer hover:opacity-100 relative flex'])}
       variant='solid'
       size={'3'}
-      asChild
+      asChild={true}
     >
       <Link href={'/cart'}>
         <Pencil1Icon className='text-zinc-700' width='18' height='18' />

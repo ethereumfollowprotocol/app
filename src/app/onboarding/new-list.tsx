@@ -14,11 +14,6 @@ import { useIsMounted } from '#/hooks/use-is-mounted.ts'
 import { efpContracts } from '#/lib/constants/contracts'
 import { useWatchEfpEvents } from '#/app/efp/use-watch-efp-events.ts'
 import { Box, Button, Card, Code, Flex, Heading, Text } from '@radix-ui/themes'
-import {
-  useWatchContractEvent,
-  useWatchPendingTransactions,
-  useWaitForTransactionReceipt
-} from 'wagmi'
 import { truncateAddress } from '#/lib/utilities'
 
 /**

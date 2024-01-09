@@ -10,7 +10,6 @@ export function ImageWithFallback({
 }: React.ComponentProps<typeof Image> & { src: string; fallback?: string }) {
   const [imageSource, setImageSource] = React.useState<string>(src)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   React.useEffect(() => {
     setImageSource(src)
   }, [src])

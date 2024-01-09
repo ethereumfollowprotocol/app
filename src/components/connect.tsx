@@ -84,7 +84,7 @@ function WalletMenu({
 }) {
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
-      <Dialog.Trigger className='bg-black text-white' hidden />
+      <Dialog.Trigger className='bg-black text-white' hidden={true} />
       <Dialog.Content size='1' className='max-w-36 mx-auto justify-center items-center'>
         {content}
       </Dialog.Content>

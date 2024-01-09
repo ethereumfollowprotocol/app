@@ -51,7 +51,7 @@ export function ProfilePageTable({
         </IconButton>
         <Box px='0'>
           <SelectWithFilter
-            dropdownOnly
+            dropdownOnly={true}
             defaultValue={selectQuery}
             filterQueryKey={selectQueryKey}
             items={['follower count', 'latest first', 'earliest first', 'alphabetical']}
@@ -74,7 +74,7 @@ export function ProfilePageTable({
         hidden={filterProfiles.length === 0}
         className='bg-white/50 rounded-xl py-4 border-transparent'
       >
-        <Table.Header hidden>
+        <Table.Header hidden={true}>
           <Table.Row>
             <Table.ColumnHeaderCell>Name</Table.ColumnHeaderCell>
             <Table.ColumnHeaderCell>Tags</Table.ColumnHeaderCell>
@@ -147,7 +147,7 @@ function TableRow({ name, type }: { name: string; type: string }) {
         </Flex>
       </Table.Cell>
       <Table.Cell pr='4' data-name='action-column'>
-        <FollowButton text={type === 'following' ? 'Unfollow' : 'Follow'} pending />
+        <FollowButton text={type === 'following' ? 'Unfollow' : 'Follow'} pending={true} />
       </Table.Cell>
     </Table.Row>
   )

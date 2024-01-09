@@ -15,8 +15,8 @@
       "./**/*.json",
       "./**/*.jsonc"
     ],
-    "ignore": ["node_modules", "dist", "_"],
-    "ignoreUnknown": true
+    "ignoreUnknown": true,
+    "ignore": ["node_modules", "dist", "_"]
   },
   "organizeImports": {
     "enabled": false
@@ -34,24 +34,68 @@
       "./**/*.tsx",
       "./**/*.d.ts",
       "./**/*.json",
-      "./**/*.jsonc"
-    ]
+      "./**/*.jsonc",
+      "!next-env.d.ts"
+    ],
+    "ignore": ["node_modules", "dist", "package.json", "tsconfig.json", "_"]
   },
   "linter": {
+    "include": [
+      "./**/*.ts",
+      "./**/*.js",
+      "./**/*.cjs",
+      "./**/*.tsx",
+      "./**/*.d.ts",
+      "./**/*.json",
+      "./**/*.jsonc"
+    ],
+    "ignore": ["node_modules", "dist", "package.json", "tsconfig.json", "_"],
     "enabled": true,
     "rules": {
       "all": true,
       "style": {
+        "all": true,
+        "noNamespace": "off",
+        "noDefaultExport": "off",
         "useBlockStatements": "off",
+        "useFragmentSyntax": "off",
+        "useNamingConvention": "off",
+        "useShorthandArrayType": "off",
+        "useConsistentArrayType": "off",
         "useSelfClosingElements": "off",
         "noUnusedTemplateLiteral": "off"
       },
-      "a11y": { "noSvgWithoutTitle": "off" },
-      "nursery": { "noUnusedImports": "off" },
-      "performance": { "noAccumulatingSpread": "off" },
-      "correctness": { "noUndeclaredVariables": "off" },
-      "suspicious": { "noExplicitAny": "off", "noEmptyInterface": "off" },
-      "complexity": { "useLiteralKeys": "off", "noUselessFragments": "off", "noBannedTypes": "off" }
+      "a11y": {
+        "all": true,
+        "noSvgWithoutTitle": "off"
+      },
+      "nursery": {
+        "all": true,
+        "useAwait": "off",
+        "noNodejsModules": "off",
+        "noUnusedImports": "off"
+      },
+      "performance": {
+        "all": true,
+        "noAccumulatingSpread": "off"
+      },
+      "correctness": {
+        "all": true,
+        "noUndeclaredVariables": "off",
+        "noUnusedVariables": "off"
+      },
+      "suspicious": {
+        "all": true,
+        "noConsoleLog": "off",
+        "noExplicitAny": "off",
+        "noEmptyInterface": "off"
+      },
+      "complexity": {
+        "all": true,
+        "useLiteralKeys": "off",
+        "noUselessFragments": "off",
+        "noBannedTypes": "off"
+      }
     }
   },
   "json": {
@@ -63,6 +107,7 @@
     }
   },
   "javascript": {
+    "globals": ["NodeJS"],
     "parser": {
       "unsafeParameterDecoratorsEnabled": true
     },

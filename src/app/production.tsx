@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 /**
  * Component that only runs in production.
  */

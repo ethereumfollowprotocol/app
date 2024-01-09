@@ -15,6 +15,7 @@ export function shouldHidePath({
   connected,
   privatePath
 }: { connected: boolean; privatePath?: boolean }) {
+  // biome-ignore lint/nursery/noUselessTernary: <explanation>
   return !connected && privatePath ? true : false
 }
 
