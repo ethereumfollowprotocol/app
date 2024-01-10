@@ -9,7 +9,7 @@ const mintTransactionHash = await mint({
   client,
   version: 1,
   locationType: 1,
-  nonce: 234n
+  slot: 234n
 })
 
 console.log({ mintTransactionHash })
@@ -17,7 +17,7 @@ console.log({ mintTransactionHash })
 const claimListTransactionHash = await claimList({
   account: '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
   client,
-  nonce: 234n
+  slot: 234n
 })
 
 console.log({ claimListTransactionHash })
@@ -25,7 +25,7 @@ console.log({ claimListTransactionHash })
 const followTransactionHash = await follow({
   account: '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
   client,
-  nonce: 234n,
+  slot: 234n,
   listClaimCompleted: isHex(claimListTransactionHash),
   address: '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266'
 })

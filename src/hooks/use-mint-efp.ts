@@ -1,8 +1,6 @@
-import * as React from 'react'
+import { efpContracts } from '#/lib/constants/contracts'
 import * as abi from 'src/lib/abi'
 import { encodePacked } from 'viem'
-import { generateNonce } from '#/app/efp/utilities.ts'
-import { efpContracts } from '#/lib/constants/contracts'
 import { useChainId, useSimulateContract, useWriteContract } from 'wagmi'
 
 export function useMintEFP() {

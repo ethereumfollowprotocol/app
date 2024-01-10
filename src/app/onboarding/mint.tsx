@@ -1,21 +1,11 @@
 'use client'
 
-import * as React from 'react'
-import * as abi from 'src/lib/abi'
-import { encodePacked } from 'viem'
-import { generateNonce } from '#/app/efp/utilities'
 import { Box, Button, Flex } from '@radix-ui/themes'
 import { useIsMounted } from 'src/hooks/use-is-mounted'
+import * as abi from 'src/lib/abi'
 import { efpContracts } from 'src/lib/constants/contracts'
-import { mint, claimList, follow } from '#/app/efp/actions.ts'
-import {
-  useAccount,
-  useChainId,
-  useSimulateContract,
-  useWriteContract,
-  useEstimateGas,
-  useEstimateFeesPerGas
-} from 'wagmi'
+import { encodePacked } from 'viem'
+import { useAccount, useChainId, useSimulateContract, useWriteContract } from 'wagmi'
 
 export function Mint() {
   const account = useAccount()

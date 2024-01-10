@@ -1,12 +1,12 @@
 import * as abi from '#/lib/abi.ts'
-import { encodePacked, type Account } from 'viem'
-import { raise } from '#/lib/utilities.ts'
-import type { Address } from '#/lib/types.ts'
-import { evmClient, type EVMClient } from '#/lib/viem.ts'
 import { efpContracts } from '#/lib/constants/contracts.ts'
+import type { Address } from '#/lib/types.ts'
+import { raise } from '#/lib/utilities.ts'
+import type { EVMClient } from '#/lib/viem.ts'
+import { encodePacked, type Account } from 'viem'
 
 /**
- * The nonce has to be the same as the nonce used to mint the list record
+ * The slot has to be the same as the slot used to mint the list record
  * https://docs.ethfollow.xyz/design/list-storage-location/#onchain-storage
  */
 
@@ -15,26 +15,25 @@ export async function mint({
   client,
   version,
   locationType,
-  nonce
+  slot
 }: {
   account: Address | Account
   client: EVMClient
   version: number
   locationType: number
-  nonce: bigint
+  slot: bigint
 }) {
   const chainId = await client.getChainId()
+  const listStorageLocation = encodePacked(
+    ['uint8', 'uint8', 'uint256', 'address', 'uint'],
+    [version, locationType, BigInt(chainId), efpContracts['EFPListRecords'], slot]
+  )
   const { request } = await client.simulateContract({
     account,
     address: efpContracts['EFPListRegistry'],
     abi: abi.efpListRegistryAbi,
     functionName: 'mint',
-    args: [
-      encodePacked(
-        ['uint8', 'uint8', 'uint256', 'address', 'uint'],
-        [version, locationType, BigInt(chainId), efpContracts['EFPListRecords'], nonce]
-      )
-    ]
+    args: [listStorageLocation]
   })
   const hash = await client.writeContract(request)
   return hash
@@ -46,18 +45,18 @@ export async function mint({
 export async function claimList({
   account,
   client,
-  nonce
+  slot
 }: {
   account: Address | Account
   client: EVMClient
-  nonce: bigint
+  slot: bigint
 }) {
   const { request } = await client.simulateContract({
     account,
     address: efpContracts['EFPListRecords'],
     abi: abi.efpListRecordsAbi,
     functionName: 'claimListManager',
-    args: [nonce]
+    args: [slot]
   })
 
   const hash = await client.writeContract(request)
@@ -69,13 +68,13 @@ export async function follow({
   listClaimCompleted,
   client,
   address,
-  nonce
+  slot
 }: {
   account: Address | Account
   listClaimCompleted: boolean
   client: EVMClient
   address: Address
-  nonce: bigint
+  slot: bigint
 }) {
   if (!listClaimCompleted) raise('List claim must be completed before following')
 
@@ -85,7 +84,7 @@ export async function follow({
     address: efpContracts['EFPListRecords'],
     abi: abi.efpListRecordsAbi,
     functionName: 'applyListOp',
-    args: [nonce, encodePacked(['uint8', 'uint8', 'bytes'], [1, 1, listRecordToFollow])]
+    args: [slot, encodePacked(['uint8', 'uint8', 'bytes'], [1, 1, listRecordToFollow])]
   })
   const writeResult = await client.writeContract(request)
   return writeResult
