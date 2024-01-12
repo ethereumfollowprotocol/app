@@ -2,20 +2,19 @@ import clsx from 'clsx'
 import Link from 'next/link'
 import * as React from 'react'
 import { Menu } from '#/components/menu.tsx'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useAccount, useEnsName } from 'wagmi'
 import { Search } from '#/components/search.tsx'
 import { Avatar, Text } from '@radix-ui/themes'
 import CartButton from '#/components/cart-button.tsx'
 // import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { useIsMounted } from '#/hooks/use-is-mounted.ts'
 import { Connect } from '#/components/connect.tsx'
+import { useIsMounted } from '#/hooks/use-is-mounted.ts'
 
 export function shouldHidePath({
   connected,
   privatePath
 }: { connected: boolean; privatePath?: boolean }) {
-  // biome-ignore lint/nursery/noUselessTernary: <explanation>
   return !connected && privatePath ? true : false
 }
 
@@ -45,15 +44,6 @@ export function Header() {
   const isMounted = useIsMounted()
 
   const account = useAccount()
-  const {
-    data: ensName,
-    error: ensNameError,
-    status: ensNameStatus
-  } = useEnsName({
-    address: account?.address
-    // cacheTime: 420_69_420_69,
-    // enabled: account?.address && isAddress(account?.address)
-  })
 
   return (
     <header className={clsx(['w-full px-2.5 font-sans sm:px-3 md:px-4 lg:px-5 xl:px-6'])}>
@@ -86,6 +76,7 @@ export function Header() {
           </Text>
           <Search />
         </div>
+        {/* <ClientOnly> */}
         <ul
           className={clsx([
             'px-2.25 py-0.15 my-auto flex space-x-0 md:text-lg text-sm font-semibold mx-2',
@@ -93,22 +84,26 @@ export function Header() {
             'hidden lg:flex'
           ])}
         >
-          {navItems.map((item, index) => (
-            <li className='inline font-bold' key={`${index}`}>
-              <Link
-                prefetch={true}
-                href={item.href}
-                className={clsx([
-                  'capitalize',
-                  pathname === item.href ? 'text-black' : 'text-pink-400'
-                ])}
-              >
-                <span className='hidden sm:block'>{item.name}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+          {navItems.map((item, index) => {
+            const url = new URL(`${process.env.NEXT_PUBLIC_BASE_URL}${item.href}`)
 
+            return (
+              <li className='inline font-bold' key={`${index}`}>
+                <Link
+                  prefetch={true}
+                  href={item.href}
+                  className={clsx([
+                    'capitalize',
+                    url.pathname === pathname ? 'text-black' : 'text-pink-400'
+                  ])}
+                >
+                  <span className='hidden sm:block'>{item.name}</span>
+                </Link>
+              </li>
+            )
+          })}
+        </ul>
+        {/* </ClientOnly> */}
         <div className='my-auto ml-2 pb-0.5 mr-4'>
           <CartButton cartItemsCount={24} />
         </div>

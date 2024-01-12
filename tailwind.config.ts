@@ -170,9 +170,9 @@ const { colors, fontFamily, fontSize, keyframes, animation, spacing } = {
 
 export default {
   content: [
-    './src/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,ts,jsx,tsx,mdx}'
+    './src/**/*.{js,ts,jsx,tsx}',
+    './src/app/**/*.{js,ts,jsx,tsx}',
+    './src/components/**/*.{js,ts,jsx,tsx}'
   ],
   darkMode: 'class',
   important: true,

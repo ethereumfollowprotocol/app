@@ -11,9 +11,10 @@ interface Row {
   followers: number
   mutuals: number
   blockedMuted: number
+  status: 'followed' | 'blocked' | 'muted' | 'none'
 }
 
-export function TableRow({ rank, name, following, followers, mutuals, blockedMuted }: Row) {
+export function TableRow({ rank, name, following, followers, mutuals, blockedMuted, status }: Row) {
   const rowNumber = (
     <React.Fragment>
       {rank === 1 ? (
@@ -95,7 +96,18 @@ export function TableRow({ rank, name, following, followers, mutuals, blockedMut
         className={clsx([rank === 1 ? 'mt-5' : 'mt-2', 'flex lg:ml-6'])}
         data-name='action-column'
       >
-        <FollowButton text='Follow' pending={true} />
+        <FollowButton
+          text={
+            status === 'followed'
+              ? 'Unfollow'
+              : status === 'blocked'
+                ? 'Unblock'
+                : status === 'muted'
+                  ? 'Unmute'
+                  : 'Follow'
+          }
+          pending={true}
+        />
       </Table.Cell>
     </Table.Row>
   )

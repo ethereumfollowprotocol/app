@@ -13,8 +13,58 @@ import { useEffectOnce } from '#/hooks/use-effect-once'
 import { useIsMounted } from '#/hooks/use-is-mounted.ts'
 import { efpContracts } from '#/lib/constants/contracts'
 import { useWatchEfpEvents } from '#/app/efp/use-watch-efp-events.ts'
-import { Box, Button, Card, Code, Flex, Heading, Text } from '@radix-ui/themes'
+import { Badge, Box, Button, Card, Code, Flex, Heading, Text } from '@radix-ui/themes'
+import {
+  useWatchContractEvent,
+  useWatchPendingTransactions,
+  useWaitForTransactionReceipt,
+  useWriteContract
+} from 'wagmi'
 import { truncateAddress } from '#/lib/utilities'
+import { encodePacked, parseAbi } from 'viem'
+import * as abi from '#/lib/abi.ts'
+import { simulateContractQueryKey } from 'wagmi/query'
+
+export function CreateEfpList() {
+  const {
+    writeMintData: hash,
+    writeMint: writeContract,
+    simulateMintStatus,
+    simulateMintData,
+    writeMintStatus,
+    writeMintError
+  } = useMintEFP()
+
+  async function submit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    if (!simulateMintData?.request) return
+    writeContract(simulateMintData.request)
+  }
+
+  const isPending = simulateMintStatus === 'pending' || writeMintStatus === 'pending'
+
+  const {
+    isLoading: isConfirming,
+    isSuccess: isConfirmed,
+    data
+  } = useWaitForTransactionReceipt({
+    hash
+  })
+
+  return (
+    <div>
+      <form onSubmit={submit}>
+        <button disabled={isPending} type='submit'>
+          {isPending ? 'Confirming...' : 'Mint'}
+        </button>
+      </form>
+      {hash && <p>Transaction hash: {truncateAddress(hash)}</p>}
+      {isConfirming && <p>Transaction is confirming...</p>}
+      {isConfirmed && <p>Transaction is confirmed!</p>}
+      {writeMintError && <p>{writeMintError.message}</p>}
+    </div>
+  )
+}
 
 /**
  * Steps
@@ -77,13 +127,15 @@ export function CreateNewListForm() {
   const {
     writeMint,
     writeMintAsync,
-    writeMintData,
+    writeMintData: hash,
     simulateMintStatus,
     writeMintStatus,
     writeMintError,
     simulateMintData,
     simulateMintError
   } = useMintEFP()
+
+  const mintIsPending = simulateMintStatus === 'pending' || writeMintStatus === 'pending'
 
   const [isPending, startTransition] = React.useTransition()
   // @ts-ignore
@@ -112,9 +164,20 @@ export function CreateNewListForm() {
     })
   }
 
-  useWatchEfpEvents({
-    all: true
+  // useWatchEfpEvents({
+  //   all: true
+  // })
+
+  const {
+    isLoading: isConfirming,
+    isSuccess: isConfirmed,
+    data: mintReceipt
+  } = useWaitForTransactionReceipt({
+    hash
   })
+
+  console.log({ isConfirming, isConfirmed })
+
   if (!isMounted) return null
 
   return (
@@ -186,8 +249,8 @@ export function CreateNewListForm() {
 
           {step === '1' && (
             <React.Fragment>
-              <Box my='4'>
-                <Text as='p' weight='bold' size='5' className='' my='4'>
+              <Box mb='auto' mt='9'>
+                <Text as='p' weight='bold' size='5' my='4'>
                   Actions
                 </Text>
                 <Text>
@@ -205,6 +268,16 @@ export function CreateNewListForm() {
                   className='w-6 h-6 mx-auto my-3'
                   loading='lazy'
                 />
+                <Badge variant='outline' size='2' color='teal'>
+                  {isConfirming
+                    ? 'Confirming...'
+                    : isConfirmed
+                      ? 'Confirmed'
+                      : simulateMintStatus === 'success'
+                        ? 'Ready'
+                        : 'Simulating transaction…'}
+                </Badge>
+                <Text>{hash}</Text>
               </Box>
             </React.Fragment>
           )}
@@ -227,20 +300,7 @@ export function CreateNewListForm() {
                 <Text as='p' size='5' weight='bold' my='4'>
                   Status
                 </Text>
-                <div>
-                  Errors
-                  {simulateMintError && <Text as='p'>{simulateMintError.message}</Text>}
-                  {writeMintError && <Text as='p'>{writeMintError.message}</Text>}
-                </div>
-                <div>
-                  <Text as='p'>
-                    Transaction:{' '}
-                    <span className='font-bold'>{simulateMintData?.request.__mode}</span>
-                  </Text>
-                  <Text as='p'>
-                    Transaction hash: <span>{truncateAddress(writeMintData)}</span>
-                  </Text>
-                </div>
+                <CreateEfpList />
               </Box>
             </React.Fragment>
           )}
@@ -266,8 +326,7 @@ export function CreateNewListForm() {
                 if (step === '1' && simulateMintData?.request) {
                   console.log(!!simulateMintData?.request)
                   writeMint(simulateMintData.request)
-                }
-                updateStep('right')
+                } else updateStep('right')
               }}
               size='4'
               radius='full'

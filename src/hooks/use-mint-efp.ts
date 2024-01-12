@@ -5,20 +5,22 @@ import { useChainId, useSimulateContract, useWriteContract } from 'wagmi'
 
 export function useMintEFP() {
   const chainId = useChainId()
+  const nonce = React.useMemo(() => generateNonce(), [])
+  console.log(nonce)
 
   const {
     data: simulateMintData,
     error: simulateMintError,
     status: simulateMintStatus
   } = useSimulateContract({
-    chainId: 31337,
+    chainId,
     address: efpContracts['EFPListRegistry'],
     abi: abi.efpListRegistryAbi,
     functionName: 'mint',
     args: [
       encodePacked(
         ['uint8', 'uint8', 'uint256', 'address', 'uint'],
-        [1, 1, BigInt(chainId), efpContracts['EFPListRegistry'], 76n]
+        [1, 1, BigInt(chainId), efpContracts['EFPListRecords'], nonce]
       )
     ]
   })

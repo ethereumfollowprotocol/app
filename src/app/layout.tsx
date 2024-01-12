@@ -12,13 +12,13 @@ import { Inter, IBM_Plex_Mono } from 'next/font/google'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { APP_NAME, APP_DESCRIPTION } from '#/lib/constants/index.ts'
 
-const inter = Inter({
+const inteFont = Inter({
   subsets: ['latin'],
   weight: ['400', '500', '700', '900'],
   variable: '--font-inter'
 })
 
-const ibm_plex_mono = IBM_Plex_Mono({
+const ibmPlexMonoFont = IBM_Plex_Mono({
   subsets: ['latin'],
   weight: ['400', '500', '700'],
   variable: '--font-ibm-plex-mono'
@@ -26,7 +26,7 @@ const ibm_plex_mono = IBM_Plex_Mono({
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang='en' className={clsx([inter.variable, ibm_plex_mono.variable, 'light'])}>
+    <html lang='en' className={clsx([inteFont.variable, ibmPlexMonoFont.variable, 'light'])}>
       <HeadTag />
       <body className='w-full min-w-full items-center font-serif'>
         <Toaster />

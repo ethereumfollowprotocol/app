@@ -119,11 +119,3 @@ export async function setMintState({
   const writeResult = await client.writeContract(request)
   return writeResult
 }
-
-// getMintState({ client: evmClient['31337']() }).then(console.log)
-
-// setMintState({
-//   account: '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
-//   client: evmClient['31337'](),
-//   mintState: 'public-mint'
-// }).then(console.log)

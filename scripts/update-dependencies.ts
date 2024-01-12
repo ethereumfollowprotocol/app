@@ -85,7 +85,7 @@ async function bumpDependencies() {
     `${JSON.stringify(updatedPackageJson, undefined, 2)}\n`
   )
 
-  return write ? true : false
+  return Boolean(write)
 }
 
 async function fetchPackageLatestVersion(name: string) {

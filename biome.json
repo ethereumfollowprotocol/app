@@ -73,7 +73,8 @@
         "all": true,
         "useAwait": "off",
         "noNodejsModules": "off",
-        "noUnusedImports": "off"
+        "noUnusedImports": "off",
+        "noUselessTernary": "off"
       },
       "performance": {
         "all": true,
@@ -92,9 +93,10 @@
       },
       "complexity": {
         "all": true,
+        "noBannedTypes": "off",
         "useLiteralKeys": "off",
         "noUselessFragments": "off",
-        "noBannedTypes": "off"
+        "noExcessiveCognitiveComplexity": "off"
       }
     }
   },

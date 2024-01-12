@@ -89,18 +89,14 @@ export function LeaderboardTable({
         hidden={filteredLeaderboard.length === 0}
       >
         <Table.Header>
-          <Table.Row className='top-0 sticky'>
-            <Table.ColumnHeaderCell className='top-0 sticky pl-4'>Rank</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell className='top-0 sticky pl-6'>Name</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell className='top-0 sticky'>Following</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell className='top-0 sticky'>Followers</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell className='top-0 sticky'>Mutuals</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell className='top-0 sticky text-center'>
-              Blocked+Muted
-            </Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell className='top-0 sticky text-center'>
-              Action
-            </Table.ColumnHeaderCell>
+          <Table.Row>
+            <Table.ColumnHeaderCell className='pl-4'>Rank</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell className='pl-6'>Name</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell>Following</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell>Followers</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell>Mutuals</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell className='text-center'>Blocked+Muted</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell className='text-center'>Action</Table.ColumnHeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -116,6 +112,7 @@ export function LeaderboardTable({
               followers={entry.followers_count || 0}
               mutuals={entry.mutuals_count || 0}
               blockedMuted={entry.blocked_count + entry.muted_count || 0}
+              status='none'
             />
           ))}
         </Table.Body>

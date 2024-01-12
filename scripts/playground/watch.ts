@@ -3,6 +3,9 @@ import { decodeEventLog } from 'viem'
 import { evmClient } from 'src/lib/viem'
 import * as abi from 'src/lib/abi'
 import { efpContracts } from '#/lib/constants/contracts.ts'
+import fs from 'node:fs'
+
+console.info('\nWatching EFP events...\n')
 
 watchEfpEvents().catch(error => {
   console.error(error)
@@ -107,6 +110,12 @@ async function watchEfpEvents() {
         })
         console.log('[EFPListMinter] Decoded topics:', JSON.stringify(_topics, undefined, 2))
       })
+    }
+  })
+
+  client.watchEvent({
+    onLogs: logs => {
+      fs.writeFileSync('logs.json', JSON.stringify(logs, undefined, 2), { encoding: 'utf8' })
     }
   })
 }

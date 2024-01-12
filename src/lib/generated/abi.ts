@@ -11,6 +11,16 @@ export const efpAccountMetadataAbi = [
     outputs: []
   },
   {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'ens', internalType: 'contract ENS', type: 'address' },
+      { name: 'claimant', internalType: 'address', type: 'address' }
+    ],
+    name: 'claimReverseENS',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }]
+  },
+  {
     stateMutability: 'view',
     type: 'function',
     inputs: [
@@ -57,6 +67,16 @@ export const efpAccountMetadataAbi = [
     inputs: [],
     name: 'renounceOwnership',
     outputs: []
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'ens', internalType: 'contract ENS', type: 'address' },
+      { name: 'name', internalType: 'string', type: 'string' }
+    ],
+    name: 'setReverseENS',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }]
   },
   {
     stateMutability: 'nonpayable',
@@ -210,6 +230,16 @@ export const efpListMinterAbi = [
     ]
   },
   {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'ens', internalType: 'contract ENS', type: 'address' },
+      { name: 'claimant', internalType: 'address', type: 'address' }
+    ],
+    name: 'claimReverseENS',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }]
+  },
+  {
     stateMutability: 'payable',
     type: 'function',
     inputs: [{ name: 'listStorageLocation', internalType: 'bytes', type: 'bytes' }],
@@ -259,6 +289,16 @@ export const efpListMinterAbi = [
     inputs: [],
     name: 'renounceOwnership',
     outputs: []
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'ens', internalType: 'contract ENS', type: 'address' },
+      { name: 'name', internalType: 'string', type: 'string' }
+    ],
+    name: 'setReverseENS',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }]
   },
   {
     stateMutability: 'nonpayable',
@@ -329,6 +369,16 @@ export const efpListRecordsAbi = [
     ],
     name: 'claimListManagerForAddress',
     outputs: []
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'ens', internalType: 'contract ENS', type: 'address' },
+      { name: 'claimant', internalType: 'address', type: 'address' }
+    ],
+    name: 'claimReverseENS',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }]
   },
   {
     stateMutability: 'view',
@@ -494,6 +544,16 @@ export const efpListRecordsAbi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
+    inputs: [
+      { name: 'ens', internalType: 'contract ENS', type: 'address' },
+      { name: 'name', internalType: 'string', type: 'string' }
+    ],
+    name: 'setReverseENS',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }]
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
     inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
     name: 'transferOwnership',
     outputs: []
@@ -578,6 +638,16 @@ export const efpListRegistryAbi = [
     inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
     name: 'balanceOf',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }]
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'ens', internalType: 'contract ENS', type: 'address' },
+      { name: 'claimant', internalType: 'address', type: 'address' }
+    ],
+    name: 'claimReverseENS',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }]
   },
   {
     stateMutability: 'view',
@@ -799,6 +869,16 @@ export const efpListRegistryAbi = [
     inputs: [{ name: 'priceOracle_', internalType: 'address', type: 'address' }],
     name: 'setPriceOracle',
     outputs: []
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'ens', internalType: 'contract ENS', type: 'address' },
+      { name: 'name', internalType: 'string', type: 'string' }
+    ],
+    name: 'setReverseENS',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }]
   },
   {
     stateMutability: 'view',
