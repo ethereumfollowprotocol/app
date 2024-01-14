@@ -61,7 +61,6 @@
         "useFragmentSyntax": "off",
         "useNamingConvention": "off",
         "useShorthandArrayType": "off",
-        "useConsistentArrayType": "off",
         "useSelfClosingElements": "off",
         "noUnusedTemplateLiteral": "off"
       },
@@ -74,7 +73,8 @@
         "useAwait": "off",
         "noNodejsModules": "off",
         "noUnusedImports": "off",
-        "noUselessTernary": "off"
+        "noUselessTernary": "off",
+        "useConsistentArrayType": "off"
       },
       "performance": {
         "all": true,
