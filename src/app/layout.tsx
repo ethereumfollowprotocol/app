@@ -29,6 +29,7 @@ const ibmPlexMonoFont = IBM_Plex_Mono({
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const initialState = cookieToInitialState(wagmiConfig, headers().get('cookie'))
+
   return (
     <html
       lang='en'

@@ -90,6 +90,9 @@ export function FollowButton({
         pending ? 'cursor-not-allowed' : theme[text as FollowButtonState].bg,
         theme[text as FollowButtonState].text
       ])}
+      style={{
+        backgroundColor: text === 'Follow' ? colorScheme().primary : undefined
+      }}
       disabled={pending}
       {...properties}
     >
