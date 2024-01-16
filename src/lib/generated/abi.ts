@@ -57,6 +57,20 @@ export const efpAccountMetadataAbi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
+    inputs: [],
+    name: 'pause',
+    outputs: []
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'paused',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }]
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
     inputs: [{ name: 'proxy', internalType: 'address', type: 'address' }],
     name: 'removeProxy',
     outputs: []
@@ -142,6 +156,13 @@ export const efpAccountMetadataAbi = [
     outputs: []
   },
   {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'unpause',
+    outputs: []
+  },
+  {
     type: 'event',
     anonymous: false,
     inputs: [
@@ -159,6 +180,19 @@ export const efpAccountMetadataAbi = [
       }
     ],
     name: 'OwnershipTransferred'
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: false
+      }
+    ],
+    name: 'Paused'
   },
   {
     type: 'event',
@@ -185,6 +219,19 @@ export const efpAccountMetadataAbi = [
       }
     ],
     name: 'ProxyRemoved'
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: false
+      }
+    ],
+    name: 'Unpaused'
   },
   {
     type: 'event',
@@ -271,6 +318,20 @@ export const efpListMinterAbi = [
     outputs: [{ name: '', internalType: 'address', type: 'address' }]
   },
   {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'pause',
+    outputs: []
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'paused',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }]
+  },
+  {
     stateMutability: 'view',
     type: 'function',
     inputs: [],
@@ -308,6 +369,13 @@ export const efpListMinterAbi = [
     outputs: []
   },
   {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'unpause',
+    outputs: []
+  },
+  {
     type: 'event',
     anonymous: false,
     inputs: [
@@ -325,6 +393,32 @@ export const efpListMinterAbi = [
       }
     ],
     name: 'OwnershipTransferred'
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: false
+      }
+    ],
+    name: 'Paused'
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: false
+      }
+    ],
+    name: 'Unpaused'
   }
 ] as const
 
@@ -337,7 +431,7 @@ export const efpListRecordsAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       { name: 'op', internalType: 'bytes', type: 'bytes' }
     ],
     name: 'applyListOp',
@@ -347,7 +441,7 @@ export const efpListRecordsAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       { name: 'ops', internalType: 'bytes[]', type: 'bytes[]' }
     ],
     name: 'applyListOps',
@@ -356,7 +450,7 @@ export const efpListRecordsAbi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    inputs: [{ name: 'nonce', internalType: 'uint256', type: 'uint256' }],
+    inputs: [{ name: 'slot', internalType: 'uint256', type: 'uint256' }],
     name: 'claimListManager',
     outputs: []
   },
@@ -364,7 +458,7 @@ export const efpListRecordsAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       { name: 'manager', internalType: 'address', type: 'address' }
     ],
     name: 'claimListManagerForAddress',
@@ -383,14 +477,14 @@ export const efpListRecordsAbi = [
   {
     stateMutability: 'view',
     type: 'function',
-    inputs: [{ name: 'nonce', internalType: 'uint256', type: 'uint256' }],
+    inputs: [{ name: 'slot', internalType: 'uint256', type: 'uint256' }],
     name: 'getAllListOps',
     outputs: [{ name: '', internalType: 'bytes[]', type: 'bytes[]' }]
   },
   {
     stateMutability: 'view',
     type: 'function',
-    inputs: [{ name: 'nonce', internalType: 'uint256', type: 'uint256' }],
+    inputs: [{ name: 'slot', internalType: 'uint256', type: 'uint256' }],
     name: 'getListManager',
     outputs: [{ name: '', internalType: 'address', type: 'address' }]
   },
@@ -398,7 +492,7 @@ export const efpListRecordsAbi = [
     stateMutability: 'view',
     type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       { name: 'index', internalType: 'uint256', type: 'uint256' }
     ],
     name: 'getListOp',
@@ -407,7 +501,7 @@ export const efpListRecordsAbi = [
   {
     stateMutability: 'view',
     type: 'function',
-    inputs: [{ name: 'nonce', internalType: 'uint256', type: 'uint256' }],
+    inputs: [{ name: 'slot', internalType: 'uint256', type: 'uint256' }],
     name: 'getListOpCount',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }]
   },
@@ -415,7 +509,7 @@ export const efpListRecordsAbi = [
     stateMutability: 'view',
     type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       { name: 'start', internalType: 'uint256', type: 'uint256' },
       { name: 'end', internalType: 'uint256', type: 'uint256' }
     ],
@@ -425,7 +519,7 @@ export const efpListRecordsAbi = [
   {
     stateMutability: 'view',
     type: 'function',
-    inputs: [{ name: 'nonce', internalType: 'uint256', type: 'uint256' }],
+    inputs: [{ name: 'slot', internalType: 'uint256', type: 'uint256' }],
     name: 'getListUser',
     outputs: [{ name: '', internalType: 'address', type: 'address' }]
   },
@@ -470,6 +564,20 @@ export const efpListRecordsAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [],
+    name: 'pause',
+    outputs: []
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'paused',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }]
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
     name: 'renounceOwnership',
     outputs: []
   },
@@ -477,7 +585,7 @@ export const efpListRecordsAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       { name: 'manager', internalType: 'address', type: 'address' }
     ],
     name: 'setListManager',
@@ -487,7 +595,7 @@ export const efpListRecordsAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       { name: 'user', internalType: 'address', type: 'address' }
     ],
     name: 'setListUser',
@@ -497,7 +605,7 @@ export const efpListRecordsAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       { name: 'key', internalType: 'string', type: 'string' },
       { name: 'value', internalType: 'bytes', type: 'bytes' }
     ],
@@ -508,7 +616,7 @@ export const efpListRecordsAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       {
         name: 'records',
         internalType: 'struct IEFPListMetadata.KeyValue[]',
@@ -526,7 +634,7 @@ export const efpListRecordsAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       {
         name: 'records',
         internalType: 'struct IEFPListMetadata.KeyValue[]',
@@ -559,15 +667,17 @@ export const efpListRecordsAbi = [
     outputs: []
   },
   {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'unpause',
+    outputs: []
+  },
+  {
     type: 'event',
     anonymous: false,
     inputs: [
-      {
-        name: 'nonce',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: true
-      },
+      { name: 'slot', internalType: 'uint256', type: 'uint256', indexed: true },
       { name: 'op', internalType: 'bytes', type: 'bytes', indexed: false }
     ],
     name: 'ListOp'
@@ -596,11 +706,32 @@ export const efpListRecordsAbi = [
     anonymous: false,
     inputs: [
       {
-        name: 'nonce',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: true
-      },
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: false
+      }
+    ],
+    name: 'Paused'
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: false
+      }
+    ],
+    name: 'Unpaused'
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'slot', internalType: 'uint256', type: 'uint256', indexed: true },
       { name: 'key', internalType: 'string', type: 'string', indexed: false },
       { name: 'value', internalType: 'bytes', type: 'bytes', indexed: false }
     ],
@@ -609,10 +740,10 @@ export const efpListRecordsAbi = [
   {
     type: 'error',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       { name: 'manager', internalType: 'address', type: 'address' }
     ],
-    name: 'NonceAlreadyClaimed'
+    name: 'SlotAlreadyClaimed'
   }
 ] as const
 
@@ -797,6 +928,20 @@ export const efpListRegistryAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [],
+    name: 'pause',
+    outputs: []
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'paused',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }]
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
     name: 'renounceOwnership',
     outputs: []
   },
@@ -945,6 +1090,13 @@ export const efpListRegistryAbi = [
     outputs: []
   },
   {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'unpause',
+    outputs: []
+  },
+  {
     type: 'event',
     anonymous: false,
     inputs: [
@@ -1060,6 +1212,19 @@ export const efpListRegistryAbi = [
     anonymous: false,
     inputs: [
       {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: false
+      }
+    ],
+    name: 'Paused'
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
         name: 'priceOracle',
         internalType: 'address',
         type: 'address',
@@ -1082,6 +1247,19 @@ export const efpListRegistryAbi = [
       }
     ],
     name: 'Transfer'
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: false
+      }
+    ],
+    name: 'Unpaused'
   },
   {
     type: 'event',
@@ -1257,7 +1435,7 @@ export const listMetadataAbi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    inputs: [{ name: 'nonce', internalType: 'uint256', type: 'uint256' }],
+    inputs: [{ name: 'slot', internalType: 'uint256', type: 'uint256' }],
     name: 'claimListManager',
     outputs: []
   },
@@ -1265,7 +1443,7 @@ export const listMetadataAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       { name: 'manager', internalType: 'address', type: 'address' }
     ],
     name: 'claimListManagerForAddress',
@@ -1274,14 +1452,14 @@ export const listMetadataAbi = [
   {
     stateMutability: 'view',
     type: 'function',
-    inputs: [{ name: 'nonce', internalType: 'uint256', type: 'uint256' }],
+    inputs: [{ name: 'slot', internalType: 'uint256', type: 'uint256' }],
     name: 'getListManager',
     outputs: [{ name: '', internalType: 'address', type: 'address' }]
   },
   {
     stateMutability: 'view',
     type: 'function',
-    inputs: [{ name: 'nonce', internalType: 'uint256', type: 'uint256' }],
+    inputs: [{ name: 'slot', internalType: 'uint256', type: 'uint256' }],
     name: 'getListUser',
     outputs: [{ name: '', internalType: 'address', type: 'address' }]
   },
@@ -1306,10 +1484,38 @@ export const listMetadataAbi = [
     outputs: [{ name: '', internalType: 'bytes[]', type: 'bytes[]' }]
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'owner',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }]
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'pause',
+    outputs: []
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'paused',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }]
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'renounceOwnership',
+    outputs: []
+  },
+  {
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       { name: 'manager', internalType: 'address', type: 'address' }
     ],
     name: 'setListManager',
@@ -1319,7 +1525,7 @@ export const listMetadataAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       { name: 'user', internalType: 'address', type: 'address' }
     ],
     name: 'setListUser',
@@ -1329,7 +1535,7 @@ export const listMetadataAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       { name: 'key', internalType: 'string', type: 'string' },
       { name: 'value', internalType: 'bytes', type: 'bytes' }
     ],
@@ -1340,7 +1546,7 @@ export const listMetadataAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       {
         name: 'records',
         internalType: 'struct IEFPListMetadata.KeyValue[]',
@@ -1355,15 +1561,69 @@ export const listMetadataAbi = [
     outputs: []
   },
   {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
+    name: 'transferOwnership',
+    outputs: []
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'unpause',
+    outputs: []
+  },
+  {
     type: 'event',
     anonymous: false,
     inputs: [
       {
-        name: 'nonce',
-        internalType: 'uint256',
-        type: 'uint256',
+        name: 'previousOwner',
+        internalType: 'address',
+        type: 'address',
         indexed: true
       },
+      {
+        name: 'newOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true
+      }
+    ],
+    name: 'OwnershipTransferred'
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: false
+      }
+    ],
+    name: 'Paused'
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: false
+      }
+    ],
+    name: 'Unpaused'
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'slot', internalType: 'uint256', type: 'uint256', indexed: true },
       { name: 'key', internalType: 'string', type: 'string', indexed: false },
       { name: 'value', internalType: 'bytes', type: 'bytes', indexed: false }
     ],
@@ -1372,10 +1632,10 @@ export const listMetadataAbi = [
   {
     type: 'error',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       { name: 'manager', internalType: 'address', type: 'address' }
     ],
-    name: 'NonceAlreadyClaimed'
+    name: 'SlotAlreadyClaimed'
   }
 ] as const
 
@@ -1388,7 +1648,7 @@ export const listRecordsAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       { name: 'op', internalType: 'bytes', type: 'bytes' }
     ],
     name: 'applyListOp',
@@ -1398,7 +1658,7 @@ export const listRecordsAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       { name: 'ops', internalType: 'bytes[]', type: 'bytes[]' }
     ],
     name: 'applyListOps',
@@ -1407,7 +1667,7 @@ export const listRecordsAbi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    inputs: [{ name: 'nonce', internalType: 'uint256', type: 'uint256' }],
+    inputs: [{ name: 'slot', internalType: 'uint256', type: 'uint256' }],
     name: 'claimListManager',
     outputs: []
   },
@@ -1415,7 +1675,7 @@ export const listRecordsAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       { name: 'manager', internalType: 'address', type: 'address' }
     ],
     name: 'claimListManagerForAddress',
@@ -1424,14 +1684,14 @@ export const listRecordsAbi = [
   {
     stateMutability: 'view',
     type: 'function',
-    inputs: [{ name: 'nonce', internalType: 'uint256', type: 'uint256' }],
+    inputs: [{ name: 'slot', internalType: 'uint256', type: 'uint256' }],
     name: 'getAllListOps',
     outputs: [{ name: '', internalType: 'bytes[]', type: 'bytes[]' }]
   },
   {
     stateMutability: 'view',
     type: 'function',
-    inputs: [{ name: 'nonce', internalType: 'uint256', type: 'uint256' }],
+    inputs: [{ name: 'slot', internalType: 'uint256', type: 'uint256' }],
     name: 'getListManager',
     outputs: [{ name: '', internalType: 'address', type: 'address' }]
   },
@@ -1439,7 +1699,7 @@ export const listRecordsAbi = [
     stateMutability: 'view',
     type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       { name: 'index', internalType: 'uint256', type: 'uint256' }
     ],
     name: 'getListOp',
@@ -1448,7 +1708,7 @@ export const listRecordsAbi = [
   {
     stateMutability: 'view',
     type: 'function',
-    inputs: [{ name: 'nonce', internalType: 'uint256', type: 'uint256' }],
+    inputs: [{ name: 'slot', internalType: 'uint256', type: 'uint256' }],
     name: 'getListOpCount',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }]
   },
@@ -1456,7 +1716,7 @@ export const listRecordsAbi = [
     stateMutability: 'view',
     type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       { name: 'start', internalType: 'uint256', type: 'uint256' },
       { name: 'end', internalType: 'uint256', type: 'uint256' }
     ],
@@ -1466,7 +1726,7 @@ export const listRecordsAbi = [
   {
     stateMutability: 'view',
     type: 'function',
-    inputs: [{ name: 'nonce', internalType: 'uint256', type: 'uint256' }],
+    inputs: [{ name: 'slot', internalType: 'uint256', type: 'uint256' }],
     name: 'getListUser',
     outputs: [{ name: '', internalType: 'address', type: 'address' }]
   },
@@ -1501,10 +1761,38 @@ export const listRecordsAbi = [
     outputs: [{ name: '', internalType: 'bytes', type: 'bytes' }]
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'owner',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }]
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'pause',
+    outputs: []
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'paused',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }]
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'renounceOwnership',
+    outputs: []
+  },
+  {
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       { name: 'manager', internalType: 'address', type: 'address' }
     ],
     name: 'setListManager',
@@ -1514,7 +1802,7 @@ export const listRecordsAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       { name: 'user', internalType: 'address', type: 'address' }
     ],
     name: 'setListUser',
@@ -1524,7 +1812,7 @@ export const listRecordsAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       { name: 'key', internalType: 'string', type: 'string' },
       { name: 'value', internalType: 'bytes', type: 'bytes' }
     ],
@@ -1535,7 +1823,7 @@ export const listRecordsAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       {
         name: 'records',
         internalType: 'struct IEFPListMetadata.KeyValue[]',
@@ -1553,7 +1841,7 @@ export const listRecordsAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       {
         name: 'records',
         internalType: 'struct IEFPListMetadata.KeyValue[]',
@@ -1569,15 +1857,24 @@ export const listRecordsAbi = [
     outputs: []
   },
   {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
+    name: 'transferOwnership',
+    outputs: []
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'unpause',
+    outputs: []
+  },
+  {
     type: 'event',
     anonymous: false,
     inputs: [
-      {
-        name: 'nonce',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: true
-      },
+      { name: 'slot', internalType: 'uint256', type: 'uint256', indexed: true },
       { name: 'op', internalType: 'bytes', type: 'bytes', indexed: false }
     ],
     name: 'ListOp'
@@ -1587,11 +1884,51 @@ export const listRecordsAbi = [
     anonymous: false,
     inputs: [
       {
-        name: 'nonce',
-        internalType: 'uint256',
-        type: 'uint256',
+        name: 'previousOwner',
+        internalType: 'address',
+        type: 'address',
         indexed: true
       },
+      {
+        name: 'newOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true
+      }
+    ],
+    name: 'OwnershipTransferred'
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: false
+      }
+    ],
+    name: 'Paused'
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: false
+      }
+    ],
+    name: 'Unpaused'
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'slot', internalType: 'uint256', type: 'uint256', indexed: true },
       { name: 'key', internalType: 'string', type: 'string', indexed: false },
       { name: 'value', internalType: 'bytes', type: 'bytes', indexed: false }
     ],
@@ -1600,9 +1937,9 @@ export const listRecordsAbi = [
   {
     type: 'error',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { name: 'slot', internalType: 'uint256', type: 'uint256' },
       { name: 'manager', internalType: 'address', type: 'address' }
     ],
-    name: 'NonceAlreadyClaimed'
+    name: 'SlotAlreadyClaimed'
   }
 ] as const
