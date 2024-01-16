@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { CreateNewListForm } from '#/app/onboarding/new-list.tsx'
 
 export default async function OnboardingPage() {
