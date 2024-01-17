@@ -4,7 +4,10 @@ import '@rainbow-me/rainbowkit/styles.css'
 
 import clsx from 'clsx'
 import { Toaster } from 'sonner'
+import { headers } from 'next/headers'
 import { Providers } from './providers.tsx'
+import { cookieToInitialState } from 'wagmi'
+import { wagmiConfig } from '#/lib/wagmi.ts'
 import { Analytics } from '@vercel/analytics/react'
 import { Production } from 'src/app/production.tsx'
 import { VercelToolbar } from '@vercel/toolbar/next'
@@ -25,12 +28,13 @@ const ibmPlexMonoFont = IBM_Plex_Mono({
 })
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const initialState = cookieToInitialState(wagmiConfig, headers().get('cookie'))
   return (
     <html lang='en' className={clsx([inteFont.variable, ibmPlexMonoFont.variable, 'light'])}>
       <HeadTag />
       <body className='w-full min-w-full items-center font-serif'>
         <Toaster />
-        <Providers>{children}</Providers>
+        <Providers initialState={initialState}>{children}</Providers>
         {/* <VercelToolbar /> */}
         <Production>
           <Analytics />

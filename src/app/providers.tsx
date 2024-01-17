@@ -5,7 +5,7 @@ import { Theme } from '@radix-ui/themes'
 import { DAY, MINUTE } from '#/lib/constants'
 import { Header } from '#/components/header.tsx'
 import { WagmiProvider, type State } from 'wagmi'
-import { wagmiConfig } from '#/lib/wallet/config.ts'
+import { wagmiConfig } from '#/lib/wagmi'
 // import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -22,17 +22,12 @@ type Props = {
 //   storage: window.localStorage
 // })
 
-// const queryClient = new QueryClient(queryClientConfig)
-
 export function Providers({ children, initialState }: Props) {
   const [queryClient] = React.useState(
     () =>
       new QueryClient({
         defaultOptions: {
-          queries: {
-            gcTime: 1 * DAY,
-            staleTime: 1 * MINUTE
-          }
+          queries: { gcTime: 1 * DAY, staleTime: 1 * MINUTE }
         }
       })
   )
