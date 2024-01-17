@@ -34,15 +34,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang='en'
       suppressHydrationWarning={true}
+      data-current-color-scheme='CURRENT'
       className={clsx([inteFont.variable, ibmPlexMonoFont.variable, 'dark'])}
     >
       <HeadTag />
-      <body
-        className={clsx([
-          'w-full min-w-full items-center font-serif'
-          // 'bg-gradient-to-t from-[#fff97f] to-[#ffbde3]'
-        ])}
-      >
+      <body className='w-full min-w-full items-center font-serif'>
         <Toaster />
         <Providers initialState={initialState}>{children}</Providers>
         {/* <VercelToolbar /> */}

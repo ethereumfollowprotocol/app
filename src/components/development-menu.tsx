@@ -1,9 +1,20 @@
 'use client'
 
-import { ColorSchemes, type ColorSchemeName } from '#/lib/constants/colors.ts'
+import clsx from 'clsx'
+import * as React from 'react'
 import { DropdownMenu, IconButton } from '@radix-ui/themes'
+import { ColorSchemes, type ColorSchemeName } from '#/lib/constants/colors.ts'
 
 export function DevelopmentMenu() {
+  const [currentScheme, setCurrentScheme] = React.useState<ColorSchemeName>('CURRENT')
+
+  React.useEffect(() => {
+    const htmlElement = document.querySelector('html')
+    const currentScheme = htmlElement?.getAttribute('data-current-color-scheme')
+
+    if (currentScheme) setCurrentScheme(currentScheme as ColorSchemeName)
+  }, [])
+
   const onThemeChange = async (theme: ColorSchemeName) => {
     const body = document.querySelector('body')
     const logo = document.querySelector('img#logo')
@@ -24,6 +35,8 @@ export function DevelopmentMenu() {
     for (const button of unfollowButtons) {
       button?.style.setProperty('background', ColorSchemes[theme]['unfollow'])
     }
+
+    setCurrentScheme(theme)
   }
 
   return (
@@ -41,7 +54,15 @@ export function DevelopmentMenu() {
       </DropdownMenu.Trigger>
       <DropdownMenu.Content>
         {Object.entries(ColorSchemes).map(([key]) => (
-          <DropdownMenu.Item key={key} onClick={() => onThemeChange(key as ColorSchemeName)}>
+          <DropdownMenu.Item
+            key={key}
+            className={clsx([
+              'hover:cursor-pointer',
+              // highlight current theme button
+              currentScheme === key && 'bg-salmon-400'
+            ])}
+            onClick={() => onThemeChange(key as ColorSchemeName)}
+          >
             {key}
           </DropdownMenu.Item>
         ))}

@@ -41,8 +41,8 @@ export function Providers({ children, initialState }: Props) {
           <ThemeProvider attribute='class' themes={['pink', 'red', 'blue', 'light', 'dark']}>
             <Theme
               scaling='100%'
-              appearance='inherit'
               accentColor='gray'
+              appearance='inherit'
               data-radix-provider={true}
             >
               <React.Suspense>
