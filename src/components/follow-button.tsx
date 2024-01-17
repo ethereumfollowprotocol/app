@@ -1,4 +1,3 @@
-import { ColorSchemes, colorScheme } from '#/lib/constants/colors.ts'
 import { Button } from '@radix-ui/themes'
 import clsx from 'clsx'
 import type { ComponentPropsWithoutRef, PropsWithChildren } from 'react'
@@ -28,7 +27,7 @@ const theme = {
     text: 'text-zinc-800'
   },
   Unfollow: {
-    bg: 'bg-salmon-500',
+    bg: 'bg-[#FF7C7C]',
     text: 'text-gray-900'
   },
   Subscribe: {

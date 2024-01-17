@@ -1,8 +1,7 @@
 'use client'
 
-import type * as React from 'react'
-import { IconButton, DropdownMenu } from '@radix-ui/themes'
 import { ColorSchemes, type ColorSchemeName } from '#/lib/constants/colors.ts'
+import { DropdownMenu, IconButton } from '@radix-ui/themes'
 
 export function DevelopmentMenu() {
   const onThemeChange = async (theme: ColorSchemeName) => {
@@ -23,7 +22,7 @@ export function DevelopmentMenu() {
     }
 
     for (const button of unfollowButtons) {
-      button?.style.setProperty('background', ColorSchemes[theme]['secondary'])
+      button?.style.setProperty('background', ColorSchemes[theme]['unfollow'])
     }
   }
 

@@ -2,29 +2,45 @@ type ColorScheme = {
   primary: `#${string}`
   secondary: `#${string}`
   tertiary: `#${string}`
+
+  unfollow: `#${string}`
 }
 
 export const ColorSchemes = {
   CURRENT: {
     // Primary: A soft yellow (#fff97f) suggesting warmth, optimism, and energy.
+    primary: '#ffff96',
+    // Secondary: A light pink (#ffbde3) for a touch of playfulness and compassion.
+    secondary: '#ff63c1',
+    tertiary: '#FFFFFF',
+
+    unfollow: '#FF7C7C'
+  },
+  FLAT: {
+    // Primary: A soft yellow (#fff97f) suggesting warmth, optimism, and energy.
     primary: '#fff97f',
     // Secondary: A light pink (#ffbde3) for a touch of playfulness and compassion.
     secondary: '#ffbde3',
-    tertiary: '#FFFFFF'
-  },
+    tertiary: '#FFFFFF',
 
+    unfollow: '#FF7C7C'
+  },
   /////////////////////////////////////////////////////////////////////////////
 
   ENS: {
     primary: '#513eff',
     secondary: '#52e5ff',
-    tertiary: '#000000'
+    tertiary: '#000000',
+
+    unfollow: '#FF7C7C'
   },
 
   ENS_Reverse: {
     primary: '#52e5ff',
     secondary: '#513eff',
-    tertiary: '#000000'
+    tertiary: '#000000',
+
+    unfollow: '#FF7C7C'
   },
 
   /////////////////////////////////////////////////////////////////////////////
@@ -34,79 +50,105 @@ export const ColorSchemes = {
     primary: '#47fa9f',
     // Secondary: A bright sky blue (#01e2ff) for clarity, creativity, and openness.
     secondary: '#01e2ff',
-    tertiary: '#000000'
+    tertiary: '#000000',
+
+    unfollow: '#FF7C7C'
   },
 
   GPT_A: {
     primary: '#bceff5',
     secondary: '#1e6695',
-    tertiary: '#000000'
+    tertiary: '#000000',
+
+    unfollow: '#FF7C7C'
   },
 
   GPT_B: {
     primary: '#43efd9',
     secondary: '#5b4cc3',
-    tertiary: '#000000'
+    tertiary: '#000000',
+
+    unfollow: '#FF7C7C'
   },
 
   GPT_C: {
     primary: '#f17a55',
     secondary: '#ffea80',
-    tertiary: '#000000'
+    tertiary: '#000000',
+
+    unfollow: '#FF7C7C'
   },
 
   GPT_D: {
     primary: '#feb02b',
     secondary: '#fee99c',
-    tertiary: '#000000'
+    tertiary: '#000000',
+
+    unfollow: '#FF7C7C'
   },
 
   GPT_E: {
     primary: '#84dd8c',
     secondary: '#00a4a5',
-    tertiary: '#000000'
+    tertiary: '#000000',
+
+    unfollow: '#FF7C7C'
   },
 
   GPT_F: {
     primary: '#88bdff',
     secondary: '#6a88ff',
-    tertiary: '#000000'
+    tertiary: '#000000',
+
+    unfollow: '#FF7C7C'
   },
 
   GPT_G: {
     primary: '#7c76f0',
     secondary: '#b2b3e2',
-    tertiary: '#000000'
+    tertiary: '#000000',
+
+    unfollow: '#FF7C7C'
   },
 
   GPT_H: {
     primary: '#b2b3e2',
     secondary: '#7c76f0',
-    tertiary: '#000000'
+    tertiary: '#000000',
+
+    unfollow: '#FF7C7C'
   },
 
   GPT_I: {
     primary: '#88a5b9',
     secondary: '#81769c',
-    tertiary: '#000000'
+    tertiary: '#000000',
+
+    unfollow: '#FF7C7C'
   },
 
   GPT_J: {
     primary: '#00cdb5',
     secondary: '#00a4a6',
-    tertiary: '#000000'
+    tertiary: '#000000',
+
+    unfollow: '#FF7C7C'
   },
 
   GPT_K: {
     primary: '#0cc6ac',
     secondary: '#00a2ae',
-    tertiary: '#000000'
+    tertiary: '#000000',
+
+    unfollow: '#FF7C7C'
   },
 
   GPT_L: {
     primary: '#ff696e',
     secondary: '#fed070',
-    tertiary: '#000000'
+    tertiary: '#000000',
+
+    unfollow: '#FF7C7C'
   }
 
   /////////////////////////////////////////////////////////////////////////////
