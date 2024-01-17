@@ -33,7 +33,7 @@
 ### Installation
 
 ```bash
-git clone https://github.com/ethereumfollowprotocol/app.git && cd efp-app
+git clone https://github.com/ethereumfollowprotocol/app.git && cd app
 ```
 
 > [!NOTE]
