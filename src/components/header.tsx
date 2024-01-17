@@ -118,6 +118,14 @@ export function Header() {
             ])}
           >
             {/* <ConnectButton
+        {isMounted && (
+          <div
+            className={clsx([
+              !account.isConnected && 'w-min',
+              'my-auto flex items-center justify-end pb-1 min-w-fit'
+            ])}
+          >
+            {/* <ConnectButton
               showBalance={false}
               chainStatus={'none'}
               label='Connect'

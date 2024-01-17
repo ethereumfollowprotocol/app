@@ -215,15 +215,6 @@ export function Menu() {
             {APP_VERSION}
           </RadixLink>
         </DropdownMenu.Item>
-
-        <DropdownMenu.Item asChild={true}>
-          <button onClick={() => handleColorSchemeChange('NEW')}>Choose NEW Color Scheme</button>
-        </DropdownMenu.Item>
-        <DropdownMenu.Item asChild={true}>
-          <button onClick={() => handleColorSchemeChange('PREVIOUS')}>
-            Choose PREVIOUS Color Scheme
-          </button>
-        </DropdownMenu.Item>
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   )
