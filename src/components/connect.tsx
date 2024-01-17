@@ -43,7 +43,7 @@ export function Connect() {
       >
         <img
           hidden={accountStatus !== 'connected' || !ensData?.avatar}
-          src={ensData?.avatar}
+          src={ensData?.avatar || '/assets/gradient-circle.svg'}
           className='w-6 h-6 rounded-full -mr-1'
           alt='ENS avatar'
         />

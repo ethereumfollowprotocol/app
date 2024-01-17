@@ -15,7 +15,8 @@ export async function efpTotalSupply(client: EVMClient) {
 }
 
 export async function getEnsProfile(ensOrAddress: string) {
-  const response = await fetch(`https://ens.ethfollow.xyz/u/${ensOrAddress}`, { cache: 'default' })
+  const ensUrl = process.env.ENS_API_URL || process.env.NEXT_PUBLIC_ENS_API_URL
+  const response = await fetch(`${ensUrl}/u/${ensOrAddress}`)
   const data = await response.json()
   return data as ENSProfile
 }

@@ -13,6 +13,10 @@ export function truncateAddress(address?: string) {
   return `${address.slice(0, 6)}…${address.slice(38, 42)}`
 }
 
+export function determineAddressOrName(addressOrName: string) {
+  return checkEnsValid(addressOrName) ? 'name' : 'address'
+}
+
 /**
  * @see https://www.youtube.com/watch?v=re2JFITR7TI
  */
