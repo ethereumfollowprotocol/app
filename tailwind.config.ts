@@ -175,7 +175,6 @@ export default {
     './src/components/**/*.{js,ts,jsx,tsx}'
   ],
   darkMode: 'class',
-  important: true,
   future: { hoverOnlyWhenSupported: true },
   theme: {
     transparent: 'transparent',

@@ -12,6 +12,10 @@
   font-variant-numeric: tabular-nums;
 }
 
+body {
+  background: linear-gradient(180deg, #fff97f 0%, #ffbde3 55%, #ffcffc);
+}
+
 *:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;

@@ -1,123 +1,125 @@
 type ColorScheme = {
-	primary: `#${string}`;
-	secondary: `#${string}`;
-	tertiary: `#${string}`;
-};
+  primary: `#${string}`
+  secondary: `#${string}`
+  tertiary: `#${string}`
+}
 
-export const ColorSchemes: Record<string, ColorScheme> = {
-	CURRENT: {
-		// Primary: A soft yellow (#fff97f) suggesting warmth, optimism, and energy.
-		primary: "#fff97f",
-		// Secondary: A light pink (#ffbde3) for a touch of playfulness and compassion.
-		secondary: "#ffbde3",
-		tertiary: "#000000",
-	},
+export const ColorSchemes = {
+  CURRENT: {
+    // Primary: A soft yellow (#fff97f) suggesting warmth, optimism, and energy.
+    primary: '#fff97f',
+    // Secondary: A light pink (#ffbde3) for a touch of playfulness and compassion.
+    secondary: '#ffbde3',
+    tertiary: '#FFFFFF'
+  },
 
-	/////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
 
-	ENS: {
-		primary: "#513eff",
-		secondary: "#52e5ff",
-		tertiary: "#000000",
-	},
+  ENS: {
+    primary: '#513eff',
+    secondary: '#52e5ff',
+    tertiary: '#000000'
+  },
 
-	ENS_Reverse: {
-		primary: "#52e5ff",
-		secondary: "#513eff",
-		tertiary: "#000000",
-	},
+  ENS_Reverse: {
+    primary: '#52e5ff',
+    secondary: '#513eff',
+    tertiary: '#000000'
+  },
 
-	/////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
 
-	GPT_1: {
-		// Primary: A fresh mint green (#47fa9f) symbolizing growth, renewal, and harmony.
-		primary: "#47fa9f",
-		// Secondary: A bright sky blue (#01e2ff) for clarity, creativity, and openness.
-		secondary: "#01e2ff",
-		tertiary: "#000000",
-	},
+  GPT_1: {
+    // Primary: A fresh mint green (#47fa9f) symbolizing growth, renewal, and harmony.
+    primary: '#47fa9f',
+    // Secondary: A bright sky blue (#01e2ff) for clarity, creativity, and openness.
+    secondary: '#01e2ff',
+    tertiary: '#000000'
+  },
 
-	GPT_A: {
-		primary: "#bceff5",
-		secondary: "#1e6695",
-		tertiary: "#000000",
-	},
+  GPT_A: {
+    primary: '#bceff5',
+    secondary: '#1e6695',
+    tertiary: '#000000'
+  },
 
-	GPT_B: {
-		primary: "#43efd9",
-		secondary: "#5b4cc3",
-		tertiary: "#000000",
-	},
+  GPT_B: {
+    primary: '#43efd9',
+    secondary: '#5b4cc3',
+    tertiary: '#000000'
+  },
 
-	GPT_C: {
-		primary: "#f17a55",
-		secondary: "#ffea80",
-		tertiary: "#000000",
-	},
+  GPT_C: {
+    primary: '#f17a55',
+    secondary: '#ffea80',
+    tertiary: '#000000'
+  },
 
-	GPT_D: {
-		primary: "#feb02b",
-		secondary: "#fee99c",
-		tertiary: "#000000",
-	},
+  GPT_D: {
+    primary: '#feb02b',
+    secondary: '#fee99c',
+    tertiary: '#000000'
+  },
 
-	GPT_E: {
-		primary: "#84dd8c",
-		secondary: "#00a4a5",
-		tertiary: "#000000",
-	},
+  GPT_E: {
+    primary: '#84dd8c',
+    secondary: '#00a4a5',
+    tertiary: '#000000'
+  },
 
-	GPT_F: {
-		primary: "#88bdff",
-		secondary: "#6a88ff",
-		tertiary: "#000000",
-	},
+  GPT_F: {
+    primary: '#88bdff',
+    secondary: '#6a88ff',
+    tertiary: '#000000'
+  },
 
-	GPT_G: {
-		primary: "#7c76f0",
-		secondary: "#b2b3e2",
-		tertiary: "#000000",
-	},
+  GPT_G: {
+    primary: '#7c76f0',
+    secondary: '#b2b3e2',
+    tertiary: '#000000'
+  },
 
-	GPT_H: {
-		primary: "#b2b3e2",
-		secondary: "#7c76f0",
-		tertiary: "#000000",
-	},
+  GPT_H: {
+    primary: '#b2b3e2',
+    secondary: '#7c76f0',
+    tertiary: '#000000'
+  },
 
-	GPT_I: {
-		primary: "#88a5b9",
-		secondary: "#81769c",
-		tertiary: "#000000",
-	},
+  GPT_I: {
+    primary: '#88a5b9',
+    secondary: '#81769c',
+    tertiary: '#000000'
+  },
 
-	GPT_J: {
-		primary: "#00cdb5",
-		secondary: "#00a4a6",
-		tertiary: "#000000",
-	},
+  GPT_J: {
+    primary: '#00cdb5',
+    secondary: '#00a4a6',
+    tertiary: '#000000'
+  },
 
-	GPT_K: {
-		primary: "#0cc6ac",
-		secondary: "#00a2ae",
-		tertiary: "#000000",
-	},
+  GPT_K: {
+    primary: '#0cc6ac',
+    secondary: '#00a2ae',
+    tertiary: '#000000'
+  },
 
-	GPT_L: {
-		primary: "#ff696e",
-		secondary: "#fed070",
-		tertiary: "#000000",
-	},
+  GPT_L: {
+    primary: '#ff696e',
+    secondary: '#fed070',
+    tertiary: '#000000'
+  }
 
-	/////////////////////////////////////////////////////////////////////////////
-};
+  /////////////////////////////////////////////////////////////////////////////
+} as const
+
+export type ColorSchemeName = keyof typeof ColorSchemes
 
 export function colorScheme(): ColorScheme {
-	const result: ColorScheme | undefined = ColorSchemes.CURRENT;
-	if (!result) {
-		throw new Error("No color scheme found");
-	}
-	return result;
+  const result: ColorScheme | undefined = ColorSchemes.CURRENT
+  if (!result) {
+    throw new Error('No color scheme found')
+  }
+  return result
 }
 
 // GPT_1_2: {

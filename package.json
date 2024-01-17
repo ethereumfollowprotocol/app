@@ -28,6 +28,7 @@
     "clsx": "^2.1.0",
     "million": "^2.6.4",
     "next": "^14.0.4",
+    "next-themes": "^0.2.1",
     "next-usequerystate": "^1.15.2",
     "pretty-cache-header": "^1.0.0",
     "react": "^18.2.0",

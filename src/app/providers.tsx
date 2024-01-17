@@ -2,6 +2,7 @@
 
 import * as React from 'react'
 import { Theme } from '@radix-ui/themes'
+import { ThemeProvider } from 'next-themes'
 import { DAY, MINUTE } from '#/lib/constants'
 import { Header } from '#/components/header.tsx'
 import { WagmiProvider, type State } from 'wagmi'
@@ -42,12 +43,19 @@ export function Providers({ children, initialState }: Props) {
         <WagmiProvider config={wagmiConfig} reconnectOnMount={true} initialState={initialState}>
           {/* <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}> */}
           {/* <RainbowKitProvider coolMode chains={chains} theme={rainbowTheme}> */}
-          <Theme scaling='100%' appearance='inherit' accentColor='gray'>
-            <React.Suspense>
-              <Header />
-            </React.Suspense>
-            {children}
-          </Theme>
+          <ThemeProvider attribute='class' themes={['pink', 'red', 'blue', 'light', 'dark']}>
+            <Theme
+              scaling='100%'
+              appearance='inherit'
+              accentColor='gray'
+              data-radix-provider={true}
+            >
+              <React.Suspense>
+                <Header />
+              </React.Suspense>
+              {children}
+            </Theme>
+          </ThemeProvider>
           {/* </RainbowKitProvider> */}
           {/* </PersistQueryClientProvider> */}
         </WagmiProvider>

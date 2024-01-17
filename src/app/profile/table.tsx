@@ -5,6 +5,7 @@ import { FollowButton } from '#/components/follow-button.tsx'
 import { SelectWithFilter } from '#/components/select-with-filter.tsx'
 import { ChevronDownIcon, DotsHorizontalIcon, PlusIcon } from '@radix-ui/react-icons'
 import { Box, Code, Flex, Table, Text, Avatar, Badge, IconButton } from '@radix-ui/themes'
+import { ImageWithFallback } from '#/components/image-with-fallback'
 
 export function ProfilePageTable({
   title,
@@ -96,11 +97,13 @@ function TableRow({ name, type }: { name: string; type: string }) {
     <Table.Row align='center' className='w-full hover:bg-white/30'>
       <Table.Cell pl='4' pr='0' data-name='name-column'>
         <Flex gap='2'>
-          <Avatar
-            src={`https://ens.ethfollow.xyz/i/${name}`}
+          <ImageWithFallback
+            src={`https://metadata.ens.domains/mainnet/avatar/${name}`}
             fallback='/assets/gradient-circle.svg'
-            my='auto'
-            radius='full'
+            width='40'
+            height='40'
+            alt='ENS profile picture'
+            className='rounded-full'
           />
           <Flex direction='column' className='text-left' justify='center' align='start'>
             <Link href={`/${name}`}>
