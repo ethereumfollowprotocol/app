@@ -33,7 +33,6 @@ const nextConfig = {
   poweredByHeader: false,
   experimental: {
     useLightningcss: true,
-    webpackBuildWorker: true
   },
   generateBuildId: async () => APP_VERSION,
   env: {
