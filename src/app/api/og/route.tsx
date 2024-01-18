@@ -58,7 +58,7 @@ export async function GET(request: NextRequest) {
         }}
       >
         <img
-          src='https://ens.ethfollow.xyz/i/brantly.eth'
+          src='${process.env.NEXT_PUBLIC_ENS_API_URL}/i/brantly.eth'
           width='225'
           height='225'
           alt='ens avatar'

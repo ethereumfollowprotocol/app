@@ -1,10 +1,10 @@
 'use client'
 
+import * as abi from 'src/lib/abi'
+import { encodePacked } from 'viem'
 import { Box, Button, Flex } from '@radix-ui/themes'
 import { useIsMounted } from 'src/hooks/use-is-mounted'
-import * as abi from 'src/lib/abi'
 import { efpContracts } from 'src/lib/constants/contracts'
-import { encodePacked } from 'viem'
 import { useAccount, useChainId, useSimulateContract, useWriteContract } from 'wagmi'
 
 export function Mint() {

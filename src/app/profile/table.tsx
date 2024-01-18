@@ -97,7 +97,7 @@ function TableRow({ name, type }: { name: string; type: string }) {
       <Table.Cell pl='4' pr='0' data-name='name-column'>
         <Flex gap='2'>
           <Avatar
-            src={`https://ens.ethfollow.xyz/i/${name}`}
+            src={`${process.env.NEXT_PUBLIC_ENS_API_URL}/i/${name}`}
             fallback='/assets/gradient-circle.svg'
             my='auto'
             radius='full'

@@ -1,4 +1,3 @@
-
 import { getEnsProfile } from '#/app/actions.ts'
 import { useQuery } from '@tanstack/react-query'
 import { checkAddressOrEnsValid } from '#/lib/utilities.ts'
