@@ -8,7 +8,6 @@ import { useChainId, useSimulateContract, useWriteContract } from 'wagmi'
 export function useMintEFP() {
   const chainId = useChainId()
   const nonce = React.useMemo(() => generateListStorageLocationSlot(), [])
-  console.log(nonce)
 
   const {
     data: simulateMintData,
