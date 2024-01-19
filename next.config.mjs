@@ -32,13 +32,16 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   experimental: {
-    useLightningcss: true,
+    useLightningcss: true
   },
   generateBuildId: async () => APP_VERSION,
   env: {
     NEXT_TELEMETRY_DISABLED: '1',
     APP_VERSION,
     APP_VERSION_SHORT: APP_VERSION?.slice(0, 7)
+  },
+  logging: {
+    fetches: { fullUrl: true }
   },
   images: {
     remotePatterns: [
