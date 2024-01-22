@@ -6,8 +6,8 @@ import type { LeaderboardFilter, LeaderboardEntry } from './types.ts'
 
 export async function fetchLeaderboard({
   filter,
-  include = [],
-  limit = 100
+  limit = 100,
+  include = []
 }: {
   filter: LeaderboardFilter
   include?: NoRepetition<'ens' | 'mutuals' | 'blocked' | 'muted'>
@@ -17,7 +17,7 @@ export async function fetchLeaderboard({
     if (filter !== 'followers') return []
     const params = include.map(key => `include=${key}`).join('&')
     const response = await fetch(
-      `https://production.evm.workers.dev/api/v1/leaderboard/${filter}?limit=${limit}&${params}`
+      `${process.env.EFP_API_URL}/api/v1/leaderboard/${filter}?limit=${limit}&${params}`
     )
     const data = await response.json()
 

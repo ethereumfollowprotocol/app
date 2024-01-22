@@ -16,7 +16,12 @@ export async function efpTotalSupply(client: EVMClient) {
 
 export async function getEnsProfile(ensOrAddress: string) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_ENS_API_URL}/u/${ensOrAddress}`, {
-    cache: 'default'
+    /**
+     * TODO _PRODUCTION_CHECKLIST_:
+     * This is set to `force-cache` on purpose while in development
+     * Unset this or set to `default` before launch
+     */
+    cache: 'force-cache'
   })
   const data = await response.json()
   return data as ENSProfile
