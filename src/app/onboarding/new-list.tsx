@@ -132,7 +132,7 @@ export function CreateNewListForm() {
     defaultValue: '0'
   })
   const [listStorageLocationChainIdStr, setListStorageLocationChainIdStr] = useQueryState(
-    'listStorageLocationChainId',
+    'list_storage_location_chain_id',
     {
       throttleMs: SECOND / 2
     }
@@ -146,13 +146,15 @@ export function CreateNewListForm() {
   }
 
   const searchParams = useSearchParams()
-  const currentSearchParam = searchParams.get('listStorageLocationChainId')
+  const currentSearchParam = searchParams.get('list_storage_location_chain_id')
 
   function selectListStorageLocationChainId(listStorageLocationChainId: number) {
     startTransition(() => {
-      if (listStorageLocationChainId.toString() === listStorageLocationChainIdStr)
+      if (listStorageLocationChainId === Number(listStorageLocationChainIdStr)) {
         setListStorageLocationChainIdStr(null)
-      else setListStorageLocationChainIdStr(location.toString())
+      } else {
+        setListStorageLocationChainIdStr(listStorageLocationChainId.toString())
+      }
     })
   }
 
