@@ -1,29 +1,17 @@
 'use client'
 
-import '#/lib/patch.ts'
-import clsx from 'clsx'
-import Image from 'next/image'
-import { toast } from 'sonner'
-import * as React from 'react'
-import { SECOND } from '#/lib/constants'
-import { useSearchParams } from 'next/navigation'
-import { useQueryState } from 'next-usequerystate'
-import { useMintEFP } from '#/hooks/use-mint-efp.ts'
-import { useEffectOnce } from '#/hooks/use-effect-once'
 import { useIsMounted } from '#/hooks/use-is-mounted.ts'
-import { efpContracts } from '#/lib/constants/contracts'
-import { useWatchEfpEvents } from '#/app/efp/use-watch-efp-events.ts'
-import { Badge, Box, Button, Card, Code, Flex, Heading, Text } from '@radix-ui/themes'
-import {
-  useWatchContractEvent,
-  useWatchPendingTransactions,
-  useWaitForTransactionReceipt,
-  useWriteContract
-} from 'wagmi'
+import { useMintEFP } from '#/hooks/use-mint-efp.ts'
+import { SECOND } from '#/lib/constants'
+import '#/lib/patch.ts'
 import { truncateAddress } from '#/lib/utilities'
-import { encodePacked, parseAbi } from 'viem'
-import * as abi from '#/lib/abi.ts'
-import { simulateContractQueryKey } from 'wagmi/query'
+import { Badge, Box, Button, Card, Code, Flex, Heading, Text } from '@radix-ui/themes'
+import clsx from 'clsx'
+import { useQueryState } from 'next-usequerystate'
+import Image from 'next/image'
+import { useSearchParams } from 'next/navigation'
+import * as React from 'react'
+import { useWaitForTransactionReceipt } from 'wagmi'
 
 export function CreateEfpList() {
   const {
@@ -143,9 +131,12 @@ export function CreateNewListForm() {
     throttleMs: SECOND / 2,
     defaultValue: '0'
   })
-  const [storageLocation, setStorageLocation] = useQueryState('location', {
-    throttleMs: SECOND / 2
-  })
+  const [listStorageLocationChainIdStr, setListStorageLocationChainIdStr] = useQueryState(
+    'listStorageLocationChainId',
+    {
+      throttleMs: SECOND / 2
+    }
+  )
 
   function updateStep(direction: 'left' | 'right') {
     const newStep = Number(step) + (direction === 'left' ? -1 : 1)
@@ -155,12 +146,13 @@ export function CreateNewListForm() {
   }
 
   const searchParams = useSearchParams()
-  const currentSearchParam = searchParams.get('location')
+  const currentSearchParam = searchParams.get('listStorageLocationChainId')
 
-  function selectStorageLocation(location: string) {
+  function selectListStorageLocationChainId(listStorageLocationChainId: number) {
     startTransition(() => {
-      if (location === storageLocation) setStorageLocation(null)
-      else setStorageLocation(location)
+      if (listStorageLocationChainId.toString() === listStorageLocationChainIdStr)
+        setListStorageLocationChainIdStr(null)
+      else setListStorageLocationChainIdStr(location.toString())
     })
   }
 
@@ -210,13 +202,13 @@ export function CreateNewListForm() {
                     key={`store-location-${index}`}
                     className={clsx([
                       'rounded-2xl border-2 border-transparent px-2 py-1.5 hover:border-lime-200 mx-auto self-center',
-                      Number(storageLocation) === location.chainId
+                      Number(listStorageLocationChainIdStr) === location.chainId
                         ? 'bg-lime-100'
                         : 'bg-transparent'
                     ])}
                   >
                     <Button
-                      onClick={_event => selectStorageLocation(location.chainId.toString())}
+                      onClick={_event => selectListStorageLocationChainId(location.chainId)}
                       variant='ghost'
                       className={clsx([
                         'flex items-center space-x-4 rounded-xl px-4 text-left text-black hover:bg-transparent mx-auto'
@@ -257,8 +249,9 @@ export function CreateNewListForm() {
                   Create a new EFP List on{' '}
                   <Code variant='outline' className='font-bold' color='gray'>
                     {
-                      storeLocation.find(location => location.chainId === Number(storageLocation))
-                        ?.name
+                      storeLocation.find(
+                        location => location.chainId === Number(listStorageLocationChainIdStr)
+                      )?.name
                     }
                   </Code>
                 </Text>
@@ -292,8 +285,9 @@ export function CreateNewListForm() {
                   Create a new EFP List on{' '}
                   <Code variant='outline' className='font-bold' color='gray'>
                     {
-                      storeLocation.find(location => location.chainId === Number(storageLocation))
-                        ?.name
+                      storeLocation.find(
+                        location => location.chainId === Number(listStorageLocationChainIdStr)
+                      )?.name
                     }
                   </Code>
                 </Text>
@@ -331,9 +325,11 @@ export function CreateNewListForm() {
               size='4'
               radius='full'
               variant='solid'
-              disabled={!storageLocation}
+              disabled={!listStorageLocationChainIdStr}
               className={clsx([
-                storageLocation ? 'bg-gradient-to-t from-[#FFDE60] to-[#ffa08d]' : 'bg-[#9b9b9b]',
+                listStorageLocationChainIdStr
+                  ? 'bg-gradient-to-t from-[#FFDE60] to-[#ffa08d]'
+                  : 'bg-[#9b9b9b]',
                 'w-[100px] text-black'
               ])}
             >
