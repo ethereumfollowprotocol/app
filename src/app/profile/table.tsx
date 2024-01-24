@@ -1,6 +1,10 @@
+'use client'
+
 import Link from 'next/link'
 import * as React from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { Searchbar } from '#/components/searchbar.tsx'
+import { fetchFollowers, fetchFollowersAndFollowing, fetchFollowing } from './actions.ts'
 import { FollowButton } from '#/components/follow-button.tsx'
 import { SelectWithFilter } from '#/components/select-with-filter.tsx'
 import { ChevronDownIcon, DotsHorizontalIcon, PlusIcon } from '@radix-ui/react-icons'
@@ -8,11 +12,10 @@ import { Box, Code, Flex, Table, Text, Avatar, Badge, IconButton } from '@radix-
 
 export function ProfilePageTable({
   title,
-  profiles,
   searchQuery,
   selectQuery
 }: {
-  title: string
+  title: 'following' | 'followers'
   searchQuery: string
   selectQuery: string
   profiles: Array<{
@@ -27,15 +30,23 @@ export function ProfilePageTable({
   const searchQueryKey = `${title.toLowerCase()}-query`
   const selectQueryKey = `${title.toLowerCase()}-filter`
 
-  const filterProfiles = profiles.filter(entry =>
-    entry.name.toLowerCase().replaceAll('.eth', '').includes(searchQuery.toLowerCase())
+  const { data, error, status } = useQuery({
+    queryKey: ['profile', title],
+    queryFn: () =>
+      title === 'following'
+        ? fetchFollowing({ addressOrName: 'dr3a.eth' })
+        : fetchFollowers({ addressOrName: 'dr3a.eth' })
+  })
+
+  const filterProfiles = data?.following.filter(entry =>
+    entry.data.toLowerCase().replaceAll('.eth', '').includes(searchQuery.toLowerCase())
   )
 
   return (
     <Box height='100%' width='100%' px='2' pb='4' mx='auto'>
       <Flex mb='2' justify='between'>
         <Box className='space-x-2 flex items-end' mr='2'>
-          <Text my='auto' weight='bold' className='h-full inline mt-1.5' as='p'>
+          <Text my='auto' weight='bold' className='h-full inline mt-1.5 uppercase' as='p'>
             {title}
           </Text>
           <Searchbar queryKey={searchQueryKey} placeholder='Search...' />

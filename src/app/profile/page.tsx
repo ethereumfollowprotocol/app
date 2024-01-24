@@ -4,6 +4,7 @@ import { ProfileCard } from './profile-card.tsx'
 import { AdvancedList } from './advanced-list.tsx'
 import { Box, Flex, Text } from '@radix-ui/themes'
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
+import { fetchFollowersAndFollowing } from '#/app/profile/actions.ts'
 
 const profiles = [
   {
@@ -67,8 +68,8 @@ export default async function ProfilePage({
 
   const queryClient = new QueryClient()
   await queryClient.prefetchQuery({
-    queryKey: ['leaderboard', followingFilter],
-    queryFn: () => void 0
+    queryKey: ['profile'],
+    queryFn: () => fetchFollowersAndFollowing({ addressOrName: 'dr3a.eth' })
   })
 
   return (
@@ -90,15 +91,13 @@ export default async function ProfilePage({
           </Box>
 
           <ProfilePageTable
-            profiles={profiles}
-            title='Following'
+            title='following'
             searchQuery={followingQuery}
             selectQuery={followingFilter}
           />
 
           <ProfilePageTable
-            profiles={profiles}
-            title='Followers'
+            title='followers'
             searchQuery={followersQuery}
             selectQuery={followersFilter}
           />
