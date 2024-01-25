@@ -1,15 +1,13 @@
-import clsx from 'clsx'
-import Link from 'next/link'
-import * as React from 'react'
-import { Menu } from '#/components/menu.tsx'
-import { usePathname, useRouter } from 'next/navigation'
-import { useAccount, useEnsName } from 'wagmi'
-import { Search } from '#/components/search.tsx'
-import { Avatar, Text } from '@radix-ui/themes'
-import CartButton from '#/components/cart-button.tsx'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { Connect } from '#/components/connect.tsx'
-import { useIsMounted } from '#/hooks/use-is-mounted.ts'
+import CartButton from '#/components/cart-button.tsx';
+import { Menu } from '#/components/menu.tsx';
+import { Search } from '#/components/search.tsx';
+import { useIsMounted } from '#/hooks/use-is-mounted.ts';
+import { Avatar, Text } from '@radix-ui/themes';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import clsx from 'clsx';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useAccount } from 'wagmi';
 
 export function shouldHidePath({
   connected,
@@ -85,6 +83,13 @@ export function Header() {
           ])}
         >
           {navItems.map((item, index) => {
+            // Check if the environment variable is set
+            if (!process.env.NEXT_PUBLIC_ENS_API_URL) {
+              throw new Error(
+                "Environment variable 'NEXT_PUBLIC_BASE_URL' is not set. Please configure it in your environment."
+              )
+            }
+
             const url = new URL(`${process.env.NEXT_PUBLIC_BASE_URL}${item.href}`)
 
             return (
@@ -109,20 +114,20 @@ export function Header() {
         </div>
 
         {/* {isMounted && ( */}
-          <div
-            className={clsx([
-              !account.isConnected && 'w-min',
-              'my-auto flex items-center justify-end pb-1 min-w-fit'
-            ])}
-          >
-            <ConnectButton
-              showBalance={false}
-              chainStatus={'none'}
-              label='Connect'
-              // accountStatus={ensName ? 'full' : 'address'}
-            />
-            {/* <Connect /> */}
-          </div>
+        <div
+          className={clsx([
+            !account.isConnected && 'w-min',
+            'my-auto flex items-center justify-end pb-1 min-w-fit'
+          ])}
+        >
+          <ConnectButton
+            showBalance={false}
+            chainStatus={'none'}
+            label='Connect'
+            // accountStatus={ensName ? 'full' : 'address'}
+          />
+          {/* <Connect /> */}
+        </div>
         {/* )} */}
 
         <div className='my-auto pb-0.5 pl-2.5'>

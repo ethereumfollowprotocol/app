@@ -1,9 +1,8 @@
 'use client'
 
-import * as React from 'react'
-import { useEnsProfile } from '#/hooks/use-ens-profile.ts'
-import { Card, Avatar, Badge, Box } from '@radix-ui/themes'
 import { FollowButton } from '#/components/follow-button.tsx'
+import { useEnsProfile } from '#/hooks/use-ens-profile.ts'
+import { Avatar, Badge, Box, Card } from '@radix-ui/themes'
 
 /**
  * TODO:
@@ -64,13 +63,6 @@ export function CoolUserCard({ addressOrName }: { addressOrName: string }) {
             size='1'
             src='https://metadata.ens.domains/mainnet/avatar/brantly.eth'
             className='rounded-full w-10 h-10'
-          />
-          <Avatar
-            alt='b'
-            fallback=''
-            size='1'
-            src='https://metadata.ens.domains/mainnet/avatar/esm.eth'
-            className='rounded-full w-10 h-10 -ml-5'
           />
           <Avatar
             alt='b'
