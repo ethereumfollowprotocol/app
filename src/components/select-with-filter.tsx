@@ -64,7 +64,11 @@ export function SelectWithFilter({
           <Select.Content>
             <Select.Group>
               {items.map((item, index) => (
-                <Select.Item value={item.toLowerCase()} className='capitalize' key={`${index}`}>
+                <Select.Item
+                  value={item.toLowerCase()}
+                  className='capitalize'
+                  key={item.toLowerCase()}
+                >
                   {item}
                 </Select.Item>
               ))}
@@ -77,7 +81,7 @@ export function SelectWithFilter({
         <div className='hidden lg:block space-x-3'>
           {items.map((item, index) => (
             <Button
-              key={`${index}`}
+              key={item.toLowerCase()}
               size='2'
               radius='full'
               className={clsx([

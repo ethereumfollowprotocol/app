@@ -3,51 +3,8 @@ import { ProfilePageTable } from './table.tsx'
 import { ProfileCard } from './profile-card.tsx'
 import { AdvancedList } from './advanced-list.tsx'
 import { Box, Flex, Text } from '@radix-ui/themes'
+import { fetchFollowers, fetchFollowing } from '#/app/profile/actions.ts'
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
-import { fetchFollowersAndFollowing } from '#/app/profile/actions.ts'
-
-const profiles = [
-  {
-    rank: 1,
-    name: 'dr3a.eth',
-    following: '12.4k',
-    followers: '495',
-    mutuals: '495',
-    blockedMuted: '495'
-  },
-  {
-    rank: 2,
-    name: 'anon.eth',
-    following: '12.4k',
-    followers: '495',
-    mutuals: '495',
-    blockedMuted: '495'
-  },
-  {
-    rank: 3,
-    name: 'dragonite.eth',
-    following: '12.4k',
-    followers: '495',
-    mutuals: '495',
-    blockedMuted: '495'
-  },
-  {
-    rank: 4,
-    name: 'dcj.eth',
-    following: '12.4k',
-    followers: '495',
-    mutuals: '495',
-    blockedMuted: '495'
-  },
-  {
-    rank: 5,
-    name: 'esm.eth',
-    following: '12.4k',
-    followers: '495',
-    mutuals: '495',
-    blockedMuted: '495'
-  }
-]
 
 export default async function ProfilePage({
   searchParams
@@ -68,8 +25,12 @@ export default async function ProfilePage({
 
   const queryClient = new QueryClient()
   await queryClient.prefetchQuery({
-    queryKey: ['profile'],
-    queryFn: () => fetchFollowersAndFollowing({ addressOrName: 'dr3a.eth' })
+    queryKey: ['profile', 'followers'],
+    queryFn: () => fetchFollowers({ addressOrName: 'dr3a.eth' })
+  })
+  await queryClient.prefetchQuery({
+    queryKey: ['profile', 'following'],
+    queryFn: () => fetchFollowing({ addressOrName: 'dr3a.eth' })
   })
 
   return (

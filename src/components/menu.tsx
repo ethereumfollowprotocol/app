@@ -114,7 +114,7 @@ export function Menu() {
               'my-0.5 flex capitalize lg:hidden',
               pathname === route.href ? 'bg-pink-400 text-white' : ''
             ])}
-            key={`route-${index}`}
+            key={`route-${route.name}`}
           >
             <Link prefetch={true} href={route.href}>
               {route.name}
@@ -171,7 +171,7 @@ export function Menu() {
           {projectSocials.map((link, index) => {
             return (
               <IconButton
-                key={`link-${index}`}
+                key={`link-${link.name}`}
                 radius='full'
                 variant='soft'
                 className='bg-transparent text-black hover:bg-pink-200'

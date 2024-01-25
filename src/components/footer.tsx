@@ -52,7 +52,7 @@ export function Footer() {
         <Section className='my-auto flex align-middle' p='0'>
           <ul className='my-auto flex flex-col space-y-1 text-center'>
             {footerLinks.map((route, index) => (
-              <li className='inline font-extrabold' key={`route-${index}`}>
+              <li className='inline font-extrabold' key={`route-${route.href}`}>
                 <a href={route.href} className={`text-pink-400`}>
                   <span>{route.text}</span>
                 </a>

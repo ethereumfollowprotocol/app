@@ -88,7 +88,7 @@ export function Header() {
             const url = new URL(`${process.env.NEXT_PUBLIC_BASE_URL}${item.href}`)
 
             return (
-              <li className='inline font-bold' key={`${index}`}>
+              <li className='inline font-bold' key={`${item.name}`}>
                 <Link
                   prefetch={true}
                   href={item.href}

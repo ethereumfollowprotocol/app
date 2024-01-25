@@ -170,7 +170,7 @@ export function Search({ disabled }: { disabled?: boolean }) {
             >
               {searchResult?.map((result, index) => (
                 <DropdownMenu.Item
-                  key={`${index}`}
+                  key={`${result}`}
                   asChild={true}
                   className='w-full text-md py-0 hover:bg-pink-50'
                   tabIndex={0 + 1}
@@ -252,7 +252,7 @@ export function Search({ disabled }: { disabled?: boolean }) {
                 >
                   {searchResult?.map((result, index) => (
                     <DropdownMenu.Item
-                      key={`${index}`}
+                      key={`${result}`}
                       asChild={true}
                       className='w-full text-md py-0 hover:bg-pink-50'
                       tabIndex={0 + 1}

@@ -4,12 +4,15 @@ import Link from 'next/link'
 import * as React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Searchbar } from '#/components/searchbar.tsx'
-import { fetchFollowers, fetchFollowersAndFollowing, fetchFollowing } from './actions.ts'
+import { fetchFollowers, fetchFollowing } from './actions.ts'
 import { FollowButton } from '#/components/follow-button.tsx'
 import { SelectWithFilter } from '#/components/select-with-filter.tsx'
 import { ChevronDownIcon, DotsHorizontalIcon, PlusIcon } from '@radix-ui/react-icons'
 import { Box, Code, Flex, Table, Text, Avatar, Badge, IconButton } from '@radix-ui/themes'
 
+/**
+ * TODO: paginate
+ */
 export function ProfilePageTable({
   title,
   searchQuery,
@@ -18,28 +21,35 @@ export function ProfilePageTable({
   title: 'following' | 'followers'
   searchQuery: string
   selectQuery: string
-  profiles: Array<{
-    rank: number
-    name: string
-    following: string
-    followers: string
-    mutuals: string
-    blockedMuted: string
-  }>
 }) {
   const searchQueryKey = `${title.toLowerCase()}-query`
   const selectQueryKey = `${title.toLowerCase()}-filter`
 
-  const { data, error, status } = useQuery({
-    queryKey: ['profile', title],
-    queryFn: () =>
-      title === 'following'
-        ? fetchFollowing({ addressOrName: 'dr3a.eth' })
-        : fetchFollowers({ addressOrName: 'dr3a.eth' })
+  const {
+    data: followersData,
+    error: followersError,
+    status: followersStatus
+  } = useQuery({
+    queryKey: ['profile', 'followers'],
+    enabled: title === 'followers',
+    queryFn: () => fetchFollowers({ addressOrName: 'dr3a.eth' })
   })
+  const followersProfiles = followersData?.followers
+  const filterFollowersProfiles = followersProfiles?.filter(entry =>
+    entry?.ens.name?.toLowerCase().replaceAll('.eth', '').includes(searchQuery.toLowerCase())
+  )
 
-  const filterProfiles = data?.following.filter(entry =>
-    entry.data.toLowerCase().replaceAll('.eth', '').includes(searchQuery.toLowerCase())
+  const {
+    data: followingData,
+    error: followingError,
+    status: followingStatus
+  } = useQuery({
+    queryKey: ['profile', 'following'],
+    queryFn: () => fetchFollowing({ addressOrName: 'dr3a.eth' })
+  })
+  const followingProfiles = followingData?.following
+  const filterFollowingProfiles = followingProfiles?.filter(entry =>
+    entry?.data?.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
   return (
@@ -69,7 +79,7 @@ export function ProfilePageTable({
           />
         </Box>
       </Flex>
-      {filterProfiles.length === 0 && (
+      {filterFollowersProfiles?.length === 0 && (
         <Box className='bg-white/70 rounded-xl' py='4'>
           <Text align='center' as='p' my='4' size='6' className='font-semibold'>
             No results for
@@ -82,7 +92,7 @@ export function ProfilePageTable({
       <Table.Root
         size='2'
         variant='ghost'
-        hidden={filterProfiles.length === 0}
+        hidden={filterFollowersProfiles?.length === 0}
         className='bg-white/50 rounded-xl py-4 border-transparent'
       >
         <Table.Header hidden={true}>
@@ -93,8 +103,22 @@ export function ProfilePageTable({
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {filterProfiles.map((entry, index) => (
-            <TableRow key={`${entry.name}-${index}`} type={title.toLowerCase()} name={entry.name} />
+          {filterFollowersProfiles?.map((entry, index) => (
+            <TableRow
+              tableType={title}
+              tags={entry.tags}
+              status={
+                entry.is_blocked
+                  ? 'blocked'
+                  : entry.is_muted
+                    ? 'muted'
+                    : entry.is_following
+                      ? 'following'
+                      : 'none'
+              }
+              key={`${entry.address}-${index}`}
+              name={entry.ens.name || entry.address}
+            />
           ))}
         </Table.Body>
       </Table.Root>
@@ -102,24 +126,45 @@ export function ProfilePageTable({
   )
 }
 
-function TableRow({ name, type }: { name: string; type: string }) {
+function TableRow({
+  tableType,
+  address,
+  name,
+  avatar,
+  status,
+  tags
+}: {
+  tableType?: 'following' | 'followers'
+  address?: string
+  name: string
+
+  avatar?: string
+  status: 'following' | 'blocked' | 'muted' | 'subscribed' | 'none'
+  tags: Array<string>
+}) {
   return (
-    <Table.Row align='center' className='w-full hover:bg-white/30'>
-      <Table.Cell pl='4' pr='0' data-name='name-column'>
-        <Flex gap='2'>
+    <Table.Row align='center' className='w-full hover:bg-white/30 flex justify-evenly h-14 mb-2'>
+      <Table.Cell pl='4' pr='0' data-name='name-column' className='my-auto h-full'>
+        <Flex gap='2' my='auto'>
           <Avatar
-            src={`${process.env.NEXT_PUBLIC_ENS_API_URL}/i/${name}`}
-            fallback='/assets/gradient-circle.svg'
-            my='auto'
-            radius='full'
+            alt="User's avatar"
+            className='auto rounded-full my-auto'
+            size='4'
+            fallback=''
+            src={avatar || `${process.env.NEXT_PUBLIC_ENS_API_URL}/i/${name}`}
           />
-          <Flex direction='column' className='text-left' justify='center' align='start'>
-            <Link href={`/${name}`}>
+          <Flex
+            direction='column'
+            className='text-right tabular-nums'
+            justify='center'
+            align='start'
+          >
+            <Link href={`/${name || address}`} className=''>
               <Text as='p' className='font-bold xl:text-lg lg:text-md text-sm hover:text-pink-400'>
                 {name}
               </Text>
             </Link>
-            {type === 'following' && (
+            {tableType === 'following' && status === 'following' && (
               <Badge size='1' radius='full' className='font-bold text-[10px] text-black'>
                 Follows you
               </Badge>
@@ -127,9 +172,9 @@ function TableRow({ name, type }: { name: string; type: string }) {
           </Flex>
         </Flex>
       </Table.Cell>
-      <Table.Cell className='my-auto'>
-        <Flex className='space-x-2'>
-          {type === 'following' && (
+      <Table.Cell className='my-auto ml-auto'>
+        <Flex className='space-x-2 m-auto'>
+          {status === 'following' && (
             <IconButton
               radius='full'
               variant='soft'
@@ -141,24 +186,38 @@ function TableRow({ name, type }: { name: string; type: string }) {
               <PlusIcon fontWeight={900} />
             </IconButton>
           )}
-          <Badge variant='solid' className='bg-white text-black' radius='full'>
-            ens
-          </Badge>
-          <Badge variant='solid' className='bg-white text-black' radius='full'>
-            eth
-          </Badge>
-          <IconButton
-            variant='soft'
-            size='1'
-            className='bg-white text-black font-extrabold rounded-lg h-4 my-auto'
-            my='auto'
-          >
-            <DotsHorizontalIcon />
-          </IconButton>
+          {tags.map(tag => (
+            <Badge key={tag} variant='solid' className='bg-white text-black' radius='full'>
+              {tag}
+            </Badge>
+          ))}
+          {tags.length > 2 && (
+            <IconButton
+              variant='soft'
+              size='1'
+              className='bg-white text-black font-extrabold rounded-lg h-4 my-auto'
+              my='auto'
+            >
+              <DotsHorizontalIcon />
+            </IconButton>
+          )}
         </Flex>
       </Table.Cell>
-      <Table.Cell pr='4' data-name='action-column'>
-        <FollowButton text={type === 'following' ? 'Unfollow' : 'Follow'} pending={true} />
+      <Table.Cell pr='4' data-name='action-column' className='w-min'>
+        <FollowButton
+          text={
+            status === 'following'
+              ? 'Unfollow'
+              : status === 'blocked'
+                ? 'Unblock'
+                : status === 'muted'
+                  ? 'Unmute'
+                  : status === 'subscribed'
+                    ? 'Unsubscribe'
+                    : 'Follow'
+          }
+          pending={true}
+        />
       </Table.Cell>
     </Table.Row>
   )

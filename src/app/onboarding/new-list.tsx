@@ -201,7 +201,7 @@ export function CreateNewListForm() {
               <ul className='mx-auto space-y-2 py-4 text-left'>
                 {storeLocation.map((location, index) => (
                   <li
-                    key={`store-location-${index}`}
+                    key={`store-location-${location.name}`}
                     className={clsx([
                       'rounded-2xl border-2 border-transparent px-2 py-1.5 hover:border-lime-200 mx-auto self-center',
                       Number(listStorageLocationChainIdStr) === location.chainId
