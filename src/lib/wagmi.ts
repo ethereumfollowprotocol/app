@@ -60,7 +60,7 @@ export const wagmiConfig = createConfig({
         http(`https://rpc.ankr.com/eth/${process.env.NEXT_PUBLIC_ANKR_ID}`, { batch: true }),
         http('https://www.noderpc.xyz/rpc-mainnet/n4ieL_MU-2jm3Tfp73BVT6eJF9M', { batch: true }),
         http(`https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`, { batch: true }),
-        http(`https://ethereum.ethfollow.xyz/v1/mainnet`, { batch: true }),
+        http(`https://mainnet.ethfollow.xyz/v1/mainnet`, { batch: true }),
         http(`https://eth.llamarpc.com/rpc/${process.env.NEXT_PUBLIC_LLAMAFOLIO_ID}`, {
           batch: true
         }),

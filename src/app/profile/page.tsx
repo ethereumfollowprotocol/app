@@ -40,7 +40,7 @@ export default async function ProfilePage({
         height='100%'
         justify='center'
         mx='auto'
-        className='lg:flex-row justify-center gap-y-0 xl:gap-x-2 gap-x-0 flex-col min-h-full lg:max-w-[1400px] max-w-2xl border-kournikova-50'
+        className='xl:flex-row justify-center gap-y-0 xl:gap-x-2 gap-x-0 flex-col min-h-full lg:max-w-[1400px] max-w-2xl border-kournikova-50'
       >
         <HydrationBoundary state={dehydrate(queryClient)}>
           <Box height='100%' width='min-content' p='2' mx='auto'>

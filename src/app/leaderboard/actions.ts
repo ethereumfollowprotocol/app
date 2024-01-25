@@ -17,7 +17,7 @@ export async function fetchLeaderboard({
     if (filter !== 'followers') return []
     const params = include.map(key => `include=${key}`).join('&')
     const response = await fetch(
-      `${process.env.EFP_API_URL}/api/v1/leaderboard/${filter}?limit=${limit}&${params}`
+      `${process.env.EFP_API_URL}/leaderboard/${filter}?limit=${limit}&${params}`
     )
     const data = await response.json()
 

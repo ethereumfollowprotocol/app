@@ -7,7 +7,7 @@ import { useAccount, useEnsName } from 'wagmi'
 import { Search } from '#/components/search.tsx'
 import { Avatar, Text } from '@radix-ui/themes'
 import CartButton from '#/components/cart-button.tsx'
-// import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { Connect } from '#/components/connect.tsx'
 import { useIsMounted } from '#/hooks/use-is-mounted.ts'
 
@@ -108,22 +108,22 @@ export function Header() {
           <CartButton cartItemsCount={24} />
         </div>
 
-        {isMounted && (
+        {/* {isMounted && ( */}
           <div
             className={clsx([
               !account.isConnected && 'w-min',
               'my-auto flex items-center justify-end pb-1 min-w-fit'
             ])}
           >
-            {/* <ConnectButton
+            <ConnectButton
               showBalance={false}
               chainStatus={'none'}
               label='Connect'
-              accountStatus={ensName ? 'full' : 'address'}
-            /> */}
-            <Connect />
+              // accountStatus={ensName ? 'full' : 'address'}
+            />
+            {/* <Connect /> */}
           </div>
-        )}
+        {/* )} */}
 
         <div className='my-auto pb-0.5 pl-2.5'>
           <Menu />
