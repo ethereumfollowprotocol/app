@@ -5,13 +5,14 @@ import { useMintEFP } from '#/hooks/use-mint-efp.ts'
 import { SECOND } from '#/lib/constants'
 import '#/lib/patch.ts'
 import { truncateAddress } from '#/lib/utilities'
-import { Badge, Box, Button, Card, Code, Flex, Heading, Text } from '@radix-ui/themes'
+import { Button, Card, Flex } from '@radix-ui/themes'
 import clsx from 'clsx'
 import { useQueryState } from 'next-usequerystate'
-import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 import * as React from 'react'
 import { useWaitForTransactionReceipt } from 'wagmi'
+import { LIST_STORAGE_LOCATION_OPTIONS, ONBOARDING_STEPS } from './constants'
+import OnboardingStep0SelectStorageLocation from './step0'
 
 export function CreateEfpList() {
   const {
@@ -63,55 +64,28 @@ export function CreateEfpList() {
  * 5. Show success message with link to EFP List,
  */
 
-export const storeLocation = [
-  {
-    chainId: 1,
-    name: 'ethereum',
-    label: undefined,
-    gas: 'High gas fees',
-    image: '/assets/onboarding/ethereum.svg'
-  },
-  {
-    chainId: 10,
-    name: 'optimism',
-    label: 'Ethereum L2',
-    gas: 'Low gas fees',
-    image: '/assets/chains/optimism.svg'
-  }
-] as const
-
-const steps = {
-  '0': {
-    title: 'Where would you like to store your EFP List?',
-    subtext: 'You can always change this later',
-    leftButton: 'Cancel',
-    rightButton: 'Next'
-  },
-  '1': {
-    title: 'Onchain update',
-    subtext: 'Summary',
-    leftButton: 'Back',
-    rightButton: 'Initiate'
-  },
-  '2': {
-    title: 'Onchain update',
-    subtext: '',
-    leftButton: 'Cancel',
-    rightButton: 'Retry'
-  },
-  '3': {
-    title: 'Transaction pending',
-    subtext: 'You can always change this later',
-    leftButton: 'Back',
-    rightButton: 'View on Etherscan'
-  }
-} satisfies Record<
-  '0' | '1' | '2' | '3',
-  { title: string; subtext: string; leftButton: string; rightButton: string }
->
-
 export function CreateNewListForm() {
   const isMounted = useIsMounted()
+  // @ts-ignore
+  const [step, setStep] = useQueryState<'0' | '1' | '2' | '3'>('step', {
+    throttleMs: SECOND / 2,
+    defaultValue: '0'
+  })
+
+  function updateStep(direction: 'left' | 'right') {
+    const newStep = Number(step) + (direction === 'left' ? -1 : 1)
+    startTransition(() => {
+      setStep(newStep.toString() as '0' | '1' | '2' | '3')
+    })
+  }
+
+  const [listStorageLocationChainIdStr, setListStorageLocationChainIdStr] = useQueryState(
+    'list_storage_location_chain_id',
+    {
+      throttleMs: SECOND / 2
+    }
+  )
+
   const {
     writeMint,
     writeMintAsync,
@@ -126,24 +100,6 @@ export function CreateNewListForm() {
   const mintIsPending = simulateMintStatus === 'pending' || writeMintStatus === 'pending'
 
   const [isPending, startTransition] = React.useTransition()
-  // @ts-ignore
-  const [step, setStep] = useQueryState<'0' | '1' | '2' | '3'>('step', {
-    throttleMs: SECOND / 2,
-    defaultValue: '0'
-  })
-  const [listStorageLocationChainIdStr, setListStorageLocationChainIdStr] = useQueryState(
-    'list_storage_location_chain_id',
-    {
-      throttleMs: SECOND / 2
-    }
-  )
-
-  function updateStep(direction: 'left' | 'right') {
-    const newStep = Number(step) + (direction === 'left' ? -1 : 1)
-    startTransition(() => {
-      setStep(newStep.toString() as '0' | '1' | '2' | '3')
-    })
-  }
 
   const searchParams = useSearchParams()
   const currentSearchParam = searchParams.get('list_storage_location_chain_id')
@@ -183,65 +139,24 @@ export function CreateNewListForm() {
         className='max-w-[450px] w-[450px] h-[600px] py-2 text-center rounded-4xl flex'
       >
         <Flex direction='column' justify='between' height='100%'>
-          <Box>
+          {/* <Box>
             <Heading className='text-2xl w-4/6 mx-auto text-center' mb='1'>
               {steps[step].title}
             </Heading>
             <Code size='5' hidden={steps[step].subtext.length === 0}>
               {steps[step].subtext}
             </Code>
-          </Box>
+          </Box> */}
 
           {step === '0' && (
-            <div className='mb-auto mt-6'>
-              <Text as='p' weight='bold' size='5' className='' mt='4'>
-                Select one
-              </Text>
-
-              <ul className='mx-auto space-y-2 py-4 text-left'>
-                {storeLocation.map((location, index) => (
-                  <li
-                    key={`store-location-${location.name}`}
-                    className={clsx([
-                      'rounded-2xl border-2 border-transparent px-2 py-1.5 hover:border-lime-200 mx-auto self-center',
-                      Number(listStorageLocationChainIdStr) === location.chainId
-                        ? 'bg-lime-100'
-                        : 'bg-transparent'
-                    ])}
-                  >
-                    <Button
-                      onClick={_event => selectListStorageLocationChainId(location.chainId)}
-                      variant='ghost'
-                      className={clsx([
-                        'flex items-center space-x-4 rounded-xl px-4 text-left text-black hover:bg-transparent mx-auto'
-                      ])}
-                    >
-                      <Image
-                        width={62}
-                        height={62}
-                        alt={`${location.name} location`}
-                        src={location.image}
-                      />
-                      <div className='ml-3 my-auto mb-3'>
-                        <span className='text-md'>{location.label}</span>
-                        <p className='text-2xl font-bold capitalize'>{location.name}</p>
-                        <span
-                          className={clsx([
-                            'text-xs',
-                            location.gas === 'Low gas fees' ? 'text-lime-500' : 'text-salmon-500'
-                          ])}
-                        >
-                          {location.gas}
-                        </span>
-                      </div>
-                    </Button>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <OnboardingStep0SelectStorageLocation
+              onLocationSelect={selectListStorageLocationChainId}
+              selectedListStorageLocationChainId={Number(listStorageLocationChainIdStr)}
+              listStorageLocationOptions={LIST_STORAGE_LOCATION_OPTIONS}
+            />
           )}
 
-          {step === '1' && (
+          {/* {step === '1' && (
             <React.Fragment>
               <Box mb='auto' mt='9'>
                 <Text as='p' weight='bold' size='5' my='4'>
@@ -251,7 +166,7 @@ export function CreateNewListForm() {
                   Create a new EFP List on{' '}
                   <Code variant='outline' className='font-bold' color='gray'>
                     {
-                      storeLocation.find(
+                      LIST_STORAGE_LOCATION_OPTIONS.find(
                         location => location.chainId === Number(listStorageLocationChainIdStr)
                       )?.name
                     }
@@ -287,7 +202,7 @@ export function CreateNewListForm() {
                   Create a new EFP List on{' '}
                   <Code variant='outline' className='font-bold' color='gray'>
                     {
-                      storeLocation.find(
+                      LIST_STORAGE_LOCATION_OPTIONS.find(
                         location => location.chainId === Number(listStorageLocationChainIdStr)
                       )?.name
                     }
@@ -299,7 +214,7 @@ export function CreateNewListForm() {
                 <CreateEfpList />
               </Box>
             </React.Fragment>
-          )}
+          )} */}
 
           <Flex justify='between' mx='6' mb='2'>
             <Button
@@ -314,7 +229,7 @@ export function CreateNewListForm() {
               radius='full'
               className='text-black w-[100px] bg-[#9b9b9b]'
             >
-              {steps[step].leftButton}
+              {ONBOARDING_STEPS[step].leftButton}
             </Button>
             <Button
               onClick={event => {
@@ -335,7 +250,7 @@ export function CreateNewListForm() {
                 'w-[100px] text-black'
               ])}
             >
-              {steps[step].rightButton}
+              {ONBOARDING_STEPS[step].rightButton}
             </Button>
           </Flex>
         </Flex>

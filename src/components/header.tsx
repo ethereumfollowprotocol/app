@@ -1,13 +1,13 @@
-import CartButton from '#/components/cart-button.tsx';
-import { Menu } from '#/components/menu.tsx';
-import { Search } from '#/components/search.tsx';
-import { useIsMounted } from '#/hooks/use-is-mounted.ts';
-import { Avatar, Text } from '@radix-ui/themes';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-import clsx from 'clsx';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useAccount } from 'wagmi';
+import CartButton from '#/components/cart-button.tsx'
+import { Menu } from '#/components/menu.tsx'
+import { Search } from '#/components/search.tsx'
+import { useIsMounted } from '#/hooks/use-is-mounted.ts'
+import { Avatar, Text } from '@radix-ui/themes'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
+import clsx from 'clsx'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { useAccount } from 'wagmi'
 
 export function shouldHidePath({
   connected,
