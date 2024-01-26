@@ -1,18 +1,19 @@
 'use client'
 
-import { useIsMounted } from '#/hooks/use-is-mounted.ts'
-import { useMintEFP } from '#/hooks/use-mint-efp.ts'
-import { SECOND } from '#/lib/constants'
-import '#/lib/patch.ts'
-import { truncateAddress } from '#/lib/utilities'
-import { Button, Card, Flex } from '@radix-ui/themes'
-import clsx from 'clsx'
-import { useQueryState } from 'next-usequerystate'
-import { useSearchParams } from 'next/navigation'
-import * as React from 'react'
-import { useWaitForTransactionReceipt } from 'wagmi'
-import { LIST_STORAGE_LOCATION_OPTIONS, ONBOARDING_STEPS } from './constants'
-import OnboardingStep0SelectStorageLocation from './step0'
+import { useIsMounted } from '#/hooks/use-is-mounted.ts';
+import { useMintEFP } from '#/hooks/use-mint-efp.ts';
+import { SECOND } from '#/lib/constants';
+import '#/lib/patch.ts';
+import { truncateAddress } from '#/lib/utilities';
+import { Button, Card, Flex } from '@radix-ui/themes';
+import clsx from 'clsx';
+import { useQueryState } from 'next-usequerystate';
+import { useSearchParams } from 'next/navigation';
+import * as React from 'react';
+import { useWaitForTransactionReceipt } from 'wagmi';
+import { LIST_STORAGE_LOCATION_OPTIONS, ONBOARDING_STEPS } from './constants';
+import OnboardingStep0SelectStorageLocation from './step0';
+import OnboardingStep1OnchainUpdateSummary from './step1';
 
 export function CreateEfpList() {
   const {
@@ -153,6 +154,16 @@ export function CreateNewListForm() {
               onLocationSelect={selectListStorageLocationChainId}
               selectedListStorageLocationChainId={Number(listStorageLocationChainIdStr)}
               listStorageLocationOptions={LIST_STORAGE_LOCATION_OPTIONS}
+            />
+          )}
+
+          {step === '1' && (
+            <OnboardingStep1OnchainUpdateSummary
+            selectedListStorageLocationOption={
+              LIST_STORAGE_LOCATION_OPTIONS.find(
+                location => location.chainId === Number(listStorageLocationChainIdStr)
+              ) || null
+            }
             />
           )}
 

@@ -6,21 +6,25 @@ export interface ListStorageLocationOption {
   icon: `${string}.svg`
 }
 
+export const LIST_STORAGE_LOCATION_OPTION_ETHEREUM: ListStorageLocationOption = {
+  chainId: 1,
+  name: 'Ethereum',
+  label: undefined,
+  gasHint: 'High gas fees',
+  icon: '/assets/onboarding/ethereum.svg'
+}
+
+export const LIST_STORAGE_LOCATION_OPTION_OPTIMISM: ListStorageLocationOption = {
+  chainId: 10,
+  name: 'Optimism',
+  label: 'Ethereum L2',
+  gasHint: 'Low gas fees',
+  icon: '/assets/chains/optimism.svg'
+}
+
 export const LIST_STORAGE_LOCATION_OPTIONS: ListStorageLocationOption[] = [
-  {
-    chainId: 10,
-    name: 'Optimism',
-    label: 'Ethereum L2',
-    gasHint: 'Low gas fees',
-    icon: '/assets/chains/optimism.svg'
-  },
-  {
-    chainId: 1,
-    name: 'Ethereum',
-    label: undefined,
-    gasHint: 'High gas fees',
-    icon: '/assets/onboarding/ethereum.svg'
-  }
+  LIST_STORAGE_LOCATION_OPTION_OPTIMISM,
+  LIST_STORAGE_LOCATION_OPTION_ETHEREUM
 ] as const
 
 export interface Step {
