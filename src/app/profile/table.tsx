@@ -4,7 +4,7 @@ import { FollowButton } from '#/components/follow-button.tsx'
 import { Searchbar } from '#/components/searchbar.tsx'
 import { SelectWithFilter } from '#/components/select-with-filter.tsx'
 import { ChevronDownIcon, DotsHorizontalIcon, PlusIcon } from '@radix-ui/react-icons'
-import { Avatar, Badge, Box, Code, Flex, IconButton, Table, Text } from '@radix-ui/themes'
+import { Avatar, Badge, Box, Flex, IconButton, Table, Text } from '@radix-ui/themes'
 import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
 import { fetchFollowers, fetchFollowing, type Follower, type Following } from './actions.ts'
@@ -86,10 +86,25 @@ export function ProfilePageTable({
       {profiles?.length === 0 && (
         <Box className='bg-white/70 rounded-xl' py='4'>
           <Text align='center' as='p' my='4' size='6' className='font-semibold'>
-            No results for
-            <Code variant='outline' color='gray' ml='2'>
-              {searchQuery}
-            </Code>
+            {title === 'followers' && (
+              <Text as='span' className='text-sm'>
+                No followers
+              </Text>
+            )}
+            {title === 'following' && (
+              <Flex direction='column' align='center'>
+                <Text as='span' className='text-m text-[#FF79C9] italic mb-1'>
+                  You don’t follow anyone yet.
+                </Text>
+                <Text as='span' className='text-m text-[#FF79C9] italic mb-4'>
+                  Sad! 😢
+                </Text>
+                <Text as='span' className='text-sm text-[#FF79C9] italic w-3/4 max-w-96'>
+                  To get started, just browse and start following. Once you confirm them onchain,
+                  they’ll show up here.
+                </Text>
+              </Flex>
+            )}
           </Text>
         </Box>
       )}

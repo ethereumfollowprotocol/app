@@ -30,6 +30,7 @@ export interface Profile {
   fresh: number
   resolver: string
   primary_list: string
+  stats: Stats
   followers: Array<Follower>
   following: Array<Following>
   chains: Record<string, string>
