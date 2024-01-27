@@ -1,9 +1,9 @@
-import { fetchFollowers, fetchFollowing, fetchStats, type Stats } from '#/app/profile/actions.ts';
-import { Box, Flex, Text } from '@radix-ui/themes';
-import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query';
-import { AdvancedList } from './advanced-list.tsx';
-import { ProfileCard } from './profile-card.tsx';
-import { ProfilePageTable } from './table.tsx';
+import { fetchFollowers, fetchFollowing, fetchStats, type Stats } from '#/app/profile/actions.ts'
+import { Box, Flex, Text } from '@radix-ui/themes'
+import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query'
+import { AdvancedList } from './advanced-list.tsx'
+import { ProfileCard } from './profile-card.tsx'
+import { ProfilePageTable } from './table.tsx'
 
 interface Props {
   searchParams: {
@@ -25,20 +25,22 @@ export default async function ProfilePage({ searchParams }: Props) {
 
   const queryClient = new QueryClient()
   await queryClient.prefetchQuery({
-    queryKey: ['profile', 'followers'],
+    queryKey: ['profile', 'followers', addressOrName],
     queryFn: () => fetchFollowers({ addressOrName })
   })
   await queryClient.prefetchQuery({
-    queryKey: ['profile', 'following'],
+    queryKey: ['profile', 'following', addressOrName],
     queryFn: () => fetchFollowing({ addressOrName })
   })
   await queryClient.prefetchQuery({
-    queryKey: ['profile', 'stats'],
+    queryKey: ['profile', 'stats', addressOrName],
     queryFn: () => fetchStats({ addressOrName })
   })
 
   // Retrieve the stats data from the QueryClient
-  const stats = queryClient.getQueryData<{ stats: Stats }>(['profile', 'stats'])?.stats || undefined
+  const stats =
+    queryClient.getQueryData<{ stats: Stats }>(['profile', 'stats', addressOrName])?.stats ||
+    undefined
 
   return (
     <main className='mx-auto flex min-h-full h-full w-full flex-col items-center text-center pt-2 pb-4 px-2'>

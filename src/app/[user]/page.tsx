@@ -33,20 +33,22 @@ export default async function UserPage({ params }: Props) {
 
   const queryClient = new QueryClient()
   await queryClient.prefetchQuery({
-    queryKey: ['profile', 'followers'],
+    queryKey: ['profile', 'followers', ensProfile.address],
     queryFn: () => fetchFollowers({ addressOrName: ensProfile.address })
   })
   await queryClient.prefetchQuery({
-    queryKey: ['profile', 'following'],
+    queryKey: ['profile', 'following', ensProfile.address],
     queryFn: () => fetchFollowing({ addressOrName: ensProfile.address })
   })
   await queryClient.prefetchQuery({
-    queryKey: ['profile', 'stats'],
+    queryKey: ['profile', 'stats', ensProfile.address],
     queryFn: () => fetchStats({ addressOrName: ensProfile.address })
   })
 
   // Retrieve the stats data from the QueryClient
-  const stats = queryClient.getQueryData<{ stats: Stats }>(['profile', 'stats'])?.stats || undefined
+  const stats =
+    queryClient.getQueryData<{ stats: Stats }>(['profile', 'stats', ensProfile.address])?.stats ||
+    undefined
 
   return (
     <main className='mx-auto flex min-h-full h-full w-full flex-col items-center text-center pt-2 pb-4 px-2'>
