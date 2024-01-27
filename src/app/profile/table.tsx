@@ -31,7 +31,7 @@ export function ProfilePageTable({
     error: followersError,
     status: followersStatus
   } = useQuery({
-    queryKey: ['profile', 'followers'],
+    queryKey: ['profile', 'followers', addressOrName],
     enabled: title === 'followers',
     queryFn: () => fetchFollowers({ addressOrName })
   })
@@ -45,7 +45,7 @@ export function ProfilePageTable({
     error: followingError,
     status: followingStatus
   } = useQuery({
-    queryKey: ['profile', 'following'],
+    queryKey: ['profile', 'following', addressOrName],
     enabled: title === 'following',
     queryFn: () => fetchFollowing({ addressOrName })
   })
