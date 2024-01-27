@@ -1,7 +1,6 @@
-import * as React from 'react'
-import { Badge, Box, Flex, Text } from '@radix-ui/themes'
 import { FollowButton } from '#/components/follow-button.tsx'
 import { ImageWithFallback } from '#/components/image-with-fallback.tsx'
+import { Badge, Box, Flex, Text } from '@radix-ui/themes'
 
 export interface TeamMember {
   ens: string
@@ -17,7 +16,7 @@ export function TeamCard(props: TeamMember) {
     <Flex direction='column'>
       <Flex mx='auto' className='bg-white/70 border-0 max-w-80 w-[295px] min-w-60 rounded-xl p-3'>
         <Flex direction='column' align='start' width='100%' height='100%' justify='center'>
-          <Badge>#132</Badge>
+          <Badge>#TODO</Badge>
           <Flex direction='column' justify='center' align='center' mx='auto' mt='3'>
             <ImageWithFallback
               src={avatar}
@@ -30,7 +29,7 @@ export function TeamCard(props: TeamMember) {
               {ens}
             </Text>
             <Badge color='blue' radius='full' className='px-3' size='1'>
-              Follows you
+              TODO
             </Badge>
             <Flex gap='3' className='' my='3'>
               <FollowButton text='Follow' />
@@ -39,7 +38,7 @@ export function TeamCard(props: TeamMember) {
           <Flex justify='center' mx='auto' className='text-center' gap='8'>
             <Box>
               <Text size='5' className='font-bold' as='div'>
-                203
+                TODO
               </Text>
               <Text size='2' className='font-bold text-gray-400' as='div'>
                 Following
@@ -47,7 +46,7 @@ export function TeamCard(props: TeamMember) {
             </Box>
             <Box>
               <Text size='5' className='font-bold' as='div'>
-                1.1k
+                TODO
               </Text>
               <Text size='2' className='font-bold text-gray-400' as='div'>
                 Followers
@@ -57,7 +56,7 @@ export function TeamCard(props: TeamMember) {
           <Flex justify='center' mx='auto' mt='5' mb='4' className='text-center'>
             <Box>
               <Text size='5' className='font-bold' as='div'>
-                #53
+                TODO
               </Text>
               <Text size='2' className='font-bold text-gray-400' as='div'>
                 Leaderboard

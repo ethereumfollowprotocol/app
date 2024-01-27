@@ -1,9 +1,9 @@
-import { fetchFollowers, fetchFollowing } from '#/app/profile/actions.ts'
-import { Box, Flex, Text } from '@radix-ui/themes'
-import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query'
-import { AdvancedList } from './advanced-list.tsx'
-import { ProfileCard } from './profile-card.tsx'
-import { ProfilePageTable } from './table.tsx'
+import { fetchFollowers, fetchFollowing, fetchStats, type Stats } from '#/app/profile/actions.ts';
+import { Box, Flex, Text } from '@radix-ui/themes';
+import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query';
+import { AdvancedList } from './advanced-list.tsx';
+import { ProfileCard } from './profile-card.tsx';
+import { ProfilePageTable } from './table.tsx';
 
 interface Props {
   searchParams: {
@@ -32,6 +32,13 @@ export default async function ProfilePage({ searchParams }: Props) {
     queryKey: ['profile', 'following'],
     queryFn: () => fetchFollowing({ addressOrName })
   })
+  await queryClient.prefetchQuery({
+    queryKey: ['profile', 'stats'],
+    queryFn: () => fetchStats({ addressOrName })
+  })
+
+  // Retrieve the stats data from the QueryClient
+  const stats = queryClient.getQueryData<{ stats: Stats }>(['profile', 'stats'])?.stats || undefined
 
   return (
     <main className='mx-auto flex min-h-full h-full w-full flex-col items-center text-center pt-2 pb-4 px-2'>
@@ -44,7 +51,7 @@ export default async function ProfilePage({ searchParams }: Props) {
       >
         <HydrationBoundary state={dehydrate(queryClient)}>
           <Box height='100%' width='min-content' p='2' mx='auto'>
-            <ProfileCard addressOrName={addressOrName} />
+            <ProfileCard addressOrName={addressOrName} stats={stats} />
             <Text as='p' className='font-semibold mt-2'>
               Block/Mute Lists
             </Text>
@@ -52,12 +59,14 @@ export default async function ProfilePage({ searchParams }: Props) {
           </Box>
 
           <ProfilePageTable
+            addressOrName={addressOrName}
             title='following'
             searchQuery={followingQuery}
             selectQuery={followingFilter}
           />
 
           <ProfilePageTable
+            addressOrName={addressOrName}
             title='followers'
             searchQuery={followersQuery}
             selectQuery={followersFilter}

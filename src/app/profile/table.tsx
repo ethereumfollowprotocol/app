@@ -1,22 +1,24 @@
 'use client'
 
-import { FollowButton } from '#/components/follow-button.tsx';
-import { Searchbar } from '#/components/searchbar.tsx';
-import { SelectWithFilter } from '#/components/select-with-filter.tsx';
-import { ChevronDownIcon, DotsHorizontalIcon, PlusIcon } from '@radix-ui/react-icons';
-import { Avatar, Badge, Box, Code, Flex, IconButton, Table, Text } from '@radix-ui/themes';
-import { useQuery } from '@tanstack/react-query';
-import Link from 'next/link';
-import { fetchFollowers, fetchFollowing } from './actions.ts';
+import { FollowButton } from '#/components/follow-button.tsx'
+import { Searchbar } from '#/components/searchbar.tsx'
+import { SelectWithFilter } from '#/components/select-with-filter.tsx'
+import { ChevronDownIcon, DotsHorizontalIcon, PlusIcon } from '@radix-ui/react-icons'
+import { Avatar, Badge, Box, Code, Flex, IconButton, Table, Text } from '@radix-ui/themes'
+import { useQuery } from '@tanstack/react-query'
+import Link from 'next/link'
+import { fetchFollowers, fetchFollowing, type Follower, type Following } from './actions.ts'
 
 /**
  * TODO: paginate
  */
 export function ProfilePageTable({
+  addressOrName,
   title,
   searchQuery,
   selectQuery
 }: {
+  addressOrName: string
   title: 'following' | 'followers'
   searchQuery: string
   selectQuery: string
@@ -31,10 +33,10 @@ export function ProfilePageTable({
   } = useQuery({
     queryKey: ['profile', 'followers'],
     enabled: title === 'followers',
-    queryFn: () => fetchFollowers({ addressOrName: 'dr3a.eth' })
+    queryFn: () => fetchFollowers({ addressOrName })
   })
-  const followersProfiles = followersData?.followers
-  const filterFollowersProfiles = followersProfiles?.filter(entry =>
+  const followersProfiles: Follower[] | undefined = followersData?.followers
+  const filterFollowersProfiles: Follower[] | undefined = followersProfiles?.filter(entry =>
     entry?.ens.name?.toLowerCase().replaceAll('.eth', '').includes(searchQuery.toLowerCase())
   )
 
@@ -44,12 +46,15 @@ export function ProfilePageTable({
     status: followingStatus
   } = useQuery({
     queryKey: ['profile', 'following'],
-    queryFn: () => fetchFollowing({ addressOrName: 'dr3a.eth' })
+    enabled: title === 'following',
+    queryFn: () => fetchFollowing({ addressOrName })
   })
-  const followingProfiles = followingData?.following
-  const filterFollowingProfiles = followingProfiles?.filter(entry =>
+  const followingProfiles: Following[] | undefined = followingData?.following
+  const filterFollowingProfiles: Following[] | undefined = followingProfiles?.filter(entry =>
     entry?.data?.toLowerCase().includes(searchQuery.toLowerCase())
   )
+
+  const profiles = title === 'following' ? filterFollowingProfiles : filterFollowersProfiles
 
   return (
     <Box height='100%' width='100%' px='2' pb='4' mx='auto'>
@@ -78,7 +83,7 @@ export function ProfilePageTable({
           />
         </Box>
       </Flex>
-      {filterFollowersProfiles?.length === 0 && (
+      {profiles?.length === 0 && (
         <Box className='bg-white/70 rounded-xl' py='4'>
           <Text align='center' as='p' my='4' size='6' className='font-semibold'>
             No results for
@@ -91,7 +96,7 @@ export function ProfilePageTable({
       <Table.Root
         size='2'
         variant='ghost'
-        hidden={filterFollowersProfiles?.length === 0}
+        hidden={profiles?.length === 0}
         className='bg-white/50 rounded-xl py-4 border-transparent'
       >
         <Table.Header hidden={true}>
@@ -102,26 +107,52 @@ export function ProfilePageTable({
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {filterFollowersProfiles?.map((entry, index) => (
-            <TableRow
-              tableType={title}
-              tags={entry.tags}
-              status={
-                entry.is_blocked
-                  ? 'blocked'
-                  : entry.is_muted
-                    ? 'muted'
-                    : entry.is_following
-                      ? 'following'
-                      : 'none'
-              }
-              key={`${entry.address}-${index}`}
-              name={entry.ens.name || entry.address}
-            />
-          ))}
+          {profiles?.map((entry, index) => {
+            return title === 'followers'
+              ? followerRow(title, entry as Follower, index)
+              : followingRow(title, entry as Following, index)
+          })}
         </Table.Body>
       </Table.Root>
     </Box>
+  )
+}
+
+function followerRow(title: 'followers', entry: Follower, index: number) {
+  return (
+    <TableRow
+      tableType={title}
+      tags={entry.tags}
+      status={
+        entry.is_blocked
+          ? 'blocked'
+          : entry.is_muted
+            ? 'muted'
+            : entry.is_following
+              ? 'following'
+              : 'none'
+      }
+      key={`${entry.address}-${index}`}
+      name={entry.ens.name || entry.address}
+    />
+  )
+}
+
+function followingRow(title: 'following', entry: Following, index: number) {
+  return (
+    <TableRow
+      tableType={title}
+      tags={entry.tags}
+      status={
+        entry.tags.includes('block')
+          ? 'blocked'
+          : entry.tags.includes('mute')
+            ? 'muted'
+            : 'following'
+      }
+      key={`${entry.data}-${index}`}
+      name={entry.ens.name || entry.data}
+    />
   )
 }
 
@@ -149,7 +180,9 @@ function TableRow({
             alt="User's avatar"
             className='auto rounded-full my-auto'
             size='4'
-            fallback={<Avatar src='/assets/gradient-circle.svg' radius='full' size='4' fallback='' />}
+            fallback={
+              <Avatar src='/assets/gradient-circle.svg' radius='full' size='4' fallback='' />
+            }
             src={avatar || `${process.env.NEXT_PUBLIC_ENS_API_URL}/i/${name}`}
           />
           <Flex
@@ -165,7 +198,7 @@ function TableRow({
             </Link>
             {tableType === 'following' && status === 'following' && (
               <Badge size='1' radius='full' className='font-bold text-[10px] text-black'>
-                Follows you
+                TODO
               </Badge>
             )}
           </Flex>

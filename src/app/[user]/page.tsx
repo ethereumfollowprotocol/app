@@ -1,11 +1,11 @@
 import { getEnsProfile } from '#/app/actions.ts'
+import { fetchFollowers, fetchFollowing, fetchStats, type Stats } from '#/app/profile/actions'
+import { AdvancedList } from '#/app/profile/advanced-list'
+import { ProfileCard } from '#/app/profile/profile-card'
+import { ProfilePageTable } from '#/app/profile/table'
 import type { ENSProfile } from '#/lib/types'
 import { Box, Flex, Text } from '@radix-ui/themes'
 import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query'
-import { fetchFollowers, fetchFollowing } from '../profile/actions'
-import { AdvancedList } from '../profile/advanced-list'
-import { ProfileCard } from '../profile/profile-card'
-import { ProfilePageTable } from '../profile/table'
 
 interface Props {
   params: { user: string }
@@ -40,6 +40,13 @@ export default async function UserPage({ params }: Props) {
     queryKey: ['profile', 'following'],
     queryFn: () => fetchFollowing({ addressOrName: ensProfile.address })
   })
+  await queryClient.prefetchQuery({
+    queryKey: ['profile', 'stats'],
+    queryFn: () => fetchStats({ addressOrName: ensProfile.address })
+  })
+
+  // Retrieve the stats data from the QueryClient
+  const stats = queryClient.getQueryData<{ stats: Stats }>(['profile', 'stats'])?.stats || undefined
 
   return (
     <main className='mx-auto flex min-h-full h-full w-full flex-col items-center text-center pt-2 pb-4 px-2'>
@@ -52,7 +59,7 @@ export default async function UserPage({ params }: Props) {
       >
         <HydrationBoundary state={dehydrate(queryClient)}>
           <Box height='100%' width='min-content' p='2' mx='auto'>
-            <ProfileCard addressOrName={ensProfile.address} />
+            <ProfileCard addressOrName={ensProfile.address} stats={stats} />
             <Text as='p' className='font-semibold mt-2'>
               Block/Mute Lists
             </Text>
@@ -60,12 +67,14 @@ export default async function UserPage({ params }: Props) {
           </Box>
 
           <ProfilePageTable
+            addressOrName={ensProfile.address}
             title='following'
             searchQuery={followingQuery}
             selectQuery={followingFilter}
           />
 
           <ProfilePageTable
+            addressOrName={ensProfile.address}
             title='followers'
             searchQuery={followersQuery}
             selectQuery={followersFilter}
