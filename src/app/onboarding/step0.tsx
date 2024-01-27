@@ -1,7 +1,7 @@
 import { Box, Button, Heading, Text } from '@radix-ui/themes'
 import clsx from 'clsx'
 import Image from 'next/image'
-import * as React from 'react'
+import type * as React from 'react'
 import { ONBOARDING_STEPS, type ListStorageLocationOption } from './constants'
 
 const STEP_ZERO = '0'

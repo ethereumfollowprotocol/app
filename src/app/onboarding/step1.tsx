@@ -1,11 +1,11 @@
-import { Box, Code, Flex, Heading, Text } from '@radix-ui/themes';
-import Image from 'next/image';
-import * as React from 'react';
+import { Box, Code, Flex, Heading, Text } from '@radix-ui/themes'
+import Image from 'next/image'
+import type * as React from 'react'
 import {
   LIST_STORAGE_LOCATION_OPTION_ETHEREUM,
   ONBOARDING_STEPS,
   type ListStorageLocationOption
-} from './constants';
+} from './constants'
 
 const STEP_ONE = '1'
 
@@ -30,9 +30,9 @@ const OnboardingStep1OnchainUpdateSummary: React.FC<Props> = ({
         <Text as='p' weight='bold' size='5' my='4'>
           Actions
         </Text>
-        <Flex direction="column" gap='3'>
+        <Flex direction='column' gap='3'>
           <Text>Create a new EFP List</Text>
-          <Flex align="center" justify="center" gap='2'>
+          <Flex align='center' justify='center' gap='2'>
             <Text>TODO: N edits to List Records</Text>
             <Code variant='outline' className='font-bold' color='gray'>
               {selectedListStorageLocationOption?.name}
@@ -44,8 +44,8 @@ const OnboardingStep1OnchainUpdateSummary: React.FC<Props> = ({
         <Text as='p' weight='bold' size='5' my='4'>
           Required Transactions
         </Text>
-        <Flex direction="column" align="center" gap='3'>
-          <Flex align="center" gap='2'>
+        <Flex direction='column' align='center' gap='3'>
+          <Flex align='center' gap='2'>
             <Text>1 tx</Text>
             <Image
               width={24}
@@ -57,7 +57,7 @@ const OnboardingStep1OnchainUpdateSummary: React.FC<Props> = ({
               {LIST_STORAGE_LOCATION_OPTION_ETHEREUM.name}
             </Code>
           </Flex>
-          <Flex align="center" gap='2'>
+          <Flex align='center' gap='2'>
             <Text>1 tx</Text>
             <Image
               width={24}

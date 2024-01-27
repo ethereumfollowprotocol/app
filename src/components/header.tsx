@@ -1,6 +1,7 @@
 import CartButton from '#/components/cart-button.tsx'
 import { Menu } from '#/components/menu.tsx'
 import { Search } from '#/components/search.tsx'
+import { useCart } from '#/contexts/cart-context'
 import { useIsMounted } from '#/hooks/use-is-mounted.ts'
 import { Avatar, Text } from '@radix-ui/themes'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
@@ -42,6 +43,8 @@ export function Header() {
   const isMounted = useIsMounted()
 
   const account = useAccount()
+
+  const { addCartItem, totalCartItems } = useCart()
 
   return (
     <header className={clsx(['w-full px-2.5 font-sans sm:px-3 md:px-4 lg:px-5 xl:px-6'])}>
@@ -108,9 +111,10 @@ export function Header() {
             )
           })}
         </ul>
+
         {/* </ClientOnly> */}
         <div className='my-auto ml-2 pb-0.5 mr-4'>
-          <CartButton cartItemsCount={24} />
+          <CartButton cartItemsCount={totalCartItems} />
         </div>
 
         {/* {isMounted && ( */}
