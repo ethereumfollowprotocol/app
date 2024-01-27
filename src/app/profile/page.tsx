@@ -1,14 +1,11 @@
-import * as React from 'react'
-import { ProfilePageTable } from './table.tsx'
-import { ProfileCard } from './profile-card.tsx'
-import { AdvancedList } from './advanced-list.tsx'
-import { Box, Flex, Text } from '@radix-ui/themes'
 import { fetchFollowers, fetchFollowing } from '#/app/profile/actions.ts'
-import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
+import { Box, Flex, Text } from '@radix-ui/themes'
+import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query'
+import { AdvancedList } from './advanced-list.tsx'
+import { ProfileCard } from './profile-card.tsx'
+import { ProfilePageTable } from './table.tsx'
 
-export default async function ProfilePage({
-  searchParams
-}: {
+interface Props {
   searchParams: {
     'following-query'?: string
     'following-filter'?: string
@@ -16,7 +13,10 @@ export default async function ProfilePage({
     'followers-query'?: string
     'followers-filter'?: string
   }
-}) {
+}
+
+export default async function ProfilePage({ searchParams }: Props) {
+  const addressOrName = 'dr3a.eth'
   const followingQuery = searchParams['following-query'] || ''
   const followingFilter = searchParams['following-filter'] || 'follower count'
 
@@ -26,11 +26,11 @@ export default async function ProfilePage({
   const queryClient = new QueryClient()
   await queryClient.prefetchQuery({
     queryKey: ['profile', 'followers'],
-    queryFn: () => fetchFollowers({ addressOrName: 'dr3a.eth' })
+    queryFn: () => fetchFollowers({ addressOrName })
   })
   await queryClient.prefetchQuery({
     queryKey: ['profile', 'following'],
-    queryFn: () => fetchFollowing({ addressOrName: 'dr3a.eth' })
+    queryFn: () => fetchFollowing({ addressOrName })
   })
 
   return (
@@ -44,7 +44,7 @@ export default async function ProfilePage({
       >
         <HydrationBoundary state={dehydrate(queryClient)}>
           <Box height='100%' width='min-content' p='2' mx='auto'>
-            <ProfileCard addressOrName='dr3a.eth' />
+            <ProfileCard addressOrName={addressOrName} />
             <Text as='p' className='font-semibold mt-2'>
               Block/Mute Lists
             </Text>

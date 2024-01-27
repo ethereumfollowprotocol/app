@@ -1,21 +1,77 @@
-import { Avatar } from '@radix-ui/themes'
 import { getEnsProfile } from '#/app/actions.ts'
+import type { ENSProfile } from '#/lib/types'
+import { Box, Flex, Text } from '@radix-ui/themes'
+import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query'
+import { fetchFollowers, fetchFollowing } from '../profile/actions'
+import { AdvancedList } from '../profile/advanced-list'
+import { ProfileCard } from '../profile/profile-card'
+import { ProfilePageTable } from '../profile/table'
 
 interface Props {
   params: { user: string }
 }
 
 export default async function UserPage({ params }: Props) {
-  const profile = await getEnsProfile(params.user)
+  const ensProfile: ENSProfile = await getEnsProfile(params.user)
+
+  // return (
+  //   <main className='font-sans mx-auto flex h-full min-h-full w-full flex-col items-center overflow-scroll mb-12 px-4 pt-6 text-center'>
+  //     <Avatar src={profile['avatar']} fallback='' alt='env ave' size='9' radius='small' />
+  //     <section className='max-w-xl'>
+  //       <pre className='text-left text-black text-clip overflow-clip'>
+  //         {JSON.stringify(profile, undefined, 2)}
+  //       </pre>
+  //     </section>
+  //   </main>
+  // )
+  const searchParams: any = {}
+  const followingQuery = searchParams['following-query'] || ''
+  const followingFilter = searchParams['following-filter'] || 'follower count'
+
+  const followersQuery = searchParams['followers-query'] || ''
+  const followersFilter = searchParams['followers-filter'] || 'follower count'
+
+  const queryClient = new QueryClient()
+  await queryClient.prefetchQuery({
+    queryKey: ['profile', 'followers'],
+    queryFn: () => fetchFollowers({ addressOrName: ensProfile.address })
+  })
+  await queryClient.prefetchQuery({
+    queryKey: ['profile', 'following'],
+    queryFn: () => fetchFollowing({ addressOrName: ensProfile.address })
+  })
 
   return (
-    <main className='font-sans mx-auto flex h-full min-h-full w-full flex-col items-center overflow-scroll mb-12 px-4 pt-6 text-center'>
-      <Avatar src={profile['avatar']} fallback='' alt='env ave' size='9' radius='small' />
-      <section className='max-w-xl'>
-        <pre className='text-left text-black text-clip overflow-clip'>
-          {JSON.stringify(profile, undefined, 2)}
-        </pre>
-      </section>
+    <main className='mx-auto flex min-h-full h-full w-full flex-col items-center text-center pt-2 pb-4 px-2'>
+      <Flex
+        width='100%'
+        height='100%'
+        justify='center'
+        mx='auto'
+        className='xl:flex-row justify-center gap-y-0 xl:gap-x-2 gap-x-0 flex-col min-h-full lg:max-w-[1400px] max-w-2xl border-kournikova-50'
+      >
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <Box height='100%' width='min-content' p='2' mx='auto'>
+            <ProfileCard addressOrName={ensProfile.address} />
+            <Text as='p' className='font-semibold mt-2'>
+              Block/Mute Lists
+            </Text>
+            <AdvancedList />
+          </Box>
+
+          <ProfilePageTable
+            title='following'
+            searchQuery={followingQuery}
+            selectQuery={followingFilter}
+          />
+
+          <ProfilePageTable
+            title='followers'
+            searchQuery={followersQuery}
+            selectQuery={followersFilter}
+          />
+        </HydrationBoundary>
+      </Flex>
     </main>
   )
 }
