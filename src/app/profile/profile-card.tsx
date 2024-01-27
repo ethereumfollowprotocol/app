@@ -1,6 +1,6 @@
-import { getEnsProfile } from '#/app/actions.ts'
-import { Flex, Badge, Avatar, Box, Text } from '@radix-ui/themes'
-import clsx from 'clsx'
+import { getEnsProfile } from '#/app/actions.ts';
+import { Avatar, Badge, Box, Flex, Text } from '@radix-ui/themes';
+import clsx from 'clsx';
 
 export async function ProfileCard({ addressOrName }: { addressOrName: string }) {
   if (!addressOrName) return null
@@ -17,7 +17,12 @@ export async function ProfileCard({ addressOrName }: { addressOrName: string }) 
     >
       <Badge>#132</Badge>
       <Flex direction='column' justify='center' align='center' mx='auto' mt='3'>
-        <Avatar src={avatar} radius='full' size='7' fallback='' />
+        <Avatar
+          src={avatar}
+          radius='full'
+          size='7'
+          fallback={<Avatar src='/assets/gradient-circle.svg' radius='full' size='7' fallback='' />}
+        />
         <Text size='5' className='font-bold' my='2'>
           {name}
         </Text>

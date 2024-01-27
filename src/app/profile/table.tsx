@@ -1,14 +1,13 @@
 'use client'
 
-import Link from 'next/link'
-import * as React from 'react'
-import { useQuery } from '@tanstack/react-query'
-import { Searchbar } from '#/components/searchbar.tsx'
-import { fetchFollowers, fetchFollowing } from './actions.ts'
-import { FollowButton } from '#/components/follow-button.tsx'
-import { SelectWithFilter } from '#/components/select-with-filter.tsx'
-import { ChevronDownIcon, DotsHorizontalIcon, PlusIcon } from '@radix-ui/react-icons'
-import { Box, Code, Flex, Table, Text, Avatar, Badge, IconButton } from '@radix-ui/themes'
+import { FollowButton } from '#/components/follow-button.tsx';
+import { Searchbar } from '#/components/searchbar.tsx';
+import { SelectWithFilter } from '#/components/select-with-filter.tsx';
+import { ChevronDownIcon, DotsHorizontalIcon, PlusIcon } from '@radix-ui/react-icons';
+import { Avatar, Badge, Box, Code, Flex, IconButton, Table, Text } from '@radix-ui/themes';
+import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
+import { fetchFollowers, fetchFollowing } from './actions.ts';
 
 /**
  * TODO: paginate
@@ -150,7 +149,7 @@ function TableRow({
             alt="User's avatar"
             className='auto rounded-full my-auto'
             size='4'
-            fallback=''
+            fallback={<Avatar src='/assets/gradient-circle.svg' radius='full' size='4' fallback='' />}
             src={avatar || `${process.env.NEXT_PUBLIC_ENS_API_URL}/i/${name}`}
           />
           <Flex
