@@ -1,9 +1,9 @@
-import { fetchFollowers, fetchFollowing, fetchStats, type Stats } from '#/app/profile/actions.ts'
+import { fetchFollowers, fetchFollowing, fetchStats, type Stats } from '#/app/api/actions.ts'
+import { AdvancedList } from '#/components/advanced-list.tsx'
+import { UserProfileCard } from '#/components/user-profile-card'
+import { UserProfilePageTable } from '#/components/user-profile-page-table'
 import { Box, Flex, Text } from '@radix-ui/themes'
 import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query'
-import { AdvancedList } from './advanced-list.tsx'
-import { ProfileCard } from './profile-card.tsx'
-import { ProfilePageTable } from './table.tsx'
 
 interface Props {
   searchParams: {
@@ -53,21 +53,21 @@ export default async function ProfilePage({ searchParams }: Props) {
       >
         <HydrationBoundary state={dehydrate(queryClient)}>
           <Box height='100%' width='min-content' p='2' mx='auto'>
-            <ProfileCard addressOrName={addressOrName} stats={stats} />
+            <UserProfileCard addressOrName={addressOrName} stats={stats} />
             <Text as='p' className='font-semibold mt-2'>
               Block/Mute Lists
             </Text>
             <AdvancedList />
           </Box>
 
-          <ProfilePageTable
+          <UserProfilePageTable
             addressOrName={addressOrName}
             title='following'
             searchQuery={followingQuery}
             selectQuery={followingFilter}
           />
 
-          <ProfilePageTable
+          <UserProfilePageTable
             addressOrName={addressOrName}
             title='followers'
             searchQuery={followersQuery}

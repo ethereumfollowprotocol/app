@@ -29,7 +29,7 @@ export function TeamCard(props: TeamMember) {
               {ens}
             </Text>
             <Badge color='blue' radius='full' className='px-3' size='1'>
-              TODO
+              TODO1
             </Badge>
             <Flex gap='3' className='' my='3'>
               <FollowButton text='Follow' />
@@ -38,7 +38,7 @@ export function TeamCard(props: TeamMember) {
           <Flex justify='center' mx='auto' className='text-center' gap='8'>
             <Box>
               <Text size='5' className='font-bold' as='div'>
-                TODO
+                TODO2
               </Text>
               <Text size='2' className='font-bold text-gray-400' as='div'>
                 Following
@@ -46,7 +46,7 @@ export function TeamCard(props: TeamMember) {
             </Box>
             <Box>
               <Text size='5' className='font-bold' as='div'>
-                TODO
+                TODO3
               </Text>
               <Text size='2' className='font-bold text-gray-400' as='div'>
                 Followers
@@ -56,7 +56,7 @@ export function TeamCard(props: TeamMember) {
           <Flex justify='center' mx='auto' mt='5' mb='4' className='text-center'>
             <Box>
               <Text size='5' className='font-bold' as='div'>
-                TODO
+                TODO4
               </Text>
               <Text size='2' className='font-bold text-gray-400' as='div'>
                 Leaderboard

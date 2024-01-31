@@ -1,8 +1,8 @@
 import { getEnsProfile } from '#/app/actions.ts'
-import { fetchFollowers, fetchFollowing, fetchStats, type Stats } from '#/app/profile/actions'
-import { AdvancedList } from '#/app/profile/advanced-list'
-import { ProfileCard } from '#/app/profile/profile-card'
-import { ProfilePageTable } from '#/app/profile/table'
+import { fetchFollowers, fetchFollowing, fetchStats, type Stats } from '#/app/api/actions'
+import { AdvancedList } from '#/components/advanced-list'
+import { UserProfileCard } from '#/components/user-profile-card'
+import { UserProfilePageTable } from '#/components/user-profile-page-table'
 import type { ENSProfile } from '#/lib/types'
 import { Box, Flex, Text } from '@radix-ui/themes'
 import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query'
@@ -61,21 +61,21 @@ export default async function UserPage({ params }: Props) {
       >
         <HydrationBoundary state={dehydrate(queryClient)}>
           <Box height='100%' width='min-content' p='2' mx='auto'>
-            <ProfileCard addressOrName={ensProfile.address} stats={stats} />
+            <UserProfileCard addressOrName={ensProfile.address} stats={stats} />
             <Text as='p' className='font-semibold mt-2'>
               Block/Mute Lists
             </Text>
             <AdvancedList />
           </Box>
 
-          <ProfilePageTable
+          <UserProfilePageTable
             addressOrName={ensProfile.address}
             title='following'
             searchQuery={followingQuery}
             selectQuery={followingFilter}
           />
 
-          <ProfilePageTable
+          <UserProfilePageTable
             addressOrName={ensProfile.address}
             title='followers'
             searchQuery={followersQuery}

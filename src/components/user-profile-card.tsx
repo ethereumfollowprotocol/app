@@ -1,14 +1,14 @@
 import { getEnsProfile } from '#/app/actions.ts'
+import type { Stats } from '#/app/api/actions'
 import { Avatar, Badge, Box, Flex, Text } from '@radix-ui/themes'
 import clsx from 'clsx'
-import type { Stats } from './actions'
 
 interface Props {
   addressOrName: string
   stats: Stats | undefined
 }
 
-export async function ProfileCard({ addressOrName, stats }: Props) {
+export async function UserProfileCard({ addressOrName, stats }: Props) {
   if (!addressOrName) return null
 
   const { address, name, avatar } = await getEnsProfile(addressOrName)

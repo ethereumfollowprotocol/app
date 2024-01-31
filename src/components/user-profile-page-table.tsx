@@ -1,5 +1,6 @@
 'use client'
 
+import { fetchFollowers, fetchFollowing, type Follower, type Following } from '#/app/api/actions.ts'
 import { FollowButton } from '#/components/follow-button.tsx'
 import { Searchbar } from '#/components/searchbar.tsx'
 import { SelectWithFilter } from '#/components/select-with-filter.tsx'
@@ -7,12 +8,11 @@ import { ChevronDownIcon, DotsHorizontalIcon, PlusIcon } from '@radix-ui/react-i
 import { Avatar, Badge, Box, Flex, IconButton, Table, Text } from '@radix-ui/themes'
 import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
-import { fetchFollowers, fetchFollowing, type Follower, type Following } from './actions.ts'
 
 /**
  * TODO: paginate
  */
-export function ProfilePageTable({
+export function UserProfilePageTable({
   addressOrName,
   title,
   searchQuery,
