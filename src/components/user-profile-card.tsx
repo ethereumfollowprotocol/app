@@ -1,17 +1,88 @@
-import type { StatsResponse } from '#/api/actions'
-import { getEnsProfile } from '#/app/actions.ts'
+'use client'
+
+import {
+  fetchUserFollowers,
+  fetchUserFollowing,
+  fetchUserProfile,
+  type FollowerResponse,
+  type FollowingResponse,
+  type StatsResponse
+} from '#/api/actions'
 import { Avatar, Badge, Box, Flex, Text } from '@radix-ui/themes'
+import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
+import type { Address } from 'viem'
+import { useAccount } from 'wagmi'
+import { FollowButton } from './follow-button'
 
 interface Props {
   addressOrName: string
   stats: StatsResponse | undefined
 }
 
-export async function UserProfileCard({ addressOrName, stats }: Props) {
+export function UserProfileCard({ addressOrName, stats }: Props) {
+  /////////////////////////////////////////////////////////////////////////////
+  // followers for the connected account
+  /////////////////////////////////////////////////////////////////////////////
+  const { isConnected, address: connectedAddress } = useAccount()
+  const {
+    data: connectedAddressFollowersData,
+    error: connectedAddressFollowersError,
+    status: connectedAddressFollowersStatus
+  } = useQuery({
+    queryKey: ['profile', 'followers', connectedAddress],
+    enabled: connectedAddress !== undefined,
+    queryFn: () => fetchUserFollowers({ addressOrName: connectedAddress as Address })
+  })
+  const connectedAddressFollowerResponses: FollowerResponse[] | undefined =
+    connectedAddressFollowersData?.followers
+  const connectedAddressFollowerAddresses: Address[] | undefined =
+    connectedAddressFollowerResponses?.map(entry => entry.address)
+
+  /////////////////////////////////////////////////////////////////////////////
+  // following for the connected account
+  /////////////////////////////////////////////////////////////////////////////
+  const {
+    data: connectedAddressFollowingData,
+    error: connectedAddressFollowingError,
+    status: connectedAddressFollowingStatus
+  } = useQuery({
+    queryKey: ['profile', 'following', connectedAddress],
+    enabled: connectedAddress !== undefined,
+    queryFn: () => fetchUserFollowing({ addressOrName: connectedAddress as Address })
+  })
+  const connectedAddressFollowingResponses: FollowingResponse[] | undefined =
+    connectedAddressFollowingData?.following
+  const connectedAddressFollowingAddresses: Address[] | undefined =
+    connectedAddressFollowingResponses
+      ?.filter(entry => entry.record_type === 'address')
+      .map(entry => entry.data)
+
+  /////////////////////////////////////////////////////////////////////////////
+  // followers for the user profile that is being viewed
+  /////////////////////////////////////////////////////////////////////////////
+  const {
+    data: userProfileResponse,
+    error: userProfileError,
+    status: userProfileStatus
+  } = useQuery({
+    queryKey: ['profile', addressOrName],
+    queryFn: () => fetchUserProfile({ addressOrName })
+  })
+
+  const address: Address | undefined = userProfileResponse?.address as Address
+  const name: string | undefined = userProfileResponse?.ens.name
+  const avatar = userProfileResponse?.ens.avatar
+
+  const doesConnectedAddressFollowAddress = connectedAddressFollowingAddresses?.includes(
+    address?.toLowerCase() as Address
+  )
+  const doesFollowConnectedAddress = connectedAddressFollowerAddresses?.includes(
+    address?.toLowerCase()
+  )
+
   if (!addressOrName) return null
 
-  const { address, name, avatar } = await getEnsProfile(addressOrName)
   return (
     <Flex
       align='start'
@@ -21,7 +92,7 @@ export async function UserProfileCard({ addressOrName, stats }: Props) {
       mx='auto'
       className={clsx(['flex-col', 'bg-white/50 border-0 xl:w-60 lg:w-52 w-64 rounded-xl p-3'])}
     >
-      <Badge>#TODO</Badge>
+      <Badge>#1</Badge>
       <Flex direction='column' justify='center' align='center' mx='auto' mt='3'>
         <Avatar
           src={avatar}
@@ -32,6 +103,26 @@ export async function UserProfileCard({ addressOrName, stats }: Props) {
         <Text size='5' className='font-bold' my='2'>
           {name}
         </Text>
+        {doesFollowConnectedAddress && (
+          <Badge size='1' radius='full' className='8font-bold text-[8px] text-black mt-[-6] mb-2'>
+            Follows you
+          </Badge>
+        )}
+        <div className='mt-2 mb-8'>
+          <FollowButton
+            address={address}
+            text={
+              doesConnectedAddressFollowAddress
+                ? 'Unfollow'
+                : // : status === 'blocked'
+                  //   ? 'Unblock'
+                  //   : status === 'muted'
+                  //     ? 'Unmute'
+                  'Follow'
+            }
+            pending={doesConnectedAddressFollowAddress === undefined} // why is this true? what is that suppose to do?
+          />
+        </div>
       </Flex>
       <Flex className='text-center' justify='center' mx='auto' gap='8'>
         <Box>
@@ -54,7 +145,7 @@ export async function UserProfileCard({ addressOrName, stats }: Props) {
       <Flex justify='center' mx='auto' mt='5' mb='4' className='text-center'>
         <Box>
           <Text size='5' className='font-bold' as='div'>
-            #??
+            #1
           </Text>
           <Text size='2' className='font-bold text-gray-500' as='div'>
             Leaderboard

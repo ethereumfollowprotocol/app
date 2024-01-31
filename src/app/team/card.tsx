@@ -16,7 +16,7 @@ export function TeamCard(props: TeamMember) {
     <Flex direction='column'>
       <Flex mx='auto' className='bg-white/70 border-0 max-w-80 w-[295px] min-w-60 rounded-xl p-3'>
         <Flex direction='column' align='start' width='100%' height='100%' justify='center'>
-          <Badge>#TODO</Badge>
+          <Badge>#1</Badge>
           <Flex direction='column' justify='center' align='center' mx='auto' mt='3'>
             <ImageWithFallback
               src={avatar}
