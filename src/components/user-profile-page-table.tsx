@@ -5,15 +5,15 @@ import {
   fetchUserFollowing,
   type FollowerResponse,
   type FollowingResponse
-} from '#/api/actions'
-import { FollowButton } from '#/components/follow-button.tsx'
-import { Searchbar } from '#/components/searchbar.tsx'
-import { SelectWithFilter } from '#/components/select-with-filter.tsx'
-import { ChevronDownIcon, DotsHorizontalIcon, PlusIcon } from '@radix-ui/react-icons'
-import { Avatar, Badge, Box, Flex, IconButton, Table, Text } from '@radix-ui/themes'
-import { useQuery } from '@tanstack/react-query'
-import Link from 'next/link'
-import type { Address } from 'viem'
+} from '#/api/actions';
+import { FollowButton } from '#/components/follow-button.tsx';
+import { Searchbar } from '#/components/searchbar.tsx';
+import { SelectWithFilter } from '#/components/select-with-filter.tsx';
+import { ChevronDownIcon, DotsHorizontalIcon, PlusIcon } from '@radix-ui/react-icons';
+import { Avatar, Badge, Box, Flex, IconButton, Table, Text } from '@radix-ui/themes';
+import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
+import type { Address } from 'viem';
 
 /**
  * TODO: paginate
@@ -45,6 +45,7 @@ export function UserProfilePageTable({
   const filterFollowerResponses: FollowerResponse[] | undefined = followerResponses?.filter(entry =>
     entry?.ens.name?.toLowerCase().replaceAll('.eth', '').includes(searchQuery.toLowerCase())
   )
+  const allFollowerAddresses: Address[] | undefined = followerResponses?.map(entry => entry.address)
 
   const {
     data: followingData,
@@ -130,8 +131,8 @@ export function UserProfilePageTable({
         <Table.Body>
           {chosenResponses?.map((entry, index) => {
             return title === 'followers'
-              ? FollowerRow(entry as FollowerResponse, index)
-              : FollowingRow(entry as FollowingResponse, index)
+              ? FollowerRow(entry as FollowerResponse, index, allFollowerAddresses)
+              : FollowingRow(entry as FollowingResponse, index, allFollowerAddresses)
           })}
         </Table.Body>
       </Table.Root>
@@ -139,7 +140,11 @@ export function UserProfilePageTable({
   )
 }
 
-function FollowerRow(followerResponse: FollowerResponse, index: number) {
+function FollowerRow(
+  followerResponse: FollowerResponse,
+  index: number,
+  allFollowerAddresses: Array<Address>
+) {
   return (
     <TableRow
       tableType={'followers'}
@@ -156,11 +161,16 @@ function FollowerRow(followerResponse: FollowerResponse, index: number) {
       key={`${followerResponse.address}-${index}`}
       name={followerResponse.ens.name || followerResponse.address}
       address={followerResponse.address}
+      allFollowerAddresses={allFollowerAddresses}
     />
   )
 }
 
-function FollowingRow(followingResponse: FollowingResponse, index: number) {
+function FollowingRow(
+  followingResponse: FollowingResponse,
+  index: number,
+  allFollowerAddresses: Array<Address>
+) {
   return (
     <TableRow
       tableType={'following'}
@@ -175,6 +185,7 @@ function FollowingRow(followingResponse: FollowingResponse, index: number) {
       key={`${followingResponse.data}-${index}`}
       name={followingResponse.ens?.name || followingResponse.data}
       address={followingResponse.data}
+      allFollowerAddresses={allFollowerAddresses}
     />
   )
 }
@@ -185,7 +196,8 @@ function TableRow({
   name,
   avatar,
   status,
-  tags
+  tags,
+  allFollowerAddresses
 }: {
   tableType?: 'following' | 'followers'
   address: Address
@@ -194,37 +206,59 @@ function TableRow({
   avatar?: string
   status: 'following' | 'blocked' | 'muted' | 'subscribed' | 'none'
   tags: Array<string>
+  allFollowerAddresses: Array<Address>
 }) {
   return (
-    <Table.Row align='center' className='w-full hover:bg-white/30 flex justify-evenly h-14 mb-2'>
+    <Table.Row
+      align='center'
+      className='w-full hover:bg-white/30 flex justify-evenly h-[74px] mb-2'
+    >
       {/* avatar */}
       <Table.Cell pl='4' pr='0' data-name='name-column' className='my-auto h-full'>
         <Flex gap='2' my='auto'>
-          <Avatar
-            alt="User's avatar"
-            className='auto rounded-full my-auto'
-            size='4'
-            fallback={
-              <Avatar src='/assets/gradient-circle.svg' radius='full' size='4' fallback='' />
-            }
-            src={avatar || `${process.env.NEXT_PUBLIC_ENS_API_URL}/i/${name}`}
-          />
+          <div className='flex items-center h-[50px]'>
+            {/* Adjust the height as necessary */}
+            <Avatar
+              alt="User's avatar"
+              className='auto rounded-full my-auto'
+              size='4'
+              fallback={
+                <Avatar src='/assets/gradient-circle.svg' radius='full' size='4' fallback='' />
+              }
+              src={avatar || `${process.env.NEXT_PUBLIC_ENS_API_URL}/i/${name}`}
+            />
+          </div>
           <Flex
             direction='column'
-            className='text-right tabular-nums'
             justify='center'
             align='start'
+            className='text-right tabular-nums h-full'
           >
-            <Link href={`/${name || address}`} className=''>
-              <Text as='p' className='font-bold xl:text-lg lg:text-md text-sm hover:text-pink-400'>
-                {name}
-              </Text>
-            </Link>
-            {tableType === 'following' && status === 'following' && (
-              <Badge size='1' radius='full' className='font-bold text-[10px] text-black'>
-                TODO
-              </Badge>
-            )}
+            {/* The name should be wrapped in a div that will always be centered vertically */}
+            <div className='flex items-center h-[50px]'>
+              {' '}
+              {/* Adjust the height as necessary */}
+              <Link href={`/${name || address}`} className=''>
+                <Text
+                  as='p'
+                  className='font-bold xl:text-lg lg:text-md text-sm hover:text-pink-400'
+                >
+                  {name}
+                </Text>
+              </Link>
+            </div>
+            {/* Badge will appear below the name, but the name stays centered */}
+            {tableType === 'following' &&
+              status === 'following' &&
+              allFollowerAddresses.includes(address) && (
+                <Badge
+                  size='1'
+                  radius='full'
+                  className='font-bold text-[8px] text-black self-start mt-[-12]'
+                >
+                  Follows you
+                </Badge>
+              )}
           </Flex>
         </Flex>
       </Table.Cell>
