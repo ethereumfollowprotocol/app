@@ -1,5 +1,5 @@
+import { fetchFollowers, fetchFollowing, fetchStats, type Stats } from '#/api/actions'
 import { getEnsProfile } from '#/app/actions.ts'
-import { fetchFollowers, fetchFollowing, fetchStats, type Stats } from '#/app/api/actions'
 import { AdvancedList } from '#/components/advanced-list'
 import { UserProfileCard } from '#/components/user-profile-card'
 import { UserProfilePageTable } from '#/components/user-profile-page-table'

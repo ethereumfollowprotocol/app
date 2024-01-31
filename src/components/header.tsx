@@ -44,7 +44,7 @@ export function Header() {
 
   const account = useAccount()
 
-  const { addCartItem, totalCartItems } = useCart()
+  const { totalCartItems } = useCart()
 
   return (
     <header className={clsx(['w-full px-2.5 font-sans sm:px-3 md:px-4 lg:px-5 xl:px-6'])}>

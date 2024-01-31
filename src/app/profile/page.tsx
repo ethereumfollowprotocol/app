@@ -1,4 +1,4 @@
-import { fetchFollowers, fetchFollowing, fetchStats, type Stats } from '#/app/api/actions.ts'
+import { fetchFollowers, fetchFollowing, fetchStats, type Stats } from '#/api/actions'
 import { AdvancedList } from '#/components/advanced-list.tsx'
 import { UserProfileCard } from '#/components/user-profile-card'
 import { UserProfilePageTable } from '#/components/user-profile-page-table'

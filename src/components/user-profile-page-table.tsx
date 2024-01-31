@@ -1,6 +1,6 @@
 'use client'
 
-import { fetchFollowers, fetchFollowing, type Follower, type Following } from '#/app/api/actions.ts'
+import { fetchFollowers, fetchFollowing, type Follower, type Following } from '#/api/actions'
 import { FollowButton } from '#/components/follow-button.tsx'
 import { Searchbar } from '#/components/searchbar.tsx'
 import { SelectWithFilter } from '#/components/select-with-filter.tsx'
@@ -8,6 +8,7 @@ import { ChevronDownIcon, DotsHorizontalIcon, PlusIcon } from '@radix-ui/react-i
 import { Avatar, Badge, Box, Flex, IconButton, Table, Text } from '@radix-ui/themes'
 import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
+import type { Address } from 'viem'
 
 /**
  * TODO: paginate
@@ -149,6 +150,7 @@ function followerRow(title: 'followers', entry: Follower, index: number) {
       }
       key={`${entry.address}-${index}`}
       name={entry.ens.name || entry.address}
+      address={entry.address}
     />
   )
 }
@@ -167,6 +169,7 @@ function followingRow(title: 'following', entry: Following, index: number) {
       }
       key={`${entry.data}-${index}`}
       name={entry.ens.name || entry.data}
+      address={entry.data}
     />
   )
 }
@@ -180,7 +183,7 @@ function TableRow({
   tags
 }: {
   tableType?: 'following' | 'followers'
-  address?: string
+  address: Address
   name: string
 
   avatar?: string
@@ -189,6 +192,7 @@ function TableRow({
 }) {
   return (
     <Table.Row align='center' className='w-full hover:bg-white/30 flex justify-evenly h-14 mb-2'>
+      {/* avatar */}
       <Table.Cell pl='4' pr='0' data-name='name-column' className='my-auto h-full'>
         <Flex gap='2' my='auto'>
           <Avatar
@@ -219,6 +223,7 @@ function TableRow({
           </Flex>
         </Flex>
       </Table.Cell>
+      {/* tags */}
       <Table.Cell className='my-auto ml-auto'>
         <Flex className='space-x-2 m-auto'>
           {status === 'following' && (
@@ -250,8 +255,10 @@ function TableRow({
           )}
         </Flex>
       </Table.Cell>
+      {/* follow button */}
       <Table.Cell pr='4' data-name='action-column' className='w-min'>
         <FollowButton
+          address={address}
           text={
             status === 'following'
               ? 'Unfollow'
@@ -263,7 +270,7 @@ function TableRow({
                     ? 'Unsubscribe'
                     : 'Follow'
           }
-          pending={true}
+          // pending={true} // why is this true? what is that suppose to do?
         />
       </Table.Cell>
     </Table.Row>

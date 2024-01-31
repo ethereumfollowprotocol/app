@@ -1,8 +1,9 @@
+import type { ListOp } from '#/types/list-op'
 import { createContext, useContext, useState, type ReactNode } from 'react'
 
 // Define the type for each cart item
 type CartItem = {
-  id: string
+  listOp: ListOp
 }
 
 // Define the type for the context value

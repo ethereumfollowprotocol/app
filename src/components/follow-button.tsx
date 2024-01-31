@@ -1,6 +1,7 @@
 import { Button } from '@radix-ui/themes'
 import clsx from 'clsx'
 import type { ComponentPropsWithoutRef, PropsWithChildren } from 'react'
+import type { Address } from 'viem'
 import { Spinner } from './spinner.tsx'
 
 export type FollowButtonState =
@@ -69,15 +70,18 @@ const theme = {
 } satisfies Record<FollowButtonState, { bg: string; text: string }>
 
 export function FollowButton({
+  address,
   text,
   pending,
   loading,
   ...properties
 }: PropsWithChildren<ComponentPropsWithoutRef<typeof Button>> & {
+  address: Address
   text: FollowButtonState
   pending?: boolean
   loading?: boolean
 }) {
+  // const { addCartItem, totalCartItems } = useCart()
   return (
     <Button
       size={'2'}
@@ -88,6 +92,16 @@ export function FollowButton({
         theme[text as FollowButtonState].text
       ])}
       disabled={pending}
+      onClick={() => {
+        alert({
+          listOp: {
+            version: 1,
+            opcode: 1,
+            data: Buffer.from(address, 'hex')
+          }
+        })
+        // addCartItem()
+      }}
       {...properties}
     >
       <img alt='mainnet logo' src='/assets/mainnet-black.svg' className='mt-0.5 -mr-1' />

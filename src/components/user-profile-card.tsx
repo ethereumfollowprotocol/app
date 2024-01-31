@@ -1,5 +1,5 @@
+import type { Stats } from '#/api/actions'
 import { getEnsProfile } from '#/app/actions.ts'
-import type { Stats } from '#/app/api/actions'
 import { Avatar, Badge, Box, Flex, Text } from '@radix-ui/themes'
 import clsx from 'clsx'
 
