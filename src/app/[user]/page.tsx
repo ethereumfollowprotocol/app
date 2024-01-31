@@ -1,4 +1,9 @@
-import { fetchFollowers, fetchFollowing, fetchStats, type Stats } from '#/api/actions'
+import {
+  fetchUserFollowers,
+  fetchUserFollowing,
+  fetchUserStats,
+  type StatsResponse
+} from '#/api/actions'
 import { getEnsProfile } from '#/app/actions.ts'
 import { AdvancedList } from '#/components/advanced-list'
 import { UserProfileCard } from '#/components/user-profile-card'
@@ -34,21 +39,21 @@ export default async function UserPage({ params }: Props) {
   const queryClient = new QueryClient()
   await queryClient.prefetchQuery({
     queryKey: ['profile', 'followers', ensProfile.address],
-    queryFn: () => fetchFollowers({ addressOrName: ensProfile.address })
+    queryFn: () => fetchUserFollowers({ addressOrName: ensProfile.address })
   })
   await queryClient.prefetchQuery({
     queryKey: ['profile', 'following', ensProfile.address],
-    queryFn: () => fetchFollowing({ addressOrName: ensProfile.address })
+    queryFn: () => fetchUserFollowing({ addressOrName: ensProfile.address })
   })
   await queryClient.prefetchQuery({
     queryKey: ['profile', 'stats', ensProfile.address],
-    queryFn: () => fetchStats({ addressOrName: ensProfile.address })
+    queryFn: () => fetchUserStats({ addressOrName: ensProfile.address })
   })
 
   // Retrieve the stats data from the QueryClient
   const stats =
-    queryClient.getQueryData<{ stats: Stats }>(['profile', 'stats', ensProfile.address])?.stats ||
-    undefined
+    queryClient.getQueryData<{ stats: StatsResponse }>(['profile', 'stats', ensProfile.address])
+      ?.stats || undefined
 
   return (
     <main className='mx-auto flex min-h-full h-full w-full flex-col items-center text-center pt-2 pb-4 px-2'>

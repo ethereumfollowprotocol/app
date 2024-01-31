@@ -1,4 +1,4 @@
-import type { ListOp } from '#/types/list-op'
+import { listOpAsHexstring, type ListOp } from '#/types/list-op'
 import { createContext, useContext, useState, type ReactNode } from 'react'
 
 // Define the type for each cart item
@@ -10,7 +10,7 @@ type CartItem = {
 type CartContextType = {
   cartItems: CartItem[]
   addCartItem: (item: CartItem) => void
-  removeCartItem: (itemId: string) => void
+  removeCartItem: (listOp: ListOp) => void
   totalCartItems: number
 }
 
@@ -27,11 +27,18 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([])
 
   const addCartItem = (item: CartItem) => {
-    setCartItems(prevItems => [...prevItems, item])
+    const exists = cartItems.some(
+      cartItem => listOpAsHexstring(cartItem.listOp) === listOpAsHexstring(item.listOp)
+    )
+    if (!exists) {
+      setCartItems(prevItems => [...prevItems, item])
+    }
   }
 
-  const removeCartItem = (itemId: string) => {
-    setCartItems(prevItems => prevItems.filter(item => item.id !== itemId))
+  const removeCartItem = (listOp: ListOp) => {
+    setCartItems(prevItems =>
+      prevItems.filter(item => listOpAsHexstring(item.listOp) !== listOpAsHexstring(listOp))
+    )
   }
 
   const totalCartItems = cartItems.length

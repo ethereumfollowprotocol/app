@@ -1,3 +1,5 @@
+import { useCart } from '#/contexts/cart-context.tsx'
+import { listOpAddListRecord, listOpRemoveListRecord } from '#/types/list-op.ts'
 import { Button } from '@radix-ui/themes'
 import clsx from 'clsx'
 import type { ComponentPropsWithoutRef, PropsWithChildren } from 'react'
@@ -81,7 +83,8 @@ export function FollowButton({
   pending?: boolean
   loading?: boolean
 }) {
-  // const { addCartItem, totalCartItems } = useCart()
+  const { addCartItem, totalCartItems } = useCart()
+
   return (
     <Button
       size={'2'}
@@ -93,14 +96,12 @@ export function FollowButton({
       ])}
       disabled={pending}
       onClick={() => {
-        alert({
-          listOp: {
-            version: 1,
-            opcode: 1,
-            data: Buffer.from(address, 'hex')
-          }
-        })
-        // addCartItem()
+        console.log(`${text} ${address}`)
+        if (text === 'Follow') {
+          addCartItem({ listOp: listOpAddListRecord(address) })
+        } else if (text === 'Unfollow') {
+          addCartItem({ listOp: listOpRemoveListRecord(address) })
+        }
       }}
       {...properties}
     >

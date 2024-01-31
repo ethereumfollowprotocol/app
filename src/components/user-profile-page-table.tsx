@@ -1,6 +1,11 @@
 'use client'
 
-import { fetchFollowers, fetchFollowing, type Follower, type Following } from '#/api/actions'
+import {
+  fetchUserFollowers,
+  fetchUserFollowing,
+  type FollowerResponse,
+  type FollowingResponse
+} from '#/api/actions'
 import { FollowButton } from '#/components/follow-button.tsx'
 import { Searchbar } from '#/components/searchbar.tsx'
 import { SelectWithFilter } from '#/components/select-with-filter.tsx'
@@ -34,10 +39,10 @@ export function UserProfilePageTable({
   } = useQuery({
     queryKey: ['profile', 'followers', addressOrName],
     enabled: title === 'followers',
-    queryFn: () => fetchFollowers({ addressOrName })
+    queryFn: () => fetchUserFollowers({ addressOrName })
   })
-  const followersProfiles: Follower[] | undefined = followersData?.followers
-  const filterFollowersProfiles: Follower[] | undefined = followersProfiles?.filter(entry =>
+  const followerResponses: FollowerResponse[] | undefined = followersData?.followers
+  const filterFollowerResponses: FollowerResponse[] | undefined = followerResponses?.filter(entry =>
     entry?.ens.name?.toLowerCase().replaceAll('.eth', '').includes(searchQuery.toLowerCase())
   )
 
@@ -48,14 +53,14 @@ export function UserProfilePageTable({
   } = useQuery({
     queryKey: ['profile', 'following', addressOrName],
     enabled: title === 'following',
-    queryFn: () => fetchFollowing({ addressOrName })
+    queryFn: () => fetchUserFollowing({ addressOrName })
   })
-  const followingProfiles: Following[] | undefined = followingData?.following
-  const filterFollowingProfiles: Following[] | undefined = followingProfiles?.filter(entry =>
-    entry?.data?.toLowerCase().includes(searchQuery.toLowerCase())
+  const followingResponses: FollowingResponse[] | undefined = followingData?.following
+  const filterFollowingResponses: FollowingResponse[] | undefined = followingResponses?.filter(
+    entry => entry?.data?.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
-  const profiles = title === 'following' ? filterFollowingProfiles : filterFollowersProfiles
+  const chosenResponses = title === 'following' ? filterFollowingResponses : filterFollowerResponses
 
   return (
     <Box height='100%' width='100%' px='2' pb='4' mx='auto'>
@@ -84,7 +89,7 @@ export function UserProfilePageTable({
           />
         </Box>
       </Flex>
-      {profiles?.length === 0 && (
+      {chosenResponses?.length === 0 && (
         <Box className='bg-white/70 rounded-xl' py='4'>
           <Text align='center' as='p' my='4' size='6' className='font-semibold'>
             {title === 'followers' && (
@@ -112,7 +117,7 @@ export function UserProfilePageTable({
       <Table.Root
         size='2'
         variant='ghost'
-        hidden={profiles?.length === 0}
+        hidden={chosenResponses?.length === 0}
         className='bg-white/50 rounded-xl py-4 border-transparent'
       >
         <Table.Header hidden={true}>
@@ -123,10 +128,10 @@ export function UserProfilePageTable({
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {profiles?.map((entry, index) => {
+          {chosenResponses?.map((entry, index) => {
             return title === 'followers'
-              ? followerRow(title, entry as Follower, index)
-              : followingRow(title, entry as Following, index)
+              ? FollowerRow(entry as FollowerResponse, index)
+              : FollowingRow(entry as FollowingResponse, index)
           })}
         </Table.Body>
       </Table.Root>
@@ -134,42 +139,42 @@ export function UserProfilePageTable({
   )
 }
 
-function followerRow(title: 'followers', entry: Follower, index: number) {
+function FollowerRow(followerResponse: FollowerResponse, index: number) {
   return (
     <TableRow
-      tableType={title}
-      tags={entry.tags}
+      tableType={'followers'}
+      tags={followerResponse.tags}
       status={
-        entry.is_blocked
+        followerResponse.is_blocked
           ? 'blocked'
-          : entry.is_muted
+          : followerResponse.is_muted
             ? 'muted'
-            : entry.is_following
+            : followerResponse.is_following
               ? 'following'
               : 'none'
       }
-      key={`${entry.address}-${index}`}
-      name={entry.ens.name || entry.address}
-      address={entry.address}
+      key={`${followerResponse.address}-${index}`}
+      name={followerResponse.ens.name || followerResponse.address}
+      address={followerResponse.address}
     />
   )
 }
 
-function followingRow(title: 'following', entry: Following, index: number) {
+function FollowingRow(followingResponse: FollowingResponse, index: number) {
   return (
     <TableRow
-      tableType={title}
-      tags={entry.tags}
+      tableType={'following'}
+      tags={followingResponse.tags}
       status={
-        entry.tags.includes('block')
+        followingResponse.tags.includes('block')
           ? 'blocked'
-          : entry.tags.includes('mute')
+          : followingResponse.tags.includes('mute')
             ? 'muted'
             : 'following'
       }
-      key={`${entry.data}-${index}`}
-      name={entry.ens.name || entry.data}
-      address={entry.data}
+      key={`${followingResponse.data}-${index}`}
+      name={followingResponse.ens?.name || followingResponse.data}
+      address={followingResponse.data}
     />
   )
 }

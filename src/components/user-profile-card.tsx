@@ -1,11 +1,11 @@
-import type { Stats } from '#/api/actions'
+import type { StatsResponse } from '#/api/actions'
 import { getEnsProfile } from '#/app/actions.ts'
 import { Avatar, Badge, Box, Flex, Text } from '@radix-ui/themes'
 import clsx from 'clsx'
 
 interface Props {
   addressOrName: string
-  stats: Stats | undefined
+  stats: StatsResponse | undefined
 }
 
 export async function UserProfileCard({ addressOrName, stats }: Props) {

@@ -1,9 +1,10 @@
 'use server'
 
 import type { ENSProfile, Hex } from '#/lib/types.ts'
+import type { Address } from 'viem'
 
-export interface Follower {
-  address: Hex
+export interface FollowerResponse {
+  address: Address
   ens: ENSProfile
   tags: Array<string>
   is_muted: boolean
@@ -11,33 +12,39 @@ export interface Follower {
   is_following: boolean
 }
 
-export interface Following {
-  data: Hex
+export interface FollowingResponse {
   version: 1
-  tags: Array<string>
   record_type: 'address' & string
-  ens: ENSProfile
+  data: Address & Hex
+  tags: Array<string>
+  ens?: ENSProfile
 }
 
-export interface Stats {
+export interface StatsResponse {
   followers_count: number
   following_count: number
 }
 
-export interface Profile {
-  address: Hex
+export interface ProfileResponse {
+  address: Address
   ens: ENSProfile
   fresh: number
   resolver: string
   primary_list: string
-  stats: Stats
-  followers: Array<Follower>
-  following: Array<Following>
+  stats: StatsResponse
+  followers: Array<FollowerResponse>
+  following: Array<FollowingResponse>
   chains: Record<string, string>
   errors: Record<string, unknown>
 }
 
-export async function fetchFullProfile({ addressOrName }: { addressOrName: string }) {
+///////////////////////////////////////////////////////////////////////////////
+// /users/:addressOrENS/profile
+///////////////////////////////////////////////////////////////////////////////
+
+export async function fetchUserProfile({
+  addressOrName
+}: { addressOrName: Address | string }): Promise<ProfileResponse> {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/profile`,
     {
@@ -51,16 +58,16 @@ export async function fetchFullProfile({ addressOrName }: { addressOrName: strin
       // cache: "no-cache",
     }
   )
-  const data = (await response.json()) as Profile
+  const data = (await response.json()) as ProfileResponse
   // console.log('fetchFullProfile', data)
   return data
 }
 
-export async function fetchFollowers({
+export async function fetchUserFollowers({
   addressOrName
 }: {
-  addressOrName: string
-}): Promise<{ followers: Array<Follower> }> {
+  addressOrName: Address | string
+}): Promise<{ followers: Array<FollowerResponse> }> {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/profile?include=followers`,
     {
@@ -74,16 +81,16 @@ export async function fetchFollowers({
       // cache: "no-cache",
     }
   )
-  const data = (await response.json()) as { followers: Array<Follower> }
+  const data = (await response.json()) as { followers: Array<FollowerResponse> }
   // console.log('fetchFollowers', data)
   return data
 }
 
-export async function fetchFollowing({
+export async function fetchUserFollowing({
   addressOrName
 }: {
-  addressOrName: string
-}): Promise<{ following: Array<Following> }> {
+  addressOrName: Address | string
+}): Promise<{ following: Array<FollowingResponse> }> {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/profile?include=following`,
     {
@@ -98,16 +105,16 @@ export async function fetchFollowing({
     }
   )
 
-  const data = (await response.json()) as { following: Array<Following> }
+  const data = (await response.json()) as { following: Array<FollowingResponse> }
   // console.log('fetchFollowing', data)
   return data
 }
 
-export async function fetchStats({
+export async function fetchUserStats({
   addressOrName
 }: {
-  addressOrName: string
-}): Promise<{ stats: Stats }> {
+  addressOrName: Address | string
+}): Promise<{ stats: StatsResponse }> {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/profile?include=following&include=followers`,
     {
@@ -122,7 +129,7 @@ export async function fetchStats({
     }
   )
 
-  const data = (await response.json()) as { stats: Stats }
+  const data = (await response.json()) as { stats: StatsResponse }
   // console.log('fetchFollowing', data)
   return data
 }
