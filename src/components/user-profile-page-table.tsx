@@ -5,15 +5,16 @@ import {
   fetchUserFollowing,
   type FollowerResponse,
   type FollowingResponse
-} from '#/api/actions';
-import { FollowButton } from '#/components/follow-button.tsx';
-import { Searchbar } from '#/components/searchbar.tsx';
-import { SelectWithFilter } from '#/components/select-with-filter.tsx';
-import { ChevronDownIcon, DotsHorizontalIcon, PlusIcon } from '@radix-ui/react-icons';
-import { Avatar, Badge, Box, Flex, IconButton, Table, Text } from '@radix-ui/themes';
-import { useQuery } from '@tanstack/react-query';
-import Link from 'next/link';
-import type { Address } from 'viem';
+} from '#/api/actions'
+import { FollowButton } from '#/components/follow-button.tsx'
+import { Searchbar } from '#/components/searchbar.tsx'
+import { SelectWithFilter } from '#/components/select-with-filter.tsx'
+import { ChevronDownIcon, DotsHorizontalIcon, PlusIcon } from '@radix-ui/react-icons'
+import { Avatar, Badge, Box, Flex, IconButton, Table, Text } from '@radix-ui/themes'
+import { useQuery } from '@tanstack/react-query'
+import Link from 'next/link'
+import type { Address } from 'viem'
+import { useAccount } from 'wagmi'
 
 /**
  * TODO: paginate
@@ -32,6 +33,27 @@ export function UserProfilePageTable({
   const searchQueryKey = `${title.toLowerCase()}-query`
   const selectQueryKey = `${title.toLowerCase()}-filter`
 
+  /////////////////////////////////////////////////////////////////////////////
+  // followers for the connected account
+  /////////////////////////////////////////////////////////////////////////////
+  const { isConnected, address: connectedAddress } = useAccount()
+  const {
+    data: connectedAddressFollowersData,
+    error: connectedAddressFollowersError,
+    status: connectedAddressFollowersStatus
+  } = useQuery({
+    queryKey: ['profile', 'followers', connectedAddress],
+    enabled: connectedAddress !== undefined,
+    queryFn: () => fetchUserFollowers({ addressOrName: connectedAddress as Address })
+  })
+  const connectedAddressFollowerResponses: FollowerResponse[] | undefined =
+    connectedAddressFollowersData?.followers
+  const connectedAddressFollowerAddresses: Address[] | undefined =
+    connectedAddressFollowerResponses?.map(entry => entry.address)
+
+  /////////////////////////////////////////////////////////////////////////////
+  // followers for the user profile that is being viewed
+  /////////////////////////////////////////////////////////////////////////////
   const {
     data: followersData,
     error: followersError,
@@ -45,8 +67,10 @@ export function UserProfilePageTable({
   const filterFollowerResponses: FollowerResponse[] | undefined = followerResponses?.filter(entry =>
     entry?.ens.name?.toLowerCase().replaceAll('.eth', '').includes(searchQuery.toLowerCase())
   )
-  const allFollowerAddresses: Address[] | undefined = followerResponses?.map(entry => entry.address)
 
+  /////////////////////////////////////////////////////////////////////////////
+  // following for the user profile that is being viewed
+  /////////////////////////////////////////////////////////////////////////////
   const {
     data: followingData,
     error: followingError,
@@ -131,8 +155,20 @@ export function UserProfilePageTable({
         <Table.Body>
           {chosenResponses?.map((entry, index) => {
             return title === 'followers'
-              ? FollowerRow(entry as FollowerResponse, index, allFollowerAddresses)
-              : FollowingRow(entry as FollowingResponse, index, allFollowerAddresses)
+              ? FollowerRow(
+                  entry as FollowerResponse,
+                  index,
+                  connectedAddressFollowerAddresses === undefined
+                    ? []
+                    : connectedAddressFollowerAddresses
+                )
+              : FollowingRow(
+                  entry as FollowingResponse,
+                  index,
+                  connectedAddressFollowerAddresses === undefined
+                    ? []
+                    : connectedAddressFollowerAddresses
+                )
           })}
         </Table.Body>
       </Table.Root>
@@ -143,7 +179,7 @@ export function UserProfilePageTable({
 function FollowerRow(
   followerResponse: FollowerResponse,
   index: number,
-  allFollowerAddresses: Array<Address>
+  connectedFollowerAddresses: Address[]
 ) {
   return (
     <TableRow
@@ -161,7 +197,7 @@ function FollowerRow(
       key={`${followerResponse.address}-${index}`}
       name={followerResponse.ens.name || followerResponse.address}
       address={followerResponse.address}
-      allFollowerAddresses={allFollowerAddresses}
+      connectedFollowerAddresses={connectedFollowerAddresses}
     />
   )
 }
@@ -169,7 +205,7 @@ function FollowerRow(
 function FollowingRow(
   followingResponse: FollowingResponse,
   index: number,
-  allFollowerAddresses: Array<Address>
+  connectedFollowerAddresses: Address[]
 ) {
   return (
     <TableRow
@@ -185,7 +221,7 @@ function FollowingRow(
       key={`${followingResponse.data}-${index}`}
       name={followingResponse.ens?.name || followingResponse.data}
       address={followingResponse.data}
-      allFollowerAddresses={allFollowerAddresses}
+      connectedFollowerAddresses={connectedFollowerAddresses}
     />
   )
 }
@@ -197,7 +233,7 @@ function TableRow({
   avatar,
   status,
   tags,
-  allFollowerAddresses
+  connectedFollowerAddresses
 }: {
   tableType?: 'following' | 'followers'
   address: Address
@@ -206,7 +242,7 @@ function TableRow({
   avatar?: string
   status: 'following' | 'blocked' | 'muted' | 'subscribed' | 'none'
   tags: Array<string>
-  allFollowerAddresses: Array<Address>
+  connectedFollowerAddresses: Array<Address>
 }) {
   return (
     <Table.Row
@@ -250,7 +286,7 @@ function TableRow({
             {/* Badge will appear below the name, but the name stays centered */}
             {tableType === 'following' &&
               status === 'following' &&
-              allFollowerAddresses.includes(address) && (
+              connectedFollowerAddresses.includes(address) && (
                 <Badge
                   size='1'
                   radius='full'
