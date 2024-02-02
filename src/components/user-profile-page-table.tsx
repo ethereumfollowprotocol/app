@@ -35,9 +35,26 @@ export function UserProfilePageTable({
   const selectQueryKey = `${title.toLowerCase()}-filter`
 
   /////////////////////////////////////////////////////////////////////////////
-  // followers for the connected account
+  // following for the connected account
   /////////////////////////////////////////////////////////////////////////////
   const { isConnected, address: connectedAddress } = useAccount()
+  const {
+    data: connectedAddressFollowingData,
+    error: connectedAddressFollowingError,
+    status: connectedAddressFollowingStatus
+  } = useQuery({
+    queryKey: ['profile', 'following', connectedAddress],
+    enabled: connectedAddress !== undefined,
+    queryFn: () => fetchUserFollowing({ addressOrName: connectedAddress as Address })
+  })
+  const connectedAddressFollowingResponses: FollowingResponse[] | undefined =
+    connectedAddressFollowingData?.following
+  // const connectedAddressFollowingAddresses: Address[] | undefined =
+  // connectedAddressFollowingResponses?.map(entry => entry.data)
+
+  /////////////////////////////////////////////////////////////////////////////
+  // followers for the connected account
+  /////////////////////////////////////////////////////////////////////////////
   const {
     data: connectedAddressFollowersData,
     error: connectedAddressFollowersError,
@@ -159,6 +176,9 @@ export function UserProfilePageTable({
               ? FollowerRow(
                   entry as FollowerResponse,
                   index,
+                  connectedAddressFollowingResponses === undefined
+                    ? []
+                    : connectedAddressFollowingResponses,
                   connectedAddressFollowerAddresses === undefined
                     ? []
                     : connectedAddressFollowerAddresses
@@ -166,6 +186,9 @@ export function UserProfilePageTable({
               : FollowingRow(
                   entry as FollowingResponse,
                   index,
+                  connectedAddressFollowingResponses === undefined
+                    ? []
+                    : connectedAddressFollowingResponses,
                   connectedAddressFollowerAddresses === undefined
                     ? []
                     : connectedAddressFollowerAddresses
@@ -180,18 +203,26 @@ export function UserProfilePageTable({
 function FollowerRow(
   followerResponse: FollowerResponse,
   index: number,
+  connectedAddressFollowingResponses: FollowingResponse[],
   connectedFollowerAddresses: Address[]
 ) {
+  const connectedAddressFollowingAddressResponses = connectedAddressFollowingResponses.filter(
+    entry => entry.record_type === 'address'
+  )
+
+  const matchingConnectedFollowingResponse = connectedAddressFollowingAddressResponses.find(
+    entry => entry.data === followerResponse.address
+  )
   return (
     <TableRow
       tableType={'followers'}
       tags={followerResponse.tags}
       status={
-        followerResponse.is_blocked
+        matchingConnectedFollowingResponse?.tags.includes('block')
           ? 'blocked'
-          : followerResponse.is_muted
+          : matchingConnectedFollowingResponse?.tags.includes('mute')
             ? 'muted'
-            : followerResponse.is_following
+            : matchingConnectedFollowingResponse !== undefined
               ? 'following'
               : 'none'
       }
@@ -206,18 +237,28 @@ function FollowerRow(
 function FollowingRow(
   followingResponse: FollowingResponse,
   index: number,
+  connectedAddressFollowingResponses: FollowingResponse[],
   connectedFollowerAddresses: Address[]
 ) {
+  const connectedAddressFollowingAddressResponses = connectedAddressFollowingResponses.filter(
+    entry => entry.record_type === 'address'
+  )
+
+  const matchingConnectedFollowingResponse = connectedAddressFollowingAddressResponses.find(
+    entry => entry.data === followingResponse.data
+  )
   return (
     <TableRow
       tableType={'following'}
       tags={followingResponse.tags}
       status={
-        followingResponse.tags.includes('block')
+        matchingConnectedFollowingResponse?.tags.includes('block')
           ? 'blocked'
-          : followingResponse.tags.includes('mute')
+          : matchingConnectedFollowingResponse?.tags.includes('mute')
             ? 'muted'
-            : 'following'
+            : matchingConnectedFollowingResponse !== undefined
+              ? 'following'
+              : 'none'
       }
       key={`${followingResponse.data}-${index}`}
       name={followingResponse.ens?.name || followingResponse.data}
