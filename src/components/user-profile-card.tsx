@@ -113,7 +113,7 @@ export function UserProfileCard({ addressOrName, stats }: Props) {
             address={address}
             text={
               doesConnectedAddressFollowAddress
-                ? 'Unfollow'
+                ? 'Following'
                 : // : status === 'blocked'
                   //   ? 'Unblock'
                   //   : status === 'muted'

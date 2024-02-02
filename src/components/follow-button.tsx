@@ -8,7 +8,9 @@ import { Spinner } from './spinner.tsx'
 
 export type FollowButtonState =
   | 'Follow'
+  | 'Pending_Follow'
   | 'Following'
+  | 'Pending_Unfollow'
   | 'Unfollow'
   | 'Subscribe'
   | 'Subscribed'
@@ -25,9 +27,21 @@ const theme = {
     bg: 'bg-kournikova-300',
     text: 'text-zinc-800'
   },
-  Following: {
+  Pending_Follow: {
     bg: 'bg-lime-400',
     text: 'text-zinc-800'
+  },
+  // Following: {
+  //   bg: 'bg-lime-400',
+  //   text: 'text-zinc-800'
+  // },
+  Following: {
+    bg: 'bg-white',
+    text: 'text-gray-900'
+  },
+  Pending_Unfollow: {
+    bg: 'bg-[#FF7C7C]',
+    text: 'text-gray-900'
   },
   Unfollow: {
     bg: 'bg-salmon-500',
@@ -83,13 +97,13 @@ export function FollowButton({
   pending?: boolean
   loading?: boolean
 }) {
-  const { addCartItem, totalCartItems } = useCart()
+  const { addCartItem, removeCartItem } = useCart()
 
   return (
     <Button
       size={'2'}
       className={clsx([
-        text === 'Follow' ? 'bg-[#ffe065]' : 'bg-white',
+        theme[text].bg,
         'rounded-lg text-xs font-bold w-[90px]',
         pending ? 'cursor-not-allowed' : theme[text as FollowButtonState].bg,
         theme[text as FollowButtonState].text
@@ -99,14 +113,18 @@ export function FollowButton({
         console.log(`${text} ${address}`)
         if (text === 'Follow') {
           addCartItem({ listOp: listOpAddListRecord(address) })
-        } else if (text === 'Unfollow') {
+        } else if (text === 'Pending_Follow') {
+          removeCartItem(listOpAddListRecord(address))
+        } else if (text === 'Following') {
           addCartItem({ listOp: listOpRemoveListRecord(address) })
+        } else if (text === 'Pending_Unfollow') {
+          removeCartItem(listOpRemoveListRecord(address))
         }
       }}
       {...properties}
     >
       <img alt='mainnet logo' src='/assets/mainnet-black.svg' className='mt-0.5 -mr-1' />
-      {text}
+      {text.replace('Pending_', '')}
       {loading && <Spinner />}
     </Button>
   )

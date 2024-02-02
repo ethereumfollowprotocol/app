@@ -9,6 +9,7 @@ import {
 import { FollowButton } from '#/components/follow-button.tsx'
 import { Searchbar } from '#/components/searchbar.tsx'
 import { SelectWithFilter } from '#/components/select-with-filter.tsx'
+import { useCart } from '#/contexts/cart-context'
 import { ChevronDownIcon, DotsHorizontalIcon, PlusIcon } from '@radix-ui/react-icons'
 import { Avatar, Badge, Box, Flex, IconButton, Table, Text } from '@radix-ui/themes'
 import { useQuery } from '@tanstack/react-query'
@@ -244,6 +245,8 @@ function TableRow({
   tags: Array<string>
   connectedFollowerAddresses: Array<Address>
 }) {
+  const { hasListOpAddRecord, hasListOpRemoveRecord } = useCart()
+
   return (
     <Table.Row
       align='center'
@@ -336,7 +339,9 @@ function TableRow({
           address={address}
           text={
             status === 'following'
-              ? 'Unfollow'
+              ? hasListOpRemoveRecord(address)
+                ? 'Pending_Unfollow'
+                : 'Following'
               : status === 'blocked'
                 ? 'Unblock'
                 : status === 'muted'
@@ -345,7 +350,6 @@ function TableRow({
                     ? 'Unsubscribe'
                     : 'Follow'
           }
-          // pending={true} // why is this true? what is that suppose to do?
         />
       </Table.Cell>
     </Table.Row>

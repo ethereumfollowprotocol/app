@@ -1,5 +1,6 @@
 import { listOpAsHexstring, type ListOp } from '#/types/list-op'
 import { createContext, useContext, useState, type ReactNode } from 'react'
+import type { Address } from 'viem'
 
 // Define the type for each cart item
 type CartItem = {
@@ -12,6 +13,9 @@ type CartContextType = {
   addCartItem: (item: CartItem) => void
   removeCartItem: (listOp: ListOp) => void
   totalCartItems: number
+
+  hasListOpAddRecord(address: Address): boolean
+  hasListOpRemoveRecord(address: Address): boolean
 }
 
 // Create the context with an initial empty value
@@ -41,6 +45,24 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
     )
   }
 
+  const hasListOpAddRecord = (address: Address): boolean => {
+    return cartItems.some(
+      cartItem =>
+        cartItem.listOp.version === 1 &&
+        cartItem.listOp.opcode === 1 &&
+        `0x${cartItem.listOp.data.toString('hex')}` === address
+    )
+  }
+
+  const hasListOpRemoveRecord = (address: Address): boolean => {
+    return cartItems.some(
+      cartItem =>
+        cartItem.listOp.version === 1 &&
+        cartItem.listOp.opcode === 2 &&
+        `0x${cartItem.listOp.data.toString('hex')}` === address
+    )
+  }
+
   const totalCartItems = cartItems.length
 
   return (
@@ -49,7 +71,9 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
         cartItems,
         addCartItem,
         removeCartItem,
-        totalCartItems
+        totalCartItems,
+        hasListOpAddRecord,
+        hasListOpRemoveRecord
       }}
     >
       {children}
