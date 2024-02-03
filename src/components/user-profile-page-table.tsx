@@ -1,6 +1,6 @@
 'use client'
 
-import { fetchUserFollowers, fetchUserFollowing } from '#/api/requests'
+import { useConnectedEFPProfile, useProfile } from '#/api/actions'
 import type { FollowerResponse, FollowingResponse } from '#/api/responses'
 import { FollowButton } from '#/components/follow-button.tsx'
 import { Searchbar } from '#/components/searchbar.tsx'
@@ -8,10 +8,8 @@ import { SelectWithFilter } from '#/components/select-with-filter.tsx'
 import { useCart } from '#/contexts/cart-context'
 import { ChevronDownIcon, DotsHorizontalIcon, PlusIcon } from '@radix-ui/react-icons'
 import { Avatar, Badge, Box, Flex, IconButton, Table, Text } from '@radix-ui/themes'
-import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
 import type { Address } from 'viem'
-import { useAccount } from 'wagmi'
 
 /**
  * TODO: paginate
@@ -30,76 +28,18 @@ export function UserProfilePageTable({
   const searchQueryKey = `${title.toLowerCase()}-query`
   const selectQueryKey = `${title.toLowerCase()}-filter`
 
-  /////////////////////////////////////////////////////////////////////////////
-  // following for the connected account
-  /////////////////////////////////////////////////////////////////////////////
-  const { isConnected, address: connectedAddress } = useAccount()
-  const {
-    data: connectedAddressFollowingData,
-    error: connectedAddressFollowingError,
-    status: connectedAddressFollowingStatus
-  } = useQuery({
-    queryKey: ['following', connectedAddress],
-    enabled: connectedAddress !== undefined,
-    queryFn: () => fetchUserFollowing({ addressOrName: connectedAddress as Address })
-  })
-  const connectedAddressFollowingResponses: FollowingResponse[] | undefined =
-    connectedAddressFollowingData?.following
-  // const connectedAddressFollowingAddresses: Address[] | undefined =
-  // connectedAddressFollowingResponses?.map(entry => entry.data)
+  const { connectedAddressFollowing, connectedAddressFollowers } = useConnectedEFPProfile()
 
-  /////////////////////////////////////////////////////////////////////////////
-  // followers for the connected account
-  /////////////////////////////////////////////////////////////////////////////
-  const {
-    data: connectedAddressFollowersData,
-    error: connectedAddressFollowersError,
-    status: connectedAddressFollowersStatus
-  } = useQuery({
-    queryKey: ['followers', connectedAddress],
-    enabled: connectedAddress !== undefined,
-    queryFn: () => fetchUserFollowers({ addressOrName: connectedAddress as Address })
-  })
-  const connectedAddressFollowerResponses: FollowerResponse[] | undefined =
-    connectedAddressFollowersData?.followers
-  const connectedAddressFollowerAddresses: Address[] | undefined =
-    connectedAddressFollowerResponses?.map(entry => entry.address)
+  const { followers, following } = useProfile(addressOrName)
 
-  /////////////////////////////////////////////////////////////////////////////
-  // followers for the user profile that is being viewed
-  /////////////////////////////////////////////////////////////////////////////
-  const {
-    data: followersData,
-    error: followersError,
-    status: followersStatus
-  } = useQuery({
-    queryKey: ['followers', addressOrName],
-    enabled: title === 'followers',
-    queryFn: () => fetchUserFollowers({ addressOrName })
-  })
-  const followerResponses: FollowerResponse[] | undefined = followersData?.followers
-  const filterFollowerResponses: FollowerResponse[] | undefined = followerResponses?.filter(entry =>
-    entry?.ens.name?.toLowerCase().replaceAll('.eth', '').includes(searchQuery.toLowerCase())
+  const filteredFollowers: FollowerResponse[] | undefined = followers?.filter(follower =>
+    follower?.ens.name?.toLowerCase().replaceAll('.eth', '').includes(searchQuery.toLowerCase())
+  )
+  const filteredFollowing: FollowingResponse[] | undefined = following?.filter(following =>
+    following?.data?.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
-  /////////////////////////////////////////////////////////////////////////////
-  // following for the user profile that is being viewed
-  /////////////////////////////////////////////////////////////////////////////
-  const {
-    data: followingData,
-    error: followingError,
-    status: followingStatus
-  } = useQuery({
-    queryKey: ['following', addressOrName],
-    enabled: title === 'following',
-    queryFn: () => fetchUserFollowing({ addressOrName })
-  })
-  const followingResponses: FollowingResponse[] | undefined = followingData?.following
-  const filterFollowingResponses: FollowingResponse[] | undefined = followingResponses?.filter(
-    entry => entry?.data?.toLowerCase().includes(searchQuery.toLowerCase())
-  )
-
-  const chosenResponses = title === 'following' ? filterFollowingResponses : filterFollowerResponses
+  const chosenResponses = title === 'following' ? filteredFollowing : filteredFollowers
 
   return (
     <Box height='100%' width='100%' px='2' pb='4' mx='auto'>
@@ -167,27 +107,19 @@ export function UserProfilePageTable({
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {chosenResponses?.map((entry, index) => {
+          {chosenResponses?.map((followerOrFollowing, index) => {
             return title === 'followers'
               ? FollowerRow(
-                  entry as FollowerResponse,
+                  followerOrFollowing as FollowerResponse,
                   index,
-                  connectedAddressFollowingResponses === undefined
-                    ? []
-                    : connectedAddressFollowingResponses,
-                  connectedAddressFollowerAddresses === undefined
-                    ? []
-                    : connectedAddressFollowerAddresses
+                  connectedAddressFollowing ?? [],
+                  connectedAddressFollowers?.map(entry => entry.address) ?? []
                 )
               : FollowingRow(
-                  entry as FollowingResponse,
+                  followerOrFollowing as FollowingResponse,
                   index,
-                  connectedAddressFollowingResponses === undefined
-                    ? []
-                    : connectedAddressFollowingResponses,
-                  connectedAddressFollowerAddresses === undefined
-                    ? []
-                    : connectedAddressFollowerAddresses
+                  connectedAddressFollowing ?? [],
+                  connectedAddressFollowers?.map(entry => entry.address) ?? []
                 )
           })}
         </Table.Body>
@@ -199,10 +131,10 @@ export function UserProfilePageTable({
 function FollowerRow(
   followerResponse: FollowerResponse,
   index: number,
-  connectedAddressFollowingResponses: FollowingResponse[],
+  connectedAddressFollowing: FollowingResponse[],
   connectedFollowerAddresses: Address[]
 ) {
-  const connectedAddressFollowingAddressResponses = connectedAddressFollowingResponses.filter(
+  const connectedAddressFollowingAddressResponses = connectedAddressFollowing.filter(
     entry => entry.record_type === 'address'
   )
 
@@ -233,10 +165,10 @@ function FollowerRow(
 function FollowingRow(
   followingResponse: FollowingResponse,
   index: number,
-  connectedAddressFollowingResponses: FollowingResponse[],
+  connectedAddressFollowing: FollowingResponse[],
   connectedFollowerAddresses: Address[]
 ) {
-  const connectedAddressFollowingAddressResponses = connectedAddressFollowingResponses.filter(
+  const connectedAddressFollowingAddressResponses = connectedAddressFollowing.filter(
     entry => entry.record_type === 'address'
   )
 
