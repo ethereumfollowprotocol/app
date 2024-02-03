@@ -1,6 +1,6 @@
-import { isAddress } from 'viem/utils'
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge as tailwindMerge } from 'tailwind-merge'
+import { isAddress } from 'viem/utils'
 
 export function raise(error: unknown): never {
   throw typeof error === 'string' ? new Error(error) : error
@@ -52,4 +52,8 @@ export function checkEnsValid(value?: string) {
 
 export function checkAddressOrEnsValid(value: string) {
   return isAddress(value) || checkEnsValid(value)
+}
+
+export function hexlify(data: Buffer): `0x${string}` {
+  return `0x${data.toString('hex')}`
 }

@@ -1,18 +1,11 @@
 'use client'
 
-import {
-  fetchUserFollowers,
-  fetchUserFollowing,
-  fetchUserProfile,
-  type FollowerResponse,
-  type FollowingResponse,
-  type StatsResponse
-} from '#/api/requests'
+import { useConnectedProfile } from '#/api/actions'
+import { fetchUserProfile, type StatsResponse } from '#/api/requests'
 import { Avatar, Badge, Box, Flex, Text } from '@radix-ui/themes'
 import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
 import type { Address } from 'viem'
-import { useAccount } from 'wagmi'
 import { FollowButton } from './follow-button'
 
 interface Props {
@@ -21,42 +14,12 @@ interface Props {
 }
 
 export function UserProfileCard({ addressOrName, stats }: Props) {
-  /////////////////////////////////////////////////////////////////////////////
-  // followers for the connected account
-  /////////////////////////////////////////////////////////////////////////////
-  const { isConnected, address: connectedAddress } = useAccount()
   const {
-    data: connectedAddressFollowersData,
-    error: connectedAddressFollowersError,
-    status: connectedAddressFollowersStatus
-  } = useQuery({
-    queryKey: ['followers', connectedAddress],
-    enabled: connectedAddress !== undefined,
-    queryFn: () => fetchUserFollowers({ addressOrName: connectedAddress as Address })
-  })
-  const connectedAddressFollowerResponses: FollowerResponse[] | undefined =
-    connectedAddressFollowersData?.followers
-  const connectedAddressFollowerAddresses: Address[] | undefined =
-    connectedAddressFollowerResponses?.map(entry => entry.address)
-
-  /////////////////////////////////////////////////////////////////////////////
-  // following for the connected account
-  /////////////////////////////////////////////////////////////////////////////
-  const {
-    data: connectedAddressFollowingData,
-    error: connectedAddressFollowingError,
-    status: connectedAddressFollowingStatus
-  } = useQuery({
-    queryKey: ['following', connectedAddress],
-    enabled: connectedAddress !== undefined,
-    queryFn: () => fetchUserFollowing({ addressOrName: connectedAddress as Address })
-  })
-  const connectedAddressFollowingResponses: FollowingResponse[] | undefined =
-    connectedAddressFollowingData?.following
-  const connectedAddressFollowingAddresses: Address[] | undefined =
-    connectedAddressFollowingResponses
-      ?.filter(entry => entry.record_type === 'address')
-      .map(entry => entry.data)
+    connectedAddressFollowing,
+    connectedAddressFollowingAddresses,
+    connectedAddressFollowers,
+    connectedAddressFollowerAddresses
+  } = useConnectedProfile()
 
   /////////////////////////////////////////////////////////////////////////////
   // followers for the user profile that is being viewed

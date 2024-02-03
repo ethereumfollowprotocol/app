@@ -1,6 +1,6 @@
 'use client'
 
-import { useConnectedEFPProfile, useProfile } from '#/api/actions'
+import { useConnectedProfile, useProfile } from '#/api/actions'
 import type { FollowerResponse, FollowingResponse } from '#/api/responses'
 import { FollowButton } from '#/components/follow-button.tsx'
 import { Searchbar } from '#/components/searchbar.tsx'
@@ -28,15 +28,16 @@ export function UserProfilePageTable({
   const searchQueryKey = `${title.toLowerCase()}-query`
   const selectQueryKey = `${title.toLowerCase()}-filter`
 
-  const { connectedAddressFollowing, connectedAddressFollowers } = useConnectedEFPProfile()
-
+  const { connectedAddressFollowing, connectedAddressFollowers } = useConnectedProfile()
   const { followers, following } = useProfile(addressOrName)
 
-  const filteredFollowers: FollowerResponse[] | undefined = followers?.filter(follower =>
-    follower?.ens.name?.toLowerCase().replaceAll('.eth', '').includes(searchQuery.toLowerCase())
+  const filteredFollowers: FollowerResponse[] | undefined = followers?.filter(
+    (follower: FollowerResponse) =>
+      follower?.ens.name?.toLowerCase().replaceAll('.eth', '').includes(searchQuery.toLowerCase())
   )
-  const filteredFollowing: FollowingResponse[] | undefined = following?.filter(following =>
-    following?.data?.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredFollowing: FollowingResponse[] | undefined = following?.filter(
+    (following: FollowingResponse) =>
+      following?.data?.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
   const chosenResponses = title === 'following' ? filteredFollowing : filteredFollowers
@@ -113,13 +114,13 @@ export function UserProfilePageTable({
                   followerOrFollowing as FollowerResponse,
                   index,
                   connectedAddressFollowing ?? [],
-                  connectedAddressFollowers?.map(entry => entry.address) ?? []
+                  connectedAddressFollowers?.map((entry: FollowerResponse) => entry.address) ?? []
                 )
               : FollowingRow(
                   followerOrFollowing as FollowingResponse,
                   index,
                   connectedAddressFollowing ?? [],
-                  connectedAddressFollowers?.map(entry => entry.address) ?? []
+                  connectedAddressFollowers?.map((entry: FollowerResponse) => entry.address) ?? []
                 )
           })}
         </Table.Body>

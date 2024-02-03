@@ -10,9 +10,12 @@ import {
   type FollowingResponse
 } from './requests'
 
-type ConnectedAddressFollowing = { connectedAddressFollowing: FollowingResponse[] | undefined }
+type ConnectedAddressFollowing = {
+  connectedAddressFollowing: FollowingResponse[] | undefined
+  connectedAddressFollowingAddresses: Address[] | undefined
+}
 
-export function useConnectedEFPFollowing(): ConnectedAddressFollowing {
+export function useConnectedFollowing(): ConnectedAddressFollowing {
   const { isConnected, address: connectedAddress } = useAccount()
 
   /////////////////////////////////////////////////////////////////////////////
@@ -25,13 +28,19 @@ export function useConnectedEFPFollowing(): ConnectedAddressFollowing {
   })
 
   return {
-    connectedAddressFollowing: data?.following
+    connectedAddressFollowing: data?.following,
+    connectedAddressFollowingAddresses: data?.following
+      ?.filter(follow => follow.record_type === 'address')
+      .map(follow => follow.data)
   }
 }
 
-type ConnectedAddressFollowers = { connectedAddressFollowers: FollowerResponse[] | undefined }
+type ConnectedAddressFollowers = {
+  connectedAddressFollowers: FollowerResponse[] | undefined
+  connectedAddressFollowerAddresses: Address[] | undefined
+}
 
-export function useConnectedEFPFollowers(): ConnectedAddressFollowers {
+export function useConnectedFollowers(): ConnectedAddressFollowers {
   const { isConnected, address: connectedAddress } = useAccount()
 
   /////////////////////////////////////////////////////////////////////////////
@@ -44,23 +53,29 @@ export function useConnectedEFPFollowers(): ConnectedAddressFollowers {
   })
 
   return {
-    connectedAddressFollowers: data?.followers
+    connectedAddressFollowers: data?.followers,
+    connectedAddressFollowerAddresses: data?.followers?.map(follower => follower.address)
   }
 }
 
 type ConnectedEFPProfile = ConnectedAddressFollowing & ConnectedAddressFollowers
 
-export function useConnectedEFPProfile(): ConnectedEFPProfile {
-  const { connectedAddressFollowing } = useConnectedEFPFollowing()
-  const { connectedAddressFollowers } = useConnectedEFPFollowers()
+export function useConnectedProfile(): ConnectedEFPProfile {
+  const { connectedAddressFollowing, connectedAddressFollowingAddresses } = useConnectedFollowing()
+  const { connectedAddressFollowers, connectedAddressFollowerAddresses } = useConnectedFollowers()
 
   return {
     connectedAddressFollowing,
-    connectedAddressFollowers
+    connectedAddressFollowingAddresses,
+    connectedAddressFollowers,
+    connectedAddressFollowerAddresses
   }
 }
 
-type Following = { following: FollowingResponse[] | undefined }
+type Following = {
+  following: FollowingResponse[] | undefined
+  followingAddresses: Address[] | undefined
+}
 
 export function useFollowing(addressOrName: Address | string): Following {
   const { data, error, status } = useQuery({
@@ -69,11 +84,17 @@ export function useFollowing(addressOrName: Address | string): Following {
   })
 
   return {
-    following: data?.following
+    following: data?.following,
+    followingAddresses: data?.following
+      ?.filter(follow => follow.record_type === 'address')
+      .map(follow => follow.data)
   }
 }
 
-type Followers = { followers: FollowerResponse[] | undefined }
+type Followers = {
+  followers: FollowerResponse[] | undefined
+  followerAddresses: Address[] | undefined
+}
 
 export function useFollowers(addressOrName: Address | string): Followers {
   const { data, error, status } = useQuery({
@@ -82,18 +103,21 @@ export function useFollowers(addressOrName: Address | string): Followers {
   })
 
   return {
-    followers: data?.followers
+    followers: data?.followers,
+    followerAddresses: data?.followers?.map(follower => follower.address)
   }
 }
 
 type Profile = Following & Followers
 
 export function useProfile(addressOrName: Address | string): Profile {
-  const { following } = useFollowing(addressOrName)
-  const { followers } = useFollowers(addressOrName)
+  const { following, followingAddresses } = useFollowing(addressOrName)
+  const { followers, followerAddresses } = useFollowers(addressOrName)
 
   return {
     following,
-    followers
+    followingAddresses,
+    followers,
+    followerAddresses
   }
 }
