@@ -3,7 +3,7 @@ import {
   fetchUserFollowing,
   fetchUserStats,
   type StatsResponse
-} from '#/api/actions'
+} from '#/api/requests'
 import { AdvancedList } from '#/components/advanced-list.tsx'
 import { UserProfileCard } from '#/components/user-profile-card'
 import { UserProfilePageTable } from '#/components/user-profile-page-table'

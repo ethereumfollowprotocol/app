@@ -7,7 +7,7 @@ import {
   type FollowerResponse,
   type FollowingResponse,
   type StatsResponse
-} from '#/api/actions'
+} from '#/api/requests'
 import { Avatar, Badge, Box, Flex, Text } from '@radix-ui/themes'
 import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'

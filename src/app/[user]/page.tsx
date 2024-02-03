@@ -1,5 +1,9 @@
-import { fetchUserFollowers, fetchUserFollowing, fetchUserStats } from '#/api/actions'
-import type { StatsResponse } from '#/api/responses'
+import {
+  fetchUserFollowers,
+  fetchUserFollowing,
+  fetchUserStats,
+  type StatsResponse
+} from '#/api/requests'
 import { getEnsProfile } from '#/app/actions.ts'
 import { AdvancedList } from '#/components/advanced-list'
 import { UserProfileCard } from '#/components/user-profile-card'

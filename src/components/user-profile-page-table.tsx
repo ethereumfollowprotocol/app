@@ -1,11 +1,7 @@
 'use client'
 
-import {
-  fetchUserFollowers,
-  fetchUserFollowing,
-  type FollowerResponse,
-  type FollowingResponse
-} from '#/api/actions'
+import { fetchUserFollowers, fetchUserFollowing } from '#/api/requests'
+import type { FollowerResponse, FollowingResponse } from '#/api/responses'
 import { FollowButton } from '#/components/follow-button.tsx'
 import { Searchbar } from '#/components/searchbar.tsx'
 import { SelectWithFilter } from '#/components/select-with-filter.tsx'
