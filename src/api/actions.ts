@@ -38,38 +38,19 @@ export interface ProfileResponse {
   errors: Record<string, unknown>
 }
 
+type AddressOrName = Address | string
+
 ///////////////////////////////////////////////////////////////////////////////
 // /users/:addressOrENS/profile
 ///////////////////////////////////////////////////////////////////////////////
 
-export async function fetchUserProfile({
-  addressOrName
-}: { addressOrName: Address | string }): Promise<ProfileResponse> {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/profile`,
-    {
-      /**
-       * TODO: _PRODUCTION_CHECKLIST_:
-       * This is set to `force-cache` on purpose while in development
-       * Unset this or set to `default` before launch
-       */
-      // cache: 'force-cache'
-      cache: 'default'
-      // cache: "no-cache",
-    }
-  )
-  const data = (await response.json()) as ProfileResponse
-  // console.log('fetchFullProfile', data)
-  return data
-}
-
 export async function fetchUserFollowers({
   addressOrName
 }: {
-  addressOrName: Address | string
+  addressOrName: AddressOrName
 }): Promise<{ followers: Array<FollowerResponse> }> {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/profile?include=followers`,
+    `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/followers?include=ens`,
     {
       /**
        * TODO: _PRODUCTION_CHECKLIST_:
@@ -89,10 +70,10 @@ export async function fetchUserFollowers({
 export async function fetchUserFollowing({
   addressOrName
 }: {
-  addressOrName: Address | string
+  addressOrName: AddressOrName
 }): Promise<{ following: Array<FollowingResponse> }> {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/profile?include=following`,
+    `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/following?include=ens`,
     {
       /**
        * TODO: _PRODUCTION_CHECKLIST_:
@@ -110,13 +91,34 @@ export async function fetchUserFollowing({
   return data
 }
 
+export async function fetchUserProfile({
+  addressOrName
+}: { addressOrName: AddressOrName }): Promise<ProfileResponse> {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/profile`,
+    {
+      /**
+       * TODO: _PRODUCTION_CHECKLIST_:
+       * This is set to `force-cache` on purpose while in development
+       * Unset this or set to `default` before launch
+       */
+      // cache: 'force-cache'
+      cache: 'default'
+      // cache: "no-cache",
+    }
+  )
+  const data = (await response.json()) as ProfileResponse
+  // console.log('fetchFullProfile', data)
+  return data
+}
+
 export async function fetchUserStats({
   addressOrName
 }: {
-  addressOrName: Address | string
+  addressOrName: AddressOrName
 }): Promise<{ stats: StatsResponse }> {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/profile?include=following&include=followers`,
+    `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/profile?include=stats`,
     {
       /**
        * TODO: _PRODUCTION_CHECKLIST_:

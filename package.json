@@ -5,14 +5,15 @@
   "repository": "github:ethereumfollowprotocol/app",
   "type": "module",
   "scripts": {
-    "dev": "next dev --turbo --port 3443",
+    "clean": "/bin/bash ./scripts/clean.sh",
     "build": "NODE_OPTIONS='--no-warnings' NODE_ENV='production' next build",
-    "start": "next start",
+    "dev": "next dev --turbo --port 3443",
     "format": "biome format . --write --diagnostic-level=warn",
+    "fix": "bun lint && bun format",
     "lint": "biome check --apply . --diagnostic-level=warn",
+    "start": "next start",
     "typecheck": "tsc --project tsconfig.json --noEmit",
-    "update-dependencies": "bun ./scripts/update-dependencies.ts",
-    "clean": "/bin/bash ./scripts/clean.sh"
+    "update-dependencies": "bun ./scripts/update-dependencies.ts"
   },
   "dependencies": {
     "@builder.io/partytown": "^0.9.0",
