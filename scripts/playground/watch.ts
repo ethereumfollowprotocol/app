@@ -1,9 +1,9 @@
 #!/usr/bin/env bun
-import { decodeEventLog } from 'viem'
-import { evmClient } from 'src/lib/viem'
-import * as abi from 'src/lib/abi'
 import { efpContracts } from '#/lib/constants/contracts.ts'
 import fs from 'node:fs'
+import * as abi from 'src/lib/abi'
+import { evmClient } from 'src/lib/viem'
+import { decodeEventLog } from 'viem'
 
 console.info('\nWatching EFP events...\n')
 

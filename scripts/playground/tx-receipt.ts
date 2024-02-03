@@ -1,6 +1,6 @@
-import { isHex } from 'viem'
-import { getPublicClient } from '@wagmi/core'
 import { wagmiConfig } from '#/lib/wagmi'
+import { getPublicClient } from '@wagmi/core'
+import { isHex } from 'viem'
 
 const chainIds = [1, 10, 31337, 11155111, 11155420] as const
 type ChainId = (typeof chainIds)[number]

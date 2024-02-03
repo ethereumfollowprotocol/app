@@ -30,11 +30,11 @@ export default async function ProfilePage({ searchParams }: Props) {
 
   const queryClient = new QueryClient()
   await queryClient.prefetchQuery({
-    queryKey: ['profile', 'followers', addressOrName],
+    queryKey: ['followers', addressOrName],
     queryFn: () => fetchUserFollowers({ addressOrName })
   })
   await queryClient.prefetchQuery({
-    queryKey: ['profile', 'following', addressOrName],
+    queryKey: ['following', addressOrName],
     queryFn: () => fetchUserFollowing({ addressOrName })
   })
   await queryClient.prefetchQuery({

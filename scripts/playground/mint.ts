@@ -1,9 +1,7 @@
-import { isHex } from 'viem'
-import { evmClient } from '#/lib/viem.ts'
-import { mint, claimList, follow } from '#/app/efp/actions.ts'
-import { getTransactionReceipt } from 'viem/actions'
+import { claimList, follow, mint } from '#/app/efp/actions.ts'
 import { generateListStorageLocationSlot } from '#/app/efp/utilities'
-import fs from 'node:fs'
+import { evmClient } from '#/lib/viem.ts'
+import { isHex } from 'viem'
 
 const client = evmClient['31337']()
 const nonce = generateListStorageLocationSlot()

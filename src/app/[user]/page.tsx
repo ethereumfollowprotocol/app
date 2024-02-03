@@ -1,9 +1,5 @@
-import {
-  fetchUserFollowers,
-  fetchUserFollowing,
-  fetchUserStats,
-  type StatsResponse
-} from '#/api/actions'
+import { fetchUserFollowers, fetchUserFollowing, fetchUserStats } from '#/api/actions'
+import type { StatsResponse } from '#/api/responses'
 import { getEnsProfile } from '#/app/actions.ts'
 import { AdvancedList } from '#/components/advanced-list'
 import { UserProfileCard } from '#/components/user-profile-card'
@@ -28,11 +24,11 @@ export default async function UserPage({ params }: Props) {
 
   const queryClient = new QueryClient()
   await queryClient.prefetchQuery({
-    queryKey: ['profile', 'followers', ensProfile.address],
+    queryKey: ['followers', ensProfile.address],
     queryFn: () => fetchUserFollowers({ addressOrName: ensProfile.address })
   })
   await queryClient.prefetchQuery({
-    queryKey: ['profile', 'following', ensProfile.address],
+    queryKey: ['following', ensProfile.address],
     queryFn: () => fetchUserFollowing({ addressOrName: ensProfile.address })
   })
   await queryClient.prefetchQuery({

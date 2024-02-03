@@ -30,7 +30,7 @@ export function UserProfileCard({ addressOrName, stats }: Props) {
     error: connectedAddressFollowersError,
     status: connectedAddressFollowersStatus
   } = useQuery({
-    queryKey: ['profile', 'followers', connectedAddress],
+    queryKey: ['followers', connectedAddress],
     enabled: connectedAddress !== undefined,
     queryFn: () => fetchUserFollowers({ addressOrName: connectedAddress as Address })
   })
@@ -47,7 +47,7 @@ export function UserProfileCard({ addressOrName, stats }: Props) {
     error: connectedAddressFollowingError,
     status: connectedAddressFollowingStatus
   } = useQuery({
-    queryKey: ['profile', 'following', connectedAddress],
+    queryKey: ['following', connectedAddress],
     enabled: connectedAddress !== undefined,
     queryFn: () => fetchUserFollowing({ addressOrName: connectedAddress as Address })
   })

@@ -43,7 +43,7 @@ export function UserProfilePageTable({
     error: connectedAddressFollowingError,
     status: connectedAddressFollowingStatus
   } = useQuery({
-    queryKey: ['profile', 'following', connectedAddress],
+    queryKey: ['following', connectedAddress],
     enabled: connectedAddress !== undefined,
     queryFn: () => fetchUserFollowing({ addressOrName: connectedAddress as Address })
   })
@@ -60,7 +60,7 @@ export function UserProfilePageTable({
     error: connectedAddressFollowersError,
     status: connectedAddressFollowersStatus
   } = useQuery({
-    queryKey: ['profile', 'followers', connectedAddress],
+    queryKey: ['followers', connectedAddress],
     enabled: connectedAddress !== undefined,
     queryFn: () => fetchUserFollowers({ addressOrName: connectedAddress as Address })
   })
@@ -77,7 +77,7 @@ export function UserProfilePageTable({
     error: followersError,
     status: followersStatus
   } = useQuery({
-    queryKey: ['profile', 'followers', addressOrName],
+    queryKey: ['followers', addressOrName],
     enabled: title === 'followers',
     queryFn: () => fetchUserFollowers({ addressOrName })
   })
@@ -94,7 +94,7 @@ export function UserProfilePageTable({
     error: followingError,
     status: followingStatus
   } = useQuery({
-    queryKey: ['profile', 'following', addressOrName],
+    queryKey: ['following', addressOrName],
     enabled: title === 'following',
     queryFn: () => fetchUserFollowing({ addressOrName })
   })
