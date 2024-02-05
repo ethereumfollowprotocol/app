@@ -1,12 +1,12 @@
 'use client'
 
-import { useConnectedProfile } from '#/api/actions'
-import { fetchUserProfile, type StatsResponse } from '#/api/requests'
-import { Avatar, Badge, Box, Flex, Text } from '@radix-ui/themes'
-import { useQuery } from '@tanstack/react-query'
-import clsx from 'clsx'
-import type { Address } from 'viem'
-import { FollowButton } from './follow-button'
+import { useConnectedProfile } from '#/api/actions';
+import { fetchUserProfile, type StatsResponse } from '#/api/requests';
+import { Avatar, Badge, Box, Flex, Text } from '@radix-ui/themes';
+import { useQuery } from '@tanstack/react-query';
+import clsx from 'clsx';
+import type { Address } from 'viem';
+import { FollowButton } from './follow-button';
 
 interface Props {
   addressOrName: string
@@ -32,13 +32,6 @@ export function UserProfileCard({ addressOrName, stats }: Props) {
   const name: string | undefined = userProfileResponse?.ens.name
   const avatar = userProfileResponse?.ens.avatar
 
-  const doesConnectedAddressFollowAddress = connectedProfile?.followingAddresses?.includes(
-    address?.toLowerCase() as Address
-  )
-  const doesFollowConnectedAddress = connectedProfile?.followerAddresses?.includes(
-    address?.toLowerCase()
-  )
-
   if (!addressOrName) return null
 
   return (
@@ -61,7 +54,7 @@ export function UserProfileCard({ addressOrName, stats }: Props) {
         <Text size='5' className='font-bold' my='2'>
           {name}
         </Text>
-        {doesFollowConnectedAddress && (
+        {connectedProfile?.isFollowedBy(address) && (
           <Badge size='1' radius='full' className='8font-bold text-[8px] text-black mt-[-6] mb-2'>
             Follows you
           </Badge>
@@ -70,7 +63,7 @@ export function UserProfileCard({ addressOrName, stats }: Props) {
           <FollowButton
             address={address}
             text={
-              doesConnectedAddressFollowAddress
+              connectedProfile?.doesFollow(address)
                 ? 'Following'
                 : // : status === 'blocked'
                   //   ? 'Unblock'
@@ -78,7 +71,7 @@ export function UserProfileCard({ addressOrName, stats }: Props) {
                   //     ? 'Unmute'
                   'Follow'
             }
-            pending={doesConnectedAddressFollowAddress === undefined} // why is this true? what is that suppose to do?
+            pending={connectedProfile === undefined}
           />
         </div>
       </Flex>

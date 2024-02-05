@@ -1,16 +1,16 @@
 'use client'
 
-import type { ENSProfile } from '#/lib/types'
-import { useQuery } from '@tanstack/react-query'
-import type { Address } from 'viem'
-import { useAccount } from 'wagmi'
+import type { ENSProfile } from '#/lib/types';
+import { useQuery } from '@tanstack/react-query';
+import type { Address } from 'viem';
+import { useAccount } from 'wagmi';
 import {
   fetchUserFollowers,
   fetchUserFollowing,
   fetchUserProfile,
   type FollowerResponse,
   type FollowingResponse
-} from './requests'
+} from './requests';
 
 type ConnectedAddressFollowing = {
   connectedAddressFollowing: FollowingResponse[] | undefined
@@ -74,8 +74,12 @@ type EFPProfile = {
   ens: ENSProfile | undefined
   followers: FollowerResponse[] | undefined
   followerAddresses: Address[] | undefined
+  getFollowingByAddress: (address: Address) => FollowingResponse | undefined
+  doesFollow: (address: Address) => boolean
   following: FollowingResponse[] | undefined
   followingAddresses: Address[] | undefined
+  getFollowerByAddress: (address: Address) => FollowerResponse | undefined
+  isFollowedBy: (address: Address) => boolean
   primaryList: number | undefined
   stats: {
     followersCount: number
@@ -110,10 +114,22 @@ export function useConnectedProfile(): ConnectedAddressProfile {
       ens: data.ens,
       followers: data.followers,
       followerAddresses: data.followers?.map(follower => follower.address),
+      getFollowingByAddress: (address: Address) => {
+        return data.following?.find(follow => follow.data === address.toLowerCase())
+      },
+      doesFollow: (address: Address) => {
+        return data.following?.some(follow => follow.data === address.toLowerCase()) ?? false
+      },
       following: data.following,
       followingAddresses: data.following
         ?.filter(follow => follow.record_type === 'address')
         .map(follow => follow.data),
+      getFollowerByAddress: (address: Address) => {
+        return data.followers?.find(follower => follower.address === address.toLowerCase())
+      },
+      isFollowedBy: (address: Address) => {
+        return data.followers?.some(follower => follower.address === address.toLowerCase()) ?? false
+      },
       primaryList: Number(data.primary_list),
       stats: {
         followersCount: data.stats.followers_count,
