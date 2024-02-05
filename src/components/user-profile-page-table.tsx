@@ -1,7 +1,7 @@
 'use client'
 
 import { useConnectedProfile, useProfile } from '#/api/actions'
-import type { FollowerResponse, FollowingResponse } from '#/api/responses'
+import type { FollowerResponse, FollowingResponse } from '#/api/requests'
 import { FollowButton } from '#/components/follow-button.tsx'
 import { Searchbar } from '#/components/searchbar.tsx'
 import { SelectWithFilter } from '#/components/select-with-filter.tsx'
@@ -10,6 +10,22 @@ import { ChevronDownIcon, DotsHorizontalIcon, PlusIcon } from '@radix-ui/react-i
 import { Avatar, Badge, Box, Flex, IconButton, Table, Text } from '@radix-ui/themes'
 import Link from 'next/link'
 import type { Address } from 'viem'
+
+type FollowButtonStatus = 'following' | 'blocked' | 'muted' | 'none'
+
+function getFollowButtonStatus(following: FollowingResponse | undefined): FollowButtonStatus {
+  let status: FollowButtonStatus = 'none'
+  if (following !== undefined) {
+    if (following.tags.includes('block')) {
+      status = 'blocked'
+    } else if (following.tags.includes('mute')) {
+      status = 'muted'
+    } else {
+      status = 'following'
+    }
+  }
+  return status
+}
 
 /**
  * TODO: paginate
@@ -25,11 +41,12 @@ export function UserProfilePageTable({
   searchQuery: string
   selectQuery: string
 }) {
+  const { getConnectedAddressFollowingByAddress, getConnectedAddressFollowerByAddress } =
+    useConnectedProfile()
+  const { followers, following } = useProfile(addressOrName)
+
   const searchQueryKey = `${title.toLowerCase()}-query`
   const selectQueryKey = `${title.toLowerCase()}-filter`
-
-  const { connectedAddressFollowing, connectedAddressFollowers } = useConnectedProfile()
-  const { followers, following } = useProfile(addressOrName)
 
   const filteredFollowers: FollowerResponse[] | undefined = followers?.filter(
     (follower: FollowerResponse) =>
@@ -109,18 +126,28 @@ export function UserProfilePageTable({
         </Table.Header>
         <Table.Body>
           {chosenResponses?.map((followerOrFollowing, index) => {
+            const address: Address =
+              title === 'followers'
+                ? (followerOrFollowing as FollowerResponse).address
+                : (followerOrFollowing as FollowingResponse).data
+            const showFollowsYouBadge =
+              getConnectedAddressFollowerByAddress?.(address) !== undefined
+            const connectedAddressFollowing: FollowingResponse | undefined =
+              getConnectedAddressFollowingByAddress?.(address)
+            const followingStatus = getFollowButtonStatus(connectedAddressFollowing)
+
             return title === 'followers'
               ? FollowerRow(
                   followerOrFollowing as FollowerResponse,
                   index,
-                  connectedAddressFollowing ?? [],
-                  connectedAddressFollowers?.map((entry: FollowerResponse) => entry.address) ?? []
+                  followingStatus,
+                  showFollowsYouBadge
                 )
               : FollowingRow(
                   followerOrFollowing as FollowingResponse,
                   index,
-                  connectedAddressFollowing ?? [],
-                  connectedAddressFollowers?.map((entry: FollowerResponse) => entry.address) ?? []
+                  followingStatus,
+                  showFollowsYouBadge
                 )
           })}
         </Table.Body>
@@ -132,33 +159,18 @@ export function UserProfilePageTable({
 function FollowerRow(
   followerResponse: FollowerResponse,
   index: number,
-  connectedAddressFollowing: FollowingResponse[],
-  connectedFollowerAddresses: Address[]
+  followingStatus: 'following' | 'blocked' | 'muted' | 'none',
+  showFollowsYouBadge: boolean
 ) {
-  const connectedAddressFollowingAddressResponses = connectedAddressFollowing.filter(
-    entry => entry.record_type === 'address'
-  )
-
-  const matchingConnectedFollowingResponse = connectedAddressFollowingAddressResponses.find(
-    entry => entry.data === followerResponse.address
-  )
   return (
     <TableRow
       tableType={'followers'}
       tags={followerResponse.tags}
-      status={
-        matchingConnectedFollowingResponse?.tags.includes('block')
-          ? 'blocked'
-          : matchingConnectedFollowingResponse?.tags.includes('mute')
-            ? 'muted'
-            : matchingConnectedFollowingResponse !== undefined
-              ? 'following'
-              : 'none'
-      }
+      status={followingStatus}
       key={`${followerResponse.address}-${index}`}
       name={followerResponse.ens.name || followerResponse.address}
       address={followerResponse.address}
-      connectedFollowerAddresses={connectedFollowerAddresses}
+      showFollowsYouBadge={showFollowsYouBadge}
     />
   )
 }
@@ -166,33 +178,18 @@ function FollowerRow(
 function FollowingRow(
   followingResponse: FollowingResponse,
   index: number,
-  connectedAddressFollowing: FollowingResponse[],
-  connectedFollowerAddresses: Address[]
+  followingStatus: 'following' | 'blocked' | 'muted' | 'none',
+  showFollowsYouBadge: boolean
 ) {
-  const connectedAddressFollowingAddressResponses = connectedAddressFollowing.filter(
-    entry => entry.record_type === 'address'
-  )
-
-  const matchingConnectedFollowingResponse = connectedAddressFollowingAddressResponses.find(
-    entry => entry.data === followingResponse.data
-  )
   return (
     <TableRow
       tableType={'following'}
       tags={followingResponse.tags}
-      status={
-        matchingConnectedFollowingResponse?.tags.includes('block')
-          ? 'blocked'
-          : matchingConnectedFollowingResponse?.tags.includes('mute')
-            ? 'muted'
-            : matchingConnectedFollowingResponse !== undefined
-              ? 'following'
-              : 'none'
-      }
+      status={followingStatus}
       key={`${followingResponse.data}-${index}`}
       name={followingResponse.ens?.name || followingResponse.data}
       address={followingResponse.data}
-      connectedFollowerAddresses={connectedFollowerAddresses}
+      showFollowsYouBadge={showFollowsYouBadge}
     />
   )
 }
@@ -204,7 +201,7 @@ function TableRow({
   avatar,
   status,
   tags,
-  connectedFollowerAddresses
+  showFollowsYouBadge
 }: {
   tableType?: 'following' | 'followers'
   address: Address
@@ -213,7 +210,7 @@ function TableRow({
   avatar?: string
   status: 'following' | 'blocked' | 'muted' | 'subscribed' | 'none'
   tags: Array<string>
-  connectedFollowerAddresses: Array<Address>
+  showFollowsYouBadge: boolean
 }) {
   const { hasListOpAddRecord, hasListOpRemoveRecord } = useCart()
 
@@ -257,17 +254,15 @@ function TableRow({
               </Link>
             </div>
             {/* Badge will appear below the name, but the name stays centered */}
-            {tableType === 'following' &&
-              status === 'following' &&
-              connectedFollowerAddresses.includes(address) && (
-                <Badge
-                  size='1'
-                  radius='full'
-                  className='font-bold text-[8px] text-black self-start mt-[-12]'
-                >
-                  Follows you
-                </Badge>
-              )}
+            {tableType === 'following' && status === 'following' && showFollowsYouBadge && (
+              <Badge
+                size='1'
+                radius='full'
+                className='font-bold text-[8px] text-black self-start mt-[-12]'
+              >
+                Follows you
+              </Badge>
+            )}
           </Flex>
         </Flex>
       </Table.Cell>

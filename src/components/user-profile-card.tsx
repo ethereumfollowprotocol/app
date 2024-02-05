@@ -14,12 +14,7 @@ interface Props {
 }
 
 export function UserProfileCard({ addressOrName, stats }: Props) {
-  const {
-    connectedAddressFollowing,
-    connectedAddressFollowingAddresses,
-    connectedAddressFollowers,
-    connectedAddressFollowerAddresses
-  } = useConnectedProfile()
+  const { profile: connectedProfile } = useConnectedProfile()
 
   /////////////////////////////////////////////////////////////////////////////
   // followers for the user profile that is being viewed
@@ -37,10 +32,10 @@ export function UserProfileCard({ addressOrName, stats }: Props) {
   const name: string | undefined = userProfileResponse?.ens.name
   const avatar = userProfileResponse?.ens.avatar
 
-  const doesConnectedAddressFollowAddress = connectedAddressFollowingAddresses?.includes(
+  const doesConnectedAddressFollowAddress = connectedProfile?.followingAddresses?.includes(
     address?.toLowerCase() as Address
   )
-  const doesFollowConnectedAddress = connectedAddressFollowerAddresses?.includes(
+  const doesFollowConnectedAddress = connectedProfile?.followerAddresses?.includes(
     address?.toLowerCase()
   )
 
@@ -55,7 +50,7 @@ export function UserProfileCard({ addressOrName, stats }: Props) {
       mx='auto'
       className={clsx(['flex-col', 'bg-white/50 border-0 xl:w-60 lg:w-52 w-64 rounded-xl p-3'])}
     >
-      <Badge>#1</Badge>
+      <Badge>#{connectedProfile?.primaryList}</Badge>
       <Flex direction='column' justify='center' align='center' mx='auto' mt='3'>
         <Avatar
           src={avatar}

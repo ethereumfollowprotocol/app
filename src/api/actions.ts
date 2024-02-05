@@ -1,11 +1,13 @@
 'use client'
 
+import type { ENSProfile } from '#/lib/types'
 import { useQuery } from '@tanstack/react-query'
 import type { Address } from 'viem'
 import { useAccount } from 'wagmi'
 import {
   fetchUserFollowers,
   fetchUserFollowing,
+  fetchUserProfile,
   type FollowerResponse,
   type FollowingResponse
 } from './requests'
@@ -13,6 +15,7 @@ import {
 type ConnectedAddressFollowing = {
   connectedAddressFollowing: FollowingResponse[] | undefined
   connectedAddressFollowingAddresses: Address[] | undefined
+  getConnectedAddressFollowingByAddress: (address: Address) => FollowingResponse | undefined
 }
 
 export function useConnectedFollowing(): ConnectedAddressFollowing {
@@ -31,13 +34,18 @@ export function useConnectedFollowing(): ConnectedAddressFollowing {
     connectedAddressFollowing: data?.following,
     connectedAddressFollowingAddresses: data?.following
       ?.filter(follow => follow.record_type === 'address')
-      .map(follow => follow.data)
+      .map(follow => follow.data),
+
+    getConnectedAddressFollowingByAddress: (address: Address) => {
+      return data?.following?.find(follow => follow.data === address)
+    }
   }
 }
 
 type ConnectedAddressFollowers = {
   connectedAddressFollowers: FollowerResponse[] | undefined
   connectedAddressFollowerAddresses: Address[] | undefined
+  getConnectedAddressFollowerByAddress: (address: Address) => FollowerResponse | undefined
 }
 
 export function useConnectedFollowers(): ConnectedAddressFollowers {
@@ -54,27 +62,71 @@ export function useConnectedFollowers(): ConnectedAddressFollowers {
 
   return {
     connectedAddressFollowers: data?.followers,
-    connectedAddressFollowerAddresses: data?.followers?.map(follower => follower.address)
+    connectedAddressFollowerAddresses: data?.followers?.map(follower => follower.address),
+    getConnectedAddressFollowerByAddress: (address: Address) => {
+      return data?.followers?.find(follower => follower.address === address)
+    }
   }
 }
 
-type ConnectedEFPProfile = ConnectedAddressFollowing & ConnectedAddressFollowers
+type EFPProfile = {
+  address: Address
+  ens: ENSProfile | undefined
+  followers: FollowerResponse[] | undefined
+  followerAddresses: Address[] | undefined
+  following: FollowingResponse[] | undefined
+  followingAddresses: Address[] | undefined
+  primaryList: number | undefined
+  stats: {
+    followersCount: number
+    followingCount: number
+  }
+}
+type ConnectedAddressProfile = {
+  profile: EFPProfile | undefined
+}
 
-export function useConnectedProfile(): ConnectedEFPProfile {
-  const { connectedAddressFollowing, connectedAddressFollowingAddresses } = useConnectedFollowing()
-  const { connectedAddressFollowers, connectedAddressFollowerAddresses } = useConnectedFollowers()
+export function useConnectedProfile(): ConnectedAddressProfile {
+  const { isConnected, address: connectedAddress } = useAccount()
+
+  /////////////////////////////////////////////////////////////////////////////
+  // followers for the connected account
+  /////////////////////////////////////////////////////////////////////////////
+  const { data, error, status } = useQuery({
+    queryKey: ['Profile', connectedAddress],
+    enabled: isConnected,
+    queryFn: () => fetchUserProfile({ addressOrName: connectedAddress as Address })
+  })
+
+  if (!data) {
+    return {
+      profile: undefined
+    }
+  }
 
   return {
-    connectedAddressFollowing,
-    connectedAddressFollowingAddresses,
-    connectedAddressFollowers,
-    connectedAddressFollowerAddresses
+    profile: {
+      address: data.address,
+      ens: data.ens,
+      followers: data.followers,
+      followerAddresses: data.followers?.map(follower => follower.address),
+      following: data.following,
+      followingAddresses: data.following
+        ?.filter(follow => follow.record_type === 'address')
+        .map(follow => follow.data),
+      primaryList: Number(data.primary_list),
+      stats: {
+        followersCount: data.stats.followers_count,
+        followingCount: data.stats.following_count
+      }
+    }
   }
 }
 
 type Following = {
   following: FollowingResponse[] | undefined
   followingAddresses: Address[] | undefined
+  getFollowingByAddress: (address: Address) => FollowingResponse | undefined
 }
 
 export function useFollowing(addressOrName: Address | string): Following {
@@ -87,13 +139,17 @@ export function useFollowing(addressOrName: Address | string): Following {
     following: data?.following,
     followingAddresses: data?.following
       ?.filter(follow => follow.record_type === 'address')
-      .map(follow => follow.data)
+      .map(follow => follow.data),
+    getFollowingByAddress: (address: Address) => {
+      return data?.following?.find(follow => follow.data === address)
+    }
   }
 }
 
 type Followers = {
   followers: FollowerResponse[] | undefined
   followerAddresses: Address[] | undefined
+  getFollowerByAddress: (address: Address) => FollowerResponse | undefined
 }
 
 export function useFollowers(addressOrName: Address | string): Followers {
@@ -104,20 +160,18 @@ export function useFollowers(addressOrName: Address | string): Followers {
 
   return {
     followers: data?.followers,
-    followerAddresses: data?.followers?.map(follower => follower.address)
+    followerAddresses: data?.followers?.map(follower => follower.address),
+    getFollowerByAddress: (address: Address) => {
+      return data?.followers?.find(follower => follower.address === address)
+    }
   }
 }
 
 type Profile = Following & Followers
 
 export function useProfile(addressOrName: Address | string): Profile {
-  const { following, followingAddresses } = useFollowing(addressOrName)
-  const { followers, followerAddresses } = useFollowers(addressOrName)
-
   return {
-    following,
-    followingAddresses,
-    followers,
-    followerAddresses
+    ...useFollowing(addressOrName),
+    ...useFollowers(addressOrName)
   }
 }
