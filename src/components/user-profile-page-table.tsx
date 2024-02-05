@@ -1,6 +1,6 @@
 'use client'
 
-import { useConnectedProfile, useProfile } from '#/api/actions'
+import { useConnectedProfile, useProfile, type FollowState as FollowingStatus } from '#/api/actions'
 import type { FollowerResponse, FollowingResponse } from '#/api/requests'
 import { FollowButton } from '#/components/follow-button.tsx'
 import { Searchbar } from '#/components/searchbar.tsx'
@@ -133,7 +133,8 @@ export function UserProfilePageTable({
               connectedProfile?.getFollowerByAddress?.(address) !== undefined
             const connectedAddressFollowing: FollowingResponse | undefined =
               connectedProfile?.getFollowingByAddress?.(address)
-            const followingStatus = getFollowButtonStatus(connectedAddressFollowing)
+            const followingStatus: FollowingStatus | undefined =
+              connectedProfile?.getFollowState(address) || 'none'
 
             return title === 'followers'
               ? FollowerRow(
@@ -158,7 +159,7 @@ export function UserProfilePageTable({
 function FollowerRow(
   followerResponse: FollowerResponse,
   index: number,
-  followingStatus: 'following' | 'blocked' | 'muted' | 'none',
+  followingStatus: FollowingStatus,
   showFollowsYouBadge: boolean
 ) {
   return (
@@ -177,7 +178,7 @@ function FollowerRow(
 function FollowingRow(
   followingResponse: FollowingResponse,
   index: number,
-  followingStatus: 'following' | 'blocked' | 'muted' | 'none',
+  followingStatus: FollowingStatus,
   showFollowsYouBadge: boolean
 ) {
   return (
@@ -207,7 +208,7 @@ function TableRow({
   name: string
 
   avatar?: string
-  status: 'following' | 'blocked' | 'muted' | 'subscribed' | 'none'
+  status: 'follows' | 'blocks' | 'mutes' | 'none'
   tags: Array<string>
   showFollowsYouBadge: boolean
 }) {
@@ -253,7 +254,7 @@ function TableRow({
               </Link>
             </div>
             {/* Badge will appear below the name, but the name stays centered */}
-            {tableType === 'following' && status === 'following' && showFollowsYouBadge && (
+            {tableType === 'following' && status === 'follows' && showFollowsYouBadge && (
               <Badge
                 size='1'
                 radius='full'
@@ -268,7 +269,7 @@ function TableRow({
       {/* tags */}
       <Table.Cell className='my-auto ml-auto'>
         <Flex className='space-x-2 m-auto'>
-          {status === 'following' && (
+          {status === 'follows' && (
             <IconButton
               radius='full'
               variant='soft'
@@ -302,16 +303,16 @@ function TableRow({
         <FollowButton
           address={address}
           text={
-            status === 'following'
+            status === 'follows'
               ? hasListOpRemoveRecord(address)
                 ? 'Pending_Unfollow'
                 : 'Following'
-              : status === 'blocked'
+              : status === 'blocks'
                 ? 'Unblock'
-                : status === 'muted'
+                : status === 'mutes'
                   ? 'Unmute'
-                  : status === 'subscribed'
-                    ? 'Unsubscribe'
+                  : hasListOpAddRecord(address)
+                    ? 'Pending_Following'
                     : 'Follow'
           }
         />

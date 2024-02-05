@@ -69,6 +69,8 @@ export function useConnectedFollowers(): ConnectedAddressFollowers {
   }
 }
 
+export type FollowState = 'follows' | 'blocks' | 'mutes' | 'none'
+
 type EFPProfile = {
   address: Address
   ens: ENSProfile | undefined
@@ -76,6 +78,7 @@ type EFPProfile = {
   followerAddresses: Address[] | undefined
   getFollowingByAddress: (address: Address) => FollowingResponse | undefined
   doesFollow: (address: Address) => boolean
+  getFollowState(address: Address): FollowState
   following: FollowingResponse[] | undefined
   followingAddresses: Address[] | undefined
   getFollowerByAddress: (address: Address) => FollowerResponse | undefined
@@ -109,15 +112,32 @@ export function useConnectedProfile(): ConnectedAddressProfile {
     }
   }
 
+  const getFollowingByAddress: EFPProfile['getFollowingByAddress'] = (address: Address) => {
+    return data.following?.find(follow => follow.data === address.toLowerCase())
+  }
+
+  const getFollowState: EFPProfile['getFollowState'] = (address: Address) => {
+    const following: FollowingResponse | undefined = getFollowingByAddress(address)
+    if (following === undefined) {
+      return 'none'
+    }
+    if (following.tags.includes('block')) {
+      return 'blocks'
+    }
+    if (following.tags.includes('mute')) {
+      return 'mutes'
+    }
+    return 'follows'
+  }
+
   return {
     profile: {
       address: data.address,
       ens: data.ens,
       followers: data.followers,
       followerAddresses: data.followers?.map(follower => follower.address),
-      getFollowingByAddress: (address: Address) => {
-        return data.following?.find(follow => follow.data === address.toLowerCase())
-      },
+      getFollowingByAddress,
+      getFollowState,
       doesFollow: (address: Address) => {
         return data.following?.some(follow => follow.data === address.toLowerCase()) ?? false
       },

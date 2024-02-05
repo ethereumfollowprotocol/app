@@ -8,7 +8,7 @@ import { Spinner } from './spinner.tsx'
 
 export type FollowButtonState =
   | 'Follow'
-  | 'Pending_Follow'
+  | 'Pending_Following'
   | 'Following'
   | 'Pending_Unfollow'
   | 'Unfollow'
@@ -27,7 +27,7 @@ const theme = {
     bg: 'bg-kournikova-300',
     text: 'text-zinc-800'
   },
-  Pending_Follow: {
+  Pending_Following: {
     bg: 'bg-lime-400',
     text: 'text-zinc-800'
   },
