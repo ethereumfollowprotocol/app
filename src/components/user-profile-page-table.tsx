@@ -1,15 +1,15 @@
 'use client'
 
-import { useConnectedProfile, useProfile } from '#/api/actions';
-import type { FollowerResponse, FollowingResponse } from '#/api/requests';
-import { FollowButton } from '#/components/follow-button.tsx';
-import { Searchbar } from '#/components/searchbar.tsx';
-import { SelectWithFilter } from '#/components/select-with-filter.tsx';
-import { useCart } from '#/contexts/cart-context';
-import { ChevronDownIcon, DotsHorizontalIcon, PlusIcon } from '@radix-ui/react-icons';
-import { Avatar, Badge, Box, Flex, IconButton, Table, Text } from '@radix-ui/themes';
-import Link from 'next/link';
-import type { Address } from 'viem';
+import { useConnectedProfile, useProfile } from '#/api/actions'
+import type { FollowerResponse, FollowingResponse } from '#/api/requests'
+import { FollowButton } from '#/components/follow-button.tsx'
+import { Searchbar } from '#/components/searchbar.tsx'
+import { SelectWithFilter } from '#/components/select-with-filter.tsx'
+import { useCart } from '#/contexts/cart-context'
+import { ChevronDownIcon, DotsHorizontalIcon, PlusIcon } from '@radix-ui/react-icons'
+import { Avatar, Badge, Box, Flex, IconButton, Table, Text } from '@radix-ui/themes'
+import Link from 'next/link'
+import type { Address } from 'viem'
 
 type FollowButtonStatus = 'following' | 'blocked' | 'muted' | 'none'
 

@@ -1,16 +1,16 @@
 'use client'
 
-import type { ENSProfile } from '#/lib/types';
-import { useQuery } from '@tanstack/react-query';
-import type { Address } from 'viem';
-import { useAccount } from 'wagmi';
+import type { ENSProfile } from '#/lib/types'
+import { useQuery } from '@tanstack/react-query'
+import type { Address } from 'viem'
+import { useAccount } from 'wagmi'
 import {
   fetchUserFollowers,
   fetchUserFollowing,
   fetchUserProfile,
   type FollowerResponse,
   type FollowingResponse
-} from './requests';
+} from './requests'
 
 type ConnectedAddressFollowing = {
   connectedAddressFollowing: FollowingResponse[] | undefined
@@ -86,6 +86,7 @@ type EFPProfile = {
     followingCount: number
   }
 }
+
 type ConnectedAddressProfile = {
   profile: EFPProfile | undefined
 }
