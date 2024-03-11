@@ -102,8 +102,10 @@ export function useConnectedProfile(): ConnectedAddressProfile {
   /////////////////////////////////////////////////////////////////////////////
   const { data, error, status } = useQuery({
     queryKey: ['Profile', connectedAddress],
-    enabled: isConnected,
-    queryFn: () => fetchUserProfile({ addressOrName: connectedAddress as Address })
+    enabled: isConnected && !!connectedAddress,
+    queryFn: connectedAddress
+      ? () => fetchUserProfile({ addressOrName: connectedAddress })
+      : undefined
   })
 
   if (!data) {
@@ -153,8 +155,8 @@ export function useConnectedProfile(): ConnectedAddressProfile {
       },
       primaryList: Number(data.primary_list),
       stats: {
-        followersCount: data.stats.followers_count,
-        followingCount: data.stats.following_count
+        followersCount: data.stats?.followers_count || 0,
+        followingCount: data.stats?.following_count || 0
       }
     }
   }
