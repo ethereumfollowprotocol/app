@@ -29,7 +29,7 @@ export interface ProfileResponse {
   fresh: number
   resolver: string
   primary_list: string
-  stats: StatsResponse
+  stats: StatsResponse | undefined
   followers: Array<FollowerResponse>
   following: Array<FollowingResponse>
   chains: Record<string, string>
