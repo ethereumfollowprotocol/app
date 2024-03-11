@@ -1,3 +1,5 @@
+import type { Address } from 'viem'
+
 export const APP_NAME = 'Ethereum Follow Protocol'
 export const APP_NAME_SHORT = 'EFP'
 export const APP_DESCRIPTION =
@@ -9,7 +11,7 @@ export const APP_URL =
 
 export const ENS_SUBGRAPH = `https://api.thegraph.com/subgraphs/name/ensdomains/ens`
 
-export const teamAddresses = [
+export const teamAddresses: Address[] = [
   '0x983110309620D911731Ac0932219af06091b6744',
   '0xBdB41BfF7E828E2DC2d15EB67257455db818F1DC'
 ]
