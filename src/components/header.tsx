@@ -89,7 +89,7 @@ export function Header() {
             // Check if the environment variable is set
             if (!process.env.NEXT_PUBLIC_ENS_API_URL) {
               throw new Error(
-                "Environment variable 'NEXT_PUBLIC_BASE_URL' is not set. Please configure it in your environment."
+                "Environment variable 'NEXT_PUBLIC_ENS_API_URL' is not set. Please configure it in your environment."
               )
             }
 
