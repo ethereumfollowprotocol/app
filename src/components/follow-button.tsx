@@ -1,3 +1,5 @@
+'use client'
+
 import { useCart } from '#/contexts/cart-context.tsx'
 import { listOpAddListRecord, listOpRemoveListRecord } from '#/types/list-op.ts'
 import { Button } from '@radix-ui/themes'
