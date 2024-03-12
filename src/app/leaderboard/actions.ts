@@ -19,6 +19,12 @@ export async function fetchLeaderboard({
     const response = await fetch(
       `${process.env.EFP_API_URL}/leaderboard/${filter}?limit=${limit}&${params}`
     )
+
+    // When there is no ens name, the API returns an object with a message property
+    if (!response.ok) {
+      raise(`API returned an error: ${response.status} ${response.statusText}`)
+    }
+
     const data = await response.json()
 
     return data as Array<LeaderboardEntry>

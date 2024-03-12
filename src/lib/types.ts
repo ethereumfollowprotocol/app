@@ -20,7 +20,7 @@ export type Pretty<T> = {
 
 export interface ENSProfile {
   name: string
-  address: string
+  address: Address
   avatar: string
   display: string
   records: {

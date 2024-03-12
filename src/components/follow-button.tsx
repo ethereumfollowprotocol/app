@@ -1,3 +1,5 @@
+'use client'
+
 import { useCart } from '#/contexts/cart-context.tsx'
 import { listOpAddListRecord, listOpRemoveListRecord } from '#/types/list-op.ts'
 import { Button } from '@radix-ui/themes'
@@ -113,7 +115,7 @@ export function FollowButton({
         console.log(`${text} ${address}`)
         if (text === 'Follow') {
           addCartItem({ listOp: listOpAddListRecord(address) })
-        } else if (text === 'Pending_Follow') {
+        } else if (text === 'Pending_Following') {
           removeCartItem(listOpAddListRecord(address))
         } else if (text === 'Following') {
           addCartItem({ listOp: listOpRemoveListRecord(address) })

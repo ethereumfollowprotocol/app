@@ -3,8 +3,10 @@ import Link from 'next/link'
 import * as React from 'react'
 import { FollowButton } from '#/components/follow-button.tsx'
 import { Box, Text, Flex, Table, Badge, Avatar } from '@radix-ui/themes'
+import type { Address } from 'viem'
 
 interface Row {
+  address: Address
   rank: number
   name: string
   following: number
@@ -14,7 +16,16 @@ interface Row {
   status: 'followed' | 'blocked' | 'muted' | 'none'
 }
 
-export function TableRow({ rank, name, following, followers, mutuals, blockedMuted, status }: Row) {
+export function TableRow({
+  address,
+  rank,
+  name,
+  following,
+  followers,
+  mutuals,
+  blockedMuted,
+  status
+}: Row) {
   const rowNumber = (
     <React.Fragment>
       {rank === 1 ? (
@@ -107,6 +118,7 @@ export function TableRow({ rank, name, following, followers, mutuals, blockedMut
                   : 'Follow'
           }
           pending={true}
+          address={address}
         />
       </Table.Cell>
     </Table.Row>

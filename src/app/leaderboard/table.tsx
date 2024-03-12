@@ -113,6 +113,7 @@ export function LeaderboardTable({
               mutuals={entry.mutuals_count || 0}
               blockedMuted={entry.blocked_count + entry.muted_count || 0}
               status='none'
+              address={entry.address}
             />
           ))}
         </Table.Body>
