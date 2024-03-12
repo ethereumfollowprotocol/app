@@ -20,6 +20,7 @@ export async function fetchLeaderboard({
       `${process.env.EFP_API_URL}/leaderboard/${filter}?limit=${limit}&${params}`
     )
 
+    // When there is no ens name, the API returns an object with a message property
     if (!response.ok) {
       raise(`API returned an error: ${response.status} ${response.statusText}`)
     }
