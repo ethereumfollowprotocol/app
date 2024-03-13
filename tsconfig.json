@@ -16,6 +16,7 @@
       "#/*": ["./src/*"],
       "~env": ["./env.ts"],
     },
+    "noUnusedLocals": true,
     "alwaysStrict": true,
     "esModuleInterop": true,
     "isolatedModules": true,

@@ -6,7 +6,7 @@ import { Avatar, Badge, Box, Flex, Text } from '@radix-ui/themes'
 import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
 import type { Address } from 'viem'
-import { FollowButton } from './follow-button'
+import { FollowButton } from '#/components/follow-button'
 
 interface Props {
   addressOrName: string
@@ -60,19 +60,7 @@ export function UserProfileCard({ addressOrName, stats }: Props) {
           </Badge>
         )}
         <div className='mt-2 mb-8'>
-          <FollowButton
-            address={address}
-            text={
-              address !== undefined && connectedProfile?.doesFollow(address)
-                ? 'Following'
-                : // : status === 'blocked'
-                  //   ? 'Unblock'
-                  //   : status === 'muted'
-                  //     ? 'Unmute'
-                  'Follow'
-            }
-            pending={connectedProfile === undefined}
-          />
+          <FollowButton address={address} />
         </div>
       </Flex>
       <Flex className='text-center' justify='center' mx='auto' gap='8'>

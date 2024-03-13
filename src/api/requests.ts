@@ -11,6 +11,7 @@ export interface FollowerResponse {
 }
 
 export interface FollowingResponse {
+  address: Address
   version: 1
   record_type: 'address' & string
   data: Address & Hex
@@ -84,9 +85,14 @@ export async function fetchUserFollowing({
     }
   )
 
-  const data = (await response.json()) as { following: Array<FollowingResponse> }
-  // console.log('fetchFollowing', data)
-  return data
+  const data = (await response.json()) as { following: Array<Omit<FollowingResponse, 'address'>> }
+  // add address field
+  const modifiedData = data.following.map(following => ({
+    ...following,
+    address: following.data
+  }))
+
+  return { following: modifiedData }
 }
 
 export async function fetchUserProfile({

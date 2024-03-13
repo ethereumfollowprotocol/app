@@ -1,4 +1,4 @@
-import { FollowButton } from '#/components/follow-button.tsx'
+import { FollowButton } from '#/components/follow-button'
 import { ImageWithFallback } from '#/components/image-with-fallback.tsx'
 import { Badge, Box, Flex, Text } from '@radix-ui/themes'
 import type { Address } from 'viem'
