@@ -94,8 +94,8 @@ export function UserProfilePageTable({
         profiles={chosenResponses || []}
         showFollowsYouBadge={showFollowsYouBadge}
         showTags={showTags}
-        tableClassName='gap-2 p-4 rounded-xl bg-white/50'
-        tableRowClassName='rounded-xl hover:bg-white/50 p-2'
+        listClassName='gap-2 p-4 rounded-xl bg-white/50'
+        listItemClassName='rounded-xl hover:bg-white/50 p-2'
       />
     </Box>
   )

@@ -6,19 +6,19 @@ interface FollowTableProps {
   profiles: (FollowerResponse | FollowingResponse)[]
   showFollowsYouBadge?: boolean
   showTags?: boolean
-  tableClassName?: string
-  tableRowClassName?: string
+  listClassName?: string
+  listItemClassName?: string
 }
 
 export function FollowList({
   profiles,
   showFollowsYouBadge = false,
   showTags = false,
-  tableClassName = '',
-  tableRowClassName = ''
+  listClassName = '',
+  listItemClassName = ''
 }: FollowTableProps) {
   return (
-    <Box className={`flex flex-col ${tableClassName}`}>
+    <Box className={`flex flex-col ${listClassName}`}>
       {profiles.map(profile => {
         // Condense profile data
         const condensedProfile = {
@@ -34,7 +34,7 @@ export function FollowList({
             showFollowsYouBadge={showFollowsYouBadge}
             showTags={showTags}
             key={condensedProfile.address}
-            className={tableRowClassName}
+            className={listItemClassName}
           />
         )
       })}
