@@ -11,7 +11,7 @@ export interface FollowListProfile {
 
 interface FollowTableProps {
   profiles: FollowListProfile[]
-  showFollowsYouBadge?: boolean
+  showFollowsYouBadges?: boolean // Prop to handle showing "Follows you" badges in the FollowList
   showTags?: boolean
   listClassName?: string
   listItemClassName?: string
@@ -21,7 +21,7 @@ export function FollowList({
   listClassName = '',
   listItemClassName = '',
   profiles,
-  showFollowsYouBadge = false,
+  showFollowsYouBadges = false,
   showTags = false
 }: FollowTableProps) {
   return (
@@ -32,7 +32,7 @@ export function FollowList({
             className={listItemClassName}
             key={profile.address}
             profile={profile}
-            showFollowsYouBadge={showFollowsYouBadge}
+            showFollowsYouBadges={showFollowsYouBadges}
             showTags={showTags}
           />
         )

@@ -7,14 +7,14 @@ import type { FollowListProfile } from '.'
 export interface FollowListItemProps {
   className?: string
   profile: FollowListProfile
-  showFollowsYouBadge: boolean
+  showFollowsYouBadges: boolean
   showTags: boolean
 }
 
 export function FollowListItem({
   className = '',
   profile,
-  showFollowsYouBadge,
+  showFollowsYouBadges,
   showTags
 }: FollowListItemProps) {
   return (
@@ -23,7 +23,7 @@ export function FollowListItem({
       <FollowListItemName
         address={profile.address}
         name={profile.name}
-        showFollowsYouBadge={showFollowsYouBadge}
+        showFollowsYouBadge={showFollowsYouBadges}
         avatarUrl={profile.avatarUrl}
         className='flex-none w-56' // Fixed width for consistent layout
       />

@@ -35,7 +35,7 @@ export function UserProfilePageTable({
   )
 
   const chosenResponses = title === 'following' ? filteredFollowing : filteredFollowers
-  const showFollowsYouBadge = title === 'followers'
+  const showFollowsYouBadges = title === 'following'
   const showTags = title === 'following'
 
   // Map the chosen responses to the FollowListProfile type
@@ -102,7 +102,7 @@ export function UserProfilePageTable({
       )}
       <FollowList
         profiles={profiles || []}
-        showFollowsYouBadge={showFollowsYouBadge}
+        showFollowsYouBadges={showFollowsYouBadges}
         showTags={showTags}
         listClassName='gap-2 p-4 rounded-xl bg-white/50'
         listItemClassName='rounded-xl hover:bg-white/50 p-2'

@@ -3,13 +3,14 @@ import { Avatar } from '#/components/avatar'
 import Link from 'next/link'
 import type { Address } from 'viem'
 import { truncateAddress } from '#/lib/utilities'
+import { useFollowState } from '#/hooks/use-follow-state'
 
 interface FollowListItemNameProps {
   address: Address
   avatarUrl?: string
   className?: string
   name?: string
-  showFollowsYouBadge: boolean
+  showFollowsYouBadges: boolean
 }
 
 export function Name({ name, address }: { name: string; address: Address }) {
@@ -25,17 +26,18 @@ export function Name({ name, address }: { name: string; address: Address }) {
 export function FollowListItemName({
   address,
   name,
-  showFollowsYouBadge,
+  showFollowsYouBadges,
   avatarUrl,
   className = ''
 }: FollowListItemNameProps) {
+  const isFollower = useFollowState(address) === 'follows'
   return (
     <Flex className={`gap-2 ${className}`}>
       <Avatar name={name || address} avatarUrl={avatarUrl} />
       <Flex direction='column' justify='center' align='start' className='tabular-nums relative'>
         <Name name={name || address} address={address} />
         {/* Badge will appear below the name, but the name stays centered */}
-        {showFollowsYouBadge && (
+        {showFollowsYouBadges && isFollower && (
           <Badge
             size='1'
             radius='full'
