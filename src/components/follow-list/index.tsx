@@ -1,9 +1,16 @@
-import type { FollowerResponse, FollowingResponse } from '#/api/requests'
 import { Box } from '@radix-ui/themes'
 import { FollowListItem } from './follow-list-item'
+import type { Address } from 'viem'
+
+export interface FollowListProfile {
+  address: Address
+  name?: string
+  avatarUrl?: string
+  tags: string[]
+}
 
 interface FollowTableProps {
-  profiles: (FollowerResponse | FollowingResponse)[]
+  profiles: FollowListProfile[]
   showFollowsYouBadge?: boolean
   showTags?: boolean
   listClassName?: string
@@ -20,20 +27,12 @@ export function FollowList({
   return (
     <Box className={`flex flex-col ${listClassName}`}>
       {profiles.map(profile => {
-        // Condense profile data
-        const condensedProfile = {
-          address: profile.address,
-          name: profile.ens?.name,
-          avatarUrl: profile.ens?.avatar,
-          tags: profile.tags || []
-        }
-
         return (
           <FollowListItem
-            profile={condensedProfile}
+            profile={profile}
             showFollowsYouBadge={showFollowsYouBadge}
             showTags={showTags}
-            key={condensedProfile.address}
+            key={profile.address}
             className={listItemClassName}
           />
         )

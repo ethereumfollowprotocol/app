@@ -1,16 +1,11 @@
 import { Box } from '@radix-ui/themes'
-import type { Address } from 'viem'
 import { FollowButton } from '#/components/follow-button'
 import { FollowListItemName } from './follow-list-item-name'
 import { FollowListItemTags } from './follow-list-item-tags'
+import type { FollowListProfile } from '.'
 
 export interface FollowListItemProps {
-  profile: {
-    address: Address
-    avatarUrl?: string
-    name?: string
-    tags: Array<string>
-  }
+  profile: FollowListProfile
   showFollowsYouBadge: boolean
   showTags: boolean
   className?: string
