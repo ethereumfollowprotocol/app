@@ -32,19 +32,18 @@ export function FollowListItemName({
   return (
     <Flex className={`gap-2 ${className}`}>
       <Avatar name={name || address} avatarUrl={avatarUrl} />
-      <Flex direction='column' justify='center' align='start' className='tabular-nums'>
+      <Flex direction='column' justify='center' align='start' className='tabular-nums relative'>
         <Name name={name || address} address={address} />
         {/* Badge will appear below the name, but the name stays centered */}
-        {
-          //showFollowsYouBadge &&
+        {showFollowsYouBadge && (
           <Badge
             size='1'
             radius='full'
-            className='font-bold text-[8px] self-start mt-[-14] bg-[#CDCDCD] text-[#333333]'
+            className='font-bold text-[8px] self-start mt-1 bg-[#CDCDCD] text-[#333333] absolute -bottom-2 left-0'
           >
             Follows you
           </Badge>
-        }
+        )}
       </Flex>
     </Flex>
   )
