@@ -5,25 +5,24 @@ import { FollowListItemTags } from './follow-list-item-tags'
 import type { FollowListProfile } from '.'
 
 export interface FollowListItemProps {
+  className?: string
   profile: FollowListProfile
   showFollowsYouBadge: boolean
   showTags: boolean
-  className?: string
-  tableRowClassName?: string
 }
 
 export function FollowListItem({
+  className = '',
   profile,
   showFollowsYouBadge,
-  showTags,
-  className = ''
+  showTags
 }: FollowListItemProps) {
   return (
     <Box className={`flex items-center justify-between ${className}`}>
       {/* Left section: Avatar and Name */}
       <FollowListItemName
-        name={profile.name || profile.address}
         address={profile.address}
+        name={profile.name}
         showFollowsYouBadge={showFollowsYouBadge}
         avatarUrl={profile.avatarUrl}
         className='flex-none w-56' // Fixed width for consistent layout

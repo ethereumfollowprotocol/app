@@ -4,8 +4,8 @@ import type { Address } from 'viem'
 
 export interface FollowListProfile {
   address: Address
-  name?: string
   avatarUrl?: string
+  name?: string
   tags: string[]
 }
 
@@ -18,22 +18,22 @@ interface FollowTableProps {
 }
 
 export function FollowList({
+  listClassName = '',
+  listItemClassName = '',
   profiles,
   showFollowsYouBadge = false,
-  showTags = false,
-  listClassName = '',
-  listItemClassName = ''
+  showTags = false
 }: FollowTableProps) {
   return (
     <Box className={`flex flex-col ${listClassName}`}>
       {profiles.map(profile => {
         return (
           <FollowListItem
+            className={listItemClassName}
+            key={profile.address}
             profile={profile}
             showFollowsYouBadge={showFollowsYouBadge}
             showTags={showTags}
-            key={profile.address}
-            className={listItemClassName}
           />
         )
       })}
