@@ -40,7 +40,7 @@ export function FollowListItemName({
           <Badge
             size='1'
             radius='full'
-            className='font-bold text-[8px] self-start mt-[-14] bg-[#CDCDCD] text-[#333333] bg-white/50'
+            className='font-bold text-[8px] self-start mt-[-14] bg-[#CDCDCD] text-[#333333]'
           >
             Follows you
           </Badge>
