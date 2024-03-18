@@ -38,6 +38,16 @@ export function UserProfilePageTable({
   const showFollowsYouBadge = title === 'followers'
   const showTags = title === 'following'
 
+  // Map the chosen responses to the FollowListProfile type
+  const profiles = chosenResponses?.map(response => {
+    return {
+      address: response.address,
+      avatarUrl: response.ens?.avatar,
+      name: response.ens?.name,
+      tags: response.tags
+    }
+  })
+
   return (
     <Box>
       <Flex mb='2' justify='between'>
@@ -91,7 +101,7 @@ export function UserProfilePageTable({
         </Box>
       )}
       <FollowList
-        profiles={chosenResponses || []}
+        profiles={profiles || []}
         showFollowsYouBadge={showFollowsYouBadge}
         showTags={showTags}
         listClassName='gap-2 p-4 rounded-xl bg-white/50'
