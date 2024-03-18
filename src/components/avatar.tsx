@@ -1,7 +1,7 @@
 import { Avatar as RadixAvatar } from '@radix-ui/themes'
 
 interface AvatarProps {
-  name: string
+  name: string // ENS name or address
   avatarUrl?: string
   size?: '1' | '2' | '3' | '4' // Add more when needed
 }
