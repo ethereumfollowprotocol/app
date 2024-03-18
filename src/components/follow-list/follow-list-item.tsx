@@ -38,7 +38,7 @@ export function FollowListItem({
       )}
 
       {/* Right section: Follow Button with consistent width */}
-      <FollowButton address={profile.address} />
+      <FollowButton address={profile.address} className='rounded-xl' />
     </Box>
   )
 }
