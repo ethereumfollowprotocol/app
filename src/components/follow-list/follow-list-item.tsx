@@ -23,7 +23,7 @@ export function FollowListItem({
       <FollowListItemName
         address={profile.address}
         name={profile.name}
-        showFollowsYouBadge={showFollowsYouBadges}
+        showFollowsYouBadges={showFollowsYouBadges}
         avatarUrl={profile.avatarUrl}
         className='flex-none w-56' // Fixed width for consistent layout
       />
