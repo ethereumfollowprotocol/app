@@ -58,7 +58,7 @@ export function SelectWithFilter({
         <Select.Root value={filter?.toLowerCase()} onValueChange={handleChange}>
           <Select.Trigger
             variant='soft'
-            className='rounded-lg bg-white/50 p-4 font-semibold !border-none text-sm ml-2'
+            className='rounded-lg bg-white/50 p-4 font-semibold !border-none text-sm ml-2 w-40'
             placeholder={placeholder}
           />
           <Select.Content>
