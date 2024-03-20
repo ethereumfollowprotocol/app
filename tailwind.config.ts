@@ -91,7 +91,9 @@ const { colors, fontFamily, fontSize, keyframes, animation, spacing } = {
       '800': 'hsl(29, 82%, 29%)',
       '900': 'hsl(26, 74%, 26%)',
       '950': 'hsl(23, 86%, 14%)'
-    }
+    },
+    grey: '#CDCDCD',
+    darkGrey: '#333333'
   },
   fontFamily: {
     sans: ['var(--font-inter)'],

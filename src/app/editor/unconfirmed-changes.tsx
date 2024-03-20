@@ -1,4 +1,3 @@
-import { useConnectedProfile } from '#/api/actions'
 import { FollowList, type FollowListProfile } from '#/components/follow-list'
 import { useCart } from '#/contexts/cart-context'
 import { hexlify } from '#/lib/utilities'
@@ -6,7 +5,6 @@ import { Box, Button, Text } from '@radix-ui/themes'
 import { useMemo } from 'react'
 
 export function UnconfirmedChanges() {
-  const { profile: connectedProfile } = useConnectedProfile()
   const { cartItems, totalCartItems } = useCart()
 
   // map the cart items to the FollowListProfile type
@@ -15,7 +13,7 @@ export function UnconfirmedChanges() {
     () =>
       cartItems.map(item => ({
         address: hexlify(item.listOp.data),
-        tags: []
+        tags: ['something', 'crypto']
       })),
     [cartItems]
   )

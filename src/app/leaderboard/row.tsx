@@ -72,11 +72,7 @@ export function TableRow({
               <Text as='p' className='font-bold sm:text-lg text-sm hover:text-pink-400'>
                 {name}
               </Text>
-              <Badge
-                size='1'
-                radius='full'
-                className='font-bold text-[10px] bg-[#CDCDCD] text-[#333333]'
-              >
+              <Badge size='1' radius='full' className='font-bold text-[10px] bg-grey text-darkGrey'>
                 Follows you
               </Badge>
             </Flex>
