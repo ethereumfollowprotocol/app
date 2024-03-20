@@ -23,7 +23,7 @@ export function FollowList({
   showTags = false
 }: FollowTableProps) {
   return (
-    <Box className={`flex flex-col ${listClassName}`}>
+    <Box className={`flex flex-col min-w-max ${listClassName}`}>
       {profiles.map(profile => {
         return (
           <FollowListItem

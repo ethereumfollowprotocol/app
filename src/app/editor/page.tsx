@@ -32,7 +32,7 @@ export default function EditorPage() {
               Add
             </Button>
           </Flex>
-          <Box mx='6'>
+          <Box px='6'>
             <Recommendations header='Recommendations' />
           </Box>
         </Flex>
