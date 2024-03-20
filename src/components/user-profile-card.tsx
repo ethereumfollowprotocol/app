@@ -19,11 +19,7 @@ export function UserProfileCard({ addressOrName, stats }: Props) {
   /////////////////////////////////////////////////////////////////////////////
   // followers for the user profile that is being viewed
   /////////////////////////////////////////////////////////////////////////////
-  const {
-    data: userProfileResponse,
-    error: userProfileError,
-    status: userProfileStatus
-  } = useQuery({
+  const { data: userProfileResponse } = useQuery({
     queryKey: ['profile', addressOrName],
     queryFn: () => fetchUserProfile({ addressOrName })
   })

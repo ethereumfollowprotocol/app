@@ -1,4 +1,3 @@
-import { UserRejectedRequestError } from 'viem'
 import { injected, walletConnect, metaMask } from 'wagmi/connectors'
 import { APP_DESCRIPTION, APP_NAME, APP_URL } from '#/lib/constants'
 import { mainnet, sepolia, foundry, optimism, optimismSepolia } from 'wagmi/chains'
@@ -9,7 +8,6 @@ import {
   createConfig,
   cookieStorage,
   createStorage,
-  unstable_connector,
   type CreateConnectorFn
 } from 'wagmi'
 

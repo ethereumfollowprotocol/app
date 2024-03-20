@@ -8,7 +8,7 @@ import { truncateAddress } from '#/lib/utilities'
 import { Button, Card, Flex } from '@radix-ui/themes'
 import clsx from 'clsx'
 import { useQueryState } from 'next-usequerystate'
-import { useSearchParams } from 'next/navigation'
+// import { useSearchParams } from 'next/navigation'
 import * as React from 'react'
 import { useWaitForTransactionReceipt } from 'wagmi'
 import { LIST_STORAGE_LOCATION_OPTIONS, ONBOARDING_STEPS } from './constants'
@@ -35,8 +35,8 @@ export function CreateEfpList() {
 
   const {
     isLoading: isConfirming,
-    isSuccess: isConfirmed,
-    data
+    isSuccess: isConfirmed
+    // data
   } = useWaitForTransactionReceipt({
     hash
   })
@@ -89,21 +89,21 @@ export function CreateNewListForm() {
 
   const {
     writeMint,
-    writeMintAsync,
+    // writeMintAsync,
     writeMintData: hash,
-    simulateMintStatus,
-    writeMintStatus,
-    writeMintError,
-    simulateMintData,
-    simulateMintError
+    // simulateMintStatus,
+    // writeMintStatus,
+    // writeMintError,
+    simulateMintData
+    // simulateMintError
   } = useMintEFP()
 
-  const mintIsPending = simulateMintStatus === 'pending' || writeMintStatus === 'pending'
+  // const mintIsPending = simulateMintStatus === 'pending' || writeMintStatus === 'pending'
 
-  const [isPending, startTransition] = React.useTransition()
+  const [_, startTransition] = React.useTransition()
 
-  const searchParams = useSearchParams()
-  const currentSearchParam = searchParams.get('list_storage_location_chain_id')
+  // const searchParams = useSearchParams()
+  // const currentSearchParam = searchParams.get('list_storage_location_chain_id')
 
   function selectListStorageLocationChainId(listStorageLocationChainId: number) {
     startTransition(() => {
@@ -121,8 +121,8 @@ export function CreateNewListForm() {
 
   const {
     isLoading: isConfirming,
-    isSuccess: isConfirmed,
-    data: mintReceipt
+    isSuccess: isConfirmed
+    // data: mintReceipt
   } = useWaitForTransactionReceipt({
     hash
   })

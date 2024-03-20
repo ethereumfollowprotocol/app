@@ -23,7 +23,7 @@ export function LeaderboardTable({
     defaultValue: initialFilter ?? null
   })
 
-  const { data, error, status } = useQuery({
+  const { data, } = useQuery({
     queryKey: ['leaderboard', filter],
     queryFn: () =>
       fetchLeaderboard({

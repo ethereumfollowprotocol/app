@@ -107,19 +107,7 @@ export function TableRow({
         className={clsx([rank === 1 ? 'mt-5' : 'mt-2', 'flex lg:ml-6'])}
         data-name='action-column'
       >
-        <FollowButton
-          text={
-            status === 'followed'
-              ? 'Unfollow'
-              : status === 'blocked'
-                ? 'Unblock'
-                : status === 'muted'
-                  ? 'Unmute'
-                  : 'Follow'
-          }
-          pending={true}
-          address={address}
-        />
+        <FollowButton address={address} />
       </Table.Cell>
     </Table.Row>
   )

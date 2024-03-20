@@ -24,7 +24,7 @@ export function useConnectedFollowing(): ConnectedAddressFollowing {
   /////////////////////////////////////////////////////////////////////////////
   // following for the connected account
   /////////////////////////////////////////////////////////////////////////////
-  const { data, error, status } = useQuery({
+  const { data } = useQuery({
     queryKey: ['following', connectedAddress],
     enabled: isConnected,
     queryFn: () => fetchUserFollowing({ addressOrName: connectedAddress as Address })
@@ -54,7 +54,7 @@ export function useConnectedFollowers(): ConnectedAddressFollowers {
   /////////////////////////////////////////////////////////////////////////////
   // followers for the connected account
   /////////////////////////////////////////////////////////////////////////////
-  const { data, error, status } = useQuery({
+  const { data } = useQuery({
     queryKey: ['followers', connectedAddress],
     enabled: isConnected,
     queryFn: () => fetchUserFollowers({ addressOrName: connectedAddress as Address })
@@ -100,7 +100,7 @@ export function useConnectedProfile(): ConnectedAddressProfile {
   /////////////////////////////////////////////////////////////////////////////
   // followers for the connected account
   /////////////////////////////////////////////////////////////////////////////
-  const { data, error, status } = useQuery({
+  const { data } = useQuery({
     queryKey: ['Profile', connectedAddress],
     enabled: isConnected && !!connectedAddress,
     queryFn: connectedAddress
@@ -169,7 +169,7 @@ type Following = {
 }
 
 export function useFollowing(addressOrName: Address | string): Following {
-  const { data, error, status } = useQuery({
+  const { data } = useQuery({
     queryKey: ['following', addressOrName],
     queryFn: () => fetchUserFollowing({ addressOrName })
   })
@@ -192,7 +192,7 @@ type Followers = {
 }
 
 export function useFollowers(addressOrName: Address | string): Followers {
-  const { data, error, status } = useQuery({
+  const { data } = useQuery({
     queryKey: ['followers', addressOrName],
     queryFn: () => fetchUserFollowers({ addressOrName })
   })
