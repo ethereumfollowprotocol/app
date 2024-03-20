@@ -2,19 +2,14 @@
 
 import { Search } from '#/components/search'
 import { Box, Button, Flex, Heading } from '@radix-ui/themes'
-import { useConnectedProfile } from '#/api/actions'
 import { Recommendations } from '#/app/editor/recommendations'
 import { UnconfirmedChanges } from './unconfirmed-changes'
 import { Legend } from './legend'
 
 export default function EditorPage() {
-  const { profile } = useConnectedProfile()
-
   const handleAddFollow = () => {
     console.log('Adding to follow in editor')
   }
-
-  if (!profile) return <Box>No profile found</Box>
 
   return (
     <main className='flex min-h-full h-full w-full flex-col items-center text-center px-28 pt-10'>
