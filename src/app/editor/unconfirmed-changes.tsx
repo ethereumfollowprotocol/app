@@ -24,7 +24,6 @@ export function UnconfirmedChanges() {
     console.log('Confirming changes')
   }
 
-  if (!connectedProfile) return null
   if (!cartItems.length) return null // TODO handle no items in cart
 
   return (
@@ -33,6 +32,9 @@ export function UnconfirmedChanges() {
         profiles={unconfirmedProfiles}
         listClassName='gap-2 p-4 rounded-xl bg-white/50'
         listItemClassName='rounded-xl p-2'
+        showAddTag={true}
+        showFollowsYouBadges={true}
+        showTags={true}
       />
       <Box className='mr-8 flex justify-end'>
         <Box className='flex gap-6 p-6 bg-white rounded-xl'>
