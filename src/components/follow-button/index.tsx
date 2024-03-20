@@ -77,7 +77,7 @@ export function FollowButton({ address, className = '', ...props }: FollowButton
         theme[buttonState].bg,
         theme[buttonState].text,
         'rounded-lg font-bold h-full',
-        'w-[107px] px-2 py-1.5', // Fixed width for consistent layout
+        'w-[107px] max-h-[37px] px-2 py-1.5', // Fixed width for consistent layout
         className
       ])}
       onClick={handleAction}
