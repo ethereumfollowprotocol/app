@@ -4,9 +4,10 @@ import { useProfile } from '#/api/actions'
 import type { FollowerResponse, FollowingResponse } from '#/api/requests'
 import { Searchbar } from '#/components/searchbar.tsx'
 import { SelectWithFilter } from '#/components/select-with-filter.tsx'
-import { ChevronDownIcon } from '@radix-ui/react-icons'
+import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons'
 import { Box, Flex, IconButton, Text } from '@radix-ui/themes'
 import { FollowList, type FollowListProfile } from '#/components/follow-list'
+import { useState } from 'react'
 
 /**
  * TODO: paginate
@@ -22,6 +23,7 @@ export function UserProfilePageTable({
   searchQuery: string
   selectQuery: string
 }) {
+  const [showTags, setShowTags] = useState(false)
   const { followers, following } = useProfile(addressOrName)
 
   const searchQueryKey = `${title.toLowerCase()}-query`
@@ -36,7 +38,6 @@ export function UserProfilePageTable({
 
   const chosenResponses = title === 'following' ? filteredFollowing : filteredFollowers
   const showFollowsYouBadges = title === 'following'
-  const showTags = title === 'following'
 
   // Map the chosen responses to the FollowListProfile type
   const profiles: FollowListProfile[] =
@@ -47,33 +48,19 @@ export function UserProfilePageTable({
       }
     }) || []
 
+  const filterOptions = ['follower count', 'latest first', 'earliest first', 'alphabetical']
+
   return (
     <Box>
-      <Flex mb='2' justify='between'>
-        <Box className='space-x-2 flex items-end' mr='2'>
-          <Text my='auto' weight='bold' className='h-full inline mt-1.5 uppercase' as='p'>
-            {title}
-          </Text>
-          <Searchbar queryKey={searchQueryKey} placeholder='Search...' />
-        </Box>
-        <IconButton
-          className='text-black font-semibold text-sm ml-auto '
-          radius='large'
-          variant='ghost'
-          my='auto'
-          size='1'
-        >
-          Tags <ChevronDownIcon />
-        </IconButton>
-        <Box px='0'>
-          <SelectWithFilter
-            dropdownOnly={true}
-            defaultValue={selectQuery}
-            filterQueryKey={selectQueryKey}
-            items={['follower count', 'latest first', 'earliest first', 'alphabetical']}
-          />
-        </Box>
-      </Flex>
+      <PageHeader
+        title={title}
+        searchQueryKey={searchQueryKey}
+        selectQuery={selectQuery}
+        selectQueryKey={selectQueryKey}
+        onToggleTags={() => setShowTags(prev => !prev)}
+        showTags={showTags}
+        filterOptions={filterOptions}
+      />
       {chosenResponses?.length === 0 && (
         <Box className='bg-white/70 rounded-xl' py='4'>
           <Text align='center' as='p' my='4' size='6' className='font-semibold'>
@@ -107,5 +94,55 @@ export function UserProfilePageTable({
         listItemClassName='rounded-xl hover:bg-white/50 p-2'
       />
     </Box>
+  )
+}
+
+interface PageHeaderProps {
+  title: string
+  selectQuery: string
+  searchQueryKey: string
+  selectQueryKey: string
+  onToggleTags: () => void
+  showTags: boolean
+  filterOptions: string[]
+}
+
+function PageHeader({
+  title,
+  selectQuery,
+  searchQueryKey,
+  selectQueryKey,
+  onToggleTags,
+  showTags,
+  filterOptions
+}: PageHeaderProps) {
+  return (
+    <Flex mb='2' justify='between' className='w-full'>
+      <Flex gap='4' align='center'>
+        <Text weight='bold' className='uppercase' as='p'>
+          {title}
+        </Text>
+        <Flex gap='2'>
+          <Searchbar queryKey={searchQueryKey} placeholder='Search...' />
+          <IconButton
+            onClick={onToggleTags}
+            className='text-black font-semibold text-sm flex items-center gap-1'
+            radius='large'
+            variant='ghost'
+            my='auto'
+            size='1'
+          >
+            <Text>Tags</Text>
+            {showTags ? <ChevronUpIcon /> : <ChevronDownIcon />}
+          </IconButton>
+        </Flex>
+      </Flex>
+      <SelectWithFilter
+        dropdownOnly={true}
+        defaultValue={selectQuery}
+        filterQueryKey={selectQueryKey}
+        items={filterOptions}
+      />
+    </Flex>
   )
 }
