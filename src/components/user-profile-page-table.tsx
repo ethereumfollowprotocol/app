@@ -6,7 +6,7 @@ import { Searchbar } from '#/components/searchbar.tsx'
 import { SelectWithFilter } from '#/components/select-with-filter.tsx'
 import { ChevronDownIcon } from '@radix-ui/react-icons'
 import { Box, Flex, IconButton, Text } from '@radix-ui/themes'
-import { FollowList } from '#/components/follow-list'
+import { FollowList, type FollowListProfile } from '#/components/follow-list'
 
 /**
  * TODO: paginate
@@ -39,14 +39,13 @@ export function UserProfilePageTable({
   const showTags = title === 'following'
 
   // Map the chosen responses to the FollowListProfile type
-  const profiles = chosenResponses?.map(response => {
-    return {
-      address: response.address,
-      avatarUrl: response.ens?.avatar,
-      name: response.ens?.name,
-      tags: response.tags
-    }
-  })
+  const profiles: FollowListProfile[] =
+    chosenResponses?.map(response => {
+      return {
+        address: response.address,
+        tags: response.tags
+      }
+    }) || []
 
   return (
     <Box>
@@ -101,7 +100,7 @@ export function UserProfilePageTable({
         </Box>
       )}
       <FollowList
-        profiles={profiles || []}
+        profiles={profiles}
         showFollowsYouBadges={showFollowsYouBadges}
         showTags={showTags}
         listClassName='gap-2 p-4 rounded-xl bg-white/50'

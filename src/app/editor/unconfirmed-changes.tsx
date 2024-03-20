@@ -1,26 +1,34 @@
 import { useConnectedProfile } from '#/api/actions'
-import { FollowList } from '#/components/follow-list'
+import { fetchUserProfile } from '#/api/requests'
+import { FollowList, type FollowListProfile } from '#/components/follow-list'
 import { useCart } from '#/contexts/cart-context'
+import { hexlify } from '#/lib/utilities'
 import { useMemo } from 'react'
+import { getAddress } from 'viem'
 
 export function UnconfirmedChanges() {
   const { profile: connectedProfile } = useConnectedProfile()
   const { cartItems } = useCart()
-  console.log('🦄 ~ UnconfirmedChanges ~ cartItems:', cartItems)
 
-  const unconfirmedProfiles = useMemo(
+  // map the cart items to the FollowListProfile type
+  // use the op add tag, remove tag, add list, remove list to determine the operation
+  const unconfirmedProfiles = useMemo<FollowListProfile[]>(
     () =>
       cartItems.map(item => ({
-        address: item.listOp.data.toString('hex'),
-        operation: item.listOp.opcode === 1 ? 'Add' : 'Remove'
+        address: hexlify(item.listOp.data),
+        tags: []
       })),
     [cartItems]
   )
-  console.log('🦄 ~ unconfirmedProfiles ~ unconfirmedProfiles:', unconfirmedProfiles)
 
   if (!connectedProfile) return null
-  if (!cartItems) return null
+  if (!cartItems.length) return null // TODO handle no items in cart
+
   return (
-    <FollowList profiles={unconfirmedProfiles} listClassName='gap-2 p-4 rounded-xl bg-white/50' />
+    <FollowList
+      profiles={unconfirmedProfiles}
+      listClassName='gap-2 p-4 rounded-xl bg-white/50'
+      listItemClassName='rounded-xl p-2'
+    />
   )
 }

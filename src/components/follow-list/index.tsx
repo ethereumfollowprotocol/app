@@ -4,8 +4,6 @@ import type { Address } from 'viem'
 
 export interface FollowListProfile {
   address: Address
-  avatarUrl?: string
-  name?: string
   tags: string[]
 }
 

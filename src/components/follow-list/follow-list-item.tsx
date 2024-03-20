@@ -3,6 +3,7 @@ import { FollowButton } from '#/components/follow-button'
 import { FollowListItemName } from './follow-list-item-name'
 import { FollowListItemTags } from './follow-list-item-tags'
 import type { FollowListProfile } from '.'
+import { useEnsProfile } from '#/hooks/use-ens-profile'
 
 export interface FollowListItemProps {
   className?: string
@@ -17,14 +18,18 @@ export function FollowListItem({
   showFollowsYouBadges,
   showTags
 }: FollowListItemProps) {
+  const { data: ensProfile } = useEnsProfile(profile.address)
+  const profileName = ensProfile?.name
+  const profileAvatar = ensProfile?.avatar
+
   return (
     <Box className={`flex items-center justify-between ${className}`}>
       {/* Left section: Avatar and Name */}
       <FollowListItemName
         address={profile.address}
-        name={profile.name}
+        name={profileName}
         showFollowsYouBadges={showFollowsYouBadges}
-        avatarUrl={profile.avatarUrl}
+        avatarUrl={profileAvatar}
         className='flex-none w-56' // Fixed width for consistent layout
       />
 
