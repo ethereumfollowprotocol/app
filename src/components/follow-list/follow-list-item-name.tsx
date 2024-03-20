@@ -13,7 +13,7 @@ interface FollowListItemNameProps {
   showFollowsYouBadges: boolean
 }
 
-export function Name({ name, address }: { name: string; address: Address }) {
+export function Name({ name, address }: { name?: string; address: Address }) {
   return (
     <Link href={`/${name || address}`}>
       <Text as='p' className='font-bold xl:text-lg lg:text-md text-sm hover:text-pink-400'>
@@ -35,7 +35,7 @@ export function FollowListItemName({
     <Flex className={`gap-2 ${className}`}>
       <Avatar name={name || address} avatarUrl={avatarUrl} />
       <Flex direction='column' justify='center' align='start' className='tabular-nums relative'>
-        <Name name={name || address} address={address} />
+        <Name name={name} address={address} />
         {/* Badge will appear below the name, but the name stays centered */}
         {showFollowsYouBadges && isFollower && (
           <Badge
