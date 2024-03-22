@@ -13,7 +13,7 @@ export function UnconfirmedChanges() {
     () =>
       cartItems.map(item => ({
         address: hexlify(item.listOp.data),
-        tags: ['something', 'crypto']
+        tags: []
       })),
     [cartItems]
   )

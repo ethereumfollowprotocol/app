@@ -35,6 +35,7 @@ export function FollowList({
             showAddTag={showAddTag}
             showFollowsYouBadges={showFollowsYouBadges}
             showTags={showTags}
+            tags={profile.tags}
           />
         )
       })}

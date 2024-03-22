@@ -19,7 +19,8 @@ export function FollowListItem({
   profile,
   showFollowsYouBadges,
   showTags,
-  showAddTag
+  showAddTag,
+  tags
 }: FollowListItemProps) {
   const { data: ensProfile } = useEnsProfile(profile.address)
   const profileName = ensProfile?.name
@@ -40,7 +41,7 @@ export function FollowListItem({
       {showTags && (
         <FollowListItemTags
           address={profile.address}
-          tags={profile.tags}
+          tags={tags}
           className='flex items-center'
           showAddTag={showAddTag}
         />
