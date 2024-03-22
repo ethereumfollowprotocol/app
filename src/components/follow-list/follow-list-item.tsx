@@ -11,6 +11,7 @@ export interface FollowListItemProps {
   showFollowsYouBadges: boolean
   showTags: boolean
   showAddTag: boolean // Prop to handle showing add tag button in the FollowList
+  tags: string[]
 }
 
 export function FollowListItem({
