@@ -14,7 +14,7 @@ export function listOpAsHexstring(listOp: ListOp): `0x${string}` {
   return `0x${versionHex}${opcodeHex}${dataHex}`
 }
 
-export function listOpAddListRecord(address: Address) {
+export function listOpAddListRecord(address: Address): ListOp {
   return {
     version: 1,
     opcode: 1,
@@ -22,7 +22,7 @@ export function listOpAddListRecord(address: Address) {
   }
 }
 
-export function listOpRemoveListRecord(address: Address) {
+export function listOpRemoveListRecord(address: Address): ListOp {
   return {
     version: 1,
     opcode: 2,
@@ -30,7 +30,7 @@ export function listOpRemoveListRecord(address: Address) {
   }
 }
 
-export function listOpAddTag(address: Address, tag: string) {
+export function listOpAddTag(address: Address, tag: string): ListOp {
   return {
     version: 1,
     opcode: 3,
@@ -38,7 +38,7 @@ export function listOpAddTag(address: Address, tag: string) {
   }
 }
 
-export function listOpRemoveTag(address: Address, tag: string) {
+export function listOpRemoveTag(address: Address, tag: string): ListOp {
   return {
     version: 1,
     opcode: 4,
