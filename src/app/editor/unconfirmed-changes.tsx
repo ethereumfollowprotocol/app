@@ -11,10 +11,12 @@ export function UnconfirmedChanges() {
 
   if (!cartItems.length) return null // TODO handle no items in cart
 
+  const profiles = cartAddresses.map(address => ({ address, tags: [] }))
+
   return (
     <>
       <FollowList
-        profileAddresses={cartAddresses}
+        profiles={profiles}
         listClassName='gap-2 p-4 rounded-xl bg-white/50'
         listItemClassName='rounded-xl p-2'
         showAddTag={true}
