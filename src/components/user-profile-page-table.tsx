@@ -24,7 +24,8 @@ export function UserProfilePageTable({
   selectQuery: string
 }) {
   const [showTags, setShowTags] = useState(false)
-  const { followers, following } = useProfile(addressOrName)
+  const profile = useProfile(addressOrName)
+  const { followers, following } = profile
   const { profile: connectedProfile } = useConnectedProfile()
 
   const searchQueryKey = `${title.toLowerCase()}-query`

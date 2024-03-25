@@ -10,6 +10,7 @@ import { useSelectedProfile } from '#/contexts/selected-profile-context'
  */
 const useSelectedProfileTags = (followerOrFollowingAddress: Address): string[] => {
   const { selectedProfile } = useSelectedProfile()
+  console.log('🦄 ~ useSelectedProfileTags ~ selectedProfile:', selectedProfile)
 
   return useMemo(() => {
     if (!selectedProfile) return []

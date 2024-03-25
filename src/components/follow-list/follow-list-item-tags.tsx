@@ -17,7 +17,7 @@ interface FollowListItemTagsProps {
 export function FollowListItemTags({
   address,
   className = '',
-  showAddTag = false
+  showAddTag
 }: FollowListItemTagsProps) {
   const initialTags = useSelectedProfileTags(address)
   const { addCartItem, getTagsFromCartByAddress } = useCart()
@@ -33,10 +33,7 @@ export function FollowListItemTags({
 
   // Add tag to cart
   useEffect(() => {
-    if (selectedTag) {
-      console.log('Adding tag to cart:', selectedTag)
-      handleAddTag(selectedTag)
-    }
+    if (selectedTag) handleAddTag(selectedTag)
   }, [selectedTag, handleAddTag])
 
   const cartTagsForAddress = getTagsFromCartByAddress(address)
@@ -44,9 +41,7 @@ export function FollowListItemTags({
 
   return (
     <Flex className={`flex w-full h-full gap-2 justify-start ${className}`}>
-      {showAddTag && (
-        <AddTagDropdown address={address} setSelectedTag={setSelectedTag} tags={tagsToShow} />
-      )}
+      {showAddTag && <AddTagDropdown address={address} setSelectedTag={setSelectedTag} />}
       {tagsToShow.map(tag => (
         <Badge key={tag} variant='solid' className='bg-white text-black' radius='full'>
           {tag}
@@ -79,14 +74,15 @@ function AddTagButton() {
 
 function AddTagDropdown({
   address,
-  tags: initialTags,
+  tags: initialTags = [],
   setSelectedTag
 }: {
   address: Address
-  tags: string[]
+  tags?: string[] // Optional initial tags to use in the dropdown
   setSelectedTag: (tag: string) => void
 }) {
   const suggestedTags = useSuggestedTags(address)
+  console.log('🦄 ~ suggestedTags:', suggestedTags)
   const tags = [...initialTags, ...suggestedTags]
   const [isEditingCustomTag, setIsEditingCustomTag] = useState(false)
   const [customTagValue, setCustomTagValue] = useState('')
