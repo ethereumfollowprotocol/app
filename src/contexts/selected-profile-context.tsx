@@ -1,6 +1,8 @@
 import { useConnectedProfile, type Profile } from '#/api/actions'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import { createContext, useContext, useEffect, useState } from 'react'
+
+const EDITOR_PATHNAME = '/editor'
 
 interface SelectedProfileContextValue {
   selectedProfile: Profile | undefined
@@ -18,16 +20,16 @@ export const useSelectedProfile = () => {
 }
 
 export const SelectedProfileProvider = ({ children }: { children: React.ReactNode }) => {
-  const router = useRouter()
+  const pathname = usePathname()
   const { profile: connectedProfile } = useConnectedProfile()
   const [selectedProfile, setSelectedProfile] = useState<Profile | undefined>(connectedProfile)
 
   // Update the selected profile to the connected profile if in the editor page
   useEffect(() => {
-    if (router.pathname.includes('/editor')) {
+    if (pathname.includes(EDITOR_PATHNAME)) {
       setSelectedProfile(connectedProfile)
     }
-  }, [connectedProfile, router.pathname])
+  }, [connectedProfile, pathname])
 
   return (
     <SelectedProfileContext.Provider value={{ selectedProfile, setSelectedProfile }}>
