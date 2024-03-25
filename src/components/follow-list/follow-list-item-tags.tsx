@@ -1,4 +1,4 @@
-import { listOpAddTag } from '#/types/list-op'
+import { listOpAddTag, listOpRemoveTag, type ListOpTagOpParams } from '#/types/list-op'
 import { DotsHorizontalIcon, PlusIcon } from '@radix-ui/react-icons'
 import { Badge, Box, Flex, IconButton, Text } from '@radix-ui/themes'
 import * as Select from '@radix-ui/react-select'
@@ -7,6 +7,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useCart } from '#/contexts/cart-context'
 import useSuggestedTags from '#/hooks/use-suggested-tags'
 import { usePathname } from 'next/navigation'
+import clsx from 'clsx'
 
 interface FollowListItemTagsProps {
   address: Address
@@ -24,28 +25,27 @@ export function FollowListItemTags({
   tags: initialTags
 }: FollowListItemTagsProps) {
   const pathname = usePathname()
-  const { addCartItem, getTagsFromCartByAddress, hasListOpAddTag, hasListOpRemoveTag } = useCart()
-  const [selectedTag, setSelectedTag] = useState<string | null>(null)
+  const {
+    addCartItem,
+    removeCartItem,
+    getTagsFromCartByAddress,
+    hasListOpAddTag,
+    hasListOpRemoveTag
+  } = useCart()
 
-  const handleAddTag = useCallback(
-    (tag: string) => {
-      console.log('Adding tag:', tag)
-      addCartItem({ listOp: listOpAddTag(address, tag) })
-      setSelectedTag(null) // Reset selected tag after adding
+  const handleRemoveTagFromCart = useCallback(
+    ({ address, tag }: ListOpTagOpParams) => {
+      removeCartItem(listOpAddTag(address, tag))
     },
-    [address, addCartItem]
+    [removeCartItem]
   )
-
-  // Add tag to cart
-  useEffect(() => {
-    if (selectedTag) handleAddTag(selectedTag)
-  }, [selectedTag, handleAddTag])
 
   const isEditor = pathname === '/editor'
   const isProfile = pathname === '/profile'
-  const showCartTags = isEditor || isProfile
-  const tags = showCartTags ? [...initialTags, ...getTagsFromCartByAddress(address)] : initialTags
-  const getTagBgColor = ({ address, tag }: { address: Address; tag: string }) =>
+  const canEditTags = isEditor || isProfile
+  // Show all tags including the cart tags if in editor or profile page
+  const tags = canEditTags ? [...initialTags, ...getTagsFromCartByAddress(address)] : initialTags
+  const getTagBgColor = ({ address, tag }: ListOpTagOpParams) =>
     hasListOpAddTag({ address, tag })
       ? 'bg-lime-500'
       : hasListOpRemoveTag({ address, tag })
@@ -54,11 +54,17 @@ export function FollowListItemTags({
 
   return (
     <Flex className={`flex w-full h-full gap-2 justify-start ${className}`}>
-      {showAddTag && <AddTagDropdown address={address} setSelectedTag={setSelectedTag} />}
+      {showAddTag && <AddTagDropdown address={address} />}
       {(isEditor ? tags : tags.slice(0, DEFAULT_NUM_TAGS_TO_SHOW)).map(tag => (
-        <Tag key={tag} tag={tag} className={getTagBgColor({ address, tag })} />
+        <Tag
+          address={address}
+          key={address + tag}
+          tag={tag}
+          className={clsx(getTagBgColor({ address, tag }), canEditTags && 'cursor-pointer')}
+          onClick={() => handleRemoveTagFromCart({ address, tag })}
+        />
       ))}
-      {tags.length - 1 > DEFAULT_NUM_TAGS_TO_SHOW && (
+      {!isEditor && tags.length - 1 > DEFAULT_NUM_TAGS_TO_SHOW && (
         <IconButton
           variant='soft'
           size='1'
@@ -73,17 +79,24 @@ export function FollowListItemTags({
 
 function AddTagDropdown({
   address,
-  tags: initialTags = [],
-  setSelectedTag
+  tags: initialTags = []
 }: {
   address: Address
   tags?: string[] // Optional initial tags to use in the dropdown
-  setSelectedTag: (tag: string) => void
 }) {
+  const { addCartItem } = useCart()
   const suggestedTags = useSuggestedTags(address)
   const tags = [...initialTags, ...suggestedTags]
   const [isEditingCustomTag, setIsEditingCustomTag] = useState(false)
   const [customTagValue, setCustomTagValue] = useState('')
+
+  const handleAddTag = useCallback(
+    (tag: string) => {
+      console.log('Adding tag:', tag)
+      addCartItem({ listOp: listOpAddTag(address, tag) })
+    },
+    [address, addCartItem]
+  )
 
   const handleCustomTagClick = () => {
     setIsEditingCustomTag(true)
@@ -98,18 +111,14 @@ function AddTagDropdown({
       const trimmedValue = customTagValue.trim()
       if (trimmedValue === '') return
 
-      setSelectedTag(trimmedValue)
+      handleAddTag(trimmedValue)
       setIsEditingCustomTag(false)
       setCustomTagValue('')
     }
   }
 
   return (
-    <Select.Root
-      defaultValue={tags[0]}
-      onValueChange={setSelectedTag}
-      onOpenChange={() => setIsEditingCustomTag(false)}
-    >
+    <Select.Root onValueChange={handleAddTag} onOpenChange={() => setIsEditingCustomTag(false)}>
       <Select.Trigger>
         <PlusIcon className='flex items-center w-5 h-5 text-black bg-grey rounded-full font-bold p-1' />
       </Select.Trigger>
@@ -139,7 +148,7 @@ function AddTagDropdown({
         )}
         {tags.map(tag => (
           <Select.Item
-            key={tag}
+            key={address + tag}
             value={tag}
             className='bg-grey rounded-full p-1 cursor-pointer hover:ring-gray-500 hover:ring-[1px]'
           >
@@ -152,17 +161,26 @@ function AddTagDropdown({
 }
 
 function Tag({
+  address,
   tag,
-  className,
+  className = '',
   onClick
-}: { tag: string; className?: string; onClick?: () => void }) {
+}: {
+  address: Address
+  tag: string
+  className?: string
+  onClick?: () => void
+}) {
+  const handleClick = () => {
+    if (onClick) onClick()
+  }
   return (
     <Badge
-      key={tag}
+      key={address + tag}
       variant='solid'
       className={`text-black ${className}`}
       radius='full'
-      onClick={onClick}
+      onClick={handleClick}
     >
       {tag}
     </Badge>
