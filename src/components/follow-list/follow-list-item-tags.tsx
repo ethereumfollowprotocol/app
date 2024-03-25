@@ -4,28 +4,30 @@ import { Badge, Box, Flex, IconButton, Text } from '@radix-ui/themes'
 import * as Select from '@radix-ui/react-select'
 import type { Address } from 'viem'
 import { useCallback, useEffect, useState } from 'react'
+import { useCart } from '#/contexts/cart-context'
+import useSelectedProfileTags from '#/hooks/use-selected-profile-tags'
 
 interface FollowListItemTagsProps {
   address: Address
   className?: string
   showAddTag: boolean
-  tags: string[]
 }
 
 export function FollowListItemTags({
   address,
   className = '',
-  showAddTag = false,
-  tags
+  showAddTag = false
 }: FollowListItemTagsProps) {
+  const initialTags = useSelectedProfileTags(address)
+  const { addCartItem, getTagsFromCart } = useCart()
   const [selectedTag, setSelectedTag] = useState<string | null>(null)
 
   const handleAddTag = useCallback(
     (tag: string) => {
-      listOpAddTag(address, tag)
+      addCartItem({ listOp: listOpAddTag(address, tag) })
       setSelectedTag(null) // Reset selected tag after adding
     },
-    [address]
+    [address, addCartItem]
   )
 
   // Add tag to cart
@@ -36,17 +38,18 @@ export function FollowListItemTags({
     }
   }, [selectedTag, handleAddTag])
 
-  const tagsToUse = [...tags, 'eth', 'ens'] // TODO: Remove dummy tags
+  const cartTagsForAddress = getTagsFromCart() // TODO filter by address
+  const tagsToShow = [...initialTags, ...cartTagsForAddress]
 
   return (
     <Flex className={`flex w-full h-full gap-2 justify-start ${className}`}>
-      {showAddTag && <AddTagDropdown setSelectedTag={setSelectedTag} tags={tagsToUse} />}
-      {tagsToUse.map(tag => (
+      {showAddTag && <AddTagDropdown setSelectedTag={setSelectedTag} tags={tagsToShow} />}
+      {tagsToShow.map(tag => (
         <Badge key={tag} variant='solid' className='bg-white text-black' radius='full'>
           {tag}
         </Badge>
       ))}
-      {tags.length > 2 && (
+      {tagsToShow.length > 2 && (
         <IconButton
           variant='soft'
           size='1'

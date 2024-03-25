@@ -2,6 +2,7 @@
 
 import { Header } from '#/components/header.tsx'
 import { CartProvider } from '#/contexts/cart-context'
+import { SelectedProfileProvider } from '#/contexts/selected-profile-context'
 import { DAY, MINUTE } from '#/lib/constants'
 import { wagmiConfig } from '#/lib/wagmi'
 import { Theme } from '@radix-ui/themes'
@@ -39,14 +40,16 @@ export function Providers({ children, initialState }: Props) {
         <WagmiProvider config={wagmiConfig} reconnectOnMount={true} initialState={initialState}>
           {/* <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}> */}
           <RainbowKitProvider coolMode={true} initialChain={1}>
-            <CartProvider>
-              <Theme scaling='100%' appearance='inherit' accentColor='gray'>
-                <React.Suspense>
-                  <Header />
-                </React.Suspense>
-                {children}
-              </Theme>
-            </CartProvider>
+            <SelectedProfileProvider>
+              <CartProvider>
+                <Theme scaling='100%' appearance='inherit' accentColor='gray'>
+                  <React.Suspense>
+                    <Header />
+                  </React.Suspense>
+                  {children}
+                </Theme>
+              </CartProvider>
+            </SelectedProfileProvider>
           </RainbowKitProvider>
           {/* </PersistQueryClientProvider> */}
         </WagmiProvider>

@@ -206,7 +206,7 @@ export function useFollowers(addressOrName: Address | string): Followers {
   }
 }
 
-type Profile = Following & Followers
+export type Profile = Following & Followers
 
 export function useProfile(addressOrName: Address | string): Profile {
   return {

@@ -13,7 +13,7 @@ export function UnconfirmedChanges() {
     () =>
       cartItems.map(item => ({
         address: hexlify(item.listOp.data),
-        tags: []
+        tags: [] // Don't set any tags here; tags are handled in the FollowListItemTags component
       })),
     [cartItems]
   )

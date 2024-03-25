@@ -9,13 +9,13 @@ type CartItem = {
 
 // Define the type for the context value
 type CartContextType = {
-  cartItems: CartItem[]
   addCartItem: (item: CartItem) => void
-  removeCartItem: (listOp: ListOp) => void
-  totalCartItems: number
-
+  cartItems: CartItem[]
+  getTagsFromCart: () => string[]
   hasListOpAddRecord(address: Address): boolean
   hasListOpRemoveRecord(address: Address): boolean
+  removeCartItem: (listOp: ListOp) => void
+  totalCartItems: number
 }
 
 // Create the context with an initial empty value
@@ -63,17 +63,24 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
     )
   }
 
+  const getTagsFromCart = (address: Address) => {
+    return cartItems
+      .filter(item => item.listOp.opcode === 3) // Add tag opcode
+      .map(item => item.listOp.data.toString('utf8'))
+  }
+
   const totalCartItems = cartItems.length
 
   return (
     <CartContext.Provider
       value={{
-        cartItems,
         addCartItem,
-        removeCartItem,
-        totalCartItems,
+        cartItems,
+        getTagsFromCart,
         hasListOpAddRecord,
-        hasListOpRemoveRecord
+        hasListOpRemoveRecord,
+        removeCartItem,
+        totalCartItems
       }}
     >
       {children}

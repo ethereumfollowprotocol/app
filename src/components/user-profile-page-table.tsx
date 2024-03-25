@@ -6,7 +6,7 @@ import { Searchbar } from '#/components/searchbar.tsx'
 import { SelectWithFilter } from '#/components/select-with-filter.tsx'
 import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons'
 import { Box, Flex, IconButton, Text } from '@radix-ui/themes'
-import { FollowList, type FollowListProfile } from '#/components/follow-list'
+import { FollowList } from '#/components/follow-list'
 import { useState } from 'react'
 
 /**
@@ -42,14 +42,7 @@ export function UserProfilePageTable({
   const showFollowsYouBadges = title === 'following'
   const showAddTag = connectedProfile?.address === addressOrName && title === 'following'
 
-  // Map the chosen responses to the FollowListProfile type
-  const profiles: FollowListProfile[] =
-    chosenResponses?.map(response => {
-      return {
-        address: response.address,
-        tags: response.tags
-      }
-    }) || []
+  const profileAddresses = chosenResponses?.map(response => response?.address) || []
 
   return (
     <Box>
@@ -90,7 +83,7 @@ export function UserProfilePageTable({
       <FollowList
         listClassName='gap-2 p-4 rounded-xl bg-white/50'
         listItemClassName='rounded-xl hover:bg-white/50 p-2'
-        profiles={profiles}
+        profileAddresses={profileAddresses}
         showAddTag={showAddTag}
         showFollowsYouBadges={showFollowsYouBadges}
         showTags={showTags}
