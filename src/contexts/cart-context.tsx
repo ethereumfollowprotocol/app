@@ -1,5 +1,6 @@
-import { listOpAsHexstring, type ListOp } from '#/types/list-op'
-import { createContext, useContext, useState, type ReactNode } from 'react'
+import { hexlify } from '#/lib/utilities'
+import { listOpAsHexstring, type ListOp, isTagListOp, extractAddressAndTag } from '#/types/list-op'
+import { createContext, useContext, useState, type ReactNode, useCallback } from 'react'
 import type { Address } from 'viem'
 
 // Define the type for each cart item
@@ -10,8 +11,10 @@ type CartItem = {
 // Define the type for the context value
 type CartContextType = {
   addCartItem: (item: CartItem) => void
+  cartAddresses: Address[]
   cartItems: CartItem[]
-  getTagsFromCart: () => string[]
+  getAddressesFromCart: () => string[]
+  getTagsFromCartByAddress: (address: Address) => string[]
   hasListOpAddRecord(address: Address): boolean
   hasListOpRemoveRecord(address: Address): boolean
   removeCartItem: (listOp: ListOp) => void
@@ -63,20 +66,42 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
     )
   }
 
-  const getTagsFromCart = (address: Address) => {
-    return cartItems
-      .filter(item => item.listOp.opcode === 3) // Add tag opcode
-      .map(item => item.listOp.data.toString('utf8'))
-  }
+  // Retrieves all tags associated with a specific address from the cart items.
+  const getTagsFromCartByAddress = useCallback(
+    (address: Address): string[] => {
+      return cartItems.reduce((tags, { listOp }) => {
+        if (isTagListOp(listOp)) {
+          const { address: opAddress, tag } = extractAddressAndTag(listOp)
+          if (opAddress === address) {
+            tags.push(tag)
+          }
+        }
+        return tags
+      }, [] as string[])
+    },
+    [cartItems]
+  )
+
+  // Retrieves all unique addresses involved in the cart items.
+  const getAddressesFromCart = useCallback((): Address[] => {
+    const addresses = cartItems.map(({ listOp }) =>
+      isTagListOp(listOp) ? extractAddressAndTag(listOp).address : hexlify(listOp.data)
+    )
+
+    return [...new Set(addresses)]
+  }, [cartItems])
 
   const totalCartItems = cartItems.length
+  const cartAddresses = getAddressesFromCart()
 
   return (
     <CartContext.Provider
       value={{
         addCartItem,
+        cartAddresses,
         cartItems,
-        getTagsFromCart,
+        getAddressesFromCart,
+        getTagsFromCartByAddress,
         hasListOpAddRecord,
         hasListOpRemoveRecord,
         removeCartItem,

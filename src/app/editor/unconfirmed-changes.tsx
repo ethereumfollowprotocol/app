@@ -1,22 +1,9 @@
-import { FollowList, type FollowListProfile } from '#/components/follow-list'
+import { FollowList } from '#/components/follow-list'
 import { useCart } from '#/contexts/cart-context'
-import { hexlify } from '#/lib/utilities'
 import { Box, Button, Text } from '@radix-ui/themes'
-import { useMemo } from 'react'
 
 export function UnconfirmedChanges() {
-  const { cartItems, totalCartItems } = useCart()
-
-  // map the cart items to the FollowListProfile type
-  // use the op add tag, remove tag, add list, remove list to determine the operation
-  const unconfirmedProfiles = useMemo<FollowListProfile[]>(
-    () =>
-      cartItems.map(item => ({
-        address: hexlify(item.listOp.data),
-        tags: [] // Don't set any tags here; tags are handled in the FollowListItemTags component
-      })),
-    [cartItems]
-  )
+  const { cartItems, totalCartItems, cartAddresses } = useCart()
 
   const handleConfirm = () => {
     console.log('Confirming changes')
@@ -27,7 +14,7 @@ export function UnconfirmedChanges() {
   return (
     <>
       <FollowList
-        profiles={unconfirmedProfiles}
+        profileAddresses={cartAddresses}
         listClassName='gap-2 p-4 rounded-xl bg-white/50'
         listItemClassName='rounded-xl p-2'
         showAddTag={true}
