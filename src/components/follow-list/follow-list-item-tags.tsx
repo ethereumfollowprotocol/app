@@ -15,6 +15,8 @@ interface FollowListItemTagsProps {
   tags: string[]
 }
 
+const DEFAULT_NUM_TAGS_TO_SHOW = 2
+
 export function FollowListItemTags({
   address,
   className = '',
@@ -27,6 +29,7 @@ export function FollowListItemTags({
 
   const handleAddTag = useCallback(
     (tag: string) => {
+      console.log('Adding tag:', tag)
       addCartItem({ listOp: listOpAddTag(address, tag) })
       setSelectedTag(null) // Reset selected tag after adding
     },
@@ -38,18 +41,20 @@ export function FollowListItemTags({
     if (selectedTag) handleAddTag(selectedTag)
   }, [selectedTag, handleAddTag])
 
-  const showCartTags = pathname === '/editor' || pathname === '/profile'
+  const isEditor = pathname === '/editor'
+  const isProfile = pathname === '/profile'
+  const showCartTags = isEditor || isProfile
   const tags = showCartTags ? [...initialTags, ...getTagsFromCartByAddress(address)] : initialTags
 
   return (
     <Flex className={`flex w-full h-full gap-2 justify-start ${className}`}>
       {showAddTag && <AddTagDropdown address={address} setSelectedTag={setSelectedTag} />}
-      {tags.map(tag => (
+      {(isEditor ? tags : tags.slice(0, DEFAULT_NUM_TAGS_TO_SHOW)).map(tag => (
         <Badge key={tag} variant='solid' className='bg-white text-black' radius='full'>
           {tag}
         </Badge>
       ))}
-      {tags.length > 2 && (
+      {tags.length - 1 > DEFAULT_NUM_TAGS_TO_SHOW && (
         <IconButton
           variant='soft'
           size='1'
