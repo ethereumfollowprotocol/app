@@ -4,7 +4,7 @@ import { Box, Button, Text } from '@radix-ui/themes'
 import { useMemo } from 'react'
 
 export function UnconfirmedChanges() {
-  const { cartItems, totalCartItems, cartAddresses, getTagsFromCartByAddress } = useCart()
+  const { cartItems, totalCartItems, cartAddresses } = useCart()
 
   const handleConfirm = () => {
     console.log('Confirming changes')
