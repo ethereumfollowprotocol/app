@@ -6,6 +6,7 @@ import type { Address } from 'viem'
 import { useCallback, useEffect, useState } from 'react'
 import { useCart } from '#/contexts/cart-context'
 import useSuggestedTags from '#/hooks/use-suggested-tags'
+import { usePathname } from 'next/navigation'
 
 interface FollowListItemTagsProps {
   address: Address
@@ -20,6 +21,7 @@ export function FollowListItemTags({
   showAddTag,
   tags: initialTags
 }: FollowListItemTagsProps) {
+  const pathname = usePathname()
   const { addCartItem, getTagsFromCartByAddress } = useCart()
   const [selectedTag, setSelectedTag] = useState<string | null>(null)
 
@@ -36,18 +38,18 @@ export function FollowListItemTags({
     if (selectedTag) handleAddTag(selectedTag)
   }, [selectedTag, handleAddTag])
 
-  const cartTagsForAddress = getTagsFromCartByAddress(address)
-  const tagsToShow = [...initialTags, ...cartTagsForAddress]
+  const showCartTags = pathname === '/editor' || pathname === '/profile'
+  const tags = showCartTags ? [...initialTags, ...getTagsFromCartByAddress(address)] : initialTags
 
   return (
     <Flex className={`flex w-full h-full gap-2 justify-start ${className}`}>
       {showAddTag && <AddTagDropdown address={address} setSelectedTag={setSelectedTag} />}
-      {tagsToShow.map(tag => (
+      {tags.map(tag => (
         <Badge key={tag} variant='solid' className='bg-white text-black' radius='full'>
           {tag}
         </Badge>
       ))}
-      {tagsToShow.length > 2 && (
+      {tags.length > 2 && (
         <IconButton
           variant='soft'
           size='1'
@@ -57,18 +59,6 @@ export function FollowListItemTags({
         </IconButton>
       )}
     </Flex>
-  )
-}
-
-function AddTagButton() {
-  return (
-    <IconButton
-      radius='full'
-      variant='soft'
-      className='flex items-center w-5 h-5 text-black font-black bg-grey'
-    >
-      <PlusIcon fontWeight={900} />
-    </IconButton>
   )
 }
 
@@ -82,7 +72,6 @@ function AddTagDropdown({
   setSelectedTag: (tag: string) => void
 }) {
   const suggestedTags = useSuggestedTags(address)
-  console.log('🦄 ~ suggestedTags:', suggestedTags)
   const tags = [...initialTags, ...suggestedTags]
   const [isEditingCustomTag, setIsEditingCustomTag] = useState(false)
   const [customTagValue, setCustomTagValue] = useState('')
@@ -113,7 +102,7 @@ function AddTagDropdown({
       onOpenChange={() => setIsEditingCustomTag(false)}
     >
       <Select.Trigger>
-        <AddTagButton />
+        <PlusIcon className='flex items-center w-5 h-5 text-black bg-grey rounded-full font-bold p-1' />
       </Select.Trigger>
       <Select.Content
         position='popper'

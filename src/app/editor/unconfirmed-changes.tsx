@@ -1,17 +1,25 @@
 import { FollowList } from '#/components/follow-list'
 import { useCart } from '#/contexts/cart-context'
 import { Box, Button, Text } from '@radix-ui/themes'
+import { useMemo } from 'react'
 
 export function UnconfirmedChanges() {
-  const { cartItems, totalCartItems, cartAddresses } = useCart()
+  const { cartItems, totalCartItems, cartAddresses, getTagsFromCartByAddress } = useCart()
 
   const handleConfirm = () => {
     console.log('Confirming changes')
   }
 
-  if (!cartItems.length) return null // TODO handle no items in cart
+  const profiles = useMemo(
+    () =>
+      cartAddresses.map(address => ({
+        address,
+        tags: []
+      })),
+    [cartAddresses]
+  )
 
-  const profiles = cartAddresses.map(address => ({ address, tags: [] }))
+  if (!cartItems.length) return null // TODO handle no items in cart
 
   return (
     <>

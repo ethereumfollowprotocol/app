@@ -20,9 +20,9 @@ export function FollowList({
   listClassName = '',
   listItemClassName = '',
   profiles,
-  showAddTag = false,
-  showFollowsYouBadges = false,
-  showTags = false
+  showAddTag,
+  showFollowsYouBadges,
+  showTags
 }: FollowTableProps) {
   return (
     <Box className={`flex flex-col min-w-max ${listClassName}`}>
