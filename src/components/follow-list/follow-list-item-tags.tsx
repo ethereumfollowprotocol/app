@@ -44,7 +44,7 @@ export function FollowListItemTags({
   const isProfile = pathname === '/profile'
   const canEditTags = isEditor || isProfile
   // Show all tags including the cart tags if in editor or profile page
-  const tags = canEditTags ? [...initialTags, ...getTagsFromCartByAddress(address)] : initialTags
+  const tags = canEditTags ? [...getTagsFromCartByAddress(address), ...initialTags] : initialTags
   const getTagBgColor = ({ address, tag }: ListOpTagOpParams) =>
     hasListOpAddTag({ address, tag })
       ? 'bg-lime-500'
