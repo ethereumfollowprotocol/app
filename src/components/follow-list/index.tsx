@@ -2,10 +2,15 @@ import { Box } from '@radix-ui/themes'
 import { FollowListItem } from './follow-list-item'
 import type { Address } from 'viem'
 
+interface FollowListProfile {
+  address: Address
+  tags: string[]
+}
+
 interface FollowTableProps {
   listClassName?: string
   listItemClassName?: string
-  profileAddresses: Address[]
+  profiles: FollowListProfile[]
   showAddTag: boolean
   showFollowsYouBadges: boolean // Prop to handle showing "Follows you" badges in the FollowList
   showTags: boolean
@@ -14,14 +19,14 @@ interface FollowTableProps {
 export function FollowList({
   listClassName = '',
   listItemClassName = '',
-  profileAddresses,
+  profiles,
   showAddTag = false,
   showFollowsYouBadges = false,
   showTags = false
 }: FollowTableProps) {
   return (
     <Box className={`flex flex-col min-w-max ${listClassName}`}>
-      {profileAddresses.map(address => {
+      {profiles.map(({ address, tags }) => {
         return (
           <FollowListItem
             className={listItemClassName}
@@ -30,6 +35,7 @@ export function FollowList({
             showAddTag={showAddTag}
             showFollowsYouBadges={showFollowsYouBadges}
             showTags={showTags}
+            tags={tags}
           />
         )
       })}

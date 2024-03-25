@@ -43,7 +43,11 @@ export function UserProfilePageTable({
   const showFollowsYouBadges = title === 'following'
   const showAddTag = connectedProfile?.address === addressOrName && title === 'following'
 
-  const profileAddresses = chosenResponses?.map(response => response?.address) || []
+  const profiles =
+    chosenResponses?.map(res => ({
+      address: res?.address,
+      tags: res?.tags
+    })) || []
 
   return (
     <Box>
@@ -84,7 +88,7 @@ export function UserProfilePageTable({
       <FollowList
         listClassName='gap-2 p-4 rounded-xl bg-white/50'
         listItemClassName='rounded-xl hover:bg-white/50 p-2'
-        profileAddresses={profileAddresses}
+        profiles={profiles}
         showAddTag={showAddTag}
         showFollowsYouBadges={showFollowsYouBadges}
         showTags={showTags}

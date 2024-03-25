@@ -5,21 +5,21 @@ import * as Select from '@radix-ui/react-select'
 import type { Address } from 'viem'
 import { useCallback, useEffect, useState } from 'react'
 import { useCart } from '#/contexts/cart-context'
-import useSelectedProfileTags from '#/hooks/use-selected-profile-tags'
 import useSuggestedTags from '#/hooks/use-suggested-tags'
 
 interface FollowListItemTagsProps {
   address: Address
   className?: string
   showAddTag: boolean
+  tags: string[]
 }
 
 export function FollowListItemTags({
   address,
   className = '',
-  showAddTag
+  showAddTag,
+  tags: initialTags
 }: FollowListItemTagsProps) {
-  const initialTags = useSelectedProfileTags(address)
   const { addCartItem, getTagsFromCartByAddress } = useCart()
   const [selectedTag, setSelectedTag] = useState<string | null>(null)
 

@@ -21,7 +21,7 @@ interface Props {
 }
 
 export default async function ProfilePage({ searchParams }: Props) {
-  const addressOrName = 'dr3a.eth'
+  const addressOrName = 'dr3a.eth' // TODO use connected address
   const followingQuery = searchParams['following-query'] || ''
   const followingFilter = searchParams['following-filter'] || 'follower count'
 
