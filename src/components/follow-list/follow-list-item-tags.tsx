@@ -24,7 +24,7 @@ export function FollowListItemTags({
   tags: initialTags
 }: FollowListItemTagsProps) {
   const pathname = usePathname()
-  const { addCartItem, getTagsFromCartByAddress } = useCart()
+  const { addCartItem, getTagsFromCartByAddress, hasListOpAddTag, hasListOpRemoveTag } = useCart()
   const [selectedTag, setSelectedTag] = useState<string | null>(null)
 
   const handleAddTag = useCallback(
@@ -45,14 +45,18 @@ export function FollowListItemTags({
   const isProfile = pathname === '/profile'
   const showCartTags = isEditor || isProfile
   const tags = showCartTags ? [...initialTags, ...getTagsFromCartByAddress(address)] : initialTags
+  const getTagBgColor = ({ address, tag }: { address: Address; tag: string }) =>
+    hasListOpAddTag({ address, tag })
+      ? 'bg-lime-500'
+      : hasListOpRemoveTag({ address, tag })
+        ? 'bg-salmon-400'
+        : 'bg-white'
 
   return (
     <Flex className={`flex w-full h-full gap-2 justify-start ${className}`}>
       {showAddTag && <AddTagDropdown address={address} setSelectedTag={setSelectedTag} />}
       {(isEditor ? tags : tags.slice(0, DEFAULT_NUM_TAGS_TO_SHOW)).map(tag => (
-        <Badge key={tag} variant='solid' className='bg-white text-black' radius='full'>
-          {tag}
-        </Badge>
+        <Tag key={tag} tag={tag} className={getTagBgColor({ address, tag })} />
       ))}
       {tags.length - 1 > DEFAULT_NUM_TAGS_TO_SHOW && (
         <IconButton
@@ -144,5 +148,23 @@ function AddTagDropdown({
         ))}
       </Select.Content>
     </Select.Root>
+  )
+}
+
+function Tag({
+  tag,
+  className,
+  onClick
+}: { tag: string; className?: string; onClick?: () => void }) {
+  return (
+    <Badge
+      key={tag}
+      variant='solid'
+      className={`text-black ${className}`}
+      radius='full'
+      onClick={onClick}
+    >
+      {tag}
+    </Badge>
   )
 }

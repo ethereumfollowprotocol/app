@@ -16,7 +16,9 @@ type CartContextType = {
   getAddressesFromCart: () => string[]
   getTagsFromCartByAddress: (address: Address) => string[]
   hasListOpAddRecord(address: Address): boolean
+  hasListOpAddTag({ address, tag }: { address: Address; tag: string }): boolean
   hasListOpRemoveRecord(address: Address): boolean
+  hasListOpRemoveTag({ address, tag }: { address: Address; tag: string }): boolean
   removeCartItem: (listOp: ListOp) => void
   totalCartItems: number
 }
@@ -66,6 +68,26 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
     )
   }
 
+  const hasListOpAddTag = ({ address, tag }: { address: Address; tag: string }): boolean => {
+    return cartItems.some(
+      cartItem =>
+        isTagListOp(cartItem.listOp) &&
+        cartItem.listOp.opcode === 3 &&
+        extractAddressAndTag(cartItem.listOp).address === address &&
+        extractAddressAndTag(cartItem.listOp).tag === tag
+    )
+  }
+
+  const hasListOpRemoveTag = ({ address, tag }: { address: Address; tag: string }): boolean => {
+    return cartItems.some(
+      cartItem =>
+        isTagListOp(cartItem.listOp) &&
+        cartItem.listOp.opcode === 4 &&
+        extractAddressAndTag(cartItem.listOp).address === address &&
+        extractAddressAndTag(cartItem.listOp).tag === tag
+    )
+  }
+
   // Retrieves all tags associated with a specific address from the cart items.
   const getTagsFromCartByAddress = useCallback(
     (address: Address): string[] => {
@@ -103,7 +125,9 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
         getAddressesFromCart,
         getTagsFromCartByAddress,
         hasListOpAddRecord,
+        hasListOpAddTag,
         hasListOpRemoveRecord,
+        hasListOpRemoveTag,
         removeCartItem,
         totalCartItems
       }}
