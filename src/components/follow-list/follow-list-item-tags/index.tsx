@@ -1,9 +1,9 @@
-import { listOpAddTag, listOpRemoveTag, type ListOpTagOpParams } from '#/types/list-op'
+import { listOpAddTag, type ListOpTagOpParams } from '#/types/list-op'
 import { DotsHorizontalIcon, PlusIcon } from '@radix-ui/react-icons'
 import { Badge, Box, Flex, IconButton, Text } from '@radix-ui/themes'
 import * as Select from '@radix-ui/react-select'
 import type { Address } from 'viem'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useCart } from '#/contexts/cart-context'
 import useSuggestedTags from '#/hooks/use-suggested-tags'
 import { usePathname } from 'next/navigation'
@@ -25,13 +25,16 @@ export function FollowListItemTags({
   tags: initialTags
 }: FollowListItemTagsProps) {
   const pathname = usePathname()
-  const {
-    addCartItem,
-    removeCartItem,
-    getTagsFromCartByAddress,
-    hasListOpAddTag,
-    hasListOpRemoveTag
-  } = useCart()
+  const { removeCartItem, getTagsFromCartByAddress, hasListOpAddTag, hasListOpRemoveTag } =
+    useCart()
+
+  const [showAllTags, setShowAllTags] = useState(false)
+
+  const isEditor = pathname === '/editor'
+  const isProfile = pathname === '/profile'
+  const canEditTags = isEditor || isProfile
+  const allTags = canEditTags ? [...getTagsFromCartByAddress(address), ...initialTags] : initialTags
+  const displayedTags = showAllTags ? allTags : allTags.slice(0, DEFAULT_NUM_TAGS_TO_SHOW)
 
   const handleRemoveTagFromCart = useCallback(
     ({ address, tag }: ListOpTagOpParams) => {
@@ -40,11 +43,6 @@ export function FollowListItemTags({
     [removeCartItem]
   )
 
-  const isEditor = pathname === '/editor'
-  const isProfile = pathname === '/profile'
-  const canEditTags = isEditor || isProfile
-  // Show all tags including the cart tags if in editor or profile page
-  const tags = canEditTags ? [...getTagsFromCartByAddress(address), ...initialTags] : initialTags
   const getTagBgColor = ({ address, tag }: ListOpTagOpParams) =>
     hasListOpAddTag({ address, tag })
       ? 'bg-lime-500'
@@ -55,7 +53,7 @@ export function FollowListItemTags({
   return (
     <Flex className={`flex w-full h-full gap-2 justify-start ${className}`}>
       {showAddTag && <AddTagDropdown address={address} />}
-      {(isEditor ? tags : tags.slice(0, DEFAULT_NUM_TAGS_TO_SHOW)).map(tag => (
+      {displayedTags.map(tag => (
         <Tag
           address={address}
           key={address + tag}
@@ -64,7 +62,7 @@ export function FollowListItemTags({
           onClick={() => handleRemoveTagFromCart({ address, tag })}
         />
       ))}
-      {!isEditor && tags.length - 1 > DEFAULT_NUM_TAGS_TO_SHOW && (
+      {!showAllTags && allTags.length > DEFAULT_NUM_TAGS_TO_SHOW && (
         <IconButton
           variant='soft'
           size='1'
