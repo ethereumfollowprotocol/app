@@ -34,7 +34,6 @@ type Props = {
 // Define the provider component
 export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([])
-  console.log('🦄 ~ cartItems:', cartItems)
 
   const addCartItem = (item: CartItem) => {
     const exists = cartItems.some(
