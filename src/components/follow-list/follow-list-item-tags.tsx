@@ -6,6 +6,7 @@ import type { Address } from 'viem'
 import { useCallback, useEffect, useState } from 'react'
 import { useCart } from '#/contexts/cart-context'
 import useSelectedProfileTags from '#/hooks/use-selected-profile-tags'
+import useSuggestedTags from '#/hooks/use-suggested-tags'
 
 interface FollowListItemTagsProps {
   address: Address
@@ -43,7 +44,9 @@ export function FollowListItemTags({
 
   return (
     <Flex className={`flex w-full h-full gap-2 justify-start ${className}`}>
-      {showAddTag && <AddTagDropdown setSelectedTag={setSelectedTag} tags={tagsToShow} />}
+      {showAddTag && (
+        <AddTagDropdown address={address} setSelectedTag={setSelectedTag} tags={tagsToShow} />
+      )}
       {tagsToShow.map(tag => (
         <Badge key={tag} variant='solid' className='bg-white text-black' radius='full'>
           {tag}
@@ -75,12 +78,16 @@ function AddTagButton() {
 }
 
 function AddTagDropdown({
-  tags,
+  address,
+  tags: initialTags,
   setSelectedTag
 }: {
+  address: Address
   tags: string[]
   setSelectedTag: (tag: string) => void
 }) {
+  const suggestedTags = useSuggestedTags(address)
+  const tags = [...initialTags, ...suggestedTags]
   const [isEditingCustomTag, setIsEditingCustomTag] = useState(false)
   const [customTagValue, setCustomTagValue] = useState('')
 
