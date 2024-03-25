@@ -18,13 +18,11 @@ export function Recommendations({ header }: RecommendationsProps) {
   const followingAddresses = profile?.followingAddresses || []
 
   // Filter out followers that are already being followed
-  const profilesToRecommend = useMemo(() => {
-    return followerAddresses
-      .filter(follower => !followingAddresses.includes(follower))
-      .map(address => ({ address, tags: [] }))
+  const profilesAddressesToRecommend = useMemo(() => {
+    return followerAddresses.filter(follower => !followingAddresses.includes(follower))
   }, [followerAddresses, followingAddresses])
 
-  if (!profilesToRecommend) return null
+  if (!profilesAddressesToRecommend) return null
 
   return (
     <Box className='flex flex-col gap-4'>
@@ -32,10 +30,11 @@ export function Recommendations({ header }: RecommendationsProps) {
         {header}
       </Heading>
       <FollowList
-        profiles={profilesToRecommend}
-        showTags={false}
-        showFollowsYouBadges={true}
         listClassName='gap-5 rounded-xl'
+        profileAddresses={profilesAddressesToRecommend}
+        showAddTag={false}
+        showFollowsYouBadges={true}
+        showTags={false}
       />
     </Box>
   )
