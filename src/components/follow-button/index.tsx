@@ -2,7 +2,7 @@ import { Button } from '@radix-ui/themes'
 import clsx from 'clsx'
 import Image from 'next/image'
 import type { Address } from 'viem'
-import { useFollowButton, type FollowButtonState } from './useFollowButton'
+import { useFollowButton, type FollowButtonState } from './use-follow-button'
 
 const theme = {
   Follow: {

@@ -1,13 +1,12 @@
 import { listOpAddTag, type ListOpTagOpParams } from '#/types/list-op'
-import { DotsHorizontalIcon } from '@radix-ui/react-icons'
-import { Flex, IconButton } from '@radix-ui/themes'
+import { Flex } from '@radix-ui/themes'
 import type { Address } from 'viem'
 import { useCallback, useState } from 'react'
 import { useCart } from '#/contexts/cart-context'
-import { usePathname } from 'next/navigation'
-import clsx from 'clsx'
 import { AddTagDropdown } from './add-tag-dropdown'
 import { Tag } from './tag'
+import { TagsPopover } from './tags-popover'
+import { useIsEditView } from '#/hooks/use-is-edit-view'
 
 interface FollowListItemTagsProps {
   address: Address
@@ -24,16 +23,13 @@ export function FollowListItemTags({
   showAddTag,
   tags: initialTags
 }: FollowListItemTagsProps) {
-  const pathname = usePathname()
-  const { removeCartItem, getTagsFromCartByAddress, hasListOpAddTag, hasListOpRemoveTag } =
-    useCart()
+  const isEditView = useIsEditView()
+  const { removeCartItem, getTagsFromCartByAddress } = useCart()
 
   const [showAllTags, setShowAllTags] = useState(false)
-
-  const isEditor = pathname === '/editor'
-  const isProfile = pathname === '/profile'
-  const canEditTags = isEditor || isProfile
-  const allTags = canEditTags ? [...getTagsFromCartByAddress(address), ...initialTags] : initialTags
+  const allTags = isEditView
+    ? [...new Set([...getTagsFromCartByAddress(address), ...initialTags])]
+    : initialTags
   const displayedTags = showAllTags ? allTags : allTags.slice(0, DEFAULT_NUM_TAGS_TO_SHOW)
 
   const handleRemoveTagFromCart = useCallback(
@@ -43,13 +39,6 @@ export function FollowListItemTags({
     [removeCartItem]
   )
 
-  const getTagBgColor = ({ address, tag }: ListOpTagOpParams) =>
-    hasListOpAddTag({ address, tag })
-      ? 'bg-lime-500'
-      : hasListOpRemoveTag({ address, tag })
-        ? 'bg-salmon-400'
-        : 'bg-white'
-
   return (
     <Flex className={`flex w-full h-full gap-2 justify-start ${className}`}>
       {showAddTag && <AddTagDropdown address={address} />}
@@ -58,18 +47,16 @@ export function FollowListItemTags({
           address={address}
           key={address + tag}
           tag={tag}
-          className={clsx(getTagBgColor({ address, tag }), canEditTags && 'cursor-pointer')}
           onClick={() => handleRemoveTagFromCart({ address, tag })}
         />
       ))}
-      {!showAllTags && allTags.length > DEFAULT_NUM_TAGS_TO_SHOW && (
-        <IconButton
-          variant='soft'
-          size='1'
-          className='bg-white text-black font-extrabold rounded-lg h-4'
-        >
-          <DotsHorizontalIcon />
-        </IconButton>
+      {allTags.length > 2 && (
+        <TagsPopover
+          address={address}
+          isOpen={showAllTags}
+          onClose={() => setShowAllTags(false)}
+          tags={allTags}
+        />
       )}
     </Flex>
   )
