@@ -92,7 +92,6 @@ function AddTagDropdown({
 
   const handleAddTag = useCallback(
     (tag: string) => {
-      console.log('Adding tag:', tag)
       addCartItem({ listOp: listOpAddTag(address, tag) })
     },
     [address, addCartItem]
