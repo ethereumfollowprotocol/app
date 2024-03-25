@@ -19,7 +19,7 @@ export function FollowListItemTags({
   showAddTag = false
 }: FollowListItemTagsProps) {
   const initialTags = useSelectedProfileTags(address)
-  const { addCartItem, getTagsFromCart } = useCart()
+  const { addCartItem, getTagsFromCartByAddress } = useCart()
   const [selectedTag, setSelectedTag] = useState<string | null>(null)
 
   const handleAddTag = useCallback(
@@ -38,7 +38,7 @@ export function FollowListItemTags({
     }
   }, [selectedTag, handleAddTag])
 
-  const cartTagsForAddress = getTagsFromCart() // TODO filter by address
+  const cartTagsForAddress = getTagsFromCartByAddress(address)
   const tagsToShow = [...initialTags, ...cartTagsForAddress]
 
   return (
