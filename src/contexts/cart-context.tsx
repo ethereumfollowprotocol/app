@@ -1,3 +1,5 @@
+'use client'
+
 import { hexlify } from '#/lib/utilities'
 import { listOpAsHexstring, type ListOp, isTagListOp, extractAddressAndTag } from '#/types/list-op'
 import { createContext, useContext, useState, type ReactNode, useCallback } from 'react'
