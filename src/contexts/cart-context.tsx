@@ -1,7 +1,16 @@
 'use client'
 
+import { useIsEditView } from '#/hooks/use-is-edit-view'
 import { hexlify } from '#/lib/utilities'
-import { listOpAsHexstring, type ListOp, isTagListOp, extractAddressAndTag } from '#/types/list-op'
+import {
+  listOpAsHexstring,
+  type ListOp,
+  isTagListOp,
+  extractAddressAndTag,
+  type ListOpTagOpParams,
+  listOpAddTag,
+  listOpRemoveTag
+} from '#/types/list-op'
 import { createContext, useContext, useState, type ReactNode, useCallback } from 'react'
 import type { Address } from 'viem'
 
@@ -12,16 +21,21 @@ type CartItem = {
 
 // Define the type for the context value
 type CartContextType = {
+  addAddTagToCart: (params: ListOpTagOpParams) => void
   addCartItem: (item: CartItem) => void
+  addRemoveTagToCart: (params: ListOpTagOpParams) => void
   cartAddresses: Address[]
   cartItems: CartItem[]
   getAddressesFromCart: () => string[]
   getTagsFromCartByAddress: (address: Address) => string[]
+  handleTagClick: (params: ListOpTagOpParams) => void
   hasListOpAddRecord(address: Address): boolean
-  hasListOpAddTag({ address, tag }: { address: Address; tag: string }): boolean
+  hasListOpAddTag(params: ListOpTagOpParams): boolean
   hasListOpRemoveRecord(address: Address): boolean
-  hasListOpRemoveTag({ address, tag }: { address: Address; tag: string }): boolean
+  hasListOpRemoveTag(params: ListOpTagOpParams): boolean
+  removeAddTagFromCart(params: ListOpTagOpParams): void
   removeCartItem: (listOp: ListOp) => void
+  removeRemoveTagFromCart(params: ListOpTagOpParams): void
   totalCartItems: number
 }
 
@@ -35,16 +49,20 @@ type Props = {
 
 // Define the provider component
 export const CartProvider: React.FC<Props> = ({ children }: Props) => {
+  const isEditView = useIsEditView()
   const [cartItems, setCartItems] = useState<CartItem[]>([])
 
-  const addCartItem = (item: CartItem) => {
-    const exists = cartItems.some(
-      cartItem => listOpAsHexstring(cartItem.listOp) === listOpAsHexstring(item.listOp)
-    )
-    if (!exists) {
-      setCartItems(prevItems => [...prevItems, item])
-    }
-  }
+  const addCartItem = useCallback(
+    (item: CartItem) => {
+      const exists = cartItems.some(
+        cartItem => listOpAsHexstring(cartItem.listOp) === listOpAsHexstring(item.listOp)
+      )
+      if (!exists) {
+        setCartItems(prevItems => [...prevItems, item])
+      }
+    },
+    [cartItems]
+  )
 
   const removeCartItem = (listOp: ListOp) => {
     setCartItems(prevItems =>
@@ -52,43 +70,129 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
     )
   }
 
-  const hasListOpAddRecord = (address: Address): boolean => {
-    return cartItems.some(
-      cartItem =>
-        cartItem.listOp.version === 1 &&
-        cartItem.listOp.opcode === 1 &&
-        `0x${cartItem.listOp.data.toString('hex')}` === address
-    )
-  }
+  const hasListOpAddRecord = useCallback(
+    (address: Address): boolean => {
+      return cartItems.some(
+        cartItem =>
+          cartItem.listOp.version === 1 &&
+          cartItem.listOp.opcode === 1 &&
+          `0x${cartItem.listOp.data.toString('hex')}` === address
+      )
+    },
+    [cartItems]
+  )
 
-  const hasListOpRemoveRecord = (address: Address): boolean => {
-    return cartItems.some(
-      cartItem =>
-        cartItem.listOp.version === 1 &&
-        cartItem.listOp.opcode === 2 &&
-        `0x${cartItem.listOp.data.toString('hex')}` === address
-    )
-  }
+  const hasListOpRemoveRecord = useCallback(
+    (address: Address): boolean => {
+      return cartItems.some(
+        cartItem =>
+          cartItem.listOp.version === 1 &&
+          cartItem.listOp.opcode === 2 &&
+          `0x${cartItem.listOp.data.toString('hex')}` === address
+      )
+    },
+    [cartItems]
+  )
 
-  const hasListOpAddTag = ({ address, tag }: { address: Address; tag: string }): boolean => {
-    return cartItems.some(
-      cartItem =>
-        isTagListOp(cartItem.listOp) &&
-        cartItem.listOp.opcode === 3 &&
-        extractAddressAndTag(cartItem.listOp).address === address &&
-        extractAddressAndTag(cartItem.listOp).tag === tag
-    )
-  }
+  const hasListOpAddTag = useCallback(
+    ({ address, tag }: { address: Address; tag: string }): boolean => {
+      return cartItems.some(
+        cartItem =>
+          isTagListOp(cartItem.listOp) &&
+          cartItem.listOp.opcode === 3 &&
+          extractAddressAndTag(cartItem.listOp).address === address &&
+          extractAddressAndTag(cartItem.listOp).tag === tag
+      )
+    },
+    [cartItems]
+  )
 
-  const hasListOpRemoveTag = ({ address, tag }: { address: Address; tag: string }): boolean => {
-    return cartItems.some(
-      cartItem =>
-        isTagListOp(cartItem.listOp) &&
-        cartItem.listOp.opcode === 4 &&
-        extractAddressAndTag(cartItem.listOp).address === address &&
-        extractAddressAndTag(cartItem.listOp).tag === tag
-    )
-  }
+  const hasListOpRemoveTag = useCallback(
+    ({ address, tag }: { address: Address; tag: string }): boolean => {
+      return cartItems.some(
+        cartItem =>
+          isTagListOp(cartItem.listOp) &&
+          cartItem.listOp.opcode === 4 &&
+          extractAddressAndTag(cartItem.listOp).address === address &&
+          extractAddressAndTag(cartItem.listOp).tag === tag
+      )
+    },
+    [cartItems]
+  )
+
+  const removeAddTagFromCart = useCallback(
+    ({ address, tag }: ListOpTagOpParams) => {
+      if (hasListOpAddTag({ address, tag })) {
+        return removeCartItem(listOpAddTag(address, tag))
+      }
+    },
+    [hasListOpAddTag, removeCartItem]
+  )
+
+  const removeRemoveTagFromCart = useCallback(
+    ({ address, tag }: ListOpTagOpParams) => {
+      if (hasListOpRemoveTag({ address, tag })) {
+        return removeCartItem(listOpRemoveTag(address, tag))
+      }
+    },
+    [hasListOpRemoveTag, removeCartItem]
+  )
+
+  const addAddTagToCart = useCallback(
+    ({ address, tag }: ListOpTagOpParams) => {
+      if (!hasListOpAddTag({ address, tag })) {
+        return addCartItem({ listOp: listOpAddTag(address, tag) })
+      }
+    },
+    [hasListOpAddTag, addCartItem]
+  )
+
+  const addRemoveTagToCart = useCallback(
+    ({ address, tag }: ListOpTagOpParams) => {
+      if (!hasListOpRemoveTag({ address, tag })) {
+        return addCartItem({ listOp: listOpRemoveTag(address, tag) })
+      }
+    },
+    [hasListOpRemoveTag, addCartItem]
+  )
+
+  const handleTagClick = useCallback(
+    ({ address, tag }: ListOpTagOpParams) => {
+      // Do nothing if not in edit view
+      if (!isEditView) return
+
+      // If cart has "add tag" remove it from the cart
+      if (hasListOpAddTag({ address, tag })) {
+        return removeAddTagFromCart({ address, tag })
+      }
+
+      // If cart has "remove tag" remove it from the cart
+      if (hasListOpRemoveTag({ address, tag })) {
+        return removeRemoveTagFromCart({ address, tag })
+      }
+
+      // Add "add tag" to cart if it not in cart
+      if (!hasListOpAddRecord(address)) {
+        return addAddTagToCart({ address, tag })
+      }
+
+      // Add "remove tag" to cart if not in cart
+      if (!hasListOpRemoveRecord(address)) {
+        return addRemoveTagToCart({ address, tag })
+      }
+    },
+    [
+      addAddTagToCart,
+      addRemoveTagToCart,
+      hasListOpAddRecord,
+      hasListOpAddTag,
+      hasListOpRemoveRecord,
+      hasListOpRemoveTag,
+      isEditView,
+      removeAddTagFromCart,
+      removeRemoveTagFromCart
+    ]
+  )
 
   // Retrieves all tags associated with a specific address from the cart items.
   const getTagsFromCartByAddress = useCallback(
@@ -121,16 +225,21 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   return (
     <CartContext.Provider
       value={{
+        addAddTagToCart,
         addCartItem,
+        addRemoveTagToCart,
         cartAddresses,
         cartItems,
         getAddressesFromCart,
         getTagsFromCartByAddress,
+        handleTagClick,
         hasListOpAddRecord,
         hasListOpAddTag,
         hasListOpRemoveRecord,
         hasListOpRemoveTag,
+        removeAddTagFromCart,
         removeCartItem,
+        removeRemoveTagFromCart,
         totalCartItems
       }}
     >

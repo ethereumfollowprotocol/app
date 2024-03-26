@@ -34,7 +34,6 @@ export function Recommendations({ header }: RecommendationsProps) {
       <FollowList
         listClassName='gap-5 rounded-xl'
         profiles={profilesToRecommend}
-        showAddTag={false}
         showFollowsYouBadges={true}
         showTags={false}
       />

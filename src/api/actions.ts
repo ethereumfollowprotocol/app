@@ -77,6 +77,7 @@ type EFPProfile = {
   followers: FollowerResponse[] | undefined
   followerAddresses: Address[] | undefined
   getFollowingByAddress: (address: Address) => FollowingResponse | undefined
+  hasFollowingByAddress: (address: Address) => boolean
   doesFollow: (address: Address) => boolean
   getFollowState(address: Address): FollowState
   following: FollowingResponse[] | undefined
@@ -94,18 +95,18 @@ type ConnectedAddressProfile = {
   profile: EFPProfile | undefined
 }
 
-export function useConnectedProfile(): ConnectedAddressProfile {
-  const { isConnected, address: connectedAddress } = useAccount()
+export function useConnectedProfile(address?: Address): ConnectedAddressProfile {
+  const { address: connectedAddress } = useAccount()
+  const addressToUse = address ?? connectedAddress
 
   /////////////////////////////////////////////////////////////////////////////
   // followers for the connected account
   /////////////////////////////////////////////////////////////////////////////
   const { data } = useQuery({
-    queryKey: ['Profile', connectedAddress],
-    enabled: isConnected && !!connectedAddress,
-    queryFn: connectedAddress
-      ? () => fetchUserProfile({ addressOrName: connectedAddress })
-      : undefined
+    // use the provided address if it's available, otherwise use the connected address
+    queryKey: ['Profile', addressToUse],
+    enabled: !!addressToUse,
+    queryFn: addressToUse ? () => fetchUserProfile({ addressOrName: addressToUse }) : undefined
   })
 
   if (!data) {
@@ -117,6 +118,8 @@ export function useConnectedProfile(): ConnectedAddressProfile {
   const getFollowingByAddress: EFPProfile['getFollowingByAddress'] = (address: Address) => {
     return data.following?.find(follow => follow.data === address.toLowerCase())
   }
+
+  const hasFollowingByAddress = (address: Address) => !!getFollowingByAddress(address)
 
   const getFollowState: EFPProfile['getFollowState'] = (address: Address) => {
     const following: FollowingResponse | undefined = getFollowingByAddress(address)
@@ -139,6 +142,7 @@ export function useConnectedProfile(): ConnectedAddressProfile {
       followers: data.followers,
       followerAddresses: data.followers?.map(follower => follower.address),
       getFollowingByAddress,
+      hasFollowingByAddress,
       getFollowState,
       doesFollow: (address: Address) => {
         return data.following?.some(follow => follow.data === address.toLowerCase()) ?? false
@@ -166,6 +170,7 @@ type Following = {
   following: FollowingResponse[] | undefined
   followingAddresses: Address[] | undefined
   getFollowingByAddress: (address: Address) => FollowingResponse | undefined
+  hasFollowingByAddress: (address: Address) => boolean
 }
 
 export function useFollowing(addressOrName: Address | string): Following {
@@ -181,6 +186,9 @@ export function useFollowing(addressOrName: Address | string): Following {
       .map(follow => follow.data),
     getFollowingByAddress: (address: Address) => {
       return data?.following?.find(follow => follow.data === address)
+    },
+    hasFollowingByAddress: (address: Address) => {
+      return !!data?.following?.find(follow => follow.data === address)
     }
   }
 }

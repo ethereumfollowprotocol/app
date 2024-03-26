@@ -9,6 +9,7 @@ import { UserProfileCard } from '#/components/user-profile-card'
 import { UserProfilePageTable } from '#/components/user-profile-page-table'
 import { Box, Flex, Text } from '@radix-ui/themes'
 import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query'
+import { DEFAULT_PROFILE_ADDRESS_FOR_TESTING } from '#/app/efp/types'
 
 interface Props {
   searchParams: {
@@ -21,7 +22,7 @@ interface Props {
 }
 
 export default async function ProfilePage({ searchParams }: Props) {
-  const addressOrName = 'dr3a.eth' // TODO use connected address
+  const addressOrName = DEFAULT_PROFILE_ADDRESS_FOR_TESTING // TODO use connected address
   const followingQuery = searchParams['following-query'] || ''
   const followingFilter = searchParams['following-filter'] || 'follower count'
 
