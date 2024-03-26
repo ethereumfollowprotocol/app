@@ -2,7 +2,7 @@ import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { Box, Flex, Popover } from '@radix-ui/themes'
 import { Tag } from './tag'
 import type { Address } from 'viem'
-import { listOpAddTag, type ListOpTagOpParams } from '#/types/list-op'
+import { listOpAddTag, listOpRemoveTag, type ListOpTagOpParams } from '#/types/list-op'
 import { useIsEditView } from '#/hooks/use-is-edit-view'
 import { useCart } from '#/contexts/cart-context'
 
@@ -15,13 +15,24 @@ interface TagsPopoverProps {
 
 export function TagsPopover({ address, tags }: TagsPopoverProps) {
   const isEditView = useIsEditView()
-  const { removeCartItem } = useCart()
+  const { removeAddTagFromCart, removeRemoveTagFromCart, addAddTagToCart, addRemoveTagToCart } =
+    useCart()
 
   const handleClick = ({ address, tag }: ListOpTagOpParams) => {
-    // remove the tag from the cart if it exists
-    if (isEditView) {
-      removeCartItem(listOpAddTag(address, tag))
-    }
+    // If not in edit view, do nothing
+    if (!isEditView) return
+
+    // Remove the add tag from the cart if it exists
+    removeAddTagFromCart({ address, tag })
+
+    // Remove the remove tag from the cart if it exists
+    removeRemoveTagFromCart({ address, tag })
+
+    // Add the add tag to the cart if applicable
+    addAddTagToCart({ address, tag })
+
+    // Add the remove tag to the cart if applicable
+    addRemoveTagToCart({ address, tag })
   }
   return (
     <Popover.Root>

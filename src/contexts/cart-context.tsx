@@ -1,7 +1,15 @@
 'use client'
 
 import { hexlify } from '#/lib/utilities'
-import { listOpAsHexstring, type ListOp, isTagListOp, extractAddressAndTag } from '#/types/list-op'
+import {
+  listOpAsHexstring,
+  type ListOp,
+  isTagListOp,
+  extractAddressAndTag,
+  type ListOpTagOpParams,
+  listOpAddTag,
+  listOpRemoveTag
+} from '#/types/list-op'
 import { createContext, useContext, useState, type ReactNode, useCallback } from 'react'
 import type { Address } from 'viem'
 
@@ -12,7 +20,9 @@ type CartItem = {
 
 // Define the type for the context value
 type CartContextType = {
+  addAddTagToCart: (params: ListOpTagOpParams) => void
   addCartItem: (item: CartItem) => void
+  addRemoveTagToCart: (params: ListOpTagOpParams) => void
   cartAddresses: Address[]
   cartItems: CartItem[]
   getAddressesFromCart: () => string[]
@@ -21,7 +31,9 @@ type CartContextType = {
   hasListOpAddTag({ address, tag }: { address: Address; tag: string }): boolean
   hasListOpRemoveRecord(address: Address): boolean
   hasListOpRemoveTag({ address, tag }: { address: Address; tag: string }): boolean
+  removeAddTagFromCart({ address, tag }: ListOpTagOpParams): void
   removeCartItem: (listOp: ListOp) => void
+  removeRemoveTagFromCart({ address, tag }: ListOpTagOpParams): void
   totalCartItems: number
 }
 
@@ -90,6 +102,30 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
     )
   }
 
+  const removeAddTagFromCart = ({ address, tag }: ListOpTagOpParams) => {
+    if (hasListOpAddTag({ address, tag })) {
+      removeCartItem(listOpAddTag(address, tag))
+    }
+  }
+
+  const removeRemoveTagFromCart = ({ address, tag }: ListOpTagOpParams) => {
+    if (hasListOpRemoveTag({ address, tag })) {
+      removeCartItem(listOpRemoveTag(address, tag))
+    }
+  }
+
+  const addAddTagToCart = ({ address, tag }: ListOpTagOpParams) => {
+    if (!hasListOpAddTag({ address, tag })) {
+      addCartItem({ listOp: listOpAddTag(address, tag) })
+    }
+  }
+
+  const addRemoveTagToCart = ({ address, tag }: ListOpTagOpParams) => {
+    if (!hasListOpRemoveTag({ address, tag })) {
+      addCartItem({ listOp: listOpRemoveTag(address, tag) })
+    }
+  }
+
   // Retrieves all tags associated with a specific address from the cart items.
   const getTagsFromCartByAddress = useCallback(
     (address: Address): string[] => {
@@ -121,7 +157,9 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   return (
     <CartContext.Provider
       value={{
+        addAddTagToCart,
         addCartItem,
+        addRemoveTagToCart
         cartAddresses,
         cartItems,
         getAddressesFromCart,
@@ -130,8 +168,11 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
         hasListOpAddTag,
         hasListOpRemoveRecord,
         hasListOpRemoveTag,
+        removeAddTagFromCart,
         removeCartItem,
-        totalCartItems
+        removeRemoveTagFromCart,
+        totalCartItems,
+
       }}
     >
       {children}
