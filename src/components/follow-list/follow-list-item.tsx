@@ -10,7 +10,6 @@ export interface FollowListItemProps {
   profileAddress: Address
   showFollowsYouBadges: boolean
   showTags: boolean
-  showAddTag: boolean // Prop to handle showing add tag button in the FollowList
   tags: string[]
 }
 
@@ -19,7 +18,6 @@ export function FollowListItem({
   profileAddress,
   showFollowsYouBadges,
   showTags,
-  showAddTag,
   tags
 }: FollowListItemProps) {
   const { data: ensProfile } = useEnsProfile(profileAddress)
@@ -39,12 +37,7 @@ export function FollowListItem({
 
       {/* Middle section: Tags (conditionally displayed) */}
       {showTags && (
-        <FollowListItemTags
-          address={profileAddress}
-          className='flex items-center'
-          showAddTag={showAddTag}
-          tags={tags}
-        />
+        <FollowListItemTags address={profileAddress} className='flex items-center' tags={tags} />
       )}
 
       {/* Right section: Follow Button with consistent width */}

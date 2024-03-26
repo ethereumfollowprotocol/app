@@ -27,7 +27,6 @@ export function UnconfirmedChanges() {
         profiles={profiles}
         listClassName='gap-2 p-4 rounded-xl bg-white/50'
         listItemClassName='rounded-xl p-2'
-        showAddTag={true}
         showFollowsYouBadges={true}
         showTags={true}
       />

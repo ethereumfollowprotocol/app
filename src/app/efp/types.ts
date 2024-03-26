@@ -13,3 +13,5 @@ export interface ListRecord {
 export interface TaggedListRecord extends ListRecord {
   tags: string[]
 }
+
+export const DEFAULT_PROFILE_FOR_TESTING = 'dr3a.eth'

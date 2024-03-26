@@ -1,6 +1,6 @@
 'use client'
 
-import { useConnectedProfile, useProfile } from '#/api/actions'
+import { useProfile } from '#/api/actions'
 import type { FollowerResponse, FollowingResponse } from '#/api/requests'
 import { Searchbar } from '#/components/searchbar.tsx'
 import { SelectWithFilter } from '#/components/select-with-filter.tsx'
@@ -26,7 +26,6 @@ export function UserProfilePageTable({
   const [showTags, setShowTags] = useState(false)
   const profile = useProfile(addressOrName)
   const { followers, following } = profile
-  const { profile: connectedProfile } = useConnectedProfile()
 
   const searchQueryKey = `${title.toLowerCase()}-query`
   const selectQueryKey = `${title.toLowerCase()}-filter`
@@ -41,7 +40,6 @@ export function UserProfilePageTable({
   const chosenResponses = title === 'following' ? filteredFollowing : filteredFollowers
   const filterOptions = ['follower count', 'latest first', 'earliest first', 'alphabetical']
   const showFollowsYouBadges = title === 'following'
-  const showAddTag = connectedProfile?.address === addressOrName && title === 'following'
 
   const profiles =
     chosenResponses?.map(res => ({
@@ -89,7 +87,6 @@ export function UserProfilePageTable({
         listClassName='gap-2 p-4 rounded-xl bg-white/50'
         listItemClassName='rounded-xl hover:bg-white/50 p-2'
         profiles={profiles}
-        showAddTag={showAddTag}
         showFollowsYouBadges={showFollowsYouBadges}
         showTags={showTags}
       />
