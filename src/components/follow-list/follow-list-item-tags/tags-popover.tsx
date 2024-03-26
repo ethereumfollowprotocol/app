@@ -33,7 +33,13 @@ export function TagsPopover({ address, tags }: TagsPopoverProps) {
       <Popover.Content className='bg-white rounded-xl p-2 flex gap-2 mt-2 flex-wrap text-[#464646] font-semibold'>
         <Flex direction='column' gap='2'>
           {tags.map(tag => (
-            <Tag address={address} key={tag} tag={tag} onClick={() => handleClick} />
+            <Tag
+              address={address}
+              key={tag}
+              tag={tag}
+              onClick={() => handleClick}
+              className='border-[1px] border-gray-300'
+            />
           ))}
         </Flex>
       </Popover.Content>

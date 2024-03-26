@@ -9,7 +9,7 @@ export const useTagBgColor = ({ address, tag }: ListOpTagOpParams) => {
       ? 'bg-lime-500'
       : hasListOpRemoveTag({ address, tag })
         ? 'bg-salmon-400'
-        : 'bg-gray-100'
+        : 'bg-white'
 
   return getTagBgColor({ address, tag })
 }
