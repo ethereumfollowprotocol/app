@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import * as React from 'react'
-import { FollowButton } from '#/components/follow-button.tsx'
+import { FollowButton } from '#/components/follow-button'
 import { Box, Text, Flex, Table, Badge, Avatar } from '@radix-ui/themes'
 import type { Address } from 'viem'
 
@@ -72,11 +72,7 @@ export function TableRow({
               <Text as='p' className='font-bold sm:text-lg text-sm hover:text-pink-400'>
                 {name}
               </Text>
-              <Badge
-                size='1'
-                radius='full'
-                className='font-bold text-[10px] bg-[#CDCDCD] text-[#333333]'
-              >
+              <Badge size='1' radius='full' className='font-bold text-[10px] bg-grey text-darkGrey'>
                 Follows you
               </Badge>
             </Flex>
@@ -107,19 +103,7 @@ export function TableRow({
         className={clsx([rank === 1 ? 'mt-5' : 'mt-2', 'flex lg:ml-6'])}
         data-name='action-column'
       >
-        <FollowButton
-          text={
-            status === 'followed'
-              ? 'Unfollow'
-              : status === 'blocked'
-                ? 'Unblock'
-                : status === 'muted'
-                  ? 'Unmute'
-                  : 'Follow'
-          }
-          pending={true}
-          address={address}
-        />
+        <FollowButton address={address} />
       </Table.Cell>
     </Table.Row>
   )

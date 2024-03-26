@@ -2,7 +2,6 @@ import CartButton from '#/components/cart-button.tsx'
 import { Menu } from '#/components/menu.tsx'
 import { Search } from '#/components/search.tsx'
 import { useCart } from '#/contexts/cart-context'
-import { useIsMounted } from '#/hooks/use-is-mounted.ts'
 import { Avatar, Text } from '@radix-ui/themes'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import clsx from 'clsx'
@@ -40,10 +39,7 @@ const navItems = [
 
 export function Header() {
   const pathname = usePathname()
-  const isMounted = useIsMounted()
-
   const account = useAccount()
-
   const { totalCartItems } = useCart()
 
   return (
@@ -77,7 +73,6 @@ export function Header() {
           </Text>
           <Search />
         </div>
-        {/* <ClientOnly> */}
         <ul
           className={clsx([
             'px-2.25 py-0.15 my-auto flex space-x-0 md:text-lg text-sm font-semibold mx-2',
@@ -112,28 +107,18 @@ export function Header() {
           })}
         </ul>
 
-        {/* </ClientOnly> */}
         <div className='my-auto ml-2 pb-0.5 mr-4'>
           <CartButton cartItemsCount={totalCartItems} />
         </div>
 
-        {/* {isMounted && ( */}
         <div
           className={clsx([
             !account.isConnected && 'w-min',
             'my-auto flex items-center justify-end pb-1 min-w-fit'
           ])}
         >
-          <ConnectButton
-            showBalance={false}
-            chainStatus={'none'}
-            label='Connect'
-            // accountStatus={ensName ? 'full' : 'address'}
-          />
-          {/* <Connect /> */}
+          <ConnectButton showBalance={false} chainStatus={'none'} label='Connect' />
         </div>
-        {/* )} */}
-
         <div className='my-auto pb-0.5 pl-2.5'>
           <Menu />
         </div>

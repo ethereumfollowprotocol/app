@@ -1,7 +1,6 @@
 import * as React from 'react'
 import Image from 'next/image'
 import type { Metadata } from 'next'
-import { draftMode } from 'next/headers'
 import { Flex, Text } from '@radix-ui/themes'
 
 export const metadata = {
@@ -15,8 +14,6 @@ export const metadata = {
 } satisfies Metadata
 
 export default async function HomePage() {
-  const { isEnabled } = draftMode()
-
   return (
     <React.Fragment>
       <main className='mx-auto flex h-full min-h-full w-full flex-col items-center overflow-scroll px-4 pt-8 text-center font-sans'>

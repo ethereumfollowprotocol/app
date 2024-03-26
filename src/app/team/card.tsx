@@ -1,4 +1,4 @@
-import { FollowButton } from '#/components/follow-button.tsx'
+import { FollowButton } from '#/components/follow-button'
 import { ImageWithFallback } from '#/components/image-with-fallback.tsx'
 import { Badge, Box, Flex, Text } from '@radix-ui/themes'
 import type { Address } from 'viem'
@@ -33,7 +33,7 @@ export function TeamCard(props: TeamMember) {
               TODO1
             </Badge>
             <Flex gap='3' className='' my='3'>
-              <FollowButton text='Follow' address={address} />
+              <FollowButton address={address} />
             </Flex>
           </Flex>
           <Flex justify='center' mx='auto' className='text-center' gap='8'>

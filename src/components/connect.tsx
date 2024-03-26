@@ -10,9 +10,9 @@ export function Connect() {
   const [showDialog, setShowDialog] = React.useState(false)
 
   const { disconnect } = useDisconnect()
-  const { connect, connectAsync, connectors, status: connectStatus } = useConnect()
+  const { connectAsync, connectors } = useConnect()
   const { address, connector: currentConnector, status: accountStatus } = useAccount()
-  const { data: ensData, status: ensStatus, error: ensError } = useEnsProfile(address)
+  const { data: ensData } = useEnsProfile(address)
 
   useAccountEffect({
     onDisconnect: () => setShowDialog(false)
