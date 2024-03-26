@@ -8,7 +8,6 @@ interface EnvironmentVariables {
   readonly NEXT_PUBLIC_ENS_API_URL: string
   readonly NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA: string
   readonly NEXT_PUBLIC_BASE_URL: string
-  readonly WALLET_CONNECT_PROJECT_ID: string
   readonly NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID: string
   readonly LOCAL_RPC: string
   readonly NEXT_PUBLIC_LOCAL_RPC: string
