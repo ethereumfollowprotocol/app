@@ -1,4 +1,3 @@
-import { listOpAddTag } from '#/types/list-op'
 import { PlusIcon } from '@radix-ui/react-icons'
 import { Box, Text } from '@radix-ui/themes'
 import * as Select from '@radix-ui/react-select'
@@ -14,7 +13,7 @@ export function AddTagDropdown({
   address: Address
   tags?: string[] // Optional initial tags to use in the dropdown
 }) {
-  const { addCartItem } = useCart()
+  const { addAddTagToCart } = useCart()
   const suggestedTags = useSuggestedTags(address)
   const tags = [...initialTags, ...suggestedTags]
   const [isEditingCustomTag, setIsEditingCustomTag] = useState(false)
@@ -22,9 +21,9 @@ export function AddTagDropdown({
 
   const handleAddTag = useCallback(
     (tag: string) => {
-      addCartItem({ listOp: listOpAddTag(address, tag) })
+      addAddTagToCart({ address, tag })
     },
-    [address, addCartItem]
+    [address, addAddTagToCart]
   )
 
   const handleCustomTagClick = () => {
