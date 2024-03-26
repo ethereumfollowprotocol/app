@@ -95,18 +95,18 @@ type ConnectedAddressProfile = {
   profile: EFPProfile | undefined
 }
 
-export function useConnectedProfile(): ConnectedAddressProfile {
-  const { isConnected, address: connectedAddress } = useAccount()
+export function useConnectedProfile(address?: Address): ConnectedAddressProfile {
+  const { address: connectedAddress } = useAccount()
+  const addressToUse = address ?? connectedAddress
 
   /////////////////////////////////////////////////////////////////////////////
   // followers for the connected account
   /////////////////////////////////////////////////////////////////////////////
   const { data } = useQuery({
-    queryKey: ['Profile', connectedAddress],
-    enabled: isConnected && !!connectedAddress,
-    queryFn: connectedAddress
-      ? () => fetchUserProfile({ addressOrName: connectedAddress })
-      : undefined
+    // use the provided address if it's available, otherwise use the connected address
+    queryKey: ['Profile', addressToUse],
+    enabled: !!addressToUse,
+    queryFn: addressToUse ? () => fetchUserProfile({ addressOrName: addressToUse }) : undefined
   })
 
   if (!data) {

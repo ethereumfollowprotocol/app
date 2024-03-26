@@ -5,20 +5,19 @@
  * @returns {boolean} - Whether the user can add a tag for that profile
  *
  */
-import { useConnectedProfile, useProfile } from '#/api/actions'
-import { DEFAULT_PROFILE_FOR_TESTING } from '#/app/efp/types'
+import { useConnectedProfile } from '#/api/actions'
+import { DEFAULT_PROFILE_ADDRESS_FOR_TESTING } from '#/app/efp/types'
 import { useIsEditView } from '#/hooks/use-is-edit-view'
 import { useMemo } from 'react'
 import type { Address } from 'viem'
 
 const useCanAddTag = (profileAddress: Address) => {
   const isEditView = useIsEditView()
-  // TODO use connected address
-  // const { profile } = useConnectedProfile()
-  const profile = useProfile(DEFAULT_PROFILE_FOR_TESTING)
+  // TODO use connected address only
+  const { profile } = useConnectedProfile(DEFAULT_PROFILE_ADDRESS_FOR_TESTING)
 
   return useMemo(() => {
-    const isFollowing = profile.hasFollowingByAddress(profileAddress)
+    const isFollowing = profile?.hasFollowingByAddress(profileAddress)
 
     // User can add a tag for the specified profile if it's the user's own profile/editor page, and they are following the profileAddress
     if (isEditView && isFollowing) return true
