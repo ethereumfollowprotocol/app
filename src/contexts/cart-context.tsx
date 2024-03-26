@@ -159,7 +159,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
       value={{
         addAddTagToCart,
         addCartItem,
-        addRemoveTagToCart
+        addRemoveTagToCart,
         cartAddresses,
         cartItems,
         getAddressesFromCart,
@@ -171,8 +171,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
         removeAddTagFromCart,
         removeCartItem,
         removeRemoveTagFromCart,
-        totalCartItems,
-
+        totalCartItems
       }}
     >
       {children}
