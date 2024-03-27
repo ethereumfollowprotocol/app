@@ -8,7 +8,6 @@ interface EnvironmentVariables {
   readonly NEXT_PUBLIC_ENS_API_URL: string
   readonly NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA: string
   readonly NEXT_PUBLIC_BASE_URL: string
-  readonly WALLET_CONNECT_PROJECT_ID: string
   readonly NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID: string
   readonly LOCAL_RPC: string
   readonly NEXT_PUBLIC_LOCAL_RPC: string
@@ -26,7 +25,6 @@ interface EnvironmentVariables {
   readonly NEXT_PUBLIC_ANKR_ID: string
   readonly ANVIL_ACCOUNT_PRIVATE_KEY: `0x${string}`
   readonly NEXT_PUBLIC_ANVIL_ACCOUNT_PRIVATE_KEY: `0x${string}`
-  readonly SITE_URL: string
   readonly NEXT_PUBLIC_SITE_URL: string
   readonly ANALYZE: 'true' | 'false'
   /* automatically added by Vercel */
