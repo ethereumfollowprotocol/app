@@ -1,34 +1,19 @@
-import { coinbaseWallet, injected, walletConnect } from 'wagmi/connectors'
+'use client'
+
 import { APP_DESCRIPTION, APP_NAME, APP_URL } from '#/lib/constants'
 import { mainnet, sepolia, foundry, optimism, optimismSepolia } from 'wagmi/chains'
-import {
-  http,
-  fallback,
-  webSocket,
-  createConfig,
-  cookieStorage,
-  createStorage,
-  type CreateConnectorFn
-} from 'wagmi'
+import { http, fallback, webSocket } from 'wagmi'
+import { getDefaultConfig, getDefaultWallets } from '@rainbow-me/rainbowkit'
 
-export const connectors = [
-  injected(),
-  coinbaseWallet({ appName: APP_NAME, appLogoUrl: 'https://app.ethfollow.xyz/logo.png' }),
-  walletConnect({
-    projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
-    metadata: {
-      url: APP_URL,
-      name: APP_NAME,
-      description: APP_DESCRIPTION,
-      icons: ['https://app.ethfollow.xyz/logo.png']
-    }
-  })
-] satisfies Array<CreateConnectorFn>
+const { wallets } = getDefaultWallets()
 
-export const wagmiConfig = createConfig({
-  ssr: true,
-  connectors,
-  storage: createStorage({ storage: cookieStorage }),
+const config = getDefaultConfig({
+  appName: APP_NAME,
+  appIcon: 'https://app.ethfollow.xyz/logo.png',
+  appDescription: APP_DESCRIPTION,
+  appUrl: APP_URL,
+  projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
+  wallets: [...wallets],
   chains: [foundry, mainnet, sepolia, optimism, optimismSepolia],
   transports: {
     [foundry.id]: http(process.env.NEXT_PUBLIC_LOCAL_RPC || 'http://0.0.0.0:8545', { batch: true }),
@@ -101,8 +86,4 @@ export const wagmiConfig = createConfig({
   }
 })
 
-declare module 'wagmi' {
-  interface Register {
-    config: typeof wagmiConfig
-  }
-}
+export { config as wagmiConfig }
