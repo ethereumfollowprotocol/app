@@ -5,9 +5,7 @@ export const APP_NAME_SHORT = 'EFP'
 export const APP_DESCRIPTION =
   'A native Ethereum protocol for following and tagging Ethereum accounts.'
 export const APP_URL =
-  process.env['NEXT_PUBLIC_VERCEL_URL'] ||
-  process.env['NEXT_PUBLIC_SITE_URL'] ||
-  'http://localhost:4321'
+  process.env.NEXT_PUBLIC_VERCEL_URL || process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:4321'
 
 export const ENS_SUBGRAPH = `https://api.thegraph.com/subgraphs/name/ensdomains/ens`
 

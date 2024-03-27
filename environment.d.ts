@@ -25,7 +25,6 @@ interface EnvironmentVariables {
   readonly NEXT_PUBLIC_ANKR_ID: string
   readonly ANVIL_ACCOUNT_PRIVATE_KEY: `0x${string}`
   readonly NEXT_PUBLIC_ANVIL_ACCOUNT_PRIVATE_KEY: `0x${string}`
-  readonly SITE_URL: string
   readonly NEXT_PUBLIC_SITE_URL: string
   readonly ANALYZE: 'true' | 'false'
   /* automatically added by Vercel */
