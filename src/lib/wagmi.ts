@@ -1,4 +1,4 @@
-import { injected, walletConnect } from 'wagmi/connectors'
+import { coinbaseWallet, injected, walletConnect } from 'wagmi/connectors'
 import { APP_DESCRIPTION, APP_NAME, APP_URL } from '#/lib/constants'
 import { mainnet, sepolia, foundry, optimism, optimismSepolia } from 'wagmi/chains'
 import {
@@ -13,6 +13,7 @@ import {
 
 export const connectors = [
   injected(),
+  coinbaseWallet({ appName: APP_NAME, appLogoUrl: 'https://app.ethfollow.xyz/logo.png' }),
   walletConnect({
     projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
     metadata: {
@@ -27,10 +28,6 @@ export const connectors = [
 export const wagmiConfig = createConfig({
   ssr: true,
   connectors,
-  cacheTime: 4_000,
-  pollingInterval: 4_000,
-  syncConnectedChain: true,
-  batch: { multicall: true },
   storage: createStorage({ storage: cookieStorage }),
   chains: [foundry, mainnet, sepolia, optimism, optimismSepolia],
   transports: {
