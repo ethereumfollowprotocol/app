@@ -1,9 +1,10 @@
 import { FollowList } from '#/components/follow-list'
 import { Modal } from '#/components/modal'
 import { useCart } from '#/contexts/cart-context'
-import { Box, Button, Text } from '@radix-ui/themes'
+import { Box, Text } from '@radix-ui/themes'
 import { useMemo } from 'react'
 import { CreateOrUpdateEFPList } from './CreateOrUpdateEFPList'
+import { PrimaryButton } from '#/components/primary-button'
 
 export function UnconfirmedChanges() {
   const { cartItems, totalCartItems, cartAddresses } = useCart()
@@ -44,23 +45,11 @@ export function UnconfirmedChanges() {
             </Box>
           </Box>
 
-          <Modal triggerButton={<ConfirmButton />}>
+          <Modal triggerButton={<PrimaryButton label='Confirm' />}>
             <CreateOrUpdateEFPList />
           </Modal>
         </Box>
       </Box>
     </>
-  )
-}
-
-function ConfirmButton() {
-  return (
-    <Button
-      className='bg-gradient-to-b from-kournikova-300 to-salmon-400 text-black'
-      radius='full'
-      size='3'
-    >
-      Confirm
-    </Button>
   )
 }
