@@ -1,9 +1,11 @@
 import { PrimaryButton } from '#/components/primary-button'
+import { useCart } from '#/contexts/cart-context'
 import type { ChainWithDetails } from '#/lib/wagmi'
 import { CheckIcon } from '@radix-ui/react-icons'
 import { Avatar, Box, Heading, Text } from '@radix-ui/themes'
 import clsx from 'clsx'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
+import { mainnet } from 'viem/chains'
 import { useChains } from 'wagmi'
 
 enum Step {
@@ -12,10 +14,35 @@ enum Step {
   TransationStatus = 'TransationStatus'
 }
 
+type Action = {
+  label: string
+  chain: ChainWithDetails | null | undefined
+}
+
 export function CreateOrUpdateEFPList() {
-  const chains = useChains() as unknown as ChainWithDetails[]
+  const hasCreatedEfpList = false // TODO get this from context or fetch this
+  const { totalCartItems } = useCart()
+
+  const chains = useChains() as unknown as ChainWithDetails[] // TODO fix this cast as unknown
   const [selectedChain, setSelectedChain] = useState<ChainWithDetails | null>(null)
   const [currentStep, setCurrentStep] = useState(Step.SelectChain)
+
+  // Cart item action
+  const cartItemActionLabel = `${totalCartItems} edit${
+    totalCartItems > 1 ? 's' : ''
+  } to List Records`
+  const cartItemAction = { label: cartItemActionLabel, chain: selectedChain }
+
+  // Create EFP List action
+  const CREATE_EFP_LIST_ACTION = {
+    label: 'Create new EFP List',
+    chain: chains.find(chain => chain.id === 1) // Mainnet
+  }
+
+  const actions = useMemo<Action[]>(
+    () => (hasCreatedEfpList ? [cartItemAction] : [CREATE_EFP_LIST_ACTION, cartItemAction]),
+    [cartItemAction, CREATE_EFP_LIST_ACTION]
+  )
 
   const handleChainClick = (chain: ChainWithDetails) => {
     setSelectedChain(chain)
@@ -27,7 +54,7 @@ export function CreateOrUpdateEFPList() {
   }
 
   return (
-    <Box className='flex flex-col items-center text-center justify-between h-full'>
+    <Box className='flex flex-col items-center text-center justify-between h-full w-full'>
       {currentStep === Step.SelectChain && (
         <SelectChain
           chains={chains}
@@ -41,6 +68,7 @@ export function CreateOrUpdateEFPList() {
           setCurrentStep={setCurrentStep}
           selectedChain={selectedChain}
           handleInitiateTransactions={() => setCurrentStep(Step.TransationStatus)}
+          actions={actions}
         />
       )}
       {currentStep === Step.TransationStatus && <TransactionStatus />}
@@ -87,16 +115,18 @@ function SelectChain({
 }
 
 function InitiateTransactions({
+  actions,
   setCurrentStep,
   selectedChain,
   handleInitiateTransactions
 }: {
+  actions: Action[]
   setCurrentStep: (step: Step) => void
   selectedChain: ChainWithDetails | null
   handleInitiateTransactions: () => void
 }) {
   return (
-    <Box className='w-full h-full'>
+    <>
       <Box className='flex flex-col gap-2'>
         <Heading as='h1' size='6'>
           Onchain Update
@@ -109,20 +139,46 @@ function InitiateTransactions({
         <Text size='5' weight='bold'>
           Actions
         </Text>
-        <Box className='actions'>
-          <Box>something</Box>
-          <Box>something else</Box>
+        <Box>
+          {actions.map(
+            action =>
+              action.chain && (
+                <Box className='flex'>
+                  <CheckIcon className='left-0 text-lime-500 relative -ml-12 w-10 h-10' />
+                  <Box key={action.chain.id} className='flex items-center gap-2'>
+                    <Text weight='bold'>{action.label}</Text>
+                  </Box>
+                </Box>
+              )
+          )}
         </Box>
       </Box>
-      <Box className='required transactions'>
-        <Box>1 tx on ethereum</Box>
-        <Box>1 tx on optimism</Box>
+      <Box className='flex flex-col gap-2 items-center'>
+        <Text size='5' weight='bold' className='text-center'>
+          Required Transactions
+        </Text>
+        {actions.map(action =>
+          action.chain ? (
+            <Box
+              key={action.chain.id}
+              className='grid grid-cols-2 items-center justify-items-center gap-2'
+            >
+              <Box className='flex items-center gap-2'>
+                <Text weight='bold' className=''>
+                  1 tx
+                </Text>
+                <ChainIcon chain={action.chain} className='h-[30px] w-[30px]' />
+              </Box>
+              <Text className='justify-self-start'>{action.chain.name}</Text>
+            </Box>
+          ) : null
+        )}
       </Box>
-      <Box className='flex justify-between'>
+      <Box className='flex w-full justify-between'>
         <PrimaryButton
           label='Back'
           onClick={() => setCurrentStep(Step.SelectChain)}
-          className='text-lg w-40 h-10'
+          className='text-lg w-40 h-10 bg-grey'
         />
         <PrimaryButton
           label='Initiate'
@@ -131,7 +187,7 @@ function InitiateTransactions({
           disabled={!selectedChain}
         />
       </Box>
-    </Box>
+    </>
   )
 }
 
@@ -189,12 +245,7 @@ function Chain({
       <Box>
         {isSelected && <CheckIcon className='left-0 text-lime-500 relative -ml-12 w-10 h-10' />}
       </Box>
-      <Avatar
-        src={chain.iconUrl}
-        fallback={'/assets/chains/ethereum.svg'}
-        radius='full'
-        className={clsx(chain.iconBackground, 'h-[60px] w-[60px]')}
-      />
+      <ChainIcon chain={chain} className={'h-[60px] w-[60px]'} />
       <Box className='flex flex-col items-start '>
         <Text size='1'>{chain.custom.chainDetail}</Text>
         <Text size='2' weight='bold'>
@@ -203,5 +254,16 @@ function Chain({
         <Text size='1'>{chain.custom.gasFeeDetail}</Text>
       </Box>
     </Box>
+  )
+}
+
+function ChainIcon({ chain, className }: { chain: ChainWithDetails; className?: string }) {
+  return (
+    <Avatar
+      src={chain.iconUrl}
+      fallback={'/assets/chains/ethereum.svg'}
+      radius='full'
+      className={clsx(chain.iconBackground, className)}
+    />
   )
 }
