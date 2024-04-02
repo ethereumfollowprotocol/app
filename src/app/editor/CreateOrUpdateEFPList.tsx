@@ -5,7 +5,6 @@ import { CheckIcon } from '@radix-ui/react-icons'
 import { Avatar, Box, Heading, Text } from '@radix-ui/themes'
 import clsx from 'clsx'
 import { useMemo, useState } from 'react'
-import { mainnet } from 'viem/chains'
 import { useChains } from 'wagmi'
 
 enum Step {
