@@ -3,7 +3,7 @@ import { Modal } from '#/components/modal'
 import { useCart } from '#/contexts/cart-context'
 import { Box, Text } from '@radix-ui/themes'
 import { useMemo } from 'react'
-import { CreateOrUpdateEFPList } from './CreateOrUpdateEFPList'
+import { CreateOrUpdateEFPList } from '#/app/editor/create-or-update-efp-list'
 import { PrimaryButton } from '#/components/primary-button'
 
 export function UnconfirmedChanges() {
