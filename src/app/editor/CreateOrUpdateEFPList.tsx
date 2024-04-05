@@ -160,6 +160,7 @@ function InitiateTransactions({
         {actions.map(action =>
           action.chain ? (
             <Box
+              /* TODO each action has a separate chain currently, but the key should be specific to the action instead */
               key={action.chain.id}
               className='grid grid-cols-2 items-center justify-items-center gap-2'
             >
