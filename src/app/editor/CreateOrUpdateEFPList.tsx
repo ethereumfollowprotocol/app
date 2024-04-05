@@ -142,7 +142,8 @@ function InitiateTransactions({
           {actions.map(
             action =>
               action.chain && (
-                <Box className='flex'>
+                /* TODO each action has a separate chain currently, but the key should be specific to the action instead */
+                <Box className='flex' key={action.chain.id}>
                   <CheckIcon className='left-0 text-lime-500 relative -ml-12 w-10 h-10' />
                   <Box key={action.chain.id} className='flex items-center gap-2'>
                     <Text weight='bold'>{action.label}</Text>
@@ -190,16 +191,14 @@ function InitiateTransactions({
   )
 }
 
-function TransactionStatus() {
+function TransactionStatus({ actions }: { actions: Action[] }) {
   return (
     <>
       <Box className='flex flex-col gap-2'>
         <Heading as='h1' size='6'>
-          Transaction Status
+          Onchain Update
         </Heading>
-        <Text as='p' size='2'>
-          blah
-        </Text>
+        <Text as='p' size='2'></Text>
       </Box>
       <PrimaryButton
         label='Next'
