@@ -3,9 +3,10 @@ import { useState } from 'react'
 import type { Action } from './types'
 import { ChainIcon } from '#/components/chain-icon'
 import { PrimaryButton } from '#/components/primary-button'
+import { useWaitForTransactionReceipt } from 'wagmi'
 
 export function TransactionStatusCard({ actions }: { actions: Action[] }) {
-  const [currentAction, setCurrentAction] = useState(() => actions[0])
+  const [currentAction, setCurrentAction] = useState(() => actions[0]) // TODO might need to validate this: to bundle in a way that handles creating an EFP list first
   const currentActionIndex = currentAction ? actions.indexOf(currentAction) + 1 : null
 
   if (!currentAction) return null
@@ -43,7 +44,8 @@ export function TransactionStatusCard({ actions }: { actions: Action[] }) {
           </Box>
         </Box>
       )}
-      <Box className='status'>transaction status</Box>
+      <TransactionPendingConfirmation />
+      <TransactionStatusDetails hash={currentAction.txHash} />
       <PrimaryButton
         label='Next'
         onClick={() => console.log('need to initiate next transaction')}
@@ -52,4 +54,11 @@ export function TransactionStatusCard({ actions }: { actions: Action[] }) {
       />
     </>
   )
+}
+
+function TransactionStatusDetails({ hash }: { hash: `0x${string}` }) {
+  const { isPending, isSuccess, isError } = useWaitForTransactionReceipt({
+    hash: currentAction?.txHash,
+    chainId: currentAction?.chain?.id
+  })
 }

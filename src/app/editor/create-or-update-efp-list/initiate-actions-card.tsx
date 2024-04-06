@@ -5,16 +5,16 @@ import { CheckIcon } from '@radix-ui/react-icons'
 import { ChainIcon } from '#/components/chain-icon'
 import { PrimaryButton } from '#/components/primary-button'
 
-export function InitiateTransactionsCard({
+export function InitiateActionsCard({
   actions,
   setCurrentStep,
   selectedChain,
-  handleInitiateTransactions
+  handleInitiateActions
 }: {
   actions: Action[]
   setCurrentStep: (step: Step) => void
   selectedChain: ChainWithDetails | null
-  handleInitiateTransactions: () => void
+  handleInitiateActions: () => void
 }) {
   return (
     <>
@@ -32,12 +32,11 @@ export function InitiateTransactionsCard({
         </Text>
         <Box>
           {actions.map(
-            action =>
+            (action, index) =>
               action.chain && (
-                /* TODO each action has a separate chain currently, but the key should be specific to the action instead */
-                <Box className='flex' key={action.chain.id}>
+                <Box className='flex' key={`${action.chain.id}-${index}`}>
                   <CheckIcon className='left-0 text-lime-500 relative -ml-12 w-10 h-10' />
-                  <Box key={action.chain.id} className='flex items-center gap-2'>
+                  <Box className='flex items-center gap-2'>
                     <Text weight='bold'>{action.label}</Text>
                   </Box>
                 </Box>
@@ -49,11 +48,10 @@ export function InitiateTransactionsCard({
         <Text size='5' weight='bold' className='text-center'>
           Required Transactions
         </Text>
-        {actions.map(action =>
+        {actions.map((action, index) =>
           action.chain ? (
             <Box
-              /* TODO each action has a separate chain currently, but the key should be specific to the action instead */
-              key={action.chain.id}
+              key={`${action.chain.id}-${index}`}
               className='grid grid-cols-2 items-center justify-items-center gap-2'
             >
               <Box className='flex items-center gap-2'>
@@ -75,7 +73,7 @@ export function InitiateTransactionsCard({
         />
         <PrimaryButton
           label='Initiate'
-          onClick={handleInitiateTransactions}
+          onClick={handleInitiateActions}
           className='text-lg w-40 h-10'
           disabled={!selectedChain}
         />
