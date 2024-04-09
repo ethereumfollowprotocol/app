@@ -28,7 +28,9 @@ export const TransactionsProvider = ({
 
   // Populate transactions from localStorage when component mounts
   useEffect(() => {
-    const storedTransactions = localStorage.getItem(TransactionsLocalStorageKey)
+    if (window === undefined) return
+
+    const storedTransactions = window.localStorage.getItem(TransactionsLocalStorageKey)
     if (storedTransactions) {
       setTransactions(JSON.parse(storedTransactions) as Transaction[])
     }
@@ -60,8 +62,9 @@ export const TransactionsProvider = ({
   // Synchronize the transactions state with local storage on changes,
   // ensuring that only the most recent transactions are stored.
   useEffect(() => {
+    if (window === undefined) return
     const recentTransactions = transactions.slice(-MAX_TRANSACTIONS_STORED)
-    localStorage.setItem(TransactionsLocalStorageKey, JSON.stringify(recentTransactions))
+    window.localStorage.setItem(TransactionsLocalStorageKey, JSON.stringify(recentTransactions))
   }, [transactions])
 
   return (
