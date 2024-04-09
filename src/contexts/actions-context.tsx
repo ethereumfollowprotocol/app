@@ -1,3 +1,5 @@
+'use client'
+
 import type { ChainWithDetails } from '#/lib/wagmi'
 import { createContext, useContext, useState, type ReactNode, useCallback } from 'react'
 import type { WriteContractReturnType } from 'viem'
@@ -69,7 +71,7 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
 
     try {
       const hash = await action.execute()
-      addOrUpdateAction({ ...action, txHash: hash })
+      addOrUpdateAction({ ...action, txHash: hash, isPendingConfirmation: false })
     } catch (error) {
       console.error('Action execution failed', error)
       addOrUpdateAction({ ...action, isConfirmationError: true })
