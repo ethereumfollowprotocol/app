@@ -74,13 +74,10 @@ function TransactionStatusDetails({ action }: { action: Action }) {
     if (isError) return 'text-red-500'
   }, [action.isPendingConfirmation, isPending, isSuccess, isError])
 
-  const isHidden =
-    action.isConfirmationError ||
-    action.isPendingConfirmation ||
-    (!isPending && !isSuccess && !isError)
+  const shouldShowComponent = isPending || isSuccess || isError
 
-  return (
-    <Box className={clsx('flex flex-col', isHidden && 'hidden')}>
+  return shouldShowComponent ? (
+    <Box className='flex flex-col'>
       <Text size='7' weight='bold'>
         Status
       </Text>
@@ -97,5 +94,5 @@ function TransactionStatusDetails({ action }: { action: Action }) {
         </a>
       )}
     </Box>
-  )
+  ) : null
 }
