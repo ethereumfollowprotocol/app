@@ -1,13 +1,13 @@
 import { Box, Heading, Text } from '@radix-ui/themes'
-import { useState } from 'react'
-import type { Action } from './types'
+import { useCallback } from 'react'
 import { ChainIcon } from '#/components/chain-icon'
 import { PrimaryButton } from '#/components/primary-button'
 import { useWaitForTransactionReceipt } from 'wagmi'
+import clsx from 'clsx'
+import { useActions, type Action } from '#/contexts/actions-context'
 
-export function TransactionStatusCard({ actions }: { actions: Action[] }) {
-  const [currentAction, setCurrentAction] = useState(() => actions[0]) // TODO might need to validate this: to bundle in a way that handles creating an EFP list first
-  const currentActionIndex = currentAction ? actions.indexOf(currentAction) + 1 : null
+export function TransactionStatusCard() {
+  const { currentAction, currentActionIndex, actions } = useActions()
 
   if (!currentAction) return null
 
@@ -17,11 +17,10 @@ export function TransactionStatusCard({ actions }: { actions: Action[] }) {
         <Heading as='h1' size='6'>
           Onchain Update
         </Heading>
-        {currentActionIndex && (
-          <Text as='p' size='2' weight='bold'>
-            {currentActionIndex} of {actions.length}
-          </Text>
-        )}
+
+        <Text as='p' size='2' weight='bold'>
+          {currentActionIndex + 1} of {actions.length}
+        </Text>
       </Box>
       <Box className='flex flex-col gap-4'>
         <Text size='5' weight='bold'>
@@ -33,7 +32,7 @@ export function TransactionStatusCard({ actions }: { actions: Action[] }) {
       </Box>
       {currentAction.chain && (
         <Box className='flex flex-col gap-2'>
-          <Text size='5' weight='bold'>
+          <Text size='4' weight='bold'>
             Chain
           </Text>
           <Box className='flex items-center gap-2'>
@@ -44,21 +43,59 @@ export function TransactionStatusCard({ actions }: { actions: Action[] }) {
           </Box>
         </Box>
       )}
-      <TransactionPendingConfirmation />
-      <TransactionStatusDetails hash={currentAction.txHash} />
+      <TransactionStatusDetails action={currentAction} />
       <PrimaryButton
         label='Next'
         onClick={() => console.log('need to initiate next transaction')}
         className='text-lg w-40 h-10'
-        disabled={false}
+        disabled={currentAction.isConfirmationError}
       />
     </>
   )
 }
 
-function TransactionStatusDetails({ hash }: { hash: `0x${string}` }) {
+function TransactionStatusDetails({ action }: { action: Action }) {
   const { isPending, isSuccess, isError } = useWaitForTransactionReceipt({
-    hash: currentAction?.txHash,
-    chainId: currentAction?.chain?.id
+    hash: action.txHash,
+    chainId: action.chain?.id
   })
+
+  const getStatusDescription = useCallback(() => {
+    if (action.isPendingConfirmation) return 'Transaction needs approval'
+    if (isPending) return 'Transaction pending...'
+    if (isSuccess) return 'Transaction approved'
+    if (isError) return 'Transaction error'
+  }, [action.isPendingConfirmation, isPending, isSuccess, isError])
+
+  const getStatusColor = useCallback(() => {
+    if (action.isPendingConfirmation) return 'text-salmon-500'
+    if (isPending) return 'text-kournikova-500'
+    if (isSuccess) return 'text-lime-500'
+    if (isError) return 'text-red-500'
+  }, [action.isPendingConfirmation, isPending, isSuccess, isError])
+
+  const isHidden =
+    action.isConfirmationError ||
+    action.isPendingConfirmation ||
+    (!isPending && !isSuccess && !isError)
+
+  return (
+    <Box className={clsx('flex flex-col', isHidden && 'hidden')}>
+      <Text size='7' weight='bold'>
+        Status
+      </Text>
+      <Text size='2' className={clsx(getStatusColor())}>
+        {getStatusDescription()}
+      </Text>
+      {action.isPendingConfirmation ? (
+        <Text size='2' className='text-gray-500'>
+          Check your wallet
+        </Text>
+      ) : (
+        <a href={action.chain?.blockExplorers?.default.url} target='_blank' rel='noreferrer'>
+          View on Block Explorer
+        </a>
+      )}
+    </Box>
+  )
 }

@@ -1,9 +1,10 @@
 import type { ChainWithDetails } from '#/lib/wagmi'
 import { Box, Heading, Text } from '@radix-ui/themes'
-import { Step, type Action } from './types'
+import { Step } from './types'
 import { CheckIcon } from '@radix-ui/react-icons'
 import { ChainIcon } from '#/components/chain-icon'
 import { PrimaryButton } from '#/components/primary-button'
+import type { Action } from '#/contexts/actions-context'
 
 export function InitiateActionsCard({
   actions,

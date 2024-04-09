@@ -1,63 +1,71 @@
 import { useCart } from '#/contexts/cart-context'
 import type { ChainWithDetails } from '#/lib/wagmi'
 import { Box } from '@radix-ui/themes'
-import { useMemo, useState } from 'react'
-import { useChains } from 'wagmi'
+import { useState } from 'react'
 import { SelectChainCard } from './select-chain-card'
-import { Step, type Action, EFPActionType } from './types'
+import { Step } from './types'
 import { InitiateActionsCard } from './initiate-actions-card'
 import { TransactionStatusCard } from './transaction-status-card'
 import { useCreateEFPList } from '#/hooks/efp-actions/use-create-efp-list'
+import { EFPActionType, type Action, useActions } from '#/contexts/actions-context'
+import type { WriteContractReturnType } from 'viem'
 
 export function CreateOrUpdateEFPList() {
-  const hasCreatedEfpList = false // TODO get this from context or fetch this
+  // Setup states and context hooks
+  const hasCreatedEfpList = false // Placeholder
   const { totalCartItems } = useCart()
-
-  const chains = useChains() as unknown as ChainWithDetails[] // TODO fix this cast as unknown
+  const { addOrUpdateAction, executeAction } = useActions()
   const [selectedChain, setSelectedChain] = useState<ChainWithDetails | null>(null)
   const [currentStep, setCurrentStep] = useState(Step.SelectChain)
 
+  // Prepare action functions
   const { createEFPList } = useCreateEFPList({ chainId: selectedChain?.id })
-  const updateEFPList = () => console.log('update list')
+  const updateEFPList = () =>
+    Promise.resolve(console.log('Updating list logic here') as unknown as WriteContractReturnType) // TODO placeholder
 
-  const cartItemActionLabel = `${totalCartItems} edit${
-    totalCartItems > 1 ? 's' : ''
-  } to List Records`
-
-  // Cart item action
+  // Define actions
+  const cartItemActionLabel = `${totalCartItems} edits to List Records`
   const cartItemAction: Action = {
+    id: EFPActionType.UpdateEFPList, // Unique identifier for the action
     type: EFPActionType.UpdateEFPList,
     label: cartItemActionLabel,
     chain: selectedChain,
-    action: updateEFPList
+    execute: updateEFPList,
+    isPendingConfirmation: false
   }
 
-  // Create EFP List action
-  const CREATE_EFP_LIST_ACTION: Action = {
+  const createEFPListAction: Action = {
+    id: EFPActionType.CreateEFPList, // Unique identifier for the action
     type: EFPActionType.CreateEFPList,
     label: 'Create new EFP List',
     chain: selectedChain,
-    action: createEFPList
+    execute: createEFPList,
+    isPendingConfirmation: false
   }
 
-  const actions = useMemo<Action[]>(
-    () => (hasCreatedEfpList ? [cartItemAction] : [CREATE_EFP_LIST_ACTION, cartItemAction]),
-    [cartItemAction, CREATE_EFP_LIST_ACTION]
-  )
+  const actions = hasCreatedEfpList ? [cartItemAction] : [createEFPListAction, cartItemAction]
 
+  // Handle selecting a chain
   const handleChainClick = (chain: ChainWithDetails) => {
     setSelectedChain(chain)
   }
 
+  // Move to the next step
   const handleNextStep = () => {
     if (!selectedChain) return
     setCurrentStep(Step.InitiateTransactions)
   }
 
+  // Handle action initiation
   const handleInitiateActions = () => {
-    setCurrentStep(Step.TransationStatus)
+    setCurrentStep(Step.TransactionStatus)
+
     for (const action of actions) {
-      action.action()
+      // Add the action in the actions context
+      addOrUpdateAction({ ...action, isPendingConfirmation: true })
+
+      // Use executeAction from the actions context to handle user rejections
+      executeAction(action.id)
     }
   }
 
@@ -65,7 +73,6 @@ export function CreateOrUpdateEFPList() {
     <Box className='flex flex-col items-center text-center justify-between h-full w-full'>
       {currentStep === Step.SelectChain && (
         <SelectChainCard
-          chains={chains}
           handleChainClick={handleChainClick}
           selectedChain={selectedChain}
           handleNextStep={handleNextStep}
@@ -73,13 +80,13 @@ export function CreateOrUpdateEFPList() {
       )}
       {currentStep === Step.InitiateTransactions && (
         <InitiateActionsCard
+          actions={actions}
           setCurrentStep={setCurrentStep}
           selectedChain={selectedChain}
           handleInitiateActions={handleInitiateActions}
-          actions={actions}
         />
       )}
-      {currentStep === Step.TransationStatus && <TransactionStatusCard actions={actions} />}
+      {currentStep === Step.TransactionStatus && <TransactionStatusCard />}
     </Box>
   )
 }

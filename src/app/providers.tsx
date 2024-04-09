@@ -1,6 +1,7 @@
 'use client'
 
 import { Header } from '#/components/header.tsx'
+import { ActionsProvider } from '#/contexts/actions-context'
 import { CartProvider } from '#/contexts/cart-context'
 import { TransactionsProvider } from '#/contexts/transactions-context'
 import { DAY, MINUTE } from '#/lib/constants'
@@ -41,14 +42,16 @@ export function Providers({ children, initialState }: Props) {
           {/* <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}> */}
           <RainbowKitProvider coolMode={true} initialChain={1}>
             <TransactionsProvider>
-              <CartProvider>
-                <Theme scaling='100%' appearance='inherit' accentColor='gray'>
-                  <React.Suspense>
-                    <Header />
-                  </React.Suspense>
-                  {children}
-                </Theme>
-              </CartProvider>
+              <ActionsProvider>
+                <CartProvider>
+                  <Theme scaling='100%' appearance='inherit' accentColor='gray'>
+                    <React.Suspense>
+                      <Header />
+                    </React.Suspense>
+                    {children}
+                  </Theme>
+                </CartProvider>
+              </ActionsProvider>
             </TransactionsProvider>
           </RainbowKitProvider>
           {/* </PersistQueryClientProvider> */}

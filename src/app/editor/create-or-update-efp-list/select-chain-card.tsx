@@ -3,18 +3,19 @@ import { PrimaryButton } from '#/components/primary-button'
 import type { ChainWithDetails } from '#/lib/wagmi'
 import { CheckIcon } from '@radix-ui/react-icons'
 import { Box, Heading, Text } from '@radix-ui/themes'
+import { useChains } from 'wagmi'
 
 export function SelectChainCard({
-  chains,
   handleChainClick,
   selectedChain,
   handleNextStep
 }: {
-  chains: ChainWithDetails[]
   handleChainClick: (chain: ChainWithDetails) => void
   selectedChain: ChainWithDetails | null
   handleNextStep: () => void
 }) {
+  // Any chains specified in wagmi are valid
+  const chains = useChains() as unknown as ChainWithDetails[] // TODO: Fix this type issue
   return (
     <>
       <Box className='flex flex-col gap-2'>

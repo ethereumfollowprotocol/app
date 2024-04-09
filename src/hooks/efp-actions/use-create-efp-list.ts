@@ -35,14 +35,14 @@ export const useCreateEFPList = ({ chainId }: { chainId: number | undefined }) =
   })
 
   const {
-    writeContract,
+    writeContractAsync,
     data: hash,
     isPending: createEFPListIsPendingUserConfirmation, // is awaiting user confirmation
     error: createEFPListError
   } = useWriteContract()
 
-  const createEFPList = () => {
-    if (!chainId) return console.error('Chain ID is required to create EFP list.')
+  const createEFPList = async () => {
+    if (!chainId) throw new Error('Chain ID is required to create EFP list.')
 
     // Switch chain if not the selected chain to store/create the EFP list
     if (chainId !== currentChainId) {
@@ -51,10 +51,10 @@ export const useCreateEFPList = ({ chainId }: { chainId: number | undefined }) =
 
     // Handle no simulated data and/or error
     if (!simulateCreateEFPListData?.request)
-      return console.error('Error simulating createEFPListData request.')
+      throw new Error('Error simulating createEFPListData request.')
 
     // Use the simulated data to write the contract
-    writeContract(simulateCreateEFPListData.request)
+    return await writeContractAsync(simulateCreateEFPListData.request)
   }
 
   return {
