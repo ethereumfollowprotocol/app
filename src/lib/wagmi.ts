@@ -3,9 +3,67 @@
 import { APP_DESCRIPTION, APP_NAME, APP_URL } from '#/lib/constants'
 import { mainnet, sepolia, foundry, optimism, optimismSepolia } from 'wagmi/chains'
 import { http, fallback, webSocket } from 'wagmi'
-import { getDefaultConfig, getDefaultWallets } from '@rainbow-me/rainbowkit'
+import { getDefaultConfig, getDefaultWallets, type Chain } from '@rainbow-me/rainbowkit'
 
 const { wallets } = getDefaultWallets()
+
+export type ChainWithDetails = Chain & {
+  iconBackground?: string
+  iconUrl: string
+  custom: {
+    chainDetail: string
+    gasFeeDetail: string
+  }
+}
+
+// Define the chains for rainbow/wagmi and their respective icons
+// These are the current supported chains for this app
+// `chainDetail` and `gasFeeDetail` are custom fields to be used in the ChainList component
+export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
+  {
+    ...foundry,
+    iconBackground: 'bg-gray-400',
+    iconUrl: '/assets/chains/ethereum.svg',
+    custom: {
+      chainDetail: 'Local Testnet',
+      gasFeeDetail: 'Low gas fees'
+    }
+  },
+  {
+    ...mainnet,
+    iconBackground: 'bg-gray-300',
+    iconUrl: '/assets/chains/ethereum.svg',
+    custom: {
+      chainDetail: '',
+      gasFeeDetail: 'High gas fees'
+    }
+  },
+  {
+    ...sepolia,
+    iconBackground: 'bg-gray-200',
+    iconUrl: '/assets/chains/ethereum.svg',
+    custom: {
+      chainDetail: 'Testnet',
+      gasFeeDetail: 'Low gas fees'
+    }
+  },
+  {
+    ...optimism,
+    iconUrl: '/assets/chains/optimism.svg',
+    custom: {
+      chainDetail: 'Ethereum L2',
+      gasFeeDetail: 'Low gas fees'
+    }
+  },
+  {
+    ...optimismSepolia,
+    iconUrl: '/assets/chains/optimism.svg',
+    custom: {
+      chainDetail: 'Ethereum L2 Testnet',
+      gasFeeDetail: 'Low gas fees'
+    }
+  }
+]
 
 const config = getDefaultConfig({
   appName: APP_NAME,
@@ -14,7 +72,7 @@ const config = getDefaultConfig({
   appUrl: APP_URL,
   projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
   wallets: [...wallets],
-  chains: [foundry, mainnet, sepolia, optimism, optimismSepolia],
+  chains,
   transports: {
     [foundry.id]: http(process.env.NEXT_PUBLIC_LOCAL_RPC || 'http://0.0.0.0:8545', { batch: true }),
     [mainnet.id]: fallback(

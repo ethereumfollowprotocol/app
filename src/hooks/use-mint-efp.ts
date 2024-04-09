@@ -1,13 +1,13 @@
-import * as React from 'react'
 import { encodePacked } from 'viem'
 import * as abi from 'src/lib/abi.ts'
 import { efpContracts } from '#/lib/constants/contracts.ts'
 import { generateListStorageLocationSlot } from '#/app/efp/utilities.ts'
 import { useChainId, useSimulateContract, useWriteContract } from 'wagmi'
+import { useMemo } from 'react'
 
 export function useMintEFP() {
   const chainId = useChainId()
-  const nonce = React.useMemo(() => generateListStorageLocationSlot(), [])
+  const nonce = useMemo(() => generateListStorageLocationSlot(), [])
 
   const {
     data: simulateMintData,
