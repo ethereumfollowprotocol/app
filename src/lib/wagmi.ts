@@ -2,7 +2,7 @@
 
 import { APP_DESCRIPTION, APP_NAME, APP_URL } from '#/lib/constants'
 import { mainnet, sepolia, foundry, optimism, optimismSepolia } from 'wagmi/chains'
-import { http, fallback, webSocket, createStorage } from 'wagmi'
+import { http, fallback, webSocket } from 'wagmi'
 import { getDefaultConfig, getDefaultWallets, type Chain } from '@rainbow-me/rainbowkit'
 
 const { wallets } = getDefaultWallets()
