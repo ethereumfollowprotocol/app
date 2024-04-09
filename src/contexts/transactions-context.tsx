@@ -24,12 +24,15 @@ export const TransactionsProvider = ({
 }) => {
   const addRecentTransaction = useAddRecentTransaction()
 
-  const initializeTransactions = () => {
-    const storedTransactions = localStorage.getItem(TransactionsLocalStorageKey)
-    return storedTransactions ? (JSON.parse(storedTransactions) as Transaction[]) : []
-  }
+  const [transactions, setTransactions] = useState<Transaction[]>([])
 
-  const [transactions, setTransactions] = useState(initializeTransactions)
+  // Populate transactions from localStorage when component mounts
+  useEffect(() => {
+    const storedTransactions = localStorage.getItem(TransactionsLocalStorageKey)
+    if (storedTransactions) {
+      setTransactions(JSON.parse(storedTransactions) as Transaction[])
+    }
+  }, [])
 
   const addTransaction = useCallback(
     (transaction: Transaction) => {
