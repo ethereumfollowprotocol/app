@@ -18,7 +18,7 @@ export function CreateOrUpdateEFPList() {
   // Setup states and context hooks
   const hasCreatedEfpList = false // Placeholder
   const { totalCartItems } = useCart()
-  const { addActions, executeCurrentAction, actions } = useActions()
+  const { addActions, executeActionByIndex, actions } = useActions()
 
   const [selectedChainId, setSelectedChainId] = useState<number>()
   const selectedChain = chains.find(chain => chain.id === selectedChainId)
@@ -75,8 +75,9 @@ export function CreateOrUpdateEFPList() {
   // Handle action initiation
   const handleInitiateActions = useCallback(() => {
     setCurrentStep(Step.TransactionStatus)
-    executeCurrentAction()
-  }, [executeCurrentAction])
+    // Execute the first action
+    executeActionByIndex(0)
+  }, [executeActionByIndex])
 
   return (
     <Box className='flex flex-col items-center text-center justify-between h-full w-full'>

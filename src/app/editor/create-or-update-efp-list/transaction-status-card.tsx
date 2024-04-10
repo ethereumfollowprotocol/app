@@ -14,7 +14,7 @@ import useChain from '#/hooks/use-chain'
  * The component also provides a button to move to the next action, using the actions-context
  */
 export function TransactionStatusCard() {
-  const { currentAction, currentActionIndex, actions, moveToNextAction, executeCurrentAction } =
+  const { currentAction, currentActionIndex, actions, moveToNextAction, executeActionByIndex } =
     useActions()
   const chain = useChain(currentAction?.chainId)
   const { isSuccess } = useWaitForTransactionReceipt({
@@ -23,9 +23,9 @@ export function TransactionStatusCard() {
   })
 
   const handleNextAction = useCallback(() => {
-    moveToNextAction()
-    executeCurrentAction()
-  }, [moveToNextAction, executeCurrentAction])
+    const nextActionIndex = moveToNextAction()
+    executeActionByIndex(nextActionIndex)
+  }, [moveToNextAction, executeActionByIndex])
 
   // Disable the next button if the current action is not successful
   const nextButtonIsDisabled = !isSuccess

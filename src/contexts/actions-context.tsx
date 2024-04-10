@@ -1,6 +1,14 @@
 'use client'
 
-import { createContext, useContext, useState, type ReactNode, useCallback, useEffect } from 'react'
+import {
+  createContext,
+  useContext,
+  useState,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useMemo
+} from 'react'
 import type { WriteContractReturnType } from 'viem'
 import { useCart } from './cart-context'
 
@@ -31,8 +39,8 @@ type ActionsContextType = {
   currentAction: Action | undefined
   currentActionIndex: number
   addActions: (newActions: Action[]) => void
-  executeCurrentAction: () => void
-  moveToNextAction: () => void
+  executeActionByIndex: (index: number) => void
+  moveToNextAction: () => number
   resetActions: () => void
 }
 
@@ -68,40 +76,53 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
     [actions]
   )
 
-  /* Moves to the next action to be able to call execute on that action */
+  // Moves to the next action to be able to call execute on that action
   const moveToNextAction = useCallback(() => {
-    // Move to next action
-    if (currentActionIndex < actions.length - 1) {
-      setCurrentActionIndex(currentActionIndex + 1)
-      return
+    // Calculate the next index
+    const nextIndex = currentActionIndex + 1 < actions.length ? currentActionIndex + 1 : -1
+
+    // Update the state based on the calculated next index
+    if (nextIndex !== -1) {
+      setCurrentActionIndex(nextIndex) // Move to the next action index
+    } else {
+      setActions([]) // Reset actions if we've reached the end
+      setCurrentActionIndex(-1) // Reset the index as well
     }
 
-    // Reset or handle completion of all actions
-    setActions([])
-    setCurrentActionIndex(-1)
+    // Return the next index for use
+    return nextIndex
   }, [currentActionIndex, actions.length])
 
-  /* Executes the current action */
-  const executeCurrentAction = useCallback(async () => {
-    // Check if the current action index is valid
-    if (currentActionIndex < 0 || currentActionIndex >= actions.length) return
+  // Executes the action based on the index to be able to handle async execution with synchronous state updates
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Don't need actions[index] as a dep
+  const executeActionByIndex = useCallback(
+    async (index: number) => {
+      // Validate the index
+      if (index < 0 || index >= actions.length) {
+        console.error('Action index out of bounds:', index)
+        return
+      }
 
-    if (!currentAction) {
-      console.error('No action found for index', currentActionIndex)
-      return
-    }
+      // Get the action to execute
+      const actionToExecute = actions[index]
+      if (!actionToExecute) {
+        console.error('No action found at index', index)
+        return
+      }
 
-    // Set the current action to pending confirmation
-    updateAction({ ...currentAction, isPendingConfirmation: true })
+      // Set the action to pending confirmation
+      updateAction({ ...actionToExecute, isPendingConfirmation: true })
 
-    try {
-      const hash = await currentAction.execute()
-      updateAction({ ...currentAction, isPendingConfirmation: false, txHash: hash })
-    } catch (error) {
-      console.error('Execution error for action', currentActionIndex, error)
-      // Handle action failure here
-    }
-  }, [currentAction, actions.length, currentActionIndex, updateAction])
+      try {
+        const hash = await actionToExecute.execute()
+        updateAction({ ...actionToExecute, isPendingConfirmation: false, txHash: hash })
+      } catch (error) {
+        console.error('Execution error for action at index', index, error)
+        // TODO Handle action failure
+      }
+    },
+    [actions, updateAction]
+  )
 
   const resetActions = useCallback(() => {
     setActions([])
@@ -120,7 +141,7 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
     currentAction,
     currentActionIndex,
     addActions,
-    executeCurrentAction,
+    executeActionByIndex,
     moveToNextAction,
     resetActions
   }
