@@ -12,7 +12,11 @@ import { parseEther } from 'viem'
 import { useAccount, useChains } from 'wagmi'
 import useSendEth from '#/hooks/use-send-eth'
 
-export function CreateOrUpdateEFPList() {
+interface CreateOrUpdateEFPListProps {
+  setOpen?: (open: boolean) => void // setOpen prop for this component's parent modal, which is passed to TransactionStatusCard to finish the process
+}
+
+export function CreateOrUpdateEFPList({ setOpen }: CreateOrUpdateEFPListProps) {
   // Any chains specified in wagmi are valid
   const chains = useChains() as unknown as ChainWithDetails[] // TODO: Fix this type issue
   // Setup states and context hooks
@@ -97,7 +101,7 @@ export function CreateOrUpdateEFPList() {
           handleInitiateActions={handleInitiateActions}
         />
       )}
-      {currentStep === Step.TransactionStatus && <TransactionStatusCard />}
+      {currentStep === Step.TransactionStatus && <TransactionStatusCard setOpen={setOpen} />}
     </Box>
   )
 }

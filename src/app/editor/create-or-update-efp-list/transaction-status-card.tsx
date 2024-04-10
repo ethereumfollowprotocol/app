@@ -7,15 +7,26 @@ import clsx from 'clsx'
 import { useActions, type Action } from '#/contexts/actions-context'
 import useChain from '#/hooks/use-chain'
 
+interface TransactionStatusCardProps {
+  setOpen?: (open: boolean) => void // setOpen prop for the parent modal
+}
+
 /**
  * @description Component for displaying the status of an onchain transaction
  * and the details of the action being executed
  *
  * The component also provides a button to move to the next action, using the actions-context
  */
-export function TransactionStatusCard() {
-  const { currentAction, currentActionIndex, actions, moveToNextAction, executeActionByIndex } =
-    useActions()
+export function TransactionStatusCard({ setOpen }: TransactionStatusCardProps) {
+  const {
+    actions,
+    allActionsSuccessful,
+    currentAction,
+    currentActionIndex,
+    executeActionByIndex,
+    moveToNextAction,
+    resetActions
+  } = useActions()
   const chain = useChain(currentAction?.chainId)
   const { isSuccess } = useWaitForTransactionReceipt({
     hash: currentAction?.txHash,
@@ -27,8 +38,20 @@ export function TransactionStatusCard() {
     executeActionByIndex(nextActionIndex)
   }, [moveToNextAction, executeActionByIndex])
 
+  const handleFinish = useCallback(() => {
+    // Close the modal
+    setOpen?.(false)
+    // Reset the actions
+    resetActions()
+  }, [setOpen, resetActions])
+
   // Disable the next button if the current action is not successful
   const nextButtonIsDisabled = !isSuccess
+  // Disable the finish button if not all actions are successful
+  const finishButtonIsDisabled = !allActionsSuccessful
+
+  const showNextButton = !allActionsSuccessful
+  const showFinishButton = allActionsSuccessful
 
   if (!currentAction) return null
 
@@ -65,12 +88,22 @@ export function TransactionStatusCard() {
         </Box>
       )}
       <TransactionStatusDetails action={currentAction} />
-      <PrimaryButton
-        label='Next'
-        onClick={handleNextAction}
-        className='text-lg w-40 h-10'
-        disabled={nextButtonIsDisabled}
-      />
+      {showNextButton && (
+        <PrimaryButton
+          label={'Next'}
+          onClick={handleNextAction}
+          className='text-lg w-40 h-10'
+          disabled={nextButtonIsDisabled}
+        />
+      )}
+      {showFinishButton && (
+        <PrimaryButton
+          label={'Finish'}
+          onClick={handleFinish}
+          className='text-lg w-40 h-10'
+          disabled={finishButtonIsDisabled}
+        />
+      )}
     </>
   )
 }

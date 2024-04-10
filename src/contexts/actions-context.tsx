@@ -11,6 +11,7 @@ import {
 } from 'react'
 import type { WriteContractReturnType } from 'viem'
 import { useCart } from './cart-context'
+import { useWaitForTransactionReceipt } from 'wagmi'
 
 export enum EFPActionType {
   CreateEFPList = 'CreateEFPList',
@@ -38,6 +39,7 @@ type ActionsContextType = {
   actions: Action[]
   currentAction: Action | undefined
   currentActionIndex: number
+  allActionsSuccessful: boolean // If all actions' transactions are successful
   addActions: (newActions: Action[]) => void
   executeActionByIndex: (index: number) => void
   moveToNextAction: () => number
@@ -54,6 +56,15 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
   const [actions, setActions] = useState<Action[]>([])
   const [currentActionIndex, setCurrentActionIndex] = useState(-1)
   const currentAction = actions[currentActionIndex]
+
+  const { isSuccess: currentActionTxIsSuccess } = useWaitForTransactionReceipt({
+    hash: currentAction?.txHash,
+    chainId: currentAction?.chainId
+  })
+
+  const allActionsSuccessful = useMemo(() => {
+    return currentActionIndex === actions.length - 1 && currentActionTxIsSuccess
+  }, [currentActionIndex, actions.length, currentActionTxIsSuccess])
 
   /* Adds actions to the context */
   const addActions = useCallback((newActions: Action[]) => {
@@ -138,6 +149,7 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
 
   const value = {
     actions,
+    allActionsSuccessful,
     currentAction,
     currentActionIndex,
     addActions,
