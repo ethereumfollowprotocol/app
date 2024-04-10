@@ -7,9 +7,28 @@ import clsx from 'clsx'
 import { useActions, type Action } from '#/contexts/actions-context'
 import useChain from '#/hooks/use-chain'
 
+/**
+ * @description Component for displaying the status of an onchain transaction
+ * and the details of the action being executed
+ *
+ * The component also provides a button to move to the next action, using the actions-context
+ */
 export function TransactionStatusCard() {
-  const { currentAction, currentActionIndex, actions } = useActions()
+  const { currentAction, currentActionIndex, actions, moveToNextAction, executeCurrentAction } =
+    useActions()
   const chain = useChain(currentAction?.chainId)
+  const { isSuccess } = useWaitForTransactionReceipt({
+    hash: currentAction?.txHash,
+    chainId: currentAction?.chainId
+  })
+
+  const handleNextAction = useCallback(() => {
+    moveToNextAction()
+    executeCurrentAction()
+  }, [moveToNextAction, executeCurrentAction])
+
+  // Disable the next button if the current action is not successful
+  const nextButtonIsDisabled = !isSuccess
 
   if (!currentAction) return null
 
@@ -48,9 +67,9 @@ export function TransactionStatusCard() {
       <TransactionStatusDetails action={currentAction} />
       <PrimaryButton
         label='Next'
-        onClick={() => console.log('need to initiate next transaction')}
+        onClick={handleNextAction}
         className='text-lg w-40 h-10'
-        disabled={currentAction.isConfirmationError}
+        disabled={nextButtonIsDisabled}
       />
     </>
   )
@@ -73,19 +92,21 @@ function TransactionStatusDetails({ action }: { action: Action }) {
 
   const getStatusColor = useCallback(() => {
     if (action.isPendingConfirmation) return 'text-salmon-500'
-    if (isPending) return 'text-kournikova-500'
-    if (isSuccess) return 'text-lime-500'
-    if (isError) return 'text-red-500'
+    if (isPending) return 'text-kournikova-600'
+    if (isSuccess) return 'text-lime-600'
+    if (isError) return 'text-red-600'
   }, [action.isPendingConfirmation, isPending, isSuccess, isError])
 
-  const shouldShowComponent = isPending || isSuccess || isError
+  const shouldShowComponent = isPending || isSuccess || isError || action.isPendingConfirmation
+
+  const explorerUrl = `${chain?.blockExplorers?.default.url}/tx/${action.txHash}`
 
   return shouldShowComponent ? (
     <Box className='flex flex-col'>
       <Text size='7' weight='bold'>
         Status
       </Text>
-      <Text size='2' className={clsx(getStatusColor())}>
+      <Text size='2' className={clsx(getStatusColor(), 'font-bold')}>
         {getStatusDescription()}
       </Text>
       {action.isPendingConfirmation ? (
@@ -93,7 +114,12 @@ function TransactionStatusDetails({ action }: { action: Action }) {
           Check your wallet
         </Text>
       ) : (
-        <a href={chain?.blockExplorers?.default.url} target='_blank' rel='noreferrer'>
+        <a
+          href={explorerUrl}
+          target='_blank'
+          rel='noreferrer'
+          className='text-sm font-bold text-blue-600'
+        >
           View on Block Explorer
         </a>
       )}

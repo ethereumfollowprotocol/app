@@ -17,7 +17,7 @@ export const PrimaryButton = forwardRef<HTMLButtonElement, PrimaryButtonProps>(
           /* Prioritize the provided bg color, or use default bg color */
           !className?.includes('bg') && 'bg-gradient-to-b from-kournikova-300 to-salmon-400',
           'text-black',
-          props.disabled && 'cursor-not-allowed',
+          props.disabled && 'cursor-not-allowed opacity-70',
           className
         )}
         radius='full'
