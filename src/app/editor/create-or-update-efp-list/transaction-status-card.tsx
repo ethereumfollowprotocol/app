@@ -5,9 +5,11 @@ import { PrimaryButton } from '#/components/primary-button'
 import { useWaitForTransactionReceipt } from 'wagmi'
 import clsx from 'clsx'
 import { useActions, type Action } from '#/contexts/actions-context'
+import useChain from '#/hooks/use-chain'
 
 export function TransactionStatusCard() {
   const { currentAction, currentActionIndex, actions } = useActions()
+  const chain = useChain(currentAction?.chainId)
 
   if (!currentAction) return null
 
@@ -30,15 +32,15 @@ export function TransactionStatusCard() {
           {currentAction.label}
         </Text>
       </Box>
-      {currentAction.chain && (
+      {chain && (
         <Box className='flex flex-col gap-2'>
           <Text size='4' weight='bold'>
             Chain
           </Text>
           <Box className='flex items-center gap-2'>
-            <ChainIcon chain={currentAction.chain} className='w-[30px] h-[30px]' />
+            <ChainIcon chain={chain} className='w-[30px] h-[30px]' />
             <Text size='3' weight='bold'>
-              {currentAction.chain.name}
+              {chain.name}
             </Text>
           </Box>
         </Box>
@@ -55,9 +57,11 @@ export function TransactionStatusCard() {
 }
 
 function TransactionStatusDetails({ action }: { action: Action }) {
+  const chain = useChain(action.chainId)
+
   const { isPending, isSuccess, isError } = useWaitForTransactionReceipt({
     hash: action.txHash,
-    chainId: action.chain?.id
+    chainId: action.chainId
   })
 
   const getStatusDescription = useCallback(() => {
@@ -89,7 +93,7 @@ function TransactionStatusDetails({ action }: { action: Action }) {
           Check your wallet
         </Text>
       ) : (
-        <a href={action.chain?.blockExplorers?.default.url} target='_blank' rel='noreferrer'>
+        <a href={chain?.blockExplorers?.default.url} target='_blank' rel='noreferrer'>
           View on Block Explorer
         </a>
       )}
