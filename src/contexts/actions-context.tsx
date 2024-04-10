@@ -1,7 +1,8 @@
 'use client'
 
-import { createContext, useContext, useState, type ReactNode, useCallback } from 'react'
+import { createContext, useContext, useState, type ReactNode, useCallback, useEffect } from 'react'
 import type { WriteContractReturnType } from 'viem'
+import { useCart } from './cart-context'
 
 export enum EFPActionType {
   CreateEFPList = 'CreateEFPList',
@@ -41,6 +42,7 @@ const ActionsContext = createContext<ActionsContextType | undefined>(undefined)
  * @description Provider for handling bundled actions in the app such as creating and/or updating EFP lists
  */
 export const ActionsProvider = ({ children }: { children: ReactNode }) => {
+  const { totalCartItems } = useCart()
   const [actions, setActions] = useState<Action[]>([])
   const [currentActionIndex, setCurrentActionIndex] = useState(-1)
   const currentAction = actions[currentActionIndex]
@@ -105,6 +107,13 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
     setActions([])
     setCurrentActionIndex(0) // Reset to initial state
   }, [])
+
+  // Clear the actions if nothing in cart
+  useEffect(() => {
+    if (totalCartItems === 0) {
+      resetActions()
+    }
+  }, [totalCartItems, resetActions])
 
   const value = {
     actions,
