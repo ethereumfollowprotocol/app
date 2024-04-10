@@ -5,6 +5,7 @@ import { CheckIcon } from '@radix-ui/react-icons'
 import { ChainIcon } from '#/components/chain-icon'
 import { PrimaryButton } from '#/components/primary-button'
 import type { Action } from '#/contexts/actions-context'
+import useChain from '#/hooks/use-chain'
 
 export function InitiateActionsCard({
   actions,
@@ -14,7 +15,7 @@ export function InitiateActionsCard({
 }: {
   actions: Action[]
   setCurrentStep: (step: Step) => void
-  selectedChain: ChainWithDetails | null
+  selectedChain: ChainWithDetails | undefined
   handleInitiateActions: () => void
 }) {
   return (
@@ -34,8 +35,8 @@ export function InitiateActionsCard({
         <Box>
           {actions.map(
             (action, index) =>
-              action.chain && (
-                <Box className='flex' key={`${action.chain.id}-${index}`}>
+              action.chainId && (
+                <Box className='flex' key={`${action.chainId}-${index}`}>
                   <CheckIcon className='left-0 text-lime-500 relative -ml-12 w-10 h-10' />
                   <Box className='flex items-center gap-2'>
                     <Text weight='bold'>{action.label}</Text>
@@ -50,19 +51,8 @@ export function InitiateActionsCard({
           Required Transactions
         </Text>
         {actions.map((action, index) =>
-          action.chain ? (
-            <Box
-              key={`${action.chain.id}-${index}`}
-              className='grid grid-cols-2 items-center justify-items-center gap-2'
-            >
-              <Box className='flex items-center gap-2'>
-                <Text weight='bold' className=''>
-                  1 tx
-                </Text>
-                <ChainIcon chain={action.chain} className='h-[30px] w-[30px]' />
-              </Box>
-              <Text className='justify-self-start'>{action.chain.name}</Text>
-            </Box>
+          action.chainId ? (
+            <RequiredTransaction key={`${action.id}-${index}`} chainId={action.chainId} />
           ) : null
         )}
       </Box>
@@ -80,5 +70,23 @@ export function InitiateActionsCard({
         />
       </Box>
     </>
+  )
+}
+
+const RequiredTransaction = ({ chainId }: { chainId: number }) => {
+  const chain = useChain(chainId)
+
+  if (!chain) return null
+
+  return (
+    <Box className='grid grid-cols-2 items-center justify-items-center gap-2'>
+      <Box className='flex items-center gap-2'>
+        <Text weight='bold' className=''>
+          1 tx
+        </Text>
+        <ChainIcon chain={chain} className='h-[30px] w-[30px]' />
+      </Box>
+      <Text className='justify-self-start'>{chain.name}</Text>
+    </Box>
   )
 }

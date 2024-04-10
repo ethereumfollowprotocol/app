@@ -14,8 +14,8 @@ export type Action = {
   type: EFPActionType
   /* The label of the action */
   label: string
-  /* The chain associated with the action */
-  chain: ChainWithDetails | null
+  /* The chain id associated with the action */
+  chainId: number
   /* The transaction hash associated with the action */
   txHash?: `0x${string}`
   /* The action to be executed */
@@ -30,9 +30,10 @@ type ActionsContextType = {
   actions: Action[]
   currentAction: Action | undefined
   currentActionIndex: number
-  addOrUpdateAction: (action: Action) => void
-  executeAction: (actionId: string) => Promise<void>
-  setNextAction: () => void // Function to move to the next action
+  addActions: (newActions: Action[]) => void
+  executeCurrentAction: () => void
+  moveToNextAction: () => void
+  resetActions: () => void
 }
 
 const ActionsContext = createContext<ActionsContextType | undefined>(undefined)
@@ -42,58 +43,56 @@ const ActionsContext = createContext<ActionsContextType | undefined>(undefined)
  */
 export const ActionsProvider = ({ children }: { children: ReactNode }) => {
   const [actions, setActions] = useState<Action[]>([])
-  const [currentActionIndex, setCurrentActionIndex] = useState(0)
+  const [currentActionIndex, setCurrentActionIndex] = useState(-1)
+  const currentAction = actions[currentActionIndex]
 
-  const addOrUpdateAction = (newAction: Action) => {
-    setActions(prevActions => {
-      const index = prevActions.findIndex(action => action.id === newAction.id)
-      if (index > -1) {
-        // Update existing action
-        const updatedActions = [...prevActions]
-        updatedActions[index] = newAction
-        return updatedActions
-      }
+  /* Adds actions to the context */
+  const addActions = useCallback((newActions: Action[]) => {
+    setActions(newActions)
+    setCurrentActionIndex(0)
+  }, [])
 
-      // Add new action
-      return [...prevActions, newAction]
-    })
-  }
-
-  const executeAction = async (actionId: string) => {
-    const action = actions.find(action => action.id === actionId)
-    if (!action) {
-      console.error('Action not found')
+  /* Moves to the next action to be able to call execute on that action */
+  const moveToNextAction = useCallback(() => {
+    // Move to next action
+    if (currentActionIndex < actions.length - 1) {
+      setCurrentActionIndex(currentActionIndex + 1)
       return
     }
 
-    // Mark action as pending confirmation if isn't already
-    addOrUpdateAction({ ...action, isPendingConfirmation: true })
+    // Reset or handle completion of all actions
+    setActions([])
+    setCurrentActionIndex(-1)
+  }, [currentActionIndex, actions.length])
 
+  /* Executes the current action */
+  const executeCurrentAction = useCallback(async () => {
+    if (currentActionIndex < 0 || currentActionIndex >= actions.length) return
     try {
-      const hash = await action.execute()
-      addOrUpdateAction({ ...action, txHash: hash, isPendingConfirmation: false })
+      if (!currentAction) {
+        console.error('No action found for index', currentActionIndex)
+        return
+      }
+      await currentAction.execute()
     } catch (error) {
-      console.error('Action execution failed', error)
-      addOrUpdateAction({ ...action, isConfirmationError: true })
-    } finally {
-      // Mark action as not pending anymore
-      addOrUpdateAction({ ...action, isPendingConfirmation: false })
+      console.error('Execution error for action', currentActionIndex, error)
+      // Handle action failure here
     }
-  }
+  }, [currentAction, actions.length, currentActionIndex])
 
-  const setNextAction = useCallback(() => {
-    setCurrentActionIndex(prevIndex => Math.min(prevIndex + 1, actions.length - 1))
-  }, [actions.length])
-
-  const currentAction = actions[currentActionIndex]
+  const resetActions = useCallback(() => {
+    setActions([])
+    setCurrentActionIndex(0) // Reset to initial state
+  }, [])
 
   const value = {
     actions,
     currentAction,
     currentActionIndex,
-    addOrUpdateAction,
-    executeAction,
-    setNextAction
+    addActions,
+    executeCurrentAction,
+    moveToNextAction,
+    resetActions
   }
 
   return <ActionsContext.Provider value={value}>{children}</ActionsContext.Provider>
