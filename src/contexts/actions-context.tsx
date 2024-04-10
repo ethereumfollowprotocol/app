@@ -1,6 +1,5 @@
 'use client'
 
-import type { ChainWithDetails } from '#/lib/wagmi'
 import { createContext, useContext, useState, type ReactNode, useCallback } from 'react'
 import type { WriteContractReturnType } from 'viem'
 
@@ -52,6 +51,21 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
     setCurrentActionIndex(0)
   }, [])
 
+  /* Updates an action */
+  const updateAction = useCallback(
+    (updatedAction: Action) => {
+      // Find the index of the action to update
+      const index = actions.findIndex(action => action.id === updatedAction.id)
+      if (index < 0) return
+
+      // Update the action
+      const updatedActions = [...actions]
+      updatedActions[index] = updatedAction
+      setActions(updatedActions)
+    },
+    [actions]
+  )
+
   /* Moves to the next action to be able to call execute on that action */
   const moveToNextAction = useCallback(() => {
     // Move to next action
@@ -67,18 +81,25 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
 
   /* Executes the current action */
   const executeCurrentAction = useCallback(async () => {
+    // Check if the current action index is valid
     if (currentActionIndex < 0 || currentActionIndex >= actions.length) return
+
+    if (!currentAction) {
+      console.error('No action found for index', currentActionIndex)
+      return
+    }
+
+    // Set the current action to pending confirmation
+    updateAction({ ...currentAction, isPendingConfirmation: true })
+
     try {
-      if (!currentAction) {
-        console.error('No action found for index', currentActionIndex)
-        return
-      }
-      await currentAction.execute()
+      const hash = await currentAction.execute()
+      updateAction({ ...currentAction, isPendingConfirmation: false, txHash: hash })
     } catch (error) {
       console.error('Execution error for action', currentActionIndex, error)
       // Handle action failure here
     }
-  }, [currentAction, actions.length, currentActionIndex])
+  }, [currentAction, actions.length, currentActionIndex, updateAction])
 
   const resetActions = useCallback(() => {
     setActions([])
