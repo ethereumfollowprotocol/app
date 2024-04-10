@@ -8,10 +8,15 @@ import { InitiateActionsCard } from './initiate-actions-card'
 import { TransactionStatusCard } from './transaction-status-card'
 import { useCreateEFPList } from '#/hooks/efp-actions/use-create-efp-list'
 import { EFPActionType, type Action, useActions } from '#/contexts/actions-context'
-import type { WriteContractReturnType } from 'viem'
-import { useChains } from 'wagmi'
+import { parseEther, type WriteContractReturnType } from 'viem'
+import { useAccount, useChainId, useChains, useSendTransaction, useSwitchChain } from 'wagmi'
+import useSendEth from '#/hooks/use-send-eth'
+import { AccountNotFoundError } from 'node_modules/viem/_types/errors/account'
 
 export function CreateOrUpdateEFPList() {
+  const chainId = useChainId()
+  const { switchChain } = useSwitchChain()
+
   // Any chains specified in wagmi are valid
   const chains = useChains() as unknown as ChainWithDetails[] // TODO: Fix this type issue
   // Setup states and context hooks
@@ -22,6 +27,15 @@ export function CreateOrUpdateEFPList() {
   const [selectedChainId, setSelectedChainId] = useState<number>()
   const selectedChain = chains.find(chain => chain.id === selectedChainId)
   const [currentStep, setCurrentStep] = useState(Step.SelectChain)
+
+  // TODO: Implement real tx
+  // Sim tx instead of real tx for now
+  const { address: account } = useAccount()
+  const sendEth = useSendEth({
+    to: account,
+    value: parseEther('0.01'),
+    chainId: selectedChain?.id
+  })
 
   // Prepare action functions
   const { createEFPList } = useCreateEFPList({ chainId: selectedChain?.id })
@@ -42,7 +56,7 @@ export function CreateOrUpdateEFPList() {
       type: EFPActionType.UpdateEFPList,
       label: `${totalCartItems} edits to List Records`,
       chainId: selectedChainId,
-      execute: updateEFPList,
+      execute: sendEth,
       isPendingConfirmation: false
     }
 
@@ -51,12 +65,12 @@ export function CreateOrUpdateEFPList() {
       type: EFPActionType.CreateEFPList,
       label: 'Create new EFP List',
       chainId: selectedChainId,
-      execute: createEFPList,
+      execute: sendEth,
       isPendingConfirmation: false
     }
     const actions = hasCreatedEfpList ? [cartItemAction] : [createEFPListAction, cartItemAction]
     addActions(actions)
-  }, [selectedChainId, totalCartItems, addActions, createEFPList, updateEFPList])
+  }, [selectedChainId, totalCartItems, addActions, sendEth])
 
   // Handle selecting a chain
   const handleChainClick = useCallback((chainId: number) => {
