@@ -8,15 +8,11 @@ import { InitiateActionsCard } from './initiate-actions-card'
 import { TransactionStatusCard } from './transaction-status-card'
 import { useCreateEFPList } from '#/hooks/efp-actions/use-create-efp-list'
 import { EFPActionType, type Action, useActions } from '#/contexts/actions-context'
-import { parseEther, type WriteContractReturnType } from 'viem'
-import { useAccount, useChainId, useChains, useSendTransaction, useSwitchChain } from 'wagmi'
+import { parseEther } from 'viem'
+import { useAccount, useChains } from 'wagmi'
 import useSendEth from '#/hooks/use-send-eth'
-import { AccountNotFoundError } from 'node_modules/viem/_types/errors/account'
 
 export function CreateOrUpdateEFPList() {
-  const chainId = useChainId()
-  const { switchChain } = useSwitchChain()
-
   // Any chains specified in wagmi are valid
   const chains = useChains() as unknown as ChainWithDetails[] // TODO: Fix this type issue
   // Setup states and context hooks
@@ -39,13 +35,6 @@ export function CreateOrUpdateEFPList() {
 
   // Prepare action functions
   const { createEFPList } = useCreateEFPList({ chainId: selectedChain?.id })
-  const updateEFPList = useCallback(
-    () =>
-      Promise.resolve(
-        console.log('Updating list logic here') as unknown as WriteContractReturnType
-      ), // TODO placeholder
-    []
-  )
 
   useEffect(() => {
     if (!selectedChainId) return
