@@ -5,8 +5,11 @@ import { Box, Text } from '@radix-ui/themes'
 import { useMemo, useState } from 'react'
 import { CreateOrUpdateEFPList } from '#/app/editor/create-or-update-efp-list'
 import { PrimaryButton } from '#/components/primary-button'
+import { useAccount } from 'wagmi'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 export function UnconfirmedChanges() {
+  const { isConnected } = useAccount()
   const { cartItems, totalCartItems, cartAddresses } = useCart()
 
   const [openModal, setOpenModal] = useState(false)
@@ -47,13 +50,17 @@ export function UnconfirmedChanges() {
             </Box>
           </Box>
 
-          <Modal
-            triggerButton={<PrimaryButton label='Confirm' />}
-            open={openModal}
-            setOpen={setOpenModal}
-          >
-            <CreateOrUpdateEFPList setOpen={setOpenModal} />
-          </Modal>
+          {isConnected ? (
+            <Modal
+              triggerButton={<PrimaryButton label='Confirm' />}
+              open={openModal}
+              setOpen={setOpenModal}
+            >
+              <CreateOrUpdateEFPList setOpen={setOpenModal} />
+            </Modal>
+          ) : (
+            <ConnectButton />
+          )}
         </Box>
       </Box>
     </>
