@@ -12,6 +12,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental'
 import * as React from 'react'
+import { sepolia } from 'viem/chains'
 import { WagmiProvider, type State } from 'wagmi'
 
 type Props = {
@@ -24,6 +25,8 @@ type Props = {
 //   deserialize,
 //   storage: window.localStorage
 // })
+
+const DEFAULT_CHAIN_ID = sepolia.id
 
 export function Providers({ children, initialState }: Props) {
   const [queryClient] = React.useState(
@@ -40,7 +43,7 @@ export function Providers({ children, initialState }: Props) {
       <ReactQueryStreamedHydration>
         <WagmiProvider config={wagmiConfig} reconnectOnMount={true} initialState={initialState}>
           {/* <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}> */}
-          <RainbowKitProvider coolMode={true} initialChain={1}>
+          <RainbowKitProvider coolMode={true} initialChain={DEFAULT_CHAIN_ID}>
             <TransactionsProvider>
               <CartProvider>
                 <ActionsProvider>
