@@ -83,6 +83,7 @@ export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
 ]
 
 const config = createConfig({
+  ssr: true,
   connectors,
   chains,
   storage: createStorage({
@@ -159,4 +160,4 @@ const config = createConfig({
   }
 })
 
-export { config as wagmiConfig }
+export default config
