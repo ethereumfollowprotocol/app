@@ -28,7 +28,7 @@
     "@uidotdev/usehooks": "^2.4.1",
     "clsx": "^2.1.0",
     "million": "^2.6.4",
-    "next": "^14.1.0",
+    "next": "^14.1.4",
     "next-usequerystate": "^1.15.4",
     "pretty-cache-header": "^1.0.0",
     "react": "^18.2.0",
