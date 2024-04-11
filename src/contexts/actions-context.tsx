@@ -1,8 +1,8 @@
 'use client'
 
-import type { ChainWithDetails } from '#/lib/wagmi'
-import { createContext, useContext, useState, type ReactNode, useCallback } from 'react'
+import { createContext, useContext, useState, type ReactNode, useCallback, useMemo } from 'react'
 import type { WriteContractReturnType } from 'viem'
+import { useWaitForTransactionReceipt } from 'wagmi'
 
 export enum EFPActionType {
   CreateEFPList = 'CreateEFPList',
@@ -14,8 +14,8 @@ export type Action = {
   type: EFPActionType
   /* The label of the action */
   label: string
-  /* The chain associated with the action */
-  chain: ChainWithDetails | null
+  /* The chain id associated with the action */
+  chainId: number
   /* The transaction hash associated with the action */
   txHash?: `0x${string}`
   /* The action to be executed */
@@ -28,11 +28,13 @@ export type Action = {
 
 type ActionsContextType = {
   actions: Action[]
+  addActions: (newActions: Action[]) => void
+  allActionsSuccessful: boolean // If all actions' transactions are successful
   currentAction: Action | undefined
   currentActionIndex: number
-  addOrUpdateAction: (action: Action) => void
-  executeAction: (actionId: string) => Promise<void>
-  setNextAction: () => void // Function to move to the next action
+  executeActionByIndex: (index: number) => void
+  moveToNextAction: () => number
+  resetActions: () => void
 }
 
 const ActionsContext = createContext<ActionsContextType | undefined>(undefined)
@@ -42,58 +44,101 @@ const ActionsContext = createContext<ActionsContextType | undefined>(undefined)
  */
 export const ActionsProvider = ({ children }: { children: ReactNode }) => {
   const [actions, setActions] = useState<Action[]>([])
-  const [currentActionIndex, setCurrentActionIndex] = useState(0)
+  const [currentActionIndex, setCurrentActionIndex] = useState(-1)
+  const currentAction = actions[currentActionIndex]
 
-  const addOrUpdateAction = (newAction: Action) => {
-    setActions(prevActions => {
-      const index = prevActions.findIndex(action => action.id === newAction.id)
-      if (index > -1) {
-        // Update existing action
-        const updatedActions = [...prevActions]
-        updatedActions[index] = newAction
-        return updatedActions
+  const { isSuccess: currentActionTxIsSuccess } = useWaitForTransactionReceipt({
+    hash: currentAction?.txHash,
+    chainId: currentAction?.chainId
+  })
+
+  const allActionsSuccessful = useMemo(() => {
+    return currentActionIndex === actions.length - 1 && currentActionTxIsSuccess
+  }, [currentActionIndex, actions.length, currentActionTxIsSuccess])
+
+  /* Adds actions to the context */
+  const addActions = useCallback((newActions: Action[]) => {
+    setActions(newActions)
+    setCurrentActionIndex(0)
+  }, [])
+
+  /* Updates an action */
+  const updateAction = useCallback(
+    (updatedAction: Action) => {
+      // Find the index of the action to update
+      const index = actions.findIndex(action => action.id === updatedAction.id)
+      if (index < 0) return
+
+      // Update the action
+      const updatedActions = [...actions]
+      updatedActions[index] = updatedAction
+      setActions(updatedActions)
+    },
+    [actions]
+  )
+
+  // Moves to the next action to be able to call execute on that action
+  const moveToNextAction = useCallback(() => {
+    // Calculate the next index
+    const nextIndex = currentActionIndex + 1 < actions.length ? currentActionIndex + 1 : -1
+
+    // Update the state based on the calculated next index
+    if (nextIndex !== -1) {
+      setCurrentActionIndex(nextIndex) // Move to the next action index
+    } else {
+      setActions([]) // Reset actions if we've reached the end
+      setCurrentActionIndex(-1) // Reset the index as well
+    }
+
+    // Return the next index for use
+    return nextIndex
+  }, [currentActionIndex, actions.length])
+
+  // Executes the action based on the index to be able to handle async execution with synchronous state updates
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Don't need actions[index] as a dep
+  const executeActionByIndex = useCallback(
+    async (index: number) => {
+      // Validate the index
+      if (index < 0 || index >= actions.length) {
+        console.error('Action index out of bounds:', index)
+        return
       }
 
-      // Add new action
-      return [...prevActions, newAction]
-    })
-  }
+      // Get the action to execute
+      const actionToExecute = actions[index]
+      if (!actionToExecute) {
+        console.error('No action found at index', index)
+        return
+      }
 
-  const executeAction = async (actionId: string) => {
-    const action = actions.find(action => action.id === actionId)
-    if (!action) {
-      console.error('Action not found')
-      return
-    }
+      // Set the action to pending confirmation
+      updateAction({ ...actionToExecute, isPendingConfirmation: true })
 
-    // Mark action as pending confirmation if isn't already
-    addOrUpdateAction({ ...action, isPendingConfirmation: true })
+      try {
+        const hash = await actionToExecute.execute()
+        updateAction({ ...actionToExecute, isPendingConfirmation: false, txHash: hash })
+      } catch (error) {
+        console.error('Execution error for action at index', index, error)
+        // TODO Handle action failure
+      }
+    },
+    [actions, updateAction]
+  )
 
-    try {
-      const hash = await action.execute()
-      addOrUpdateAction({ ...action, txHash: hash, isPendingConfirmation: false })
-    } catch (error) {
-      console.error('Action execution failed', error)
-      addOrUpdateAction({ ...action, isConfirmationError: true })
-    } finally {
-      // Mark action as not pending anymore
-      addOrUpdateAction({ ...action, isPendingConfirmation: false })
-    }
-  }
-
-  const setNextAction = useCallback(() => {
-    setCurrentActionIndex(prevIndex => Math.min(prevIndex + 1, actions.length - 1))
-  }, [actions.length])
-
-  const currentAction = actions[currentActionIndex]
+  const resetActions = useCallback(() => {
+    setActions([])
+    setCurrentActionIndex(0) // Reset to initial state
+  }, [])
 
   const value = {
     actions,
+    addActions,
+    allActionsSuccessful,
     currentAction,
     currentActionIndex,
-    addOrUpdateAction,
-    executeAction,
-    setNextAction
+    executeActionByIndex,
+    moveToNextAction,
+    resetActions
   }
 
   return <ActionsContext.Provider value={value}>{children}</ActionsContext.Provider>

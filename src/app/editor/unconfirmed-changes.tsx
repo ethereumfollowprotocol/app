@@ -2,12 +2,14 @@ import { FollowList } from '#/components/follow-list'
 import { Modal } from '#/components/modal'
 import { useCart } from '#/contexts/cart-context'
 import { Box, Text } from '@radix-ui/themes'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { CreateOrUpdateEFPList } from '#/app/editor/create-or-update-efp-list'
 import { PrimaryButton } from '#/components/primary-button'
 
 export function UnconfirmedChanges() {
   const { cartItems, totalCartItems, cartAddresses } = useCart()
+
+  const [openModal, setOpenModal] = useState(false)
 
   const profiles = useMemo(
     () =>
@@ -45,8 +47,12 @@ export function UnconfirmedChanges() {
             </Box>
           </Box>
 
-          <Modal triggerButton={<PrimaryButton label='Confirm' />}>
-            <CreateOrUpdateEFPList />
+          <Modal
+            triggerButton={<PrimaryButton label='Confirm' />}
+            open={openModal}
+            setOpen={setOpenModal}
+          >
+            <CreateOrUpdateEFPList setOpen={setOpenModal} />
           </Modal>
         </Box>
       </Box>

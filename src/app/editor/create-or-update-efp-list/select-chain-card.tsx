@@ -3,19 +3,18 @@ import { PrimaryButton } from '#/components/primary-button'
 import type { ChainWithDetails } from '#/lib/wagmi'
 import { CheckIcon } from '@radix-ui/react-icons'
 import { Box, Heading, Text } from '@radix-ui/themes'
-import { useChains } from 'wagmi'
 
 export function SelectChainCard({
+  chains,
   handleChainClick,
   selectedChain,
   handleNextStep
 }: {
-  handleChainClick: (chain: ChainWithDetails) => void
-  selectedChain: ChainWithDetails | null
+  chains: ChainWithDetails[]
+  handleChainClick: (chainId: number) => void
+  selectedChain: ChainWithDetails | undefined
   handleNextStep: () => void
 }) {
-  // Any chains specified in wagmi are valid
-  const chains = useChains() as unknown as ChainWithDetails[] // TODO: Fix this type issue
   return (
     <>
       <Box className='flex flex-col gap-2'>
@@ -49,8 +48,8 @@ export function ChainList({
   selectedChain
 }: {
   chains: ChainWithDetails[]
-  onClick: (chain: ChainWithDetails) => void
-  selectedChain: ChainWithDetails | null
+  onClick: (chainId: number) => void
+  selectedChain: ChainWithDetails | undefined
 }) {
   return (
     <Box className='flex flex-col gap-4'>
@@ -58,7 +57,7 @@ export function ChainList({
         <Chain
           chain={chain}
           onClick={onClick}
-          isSelected={chain === selectedChain}
+          isSelected={chain.id === selectedChain?.id}
           key={chain.id}
         />
       ))}
@@ -70,9 +69,9 @@ function Chain({
   chain,
   onClick,
   isSelected
-}: { chain: ChainWithDetails; onClick: (chain: ChainWithDetails) => void; isSelected: boolean }) {
+}: { chain: ChainWithDetails; onClick: (chainId: number) => void; isSelected: boolean }) {
   return (
-    <Box className='flex items-center gap-2 hover:cursor-pointer' onClick={() => onClick(chain)}>
+    <Box className='flex items-center gap-2 hover:cursor-pointer' onClick={() => onClick(chain.id)}>
       <Box>
         {isSelected && <CheckIcon className='left-0 text-lime-500 relative -ml-12 w-10 h-10' />}
       </Box>

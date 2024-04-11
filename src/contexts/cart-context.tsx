@@ -36,6 +36,7 @@ type CartContextType = {
   removeAddTagFromCart(params: ListOpTagOpParams): void
   removeCartItem: (listOp: ListOp) => void
   removeRemoveTagFromCart(params: ListOpTagOpParams): void
+  resetCart: () => void
   totalCartItems: number
 }
 
@@ -219,6 +220,11 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
     return [...new Set(addresses)]
   }, [cartItems])
 
+  // Resets the cart items
+  const resetCart = useCallback(() => {
+    setCartItems([])
+  }, [])
+
   const totalCartItems = cartItems.length
   const cartAddresses = getAddressesFromCart()
 
@@ -240,6 +246,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
         removeAddTagFromCart,
         removeCartItem,
         removeRemoveTagFromCart,
+        resetCart,
         totalCartItems
       }}
     >

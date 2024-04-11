@@ -42,16 +42,16 @@ export function Providers({ children, initialState }: Props) {
           {/* <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}> */}
           <RainbowKitProvider coolMode={true} initialChain={1}>
             <TransactionsProvider>
-              <ActionsProvider>
-                <CartProvider>
+              <CartProvider>
+                <ActionsProvider>
                   <Theme scaling='100%' appearance='inherit' accentColor='gray'>
                     <React.Suspense>
                       <Header />
                     </React.Suspense>
                     {children}
                   </Theme>
-                </CartProvider>
-              </ActionsProvider>
+                </ActionsProvider>
+              </CartProvider>
             </TransactionsProvider>
           </RainbowKitProvider>
           {/* </PersistQueryClientProvider> */}

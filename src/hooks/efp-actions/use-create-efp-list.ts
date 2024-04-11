@@ -1,7 +1,7 @@
 import { generateListStorageLocationSlot } from '#/app/efp/utilities'
 import { efpListRegistryAbi } from '#/lib/abi'
 import { efpContracts } from '#/lib/constants/contracts'
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { encodePacked } from 'viem'
 import { useChainId, useSimulateContract, useSwitchChain, useWriteContract } from 'wagmi'
 
@@ -41,7 +41,7 @@ export const useCreateEFPList = ({ chainId }: { chainId: number | undefined }) =
     error: createEFPListError
   } = useWriteContract()
 
-  const createEFPList = async () => {
+  const createEFPList = useCallback(async () => {
     if (!chainId) throw new Error('Chain ID is required to create EFP list.')
 
     // Switch chain if not the selected chain to store/create the EFP list
@@ -55,7 +55,7 @@ export const useCreateEFPList = ({ chainId }: { chainId: number | undefined }) =
 
     // Use the simulated data to write the contract
     return await writeContractAsync(simulateCreateEFPListData.request)
-  }
+  }, [currentChainId, simulateCreateEFPListData?.request, switchChain, writeContractAsync, chainId])
 
   return {
     simulateCreateEFPListData,
