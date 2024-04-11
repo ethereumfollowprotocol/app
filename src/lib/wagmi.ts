@@ -160,4 +160,4 @@ const config = createConfig({
   }
 })
 
-export { config as wagmiConfig }
+export default config
