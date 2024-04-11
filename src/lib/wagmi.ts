@@ -2,10 +2,27 @@
 
 import { APP_DESCRIPTION, APP_NAME, APP_URL } from '#/lib/constants'
 import { mainnet, sepolia, foundry, optimism, optimismSepolia } from 'wagmi/chains'
-import { http, fallback, webSocket } from 'wagmi'
-import { getDefaultConfig, getDefaultWallets, type Chain } from '@rainbow-me/rainbowkit'
+import { http, fallback, webSocket, createStorage, cookieStorage, createConfig } from 'wagmi'
+import { type Chain, connectorsForWallets } from '@rainbow-me/rainbowkit'
+import { injectedWallet, walletConnectWallet } from '@rainbow-me/rainbowkit/wallets'
 
-const { wallets } = getDefaultWallets()
+// Define the connectors for the app
+// Purposely using only these for now because of a localStorage error with the Coinbase Wallet connector
+const connectors = connectorsForWallets(
+  [
+    {
+      groupName: 'Recommended',
+      wallets: [injectedWallet, walletConnectWallet]
+    }
+  ],
+  {
+    appName: APP_NAME,
+    projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
+    appDescription: APP_DESCRIPTION,
+    appUrl: APP_URL,
+    appIcon: 'https://app.ethfollow.xyz/logo.png'
+  }
+)
 
 export type ChainWithDetails = Chain & {
   iconBackground?: string
@@ -65,14 +82,12 @@ export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
   }
 ]
 
-const config = getDefaultConfig({
-  appName: APP_NAME,
-  appIcon: 'https://app.ethfollow.xyz/logo.png',
-  appDescription: APP_DESCRIPTION,
-  appUrl: APP_URL,
-  projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
-  wallets: [...wallets],
+const config = createConfig({
+  connectors,
   chains,
+  storage: createStorage({
+    storage: cookieStorage
+  }),
   transports: {
     [foundry.id]: http(process.env.NEXT_PUBLIC_LOCAL_RPC || 'http://0.0.0.0:8545', { batch: true }),
     [mainnet.id]: fallback(
