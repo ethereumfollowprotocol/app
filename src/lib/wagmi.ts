@@ -83,6 +83,7 @@ export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
 ]
 
 const config = createConfig({
+  ssr: true,
   connectors,
   chains,
   storage: createStorage({
