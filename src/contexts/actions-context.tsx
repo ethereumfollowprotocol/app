@@ -1,16 +1,7 @@
 'use client'
 
-import {
-  createContext,
-  useContext,
-  useState,
-  type ReactNode,
-  useCallback,
-  useEffect,
-  useMemo
-} from 'react'
+import { createContext, useContext, useState, type ReactNode, useCallback, useMemo } from 'react'
 import type { WriteContractReturnType } from 'viem'
-import { useCart } from './cart-context'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
 export enum EFPActionType {
@@ -52,7 +43,6 @@ const ActionsContext = createContext<ActionsContextType | undefined>(undefined)
  * @description Provider for handling bundled actions in the app such as creating and/or updating EFP lists
  */
 export const ActionsProvider = ({ children }: { children: ReactNode }) => {
-  const { totalCartItems, resetCart } = useCart()
   const [actions, setActions] = useState<Action[]>([])
   const [currentActionIndex, setCurrentActionIndex] = useState(-1)
   const currentAction = actions[currentActionIndex]
