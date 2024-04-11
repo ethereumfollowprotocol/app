@@ -37,10 +37,10 @@ export type Action = {
 
 type ActionsContextType = {
   actions: Action[]
+  addActions: (newActions: Action[]) => void
+  allActionsSuccessful: boolean // If all actions' transactions are successful
   currentAction: Action | undefined
   currentActionIndex: number
-  allActionsSuccessful: boolean // If all actions' transactions are successful
-  addActions: (newActions: Action[]) => void
   executeActionByIndex: (index: number) => void
   moveToNextAction: () => number
   resetActions: () => void
@@ -52,7 +52,7 @@ const ActionsContext = createContext<ActionsContextType | undefined>(undefined)
  * @description Provider for handling bundled actions in the app such as creating and/or updating EFP lists
  */
 export const ActionsProvider = ({ children }: { children: ReactNode }) => {
-  const { totalCartItems } = useCart()
+  const { totalCartItems, resetCart } = useCart()
   const [actions, setActions] = useState<Action[]>([])
   const [currentActionIndex, setCurrentActionIndex] = useState(-1)
   const currentAction = actions[currentActionIndex]
@@ -140,19 +140,12 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
     setCurrentActionIndex(0) // Reset to initial state
   }, [])
 
-  // Clear the actions if nothing in cart
-  useEffect(() => {
-    if (totalCartItems === 0) {
-      resetActions()
-    }
-  }, [totalCartItems, resetActions])
-
   const value = {
     actions,
+    addActions,
     allActionsSuccessful,
     currentAction,
     currentActionIndex,
-    addActions,
     executeActionByIndex,
     moveToNextAction,
     resetActions

@@ -6,6 +6,7 @@ import { useWaitForTransactionReceipt } from 'wagmi'
 import clsx from 'clsx'
 import { useActions, type Action } from '#/contexts/actions-context'
 import useChain from '#/hooks/use-chain'
+import { useCart } from '#/contexts/cart-context'
 
 interface TransactionStatusCardProps {
   setOpen?: (open: boolean) => void // setOpen prop for the parent modal
@@ -28,6 +29,7 @@ export function TransactionStatusCard({ setOpen }: TransactionStatusCardProps) {
     resetActions
   } = useActions()
   const chain = useChain(currentAction?.chainId)
+  const { resetCart } = useCart()
   const { isSuccess } = useWaitForTransactionReceipt({
     hash: currentAction?.txHash,
     chainId: currentAction?.chainId
@@ -43,7 +45,9 @@ export function TransactionStatusCard({ setOpen }: TransactionStatusCardProps) {
     setOpen?.(false)
     // Reset the actions
     resetActions()
-  }, [setOpen, resetActions])
+    // Reset the cart
+    resetCart()
+  }, [setOpen, resetActions, resetCart])
 
   // Disable the next button if the current action is not successful
   const nextButtonIsDisabled = !isSuccess
@@ -143,7 +147,7 @@ function TransactionStatusDetails({ action }: { action: Action }) {
         {getStatusDescription()}
       </Text>
       {action.isPendingConfirmation ? (
-        <Text size='2' className='text-gray-500'>
+        <Text size='2' className='text-gray-500 font-bold'>
           Check your wallet
         </Text>
       ) : (
