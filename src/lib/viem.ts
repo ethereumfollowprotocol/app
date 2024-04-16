@@ -2,7 +2,6 @@ import './patch.ts'
 import {
   http,
   fallback,
-  webSocket,
   walletActions,
   publicActions,
   createTestClient,
