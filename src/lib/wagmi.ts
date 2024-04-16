@@ -2,7 +2,7 @@
 
 import { APP_DESCRIPTION, APP_NAME, APP_URL } from '#/lib/constants'
 import { mainnet, sepolia, foundry, optimism, optimismSepolia } from 'wagmi/chains'
-import { http, fallback, webSocket, createStorage, cookieStorage, createConfig } from 'wagmi'
+import { http, fallback, createStorage, cookieStorage, createConfig } from 'wagmi'
 import { type Chain, connectorsForWallets } from '@rainbow-me/rainbowkit'
 import { injectedWallet, walletConnectWallet } from '@rainbow-me/rainbowkit/wallets'
 
@@ -101,13 +101,7 @@ const config = createConfig({
         }),
         http(`https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_MAINNET_ALCHEMY_ID}`, {
           batch: true
-        }),
-        webSocket(
-          `wss://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_MAINNET_ALCHEMY_ID}`
-        ),
-        webSocket('wss://www.noderpc.xyz/rpc-mainnet/ws/n4ieL_MU-2jm3Tfp73BVT6eJF9M'),
-        webSocket(`wss://mainnet.infura.io/ws/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`),
-        webSocket(`wss://eth.llamarpc.com/rpc/${process.env.NEXT_PUBLIC_LLAMAFOLIO_ID}`)
+        })
       ],
       { rank: true }
     ),
@@ -123,11 +117,7 @@ const config = createConfig({
         }),
         http(`https://optimism.llamarpc.com/rpc/${process.env.NEXT_PUBLIC_LLAMAFOLIO_ID}`, {
           batch: true
-        }),
-        webSocket(
-          `wss://opt-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_OPTIMISM_ALCHEMY_ID}`
-        ),
-        webSocket(`wss://optimism.llamarpc.com/rpc/${process.env.NEXT_PUBLIC_LLAMAFOLIO_ID}`)
+        })
       ],
       { rank: true }
     ),
@@ -136,14 +126,9 @@ const config = createConfig({
         http(`https://rpc.ankr.com/eth_sepolia/${process.env.NEXT_PUBLIC_ANKR_ID}`, {
           batch: true
         }),
-        http(`https://sepolia.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`, { batch: true }),
         http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_SEPOLIA_ALCHEMY_ID}`, {
           batch: true
-        }),
-        webSocket(`wss://sepolia.infura.io/ws/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`),
-        webSocket(
-          `wss://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_SEPOLIA_ALCHEMY_ID}`
-        )
+        })
       ],
       { rank: true }
     ),
