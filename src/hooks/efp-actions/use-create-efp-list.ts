@@ -1,10 +1,10 @@
 import type { ListStorageLocation } from '#/app/efp/types'
 import { generateListStorageLocationSlot } from '#/app/efp/utilities'
 import { efpListRegistryAbi } from '#/lib/abi'
-import { efpContracts } from '#/lib/constants/contracts'
+import { EFPListRegistryDeployChain, efpContracts } from '#/lib/constants/contracts'
 import { useCallback, useMemo } from 'react'
 import { encodePacked } from 'viem'
-import { foundry, mainnet } from 'viem/chains'
+import { mainnet } from 'viem/chains'
 import { useChainId, useSimulateContract, useSwitchChain, useWriteContract } from 'wagmi'
 
 /**
@@ -19,8 +19,6 @@ export const useCreateEFPList = ({
   listStorageLocationChainId = mainnet.id
 }: { listStorageLocationChainId: number | undefined }) => {
   const currentChainId = useChainId()
-  // Use the mainnet chain ID if we're not testing, otherwise use the foundry chain ID
-  const mainnetChainId = currentChainId === foundry.id ? foundry.id : mainnet.id
   const { switchChain } = useSwitchChain()
 
   // EFP List Storage Location version value, which is currently always 1
@@ -66,9 +64,9 @@ export const useCreateEFPList = ({
     if (!listStorageLocationChainId)
       throw new Error('listStorageLocationChainId is required to create an EFP list.')
 
-    // Switch chain to mainnet since the EFP List Registry contract is only deployed on mainnet
-    if (currentChainId !== mainnetChainId) {
-      switchChain({ chainId: mainnetChainId })
+    // Switch chain to mainnet (or foundry if in dev) since the EFP List Registry contract is only deployed on mainnet
+    if (currentChainId !== EFPListRegistryDeployChain) {
+      switchChain({ chainId: EFPListRegistryDeployChain })
     }
 
     // Handle no simulated data and/or error
@@ -82,8 +80,7 @@ export const useCreateEFPList = ({
     simulateCreateEFPListData?.request,
     switchChain,
     writeContractAsync,
-    listStorageLocationChainId,
-    mainnetChainId
+    listStorageLocationChainId
   ])
 
   return {
