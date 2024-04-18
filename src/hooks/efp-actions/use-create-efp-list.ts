@@ -67,8 +67,8 @@ export const useCreateEFPList = ({
       throw new Error('listStorageLocationChainId is required to create an EFP list.')
 
     // Switch chain to mainnet since the EFP List Registry contract is only deployed on mainnet
-    if (currentChainId !== mainnet.id) {
-      switchChain({ chainId: mainnet.id })
+    if (currentChainId !== mainnetChainId) {
+      switchChain({ chainId: mainnetChainId })
     }
 
     // Handle no simulated data and/or error
@@ -82,7 +82,8 @@ export const useCreateEFPList = ({
     simulateCreateEFPListData?.request,
     switchChain,
     writeContractAsync,
-    listStorageLocationChainId
+    listStorageLocationChainId,
+    mainnetChainId
   ])
 
   return {
