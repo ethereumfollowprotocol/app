@@ -1,6 +1,10 @@
+/**
+ * The list storage location type to encode for storing an efp list within the efp list registry contract
+ * https://docs.ethfollow.xyz/design/list-storage-location/
+ */
 export type ListStorageLocation = {
-  version: number // 0-255
-  locationType: number // 0-255
+  version: 1 // 0-255, but currently only supporting 1
+  locationType: 1 // 0-255, but currently only supporting 1
   data: Uint8Array
 }
 
