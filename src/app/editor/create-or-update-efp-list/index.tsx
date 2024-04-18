@@ -11,6 +11,7 @@ import { EFPActionType, type Action, useActions } from '#/contexts/actions-conte
 import { parseEther } from 'viem'
 import { useAccount, useChains } from 'wagmi'
 import useSendEth from '#/hooks/use-send-eth'
+import useListRegistry from '#/hooks/efp-contract-reads/use-list-registry'
 
 interface CreateOrUpdateEFPListProps {
   setOpen?: (open: boolean) => void // setOpen prop for this component's parent modal, which is passed to TransactionStatusCard to finish the process
@@ -20,7 +21,6 @@ export function CreateOrUpdateEFPList({ setOpen }: CreateOrUpdateEFPListProps) {
   // Any chains specified in wagmi are valid
   const chains = useChains() as unknown as ChainWithDetails[] // TODO: Fix this type issue
   // Setup states and context hooks
-  const hasCreatedEfpList = false // Placeholder
   const { totalCartItems } = useCart()
   const { addActions, executeActionByIndex, actions } = useActions()
 
@@ -36,6 +36,10 @@ export function CreateOrUpdateEFPList({ setOpen }: CreateOrUpdateEFPListProps) {
     value: parseEther('0.01'),
     chainId: selectedChain?.id
   })
+
+  // If the user has a primary list token id, they have already created a list, so default to not creating a new list
+  // There could be an option to create a new list even if they have a primary list token id already
+  const { hasPrimaryListTokenId } = useListRegistry(account)
 
   // Prepare action functions
   const { createEFPList } = useCreateEFPList({ listStorageLocationChainId: selectedChain?.id })
@@ -61,9 +65,9 @@ export function CreateOrUpdateEFPList({ setOpen }: CreateOrUpdateEFPListProps) {
       execute: sendEth,
       isPendingConfirmation: false
     }
-    const actions = hasCreatedEfpList ? [cartItemAction] : [createEFPListAction, cartItemAction]
+    const actions = hasPrimaryListTokenId ? [cartItemAction] : [createEFPListAction, cartItemAction]
     addActions(actions)
-  }, [selectedChainId, totalCartItems, addActions, sendEth, createEFPList])
+  }, [selectedChainId, totalCartItems, addActions, sendEth, createEFPList, hasPrimaryListTokenId])
 
   // Handle selecting a chain
   const handleChainClick = useCallback((chainId: number) => {
