@@ -4,21 +4,23 @@ import { efpListRegistryAbi } from '#/lib/abi'
 import { efpContracts } from '#/lib/constants/contracts'
 import { useCallback, useMemo } from 'react'
 import { encodePacked } from 'viem'
+import { foundry, mainnet } from 'viem/chains'
 import { useChainId, useSimulateContract, useSwitchChain, useWriteContract } from 'wagmi'
-
-// Chain ID to use when no chain ID is provided
-const NO_CHAIN_ID = 0
 
 /**
  * @description Create an EFP list by calling the mint function on the EFPListRegistry contract
  * This mints an nft to the user while setting the EFP list storage location
  * The List Storage Location value is stored in the main EFP List Registry contract and can be changed at any time by the EFP List NFT owner.
- * @param param0
+ * The EFP List Registry is always on mainnet, so the user must switch to mainnet to create an EFP list.
+ * @param listStorageLocationChainId - The chain ID to store the EFP list on; defaults to mainnet if not provided
  * @returns
  */
-export const useCreateEFPList = ({ chainId }: { chainId: number | undefined }) => {
+export const useCreateEFPList = ({
+  listStorageLocationChainId = mainnet.id
+}: { listStorageLocationChainId: number | undefined }) => {
   const currentChainId = useChainId()
-  const chainIdToUseForCreate = chainId || NO_CHAIN_ID
+  // Use the mainnet chain ID if we're not testing, otherwise use the foundry chain ID
+  const mainnetChainId = currentChainId === foundry.id ? foundry.id : mainnet.id
   const { switchChain } = useSwitchChain()
 
   // EFP List Storage Location version value, which is currently always 1
@@ -30,7 +32,13 @@ export const useCreateEFPList = ({ chainId }: { chainId: number | undefined }) =
 
   const listStorageLocation = encodePacked(
     ['uint8', 'uint8', 'uint256', 'address', 'uint'],
-    [version, locationType, BigInt(chainIdToUseForCreate), efpContracts['EFPListRecords'], slot]
+    [
+      version,
+      locationType,
+      BigInt(listStorageLocationChainId),
+      efpContracts['EFPListRecords'],
+      slot
+    ]
   )
 
   // Simulate the creation of an EFP list
@@ -40,7 +48,7 @@ export const useCreateEFPList = ({ chainId }: { chainId: number | undefined }) =
     error: simulateCreateEFPListError,
     isPending: simulateCreateEFPListIsPending
   } = useSimulateContract({
-    chainId: chainIdToUseForCreate,
+    chainId: listStorageLocationChainId,
     address: efpContracts['EFPListRegistry'],
     abi: efpListRegistryAbi,
     functionName: 'mint',
@@ -55,11 +63,12 @@ export const useCreateEFPList = ({ chainId }: { chainId: number | undefined }) =
   } = useWriteContract()
 
   const createEFPList = useCallback(async () => {
-    if (!chainId) throw new Error('Chain ID is required to create EFP list.')
+    if (!listStorageLocationChainId)
+      throw new Error('listStorageLocationChainId is required to create an EFP list.')
 
-    // Switch chain if not the selected chain to store/create the EFP list
-    if (chainId !== currentChainId) {
-      switchChain({ chainId })
+    // Switch chain to mainnet since the EFP List Registry contract is only deployed on mainnet
+    if (currentChainId !== mainnet.id) {
+      switchChain({ chainId: mainnet.id })
     }
 
     // Handle no simulated data and/or error
@@ -68,7 +77,13 @@ export const useCreateEFPList = ({ chainId }: { chainId: number | undefined }) =
 
     // Use the simulated data to write the contract
     return await writeContractAsync(simulateCreateEFPListData.request)
-  }, [currentChainId, simulateCreateEFPListData?.request, switchChain, writeContractAsync, chainId])
+  }, [
+    currentChainId,
+    simulateCreateEFPListData?.request,
+    switchChain,
+    writeContractAsync,
+    listStorageLocationChainId
+  ])
 
   return {
     simulateCreateEFPListData,
