@@ -6,7 +6,7 @@ import { SelectChainCard } from './select-chain-card'
 import { Step } from './types'
 import { InitiateActionsCard } from './initiate-actions-card'
 import { TransactionStatusCard } from './transaction-status-card'
-// import { useCreateEFPList } from '#/hooks/efp-actions/use-create-efp-list'
+import { useCreateEFPList } from '#/hooks/efp-actions/use-create-efp-list'
 import { EFPActionType, type Action, useActions } from '#/contexts/actions-context'
 import { parseEther } from 'viem'
 import { useAccount, useChains } from 'wagmi'
@@ -38,7 +38,7 @@ export function CreateOrUpdateEFPList({ setOpen }: CreateOrUpdateEFPListProps) {
   })
 
   // Prepare action functions
-  // const { createEFPList } = useCreateEFPList({ chainId: selectedChain?.id })
+  const { createEFPList } = useCreateEFPList({ listStorageLocationChainId: selectedChain?.id })
 
   useEffect(() => {
     if (!selectedChainId) return
@@ -49,7 +49,7 @@ export function CreateOrUpdateEFPList({ setOpen }: CreateOrUpdateEFPListProps) {
       type: EFPActionType.UpdateEFPList,
       label: `${totalCartItems} edits to List Records`,
       chainId: selectedChainId,
-      execute: sendEth,
+      execute: createEFPList,
       isPendingConfirmation: false
     }
 
@@ -63,7 +63,7 @@ export function CreateOrUpdateEFPList({ setOpen }: CreateOrUpdateEFPListProps) {
     }
     const actions = hasCreatedEfpList ? [cartItemAction] : [createEFPListAction, cartItemAction]
     addActions(actions)
-  }, [selectedChainId, totalCartItems, addActions, sendEth])
+  }, [selectedChainId, totalCartItems, addActions, sendEth, createEFPList])
 
   // Handle selecting a chain
   const handleChainClick = useCallback((chainId: number) => {
