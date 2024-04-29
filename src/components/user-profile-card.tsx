@@ -1,11 +1,11 @@
 'use client'
 
-import { useConnectedProfile } from '#/api/actions'
-import { fetchUserProfile, type StatsResponse } from '#/api/requests'
 import { Avatar, Badge, Box, Flex, Text } from '@radix-ui/themes'
 import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
-import type { Address } from 'viem'
+import { type Address, isAddress } from 'viem'
+import { useConnectedProfile } from '#/api/actions'
+import { type StatsResponse, fetchUserProfile } from '#/api/requests'
 import { FollowButton } from '#/components/follow-button'
 
 interface Props {
@@ -15,7 +15,6 @@ interface Props {
 
 export function UserProfileCard({ addressOrName, stats }: Props) {
   const { profile: connectedProfile } = useConnectedProfile()
-
   /////////////////////////////////////////////////////////////////////////////
   // followers for the user profile that is being viewed
   /////////////////////////////////////////////////////////////////////////////
@@ -24,9 +23,11 @@ export function UserProfileCard({ addressOrName, stats }: Props) {
     queryFn: () => fetchUserProfile({ addressOrName })
   })
 
-  const address: Address | undefined = userProfileResponse?.address as Address
-  const name: string | undefined = userProfileResponse?.ens.name
-  const avatar = userProfileResponse?.ens.avatar
+  const address: Address | undefined = (
+    userProfileResponse?.address || isAddress(addressOrName) ? addressOrName : undefined
+  ) as Address
+  const name: string | undefined = userProfileResponse?.ens?.name
+  const avatar = userProfileResponse?.ens?.avatar
 
   if (!addressOrName) return null
 

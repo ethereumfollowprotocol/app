@@ -1,7 +1,7 @@
-import * as React from 'react'
-import Image from 'next/image'
-import type { Metadata } from 'next'
 import { Flex, Text } from '@radix-ui/themes'
+import type { Metadata } from 'next'
+import Image from 'next/image'
+import * as React from 'react'
 
 export const metadata = {
   metadataBase: new URL('https://app.ethfollow.xyz'),
@@ -15,7 +15,7 @@ export const metadata = {
 
 export default async function HomePage() {
   return (
-    <React.Fragment>
+    <>
       <main className='mx-auto flex h-full min-h-full w-full flex-col items-center overflow-scroll px-4 pt-8 text-center font-sans'>
         <Text className='text-4xl font-bold text-white'>It's about who you know.</Text>
         <Flex direction={'column'}>
@@ -41,6 +41,6 @@ export default async function HomePage() {
       {/* <React.Suspense>
         <Footer />
       </React.Suspense> */}
-    </React.Fragment>
+    </>
   )
 }

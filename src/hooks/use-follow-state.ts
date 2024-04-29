@@ -1,6 +1,6 @@
-import { useConnectedProfile, type FollowState } from '#/api/actions'
-import { useMemo } from 'react'
-import type { Address } from 'viem'
+import { useMemo } from "react";
+import type { Address } from "viem";
+import { type FollowState, useConnectedProfile } from "#/api/actions";
 
 /**
  * @description
@@ -14,9 +14,9 @@ import type { Address } from 'viem'
  * indicating the relationship status from the perspective of the connected user towards the specified address.
  */
 export function useFollowState(address: Address): FollowState {
-  const { profile } = useConnectedProfile()
+	const { profile } = useConnectedProfile();
 
-  return useMemo(() => {
-    return profile ? profile.getFollowState(address) : 'none'
-  }, [profile, address])
+	return useMemo(() => {
+		return profile ? profile.getFollowState(address) : "none";
+	}, [profile, address]);
 }

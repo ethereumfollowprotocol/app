@@ -33,28 +33,27 @@ export function InitiateActionsCard({
           Actions
         </Text>
         <Box>
-          {actions.map(
-            (action, index) =>
-              action.chainId && (
-                <Box className='flex' key={`${action.chainId}-${index}`}>
-                  <CheckIcon className='left-0 text-lime-500 relative -ml-12 w-10 h-10' />
-                  <Box className='flex items-center gap-2'>
-                    <Text weight='bold'>{action.label}</Text>
-                  </Box>
+          {actions
+            .filter(action => action.chainId)
+            .map((action, index) => (
+              <Box className='flex' key={`${action.id}-${index}`}>
+                <CheckIcon className='left-0 text-lime-500 relative -ml-12 w-10 h-10' />
+                <Box className='flex items-center gap-2'>
+                  <Text weight='bold'>{action.label}</Text>
                 </Box>
-              )
-          )}
+              </Box>
+            ))}
         </Box>
       </Box>
       <Box className='flex flex-col gap-2 items-center'>
         <Text size='5' weight='bold' className='text-center'>
           Required Transactions
         </Text>
-        {actions.map((action, index) =>
-          action.chainId ? (
+        {actions
+          .filter(action => action.chainId)
+          .map((action, index) => (
             <RequiredTransaction key={`${action.id}-${index}`} chainId={action.chainId} />
-          ) : null
-        )}
+          ))}
       </Box>
       <Box className='flex w-full justify-between'>
         <PrimaryButton
