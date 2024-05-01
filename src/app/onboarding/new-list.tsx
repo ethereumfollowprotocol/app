@@ -1,156 +1,141 @@
-"use client";
+'use client'
 
-import { Badge, Box, Button, Card, Code, Flex, Text } from "@radix-ui/themes";
-import clsx from "clsx";
-import { useQueryState } from "next-usequerystate";
-// import { useSearchParams } from 'next/navigation'
-import * as React from "react";
-import { useWaitForTransactionReceipt } from "wagmi";
-import { useIsMounted } from "#/hooks/use-is-mounted.ts";
-import { useMintEFP } from "#/hooks/use-mint-efp.ts";
-import { SECOND } from "#/lib/constants";
-import "#/lib/patch.ts";
-import { truncateAddress } from "#/lib/utilities";
-import { LIST_STORAGE_LOCATION_OPTIONS, ONBOARDING_STEPS } from "./constants";
-import OnboardingStep0SelectStorageLocation from "./step0";
-import OnboardingStep1OnchainUpdateSummary from "./step1";
+import clsx from 'clsx'
+import { useQueryState } from 'next-usequerystate'
+import { Box, Button, Card, Code, Flex, Text } from '@radix-ui/themes'
 
-type StepType = "0" | "1" | "2" | "3";
+import '#/lib/patch.ts'
+import { SECOND } from '#/lib/constants'
+import { truncateAddress } from '#/lib/utilities'
+import { useMintEFP } from '#/hooks/use-mint-efp.ts'
+import { useIsMounted } from '#/hooks/use-is-mounted.ts'
 
-export function CreateEfpList() {
-	const {
-		writeMintData: hash,
-		writeMint: writeContract,
-		simulateMintStatus,
-		simulateMintData,
-		writeMintStatus,
-		writeMintError,
-	} = useMintEFP();
+import OnboardingStep0SelectStorageLocation from './step0'
+import OnboardingStep1OnchainUpdateSummary from './step1'
+import { LIST_STORAGE_LOCATION_OPTIONS, ONBOARDING_STEPS } from './constants'
+import { useState, useTransition, type MouseEventHandler } from 'react'
+import type { QueryStatus } from '@tanstack/react-query'
 
-	async function submit(event: React.FormEvent<HTMLFormElement>) {
-		event.preventDefault();
-		if (!simulateMintData?.request) return;
-		writeContract(simulateMintData.request);
-	}
-
-	const isPending =
-		simulateMintStatus === "pending" || writeMintStatus === "pending";
-
-	const {
-		isLoading: isConfirming,
-		isSuccess: isConfirmed,
-		// data
-	} = useWaitForTransactionReceipt({
-		hash,
-	});
-
-	return (
-		<div>
-			<form onSubmit={submit}>
-				<button disabled={isPending} type="submit">
-					{isPending ? "Confirming..." : "Mint"}
-				</button>
-			</form>
-			{hash && <p>Transaction hash: {truncateAddress(hash)}</p>}
-			{isConfirming && <p>Transaction is confirming...</p>}
-			{isConfirmed && <p>Transaction is confirmed!</p>}
-			{writeMintError && <p>{writeMintError.message}</p>}
-		</div>
-	);
-}
+type StepType = '0' | '1' | '2' | '3'
 
 /**
  * Steps
- * 1. Select where to store EFP List: Ethereum or Optimism,
- * 2. Show confirmation step summarizing what's about to happen, cost, and a button to initiate,
- * 3. Tell user transaction needs approval,
- * 4. Show pending transaction with view on Etherscan,
- * 5. Show success message with link to EFP List,
+ * 0. Select where to store EFP List: Ethereum or Optimism,
+ * 1. Show confirmation step summarizing what's about to happen, cost, and a button to initiate,
+ * 2. Tell user transaction needs approval,
+ * 3. Show pending transaction with view on Etherscan,
+ * 4. Show success message with link to EFP List,
  */
 
 export function CreateNewListForm() {
-	const isMounted = useIsMounted();
-	// @ts-ignore
-	const [step, setStep] = useQueryState<StepType>("step", {
-		throttleMs: SECOND / 2,
-		defaultValue: "0",
-	});
+  const isMounted = useIsMounted()
+  const [_, startTransition] = useTransition()
+  const [mintHash, setMintHash] = useState<string | undefined>()
+  const [mintError, setMintError] = useState<string | undefined>()
+  const [mintStatus, setMintStatus] = useState<QueryStatus | undefined>()
 
-	function updateStep(direction: "left" | "right") {
-		const newStep = Number(step) + (direction === "left" ? -1 : 1);
-		startTransition(() => {
-			setStep(newStep.toString() as StepType);
-		});
-	}
+  // @ts-ignore
+  const [step, setStep] = useQueryState<StepType>('step', {
+    throttleMs: SECOND / 2,
+    defaultValue: '0'
+  })
+  const [listStorageLocationChainIdStr, setListStorageLocationChainIdStr] = useQueryState(
+    'list_storage_location_chain_id',
+    {
+      throttleMs: SECOND / 2
+    }
+  )
 
-	const [listStorageLocationChainIdStr, setListStorageLocationChainIdStr] =
-		useQueryState("list_storage_location_chain_id", {
-			throttleMs: SECOND / 2,
-		});
+  function updateStep(direction: 'left' | 'right') {
+    const newStep = Number(step) + (direction === 'left' ? -1 : 1)
+    startTransition(() => {
+      setStep(newStep.toString() as StepType)
+    })
+  }
 
-	const {
-		writeMint,
-		// writeMintAsync,
-		writeMintData: hash,
-		// simulateMintStatus,
-		// writeMintStatus,
-		// writeMintError,
-		simulateMintData,
-		// simulateMintError
-	} = useMintEFP();
+  const { mint, walletClient } = useMintEFP()
 
-	// const mintIsPending = simulateMintStatus === 'pending' || writeMintStatus === 'pending'
+  const mintEFPList = async () => {
+    setMintStatus('pending')
+    setMintError(undefined)
+    setMintHash(undefined)
+    const res = await mint()
 
-	const [_, startTransition] = React.useTransition();
+    if (!res || res?.status === 'error') {
+      setMintStatus('error')
+      setMintError(res?.message || 'Something went wrong.')
+      return
+    }
 
-	// const searchParams = useSearchParams()
-	// const currentSearchParam = searchParams.get('list_storage_location_chain_id')
+    setStep('3')
+    setMintStatus('success')
+    setMintHash(res.hash)
+  }
 
-	function selectListStorageLocationChainId(
-		listStorageLocationChainId: number,
-	) {
-		startTransition(() => {
-			if (
-				listStorageLocationChainId === Number(listStorageLocationChainIdStr)
-			) {
-				setListStorageLocationChainIdStr(null);
-			} else {
-				setListStorageLocationChainIdStr(listStorageLocationChainId.toString());
-			}
-		});
-	}
+  // const searchParams = useSearchParams()
+  // const currentSearchParam = searchParams.get('list_storage_location_chain_id')
 
-	// useWatchEfpEvents({
-	//   all: true
-	// })
+  async function selectListStorageLocationChainId(listStorageLocationChainId: number) {
+    startTransition(() => {
+      if (listStorageLocationChainId === Number(listStorageLocationChainIdStr)) return
+      setListStorageLocationChainIdStr(listStorageLocationChainId.toString())
+    })
+  }
 
-	const {
-		isLoading: isConfirming,
-		isSuccess: isConfirmed,
-		data: mintReceipt,
-	} = useWaitForTransactionReceipt({
-		hash,
-	});
+  console.log(mintStatus, step)
 
-	console.log({ isConfirming, isConfirmed, mintReceipt });
+  const onClickNextStep: MouseEventHandler<HTMLButtonElement> = event => {
+    event.preventDefault()
 
-	if (!isMounted) return null;
+    const stepFn = {
+      0: async () => {
+        if (!listStorageLocationChainIdStr) return
+        await walletClient?.switchChain({ id: Number(listStorageLocationChainIdStr) })
+        updateStep('right')
+      },
+      1: async () => {
+        updateStep('right')
+        await mintEFPList()
+      },
+      2: async () => {
+        await mintEFPList()
+      },
+      3: () => window.open(`https://sepolia.etherscan.io/tx/${mintHash}`)
+    }[step]
 
-	return (
-		<Flex
-			justify="center"
-			mx="auto"
-			className="max-w-4xl min-h-full"
-			height="100%"
-		>
-			<Card
-				my="2"
-				mx="auto"
-				variant="surface"
-				className="max-w-[450px] w-[450px] h-[600px] py-2 text-center rounded-4xl flex"
-			>
-				<Flex direction="column" justify="between" height="100%">
-					{/* <Box>
+    stepFn()
+  }
+
+  const onClickPreviousStep: MouseEventHandler<HTMLButtonElement> = event => {
+    console.log('clicked cancel')
+    event.preventDefault()
+    updateStep('left')
+  }
+
+  // useWatchEfpEvents({
+  //   all: true
+  // })
+
+  if (!isMounted) return null
+
+  const txStatus = mintStatus
+    ? {
+        pending: <p>Transaction is confirming...</p>,
+        success: <p>Transaction hash: {truncateAddress(mintHash)}</p>,
+        error: <p>{mintError}</p>
+      }[mintStatus]
+    : null
+
+  return (
+    <Flex justify='center' mx='auto' className='max-w-4xl min-h-full' height='100%'>
+      <Card
+        my='2'
+        mx='auto'
+        variant='surface'
+        className='max-w-[450px] w-[450px] h-[600px] py-2 text-center rounded-4xl flex'
+      >
+        <Flex direction='column' justify='between' height='100%'>
+          {/* <Box>
             <Heading className='text-2xl w-4/6 mx-auto text-center' mb='1'>
               {steps[step].title}
             </Heading>
@@ -159,130 +144,101 @@ export function CreateNewListForm() {
             </Code>
           </Box> */}
 
-					{step === "0" && (
-						<OnboardingStep0SelectStorageLocation
-							onLocationSelect={selectListStorageLocationChainId}
-							selectedListStorageLocationChainId={Number(
-								listStorageLocationChainIdStr,
-							)}
-							listStorageLocationOptions={LIST_STORAGE_LOCATION_OPTIONS}
-						/>
-					)}
+          {step === '0' && (
+            <OnboardingStep0SelectStorageLocation
+              onLocationSelect={selectListStorageLocationChainId}
+              selectedListStorageLocationChainId={Number(listStorageLocationChainIdStr)}
+              listStorageLocationOptions={LIST_STORAGE_LOCATION_OPTIONS}
+            />
+          )}
 
-					{step === "1" && (
-						<OnboardingStep1OnchainUpdateSummary
-							selectedListStorageLocationOption={
-								LIST_STORAGE_LOCATION_OPTIONS.find(
-									(location) =>
-										location.chainId === Number(listStorageLocationChainIdStr),
-								) || null
-							}
-						/>
-					)}
+          {step === '1' && (
+            <OnboardingStep1OnchainUpdateSummary
+              selectedListStorageLocationOption={
+                LIST_STORAGE_LOCATION_OPTIONS.find(
+                  location => location.chainId === Number(listStorageLocationChainIdStr)
+                ) || null
+              }
+            />
+          )}
 
-					{/* {step === "1" && (
-						<>
-							<Box mb="auto" mt="9">
-								<Text as="p" weight="bold" size="5" my="4">
-									Actions
-								</Text>
-								<Text>
-									Create a new EFP List on{" "}
-									<Code variant="outline" className="font-bold" color="gray">
-										{
-											LIST_STORAGE_LOCATION_OPTIONS.find(
-												(location) =>
-													location.chainId ===
-													Number(listStorageLocationChainIdStr),
-											)?.name
-										}
-									</Code>
-								</Text>
-								<img
-									src="/assets/greencheck.svg"
-									alt="checkmark"
-									className="w-6 h-6 mx-auto my-3"
-									loading="lazy"
-								/>
-								<Badge variant="outline" size="2" color="teal">
-									{isConfirming
-										? "Confirming..."
-										: isConfirmed
-										  ? "Confirmed"
-										  : isConfirmed
-											  ? "Ready"
-											  : "Simulating transaction…"}
-								</Badge>
-								<Text>{hash}</Text>
-							</Box>
-						</>
-					)} */}
+          {step === '2' && (
+            <>
+              <Box my='4'>
+                <Text as='p' weight='bold' size='5' className='' my='3'>
+                  Actions
+                </Text>
+                <Text>
+                  Create a new EFP List on{' '}
+                  <Code variant='outline' className='font-bold' color='gray'>
+                    {
+                      LIST_STORAGE_LOCATION_OPTIONS.find(
+                        location => location.chainId === Number(listStorageLocationChainIdStr)
+                      )?.name
+                    }
+                  </Code>
+                </Text>
+                <Text as='p' size='5' weight='bold' my='4'>
+                  Status
+                </Text>
+                {txStatus}
+              </Box>
+            </>
+          )}
 
-					{step === "2" && (
-						<>
-							<Box my="4">
-								<Text as="p" weight="bold" size="5" className="" my="3">
-									Actions
-								</Text>
-								<Text>
-									Create a new EFP List on{" "}
-									<Code variant="outline" className="font-bold" color="gray">
-										{
-											LIST_STORAGE_LOCATION_OPTIONS.find(
-												(location) =>
-													location.chainId ===
-													Number(listStorageLocationChainIdStr),
-											)?.name
-										}
-									</Code>
-								</Text>
-								<Text as="p" size="5" weight="bold" my="4">
-									Status
-								</Text>
-								<CreateEfpList />
-							</Box>
-						</>
-					)}
+          {step === '3' && (
+            <>
+              <Box my='4'>
+                <Text as='p' weight='bold' size='5' className='' my='3'>
+                  Actions
+                </Text>
+                <Text>
+                  Create a new EFP List on{' '}
+                  <Code variant='outline' className='font-bold' color='gray'>
+                    {
+                      LIST_STORAGE_LOCATION_OPTIONS.find(
+                        location => location.chainId === Number(listStorageLocationChainIdStr)
+                      )?.name
+                    }
+                  </Code>
+                </Text>
+                <Text as='p' size='5' weight='bold' my='4'>
+                  Status
+                </Text>
+                {txStatus}
+              </Box>
+            </>
+          )}
 
-					<Flex justify="between" mx="6" mb="2">
-						<Button
-							disabled={step === "0"}
-							onClick={(event) => {
-								console.log("clicked cancel");
-								event.preventDefault();
-								updateStep("left");
-							}}
-							size="4"
-							variant="solid"
-							radius="full"
-							className="text-black w-[100px] bg-[#9b9b9b]"
-						>
-							{ONBOARDING_STEPS[step].leftButton}
-						</Button>
-						<Button
-							onClick={(event) => {
-								event.preventDefault();
-								if (step === "1" && simulateMintData?.request) {
-									console.log(!!simulateMintData?.request);
-									writeMint(simulateMintData.request);
-								} else updateStep("right");
-							}}
-							size="4"
-							radius="full"
-							variant="solid"
-							disabled={!listStorageLocationChainIdStr}
-							className={clsx([
-								listStorageLocationChainIdStr
-									? "bg-gradient-to-t from-[#FFDE60] to-[#ffa08d]"
-									: "bg-[#9b9b9b]",
-								"w-[100px] text-black",
-							])}
-						>
-							{ONBOARDING_STEPS[step].rightButton}
-						</Button>
-					</Flex>
-				</Flex>
-			</Card>
-		</Flex>
-	);
+          <Flex justify='between' mx='6' mb='2'>
+            <Button
+              disabled={step === '0' || mintStatus === 'pending'}
+              onClick={onClickPreviousStep}
+              size='4'
+              variant='solid'
+              radius='full'
+              className='text-black w-[100px] bg-[#9b9b9b]'
+            >
+              {ONBOARDING_STEPS[step].leftButton}
+            </Button>
+            <Button
+              onClick={onClickNextStep}
+              size='4'
+              radius='full'
+              variant='solid'
+              disabled={!listStorageLocationChainIdStr || mintStatus === 'pending'}
+              className={clsx([
+                listStorageLocationChainIdStr
+                  ? 'bg-gradient-to-t from-[#FFDE60] to-[#ffa08d]'
+                  : 'bg-[#9b9b9b]',
+                'w-[100px] text-black'
+              ])}
+            >
+              {ONBOARDING_STEPS[step].rightButton}
+            </Button>
+          </Flex>
+        </Flex>
+      </Card>
+    </Flex>
+  )
 }
