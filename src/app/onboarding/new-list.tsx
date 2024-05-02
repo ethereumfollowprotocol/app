@@ -225,7 +225,7 @@ export function CreateNewListForm() {
               onClick={onClickNextStep}
               size='4'
               radius='full'
-              variant='solid'
+              variant='classic'
               disabled={!listStorageLocationChainIdStr || mintStatus === 'pending'}
               className={clsx([
                 listStorageLocationChainIdStr

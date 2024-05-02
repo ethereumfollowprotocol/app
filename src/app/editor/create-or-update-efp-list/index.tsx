@@ -46,7 +46,6 @@ export function CreateOrUpdateEFPList({ setOpen }: CreateOrUpdateEFPListProps) {
       functionName: 'applyListOp',
       args: [
         nonce,
-
         encodePacked(
           ['uint8', 'uint8', 'uint8', 'uint8', 'address'],
           [1, 1, 1, 1, '0xC983Ebc9dB969782D994627bdfFeC0ae6efee1b3']
