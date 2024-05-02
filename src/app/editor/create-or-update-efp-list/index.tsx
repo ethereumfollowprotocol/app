@@ -14,6 +14,7 @@ import * as abi from 'src/lib/abi.ts'
 import { generateListStorageLocationSlot } from '#/app/efp/utilities'
 import { encodePacked } from 'viem'
 import { mint } from '#/app/efp/actions'
+import { extractAddressAndTag, isTagListOp } from '#/types/list-op'
 
 interface CreateOrUpdateEFPListProps {
   setOpen?: (open: boolean) => void // setOpen prop for this component's parent modal, which is passed to TransactionStatusCard to finish the process
@@ -24,7 +25,7 @@ export function CreateOrUpdateEFPList({ setOpen }: CreateOrUpdateEFPListProps) {
   const chains = useChains() as unknown as ChainWithDetails[] // TODO: Fix this type issue
   const nonce = useMemo(() => generateListStorageLocationSlot(), [])
   // Setup states and context hooks
-  const hasCreatedEfpList = false // Placeholder
+  const hasCreatedEfpList = true // Placeholder
   const { totalCartItems, cartItems } = useCart()
   const { addActions, executeActionByIndex, actions } = useActions()
 
@@ -37,20 +38,29 @@ export function CreateOrUpdateEFPList({ setOpen }: CreateOrUpdateEFPListProps) {
   const { data: walletClient } = useWalletClient()
 
   const listOpTx = async () => {
-    const listOpsToPerform = []
-    console.log(cartItems)
+    // const listOpsToPerform = []
+    console.log('listOpTx')
+
+    const operations = cartItems.map(item => {
+      const types = ['uint8', 'uint8', 'uint8', 'uint8', 'address']
+      const data: (string | number)[] = [item.listOp.version, item.listOp.opcode, 1, 1]
+
+      if (item.listOp.opcode > 2 && isTagListOp(item.listOp)) {
+        const addrrAndTag = extractAddressAndTag(item.listOp)
+        types.push('bytes')
+        data.concat([addrrAndTag.address, addrrAndTag.tag])
+      } else {
+        data.push(`0x${item.listOp.data.toString('hex')}`)
+      }
+
+      return encodePacked(types, data)
+    })
 
     const hash = await walletClient?.writeContract({
       address: efpContracts.EFPListRecords,
       abi: abi.efpListRecordsAbi,
-      functionName: 'applyListOp',
-      args: [
-        nonce,
-        encodePacked(
-          ['uint8', 'uint8', 'uint8', 'uint8', 'address'],
-          [1, 1, 1, 1, '0xC983Ebc9dB969782D994627bdfFeC0ae6efee1b3']
-        )
-      ]
+      functionName: 'applyListOps',
+      args: [nonce, operations]
     })
 
     return hash
