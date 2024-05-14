@@ -77,8 +77,6 @@ export function FollowButton({ address, className = '', ...props }: FollowButton
     address
   })
 
-  console.log(address)
-
   return (
     <Button
       className={clsx([
