@@ -19,7 +19,7 @@ export type Action = {
   /* The transaction hash associated with the action */
   txHash?: `0x${string}`
   /* The action to be executed */
-  execute: () => Promise<WriteContractReturnType>
+  execute: () => Promise<WriteContractReturnType | undefined>
   /* If the action is pending confirmation */
   isPendingConfirmation: boolean
   /* If the action triggered error */

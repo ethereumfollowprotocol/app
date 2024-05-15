@@ -1,23 +1,24 @@
+import { Box, Flex, Text } from '@radix-ui/themes'
+import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query'
 import {
+  type StatsResponse,
   fetchUserFollowers,
   fetchUserFollowing,
-  fetchUserStats,
-  type StatsResponse
+  fetchUserStats
 } from '#/api/requests'
 import { getEnsProfile } from '#/app/actions.ts'
 import { AdvancedList } from '#/components/advanced-list'
 import { UserProfileCard } from '#/components/user-profile-card'
 import { UserProfilePageTable } from '#/components/user-profile-page-table'
 import type { ENSProfile } from '#/lib/types'
-import { Box, Flex, Text } from '@radix-ui/themes'
-import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query'
+import { formatAddressOrName } from '#/lib/utilities'
 
 interface Props {
   params: { user: string }
 }
 
 export default async function UserPage({ params }: Props) {
-  const ensProfile: ENSProfile = await getEnsProfile(params.user)
+  const ensProfile: ENSProfile = await getEnsProfile(formatAddressOrName(params.user))
 
   const searchParams: any = {}
   const followingQuery = searchParams['following-query'] || ''
@@ -29,15 +30,15 @@ export default async function UserPage({ params }: Props) {
   const queryClient = new QueryClient()
   await queryClient.prefetchQuery({
     queryKey: ['followers', ensProfile.address],
-    queryFn: () => fetchUserFollowers({ addressOrName: ensProfile.address })
+    queryFn: () => fetchUserFollowers(ensProfile.address)
   })
   await queryClient.prefetchQuery({
     queryKey: ['following', ensProfile.address],
-    queryFn: () => fetchUserFollowing({ addressOrName: ensProfile.address })
+    queryFn: () => fetchUserFollowing(ensProfile.address)
   })
   await queryClient.prefetchQuery({
     queryKey: ['profile', 'stats', ensProfile.address],
-    queryFn: () => fetchUserStats({ addressOrName: ensProfile.address })
+    queryFn: () => fetchUserStats(ensProfile.address)
   })
 
   // Retrieve the stats data from the QueryClient

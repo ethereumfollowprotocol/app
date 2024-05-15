@@ -32,7 +32,7 @@ export const evmClient = {
         [
           http(`https://rpc.ankr.com/eth/${process.env.NEXT_PUBLIC_ANKR_ID}`),
           http(`https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`),
-          http(`https://mainnet.ethfollow.xyz/v1/mainnet`),
+          http('https://mainnet.ethfollow.xyz/v1/mainnet'),
           http(`https://eth.llamarpc.com/rpc/${process.env.NEXT_PUBLIC_LLAMAFOLIO_ID}`),
           http(`https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_MAINNET_ALCHEMY_ID}`)
         ],

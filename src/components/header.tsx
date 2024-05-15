@@ -117,7 +117,7 @@ export function Header() {
             'my-auto flex items-center justify-end pb-1 min-w-fit'
           ])}
         >
-          <ConnectButton showBalance={false} chainStatus={'none'} label='Connect' />
+          <ConnectButton showBalance={true} chainStatus={'icon'} label='Connect' />
         </div>
         <div className='my-auto pb-0.5 pl-2.5'>
           <Menu />

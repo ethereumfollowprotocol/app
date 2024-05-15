@@ -1,15 +1,15 @@
 'use client'
 
-import type { ENSProfile } from '#/lib/types'
 import { useQuery } from '@tanstack/react-query'
 import type { Address } from 'viem'
 import { useAccount } from 'wagmi'
+import type { ENSProfile } from '#/lib/types'
 import {
+  type FollowerResponse,
+  type FollowingResponse,
   fetchUserFollowers,
   fetchUserFollowing,
-  fetchUserProfile,
-  type FollowerResponse,
-  type FollowingResponse
+  fetchUserProfile
 } from './requests'
 
 type ConnectedAddressFollowing = {
@@ -123,21 +123,27 @@ export function useConnectedProfile(address?: Address): ConnectedAddressProfile 
 
   const getFollowState: EFPProfile['getFollowState'] = (address: Address) => {
     const following: FollowingResponse | undefined = getFollowingByAddress(address)
+
+    console.log(following)
+
     if (following === undefined) {
       return 'none'
     }
+
     if (following.tags.includes('block')) {
       return 'blocks'
     }
+
     if (following.tags.includes('mute')) {
       return 'mutes'
     }
+
     return 'follows'
   }
 
   return {
     profile: {
-      address: data.address,
+      address: data.address || address || connectedAddress,
       ens: data.ens,
       followers: data.followers,
       followerAddresses: data.followers?.map(follower => follower.address),

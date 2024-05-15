@@ -1,15 +1,18 @@
+'use client'
+
+import { Box, Flex, Text } from '@radix-ui/themes'
+import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query'
+import { useAccount } from 'wagmi'
 import {
+  type StatsResponse,
   fetchUserFollowers,
   fetchUserFollowing,
-  fetchUserStats,
-  type StatsResponse
+  fetchUserStats
 } from '#/api/requests'
+import { DEFAULT_PROFILE_ADDRESS_FOR_TESTING } from '#/app/efp/types'
 import { AdvancedList } from '#/components/advanced-list.tsx'
 import { UserProfileCard } from '#/components/user-profile-card'
 import { UserProfilePageTable } from '#/components/user-profile-page-table'
-import { Box, Flex, Text } from '@radix-ui/themes'
-import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query'
-import { DEFAULT_PROFILE_ADDRESS_FOR_TESTING } from '#/app/efp/types'
 
 interface Props {
   searchParams: {
@@ -21,8 +24,8 @@ interface Props {
   }
 }
 
-export default async function ProfilePage({ searchParams }: Props) {
-  const addressOrName = DEFAULT_PROFILE_ADDRESS_FOR_TESTING // TODO use connected address
+export default function ProfilePage({ searchParams }: Props) {
+  const { address } = useAccount() // TODO use connected address
   const followingQuery = searchParams['following-query'] || ''
   const followingFilter = searchParams['following-filter'] || 'follower count'
 
@@ -30,23 +33,25 @@ export default async function ProfilePage({ searchParams }: Props) {
   const followersFilter = searchParams['followers-filter'] || 'follower count'
 
   const queryClient = new QueryClient()
-  await queryClient.prefetchQuery({
-    queryKey: ['followers', addressOrName],
-    queryFn: () => fetchUserFollowers({ addressOrName })
+  queryClient.prefetchQuery({
+    queryKey: ['followers', address],
+    queryFn: () => fetchUserFollowers(address)
   })
-  await queryClient.prefetchQuery({
-    queryKey: ['following', addressOrName],
-    queryFn: () => fetchUserFollowing({ addressOrName })
+  queryClient.prefetchQuery({
+    queryKey: ['following', address],
+    queryFn: () => fetchUserFollowing(address)
   })
-  await queryClient.prefetchQuery({
-    queryKey: ['profile', 'stats', addressOrName],
-    queryFn: () => fetchUserStats({ addressOrName })
+  queryClient.prefetchQuery({
+    queryKey: ['profile', 'stats', address],
+    queryFn: () => fetchUserStats(address)
   })
 
   // Retrieve the stats data from the QueryClient
   const stats =
-    queryClient.getQueryData<{ stats: StatsResponse }>(['profile', 'stats', addressOrName])
-      ?.stats || undefined
+    queryClient.getQueryData<{ stats: StatsResponse }>(['profile', 'stats', address])?.stats ||
+    undefined
+
+  if (!address) return null
 
   return (
     <main className='mx-auto flex min-h-full h-full w-full flex-col items-center text-center pt-2 pb-4 px-2'>
@@ -59,7 +64,7 @@ export default async function ProfilePage({ searchParams }: Props) {
       >
         <HydrationBoundary state={dehydrate(queryClient)}>
           <Box height='100%' width='min-content' p='2' mx='auto'>
-            <UserProfileCard addressOrName={addressOrName} stats={stats} />
+            <UserProfileCard addressOrName={address} stats={stats} />
             <Text as='p' className='font-semibold mt-2'>
               Block/Mute Lists
             </Text>
@@ -67,14 +72,14 @@ export default async function ProfilePage({ searchParams }: Props) {
           </Box>
 
           <UserProfilePageTable
-            addressOrName={addressOrName}
+            addressOrName={address}
             title='following'
             searchQuery={followingQuery}
             selectQuery={followingFilter}
           />
 
           <UserProfilePageTable
-            addressOrName={addressOrName}
+            addressOrName={address}
             title='followers'
             searchQuery={followersQuery}
             selectQuery={followersFilter}

@@ -19,10 +19,12 @@ export default async function LeaderboardPage({
     queryFn: () =>
       fetchLeaderboard({
         filter,
-        limit: 200,
+        limit: 4, // change to 200 once ENS data is fixed
         include: ['ens', 'blocked', 'muted', 'mutuals']
       })
   })
+
+  console.log(queryClient.getQueryData(['leaderboard', filter]))
 
   return (
     <main className='font-sans mx-auto flex h-full min-h-full w-full flex-col items-center overflow-scroll mb-12 px-4 pt-6 text-center'>

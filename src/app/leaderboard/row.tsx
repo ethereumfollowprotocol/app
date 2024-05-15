@@ -1,9 +1,9 @@
+import { Avatar, Badge, Box, Flex, Table, Text } from '@radix-ui/themes'
 import clsx from 'clsx'
 import Link from 'next/link'
 import * as React from 'react'
-import { FollowButton } from '#/components/follow-button'
-import { Box, Text, Flex, Table, Badge, Avatar } from '@radix-ui/themes'
 import type { Address } from 'viem'
+import { FollowButton } from '#/components/follow-button'
 
 interface Row {
   address: Address
@@ -26,36 +26,33 @@ export function TableRow({
   blockedMuted,
   status
 }: Row) {
-  const rowNumber = (
-    <React.Fragment>
-      {rank === 1 ? (
-        <img
-          alt='1'
-          src='/assets/leaderboard/1.png'
-          width='40'
-          className='mx-auto overflow-hidden select-none -mb-1'
-        />
-      ) : rank === 2 ? (
-        <img alt='2' src='/assets/leaderboard/2.png' width='28' className='mx-auto select-none' />
-      ) : rank === 3 ? (
-        <img alt='3' src='/assets/leaderboard/3.png' width='23' className='mx-auto select-none' />
-      ) : rank <= 10 ? (
-        <Text size='7' as='p' className='font-bold w-min' mx='auto' my='auto'>
-          {rank}
-        </Text>
-      ) : (
-        <Text size='4' as='p' className='font-bold w-min' mx='auto' my='auto'>
-          {rank}
-        </Text>
-      )}
-    </React.Fragment>
-  )
+  const rankedAs = rank <= 3 ? 'top-three' : rank <= 10 ? 'top-ten' : 'regular'
+  const rankNumber = {
+    'top-three': (
+      <img
+        alt={`${rank}`}
+        src={`/assets/leaderboard/${rank}.png`}
+        width={38 - (rank > 1 ? rank * 5 : 0)}
+        className='mx-auto overflow-hidden select-none -mb-1 pointer-events-none'
+      />
+    ),
+    'top-ten': (
+      <Text size='7' as='p' className='font-bold w-min' mx='auto' my='auto'>
+        {rank}
+      </Text>
+    ),
+    regular: (
+      <Text size='4' as='p' className='font-bold w-min' mx='auto' my='auto'>
+        {rank}
+      </Text>
+    )
+  }[rankedAs]
 
   return (
-    <Table.Row align='center'>
-      <Table.RowHeaderCell justify='center' className='pt-1 sm:pr-6 select-none'>
+    <Table.Row align='center' className='h-[75px]'>
+      <Table.RowHeaderCell justify='center' className='sm:pr-6 select-none'>
         <Box height='max-content' my='auto' className='tabular-nums text-right'>
-          {rowNumber}
+          {rankNumber}
         </Box>
       </Table.RowHeaderCell>
       <Table.Cell data-name='name-column'>

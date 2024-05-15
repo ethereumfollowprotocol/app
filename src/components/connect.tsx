@@ -1,9 +1,9 @@
 'use client'
 
-import * as React from 'react'
 import { Button, Dialog } from '@radix-ui/themes'
+import * as React from 'react'
+import { useAccount, useAccountEffect, useConnect, useDisconnect } from 'wagmi'
 import { useEnsProfile } from '#/hooks/use-ens-profile'
-import { useConnect, useAccountEffect, useAccount, useDisconnect } from 'wagmi'
 import { truncateAddress } from '#/lib/utilities'
 
 export function Connect() {
@@ -32,7 +32,7 @@ export function Connect() {
   }
 
   return (
-    <React.Fragment>
+    <>
       <Button
         className='bg-white text-gray-800 tabular-nums shadow-sm text-[16px] font-bold antialiased justify-around px-3'
         variant='solid'
@@ -69,7 +69,7 @@ export function Connect() {
           </Button>
         }
       />
-    </React.Fragment>
+    </>
   )
 }
 
@@ -79,7 +79,7 @@ function WalletMenu({
   content
 }: {
   open: boolean
-  setOpen: any
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
   content: React.ReactNode
 }) {
   return (

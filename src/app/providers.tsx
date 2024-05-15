@@ -43,7 +43,11 @@ export function Providers({ children, initialState }: Props) {
       <ReactQueryStreamedHydration>
         <WagmiProvider config={wagmiConfig} reconnectOnMount={true} initialState={initialState}>
           {/* <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}> */}
-          <RainbowKitProvider coolMode={true} initialChain={DEFAULT_CHAIN_ID}>
+          <RainbowKitProvider
+            coolMode={true}
+            initialChain={DEFAULT_CHAIN_ID}
+            showRecentTransactions={true}
+          >
             <TransactionsProvider>
               <CartProvider>
                 <ActionsProvider>

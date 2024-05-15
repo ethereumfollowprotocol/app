@@ -28,12 +28,14 @@ export function LeaderboardTable({
     queryFn: () =>
       fetchLeaderboard({
         filter: filter as LeaderboardFilter,
-        limit: 200,
+        limit: 4, // change to 200 once ENS data is fixed
         include: ['ens', 'blocked', 'muted', 'mutuals']
       })
   })
 
-  const filteredLeaderboard = data?.filter(entry => entry.ens?.name?.includes(query)) ?? []
+  const filteredLeaderboard = data ?? []
+  // const filteredLeaderboard =
+  // 	data?.filter((entry) => entry.ens?.name?.includes(query)) ?? [];
 
   return (
     <Flex direction='column' width='100%' className='max-w-[860px]'>
@@ -70,7 +72,8 @@ export function LeaderboardTable({
             as='p'
             className='h-2 font-semibold text-sm sm:text-md w-full leading-none sm:leading-normal'
           >
-            {filteredLeaderboard.length} account{filteredLeaderboard.length === 1 ? '' : 's'}
+            {filteredLeaderboard.length} account
+            {filteredLeaderboard.length === 1 ? '' : 's'}
           </Text>
         </Box>
       </Flex>

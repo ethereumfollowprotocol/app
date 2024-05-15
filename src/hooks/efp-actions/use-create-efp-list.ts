@@ -23,13 +23,13 @@ export const useCreateEFPList = ({ chainId }: { chainId: number | undefined }) =
     isPending: simulateCreateEFPListIsPending
   } = useSimulateContract({
     chainId: chainIdToUseForCreate,
-    address: efpContracts['EFPListRegistry'],
+    address: efpContracts.EFPListRegistry,
     abi: efpListRegistryAbi,
     functionName: 'mint',
     args: [
       encodePacked(
         ['uint8', 'uint8', 'uint256', 'address', 'uint'],
-        [1, 1, BigInt(chainIdToUseForCreate), efpContracts['EFPListRecords'], nonce]
+        [1, 1, BigInt(chainIdToUseForCreate), efpContracts.EFPListRecords, nonce]
       )
     ]
   })
