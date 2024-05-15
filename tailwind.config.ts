@@ -92,7 +92,10 @@ const { colors, fontFamily, fontSize, keyframes, animation, spacing } = {
       '900': 'hsl(26, 74%, 26%)',
       '950': 'hsl(23, 86%, 14%)'
     },
-    grey: '#CDCDCD',
+    yellow: '#FFF500',
+    pink: '#FF79C9',
+    neutral: '#CDCDCD',
+    grey: '#999999',
     darkGrey: '#333333'
   },
   fontFamily: {

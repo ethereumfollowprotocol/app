@@ -119,12 +119,6 @@ export function Search({ disabled }: { disabled?: boolean }) {
           Search
         </label>
         <div className='rounded-md shadow-sm hidden sm:block'>
-          <div
-            className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2'
-            aria-hidden='true'
-          >
-            <MagnifyingGlassIcon className='mr-3 h-4 w-4 text-gray-400' aria-hidden='true' />
-          </div>
           <input
             ref={searchBarRef}
             type='text'
@@ -144,8 +138,14 @@ export function Search({ disabled }: { disabled?: boolean }) {
                   !!searchResult
               )
             }}
-            className='lowercase h-9 block w-full rounded-xl border-0 border-transparent pl-7 text-xs sm:text-sm bg-white/70'
+            className='h-12 block w-full font-medium rounded-xl border-2 border-grey pl-4 text-xs sm:text-sm bg-white/70'
           />
+          <div
+            className='pointer-events-none absolute inset-y-0 right-2 flex items-center'
+            aria-hidden='true'
+          >
+            <MagnifyingGlassIcon className='mr-3 h-5 w-5 text-grey' aria-hidden='true' />
+          </div>
         </div>
         <div className='hidden sm:block'>
           <DropdownMenu.Root

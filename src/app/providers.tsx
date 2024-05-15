@@ -1,19 +1,20 @@
 'use client'
 
-import { Header } from '#/components/header.tsx'
-import { ActionsProvider } from '#/contexts/actions-context'
-import { CartProvider } from '#/contexts/cart-context'
-import { TransactionsProvider } from '#/contexts/transactions-context'
-import { DAY, MINUTE } from '#/lib/constants'
-import wagmiConfig from '#/lib/wagmi'
-import { Theme } from '@radix-ui/themes'
-import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental'
 import * as React from 'react'
 import { sepolia } from 'viem/chains'
+import { Theme } from '@radix-ui/themes'
 import { WagmiProvider, type State } from 'wagmi'
+import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental'
+
+import wagmiConfig from '#/lib/wagmi'
+import { DAY, MINUTE } from '#/lib/constants'
+import Navigation from '#/components/navigation'
+import { CartProvider } from '#/contexts/cart-context'
+import { ActionsProvider } from '#/contexts/actions-context'
+import { TransactionsProvider } from '#/contexts/transactions-context'
 
 type Props = {
   children: React.ReactNode
@@ -52,10 +53,12 @@ export function Providers({ children, initialState }: Props) {
               <CartProvider>
                 <ActionsProvider>
                   <Theme scaling='100%' appearance='inherit' accentColor='gray'>
-                    <React.Suspense>
-                      <Header />
-                    </React.Suspense>
-                    {children}
+                    <div className='p-4 pb-0 xl:px-12'>
+                      <React.Suspense>
+                        <Navigation />
+                      </React.Suspense>
+                      {children}
+                    </div>
                   </Theme>
                 </ActionsProvider>
               </CartProvider>

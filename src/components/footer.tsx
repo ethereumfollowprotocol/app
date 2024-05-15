@@ -39,7 +39,7 @@ export function Footer() {
         justify={'center'}
         width={'100%'}
         height={'100%'}
-        className='space-x-28 bg-[#FEF305]'
+        className='space-x-28 bg-[#FFE067]'
       >
         <Section className='flex space-x-5 align-middle'>
           <Box className='my-auto'>

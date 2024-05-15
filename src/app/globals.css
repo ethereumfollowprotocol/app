@@ -68,6 +68,16 @@ body::-webkit-scrollbar-thumb {
   scrollbar-color: transparent;
 }
 
+.glass-card {
+  background: white;
+    background: linear-gradient(
+        to right bottom,
+        rgba(255, 255, 255, 0.4),
+        rgba(255, 255, 255, 0.2)
+    );
+    backdrop-filter: blur(1rem);
+}
+
 img,
 video,
 iframe {
@@ -84,7 +94,7 @@ iframe {
   outline: none;
 }
 
-input:-webkit-autofill,
+/* input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
@@ -102,7 +112,7 @@ input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 999px var(--color-gray-800) inset !important;
   box-shadow: 0 0 0 999px var(--color-gray-800) inset !important;
   background-clip: content-box !important;
-}
+} */
 
 input:-webkit-autofill::first-line {
   font-size: 1.125rem;
@@ -155,10 +165,10 @@ input[type="search"]::-webkit-search-results-decoration {
   }
 }
 
-::selection {
+/* ::selection {
   background-color: rgb(255, 255, 255) !important;
   color: rgb(0, 0, 0);
-}
+} */
 
 .prose > :first-child {
   /* Override removing top margin, causing layout shift */

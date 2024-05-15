@@ -57,9 +57,9 @@ function HeadTag() {
       <meta name='apple-mobile-web-app-status-bar-style' content='default' />
       <meta name='apple-mobile-web-app-title' content='EFP' />
       <meta name='mobile-web-app-capable' content='yes' />
-      <meta name='theme-color' content='#fef305' />
-      <meta name='apple-mobile-web-app-status-bar-style' content='#fef305' />
-      <meta name='msapplication-TileColor' content='#fef305' />
+      <meta name='theme-color' content='#FFE067' />
+      <meta name='apple-mobile-web-app-status-bar-style' content='#FFE067' />
+      <meta name='msapplication-TileColor' content='#FFE067' />
       <meta name='author' content='Ethereum Follow Protocol Team' />
       <meta name='twitter:creator' content='@ethfollowpr' />
       <meta name='twitter:site' content='@ethfollowpr' />
