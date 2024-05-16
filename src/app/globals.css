@@ -72,10 +72,10 @@ body::-webkit-scrollbar-thumb {
   background: white;
     background: linear-gradient(
         to right bottom,
-        rgba(255, 255, 255, 0.4),
-        rgba(255, 255, 255, 0.2)
+        rgba(255, 255, 255, 0.2),
+        rgba(255, 255, 255, 0.1)
     );
-    backdrop-filter: blur(1rem);
+    backdrop-filter: blur(0.2rem);
 }
 
 img,
