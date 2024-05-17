@@ -66,16 +66,18 @@
       },
       "a11y": {
         "all": true,
+        "useButtonType": "off",
         "noSvgWithoutTitle": "off",
+        "useKeyWithClickEvents": "off",
         "noDistractingElements": "off"
       },
       "nursery": {
         "all": true,
-        "useAwait": "off",
         "noNodejsModules": "off",
-        "noUnusedImports": "off",
-        "noUselessTernary": "off",
-        "useConsistentArrayType": "off"
+        "useSortedClasses": "off",
+        "noReactSpecificProps": "off",
+        "useImportRestrictions": "off",
+        "noUndeclaredDependencies": "off"
       },
       "performance": {
         "all": true,
@@ -83,8 +85,9 @@
       },
       "correctness": {
         "all": true,
+        "noUnusedVariables": "off",
         "noUndeclaredVariables": "off",
-        "noUnusedVariables": "off"
+        "useExhaustiveDependencies": "off"
       },
       "suspicious": {
         "all": true,

@@ -1,8 +1,6 @@
-import { FollowList } from '#/components/follow-list'
-import { useConnectedProfile } from '#/api/actions'
 import { useMemo } from 'react'
-import { Box, Heading } from '@radix-ui/themes'
-
+import { useConnectedProfile } from '#/api/actions'
+import { FollowList } from '#/components/follow-list'
 interface RecommendationsProps {
   header: string
 }
@@ -27,16 +25,14 @@ export function Recommendations({ header }: RecommendationsProps) {
   if (!profilesToRecommend) return null
 
   return (
-    <Box className='flex flex-col gap-4'>
-      <Heading as='h2' weight={'bold'} className='text-start'>
-        {header}
-      </Heading>
+    <div className='flex flex-col gap-4'>
+      <h2 className='text-start font-bold'>{header}</h2>
       <FollowList
         listClassName='gap-5 rounded-xl'
         profiles={profilesToRecommend}
         showFollowsYouBadges={true}
         showTags={false}
       />
-    </Box>
+    </div>
   )
 }

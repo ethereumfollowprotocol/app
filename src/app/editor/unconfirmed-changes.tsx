@@ -1,12 +1,12 @@
-import { FollowList } from '#/components/follow-list'
+import { useAccount } from 'wagmi'
+import { useMemo, useState } from 'react'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
+
 import { Modal } from '#/components/modal'
 import { useCart } from '#/contexts/cart-context'
-import { Box, Text } from '@radix-ui/themes'
-import { useMemo, useState } from 'react'
-import { CreateOrUpdateEFPList } from '#/app/editor/create-or-update-efp-list'
+import { FollowList } from '#/components/follow-list'
 import { PrimaryButton } from '#/components/primary-button'
-import { useAccount } from 'wagmi'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { CreateOrUpdateEFPList } from '#/app/editor/create-or-update-efp-list'
 
 export function UnconfirmedChanges() {
   const { isConnected } = useAccount()
@@ -23,7 +23,7 @@ export function UnconfirmedChanges() {
     [cartAddresses]
   )
 
-  if (!cartItems.length) return null // TODO handle no items in cart
+  if (cartItems.length === 0) return null // TODO handle no items in cart
 
   return (
     <>
@@ -34,21 +34,15 @@ export function UnconfirmedChanges() {
         showFollowsYouBadges={true}
         showTags={true}
       />
-      <Box className='mr-8 flex justify-end'>
-        <Box className='flex gap-6 p-6 bg-white rounded-xl'>
-          <Box className='flex gap-2 items-center'>
-            <Text size='8' weight='bold'>
-              {totalCartItems}
-            </Text>
-            <Box className='flex flex-col text-right'>
-              <Text size='1' weight='bold'>
-                Unconfirmed
-              </Text>
-              <Text size='1' weight='bold'>
-                Changes
-              </Text>
-            </Box>
-          </Box>
+      <div className='mr-8 flex justify-end'>
+        <div className='flex gap-6 p-6 bg-white rounded-xl'>
+          <div className='flex gap-2 items-center'>
+            <p className='text-xl font-bold'>{totalCartItems}</p>
+            <div className='flex flex-col text-right'>
+              <p className='font-bold'>Unconfirmed</p>
+              <p className='font-bold'>Changes</p>
+            </div>
+          </div>
 
           {isConnected ? (
             <Modal
@@ -61,8 +55,8 @@ export function UnconfirmedChanges() {
           ) : (
             <ConnectButton />
           )}
-        </Box>
-      </Box>
+        </div>
+      </div>
     </>
   )
 }

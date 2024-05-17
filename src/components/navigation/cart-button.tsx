@@ -2,11 +2,10 @@
 
 import clsx from 'clsx'
 import Link from 'next/link'
-import * as React from 'react'
 import Image from 'next/image'
 import Pencil from 'public/assets/common/pencil.png'
 
-export function CartButton({ cartItemsCount }: { cartItemsCount: number }) {
+const CartButton = ({ cartItemsCount }: { cartItemsCount: number }) => {
   return (
     <Link href='/editor' passHref={true} legacyBehavior={true}>
       <div

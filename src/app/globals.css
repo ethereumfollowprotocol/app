@@ -17,29 +17,13 @@
   outline-offset: 2px;
 }
 
-html {
-  overflow-y: overlay;
-  overflow-x: hidden;
-  margin: auto;
-  height: 100%;
-  width: 100%;
-  min-height: 100%;
-  min-width: 100%;
-  scroll-behavior: smooth;
-}
 
 html,
-body,
-#root {
-  overflow-x: hidden;
-  justify-items: center;
-  width: 100%;
-  min-height: 100%;
-  background-size: cover;
+body, #root {
+  background-image: url('/public/assets/art/waves-background.svg');
   background-repeat: no-repeat;
-  background-attachment: fixed;
-  min-width: 100%;
-  font-variant-numeric: tabular-nums;
+  background-size: auto;
+  background: black;
 }
 
 /* Disable zoom in iOS Safari when double tapping an element */
@@ -69,7 +53,6 @@ body::-webkit-scrollbar-thumb {
 }
 
 .glass-card {
-  background: white;
     background: linear-gradient(
         to right bottom,
         rgba(255, 255, 255, 0.2),

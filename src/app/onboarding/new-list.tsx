@@ -2,19 +2,17 @@
 
 import clsx from 'clsx'
 import { useQueryState } from 'next-usequerystate'
-import { Box, Button, Card, Code, Flex, Text } from '@radix-ui/themes'
+import type { QueryStatus } from '@tanstack/react-query'
+import { useState, useTransition, type MouseEventHandler } from 'react'
 
 import '#/lib/patch.ts'
 import { SECOND } from '#/lib/constants'
 import { truncateAddress } from '#/lib/utilities'
 import { useMintEFP } from '#/hooks/use-mint-efp.ts'
 import { useIsMounted } from '#/hooks/use-is-mounted.ts'
-
-import OnboardingStep0SelectStorageLocation from './step0'
 import OnboardingStep1OnchainUpdateSummary from './step1'
+import OnboardingStep0SelectStorageLocation from './step0'
 import { LIST_STORAGE_LOCATION_OPTIONS, ONBOARDING_STEPS } from './constants'
-import { useState, useTransition, type MouseEventHandler } from 'react'
-import type { QueryStatus } from '@tanstack/react-query'
 
 type StepType = '0' | '1' | '2' | '3'
 
@@ -82,7 +80,7 @@ export function CreateNewListForm() {
     })
   }
 
-  console.log(mintStatus, step)
+  // console.log(mintStatus, step)
 
   const onClickNextStep: MouseEventHandler<HTMLButtonElement> = event => {
     event.preventDefault()
@@ -107,7 +105,7 @@ export function CreateNewListForm() {
   }
 
   const onClickPreviousStep: MouseEventHandler<HTMLButtonElement> = event => {
-    console.log('clicked cancel')
+    // console.log('clicked cancel')
     event.preventDefault()
     updateStep('left')
   }
@@ -127,14 +125,9 @@ export function CreateNewListForm() {
     : null
 
   return (
-    <Flex justify='center' mx='auto' className='max-w-4xl min-h-full' height='100%'>
-      <Card
-        my='2'
-        mx='auto'
-        variant='surface'
-        className='max-w-[450px] w-[450px] h-[600px] py-2 text-center rounded-4xl flex'
-      >
-        <Flex direction='column' justify='between' height='100%'>
+    <div className='justify-center mx-auto max-w-4xl h-full'>
+      <div className='max-w-[450px] w-[450px] h-[600px] my-2 py-2 mx-auto text-center rounded-4xl flex'>
+        <div className='flex flex-col justify-between h-full'>
           {/* <Box>
             <Heading className='text-2xl w-4/6 mx-auto text-center' mb='1'>
               {steps[step].title}
@@ -164,68 +157,54 @@ export function CreateNewListForm() {
 
           {step === '2' && (
             <>
-              <Box my='4'>
-                <Text as='p' weight='bold' size='5' className='' my='3'>
-                  Actions
-                </Text>
-                <Text>
+              <div className='my-4'>
+                <p className='my-r font-bold text-3xl'>Actions</p>
+                <p>
                   Create a new EFP List on{' '}
-                  <Code variant='outline' className='font-bold' color='gray'>
+                  <code className='font-bold text-gray-400'>
                     {
                       LIST_STORAGE_LOCATION_OPTIONS.find(
                         location => location.chainId === Number(listStorageLocationChainIdStr)
                       )?.name
                     }
-                  </Code>
-                </Text>
-                <Text as='p' size='5' weight='bold' my='4'>
-                  Status
-                </Text>
+                  </code>
+                </p>
+                <p className='text-2xl font-bold my-4'>Status</p>
                 {txStatus}
-              </Box>
+              </div>
             </>
           )}
 
           {step === '3' && (
             <>
-              <Box my='4'>
-                <Text as='p' weight='bold' size='5' className='' my='3'>
-                  Actions
-                </Text>
-                <Text>
+              <div className='my-4'>
+                <p className='text-2xl font-bold my-3'>Actions</p>
+                <p>
                   Create a new EFP List on{' '}
-                  <Code variant='outline' className='font-bold' color='gray'>
+                  <code className='font-bold text-gray-400'>
                     {
                       LIST_STORAGE_LOCATION_OPTIONS.find(
                         location => location.chainId === Number(listStorageLocationChainIdStr)
                       )?.name
                     }
-                  </Code>
-                </Text>
-                <Text as='p' size='5' weight='bold' my='4'>
-                  Status
-                </Text>
+                  </code>
+                </p>
+                <p className='text-2xl font-bold my-4'>Status</p>
                 {txStatus}
-              </Box>
+              </div>
             </>
           )}
 
-          <Flex justify='between' mx='6' mb='2'>
-            <Button
+          <div className='flex justify-between mx-6 mb-2'>
+            <button
               disabled={step === '0' || mintStatus === 'pending'}
               onClick={onClickPreviousStep}
-              size='4'
-              variant='solid'
-              radius='full'
               className='text-black w-[100px] bg-[#9b9b9b]'
             >
               {ONBOARDING_STEPS[step].leftButton}
-            </Button>
-            <Button
+            </button>
+            <button
               onClick={onClickNextStep}
-              size='4'
-              radius='full'
-              variant='classic'
               disabled={!listStorageLocationChainIdStr || mintStatus === 'pending'}
               className={clsx([
                 listStorageLocationChainIdStr
@@ -235,10 +214,10 @@ export function CreateNewListForm() {
               ])}
             >
               {ONBOARDING_STEPS[step].rightButton}
-            </Button>
-          </Flex>
-        </Flex>
-      </Card>
-    </Flex>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }

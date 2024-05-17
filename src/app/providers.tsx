@@ -1,8 +1,6 @@
 'use client'
 
-import * as React from 'react'
 import { sepolia } from 'viem/chains'
-import { Theme } from '@radix-ui/themes'
 import { WagmiProvider, type State } from 'wagmi'
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
@@ -15,6 +13,7 @@ import Navigation from '#/components/navigation'
 import { CartProvider } from '#/contexts/cart-context'
 import { ActionsProvider } from '#/contexts/actions-context'
 import { TransactionsProvider } from '#/contexts/transactions-context'
+import { useState } from 'react'
 
 type Props = {
   children: React.ReactNode
@@ -30,7 +29,7 @@ type Props = {
 const DEFAULT_CHAIN_ID = sepolia.id
 
 export function Providers({ children, initialState }: Props) {
-  const [queryClient] = React.useState(
+  const [queryClient] = useState(
     () =>
       new QueryClient({
         defaultOptions: {
@@ -52,14 +51,10 @@ export function Providers({ children, initialState }: Props) {
             <TransactionsProvider>
               <CartProvider>
                 <ActionsProvider>
-                  <Theme scaling='100%' appearance='inherit' accentColor='gray'>
-                    <div className='p-4 pb-0 xl:px-12'>
-                      <React.Suspense>
-                        <Navigation />
-                      </React.Suspense>
-                      {children}
-                    </div>
-                  </Theme>
+                  <div className='p-4 pb-0 xl:px-12'>
+                    <Navigation />
+                    {children}
+                  </div>
                 </ActionsProvider>
               </CartProvider>
             </TransactionsProvider>

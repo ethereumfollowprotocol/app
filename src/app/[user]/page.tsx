@@ -1,4 +1,3 @@
-import { Box, Flex, Text } from '@radix-ui/themes'
 import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query'
 import {
   type StatsResponse,
@@ -48,21 +47,13 @@ export default async function UserPage({ params }: Props) {
 
   return (
     <main className='mx-auto flex min-h-full h-full w-full flex-col items-center text-center pt-2 pb-4 px-2'>
-      <Flex
-        width='100%'
-        height='100%'
-        justify='center'
-        mx='auto'
-        className='xl:flex-row justify-center gap-y-0 xl:gap-x-2 gap-x-0 flex-col min-h-full lg:max-w-[1400px] max-w-2xl border-kournikova-50'
-      >
+      <div className='xl:flex-row justify-center gap-y-0 xl:gap-x-2 gap-x-0 flex-col min-h-full lg:max-w-[1400px] max-w-2xl border-kournikova-50'>
         <HydrationBoundary state={dehydrate(queryClient)}>
-          <Box height='100%' width='min-content' p='2' mx='auto'>
+          <div className='h-full w-fit p-2 mx-auto'>
             <UserProfileCard addressOrName={ensProfile.address} stats={stats} />
-            <Text as='p' className='font-semibold mt-2'>
-              Block/Mute Lists
-            </Text>
+            <p className='font-semibold mt-2'>Block/Mute Lists</p>
             <AdvancedList />
-          </Box>
+          </div>
 
           <UserProfilePageTable
             addressOrName={ensProfile.address}
@@ -78,7 +69,7 @@ export default async function UserPage({ params }: Props) {
             selectQuery={followersFilter}
           />
         </HydrationBoundary>
-      </Flex>
+      </div>
     </main>
   )
 }

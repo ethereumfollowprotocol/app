@@ -1,5 +1,3 @@
-import * as React from 'react'
-import { Text } from '@radix-ui/themes'
 import { LeaderboardTable } from './table.tsx'
 import { fetchLeaderboard } from './actions.ts'
 import type { LeaderboardFilter } from './types.ts'
@@ -24,13 +22,11 @@ export default async function LeaderboardPage({
       })
   })
 
-  console.log(queryClient.getQueryData(['leaderboard', filter]))
+  // console.log(queryClient.getQueryData(['leaderboard', filter]))
 
   return (
     <main className='font-sans mx-auto flex h-full min-h-full w-full flex-col items-center overflow-scroll mb-12 px-4 pt-6 text-center'>
-      <Text size='7' className='font-bold' mb='5'>
-        Leaderboard
-      </Text>
+      <p className='mb-5 text-4xl font-bold'>Leaderboard</p>
       <HydrationBoundary state={dehydrate(queryClient)}>
         <LeaderboardTable initialFilter={filter} query={query} />
       </HydrationBoundary>

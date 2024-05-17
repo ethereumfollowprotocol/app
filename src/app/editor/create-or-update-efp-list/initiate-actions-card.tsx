@@ -1,11 +1,9 @@
 import type { ChainWithDetails } from '#/lib/wagmi'
-import { Box, Heading, Text } from '@radix-ui/themes'
 import { Step } from './types'
-import { CheckIcon } from '@radix-ui/react-icons'
+import useChain from '#/hooks/use-chain'
 import { ChainIcon } from '#/components/chain-icon'
 import { PrimaryButton } from '#/components/primary-button'
 import type { Action } from '#/contexts/actions-context'
-import useChain from '#/hooks/use-chain'
 
 export function InitiateActionsCard({
   actions,
@@ -20,42 +18,34 @@ export function InitiateActionsCard({
 }) {
   return (
     <>
-      <Box className='flex flex-col gap-2'>
-        <Heading as='h1' size='6'>
-          Onchain Update
-        </Heading>
-        <Text as='p' size='2'>
-          Summary
-        </Text>
-      </Box>
-      <Box className='flex flex-col gap-6'>
-        <Text size='5' weight='bold'>
-          Actions
-        </Text>
-        <Box>
+      <div className='flex flex-col gap-2'>
+        <h1 className='text-3xl'>Onchain Update</h1>
+        <p className='text-lg'>Summary</p>
+      </div>
+      <div className='flex flex-col gap-6'>
+        <p className='text-2xl font-bold'>Actions</p>
+        <div>
           {actions
             .filter(action => action.chainId)
             .map((action, index) => (
-              <Box className='flex' key={`${action.id}-${index}`}>
-                <CheckIcon className='left-0 text-lime-500 relative -ml-12 w-10 h-10' />
-                <Box className='flex items-center gap-2'>
-                  <Text weight='bold'>{action.label}</Text>
-                </Box>
-              </Box>
+              <div className='flex' key={`${action.id}-${index}`}>
+                {/* <CheckIcon className='left-0 text-lime-500 relative -ml-12 w-10 h-10' /> */}
+                <div className='flex items-center gap-2'>
+                  <p className='font-bold'>{action.label}</p>
+                </div>
+              </div>
             ))}
-        </Box>
-      </Box>
-      <Box className='flex flex-col gap-2 items-center'>
-        <Text size='5' weight='bold' className='text-center'>
-          Required Transactions
-        </Text>
+        </div>
+      </div>
+      <div className='flex flex-col gap-2 items-center'>
+        <p className='text-center text-xl font-bold'>Required Transactions</p>
         {actions
           .filter(action => action.chainId)
           .map((action, index) => (
             <RequiredTransaction key={`${action.id}-${index}`} chainId={action.chainId} />
           ))}
-      </Box>
-      <Box className='flex w-full justify-between'>
+      </div>
+      <div className='flex w-full justify-between'>
         <PrimaryButton
           label='Back'
           onClick={() => setCurrentStep(Step.SelectChain)}
@@ -67,7 +57,7 @@ export function InitiateActionsCard({
           className='text-lg w-40 h-10'
           disabled={!selectedChain}
         />
-      </Box>
+      </div>
     </>
   )
 }
@@ -78,14 +68,12 @@ const RequiredTransaction = ({ chainId }: { chainId: number }) => {
   if (!chain) return null
 
   return (
-    <Box className='grid grid-cols-2 items-center justify-items-center gap-2'>
-      <Box className='flex items-center gap-2'>
-        <Text weight='bold' className=''>
-          1 tx
-        </Text>
+    <div className='grid grid-cols-2 items-center justify-items-center gap-2'>
+      <div className='flex items-center gap-2'>
+        <p className='font-bold'>1 tx</p>
         <ChainIcon chain={chain} className='h-[30px] w-[30px]' />
-      </Box>
-      <Text className='justify-self-start'>{chain.name}</Text>
-    </Box>
+      </div>
+      <p className='justify-self-start'>{chain.name}</p>
+    </div>
   )
 }

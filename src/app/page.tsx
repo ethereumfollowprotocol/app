@@ -1,7 +1,5 @@
-import { Flex, Text } from '@radix-ui/themes'
 import type { Metadata } from 'next'
-import Image from 'next/image'
-import * as React from 'react'
+import { Footer } from '#/components/footer'
 
 export const metadata = {
   metadataBase: new URL('https://app.ethfollow.xyz'),
@@ -13,13 +11,13 @@ export const metadata = {
   }
 } satisfies Metadata
 
-export default async function HomePage() {
+const HomePage = () => {
   return (
     <>
       <main className='mx-auto flex h-full min-h-full w-full flex-col items-center overflow-scroll px-4 pt-8 text-center font-sans'></main>
-      {/* <React.Suspense>
-        <Footer />
-      </React.Suspense> */}
+      <Footer />
     </>
   )
 }
+
+export default HomePage

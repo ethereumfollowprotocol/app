@@ -1,18 +1,19 @@
 'use client'
 
-import { useIsEditView } from '#/hooks/use-is-edit-view'
+import type { Address } from 'viem'
 import { hexlify } from '#/lib/utilities'
+import { createContext, useContext, useState, type ReactNode, useCallback } from 'react'
+
 import {
-  listOpAsHexstring,
   type ListOp,
   isTagListOp,
-  extractAddressAndTag,
-  type ListOpTagOpParams,
   listOpAddTag,
-  listOpRemoveTag
+  listOpRemoveTag,
+  listOpAsHexstring,
+  extractAddressAndTag,
+  type ListOpTagOpParams
 } from '#/types/list-op'
-import { createContext, useContext, useState, type ReactNode, useCallback } from 'react'
-import type { Address } from 'viem'
+import { useIsEditView } from '#/hooks/use-is-edit-view'
 
 // Define the type for each cart item
 type CartItem = {

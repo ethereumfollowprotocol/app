@@ -1,20 +1,20 @@
-import { useCart } from '#/contexts/cart-context'
-import type { ChainWithDetails } from '#/lib/wagmi'
-import { Box } from '@radix-ui/themes'
+import { encodePacked } from 'viem'
+import { useChains, useWalletClient } from 'wagmi'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { SelectChainCard } from './select-chain-card'
+
 import { Step } from './types'
+import { SelectChainCard } from './select-chain-card'
 import { InitiateActionsCard } from './initiate-actions-card'
 import { TransactionStatusCard } from './transaction-status-card'
 // import { useCreateEFPList } from '#/hooks/efp-actions/use-create-efp-list'
-import { EFPActionType, type Action, useActions } from '#/contexts/actions-context'
-import { useChains, useWalletClient } from 'wagmi'
-import { efpContracts } from '#/lib/constants/contracts'
-import * as abi from 'src/lib/abi.ts'
-import { generateListStorageLocationSlot } from '#/app/efp/utilities'
-import { encodePacked } from 'viem'
 import { mint } from '#/app/efp/actions'
+import { efpListRecordsAbi } from '#/lib/abi'
+import { useCart } from '#/contexts/cart-context'
+import type { ChainWithDetails } from '#/lib/wagmi'
+import { efpContracts } from '#/lib/constants/contracts'
+import { generateListStorageLocationSlot } from '#/app/efp/utilities'
 import { extractAddressAndTag, isTagListOp } from '#/types/list-op'
+import { EFPActionType, type Action, useActions } from '#/contexts/actions-context'
 
 interface CreateOrUpdateEFPListProps {
   setOpen?: (open: boolean) => void // setOpen prop for this component's parent modal, which is passed to TransactionStatusCard to finish the process
@@ -39,7 +39,7 @@ export function CreateOrUpdateEFPList({ setOpen }: CreateOrUpdateEFPListProps) {
 
   const listOpTx = async () => {
     // const listOpsToPerform = []
-    console.log('listOpTx')
+    // console.log('listOpTx')
 
     const operations = cartItems.map(item => {
       const types = ['uint8', 'uint8', 'uint8', 'uint8', 'address']
@@ -58,7 +58,7 @@ export function CreateOrUpdateEFPList({ setOpen }: CreateOrUpdateEFPListProps) {
 
     const hash = await walletClient?.writeContract({
       address: efpContracts.EFPListRecords,
-      abi: abi.efpListRecordsAbi,
+      abi: efpListRecordsAbi,
       functionName: 'applyListOps',
       args: [nonce, operations]
     })
@@ -87,13 +87,14 @@ export function CreateOrUpdateEFPList({ setOpen }: CreateOrUpdateEFPListProps) {
       type: EFPActionType.CreateEFPList,
       label: 'Create new EFP List',
       chainId: selectedChainId,
+      // @ts-ignore
       execute: mint,
       isPendingConfirmation: false
     }
 
     const actions = hasCreatedEfpList ? [cartItemAction] : [createEFPListAction, cartItemAction]
     addActions(actions)
-  }, [selectedChainId, totalCartItems, addActions])
+  }, [selectedChainId, totalCartItems, addActions, hasCreatedEfpList])
 
   // Handle selecting a chain
   const handleChainClick = useCallback((chainId: number) => {
@@ -114,7 +115,7 @@ export function CreateOrUpdateEFPList({ setOpen }: CreateOrUpdateEFPListProps) {
   }, [executeActionByIndex])
 
   return (
-    <Box className='flex flex-col items-center text-center justify-between h-full w-full'>
+    <div className='flex flex-col items-center text-center justify-between h-full w-full'>
       {currentStep === Step.SelectChain && (
         <SelectChainCard
           chains={chains}
@@ -132,6 +133,6 @@ export function CreateOrUpdateEFPList({ setOpen }: CreateOrUpdateEFPListProps) {
         />
       )}
       {currentStep === Step.TransactionStatus && <TransactionStatusCard setOpen={setOpen} />}
-    </Box>
+    </div>
   )
 }

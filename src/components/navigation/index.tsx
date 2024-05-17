@@ -5,10 +5,9 @@ import { useAccount } from 'wagmi'
 import { usePathname } from 'next/navigation'
 
 import ConnectButton from './connect-button'
-import { Menu } from '#/components/menu.tsx'
-import { Search } from '#/components/search.tsx'
-import { useCart } from '#/contexts/cart-context'
-import CartButton from '#/components/cart-button.tsx'
+import { Search } from '../../components/search.tsx'
+import { useCart } from '../../contexts/cart-context'
+import CartButton from './cart-button.tsx'
 
 import FullLogo from 'public/assets/logo-full.svg'
 
@@ -16,7 +15,7 @@ export function shouldHidePath({
   connected,
   privatePath
 }: { connected: boolean; privatePath?: boolean }) {
-  return !connected && privatePath ? true : false
+  return !connected && privatePath
 }
 
 const navItems = [
@@ -42,11 +41,11 @@ const navItems = [
 
 const Navigation = () => {
   const pathname = usePathname()
-  const account = useAccount()
   const { totalCartItems } = useCart()
+  const { address: userAddress } = useAccount()
 
   return (
-    <header className={clsx(['w-full  font-sans '])}>
+    <header className={clsx(['w-full font-sans'])}>
       <nav className='my-auto flex w-full flex-row justify-between'>
         <div className={clsx(['my-auto flex w-full items-center gap-6 space-x-3 sm:pr-3'])}>
           <Link href='/' className='select-none' aria-label='Ethereum Follow Protocol Logo link'>
@@ -87,7 +86,7 @@ const Navigation = () => {
             })}
           </ul>
           <div className='flex items-center gap-6'>
-            <CartButton cartItemsCount={totalCartItems} />
+            {userAddress && <CartButton cartItemsCount={totalCartItems} />}
             <ConnectButton />
             {/* <Menu /> */}
           </div>

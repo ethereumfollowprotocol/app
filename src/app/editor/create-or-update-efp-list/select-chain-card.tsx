@@ -1,8 +1,6 @@
+import type { ChainWithDetails } from '#/lib/wagmi'
 import { ChainIcon } from '#/components/chain-icon'
 import { PrimaryButton } from '#/components/primary-button'
-import type { ChainWithDetails } from '#/lib/wagmi'
-import { CheckIcon } from '@radix-ui/react-icons'
-import { Box, Heading, Text } from '@radix-ui/themes'
 
 export function SelectChainCard({
   chains,
@@ -17,21 +15,15 @@ export function SelectChainCard({
 }) {
   return (
     <>
-      <Box className='flex flex-col gap-2'>
-        <Heading as='h1' size='6'>
-          Where would you like to store you EFP list?
-        </Heading>
-        <Text as='p' size='2'>
-          You can always change this later
-        </Text>
-      </Box>
+      <div className='flex flex-col gap-2'>
+        <h1 className='text-3xl'>Where would you like to store you EFP list?</h1>
+        <p className='lg'>You can always change this later</p>
+      </div>
 
-      <Box className='flex flex-col gap-6'>
-        <Text size='5' weight='bold'>
-          Select one
-        </Text>
+      <div className='flex flex-col gap-6'>
+        <p className='text-2xl font-bold'>Select one</p>
         <ChainList chains={chains} onClick={handleChainClick} selectedChain={selectedChain} />
-      </Box>
+      </div>
       <PrimaryButton
         label='Next'
         onClick={handleNextStep}
@@ -52,7 +44,7 @@ export function ChainList({
   selectedChain: ChainWithDetails | undefined
 }) {
   return (
-    <Box className='flex flex-col gap-4'>
+    <div className='flex flex-col gap-4'>
       {chains.map(chain => (
         <Chain
           chain={chain}
@@ -61,7 +53,7 @@ export function ChainList({
           key={chain.id}
         />
       ))}
-    </Box>
+    </div>
   )
 }
 
@@ -71,18 +63,16 @@ function Chain({
   isSelected
 }: { chain: ChainWithDetails; onClick: (chainId: number) => void; isSelected: boolean }) {
   return (
-    <Box className='flex items-center gap-2 hover:cursor-pointer' onClick={() => onClick(chain.id)}>
-      <Box>
+    <div className='flex items-center gap-2 hover:cursor-pointer' onClick={() => onClick(chain.id)}>
+      {/* <div>
         {isSelected && <CheckIcon className='left-0 text-lime-500 relative -ml-12 w-10 h-10' />}
-      </Box>
+      </div> */}
       <ChainIcon chain={chain} className={'h-[60px] w-[60px]'} />
-      <Box className='flex flex-col items-start '>
-        <Text size='1'>{chain.custom.chainDetail}</Text>
-        <Text size='2' weight='bold'>
-          {chain.name}
-        </Text>
-        <Text size='1'>{chain.custom.gasFeeDetail}</Text>
-      </Box>
-    </Box>
+      <div className='flex flex-col items-start '>
+        <p>{chain.custom.chainDetail}</p>
+        <p className='text-lg font-bold'>{chain.name}</p>
+        <p>{chain.custom.gasFeeDetail}</p>
+      </div>
+    </div>
   )
 }
