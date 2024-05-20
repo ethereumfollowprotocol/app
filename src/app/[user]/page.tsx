@@ -49,7 +49,7 @@ export default async function UserPage({ params }: Props) {
       <div className='xl:flex-row justify-center gap-y-0 xl:gap-x-2 gap-x-0 flex-col min-h-full lg:max-w-[1400px] max-w-2xl border-kournikova-50'>
         <HydrationBoundary state={dehydrate(queryClient)}>
           <div className='h-full w-fit p-2 mx-auto'>
-            <UserProfileCard addressOrName={ensProfile.address} stats={stats} />
+            <UserProfileCard address={ensProfile.address} stats={stats} />
             <p className='font-semibold mt-2'>Block/Mute Lists</p>
           </div>
 

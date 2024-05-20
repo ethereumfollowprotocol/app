@@ -10,7 +10,7 @@ import { useRef, useState, useTransition } from 'react'
 import { PendingIcon } from './pending.tsx'
 import { usePathname } from 'next/navigation'
 import { useQueryState } from 'next-usequerystate'
-import { checkAddressOrEnsValid } from '#/lib/utilities.ts'
+// import { checkAddressOrEnsValid } from '#/lib/utilities.ts'
 import { ENS_SUBGRAPH, SECOND } from '#/lib/constants/index.ts'
 import MagnifyingGlass from 'public/assets/icons/magnifying-glass.svg'
 import { useIsomorphicLayoutEffect } from '#/hooks/use-isomorphic-layout-effect.ts'
@@ -100,18 +100,18 @@ export function Search({ disabled }: { disabled?: boolean }) {
     })
   }
 
-  function onSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    /**
-     * checking the html element for value to catch an edge case:
-     * - when typing a search term then navigating to another page,
-     *   the search term is gone from the url but is still in the search input
-     */
-    const searchTerm = search
-    if (!searchTerm) return
-    const inputIsValid = checkAddressOrEnsValid(searchTerm)
-    if (!inputIsValid) return
-  }
+  // function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+  //   event.preventDefault()
+  //   /**
+  //    * checking the html element for value to catch an edge case:
+  //    * - when typing a search term then navigating to another page,
+  //    *   the search term is gone from the url but is still in the search input
+  //    */
+  //   const searchTerm = search
+  //   if (!searchTerm) return
+  //   const inputIsValid = checkAddressOrEnsValid(searchTerm)
+  //   if (!inputIsValid) return
+  // }
 
   return (
     <div className='relative max-w-[400px] w-full'>

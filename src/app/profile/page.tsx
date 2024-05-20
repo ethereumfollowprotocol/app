@@ -56,7 +56,7 @@ export default function ProfilePage({ searchParams }: Props) {
       <div className='flex w-full h-full mx-auto xl:flex-row justify-center gap-y-0 xl:gap-x-2 gap-x-0 flex-col min-h-full lg:max-w-[1400px] max-w-2xl border-kournikova-50'>
         <HydrationBoundary state={dehydrate(queryClient)}>
           <div className='h-full min-w-fit p-2 mx-auto'>
-            <UserProfileCard addressOrName={address} stats={stats} />
+            <UserProfileCard address={address} stats={stats} />
             <p className='font-semibold mt-2'>Block/Mute Lists</p>
           </div>
 

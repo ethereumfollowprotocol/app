@@ -46,7 +46,7 @@ export function UnconfirmedChanges() {
 
           {isConnected ? (
             <Modal
-              triggerButton={<PrimaryButton label='Confirm' />}
+              triggerButton={<PrimaryButton onClick={() => setOpenModal(true)} label='Confirm' />}
               open={openModal}
               setOpen={setOpenModal}
             >
