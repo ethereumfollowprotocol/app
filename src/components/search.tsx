@@ -41,7 +41,7 @@ async function searchEnsSubgraph({ search }: { search: string }): Promise<string
   })
   if (!response.ok) return []
   const json = (await response.json()) as {
-    data: { domains: Array<{ name: string; registration: { registrationDate: string } | null }> }
+    data: { domains: { name: string; registration: { registrationDate: string } | null }[] }
   }
   return json.data.domains
     .filter(domain => !!domain.registration)

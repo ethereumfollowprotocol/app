@@ -5,7 +5,7 @@ import { formatAddressOrName } from '#/lib/utilities'
 export interface FollowerResponse {
   address: Address
   ens: ENSProfile
-  tags: Array<string>
+  tags: string[]
   is_muted: boolean
   is_blocked: boolean
   is_following: boolean
@@ -16,7 +16,7 @@ export interface FollowingResponse {
   version: 1
   record_type: 'address' & string
   data: Address & Hex
-  tags: Array<string>
+  tags: string[]
   ens?: ENSProfile
 }
 
@@ -32,8 +32,8 @@ export interface ProfileResponse {
   resolver: string
   primary_list: string
   stats: StatsResponse | undefined
-  followers: Array<FollowerResponse>
-  following: Array<FollowingResponse>
+  followers: FollowerResponse[]
+  following: FollowingResponse[]
   chains: Record<string, string>
   errors: Record<string, unknown>
 }
@@ -46,7 +46,7 @@ type AddressOrName = Address | string
 
 export async function fetchUserFollowers(
   addressOrName?: AddressOrName
-): Promise<{ followers: Array<FollowerResponse> }> {
+): Promise<{ followers: FollowerResponse[] }> {
   if (!addressOrName)
     return {
       followers: []
