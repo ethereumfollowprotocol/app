@@ -1,12 +1,11 @@
-import { Flex } from '@radix-ui/themes'
-import type { Address } from 'viem'
 import { useState } from 'react'
+import type { Address } from 'viem'
+import { Tag } from './tag'
+import useCanAddTag from './use-can-add-tag'
+import { TagsPopover } from './tags-popover'
 import { useCart } from '#/contexts/cart-context'
 import { AddTagDropdown } from './add-tag-dropdown'
-import { Tag } from './tag'
-import { TagsPopover } from './tags-popover'
 import { useIsEditView } from '#/hooks/use-is-edit-view'
-import useCanAddTag from './use-can-add-tag'
 
 interface FollowListItemTagsProps {
   address: Address
@@ -32,7 +31,7 @@ export function FollowListItemTags({
   const displayedTags = showAllTags ? allTags : allTags.slice(0, DEFAULT_NUM_TAGS_TO_SHOW)
 
   return (
-    <Flex className={`flex w-full h-full gap-2 justify-start ${className}`}>
+    <div className={`flex w-full h-full gap-2 justify-start ${className}`}>
       {canAddTag && <AddTagDropdown address={address} />}
       {displayedTags.map(tag => (
         <Tag address={address} key={address + tag} tag={tag} />
@@ -45,6 +44,6 @@ export function FollowListItemTags({
           tags={allTags}
         />
       )}
-    </Flex>
+    </div>
   )
 }

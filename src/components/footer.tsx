@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import { Text, Box, Flex, Section } from '@radix-ui/themes'
 
 const footerLinks = [
   {
@@ -33,23 +32,16 @@ const footerLinks = [
 export function Footer() {
   return (
     <footer className='bottom-0 mx-auto mt-4 w-full font-sans'>
-      <Flex
-        direction={'row'}
-        align={'center'}
-        justify={'center'}
-        width={'100%'}
-        height={'100%'}
-        className='space-x-28 bg-[#FFE067]'
-      >
-        <Section className='flex space-x-5 align-middle'>
-          <Box className='my-auto'>
-            <Text className='table-caption max-w-md text-4xl font-extrabold text-pink-400'>
+      <div className='flex flex-row items-center justify-center h-full w-full space-x-28 bg-[#FFE067]'>
+        <section className='flex space-x-5 align-middle'>
+          <div className='my-auto'>
+            <div className='table-caption max-w-md text-4xl font-extrabold text-pink-400'>
               Ethereum Follow Protocol
-            </Text>
-          </Box>
+            </div>
+          </div>
           <Image src='/assets/logo.png' width={160} height={160} alt='Ethereum Follow Protocol' />
-        </Section>
-        <Section className='my-auto flex align-middle' p='0'>
+        </section>
+        <section className='my-auto flex align-middle'>
           <ul className='my-auto flex flex-col space-y-1 text-center'>
             {footerLinks.map((route, index) => (
               <li className='inline font-extrabold' key={`route-${route.href}`}>
@@ -59,8 +51,8 @@ export function Footer() {
               </li>
             ))}
           </ul>
-        </Section>
-      </Flex>
+        </section>
+      </div>
     </footer>
   )
 }

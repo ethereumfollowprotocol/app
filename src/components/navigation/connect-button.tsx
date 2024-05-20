@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import type { Address, GetEnsAvatarReturnType } from 'viem'
@@ -8,8 +8,8 @@ import { useAccountModal, useConnectModal } from '@rainbow-me/rainbowkit'
 
 import { truncateAddress } from '#/lib/utilities'
 import { resolveENSProfile } from '#/utils/resolveAddress'
-import ArrowDown from 'public/assets/common/arrow-down.svg'
-import DefaultAvatar from 'public/assets/common/default-avatar.svg'
+import ArrowDown from 'public/assets/icons/arrow-down.svg'
+import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 
 const nullEnsProfile = {
   name: null,

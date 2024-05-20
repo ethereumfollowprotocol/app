@@ -6,7 +6,6 @@ import {
   fetchUserStats
 } from '#/api/requests'
 import { getEnsProfile } from '#/app/actions.ts'
-import { AdvancedList } from '#/components/advanced-list'
 import { UserProfileCard } from '#/components/user-profile-card'
 import { UserProfilePageTable } from '#/components/user-profile-page-table'
 import type { ENSProfile } from '#/lib/types'
@@ -52,7 +51,6 @@ export default async function UserPage({ params }: Props) {
           <div className='h-full w-fit p-2 mx-auto'>
             <UserProfileCard addressOrName={ensProfile.address} stats={stats} />
             <p className='font-semibold mt-2'>Block/Mute Lists</p>
-            <AdvancedList />
           </div>
 
           <UserProfilePageTable

@@ -1,10 +1,9 @@
 import clsx from 'clsx'
 import Image from 'next/image'
-import type { Address } from 'viem'
-import { Button } from '@radix-ui/themes'
-import { type FollowButtonState, useFollowButton } from './use-follow-button'
-import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useAccount } from 'wagmi'
+import type { Address } from 'viem'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
+import { type FollowButtonState, useFollowButton } from './use-follow-button'
 
 const theme = {
   Follow: {
@@ -65,7 +64,7 @@ const theme = {
   }
 } satisfies Record<FollowButtonState, { bg: string; text: string }>
 
-interface FollowButtonProps extends React.ComponentProps<typeof Button> {
+interface FollowButtonProps {
   address: Address
   className?: string
 }
@@ -78,7 +77,7 @@ export function FollowButton({ address, className = '', ...props }: FollowButton
   })
 
   return (
-    <Button
+    <button
       className={clsx([
         theme[buttonState].bg,
         theme[buttonState].text,
@@ -98,6 +97,6 @@ export function FollowButton({ address, className = '', ...props }: FollowButton
     >
       <Image alt='mainnet logo' src='/assets/mainnet-black.svg' width={16} height={16} />
       {buttonText}
-    </Button>
+    </button>
   )
 }

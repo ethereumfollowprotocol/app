@@ -1,8 +1,8 @@
-import { PlusIcon } from '@radix-ui/react-icons'
-import { Box, Text } from '@radix-ui/themes'
-import * as Select from '@radix-ui/react-select'
+import Image from 'next/image'
 import type { Address } from 'viem'
 import { useCallback, useState } from 'react'
+
+import Plus from 'public/assets/icons/plus.svg'
 import { useCart } from '#/contexts/cart-context'
 import useSuggestedTags from '#/hooks/use-suggested-tags'
 
@@ -13,11 +13,13 @@ export function AddTagDropdown({
   address: Address
   tags?: string[] // Optional initial tags to use in the dropdown
 }) {
+  const [open, setOpen] = useState(false)
+  const [customTagValue, setCustomTagValue] = useState('')
+  const [isEditingCustomTag, setIsEditingCustomTag] = useState(false)
+
   const { addAddTagToCart } = useCart()
   const suggestedTags = useSuggestedTags(address)
   const tags = [...initialTags, ...suggestedTags]
-  const [isEditingCustomTag, setIsEditingCustomTag] = useState(false)
-  const [customTagValue, setCustomTagValue] = useState('')
 
   const handleAddTag = useCallback(
     (tag: string) => {
@@ -46,13 +48,24 @@ export function AddTagDropdown({
   }
 
   return (
-    <Select.Root onValueChange={handleAddTag} onOpenChange={() => setIsEditingCustomTag(false)}>
-      <Select.Trigger>
-        <PlusIcon className='flex items-center w-5 h-5 text-black bg-grey rounded-full font-bold p-1' />
-      </Select.Trigger>
-      <Select.Content
-        position='popper'
+    <div>
+      <div
+        onClick={() => {
+          setOpen(true)
+          setIsEditingCustomTag(false)
+        }}
+      >
+        <Image
+          src={Plus}
+          alt='Add tag'
+          className='flex items-center w-5 h-5 text-black bg-grey rounded-full font-bold p-1'
+        />
+      </div>
+      <div
         className='bg-white rounded-xl p-2 flex gap-2 mt-2 flex-wrap text-[#464646] font-semibold'
+        style={{
+          display: open ? 'flex' : 'none'
+        }}
       >
         {isEditingCustomTag ? (
           <input
@@ -66,24 +79,23 @@ export function AddTagDropdown({
             placeholder='Enter custom tag'
           />
         ) : (
-          <Box
+          <div
             onClick={handleCustomTagClick}
             className='bg-grey rounded-xl flex gap-1 items-center p-2 cursor-pointer hover:ring-gray-500 hover:ring-[1px]'
           >
-            <PlusIcon fontWeight='7' />
-            <Text>Custom Tag</Text>
-          </Box>
+            <Image src={Plus} alt='Add tag' />
+            <p>Custom Tag</p>
+          </div>
         )}
         {tags.map(tag => (
-          <Select.Item
+          <div
             key={address + tag}
-            value={tag}
             className='bg-grey rounded-full p-1 cursor-pointer hover:ring-gray-500 hover:ring-[1px]'
           >
             {tag}
-          </Select.Item>
+          </div>
         ))}
-      </Select.Content>
-    </Select.Root>
+      </div>
+    </div>
   )
 }

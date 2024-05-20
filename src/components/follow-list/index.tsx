@@ -1,6 +1,5 @@
-import { Box } from '@radix-ui/themes'
-import { FollowListItem } from './follow-list-item'
 import type { Address } from 'viem'
+import { FollowListItem } from './follow-list-item'
 
 interface FollowListProfile {
   address: Address
@@ -23,7 +22,7 @@ export function FollowList({
   showTags
 }: FollowTableProps) {
   return (
-    <Box className={`flex flex-col min-w-max ${listClassName}`}>
+    <div className={`flex flex-col min-w-max ${listClassName}`}>
       {profiles.map(({ address, tags }) => {
         return (
           <FollowListItem
@@ -36,6 +35,6 @@ export function FollowList({
           />
         )
       })}
-    </Box>
+    </div>
   )
 }

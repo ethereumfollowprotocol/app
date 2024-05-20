@@ -12,18 +12,13 @@
   font-variant-numeric: tabular-nums;
 }
 
-*:focus {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-}
 
-
-html,
-body, #root {
-  background-image: url('/public/assets/art/waves-background.svg');
+body {
+  background: url('../../public/assets/art/waves-background.svg');
   background-repeat: no-repeat;
   background-size: auto;
-  background: black;
+  height: 100vh;
+  width: 100%;
 }
 
 /* Disable zoom in iOS Safari when double tapping an element */
@@ -36,8 +31,7 @@ button:hover {
 }
 
 body::-webkit-scrollbar {
-  width: 0.15em;
-  background-color: transparent;
+  display: none;
 }
 
 body::-webkit-scrollbar-track {

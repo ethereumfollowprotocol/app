@@ -1,7 +1,7 @@
-import { Badge, Flex, Text } from '@radix-ui/themes'
-import { Avatar } from '#/components/avatar'
 import Link from 'next/link'
 import type { Address } from 'viem'
+
+import { Avatar } from '#/components/avatar'
 import { truncateAddress } from '#/lib/utilities'
 import { useFollowState } from '#/hooks/use-follow-state'
 
@@ -16,9 +16,9 @@ interface FollowListItemNameProps {
 export function Name({ name, address }: { name?: string; address: Address }) {
   return (
     <Link href={`/${name || address}`}>
-      <Text as='p' className='font-bold xl:text-lg lg:text-md text-sm hover:text-pink-400'>
+      <p className='font-bold xl:text-lg lg:text-md text-sm hover:text-pink-400'>
         {name || truncateAddress(address)}
-      </Text>
+      </p>
     </Link>
   )
 }
@@ -32,21 +32,17 @@ export function FollowListItemName({
 }: FollowListItemNameProps) {
   const isFollower = useFollowState(address) === 'follows'
   return (
-    <Flex className={`gap-2 ${className}`}>
+    <div className={`flex gap-2 ${className}`}>
       <Avatar name={name || address} avatarUrl={avatarUrl} />
-      <Flex direction='column' justify='center' align='start' className='tabular-nums relative'>
+      <div className='flex flex-col justify-center tabular-nums relative'>
         <Name name={name} address={address} />
         {/* Badge will appear below the name, but the name stays centered */}
         {showFollowsYouBadges && isFollower && (
-          <Badge
-            size='1'
-            radius='full'
-            className='font-bold text-[8px] self-start mt-1 bg-grey text-darkGrey absolute -bottom-2 left-0'
-          >
+          <div className='font-bold text-[8px] self-start mt-1 bg-grey text-darkGrey absolute -bottom-2 left-0'>
             Follows you
-          </Badge>
+          </div>
         )}
-      </Flex>
-    </Flex>
+      </div>
+    </div>
   )
 }

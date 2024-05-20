@@ -1,14 +1,11 @@
 import type { ChainWithDetails } from '#/lib/wagmi'
-import { Avatar } from '@radix-ui/themes'
-import clsx from 'clsx'
+import { Avatar } from './avatar'
 
 export function ChainIcon({ chain, className }: { chain: ChainWithDetails; className?: string }) {
   return (
     <Avatar
-      src={chain.iconUrl}
-      fallback={'/assets/chains/ethereum.svg'}
-      radius='full'
-      className={clsx(chain.iconBackground, className)}
+      name={chain.name || 'Ethereum'}
+      avatarUrl={chain.iconUrl || '/assets/chains/ethereum.svg'}
     />
   )
 }

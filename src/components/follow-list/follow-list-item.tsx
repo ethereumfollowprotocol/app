@@ -1,9 +1,8 @@
-import { Box } from '@radix-ui/themes'
+import type { Address } from 'viem'
+import { useEnsProfile } from '#/hooks/use-ens-profile'
 import { FollowButton } from '#/components/follow-button'
 import { FollowListItemName } from './follow-list-item-name'
 import { FollowListItemTags } from './follow-list-item-tags'
-import { useEnsProfile } from '#/hooks/use-ens-profile'
-import type { Address } from 'viem'
 
 export interface FollowListItemProps {
   className?: string
@@ -21,11 +20,12 @@ export function FollowListItem({
   tags
 }: FollowListItemProps) {
   const { data: ensProfile } = useEnsProfile(profileAddress)
+
   const profileName = ensProfile?.name
   const profileAvatar = ensProfile?.avatar
 
   return (
-    <Box className={`flex items-center justify-between ${className}`}>
+    <div className={`flex items-center justify-between ${className}`}>
       {/* Left section: Avatar and Name */}
       <FollowListItemName
         address={profileAddress}
@@ -42,6 +42,6 @@ export function FollowListItem({
 
       {/* Right section: Follow Button with consistent width */}
       <FollowButton address={profileAddress} className='rounded-xl' />
-    </Box>
+    </div>
   )
 }

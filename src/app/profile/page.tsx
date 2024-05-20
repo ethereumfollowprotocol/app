@@ -9,7 +9,6 @@ import {
   fetchUserFollowing,
   type StatsResponse
 } from '#/api/requests'
-import { AdvancedList } from '#/components/advanced-list.tsx'
 import { UserProfileCard } from '#/components/user-profile-card'
 import { UserProfilePageTable } from '#/components/user-profile-page-table'
 
@@ -59,7 +58,6 @@ export default function ProfilePage({ searchParams }: Props) {
           <div className='h-full min-w-fit p-2 mx-auto'>
             <UserProfileCard addressOrName={address} stats={stats} />
             <p className='font-semibold mt-2'>Block/Mute Lists</p>
-            <AdvancedList />
           </div>
 
           <UserProfilePageTable

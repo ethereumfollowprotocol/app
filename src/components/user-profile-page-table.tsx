@@ -1,13 +1,13 @@
 'use client'
 
+import { useState } from 'react'
 import { useProfile } from '#/api/actions'
-import type { FollowerResponse, FollowingResponse } from '#/api/requests'
+import { FollowList } from '#/components/follow-list'
 import { Searchbar } from '#/components/searchbar.tsx'
 import { SelectWithFilter } from '#/components/select-with-filter.tsx'
-import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons'
-import { Box, Flex, IconButton, Text } from '@radix-ui/themes'
-import { FollowList } from '#/components/follow-list'
-import { useState } from 'react'
+import type { FollowerResponse, FollowingResponse } from '#/api/requests'
+import ArrowUp from 'public/assets/icons/arrow-up.svg'
+import ArrowDown from 'public/assets/icons/arrow-down.svg'
 
 /**
  * TODO: paginate
@@ -48,7 +48,7 @@ export function UserProfilePageTable({
     })) || []
 
   return (
-    <Box>
+    <div>
       <PageHeader
         title={title}
         searchQueryKey={searchQueryKey}
@@ -59,29 +59,23 @@ export function UserProfilePageTable({
         filterOptions={filterOptions}
       />
       {chosenResponses?.length === 0 && (
-        <Box className='bg-white/70 rounded-xl' py='4'>
-          <Text align='center' as='p' my='4' size='6' className='font-semibold'>
-            {title === 'followers' && (
-              <Text as='span' className='text-sm'>
-                No followers
-              </Text>
-            )}
+        <div className='bg-white/70 rounded-xl py-4'>
+          <p className='text-3xl my-4 text-center font-semibold'>
+            {title === 'followers' && <span className='text-sm'>No followers</span>}
             {title === 'following' && (
-              <Flex direction='column' align='center'>
-                <Text as='span' className='text-m text-[#FF79C9] italic mb-1'>
-                  You don’t follow anyone yet.
-                </Text>
-                <Text as='span' className='text-m text-[#FF79C9] italic mb-4'>
-                  Sad! 😢
-                </Text>
-                <Text as='span' className='text-sm text-[#FF79C9] italic w-3/4 max-w-96'>
+              <div className='flex flex-col items-center'>
+                <span className='text-m text-[#FF79C9] italic mb-1'>
+                  You don&apos;t follow anyone yet.
+                </span>
+                <span className='text-m text-[#FF79C9] italic mb-4'>Sad! 😢</span>
+                <span className='text-sm text-[#FF79C9] italic w-3/4 max-w-96'>
                   To get started, just browse and start following. Once you confirm them onchain,
                   they’ll show up here.
-                </Text>
-              </Flex>
+                </span>
+              </div>
             )}
-          </Text>
-        </Box>
+          </p>
+        </div>
       )}
       <FollowList
         listClassName='gap-2 p-4 rounded-xl bg-white/50'
@@ -90,7 +84,7 @@ export function UserProfilePageTable({
         showFollowsYouBadges={showFollowsYouBadges}
         showTags={showTags}
       />
-    </Box>
+    </div>
   )
 }
 
@@ -114,32 +108,21 @@ function PageHeader({
   filterOptions
 }: PageHeaderProps) {
   return (
-    <Flex mb='2' justify='between' className='w-full'>
-      <Flex gap='4' align='center'>
-        <Text weight='bold' className='uppercase' as='p'>
-          {title}
-        </Text>
-        <Flex gap='2'>
+    <div className='flex justify-between mb-2 w-full'>
+      <div className='flex gap-4 items-center'>
+        <p className='uppercase font-bold'>{title}</p>
+        <div className='flex gap-2'>
           <Searchbar queryKey={searchQueryKey} placeholder='Search...' />
-          <IconButton
-            onClick={onToggleTags}
-            className='text-black font-semibold text-sm flex items-center gap-1'
-            radius='large'
-            variant='ghost'
-            my='auto'
-            size='1'
-          >
-            <Text>Tags</Text>
-            {showTags ? <ChevronUpIcon /> : <ChevronDownIcon />}
-          </IconButton>
-        </Flex>
-      </Flex>
+          <p>Tags</p>
+          {showTags ? <ArrowUp /> : <ArrowDown />}
+        </div>
+      </div>
       <SelectWithFilter
         dropdownOnly={true}
         defaultValue={selectQuery}
         filterQueryKey={selectQueryKey}
         items={filterOptions}
       />
-    </Flex>
+    </div>
   )
 }

@@ -3,7 +3,7 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import Image from 'next/image'
-import Pencil from 'public/assets/common/pencil.png'
+import Pencil from 'public/assets/icons/pencil.png'
 
 const CartButton = ({ cartItemsCount }: { cartItemsCount: number }) => {
   return (

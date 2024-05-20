@@ -1,9 +1,11 @@
 'use client'
 
-import * as React from 'react'
-import { SECOND } from '#/lib/constants/index.ts'
+import Image from 'next/image'
+import { useTransition } from 'react'
 import { useQueryState } from 'next-usequerystate'
-import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
+
+import { SECOND } from '#/lib/constants/index.ts'
+import MagnifyingGlass from 'public/assets/icons/magnifying-glass.svg'
 
 export function Searchbar({
   disabled,
@@ -14,7 +16,7 @@ export function Searchbar({
   queryKey: string
   placeholder: string
 }) {
-  const [isPending, startTransition] = React.useTransition()
+  const [isPending, startTransition] = useTransition()
   const [query, setQuery] = useQueryState(queryKey, {
     throttleMs: SECOND / 2,
     shallow: false,
@@ -40,7 +42,12 @@ export function Searchbar({
           className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3'
           aria-hidden='true'
         >
-          <MagnifyingGlassIcon className='mr-3 h-4 w-4 text-gray-400' aria-hidden='true' />
+          <Image
+            src={MagnifyingGlass}
+            alt='Search'
+            className='mr-3 h-4 w-4 text-gray-400'
+            aria-hidden='true'
+          />
         </div>
         <input
           type='text'

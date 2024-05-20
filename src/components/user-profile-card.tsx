@@ -1,12 +1,11 @@
 'use client'
 
-import { Avatar, Badge, Box, Flex, Text } from '@radix-ui/themes'
-import { useQuery } from '@tanstack/react-query'
-import clsx from 'clsx'
 import { type Address, isAddress } from 'viem'
+import { useQuery } from '@tanstack/react-query'
 import { useConnectedProfile } from '#/api/actions'
 import { type StatsResponse, fetchUserProfile } from '#/api/requests'
 import { FollowButton } from '#/components/follow-button'
+import { Avatar } from './avatar'
 
 interface Props {
   addressOrName: string
@@ -32,62 +31,40 @@ export function UserProfileCard({ addressOrName, stats }: Props) {
   if (!addressOrName) return null
 
   return (
-    <Flex
-      align='start'
-      width='100%'
-      height='100%'
-      justify='center'
-      mx='auto'
-      className={clsx(['flex-col', 'bg-white/50 border-0 xl:w-60 lg:w-52 w-64 rounded-xl p-3'])}
-    >
-      <Badge>#{connectedProfile?.primaryList}</Badge>
-      <Flex direction='column' justify='center' align='center' mx='auto' mt='3'>
-        <Avatar
-          src={avatar}
-          radius='full'
-          size='7'
-          fallback={<Avatar src='/assets/gradient-circle.svg' radius='full' size='7' fallback='' />}
-        />
-        <Text size='5' className='font-bold' my='2'>
-          {name}
-        </Text>
+    <div className='flex w-full h-full mx-auto justify-center flex-col bg-white/50 border-0 xl:w-60 lg:w-52 rounded-xl p-3'>
+      <div>#{connectedProfile?.primaryList}</div>
+      <div className='flex flex-col justify-center items-center mt-3 mx-auto'>
+        <Avatar avatarUrl={avatar} name={name || addressOrName} />
+        <div className='text-3xl font-bold my-2'>{name}</div>
         {address !== undefined && connectedProfile?.isFollowedBy(address) && (
-          <Badge size='1' radius='full' className='8font-bold text-[8px] text-black mt-[-6] mb-2'>
+          <div className='rounded-full font-bold text-[8px] text-black mt-[-6] mb-2'>
             Follows you
-          </Badge>
+          </div>
         )}
         <div className='mt-2 mb-8'>
           <FollowButton address={address} />
         </div>
-      </Flex>
-      <Flex className='text-center' justify='center' mx='auto' gap='8'>
-        <Box>
-          <Text size='5' className='font-bold' as='div'>
+      </div>
+      <div className='flex justify-center mx-auto gap-8 text-center'>
+        <div>
+          <div className='text-2xl font-bold'>
             {stats === undefined ? '?' : stats.following_count}
-          </Text>
-          <Text size='2' className='font-bold text-gray-500' as='div'>
-            Following
-          </Text>
-        </Box>
-        <Box>
-          <Text size='5' className='font-bold' as='div'>
+          </div>
+          <div className='text-lg font-bold text-gray-500'>Following</div>
+        </div>
+        <div>
+          <div className='text-2xl font-bold'>
             {stats === undefined ? '?' : stats.followers_count}
-          </Text>
-          <Text size='2' className='font-bold text-gray-500' as='div'>
-            Followers
-          </Text>
-        </Box>
-      </Flex>
-      <Flex justify='center' mx='auto' mt='5' mb='4' className='text-center'>
-        <Box>
-          <Text size='5' className='font-bold' as='div'>
-            #1
-          </Text>
-          <Text size='2' className='font-bold text-gray-500' as='div'>
-            Leaderboard
-          </Text>
-        </Box>
-      </Flex>
-    </Flex>
+          </div>
+          <div className='text-lg text-gray-500 font-bold'>Followers</div>
+        </div>
+      </div>
+      <div className='justify-center mx-auto mt-5 mb-4 text-center'>
+        <div>
+          <div className='text-2xl font-bold'>#1</div>
+          <div className='text-lg font-bold text-gray-500'>Leaderboard</div>
+        </div>
+      </div>
+    </div>
   )
 }

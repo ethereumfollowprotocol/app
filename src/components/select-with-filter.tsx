@@ -1,12 +1,11 @@
 'use client'
 
 import clsx from 'clsx'
-import * as React from 'react'
 import { SECOND } from '#/lib/constants/index.ts'
 import { useSearchParams } from 'next/navigation'
 import { useQueryState } from 'next-usequerystate'
-import { Box, Button, Select } from '@radix-ui/themes'
 import { useEffectOnce } from '#/hooks/use-effect-once.ts'
+import { useTransition } from 'react'
 
 export function SelectWithFilter({
   disabled,
@@ -19,11 +18,11 @@ export function SelectWithFilter({
   dropdownOnly?: boolean
   disabled?: boolean
   filterQueryKey: string
-  items: Array<string>
+  items: string[]
   defaultValue?: string | null
   placeholder?: string
 }) {
-  const [, startTransition] = React.useTransition()
+  const [, startTransition] = useTransition()
   const [filter, setFilter] = useQueryState(filterQueryKey, {
     throttleMs: SECOND / 2,
     // @ts-ignore TODO: why does it not like null?
@@ -53,9 +52,9 @@ export function SelectWithFilter({
   }
 
   return (
-    <Box className='space-x-3 lg:ml-0 mr-auto' px='0' my='auto'>
+    <div className='space-x-3 lg:ml-0 my-auto'>
       <div className={clsx(['block capitalize', dropdownOnly ? 'block' : 'block lg:hidden mr-2'])}>
-        <Select.Root value={filter?.toLowerCase()} onValueChange={handleChange}>
+        {/* <Select.Root value={filter?.toLowerCase()} onValueChange={handleChange}>
           <Select.Trigger
             variant='soft'
             className='rounded-lg bg-white/50 p-4 font-semibold !border-none text-sm ml-2 w-40'
@@ -74,18 +73,16 @@ export function SelectWithFilter({
               ))}
             </Select.Group>
           </Select.Content>
-        </Select.Root>
+        </Select.Root> */}
       </div>
 
       {dropdownOnly ? null : (
         <div className='hidden lg:block space-x-3'>
           {items.map(item => (
-            <Button
+            <button
               key={item.toLowerCase()}
-              size='2'
-              radius='full'
               className={clsx([
-                'text-sm px-4 font-semibold text-black capitalize',
+                'text-sm px-4 font-semibold text-black rounded-full capitalize',
                 filter === item.toLowerCase() ? 'bg-white' : 'bg-gray-300/80 text-gray-500'
               ])}
               disabled={disabled}
@@ -93,10 +90,10 @@ export function SelectWithFilter({
               onClick={handleChangeEvent}
             >
               {item}
-            </Button>
+            </button>
           ))}
         </div>
       )}
-    </Box>
+    </div>
   )
 }
