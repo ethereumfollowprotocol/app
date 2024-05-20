@@ -19,17 +19,17 @@ const {
 } = packageJson
 
 main().catch(error => {
-  console.error(error)
+  // console.error(error)
   process.exit(1)
 })
 
 async function main() {
   const updated = await bumpDependencies()
-  if (updated) console.log('Dependencies updated')
-  else console.log('Dependencies are up to date')
+  // if (updated) console.log('Dependencies updated')
+  // else console.log('Dependencies are up to date')
 
-  const { stdout, success } = bun.spawnSync(['bun', 'install', '--no-cache', '--force'])
-  console.log(`success: ${success}`, stdout.toString())
+  // const { stdout, success } = bun.spawnSync(['bun', 'install', '--no-cache', '--force'])
+  // console.log(`success: ${success}`, stdout.toString())
 }
 
 async function bumpDependencies() {

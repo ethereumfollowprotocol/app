@@ -62,7 +62,7 @@ export async function fetchUserFollowers(
     }
   )
   const data = (await response.json()) as {
-    followers: Array<FollowerResponse>
+    followers: FollowerResponse[]
   }
   // console.log('fetchFollowers', data)
   return data
@@ -70,7 +70,7 @@ export async function fetchUserFollowers(
 
 export async function fetchUserFollowing(
   addressOrName?: AddressOrName
-): Promise<{ following: Array<FollowingResponse> }> {
+): Promise<{ following: FollowingResponse[] }> {
   if (!addressOrName)
     return {
       following: []
@@ -87,7 +87,7 @@ export async function fetchUserFollowing(
   )
 
   const data = (await response.json()) as {
-    following: Array<Omit<FollowingResponse, 'address'>>
+    following: Omit<FollowingResponse, 'address'>[]
   }
   // add address field
   const modifiedData = data.following.map(following => ({

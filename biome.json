@@ -57,6 +57,7 @@
         "all": true,
         "noNamespace": "off",
         "noDefaultExport": "off",
+        "noNamespaceImport": "off",
         "useFragmentSyntax": "off",
         "useBlockStatements": "off",
         "useNamingConvention": "off",

@@ -12,11 +12,11 @@ export async function fetchLeaderboard({
   filter: LeaderboardFilter
   include?: NoRepetition<'ens' | 'mutuals' | 'blocked' | 'muted'>
   limit?: number
-}): Promise<Array<LeaderboardEntry>> {
+}): Promise<LeaderboardEntry[]> {
   try {
     // if (filter !== "followers") return [];
-    const params = include.map(key => `include=${key}`).join('&')
-    console.log(`${process.env.EFP_API_URL}/leaderboard/${filter}?limit=${limit}&${params}`)
+    // const params = include.map(key => `include=${key}`).join('&')
+    // console.log(`${process.env.EFP_API_URL}/leaderboard/${filter}?limit=${limit}&${params}`)
     const response = await fetch(
       `${process.env.EFP_API_URL}/leaderboard/${filter}?limit=${limit}&include=ens`
     )
@@ -28,10 +28,10 @@ export async function fetchLeaderboard({
 
     const data = await response.json()
 
-    return data as Array<LeaderboardEntry>
+    return data as LeaderboardEntry[]
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : error
-    console.error(errorMessage)
+    // console.error(errorMessage)
     raise(errorMessage)
   }
 }

@@ -95,7 +95,6 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
   }, [currentActionIndex, actions.length])
 
   // Executes the action based on the index to be able to handle async execution with synchronous state updates
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Don't need actions[index] as a dep
   const executeActionByIndex = useCallback(
     async (index: number) => {
       // Validate the index

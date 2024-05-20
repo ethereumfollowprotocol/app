@@ -2,11 +2,11 @@ import Image from 'next/image'
 import type { ReactNode } from 'react'
 
 interface ModalProps {
-  children: ReactNode
   open?: boolean
-  setOpen?: (open: boolean) => void
+  children: ReactNode
   triggerButton: ReactNode
   triggerButtonClassName?: string
+  setOpen?: (open: boolean) => void
 }
 
 export function Modal({ children, triggerButton, open, setOpen }: ModalProps) {

@@ -31,7 +31,11 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang='en' className={clsx([inteFont.variable, ibmPlexMonoFont.variable, 'light'])}>
       <HeadTag />
-      <body className='w-full min-w-full items-center font-serif'>
+      <body
+        style={{
+          backgroundImage: `url(assets/art/waves-background.svg)`
+        }}
+      >
         <Toaster />
         <Providers initialState={initialState}>{children}</Providers>
         {/* <VercelToolbar /> */}

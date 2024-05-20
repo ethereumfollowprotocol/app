@@ -3,22 +3,23 @@
 @tailwind utilities;
 
 * {
-  scrollbar-width: none;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
-  text-rendering: optimizeLegibility;
-  -webkit-tap-highlight-color: transparent;
-  scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
   font-feature-settings: "tnum";
   font-variant-numeric: tabular-nums;
 }
 
+ html, body {
+  width: 100vw;
+  color: #333333;
+  min-height: 100vh;
+}
 
 body {
-  background: url('../../public/assets/art/waves-background.svg');
   background-repeat: no-repeat;
-  background-size: auto;
-  height: 100vh;
-  width: 100%;
+  background-position: -27.5vw -32.75vw;
+  background-size: 200vw;
 }
 
 /* Disable zoom in iOS Safari when double tapping an element */
@@ -49,22 +50,10 @@ body::-webkit-scrollbar-thumb {
 .glass-card {
     background: linear-gradient(
         to right bottom,
-        rgba(255, 255, 255, 0.2),
-        rgba(255, 255, 255, 0.1)
+        rgba(255, 255, 255, 0.55),
+        rgba(255, 255, 255, 0.35)
     );
-    backdrop-filter: blur(0.2rem);
-}
-
-img,
-video,
-iframe {
-  max-inline-size: 100%;
-  block-size: auto;
-  object-fit: contain;
-}
-
-[data-font="ibm-plex-sans"] {
-  font-family: "IBM Plex Sans", sans-serif;
+    backdrop-filter: blur(0.9rem);
 }
 
 :focus:not(:focus-visible) {
@@ -90,16 +79,6 @@ input:-webkit-autofill:active {
   box-shadow: 0 0 0 999px var(--color-gray-800) inset !important;
   background-clip: content-box !important;
 } */
-
-input:-webkit-autofill::first-line {
-  font-size: 1.125rem;
-  font-weight: 500;
-  font-family: IBM Plex Sans, sans-serif;
-}
-
-[hidden] {
-  pointer-events: none;
-}
 
 @media (prefers-reduced-motion: no-preference) {
   :focus {

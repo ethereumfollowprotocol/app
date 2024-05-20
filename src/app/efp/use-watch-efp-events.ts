@@ -15,12 +15,13 @@ export function useWatchEfpEvents({ accountMetadata, listRegistry, listRecords, 
     abi: abi.efpListRegistryAbi,
     syncConnectedChain: true,
     onLogs: logs => {
-      console.log('[EFPListRegistry] - LOGS')
-      console.log(logs)
+      // console.log('[EFPListRegistry] - LOGS')
+      // console.log(logs)
     },
     onError: error => {
-      console.log('[EFPListRegistry] - ERROR')
-      console.error(error)
+      // console.log('[EFPListRegistry] - ERROR')
+      // console.error(error)
+      throw new Error(error.message)
     }
   })
   useWatchContractEvent({
@@ -29,12 +30,13 @@ export function useWatchEfpEvents({ accountMetadata, listRegistry, listRecords, 
     abi: abi.efpListRecordsAbi,
     syncConnectedChain: true,
     onLogs: logs => {
-      console.log('[EFPListRecords] - LOGS')
-      console.log(logs)
+      // console.log('[EFPListRecords] - LOGS')
+      // console.log(logs)
     },
     onError: error => {
-      console.log('[EFPListRecords] - ERROR')
-      console.error(error)
+      // console.log('[EFPListRecords] - ERROR')
+      // console.error(error)
+      throw new Error(error.message)
     }
   })
   useWatchContractEvent({
@@ -43,12 +45,13 @@ export function useWatchEfpEvents({ accountMetadata, listRegistry, listRecords, 
     abi: abi.efpAccountMetadataAbi,
     syncConnectedChain: true,
     onLogs: logs => {
-      console.log('[EFPAccountMetadata] - LOGS')
-      console.log(logs)
+      // console.log('[EFPAccountMetadata] - LOGS')
+      // console.log(logs)
     },
     onError: error => {
-      console.log('[EFPAccountMetadata] - ERROR')
-      console.error(error)
+      // console.log('[EFPAccountMetadata] - ERROR')
+      // console.error(error)
+      throw new Error(error.message)
     }
   })
 }

@@ -45,7 +45,7 @@ const Navigation = () => {
   const { address: userAddress } = useAccount()
 
   return (
-    <header className={clsx(['w-full font-sans'])}>
+    <header className={clsx(['w-full font-sans py-6 px-8'])}>
       <nav className='my-auto flex w-full flex-row justify-between'>
         <div className={clsx(['my-auto flex w-full items-center gap-6 space-x-3 sm:pr-3'])}>
           <Link href='/' className='select-none' aria-label='Ethereum Follow Protocol Logo link'>
@@ -57,7 +57,7 @@ const Navigation = () => {
           </Link>
           <Search />
         </div>
-        <div className='flex gap-10 items-center'>
+        <div className='flex gap-12 items-center'>
           <ul className='flex gap-9 items-center'>
             {navItems.map((item, index) => {
               // Check if the environment variable is set
@@ -75,7 +75,7 @@ const Navigation = () => {
                     prefetch={true}
                     href={item.href}
                     className={clsx([
-                      'capitalize transition-colors',
+                      'capitalize text-xl transition-colors',
                       url.pathname === pathname ? 'text-darkGrey' : 'text-grey hover:text-gray-500'
                     ])}
                   >

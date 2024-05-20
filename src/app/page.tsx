@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Footer } from '#/components/footer'
+import Summary from '#/components/home/summary'
 
 export const metadata = {
   metadataBase: new URL('https://app.ethfollow.xyz'),
@@ -14,7 +15,9 @@ export const metadata = {
 const HomePage = () => {
   return (
     <>
-      <main className='mx-auto flex h-full min-h-full w-full flex-col items-center overflow-scroll px-4 pt-8 text-center font-sans'></main>
+      <main className='mx-auto bg-transparent flex h-screen w-full flex-col items-center font-sans'>
+        <Summary />
+      </main>
       <Footer />
     </>
   )

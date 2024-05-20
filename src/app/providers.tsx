@@ -51,10 +51,8 @@ export function Providers({ children, initialState }: Props) {
             <TransactionsProvider>
               <CartProvider>
                 <ActionsProvider>
-                  <div className='p-4 pb-0 xl:px-12'>
-                    <Navigation />
-                    {children}
-                  </div>
+                  <Navigation />
+                  {children}
                 </ActionsProvider>
               </CartProvider>
             </TransactionsProvider>

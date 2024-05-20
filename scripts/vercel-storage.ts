@@ -10,7 +10,7 @@ if (!VERCEL_BLOB_READ_WRITE_TOKEN) raise('VERCEL_BLOB_READ_WRITE_TOKEN is not de
 const fontsLocation = `${import.meta.dir}/../src/app/assets/fonts`
 
 main().catch(error => {
-  console.error(error)
+  // console.error(error)
   process.exit(1)
 })
 
@@ -41,5 +41,5 @@ async function putFonts() {
     )
   )
 
-  console.log(JSON.stringify(results, undefined, 2))
+  // console.log(JSON.stringify(results, undefined, 2))
 }

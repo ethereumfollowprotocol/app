@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/nextjs'
+import Sentry from '@sentry/nextjs'
 
 const filename = import.meta.url.split('/').pop()
 

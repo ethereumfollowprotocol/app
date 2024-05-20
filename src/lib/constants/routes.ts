@@ -65,4 +65,4 @@ export const pageRoutes = [
     external: false,
     displayLocation: 'footer'
   }
-] satisfies ReadonlyArray<Route>
+] satisfies Route[]

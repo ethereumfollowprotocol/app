@@ -1,56 +1,64 @@
 import Image from 'next/image'
+import X from 'public/assets/icons/socials/x.svg'
+import Github from 'public/assets/icons/socials/github.svg'
+import Discord from 'public/assets/icons/socials/discord.svg'
 
-const footerLinks = [
-  {
-    text: 'Docs',
-    href: 'https://docs.ethfollow.xyz'
-  },
-  /**
-   * TODO: update with proper link
-   */
+const footerPages = [
   {
     text: 'Team',
     href: 'https://github.com/orgs/ethereumfollowprotocol/people'
   },
   {
-    text: 'GitHub',
-    href: 'https://github.com/ethereumfollowprotocol'
-  },
+    text: 'Documentation',
+    href: 'https://docs.ethfollow.xyz'
+  }
+]
+
+const socials = [
   {
     text: 'X',
-    href: 'https://x.com/ethfollowpr'
+    href: 'https://x.com/ethfollowpr',
+    icon: X
+  },
+  {
+    text: 'GitHub',
+    href: 'https://github.com/ethereumfollowprotocol',
+    icon: Github
   },
   /**
    * TODO: add Discord link once we have one
    */
   {
     text: 'Discord',
-    href: 'https://x.com/ethfollowpr'
+    href: 'https://discord.com/invite/hDTFKmxwwV',
+    icon: Discord
   }
 ]
 
 export function Footer() {
   return (
-    <footer className='bottom-0 mx-auto mt-4 w-full font-sans'>
-      <div className='flex flex-row items-center justify-center h-full w-full space-x-28 bg-[#FFE067]'>
-        <section className='flex space-x-5 align-middle'>
-          <div className='my-auto'>
-            <div className='table-caption max-w-md text-4xl font-extrabold text-pink-400'>
-              Ethereum Follow Protocol
-            </div>
-          </div>
+    <footer className='w-full font-sans flex justify-center border-t-2 border-t-pink py-10 items-center'>
+      <div className='flex flex-row items-center justify-center h-full w-full gap-44'>
+        <section className='flex gaü-5 align-middle'>
           <Image src='/assets/logo.png' width={160} height={160} alt='Ethereum Follow Protocol' />
         </section>
         <section className='my-auto flex align-middle'>
-          <ul className='my-auto flex flex-col space-y-1 text-center'>
-            {footerLinks.map((route, index) => (
-              <li className='inline font-extrabold' key={`route-${route.href}`}>
-                <a href={route.href} className={`text-pink-400`}>
+          <div className='my-auto flex flex-col justify-center gap-6'>
+            {footerPages.map((route, index) => (
+              <div className='inline font-bold' key={`route-${route.href}`}>
+                <a href={route.href} className={`text-lg text-pink-400`}>
                   <span>{route.text}</span>
                 </a>
-              </li>
+              </div>
             ))}
-          </ul>
+            <div className='flex items-center gap-10'>
+              {socials.map(item => (
+                <a key={item.text} href={item.href}>
+                  <Image src={item.icon} className='w-8' alt={item.text} />
+                </a>
+              ))}
+            </div>
+          </div>
         </section>
       </div>
     </footer>

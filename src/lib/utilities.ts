@@ -16,7 +16,7 @@ export function truncateAddress(address?: string) {
 /**
  * @see https://www.youtube.com/watch?v=re2JFITR7TI
  */
-export function cn(...args: Array<ClassValue>): string {
+export function cn(...args: ClassValue[]): string {
   return tailwindMerge(clsx(...args))
 }
 

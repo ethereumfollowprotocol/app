@@ -27,7 +27,7 @@ export function useConnectedFollowing(): ConnectedAddressFollowing {
   const { data } = useQuery({
     queryKey: ['following', connectedAddress],
     enabled: isConnected,
-    queryFn: () => fetchUserFollowing({ addressOrName: connectedAddress as Address })
+    queryFn: () => fetchUserFollowing(connectedAddress as Address)
   })
 
   return {
@@ -57,7 +57,7 @@ export function useConnectedFollowers(): ConnectedAddressFollowers {
   const { data } = useQuery({
     queryKey: ['followers', connectedAddress],
     enabled: isConnected,
-    queryFn: () => fetchUserFollowers({ addressOrName: connectedAddress as Address })
+    queryFn: () => fetchUserFollowers(connectedAddress as Address)
   })
 
   return {
@@ -124,7 +124,7 @@ export function useConnectedProfile(address?: Address): ConnectedAddressProfile 
   const getFollowState: EFPProfile['getFollowState'] = (address: Address) => {
     const following: FollowingResponse | undefined = getFollowingByAddress(address)
 
-    console.log(following)
+    // console.log(following)
 
     if (following === undefined) {
       return 'none'
@@ -182,7 +182,7 @@ type Following = {
 export function useFollowing(addressOrName: Address | string): Following {
   const { data } = useQuery({
     queryKey: ['following', addressOrName],
-    queryFn: () => fetchUserFollowing({ addressOrName })
+    queryFn: () => fetchUserFollowing(addressOrName)
   })
 
   return {
@@ -208,7 +208,7 @@ type Followers = {
 export function useFollowers(addressOrName: Address | string): Followers {
   const { data } = useQuery({
     queryKey: ['followers', addressOrName],
-    queryFn: () => fetchUserFollowers({ addressOrName })
+    queryFn: () => fetchUserFollowers(addressOrName)
   })
 
   return {

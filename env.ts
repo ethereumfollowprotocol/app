@@ -24,6 +24,6 @@ export const {
 } = v.safeParse(EnvironmentVariableSchema, process.env, { abortEarly: true, abortPipeEarly: true })
 
 if (!success) {
-  console.error(issues)
+  // console.error(issues)
   throw new Error('Environment variables are invalid')
 }
