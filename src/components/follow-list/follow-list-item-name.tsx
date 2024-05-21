@@ -10,13 +10,13 @@ interface FollowListItemNameProps {
   avatarUrl?: string
   className?: string
   name?: string
-  showFollowsYouBadges: boolean
+  showFollowsYouBadges?: boolean
 }
 
 export function Name({ name, address }: { name?: string; address: Address }) {
   return (
     <Link href={`/${name || address}`}>
-      <p className='font-bold xl:text-lg lg:text-md text-sm hover:text-pink-400'>
+      <p className='font-bold xl:text-lg lg:text-md text-sm hover:opacity-75 transition-opacity'>
         {name || truncateAddress(address)}
       </p>
     </Link>
@@ -32,8 +32,12 @@ export function FollowListItemName({
 }: FollowListItemNameProps) {
   const isFollower = useFollowState(address) === 'follows'
   return (
-    <div className={`flex gap-2 ${className}`}>
-      <Avatar name={name || address} avatarUrl={avatarUrl} />
+    <div className={`flex gap-3 ${className}`}>
+      <Avatar
+        name={name || address}
+        avatarUrl={avatarUrl}
+        size='h-[45px] w-[45px] md:h-[50px] md:w-[50px]'
+      />
       <div className='flex flex-col justify-center tabular-nums relative'>
         <Name name={name} address={address} />
         {/* Badge will appear below the name, but the name stays centered */}

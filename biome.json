@@ -82,6 +82,7 @@
       },
       "performance": {
         "all": true,
+        "noReExportAll": "off",
         "noAccumulatingSpread": "off"
       },
       "correctness": {

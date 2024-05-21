@@ -1,13 +1,19 @@
 'use client'
 
-import { Search } from '#/components/search'
-import { Recommendations } from '#/app/editor/recommendations'
-import { UnconfirmedChanges } from './unconfirmed-changes'
+import type { Address } from 'viem'
+
 import { Legend } from './legend'
+import { Search } from '#/components/search'
+import { useCart } from '#/contexts/cart-context'
+import { listOpAddListRecord } from '#/types/list-op'
+import { UnconfirmedChanges } from './unconfirmed-changes'
+import { Recommendations } from '#/components/recommendations'
 
 export default function EditorPage() {
-  const handleAddFollow = () => {
-    console.log('Adding to follow in editor')
+  const { addCartItem } = useCart()
+
+  const handleAddFollow = (address: Address) => {
+    addCartItem({ listOp: listOpAddListRecord(address) })
   }
 
   return (
@@ -19,7 +25,7 @@ export default function EditorPage() {
             <Search />
             <button
               className='bg-gradient-to-b p-3 from-kournikova-300 rounded-full to-salmon-400 text-black h-auto'
-              onClick={handleAddFollow}
+              onClick={() => handleAddFollow('0x')}
             >
               Add
             </button>

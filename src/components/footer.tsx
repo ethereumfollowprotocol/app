@@ -37,10 +37,10 @@ const socials = [
 
 export function Footer() {
   return (
-    <footer className='w-full font-sans flex justify-center border-t-2 border-t-pink py-10 items-center'>
+    <footer className='w-full font-sans flex justify-center border-t-2 border-t-pink bg-white py-16 items-center'>
       <div className='flex flex-row items-center justify-center h-full w-full gap-44'>
         <section className='flex gaü-5 align-middle'>
-          <Image src='/assets/logo.png' width={160} height={160} alt='Ethereum Follow Protocol' />
+          <Image src='/assets/logo.png' width={180} height={180} alt='Ethereum Follow Protocol' />
         </section>
         <section className='my-auto flex align-middle'>
           <div className='my-auto flex flex-col justify-center gap-6'>

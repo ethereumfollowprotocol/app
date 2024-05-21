@@ -7,8 +7,8 @@ import { FollowListItemTags } from './follow-list-item-tags'
 export interface FollowListItemProps {
   className?: string
   profileAddress: Address
-  showFollowsYouBadges: boolean
-  showTags: boolean
+  showFollowsYouBadges?: boolean
+  showTags?: boolean
   tags: string[]
 }
 

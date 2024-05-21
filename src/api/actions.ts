@@ -64,7 +64,9 @@ export function useConnectedFollowers(): ConnectedAddressFollowers {
     connectedAddressFollowers: data?.followers,
     connectedAddressFollowerAddresses: data?.followers?.map(follower => follower.address),
     getConnectedAddressFollowerByAddress: (address: Address) => {
-      return data?.followers?.find(follower => follower.address === address)
+      return data?.followers?.find(
+        follower => follower.address.toLowerCase() === address.toLowerCase()
+      )
     }
   }
 }
@@ -158,10 +160,16 @@ export function useConnectedProfile(address?: Address): ConnectedAddressProfile 
         ?.filter(follow => follow.record_type === 'address')
         .map(follow => follow.data),
       getFollowerByAddress: (address: Address) => {
-        return data.followers?.find(follower => follower.address === address.toLowerCase())
+        return data.followers?.find(
+          follower => follower.address.toLowerCase() === address.toLowerCase()
+        )
       },
       isFollowedBy: (address: Address) => {
-        return data.followers?.some(follower => follower.address === address.toLowerCase()) ?? false
+        return (
+          data.followers?.some(
+            follower => follower.address.toLowerCase() === address.toLowerCase()
+          ) ?? false
+        )
       },
       primaryList: Number(data.primary_list),
       stats: {
@@ -215,7 +223,9 @@ export function useFollowers(addressOrName: Address | string): Followers {
     followers: data?.followers,
     followerAddresses: data?.followers?.map(follower => follower.address),
     getFollowerByAddress: (address: Address) => {
-      return data?.followers?.find(follower => follower.address === address)
+      return data?.followers?.find(
+        follower => follower.address.toLowerCase() === address.toLowerCase()
+      )
     }
   }
 }

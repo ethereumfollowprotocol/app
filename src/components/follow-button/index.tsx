@@ -76,15 +76,15 @@ export function FollowButton({ address, className = '', ...props }: FollowButton
     address
   })
 
-  if (address === userAddress) return null
+  if (address.toLowerCase() === userAddress?.toLowerCase()) return null
 
   return (
     <button
       className={clsx([
         theme[buttonState].bg,
         theme[buttonState].text,
-        'rounded-lg flex items-center gap-2 justify-center font-bold h-full',
-        'w-[107px] max-h-[37px] px-2 py-1.5', // Fixed width for consistent layout
+        'rounded-lg text-sm flex items-center gap-1.5 justify-center font-bold',
+        'w-[107px] h-[37px] px-2 py-1.5', // Fixed width for consistent layout
         className
       ])}
       onClick={() => {

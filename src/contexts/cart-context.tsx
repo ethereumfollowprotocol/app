@@ -73,52 +73,48 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   }
 
   const hasListOpAddRecord = useCallback(
-    (address: Address): boolean => {
-      return cartItems.some(
+    (address: Address): boolean =>
+      cartItems.some(
         cartItem =>
           cartItem.listOp.version === 1 &&
           cartItem.listOp.opcode === 1 &&
-          `0x${cartItem.listOp.data.toString('hex')}` === address
-      )
-    },
+          `0x${cartItem.listOp.data.toString('hex')}`.toLowerCase() === address.toLowerCase()
+      ),
     [cartItems]
   )
 
   const hasListOpRemoveRecord = useCallback(
-    (address: Address): boolean => {
-      return cartItems.some(
+    (address: Address): boolean =>
+      cartItems.some(
         cartItem =>
           cartItem.listOp.version === 1 &&
           cartItem.listOp.opcode === 2 &&
-          `0x${cartItem.listOp.data.toString('hex')}` === address
-      )
-    },
+          `0x${cartItem.listOp.data.toString('hex')}`.toLowerCase() === address.toLowerCase()
+      ),
     [cartItems]
   )
 
   const hasListOpAddTag = useCallback(
-    ({ address, tag }: { address: Address; tag: string }): boolean => {
-      return cartItems.some(
+    ({ address, tag }: { address: Address; tag: string }): boolean =>
+      cartItems.some(
         cartItem =>
           isTagListOp(cartItem.listOp) &&
           cartItem.listOp.opcode === 3 &&
-          extractAddressAndTag(cartItem.listOp).address === address &&
+          extractAddressAndTag(cartItem.listOp).address.toLowerCase() === address.toLowerCase() &&
           extractAddressAndTag(cartItem.listOp).tag === tag
-      )
-    },
+      ),
     [cartItems]
   )
 
   const hasListOpRemoveTag = useCallback(
-    ({ address, tag }: { address: Address; tag: string }): boolean => {
-      return cartItems.some(
+    ({ address, tag }: { address: Address; tag: string }): boolean =>
+      cartItems.some(
         cartItem =>
           isTagListOp(cartItem.listOp) &&
           cartItem.listOp.opcode === 4 &&
-          extractAddressAndTag(cartItem.listOp).address === address &&
+          extractAddressAndTag(cartItem.listOp).address.toLowerCase() === address.toLowerCase() &&
           extractAddressAndTag(cartItem.listOp).tag === tag
-      )
-    },
+      ),
     [cartItems]
   )
 
@@ -202,7 +198,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
       return cartItems.reduce((tags, { listOp }) => {
         if (isTagListOp(listOp)) {
           const { address: opAddress, tag } = extractAddressAndTag(listOp)
-          if (opAddress === address) {
+          if (opAddress.toLowerCase() === address.toLowerCase()) {
             tags.push(tag)
           }
         }
