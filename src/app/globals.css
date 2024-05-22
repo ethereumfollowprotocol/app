@@ -10,10 +10,11 @@
   font-variant-numeric: tabular-nums;
 }
 
- html, body {
+html, body {
   width: 100vw;
   color: #333333;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 body {
@@ -126,12 +127,6 @@ input[type="search"]::-webkit-search-results-decoration {
   color: rgb(0, 0, 0);
 } */
 
-.prose > :first-child {
-  /* Override removing top margin, causing layout shift */
-  margin-top: 1.25em !important;
-  margin-bottom: 1.25em !important;
-}
-
 pre::-webkit-scrollbar {
   display: none;
 }
@@ -149,18 +144,19 @@ input[type='email'] {
   appearance: none;
 }
 
-.prose .callout > p {
-  margin: 0 !important;
-}
-
 .title {
   text-wrap: balance;
 }
 
-.rt-TableRootTable {
-  --table-row-box-shadow: unset !important;
+@media screen and (max-width: 1650px) {
+  body {
+    background-position: -34.1vw -32vw;
+    background-size: 210vw 129vw;
+  }
 }
-
-.rt-SelectTriggerInner {
-  text-transform: capitalize;
+@media screen and (max-width: 1350px) {
+  body {
+    background-position: -34.1vw -27.5vw;
+    background-size: 210vw 129vw;
+  }
 }

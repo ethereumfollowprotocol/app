@@ -1,15 +1,17 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useState } from 'react'
 import { useAccount } from 'wagmi'
 import { usePathname } from 'next/navigation'
+import { useClickAway } from '@uidotdev/usehooks'
 
-import ConnectButton from './connect-button'
+import Logo from 'public/assets/logo.svg'
+import FullLogo from 'public/assets/logo-full.svg'
 import { Search } from '../../components/search.tsx'
 import { useCart } from '../../contexts/cart-context'
-import CartButton from './cart-button.tsx'
-
-import FullLogo from 'public/assets/logo-full.svg'
+import CartButton from './components/cart-button.tsx'
+import ConnectButton from './components/connect-button.tsx'
 
 export function shouldHidePath({
   connected,
@@ -40,55 +42,86 @@ const navItems = [
 ]
 
 const Navigation = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
   const pathname = usePathname()
   const { totalCartItems } = useCart()
   const { address: userAddress } = useAccount()
+  const clickAwayRef = useClickAway<HTMLDivElement>(_ => {
+    setMobileMenuOpen(false)
+  })
 
   return (
-    <header className={clsx(['w-full font-sans py-6 px-8'])}>
-      <nav className='my-auto flex w-full flex-row justify-between'>
-        <div className={clsx(['my-auto flex w-full items-center gap-6 space-x-3 sm:pr-3'])}>
+    <header className='w-full font-sans p-4 md:px-6 md:py-6 lg:px-8'>
+      <nav className='my-auto flex w-full flex-row items-center justify-between'>
+        <div className='flex w-full justify-start items-center gap-6 xl:gap-8'>
           <Link href='/' className='select-none' aria-label='Ethereum Follow Protocol Logo link'>
             <Image
               src={FullLogo}
-              className='w-32 select-none'
+              className='hidden sm:block sm:w-32 select-none'
+              alt='Ethereum Follow Protocol Logo'
+            />
+            <Image
+              src={Logo}
+              className='w-12 sm:hidden select-none'
               alt='Ethereum Follow Protocol Logo'
             />
           </Link>
-          <Search />
+          <div className='hidden md:block w-full'>
+            <Search size='md:w-4/5 xl:w-full max-w-[400px]' />
+          </div>
         </div>
-        <div className='flex gap-12 items-center'>
-          <ul className='flex gap-9 items-center'>
-            {navItems.map((item, index) => {
-              // Check if the environment variable is set
-              if (!process.env.NEXT_PUBLIC_ENS_API_URL) {
-                throw new Error(
-                  "Environment variable 'NEXT_PUBLIC_ENS_API_URL' is not set. Please configure it in your environment."
-                )
-              }
-
-              const url = new URL(`${process.env.NEXT_PUBLIC_BASE_URL}${item.href}`)
-
-              return (
-                <li className='inline font-bold' key={`${item.name}`}>
-                  <Link
-                    prefetch={true}
-                    href={item.href}
-                    className={clsx([
-                      'capitalize text-xl transition-colors',
-                      url.pathname === pathname ? 'text-darkGrey' : 'text-grey hover:text-gray-500'
-                    ])}
-                  >
-                    <span className='hidden sm:block'>{item.name}</span>
-                  </Link>
-                </li>
-              )
-            })}
+        <div className='flex lg:gap-6 xl:gap-12 items-center'>
+          <ul className='lg:flex hidden lg:gap-6 xl:gap-9 items-center'>
+            {navItems.map((item, index) => (
+              <li className='inline font-bold' key={`${item.name}`}>
+                <Link
+                  prefetch={true}
+                  href={item.href}
+                  className={clsx([
+                    'capitalize xl:text-xl lg:text-lg transition-colors',
+                    item.href === pathname ? 'text-darkGrey' : 'text-grey hover:text-gray-500'
+                  ])}
+                >
+                  <span className='hidden sm:block'>{item.name}</span>
+                </Link>
+              </li>
+            ))}
           </ul>
-          <div className='flex items-center gap-6'>
+          <div className='flex items-center gap-2 md:gap-4 xl:gap-6'>
             {userAddress && <CartButton cartItemsCount={totalCartItems} />}
             <ConnectButton />
             {/* <Menu /> */}
+            <div ref={clickAwayRef} className='lg:hidden relative'>
+              <div
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className='flex cursor-pointer hover:opacity-75 relative transition-opacity lg:hidden gap-[5px] flex-col p-[10px] glass-card border-2 rounded-md border-gray-200'
+              >
+                <div className='w-5 h-[3px] bg-darkGrey rounded-full'></div>
+                <div className='w-5 h-[3px] bg-darkGrey rounded-full'></div>
+                <div className='w-5 h-[3px] bg-darkGrey rounded-full'></div>
+              </div>
+              <div
+                className={`${
+                  mobileMenuOpen ? 'flex' : 'hidden'
+                } glass-card px-3 py-2 gap-1 z-50 shadow-md border-2 rounded-md border-gray-200 absolute top-[120%] flex-col items-end right-0`}
+              >
+                {navItems.map(item => (
+                  <div className='font-bold' key={`${item.name}`}>
+                    <Link
+                      prefetch={true}
+                      href={item.href}
+                      className={clsx([
+                        'capitalize xl:text-xl lg:text-lg transition-colors',
+                        pathname === item.href ? 'text-darkGrey' : 'text-grey hover:text-gray-500'
+                      ])}
+                    >
+                      <span>{item.name}</span>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </nav>

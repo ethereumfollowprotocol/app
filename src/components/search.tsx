@@ -49,7 +49,10 @@ async function searchEnsSubgraph({ search }: { search: string }): Promise<string
     .sort((a, b) => a.length - b.length)
 }
 
-export function Search({ disabled }: { disabled?: boolean }) {
+export function Search({
+  disabled,
+  size = 'w-full max-w-[400px]'
+}: { disabled?: boolean; size?: string }) {
   const pathname = usePathname()
   const searchBarRef = useRef<HTMLInputElement>(null)
   const [dropdownMenuOpen, setDropdownMenuOpen] = useState(false)
@@ -114,7 +117,7 @@ export function Search({ disabled }: { disabled?: boolean }) {
   // }
 
   return (
-    <div className='relative max-w-[400px] w-full'>
+    <div className={`relative ${size}`}>
       <label htmlFor='search' className='sr-only'>
         Search
       </label>

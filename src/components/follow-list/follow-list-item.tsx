@@ -30,7 +30,7 @@ export function FollowListItem({
       <FollowListItemName
         address={profileAddress}
         avatarUrl={profileAvatar}
-        className='flex-none w-56' // Fixed width for consistent layout
+        className='flex-none w-fit sm:w-56' // Fixed width for consistent layout
         name={profileName}
         showFollowsYouBadges={showFollowsYouBadges}
       />

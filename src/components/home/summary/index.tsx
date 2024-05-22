@@ -11,14 +11,17 @@ const Summary = () => {
   if (!userAddress) return null
 
   return (
-    <div className='mt-24 xl:mt-32 px-8 flex items-start lg:justify-between 2xl: justify-center flex-wrap 2xl:flex-nowrap gap-y-4 2xl:gap-6'>
+    <div className='mt-12 md:mt-16 lg:mt-24 xl:mt-32 px-4 md:px-6 lg:px-8 flex items-start lg:justify-between justify-center flex-wrap 2xl:flex-nowrap gap-y-4 2xl:gap-4'>
       <UserProfileCard
         address={userAddress}
         stats={{ followers_count: 12, following_count: 8 }}
-        borderColor='#FFDBD9'
+        borderColor='border-[#FFDBD9]'
       />
       <LatestFollowers />
-      <Recommendations header='Discover' size='h-[638px] lg:w-[49%] xl:w-[65%] 2xl:w-[700px]' />
+      <Recommendations
+        header='Discover'
+        size='h-fit lg:h-[638px] w-full lg:w-[49%] xl:w-[65%] 2xl:w-[700px]'
+      />
     </div>
   )
 }

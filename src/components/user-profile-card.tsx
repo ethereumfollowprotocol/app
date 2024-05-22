@@ -43,36 +43,42 @@ export function UserProfileCard({ address, stats, borderColor }: Props) {
 
   return (
     <div
-      className={`flex glass-card 2xl:w-86 mx-auto pb-8 border-2 justify-center flex-col border-[${
-        borderColor || '#ffd6ba'
-      }] w-full rounded-xl pl-3 pt-2`}
+      className={`flex glass-card 2xl:w-86 mx-auto border-2 justify-center flex-col ${
+        borderColor || 'border-[#FFDBD9]'
+      } w-full rounded-xl py-3 px-4 sm:p-6 relative`}
     >
-      <div className='text-gray-500 font-semibold'>#{connectedProfile?.primaryList}</div>
-      <div className='flex flex-col gap-9 pt-2'>
-        <div className='flex flex-col justify-center items-center gap-3 mx-auto'>
-          <Avatar avatarUrl={avatar || DefaultAvatar} name={name || address} />
-          <div className='text-2xl font-bold my-2'>{name}</div>
+      <div className='text-gray-500 absolute text-right 2xl:text-left px-2 w-full left-0 top-1 font-semibold'>
+        #{connectedProfile?.primaryList}
+      </div>
+      <div className='flex 2xl:items-center flex-col gap-5 sm:gap-6 md:gap-9 pt-2'>
+        <div className='flex flex-row 2xl:flex-col 2xl:justify-center items-center gap-3'>
+          <Avatar
+            avatarUrl={avatar || DefaultAvatar}
+            name={name || address}
+            size='h-[70px] w-[70px] sm:h-[75px]  sm:w-[75px] xl:h-[100px] xl:w-[100px]'
+          />
+          <div className='text-xl sm:text-2xl font-bold my-2'>{name}</div>
           {connectedProfile?.isFollowedBy(address) && (
             <div className='rounded-full font-bold text-[8px]  mt-[-6] mb-2'>Follows you</div>
           )}
           <FollowButton address={address} />
         </div>
-        <div className='flex w-full flex-wrap justify-center items-center mx-auto gap-y-10 gap-x-16 text-center'>
+        <div className='flex w-full flex-wrap 2xl:justify-center items-center mx-auto gap-0 justify-between sm:justify-start sm:gap-y-10 sm:gap-x-16 text-center'>
           <div>
-            <div className='text-2xl font-bold'>
+            <div className='text-xl sm:text-2xl font-bold'>
               {stats === undefined ? '?' : stats.following_count}
             </div>
-            <div className='text-lg font-bold text-gray-500'>Following</div>
+            <div className='sm:text-lg font-bold text-gray-500'>Following</div>
           </div>
           <div>
-            <div className='text-2xl font-bold'>
+            <div className='text-xl sm:text-2xl font-bold'>
               {stats === undefined ? '?' : stats.followers_count}
             </div>
-            <div className='text-lg text-gray-500 font-bold'>Followers</div>
+            <div className='sm:text-lg text-gray-500 font-bold'>Followers</div>
           </div>
           <div>
-            <div className='text-2xl font-bold'>#1</div>
-            <div className='text-lg font-bold text-gray-500'>Leaderboard</div>
+            <div className='text-xl sm:text-2xl font-bold'>#1</div>
+            <div className='sm:text-lg font-bold text-gray-500'>Leaderboard</div>
           </div>
         </div>
       </div>

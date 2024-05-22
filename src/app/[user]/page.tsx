@@ -1,15 +1,15 @@
 import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query'
 import {
+  fetchUserStats,
   type StatsResponse,
   fetchUserFollowers,
-  fetchUserFollowing,
-  fetchUserStats
+  fetchUserFollowing
 } from '#/api/requests'
+import type { ENSProfile } from '#/lib/types'
 import { getEnsProfile } from '#/app/actions.ts'
+import { formatAddressOrName } from '#/lib/utilities'
 import { UserProfileCard } from '#/components/user-profile-card'
 import { UserProfilePageTable } from '#/components/user-profile-page-table'
-import type { ENSProfile } from '#/lib/types'
-import { formatAddressOrName } from '#/lib/utilities'
 
 interface Props {
   params: { user: string }

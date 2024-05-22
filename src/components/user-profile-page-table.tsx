@@ -8,6 +8,7 @@ import { SelectWithFilter } from '#/components/select-with-filter.tsx'
 import type { FollowerResponse, FollowingResponse } from '#/api/requests'
 import ArrowUp from 'public/assets/icons/arrow-up.svg'
 import ArrowDown from 'public/assets/icons/arrow-down.svg'
+import Image from 'next/image'
 
 /**
  * TODO: paginate
@@ -111,10 +112,14 @@ function PageHeader({
     <div className='flex justify-between mb-2 w-full'>
       <div className='flex gap-4 items-center'>
         <p className='uppercase font-bold'>{title}</p>
-        <div className='flex gap-2'>
+        <div className='flex items-center gap-2'>
           <Searchbar queryKey={searchQueryKey} placeholder='Search...' />
           <p>Tags</p>
-          {showTags ? <ArrowUp /> : <ArrowDown />}
+          {showTags ? (
+            <Image src={ArrowUp} alt='close tags' width={16} height={16} />
+          ) : (
+            <Image src={ArrowDown} alt='open tags' width={16} height={16} />
+          )}
         </div>
       </div>
       <SelectWithFilter
