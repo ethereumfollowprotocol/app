@@ -5,7 +5,7 @@ import { useState } from 'react'
 
 import { useProfile } from '#/api/actions'
 import { FollowList } from '#/components/follow-list'
-import { Searchbar } from '#/components/searchbar.tsx'
+// import { Searchbar } from '#/components/searchbar.tsx'
 import { SelectWithFilter } from '#/components/select-with-filter.tsx'
 import type { FollowerResponse, FollowingResponse } from '#/api/requests'
 
