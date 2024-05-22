@@ -101,26 +101,24 @@ const Navigation = () => {
                 <div className='w-5 h-[3px] bg-darkGrey rounded-full'></div>
                 <div className='w-5 h-[3px] bg-darkGrey rounded-full'></div>
               </div>
-              <div
-                className={`${
-                  mobileMenuOpen ? 'flex' : 'hidden'
-                } glass-card px-3 py-2 gap-1 z-50 shadow-md border-2 rounded-md border-gray-200 absolute top-[120%] flex-col items-end right-0`}
-              >
-                {navItems.map(item => (
-                  <div className='font-bold' key={`${item.name}`}>
-                    <Link
-                      prefetch={true}
-                      href={item.href}
-                      className={clsx([
-                        'capitalize xl:text-xl lg:text-lg transition-colors',
-                        pathname === item.href ? 'text-darkGrey' : 'text-grey hover:text-gray-500'
-                      ])}
-                    >
-                      <span>{item.name}</span>
-                    </Link>
-                  </div>
-                ))}
-              </div>
+              {mobileMenuOpen && (
+                <div className='glass-card px-3 py-2 gap-1 z-50 shadow-md border-2 rounded-md border-gray-200 absolute top-[120%] flex flex-col items-end right-0'>
+                  {navItems.map(item => (
+                    <div className='font-bold' key={`${item.name}`}>
+                      <Link
+                        prefetch={true}
+                        href={item.href}
+                        className={clsx([
+                          'capitalize xl:text-xl lg:text-lg transition-colors',
+                          pathname === item.href ? 'text-darkGrey' : 'text-grey hover:text-gray-500'
+                        ])}
+                      >
+                        <span>{item.name}</span>
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>

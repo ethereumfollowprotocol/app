@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useAccount } from 'wagmi'
+import { useAccount, useDisconnect } from 'wagmi'
 import { useEffect, useState } from 'react'
 import { useClickAway } from '@uidotdev/usehooks'
 import type { Address, GetEnsAvatarReturnType } from 'viem'
@@ -23,14 +23,16 @@ const ConnectButton = () => {
     name: string | null
     avatar: GetEnsAvatarReturnType | null
   }>(nullEnsProfile)
-  const [walletMenu, setWalletMenuOpen] = useState(false)
-  const clickAwayRef = useClickAway<HTMLButtonElement>(_ => {
+  const [walletMenOpenu, setWalletMenuOpen] = useState(false)
+
+  const clickAwayRef = useClickAway<HTMLDivElement>(_ => {
     setWalletMenuOpen(false)
   })
 
+  const { disconnect } = useDisconnect()
+  const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
   const { openAccountModal } = useAccountModal()
-  const { address: userAddress } = useAccount()
 
   const getENSProfile = async (address: Address) => {
     const data = await resolveENSProfile(address)
@@ -44,57 +46,64 @@ const ConnectButton = () => {
     }
 
     getENSProfile(userAddress)
-  }, [userAddress, getENSProfile])
+  }, [userAddress])
 
   return (
-    <button
-      type='button'
-      ref={clickAwayRef}
-      // className='bg-gradient-to-br p-[2px] from-yellow to-pink cursor-pointer h-12 rounded-full w-40'
-      className='border-[#FFC057] z-50 relative hover:bg-[#FFC057]/10 px-1 transition-colors border-2 gap-[6px] cursor-pointer flex justify-between items-center h-12 glass-card rounded-full w-48'
-      onClick={() =>
-        userAddress && openAccountModal
-          ? setWalletMenuOpen(true)
-          : openConnectModal
-            ? openConnectModal()
-            : null
-      }
-    >
-      {userAddress ? (
-        <>
-          <Image
-            src={ensProfile.avatar || DefaultAvatar}
-            alt='ENS Avatar'
-            width={36}
-            height={36}
-            className='rounded-full'
-          />
-          <p className='font-semibold truncate text-sm'>
-            {ensProfile.name || truncateAddress(userAddress)}
+    <div ref={clickAwayRef} className='relative'>
+      <button
+        type='button'
+        // className='bg-gradient-to-br p-[2px] from-yellow to-pink cursor-pointer h-12 rounded-full w-40'
+        className='border-[#FFC057] z-50 hover:bg-[#FFC057]/10 px-1 transition-colors border-2 gap-[6px] cursor-pointer flex justify-between items-center h-12 glass-card rounded-full w-48'
+        onClick={() =>
+          userAddress && openAccountModal
+            ? setWalletMenuOpen(true)
+            : openConnectModal
+              ? openConnectModal()
+              : null
+        }
+      >
+        {userAddress ? (
+          <>
+            <Image
+              src={ensProfile.avatar || DefaultAvatar}
+              alt='ENS Avatar'
+              width={36}
+              height={36}
+              className='rounded-full'
+            />
+            <p className='font-semibold truncate text-sm'>
+              {ensProfile.name || truncateAddress(userAddress)}
+            </p>
+            <Image src={ArrowDown} alt='Open button' className='w-4 mr-1' />
+          </>
+        ) : (
+          <div className='w-full h-full flex items-center justify-center  rounded-full'>
+            <p className='font-semibold text-black'>Connect Wallet</p>
+          </div>
+        )}
+      </button>
+      {walletMenOpenu && (
+        <div className='p-3 flex gap-1.5 z-50 shadow-md border-2 rounded-lg bg-white/95 border-gray-200 absolute top-[120%] flex-col items-end right-0'>
+          <div className='flex justify-between items-center w-full hover:opacity-80 transition-opacity cursor-pointer'>
+            <Image src={ArrowLeft} alt='Show lists' />
+            <p className=' font-semibold'>List #0</p>
+          </div>
+          <div className='flex justify-between items-center w-full hover:opacity-80 transition-opacity cursor-pointer'>
+            <Image src={ArrowLeft} alt='Show languages' />
+            <p className=' font-semibold'>English</p>
+          </div>
+          <p
+            className='text-red-500 font-semibold hover:text-opacity-75 transition-opacity cursor-pointer'
+            onClick={() => {
+              disconnect()
+              setWalletMenuOpen(false)
+            }}
+          >
+            Disconnect Wallet
           </p>
-          <Image src={ArrowDown} alt='Open button' className='w-4 mr-1' />
-        </>
-      ) : (
-        <div className='w-full h-full flex items-center justify-center  rounded-full'>
-          <p className='font-semibold text-black'>Connect Wallet</p>
         </div>
       )}
-      <div
-        className={`${
-          walletMenu ? 'flex' : 'hidden'
-        } p-3 gap-2 z-50 shadow-md border-2 rounded-lg bg-white/95 border-gray-200 absolute top-[120%] flex-col items-end right-0`}
-      >
-        <div className='flex justify-between items-center w-full'>
-          <Image src={ArrowLeft} alt='Show lists' />
-          <p className=' font-semibold'>List #0</p>
-        </div>
-        <div className='flex justify-between items-center w-full'>
-          <Image src={ArrowLeft} alt='Show languages' />
-          <p className=' font-semibold'>English</p>
-        </div>
-        <p className='text-red-500 font-semibold'>Disconnect Wallet</p>
-      </div>
-    </button>
+    </div>
   )
 }
 

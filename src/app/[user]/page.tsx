@@ -29,14 +29,17 @@ export default async function UserPage({ params }: Props) {
   await queryClient.prefetchQuery({
     queryKey: ['followers', ensProfile.address],
     queryFn: () => fetchUserFollowers(ensProfile.address)
+    // staleTime: 12000000
   })
   await queryClient.prefetchQuery({
     queryKey: ['following', ensProfile.address],
     queryFn: () => fetchUserFollowing(ensProfile.address)
+    // staleTime: 12000000
   })
   await queryClient.prefetchQuery({
     queryKey: ['profile', 'stats', ensProfile.address],
     queryFn: () => fetchUserStats(ensProfile.address)
+    // staleTime: 12000000
   })
 
   // Retrieve the stats data from the QueryClient
@@ -45,29 +48,27 @@ export default async function UserPage({ params }: Props) {
       ?.stats || undefined
 
   return (
-    <main className='mx-auto flex min-h-full h-full w-full flex-col items-center text-center pt-2 pb-4 px-2'>
-      <div className='xl:flex-row justify-center gap-y-0 xl:gap-x-2 gap-x-0 flex-col min-h-full lg:max-w-[1400px] max-w-2xl border-kournikova-50'>
-        <HydrationBoundary state={dehydrate(queryClient)}>
-          <div className='h-full w-fit p-2 mx-auto'>
-            <UserProfileCard address={ensProfile.address} stats={stats} />
-            <p className='font-semibold mt-2'>Block/Mute Lists</p>
-          </div>
+    <main className='flex min-h-full w-full flex-col lg:flex-row items-start mt-24 px-6'>
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <div className='flex gap-4'>
+          <UserProfileCard address={ensProfile.address} stats={stats} />
+          <p className='font-semibold'>Block/Mute Lists</p>
+        </div>
 
-          <UserProfilePageTable
-            addressOrName={ensProfile.address}
-            title='following'
-            searchQuery={followingQuery}
-            selectQuery={followingFilter}
-          />
+        <UserProfilePageTable
+          addressOrName={ensProfile.address}
+          title='following'
+          searchQuery={followingQuery}
+          selectQuery={followingFilter}
+        />
 
-          <UserProfilePageTable
-            addressOrName={ensProfile.address}
-            title='followers'
-            searchQuery={followersQuery}
-            selectQuery={followersFilter}
-          />
-        </HydrationBoundary>
-      </div>
+        <UserProfilePageTable
+          addressOrName={ensProfile.address}
+          title='followers'
+          searchQuery={followersQuery}
+          selectQuery={followersFilter}
+        />
+      </HydrationBoundary>
     </main>
   )
 }
