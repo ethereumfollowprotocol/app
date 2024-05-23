@@ -5,7 +5,7 @@
  * @typedef {import('@sentry/nextjs/types/config/types.ts').UserSentryOptions} SentryUserOptions
  * @typedef {import('@sentry/nextjs').SentryWebpackPluginOptions} SentryWebpackPluginOptions
  */
-import million from 'million/compiler'
+// import million from 'million/compiler'
 import childProcess from 'node:child_process'
 import { withSentryConfig } from '@sentry/nextjs'
 import { withVercelToolbar } from '@vercel/toolbar/plugins/next'
@@ -44,11 +44,8 @@ const nextConfig = {
     fetches: { fullUrl: true }
   },
   images: {
-    domains: ['ipfs.io'],
+    domains: ['ipfs.io', 'euc.li'],
     remotePatterns: [
-      /**
-       * Temporarily accept all domains during development
-       */
       {
         protocol: 'https',
         hostname: 'euc.li',
@@ -176,6 +173,9 @@ const nextConfigWithSentry = withSentryConfig(nextConfig, {
 
 const nextConfigWithPlugins = () => plugins.reduce((_, plugin) => plugin(_), nextConfigWithSentry)
 
-export default process.env.NODE_ENV === 'development'
-  ? nextConfigWithPlugins()
-  : million.next(nextConfigWithPlugins, { auto: { rsc: true } })
+// export default process.env.NODE_ENV === 'development'
+//   ? nextConfigWithPlugins()
+//   : million.next(nextConfigWithPlugins, { auto: { rsc: true } })
+
+  export default nextConfigWithPlugins()
+
