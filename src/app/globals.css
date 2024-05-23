@@ -19,7 +19,7 @@ html, body {
 
 body {
   background-repeat: no-repeat;
-  background-position: -34.1vw -35.75vw;
+  background-position: -34.1vw -38vw;
   background-size: 210vw 129vw;
 }
 
@@ -144,19 +144,31 @@ input[type='email'] {
   appearance: none;
 }
 
+input {
+  outline: none;
+}
+
 .title {
   text-wrap: balance;
 }
 
-@media screen and (max-width: 1650px) {
+@media screen and (max-width: 1750px) {
   body {
-    background-position: -34.1vw -32vw;
+    background-position: -34.1vw -30vw;
     background-size: 210vw 129vw;
   }
 }
+
+@media screen and (min-width: 2100px) {
+  body {
+    background-position: -34.1vw -44vw;
+    background-size: 210vw 129vw;
+  }
+}
+
 @media screen and (max-width: 1350px) {
   body {
-    background-position: -34.1vw -27.5vw;
+    background-position: -34.1vw -20vw;
     background-size: 210vw 129vw;
   }
 }

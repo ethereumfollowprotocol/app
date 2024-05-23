@@ -78,7 +78,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
         cartItem =>
           cartItem.listOp.version === 1 &&
           cartItem.listOp.opcode === 1 &&
-          `0x${cartItem.listOp.data.toString('hex')}`.toLowerCase() === address.toLowerCase()
+          `0x${cartItem.listOp.data.toString('hex')}`.toLowerCase() === address?.toLowerCase()
       ),
     [cartItems]
   )
@@ -89,7 +89,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
         cartItem =>
           cartItem.listOp.version === 1 &&
           cartItem.listOp.opcode === 2 &&
-          `0x${cartItem.listOp.data.toString('hex')}`.toLowerCase() === address.toLowerCase()
+          `0x${cartItem.listOp.data.toString('hex')}`.toLowerCase() === address?.toLowerCase()
       ),
     [cartItems]
   )
@@ -100,7 +100,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
         cartItem =>
           isTagListOp(cartItem.listOp) &&
           cartItem.listOp.opcode === 3 &&
-          extractAddressAndTag(cartItem.listOp).address.toLowerCase() === address.toLowerCase() &&
+          extractAddressAndTag(cartItem.listOp).address.toLowerCase() === address?.toLowerCase() &&
           extractAddressAndTag(cartItem.listOp).tag === tag
       ),
     [cartItems]
@@ -112,7 +112,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
         cartItem =>
           isTagListOp(cartItem.listOp) &&
           cartItem.listOp.opcode === 4 &&
-          extractAddressAndTag(cartItem.listOp).address.toLowerCase() === address.toLowerCase() &&
+          extractAddressAndTag(cartItem.listOp).address.toLowerCase() === address?.toLowerCase() &&
           extractAddressAndTag(cartItem.listOp).tag === tag
       ),
     [cartItems]

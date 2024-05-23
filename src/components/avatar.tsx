@@ -1,10 +1,11 @@
 import clsx from 'clsx'
 import Image from 'next/image'
+import type { GetEnsAvatarReturnType } from 'viem'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 
 interface AvatarProps {
   name: string // ENS name or address
-  avatarUrl?: string
+  avatarUrl?: string | GetEnsAvatarReturnType
   size?: string
   height?: `${number}` | number
   width?: `${number}` | number

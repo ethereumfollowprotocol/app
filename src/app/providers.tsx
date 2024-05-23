@@ -14,6 +14,7 @@ import { CartProvider } from '#/contexts/cart-context'
 import { ActionsProvider } from '#/contexts/actions-context'
 import { TransactionsProvider } from '#/contexts/transactions-context'
 import { useState } from 'react'
+import { EFPProfileProvider } from '#/contexts/efp-profile-context'
 
 type Props = {
   children: React.ReactNode
@@ -48,14 +49,16 @@ export function Providers({ children, initialState }: Props) {
             initialChain={DEFAULT_CHAIN_ID}
             showRecentTransactions={true}
           >
-            <TransactionsProvider>
-              <CartProvider>
-                <ActionsProvider>
-                  <Navigation />
-                  {children}
-                </ActionsProvider>
-              </CartProvider>
-            </TransactionsProvider>
+            <EFPProfileProvider>
+              <TransactionsProvider>
+                <CartProvider>
+                  <ActionsProvider>
+                    <Navigation />
+                    {children}
+                  </ActionsProvider>
+                </CartProvider>
+              </TransactionsProvider>
+            </EFPProfileProvider>
           </RainbowKitProvider>
           {/* </PersistQueryClientProvider> */}
         </WagmiProvider>

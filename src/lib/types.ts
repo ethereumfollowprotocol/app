@@ -1,3 +1,5 @@
+import type { GetEnsAvatarReturnType } from 'viem'
+
 declare global {
   interface Window {
     // access via `window._APP_VERSION_`. The value is commit hash
@@ -21,16 +23,16 @@ export type Pretty<T> = {
 export interface ENSProfile {
   name: string
   address: Address
-  avatar: string
-  display: string
-  records: {
+  avatar: string | GetEnsAvatarReturnType
+  display?: string
+  records?: {
     avatar: string
     [key: string]: string
   }
-  chains: { [key: string]: string }
-  fresh: number
-  resolver: string
-  errors: { [key: string]: string }
+  chains?: { [key: string]: string }
+  fresh?: number
+  resolver?: string
+  errors?: { [key: string]: string }
 }
 
 export type NoRepetition<U extends string, ResultT extends any[] = []> =

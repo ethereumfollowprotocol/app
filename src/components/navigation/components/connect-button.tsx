@@ -53,10 +53,10 @@ const ConnectButton = () => {
       <button
         type='button'
         // className='bg-gradient-to-br p-[2px] from-yellow to-pink cursor-pointer h-12 rounded-full w-40'
-        className='border-[#FFC057] z-50 hover:bg-[#FFC057]/10 px-1 transition-colors border-2 gap-[6px] cursor-pointer flex justify-between items-center h-12 glass-card rounded-full w-48'
+        className='border-[#FFC057] z-50 hover:bg-[#FFC057]/10 px-1 transition-colors border-2 gap-1 xs:gap-[6px] cursor-pointer flex justify-between items-center h-12 glass-card rounded-full w-20 sm:w-48'
         onClick={() =>
           userAddress && openAccountModal
-            ? setWalletMenuOpen(true)
+            ? setWalletMenuOpen(!walletMenOpenu)
             : openConnectModal
               ? openConnectModal()
               : null
@@ -71,10 +71,14 @@ const ConnectButton = () => {
               height={36}
               className='rounded-full'
             />
-            <p className='font-semibold truncate text-sm'>
+            <p className='font-semibold hidden sm:block truncate text-sm'>
               {ensProfile.name || truncateAddress(userAddress)}
             </p>
-            <Image src={ArrowDown} alt='Open button' className='w-4 mr-1' />
+            <Image
+              src={ArrowDown}
+              alt='Open button'
+              className={`${walletMenOpenu ? 'rotate-180' : ''} transition-transform w-4 mr-1`}
+            />
           </>
         ) : (
           <div className='w-full h-full flex items-center justify-center  rounded-full'>
@@ -83,7 +87,7 @@ const ConnectButton = () => {
         )}
       </button>
       {walletMenOpenu && (
-        <div className='p-3 flex gap-1.5 z-50 shadow-md border-2 rounded-lg bg-white/95 border-gray-200 absolute top-[120%] flex-col items-end right-0'>
+        <div className='p-3 flex gap-1.5 w-[171px] z-50 shadow-md border-2 rounded-lg bg-white/95 border-gray-200 absolute top-[120%] flex-col items-end right-0'>
           <div className='flex justify-between items-center w-full hover:opacity-80 transition-opacity cursor-pointer'>
             <Image src={ArrowLeft} alt='Show lists' />
             <p className=' font-semibold'>List #0</p>

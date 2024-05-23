@@ -65,7 +65,7 @@ export function useConnectedFollowers(): ConnectedAddressFollowers {
     connectedAddressFollowerAddresses: data?.followers?.map(follower => follower.address),
     getConnectedAddressFollowerByAddress: (address: Address) => {
       return data?.followers?.find(
-        follower => follower.address.toLowerCase() === address.toLowerCase()
+        follower => follower.address?.toLowerCase() === address?.toLowerCase()
       )
     }
   }
@@ -118,7 +118,7 @@ export function useConnectedProfile(address?: Address): ConnectedAddressProfile 
   }
 
   const getFollowingByAddress: EFPProfile['getFollowingByAddress'] = (address: Address) => {
-    return data.following?.find(follow => follow.data === address.toLowerCase())
+    return data.following?.find(follow => follow.data === address?.toLowerCase())
   }
 
   const hasFollowingByAddress = (address: Address) => !!getFollowingByAddress(address)
@@ -153,7 +153,7 @@ export function useConnectedProfile(address?: Address): ConnectedAddressProfile 
       hasFollowingByAddress,
       getFollowState,
       doesFollow: (address: Address) => {
-        return data.following?.some(follow => follow.data === address.toLowerCase()) ?? false
+        return data.following?.some(follow => follow.data === address?.toLowerCase()) ?? false
       },
       following: data.following,
       followingAddresses: data.following
@@ -161,13 +161,13 @@ export function useConnectedProfile(address?: Address): ConnectedAddressProfile 
         .map(follow => follow.data),
       getFollowerByAddress: (address: Address) => {
         return data.followers?.find(
-          follower => follower.address.toLowerCase() === address.toLowerCase()
+          follower => follower.address.toLowerCase() === address?.toLowerCase()
         )
       },
       isFollowedBy: (address: Address) => {
         return (
           data.followers?.some(
-            follower => follower.address.toLowerCase() === address.toLowerCase()
+            follower => follower.address.toLowerCase() === address?.toLowerCase()
           ) ?? false
         )
       },
@@ -224,7 +224,7 @@ export function useFollowers(addressOrName: Address | string): Followers {
     followerAddresses: data?.followers?.map(follower => follower.address),
     getFollowerByAddress: (address: Address) => {
       return data?.followers?.find(
-        follower => follower.address.toLowerCase() === address.toLowerCase()
+        follower => follower.address.toLowerCase() === address?.toLowerCase()
       )
     }
   }

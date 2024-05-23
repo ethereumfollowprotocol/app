@@ -8,11 +8,10 @@ import LaunchPartners from './components/launch-partners'
 
 const Landing = () => {
   return (
-    <div className='mt-20 px-4 md:mt-36 lg:mt-44 xl:mt-52 2xl:mt-[15vw] gap-[50px] lg:gap-[150px] flex flex-col items-center mb-[100px] lg:mb-[170px]'>
+    <div className='mt-20 px-4 md:mt-36 lg:mt-44 xl:mt-60 gap-[50px] lg:gap-[150px] flex flex-col items-center mb-[100px] lg:mb-[170px]'>
       <div className='relative'>
-        <p className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold'>
-          It&apos;s about <span className='text-[#ffc056]'>who</span> you know.{' '}
-          <span className='hidden sm:inline'>😜</span>
+        <p className='text-[25px] sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold'>
+          It&apos;s about <span className='text-[#ffc056]'>who</span> you know. 😜
           <Image
             src={LineDesktop}
             alt='line'
@@ -24,7 +23,7 @@ const Landing = () => {
             src={LineMobile}
             alt='line'
             width={3}
-            className='lg:hidden pointer-events-none absolute top-[28px] left-[194px] md:top-[32px] md:left-[234px]'
+            className='lg:hidden pointer-events-none absolute top-[28px] left-[162px] sm:top-[28px] sm:left-[194px] md:top-[32px] md:left-[234px]'
           />
         </p>
       </div>

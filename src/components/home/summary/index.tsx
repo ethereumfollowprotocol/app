@@ -1,20 +1,22 @@
 'use client'
 
 import { UserProfileCard } from '#/components/user-profile-card'
-import { useAccount } from 'wagmi'
 import LatestFollowers from './components/latest-followers'
 import { Recommendations } from '#/components/recommendations'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 const Summary = () => {
-  const { address: userAddress } = useAccount()
+  const { profile } = useEFPProfile()
+
+  console.log(profile)
 
   return (
-    <div className='mt-12 md:mt-16 w-full lg:mt-24 xl:mt-32 px-4 md:px-6 flex items-start lg:justify-between xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4 xl:gap-4'>
-      {userAddress ? (
+    <div className='mt-36 md:mt-48 w-full lg:mt-52 xl:mt-60 px-4 lg:px-6 flex items-start lg:justify-between xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4 xl:gap-4'>
+      {profile ? (
         <>
           <UserProfileCard
-            address={userAddress}
-            stats={{ followers_count: 12, following_count: 8 }}
+            profile={profile?.ens}
+            stats={profile.stats}
             borderColor='border-[#FFDBD9]'
           />
           <LatestFollowers />

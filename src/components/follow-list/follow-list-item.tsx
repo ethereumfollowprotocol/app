@@ -30,18 +30,22 @@ export function FollowListItem({
       <FollowListItemName
         address={profileAddress}
         avatarUrl={profileAvatar}
-        className='flex-none w-fit sm:w-56' // Fixed width for consistent layout
+        className='flex-none w-fit' // Fixed width for consistent layout
         name={profileName}
         showFollowsYouBadges={showFollowsYouBadges}
       />
 
       {/* Middle section: Tags (conditionally displayed) */}
-      {showTags && (
-        <FollowListItemTags address={profileAddress} className='flex items-center' tags={tags} />
+      {showTags && tags.length > 0 && (
+        <FollowListItemTags
+          address={profileAddress}
+          className='flex w-fit items-center'
+          tags={tags}
+        />
       )}
 
       {/* Right section: Follow Button with consistent width */}
-      <FollowButton address={profileAddress} className='rounded-xl' />
+      <FollowButton address={profileAddress} className='rounded-xl w-[107px]' />
     </div>
   )
 }

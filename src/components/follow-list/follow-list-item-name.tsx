@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import type { Address } from 'viem'
+import type { Address, GetEnsAvatarReturnType } from 'viem'
 
 import { Avatar } from '#/components/avatar'
 import { truncateAddress } from '#/lib/utilities'
@@ -7,7 +7,7 @@ import { useFollowState } from '#/hooks/use-follow-state'
 
 interface FollowListItemNameProps {
   address: Address
-  avatarUrl?: string
+  avatarUrl?: string | GetEnsAvatarReturnType
   className?: string
   name?: string
   showFollowsYouBadges?: boolean

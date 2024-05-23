@@ -1,46 +1,33 @@
 'use client'
 
-import type { Address } from 'viem'
-import { useQuery } from '@tanstack/react-query'
-
 import { Avatar } from './avatar'
 import type { StatsResponse } from '#/api/requests'
 import { useConnectedProfile } from '#/api/actions'
 import { FollowButton } from '#/components/follow-button'
-import { resolveENSProfile } from '#/utils/resolveAddress'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 import { truncateAddress } from '#/lib/utilities'
+import type { ENSProfile } from '#/lib/types'
 
 interface Props {
-  address: Address
+  profile: ENSProfile
   stats: StatsResponse | undefined
   borderColor?: string
 }
 
-export function UserProfileCard({ address, stats, borderColor }: Props) {
+export function UserProfileCard({ profile, stats, borderColor }: Props) {
   const { profile: connectedProfile } = useConnectedProfile()
   /////////////////////////////////////////////////////////////////////////////
   // followers for the user profile that is being viewed
   /////////////////////////////////////////////////////////////////////////////
-  const { data: userProfileResponse } = useQuery({
-    queryKey: ['profile', address],
-    queryFn: async () => {
-      // const fetchedProfile = fetchUserProfile({ addressOrName })
-      const data = await resolveENSProfile(address)
-
-      return data
-    }
-  })
 
   // const address: Address | undefined = (
   //   userProfileResponse?.address || isAddress(addressOrName) ? addressOrName : undefined
   // ) as Address
   // const name: string | undefined = userProfileResponse?.ens?.name
   // const avatar = userProfileResponse?.ens?.avatar
-  const name = userProfileResponse?.name
-  const avatar = userProfileResponse?.avatar
-
-  if (!address) return null
+  const name = profile.name
+  const avatar = profile.avatar
+  const address = profile.address
 
   return (
     <div

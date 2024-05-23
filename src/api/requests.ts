@@ -28,14 +28,14 @@ export interface StatsResponse {
 export interface ProfileResponse {
   address: Address
   ens: ENSProfile
-  fresh: number
-  resolver: string
-  primary_list: string
-  stats: StatsResponse | undefined
-  followers: FollowerResponse[]
-  following: FollowingResponse[]
-  chains: Record<string, string>
-  errors: Record<string, unknown>
+  fresh?: number
+  resolver?: string
+  primary_list?: string
+  stats?: StatsResponse | undefined
+  followers?: FollowerResponse[]
+  following?: FollowingResponse[]
+  chains?: Record<string, string>
+  errors?: Record<string, unknown>
 }
 
 type AddressOrName = Address | string

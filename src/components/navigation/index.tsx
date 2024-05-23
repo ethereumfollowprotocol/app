@@ -52,13 +52,13 @@ const Navigation = () => {
   })
 
   return (
-    <header className='w-full font-sans p-4 md:px-6 md:py-6 lg:px-8'>
+    <header className='w-full fixed z-50 glass-card bg-white/50 top-0 left-0 font-sans border-b-[1px] border-gray-200 p-4 lg:px-6 md:py-6 xl:px-8'>
       <nav className='my-auto flex w-full flex-row items-center justify-between'>
         <div className='flex w-full justify-start items-center gap-6 xl:gap-8'>
           <Link href='/' className='select-none' aria-label='Ethereum Follow Protocol Logo link'>
             <Image
               src={FullLogo}
-              className='hidden sm:block sm:w-32 select-none'
+              className='hidden sm:block sm:w-36 select-none'
               alt='Ethereum Follow Protocol Logo'
             />
             <Image
@@ -90,8 +90,6 @@ const Navigation = () => {
           </ul>
           <div className='flex items-center gap-2 md:gap-4 xl:gap-6'>
             {userAddress && <CartButton cartItemsCount={totalCartItems} />}
-            <ConnectButton />
-            {/* <Menu /> */}
             <div ref={clickAwayRef} className='lg:hidden relative'>
               <div
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -102,7 +100,7 @@ const Navigation = () => {
                 <div className='w-5 h-[3px] bg-darkGrey rounded-full'></div>
               </div>
               {mobileMenuOpen && (
-                <div className='glass-card px-3 py-2 gap-1 z-50 shadow-md border-2 rounded-md border-gray-200 absolute top-[120%] flex flex-col items-end right-0'>
+                <div className=' bg-white/90  glass-card px-3 py-2 gap-1 z-50 shadow-md border-2 rounded-md border-gray-200 absolute top-[120%] flex flex-col items-end right-0'>
                   {navItems.map(item => (
                     <div className='font-bold' key={`${item.name}`}>
                       <Link
@@ -120,6 +118,8 @@ const Navigation = () => {
                 </div>
               )}
             </div>
+            <ConnectButton />
+            {/* <Menu /> */}
           </div>
         </div>
       </nav>

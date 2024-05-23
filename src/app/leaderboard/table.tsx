@@ -7,7 +7,6 @@ import { SECOND } from '#/lib/constants/index.ts'
 import { useQueryState } from 'next-usequerystate'
 import type { LeaderboardFilter } from './types.ts'
 import { Searchbar } from '#/components/searchbar.tsx'
-import { SelectWithFilter } from '#/components/select-with-filter.tsx'
 import { Suspense } from 'react'
 
 export function LeaderboardTable({
@@ -45,14 +44,14 @@ export function LeaderboardTable({
           </Suspense>
         </div>
 
-        <Suspense>
+        {/* <Suspense>
           <SelectWithFilter
             dropdownOnly={false}
             filterQueryKey='filter'
             placeholder='Select a filter'
             items={['following', 'followers', 'mutuals', 'blocked+muted']}
           />
-        </Suspense>
+        </Suspense> */}
         {/* <div className='w-min'>
           <IconButton
             radius='full'
