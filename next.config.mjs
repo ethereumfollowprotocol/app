@@ -44,15 +44,17 @@ const nextConfig = {
     fetches: { fullUrl: true }
   },
   images: {
-    domains: ['ipfs.io', 'euc.li'],
+    domains: ['ipfs.io'],
     remotePatterns: [
       /**
        * Temporarily accept all domains during development
        */
       {
         protocol: 'https',
-        hostname: '*'
-      }
+        hostname: 'euc.li',
+        port: '',
+        pathname: '/*',
+      },
     ]
   },
   /** @param {WebpackConfiguration} config */
