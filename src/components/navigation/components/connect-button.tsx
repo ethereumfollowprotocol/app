@@ -70,6 +70,7 @@ const ConnectButton = () => {
               width={36}
               height={36}
               className='rounded-full'
+              unoptimized={true}
             />
             <p className='font-semibold hidden sm:block truncate text-sm'>
               {ensProfile.name || truncateAddress(userAddress)}
