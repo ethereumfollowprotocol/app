@@ -92,13 +92,11 @@ export const useFollowButton = ({
 
     // add to cart if it's a follow
     if (buttonText === 'Follow') {
-      console.log('added')
       return addCartItem({ listOp: listOpAddListRecord(address) })
     }
 
     // add to cart if it's an unfollow
     if (buttonText === 'Unfollow') {
-      console.log('removed')
       return addCartItem({ listOp: listOpRemoveListRecord(address) })
     }
   }

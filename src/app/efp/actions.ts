@@ -128,8 +128,6 @@ export async function setMintState({
     args: [mintStateRecord[mintState]]
   })
 
-  console.log(request)
-
   const writeResult = await client.writeContract(request)
   return writeResult
 }

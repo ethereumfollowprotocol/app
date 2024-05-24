@@ -69,7 +69,6 @@ export function AddTagDropdown({
       >
         {isEditingCustomTag ? (
           <input
-            // biome-ignore lint/a11y/noAutofocus: user is intentionally clicking to get to the input
             autoFocus={true}
             type='text'
             value={customTagValue}

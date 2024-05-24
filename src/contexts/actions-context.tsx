@@ -1,8 +1,8 @@
 'use client'
 
-import { createContext, useContext, useState, type ReactNode, useCallback, useMemo } from 'react'
 import type { WriteContractReturnType } from 'viem'
 import { useWaitForTransactionReceipt } from 'wagmi'
+import { createContext, useContext, useState, type ReactNode, useCallback, useMemo } from 'react'
 
 export enum EFPActionType {
   CreateEFPList = 'CreateEFPList',
@@ -98,17 +98,12 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
   const executeActionByIndex = useCallback(
     async (index: number) => {
       // Validate the index
-      if (index < 0 || index >= actions.length) {
-        console.error('Action index out of bounds:', index)
-        return
-      }
+      if (index < 0 || index >= actions.length)
+        throw new Error(`Action index out of bounds: ${index}`)
 
       // Get the action to execute
       const actionToExecute = actions[index]
-      if (!actionToExecute) {
-        console.error('No action found at index', index)
-        return
-      }
+      if (!actionToExecute) throw new Error(`No action found at index: ${index}`)
 
       // Set the action to pending confirmation
       updateAction({ ...actionToExecute, isPendingConfirmation: true })
@@ -116,8 +111,8 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
       try {
         const hash = await actionToExecute.execute()
         updateAction({ ...actionToExecute, isPendingConfirmation: false, txHash: hash })
-      } catch (error) {
-        console.error('Execution error for action at index', index, error)
+      } catch (error: any) {
+        throw new Error(error)
         // TODO Handle action failure
       }
     },
