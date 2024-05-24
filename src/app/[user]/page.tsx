@@ -10,7 +10,7 @@ import { UserProfileCard } from '#/components/user-profile-card'
 import { UserProfilePageTable } from '#/components/profile-page-table'
 import type { ProfileTabType } from '#/types/common'
 import { PROFILE_TABS } from '#/lib/constants'
-import SettingsIcon from '../../../public/assets/icons/settings.svg'
+import SettingsIcon from '/public/assets/icons/settings.svg'
 
 interface Props {
   params: { user: string }
