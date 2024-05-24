@@ -14,7 +14,7 @@
     "skipLibCheck": true,
     "paths": {
       "#/*": ["./src/*"],
-      "~env": ["./env.ts"],
+      "~env": ["./env.ts"]
     },
     "noUnusedLocals": true,
     "alwaysStrict": true,
@@ -41,7 +41,7 @@
       }
     ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.jsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.jsx", ".next/types/**/*.ts", ""],
   "files": ["biome.json", "environment.d.ts", "next.config.mjs", "env.ts"],
   "exclude": ["node_modules", "./src/lib/generated", "_"]
 }
