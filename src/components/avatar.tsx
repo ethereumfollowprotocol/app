@@ -24,6 +24,7 @@ export const Avatar = ({
       width={50}
       // src={avatarUrl || `${process.env.NEXT_PUBLIC_ENS_API_URL}/i/${name}` || DefaultAvatar}
       src={avatarUrl || DefaultAvatar}
+      unoptimized={true}
     />
   )
 }
