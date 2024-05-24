@@ -22,5 +22,9 @@ export const DAY = 24 * HOUR
 export const WEEK = 7 * DAY
 
 export const PROFILE_TABS: ProfileTabType[] = ['following', 'followers']
+export const LANGUAGES = [
+  { language: 'English', key: 'en' },
+  { language: 'Slovenščina', key: 'si' }
+]
 export const DEFAULT_TAGS = ['No Tag', 'Blocked', 'Muted']
 export const SORT_OPTIONS = ['follower count', 'latest first', 'earliest first', 'alphabetical']

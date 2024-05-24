@@ -1,10 +1,11 @@
+import './i18n'
 import './globals.css'
 import '@rainbow-me/rainbowkit/styles.css'
 
 import clsx from 'clsx'
 import { Toaster } from 'sonner'
 import { headers } from 'next/headers'
-import { Providers } from './providers.tsx'
+import Providers from './providers.tsx'
 import { cookieToInitialState } from 'wagmi'
 import { Analytics } from '@vercel/analytics/react'
 import { Inter, IBM_Plex_Mono } from 'next/font/google'
