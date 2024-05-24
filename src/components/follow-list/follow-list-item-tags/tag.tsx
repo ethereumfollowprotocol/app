@@ -1,9 +1,8 @@
-import { Badge } from '@radix-ui/themes'
-import type { Address } from 'viem'
-import { useTagBgColor } from './use-tag-bg-color'
 import clsx from 'clsx'
-import { useIsEditView } from '#/hooks/use-is-edit-view'
+import type { Address } from 'viem'
 import { useCart } from '#/contexts/cart-context'
+import { useTagBgColor } from './use-tag-bg-color'
+import { useIsEditView } from '#/hooks/use-is-edit-view'
 
 export function Tag({
   address,
@@ -18,14 +17,17 @@ export function Tag({
   const isEditView = useIsEditView()
   const bgColor = useTagBgColor({ address, tag })
   return (
-    <Badge
+    <div
       key={address + tag}
-      variant='solid'
-      className={clsx(`text-black`, bgColor, isEditView && 'cursor-pointer', className)}
-      radius='full'
+      className={clsx(
+        `text-black rounded-full`,
+        bgColor,
+        isEditView && 'cursor-pointer',
+        className
+      )}
       onClick={() => handleTagClick({ address, tag })}
     >
       {tag}
-    </Badge>
+    </div>
   )
 }

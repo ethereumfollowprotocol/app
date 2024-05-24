@@ -1,8 +1,8 @@
 'use client'
 
-import { createContext, useContext, useState, type ReactNode, useCallback, useMemo } from 'react'
 import type { WriteContractReturnType } from 'viem'
 import { useWaitForTransactionReceipt } from 'wagmi'
+import { createContext, useContext, useState, type ReactNode, useCallback, useMemo } from 'react'
 
 export enum EFPActionType {
   CreateEFPList = 'CreateEFPList',
@@ -19,7 +19,7 @@ export type Action = {
   /* The transaction hash associated with the action */
   txHash?: `0x${string}`
   /* The action to be executed */
-  execute: () => Promise<WriteContractReturnType>
+  execute: () => Promise<WriteContractReturnType | undefined>
   /* If the action is pending confirmation */
   isPendingConfirmation: boolean
   /* If the action triggered error */
@@ -95,21 +95,15 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
   }, [currentActionIndex, actions.length])
 
   // Executes the action based on the index to be able to handle async execution with synchronous state updates
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Don't need actions[index] as a dep
   const executeActionByIndex = useCallback(
     async (index: number) => {
       // Validate the index
-      if (index < 0 || index >= actions.length) {
-        console.error('Action index out of bounds:', index)
-        return
-      }
+      if (index < 0 || index >= actions.length)
+        throw new Error(`Action index out of bounds: ${index}`)
 
       // Get the action to execute
       const actionToExecute = actions[index]
-      if (!actionToExecute) {
-        console.error('No action found at index', index)
-        return
-      }
+      if (!actionToExecute) throw new Error(`No action found at index: ${index}`)
 
       // Set the action to pending confirmation
       updateAction({ ...actionToExecute, isPendingConfirmation: true })
@@ -117,8 +111,8 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
       try {
         const hash = await actionToExecute.execute()
         updateAction({ ...actionToExecute, isPendingConfirmation: false, txHash: hash })
-      } catch (error) {
-        console.error('Execution error for action at index', index, error)
+      } catch (error: any) {
+        throw new Error(error)
         // TODO Handle action failure
       }
     },

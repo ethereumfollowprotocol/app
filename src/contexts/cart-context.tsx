@@ -1,18 +1,19 @@
 'use client'
 
-import { useIsEditView } from '#/hooks/use-is-edit-view'
+import type { Address } from 'viem'
 import { hexlify } from '#/lib/utilities'
+import { createContext, useContext, useState, type ReactNode, useCallback } from 'react'
+
 import {
-  listOpAsHexstring,
   type ListOp,
   isTagListOp,
-  extractAddressAndTag,
-  type ListOpTagOpParams,
   listOpAddTag,
-  listOpRemoveTag
+  listOpRemoveTag,
+  listOpAsHexstring,
+  extractAddressAndTag,
+  type ListOpTagOpParams
 } from '#/types/list-op'
-import { createContext, useContext, useState, type ReactNode, useCallback } from 'react'
-import type { Address } from 'viem'
+import { useIsEditView } from '#/hooks/use-is-edit-view'
 
 // Define the type for each cart item
 type CartItem = {
@@ -72,52 +73,48 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   }
 
   const hasListOpAddRecord = useCallback(
-    (address: Address): boolean => {
-      return cartItems.some(
+    (address: Address): boolean =>
+      cartItems.some(
         cartItem =>
           cartItem.listOp.version === 1 &&
           cartItem.listOp.opcode === 1 &&
-          `0x${cartItem.listOp.data.toString('hex')}` === address
-      )
-    },
+          `0x${cartItem.listOp.data.toString('hex')}`.toLowerCase() === address?.toLowerCase()
+      ),
     [cartItems]
   )
 
   const hasListOpRemoveRecord = useCallback(
-    (address: Address): boolean => {
-      return cartItems.some(
+    (address: Address): boolean =>
+      cartItems.some(
         cartItem =>
           cartItem.listOp.version === 1 &&
           cartItem.listOp.opcode === 2 &&
-          `0x${cartItem.listOp.data.toString('hex')}` === address
-      )
-    },
+          `0x${cartItem.listOp.data.toString('hex')}`.toLowerCase() === address?.toLowerCase()
+      ),
     [cartItems]
   )
 
   const hasListOpAddTag = useCallback(
-    ({ address, tag }: { address: Address; tag: string }): boolean => {
-      return cartItems.some(
+    ({ address, tag }: { address: Address; tag: string }): boolean =>
+      cartItems.some(
         cartItem =>
           isTagListOp(cartItem.listOp) &&
           cartItem.listOp.opcode === 3 &&
-          extractAddressAndTag(cartItem.listOp).address === address &&
+          extractAddressAndTag(cartItem.listOp).address.toLowerCase() === address?.toLowerCase() &&
           extractAddressAndTag(cartItem.listOp).tag === tag
-      )
-    },
+      ),
     [cartItems]
   )
 
   const hasListOpRemoveTag = useCallback(
-    ({ address, tag }: { address: Address; tag: string }): boolean => {
-      return cartItems.some(
+    ({ address, tag }: { address: Address; tag: string }): boolean =>
+      cartItems.some(
         cartItem =>
           isTagListOp(cartItem.listOp) &&
           cartItem.listOp.opcode === 4 &&
-          extractAddressAndTag(cartItem.listOp).address === address &&
+          extractAddressAndTag(cartItem.listOp).address.toLowerCase() === address?.toLowerCase() &&
           extractAddressAndTag(cartItem.listOp).tag === tag
-      )
-    },
+      ),
     [cartItems]
   )
 
@@ -201,7 +198,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
       return cartItems.reduce((tags, { listOp }) => {
         if (isTagListOp(listOp)) {
           const { address: opAddress, tag } = extractAddressAndTag(listOp)
-          if (opAddress === address) {
+          if (opAddress.toLowerCase() === address.toLowerCase()) {
             tags.push(tag)
           }
         }

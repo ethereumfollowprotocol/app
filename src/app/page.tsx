@@ -1,7 +1,7 @@
-import * as React from 'react'
-import Image from 'next/image'
 import type { Metadata } from 'next'
-import { Flex, Text } from '@radix-ui/themes'
+import { Footer } from '#/components/footer'
+import Summary from '#/components/home/summary'
+import Landing from '#/components/home/landing'
 
 export const metadata = {
   metadataBase: new URL('https://app.ethfollow.xyz'),
@@ -13,34 +13,16 @@ export const metadata = {
   }
 } satisfies Metadata
 
-export default async function HomePage() {
+const HomePage = () => {
   return (
-    <React.Fragment>
-      <main className='mx-auto flex h-full min-h-full w-full flex-col items-center overflow-scroll px-4 pt-8 text-center font-sans'>
-        <Text className='text-4xl font-bold text-white'>It's about who you know.</Text>
-        <Flex direction={'column'}>
-          <Text className='text-4xl font-bold text-white'>The social graph</Text>
-          <Text className='text-4xl font-bold text-[#FEF305]'>for Ethereum.</Text>
-        </Flex>
-
-        <Image
-          src='/assets/landing-graph.webp'
-          width={500}
-          height={500}
-          alt='Landing graph'
-          priority={true}
-          placeholder='empty'
-          className='select-none pointer-events-none'
-        />
-        <Flex direction={'column'}>
-          <Text className='text-4xl font-bold text-white'>Follow your friends.</Text>
-          <Text className='text-4xl font-bold text-[#FEF305]'>Ghost your enemies.</Text>
-        </Flex>
-        <Text className='text-4xl font-bold text-white'>A follower list you own</Text>
+    <>
+      <main className='mx-auto bg-transparent flex min-h-screen w-full flex-col items-center font-sans'>
+        <Summary />
+        <Landing />
       </main>
-      {/* <React.Suspense>
-        <Footer />
-      </React.Suspense> */}
-    </React.Fragment>
+      <Footer />
+    </>
   )
 }
+
+export default HomePage

@@ -8,51 +8,6 @@ import containerQueriesPlugin from '@tailwindcss/container-queries'
 
 const { colors, fontFamily, fontSize, keyframes, animation, spacing } = {
   colors: {
-    border: 'hsl(var(--border))',
-    input: {
-      DEFAULT: 'hsl(var(--input))',
-      invalid: 'hsl(var(--input-invalid))'
-    },
-    ring: {
-      DEFAULT: 'hsl(var(--ring))',
-      invalid: 'hsl(var(--foreground-danger))'
-    },
-    background: 'hsl(var(--background))',
-    foreground: {
-      DEFAULT: 'hsl(var(--foreground))',
-      danger: 'hsl(var(--foreground-danger))'
-    },
-    primary: {
-      DEFAULT: 'hsl(var(--primary))',
-      foreground: 'hsl(var(--primary-foreground))'
-    },
-    secondary: {
-      DEFAULT: 'hsl(var(--secondary))',
-      foreground: 'hsl(var(--secondary-foreground))'
-    },
-    destructive: {
-      DEFAULT: 'hsl(var(--destructive))',
-      foreground: 'hsl(var(--destructive-foreground))'
-    },
-    muted: {
-      DEFAULT: 'hsl(var(--muted))',
-      foreground: 'hsl(var(--muted-foreground))'
-    },
-    accent: {
-      DEFAULT: 'hsl(var(--accent))',
-      foreground: 'hsl(var(--accent-foreground))'
-    },
-    popover: {
-      DEFAULT: 'hsl(var(--popover))',
-      foreground: 'hsl(var(--popover-foreground))'
-    },
-    card: {
-      DEFAULT: 'hsl(var(--card))',
-      foreground: 'hsl(var(--card-foreground))'
-    },
-    /**
-     * @see https://uicolors.app/create
-     */
     lime: {
       '50': 'hsl(98, 100%, 95%)',
       '100': 'hsl(99, 100%, 88%)',
@@ -92,7 +47,10 @@ const { colors, fontFamily, fontSize, keyframes, animation, spacing } = {
       '900': 'hsl(26, 74%, 26%)',
       '950': 'hsl(23, 86%, 14%)'
     },
-    grey: '#CDCDCD',
+    yellow: '#FFF500',
+    pink: '#FF79C9',
+    neutral: '#CDCDCD',
+    grey: '#999999',
     darkGrey: '#333333'
   },
   fontFamily: {
@@ -198,8 +156,6 @@ export default {
     containerQueriesPlugin,
     tailwindcssRadixPlugin,
     plugin(({ addVariant, addUtilities, matchUtilities, theme }) => {
-      addVariant('radix-side-top', '&[data-side="top"]')
-      addVariant('radix-side-bottom', '&[data-side="bottom"]')
       matchUtilities(
         { 'animation-delay': value => ({ 'animation-delay': value }) },
         { values: theme('transitionDelay') }

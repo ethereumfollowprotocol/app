@@ -1,46 +1,47 @@
 'use client'
 
-import { Search } from '#/components/search'
-import { Box, Button, Flex, Heading } from '@radix-ui/themes'
-import { Recommendations } from '#/app/editor/recommendations'
-import { UnconfirmedChanges } from './unconfirmed-changes'
+import type { Address } from 'viem'
+
 import { Legend } from './legend'
+import { Search } from '#/components/search'
+import { useCart } from '#/contexts/cart-context'
+import { listOpAddListRecord } from '#/types/list-op'
+import { UnconfirmedChanges } from './unconfirmed-changes'
+import { Recommendations } from '#/components/recommendations'
 
 export default function EditorPage() {
-  const handleAddFollow = () => {
-    console.log('Adding to follow in editor')
+  const { addCartItem } = useCart()
+
+  const handleAddFollow = (address: Address) => {
+    addCartItem({ listOp: listOpAddListRecord(address) })
   }
 
   return (
     <main className='flex min-h-full h-full w-full flex-col items-center text-center px-28 pt-10'>
-      <Flex gap='9' className='w-full'>
-        <Flex direction='column' gap='4' className='w-1/3'>
-          <Heading className='text-left mb-4 text-3xl font-bold'>Editor</Heading>
-          <Flex gap='2'>
+      <div className='flex gap-9 w-full'>
+        <div className='flex flex-col gap-4 w-1/3'>
+          <h1 className='text-left mb-4 text-3xl font-bold'>Editor</h1>
+          <div className='flex g-2'>
             <Search />
-            <Button
-              className='bg-gradient-to-b from-kournikova-300 to-salmon-400 text-black h-auto'
-              radius='full'
-              onClick={handleAddFollow}
-              size='3'
+            <button
+              className='bg-gradient-to-b p-3 from-kournikova-300 rounded-full to-salmon-400 text-black h-auto'
+              onClick={() => handleAddFollow('0x')}
             >
               Add
-            </Button>
-          </Flex>
-          <Box px='6'>
+            </button>
+          </div>
+          <div className='px-6'>
             <Recommendations header='Recommendations' />
-          </Box>
-        </Flex>
-        <Flex direction='column' gap='4' className='w-2/3'>
-          <Flex justify='between' mx='5' align='center'>
-            <Heading as='h2' weight='bold'>
-              Unconfirmed Changes
-            </Heading>
+          </div>
+        </div>
+        <div className='flex flex-col gap-4 w-2/3'>
+          <div className='flex justify-between items-center mx-5'>
+            <h2 className='font-bold'>Unconfirmed Changes</h2>
             <Legend />
-          </Flex>
+          </div>
           <UnconfirmedChanges />
-        </Flex>
-      </Flex>
+        </div>
+      </div>
     </main>
   )
 }

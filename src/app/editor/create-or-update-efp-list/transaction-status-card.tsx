@@ -1,4 +1,3 @@
-import { Box, Heading, Text } from '@radix-ui/themes'
 import { useCallback } from 'react'
 import { ChainIcon } from '#/components/chain-icon'
 import { PrimaryButton } from '#/components/primary-button'
@@ -61,35 +60,25 @@ export function TransactionStatusCard({ setOpen }: TransactionStatusCardProps) {
 
   return (
     <>
-      <Box className='flex flex-col gap-2'>
-        <Heading as='h1' size='6'>
-          Onchain Update
-        </Heading>
+      <div className='flex flex-col gap-2'>
+        <h1 className='text-3xl'>Onchain Update</h1>
 
-        <Text as='p' size='2' weight='bold'>
+        <p className='text-lg font-bold'>
           {currentActionIndex + 1} of {actions.length}
-        </Text>
-      </Box>
-      <Box className='flex flex-col gap-4'>
-        <Text size='5' weight='bold'>
-          Action
-        </Text>
-        <Text size='2' weight='bold'>
-          {currentAction.label}
-        </Text>
-      </Box>
+        </p>
+      </div>
+      <div className='flex flex-col gap-4'>
+        <p className='text-2xl font-bold'>Action</p>
+        <p className='text-xl font-bold'>{currentAction.label}</p>
+      </div>
       {chain && (
-        <Box className='flex flex-col gap-2'>
-          <Text size='4' weight='bold'>
-            Chain
-          </Text>
-          <Box className='flex items-center gap-2'>
+        <div className='flex flex-col gap-2'>
+          <p className='font-bold text-xl'>Chain</p>
+          <div className='flex items-center gap-2'>
             <ChainIcon chain={chain} className='w-[30px] h-[30px]' />
-            <Text size='3' weight='bold'>
-              {chain.name}
-            </Text>
-          </Box>
-        </Box>
+            <p className='font-bold text-lg'>{chain.name}</p>
+          </div>
+        </div>
       )}
       <TransactionStatusDetails action={currentAction} />
       {showNextButton && (
@@ -139,17 +128,11 @@ function TransactionStatusDetails({ action }: { action: Action }) {
   const explorerUrl = `${chain?.blockExplorers?.default.url}/tx/${action.txHash}`
 
   return shouldShowComponent ? (
-    <Box className='flex flex-col'>
-      <Text size='7' weight='bold'>
-        Status
-      </Text>
-      <Text size='2' className={clsx(getStatusColor(), 'font-bold')}>
-        {getStatusDescription()}
-      </Text>
+    <div className='flex flex-col'>
+      <p className='text-4xl font-bold'>Status</p>
+      <p className={clsx(getStatusColor(), 'text-lg font-bold')}>{getStatusDescription()}</p>
       {action.isPendingConfirmation ? (
-        <Text size='2' className='text-gray-500 font-bold'>
-          Check your wallet
-        </Text>
+        <p className='text-lg text-gray-500 font-bold'>Check your wallet</p>
       ) : (
         <a
           href={explorerUrl}
@@ -160,6 +143,6 @@ function TransactionStatusDetails({ action }: { action: Action }) {
           View on Block Explorer
         </a>
       )}
-    </Box>
+    </div>
   ) : null
 }

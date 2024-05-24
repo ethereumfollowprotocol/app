@@ -1,6 +1,6 @@
-import { useConnectedProfile, type FollowState } from '#/api/actions'
 import { useMemo } from 'react'
 import type { Address } from 'viem'
+import { type FollowState, useConnectedProfile } from '#/api/actions'
 
 /**
  * @description

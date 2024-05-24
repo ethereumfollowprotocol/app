@@ -2,15 +2,8 @@
 
 import clsx from 'clsx'
 import Link from 'next/link'
-import {
-  GitHubLogoIcon,
-  DiscordLogoIcon,
-  TwitterLogoIcon,
-  HamburgerMenuIcon
-} from '@radix-ui/react-icons'
+import { useState } from 'react'
 import { usePathname } from 'next/navigation'
-import { projectSocials } from '#/lib/constants/routes.ts'
-import { DropdownMenu, IconButton, Button, Flex, Link as RadixLink } from '@radix-ui/themes'
 
 export const emojis = {
   home: '🏠',
@@ -18,31 +11,11 @@ export const emojis = {
   leaderboard: '🏆',
   settings: '⚙️',
   bug: '🐛'
-} satisfies Record<string, string>
-
-export const projectLinkIcons = {
-  GitHub: () => (
-    <IconButton size='1' variant='outline' className='shadow-none'>
-      <GitHubLogoIcon width='28' height='28' className='text-black' />
-    </IconButton>
-  ),
-
-  X: () => (
-    <IconButton size='1' variant='outline' className='shadow-none'>
-      <TwitterLogoIcon width='28' height='28' className='text-black' />
-    </IconButton>
-  ),
-
-  Discord: () => (
-    <IconButton size='1' variant='outline' className='shadow-none'>
-      <DiscordLogoIcon width='28' height='28' className='text-black' />
-    </IconButton>
-  )
 }
 
-const APP_VERSION = (
-  process.env['NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA'] || process.env['APP_VERSION']
-)?.slice(0, 7)
+// const APP_VERSION = (
+//   process.env['NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA'] || process.env['APP_VERSION']
+// )?.slice(0, 7)
 
 const navItems = [
   {
@@ -70,33 +43,29 @@ const navItems = [
 ]
 
 export function Menu() {
+  const [dropdownOpen, setDropdownOpen] = useState(false)
   const pathname = usePathname()
 
   return (
-    <DropdownMenu.Root>
-      <DropdownMenu.Trigger>
-        <IconButton
-          variant='soft'
-          color='gray'
-          className='bg-white hover:cursor-pointer hover:opacity-100'
-          radius='large'
-          size={'3'}
+    <div className='relative'>
+      <div>
+        <div
+          onClick={() => setDropdownOpen(!dropdownOpen)}
+          className=' flex flex-col items-center justify-center'
         >
-          <HamburgerMenuIcon color='gray' />
-        </IconButton>
-      </DropdownMenu.Trigger>
-      <DropdownMenu.Content>
-        <Flex my={'1'} gap={'2'} mx={'auto'}>
-          <Button
-            color='pink'
-            className='bg-gradient-to-b from-yellow-300 to-pink-400 text-white'
-            variant='classic'
-            radius='full'
-            size={'2'}
+          <div className='bg-black w-4 h-1 rounded-xl'></div>
+          <div className='bg-black w-4 h-1 rounded-xl'></div>
+          <div className='bg-black w-4 h-1 rounded-xl'></div>
+        </div>
+      </div>
+      <div className='absolute top-full mt-2 left-0'>
+        {/* <div className='flex gap-2 my-1 mx-auto'>
+          <button
+            className='bg-gradient-to-b from-yellow-300 to-pink-400 text-white p-4'
           >
             Cool
-          </Button>
-          <Button
+          </button>
+          <button
             color='gray'
             variant='classic'
             className='bg-white text-gray-600'
@@ -104,12 +73,11 @@ export function Menu() {
             size={'2'}
           >
             Lame
-          </Button>
-        </Flex>
+          </button>
+        </div> */}
 
         {navItems.map((route, index) => (
-          <DropdownMenu.Item
-            asChild={true}
+          <div
             className={clsx([
               'my-0.5 flex capitalize lg:hidden',
               pathname === route.href ? 'bg-pink-400 text-white' : ''
@@ -120,19 +88,19 @@ export function Menu() {
               {route.name}
               <span>{emojis[route.name.toLowerCase() as keyof typeof emojis] || route.emoji}</span>
             </Link>
-          </DropdownMenu.Item>
+          </div>
         ))}
-        <DropdownMenu.Item asChild={true}>
+        {/* <div>
           <Link href='/onboarding'>Get started</Link>
-        </DropdownMenu.Item>
-        <DropdownMenu.Separator />
-        <DropdownMenu.Sub>
+        </div>
+        <hr />
+        <div>
           <DropdownMenu.SubTrigger>List #2,932</DropdownMenu.SubTrigger>
           <DropdownMenu.SubContent>
             <DropdownMenu.Item>List #3</DropdownMenu.Item>
             <DropdownMenu.Item>List #2,932</DropdownMenu.Item>
           </DropdownMenu.SubContent>
-        </DropdownMenu.Sub>
+        </div>
         <DropdownMenu.Separator />
         <DropdownMenu.Item asChild={true}>
           <Link prefetch={true} href='/team'>
@@ -202,8 +170,8 @@ export function Menu() {
           >
             {APP_VERSION}
           </RadixLink>
-        </DropdownMenu.Item>
-      </DropdownMenu.Content>
-    </DropdownMenu.Root>
+        </DropdownMenu.Item> */}
+      </div>
+    </div>
   )
 }

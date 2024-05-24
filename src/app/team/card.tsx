@@ -1,72 +1,56 @@
+import Image from 'next/image'
+import type { Address, GetEnsAvatarReturnType } from 'viem'
 import { FollowButton } from '#/components/follow-button'
-import { ImageWithFallback } from '#/components/image-with-fallback.tsx'
-import { Badge, Box, Flex, Text } from '@radix-ui/themes'
-import type { Address } from 'viem'
+import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 
 export interface TeamMember {
   ens: string
   address: Address
   x: string
   github: string
-  avatar: string
+  avatar?: string | GetEnsAvatarReturnType
 }
 
 export function TeamCard(props: TeamMember) {
   const { ens, address, avatar, x, github } = props
   return (
-    <Flex direction='column'>
-      <Flex mx='auto' className='bg-white/70 border-0 max-w-80 w-[295px] min-w-60 rounded-xl p-3'>
-        <Flex direction='column' align='start' width='100%' height='100%' justify='center'>
-          <Badge>#1</Badge>
-          <Flex direction='column' justify='center' align='center' mx='auto' mt='3'>
-            <ImageWithFallback
-              src={avatar}
+    <div className='flex flex-col'>
+      <div className='mx-auto flex bg-white/70 border-0 max-w-80 w-[295px] min-w-60 rounded-xl p-3'>
+        <div className='flex flex-col items-start justify-center h-full w-full'>
+          <p>#1</p>
+          <div className='flex flex-col items-center justify-center mx-auto mt-3'>
+            <Image
+              src={avatar || DefaultAvatar}
               width={100}
               height={100}
               className='rounded-full'
               alt='avatar'
             />
-            <Text size='5' className='font-bold' my='2'>
-              {ens}
-            </Text>
-            <Badge color='blue' radius='full' className='px-3' size='1'>
-              TODO1
-            </Badge>
-            <Flex gap='3' className='' my='3'>
+            <p className='text-2xl font-bold my-2'>{ens}</p>
+            <p className='text-blue rounded-full px-3'>TODO1</p>
+            <div className='flex gap-3 my-3'>
               <FollowButton address={address} />
-            </Flex>
-          </Flex>
-          <Flex justify='center' mx='auto' className='text-center' gap='8'>
-            <Box>
-              <Text size='5' className='font-bold' as='div'>
-                TODO2
-              </Text>
-              <Text size='2' className='font-bold text-gray-400' as='div'>
-                Following
-              </Text>
-            </Box>
-            <Box>
-              <Text size='5' className='font-bold' as='div'>
-                TODO3
-              </Text>
-              <Text size='2' className='font-bold text-gray-400' as='div'>
-                Followers
-              </Text>
-            </Box>
-          </Flex>
-          <Flex justify='center' mx='auto' mt='5' mb='4' className='text-center'>
-            <Box>
-              <Text size='5' className='font-bold' as='div'>
-                TODO4
-              </Text>
-              <Text size='2' className='font-bold text-gray-400' as='div'>
-                Leaderboard
-              </Text>
-            </Box>
-          </Flex>
-        </Flex>
-      </Flex>
-      <Box mt='4' className='space-x-6'>
+            </div>
+          </div>
+          <div className='flex justify-center mx-auto gap-8 text-center'>
+            <div>
+              <div className='text-2xl font-bold'>TODO2</div>
+              <div className='font-bold text-gray-400 text-xl'>Following</div>
+            </div>
+            <div>
+              <div className='text-2xl font-bold'>TODO3</div>
+              <div className='font-bold text-gray-400 text-xl'>Followers</div>
+            </div>
+          </div>
+          <div className='flex justify-center mx-auto mt-5 mb-4 text-center'>
+            <div>
+              <div className='text-2xl font-bold'>TODO4</div>
+              <div className='font-bold text-gray-400 text-xl'>Leaderboard</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className='mt-4 space-x-6'>
         <a href={x} target='_blank' rel='noreferrer' className='my-auto'>
           <button type='button' className='bg-white invert rounded-full p-2'>
             <img src='/assets/x.svg' alt='x.com icon' />
@@ -77,7 +61,7 @@ export function TeamCard(props: TeamMember) {
             <img src='/assets/github.svg' alt='github icon' />
           </button>
         </a>
-      </Box>
-    </Flex>
+      </div>
+    </div>
   )
 }

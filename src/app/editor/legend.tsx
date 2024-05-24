@@ -1,15 +1,13 @@
-import { Box, Flex, Text } from '@radix-ui/themes'
-
-export function Legend() {
+export const Legend = () => {
   return (
-    <Flex gap='2' className='items-center'>
-      <Text weight='medium'>legend:</Text>
-      <Box className='flex font-semibold items-center'>
-        <Box className='p-2 bg-lime-500 rounded-full'>addition</Box>
-      </Box>
-      <Box className='flex font-semibold items-center'>
-        <Box className='p-2 bg-salmon-400 rounded-full'>deletion</Box>
-      </Box>
-    </Flex>
+    <div className='flex gap-2 items-center'>
+      <p className='font-medium'>legend:</p>
+      <div className='flex font-semibold items-center'>
+        <div className='p-2 bg-lime-500 rounded-full'>addition</div>
+      </div>
+      <div className='flex font-semibold items-center'>
+        <div className='p-2 bg-salmon-400 rounded-full'>deletion</div>
+      </div>
+    </div>
   )
 }

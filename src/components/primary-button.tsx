@@ -1,16 +1,17 @@
-import { Button } from '@radix-ui/themes'
 import clsx from 'clsx'
-import { forwardRef, type ComponentPropsWithoutRef } from 'react'
+import { forwardRef, type MouseEventHandler } from 'react'
 
-interface PrimaryButtonProps extends ComponentPropsWithoutRef<typeof Button> {
+interface PrimaryButtonProps {
   className?: string
   label: string
+  onClick: MouseEventHandler
+  disabled?: boolean
 }
 
 export const PrimaryButton = forwardRef<HTMLButtonElement, PrimaryButtonProps>(
   ({ className, label, onClick, ...props }, ref) => {
     return (
-      <Button
+      <button
         ref={ref}
         onClick={onClick}
         className={clsx(
@@ -20,12 +21,10 @@ export const PrimaryButton = forwardRef<HTMLButtonElement, PrimaryButtonProps>(
           props.disabled && 'cursor-not-allowed opacity-70',
           className
         )}
-        radius='full'
-        size='3'
         {...props}
       >
         {label}
-      </Button>
+      </button>
     )
   }
 )

@@ -1,13 +1,15 @@
 'use client'
 
-import * as React from 'react'
-import { Button, Dialog } from '@radix-ui/themes'
-import { useEnsProfile } from '#/hooks/use-ens-profile'
-import { useConnect, useAccountEffect, useAccount, useDisconnect } from 'wagmi'
+import Image from 'next/image'
+import { useState } from 'react'
+import { useAccount, useAccountEffect, useConnect, useDisconnect } from 'wagmi'
+
 import { truncateAddress } from '#/lib/utilities'
+import { useEnsProfile } from '#/hooks/use-ens-profile'
+import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 
 export function Connect() {
-  const [showDialog, setShowDialog] = React.useState(false)
+  const [showDialog, setShowDialog] = useState(false)
 
   const { disconnect } = useDisconnect()
   const { connectAsync, connectors } = useConnect()
@@ -32,18 +34,15 @@ export function Connect() {
   }
 
   return (
-    <React.Fragment>
-      <Button
-        className='bg-white text-gray-800 tabular-nums shadow-sm text-[16px] font-bold antialiased justify-around px-3'
-        variant='solid'
-        radius='large'
-        size='3'
+    <>
+      <button
+        className='bg-white text-gray-800 tabular-nums p-4 shadow-sm text-[16px] font-bold antialiased justify-around px-3'
         disabled={accountStatus === 'connecting'}
         onClick={onButtonClick}
       >
-        <img
+        <Image
           hidden={accountStatus !== 'connected' || !ensData?.avatar}
-          src={ensData?.avatar}
+          src={ensData?.avatar || DefaultAvatar}
           className='w-6 h-6 rounded-full -mr-1'
           alt='ENS avatar'
         />
@@ -54,22 +53,17 @@ export function Connect() {
           src='/assets/arrow-down.svg'
           alt='arrow down'
         />
-      </Button>
+      </button>
       <WalletMenu
         open={showDialog}
         setOpen={setShowDialog}
         content={
-          <Button
-            size='3'
-            className='mx-auto font-bold bg-salmon-400'
-            variant='solid'
-            onClick={() => disconnect()}
-          >
+          <button className='mx-auto p-4 font-bold bg-salmon-400' onClick={() => disconnect()}>
             Disconnect
-          </Button>
+          </button>
         }
       />
-    </React.Fragment>
+    </>
   )
 }
 
@@ -79,15 +73,19 @@ function WalletMenu({
   content
 }: {
   open: boolean
-  setOpen: any
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
   content: React.ReactNode
 }) {
   return (
-    <Dialog.Root open={open} onOpenChange={setOpen}>
-      <Dialog.Trigger className='bg-black text-white' hidden={true} />
-      <Dialog.Content size='1' className='max-w-36 mx-auto justify-center items-center'>
+    <div className='relative'>
+      <div onClick={() => setOpen(!open)} className=' flex flex-col items-center justify-center'>
+        <div className='bg-black w-4 h-1 rounded-xl'></div>
+        <div className='bg-black w-4 h-1 rounded-xl'></div>
+        <div className='bg-black w-4 h-1 rounded-xl'></div>
+      </div>
+      <div className='max-w-36 mx-auto mt-1 top-full left-0 absolute justify-center items-center'>
         {content}
-      </Dialog.Content>
-    </Dialog.Root>
+      </div>
+    </div>
   )
 }

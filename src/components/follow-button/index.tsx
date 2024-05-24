@@ -1,8 +1,9 @@
-import { Button } from '@radix-ui/themes'
 import clsx from 'clsx'
 import Image from 'next/image'
+import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
-import { useFollowButton, type FollowButtonState } from './use-follow-button'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
+import { type FollowButtonState, useFollowButton } from './use-follow-button'
 
 const theme = {
   Follow: {
@@ -63,28 +64,41 @@ const theme = {
   }
 } satisfies Record<FollowButtonState, { bg: string; text: string }>
 
-interface FollowButtonProps extends React.ComponentProps<typeof Button> {
+interface FollowButtonProps {
   address: Address
   className?: string
 }
 
 export function FollowButton({ address, className = '', ...props }: FollowButtonProps) {
-  const { buttonText, buttonState, handleAction } = useFollowButton({ address })
+  const { address: userAddress } = useAccount()
+  const { openConnectModal } = useConnectModal()
+  const { buttonText, buttonState, handleAction } = useFollowButton({
+    address
+  })
+
+  if (address?.toLowerCase() === userAddress?.toLowerCase()) return null
 
   return (
-    <Button
+    <button
       className={clsx([
         theme[buttonState].bg,
         theme[buttonState].text,
-        'rounded-lg font-bold h-full',
-        'w-[107px] max-h-[37px] px-2 py-1.5', // Fixed width for consistent layout
+        'rounded-lg text-sm flex items-center gap-1.5 justify-center font-bold',
+        'w-[107px] h-[37px] px-2 py-1.5', // Fixed width for consistent layout
         className
       ])}
-      onClick={handleAction}
+      onClick={() => {
+        if (!userAddress && openConnectModal) {
+          openConnectModal()
+          return
+        }
+
+        handleAction()
+      }}
       {...props}
     >
       <Image alt='mainnet logo' src='/assets/mainnet-black.svg' width={16} height={16} />
       {buttonText}
-    </Button>
+    </button>
   )
 }

@@ -2,20 +2,21 @@
 
 import clsx from 'clsx'
 import Link from 'next/link'
-import * as React from 'react'
-import { PendingIcon } from './pending.tsx'
-import { usePathname } from 'next/navigation'
+import Image from 'next/image'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
+import { useRef, useState, useTransition } from 'react'
+
+import { PendingIcon } from './pending.tsx'
+import { usePathname } from 'next/navigation'
 import { useQueryState } from 'next-usequerystate'
-import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
-import { checkAddressOrEnsValid } from '#/lib/utilities.ts'
+// import { checkAddressOrEnsValid } from '#/lib/utilities.ts'
 import { ENS_SUBGRAPH, SECOND } from '#/lib/constants/index.ts'
-import { IconButton, Dialog, TextField, DropdownMenu } from '@radix-ui/themes'
+import MagnifyingGlass from 'public/assets/icons/magnifying-glass.svg'
 import { useIsomorphicLayoutEffect } from '#/hooks/use-isomorphic-layout-effect.ts'
 
 // autocomplete search suggestions
-async function searchEnsSubgraph({ search }: { search: string }): Promise<Array<string>> {
+async function searchEnsSubgraph({ search }: { search: string }): Promise<string[]> {
   const sanitizedSearch = search.trim().toLowerCase()
   if (sanitizedSearch.length < 3) return []
   const response = await fetch(ENS_SUBGRAPH, {
@@ -40,7 +41,7 @@ async function searchEnsSubgraph({ search }: { search: string }): Promise<Array<
   })
   if (!response.ok) return []
   const json = (await response.json()) as {
-    data: { domains: Array<{ name: string; registration: { registrationDate: string } | null }> }
+    data: { domains: { name: string; registration: { registrationDate: string } | null }[] }
   }
   return json.data.domains
     .filter(domain => !!domain.registration)
@@ -48,17 +49,20 @@ async function searchEnsSubgraph({ search }: { search: string }): Promise<Array<
     .sort((a, b) => a.length - b.length)
 }
 
-export function Search({ disabled }: { disabled?: boolean }) {
+export function Search({
+  disabled,
+  size = 'w-full max-w-[400px]'
+}: { disabled?: boolean; size?: string }) {
   const pathname = usePathname()
-  const searchBarRef = React.useRef<HTMLInputElement>(null)
-  const [dropdownMenuOpen, setDropdownMenuOpen] = React.useState(false)
-  const [dialogOpen, setDialogOpen] = React.useState<undefined | boolean>(undefined)
+  const searchBarRef = useRef<HTMLInputElement>(null)
+  const [dropdownMenuOpen, setDropdownMenuOpen] = useState(false)
+  const [dialogOpen, setDialogOpen] = useState<undefined | boolean>(undefined)
   const clickAwayRef = useClickAway<HTMLInputElement>(_ => {
     setDropdownMenuOpen(false)
     setDialogOpen(false)
   })
-  const [selectedItem, setSelectedItem] = React.useState<string | null>(null)
-  const [isPending, startTransition] = React.useTransition()
+  const [selectedItem, setSelectedItem] = useState<string | null>(null)
+  const [isPending, startTransition] = useTransition()
 
   const [search, setSearch] = useQueryState('search', {
     throttleMs: SECOND / 2,
@@ -86,7 +90,7 @@ export function Search({ disabled }: { disabled?: boolean }) {
   useIsomorphicLayoutEffect(() => {
     if (pathname.slice(1) === selectedItem) {
       setDropdownMenuOpen(false)
-      console.log({ dialogOpen })
+      // console.log({ dialogOpen })
       if (searchBarRef.current) searchBarRef.current.value = ''
     }
   }, [pathname])
@@ -99,69 +103,137 @@ export function Search({ disabled }: { disabled?: boolean }) {
     })
   }
 
-  function onSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    /**
-     * checking the html element for value to catch an edge case:
-     * - when typing a search term then navigating to another page,
-     *   the search term is gone from the url but is still in the search input
-     */
-    const searchTerm = search
-    if (!searchTerm) return
-    const inputIsValid = checkAddressOrEnsValid(searchTerm)
-    if (!inputIsValid) return
-  }
+  // function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+  //   event.preventDefault()
+  //   /**
+  //    * checking the html element for value to catch an edge case:
+  //    * - when typing a search term then navigating to another page,
+  //    *   the search term is gone from the url but is still in the search input
+  //    */
+  //   const searchTerm = search
+  //   if (!searchTerm) return
+  //   const inputIsValid = checkAddressOrEnsValid(searchTerm)
+  //   if (!inputIsValid) return
+  // }
 
   return (
-    <form onSubmit={onSubmit} className='w-full max-w-[400px]'>
-      <div className='relative max-w-[400px] w-full'>
-        <label htmlFor='search' className='sr-only'>
-          Search
-        </label>
-        <div className='rounded-md shadow-sm hidden sm:block'>
-          <div
-            className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2'
+    <div className={`relative ${size}`}>
+      <label htmlFor='search' className='sr-only'>
+        Search
+      </label>
+      <div className='rounded-md shadow-sm hidden sm:block'>
+        <input
+          ref={searchBarRef}
+          type='text'
+          id='search'
+          name='search'
+          spellCheck={false}
+          autoComplete='off'
+          disabled={disabled}
+          placeholder='Search ENS or 0x address…'
+          onChange={handleSearchEvent}
+          onClick={event => {
+            event.preventDefault()
+            setDropdownMenuOpen(
+              event.currentTarget.value.length >= 3 &&
+                !!search &&
+                search.length >= 3 &&
+                !!searchResult
+            )
+          }}
+          className='h-12 block w-full font-medium rounded-xl border-2 border-grey pl-4 text-xs sm:text-sm bg-white/70'
+        />
+        <div
+          className='pointer-events-none absolute inset-y-0 right-2 flex items-center'
+          aria-hidden='true'
+        >
+          <Image
+            src={MagnifyingGlass}
+            alt='Search'
+            className='mr-3 h-5 w-5 text-grey'
             aria-hidden='true'
-          >
-            <MagnifyingGlassIcon className='mr-3 h-4 w-4 text-gray-400' aria-hidden='true' />
-          </div>
-          <input
-            ref={searchBarRef}
-            type='text'
-            id='search'
-            name='search'
-            spellCheck={false}
-            autoComplete='off'
-            disabled={disabled}
-            placeholder='Search ENS or 0x address…'
-            onChange={handleSearchEvent}
-            onClick={event => {
-              event.preventDefault()
-              setDropdownMenuOpen(
-                event.currentTarget.value.length >= 3 &&
-                  !!search &&
-                  search.length >= 3 &&
-                  !!searchResult
-              )
-            }}
-            className='lowercase h-9 block w-full rounded-xl border-0 border-transparent pl-7 text-xs sm:text-sm bg-white/70'
           />
         </div>
-        <div className='hidden sm:block'>
-          <DropdownMenu.Root
-            modal={false}
-            defaultOpen={false}
-            open={dropdownMenuOpen}
-            onOpenChange={() => setDropdownMenuOpen(searchResult.length > 0)}
+      </div>
+      <div
+        className={`hidden absolute top-full mt-2 left-0 sm:${
+          dropdownMenuOpen ? 'block' : 'hidden'
+        }`}
+      >
+        <div>
+          <div
+            className={clsx(['max-w-xl w-80 min-w-full text-lg py-0 hidden sm:block'])}
+            ref={clickAwayRef}
+            onFocusCapture={event => {
+              event.preventDefault()
+              event.stopPropagation()
+              searchBarRef.current?.focus()
+            }}
           >
-            <DropdownMenu.Trigger className='w-full' data-state='closed'>
-              <div />
-            </DropdownMenu.Trigger>
-            <DropdownMenu.Content
-              className={clsx(['max-w-xl w-80 min-w-full text-lg py-0 hidden sm:block'])}
-              autoFocus={false}
+            {searchResult?.map((result, index) => (
+              <div
+                key={`${result}`}
+                className='w-full text-md py-0 hover:bg-pink-50'
+                tabIndex={0 + 1}
+                onClick={() => setSelectedItem(result)}
+              >
+                <Link href={{ pathname: result }} className='hover:cursor-pointer'>
+                  {result}
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      {isPending && (
+        <div className='absolute right-0 top-0 bottom-0 sm:flex items-center justify-center hidden'>
+          <PendingIcon hidden={!isPending} />
+        </div>
+      )}
+
+      <div className='block sm:hidden' hidden={dialogOpen}>
+        <Image
+          src={MagnifyingGlass}
+          onClick={() => setDialogOpen(true)}
+          alt='Search'
+          className='mr-3 h-5 w-5 text-grey'
+          aria-hidden='true'
+        />
+        <div className='p-0 sm:hidden block w-96 -mt-52 mx-auto'>
+          <div>
+            <input
+              name='search'
+              className='h-11 px-1'
+              spellCheck={false}
+              disabled={disabled}
+              onChange={handleSearchEvent}
+              onClick={event => {
+                event.preventDefault()
+                setDropdownMenuOpen(
+                  event.currentTarget.value.length >= 3 &&
+                    !!search &&
+                    search.length >= 3 &&
+                    !!searchResult
+                )
+              }}
+              placeholder='Search ENS or 0x address…'
+              autoComplete='off'
               ref={clickAwayRef}
-              hideWhenDetached={true}
+            />
+            {isPending && (
+              <div className='absolute right-0 top-0 bottom-0 flex items-center justify-center'>
+                <PendingIcon hidden={!isPending} />
+              </div>
+            )}
+          </div>
+          <div
+            className={`hidden absolute top-full mt-2 left-0 sm:${
+              dropdownMenuOpen ? 'block' : 'hidden'
+            }`}
+          >
+            <div
+              className='w-96 mx-auto min-w-full text-lg py-0 sm:hidden block max-h-56 bg-slate-50'
+              ref={clickAwayRef}
               onFocusCapture={event => {
                 event.preventDefault()
                 event.stopPropagation()
@@ -169,110 +241,25 @@ export function Search({ disabled }: { disabled?: boolean }) {
               }}
             >
               {searchResult?.map((result, index) => (
-                <DropdownMenu.Item
+                <div
                   key={`${result}`}
-                  asChild={true}
                   className='w-full text-md py-0 hover:bg-pink-50'
                   tabIndex={0 + 1}
-                  onClick={() => setSelectedItem(result)}
+                  onClick={() => {
+                    setSelectedItem(result)
+                    setDialogOpen(false)
+                  }}
                 >
                   <Link href={{ pathname: result }} className='hover:cursor-pointer'>
                     {result}
                   </Link>
-                </DropdownMenu.Item>
+                </div>
               ))}
-            </DropdownMenu.Content>
-          </DropdownMenu.Root>
-        </div>
-        {isPending && (
-          <div className='absolute right-0 top-0 bottom-0 sm:flex items-center justify-center hidden'>
-            <PendingIcon hidden={!isPending} />
+            </div>
           </div>
-        )}
-
-        <div className='block sm:hidden' hidden={dialogOpen}>
-          <Dialog.Root defaultOpen={false} open={dialogOpen}>
-            <Dialog.Trigger>
-              <IconButton
-                variant='soft'
-                size='3'
-                radius='full'
-                className='bg-white'
-                onClick={() => setDialogOpen(true)}
-              >
-                <MagnifyingGlassIcon className='h-6 w-6 text-black' aria-hidden='true' />
-              </IconButton>
-            </Dialog.Trigger>
-
-            <Dialog.Content className='p-0 sm:hidden block w-96 -mt-52 mx-auto'>
-              <TextField.Root>
-                <TextField.Input
-                  size='3'
-                  name='search'
-                  className='h-11 px-1'
-                  spellCheck={false}
-                  disabled={disabled}
-                  onChange={handleSearchEvent}
-                  onClick={event => {
-                    event.preventDefault()
-                    setDropdownMenuOpen(
-                      event.currentTarget.value.length >= 3 &&
-                        !!search &&
-                        search.length >= 3 &&
-                        !!searchResult
-                    )
-                  }}
-                  placeholder='Search ENS or 0x address…'
-                  autoComplete='off'
-                  ref={clickAwayRef}
-                />
-                <TextField.Slot>
-                  {isPending && (
-                    <div className='absolute right-0 top-0 bottom-0 flex items-center justify-center'>
-                      <PendingIcon hidden={!isPending} />
-                    </div>
-                  )}
-                </TextField.Slot>
-              </TextField.Root>
-              <DropdownMenu.Root modal={false} defaultOpen={false} open={dropdownMenuOpen}>
-                <DropdownMenu.Trigger className='w-full' data-state='closed'>
-                  <div />
-                </DropdownMenu.Trigger>
-                <DropdownMenu.Content
-                  className='w-96 mx-auto min-w-full text-lg py-0 sm:hidden block max-h-56 bg-slate-50'
-                  autoFocus={false}
-                  sticky='always'
-                  ref={clickAwayRef}
-                  hideWhenDetached={true}
-                  onFocusCapture={event => {
-                    event.preventDefault()
-                    event.stopPropagation()
-                    searchBarRef.current?.focus()
-                  }}
-                >
-                  {searchResult?.map((result, index) => (
-                    <DropdownMenu.Item
-                      key={`${result}`}
-                      asChild={true}
-                      className='w-full text-md py-0 hover:bg-pink-50'
-                      tabIndex={0 + 1}
-                      onClick={() => {
-                        setSelectedItem(result)
-                        setDialogOpen(false)
-                      }}
-                    >
-                      <Link href={{ pathname: result }} className='hover:cursor-pointer'>
-                        {result}
-                      </Link>
-                    </DropdownMenu.Item>
-                  ))}
-                </DropdownMenu.Content>
-              </DropdownMenu.Root>
-              <label className='sr-only'>Search</label>
-            </Dialog.Content>
-          </Dialog.Root>
+          <label className='sr-only'>Search</label>
         </div>
       </div>
-    </form>
+    </div>
   )
 }

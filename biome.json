@@ -57,8 +57,9 @@
         "all": true,
         "noNamespace": "off",
         "noDefaultExport": "off",
-        "useBlockStatements": "off",
+        "noNamespaceImport": "off",
         "useFragmentSyntax": "off",
+        "useBlockStatements": "off",
         "useNamingConvention": "off",
         "useShorthandArrayType": "off",
         "useSelfClosingElements": "off",
@@ -66,25 +67,30 @@
       },
       "a11y": {
         "all": true,
+        "noAutofocus": "off",
+        "useButtonType": "off",
         "noSvgWithoutTitle": "off",
+        "useKeyWithClickEvents": "off",
         "noDistractingElements": "off"
       },
       "nursery": {
         "all": true,
-        "useAwait": "off",
         "noNodejsModules": "off",
-        "noUnusedImports": "off",
-        "noUselessTernary": "off",
-        "useConsistentArrayType": "off"
+        "useSortedClasses": "off",
+        "noReactSpecificProps": "off",
+        "useImportRestrictions": "off",
+        "noUndeclaredDependencies": "off"
       },
       "performance": {
         "all": true,
+        "noReExportAll": "off",
         "noAccumulatingSpread": "off"
       },
       "correctness": {
         "all": true,
+        "noUnusedVariables": "off",
         "noUndeclaredVariables": "off",
-        "noUnusedVariables": "off"
+        "useExhaustiveDependencies": "off"
       },
       "suspicious": {
         "all": true,

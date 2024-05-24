@@ -9,7 +9,7 @@ export async function efpTotalSupply(client: EVMClient) {
   return await client.readContract({
     abi: abi.efpListRegistryAbi,
     functionName: 'getMintState',
-    address: efpContracts['EFPListRegistry'],
+    address: efpContracts.EFPListRegistry,
     args: undefined
   })
 }
@@ -46,7 +46,9 @@ export async function toggleDraftMode({
   state: 'enable' | 'disable'
 }) {
   const searchParams = new URLSearchParams({ requestedFrom })
-  const response = await fetch(`/api/draft/${state}?${searchParams}`, { method: 'GET' })
+  const response = await fetch(`/api/draft/${state}?${searchParams}`, {
+    method: 'GET'
+  })
   const data = await response.text()
   return data
 }

@@ -1,15 +1,15 @@
 'use client'
 
-import type { ENSProfile } from '#/lib/types'
 import { useQuery } from '@tanstack/react-query'
 import type { Address } from 'viem'
 import { useAccount } from 'wagmi'
+import type { ENSProfile } from '#/lib/types'
 import {
+  type FollowerResponse,
+  type FollowingResponse,
   fetchUserFollowers,
   fetchUserFollowing,
-  fetchUserProfile,
-  type FollowerResponse,
-  type FollowingResponse
+  fetchUserProfile
 } from './requests'
 
 type ConnectedAddressFollowing = {
@@ -27,7 +27,7 @@ export function useConnectedFollowing(): ConnectedAddressFollowing {
   const { data } = useQuery({
     queryKey: ['following', connectedAddress],
     enabled: isConnected,
-    queryFn: () => fetchUserFollowing({ addressOrName: connectedAddress as Address })
+    queryFn: () => fetchUserFollowing(connectedAddress as Address)
   })
 
   return {
@@ -57,14 +57,16 @@ export function useConnectedFollowers(): ConnectedAddressFollowers {
   const { data } = useQuery({
     queryKey: ['followers', connectedAddress],
     enabled: isConnected,
-    queryFn: () => fetchUserFollowers({ addressOrName: connectedAddress as Address })
+    queryFn: () => fetchUserFollowers(connectedAddress as Address)
   })
 
   return {
     connectedAddressFollowers: data?.followers,
     connectedAddressFollowerAddresses: data?.followers?.map(follower => follower.address),
     getConnectedAddressFollowerByAddress: (address: Address) => {
-      return data?.followers?.find(follower => follower.address === address)
+      return data?.followers?.find(
+        follower => follower.address?.toLowerCase() === address?.toLowerCase()
+      )
     }
   }
 }
@@ -116,28 +118,34 @@ export function useConnectedProfile(address?: Address): ConnectedAddressProfile 
   }
 
   const getFollowingByAddress: EFPProfile['getFollowingByAddress'] = (address: Address) => {
-    return data.following?.find(follow => follow.data === address.toLowerCase())
+    return data.following?.find(follow => follow.data === address?.toLowerCase())
   }
 
   const hasFollowingByAddress = (address: Address) => !!getFollowingByAddress(address)
 
   const getFollowState: EFPProfile['getFollowState'] = (address: Address) => {
     const following: FollowingResponse | undefined = getFollowingByAddress(address)
+
+    // console.log(following)
+
     if (following === undefined) {
       return 'none'
     }
+
     if (following.tags.includes('block')) {
       return 'blocks'
     }
+
     if (following.tags.includes('mute')) {
       return 'mutes'
     }
+
     return 'follows'
   }
 
   return {
     profile: {
-      address: data.address,
+      address: data.address || address || connectedAddress,
       ens: data.ens,
       followers: data.followers,
       followerAddresses: data.followers?.map(follower => follower.address),
@@ -145,17 +153,23 @@ export function useConnectedProfile(address?: Address): ConnectedAddressProfile 
       hasFollowingByAddress,
       getFollowState,
       doesFollow: (address: Address) => {
-        return data.following?.some(follow => follow.data === address.toLowerCase()) ?? false
+        return data.following?.some(follow => follow.data === address?.toLowerCase()) ?? false
       },
       following: data.following,
       followingAddresses: data.following
         ?.filter(follow => follow.record_type === 'address')
         .map(follow => follow.data),
       getFollowerByAddress: (address: Address) => {
-        return data.followers?.find(follower => follower.address === address.toLowerCase())
+        return data.followers?.find(
+          follower => follower.address.toLowerCase() === address?.toLowerCase()
+        )
       },
       isFollowedBy: (address: Address) => {
-        return data.followers?.some(follower => follower.address === address.toLowerCase()) ?? false
+        return (
+          data.followers?.some(
+            follower => follower.address.toLowerCase() === address?.toLowerCase()
+          ) ?? false
+        )
       },
       primaryList: Number(data.primary_list),
       stats: {
@@ -176,7 +190,7 @@ type Following = {
 export function useFollowing(addressOrName: Address | string): Following {
   const { data } = useQuery({
     queryKey: ['following', addressOrName],
-    queryFn: () => fetchUserFollowing({ addressOrName })
+    queryFn: () => fetchUserFollowing(addressOrName)
   })
 
   return {
@@ -202,14 +216,16 @@ type Followers = {
 export function useFollowers(addressOrName: Address | string): Followers {
   const { data } = useQuery({
     queryKey: ['followers', addressOrName],
-    queryFn: () => fetchUserFollowers({ addressOrName })
+    queryFn: () => fetchUserFollowers(addressOrName)
   })
 
   return {
     followers: data?.followers,
     followerAddresses: data?.followers?.map(follower => follower.address),
     getFollowerByAddress: (address: Address) => {
-      return data?.followers?.find(follower => follower.address === address)
+      return data?.followers?.find(
+        follower => follower.address.toLowerCase() === address?.toLowerCase()
+      )
     }
   }
 }

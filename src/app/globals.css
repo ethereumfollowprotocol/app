@@ -3,44 +3,24 @@
 @tailwind utilities;
 
 * {
-  scrollbar-width: none;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
-  text-rendering: optimizeLegibility;
-  -webkit-tap-highlight-color: transparent;
-  scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
   font-feature-settings: "tnum";
   font-variant-numeric: tabular-nums;
 }
 
-*:focus {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
+html, body {
+  width: 100vw;
+  color: #333333;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-html {
-  overflow-y: overlay;
-  overflow-x: hidden;
-  margin: auto;
-  height: 100%;
-  width: 100%;
-  min-height: 100%;
-  min-width: 100%;
-  scroll-behavior: smooth;
-}
-
-html,
-body,
-#root {
-  overflow-x: hidden;
-  justify-items: center;
-  width: 100%;
-  min-height: 100%;
-  background-size: cover;
+body {
   background-repeat: no-repeat;
-  background-attachment: fixed;
-  min-width: 100%;
-  background: linear-gradient(180deg, #fef305 0%, #ff79c9 55%), #333;
-  font-variant-numeric: tabular-nums;
+  background-position: -34.1vw -38vw;
+  background-size: 210vw 129vw;
 }
 
 /* Disable zoom in iOS Safari when double tapping an element */
@@ -53,8 +33,7 @@ button:hover {
 }
 
 body::-webkit-scrollbar {
-  width: 0.15em;
-  background-color: transparent;
+  display: none;
 }
 
 body::-webkit-scrollbar-track {
@@ -69,23 +48,20 @@ body::-webkit-scrollbar-thumb {
   scrollbar-color: transparent;
 }
 
-img,
-video,
-iframe {
-  max-inline-size: 100%;
-  block-size: auto;
-  object-fit: contain;
-}
-
-[data-font="ibm-plex-sans"] {
-  font-family: "IBM Plex Sans", sans-serif;
+.glass-card {
+    background: linear-gradient(
+        to right bottom,
+        rgba(255, 255, 255, 0.55),
+        rgba(255, 255, 255, 0.35)
+    );
+    backdrop-filter: blur(0.9rem);
 }
 
 :focus:not(:focus-visible) {
   outline: none;
 }
 
-input:-webkit-autofill,
+/* input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
@@ -103,17 +79,7 @@ input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 999px var(--color-gray-800) inset !important;
   box-shadow: 0 0 0 999px var(--color-gray-800) inset !important;
   background-clip: content-box !important;
-}
-
-input:-webkit-autofill::first-line {
-  font-size: 1.125rem;
-  font-weight: 500;
-  font-family: IBM Plex Sans, sans-serif;
-}
-
-[hidden] {
-  pointer-events: none;
-}
+} */
 
 @media (prefers-reduced-motion: no-preference) {
   :focus {
@@ -156,16 +122,10 @@ input[type="search"]::-webkit-search-results-decoration {
   }
 }
 
-::selection {
+/* ::selection {
   background-color: rgb(255, 255, 255) !important;
   color: rgb(0, 0, 0);
-}
-
-.prose > :first-child {
-  /* Override removing top margin, causing layout shift */
-  margin-top: 1.25em !important;
-  margin-bottom: 1.25em !important;
-}
+} */
 
 pre::-webkit-scrollbar {
   display: none;
@@ -184,18 +144,31 @@ input[type='email'] {
   appearance: none;
 }
 
-.prose .callout > p {
-  margin: 0 !important;
+input {
+  outline: none;
 }
 
 .title {
   text-wrap: balance;
 }
 
-.rt-TableRootTable {
-  --table-row-box-shadow: unset !important;
+@media screen and (max-width: 1750px) {
+  body {
+    background-position: -34.1vw -30vw;
+    background-size: 210vw 129vw;
+  }
 }
 
-.rt-SelectTriggerInner {
-  text-transform: capitalize;
+@media screen and (min-width: 2100px) {
+  body {
+    background-position: -34.1vw -44vw;
+    background-size: 210vw 129vw;
+  }
+}
+
+@media screen and (max-width: 1350px) {
+  body {
+    background-position: -34.1vw -20vw;
+    background-size: 210vw 129vw;
+  }
 }

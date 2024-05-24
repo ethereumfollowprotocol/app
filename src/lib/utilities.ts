@@ -1,4 +1,4 @@
-import { clsx, type ClassValue } from 'clsx'
+import { type ClassValue, clsx } from 'clsx'
 import { twMerge as tailwindMerge } from 'tailwind-merge'
 import { isAddress } from 'viem/utils'
 
@@ -16,7 +16,7 @@ export function truncateAddress(address?: string) {
 /**
  * @see https://www.youtube.com/watch?v=re2JFITR7TI
  */
-export function cn(...args: Array<ClassValue>): string {
+export function cn(...args: ClassValue[]): string {
   return tailwindMerge(clsx(...args))
 }
 
@@ -56,4 +56,8 @@ export function checkAddressOrEnsValid(value: string) {
 
 export function hexlify(data: Buffer): `0x${string}` {
   return `0x${data.toString('hex')}`
+}
+
+export function formatAddressOrName(addressOrName: string) {
+  return isAddress(addressOrName) ? addressOrName : `${addressOrName.replace('.eth', '')}.eth`
 }
