@@ -24,8 +24,8 @@ export default function TeamPage() {
               ens={name}
               address={address}
               avatar={avatar}
-              x={records['com.twitter'] ?? ''}
-              github={records['com.github'] ?? ''}
+              x={records?.['com.twitter'] ?? ''}
+              github={records?.['com.github'] ?? ''}
             />
           </div>
         ))}

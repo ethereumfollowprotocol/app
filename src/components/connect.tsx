@@ -1,10 +1,12 @@
 'use client'
 
+import Image from 'next/image'
 import { useState } from 'react'
 import { useAccount, useAccountEffect, useConnect, useDisconnect } from 'wagmi'
 
 import { truncateAddress } from '#/lib/utilities'
 import { useEnsProfile } from '#/hooks/use-ens-profile'
+import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 
 export function Connect() {
   const [showDialog, setShowDialog] = useState(false)
@@ -38,9 +40,9 @@ export function Connect() {
         disabled={accountStatus === 'connecting'}
         onClick={onButtonClick}
       >
-        <img
+        <Image
           hidden={accountStatus !== 'connected' || !ensData?.avatar}
-          src={ensData?.avatar}
+          src={ensData?.avatar || DefaultAvatar}
           className='w-6 h-6 rounded-full -mr-1'
           alt='ENS avatar'
         />

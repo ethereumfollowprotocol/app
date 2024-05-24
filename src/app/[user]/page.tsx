@@ -1,21 +1,15 @@
 'use client'
 
+import Image from 'next/image'
+import { useState } from 'react'
 import { dehydrate, HydrationBoundary, QueryClient, useQuery } from '@tanstack/react-query'
-import {
-  fetchUserStats,
-  type StatsResponse,
-  fetchUserFollowers,
-  fetchUserFollowing
-} from '#/api/requests'
-import type { ENSProfile } from '#/lib/types'
+import { fetchUserStats, fetchUserFollowers, fetchUserFollowing } from '#/api/requests'
 import { getEnsProfile } from '#/app/actions.ts'
 import { formatAddressOrName } from '#/lib/utilities'
 import { UserProfileCard } from '#/components/user-profile-card'
 import { UserProfilePageTable } from '#/components/profile-page-table'
 import type { ProfileTabType } from '#/types/common'
-import { useState } from 'react'
 import { PROFILE_TABS } from '#/lib/constants'
-import Image from 'next/image'
 import SettingsIcon from 'public/assets/icons/settings.svg'
 
 interface Props {
@@ -29,8 +23,6 @@ export default function UserPage({ params }: Props) {
     queryKey: ['user', params.user],
     queryFn: async () => getEnsProfile(formatAddressOrName(params.user))
   })
-
-  console.log(ensProfile)
 
   // const searchParams: any = {}
   // const followingQuery = searchParams['following-query'] || ''

@@ -8,8 +8,6 @@ import { useEFPProfile } from '#/contexts/efp-profile-context'
 const Summary = () => {
   const { profile } = useEFPProfile()
 
-  console.log(profile)
-
   return (
     <div className='mt-36 md:mt-48 w-full lg:mt-52 xl:mt-60 px-4 lg:px-6 flex items-start lg:justify-between xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4 xl:gap-4'>
       {profile ? (

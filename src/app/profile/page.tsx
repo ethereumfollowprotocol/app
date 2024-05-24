@@ -2,13 +2,12 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
-import { QueryClient, useQuery } from '@tanstack/react-query'
+import { QueryClient } from '@tanstack/react-query'
 
 import {
   // fetchUserStats,
   fetchUserFollowers,
-  fetchUserFollowing,
-  fetchUserStats
+  fetchUserFollowing
   // type StatsResponse
 } from '#/api/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'

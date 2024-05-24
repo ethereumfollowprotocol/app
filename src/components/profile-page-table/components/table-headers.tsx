@@ -1,14 +1,12 @@
 import Image from 'next/image'
+import { useMemo, useState } from 'react'
 
-import ArrowUp from 'public/assets/icons/arrow-up.svg'
 import ArrowDown from 'public/assets/icons/arrow-down.svg'
 import SearchIcon from 'public/assets/icons/magnifying-glass.svg'
-import { useMemo, useState } from 'react'
 import { DEFAULT_TAGS, SORT_OPTIONS } from '#/lib/constants'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { ProfileTabType } from '#/types/common'
 import { useClickAway } from '@uidotdev/usehooks'
-import { Searchbar } from '#/components/searchbar'
 
 interface TableHeaderProps {
   title: ProfileTabType

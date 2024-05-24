@@ -1,13 +1,14 @@
-import type { Address } from 'viem'
+import Image from 'next/image'
+import type { Address, GetEnsAvatarReturnType } from 'viem'
 import { FollowButton } from '#/components/follow-button'
-import { ImageWithFallback } from '#/components/image-with-fallback.tsx'
+import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 
 export interface TeamMember {
   ens: string
   address: Address
   x: string
   github: string
-  avatar: string
+  avatar?: string | GetEnsAvatarReturnType
 }
 
 export function TeamCard(props: TeamMember) {
@@ -18,8 +19,8 @@ export function TeamCard(props: TeamMember) {
         <div className='flex flex-col items-start justify-center h-full w-full'>
           <p>#1</p>
           <div className='flex flex-col items-center justify-center mx-auto mt-3'>
-            <ImageWithFallback
-              src={avatar}
+            <Image
+              src={avatar || DefaultAvatar}
               width={100}
               height={100}
               className='rounded-full'
