@@ -27,7 +27,7 @@ const ConnectButton = () => {
   const [walletMenOpenu, setWalletMenuOpen] = useState(false)
   const [languageMenOpenu, setLanguageMenuOpen] = useState(false)
   const [selectedLanguage, setSelectedLanguage] = useState(
-    LANGUAGES[LANGUAGES.map(lang => lang.key).indexOf(i18n.language)]?.language
+    LANGUAGES[LANGUAGES.map(lang => lang.key).indexOf(i18n.language || 'en')]?.language
   )
 
   const clickAwayWalletRef = useClickAway<HTMLDivElement>(_ => {
@@ -101,19 +101,20 @@ const ConnectButton = () => {
             <Image src={ArrowLeft} alt='Show lists' />
             <p className=' font-semibold'>List #0</p>
           </div>
-          <div
-            ref={clickAwayLanguageRef}
-            onClick={() => setLanguageMenuOpen(!languageMenOpenu)}
-            className='flex justify-between items-center w-full cursor-pointer group relative'
-          >
-            <Image
-              src={ArrowLeft}
-              alt='Show languages'
-              className='group-hover:opacity-80 transition-opacity'
-            />
-            <p className='group-hover:opacity-80 transition-opacity font-semibold'>
-              {selectedLanguage}
-            </p>
+          <div ref={clickAwayLanguageRef} className='w-full cursor-pointer group relative'>
+            <div
+              onClick={() => setLanguageMenuOpen(!languageMenOpenu)}
+              className='flex justify-between items-center w-full'
+            >
+              <Image
+                src={ArrowLeft}
+                alt='Show languages'
+                className='group-hover:opacity-80 transition-opacity'
+              />
+              <p className='group-hover:opacity-80 transition-opacity font-semibold'>
+                {selectedLanguage}
+              </p>
+            </div>
             <div
               className={`absolute right-[100%] -top-2 ${
                 languageMenOpenu ? 'block' : 'hidden'
