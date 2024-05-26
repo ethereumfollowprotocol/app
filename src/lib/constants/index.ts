@@ -28,3 +28,24 @@ export const LANGUAGES = [
 ]
 export const DEFAULT_TAGS = ['No Tag', 'Blocked', 'Muted']
 export const SORT_OPTIONS = ['follower count', 'latest first', 'earliest first', 'alphabetical']
+
+export const NAV_ITEMS = [
+  {
+    href: '/',
+    emoji: '🏠',
+    name: 'home',
+    private: false
+  },
+  {
+    href: '/profile',
+    emoji: '👤',
+    name: 'profile',
+    private: true
+  },
+  {
+    href: '/leaderboard?filter=followers',
+    emoji: '🏆',
+    name: 'leaderboard',
+    private: false
+  }
+]

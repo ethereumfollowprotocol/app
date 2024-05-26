@@ -1,0 +1,14 @@
+{
+  "navigation": {
+    "home": "Home",
+    "profile": "My Profile",
+    "leaderboard": "Leaderboard",
+    "connect": "Connect Wallet",
+    "disconnect": "Disconnect Wallet",
+    "search placeholder": "Search ENS or 0x address"
+  },
+  "footer": {
+    "team": "Team",
+    "docs": "Documentation"
+  }
+}

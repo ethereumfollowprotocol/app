@@ -7,7 +7,7 @@ import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { useTranslation } from 'react-i18next'
 
 const Summary = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('home')
   const { profile } = useEFPProfile()
 
   return (
@@ -23,11 +23,11 @@ const Summary = () => {
         </>
       ) : (
         <div className='glass-card border-2 flex items-center justify-center rounded-2xl border-gray-200 w-full lg:w-1/2 h-64 lg:h-[638px]'>
-          <p className='italic text-xl font-semibold text-gray-400'>Connect your wallet to view</p>
+          <p className='italic text-xl font-semibold text-gray-400'>{t('connect wallet')}</p>
         </div>
       )}
       <Recommendations
-        header={t('home.discover')}
+        header={t('discover')}
         size='h-fit lg:h-[638px] w-full lg:w-[49%] xl:w-[40%] 2xl:w-[700px]'
       />
     </div>

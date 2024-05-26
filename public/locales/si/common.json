@@ -1,0 +1,14 @@
+{
+  "navigation": {
+    "home": "Domov",
+    "profile": "Moj Profil",
+    "leaderboard": "Lestvica",
+    "connect": "Poveži denarnico",
+    "disconnect": "Odpoveži denarnico",
+    "search placeholder": "Išci ENS ime ali 0x naslov"
+  },
+  "footer": {
+    "team": "Ekipa",
+    "docs": "Dokumentacija"
+  }
+}

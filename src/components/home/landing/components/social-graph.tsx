@@ -1,15 +1,20 @@
+'use client'
+
 import Image from 'next/image'
-import SocialGraphImage from 'public/assets/art/social-graph.png'
+import { useTranslation } from 'react-i18next'
 import LineDesktop from 'public/assets/lines/desktop/line-2.svg'
+import SocialGraphImage from 'public/assets/art/social-graph.png'
 import LineMobileFirst from 'public/assets/lines/mobile/line-2.svg'
 import LineMobileSecond from 'public/assets/lines/mobile/line-3.svg'
 
 export default function SocialGraph() {
+  const { t } = useTranslation('home')
+
   return (
     <div className='flex flex-col lg:flex-row-reverse gap-8 lg:gap-[90px] xl:gap-32 items-center relative'>
       <div className='text-3xl flex lg:items-start items-center flex-col gap-1 lg:gap-3 md:text-4xl lg:text-5xl xl:text-6xl font-bold px-4 py-4 lg:px-5 lg:py-5 border-[3px] border-[#ffc18a] rounded-2xl'>
-        <p>The social graph </p>
-        <p className='text-[#ffb4a1]'>for Ethereum.</p>
+        <p>{t('social graph first')}</p>
+        <p className='text-[#ffb4a1]'>{t('social graph second')}</p>
       </div>
       <Image
         src={SocialGraphImage}

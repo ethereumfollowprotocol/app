@@ -1,3 +1,5 @@
+'use client'
+
 import clsx from 'clsx'
 import { useMemo } from 'react'
 import { useConnectedProfile } from '#/api/actions'
