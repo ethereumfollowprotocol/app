@@ -38,7 +38,7 @@ export function UserProfileCard({ profile, stats, borderColor }: Props) {
       } w-full rounded-xl py-3 px-4 sm:p-6 relative`}
     >
       <div className='text-gray-500 absolute text-right xl:text-left px-2 w-full left-0 top-1 font-semibold'>
-        #{connectedProfile?.primaryList}
+        #{connectedProfile?.primaryList ?? '-'}
       </div>
       <div className='flex xl:items-center flex-col gap-5 sm:gap-6 md:gap-9 pt-2'>
         <div className='flex flex-row xl:flex-col xl:justify-center items-center gap-3'>
@@ -47,26 +47,28 @@ export function UserProfileCard({ profile, stats, borderColor }: Props) {
             name={name || address}
             size='h-[70px] w-[70px] sm:h-[75px]  sm:w-[75px] xl:h-[100px] xl:w-[100px]'
           />
-          <div className='text-xl sm:text-2xl font-bold my-2'>
-            {name || truncateAddress(address)}
-          </div>
-          {connectedProfile?.isFollowedBy(address) && (
-            <div className='rounded-full font-bold text-[8px]  mt-[-6] mb-2'>
-              {t('follows you')}
+          <div className='flex flex-col items-start justify-center'>
+            <div className='text-xl sm:text-2xl font-bold my-2'>
+              {name || truncateAddress(address)}
             </div>
-          )}
-          <FollowButton address={address} />
+            {connectedProfile?.isFollowedBy(address) && (
+              <div className='rounded-full font-bold text-[8px]  mt-[-6] mb-2'>
+                {t('follows you')}
+              </div>
+            )}
+            <FollowButton address={address} />
+          </div>
         </div>
         <div className='flex w-full flex-wrap xl:justify-center items-center mx-auto gap-0 justify-between sm:justify-start sm:gap-y-10 sm:gap-x-16 text-center'>
           <div>
             <div className='text-xl sm:text-2xl font-bold'>
-              {stats === undefined ? '?' : stats.following_count}
+              {stats === undefined ? '-' : stats.following_count}
             </div>
             <div className='sm:text-lg font-bold text-gray-500'>{t('following')}</div>
           </div>
           <div>
             <div className='text-xl sm:text-2xl font-bold'>
-              {stats === undefined ? '?' : stats.followers_count}
+              {stats === undefined ? '-' : stats.followers_count}
             </div>
             <div className='sm:text-lg text-gray-500 font-bold'>{t('followers')}</div>
           </div>

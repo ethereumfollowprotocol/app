@@ -64,7 +64,7 @@ const ConnectButton = () => {
       <button
         type='button'
         // className='bg-gradient-to-br p-[2px] from-yellow to-pink cursor-pointer h-12 rounded-full w-40'
-        className='border-[#FFC057] z-50 hover:bg-[#FFC057]/10 px-1 transition-colors border-2 gap-1 xs:gap-[6px] cursor-pointer flex justify-between items-center h-12 glass-card rounded-full w-20 sm:w-48'
+        className='border-[#FFC057] z-50 hover:bg-[#FFC057]/10 px-1 transition-colors border-2 gap-[6px] cursor-pointer flex justify-between items-center h-12 glass-card rounded-full w-fit sm:w-48'
         onClick={() =>
           userAddress && openAccountModal
             ? setWalletMenuOpen(!walletMenOpenu)
@@ -94,7 +94,7 @@ const ConnectButton = () => {
           </>
         ) : (
           <div className='w-full h-full flex items-center justify-center  rounded-full'>
-            <p className='font-semibold text-black'>{t('navigation.connect')}</p>
+            <p className='font-semibold text-nowrap px-1 text-black'>{t('navigation.connect')}</p>
           </div>
         )}
       </button>
@@ -141,7 +141,7 @@ const ConnectButton = () => {
             </div>
           </div>
           <p
-            className='text-red-500 font-semibold w-full hover:text-opacity-75 transition-opacity cursor-pointer'
+            className='text-red-500 font-semibold w-full text-nowrap hover:text-opacity-75 transition-opacity cursor-pointer'
             onClick={() => {
               disconnect()
               setWalletMenuOpen(false)

@@ -25,7 +25,7 @@ const Navigation = () => {
   return (
     <header className='w-full fixed z-50 glass-card bg-white/50 top-0 left-0 font-sans border-b-[1px] border-gray-200 p-4 lg:px-6 md:py-6 xl:px-8'>
       <nav className='my-auto flex w-full flex-row items-center justify-between'>
-        <div className='flex w-full justify-start items-center gap-6 xl:gap-8'>
+        <div className='flex sm:w-full justify-start items-center gap-6 xl:gap-8'>
           <Link href='/' className='select-none' aria-label='Ethereum Follow Protocol Logo link'>
             <Image
               src={FullLogo}
