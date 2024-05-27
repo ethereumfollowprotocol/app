@@ -1,7 +1,7 @@
 {
   "navigation": {
     "home": "Home",
-    "profile": "My Profile",
+    "profile": "My Profile",
     "leaderboard": "Leaderboard",
     "connect": "Connect Wallet",
     "disconnect": "Disconnect Wallet",
@@ -10,5 +10,11 @@
   "footer": {
     "team": "Team",
     "docs": "Documentation"
+  },
+  "profile card": {
+    "followers": "Followers",
+    "following": "Following",
+    "leaderboard": "Leaderboard",
+    "follows you": "Follows you"
   }
 }

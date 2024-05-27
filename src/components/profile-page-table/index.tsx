@@ -6,6 +6,7 @@ import { FollowList } from '#/components/follow-list'
 // import { Searchbar } from '#/components/searchbar.tsx'
 import type { FollowerResponse, FollowingResponse } from '#/api/requests'
 import TableHeader from './components/table-headers'
+import { useTranslation } from 'react-i18next'
 
 /**
  * TODO: paginate
@@ -22,6 +23,7 @@ export function UserProfilePageTable({
   const [search, setSearch] = useState<string>('')
   const [showTags, setShowTags] = useState(false)
 
+  const { t } = useTranslation('profile')
   const profile = useProfile(addressOrName)
   const { followers, following } = profile
 
@@ -54,16 +56,14 @@ export function UserProfilePageTable({
       />
       {chosenResponses?.length === 0 && (
         <div className='text-center font-semibold py-4'>
-          {title === 'followers' && <span className='text-lg'>No followers</span>}
+          {title === 'followers' && <span className='text-lg'>{t('followers empty')}</span>}
           {title === 'following' && (
             <div className='flex flex-col items-center'>
-              <span className='text-xl text-darkGrey italic mb-1'>
-                You don&apos;t follow anyone yet.
+              <span className='text-xl text-darkGrey italic mb-4'>
+                {t('following empty first')}
               </span>
-              <span className='text-xl text-darkGrey italic mb-4'>Sad! 😢</span>
               <span className='text-base text-darkGrey italic w-3/4 max-w-96'>
-                To get started, just browse and start following. Once you confirm them onchain,
-                they&apos;ll show up here.
+                {t('following empty second')}
               </span>
             </div>
           )}

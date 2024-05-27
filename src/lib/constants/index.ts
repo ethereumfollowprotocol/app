@@ -26,7 +26,7 @@ export const LANGUAGES = [
   { language: 'English', key: 'en' },
   { language: 'Slovenščina', key: 'si' }
 ]
-export const DEFAULT_TAGS = ['No Tag', 'Blocked', 'Muted']
+export const DEFAULT_TAGS = ['no tag', 'blocked', 'muted']
 export const SORT_OPTIONS = ['follower count', 'latest first', 'earliest first', 'alphabetical']
 
 export const NAV_ITEMS = [

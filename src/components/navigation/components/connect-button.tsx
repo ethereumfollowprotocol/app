@@ -13,6 +13,7 @@ import { resolveENSProfile } from '#/utils/resolveAddress'
 import ArrowDown from 'public/assets/icons/arrow-down.svg'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 import { LANGUAGES } from '#/lib/constants'
+import { useTranslation } from 'react-i18next'
 
 const nullEnsProfile = {
   name: null,
@@ -24,6 +25,7 @@ const ConnectButton = () => {
     name: string | null
     avatar: GetEnsAvatarReturnType | null
   }>(nullEnsProfile)
+
   const [walletMenOpenu, setWalletMenuOpen] = useState(false)
   const [languageMenOpenu, setLanguageMenuOpen] = useState(false)
   const [selectedLanguage, setSelectedLanguage] = useState(
@@ -37,6 +39,7 @@ const ConnectButton = () => {
     setLanguageMenuOpen(false)
   })
 
+  const { t } = useTranslation()
   const { disconnect } = useDisconnect()
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
@@ -91,12 +94,12 @@ const ConnectButton = () => {
           </>
         ) : (
           <div className='w-full h-full flex items-center justify-center  rounded-full'>
-            <p className='font-semibold text-black'>Connect Wallet</p>
+            <p className='font-semibold text-black'>{t('navigation.connect')}</p>
           </div>
         )}
       </button>
       {walletMenOpenu && (
-        <div className='p-3 flex gap-1.5 w-[171px] z-50 shadow-md border-2 rounded-lg bg-white/95 border-gray-200 absolute top-[120%] flex-col items-end right-0'>
+        <div className='p-3 flex gap-1.5 w-fit z-50 shadow-md border-2 rounded-lg bg-white/95 border-gray-200 absolute top-[120%] flex-col items-end right-0'>
           <div className='flex justify-between items-center w-full hover:opacity-80 transition-opacity cursor-pointer'>
             <Image src={ArrowLeft} alt='Show lists' />
             <p className=' font-semibold'>List #0</p>
@@ -138,13 +141,13 @@ const ConnectButton = () => {
             </div>
           </div>
           <p
-            className='text-red-500 font-semibold hover:text-opacity-75 transition-opacity cursor-pointer'
+            className='text-red-500 font-semibold w-full hover:text-opacity-75 transition-opacity cursor-pointer'
             onClick={() => {
               disconnect()
               setWalletMenuOpen(false)
             }}
           >
-            Disconnect Wallet
+            {t('navigation.disconnect')}
           </p>
         </div>
       )}

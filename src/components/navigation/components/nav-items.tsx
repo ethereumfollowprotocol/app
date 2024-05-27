@@ -14,7 +14,7 @@ const NavItems = () => {
   return (
     <ul className='lg:flex hidden lg:gap-6 xl:gap-9 items-center'>
       {NAV_ITEMS.map((item, index) => (
-        <li className=' font-bold' key={`${item.name}`}>
+        <li className='font-bold' key={`${item.name}`}>
           <Link
             prefetch={true}
             href={item.href}
@@ -23,7 +23,7 @@ const NavItems = () => {
               item.href === pathname ? 'text-darkGrey' : 'text-grey hover:text-gray-500'
             ])}
           >
-            <span className='hidden sm:block'>{t(`navigation.${item.name}`)}</span>
+            <span className='hidden sm:block text-nowrap'>{t(`navigation.${item.name}`)}</span>
           </Link>
         </li>
       ))}

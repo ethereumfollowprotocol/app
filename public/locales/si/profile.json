@@ -1,0 +1,20 @@
+{
+  "block-mute": "Seznam blokirani/utišani",
+  "setting": "Nastavitve seznama",
+  "following": "Slediš",
+  "followers": "Sledilci",
+  "tags": "Oznake",
+  "no tag": "Brez oznake",
+  "blocked": "Blokirani",
+  "muted": "Utišani",
+  "sort": {
+    "follower count": "Število sledilcev",
+    "latest first": "Najnovejši",
+    "earliest first": "Prvi",
+    "alphabetical": "Po abecedi"
+  },
+  "search placeholder": "Išci ENS ime ali naslov",
+  "following empty first": "Na žalost ne slediš nikomur! 😢",
+  "following empty second": "Prični z brskanjem in sledi drugim. Ko jih potrdiš \"onchain\" se bodo prikazali tukaj.",
+  "followers empty": "Nimaš sledilcev."
+}

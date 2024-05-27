@@ -1,7 +1,7 @@
 {
   "navigation": {
     "home": "Domov",
-    "profile": "Moj Profil",
+    "profile": "Moj Profil",
     "leaderboard": "Lestvica",
     "connect": "Poveži denarnico",
     "disconnect": "Odpoveži denarnico",
@@ -10,5 +10,11 @@
   "footer": {
     "team": "Ekipa",
     "docs": "Dokumentacija"
+  },
+  "profile card": {
+    "followers": "Sledilci",
+    "following": "Slediš",
+    "leaderboard": "Lestvica",
+    "follows you": "Ti sledi"
   }
 }

@@ -14,6 +14,7 @@ import { useQueryState } from 'next-usequerystate'
 import { ENS_SUBGRAPH, SECOND } from '#/lib/constants/index.ts'
 import MagnifyingGlass from 'public/assets/icons/magnifying-glass.svg'
 import { useIsomorphicLayoutEffect } from '#/hooks/use-isomorphic-layout-effect.ts'
+import { useTranslation } from 'react-i18next'
 
 // autocomplete search suggestions
 async function searchEnsSubgraph({ search }: { search: string }): Promise<string[]> {
@@ -53,14 +54,17 @@ export function Search({
   disabled,
   size = 'w-full max-w-[400px]'
 }: { disabled?: boolean; size?: string }) {
+  const { t } = useTranslation()
   const pathname = usePathname()
   const searchBarRef = useRef<HTMLInputElement>(null)
+
   const [dropdownMenuOpen, setDropdownMenuOpen] = useState(false)
   const [dialogOpen, setDialogOpen] = useState<undefined | boolean>(undefined)
   const clickAwayRef = useClickAway<HTMLInputElement>(_ => {
     setDropdownMenuOpen(false)
     setDialogOpen(false)
   })
+
   const [selectedItem, setSelectedItem] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
 
@@ -130,7 +134,7 @@ export function Search({
           spellCheck={false}
           autoComplete='off'
           disabled={disabled}
-          placeholder='Search ENS or 0x address…'
+          placeholder={t('navigation.search placeholder')}
           onChange={handleSearchEvent}
           onClick={event => {
             event.preventDefault()

@@ -1,9 +1,12 @@
+'use client'
+
 import Link from 'next/link'
 import type { Address, GetEnsAvatarReturnType } from 'viem'
 
 import { Avatar } from '#/components/avatar'
 import { truncateAddress } from '#/lib/utilities'
 import { useFollowState } from '#/hooks/use-follow-state'
+import { useTranslation } from 'react-i18next'
 
 interface FollowListItemNameProps {
   address: Address
@@ -30,6 +33,7 @@ export function FollowListItemName({
   avatarUrl,
   className = ''
 }: FollowListItemNameProps) {
+  const { t } = useTranslation()
   const isFollower = useFollowState(address) === 'follows'
   return (
     <div className={`flex gap-3 ${className}`}>
@@ -43,7 +47,7 @@ export function FollowListItemName({
         {/* Badge will appear below the name, but the name stays centered */}
         {showFollowsYouBadges && isFollower && (
           <div className='font-bold text-[8px] self-start mt-1 bg-grey text-darkGrey absolute -bottom-2 left-0'>
-            Follows you
+            {t('profile card.follows you')}
           </div>
         )}
       </div>

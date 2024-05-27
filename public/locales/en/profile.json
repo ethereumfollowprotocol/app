@@ -1,0 +1,20 @@
+{
+  "following": "Following",
+  "block-mute": "Block/Mute Lists",
+  "setting": "List Settings",
+  "followers": "Followers",
+  "tags": "Tags",
+  "no tag": "No Tag",
+  "blocked": "Blocked",
+  "muted": "Muted",
+  "sort": {
+    "follower count": "Follower Count",
+    "lalatest firsttest": "Latest First",
+    "earliest first": "Earliest First",
+    "alphabetical": "Alphabetical"
+  },
+  "search placeholder": "Search ENS or Address",
+  "following empty first": "You don't follow anyone yet. Sad! 😢",
+  "following empty second": "To get started, just browse and start following. Once you confirm them onchain, they'll show up here.",
+  "followers empty": "No followers"
+}

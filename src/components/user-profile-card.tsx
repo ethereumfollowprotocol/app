@@ -7,6 +7,7 @@ import { FollowButton } from '#/components/follow-button'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 import { truncateAddress } from '#/lib/utilities'
 import type { ENSProfile } from '#/lib/types'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
   profile: ENSProfile
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export function UserProfileCard({ profile, stats, borderColor }: Props) {
+  const { t } = useTranslation('common', { keyPrefix: 'profile card' })
   const { profile: connectedProfile } = useConnectedProfile()
   /////////////////////////////////////////////////////////////////////////////
   // followers for the user profile that is being viewed
@@ -49,7 +51,9 @@ export function UserProfileCard({ profile, stats, borderColor }: Props) {
             {name || truncateAddress(address)}
           </div>
           {connectedProfile?.isFollowedBy(address) && (
-            <div className='rounded-full font-bold text-[8px]  mt-[-6] mb-2'>Follows you</div>
+            <div className='rounded-full font-bold text-[8px]  mt-[-6] mb-2'>
+              {t('follows you')}
+            </div>
           )}
           <FollowButton address={address} />
         </div>
@@ -58,17 +62,17 @@ export function UserProfileCard({ profile, stats, borderColor }: Props) {
             <div className='text-xl sm:text-2xl font-bold'>
               {stats === undefined ? '?' : stats.following_count}
             </div>
-            <div className='sm:text-lg font-bold text-gray-500'>Following</div>
+            <div className='sm:text-lg font-bold text-gray-500'>{t('following')}</div>
           </div>
           <div>
             <div className='text-xl sm:text-2xl font-bold'>
               {stats === undefined ? '?' : stats.followers_count}
             </div>
-            <div className='sm:text-lg text-gray-500 font-bold'>Followers</div>
+            <div className='sm:text-lg text-gray-500 font-bold'>{t('followers')}</div>
           </div>
           <div>
             <div className='text-xl sm:text-2xl font-bold'>#1</div>
-            <div className='sm:text-lg font-bold text-gray-500'>Leaderboard</div>
+            <div className='sm:text-lg font-bold text-gray-500'>{t('leaderboard')}</div>
           </div>
         </div>
       </div>
