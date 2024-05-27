@@ -1,7 +1,7 @@
 {
-  "following": "Following",
   "block-mute": "Block/Mute Lists",
-  "setting": "List Settings",
+  "settings": "List Settings",
+  "following": "Following",
   "followers": "Followers",
   "tags": "Tags",
   "no tag": "No Tag",
@@ -9,7 +9,7 @@
   "muted": "Muted",
   "sort": {
     "follower count": "Follower Count",
-    "lalatest firsttest": "Latest First",
+    "latest first": "Latest First",
     "earliest first": "Earliest First",
     "alphabetical": "Alphabetical"
   },

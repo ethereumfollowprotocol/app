@@ -16,5 +16,13 @@
     "following": "Following",
     "leaderboard": "Leaderboard",
     "follows you": "Follows you"
+  },
+  "follow btn": {
+    "Follow": "Follow",
+    "Following": "Following",
+    "Unfollow": "Unfollow",
+    "Blocked": "Blocked",
+    "Block": "Block",
+    "Unblock": "Unblock"
   }
 }

@@ -1,9 +1,11 @@
+'use client'
 import clsx from 'clsx'
 import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { type FollowButtonState, useFollowButton } from './use-follow-button'
+import { useTranslation } from 'react-i18next'
 
 const theme = {
   Follow: {
@@ -70,6 +72,7 @@ interface FollowButtonProps {
 }
 
 export function FollowButton({ address, className = '', ...props }: FollowButtonProps) {
+  const { t } = useTranslation('common', { keyPrefix: 'follow btn' })
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
   const { buttonText, buttonState, handleAction } = useFollowButton({
@@ -98,7 +101,7 @@ export function FollowButton({ address, className = '', ...props }: FollowButton
       {...props}
     >
       <Image alt='mainnet logo' src='/assets/mainnet-black.svg' width={16} height={16} />
-      {buttonText}
+      {t(buttonText)}
     </button>
   )
 }
