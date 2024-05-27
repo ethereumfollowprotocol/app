@@ -7,6 +7,7 @@ import { DEFAULT_TAGS, SORT_OPTIONS } from '#/lib/constants'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { ProfileTabType } from '#/types/common'
 import { useClickAway } from '@uidotdev/usehooks'
+import { useTranslation } from 'react-i18next'
 
 interface TableHeaderProps {
   title: ProfileTabType
@@ -42,6 +43,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
     followersTags,
     followingTags
   } = useEFPProfile()
+  const { t } = useTranslation('profile')
 
   const tags = useMemo(
     () =>
@@ -65,7 +67,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
       <div className='flex justify-between w-full'>
         <div className='flex gap-4 justify-between items-center w-full'>
           <div ref={clickAwaySearchRef} className='flex gap-3 items-center'>
-            <p className='uppercase text-lg lg:text-xl font-bold'>{title}</p>
+            <p className='uppercase text-lg lg:text-xl font-bold'>{t(title)}</p>
             <div className='relative z-50'>
               <div
                 className='cursor-pointer max-w-40 flex items-center gap-2 hover:opacity-75'
@@ -94,7 +96,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                     spellCheck={false}
                     autoFocus={true}
                     autoComplete='off'
-                    placeholder={'Search ENS Name or Address'}
+                    placeholder={t('search placeholder')}
                     onChange={e => {
                       setSearch(e.target.value)
                     }}
@@ -111,7 +113,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
               className='cursor-pointer flex items-center gap-1'
             >
               {/* <Searchbar queryKey={searchQueryKey} placeholder='Search...' /> */}
-              <p className='text-sm font-bold'>Tags</p>
+              <p className='text-sm font-bold'>{t('tags')}</p>
               <Image
                 src={ArrowDown}
                 alt='open tags'
@@ -126,7 +128,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
               className='cursor-pointer flex relative items-center gap-1'
             >
               {/* <Searchbar queryKey={searchQueryKey} placeholder='Search...' /> */}
-              <p className='text-sm capitalize font-bold'>{sort}</p>
+              <p className='text-sm capitalize font-bold'>{t(`sort.${sort}`)}</p>
               <Image
                 src={ArrowDown}
                 alt='open sort'
@@ -142,7 +144,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                       key={option}
                       onClick={() => setSort(option)}
                     >
-                      {option}
+                      {t(`sort.${option}`)}
                     </div>
                   ))}
                 </div>
@@ -164,7 +166,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
               name={tag.toLowerCase()}
               onClick={() => toggleTag(title, tag)}
             >
-              {tag}
+              {t(tag)}
             </button>
           ))}
         </div>

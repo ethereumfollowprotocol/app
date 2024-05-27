@@ -1,3 +1,5 @@
+'use client'
+
 import clsx from 'clsx'
 import { useMemo } from 'react'
 import { useConnectedProfile } from '#/api/actions'
@@ -32,7 +34,7 @@ export function Recommendations({ header, size }: RecommendationsProps) {
         size
       )}
     >
-      <h2 className='text-start text-3xl font-bold'>{header}</h2>
+      <h2 className='lg:text-start text-3xl text-center font-bold'>{header}</h2>
       <FollowList
         listClassName='rounded-xl gap-7'
         profiles={profilesToRecommend}

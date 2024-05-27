@@ -17,6 +17,7 @@ import { UserProfilePageTable } from '#/components/profile-page-table'
 import { PROFILE_TABS } from '#/lib/constants'
 import type { ProfileTabType } from '#/types/common'
 import SettingsIcon from 'public/assets/icons/settings.svg'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
   searchParams: {
@@ -29,7 +30,9 @@ interface Props {
 
 export default function ProfilePage({ searchParams }: Props) {
   const [activeTab, setActiveTab] = useState<ProfileTabType>('following')
+
   const { profile } = useEFPProfile()
+  const { t } = useTranslation('profile')
 
   const queryClient = new QueryClient()
   queryClient.prefetchQuery({
@@ -68,9 +71,9 @@ export default function ProfilePage({ searchParams }: Props) {
       <div className='flex flex-col w-full xl:w-fit items-center gap-4'>
         <UserProfileCard profile={profile.ens} stats={profile.stats} />
         <div className='flex flex-col gap-1 items-center'>
-          <p className='font-semibold '>Block/Mute Lists</p>
+          <p className='font-semibold '>{t('block-mute')}</p>
           <div className='flex gap-1 cursor-pointer hover:opacity-80 transition-opacity'>
-            <p className='font-semibold '>List Settings</p>
+            <p className='font-semibold '>{t('settings')}</p>
             <Image src={SettingsIcon} alt='List settings' width={18} height={18} />
           </div>
         </div>
@@ -95,7 +98,7 @@ export default function ProfilePage({ searchParams }: Props) {
                 activeTab === option ? '' : 'bg-black/5'
               }`}
             >
-              {option}
+              {t(option)}
             </button>
           ))}
         </div>

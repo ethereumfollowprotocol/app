@@ -1,0 +1,28 @@
+{
+  "navigation": {
+    "home": "Domov",
+    "profile": "Moj Profil",
+    "leaderboard": "Lestvica",
+    "connect": "Poveži denarnico",
+    "disconnect": "Odpoveži denarnico",
+    "search placeholder": "Išci ENS ime ali 0x naslov"
+  },
+  "footer": {
+    "team": "Ekipa",
+    "docs": "Dokumentacija"
+  },
+  "profile card": {
+    "followers": "Sledilci",
+    "following": "Slediš",
+    "leaderboard": "Lestvica",
+    "follows you": "Ti sledi"
+  },
+  "follow btn": {
+    "Follow": "Sledi",
+    "Following": "Slediš",
+    "Unfollow": "Ne Sledi",
+    "Blocked": "Blockiran",
+    "Block": "Blokiraj",
+    "Unblock": "Odblokiraj"
+  }
+}

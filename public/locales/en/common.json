@@ -1,0 +1,28 @@
+{
+  "navigation": {
+    "home": "Home",
+    "profile": "My Profile",
+    "leaderboard": "Leaderboard",
+    "connect": "Connect Wallet",
+    "disconnect": "Disconnect Wallet",
+    "search placeholder": "Search ENS or 0x address"
+  },
+  "footer": {
+    "team": "Team",
+    "docs": "Documentation"
+  },
+  "profile card": {
+    "followers": "Followers",
+    "following": "Following",
+    "leaderboard": "Leaderboard",
+    "follows you": "Follows you"
+  },
+  "follow btn": {
+    "Follow": "Follow",
+    "Following": "Following",
+    "Unfollow": "Unfollow",
+    "Blocked": "Blocked",
+    "Block": "Block",
+    "Unblock": "Unblock"
+  }
+}

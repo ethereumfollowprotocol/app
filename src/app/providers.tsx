@@ -16,7 +16,7 @@ import { TransactionsProvider } from '#/contexts/transactions-context'
 import { useState } from 'react'
 import { EFPProfileProvider } from '#/contexts/efp-profile-context'
 
-type Props = {
+type ProviderProps = {
   children: React.ReactNode
   initialState?: State
 }
@@ -29,7 +29,7 @@ type Props = {
 
 const DEFAULT_CHAIN_ID = sepolia.id
 
-export function Providers({ children, initialState }: Props) {
+const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -67,3 +67,5 @@ export function Providers({ children, initialState }: Props) {
     </QueryClientProvider>
   )
 }
+
+export default Providers
