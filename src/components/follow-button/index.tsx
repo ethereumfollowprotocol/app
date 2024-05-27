@@ -13,7 +13,7 @@ const theme = {
     text: 'text-zinc-800'
   },
   'Pending Following': {
-    bg: 'bg-lime-400',
+    bg: 'bg-addition',
     text: 'text-zinc-800'
   },
   Following: {
@@ -21,11 +21,11 @@ const theme = {
     text: 'text-gray-900'
   },
   'Pending Unfollow': {
-    bg: 'bg-[#FF7C7C]',
+    bg: 'bg-deletion',
     text: 'text-gray-900'
   },
   Unfollow: {
-    bg: 'bg-salmon-500',
+    bg: 'bg-deletion',
     text: 'text-gray-900'
   },
   Subscribe: {
@@ -33,11 +33,11 @@ const theme = {
     text: 'text-zinc-800'
   },
   Subscribed: {
-    bg: 'bg-lime-400',
+    bg: 'bg-addition',
     text: 'text-zinc-800'
   },
   Unsubscribe: {
-    bg: 'bg-salmon-500',
+    bg: 'bg-deletion',
     text: 'text-gray-900'
   },
   Block: {
@@ -49,7 +49,7 @@ const theme = {
     text: 'text-salmon-500'
   },
   Unblock: {
-    bg: 'bg-salmon-500',
+    bg: 'bg-deletion',
     text: 'text-zinc-800'
   },
   Mute: {
@@ -61,7 +61,7 @@ const theme = {
     text: 'text-salmon-500'
   },
   Unmute: {
-    bg: 'bg-salmon-500',
+    bg: 'bg-deletion',
     text: 'text-red-700'
   }
 } satisfies Record<FollowButtonState, { bg: string; text: string }>

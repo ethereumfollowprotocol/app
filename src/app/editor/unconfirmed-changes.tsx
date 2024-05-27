@@ -29,16 +29,16 @@ export function UnconfirmedChanges() {
     <>
       <FollowList
         profiles={profiles}
-        listClassName='gap-2 p-4 rounded-xl bg-white/50'
-        listItemClassName='rounded-xl p-2'
+        listClassName='gap-4 rounded-xl '
+        listItemClassName='rounded-xl p-4 hover:bg-white/80'
         showFollowsYouBadges={true}
         showTags={true}
       />
-      <div className='mr-8 flex justify-end'>
-        <div className='flex gap-6 p-6 bg-white rounded-xl'>
+      <div className='flex justify-end'>
+        <div className='flex gap-6 items-center p-4 glass-card bg-opacity-50 shadow-lg rounded-xl'>
           <div className='flex gap-2 items-center'>
-            <p className='text-xl font-bold'>{totalCartItems}</p>
-            <div className='flex flex-col text-right'>
+            <p className='text-6xl font-bold'>{totalCartItems}</p>
+            <div className='flex flex-col text-lg text-left'>
               <p className='font-bold'>Unconfirmed</p>
               <p className='font-bold'>Changes</p>
             </div>
@@ -46,7 +46,13 @@ export function UnconfirmedChanges() {
 
           {isConnected ? (
             <Modal
-              triggerButton={<PrimaryButton onClick={() => setOpenModal(true)} label='Confirm' />}
+              triggerButton={
+                <PrimaryButton
+                  className='py-[14px] px-4 text-xl font-medium rounded-full'
+                  onClick={() => setOpenModal(true)}
+                  label='Confirm'
+                />
+              }
               open={openModal}
               setOpen={setOpenModal}
             >

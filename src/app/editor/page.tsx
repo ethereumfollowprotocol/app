@@ -12,37 +12,33 @@ import { Recommendations } from '#/components/recommendations'
 
 export default function EditorPage() {
   const { addCartItem } = useCart()
-  const { t } = useTranslation('profile')
+  const { t } = useTranslation('editor')
 
   const handleAddFollow = (address: Address) => {
     addCartItem({ listOp: listOpAddListRecord(address) })
   }
 
   return (
-    <main className='flex min-h-full h-full w-full flex-col items-center text-center px-28 pt-10'>
-      <div className='flex gap-9 w-full'>
-        <div className='flex flex-col gap-4 w-1/3'>
-          <h1 className='text-left mb-4 text-3xl font-bold'>Editor</h1>
-          <div className='flex g-2'>
-            <Search />
-            <button
-              className='bg-gradient-to-b p-3 from-kournikova-300 rounded-full to-salmon-400 text-black h-auto'
-              onClick={() => handleAddFollow('0x')}
-            >
-              Add
-            </button>
-          </div>
-          <div className='px-6'>
-            <Recommendations header='Recommendations' />
-          </div>
+    <main className='flex min-h-full h-full w-full text-center pt-10 xl:gap-6 mt-32 md:mt-40 lg:mt-48 px-4 lg:px-8'>
+      <div className='flex flex-col glass-card gap-6 p-6 rounded-2xl border-2 border-gray-200 max-w-116 w-1/3'>
+        <h1 className='text-left text-3xl font-bold'>{t('editor')}</h1>
+        <div className='flex gap-2'>
+          <Search />
+          <button
+            className='bg-gradient-to-b py-3 px-6 from-kournikova-300 rounded-full to-salmon-400 text-black h-auto'
+            onClick={() => handleAddFollow('0x')}
+          >
+            Add
+          </button>
         </div>
-        <div className='flex flex-col gap-4 w-2/3'>
-          <div className='flex justify-between items-center mx-5'>
-            <h2 className='font-bold'>Unconfirmed Changes</h2>
-            <Legend />
-          </div>
-          <UnconfirmedChanges />
+        <Recommendations header={t('recommendations')} />
+      </div>
+      <div className='flex flex-col glass-card rounded-2xl border-2 border-gray-200 gap-4 py-6 px-4 w-2/3'>
+        <div className='flex justify-between items-center px-4'>
+          <h3 className='font-bold text-2xl'>{t('unc-changes')}</h3>
+          <Legend />
         </div>
+        <UnconfirmedChanges />
       </div>
     </main>
   )
