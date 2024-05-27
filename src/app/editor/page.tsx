@@ -1,6 +1,7 @@
 'use client'
 
 import type { Address } from 'viem'
+import { useTranslation } from 'react-i18next'
 
 import { Legend } from './legend'
 import { Search } from '#/components/search'
@@ -11,6 +12,7 @@ import { Recommendations } from '#/components/recommendations'
 
 export default function EditorPage() {
   const { addCartItem } = useCart()
+  const { t } = useTranslation('profile')
 
   const handleAddFollow = (address: Address) => {
     addCartItem({ listOp: listOpAddListRecord(address) })

@@ -47,7 +47,7 @@ export function UserProfileCard({ profile, stats, borderColor }: Props) {
             name={name || address}
             size='h-[70px] w-[70px] sm:h-[75px]  sm:w-[75px] xl:h-[100px] xl:w-[100px]'
           />
-          <div className='flex flex-col items-start justify-center'>
+          <div className='flex xl:items-center  flex-col items-start justify-center'>
             <div className='text-xl sm:text-2xl font-bold my-2'>
               {name || truncateAddress(address)}
             </div>

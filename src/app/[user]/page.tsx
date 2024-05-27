@@ -2,15 +2,17 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { dehydrate, HydrationBoundary, QueryClient, useQuery } from '@tanstack/react-query'
-import { fetchUserStats, fetchUserFollowers, fetchUserFollowing } from '#/api/requests'
+
+import { PROFILE_TABS } from '#/lib/constants'
 import { getEnsProfile } from '#/app/actions.ts'
+import type { ProfileTabType } from '#/types/common'
 import { formatAddressOrName } from '#/lib/utilities'
+import SettingsIcon from 'public/assets/icons/settings.svg'
 import { UserProfileCard } from '#/components/user-profile-card'
 import { UserProfilePageTable } from '#/components/profile-page-table'
-import type { ProfileTabType } from '#/types/common'
-import { PROFILE_TABS } from '#/lib/constants'
-import SettingsIcon from 'public/assets/icons/settings.svg'
+import { fetchUserStats, fetchUserFollowers, fetchUserFollowing } from '#/api/requests'
 
 interface Props {
   params: { user: string }
@@ -18,6 +20,8 @@ interface Props {
 
 export default function UserPage({ params }: Props) {
   const [activeTab, setActiveTab] = useState<ProfileTabType>('following')
+
+  const { t } = useTranslation('profile')
 
   const { data: ensProfile } = useQuery({
     queryKey: ['user', params.user],
@@ -74,9 +78,9 @@ export default function UserPage({ params }: Props) {
         <div className='flex flex-col w-full xl:w-fit items-center gap-4'>
           <UserProfileCard profile={ensProfile} stats={stats?.stats} />
           <div className='flex flex-col gap-1 items-center'>
-            <p className='font-semibold '>Block/Mute Lists</p>
+            <p className='font-semibold '>{t('block-mute')}</p>
             <div className='flex gap-1 cursor-pointer hover:opacity-80 transition-opacity'>
-              <p className='font-semibold '>List Settings</p>
+              <p className='font-semibold '>{t('settings')}</p>
               <Image src={SettingsIcon} alt='List settings' width={18} height={18} />
             </div>
           </div>
@@ -101,7 +105,7 @@ export default function UserPage({ params }: Props) {
                   activeTab === option ? '' : 'bg-black/5'
                 }`}
               >
-                {option}
+                {t(option)}
               </button>
             ))}
           </div>
