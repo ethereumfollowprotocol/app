@@ -3,6 +3,7 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useRef, useState, useTransition } from 'react'
@@ -14,12 +15,12 @@ import { useQueryState } from 'next-usequerystate'
 import { ENS_SUBGRAPH, SECOND } from '#/lib/constants/index.ts'
 import MagnifyingGlass from 'public/assets/icons/magnifying-glass.svg'
 import { useIsomorphicLayoutEffect } from '#/hooks/use-isomorphic-layout-effect.ts'
-import { useTranslation } from 'react-i18next'
 
 // autocomplete search suggestions
 async function searchEnsSubgraph({ search }: { search: string }): Promise<string[]> {
   const sanitizedSearch = search.trim().toLowerCase()
   if (sanitizedSearch.length < 3) return []
+
   const response = await fetch(ENS_SUBGRAPH, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -40,10 +41,13 @@ async function searchEnsSubgraph({ search }: { search: string }): Promise<string
       operationName: 'SearchQuery'
     })
   })
+
   if (!response.ok) return []
+
   const json = (await response.json()) as {
     data: { domains: { name: string; registration: { registrationDate: string } | null }[] }
   }
+
   return json.data.domains
     .filter(domain => !!domain.registration)
     .map(domain => domain.name)
@@ -60,7 +64,7 @@ export function Search({
 
   const [dropdownMenuOpen, setDropdownMenuOpen] = useState(false)
   const [dialogOpen, setDialogOpen] = useState<undefined | boolean>(undefined)
-  const clickAwayRef = useClickAway<HTMLInputElement>(_ => {
+  const clickAwayRef = useClickAway<HTMLDivElement>(_ => {
     setDropdownMenuOpen(false)
     setDialogOpen(false)
   })
@@ -125,7 +129,7 @@ export function Search({
       <label htmlFor='search' className='sr-only'>
         Search
       </label>
-      <div className='rounded-md shadow-sm hidden sm:block'>
+      <div className='rounded-md hidden sm:block'>
         <input
           ref={searchBarRef}
           type='text'
@@ -145,7 +149,7 @@ export function Search({
                 !!searchResult
             )
           }}
-          className='h-12 block w-full font-medium rounded-xl border-2 border-grey pl-4 text-xs sm:text-sm bg-white/70'
+          className='h-12 block w-full font-medium rounded-xl border-2 border-gray-200 pl-4 text-xs sm:text-sm bg-white/70'
         />
         <div
           className='pointer-events-none absolute inset-y-0 right-2 flex items-center'
@@ -195,20 +199,26 @@ export function Search({
         </div>
       )}
 
-      <div className='block sm:hidden' hidden={dialogOpen}>
+      <div className='block relative z-50 sm:hidden'>
         <Image
           src={MagnifyingGlass}
           onClick={() => setDialogOpen(true)}
           alt='Search'
-          className='mr-3 h-5 w-5 text-grey'
+          className='h-5 w-5'
           aria-hidden='true'
         />
-        <div className='p-0 sm:hidden block w-96 -mt-52 mx-auto'>
+        <div
+          ref={clickAwayRef}
+          className={`p-0 sm:hidden absolute top-8 left-0 mx-auto ${
+            dialogOpen ? 'block' : 'hidden'
+          }`}
+        >
           <div>
             <input
               name='search'
-              className='h-11 px-1'
+              className='h-11 rounded-xl border-2 shadow-md border-gray-200 px-2'
               spellCheck={false}
+              placeholder={t('navigation.search placeholder')}
               disabled={disabled}
               onChange={handleSearchEvent}
               onClick={event => {
@@ -220,9 +230,7 @@ export function Search({
                     !!searchResult
                 )
               }}
-              placeholder='Search ENS or 0x address…'
               autoComplete='off'
-              ref={clickAwayRef}
             />
             {isPending && (
               <div className='absolute right-0 top-0 bottom-0 flex items-center justify-center'>
@@ -236,7 +244,7 @@ export function Search({
             }`}
           >
             <div
-              className='w-96 mx-auto min-w-full text-lg py-0 sm:hidden block max-h-56 bg-slate-50'
+              className='w-80 mx-auto min-w-full text-lg py-0 sm:hidden block max-h-56 bg-slate-50'
               ref={clickAwayRef}
               onFocusCapture={event => {
                 event.preventDefault()

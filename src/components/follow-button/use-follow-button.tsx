@@ -1,6 +1,6 @@
 import { useCart } from '#/contexts/cart-context'
-import { listOpAddListRecord, listOpRemoveListRecord } from '#/types/list-op'
 import { useFollowState } from '#/hooks/use-follow-state'
+import { listOpAddListRecord, listOpRemoveListRecord } from '#/utils/list-ops'
 import { useMemo } from 'react'
 import type { Address } from 'viem'
 

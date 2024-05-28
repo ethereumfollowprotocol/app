@@ -2,7 +2,7 @@
 
 import { useTranslation } from 'react-i18next'
 
-export const Legend = () => {
+const Legend = () => {
   const { t } = useTranslation('editor')
 
   return (
@@ -17,3 +17,5 @@ export const Legend = () => {
     </div>
   )
 }
+
+export default Legend

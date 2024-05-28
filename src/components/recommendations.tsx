@@ -12,7 +12,7 @@ interface RecommendationsProps {
 
 const mockProfiles: `0x${string}`[] = ['0x123', '0x456', '0x789']
 
-export function Recommendations({ header, className }: RecommendationsProps) {
+const Recommendations = ({ header, className }: RecommendationsProps) => {
   const { profile } = useConnectedProfile()
 
   // TODO get better recommendations
@@ -29,7 +29,7 @@ export function Recommendations({ header, className }: RecommendationsProps) {
 
   return (
     <div className={clsx(' flex flex-col gap-8', className)}>
-      <h2 className='lg:text-start text-3xl text-center font-bold'>{header}</h2>
+      <h2 className='text-start text-3xl font-bold'>{header}</h2>
       <FollowList
         listClassName='rounded-xl gap-7'
         profiles={profilesToRecommend}
@@ -39,3 +39,5 @@ export function Recommendations({ header, className }: RecommendationsProps) {
     </div>
   )
 }
+
+export default Recommendations

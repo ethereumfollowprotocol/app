@@ -51,8 +51,8 @@ body::-webkit-scrollbar-thumb {
 .glass-card {
     background: linear-gradient(
         to right bottom,
-        rgba(255, 255, 255, 0.55),
-        rgba(255, 255, 255, 0.35)
+        rgba(245, 245, 245, 0.55),
+        rgba(245, 245, 245, 0.35)
     );
     backdrop-filter: blur(0.9rem);
 }

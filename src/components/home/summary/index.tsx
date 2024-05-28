@@ -2,7 +2,7 @@
 
 import { UserProfileCard } from '#/components/user-profile-card'
 import LatestFollowers from './components/latest-followers'
-import { Recommendations } from '#/components/recommendations'
+import Recommendations from '#/components/recommendations'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { useTranslation } from 'react-i18next'
 

@@ -25,7 +25,7 @@ const Navigation = () => {
   return (
     <header className='w-full fixed z-50 glass-card bg-white/50 top-0 left-0 font-sans border-b-[1px] border-gray-200 p-4 lg:px-6 md:py-6 xl:px-8'>
       <nav className='my-auto flex w-full flex-row items-center justify-between'>
-        <div className='flex sm:w-full justify-start items-center gap-6 xl:gap-8'>
+        <div className='flex w-fit sm:w-full justify-start items-center gap-4 md:gap-6 xl:gap-8'>
           <Link href='/' className='select-none' aria-label='Ethereum Follow Protocol Logo link'>
             <Image
               src={FullLogo}
@@ -38,7 +38,7 @@ const Navigation = () => {
               alt='Ethereum Follow Protocol Logo'
             />
           </Link>
-          <div className='hidden md:block w-full'>
+          <div className='sm:w-3/5 md:w-full'>
             <Search size='md:w-4/5 xl:w-full max-w-[400px]' />
           </div>
         </div>
