@@ -1,4 +1,4 @@
-import './i18n'
+import '../i18n.ts'
 import './globals.css'
 import '@rainbow-me/rainbowkit/styles.css'
 

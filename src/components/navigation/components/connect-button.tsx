@@ -1,8 +1,9 @@
 'use client'
-import i18n from '#/app/i18n'
+
+import i18n from '#/i18n'
 import Image from 'next/image'
-import { useAccount, useDisconnect } from 'wagmi'
 import { useEffect, useState } from 'react'
+import { useAccount, useDisconnect } from 'wagmi'
 import { useClickAway } from '@uidotdev/usehooks'
 import type { Address, GetEnsAvatarReturnType } from 'viem'
 import { useAccountModal, useConnectModal } from '@rainbow-me/rainbowkit'
@@ -107,7 +108,7 @@ const ConnectButton = () => {
           </div>
           <div ref={clickAwayLanguageRef} className='w-full cursor-pointer group relative'>
             <div
-              onClick={() => setLanguageMenuOpen(!languageMenOpenu)}
+              onClick={() => setLanguageMenuOpen(true)}
               className='flex justify-between items-center w-full'
             >
               <Image
@@ -119,7 +120,7 @@ const ConnectButton = () => {
                 {selectedLanguage}
               </p>
             </div>
-            <div className={`absolute right-[100%] -top-2 group-hover:block pr-5`}>
+            <div className='absolute right-[100%] -top-2 group-hover:block pr-5'>
               <div className='flex flex-col gap-2 glass-card bg-white/90 border-2 border-gray-200 px-4 py-2 rounded-lg shadow-md'>
                 {LANGUAGES.map(lang => (
                   <p
