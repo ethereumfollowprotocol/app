@@ -1,11 +1,11 @@
 'use client'
 
-import { UserProfileCard } from '#/components/user-profile-card'
-import LatestFollowers from './components/latest-followers'
-import Recommendations from '#/components/recommendations'
-import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { useTranslation } from 'react-i18next'
 import LoadingSpinner from '#/components/loading-spinner'
+import Recommendations from '#/components/recommendations'
+import LatestFollowers from './components/latest-followers'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
+import { UserProfileCard } from '#/components/user-profile-card'
 
 const Summary = () => {
   const { t } = useTranslation('home')

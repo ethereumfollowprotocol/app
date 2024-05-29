@@ -1,11 +1,13 @@
 'use client'
+
 import clsx from 'clsx'
 import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
-import { useConnectModal } from '@rainbow-me/rainbowkit'
-import { type FollowButtonState, useFollowButton } from './use-follow-button'
 import { useTranslation } from 'react-i18next'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
+
+import { type FollowButtonState, useFollowButton } from './use-follow-button'
 
 const theme = {
   Follow: {

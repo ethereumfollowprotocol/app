@@ -1,8 +1,9 @@
+import Image from 'next/image'
 import type { ChainWithDetails } from '#/lib/wagmi'
 import { ChainIcon } from '#/components/chain-icon'
 import { PrimaryButton } from '#/components/primary-button'
 import GreenCheck from 'public/assets/icons/check-green.svg'
-import Image from 'next/image'
+import CancelButton from '#/components/cancel-button'
 
 export function SelectChainCard({
   chains,
@@ -29,12 +30,7 @@ export function SelectChainCard({
         <ChainList chains={chains} onClick={handleChainClick} selectedChain={selectedChain} />
       </div>
       <div className='w-full mt-10 flex justify-between items-center'>
-        <button
-          onClick={() => onCancel()}
-          className='w-32 h-12 bg-gray-300 rounded-full text-lg font-semibold'
-        >
-          Cancel
-        </button>
+        <CancelButton onClick={onCancel} />
         <PrimaryButton
           label='Next'
           onClick={handleNextStep}

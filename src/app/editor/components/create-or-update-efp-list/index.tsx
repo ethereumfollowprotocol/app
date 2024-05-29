@@ -1,20 +1,20 @@
-import { useChains, useWalletClient } from 'wagmi'
 import { encodePacked } from 'viem'
+import { useChains, useWalletClient } from 'wagmi'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
-import { useCart } from '#/contexts/cart-context'
-
-// import { useCreateEFPList } from '#/hooks/efp-actions/use-create-efp-list'
 import { Step } from './types'
 import { mint } from '#/app/efp/actions'
 import { efpListRecordsAbi } from '#/lib/abi'
-import type { ChainWithDetails } from '#/lib/wagmi'
+import { useCart } from '#/contexts/cart-context'
 import { SelectChainCard } from './select-chain-card'
 import { efpContracts } from '#/lib/constants/contracts'
 import { InitiateActionsCard } from './initiate-actions-card'
 import { TransactionStatusCard } from './transaction-status-card'
 import { generateListStorageLocationSlot } from '#/app/efp/utilities'
 import { extractAddressAndTag, isTagListOp } from '#/utils/list-ops'
+// import { useCreateEFPList } from '#/hooks/efp-actions/use-create-efp-list'
+
+import type { ChainWithDetails } from '#/lib/wagmi'
 import { EFPActionType, type Action, useActions } from '#/contexts/actions-context'
 
 interface CreateOrUpdateEFPListProps {
@@ -29,8 +29,8 @@ const CreateOrUpdateEFPList: React.FC<CreateOrUpdateEFPListProps> = ({
   const chains = useChains() as unknown as ChainWithDetails[] // TODO: Fix this type issue
   const nonce = useMemo(() => generateListStorageLocationSlot(), [])
 
-  const { data: walletClient } = useWalletClient()
   const { totalCartItems, cartItems } = useCart()
+  const { data: walletClient } = useWalletClient()
   const { addActions, executeActionByIndex, actions } = useActions()
 
   const [selectedChainId, setSelectedChainId] = useState<number>()

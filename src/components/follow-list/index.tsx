@@ -1,7 +1,8 @@
-import type { Address } from 'viem'
-import { FollowListItem } from './follow-list-item'
 import Image from 'next/image'
+import type { Address } from 'viem'
+
 import EFPLogo from 'public/assets/logo.svg'
+import { FollowListItem } from './follow-list-item'
 
 interface FollowListProfile {
   address: Address

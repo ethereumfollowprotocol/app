@@ -6,6 +6,7 @@ import clsx from 'clsx'
 import { useActions, type Action } from '#/contexts/actions-context'
 import useChain from '#/hooks/use-chain'
 import { useCart } from '#/contexts/cart-context'
+import CancelButton from '#/components/cancel-button'
 
 interface TransactionStatusCardProps {
   setOpen?: (open: boolean) => void // setOpen prop for the parent modal
@@ -81,22 +82,25 @@ export function TransactionStatusCard({ setOpen }: TransactionStatusCardProps) {
         </div>
       )}
       <TransactionStatusDetails action={currentAction} />
-      {showNextButton && (
-        <PrimaryButton
-          label={'Next'}
-          onClick={handleNextAction}
-          className='text-lg w-40 h-10'
-          disabled={nextButtonIsDisabled}
-        />
-      )}
-      {showFinishButton && (
-        <PrimaryButton
-          label={'Finish'}
-          onClick={handleFinish}
-          className='text-lg w-40 h-10'
-          disabled={finishButtonIsDisabled}
-        />
-      )}
+      <div className='w-full mt-10 flex justify-between items-center'>
+        <CancelButton />
+        {showNextButton && (
+          <PrimaryButton
+            label={'Next'}
+            onClick={handleNextAction}
+            className='text-lg w-40 h-10'
+            disabled={nextButtonIsDisabled}
+          />
+        )}
+        {showFinishButton && (
+          <PrimaryButton
+            label={'Finish'}
+            onClick={handleFinish}
+            className='text-lg w-40 h-10'
+            disabled={finishButtonIsDisabled}
+          />
+        )}
+      </div>
     </>
   )
 }
