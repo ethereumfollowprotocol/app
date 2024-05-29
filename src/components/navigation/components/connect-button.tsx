@@ -40,6 +40,7 @@ const ConnectButton = () => {
   })
 
   const { t } = useTranslation()
+  console.log(t, i18n.language)
   const { disconnect } = useDisconnect()
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
