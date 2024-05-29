@@ -40,7 +40,7 @@ const ConnectButton = () => {
   })
 
   const { t } = useTranslation()
-  console.log(t, i18n.language)
+  console.log(i18n.language, languageMenOpenu)
   const { disconnect } = useDisconnect()
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
@@ -119,11 +119,7 @@ const ConnectButton = () => {
                 {selectedLanguage}
               </p>
             </div>
-            <div
-              className={`absolute right-[100%] -top-2 ${
-                languageMenOpenu ? 'block' : 'hidden'
-              } group-hover:block pr-5`}
-            >
+            <div className={`absolute right-[100%] -top-2 group-hover:block pr-5`}>
               <div className='flex flex-col gap-2 glass-card bg-white/90 border-2 border-gray-200 px-4 py-2 rounded-lg shadow-md'>
                 {LANGUAGES.map(lang => (
                   <p
