@@ -25,7 +25,7 @@ export default function EditorPage() {
   const { totalCartItems, cartAddresses, addCartItem } = useCart()
 
   const { profile: connectedProfile } = useConnectedProfile()
-  const hasCreatedEfpList = !Number.isNaN(connectedProfile?.primaryList)
+  const hasCreatedEfpList = !!connectedProfile?.primaryList
 
   const profiles = useMemo(
     () =>

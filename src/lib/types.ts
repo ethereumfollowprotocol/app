@@ -21,9 +21,9 @@ export type Pretty<T> = {
 } & {}
 
 export interface ENSProfile {
-  name: string
+  name?: string
   address: Address
-  avatar: string | GetEnsAvatarReturnType
+  avatar?: string | GetEnsAvatarReturnType
   display?: string
   records?: {
     avatar: string

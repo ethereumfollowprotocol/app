@@ -4,6 +4,7 @@ import useChain from '#/hooks/use-chain'
 import { ChainIcon } from '#/components/chain-icon'
 import { PrimaryButton } from '#/components/primary-button'
 import type { Action } from '#/contexts/actions-context'
+import CancelButton from '#/components/cancel-button'
 
 export function InitiateActionsCard({
   actions,
@@ -46,15 +47,11 @@ export function InitiateActionsCard({
           ))}
       </div>
       <div className='flex w-full justify-between'>
-        <PrimaryButton
-          label='Back'
-          onClick={() => setCurrentStep(Step.SelectChain)}
-          className='text-lg w-40 h-10 bg-grey'
-        />
+        <CancelButton onClick={() => setCurrentStep(Step.SelectChain)} />
         <PrimaryButton
           label='Initiate'
           onClick={handleInitiateActions}
-          className='text-lg w-40 h-10'
+          className='text-lg w-32 h-12'
           disabled={!selectedChain}
         />
       </div>

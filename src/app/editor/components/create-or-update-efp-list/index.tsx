@@ -1,16 +1,17 @@
-import { encodePacked } from 'viem'
+import { sepolia } from 'viem/chains'
 import { useChains, useWalletClient } from 'wagmi'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { createPublicClient, encodePacked, getContract, http, toHex } from 'viem'
 
 import { Step } from './types'
-import { mint } from '#/app/efp/actions'
-import { efpListRecordsAbi } from '#/lib/abi'
+import { useMintEFP } from '#/hooks/use-mint-efp'
 import { useCart } from '#/contexts/cart-context'
 import { SelectChainCard } from './select-chain-card'
 import { efpContracts } from '#/lib/constants/contracts'
 import { InitiateActionsCard } from './initiate-actions-card'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { TransactionStatusCard } from './transaction-status-card'
-import { generateListStorageLocationSlot } from '#/app/efp/utilities'
+import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { extractAddressAndTag, isTagListOp } from '#/utils/list-ops'
 // import { useCreateEFPList } from '#/hooks/efp-actions/use-create-efp-list'
 
@@ -27,10 +28,16 @@ const CreateOrUpdateEFPList: React.FC<CreateOrUpdateEFPListProps> = ({
   hasCreatedEfpList
 }) => {
   const chains = useChains() as unknown as ChainWithDetails[] // TODO: Fix this type issue
-  const nonce = useMemo(() => generateListStorageLocationSlot(), [])
 
+  const { mint, nonce: mintNonce } = useMintEFP()
+  const { profile } = useEFPProfile()
   const { totalCartItems, cartItems } = useCart()
   const { data: walletClient } = useWalletClient()
+  const listRegistryContract = getContract({
+    address: efpContracts.EFPListRegistry,
+    abi: efpListRegistryAbi,
+    client: createPublicClient({ chain: sepolia, transport: http() })
+  })
   const { addActions, executeActionByIndex, actions } = useActions()
 
   const [selectedChainId, setSelectedChainId] = useState<number>()
@@ -38,6 +45,14 @@ const CreateOrUpdateEFPList: React.FC<CreateOrUpdateEFPListProps> = ({
   const [currentStep, setCurrentStep] = useState(Step.SelectChain)
 
   const listOpTx = async () => {
+    const nonce = profile?.primary_list
+      ? BigInt(
+          `0x${(
+            await listRegistryContract.read.getListStorageLocation([BigInt(profile?.primary_list)])
+          ).slice(-64)}`
+        )
+      : mintNonce
+
     const operations = cartItems.map(item => {
       const types = ['uint8', 'uint8', 'uint8', 'uint8', 'address']
       const data: (string | number)[] = [item.listOp.version, item.listOp.opcode, 1, 1]
@@ -45,7 +60,7 @@ const CreateOrUpdateEFPList: React.FC<CreateOrUpdateEFPListProps> = ({
       if (item.listOp.opcode > 2 && isTagListOp(item.listOp)) {
         const addrrAndTag = extractAddressAndTag(item.listOp)
         types.push('bytes')
-        data.concat([addrrAndTag.address, addrrAndTag.tag])
+        data.push(...[addrrAndTag.address, toHex(addrrAndTag.tag)])
       } else {
         data.push(`0x${item.listOp.data.toString('hex')}`)
       }
@@ -84,7 +99,6 @@ const CreateOrUpdateEFPList: React.FC<CreateOrUpdateEFPListProps> = ({
       type: EFPActionType.CreateEFPList,
       label: 'Create new EFP List',
       chainId: selectedChainId,
-      // @ts-ignore
       execute: mint,
       isPendingConfirmation: false
     }

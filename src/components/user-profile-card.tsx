@@ -2,12 +2,12 @@
 
 import { Avatar } from './avatar'
 import type { StatsResponse } from '#/api/requests'
-import { useConnectedProfile } from '#/api/actions'
 import { FollowButton } from '#/components/follow-button'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 import { truncateAddress } from '#/lib/utilities'
 import type { ENSProfile } from '#/lib/types'
 import { useTranslation } from 'react-i18next'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 interface Props {
   profile: ENSProfile
@@ -17,7 +17,7 @@ interface Props {
 
 export function UserProfileCard({ profile, stats, borderColor }: Props) {
   const { t } = useTranslation('common', { keyPrefix: 'profile card' })
-  const { profile: connectedProfile } = useConnectedProfile()
+  const { profile: connectedProfile } = useEFPProfile()
   /////////////////////////////////////////////////////////////////////////////
   // followers for the user profile that is being viewed
   /////////////////////////////////////////////////////////////////////////////
@@ -38,7 +38,7 @@ export function UserProfileCard({ profile, stats, borderColor }: Props) {
       } w-full rounded-xl py-3 px-4 sm:p-6 relative`}
     >
       <div className='text-gray-500 absolute text-right xl:text-left px-2 w-full left-0 top-1 font-semibold'>
-        #{connectedProfile?.primaryList ?? '-'}
+        #{connectedProfile?.primary_list ?? '-'}
       </div>
       <div className='flex xl:items-center flex-col gap-5 sm:gap-6 md:gap-9 pt-2'>
         <div className='flex flex-row xl:flex-col xl:justify-center items-center gap-3'>
@@ -51,7 +51,7 @@ export function UserProfileCard({ profile, stats, borderColor }: Props) {
             <div className='text-xl sm:text-2xl font-bold my-2'>
               {name || truncateAddress(address)}
             </div>
-            {connectedProfile?.isFollowedBy(address) && (
+            {connectedProfile?.followers?.map(follower => follower.address).includes(address) && (
               <div className='rounded-full font-bold text-[8px]  mt-[-6] mb-2'>
                 {t('follows you')}
               </div>

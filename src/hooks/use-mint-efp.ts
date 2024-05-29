@@ -1,7 +1,6 @@
 import { useMemo } from 'react'
 import { encodePacked } from 'viem'
 import { useAccount, useChainId, useWalletClient } from 'wagmi'
-import { useAddRecentTransaction } from '@rainbow-me/rainbowkit'
 
 import * as abi from 'src/lib/abi.ts'
 import { efpContracts } from '#/lib/constants/contracts.ts'
@@ -11,7 +10,6 @@ export function useMintEFP() {
   const chainId = useChainId()
   const { address: accountAddress } = useAccount()
   const { data: walletClient } = useWalletClient()
-  const addRecentTransaction = useAddRecentTransaction()
   const nonce = useMemo(() => generateListStorageLocationSlot(), [])
 
   const mint = async () => {
@@ -33,26 +31,15 @@ export function useMintEFP() {
         ]
       })
 
-      if (hash)
-        addRecentTransaction({
-          hash,
-          description: 'Mint - EFP List creation'
-        })
-
-      return {
-        hash,
-        status: 'success'
-      }
+      return hash
     } catch (e: any) {
-      return {
-        message: e.details,
-        status: 'error'
-      }
+      throw new Error(e)
     }
   }
 
   return {
     mint,
-    walletClient
+    walletClient,
+    nonce
   }
 }

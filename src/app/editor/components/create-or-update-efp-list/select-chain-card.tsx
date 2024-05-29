@@ -34,7 +34,7 @@ export function SelectChainCard({
         <PrimaryButton
           label='Next'
           onClick={handleNextStep}
-          className='text-lg font-semibold w-32 h-12'
+          className='text-lg w-32 h-12'
           disabled={!selectedChain}
         />
       </div>

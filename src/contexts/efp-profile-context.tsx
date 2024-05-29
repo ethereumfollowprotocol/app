@@ -2,13 +2,13 @@ import { fetchUserProfile, type ProfileResponse } from '#/api/requests'
 import type { ProfileTabType } from '#/types/common'
 import { resolveENSProfile } from '#/utils/resolveAddress'
 import { useQuery } from '@tanstack/react-query'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 import type { Address } from 'viem'
 import { useAccount } from 'wagmi'
 
 // Define the type for the profile context
 type EFPProfileContextType = {
-  profile: ProfileResponse | null
+  profile?: ProfileResponse | null
   isLoading: boolean
   followingTags: string[]
   followersTags: string[]
@@ -27,59 +27,48 @@ type Props = {
 const EFPProfileContext = createContext<EFPProfileContextType | undefined>(undefined)
 
 export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
   const [followingTags, setFollowingTags] = useState<string[]>([])
   const [followersTags, setFollowersTags] = useState<string[]>([])
-  const [profile, setProfile] = useState<ProfileResponse | null>(null)
   const [followingSort, setFollowingSort] = useState<string>('follower count')
   const [followersSort, setFollowersSort] = useState<string>('follower count')
 
   const { address: userAddress } = useAccount()
-  const { data: userProfileResponse } = useQuery({
+  const {
+    data: profile,
+    isLoading,
+    error
+  } = useQuery({
     queryKey: ['profile', userAddress],
     queryFn: async () => {
-      if (!userAddress) return { name: null, avatar: null }
-      // const fetchedProfile = fetchUserProfile({ addressOrName })
-      const data = await resolveENSProfile(userAddress)
+      if (!userAddress) return null
 
-      return data
-    }
-  })
+      try {
+        const fetchedProfile = await fetchUserProfile({ addressOrName: userAddress })
+        const transformedProfile: ProfileResponse = {
+          ...fetchedProfile,
+          address: userAddress as Address,
+          ens: {
+            ...fetchedProfile.ens,
+            address: userAddress as Address
+          }
+        }
 
-  const fetchProfile = async (addressOrName: string) => {
-    try {
-      const fetchedProfile = await fetchUserProfile({ addressOrName })
-      const transformedProfile: ProfileResponse = {
-        ...fetchedProfile,
-        address: addressOrName as Address,
-        ens: {
-          ...fetchedProfile.ens,
-          address: addressOrName as Address
+        return transformedProfile
+      } catch (err: unknown) {
+        const data = await resolveENSProfile(userAddress)
+        if (data?.name && data?.avatar)
+          return {
+            address: userAddress as Address,
+            ens: { ...data, address: userAddress as Address }
+          }
+
+        return {
+          address: userAddress as Address,
+          ens: { address: userAddress as Address }
         }
       }
-      setProfile(transformedProfile)
-    } catch (err: unknown) {
-      if (userProfileResponse?.name && userProfileResponse?.avatar)
-        setProfile({
-          address: addressOrName as Address,
-          ens: { ...userProfileResponse, address: addressOrName as Address }
-        })
-      setError(err as Error | null)
-    } finally {
-      setIsLoading(false)
     }
-  }
-
-  useEffect(() => {
-    if (!userAddress) {
-      setProfile(null)
-      return
-    }
-
-    setIsLoading(true)
-    fetchProfile(userAddress)
-  }, [userAddress])
+  })
 
   const toggleTag = (tab: ProfileTabType, tag: string) => {
     if (tab === 'following') {

@@ -113,7 +113,6 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
         updateAction({ ...actionToExecute, isPendingConfirmation: false, txHash: hash })
       } catch (error: any) {
         throw new Error(error)
-        // TODO Handle action failure
       }
     },
     [actions, updateAction]
