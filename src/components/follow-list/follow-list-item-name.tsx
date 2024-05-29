@@ -49,7 +49,7 @@ export function FollowListItemName({
   })
 
   const { t } = useTranslation()
-  const { t: tProfile } = useTranslation('profile')
+  const { t: tEditor } = useTranslation('editor')
   const isFollower = useFollowState(address) === 'follows'
   const { addCartItem, removeCartItem, getTagsFromCartByAddress, hasListOpAddTag } = useCart()
 
@@ -103,7 +103,7 @@ export function FollowListItemName({
               <div className='absolute z-50 flex flex-col w-60 gap-2 left-0 top-8 glass-card bg-white/50 p-2 border-2 border-gray-200 rounded-lg'>
                 <div className='w-full flex items-center gap-1.5 justify-between bg-gray-300 rounded-lg font-bold p-1 text-left'>
                   <input
-                    placeholder='Custom tag'
+                    placeholder={tEditor('custom tag')}
                     value={customTagInput}
                     onChange={e => setCustomTagInput(e.target.value)}
                     onKeyDown={e => {
@@ -125,7 +125,7 @@ export function FollowListItemName({
                       className='font-semibold py-2 px-3 hover:opacity-80 bg-gray-300 rounded-full'
                       onClick={() => addTag(tag)}
                     >
-                      {tProfile(tag)}
+                      {tEditor(tag)}
                     </button>
                   ))}
                 </div>
@@ -144,7 +144,7 @@ export function FollowListItemName({
                   `}
                   onClick={() => removeTag(tag)}
                 >
-                  {tProfile(tag)}
+                  {tEditor(tag)}
                 </button>
               )
             })}

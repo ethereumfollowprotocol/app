@@ -1,8 +1,15 @@
 {
-  "editor": "Editor",
+  "title": "Editor",
+  "add": "Add",
   "recommendations": "Recommendations",
   "unc-changes": "Unconfirmed Changes",
   "legend": "Legend:",
   "addition": "addition",
-  "deletion": "deletion"
+  "deletion": "deletion",
+  "custom tag": "Custom tag",
+  "blocked": "Blocked",
+  "muted": "Muted",
+  "confirm": "Confirm",
+  "unconfirmed": "Unconfirmed",
+  "changes": "Changes"
 }

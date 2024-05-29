@@ -1,8 +1,15 @@
 {
   "editor": "Upravljalnik",
+  "add": "Dodaj",
   "recommendations": "Priporočeni",
   "unc-changes": "Nepotrjene spremembe",
   "legend": "Legenda:",
   "addition": "dodano",
-  "deletion": "izbrisano"
+  "deletion": "izbrisano",
+  "custom tag": "Nova oznaka",
+  "blocked": "Blokiran",
+  "muted": "Utišan",
+  "confirm": "Potrdi",
+  "unconfirmed": "Nepotrjene",
+  "changes": "Spremembe"
 }

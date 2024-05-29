@@ -27,16 +27,15 @@ type Props = {
 const EFPProfileContext = createContext<EFPProfileContextType | undefined>(undefined)
 
 export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
-  const [profile, setProfile] = useState<ProfileResponse | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
   const [followingTags, setFollowingTags] = useState<string[]>([])
   const [followersTags, setFollowersTags] = useState<string[]>([])
+  const [profile, setProfile] = useState<ProfileResponse | null>(null)
   const [followingSort, setFollowingSort] = useState<string>('follower count')
   const [followersSort, setFollowersSort] = useState<string>('follower count')
 
   const { address: userAddress } = useAccount()
-
   const { data: userProfileResponse } = useQuery({
     queryKey: ['profile', userAddress],
     queryFn: async () => {
@@ -73,9 +72,14 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   }
 
   useEffect(() => {
-    if (!userAddress) return
+    if (!userAddress) {
+      setProfile(null)
+      return
+    }
+
+    setIsLoading(true)
     fetchProfile(userAddress)
-  }, [userAddress, userProfileResponse])
+  }, [userAddress])
 
   const toggleTag = (tab: ProfileTabType, tag: string) => {
     if (tab === 'following') {

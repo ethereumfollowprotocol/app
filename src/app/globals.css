@@ -152,6 +152,38 @@ input {
   text-wrap: balance;
 }
 
+/* Custom loader */
+.loader {
+  border: 4px solid #ffc057;
+  border-left-color: transparent;
+  border-radius: 50%;
+}
+
+.loader {
+  border: 4px solid #ffc057;
+  border-left-color: transparent;
+  width: 36px;
+  height: 36px;
+}
+
+.loader {
+  border: 4px solid #ffc057;
+  border-left-color: transparent;
+  width: 36px;
+  height: 36px;
+  animation: spin89345 1s linear infinite;
+}
+
+@keyframes spin89345 {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 @media screen and (max-width: 1750px) {
   body {
     background-position: -34.1vw -30vw;

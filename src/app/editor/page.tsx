@@ -55,7 +55,7 @@ export default function EditorPage() {
                 className='bg-gradient-to-b py-3 px-6 from-kournikova-300 rounded-full to-salmon-400 text-black h-auto'
                 onClick={() => handleAddFollow('0x')}
               >
-                Add
+                {t('add')}
               </button>
             </div>
             <Recommendations header={t('recommendations')} />
@@ -79,8 +79,8 @@ export default function EditorPage() {
               <div className='flex gap-2 items-center'>
                 <p className='text-6xl font-bold'>{totalCartItems}</p>
                 <div className='flex flex-col text-lg text-left'>
-                  <p className='font-bold'>Unconfirmed</p>
-                  <p className='font-bold'>Changes</p>
+                  <p className='font-bold'>{t('unconfirmed')}</p>
+                  <p className='font-bold'>{t('changes')}</p>
                 </div>
               </div>
               <PrimaryButton
@@ -93,7 +93,7 @@ export default function EditorPage() {
 
                   setIsCheckingOut(true)
                 }}
-                label='Confirm'
+                label={t('confirm')}
               />
             </div>
           </div>
