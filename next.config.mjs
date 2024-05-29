@@ -43,10 +43,6 @@ const nextConfig = {
   logging: {
     fetches: { fullUrl: true }
   },
-  i18n: {
-    locales: ['en', 'si'],
-    defaultLocale: 'en'
-  },
   images: {
     domains: ['ipfs.io'],
     remotePatterns: [
