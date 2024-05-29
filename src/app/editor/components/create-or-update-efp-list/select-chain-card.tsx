@@ -1,14 +1,19 @@
+import Image from 'next/image'
 import type { ChainWithDetails } from '#/lib/wagmi'
 import { ChainIcon } from '#/components/chain-icon'
 import { PrimaryButton } from '#/components/primary-button'
+import GreenCheck from 'public/assets/icons/check-green.svg'
+import CancelButton from '#/components/cancel-button'
 
 export function SelectChainCard({
   chains,
+  onCancel,
   handleChainClick,
   selectedChain,
   handleNextStep
 }: {
   chains: ChainWithDetails[]
+  onCancel: () => void
   handleChainClick: (chainId: number) => void
   selectedChain: ChainWithDetails | undefined
   handleNextStep: () => void
@@ -16,20 +21,23 @@ export function SelectChainCard({
   return (
     <>
       <div className='flex flex-col gap-2'>
-        <h1 className='text-3xl'>Where would you like to store you EFP list?</h1>
-        <p className='lg'>You can always change this later</p>
+        <h1 className='text-3xl font-semibold'>Where would you like to store you EFP list?</h1>
+        <p className=' font-medium text-gray-400'>You can always change this later</p>
       </div>
 
       <div className='flex flex-col gap-6'>
         <p className='text-2xl font-bold'>Select one</p>
         <ChainList chains={chains} onClick={handleChainClick} selectedChain={selectedChain} />
       </div>
-      <PrimaryButton
-        label='Next'
-        onClick={handleNextStep}
-        className='text-lg w-40 h-10'
-        disabled={!selectedChain}
-      />
+      <div className='w-full mt-10 flex justify-between items-center'>
+        <CancelButton onClick={onCancel} />
+        <PrimaryButton
+          label='Next'
+          onClick={handleNextStep}
+          className='text-lg font-semibold w-32 h-12'
+          disabled={!selectedChain}
+        />
+      </div>
     </>
   )
 }
@@ -63,10 +71,19 @@ function Chain({
   isSelected
 }: { chain: ChainWithDetails; onClick: (chainId: number) => void; isSelected: boolean }) {
   return (
-    <div className='flex items-center gap-2 hover:cursor-pointer' onClick={() => onClick(chain.id)}>
-      {/* <div>
-        {isSelected && <CheckIcon className='left-0 text-lime-500 relative -ml-12 w-10 h-10' />}
-      </div> */}
+    <div
+      className='flex items-center relative gap-2 hover:cursor-pointer'
+      onClick={() => onClick(chain.id)}
+    >
+      {isSelected && (
+        <Image
+          src={GreenCheck}
+          alt='selected'
+          height={32}
+          width={32}
+          className=' absolute left-0 text-lime-500 -ml-12'
+        />
+      )}
       <ChainIcon chain={chain} className={'h-[60px] w-[60px]'} />
       <div className='flex flex-col items-start '>
         <p>{chain.custom.chainDetail}</p>

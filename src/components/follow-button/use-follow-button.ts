@@ -1,8 +1,9 @@
-import { useCart } from '#/contexts/cart-context'
-import { listOpAddListRecord, listOpRemoveListRecord } from '#/types/list-op'
-import { useFollowState } from '#/hooks/use-follow-state'
 import { useMemo } from 'react'
 import type { Address } from 'viem'
+
+import { useCart } from '#/contexts/cart-context'
+import { useFollowState } from '#/hooks/use-follow-state'
+import { listOpAddListRecord, listOpRemoveListRecord } from '#/utils/list-ops'
 
 export type FollowButtonState =
   | 'Block'

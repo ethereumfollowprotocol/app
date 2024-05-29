@@ -43,7 +43,7 @@ export function Footer() {
             <Pages />
             <div className='flex items-center gap-10'>
               {socials.map(item => (
-                <a key={item.text} href={item.href}>
+                <a target='_blank' rel='noreferrer' key={item.text} href={item.href}>
                   <Image src={item.icon} className='w-8' alt={item.text} />
                 </a>
               ))}

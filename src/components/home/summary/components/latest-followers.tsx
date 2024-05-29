@@ -12,23 +12,23 @@ const MOCK_PROFILES_DATA = [
     tags: []
   },
   {
-    address: '0x2425124064f82bf68c6844fec4515b071d4b821a' as Address,
+    address: '0xEA10c294b01659495932bC69c4a68A6b62326ff2' as Address,
     tags: []
   },
   {
-    address: '0x983110309620D911731Ac0932219af06091b6744' as Address,
+    address: '0xBc4ABa27fFc74455597477dE5CACBBb4F8D5659e' as Address,
     tags: []
   },
   {
-    address: '0x2425124064f82bf68c6844fec4515b071d4b821a' as Address,
+    address: '0x6Aa5eC5990977feE7AA1A4181Baa76dF243070E4' as Address,
     tags: []
   },
   {
-    address: '0x983110309620D911731Ac0932219af06091b6744' as Address,
+    address: '0xd4713Cca4068700Cf722f8C2b6c05f948B75321b' as Address,
     tags: []
   },
   {
-    address: '0x2425124064f82bf68c6844fec4515b071d4b821a' as Address,
+    address: '0x871b4be6Ec08a847c94a86C41aD449eF9d507b34' as Address,
     tags: []
   }
 ]

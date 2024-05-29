@@ -4,6 +4,7 @@ import { initReactI18next } from 'react-i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 
 import home from '../../public/locales/en/home.json'
+import editor from '../../public/locales/en/editor.json'
 import common from '../../public/locales/en/common.json'
 import profile from '../../public/locales/en/profile.json'
 
@@ -19,7 +20,7 @@ i18n
       escapeValue: false
     },
     defaultNS: 'common',
-    ns: ['common', 'home', 'profile'],
+    ns: ['common', 'home', 'profile', 'editor'],
     react: {
       useSuspense: false
     }
@@ -27,6 +28,7 @@ i18n
 
 // preload english
 i18n.addResourceBundle('en', 'home', home)
+i18n.addResourceBundle('en', 'editor', editor)
 i18n.addResourceBundle('en', 'common', common)
 i18n.addResourceBundle('en', 'profile', profile)
 

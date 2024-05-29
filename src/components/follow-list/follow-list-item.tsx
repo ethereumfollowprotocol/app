@@ -10,6 +10,7 @@ export interface FollowListItemProps {
   showFollowsYouBadges?: boolean
   showTags?: boolean
   tags: string[]
+  isEditor?: boolean
 }
 
 export function FollowListItem({
@@ -17,7 +18,8 @@ export function FollowListItem({
   profileAddress,
   showFollowsYouBadges,
   showTags,
-  tags
+  tags,
+  isEditor
 }: FollowListItemProps) {
   const { data: ensProfile } = useEnsProfile(profileAddress)
 
@@ -33,6 +35,7 @@ export function FollowListItem({
         className='flex-none w-fit' // Fixed width for consistent layout
         name={profileName}
         showFollowsYouBadges={showFollowsYouBadges}
+        isEditor={isEditor}
       />
 
       {/* Middle section: Tags (conditionally displayed) */}

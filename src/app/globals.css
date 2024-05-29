@@ -51,8 +51,8 @@ body::-webkit-scrollbar-thumb {
 .glass-card {
     background: linear-gradient(
         to right bottom,
-        rgba(255, 255, 255, 0.55),
-        rgba(255, 255, 255, 0.35)
+        rgba(245, 245, 245, 0.55),
+        rgba(245, 245, 245, 0.35)
     );
     backdrop-filter: blur(0.9rem);
 }
@@ -150,6 +150,38 @@ input {
 
 .title {
   text-wrap: balance;
+}
+
+/* Custom loader */
+.loader {
+  border: 4px solid #ffc057;
+  border-left-color: transparent;
+  border-radius: 50%;
+}
+
+.loader {
+  border: 4px solid #ffc057;
+  border-left-color: transparent;
+  width: 36px;
+  height: 36px;
+}
+
+.loader {
+  border: 4px solid #ffc057;
+  border-left-color: transparent;
+  width: 36px;
+  height: 36px;
+  animation: spin89345 1s linear infinite;
+}
+
+@keyframes spin89345 {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @media screen and (max-width: 1750px) {

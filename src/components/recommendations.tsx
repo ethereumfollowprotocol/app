@@ -7,12 +7,12 @@ import { FollowList } from '#/components/follow-list'
 
 interface RecommendationsProps {
   header: string
-  size?: string
+  className?: string
 }
 
 const mockProfiles: `0x${string}`[] = ['0x123', '0x456', '0x789']
 
-export function Recommendations({ header, size }: RecommendationsProps) {
+const Recommendations = ({ header, className }: RecommendationsProps) => {
   const { profile } = useConnectedProfile()
 
   // TODO get better recommendations
@@ -28,13 +28,8 @@ export function Recommendations({ header, size }: RecommendationsProps) {
   }, [followerAddresses, followingAddresses])
 
   return (
-    <div
-      className={clsx(
-        'glass-card border-2 p-6 rounded-2xl border-[#0001] flex flex-col gap-8',
-        size
-      )}
-    >
-      <h2 className='lg:text-start text-3xl text-center font-bold'>{header}</h2>
+    <div className={clsx(' flex flex-col gap-8', className)}>
+      <h2 className='text-start text-3xl font-bold'>{header}</h2>
       <FollowList
         listClassName='rounded-xl gap-7'
         profiles={profilesToRecommend}
@@ -44,3 +39,5 @@ export function Recommendations({ header, size }: RecommendationsProps) {
     </div>
   )
 }
+
+export default Recommendations

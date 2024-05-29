@@ -5,15 +5,14 @@ import { hexlify } from '#/lib/utilities'
 import { createContext, useContext, useState, type ReactNode, useCallback } from 'react'
 
 import {
-  type ListOp,
   isTagListOp,
   listOpAddTag,
   listOpRemoveTag,
   listOpAsHexstring,
-  extractAddressAndTag,
-  type ListOpTagOpParams
-} from '#/types/list-op'
+  extractAddressAndTag
+} from '#/utils/list-ops'
 import { useIsEditView } from '#/hooks/use-is-edit-view'
+import type { ListOp, ListOpTagOpParams } from '#/types/list-op'
 
 // Define the type for each cart item
 type CartItem = {

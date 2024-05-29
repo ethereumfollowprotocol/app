@@ -7,8 +7,6 @@ interface AvatarProps {
   name: string // ENS name or address
   avatarUrl?: string | GetEnsAvatarReturnType
   size?: string
-  height?: `${number}` | number
-  width?: `${number}` | number
 }
 
 export const Avatar = ({
@@ -18,7 +16,7 @@ export const Avatar = ({
 }: AvatarProps) => {
   return (
     <Image
-      alt="User's avatar"
+      alt={`${name}'s avatar`}
       className={clsx('auto rounded-full my-auto ', size)}
       height={50}
       width={50}
