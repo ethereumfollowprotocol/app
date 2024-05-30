@@ -20,7 +20,7 @@ const Summary = () => {
             stats={profile.stats}
             borderColor='border-[#FFDBD9]'
           />
-          <LatestFollowers />
+          <LatestFollowers profiles={profile.followers || []} />
         </>
       ) : (
         <div className='glass-card border-2 flex items-center justify-center rounded-2xl border-gray-200 w-full lg:w-1/2 h-64 lg:h-[638px]'>

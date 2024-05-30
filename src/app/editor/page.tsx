@@ -9,12 +9,12 @@ import { useConnectModal } from '@rainbow-me/rainbowkit'
 import Legend from './components/legend'
 import { Search } from '#/components/search'
 import { useCart } from '#/contexts/cart-context'
-import { useConnectedProfile } from '#/api/actions'
 import { FollowList } from '#/components/follow-list'
 import { listOpAddListRecord } from '#/utils/list-ops'
 import Recommendations from '#/components/recommendations'
 import { PrimaryButton } from '#/components/primary-button'
-import CreateOrUpdateEFPList from './components/create-or-update-efp-list'
+import Checkout from './components/checkout'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 export default function EditorPage() {
   const [isCheckingOut, setIsCheckingOut] = useState(false)
@@ -24,8 +24,8 @@ export default function EditorPage() {
   const { openConnectModal } = useConnectModal()
   const { totalCartItems, cartAddresses, addCartItem } = useCart()
 
-  const { profile: connectedProfile } = useConnectedProfile()
-  const hasCreatedEfpList = !!connectedProfile?.primaryList
+  const { profile: connectedProfile } = useEFPProfile()
+  const hasCreatedEfpList = !!connectedProfile?.primary_list
 
   const profiles = useMemo(
     () =>
@@ -43,8 +43,8 @@ export default function EditorPage() {
 
   return (
     <main className='flex flex-col-reverse xl:flex-row gap-4 min-h-full h-full w-full items-center xl:items-start justify-center text-center pt-10 xl:gap-6 pb-28 mt-20 md:mt-32 xl:mt-48 px-2 lg:px-8'>
-      {isCheckingOut ? (
-        <CreateOrUpdateEFPList setOpen={setIsCheckingOut} hasCreatedEfpList={hasCreatedEfpList} />
+      {isConnected && isCheckingOut ? (
+        <Checkout setOpen={setIsCheckingOut} hasCreatedEfpList={hasCreatedEfpList} />
       ) : (
         <>
           <div className='flex  flex-col glass-card gap-6 p-6 h-fit rounded-2xl border-2 border-gray-200 xl:max-w-116 w-full xl:w-1/3'>
@@ -52,7 +52,7 @@ export default function EditorPage() {
             <div className='flex gap-2'>
               <Search size='w-3/4' />
               <button
-                className='bg-gradient-to-b py-3 px-6 from-kournikova-300 rounded-full to-salmon-400 text-black h-auto'
+                className='bg-gradient-to-b font-semibold py-3 px-6 from-kournikova-300 rounded-full to-salmon-400 text-black h-auto'
                 onClick={() => handleAddFollow('0x')}
               >
                 {t('add')}
@@ -74,29 +74,31 @@ export default function EditorPage() {
               createListItem={!hasCreatedEfpList}
             />
           </div>
-          <div className='fixed w-full top-[87.5vh] lg:top-[85vh] right-0 px-4 lg:right-[5vw] flex justify-end'>
-            <div className='flex gap-6 w-full border-[1px] border-gray-200 lg:w-fit items-center p-4 bg-white/10 justify-between glass-card bg-opacity-50 shadow-xl rounded-xl'>
-              <div className='flex gap-2 items-center'>
-                <p className='text-6xl font-bold'>{totalCartItems}</p>
-                <div className='flex flex-col text-lg text-left'>
-                  <p className='font-bold'>{t('unconfirmed')}</p>
-                  <p className='font-bold'>{t('changes')}</p>
+          {totalCartItems > 0 && (
+            <div className='fixed w-full top-[87.5vh] lg:top-[85vh] right-0 px-4 lg:right-[5vw] flex justify-end'>
+              <div className='flex gap-6 w-full border-[1px] border-gray-200 lg:w-fit items-center p-4 bg-white/10 justify-between glass-card bg-opacity-50 shadow-xl rounded-xl'>
+                <div className='flex gap-2 items-center'>
+                  <p className='text-6xl font-bold'>{totalCartItems}</p>
+                  <div className='flex flex-col text-lg text-left'>
+                    <p className='font-bold'>{t('unconfirmed')}</p>
+                    <p className='font-bold'>{t('changes')}</p>
+                  </div>
                 </div>
-              </div>
-              <PrimaryButton
-                className='py-[14px] px-4 text-xl font-medium rounded-full'
-                onClick={() => {
-                  if (!isConnected) {
-                    if (openConnectModal) openConnectModal()
-                    return
-                  }
+                <PrimaryButton
+                  className='py-[14px] px-4 text-xl font-medium rounded-full'
+                  onClick={() => {
+                    if (!isConnected) {
+                      if (openConnectModal) openConnectModal()
+                      return
+                    }
 
-                  setIsCheckingOut(true)
-                }}
-                label={t('confirm')}
-              />
+                    setIsCheckingOut(true)
+                  }}
+                  label={t('confirm')}
+                />
+              </div>
             </div>
-          </div>
+          )}
           <h1 className='text-center text-4xl font-semibold mb-6 xl:hidden'>{t('editor')}</h1>
         </>
       )}

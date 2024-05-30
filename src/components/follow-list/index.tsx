@@ -3,6 +3,7 @@ import type { Address } from 'viem'
 
 import EFPLogo from 'public/assets/logo.svg'
 import { FollowListItem } from './follow-list-item'
+import { useTranslation } from 'react-i18next'
 
 interface FollowListProfile {
   address: Address
@@ -28,9 +29,11 @@ export function FollowList({
   isEditor,
   createListItem
 }: FollowTableProps) {
+  const { t } = useTranslation('editor')
+
   return (
     <div className={`flex flex-col min-w-max ${listClassName}`}>
-      {createListItem && (
+      {profiles.length > 0 && createListItem && (
         <div className='flex w-[350px] sm:w-full items-center gap-2 md:p-4 p-1.5 sm:p-2 sm:gap-3'>
           <Image
             src={EFPLogo}
@@ -38,9 +41,9 @@ export function FollowList({
             className='rounded-full h-[45px] w-[45px] md:h-[50px] md:w-[50px]'
           />
           <div className='flex flex-col md:flex-row md:items-center'>
-            <p className='text-lg font-semibold w-fit sm:w-52 text-left'>Minting new EFP List</p>
+            <p className='text-lg font-semibold w-fit sm:w-56 text-left'>{t('mint name')}</p>
             <p className='font-semibold text-sm sm:text-base text-left italic text-grey'>
-              An NFT representing your List will appear in your wallet
+              {t('mint description')}
             </p>
           </div>
         </div>

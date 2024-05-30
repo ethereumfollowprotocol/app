@@ -2,7 +2,6 @@ import type { Address } from 'viem'
 import { useEnsProfile } from '#/hooks/use-ens-profile'
 import { FollowButton } from '#/components/follow-button'
 import { FollowListItemName } from './follow-list-item-name'
-import { FollowListItemTags } from './follow-list-item-tags'
 
 export interface FollowListItemProps {
   className?: string
@@ -39,13 +38,13 @@ export function FollowListItem({
       />
 
       {/* Middle section: Tags (conditionally displayed) */}
-      {showTags && tags.length > 0 && (
+      {/* {showTags && tags.length > 0 && (
         <FollowListItemTags
           address={profileAddress}
           className='flex w-fit items-center'
           tags={tags}
         />
-      )}
+      )} */}
 
       {/* Right section: Follow Button with consistent width */}
       <FollowButton address={profileAddress} className='rounded-xl w-[107px]' />

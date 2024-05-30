@@ -1,15 +1,19 @@
 import { fetchUserProfile, type ProfileResponse } from '#/api/requests'
 import type { ProfileTabType } from '#/types/common'
 import { resolveENSProfile } from '#/utils/resolveAddress'
-import { useQuery } from '@tanstack/react-query'
-import { createContext, useContext, useState } from 'react'
+import { useQuery, type QueryObserverResult, type RefetchOptions } from '@tanstack/react-query'
+import { createContext, useContext, useEffect, useState } from 'react'
 import type { Address } from 'viem'
 import { useAccount } from 'wagmi'
+import { useCart } from './cart-context'
 
 // Define the type for the profile context
 type EFPProfileContextType = {
   profile?: ProfileResponse | null
   isLoading: boolean
+  refetchProfile: (
+    options?: RefetchOptions
+  ) => Promise<QueryObserverResult<ProfileResponse | null, Error>>
   followingTags: string[]
   followersTags: string[]
   followingSort: string | undefined
@@ -32,11 +36,13 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   const [followingSort, setFollowingSort] = useState<string>('follower count')
   const [followersSort, setFollowersSort] = useState<string>('follower count')
 
+  const { resetCart } = useCart()
   const { address: userAddress } = useAccount()
   const {
     data: profile,
     isLoading,
-    error
+    error,
+    refetch: refetchProfile
   } = useQuery({
     queryKey: ['profile', userAddress],
     queryFn: async () => {
@@ -70,6 +76,10 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     }
   })
 
+  useEffect(() => {
+    resetCart()
+  }, [userAddress])
+
   const toggleTag = (tab: ProfileTabType, tag: string) => {
     if (tab === 'following') {
       if (followingTags.includes(tag)) {
@@ -93,6 +103,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       value={{
         profile,
         isLoading,
+        refetchProfile,
         followingTags,
         followersTags,
         followingSort,

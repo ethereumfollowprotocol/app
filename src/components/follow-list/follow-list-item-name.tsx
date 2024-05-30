@@ -35,12 +35,12 @@ export function Name({ name, address }: { name?: string; address: Address }) {
 }
 
 export function FollowListItemName({
-  address,
   name,
-  showFollowsYouBadges,
-  avatarUrl,
+  address,
   isEditor,
-  className = ''
+  avatarUrl,
+  className = '',
+  showFollowsYouBadges
 }: FollowListItemNameProps) {
   const [tagDropdownOpen, setTagDropdownOpen] = useState(false)
   const [customTagInput, setCustomTagInput] = useState('')
@@ -50,8 +50,15 @@ export function FollowListItemName({
 
   const { t } = useTranslation()
   const { t: tEditor } = useTranslation('editor')
-  const isFollower = useFollowState(address) === 'follows'
-  const { addCartItem, removeCartItem, getTagsFromCartByAddress, hasListOpAddTag } = useCart()
+  const isFollower = useFollowState(address, 'followers') === 'follows'
+  const {
+    addCartItem,
+    removeCartItem,
+    hasListOpAddTag,
+    hasListOpRemoveRecord,
+    getTagsFromCartByAddress
+  } = useCart()
+  const isBeingremoved = hasListOpRemoveRecord(address)
 
   const tags = getTagsFromCartByAddress(address)
 
@@ -88,7 +95,7 @@ export function FollowListItemName({
             </div>
           )}
         </div>
-        {isEditor && (
+        {isEditor && !isBeingremoved && (
           <div
             className='relative flex w-[190px] flex-wrap gap-2 items-center sm:w-fit'
             ref={clickAwayTagDropwdownRef}

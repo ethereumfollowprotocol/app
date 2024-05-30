@@ -1,0 +1,35 @@
+{
+  "cancel": "Cancel",
+  "initiate": "Initiate",
+  "next": "Next",
+  "finish": "Finish",
+  "select chain": {
+    "title create list": "Where would you like to store you EFP list?",
+    "title list op": "Where would you like to perform list operations?",
+    "comment": "You can always change this later",
+    "select": "Select one",
+    "Low gas fees": "Low gas fees",
+    "High gas fees": "High gas fees"
+  },
+  "action": {
+    "title": "Onchain update",
+    "summary": "Summary",
+    "of": "od",
+    "actions": "Actions",
+    "action": "Action",
+    "create list": "Create new EFP List",
+    "edits": "edits to list records",
+    "req transactions": "Required transactions",
+    "chain": "Chain"
+  },
+  "status": {
+    "title": "Status",
+    "approve": "Transaction needs approval",
+    "approved": "Transaction approved",
+    "pending": "Transaction pending",
+    "successful": "Transaction successful",
+    "error": "Transaction error",
+    "check wallet": "Check your wallet",
+    "block explorer": "View on Block Explorer"
+  }
+}

@@ -49,16 +49,16 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
             initialChain={DEFAULT_CHAIN_ID}
             showRecentTransactions={true}
           >
-            <EFPProfileProvider>
-              <TransactionsProvider>
-                <CartProvider>
+            <CartProvider>
+              <EFPProfileProvider>
+                <TransactionsProvider>
                   <ActionsProvider>
                     <Navigation />
                     {children}
                   </ActionsProvider>
-                </CartProvider>
-              </TransactionsProvider>
-            </EFPProfileProvider>
+                </TransactionsProvider>
+              </EFPProfileProvider>
+            </CartProvider>
           </RainbowKitProvider>
           {/* </PersistQueryClientProvider> */}
         </WagmiProvider>
