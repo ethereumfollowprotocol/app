@@ -1,4 +1,4 @@
-import { sepolia } from 'viem/chains'
+import { optimismSepolia } from 'viem/chains'
 import { useChains, useWalletClient } from 'wagmi'
 import { useCallback, useEffect, useState } from 'react'
 import { createPublicClient, encodePacked, getContract, http, toHex } from 'viem'
@@ -39,7 +39,7 @@ const Checkout: React.FC<CheckoutProps> = ({ setOpen, hasCreatedEfpList }) => {
   const listRegistryContract = getContract({
     address: efpContracts.EFPListRegistry,
     abi: efpListRegistryAbi,
-    client: createPublicClient({ chain: sepolia, transport: http() })
+    client: createPublicClient({ chain: optimismSepolia, transport: http() })
   })
 
   const listOpTx = async () => {
