@@ -2,6 +2,7 @@
   "cancel": "Cancel",
   "initiate": "Initiate",
   "next": "Next",
+  "reintiate": "Reinitiate",
   "finish": "Finish",
   "select chain": {
     "title create list": "Where would you like to store you EFP list?",
@@ -29,6 +30,7 @@
     "pending": "Transaction pending",
     "successful": "Transaction successful",
     "error": "Transaction error",
+    "confirmation error": "Transacation was declined",
     "check wallet": "Check your wallet",
     "block explorer": "View on Block Explorer"
   }

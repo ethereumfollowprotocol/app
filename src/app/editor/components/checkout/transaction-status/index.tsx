@@ -10,11 +10,12 @@ import TransactionDetails from './transaction-details'
 import { useActions } from '#/contexts/actions-context'
 import { PrimaryButton } from '#/components/primary-button'
 import { useTranslation } from 'react-i18next'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 interface TransactionStatusProps {
   setOpen?: (open: boolean) => void // setOpen prop for the parent modal
   setCurrentStep: (step: Step) => void
+  handleReInitiateActions: () => void
 }
 
 /**
@@ -23,7 +24,11 @@ interface TransactionStatusProps {
  *
  * The component also provides a button to move to the next action, using the actions-context
  */
-const TransactionStatus: React.FC<TransactionStatusProps> = ({ setOpen, setCurrentStep }) => {
+const TransactionStatus: React.FC<TransactionStatusProps> = ({
+  setOpen,
+  setCurrentStep,
+  handleReInitiateActions
+}) => {
   const {
     actions,
     resetActions,
@@ -63,8 +68,8 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({ setOpen, setCurre
   // Disable the finish button if not all actions are successful
   const finishButtonIsDisabled = !allActionsSuccessful
 
-  const showNextButton = !allActionsSuccessful
-  const showFinishButton = allActionsSuccessful
+  const showNextButton = !(currentAction?.isConfirmationError || allActionsSuccessful)
+  const showFinishButton = !currentAction?.isConfirmationError && allActionsSuccessful
 
   if (!currentAction) return null
 
@@ -100,6 +105,13 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({ setOpen, setCurre
       <TransactionDetails action={currentAction} />
       <div className='w-full sm:mt-10 mt-6 gap-8 flex justify-between items-center'>
         <CancelButton onClick={() => setCurrentStep(Step.InitiateTransactions)} />
+        {currentAction.isConfirmationError && (
+          <PrimaryButton
+            label={tBtn('reinitiate')}
+            onClick={handleReInitiateActions}
+            className='text-lg w-32 h-12'
+          />
+        )}
         {showNextButton && (
           <PrimaryButton
             label={tBtn('next')}

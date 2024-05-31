@@ -149,7 +149,11 @@ const Checkout: React.FC<CheckoutProps> = ({ setOpen, hasCreatedEfpList }) => {
         />
       )}
       {currentStep === Step.TransactionStatus && (
-        <TransactionStatus setOpen={setOpen} setCurrentStep={setCurrentStep} />
+        <TransactionStatus
+          setOpen={setOpen}
+          setCurrentStep={setCurrentStep}
+          handleReInitiateActions={handleInitiateActions}
+        />
       )}
     </div>
   )

@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
 import useChain from '#/hooks/use-chain'
@@ -12,7 +12,7 @@ const TransactionDetails = ({ action }: { action: Action }) => {
 
   const { refetchProfile } = useEFPProfile()
   const { t } = useTranslation('transactions', { keyPrefix: 'status' })
-  const { isPending, isSuccess, isError } = useWaitForTransactionReceipt({
+  const { isPending, isSuccess, isError, error } = useWaitForTransactionReceipt({
     hash: action.txHash,
     chainId: action.chainId
   })
@@ -21,15 +21,17 @@ const TransactionDetails = ({ action }: { action: Action }) => {
     setTimeout(() => refetchProfile(), 1000)
   }, [isSuccess])
 
-  const getStatusDescription = useCallback(() => {
+  const statusDescription = useMemo(() => {
     if (action.isPendingConfirmation) return t('approve')
+    if (action.isConfirmationError) return `${t('error')}: ${t('confirmation error')}`
     if (isPending) return t('pending')
     if (isSuccess) return t('successful')
-    if (isError) return t('error')
-  }, [action.isPendingConfirmation, isPending, isSuccess, isError])
+    if (isError) return `${t('error')} ${error}`
+  }, [action.isPendingConfirmation, action.isConfirmationError, isPending, isSuccess, isError])
 
   const getStatusColor = useCallback(() => {
     if (action.isPendingConfirmation) return 'text-salmon-500'
+    if (action.isConfirmationError) return 'text-salmon-500'
     if (isPending) return 'text-kournikova-600'
     if (isSuccess) return 'text-lime-600'
     if (isError) return 'text-red-600'
@@ -42,7 +44,7 @@ const TransactionDetails = ({ action }: { action: Action }) => {
   return shouldShowComponent ? (
     <div className='flex gap-1 sm:gap-2 flex-col'>
       <p className='text-xl sm:text-2xl font-bold'>{t('title')}</p>
-      <p className={clsx(getStatusColor(), 'text-lg font-bold')}>{getStatusDescription()}</p>
+      <p className={clsx(getStatusColor(), 'text-lg font-bold')}>{statusDescription}</p>
       {action.isPendingConfirmation ? (
         <p className='text-lg text-gray-400 italic font-bold'>{t('check wallet')}</p>
       ) : (
