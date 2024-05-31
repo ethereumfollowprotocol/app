@@ -1,6 +1,6 @@
 import type { Address } from 'viem'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import type { FollowState } from '#/api/actions'
+import type { FollowState } from '#/types/common'
 
 /**
  * @description

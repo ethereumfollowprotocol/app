@@ -12,3 +12,5 @@ export type DiscoverItemType = {
 export type DiscoverResponseType = {
   discover: DiscoverItemType[]
 }
+
+export type FollowState = 'follows' | 'blocks' | 'mutes' | 'none'
