@@ -1,9 +1,8 @@
-import type { FollowerResponse } from '#/api/requests'
-import { FollowList } from '#/components/follow-list'
 import { useTranslation } from 'react-i18next'
+import { FollowList, type FollowListProfile } from '#/components/follow-list'
 
 interface LatestFollowersProps {
-  profiles: FollowerResponse[]
+  profiles?: FollowListProfile[]
 }
 
 const LatestFollowers: React.FC<LatestFollowersProps> = ({ profiles }) => {
@@ -14,7 +13,9 @@ const LatestFollowers: React.FC<LatestFollowersProps> = ({ profiles }) => {
       <h2 className='text-2xl sm:text-3xl w-full text-center lg:text-left font-bold'>
         {t('latest followers')}
       </h2>
-      <FollowList profiles={profiles} showFollowsYouBadges={true} listClassName='gap-7' />
+      {profiles && (
+        <FollowList profiles={profiles} showFollowsYouBadges={true} listClassName='gap-7' />
+      )}
     </div>
   )
 }

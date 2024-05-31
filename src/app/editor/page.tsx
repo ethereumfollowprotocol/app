@@ -7,13 +7,13 @@ import { useTranslation } from 'react-i18next'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import Legend from './components/legend'
+import Checkout from './components/checkout'
 import { Search } from '#/components/search'
 import { useCart } from '#/contexts/cart-context'
 import { FollowList } from '#/components/follow-list'
 import { listOpAddListRecord } from '#/utils/list-ops'
 import Recommendations from '#/components/recommendations'
 import { PrimaryButton } from '#/components/primary-button'
-import Checkout from './components/checkout'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 export default function EditorPage() {

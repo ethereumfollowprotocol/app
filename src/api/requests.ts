@@ -1,4 +1,4 @@
-import type { Address, Hex } from 'viem'
+import type { Address } from 'viem'
 import type { ENSProfile } from '#/lib/types'
 import { formatAddressOrName } from '#/lib/utilities'
 
@@ -12,10 +12,9 @@ export interface FollowerResponse {
 }
 
 export interface FollowingResponse {
-  address: Address
   version: 1
   record_type: 'address' & string
-  data: Address & Hex
+  data: Address
   tags: string[]
   ens?: ENSProfile
 }
@@ -96,21 +95,6 @@ export async function fetchUserFollowing(
   }))
 
   return { following: modifiedData }
-}
-
-export async function fetchUserProfile({
-  addressOrName
-}: { addressOrName: AddressOrName }): Promise<ProfileResponse> {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${formatAddressOrName(addressOrName)}/profile`,
-    {
-      cache: 'default'
-      // cache: "no-cache",
-    }
-  )
-
-  const data = (await response.json()) as ProfileResponse
-  return data
 }
 
 export async function fetchUserStats(

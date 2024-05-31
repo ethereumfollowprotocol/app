@@ -1,12 +1,14 @@
 import Image from 'next/image'
 import type { Address } from 'viem'
-
-import EFPLogo from 'public/assets/logo.svg'
-import { FollowListItem } from './follow-list-item'
 import { useTranslation } from 'react-i18next'
 
-interface FollowListProfile {
+import EFPLogo from 'public/assets/logo.svg'
+import type { ENSProfile } from '#/lib/types'
+import { FollowListItem } from './follow-list-item'
+
+export interface FollowListProfile {
   address: Address
+  ens?: ENSProfile
   tags: string[]
 }
 
@@ -48,12 +50,13 @@ export function FollowList({
           </div>
         </div>
       )}
-      {profiles.map(({ address, tags }) => {
+      {profiles.map(({ address, tags, ens }) => {
         return (
           <FollowListItem
             className={listItemClassName}
             key={address}
-            profileAddress={address}
+            address={address}
+            ensProfile={ens}
             showFollowsYouBadges={showFollowsYouBadges}
             showTags={showTags}
             tags={tags}

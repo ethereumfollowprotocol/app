@@ -21,13 +21,13 @@ export function useFollowState(address: Address, type: 'followers' | 'followings
     if (!profile) return 'none'
 
     const follower = profile.followers?.find(
-      follower => follower.address.toLowerCase() === address.toLowerCase()
+      follower => follower?.address?.toLowerCase() === address?.toLowerCase()
     )
     if (!follower) return 'none'
 
-    if (follower?.is_following) return 'follows'
     if (follower?.is_blocked) return 'blocks'
     if (follower.is_muted) return 'mutes'
+    if (follower) return 'follows'
 
     return 'none'
   }
@@ -36,7 +36,7 @@ export function useFollowState(address: Address, type: 'followers' | 'followings
     if (!profile) return 'none'
 
     const following = profile.following?.find(
-      follower => follower.data.toLowerCase() === address.toLowerCase()
+      follower => follower?.data?.toLowerCase() === address?.toLowerCase()
     )
     if (!following) return 'none'
 

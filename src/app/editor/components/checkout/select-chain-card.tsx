@@ -7,6 +7,7 @@ import { ChainIcon } from '#/components/chain-icon'
 import CancelButton from '#/components/cancel-button'
 import { PrimaryButton } from '#/components/primary-button'
 import GreenCheck from 'public/assets/icons/check-green.svg'
+import { useChainId, useSwitchChain } from 'wagmi'
 
 export function SelectChainCard({
   chains,
@@ -23,8 +24,11 @@ export function SelectChainCard({
   selectedChain: ChainWithDetails | undefined
   handleNextStep: () => void
 }) {
-  const { t: tChain } = useTranslation('transactions', { keyPrefix: 'select chain' })
+  const currentChainId = useChainId()
+  const { switchChain } = useSwitchChain()
+
   const { t } = useTranslation('transactions')
+  const { t: tChain } = useTranslation('transactions', { keyPrefix: 'select chain' })
 
   return (
     <>
@@ -47,7 +51,11 @@ export function SelectChainCard({
         <CancelButton onClick={onCancel} />
         <PrimaryButton
           label={t('next')}
-          onClick={handleNextStep}
+          onClick={() => {
+            if (!selectedChain) return
+            if (currentChainId !== selectedChain.id) switchChain({ chainId: selectedChain.id })
+            handleNextStep()
+          }}
           className='text-lg w-32 h-12'
           disabled={!selectedChain}
         />

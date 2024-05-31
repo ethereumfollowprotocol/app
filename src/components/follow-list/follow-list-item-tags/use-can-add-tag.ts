@@ -15,7 +15,7 @@ const useCanAddTag = (profileAddress: Address) => {
   const { profile } = useEFPProfile()
 
   return useMemo(() => {
-    const isFollowing = !!profile?.following?.find(follower => follower.address === profileAddress)
+    const isFollowing = !!profile?.following?.find(follower => follower.data === profileAddress)
 
     // User can add a tag for the specified profile if it's the user's own profile/editor page, and they are following the profileAddress
     if (isEditView && isFollowing) return true

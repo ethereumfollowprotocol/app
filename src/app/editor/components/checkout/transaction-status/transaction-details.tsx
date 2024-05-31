@@ -18,7 +18,7 @@ const TransactionDetails = ({ action }: { action: Action }) => {
   })
 
   useEffect(() => {
-    setTimeout(() => refetchProfile(), 1000)
+    setTimeout(() => refetchProfile(), 2000)
   }, [isSuccess])
 
   const statusDescription = useMemo(() => {

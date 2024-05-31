@@ -1,35 +1,25 @@
 'use client'
 
 import { Avatar } from './avatar'
-import type { StatsResponse } from '#/api/requests'
+import { useAccount } from 'wagmi'
+import { useTranslation } from 'react-i18next'
+import { truncateAddress } from '#/lib/utilities'
+import type { ProfileResponse } from '#/api/requests'
 import { FollowButton } from '#/components/follow-button'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
-import { truncateAddress } from '#/lib/utilities'
-import type { ENSProfile } from '#/lib/types'
-import { useTranslation } from 'react-i18next'
-import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 interface Props {
-  profile: ENSProfile
-  stats: StatsResponse | undefined
+  profile: ProfileResponse
   borderColor?: string
 }
 
-export function UserProfileCard({ profile, stats, borderColor }: Props) {
+export function UserProfileCard({ profile, borderColor }: Props) {
   const { t } = useTranslation('common', { keyPrefix: 'profile card' })
-  const { profile: connectedProfile } = useEFPProfile()
-  /////////////////////////////////////////////////////////////////////////////
-  // followers for the user profile that is being viewed
-  /////////////////////////////////////////////////////////////////////////////
+  const { address: connectedAddress } = useAccount()
 
-  // const address: Address | undefined = (
-  //   userProfileResponse?.address || isAddress(addressOrName) ? addressOrName : undefined
-  // ) as Address
-  // const name: string | undefined = userProfileResponse?.ens?.name
-  // const avatar = userProfileResponse?.ens?.avatar
-  const name = profile.name
-  const avatar = profile.avatar
-  const address = profile.address
+  const name = profile.ens?.name
+  const avatar = profile.ens?.avatar
+  const address = profile?.address
 
   return (
     <div
@@ -38,37 +28,38 @@ export function UserProfileCard({ profile, stats, borderColor }: Props) {
       } w-full rounded-xl py-3 px-4 sm:p-6 relative`}
     >
       <div className='text-gray-500 absolute text-right xl:text-left px-2 w-full left-0 top-1 font-semibold'>
-        #{connectedProfile?.primary_list ?? '-'}
+        #{profile?.primary_list ?? '-'}
       </div>
       <div className='flex xl:items-center flex-col gap-5 sm:gap-6 md:gap-9 pt-2'>
-        <div className='flex flex-row xl:flex-col xl:justify-center items-center gap-3'>
+        <div className='flex flex-row xl:flex-col xl:justify-center items-center gap-4'>
           <Avatar
             avatarUrl={avatar || DefaultAvatar}
             name={name || address}
             size='h-[70px] w-[70px] sm:h-[75px]  sm:w-[75px] xl:h-[100px] xl:w-[100px]'
           />
-          <div className='flex xl:items-center  flex-col items-start justify-center'>
-            <div className='text-xl sm:text-2xl font-bold my-2'>
-              {name || truncateAddress(address)}
-            </div>
-            {connectedProfile?.followers?.map(follower => follower.address).includes(address) && (
-              <div className='rounded-full font-bold text-[8px]  mt-[-6] mb-2'>
-                {t('follows you')}
-              </div>
-            )}
-            <FollowButton address={address} />
+          <div className='flex xl:items-center  flex-col items-start gap-2 justify-center'>
+            <div className='text-xl sm:text-2xl font-bold '>{name || truncateAddress(address)}</div>
+            {connectedAddress &&
+              profile?.following
+                ?.map(follower => follower.data.toLowerCase())
+                .includes(connectedAddress.toLowerCase()) && (
+                <div className='rounded-full font-bold text-[10px] mb-1 flex items-center justify-center bg-gray-300 h-5 w-20'>
+                  {t('follows you')}
+                </div>
+              )}
+            {address && <FollowButton address={address} />}
           </div>
         </div>
         <div className='flex w-full flex-wrap xl:justify-center items-center mx-auto gap-0 justify-between sm:justify-start sm:gap-y-10 sm:gap-x-16 text-center'>
           <div>
             <div className='text-xl sm:text-2xl font-bold'>
-              {stats === undefined ? '-' : stats.following_count}
+              {profile.stats === undefined ? '-' : profile.stats.following_count}
             </div>
             <div className='sm:text-lg font-bold text-gray-500'>{t('following')}</div>
           </div>
           <div>
             <div className='text-xl sm:text-2xl font-bold'>
-              {stats === undefined ? '-' : stats.followers_count}
+              {profile.stats === undefined ? '-' : profile.stats.followers_count}
             </div>
             <div className='sm:text-lg text-gray-500 font-bold'>{t('followers')}</div>
           </div>
