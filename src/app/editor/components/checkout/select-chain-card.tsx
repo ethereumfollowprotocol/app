@@ -29,13 +29,13 @@ export function SelectChainCard({
   return (
     <>
       <div className='flex flex-col gap-2'>
-        <h1 className='text-3xl font-semibold'>
+        <h1 className='text-2xl sm:text-3xl font-semibold'>
           {tChain(isCreatingNewList ? 'title create list' : 'title list op')}
         </h1>
         {isCreatingNewList && <p className=' font-medium text-gray-400'>{tChain('comment')}</p>}
       </div>
-      <div className='flex flex-col items-center gap-6'>
-        <p className='text-2xl font-bold'>{tChain('select')}</p>
+      <div className='flex flex-col items-center gap-4 sm:gap-6'>
+        <p className='text-xl sm:text-2xl font-bold'>{tChain('select')}</p>
         <ChainList
           chains={chains}
           onClick={handleChainClick}
@@ -104,7 +104,7 @@ function Chain({
           alt='selected'
           height={32}
           width={32}
-          className=' absolute left-0 text-lime-500 -ml-12'
+          className=' absolute left-0 text-lime-500 -ml-8 sm:-ml-12'
         />
       )}
       <ChainIcon chain={chain} className={'h-[60px] w-[60px]'} />

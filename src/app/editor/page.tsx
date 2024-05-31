@@ -42,12 +42,14 @@ export default function EditorPage() {
   }
 
   return (
-    <main className='flex flex-col-reverse xl:flex-row gap-4 min-h-full h-full w-full items-center xl:items-start justify-center text-center pt-10 xl:gap-6 pb-28 mt-20 md:mt-32 xl:mt-48 px-2 lg:px-8'>
+    <main className='flex flex-col-reverse xl:flex-row gap-4 min-h-full h-full w-full items-center xl:items-start justify-center text-center pt-10 xl:gap-6 pb-28 mt-20 md:mt-28 xl:mt-40 px-2 lg:px-8'>
       {isConnected && isCheckingOut ? (
-        <Checkout setOpen={setIsCheckingOut} hasCreatedEfpList={hasCreatedEfpList} />
+        <div className='px-2'>
+          <Checkout setOpen={setIsCheckingOut} hasCreatedEfpList={hasCreatedEfpList} />
+        </div>
       ) : (
         <>
-          <div className='flex  flex-col glass-card gap-6 p-6 h-fit rounded-2xl border-2 border-gray-200 xl:max-w-116 w-full xl:w-1/3'>
+          <div className='flex flex-col glass-card gap-6 p-6 h-fit rounded-2xl border-2 border-gray-200 xl:max-w-116 w-full xl:w-1/3'>
             <h1 className='text-left text-3xl font-semibold hidden xl:block'>{t('editor')}</h1>
             <div className='flex gap-2'>
               <Search size='w-3/4' />

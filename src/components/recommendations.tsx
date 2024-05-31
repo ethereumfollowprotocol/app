@@ -23,7 +23,11 @@ const Recommendations = ({ header, className }: RecommendationsProps) => {
   return (
     <div className={clsx('flex flex-col gap-8', className)}>
       <h2 className='text-start text-3xl font-bold'>{header}</h2>
-      {isLoading && <LoadingSpinner />}
+      {isLoading && (
+        <div className='h-24 w-full flex justify-center items-center'>
+          <LoadingSpinner />
+        </div>
+      )}
       {profilesToRecommend && (
         <FollowList
           listClassName='rounded-xl gap-7'

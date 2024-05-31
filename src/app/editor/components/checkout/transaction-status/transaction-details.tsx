@@ -40,8 +40,8 @@ const TransactionDetails = ({ action }: { action: Action }) => {
   const explorerUrl = `${chain?.blockExplorers?.default.url}/tx/${action.txHash}`
 
   return shouldShowComponent ? (
-    <div className='flex gap-2 flex-col'>
-      <p className='text-2xl font-bold'>{t('title')}</p>
+    <div className='flex gap-1 sm:gap-2 flex-col'>
+      <p className='text-xl sm:text-2xl font-bold'>{t('title')}</p>
       <p className={clsx(getStatusColor(), 'text-lg font-bold')}>{getStatusDescription()}</p>
       {action.isPendingConfirmation ? (
         <p className='text-lg text-gray-400 italic font-bold'>{t('check wallet')}</p>

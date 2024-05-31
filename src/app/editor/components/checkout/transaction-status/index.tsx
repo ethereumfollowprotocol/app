@@ -67,15 +67,15 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({ setOpen, setCurre
   return (
     <>
       <div className='flex flex-col gap-2'>
-        <h1 className='text-3xl font-semibold'>{t('title')}</h1>
+        <h1 className='text-2xl sm:text-3xl font-semibold'>{t('title')}</h1>
 
         <p className='text-lg font-bold'>
           {currentActionIndex + 1} {t('of')} {actions.length}
         </p>
       </div>
       <div className='flex flex-col gap-4'>
-        <p className='text-2xl font-bold'>{t('action')}</p>
-        <p className='text-xl font-bold'>
+        <p className='text-xl sm:text-2xl font-bold'>{t('action')}</p>
+        <p className='text-lg sm:text-xl font-bold'>
           {' '}
           {t(
             currentAction.label.includes('edits')
@@ -86,7 +86,7 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({ setOpen, setCurre
       </div>
       {chain && (
         <div className='flex flex-col gap-2'>
-          <p className='font-bold text-xl'>{t('chain')}</p>
+          <p className='font-bold text-lg sm:text-xl'>{t('chain')}</p>
           <div className='flex items-center gap-2'>
             <ChainIcon chain={chain} className='w-[30px] h-[30px]' />
             <p className='font-bold text-lg'>{chain.name}</p>
@@ -94,7 +94,7 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({ setOpen, setCurre
         </div>
       )}
       <TransactionDetails action={currentAction} />
-      <div className='w-full mt-10 flex justify-between items-center'>
+      <div className='w-full sm:mt-10 mt-6 gap-8 flex justify-between items-center'>
         <CancelButton onClick={() => setCurrentStep(Step.InitiateTransactions)} />
         {showNextButton && (
           <PrimaryButton

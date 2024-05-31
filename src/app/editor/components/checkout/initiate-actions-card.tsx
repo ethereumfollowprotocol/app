@@ -24,11 +24,11 @@ export function InitiateActionsCard({
   return (
     <>
       <div className='flex flex-col gap-2'>
-        <h1 className='text-3xl font-semibold'>{t('title')}</h1>
+        <h1 className='text-2xl sm:text-3xl font-semibold'>{t('title')}</h1>
         <p className='text-lg'>{t('summary')}</p>
       </div>
-      <div className='flex flex-col items-center gap-6'>
-        <p className='text-2xl font-bold'>{t('actions')}</p>
+      <div className='flex flex-col items-center gap-4 sm:gap-6'>
+        <p className='text-xl sm:text-2xl font-bold'>{t('actions')}</p>
         <div>
           {actions
             .filter(action => action.chainId)
@@ -52,7 +52,7 @@ export function InitiateActionsCard({
             <RequiredTransaction key={`${action.id}-${index}`} chainId={action.chainId} />
           ))}
       </div>
-      <div className='flex w-full justify-between'>
+      <div className='flex w-full gap-8 mt-4 justify-between'>
         <CancelButton onClick={() => setCurrentStep(Step.SelectChain)} />
         <PrimaryButton
           label={tBtn('initiate')}
