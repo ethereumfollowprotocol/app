@@ -2,7 +2,7 @@
   "cancel": "Cancel",
   "initiate": "Initiate",
   "next": "Next",
-  "reintiate": "Reinitiate",
+  "reinitiate": "Reinitiate",
   "finish": "Finish",
   "select chain": {
     "title create list": "Where would you like to store you EFP list?",

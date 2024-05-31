@@ -122,7 +122,6 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
           isPendingConfirmation: false,
           isConfirmationError: true
         })
-        throw new Error(error)
       }
     },
     [actions, updateAction]

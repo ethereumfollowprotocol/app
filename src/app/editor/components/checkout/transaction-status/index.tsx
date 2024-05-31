@@ -55,11 +55,9 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
   }, [moveToNextAction, executeActionByIndex])
 
   const handleFinish = useCallback(() => {
-    // Close the modal and reset parameters
-    setOpen?.(false)
+    // Reset parameters and redirect to profile page
     resetActions()
     resetCart()
-
     router.push('/profile')
   }, [setOpen, resetActions, resetCart])
 
@@ -85,12 +83,7 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
       <div className='flex flex-col gap-4'>
         <p className='text-xl sm:text-2xl font-bold'>{t('action')}</p>
         <p className='text-lg sm:text-xl font-bold'>
-          {' '}
-          {t(
-            currentAction.label.includes('edits')
-              ? currentAction.label.slice(2)
-              : currentAction.label
-          )}
+          {currentAction.label === 'create list' ? t(currentAction.label) : currentAction.label}
         </p>
       </div>
       {chain && (
@@ -109,7 +102,7 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
           <PrimaryButton
             label={tBtn('reinitiate')}
             onClick={handleReInitiateActions}
-            className='text-lg w-32 h-12'
+            className='text-lg w-fit px-4 min-w-32 h-12'
           />
         )}
         {showNextButton && (

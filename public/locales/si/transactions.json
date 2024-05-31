@@ -2,7 +2,7 @@
   "cancel": "Prekliči",
   "initiate": "Izvedi",
   "next": "Naprej",
-  "reintiate": "Izvedi ponovno",
+  "reinitiate": "Izvedi ponovno",
   "finish": "Zaključi",
   "select chain": {
     "title create list": "Kje bi radi shranili svoj nov EFP seznam?",
@@ -30,7 +30,7 @@
     "pending": "Transakcija se izvaja",
     "successful": "Transakcija uspešna",
     "error": "Transakcija neuspešna",
-    "confirmation error": "Transakcija je bil zavrnjena",
+    "confirmation error": "Transakcija je bila zavrnjena",
     "check wallet": "Preverite svojo denarnico",
     "block explorer": "Poglej na Block Explorer-ju"
   }
