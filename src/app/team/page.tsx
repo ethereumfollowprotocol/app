@@ -21,7 +21,7 @@ export default function TeamPage() {
         {efpTeam?.map(({ name, address, records, avatar }) => (
           <div key={address}>
             <TeamCard
-              ens={name}
+              ens={name || address}
               address={address}
               avatar={avatar}
               x={records?.['com.twitter'] ?? ''}

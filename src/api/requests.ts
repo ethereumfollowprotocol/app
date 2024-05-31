@@ -30,7 +30,7 @@ export interface ProfileResponse {
   ens: ENSProfile
   fresh?: number
   resolver?: string
-  primary_list?: string
+  primary_list?: number | null
   stats?: StatsResponse | undefined
   followers?: FollowerResponse[]
   following?: FollowingResponse[]

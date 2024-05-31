@@ -15,8 +15,8 @@ export const efpContracts: {
   // EFPListRegistry: "0x09F508738E6413DbFeA4E95E2611d5512F323868",
   // EFPListRecords: "0xBd0e344ECCF11EC3d835ad10aeD73F0BF5e604e1",
   // EFPListMinter: "0xA87611B03963e0e137D8DCb18B2CcF82Aaff7104",
-  EFPAccountMetadata: '0x16a3457dB1D7dc58196C0b94D8F49f5e9eCba611',
-  EFPListRegistry: '0xd66c005A5F1e26BaaDe97cb9f270c9Edfa78a684',
-  EFPListRecords: '0x84340faBF70340153fAB988404C4356EEf14d581',
-  EFPListMinter: '0x8581B0CA827Cf577269721A596CEfC2ffc09BaDB'
+  EFPAccountMetadata: process.env['NEXT_PUBLIC_EFP_ACCOUNT_METADATA'] as Address,
+  EFPListRegistry: process.env['NEXT_PUBLIC_EFP_LIST_REGISTRY'] as Address,
+  EFPListRecords: process.env['NEXT_PUBLIC_EFP_LIST_RECORDS'] as Address,
+  EFPListMinter: process.env['NEXT_PUBLIC_EFP_LIST_MINTER'] as Address
 }

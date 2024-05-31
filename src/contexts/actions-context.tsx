@@ -106,14 +106,22 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
       if (!actionToExecute) throw new Error(`No action found at index: ${index}`)
 
       // Set the action to pending confirmation
-      updateAction({ ...actionToExecute, isPendingConfirmation: true })
+      updateAction({ ...actionToExecute, isPendingConfirmation: true, isConfirmationError: false })
 
       try {
         const hash = await actionToExecute.execute()
-        updateAction({ ...actionToExecute, isPendingConfirmation: false, txHash: hash })
+        updateAction({
+          ...actionToExecute,
+          isPendingConfirmation: false,
+          txHash: hash,
+          isConfirmationError: false
+        })
       } catch (error: any) {
-        throw new Error(error)
-        // TODO Handle action failure
+        updateAction({
+          ...actionToExecute,
+          isPendingConfirmation: false,
+          isConfirmationError: true
+        })
       }
     },
     [actions, updateAction]

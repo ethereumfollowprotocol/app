@@ -1,0 +1,37 @@
+{
+  "cancel": "Prekliči",
+  "initiate": "Izvedi",
+  "next": "Naprej",
+  "reinitiate": "Izvedi ponovno",
+  "finish": "Zaključi",
+  "select chain": {
+    "title create list": "Kje bi radi shranili svoj nov EFP seznam?",
+    "title list op": "Kje bi radi opravili opercije seznama?",
+    "comment": "Lahko spremenite kasneje",
+    "select": "Izberi eno",
+    "Low gas fees": "Nizki stroški",
+    "High gas fees": "Visoki stroški"
+  },
+  "action": {
+    "title": "Onchain posodobitev",
+    "summary": "Povzetek",
+    "of": "od",
+    "actions": "Dejanja",
+    "action": "Dejanje",
+    "create list": "Ustvari nov EFP seznam",
+    "edits": "sprememba/-e seznama zapisov",
+    "req transactions": "Potrebna Dejanja",
+    "chain": "Veriga"
+  },
+  "status": {
+    "title": "Status",
+    "approve": "Transakcija potrebuje potrdilo",
+    "approved": "Transakcija potrjena",
+    "pending": "Transakcija se izvaja",
+    "successful": "Transakcija uspešna",
+    "error": "Transakcija neuspešna",
+    "confirmation error": "Transakcija je bila zavrnjena",
+    "check wallet": "Preverite svojo denarnico",
+    "block explorer": "Poglej na Block Explorer-ju"
+  }
+}

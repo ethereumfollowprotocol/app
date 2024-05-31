@@ -96,4 +96,6 @@ export const evmClient = {
     }).extend(walletActions)
 }
 
-export type EVMClient = ReturnType<(typeof evmClient)['31337'] | (typeof evmClient)['mainnet']>
+export type EVMClient = ReturnType<
+  (typeof evmClient)['31337'] | (typeof evmClient)['mainnet'] | (typeof evmClient)['sepolia']
+>

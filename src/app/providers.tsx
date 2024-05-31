@@ -1,19 +1,19 @@
 'use client'
 
-import { sepolia } from 'viem/chains'
+import { optimismSepolia } from 'viem/chains'
 import { WagmiProvider, type State } from 'wagmi'
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental'
 
+import { useState } from 'react'
 import wagmiConfig from '#/lib/wagmi'
 import { DAY, MINUTE } from '#/lib/constants'
 import Navigation from '#/components/navigation'
 import { CartProvider } from '#/contexts/cart-context'
 import { ActionsProvider } from '#/contexts/actions-context'
 import { TransactionsProvider } from '#/contexts/transactions-context'
-import { useState } from 'react'
 import { EFPProfileProvider } from '#/contexts/efp-profile-context'
 
 type ProviderProps = {
@@ -27,7 +27,7 @@ type ProviderProps = {
 //   storage: window.localStorage
 // })
 
-const DEFAULT_CHAIN_ID = sepolia.id
+const DEFAULT_CHAIN_ID = optimismSepolia.id
 
 const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
   const [queryClient] = useState(
@@ -49,16 +49,16 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
             initialChain={DEFAULT_CHAIN_ID}
             showRecentTransactions={true}
           >
-            <EFPProfileProvider>
-              <TransactionsProvider>
-                <CartProvider>
+            <CartProvider>
+              <EFPProfileProvider>
+                <TransactionsProvider>
                   <ActionsProvider>
                     <Navigation />
                     {children}
                   </ActionsProvider>
-                </CartProvider>
-              </TransactionsProvider>
-            </EFPProfileProvider>
+                </TransactionsProvider>
+              </EFPProfileProvider>
+            </CartProvider>
           </RainbowKitProvider>
           {/* </PersistQueryClientProvider> */}
         </WagmiProvider>

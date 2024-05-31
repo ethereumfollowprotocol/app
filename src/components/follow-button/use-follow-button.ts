@@ -1,9 +1,14 @@
 import { useMemo } from 'react'
 import type { Address } from 'viem'
 
+import {
+  isTagListOp,
+  listOpAddListRecord,
+  extractAddressAndTag,
+  listOpRemoveListRecord
+} from '#/utils/list-ops'
 import { useCart } from '#/contexts/cart-context'
 import { useFollowState } from '#/hooks/use-follow-state'
-import { listOpAddListRecord, listOpRemoveListRecord } from '#/utils/list-ops'
 
 export type FollowButtonState =
   | 'Block'
@@ -40,8 +45,9 @@ export const useFollowButton = ({
 }: {
   address: Address
 }) => {
-  const followState = useFollowState(address)
-  const { hasListOpAddRecord, hasListOpRemoveRecord, addCartItem, removeCartItem } = useCart()
+  const followState = useFollowState(address, 'followings')
+  const { hasListOpAddRecord, hasListOpRemoveRecord, addCartItem, removeCartItem, cartItems } =
+    useCart()
 
   const isPendingFollow = useMemo(() => hasListOpAddRecord(address), [hasListOpAddRecord, address])
   const isPendingUnfollow = useMemo(
@@ -81,25 +87,26 @@ export const useFollowButton = ({
   }, [followState, isPendingFollow, isPendingUnfollow])
 
   const handleAction = () => {
-    // remove from cart if it's a pending follow
+    // remove address and tags for this address from cart if it's a pending follow
     if (isPendingFollow) {
-      return removeCartItem(listOpAddListRecord(address))
+      const addressTags = cartItems.filter(item =>
+        item.listOp.opcode > 2 && isTagListOp(item.listOp)
+          ? extractAddressAndTag(item.listOp).address === address
+          : false
+      )
+      removeCartItem(listOpAddListRecord(address))
+      addressTags.flatMap(item => removeCartItem(item.listOp))
+      return
     }
 
     // remove from cart if it's a pending unfollow
-    if (isPendingUnfollow) {
-      return removeCartItem(listOpRemoveListRecord(address))
-    }
+    if (isPendingUnfollow) return removeCartItem(listOpRemoveListRecord(address))
 
     // add to cart if it's a follow
-    if (buttonText === 'Follow') {
-      return addCartItem({ listOp: listOpAddListRecord(address) })
-    }
+    if (buttonText === 'Follow') return addCartItem({ listOp: listOpAddListRecord(address) })
 
     // add to cart if it's an unfollow
-    if (buttonText === 'Unfollow') {
-      return addCartItem({ listOp: listOpRemoveListRecord(address) })
-    }
+    if (buttonText === 'Following') return addCartItem({ listOp: listOpRemoveListRecord(address) })
   }
 
   return { buttonText, buttonState, handleAction }
