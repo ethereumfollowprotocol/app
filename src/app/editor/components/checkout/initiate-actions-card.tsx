@@ -6,6 +6,7 @@ import { PrimaryButton } from '#/components/primary-button'
 import type { Action } from '#/contexts/actions-context'
 import CancelButton from '#/components/cancel-button'
 import { useTranslation } from 'react-i18next'
+import { useChainId } from 'wagmi'
 
 export function InitiateActionsCard({
   actions,
@@ -18,8 +19,11 @@ export function InitiateActionsCard({
   selectedChain: ChainWithDetails | undefined
   handleInitiateActions: () => void
 }) {
-  const { t } = useTranslation('transactions', { keyPrefix: 'action' })
+  const currentChainId = useChainId()
   const { t: tBtn } = useTranslation('transactions')
+  const { t } = useTranslation('transactions', { keyPrefix: 'action' })
+
+  const isCorrectChainSelected = currentChainId === selectedChain?.id
 
   return (
     <>
@@ -55,9 +59,9 @@ export function InitiateActionsCard({
       <div className='flex w-full gap-8 mt-4 justify-between'>
         <CancelButton onClick={() => setCurrentStep(Step.SelectChain)} />
         <PrimaryButton
-          label={tBtn('initiate')}
+          label={isCorrectChainSelected ? tBtn('initiate') : tBtn('network')}
           onClick={handleInitiateActions}
-          className='text-lg w-32 h-12'
+          className='text-lg w-auto px-4 min-w-32 h-12'
           disabled={!selectedChain}
         />
       </div>

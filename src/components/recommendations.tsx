@@ -33,7 +33,13 @@ const Recommendations = ({ header, className }: RecommendationsProps) => {
           listClassName='rounded-xl gap-7'
           profiles={profilesToRecommend?.map(account => ({
             address: account.address,
-            tags: [] as string[]
+            tags: [] as string[],
+            ens: account.name
+              ? {
+                  name: account.name,
+                  avatar: account.avatar
+                }
+              : undefined
           }))}
           showFollowsYouBadges={true}
           showTags={false}

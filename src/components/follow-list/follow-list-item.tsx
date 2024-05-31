@@ -1,11 +1,13 @@
 import type { Address } from 'viem'
-import { useEnsProfile } from '#/hooks/use-ens-profile'
+import type { ENSProfile } from '#/lib/types'
 import { FollowButton } from '#/components/follow-button'
 import { FollowListItemName } from './follow-list-item-name'
+import { useEnsProfile } from '#/hooks/use-ens-profile'
 
 export interface FollowListItemProps {
   className?: string
-  profileAddress: Address
+  address: Address
+  ensProfile?: ENSProfile
   showFollowsYouBadges?: boolean
   showTags?: boolean
   tags: string[]
@@ -14,22 +16,23 @@ export interface FollowListItemProps {
 
 export function FollowListItem({
   className = '',
-  profileAddress,
+  address,
+  ensProfile,
   showFollowsYouBadges,
   showTags,
   tags,
   isEditor
 }: FollowListItemProps) {
-  const { data: ensProfile } = useEnsProfile(profileAddress)
+  const { data: fetchedEnsProfile } = useEnsProfile(address)
 
-  const profileName = ensProfile?.name
-  const profileAvatar = ensProfile?.avatar
+  const profileName = ensProfile ? ensProfile.name : fetchedEnsProfile?.name
+  const profileAvatar = ensProfile ? ensProfile.avatar : fetchedEnsProfile?.avatar
 
   return (
     <div className={`flex items-center justify-between ${className}`}>
       {/* Left section: Avatar and Name */}
       <FollowListItemName
-        address={profileAddress}
+        address={address}
         avatarUrl={profileAvatar}
         className='flex-none w-fit' // Fixed width for consistent layout
         name={profileName}
@@ -47,7 +50,7 @@ export function FollowListItem({
       )} */}
 
       {/* Right section: Follow Button with consistent width */}
-      <FollowButton address={profileAddress} className='rounded-xl w-[107px]' />
+      <FollowButton address={address} className='rounded-xl w-[107px]' />
     </div>
   )
 }

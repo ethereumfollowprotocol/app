@@ -1,11 +1,11 @@
-import { fetchUserProfile, type ProfileResponse } from '#/api/requests'
-import type { ProfileTabType } from '#/types/common'
-import { resolveENSProfile } from '#/utils/resolveAddress'
-import { useQuery, type QueryObserverResult, type RefetchOptions } from '@tanstack/react-query'
-import { createContext, useContext, useEffect, useState } from 'react'
-import type { Address } from 'viem'
 import { useAccount } from 'wagmi'
+import { createContext, useContext, useEffect, useState } from 'react'
+
 import { useCart } from './cart-context'
+import type { ProfileTabType } from '#/types/common'
+import { useQuery, type QueryObserverResult, type RefetchOptions } from '@tanstack/react-query'
+import fetchUserProfile from '#/api/fetchProfile'
+import type { ProfileResponse } from '#/api/requests'
 
 // Define the type for the profile context
 type EFPProfileContextType = {
@@ -48,32 +48,10 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     queryFn: async () => {
       if (!userAddress) return null
 
-      try {
-        const fetchedProfile = await fetchUserProfile({ addressOrName: userAddress })
-        const transformedProfile: ProfileResponse = {
-          ...fetchedProfile,
-          address: userAddress as Address,
-          ens: {
-            ...fetchedProfile.ens,
-            address: userAddress as Address
-          }
-        }
-
-        return transformedProfile
-      } catch (err: unknown) {
-        const data = await resolveENSProfile(userAddress)
-        if (data?.name && data?.avatar)
-          return {
-            address: userAddress as Address,
-            ens: { ...data, address: userAddress as Address }
-          }
-
-        return {
-          address: userAddress as Address,
-          ens: { address: userAddress as Address }
-        }
-      }
-    }
+      const fetchedProfile = await fetchUserProfile(userAddress)
+      return fetchedProfile
+    },
+    staleTime: 20000
   })
 
   useEffect(() => {

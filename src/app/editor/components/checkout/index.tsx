@@ -1,5 +1,5 @@
 import { optimismSepolia } from 'viem/chains'
-import { useChains, useWalletClient } from 'wagmi'
+import { useChainId, useChains, useSwitchChain, useWalletClient } from 'wagmi'
 import { useCallback, useEffect, useState } from 'react'
 import { createPublicClient, encodePacked, getContract, http, toHex } from 'viem'
 
@@ -26,6 +26,8 @@ const Checkout: React.FC<CheckoutProps> = ({ setOpen, hasCreatedEfpList }) => {
   const chains = useChains() as unknown as ChainWithDetails[] // TODO: Fix this type issue
 
   const { profile } = useEFPProfile()
+  const currentChainId = useChainId()
+  const { switchChain } = useSwitchChain()
   const { mint, nonce: mintNonce } = useMintEFP()
   const { totalCartItems, cartItems } = useCart()
   const { data: walletClient } = useWalletClient()
@@ -42,7 +44,7 @@ const Checkout: React.FC<CheckoutProps> = ({ setOpen, hasCreatedEfpList }) => {
     client: createPublicClient({ chain: optimismSepolia, transport: http() })
   })
 
-  const listOpTx = async () => {
+  const listOpTx = useCallback(async () => {
     // Get existing slot from storage location via token ID or use a mint nonce which is a slot of a newly created EFP list
     const nonce = profile?.primary_list
       ? BigInt(
@@ -82,7 +84,7 @@ const Checkout: React.FC<CheckoutProps> = ({ setOpen, hasCreatedEfpList }) => {
 
     // return transaction hash to enable following transaction status in transaction details component
     return hash
-  }
+  }, [walletClient])
 
   useEffect(() => {
     if (!selectedChainId) return
@@ -108,7 +110,7 @@ const Checkout: React.FC<CheckoutProps> = ({ setOpen, hasCreatedEfpList }) => {
 
     const actions = hasCreatedEfpList ? [cartItemAction] : [createEFPListAction, cartItemAction]
     addActions(actions)
-  }, [selectedChainId, totalCartItems, addActions, hasCreatedEfpList])
+  }, [selectedChainId, totalCartItems, addActions, hasCreatedEfpList, walletClient])
 
   // Handle selecting a chain
   const handleChainClick = useCallback((chainId: number) => {
@@ -123,10 +125,15 @@ const Checkout: React.FC<CheckoutProps> = ({ setOpen, hasCreatedEfpList }) => {
 
   // Handle action initiation
   const handleInitiateActions = useCallback(() => {
+    if (!selectedChain) return
+    if (currentChainId !== selectedChain?.id) {
+      switchChain({ chainId: selectedChain?.id })
+      return
+    }
+
     setCurrentStep(Step.TransactionStatus)
-    // Execute the first action
     executeActionByIndex(0)
-  }, [executeActionByIndex])
+  }, [executeActionByIndex, currentChainId])
 
   return (
     <div className='flex glass-card gap-4 sm:gap-6 flex-col w-full sm:w-[552px] items-center border-2 border-gray-200 text-center justify-between rounded-xl p-6 py-8 sm:p-16'>

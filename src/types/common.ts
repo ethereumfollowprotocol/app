@@ -14,3 +14,18 @@ export type DiscoverResponseType = {
 }
 
 export type FollowState = 'follows' | 'blocks' | 'mutes' | 'none'
+
+export type UserFollowerType = {
+  efp_list_nft_token_id: number | null
+  address: Address
+  tags: []
+  is_following: boolean
+  is_blocked: boolean
+  is_muted: boolean
+  ens: {
+    name: string | null
+    address: Address
+    avatar: string
+    updated_at: string
+  }
+}

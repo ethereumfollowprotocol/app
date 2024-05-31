@@ -74,9 +74,9 @@ interface FollowButtonProps {
 }
 
 export function FollowButton({ address, className = '', ...props }: FollowButtonProps) {
-  const { t } = useTranslation('common', { keyPrefix: 'follow btn' })
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
+  const { t } = useTranslation('common', { keyPrefix: 'follow btn' })
   const { buttonText, buttonState, handleAction } = useFollowButton({
     address
   })

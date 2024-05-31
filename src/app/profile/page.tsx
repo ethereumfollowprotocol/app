@@ -2,22 +2,15 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
-import { QueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 
-import {
-  // fetchUserStats,
-  fetchUserFollowers,
-  fetchUserFollowing
-  // type StatsResponse
-} from '#/api/requests'
+import SettingsIcon from 'public/assets/icons/settings.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { UserProfileCard } from '#/components/user-profile-card'
 import { UserProfilePageTable } from '#/components/profile-page-table'
 
 import { PROFILE_TABS } from '#/lib/constants'
 import type { ProfileTabType } from '#/types/common'
-import SettingsIcon from 'public/assets/icons/settings.svg'
-import { useTranslation } from 'react-i18next'
 
 interface Props {
   searchParams: {
@@ -34,31 +27,31 @@ export default function ProfilePage({ searchParams }: Props) {
   const { profile } = useEFPProfile()
   const { t } = useTranslation('profile')
 
-  const queryClient = new QueryClient()
-  queryClient.prefetchQuery({
-    queryKey: ['followers', profile?.address],
-    queryFn: () => fetchUserFollowers(profile?.address)
-    // staleTime: 1200000
-  })
-  queryClient.prefetchQuery({
-    queryKey: ['following', profile?.address],
-    queryFn: () => fetchUserFollowing(profile?.address)
-    // staleTime: 1200000
-  })
+  // const queryClient = new QueryClient()
+  // queryClient.prefetchQuery({
+  //   queryKey: ['followers', profile?.address],
+  //   queryFn: () => fetchUserFollowers(profile?.address)
+  //   // staleTime: 1200000
+  // })
+  // queryClient.prefetchQuery({
+  //   queryKey: ['following', profile?.address],
+  //   queryFn: () => fetchUserFollowing(profile?.address)
+  //   // staleTime: 1200000
+  // })
 
   if (!profile?.address) return null
 
   const mobileActiveEl = {
     following: (
       <UserProfilePageTable
-        addressOrName={profile?.address}
+        profile={profile}
         title='following'
         customClass='border-t-0 rounded-t-none'
       />
     ),
     followers: (
       <UserProfilePageTable
-        addressOrName={profile?.address}
+        profile={profile}
         title='followers'
         customClass='border-t-0 rounded-t-none'
       />
@@ -69,7 +62,7 @@ export default function ProfilePage({ searchParams }: Props) {
     <main className='flex min-h-full w-full justify-between xl:justify-center gap-y-4 flex-col md:flex-row flex-wrap xl:flex-nowrap items-start xl:gap-6 mt-32 md:mt-40 lg:mt-48 px-4 lg:px-8'>
       {/* <HydrationBoundary state={dehydrate(queryClient)}> */}
       <div className='flex flex-col w-full xl:w-fit items-center gap-4'>
-        <UserProfileCard profile={profile.ens} stats={profile.stats} />
+        <UserProfileCard profile={profile} />
         <div className='flex flex-col gap-1 items-center'>
           <p className='font-semibold '>{t('block-mute')}</p>
           <div className='flex gap-1 cursor-pointer hover:opacity-80 transition-opacity'>
@@ -78,16 +71,8 @@ export default function ProfilePage({ searchParams }: Props) {
           </div>
         </div>
       </div>
-      <UserProfilePageTable
-        addressOrName={profile?.address}
-        title='following'
-        customClass='hidden md:flex'
-      />
-      <UserProfilePageTable
-        addressOrName={profile?.address}
-        title='followers'
-        customClass='hidden md:flex'
-      />
+      <UserProfilePageTable profile={profile} title='following' customClass='hidden md:flex' />
+      <UserProfilePageTable profile={profile} title='followers' customClass='hidden md:flex' />
       <div className=' w-full mt-12 relative md:hidden'>
         <div className='w-full absolute -top-12 left-0'>
           {PROFILE_TABS.map(option => (

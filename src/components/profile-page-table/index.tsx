@@ -1,46 +1,48 @@
 'use client'
 
 import { useState } from 'react'
-import { useProfile } from '#/api/actions'
+import { useTranslation } from 'react-i18next'
 import { FollowList } from '#/components/follow-list'
 // import { Searchbar } from '#/components/searchbar.tsx'
-import type { FollowerResponse, FollowingResponse } from '#/api/requests'
+import type { ProfileResponse } from '#/api/requests'
 import TableHeader from './components/table-headers'
-import { useTranslation } from 'react-i18next'
+import { usePathname } from 'next/navigation'
 
 /**
  * TODO: paginate
  */
 export function UserProfilePageTable({
-  addressOrName,
+  profile,
   title,
   customClass
 }: {
-  addressOrName: string
+  profile: ProfileResponse
   title: 'following' | 'followers'
   customClass?: string
 }) {
   const [search, setSearch] = useState<string>('')
   const [showTags, setShowTags] = useState(false)
 
+  const pathname = usePathname()
   const { t } = useTranslation('profile')
-  const profile = useProfile(addressOrName)
   const { followers, following } = profile
 
-  const filteredFollowers = followers?.filter((follower: FollowerResponse) =>
+  const filteredFollowers = followers?.filter(follower =>
     follower?.ens.name?.toLowerCase().replaceAll('.eth', '').includes(search.toLowerCase())
   )
-  const filteredFollowing = following?.filter((following: FollowingResponse) =>
+  const filteredFollowing = following?.filter(following =>
     following?.data?.toLowerCase().includes(search.toLowerCase())
   )
 
   const chosenResponses = title === 'following' ? filteredFollowing : filteredFollowers
-  const showFollowsYouBadges = title === 'following'
+  const showFollowsYouBadges = !pathname.includes('profile') || title === 'following'
 
   const profiles =
     chosenResponses?.map(res => ({
-      address: res?.address,
-      tags: res?.tags
+      ens: res.ens,
+      tags: res.tags,
+      // @ts-ignore
+      address: title === 'following' ? res.data : res.address
     })) || []
 
   return (

@@ -27,7 +27,7 @@ type ProviderProps = {
 //   storage: window.localStorage
 // })
 
-const DEFAULT_CHAIN_ID = optimismSepolia.id
+export const DEFAULT_CHAIN_ID = optimismSepolia.id
 
 const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
   const [queryClient] = useState(

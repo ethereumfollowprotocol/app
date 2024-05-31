@@ -1,4 +1,5 @@
 import { evmClient } from '#/lib/viem'
+import type { Address } from 'viem'
 import { normalize } from 'viem/ens'
 
 export const resolveENSProfile = async (address: `0x${string}`) => {
@@ -16,4 +17,13 @@ export const resolveENSProfile = async (address: `0x${string}`) => {
   })
 
   return { name: lookup, avatar: ensText }
+}
+
+export const resolveENSAddress = async (name: string) => {
+  const publicClient = evmClient.mainnet()
+  const ensAddress = await publicClient.getEnsAddress({
+    name: normalize(name)
+  })
+
+  return ensAddress as Address
 }

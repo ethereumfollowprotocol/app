@@ -15,12 +15,14 @@ const Summary = () => {
     <div className='mt-36 md:mt-48 w-full lg:mt-52 xl:mt-60 px-4 lg:px-6 flex items-start lg:justify-between xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4 xl:gap-4'>
       {profile ? (
         <>
-          <UserProfileCard
-            profile={profile?.ens}
-            stats={profile.stats}
-            borderColor='border-[#FFDBD9]'
+          <UserProfileCard profile={profile} borderColor='border-[#FFDBD9]' />
+          <LatestFollowers
+            profiles={profile.followers?.map(follower => ({
+              tags: follower.tags,
+              address: follower.address,
+              ens: follower.ens
+            }))}
           />
-          <LatestFollowers profiles={profile.followers || []} />
         </>
       ) : (
         <div className='glass-card border-2 flex items-center justify-center rounded-2xl border-gray-200 w-full lg:w-1/2 h-64 lg:h-[638px]'>
