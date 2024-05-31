@@ -10,6 +10,7 @@ import TransactionDetails from './transaction-details'
 import { useActions } from '#/contexts/actions-context'
 import { PrimaryButton } from '#/components/primary-button'
 import { useTranslation } from 'react-i18next'
+import { useRouter } from 'next/router'
 
 interface TransactionStatusProps {
   setOpen?: (open: boolean) => void // setOpen prop for the parent modal
@@ -39,6 +40,7 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({ setOpen, setCurre
     chainId: currentAction?.chainId
   })
 
+  const router = useRouter()
   const { t } = useTranslation('transactions', { keyPrefix: 'action' })
   const { t: tBtn } = useTranslation('transactions')
 
@@ -52,6 +54,8 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({ setOpen, setCurre
     setOpen?.(false)
     resetActions()
     resetCart()
+
+    router.push('/profile')
   }, [setOpen, resetActions, resetCart])
 
   // Disable the next button if the current action is not successful
