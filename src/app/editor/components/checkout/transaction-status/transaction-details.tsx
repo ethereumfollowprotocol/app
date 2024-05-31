@@ -18,7 +18,7 @@ const TransactionDetails = ({ action }: { action: Action }) => {
   })
 
   useEffect(() => {
-    refetchProfile()
+    setTimeout(() => refetchProfile(), 1000)
   }, [isSuccess])
 
   const getStatusDescription = useCallback(() => {
