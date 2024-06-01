@@ -1,14 +1,13 @@
-import { optimismSepolia } from 'viem/chains'
-import { useChainId, useChains, useSwitchChain, useWalletClient } from 'wagmi'
 import { useCallback, useEffect, useState } from 'react'
+import { useChainId, useChains, useSwitchChain, useWalletClient } from 'wagmi'
 import { createPublicClient, encodePacked, getContract, http, toHex } from 'viem'
 
 import { Step } from './types'
-import { useMintEFP } from '#/hooks/use-mint-efp'
 import { useCart } from '#/contexts/cart-context'
 import TransactionStatus from './transaction-status'
 import { SelectChainCard } from './select-chain-card'
 import { efpContracts } from '#/lib/constants/contracts'
+import { useMintEFP } from '#/hooks/efp-actions/use-mint-efp'
 import { InitiateActionsCard } from './initiate-actions-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
@@ -38,13 +37,14 @@ const Checkout: React.FC<CheckoutProps> = ({ setOpen, hasCreatedEfpList }) => {
   // const selectedChain = chains.find(chain => chain.id === selectedChainId)
   const [currentStep, setCurrentStep] = useState(Step.SelectChain)
 
-  const listRegistryContract = getContract({
-    address: efpContracts.EFPListRegistry,
-    abi: efpListRegistryAbi,
-    client: createPublicClient({ chain: optimismSepolia, transport: http() })
-  })
-
   const listOpTx = useCallback(async () => {
+    // get contract for selected chain to pull list storage location from
+    const listRegistryContract = getContract({
+      address: efpContracts.EFPListRegistry,
+      abi: efpListRegistryAbi,
+      client: createPublicClient({ chain: selectedChain, transport: http() })
+    })
+
     // Get existing slot from storage location via token ID or use a mint nonce which is a slot of a newly created EFP list
     const nonce = profile?.primary_list
       ? BigInt(
@@ -84,7 +84,7 @@ const Checkout: React.FC<CheckoutProps> = ({ setOpen, hasCreatedEfpList }) => {
 
     // return transaction hash to enable following transaction status in transaction details component
     return hash
-  }, [walletClient])
+  }, [walletClient, selectedChain])
 
   useEffect(() => {
     if (!selectedChainId) return

@@ -1,18 +1,15 @@
 'use server'
 
-import { efpContracts } from '#/lib/constants/contracts.ts'
 import type { ENSProfile } from '#/lib/types.ts'
-import type { EVMClient } from '#/lib/viem.ts'
-import * as abi from 'src/lib/abi'
 
-export async function efpTotalSupply(client: EVMClient) {
-  return await client.readContract({
-    abi: abi.efpListRegistryAbi,
-    functionName: 'getMintState',
-    address: efpContracts.EFPListRegistry,
-    args: undefined
-  })
-}
+// export async function efpTotalSupply(client: EVMClient) {
+//   return await client.readContract({
+//     abi: abi.efpListRegistryAbi,
+//     functionName: 'getMintState',
+//     address: efpContracts.EFPListRegistry,
+//     args: undefined
+//   })
+// }
 
 export async function getEnsProfile(ensOrAddress: string) {
   // Check if the environment variable is set
