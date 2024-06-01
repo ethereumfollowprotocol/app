@@ -21,10 +21,9 @@ export function middleware(request: NextRequest) {
   //   block-all-mixed-content;
   //   upgrade-insecure-requests;
   // `
+
   const cspHeader = `
-    default-src 'self' vercel.live;
     script-src 'self' 'unsafe-eval' 'unsafe-inline' *.cloudflareinsights.com cdn.vercel-insights.com vercel.live va.vercel-scripts.com;
-    img-src * blob: data: *.vercel-storage.com;
     media-src 'none';
     connect-src *;
     object-src 'none';
