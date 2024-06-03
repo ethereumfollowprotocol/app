@@ -56,8 +56,8 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
 
   const handleFinish = useCallback(() => {
     // Reset parameters and redirect to profile page
-    resetActions()
     resetCart()
+    resetActions()
     router.push('/profile')
   }, [setOpen, resetActions, resetCart])
 

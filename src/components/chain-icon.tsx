@@ -1,5 +1,5 @@
-import type { ChainWithDetails } from '#/lib/wagmi'
 import { Avatar } from './avatar'
+import type { ChainWithDetails } from '#/lib/wagmi'
 
 export function ChainIcon({ chain, className }: { chain: ChainWithDetails; className?: string }) {
   return (

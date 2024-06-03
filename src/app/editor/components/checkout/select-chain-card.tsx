@@ -1,13 +1,14 @@
 import Image from 'next/image'
 import type { TFunction } from 'i18next'
 import { useTranslation } from 'react-i18next'
+import { optimismSepolia, type Chain } from 'viem/chains'
+import { useChainId, useSwitchChain, type Config, type UseChainsReturnType } from 'wagmi'
 
 import type { ChainWithDetails } from '#/lib/wagmi'
 import { ChainIcon } from '#/components/chain-icon'
 import CancelButton from '#/components/cancel-button'
 import { PrimaryButton } from '#/components/primary-button'
 import GreenCheck from 'public/assets/icons/check-green.svg'
-import { useChainId, useSwitchChain } from 'wagmi'
 
 export function SelectChainCard({
   chains,
@@ -17,7 +18,7 @@ export function SelectChainCard({
   selectedChain,
   handleNextStep
 }: {
-  chains: ChainWithDetails[]
+  chains: UseChainsReturnType<Config>
   isCreatingNewList: boolean
   onCancel: () => void
   handleChainClick: (chainId: number) => void
@@ -53,7 +54,7 @@ export function SelectChainCard({
           label={t('next')}
           onClick={() => {
             if (!selectedChain) return
-            if (currentChainId !== selectedChain.id) switchChain({ chainId: selectedChain.id })
+            if (currentChainId !== optimismSepolia.id) switchChain({ chainId: optimismSepolia.id })
             handleNextStep()
           }}
           className='text-lg w-32 h-12'
@@ -70,7 +71,7 @@ export function ChainList({
   translations,
   selectedChain
 }: {
-  chains: ChainWithDetails[]
+  chains: UseChainsReturnType<Config>
   onClick: (chainId: number) => void
   translations: TFunction<'transactions', 'select chain'>
   selectedChain: ChainWithDetails | undefined
@@ -78,7 +79,7 @@ export function ChainList({
   return (
     <div className='flex flex-col gap-4'>
       {chains.map(chain => (
-        <Chain
+        <ChainItem
           key={chain.id}
           chain={chain}
           onClick={onClick}
@@ -90,14 +91,14 @@ export function ChainList({
   )
 }
 
-function Chain({
+function ChainItem({
   chain,
   onClick,
   isSelected,
   translations
 }: {
   isSelected: boolean
-  chain: ChainWithDetails
+  chain: Chain
   onClick: (chainId: number) => void
   translations: TFunction<'transactions', 'select chain'>
 }) {
@@ -115,11 +116,11 @@ function Chain({
           className='absolute left-0 text-lime-500 -ml-8 sm:-ml-12'
         />
       )}
-      <ChainIcon chain={chain} className={'h-[60px] w-[60px]'} />
+      <ChainIcon chain={chain as ChainWithDetails} className={'h-[60px] w-[60px]'} />
       <div className='flex flex-col items-start '>
-        <p>{chain.custom.chainDetail}</p>
+        <p>{chain?.custom?.chainDetail as string}</p>
         <p className='text-lg font-bold'>{chain.name}</p>
-        <p>{translations(chain.custom.gasFeeDetail)}</p>
+        <p>{translations(chain?.custom?.gasFeeDetail as string)}</p>
       </div>
     </div>
   )

@@ -26,10 +26,10 @@ const connectors = connectorsForWallets(
 
 export type ChainWithDetails = Chain & {
   iconBackground?: string
-  iconUrl: string
+  iconUrl?: string
   custom: {
-    chainDetail: string
-    gasFeeDetail: string
+    chainDetail?: string
+    gasFeeDetail?: string
   }
 }
 
