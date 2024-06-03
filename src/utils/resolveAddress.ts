@@ -1,9 +1,9 @@
-import { evmClient } from '#/lib/viem'
-import type { Address } from 'viem'
+import { createPublicClient, http, type Address } from 'viem'
+import { mainnet } from 'viem/chains'
 import { normalize } from 'viem/ens'
 
 export const resolveENSProfile = async (address: `0x${string}`) => {
-  const publicClient = evmClient.mainnet()
+  const publicClient = createPublicClient({ chain: mainnet, transport: http() })
   const lookup = await publicClient.getEnsName({ address })
 
   if (!lookup)
@@ -20,7 +20,7 @@ export const resolveENSProfile = async (address: `0x${string}`) => {
 }
 
 export const resolveENSAddress = async (name: string) => {
-  const publicClient = evmClient.mainnet()
+  const publicClient = createPublicClient({ chain: mainnet, transport: http() })
   const ensAddress = await publicClient.getEnsAddress({
     name: normalize(name)
   })

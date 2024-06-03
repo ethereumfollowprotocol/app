@@ -1,7 +1,7 @@
 'use client'
 
 import { APP_DESCRIPTION, APP_NAME, APP_URL } from '#/lib/constants'
-import { mainnet, sepolia, foundry, optimism, optimismSepolia } from 'wagmi/chains'
+import { mainnet, sepolia, optimism, optimismSepolia } from 'wagmi/chains'
 import { http, fallback, createStorage, cookieStorage, createConfig } from 'wagmi'
 import { type Chain, connectorsForWallets } from '@rainbow-me/rainbowkit'
 import { injectedWallet, walletConnectWallet } from '@rainbow-me/rainbowkit/wallets'
@@ -37,15 +37,15 @@ export type ChainWithDetails = Chain & {
 // These are the current supported chains for this app
 // `chainDetail` and `gasFeeDetail` are custom fields to be used in the ChainList component
 export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
-  {
-    ...foundry,
-    iconBackground: 'bg-gray-400',
-    iconUrl: '/assets/chains/ethereum.svg',
-    custom: {
-      chainDetail: 'Local Testnet',
-      gasFeeDetail: 'Low gas fees'
-    }
-  },
+  // {
+  //   ...foundry,
+  //   iconBackground: 'bg-gray-400',
+  //   iconUrl: '/assets/chains/ethereum.svg',
+  //   custom: {
+  //     chainDetail: 'Local Testnet',
+  //     gasFeeDetail: 'Low gas fees'
+  //   }
+  // },
   {
     ...mainnet,
     iconBackground: 'bg-gray-300',
@@ -90,15 +90,15 @@ const config = createConfig({
     storage: cookieStorage
   }),
   transports: {
-    [foundry.id]: http(process.env.NEXT_PUBLIC_LOCAL_RPC || 'http://0.0.0.0:8545', { batch: true }),
+    // [foundry.id]: http(process.env.NEXT_PUBLIC_LOCAL_RPC || 'http://0.0.0.0:8545', { batch: true }),
     [mainnet.id]: fallback(
       [
-        http(`https://rpc.ankr.com/eth/${process.env.NEXT_PUBLIC_ANKR_ID}`, { batch: true }),
-        http(`https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`, { batch: true }),
-        http(`https://mainnet.ethfollow.xyz/v1/mainnet`, { batch: true }),
-        http(`https://eth.llamarpc.com/rpc/${process.env.NEXT_PUBLIC_LLAMAFOLIO_ID}`, {
-          batch: true
-        }),
+        // http(`https://rpc.ankr.com/eth/${process.env.NEXT_PUBLIC_ANKR_ID}`, { batch: true }),
+        // http(`https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`, { batch: true }),
+        // http(`https://mainnet.ethfollow.xyz/v1/mainnet`, { batch: true }),
+        // http(`https://eth.llamarpc.com/rpc/${process.env.NEXT_PUBLIC_LLAMAFOLIO_ID}`, {
+        //   batch: true
+        // }),
         http(`https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_MAINNET_ALCHEMY_ID}`, {
           batch: true
         })
@@ -107,25 +107,25 @@ const config = createConfig({
     ),
     [optimism.id]: fallback(
       [
-        http(`https://rpc.ankr.com/optimism/${process.env.NEXT_PUBLIC_ANKR_ID}`, { batch: true }),
+        // http(`https://rpc.ankr.com/optimism/${process.env.NEXT_PUBLIC_ANKR_ID}`, { batch: true }),
         http(
           `https://opt-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_OPTIMISM_ALCHEMY_ID}`,
           { batch: true }
-        ),
-        http(`https://optimism-mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`, {
-          batch: true
-        }),
-        http(`https://optimism.llamarpc.com/rpc/${process.env.NEXT_PUBLIC_LLAMAFOLIO_ID}`, {
-          batch: true
-        })
+        )
+        // http(`https://optimism-mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`, {
+        //   batch: true
+        // }),
+        // http(`https://optimism.llamarpc.com/rpc/${process.env.NEXT_PUBLIC_LLAMAFOLIO_ID}`, {
+        //   batch: true
+        // })
       ],
       { rank: true }
     ),
     [sepolia.id]: fallback(
       [
-        http(`https://rpc.ankr.com/eth_sepolia/${process.env.NEXT_PUBLIC_ANKR_ID}`, {
-          batch: true
-        }),
+        // http(`https://rpc.ankr.com/eth_sepolia/${process.env.NEXT_PUBLIC_ANKR_ID}`, {
+        //   batch: true
+        // }),
         http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_SEPOLIA_ALCHEMY_ID}`, {
           batch: true
         })
@@ -134,9 +134,9 @@ const config = createConfig({
     ),
     [optimismSepolia.id]: fallback(
       [
-        http(`https://optimism-sepolia.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`, {
-          batch: true
-        }),
+        // http(`https://optimism-sepolia.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`, {
+        //   batch: true
+        // }),
         http('https://sepolia.optimism.io', { batch: true }),
         http('https://sepolia-rollup.arbitrum.io/rpc', { batch: true })
       ],

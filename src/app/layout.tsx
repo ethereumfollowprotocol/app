@@ -56,7 +56,7 @@ const HeadTag = () => {
       <meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no' />
       <title>{APP_NAME}</title>
       <meta name='description' content={APP_DESCRIPTION} />
-      <link rel='manifest' href='/site.webmanifest' />
+      <link rel='manifest' href='/site.webmanifest' crossOrigin='use-credentials' />
       <link rel='icon' href='/assets/favicon.ico' sizes='any' />
       <meta name='apple-mobile-web-app-capable' content='yes' />
       <meta name='apple-mobile-web-app-status-bar-style' content='default' />
