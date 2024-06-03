@@ -1,29 +1,25 @@
-import type { ChainWithDetails } from '#/lib/wagmi'
 import { Step } from './types'
+import { useTranslation } from 'react-i18next'
+
 import useChain from '#/hooks/use-chain'
 import { ChainIcon } from '#/components/chain-icon'
-import { PrimaryButton } from '#/components/primary-button'
-import type { Action } from '#/contexts/actions-context'
 import CancelButton from '#/components/cancel-button'
-import { useTranslation } from 'react-i18next'
-import { useChainId } from 'wagmi'
+import type { Action } from '#/contexts/actions-context'
+import { PrimaryButton } from '#/components/primary-button'
 
 export function InitiateActionsCard({
   actions,
+  onCancel,
   setCurrentStep,
-  selectedChain,
   handleInitiateActions
 }: {
   actions: Action[]
+  onCancel: () => void
   setCurrentStep: (step: Step) => void
-  selectedChain: ChainWithDetails | undefined
   handleInitiateActions: () => void
 }) {
-  const currentChainId = useChainId()
   const { t: tBtn } = useTranslation('transactions')
   const { t } = useTranslation('transactions', { keyPrefix: 'action' })
-
-  const isCorrectChainSelected = currentChainId === selectedChain?.id
 
   return (
     <>
@@ -57,12 +53,20 @@ export function InitiateActionsCard({
           ))}
       </div>
       <div className='flex w-full gap-8 mt-4 justify-between'>
-        <CancelButton onClick={() => setCurrentStep(Step.SelectChain)} />
+        <CancelButton
+          onClick={() => {
+            if (actions[0]?.label === 'create list') {
+              setCurrentStep(Step.SelectChain)
+              return
+            }
+
+            onCancel()
+          }}
+        />
         <PrimaryButton
-          label={isCorrectChainSelected ? tBtn('initiate') : tBtn('network')}
+          label={tBtn('initiate')}
           onClick={handleInitiateActions}
           className='text-lg w-auto px-4 min-w-32 h-12'
-          disabled={!selectedChain}
         />
       </div>
     </>
