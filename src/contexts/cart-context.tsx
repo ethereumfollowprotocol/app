@@ -2,7 +2,7 @@
 
 import type { Address } from 'viem'
 import { hexlify } from '#/lib/utilities'
-import { createContext, useContext, useState, type ReactNode, useCallback } from 'react'
+import { createContext, useContext, useState, type ReactNode, useCallback, useEffect } from 'react'
 
 import {
   isTagListOp,
@@ -13,10 +13,18 @@ import {
 } from '#/utils/list-ops'
 import { useIsEditView } from '#/hooks/use-is-edit-view'
 import type { ListOp, ListOpTagOpParams } from '#/types/list-op'
+import { useAccount } from 'wagmi'
 
 // Define the type for each cart item
 type CartItem = {
   listOp: ListOp
+}
+
+type StoredCartItem = {
+  opcode: number
+  version: number
+  address: Address
+  tag?: string
 }
 
 // Define the type for the context value
@@ -50,14 +58,61 @@ type Props = {
 
 // Define the provider component
 export const CartProvider: React.FC<Props> = ({ children }: Props) => {
+  const { address } = useAccount()
   const isEditView = useIsEditView()
-  const [cartItems, setCartItems] = useState<CartItem[]>([])
+
+  const storedCartItems = localStorage.getItem('cart')
+    ? (JSON.parse(localStorage.getItem('cart') || '') as StoredCartItem[])
+    : []
+  const transformedStoredCartItems =
+    storedCartItems.length > 0
+      ? storedCartItems.map(item => ({
+          listOp: {
+            opcode: item.opcode,
+            version: item.version,
+            data: item.tag
+              ? Buffer.concat([
+                  Buffer.from(item.address.slice(2), 'hex'),
+                  Buffer.from(item.tag, 'utf8')
+                ])
+              : Buffer.from(item.address.slice(2), 'hex')
+          }
+        }))
+      : []
+
+  const [cartItems, setCartItems] = useState<CartItem[]>(transformedStoredCartItems)
+
+  useEffect(() => {
+    if (!address) return
+
+    const transformedCartItems = cartItems.map(({ listOp }) => {
+      if (isTagListOp(listOp)) {
+        const { address, tag } = extractAddressAndTag(listOp)
+        return {
+          opcode: listOp.opcode,
+          version: listOp.version,
+          address,
+          tag
+        }
+      }
+
+      return {
+        opcode: listOp.opcode,
+        version: listOp.version,
+        address: hexlify(listOp.data)
+      }
+    })
+
+    localStorage.setItem('cart', JSON.stringify(transformedCartItems))
+    localStorage.setItem('cart address', address)
+  }, [cartItems])
 
   const addCartItem = useCallback(
     (item: CartItem) => {
       const exists = cartItems.some(
         cartItem => listOpAsHexstring(cartItem.listOp) === listOpAsHexstring(item.listOp)
       )
+
       if (!exists) {
         setCartItems(prevItems => [...prevItems, item])
       }
@@ -156,7 +211,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   const handleTagClick = useCallback(
     ({ address, tag }: ListOpTagOpParams) => {
       // Do nothing if not in edit view
-      if (!isEditView) return
+      // if (!isEditView) return
 
       // If cart has "add tag" remove it from the cart
       if (hasListOpAddTag({ address, tag })) {
@@ -217,9 +272,9 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   }, [cartItems])
 
   // Resets the cart items
-  const resetCart = useCallback(() => {
+  const resetCart = () => {
     setCartItems([])
-  }, [])
+  }
 
   const totalCartItems = cartItems.length
   const cartAddresses = getAddressesFromCart()

@@ -55,6 +55,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   })
 
   useEffect(() => {
+    const cartAddress = localStorage.getItem('cart address')
+    if (userAddress?.toLowerCase() === cartAddress?.toLowerCase() || !userAddress) return
     resetCart()
   }, [userAddress])
 
