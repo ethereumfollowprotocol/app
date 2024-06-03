@@ -18,6 +18,7 @@ const TransactionDetails = ({ action }: { action: Action }) => {
   })
 
   useEffect(() => {
+    if (!isSuccess) return
     setTimeout(() => refetchProfile(), 2000)
   }, [isSuccess])
 

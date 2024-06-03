@@ -91,7 +91,7 @@ const useCheckout = () => {
     return hash
   }, [walletClient, selectedChain])
 
-  const setActions = async () => {
+  const setActions = useCallback(async () => {
     // getting the chain ID where the list operations will be performed (selected chain ID if EFP list minted before)
     const chainId = profile?.primary_list
       ? fromHex(
@@ -126,11 +126,11 @@ const useCheckout = () => {
     // add Create list action if user doesn't have the EFP list yet
     const actions = profile?.primary_list ? [cartItemAction] : [createEFPListAction, cartItemAction]
     addActions(actions)
-  }
+  }, [selectedChainId, totalCartItems, addActions, profile, walletClient])
 
   useEffect(() => {
     setActions()
-  }, [selectedChainId, totalCartItems, addActions, profile, walletClient])
+  }, [setActions])
 
   // Handle selecting a chain
   const handleChainClick = useCallback((chainId: number) => {
