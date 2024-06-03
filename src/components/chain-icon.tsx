@@ -1,4 +1,3 @@
-import type { Chain } from 'viem'
 import { Avatar } from './avatar'
 import type { ChainWithDetails } from '#/lib/wagmi'
 
