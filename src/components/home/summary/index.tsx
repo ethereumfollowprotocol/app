@@ -8,14 +8,26 @@ import { UserProfileCard } from '#/components/user-profile-card'
 
 const Summary = () => {
   const { t } = useTranslation('home')
-  const { profile, isLoading } = useEFPProfile()
+  const {
+    profile,
+    profileIsLoading,
+    followersIsLoading,
+    isFetchingMoreFollowers,
+    followers,
+    following
+  } = useEFPProfile()
 
   return (
     <div className='mt-36 md:mt-48 w-full lg:mt-52 xl:mt-60 px-4 lg:px-6 flex items-start lg:justify-between xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4 xl:gap-4'>
-      <UserProfileCard profile={profile} isLoading={isLoading} borderColor='border-[#FFDBD9]' />
+      <UserProfileCard
+        profile={profile}
+        following={following}
+        isLoading={profileIsLoading}
+        borderColor='border-[#FFDBD9]'
+      />
       <LatestFollowers
-        isLoading={isLoading}
-        profiles={profile?.followers?.map(follower => ({
+        isLoading={followersIsLoading || isFetchingMoreFollowers}
+        profiles={followers?.map(follower => ({
           tags: follower.tags,
           address: follower.address,
           ens: follower.ens

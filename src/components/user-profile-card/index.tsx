@@ -3,19 +3,21 @@
 import { Avatar } from '../avatar'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
+
 import { truncateAddress } from '#/lib/utilities'
-import type { ProfileResponse } from '#/api/requests'
+import LoadingProfileCard from './loading-profile-card'
 import { FollowButton } from '#/components/follow-button'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
-import LoadingProfileCard from './loading-profile-card'
+import type { FollowingResponse, ProfileDetailsResponse } from '#/api/requests'
 
 interface Props {
-  profile?: ProfileResponse | null
+  profile?: ProfileDetailsResponse | null
+  following: FollowingResponse[]
   borderColor?: string
   isLoading?: boolean
 }
 
-export function UserProfileCard({ profile, borderColor, isLoading }: Props) {
+export function UserProfileCard({ profile, borderColor, isLoading, following }: Props) {
   const { t } = useTranslation('common', { keyPrefix: 'profile card' })
   const { address: connectedAddress } = useAccount()
 
@@ -43,14 +45,15 @@ export function UserProfileCard({ profile, borderColor, isLoading }: Props) {
                 <div className='text-xl sm:text-2xl font-bold '>
                   {profile.ens?.name || truncateAddress(profile.address)}
                 </div>
-                {connectedAddress &&
-                  profile?.following
-                    ?.map(follower => follower.data.toLowerCase())
-                    .includes(connectedAddress.toLowerCase()) && (
-                    <div className='rounded-full font-bold text-[10px] mb-1 flex items-center justify-center bg-gray-300 h-5 w-20'>
-                      {t('follows you')}
-                    </div>
-                  )}
+                {following && connectedAddress
+                  ? following
+                      ?.map(follower => follower.data.toLowerCase())
+                      .includes(connectedAddress.toLowerCase()) && (
+                      <div className='rounded-full font-bold text-[10px] mb-1 flex items-center justify-center bg-gray-300 h-5 w-20'>
+                        {t('follows you')}
+                      </div>
+                    )
+                  : null}
                 {profile.address && <FollowButton address={profile.address} />}
               </div>
             </div>

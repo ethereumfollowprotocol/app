@@ -2,10 +2,10 @@ import Image from 'next/image'
 import type { Address } from 'viem'
 import { useTranslation } from 'react-i18next'
 
+import LoadingRow from './loading-row'
 import EFPLogo from 'public/assets/logo.svg'
 import type { ENSProfile } from '#/lib/types'
 import { FollowListItem } from './follow-list-item'
-import LoadingRow from './loading-row'
 
 export interface FollowListProfile {
   address: Address
@@ -55,11 +55,6 @@ export function FollowList({
           </div>
         </div>
       )}
-      {isLoading &&
-        new Array(loadingRows)
-          .fill(1)
-          // biome-ignore lint/suspicious/noArrayIndexKey: no unique param to use as key
-          .map((_, i) => <LoadingRow key={i} className={listItemClassName} isEditor={isEditor} />)}
       {profiles?.map(({ address, tags, ens }) => {
         return (
           <FollowListItem
@@ -74,6 +69,11 @@ export function FollowList({
           />
         )
       })}
+      {isLoading &&
+        new Array(loadingRows)
+          .fill(1)
+          // biome-ignore lint/suspicious/noArrayIndexKey: no unique param to use as key
+          .map((_, i) => <LoadingRow key={i} className={listItemClassName} isEditor={isEditor} />)}
     </div>
   )
 }

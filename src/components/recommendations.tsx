@@ -1,10 +1,10 @@
 'use client'
 
 import clsx from 'clsx'
-import { FollowList } from '#/components/follow-list'
 import { useQuery } from '@tanstack/react-query'
+
 import fetchDiscover from '#/api/fetchDiscover'
-import LoadingSpinner from './loading-spinner'
+import { FollowList } from '#/components/follow-list'
 
 interface RecommendationsProps {
   header: string

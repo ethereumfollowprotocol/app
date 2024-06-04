@@ -4,13 +4,12 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { PROFILE_TABS } from '#/lib/constants'
+import type { ProfileTabType } from '#/types/common'
 import SettingsIcon from 'public/assets/icons/settings.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { UserProfileCard } from '#/components/user-profile-card'
 import { UserProfilePageTable } from '#/components/profile-page-table'
-
-import { PROFILE_TABS } from '#/lib/constants'
-import type { ProfileTabType } from '#/types/common'
 
 interface Props {
   searchParams: {
@@ -24,34 +23,31 @@ interface Props {
 export default function ProfilePage({ searchParams }: Props) {
   const [activeTab, setActiveTab] = useState<ProfileTabType>('following')
 
-  const { profile, isLoading } = useEFPProfile()
+  const {
+    profile,
+    profileIsLoading,
+    following,
+    followers,
+    followingIsLoading,
+    followersIsLoading
+  } = useEFPProfile()
   const { t } = useTranslation('profile')
-
-  // const queryClient = new QueryClient()
-  // queryClient.prefetchQuery({
-  //   queryKey: ['followers', profile?.address],
-  //   queryFn: () => fetchUserFollowers(profile?.address)
-  //   // staleTime: 1200000
-  // })
-  // queryClient.prefetchQuery({
-  //   queryKey: ['following', profile?.address],
-  //   queryFn: () => fetchUserFollowing(profile?.address)
-  //   // staleTime: 1200000
-  // })
 
   const mobileActiveEl = {
     following: (
       <UserProfilePageTable
-        isLoading={isLoading}
-        profile={profile}
+        isLoading={followingIsLoading}
+        following={following}
+        followers={followers}
         title='following'
         customClass='border-t-0 rounded-t-none'
       />
     ),
     followers: (
       <UserProfilePageTable
-        isLoading={isLoading}
-        profile={profile}
+        isLoading={followersIsLoading}
+        following={following}
+        followers={followers}
         title='followers'
         customClass='border-t-0 rounded-t-none'
       />
@@ -62,7 +58,7 @@ export default function ProfilePage({ searchParams }: Props) {
     <main className='flex min-h-full w-full justify-between xl:justify-center gap-y-4 flex-col md:flex-row flex-wrap xl:flex-nowrap items-start xl:gap-6 mt-32 md:mt-40 lg:mt-48 px-4 lg:px-8'>
       {/* <HydrationBoundary state={dehydrate(queryClient)}> */}
       <div className='flex flex-col w-full xl:w-fit items-center gap-4'>
-        <UserProfileCard profile={profile} isLoading={isLoading} />
+        <UserProfileCard profile={profile} following={following} isLoading={profileIsLoading} />
         <div className='flex flex-col gap-1 items-center'>
           <p className='font-semibold '>{t('block-mute')}</p>
           <div className='flex gap-1 cursor-pointer hover:opacity-80 transition-opacity'>
@@ -72,14 +68,16 @@ export default function ProfilePage({ searchParams }: Props) {
         </div>
       </div>
       <UserProfilePageTable
-        isLoading={isLoading}
-        profile={profile}
+        isLoading={followingIsLoading}
+        following={following}
+        followers={followers}
         title='following'
         customClass='hidden md:flex'
       />
       <UserProfilePageTable
-        isLoading={isLoading}
-        profile={profile}
+        isLoading={followersIsLoading}
+        following={following}
+        followers={followers}
         title='followers'
         customClass='hidden md:flex'
       />

@@ -1,5 +1,5 @@
-import type { ProfileTabType } from '#/types/common'
 import type { Address } from 'viem'
+import type { ProfileTabType } from '#/types/common'
 
 export const APP_NAME = 'Ethereum Follow Protocol'
 export const APP_NAME_SHORT = 'EFP'
@@ -14,6 +14,8 @@ export const teamAddresses: Address[] = [
   '0x983110309620D911731Ac0932219af06091b6744',
   '0xC983Ebc9dB969782D994627bdfFeC0ae6efee1b3'
 ]
+
+export const FETCH_LIMIT_PARAM = 10
 
 export const SECOND = 1_000
 export const MINUTE = 60 * SECOND

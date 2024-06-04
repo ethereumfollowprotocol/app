@@ -1,33 +1,34 @@
 'use client'
 
 import { useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { FollowList } from '#/components/follow-list'
 // import { Searchbar } from '#/components/searchbar.tsx'
-import type { ProfileResponse } from '#/api/requests'
 import TableHeader from './components/table-headers'
-import { usePathname } from 'next/navigation'
+import type { FollowerResponse, FollowingResponse } from '#/api/requests'
 
 /**
  * TODO: paginate
  */
 export function UserProfilePageTable({
-  profile,
   title,
   customClass,
-  isLoading
+  isLoading,
+  followers,
+  following
 }: {
-  profile?: ProfileResponse | null
   title: 'following' | 'followers'
   customClass?: string
   isLoading: boolean
+  followers: FollowerResponse[]
+  following: FollowingResponse[]
 }) {
   const [search, setSearch] = useState<string>('')
   const [showTags, setShowTags] = useState(false)
 
   const pathname = usePathname()
   const { t } = useTranslation('profile')
-  const { followers, following } = profile || { followers: [], following: [] }
 
   const filteredFollowers = followers?.filter(follower =>
     follower?.ens.name?.toLowerCase().replaceAll('.eth', '').includes(search.toLowerCase())

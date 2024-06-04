@@ -2,16 +2,18 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
-import type { Address } from 'viem'
 import { useTranslation } from 'react-i18next'
-import { useQuery } from '@tanstack/react-query'
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 
-import { PROFILE_TABS } from '#/lib/constants'
-import fetchUserProfile from '#/api/fetchProfile'
 import type { ProfileTabType } from '#/types/common'
 import SettingsIcon from 'public/assets/icons/settings.svg'
+import fetchProfileDetails from '#/api/fetchProfileDetails'
+import fetchProfileFollowers from '#/api/fetchProfileFollowers'
+import fetchProfileFollowing from '#/api/fetchProfileFollowing'
 import { UserProfileCard } from '#/components/user-profile-card'
+import { FETCH_LIMIT_PARAM, PROFILE_TABS } from '#/lib/constants'
 import { UserProfilePageTable } from '#/components/profile-page-table'
+import type { FollowerResponse, FollowingResponse } from '#/api/requests'
 
 interface Props {
   params: { user: string }
@@ -23,30 +25,98 @@ export default function UserPage({ params }: Props) {
 
   const { t } = useTranslation('profile')
 
-  const { data: profile, isLoading } = useQuery({
+  const { data: profile, isLoading: profileIsLoading } = useQuery({
     queryKey: ['profile', user],
     queryFn: async () => {
       if (!user) return null
 
-      const fetchedProfile = await fetchUserProfile(user as Address)
+      const fetchedProfile = await fetchProfileDetails(user)
       return fetchedProfile
     },
     staleTime: 20000
   })
 
+  const {
+    data: fetchedFollowers,
+    isLoading: followersIsLoading
+    // fetchNextPage: fetchMoreFollowers,
+    // isFetchingNextPage: isFetchingMoreFollowers
+  } = useInfiniteQuery({
+    queryKey: ['followers', user],
+    queryFn: async ({ pageParam = 0 }) => {
+      if (!user)
+        return {
+          followers: [],
+          nextPageParam: pageParam
+        }
+
+      const fetchedFollowers = await fetchProfileFollowers({
+        addressOrName: user,
+        limit: FETCH_LIMIT_PARAM,
+        pageParam
+      })
+      return fetchedFollowers
+    },
+    initialPageParam: 0,
+    getNextPageParam: lastPage => lastPage.nextPageParam,
+    staleTime: 120000
+  })
+
+  const {
+    data: fetchedFollowing,
+    isLoading: followingIsLoading
+    // fetchNextPage: fetchMoreFollowing,
+    // isFetchingNextPage: isFetchingMoreFollowing
+  } = useInfiniteQuery({
+    queryKey: ['following', user],
+    queryFn: async ({ pageParam = 0 }) => {
+      if (!user)
+        return {
+          following: [],
+          nextPageParam: pageParam
+        }
+
+      const fetchedFollowers = await fetchProfileFollowing({
+        addressOrName: user,
+        limit: FETCH_LIMIT_PARAM,
+        pageParam
+      })
+      return fetchedFollowers
+    },
+    initialPageParam: 0,
+    getNextPageParam: lastPage => lastPage.nextPageParam,
+    staleTime: 120000
+  })
+
+  const followers = fetchedFollowers
+    ? fetchedFollowers.pages.reduce(
+        (acc, el) => [...acc, ...el.followers],
+        [] as FollowerResponse[]
+      )
+    : []
+
+  const following = fetchedFollowing
+    ? fetchedFollowing.pages.reduce(
+        (acc, el) => [...acc, ...el.following],
+        [] as FollowingResponse[]
+      )
+    : []
+
   const mobileActiveEl = {
     following: (
       <UserProfilePageTable
-        isLoading={isLoading}
-        profile={profile}
+        isLoading={followingIsLoading}
+        following={following}
+        followers={followers}
         title='following'
         customClass='border-t-0 rounded-t-none'
       />
     ),
     followers: (
       <UserProfilePageTable
-        isLoading={isLoading}
-        profile={profile}
+        isLoading={followersIsLoading}
+        following={following}
+        followers={followers}
         title='followers'
         customClass='border-t-0 rounded-t-none'
       />
@@ -56,7 +126,7 @@ export default function UserPage({ params }: Props) {
   return (
     <main className='flex min-h-full w-full justify-between xl:justify-center gap-y-4 flex-col md:flex-row flex-wrap xl:flex-nowrap items-start xl:gap-6 mt-32 md:mt-40 lg:mt-48 px-4 lg:px-8'>
       <div className='flex flex-col w-full xl:w-fit items-center gap-4'>
-        <UserProfileCard profile={profile} isLoading={isLoading} />
+        <UserProfileCard profile={profile} following={following} isLoading={profileIsLoading} />
         <div className='flex flex-col gap-1 items-center'>
           <p className='font-semibold '>{t('block-mute')}</p>
           <div className='flex gap-1 cursor-pointer hover:opacity-80 transition-opacity'>
@@ -66,14 +136,16 @@ export default function UserPage({ params }: Props) {
         </div>
       </div>
       <UserProfilePageTable
-        isLoading={isLoading}
-        profile={profile}
+        isLoading={followingIsLoading}
+        following={following}
+        followers={followers}
         title='following'
         customClass='hidden md:flex'
       />
       <UserProfilePageTable
-        isLoading={isLoading}
-        profile={profile}
+        isLoading={followersIsLoading}
+        following={following}
+        followers={followers}
         title='followers'
         customClass='hidden md:flex'
       />
