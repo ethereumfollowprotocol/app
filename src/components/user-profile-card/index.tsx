@@ -42,7 +42,7 @@ export function UserProfileCard({ profile, borderColor, isLoading, following }: 
                 size='h-[70px] w-[70px] sm:h-[75px] sm:w-[75px] xl:h-[100px] xl:w-[100px]'
               />
               <div className='flex w-full xl:items-center flex-col items-start gap-2 justify-center'>
-                <div className='text-xl w-[90%] xl:w-full xl:max-w-72 2xl:max-w-[332px] truncate sm:text-2xl font-bold'>
+                <div className='text-xl text-start xl:text-center w-[90%] xl:w-full xl:max-w-72 2xl:max-w-[332px] truncate sm:text-2xl font-bold'>
                   {profile.ens?.name || truncateAddress(profile.address)}
                 </div>
                 {following && connectedAddress
