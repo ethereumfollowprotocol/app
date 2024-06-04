@@ -1,7 +1,6 @@
 'use client'
 
 import { useTranslation } from 'react-i18next'
-import LoadingSpinner from '#/components/loading-spinner'
 import Recommendations from '#/components/recommendations'
 import LatestFollowers from './components/latest-followers'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
@@ -13,27 +12,17 @@ const Summary = () => {
 
   return (
     <div className='mt-36 md:mt-48 w-full lg:mt-52 xl:mt-60 px-4 lg:px-6 flex items-start lg:justify-between xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4 xl:gap-4'>
-      {profile ? (
-        <>
-          <UserProfileCard profile={profile} borderColor='border-[#FFDBD9]' />
-          <LatestFollowers
-            profiles={profile.followers?.map(follower => ({
-              tags: follower.tags,
-              address: follower.address,
-              ens: follower.ens
-            }))}
-          />
-        </>
-      ) : (
-        <div className='glass-card border-2 flex items-center justify-center rounded-2xl border-gray-200 w-full lg:w-1/2 h-64 lg:h-[638px]'>
-          {isLoading ? (
-            <LoadingSpinner />
-          ) : (
-            <p className='italic text-xl font-semibold text-gray-400'>{t('connect wallet')}</p>
-          )}
-        </div>
-      )}
+      <UserProfileCard profile={profile} isLoading={isLoading} borderColor='border-[#FFDBD9]' />
+      <LatestFollowers
+        isLoading={isLoading}
+        profiles={profile?.followers?.map(follower => ({
+          tags: follower.tags,
+          address: follower.address,
+          ens: follower.ens
+        }))}
+      />
       <Recommendations
+        limit={7}
         header={t('discover')}
         className='h-fit lg:h-[638px] w-full lg:w-[49%] xl:w-[40%] 2xl:w-[700px] p-6 glass-card border-2 border-[#0001] rounded-2xl'
       />

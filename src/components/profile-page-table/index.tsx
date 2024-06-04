@@ -14,18 +14,20 @@ import { usePathname } from 'next/navigation'
 export function UserProfilePageTable({
   profile,
   title,
-  customClass
+  customClass,
+  isLoading
 }: {
-  profile: ProfileResponse
+  profile?: ProfileResponse | null
   title: 'following' | 'followers'
   customClass?: string
+  isLoading: boolean
 }) {
   const [search, setSearch] = useState<string>('')
   const [showTags, setShowTags] = useState(false)
 
   const pathname = usePathname()
   const { t } = useTranslation('profile')
-  const { followers, following } = profile
+  const { followers, following } = profile || { followers: [], following: [] }
 
   const filteredFollowers = followers?.filter(follower =>
     follower?.ens.name?.toLowerCase().replaceAll('.eth', '').includes(search.toLowerCase())
@@ -45,18 +47,21 @@ export function UserProfilePageTable({
       address: title === 'following' ? res.data : res.address
     })) || []
 
+  const allTags = chosenResponses?.flatMap(item => item.tags) || []
+
   return (
     <div
       className={`glass-card flex flex-col gap-4 p-4 md:w-[49%] xl:w-[620px] border-2 rounded-2xl border-gray-200 ${customClass}`}
     >
       <TableHeader
+        allTags={allTags}
         search={search}
         setSearch={(input: string) => setSearch(input)}
         showTags={showTags}
         setShowTags={(option: boolean) => setShowTags(option)}
         title={title}
       />
-      {chosenResponses?.length === 0 && (
+      {!isLoading && chosenResponses?.length === 0 && (
         <div className='text-center font-semibold py-4'>
           {title === 'followers' && <span className='text-lg'>{t('followers empty')}</span>}
           {title === 'following' && (
@@ -72,6 +77,8 @@ export function UserProfilePageTable({
         </div>
       )}
       <FollowList
+        isLoading={isLoading}
+        loadingRows={10}
         listClassName='gap-2 rounded-xl'
         listItemClassName='rounded-xl hover:bg-white/50 p-2'
         profiles={profiles}

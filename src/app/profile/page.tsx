@@ -24,7 +24,7 @@ interface Props {
 export default function ProfilePage({ searchParams }: Props) {
   const [activeTab, setActiveTab] = useState<ProfileTabType>('following')
 
-  const { profile } = useEFPProfile()
+  const { profile, isLoading } = useEFPProfile()
   const { t } = useTranslation('profile')
 
   // const queryClient = new QueryClient()
@@ -39,11 +39,10 @@ export default function ProfilePage({ searchParams }: Props) {
   //   // staleTime: 1200000
   // })
 
-  if (!profile?.address) return null
-
   const mobileActiveEl = {
     following: (
       <UserProfilePageTable
+        isLoading={isLoading}
         profile={profile}
         title='following'
         customClass='border-t-0 rounded-t-none'
@@ -51,6 +50,7 @@ export default function ProfilePage({ searchParams }: Props) {
     ),
     followers: (
       <UserProfilePageTable
+        isLoading={isLoading}
         profile={profile}
         title='followers'
         customClass='border-t-0 rounded-t-none'
@@ -62,7 +62,7 @@ export default function ProfilePage({ searchParams }: Props) {
     <main className='flex min-h-full w-full justify-between xl:justify-center gap-y-4 flex-col md:flex-row flex-wrap xl:flex-nowrap items-start xl:gap-6 mt-32 md:mt-40 lg:mt-48 px-4 lg:px-8'>
       {/* <HydrationBoundary state={dehydrate(queryClient)}> */}
       <div className='flex flex-col w-full xl:w-fit items-center gap-4'>
-        <UserProfileCard profile={profile} />
+        <UserProfileCard profile={profile} isLoading={isLoading} />
         <div className='flex flex-col gap-1 items-center'>
           <p className='font-semibold '>{t('block-mute')}</p>
           <div className='flex gap-1 cursor-pointer hover:opacity-80 transition-opacity'>
@@ -71,8 +71,18 @@ export default function ProfilePage({ searchParams }: Props) {
           </div>
         </div>
       </div>
-      <UserProfilePageTable profile={profile} title='following' customClass='hidden md:flex' />
-      <UserProfilePageTable profile={profile} title='followers' customClass='hidden md:flex' />
+      <UserProfilePageTable
+        isLoading={isLoading}
+        profile={profile}
+        title='following'
+        customClass='hidden md:flex'
+      />
+      <UserProfilePageTable
+        isLoading={isLoading}
+        profile={profile}
+        title='followers'
+        customClass='hidden md:flex'
+      />
       <div className=' w-full mt-12 relative md:hidden'>
         <div className='w-full absolute -top-12 left-0'>
           {PROFILE_TABS.map(option => (

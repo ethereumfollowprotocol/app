@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import EFPLogo from 'public/assets/logo.svg'
 import type { ENSProfile } from '#/lib/types'
 import { FollowListItem } from './follow-list-item'
+import LoadingRow from './loading-row'
 
 export interface FollowListProfile {
   address: Address
@@ -12,14 +13,16 @@ export interface FollowListProfile {
   tags: string[]
 }
 
-interface FollowTableProps {
+interface FollowListProps {
   listClassName?: string
   listItemClassName?: string
-  profiles: FollowListProfile[]
+  profiles?: FollowListProfile[]
   showFollowsYouBadges?: boolean // Prop to handle showing "Follows you" badges in the FollowList
   showTags?: boolean
   isEditor?: boolean
   createListItem?: boolean
+  loadingRows?: number
+  isLoading: boolean
 }
 
 export function FollowList({
@@ -29,13 +32,15 @@ export function FollowList({
   showFollowsYouBadges,
   showTags,
   isEditor,
-  createListItem
-}: FollowTableProps) {
+  createListItem,
+  loadingRows = 7,
+  isLoading
+}: FollowListProps) {
   const { t } = useTranslation('editor')
 
   return (
     <div className={`flex flex-col min-w-max ${listClassName}`}>
-      {profiles.length > 0 && createListItem && (
+      {(profiles?.length || 0) > 0 && createListItem && (
         <div className='flex w-[350px] sm:w-full items-center gap-2 md:p-4 p-1.5 sm:p-2 sm:gap-3'>
           <Image
             src={EFPLogo}
@@ -50,7 +55,12 @@ export function FollowList({
           </div>
         </div>
       )}
-      {profiles.map(({ address, tags, ens }) => {
+      {isLoading &&
+        new Array(loadingRows)
+          .fill(1)
+          // biome-ignore lint/suspicious/noArrayIndexKey: no unique param to use as key
+          .map((_, i) => <LoadingRow key={i} className={listItemClassName} isEditor={isEditor} />)}
+      {profiles?.map(({ address, tags, ens }) => {
         return (
           <FollowListItem
             className={listItemClassName}

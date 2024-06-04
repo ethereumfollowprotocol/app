@@ -109,12 +109,24 @@ const { colors, fontFamily, fontSize, keyframes, animation, spacing } = {
     'accordion-up': {
       from: { height: 'var(--radix-accordion-content-height)' },
       to: { height: '0' }
+    },
+    loading: {
+      '0%': {
+        'background-position': '200% 0'
+      },
+      '50%': {
+        'background-position': '0% 0'
+      },
+      '100%': {
+        'background-position': '-200% 0'
+      }
     }
   },
   animation: {
     'accordion-down': 'accordion-down 0.2s ease-out',
     'accordion-up': 'accordion-up 0.2s ease-out',
-    'spin-slow': 'spin 2s linear infinite'
+    'spin-slow': 'spin 2s linear infinite',
+    loading: 'loading 5s ease-in-out infinite'
   },
   spacing: {
     '68': '17rem',

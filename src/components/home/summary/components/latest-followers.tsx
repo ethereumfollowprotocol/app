@@ -3,9 +3,10 @@ import { FollowList, type FollowListProfile } from '#/components/follow-list'
 
 interface LatestFollowersProps {
   profiles?: FollowListProfile[]
+  isLoading: boolean
 }
 
-const LatestFollowers: React.FC<LatestFollowersProps> = ({ profiles }) => {
+const LatestFollowers: React.FC<LatestFollowersProps> = ({ profiles, isLoading }) => {
   const { t } = useTranslation('home')
 
   return (
@@ -13,9 +14,14 @@ const LatestFollowers: React.FC<LatestFollowersProps> = ({ profiles }) => {
       <h2 className='text-2xl sm:text-3xl w-full text-center lg:text-left font-bold'>
         {t('latest followers')}
       </h2>
-      {profiles && (
-        <FollowList profiles={profiles} showFollowsYouBadges={true} listClassName='gap-7' />
-      )}
+
+      <FollowList
+        profiles={profiles}
+        showFollowsYouBadges={true}
+        isLoading={isLoading}
+        loadingRows={7}
+        listClassName='gap-7'
+      />
     </div>
   )
 }

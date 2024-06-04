@@ -70,6 +70,7 @@ export default function EditorPage() {
               <Legend />
             </div>
             <FollowList
+              isLoading={false}
               profiles={profiles}
               listClassName='rounded-xl gap-1 sm:gap-0'
               listItemClassName='rounded-xl md:p-4 p-1.5 sm:p-2 hover:bg-white/80'
