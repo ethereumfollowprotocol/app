@@ -26,8 +26,8 @@ interface FollowListItemNameProps {
 
 export function Name({ name, address }: { name?: string; address: Address }) {
   return (
-    <Link href={`/${name || address}`}>
-      <p className='font-bold sm:text-lg hover:opacity-75 transition-opacity'>
+    <Link href={`/${name || address}`} className='w-full'>
+      <p className='font-bold sm:text-lg truncate w-[90%] hover:opacity-75 transition-opacity'>
         {name || truncateAddress(address)}
       </p>
     </Link>
@@ -77,15 +77,20 @@ export function FollowListItemName({
   }
 
   return (
-    <div className={`flex gap-2 sm:gap-3 items-center ${className}`}>
+    <div
+      className={`flex gap-2 sm:gap-3 items-center ${className}`}
+      style={{
+        width: 'calc(100% - 110px)'
+      }}
+    >
       <Avatar
         name={name || address}
         avatarUrl={avatarUrl}
         size='h-[45px] w-[45px] md:h-[50px] md:w-[50px]'
       />
-      <div className='flex flex-col md:flex-row gap-[2px] w-3/4 sm:w-fit md:gap-3'>
+      <div className='flex w-full flex-col md:flex-row gap-[2px] md:gap-3'>
         <div
-          className={`flex flex-col justify-center w-fit ${
+          className={`flex flex-col justify-center w-full ${
             isEditor ? 'md:w-52' : ''
           } items-start tabular-nums relative`}
         >

@@ -18,8 +18,8 @@ interface Props {
 }
 
 export function UserProfileCard({ profile, borderColor, isLoading, following }: Props) {
-  const { t } = useTranslation('common', { keyPrefix: 'profile card' })
   const { address: connectedAddress } = useAccount()
+  const { t } = useTranslation('common', { keyPrefix: 'profile card' })
 
   return (
     <div
@@ -41,8 +41,8 @@ export function UserProfileCard({ profile, borderColor, isLoading, following }: 
                 name={profile.ens?.name || profile.address}
                 size='h-[70px] w-[70px] sm:h-[75px] sm:w-[75px] xl:h-[100px] xl:w-[100px]'
               />
-              <div className='flex xl:items-center flex-col items-start gap-2 justify-center'>
-                <div className='text-xl max-w-full xl:max-w-72 2xl:max-w-[332px] truncate sm:text-2xl font-bold'>
+              <div className='flex w-full xl:items-center flex-col items-start gap-2 justify-center'>
+                <div className='text-xl w-[90%] xl:w-full xl:max-w-72 2xl:max-w-[332px] truncate sm:text-2xl font-bold'>
                   {profile.ens?.name || truncateAddress(profile.address)}
                 </div>
                 {following && connectedAddress

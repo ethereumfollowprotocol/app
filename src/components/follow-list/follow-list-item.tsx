@@ -34,7 +34,6 @@ export function FollowListItem({
       <FollowListItemName
         address={address}
         avatarUrl={profileAvatar}
-        className='flex-none w-fit' // Fixed width for consistent layout
         name={profileName}
         showFollowsYouBadges={showFollowsYouBadges}
         isEditor={isEditor}

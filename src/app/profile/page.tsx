@@ -63,7 +63,7 @@ export default function ProfilePage({ searchParams }: Props) {
   }[activeTab]
 
   return (
-    <main className='flex min-h-full w-full justify-between xl:justify-center gap-y-4 flex-col md:flex-row flex-wrap xl:flex-nowrap items-start xl:gap-6 mt-32 md:mt-40 lg:mt-48 px-4 lg:px-8'>
+    <main className='flex pb-8 min-h-full w-full justify-between xl:justify-center gap-y-4 flex-col md:flex-row flex-wrap xl:flex-nowrap items-start xl:gap-6 mt-32 md:mt-40 lg:mt-48 px-4 lg:px-8'>
       {/* <HydrationBoundary state={dehydrate(queryClient)}> */}
       <div className='flex flex-col w-full xl:w-fit items-center gap-4'>
         <UserProfileCard profile={profile} following={following} isLoading={profileIsLoading} />

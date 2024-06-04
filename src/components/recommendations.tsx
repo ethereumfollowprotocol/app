@@ -25,7 +25,7 @@ const Recommendations = ({ header, className, limit }: RecommendationsProps) => 
 
   return (
     <div className={clsx('flex flex-col gap-8', className)}>
-      <h2 className='text-start text-3xl font-bold'>{header}</h2>
+      <h2 className='text-center lg:text-start text-3xl font-bold'>{header}</h2>
       <FollowList
         isLoading={isLoading}
         loadingRows={limit}
