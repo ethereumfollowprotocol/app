@@ -110,7 +110,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       const fetchedProfile = await fetchProfileDetails(userAddress)
       return fetchedProfile
     },
-    staleTime: 20000
+    refetchInterval: 20000
   })
 
   const {
@@ -138,7 +138,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     },
     initialPageParam: 0,
     getNextPageParam: lastPage => lastPage.nextPageParam,
-    staleTime: 120000
+    refetchInterval: 20000
   })
 
   const {
@@ -166,7 +166,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     },
     initialPageParam: 0,
     getNextPageParam: lastPage => lastPage.nextPageParam,
-    staleTime: 120000
+    refetchInterval: 20000
   })
 
   const followers = fetchedFollowers

@@ -38,9 +38,9 @@ export default function UserPage({ params }: Props) {
 
   const {
     data: fetchedFollowers,
-    isLoading: followersIsLoading
-    // fetchNextPage: fetchMoreFollowers,
-    // isFetchingNextPage: isFetchingMoreFollowers
+    isLoading: followersIsLoading,
+    fetchNextPage: fetchMoreFollowers,
+    isFetchingNextPage: isFetchingMoreFollowers
   } = useInfiniteQuery({
     queryKey: ['followers', user],
     queryFn: async ({ pageParam = 0 }) => {
@@ -64,9 +64,9 @@ export default function UserPage({ params }: Props) {
 
   const {
     data: fetchedFollowing,
-    isLoading: followingIsLoading
-    // fetchNextPage: fetchMoreFollowing,
-    // isFetchingNextPage: isFetchingMoreFollowing
+    isLoading: followingIsLoading,
+    fetchNextPage: fetchMoreFollowing,
+    isFetchingNextPage: isFetchingMoreFollowing
   } = useInfiniteQuery({
     queryKey: ['following', user],
     queryFn: async ({ pageParam = 0 }) => {
@@ -108,6 +108,8 @@ export default function UserPage({ params }: Props) {
         isLoading={followingIsLoading}
         following={following}
         followers={followers}
+        isFetchingMore={isFetchingMoreFollowing}
+        fetchMore={() => fetchMoreFollowing()}
         title='following'
         customClass='border-t-0 rounded-t-none'
       />
@@ -117,6 +119,8 @@ export default function UserPage({ params }: Props) {
         isLoading={followersIsLoading}
         following={following}
         followers={followers}
+        isFetchingMore={isFetchingMoreFollowers}
+        fetchMore={() => fetchMoreFollowers()}
         title='followers'
         customClass='border-t-0 rounded-t-none'
       />
@@ -139,6 +143,8 @@ export default function UserPage({ params }: Props) {
         isLoading={followingIsLoading}
         following={following}
         followers={followers}
+        isFetchingMore={isFetchingMoreFollowing}
+        fetchMore={() => fetchMoreFollowing()}
         title='following'
         customClass='hidden md:flex'
       />
@@ -146,6 +152,8 @@ export default function UserPage({ params }: Props) {
         isLoading={followersIsLoading}
         following={following}
         followers={followers}
+        isFetchingMore={isFetchingMoreFollowers}
+        fetchMore={() => fetchMoreFollowers()}
         title='followers'
         customClass='hidden md:flex'
       />

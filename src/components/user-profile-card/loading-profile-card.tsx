@@ -6,14 +6,14 @@ const LoadingProfileCard = () => {
 
   return (
     <>
-      <div className='text-gray-500 absolute text-right xl:text-left px-2 w-full left-0 top-1 font-semibold'>
+      <div className='text-gray-500 absolute flex justify-end xl:justify-start px-2 w-full left-0 top-1 font-semibold'>
         <LoadingCell className='w-10 h-5 mt-1 rounded-lg' />
       </div>
       <div className='flex w-full xl:items-center flex-col gap-5 sm:gap-6 md:gap-9 pt-2'>
         <div className='flex w-full flex-row xl:flex-col xl:justify-center items-center gap-5'>
           <LoadingCell className='w-[70px] sm:w-[75px] xl:w-[100px] h-[70px] sm:h-[75px] xl:h-[100px] rounded-full' />
-          <div className='flex w-full xl:items-center flex-col items-start gap-2 justify-center'>
-            <LoadingCell className='w-3/4 h-7 rounded-lg' />
+          <div className='flex xl:w-full xl:items-center flex-col items-start gap-2 justify-center'>
+            <LoadingCell className='w-48 sm:w-68 xl:w-3/4 h-7 rounded-lg' />
             {/* <LoadingCell width='75%' height='20px' /> */}
           </div>
         </div>

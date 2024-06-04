@@ -27,7 +27,7 @@ interface FollowListItemNameProps {
 export function Name({ name, address }: { name?: string; address: Address }) {
   return (
     <Link href={`/${name || address}`}>
-      <p className='font-bold sm:text-lg  hover:opacity-75 transition-opacity'>
+      <p className='font-bold sm:text-lg hover:opacity-75 transition-opacity'>
         {name || truncateAddress(address)}
       </p>
     </Link>

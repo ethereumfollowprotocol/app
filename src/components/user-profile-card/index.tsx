@@ -34,15 +34,15 @@ export function UserProfileCard({ profile, borderColor, isLoading, following }: 
           <div className='text-gray-500 absolute text-right xl:text-left px-2 w-full left-0 top-1 font-semibold'>
             #{profile?.primary_list ?? '-'}
           </div>
-          <div className='flex xl:items-center flex-col gap-5 sm:gap-6 md:gap-9 pt-2'>
-            <div className='flex flex-row xl:flex-col xl:justify-center items-center gap-4'>
+          <div className='flex w-full xl:items-center flex-col gap-5 sm:gap-6 md:gap-9 pt-2'>
+            <div className='flex w-full flex-row xl:flex-col xl:justify-center items-center gap-4'>
               <Avatar
                 avatarUrl={profile.ens?.avatar || DefaultAvatar}
                 name={profile.ens?.name || profile.address}
-                size='h-[70px] w-[70px] sm:h-[75px]  sm:w-[75px] xl:h-[100px] xl:w-[100px]'
+                size='h-[70px] w-[70px] sm:h-[75px] sm:w-[75px] xl:h-[100px] xl:w-[100px]'
               />
-              <div className='flex xl:items-center  flex-col items-start gap-2 justify-center'>
-                <div className='text-xl sm:text-2xl font-bold '>
+              <div className='flex xl:items-center flex-col items-start gap-2 justify-center'>
+                <div className='text-xl max-w-full xl:max-w-72 2xl:max-w-[332px] truncate sm:text-2xl font-bold'>
                   {profile.ens?.name || truncateAddress(profile.address)}
                 </div>
                 {following && connectedAddress

@@ -29,7 +29,11 @@ export default function ProfilePage({ searchParams }: Props) {
     following,
     followers,
     followingIsLoading,
-    followersIsLoading
+    followersIsLoading,
+    fetchMoreFollowers,
+    fetchMoreFollowing,
+    isFetchingMoreFollowers,
+    isFetchingMoreFollowing
   } = useEFPProfile()
   const { t } = useTranslation('profile')
 
@@ -39,6 +43,8 @@ export default function ProfilePage({ searchParams }: Props) {
         isLoading={followingIsLoading}
         following={following}
         followers={followers}
+        isFetchingMore={isFetchingMoreFollowing}
+        fetchMore={() => fetchMoreFollowing()}
         title='following'
         customClass='border-t-0 rounded-t-none'
       />
@@ -48,6 +54,8 @@ export default function ProfilePage({ searchParams }: Props) {
         isLoading={followersIsLoading}
         following={following}
         followers={followers}
+        isFetchingMore={isFetchingMoreFollowers}
+        fetchMore={() => fetchMoreFollowers()}
         title='followers'
         customClass='border-t-0 rounded-t-none'
       />
@@ -71,6 +79,8 @@ export default function ProfilePage({ searchParams }: Props) {
         isLoading={followingIsLoading}
         following={following}
         followers={followers}
+        isFetchingMore={isFetchingMoreFollowing}
+        fetchMore={() => fetchMoreFollowing()}
         title='following'
         customClass='hidden md:flex'
       />
@@ -78,6 +88,8 @@ export default function ProfilePage({ searchParams }: Props) {
         isLoading={followersIsLoading}
         following={following}
         followers={followers}
+        isFetchingMore={isFetchingMoreFollowers}
+        fetchMore={() => fetchMoreFollowers()}
         title='followers'
         customClass='hidden md:flex'
       />

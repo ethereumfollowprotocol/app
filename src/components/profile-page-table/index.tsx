@@ -1,12 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
+import { useIntersectionObserver } from '@uidotdev/usehooks'
+
 import { FollowList } from '#/components/follow-list'
-// import { Searchbar } from '#/components/searchbar.tsx'
 import TableHeader from './components/table-headers'
 import type { FollowerResponse, FollowingResponse } from '#/api/requests'
+import { FETCH_LIMIT_PARAM } from '#/lib/constants'
 
 /**
  * TODO: paginate
@@ -15,14 +17,18 @@ export function UserProfilePageTable({
   title,
   customClass,
   isLoading,
+  isFetchingMore,
   followers,
-  following
+  following,
+  fetchMore
 }: {
   title: 'following' | 'followers'
   customClass?: string
   isLoading: boolean
+  isFetchingMore: boolean
   followers: FollowerResponse[]
   following: FollowingResponse[]
+  fetchMore: () => void
 }) {
   const [search, setSearch] = useState<string>('')
   const [showTags, setShowTags] = useState(false)
@@ -49,6 +55,18 @@ export function UserProfilePageTable({
     })) || []
 
   const allTags = chosenResponses?.flatMap(item => item.tags) || []
+
+  const [loadMoreRef, entry] = useIntersectionObserver()
+
+  useEffect(() => {
+    if (entry?.isIntersecting) return
+    if (
+      !(isLoading || isFetchingMore) &&
+      chosenResponses.length > 0 &&
+      chosenResponses.length % FETCH_LIMIT_PARAM === 0
+    )
+      fetchMore()
+  }, [entry?.isIntersecting])
 
   return (
     <div
@@ -78,7 +96,7 @@ export function UserProfilePageTable({
         </div>
       )}
       <FollowList
-        isLoading={isLoading}
+        isLoading={isLoading || isFetchingMore}
         loadingRows={10}
         listClassName='gap-2 rounded-xl'
         listItemClassName='rounded-xl hover:bg-white/50 p-2'
@@ -86,6 +104,7 @@ export function UserProfilePageTable({
         showTags={showTags}
         showFollowsYouBadges={showFollowsYouBadges}
       />
+      {!(isLoading || isFetchingMore) && <div ref={loadMoreRef} className='h-px w-full' />}
     </div>
   )
 }

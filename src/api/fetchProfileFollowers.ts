@@ -19,7 +19,7 @@ const fetchProfileFollowers = async ({
 
     const data = (await response.json()).followers as FollowerResponse[]
     return {
-      followers: data,
+      followers: data ?? [],
       nextPageParam: pageParam + 1
     }
   } catch (err: unknown) {
