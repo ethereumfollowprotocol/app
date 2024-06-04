@@ -52,7 +52,9 @@ export default function EditorPage() {
       ) : (
         <>
           <div className='flex flex-col glass-card gap-6 p-6 h-fit rounded-2xl border-2 border-gray-200 xl:max-w-116 w-full xl:w-1/3'>
-            <h1 className='text-left text-3xl font-semibold hidden xl:block'>{t('editor')}</h1>
+            <h1 className='text-left text-3xl font-semibold hidden xl:block capitalize'>
+              {t('editor')}
+            </h1>
             <div className='flex gap-2'>
               <Search size='w-3/4' />
               <button
