@@ -29,10 +29,12 @@ export default function EditorPage() {
 
   const profiles = useMemo(
     () =>
-      cartAddresses.map(address => ({
-        address,
-        tags: []
-      })),
+      isConnected
+        ? cartAddresses.map(address => ({
+            address,
+            tags: []
+          }))
+        : [],
     [cartAddresses]
   )
 
