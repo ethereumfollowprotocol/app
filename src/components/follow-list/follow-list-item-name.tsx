@@ -178,7 +178,7 @@ export function FollowListItemName({
                     onChange={e => {
                       setCustomTagInput(e.target.value.replaceAll(' ', ''))
                     }}
-                    maxLength={80}
+                    maxLength={68}
                     onKeyDown={e => {
                       if (e.key === 'Enter') addCustomTag()
                     }}
