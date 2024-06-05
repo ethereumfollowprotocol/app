@@ -1,19 +1,76 @@
 import { useAccount } from 'wagmi'
 import { createContext, useContext, useEffect, useState } from 'react'
 
+import {
+  useQuery,
+  useInfiniteQuery,
+  type InfiniteData,
+  type RefetchOptions,
+  type QueryObserverResult,
+  type FetchNextPageOptions,
+  type InfiniteQueryObserverResult
+} from '@tanstack/react-query'
 import { useCart } from './cart-context'
 import type { ProfileTabType } from '#/types/common'
-import { useQuery, type QueryObserverResult, type RefetchOptions } from '@tanstack/react-query'
-import fetchUserProfile from '#/api/fetchProfile'
-import type { ProfileResponse } from '#/api/requests'
+import { FETCH_LIMIT_PARAM } from '#/lib/constants'
+import fetchProfileDetails from '#/api/fetchProfileDetails'
+import fetchProfileFollowers from '#/api/fetchProfileFollowers'
+import fetchProfileFollowing from '#/api/fetchProfileFollowing'
+import type { FollowerResponse, FollowingResponse, ProfileDetailsResponse } from '#/api/requests'
 
 // Define the type for the profile context
 type EFPProfileContextType = {
-  profile?: ProfileResponse | null
-  isLoading: boolean
+  profile?: ProfileDetailsResponse | null
+  followers: FollowerResponse[]
+  following: FollowingResponse[]
+  profileIsLoading: boolean
+  followersIsLoading: boolean
+  followingIsLoading: boolean
+  isFetchingMoreFollowers: boolean
+  isFetchingMoreFollowing: boolean
+  fetchMoreFollowers: (options?: FetchNextPageOptions) => Promise<
+    InfiniteQueryObserverResult<
+      InfiniteData<
+        {
+          followers: FollowerResponse[]
+          nextPageParam: number
+        },
+        unknown
+      >,
+      Error
+    >
+  >
+  fetchMoreFollowing: (options?: FetchNextPageOptions) => Promise<
+    InfiniteQueryObserverResult<
+      InfiniteData<
+        {
+          following: FollowingResponse[]
+          nextPageParam: number
+        },
+        unknown
+      >,
+      Error
+    >
+  >
   refetchProfile: (
     options?: RefetchOptions
-  ) => Promise<QueryObserverResult<ProfileResponse | null, Error>>
+  ) => Promise<QueryObserverResult<ProfileDetailsResponse | null, Error>>
+  refetchFollowers: (
+    options?: RefetchOptions | undefined
+  ) => Promise<
+    QueryObserverResult<
+      InfiniteData<{ followers: FollowerResponse[]; nextPageParam: number }, unknown>,
+      Error
+    >
+  >
+  refetchFollowing: (
+    options?: RefetchOptions | undefined
+  ) => Promise<
+    QueryObserverResult<
+      InfiniteData<{ following: FollowingResponse[]; nextPageParam: number }, unknown>,
+      Error
+    >
+  >
   followingTags: string[]
   followersTags: string[]
   followingSort: string | undefined
@@ -21,7 +78,9 @@ type EFPProfileContextType = {
   toggleTag: (tab: ProfileTabType, tag: string) => void
   setFollowingSort: (option: string) => void
   setFollowersSort: (option: string) => void
-  error: Error | null
+  profileError: Error | null
+  followersError: Error | null
+  followingError: Error | null
 }
 
 type Props = {
@@ -40,19 +99,89 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   const { address: userAddress } = useAccount()
   const {
     data: profile,
-    isLoading,
-    error,
+    isLoading: profileIsLoading,
+    error: profileError,
     refetch: refetchProfile
   } = useQuery({
     queryKey: ['profile', userAddress],
     queryFn: async () => {
       if (!userAddress) return null
 
-      const fetchedProfile = await fetchUserProfile(userAddress)
+      const fetchedProfile = await fetchProfileDetails(userAddress)
       return fetchedProfile
     },
-    staleTime: 20000
+    refetchInterval: 60000
   })
+
+  const {
+    data: fetchedFollowers,
+    isLoading: followersIsLoading,
+    error: followersError,
+    fetchNextPage: fetchMoreFollowers,
+    isFetchingNextPage: isFetchingMoreFollowers,
+    refetch: refetchFollowers
+  } = useInfiniteQuery({
+    queryKey: ['followers', userAddress],
+    queryFn: async ({ pageParam = 0 }) => {
+      if (!userAddress)
+        return {
+          followers: [],
+          nextPageParam: pageParam
+        }
+
+      const fetchedFollowers = await fetchProfileFollowers({
+        addressOrName: userAddress,
+        limit: FETCH_LIMIT_PARAM,
+        pageParam
+      })
+      return fetchedFollowers
+    },
+    initialPageParam: 0,
+    getNextPageParam: lastPage => lastPage.nextPageParam,
+    refetchInterval: 60000
+  })
+
+  const {
+    data: fetchedFollowing,
+    isLoading: followingIsLoading,
+    fetchNextPage: fetchMoreFollowing,
+    isFetchingNextPage: isFetchingMoreFollowing,
+    error: followingError,
+    refetch: refetchFollowing
+  } = useInfiniteQuery({
+    queryKey: ['following', userAddress],
+    queryFn: async ({ pageParam = 0 }) => {
+      if (!userAddress)
+        return {
+          following: [],
+          nextPageParam: pageParam
+        }
+
+      const fetchedFollowers = await fetchProfileFollowing({
+        addressOrName: userAddress,
+        limit: FETCH_LIMIT_PARAM,
+        pageParam
+      })
+      return fetchedFollowers
+    },
+    initialPageParam: 0,
+    getNextPageParam: lastPage => lastPage.nextPageParam,
+    refetchInterval: 60000
+  })
+
+  const followers = fetchedFollowers
+    ? fetchedFollowers.pages.reduce(
+        (acc, el) => [...acc, ...el.followers],
+        [] as FollowerResponse[]
+      )
+    : []
+
+  const following = fetchedFollowing
+    ? fetchedFollowing.pages.reduce(
+        (acc, el) => [...acc, ...el.following],
+        [] as FollowingResponse[]
+      )
+    : []
 
   useEffect(() => {
     const cartAddress = localStorage.getItem('cart address')
@@ -82,8 +211,18 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     <EFPProfileContext.Provider
       value={{
         profile,
-        isLoading,
+        followers,
+        following,
+        profileIsLoading,
+        followersIsLoading,
+        followingIsLoading,
+        isFetchingMoreFollowers,
+        isFetchingMoreFollowing,
+        fetchMoreFollowers,
+        fetchMoreFollowing,
         refetchProfile,
+        refetchFollowers,
+        refetchFollowing,
         followingTags,
         followersTags,
         followingSort,
@@ -95,7 +234,9 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         setFollowersSort: (option: string) => {
           setFollowersSort(option)
         },
-        error
+        profileError,
+        followersError,
+        followingError
       }}
     >
       {children}

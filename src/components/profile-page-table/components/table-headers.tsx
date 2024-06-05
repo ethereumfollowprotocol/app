@@ -15,6 +15,7 @@ interface TableHeaderProps {
   showTags: boolean
   setShowTags: (input: boolean) => void
   setSearch: (input: string) => void
+  allTags: string[]
 }
 
 const TableHeader: React.FC<TableHeaderProps> = ({
@@ -22,7 +23,8 @@ const TableHeader: React.FC<TableHeaderProps> = ({
   showTags,
   setShowTags,
   search,
-  setSearch
+  setSearch,
+  allTags
 }) => {
   const [showSort, setShowSort] = useState(false)
   const [showSearch, setShowSearch] = useState(false)
@@ -33,6 +35,15 @@ const TableHeader: React.FC<TableHeaderProps> = ({
   const clickAwaySearchRef = useClickAway<HTMLDivElement>(() => {
     setShowSearch(false)
   })
+
+  const tagsToDisplay = () => {
+    const seen: { [key: string]: boolean } = {}
+    return [...DEFAULT_TAGS, ...allTags].filter(tag => {
+      if (Object.keys(seen).includes(tag)) return false
+      seen[tag] = true
+      return true
+    })
+  }
 
   const {
     setFollowersSort,
@@ -67,7 +78,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
       <div className='flex justify-between w-full'>
         <div className='flex gap-4 justify-between items-center w-full'>
           <div ref={clickAwaySearchRef} className='flex gap-3 items-center'>
-            <p className='uppercase text-lg lg:text-xl font-bold'>{t(title)}</p>
+            <p className='capitalize text-lg lg:text-xl font-bold'>{t(title)}</p>
             <div className='relative z-50'>
               <div
                 className='cursor-pointer max-w-40 flex items-center gap-2 hover:opacity-75'
@@ -155,14 +166,14 @@ const TableHeader: React.FC<TableHeaderProps> = ({
       </div>
       {showTags && (
         <div className='flex flex-wrap w-full gap-2'>
-          {DEFAULT_TAGS.map(tag => (
+          {tagsToDisplay().map(tag => (
             <button
               key={tag.toLowerCase()}
               className={`text-sm px-4 py-2 font-semibold italic ${
                 tags.includes(tag)
                   ? 'text-darkGrey bg-white shadow-inner shadow-black/40'
                   : 'text-gray-500 bg-gray-300/80'
-              } rounded-full capitalize`}
+              } rounded-full`}
               name={tag.toLowerCase()}
               onClick={() => toggleTag(title, tag)}
             >

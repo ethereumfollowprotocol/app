@@ -2,18 +2,19 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Address, GetEnsAvatarReturnType } from 'viem'
 
 import { Avatar } from '#/components/avatar'
-import { listOpAddTag } from '#/utils/list-ops'
+import { listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useCart } from '#/contexts/cart-context'
 import { truncateAddress } from '#/lib/utilities'
 import { DEFAULT_TAGS_TO_ADD } from '#/lib/constants'
 import Plus from 'public/assets/icons/plus-squared.svg'
 import { useFollowState } from '#/hooks/use-follow-state'
+import { usePathname } from 'next/navigation'
 
 interface FollowListItemNameProps {
   address: Address
@@ -21,13 +22,23 @@ interface FollowListItemNameProps {
   className?: string
   name?: string
   showFollowsYouBadges?: boolean
-  isEditor?: boolean
+  showTags?: boolean
+  tags: string[]
+  canEditTags?: boolean
 }
 
-export function Name({ name, address }: { name?: string; address: Address }) {
+export function Name({
+  name,
+  address,
+  showTags
+}: { name?: string; address: Address; showTags?: boolean }) {
   return (
-    <Link href={`/${name || address}`}>
-      <p className='font-bold sm:text-lg  hover:opacity-75 transition-opacity'>
+    <Link href={`/${name || address}`} className='w-full'>
+      <p
+        className={`font-bold sm:text-lg text-start  ${
+          showTags ? 'w-full text-nowrap' : 'w-[90%] truncate'
+        } hover:opacity-75 transition-opacity`}
+      >
         {name || truncateAddress(address)}
       </p>
     </Link>
@@ -36,17 +47,22 @@ export function Name({ name, address }: { name?: string; address: Address }) {
 
 export function FollowListItemName({
   name,
+  tags,
   address,
-  isEditor,
+  showTags,
   avatarUrl,
   className = '',
-  showFollowsYouBadges
+  showFollowsYouBadges,
+  canEditTags
 }: FollowListItemNameProps) {
   const [tagDropdownOpen, setTagDropdownOpen] = useState(false)
   const [customTagInput, setCustomTagInput] = useState('')
   const clickAwayTagDropwdownRef = useClickAway<HTMLDivElement>(() => {
     setTagDropdownOpen(false)
   })
+
+  const pathname = usePathname()
+  const isEditor = pathname.includes('/editor')
 
   const { t } = useTranslation()
   const { t: tEditor } = useTranslation('editor')
@@ -56,64 +72,113 @@ export function FollowListItemName({
     addCartItem,
     removeCartItem,
     hasListOpAddTag,
+    hasListOpRemoveTag,
     hasListOpRemoveRecord,
     getTagsFromCartByAddress
   } = useCart()
   const isBeingremoved = hasListOpRemoveRecord(address)
 
-  const tags = getTagsFromCartByAddress(address)
+  const tagsFromCart = getTagsFromCartByAddress(address)
+  const inintialDisplayedTags = () => {
+    const seen: { [key: string]: boolean } = {}
+    return [...tags, ...tagsFromCart].filter(tag => {
+      if (Object.keys(seen).includes(tag)) return false
+      seen[tag] = true
+      return true
+    })
+  }
+  const [displayedtags, setDisplayedTags] = useState(inintialDisplayedTags)
 
   const addTag = (tag: string) => {
+    if (!displayedtags.includes(tag)) setDisplayedTags(prevTags => [...prevTags, tag])
     addCartItem({ listOp: listOpAddTag(address, tag) })
   }
 
   const removeTag = (tag: string) => {
-    removeCartItem(listOpAddTag(address, tag))
+    if (hasListOpAddTag({ address, tag })) {
+      removeCartItem(listOpAddTag(address, tag))
+      setDisplayedTags(prevTags => prevTags.filter(prevTag => prevTag !== tag))
+      return
+    }
+
+    if (hasListOpRemoveTag({ address, tag })) {
+      removeCartItem(listOpRemoveTag(address, tag))
+      return
+    }
+
+    addCartItem({ listOp: listOpRemoveTag(address, tag) })
   }
 
   const addCustomTag = () => {
+    if (customTagInput.length === 0) return
     addTag(customTagInput)
     setCustomTagInput('')
   }
 
+  useEffect(() => {
+    if (!isBeingremoved) return
+
+    tagsFromCart.map(tag => {
+      removeTag(tag)
+    })
+  }, [isBeingremoved])
+
   return (
-    <div className={`flex gap-2 sm:gap-3 items-center ${className}`}>
+    <div
+      className={`flex gap-2 sm:gap-3 items-center ${className}`}
+      style={{
+        width: 'calc(100% - 110px)'
+      }}
+    >
       <Avatar
         name={name || address}
         avatarUrl={avatarUrl}
         size='h-[45px] w-[45px] md:h-[50px] md:w-[50px]'
       />
-      <div className='flex flex-col md:flex-row gap-[2px] w-3/4 sm:w-fit md:gap-3'>
+      <div
+        className={`flex flex-col w-full ${
+          isEditor ? 'md:flex-row md:gap-3' : 'md:flex-row md:gap-3'
+        } gap-[2px]`}
+      >
         <div
-          className={`flex flex-col justify-center w-fit ${
-            isEditor ? 'md:w-52' : ''
+          className={`flex flex-col justify-center  ${
+            isEditor ? 'md:w-52' : showTags ? 'w-fit' : 'w-full'
           } items-start tabular-nums relative`}
         >
-          <Name name={name} address={address} />
+          <Name name={name} address={address} showTags={showTags} />
           {showFollowsYouBadges && isFollower && (
             <div className='rounded-full font-bold text-[10px] mb-1 flex items-center justify-center bg-gray-300 h-5 w-20'>
               {t('profile card.follows you')}
             </div>
           )}
         </div>
-        {isEditor && !isBeingremoved && (
+        {showTags && !isBeingremoved && (
           <div
-            className='relative flex w-[190px] flex-wrap gap-2 items-center sm:w-fit'
+            className={`relative flex ${
+              isEditor
+                ? 'max-w-[170px] xxs:max-w-[220px] xs:max-w-[270px] sm:max-w-[400px] md:max-w-[300px] lg:max-w-[490px] w-fit xl:max-w-[370px] 2xl:max-w-[700px]'
+                : 'max-w-[170px] xxs:max-w-[200px] xs:max-w-[270px] sm:max-w-[400px] md:max-w-[300px] lg:max-w-[530px] w-fit xl:max-w-[200px] 2xl:max-w-[210px]'
+            } flex-wrap gap-2 items-center`}
             ref={clickAwayTagDropwdownRef}
           >
-            <button
-              className='h-5 w-5 flex items-center justify-center rounded-full hover:opacity-80 bg-gray-300'
-              onClick={() => setTagDropdownOpen(!tagDropdownOpen)}
-            >
-              <Image src={Plus} alt='Add Tag' height={10} width={10} />
-            </button>
-            {tagDropdownOpen && (
+            {canEditTags && (
+              <button
+                className='h-5 w-5 flex items-center justify-center rounded-full hover:opacity-80 bg-gray-300'
+                onClick={() => setTagDropdownOpen(!tagDropdownOpen)}
+              >
+                <Image src={Plus} alt='Add Tag' height={10} width={10} />
+              </button>
+            )}
+            {canEditTags && tagDropdownOpen && (
               <div className='absolute z-50 flex flex-col w-60 gap-2 left-0 top-8 glass-card bg-white/50 p-2 border-2 border-gray-200 rounded-lg'>
                 <div className='w-full flex items-center gap-1.5 justify-between bg-gray-300 rounded-lg font-bold p-1 text-left'>
                   <input
                     placeholder={tEditor('custom tag')}
                     value={customTagInput}
-                    onChange={e => setCustomTagInput(e.target.value)}
+                    onChange={e => {
+                      setCustomTagInput(e.target.value.replaceAll(' ', ''))
+                    }}
+                    maxLength={68}
                     onKeyDown={e => {
                       if (e.key === 'Enter') addCustomTag()
                     }}
@@ -139,18 +204,22 @@ export function FollowListItemName({
                 </div>
               </div>
             )}
-            {tags.map(tag => {
+            {displayedtags.map(tag => {
               const addingTag = hasListOpAddTag({ address, tag })
+              const removingTag = hasListOpRemoveTag({ address, tag })
 
               return (
                 <button
                   key={tag}
                   className={`
-                    font-semibold py-1 px-2 sm:py-1.5 sm:px-3 text-sm hover:opacity-80 rounded-full ${
-                      addingTag ? 'bg-addition' : 'bg-deletion'
+                    font-semibold py-1 px-2 max-w-[80%] sm:max-w-full sm:py-1.5 sm:px-3 truncate text-sm hover:opacity-80 rounded-full ${
+                      addingTag ? 'bg-addition' : removingTag ? 'bg-deletion' : 'bg-gray-300'
                     }
                   `}
-                  onClick={() => removeTag(tag)}
+                  onClick={() => {
+                    if (!canEditTags) return
+                    removeTag(tag)
+                  }}
                 >
                   {tEditor(tag)}
                 </button>

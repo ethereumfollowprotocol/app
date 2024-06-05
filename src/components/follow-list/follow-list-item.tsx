@@ -11,7 +11,7 @@ export interface FollowListItemProps {
   showFollowsYouBadges?: boolean
   showTags?: boolean
   tags: string[]
-  isEditor?: boolean
+  canEditTags?: boolean
 }
 
 export function FollowListItem({
@@ -21,7 +21,7 @@ export function FollowListItem({
   showFollowsYouBadges,
   showTags,
   tags,
-  isEditor
+  canEditTags
 }: FollowListItemProps) {
   const { data: fetchedEnsProfile } = useEnsProfile(address)
 
@@ -34,10 +34,11 @@ export function FollowListItem({
       <FollowListItemName
         address={address}
         avatarUrl={profileAvatar}
-        className='flex-none w-fit' // Fixed width for consistent layout
         name={profileName}
         showFollowsYouBadges={showFollowsYouBadges}
-        isEditor={isEditor}
+        showTags={showTags}
+        tags={tags}
+        canEditTags={canEditTags}
       />
 
       {/* Middle section: Tags (conditionally displayed) */}

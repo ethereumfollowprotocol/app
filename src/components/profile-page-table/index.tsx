@@ -1,31 +1,42 @@
 'use client'
 
-import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { FollowList } from '#/components/follow-list'
-// import { Searchbar } from '#/components/searchbar.tsx'
-import type { ProfileResponse } from '#/api/requests'
-import TableHeader from './components/table-headers'
+import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
+import { useTranslation } from 'react-i18next'
+import { useIntersectionObserver } from '@uidotdev/usehooks'
+
+import { FollowList } from '#/components/follow-list'
+import TableHeader from './components/table-headers'
+import type { FollowerResponse, FollowingResponse } from '#/api/requests'
+import { FETCH_LIMIT_PARAM } from '#/lib/constants'
 
 /**
  * TODO: paginate
  */
 export function UserProfilePageTable({
-  profile,
   title,
-  customClass
+  customClass,
+  isLoading,
+  isFetchingMore,
+  followers,
+  following,
+  fetchMore,
+  canEditTags
 }: {
-  profile: ProfileResponse
   title: 'following' | 'followers'
   customClass?: string
+  isLoading: boolean
+  isFetchingMore: boolean
+  followers: FollowerResponse[]
+  following: FollowingResponse[]
+  fetchMore: () => void
+  canEditTags?: boolean
 }) {
   const [search, setSearch] = useState<string>('')
   const [showTags, setShowTags] = useState(false)
 
   const pathname = usePathname()
   const { t } = useTranslation('profile')
-  const { followers, following } = profile
 
   const filteredFollowers = followers?.filter(follower =>
     follower?.ens.name?.toLowerCase().replaceAll('.eth', '').includes(search.toLowerCase())
@@ -45,18 +56,35 @@ export function UserProfilePageTable({
       address: title === 'following' ? res.data : res.address
     })) || []
 
+  const allTags = chosenResponses?.flatMap(item => item.tags) || []
+
+  const [loadMoreRef, entry] = useIntersectionObserver()
+
+  useEffect(() => {
+    if (entry?.isIntersecting) return
+    if (
+      !(isLoading || isFetchingMore) &&
+      chosenResponses.length > 0 &&
+      chosenResponses.length % FETCH_LIMIT_PARAM === 0
+    )
+      fetchMore()
+  }, [entry?.isIntersecting])
+
   return (
     <div
-      className={`glass-card flex flex-col gap-4 p-4 md:w-[49%] xl:w-[620px] border-2 rounded-2xl border-gray-200 ${customClass}`}
+      className={`glass-card flex flex-col gap-4 p-3 ${
+        !(isLoading || isFetchingMore) && 'pb-0 sm:pb-0'
+      } sm:p-4 w-full xl:w-[620px] border-2 rounded-2xl border-gray-200 ${customClass}`}
     >
       <TableHeader
+        allTags={allTags}
         search={search}
         setSearch={(input: string) => setSearch(input)}
         showTags={showTags}
         setShowTags={(option: boolean) => setShowTags(option)}
         title={title}
       />
-      {chosenResponses?.length === 0 && (
+      {!isLoading && chosenResponses?.length === 0 && (
         <div className='text-center font-semibold py-4'>
           {title === 'followers' && <span className='text-lg'>{t('followers empty')}</span>}
           {title === 'following' && (
@@ -72,12 +100,16 @@ export function UserProfilePageTable({
         </div>
       )}
       <FollowList
+        isLoading={isLoading || isFetchingMore}
+        loadingRows={10}
         listClassName='gap-2 rounded-xl'
-        listItemClassName='rounded-xl hover:bg-white/50 p-2'
+        listItemClassName='rounded-xl hover:bg-white/50 px-0 py-2 sm:p-2'
         profiles={profiles}
         showTags={showTags}
         showFollowsYouBadges={showFollowsYouBadges}
+        canEditTags={canEditTags}
       />
+      {!(isLoading || isFetchingMore) && <div ref={loadMoreRef} className='h-px w-full' />}
     </div>
   )
 }

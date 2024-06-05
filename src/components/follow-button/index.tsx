@@ -88,6 +88,7 @@ export function FollowButton({ address, className = '', ...props }: FollowButton
       className={clsx([
         theme[buttonState].bg,
         theme[buttonState].text,
+        buttonState === 'Following' && 'border-2 border-darkGrey',
         'rounded-lg text-sm flex items-center gap-1.5 justify-center font-bold',
         'w-[107px] h-[37px] px-2 py-1.5', // Fixed width for consistent layout
         className

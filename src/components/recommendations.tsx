@@ -1,17 +1,18 @@
 'use client'
 
 import clsx from 'clsx'
-import { FollowList } from '#/components/follow-list'
 import { useQuery } from '@tanstack/react-query'
+
 import fetchDiscover from '#/api/fetchDiscover'
-import LoadingSpinner from './loading-spinner'
+import { FollowList } from '#/components/follow-list'
 
 interface RecommendationsProps {
   header: string
   className?: string
+  limit?: number
 }
 
-const Recommendations = ({ header, className }: RecommendationsProps) => {
+const Recommendations = ({ header, className, limit }: RecommendationsProps) => {
   const { data: profilesToRecommend, isLoading } = useQuery({
     queryKey: ['discover'],
     queryFn: async () => {
@@ -20,31 +21,28 @@ const Recommendations = ({ header, className }: RecommendationsProps) => {
     }
   })
 
+  const displayedProfiles = limit ? profilesToRecommend?.slice(0, limit) : profilesToRecommend
+
   return (
     <div className={clsx('flex flex-col gap-8', className)}>
-      <h2 className='text-start text-3xl font-bold'>{header}</h2>
-      {isLoading && (
-        <div className='h-24 w-full flex justify-center items-center'>
-          <LoadingSpinner />
-        </div>
-      )}
-      {profilesToRecommend && (
-        <FollowList
-          listClassName='rounded-xl gap-7'
-          profiles={profilesToRecommend?.map(account => ({
-            address: account.address,
-            tags: [] as string[],
-            ens: account.name
-              ? {
-                  name: account.name,
-                  avatar: account.avatar
-                }
-              : undefined
-          }))}
-          showFollowsYouBadges={true}
-          showTags={false}
-        />
-      )}
+      <h2 className='text-center lg:text-start text-3xl font-bold'>{header}</h2>
+      <FollowList
+        isLoading={isLoading}
+        loadingRows={limit}
+        listClassName='rounded-xl gap-7'
+        profiles={displayedProfiles?.map(account => ({
+          address: account.address,
+          tags: [] as string[],
+          ens: account.name
+            ? {
+                name: account.name,
+                avatar: account.avatar
+              }
+            : undefined
+        }))}
+        showFollowsYouBadges={true}
+        showTags={false}
+      />
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import type { Address } from 'viem'
-import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { FollowState } from '#/types/common'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 /**
  * @description
@@ -15,12 +15,12 @@ import type { FollowState } from '#/types/common'
  * indicating the relationship status from the perspective of the connected user towards the specified address.
  */
 export function useFollowState(address: Address, type: 'followers' | 'followings'): FollowState {
-  const { profile } = useEFPProfile()
+  const { followers, following } = useEFPProfile()
 
   const followerState = () => {
-    if (!profile) return 'none'
+    if (!followers) return 'none'
 
-    const follower = profile.followers?.find(
+    const follower = followers?.find(
       follower => follower?.address?.toLowerCase() === address?.toLowerCase()
     )
     if (!follower) return 'none'
@@ -33,15 +33,15 @@ export function useFollowState(address: Address, type: 'followers' | 'followings
   }
 
   const followingState = () => {
-    if (!profile) return 'none'
-
-    const following = profile.following?.find(
-      follower => follower?.data?.toLowerCase() === address?.toLowerCase()
-    )
     if (!following) return 'none'
 
-    if (following.tags.includes('Blocked')) return 'blocks'
-    if (following.tags.includes('Muted')) return 'mutes'
+    const followingItem = following?.find(
+      follower => follower?.data?.toLowerCase() === address?.toLowerCase()
+    )
+    if (!followingItem) return 'none'
+
+    if (followingItem.tags.includes('Blocked')) return 'blocks'
+    if (followingItem.tags.includes('Muted')) return 'mutes'
 
     return 'follows'
   }

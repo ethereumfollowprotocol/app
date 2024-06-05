@@ -2,6 +2,11 @@ import type { Address } from 'viem'
 import type { ENSProfile } from '#/lib/types'
 import { formatAddressOrName } from '#/lib/utilities'
 
+export interface InfiniteProfileQueryProps {
+  addressOrName: string
+  limit: number
+  pageParam: number
+}
 export interface FollowerResponse {
   address: Address
   ens: ENSProfile
@@ -35,6 +40,13 @@ export interface ProfileResponse {
   following?: FollowingResponse[]
   chains?: Record<string, string>
   errors?: Record<string, unknown>
+}
+
+export interface ProfileDetailsResponse {
+  address: Address
+  ens: ENSProfile
+  primary_list?: number | null
+  stats?: StatsResponse | undefined
 }
 
 type AddressOrName = Address | string

@@ -12,10 +12,10 @@ import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 const useCanAddTag = (profileAddress: Address) => {
   const isEditView = useIsEditView()
-  const { profile } = useEFPProfile()
+  const { profile, following } = useEFPProfile()
 
   return useMemo(() => {
-    const isFollowing = !!profile?.following?.find(follower => follower.data === profileAddress)
+    const isFollowing = !!following?.find(follower => follower.data === profileAddress)
 
     // User can add a tag for the specified profile if it's the user's own profile/editor page, and they are following the profileAddress
     if (isEditView && isFollowing) return true

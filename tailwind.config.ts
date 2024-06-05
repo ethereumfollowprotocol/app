@@ -5,8 +5,14 @@ import typographyPlugin from '@tailwindcss/typography'
 import tailwindcssRadixPlugin from 'tailwindcss-radix'
 import aspectRatioPlugin from '@tailwindcss/aspect-ratio'
 import containerQueriesPlugin from '@tailwindcss/container-queries'
+import defaultTheme from 'tailwindcss/defaultTheme'
 
-const { colors, fontFamily, fontSize, keyframes, animation, spacing } = {
+const { colors, fontFamily, fontSize, keyframes, animation, spacing, screens } = {
+  screens: {
+    xxs: '420px',
+    xs: '500px',
+    ...defaultTheme.screens
+  },
   colors: {
     lime: {
       '50': 'hsl(98, 100%, 95%)',
@@ -109,12 +115,24 @@ const { colors, fontFamily, fontSize, keyframes, animation, spacing } = {
     'accordion-up': {
       from: { height: 'var(--radix-accordion-content-height)' },
       to: { height: '0' }
+    },
+    loading: {
+      '0%': {
+        'background-position': '200% 0'
+      },
+      '50%': {
+        'background-position': '0% 0'
+      },
+      '100%': {
+        'background-position': '-200% 0'
+      }
     }
   },
   animation: {
     'accordion-down': 'accordion-down 0.2s ease-out',
     'accordion-up': 'accordion-up 0.2s ease-out',
-    'spin-slow': 'spin 2s linear infinite'
+    'spin-slow': 'spin 2s linear infinite',
+    loading: 'loading 5s ease-in-out infinite'
   },
   spacing: {
     '68': '17rem',
@@ -126,8 +144,7 @@ const { colors, fontFamily, fontSize, keyframes, animation, spacing } = {
     '116': '30rem',
     '128': '32rem',
     '144': '36rem'
-  },
-  screens: {}
+  }
 } satisfies Config['theme']
 
 export default {
@@ -142,6 +159,7 @@ export default {
   theme: {
     transparent: 'transparent',
     current: 'currentColor',
+    screens,
     extend: {
       spacing,
       colors,

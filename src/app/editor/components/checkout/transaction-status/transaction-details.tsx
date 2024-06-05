@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next'
 const TransactionDetails = ({ action }: { action: Action }) => {
   const chain = useChain(action.chainId)
 
-  const { refetchProfile } = useEFPProfile()
+  const { refetchProfile, refetchFollowing } = useEFPProfile()
   const { t } = useTranslation('transactions', { keyPrefix: 'status' })
   const { isPending, isSuccess, isError, error } = useWaitForTransactionReceipt({
     hash: action.txHash,
@@ -19,7 +19,10 @@ const TransactionDetails = ({ action }: { action: Action }) => {
 
   useEffect(() => {
     if (!isSuccess) return
-    setTimeout(() => refetchProfile(), 2000)
+    setTimeout(() => {
+      refetchProfile()
+      refetchFollowing()
+    }, 1500)
   }, [isSuccess])
 
   const statusDescription = useMemo(() => {
