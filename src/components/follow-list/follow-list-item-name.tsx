@@ -135,7 +135,11 @@ export function FollowListItemName({
         avatarUrl={avatarUrl}
         size='h-[45px] w-[45px] md:h-[50px] md:w-[50px]'
       />
-      <div className='flex w-full flex-col md:flex-row gap-[2px] md:gap-3'>
+      <div
+        className={`flex flex-col w-full ${
+          isEditor ? 'md:flex-row md:gap-3' : 'xl:flex-row xl:gap-3'
+        } gap-[2px]`}
+      >
         <div
           className={`flex flex-col justify-center  ${
             isEditor ? 'md:w-52' : showTags ? 'w-fit' : 'w-full'
@@ -150,8 +154,10 @@ export function FollowListItemName({
         </div>
         {showTags && !isBeingremoved && (
           <div
-            className={`relative flex w-[190px] ${
-              isEditor ? 'sm:w-full' : 'sm:w-2/3'
+            className={`relative flex ${
+              isEditor
+                ? 'max-w-[170px] sm:max-w-[400px] md:max-w-[300px] lg:max-w-[700px] w-fit xl:max-w-[200px] 2xl:max-w-[210px]'
+                : 'max-w-[170px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[700px] w-fit xl:max-w-[200px] 2xl:max-w-[210px]'
             } flex-wrap gap-2 items-center`}
             ref={clickAwayTagDropwdownRef}
           >
@@ -169,7 +175,10 @@ export function FollowListItemName({
                   <input
                     placeholder={tEditor('custom tag')}
                     value={customTagInput}
-                    onChange={e => setCustomTagInput(e.target.value)}
+                    onChange={e => {
+                      setCustomTagInput(e.target.value.replaceAll(' ', ''))
+                    }}
+                    maxLength={30}
                     onKeyDown={e => {
                       if (e.key === 'Enter') addCustomTag()
                     }}
@@ -203,7 +212,7 @@ export function FollowListItemName({
                 <button
                   key={tag}
                   className={`
-                    font-semibold py-1 px-2 sm:py-1.5 sm:px-3 text-sm hover:opacity-80 rounded-full ${
+                    font-semibold py-1 px-2 max-w-[80%] sm:max-w-full sm:py-1.5 sm:px-3 truncate text-sm hover:opacity-80 rounded-full ${
                       addingTag ? 'bg-addition' : removingTag ? 'bg-deletion' : 'bg-gray-300'
                     }
                   `}

@@ -84,7 +84,7 @@ export default function ProfilePage({ searchParams }: Props) {
         fetchMore={() => fetchMoreFollowing()}
         canEditTags={true}
         title='following'
-        customClass='hidden md:flex'
+        customClass='hidden xl:flex'
       />
       <UserProfilePageTable
         isLoading={followersIsLoading}
@@ -93,9 +93,9 @@ export default function ProfilePage({ searchParams }: Props) {
         isFetchingMore={isFetchingMoreFollowers}
         fetchMore={() => fetchMoreFollowers()}
         title='followers'
-        customClass='hidden md:flex'
+        customClass='hidden xl:flex'
       />
-      <div className=' w-full mt-12 relative md:hidden'>
+      <div className=' w-full mt-12 relative xl:hidden'>
         <div className='w-full absolute -top-12 left-0'>
           {PROFILE_TABS.map(option => (
             <button

@@ -74,7 +74,7 @@ export function UserProfilePageTable({
     <div
       className={`glass-card flex flex-col gap-4 p-3 ${
         !(isLoading || isFetchingMore) && 'pb-0 sm:pb-0'
-      } sm:p-4 md:w-[49%] xl:w-[620px] border-2 rounded-2xl border-gray-200 ${customClass}`}
+      } sm:p-4 w-full xl:w-[620px] border-2 rounded-2xl border-gray-200 ${customClass}`}
     >
       <TableHeader
         allTags={allTags}
