@@ -156,7 +156,7 @@ export function FollowListItemName({
           <div
             className={`relative flex ${
               isEditor
-                ? 'max-w-[170px] sm:max-w-[400px] md:max-w-[300px] lg:max-w-[700px] w-fit xl:max-w-[370px] 2xl:max-w-[700px]'
+                ? 'max-w-[170px] sm:max-w-[400px] md:max-w-[300px] lg:max-w-[490px] w-fit xl:max-w-[370px] 2xl:max-w-[700px]'
                 : 'max-w-[170px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[700px] w-fit xl:max-w-[200px] 2xl:max-w-[210px]'
             } flex-wrap gap-2 items-center`}
             ref={clickAwayTagDropwdownRef}
@@ -178,7 +178,7 @@ export function FollowListItemName({
                     onChange={e => {
                       setCustomTagInput(e.target.value.replaceAll(' ', ''))
                     }}
-                    maxLength={30}
+                    maxLength={80}
                     onKeyDown={e => {
                       if (e.key === 'Enter') addCustomTag()
                     }}
