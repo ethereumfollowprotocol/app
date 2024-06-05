@@ -131,7 +131,7 @@ export default function UserPage({ params }: Props) {
   }[activeTab]
 
   return (
-    <main className='flex pb-8 min-h-full w-full justify-between xl:justify-center gap-y-4 flex-col md:flex-row flex-wrap xl:flex-nowrap items-start xl:gap-6 mt-32 md:mt-40 lg:mt-48 px-4 lg:px-8'>
+    <main className='flex pb-8 min-h-full w-full justify-between xl:justify-center gap-y-4 flex-col xl:flex-row flex-wrap xl:flex-nowrap items-start xl:gap-6 mt-32 md:mt-40 lg:mt-48 px-4 lg:px-8'>
       <div className='flex flex-col w-full xl:w-fit items-center gap-4'>
         <UserProfileCard profile={profile} following={following} isLoading={profileIsLoading} />
         <div className='flex flex-col gap-1 items-center'>
@@ -150,7 +150,7 @@ export default function UserPage({ params }: Props) {
         fetchMore={() => fetchMoreFollowing()}
         title='following'
         canEditTags={profile?.address.toLowerCase() === connectedUserAddress?.toLowerCase()}
-        customClass='hidden md:flex'
+        customClass='hidden xl:flex'
       />
       <UserProfilePageTable
         isLoading={followersIsLoading}
@@ -159,9 +159,9 @@ export default function UserPage({ params }: Props) {
         isFetchingMore={isFetchingMoreFollowers}
         fetchMore={() => fetchMoreFollowers()}
         title='followers'
-        customClass='hidden md:flex'
+        customClass='hidden xl:flex'
       />
-      <div className=' w-full mt-12 relative md:hidden'>
+      <div className=' w-full mt-12 relative xl:hidden'>
         <div className='w-full absolute -top-12 left-0'>
           {PROFILE_TABS.map(option => (
             <button
