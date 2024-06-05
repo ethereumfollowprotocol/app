@@ -5,8 +5,14 @@ import typographyPlugin from '@tailwindcss/typography'
 import tailwindcssRadixPlugin from 'tailwindcss-radix'
 import aspectRatioPlugin from '@tailwindcss/aspect-ratio'
 import containerQueriesPlugin from '@tailwindcss/container-queries'
+import defaultTheme from 'tailwindcss/defaultTheme'
 
-const { colors, fontFamily, fontSize, keyframes, animation, spacing } = {
+const { colors, fontFamily, fontSize, keyframes, animation, spacing, screens } = {
+  screens: {
+    xxs: '420px',
+    xs: '500px',
+    ...defaultTheme.screens
+  },
   colors: {
     lime: {
       '50': 'hsl(98, 100%, 95%)',
@@ -138,8 +144,7 @@ const { colors, fontFamily, fontSize, keyframes, animation, spacing } = {
     '116': '30rem',
     '128': '32rem',
     '144': '36rem'
-  },
-  screens: {}
+  }
 } satisfies Config['theme']
 
 export default {
@@ -154,6 +159,7 @@ export default {
   theme: {
     transparent: 'transparent',
     current: 'currentColor',
+    screens,
     extend: {
       spacing,
       colors,

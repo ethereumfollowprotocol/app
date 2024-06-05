@@ -137,7 +137,7 @@ export function FollowListItemName({
       />
       <div
         className={`flex flex-col w-full ${
-          isEditor ? 'md:flex-row md:gap-3' : 'xl:flex-row xl:gap-3'
+          isEditor ? 'md:flex-row md:gap-3' : 'md:flex-row md:gap-3'
         } gap-[2px]`}
       >
         <div
@@ -156,8 +156,8 @@ export function FollowListItemName({
           <div
             className={`relative flex ${
               isEditor
-                ? 'max-w-[170px] sm:max-w-[400px] md:max-w-[300px] lg:max-w-[490px] w-fit xl:max-w-[370px] 2xl:max-w-[700px]'
-                : 'max-w-[170px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[700px] w-fit xl:max-w-[200px] 2xl:max-w-[210px]'
+                ? 'max-w-[170px] xxs:max-w-[220px] xs:max-w-[270px] sm:max-w-[400px] md:max-w-[300px] lg:max-w-[490px] w-fit xl:max-w-[370px] 2xl:max-w-[700px]'
+                : 'max-w-[170px] xxs:max-w-[200px] xs:max-w-[270px] sm:max-w-[400px] md:max-w-[300px] lg:max-w-[530px] w-fit xl:max-w-[200px] 2xl:max-w-[210px]'
             } flex-wrap gap-2 items-center`}
             ref={clickAwayTagDropwdownRef}
           >
