@@ -116,6 +116,8 @@ export function FollowListItemName({
   }
 
   useEffect(() => {
+    if (!isBeingremoved) return
+
     tagsFromCart.map(tag => {
       removeTag(tag)
     })
