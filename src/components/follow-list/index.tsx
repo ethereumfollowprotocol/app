@@ -19,10 +19,10 @@ interface FollowListProps {
   profiles?: FollowListProfile[]
   showFollowsYouBadges?: boolean // Prop to handle showing "Follows you" badges in the FollowList
   showTags?: boolean
-  isEditor?: boolean
   createListItem?: boolean
   loadingRows?: number
   isLoading: boolean
+  canEditTags?: boolean
 }
 
 export function FollowList({
@@ -31,10 +31,10 @@ export function FollowList({
   profiles,
   showFollowsYouBadges,
   showTags,
-  isEditor,
   createListItem,
   loadingRows = 7,
-  isLoading
+  isLoading,
+  canEditTags
 }: FollowListProps) {
   const { t } = useTranslation('editor')
 
@@ -65,7 +65,7 @@ export function FollowList({
             showFollowsYouBadges={showFollowsYouBadges}
             showTags={showTags}
             tags={tags}
-            isEditor={isEditor}
+            canEditTags={canEditTags}
           />
         )
       })}
@@ -73,7 +73,7 @@ export function FollowList({
         new Array(loadingRows)
           .fill(1)
           // biome-ignore lint/suspicious/noArrayIndexKey: no unique param to use as key
-          .map((_, i) => <LoadingRow key={i} className={listItemClassName} isEditor={isEditor} />)}
+          .map((_, i) => <LoadingRow key={i} className={listItemClassName} showTags={showTags} />)}
     </div>
   )
 }

@@ -14,6 +14,7 @@ import { UserProfileCard } from '#/components/user-profile-card'
 import { FETCH_LIMIT_PARAM, PROFILE_TABS } from '#/lib/constants'
 import { UserProfilePageTable } from '#/components/profile-page-table'
 import type { FollowerResponse, FollowingResponse } from '#/api/requests'
+import { useAccount } from 'wagmi'
 
 interface Props {
   params: { user: string }
@@ -23,6 +24,7 @@ export default function UserPage({ params }: Props) {
   const { user } = params
   const [activeTab, setActiveTab] = useState<ProfileTabType>('following')
 
+  const { address: connectedUserAddress } = useAccount()
   const { t } = useTranslation('profile')
 
   const { data: profile, isLoading: profileIsLoading } = useQuery({
@@ -111,6 +113,7 @@ export default function UserPage({ params }: Props) {
         isFetchingMore={isFetchingMoreFollowing}
         fetchMore={() => fetchMoreFollowing()}
         title='following'
+        canEditTags={profile?.address.toLowerCase() === connectedUserAddress?.toLowerCase()}
         customClass='border-t-0 rounded-t-none'
       />
     ),
@@ -146,6 +149,7 @@ export default function UserPage({ params }: Props) {
         isFetchingMore={isFetchingMoreFollowing}
         fetchMore={() => fetchMoreFollowing()}
         title='following'
+        canEditTags={profile?.address.toLowerCase() === connectedUserAddress?.toLowerCase()}
         customClass='hidden md:flex'
       />
       <UserProfilePageTable

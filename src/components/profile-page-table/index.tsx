@@ -20,7 +20,8 @@ export function UserProfilePageTable({
   isFetchingMore,
   followers,
   following,
-  fetchMore
+  fetchMore,
+  canEditTags
 }: {
   title: 'following' | 'followers'
   customClass?: string
@@ -29,6 +30,7 @@ export function UserProfilePageTable({
   followers: FollowerResponse[]
   following: FollowingResponse[]
   fetchMore: () => void
+  canEditTags?: boolean
 }) {
   const [search, setSearch] = useState<string>('')
   const [showTags, setShowTags] = useState(false)
@@ -105,6 +107,7 @@ export function UserProfilePageTable({
         profiles={profiles}
         showTags={showTags}
         showFollowsYouBadges={showFollowsYouBadges}
+        canEditTags={canEditTags}
       />
       {!(isLoading || isFetchingMore) && <div ref={loadMoreRef} className='h-px w-full' />}
     </div>

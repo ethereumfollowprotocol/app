@@ -18,7 +18,7 @@ const Summary = () => {
   } = useEFPProfile()
 
   return (
-    <div className='mt-36 md:mt-48 w-full lg:mt-52 xl:mt-60 px-4 lg:px-6 flex items-start lg:justify-between xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4 xl:gap-4'>
+    <div className='mt-36 md:mt-48 w-full lg:mt-52 xl:mt-60 px-4 xl:px-0 2xl:px-8 flex items-start lg:justify-between xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4 xl:gap-4'>
       <UserProfileCard
         profile={profile}
         following={following}

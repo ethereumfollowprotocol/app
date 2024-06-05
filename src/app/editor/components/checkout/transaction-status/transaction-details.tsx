@@ -22,7 +22,7 @@ const TransactionDetails = ({ action }: { action: Action }) => {
     setTimeout(() => {
       refetchProfile()
       refetchFollowing()
-    }, 1000)
+    }, 1500)
   }, [isSuccess])
 
   const statusDescription = useMemo(() => {

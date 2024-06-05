@@ -45,6 +45,7 @@ export default function ProfilePage({ searchParams }: Props) {
         followers={followers}
         isFetchingMore={isFetchingMoreFollowing}
         fetchMore={() => fetchMoreFollowing()}
+        canEditTags={true}
         title='following'
         customClass='border-t-0 rounded-t-none'
       />
@@ -81,6 +82,7 @@ export default function ProfilePage({ searchParams }: Props) {
         followers={followers}
         isFetchingMore={isFetchingMoreFollowing}
         fetchMore={() => fetchMoreFollowing()}
+        canEditTags={true}
         title='following'
         customClass='hidden md:flex'
       />

@@ -75,8 +75,8 @@ export default function EditorPage() {
               listClassName='rounded-xl gap-1 sm:gap-0'
               listItemClassName='rounded-xl md:p-4 p-1.5 sm:p-2 hover:bg-white/80'
               showTags={true}
-              isEditor={true}
               createListItem={!hasCreatedEfpList}
+              canEditTags={true}
             />
           </div>
           {totalCartItems > 0 && (
