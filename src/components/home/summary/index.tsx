@@ -36,7 +36,7 @@ const Summary = () => {
       <Recommendations
         limit={7}
         header={t('discover')}
-        className='h-fit p-2 lg:h-[638px] w-full lg:w-[49%] xl:w-[40%] 2xl:w-[700px] py-4 sm:p-6 glass-card border-2 border-[#0001] rounded-2xl'
+        className='h-fit p-2 lg:h-[638px] w-full lg:w-[49%] xl:w-[470px] 2xl:w-[650px] py-4 sm:p-6 glass-card border-2 border-[#0001] rounded-2xl'
       />
     </div>
   )

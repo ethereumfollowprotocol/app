@@ -15,7 +15,8 @@
     "followers": "Followers",
     "following": "Following",
     "leaderboard": "Leaderboard",
-    "follows you": "Follows you"
+    "follows you": "Follows you",
+    "profile error": "User doesn't exist"
   },
   "follow btn": {
     "Follow": "Follow",

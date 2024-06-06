@@ -14,7 +14,9 @@
     "alphabetical": "Po abecedi"
   },
   "search placeholder": "Išci ENS ime ali naslov",
-  "following empty first": "Na žalost ne slediš nikomur! 😢",
-  "following empty second": "Prični z brskanjem in sledi drugim. Ko jih potrdiš \"onchain\" se bodo prikazali tukaj.",
-  "followers empty": "Nimaš sledilcev."
+  "following myprofile empty first": "Na žalost ne slediš nikomur! 😢",
+  "following myprofile empty second": "Prični z brskanjem in sledi drugim. Ko jih potrdiš \"onchain\" se bodo prikazali tukaj",
+  "followers myprofile empty": "Nimaš sledilcev",
+  "following empty first": "Ta uporabnik ne sledi nikomur",
+  "followers empty": "Ta uporabnik nima sledilcev"
 }

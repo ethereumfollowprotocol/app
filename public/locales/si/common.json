@@ -15,7 +15,8 @@
     "followers": "Sledilci",
     "following": "Slediš",
     "leaderboard": "Lestvica",
-    "follows you": "Ti sledi"
+    "follows you": "Ti sledi",
+    "profile error": "Uporabnik ne obstaja"
   },
   "follow btn": {
     "Follow": "Sledi",

@@ -1,135 +1,129 @@
 'use client'
 
-import clsx from 'clsx'
-import Link from 'next/link'
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
-import { useRef, useState, useTransition } from 'react'
-
-import { PendingIcon } from './pending.tsx'
-import { usePathname } from 'next/navigation'
 import { useQueryState } from 'next-usequerystate'
-// import { checkAddressOrEnsValid } from '#/lib/utilities.ts'
-import { ENS_SUBGRAPH, SECOND } from '#/lib/constants/index.ts'
+import { useCallback, useRef, useState } from 'react'
+
+import searchENSNames from '#/api/fetchEnsName.ts'
+import LoadingSpinner from './loading-spinner.tsx'
 import MagnifyingGlass from 'public/assets/icons/magnifying-glass.svg'
-import { useIsomorphicLayoutEffect } from '#/hooks/use-isomorphic-layout-effect.ts'
-
-// autocomplete search suggestions
-async function searchEnsSubgraph({ search }: { search: string }): Promise<string[]> {
-  const sanitizedSearch = search.trim().toLowerCase()
-  if (sanitizedSearch.length < 3) return []
-
-  const response = await fetch(ENS_SUBGRAPH, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      query: /*GraphQL*/ `
-        query SearchQuery($search: String) {
-          domains(
-            first: 15
-            orderBy: id
-            orderDirection: asc
-            where: {and: [{name_starts_with: $search}, {name_ends_with: ".eth"}]}
-          ) {
-            name
-            registration { registrationDate }
-          }
-        }`,
-      variables: { search: sanitizedSearch },
-      operationName: 'SearchQuery'
-    })
-  })
-
-  if (!response.ok) return []
-
-  const json = (await response.json()) as {
-    data: { domains: { name: string; registration: { registrationDate: string } | null }[] }
-  }
-
-  return json.data.domains
-    .filter(domain => !!domain.registration)
-    .map(domain => domain.name)
-    .sort((a, b) => a.length - b.length)
-}
+import { useRouter } from 'next/navigation'
+import { isAddress, type Address } from 'viem'
+import { useCart } from '#/contexts/cart-context.tsx'
+import { listOpAddListRecord } from '#/utils/list-ops.ts'
+import { resolveENSAddress } from '#/utils/resolveAddress.ts'
+import { useEFPProfile } from '#/contexts/efp-profile-context.tsx'
 
 export function Search({
   disabled,
-  size = 'w-full max-w-[400px]'
-}: { disabled?: boolean; size?: string }) {
+  size = 'w-full max-w-[400px]',
+  isEditor
+}: { disabled?: boolean; size?: string; isEditor?: boolean }) {
+  const router = useRouter()
   const { t } = useTranslation()
-  const pathname = usePathname()
-  const searchBarRef = useRef<HTMLInputElement>(null)
 
+  const searchBarRef = useRef<HTMLInputElement>(null)
   const [dropdownMenuOpen, setDropdownMenuOpen] = useState(false)
   const [dialogOpen, setDialogOpen] = useState<undefined | boolean>(undefined)
+
   const clickAwayRef = useClickAway<HTMLDivElement>(_ => {
     setDropdownMenuOpen(false)
     setDialogOpen(false)
   })
 
-  const [selectedItem, setSelectedItem] = useState<string | null>(null)
-  const [isPending, startTransition] = useTransition()
-
+  const [currentSearch, setCurrentSearch] = useState('')
   const [search, setSearch] = useQueryState('search', {
-    throttleMs: SECOND / 2,
     history: 'push',
     parse: value => value?.trim().toLowerCase(),
     serialize: value => value.trim().toLowerCase()
   })
 
-  const { data, status: searchResultStatus } = useQuery({
+  const {
+    data,
+    status: searchResultStatus,
+    isLoading
+  } = useQuery({
     queryKey: ['ens-subgraph-search', { search }],
-    queryFn: async () => searchEnsSubgraph({ search: search ?? '' }),
+    queryFn: async () => await searchENSNames({ search: search ?? '' }),
     refetchOnMount: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
     refetchIntervalInBackground: false,
-    enabled: Boolean(search && search.length >= 3)
+    enabled: Boolean(search && search.length > 0)
   })
+
+  const { following } = useEFPProfile()
+  const { addCartItem, hasListOpAddRecord } = useCart()
+
+  const getFollowingState = (address: Address) => {
+    if (!following) return 'none'
+
+    const followingItem = following?.find(
+      follower => follower?.data?.toLowerCase() === address?.toLowerCase()
+    )
+    if (!followingItem) return 'none'
+
+    if (followingItem.tags.includes('Blocked')) return 'blocks'
+    if (followingItem.tags.includes('Muted')) return 'mutes'
+
+    return 'follows'
+  }
 
   const searchResult = searchResultStatus === 'success' ? data : []
 
-  useIsomorphicLayoutEffect(() => {
-    setDropdownMenuOpen(searchResult.length > 0)
-  }, [searchResult, searchResultStatus])
+  let searchTimeout: NodeJS.Timeout | null = null
 
-  useIsomorphicLayoutEffect(() => {
-    if (pathname.slice(1) === selectedItem) {
-      setDropdownMenuOpen(false)
-      // console.log({ dialogOpen })
-      if (searchBarRef.current) searchBarRef.current.value = ''
-    }
-  }, [pathname])
+  const handleSearchEvent = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (event?.target.value.includes(' ')) return
+      if (searchTimeout) clearTimeout(searchTimeout)
+      const term = event?.target.value
+      setDropdownMenuOpen(term.length > 0)
+      setCurrentSearch(term)
+      searchTimeout = setTimeout(() => setSearch(term), 500)
+    },
+    [searchTimeout]
+  )
 
-  function handleSearchEvent(event: React.ChangeEvent<HTMLInputElement>) {
-    const term = event?.target.value
-    startTransition(() => {
-      if (term) setSearch(term)
-      else setSearch(null)
-    })
+  const resetSearch = () => {
+    setCurrentSearch('')
+    setDropdownMenuOpen(false)
+    searchBarRef.current?.blur()
   }
 
-  // function onSubmit(event: React.FormEvent<HTMLFormElement>) {
-  //   event.preventDefault()
-  //   /**
-  //    * checking the html element for value to catch an edge case:
-  //    * - when typing a search term then navigating to another page,
-  //    *   the search term is gone from the url but is still in the search input
-  //    */
-  //   const searchTerm = search
-  //   if (!searchTerm) return
-  //   const inputIsValid = checkAddressOrEnsValid(searchTerm)
-  //   if (!inputIsValid) return
-  // }
+  const addToCart = async (user: string) => {
+    const address = isAddress(user) ? user : await resolveENSAddress(user)
+
+    if (!address) return
+
+    const followState = getFollowingState(address)
+    const isPendingFollow = hasListOpAddRecord(address)
+
+    resetSearch()
+
+    if (isPendingFollow) return
+    if (followState === 'follows') return
+    if (followState === 'none') return addCartItem({ listOp: listOpAddListRecord(address) })
+  }
+
+  const onSubmit = () => {
+    if (isEditor) return addToCart(currentSearch)
+
+    if (isAddress(currentSearch) || currentSearch.includes('.')) {
+      router.push(`/${currentSearch}`)
+      resetSearch()
+    }
+  }
 
   return (
-    <div className={`relative ${size}`}>
+    <div className={`relative z-50 ${size}`} ref={clickAwayRef}>
       <label htmlFor='search' className='sr-only'>
         Search
       </label>
-      <div className='rounded-md hidden sm:block'>
+      <div className='rounded-md hidden gap-2 md:flex'>
         <input
           ref={searchBarRef}
           type='text'
@@ -138,8 +132,12 @@ export function Search({
           spellCheck={false}
           autoComplete='off'
           disabled={disabled}
+          value={currentSearch}
           placeholder={t('navigation.search placeholder')}
           onChange={handleSearchEvent}
+          onKeyDown={e => {
+            if (e.key === 'Enter') onSubmit()
+          }}
           onClick={event => {
             event.preventDefault()
             setDropdownMenuOpen(
@@ -149,7 +147,7 @@ export function Search({
                 !!searchResult
             )
           }}
-          className='h-12 block w-full font-medium rounded-xl border-2 border-gray-200 pl-4 text-xs sm:text-sm bg-white/70'
+          className='h-12 block w-full pr-12 truncate font-medium rounded-xl border-2 border-gray-200 pl-4 text-xs sm:text-sm bg-white/70'
         />
         <div
           className='pointer-events-none absolute inset-y-0 right-2 flex items-center'
@@ -158,48 +156,54 @@ export function Search({
           <Image
             src={MagnifyingGlass}
             alt='Search'
-            className='mr-3 h-5 w-5 text-grey'
+            className={`${isEditor ? 'mr-24' : 'mr-3'} h-5 w-5 text-grey`}
             aria-hidden='true'
           />
         </div>
+        {isEditor && (
+          <button
+            className='bg-gradient-to-b font-semibold py-3 px-6 from-kournikova-300 rounded-full to-salmon-400 text-black h-auto'
+            onClick={() => addToCart(currentSearch)}
+          >
+            {t('add')}
+          </button>
+        )}
       </div>
       <div
-        className={`hidden absolute top-full mt-2 left-0 sm:${
-          dropdownMenuOpen ? 'block' : 'hidden'
-        }`}
+        className={` absolute glass-card p-4 w-full shadow-md border-2 border-gray-200 bg-white/95 rounded-xl top-full mt-2 left-0`}
+        style={{
+          display: dropdownMenuOpen ? 'block' : 'none'
+        }}
       >
-        <div>
-          <div
-            className={clsx(['max-w-xl w-80 min-w-full text-lg py-0 hidden sm:block'])}
-            ref={clickAwayRef}
-            onFocusCapture={event => {
-              event.preventDefault()
-              event.stopPropagation()
-              searchBarRef.current?.focus()
-            }}
-          >
-            {searchResult?.map((result, index) => (
-              <div
-                key={`${result}`}
-                className='w-full text-md py-0 hover:bg-pink-50'
-                tabIndex={0 + 1}
-                onClick={() => setSelectedItem(result)}
-              >
-                <Link href={{ pathname: result }} className='hover:cursor-pointer'>
-                  {result}
-                </Link>
-              </div>
-            ))}
-          </div>
+        <div
+          className='w-full items-start text-lg flex-col hidden md:flex'
+          onFocusCapture={event => {
+            event.preventDefault()
+            event.stopPropagation()
+            searchBarRef.current?.focus()
+          }}
+        >
+          {isLoading && (
+            <div className='w-full h-40'>
+              <LoadingSpinner />
+            </div>
+          )}
+          {searchResult.map((result, index) => (
+            <p
+              key={result}
+              onClick={() => {
+                if (isEditor) addToCart(result)
+                else router.push(`/${result}`)
+                resetSearch()
+              }}
+              className='max-w-full  truncate text-md hover:opacity-75 cursor-pointer transition-opacity'
+            >
+              {result}
+            </p>
+          ))}
         </div>
       </div>
-      {isPending && (
-        <div className='absolute right-0 top-0 bottom-0 sm:flex items-center justify-center hidden'>
-          <PendingIcon hidden={!isPending} />
-        </div>
-      )}
-
-      <div className='block relative z-50 sm:hidden'>
+      <div className='block relative z-50 md:hidden'>
         <Image
           src={MagnifyingGlass}
           onClick={() => setDialogOpen(true)}
@@ -209,17 +213,22 @@ export function Search({
         />
         <div
           ref={clickAwayRef}
-          className={`p-0 sm:hidden absolute top-8 left-0 mx-auto ${
+          className={`p-0 md:hidden w-[40vw] min-w-68 absolute -top-3 left-0 mx-auto ${
             dialogOpen ? 'block' : 'hidden'
           }`}
         >
           <div>
             <input
               name='search'
-              className='h-11 rounded-xl border-2 shadow-md border-gray-200 px-2'
+              className='h-11 rounded-xl border-2 w-full shadow-md border-gray-200 px-2'
               spellCheck={false}
               placeholder={t('navigation.search placeholder')}
               disabled={disabled}
+              onSubmit={onSubmit}
+              value={currentSearch}
+              onKeyDown={e => {
+                if (e.key === 'Enter') onSubmit()
+              }}
               onChange={handleSearchEvent}
               onClick={event => {
                 event.preventDefault()
@@ -232,19 +241,14 @@ export function Search({
               }}
               autoComplete='off'
             />
-            {isPending && (
-              <div className='absolute right-0 top-0 bottom-0 flex items-center justify-center'>
-                <PendingIcon hidden={!isPending} />
-              </div>
-            )}
           </div>
           <div
-            className={`hidden absolute top-full mt-2 left-0 sm:${
+            className={`absolute glass-card w-full shadow-md border-2 p-3 rounded-xl bg-white/95 border-gray-200 top-full mt-2 left-0 ${
               dropdownMenuOpen ? 'block' : 'hidden'
             }`}
           >
             <div
-              className='w-80 mx-auto min-w-full text-lg py-0 sm:hidden block max-h-56 bg-slate-50'
+              className='w-full mx-auto min-w-full text-lg py-0 md:hidden block '
               ref={clickAwayRef}
               onFocusCapture={event => {
                 event.preventDefault()
@@ -252,19 +256,22 @@ export function Search({
                 searchBarRef.current?.focus()
               }}
             >
-              {searchResult?.map((result, index) => (
+              {isLoading && (
+                <div className='w-full h-40'>
+                  <LoadingSpinner />
+                </div>
+              )}
+              {searchResult.map(result => (
                 <div
                   key={`${result}`}
-                  className='w-full text-md py-0 hover:bg-pink-50'
-                  tabIndex={0 + 1}
                   onClick={() => {
-                    setSelectedItem(result)
-                    setDialogOpen(false)
+                    if (isEditor) addToCart(result)
+                    else router.push(`/${result}`)
+                    resetSearch()
                   }}
+                  className='max-w-full truncate text-md hover:opacity-75 cursor-pointer transition-opacity'
                 >
-                  <Link href={{ pathname: result }} className='hover:cursor-pointer'>
-                    {result}
-                  </Link>
+                  {result}
                 </div>
               ))}
             </div>

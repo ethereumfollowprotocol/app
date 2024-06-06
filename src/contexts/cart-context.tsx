@@ -61,9 +61,10 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   const { address } = useAccount()
   const isEditView = useIsEditView()
 
-  const storedCartItems = localStorage.getItem('cart')
-    ? (JSON.parse(localStorage.getItem('cart') || '') as StoredCartItem[])
-    : []
+  const storedCartItems =
+    typeof window !== 'undefined' && localStorage.getItem('cart')
+      ? (JSON.parse(localStorage.getItem('cart') || '') as StoredCartItem[])
+      : []
   const transformedStoredCartItems =
     storedCartItems.length > 0
       ? storedCartItems.map(item => ({

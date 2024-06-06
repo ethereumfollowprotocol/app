@@ -2,7 +2,6 @@ import plugin from 'tailwindcss/plugin'
 import type { Config } from 'tailwindcss'
 import tailwindAnimate from 'tailwindcss-animate'
 import typographyPlugin from '@tailwindcss/typography'
-import tailwindcssRadixPlugin from 'tailwindcss-radix'
 import aspectRatioPlugin from '@tailwindcss/aspect-ratio'
 import containerQueriesPlugin from '@tailwindcss/container-queries'
 import defaultTheme from 'tailwindcss/defaultTheme'
@@ -174,7 +173,6 @@ export default {
     typographyPlugin,
     aspectRatioPlugin,
     containerQueriesPlugin,
-    tailwindcssRadixPlugin,
     plugin(({ addVariant, addUtilities, matchUtilities, theme }) => {
       matchUtilities(
         { 'animation-delay': value => ({ 'animation-delay': value }) },

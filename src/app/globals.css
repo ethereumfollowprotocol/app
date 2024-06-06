@@ -128,37 +128,62 @@ input {
 }
 
 /* Custom loader */
-.loader {
-  border: 4px solid #ffc057;
-  border-left-color: transparent;
+/* .loader {
+  width: 50px;
+  aspect-ratio: 1;
   border-radius: 50%;
+  background:
+  radial-gradient(farthest-side,#ffa516 94%,#0000) top/8px 8px no-repeat,
+  conic-gradient(#0000 30%,#ffa516);
+  -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 8px),#000 0);
+  animation: l13 1s infinite linear;
 }
+@keyframes l13{
+  from {
+    transform: rotate(0turn)
+  }
+  to {
+    transform: rotate(1turn)
+  }
+} */
 
 .loader {
-  border: 4px solid #ffc057;
-  border-left-color: transparent;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin: 0;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 8px solid #0000;
+  border-right-color: #ffa50097;
+  position: relative;
+  margin-left: -20px;
+  margin-top: -20px;
+  animation: l24 1s infinite linear;
 }
-
-.loader {
-  border: 4px solid #ffc057;
-  border-left-color: transparent;
-  width: 36px;
-  height: 36px;
-  animation: spin89345 1s linear infinite;
+.loader:before,
+.loader:after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: inherit;
+  animation: inherit;
+  animation-duration: 2s;
 }
-
-@keyframes spin89345 {
-  0% {
-    transform: rotate(0deg);
+.loader:after {
+  animation-duration: 4s;
+}
+@keyframes l24 {
+  from {
+    transform: rotate(0)
   }
-
-  100% {
-    transform: rotate(360deg);
+  to {
+    transform: rotate(360deg)
   }
 }
 
+/* Background size changes */
 @media screen and (max-width: 1750px) {
   body {
     background-position: -34.1vw -30vw;
