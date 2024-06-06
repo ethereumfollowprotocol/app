@@ -19,6 +19,7 @@
     "@rainbow-me/rainbowkit": "^2.0.5",
     "@sentry/nextjs": "^7.95.0",
     "@tanstack/react-query": "^5.17.19",
+    "@tanstack/react-query-next-experimental": "^5.17.19",
     "@uidotdev/usehooks": "^2.4.1",
     "clsx": "^2.1.0",
     "i18next": "^23.11.5",

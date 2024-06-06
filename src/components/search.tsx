@@ -78,6 +78,7 @@ export function Search({
 
   const handleSearchEvent = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (event?.target.value.includes(' ')) return
       if (searchTimeout) clearTimeout(searchTimeout)
       const term = event?.target.value
       setDropdownMenuOpen(term.length > 0)
