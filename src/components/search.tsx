@@ -170,9 +170,10 @@ export function Search({
         )}
       </div>
       <div
-        className={`hidden absolute glass-card p-4 w-full shadow-md border-2 border-gray-200 bg-white/95 rounded-xl top-full mt-2 left-0 md:${
-          dropdownMenuOpen ? 'block' : 'hidden'
-        }`}
+        className={` absolute glass-card p-4 w-full shadow-md border-2 border-gray-200 bg-white/95 rounded-xl top-full mt-2 left-0`}
+        style={{
+          display: dropdownMenuOpen ? 'block' : 'none'
+        }}
       >
         <div
           className='w-full items-start text-lg flex-col hidden md:flex'
