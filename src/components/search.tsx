@@ -7,7 +7,7 @@ import { useClickAway } from '@uidotdev/usehooks'
 import { useQueryState } from 'next-usequerystate'
 import { useCallback, useRef, useState } from 'react'
 
-import searchENSNames from '#/api/fetchENSNames.ts'
+import searchENSNames from '#/api/fetchEnsName.ts'
 import LoadingSpinner from './loading-spinner.tsx'
 import MagnifyingGlass from 'public/assets/icons/magnifying-glass.svg'
 import { useRouter } from 'next/navigation'
