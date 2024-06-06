@@ -23,6 +23,8 @@ interface Props {
 export default function ProfilePage({ searchParams }: Props) {
   const [activeTab, setActiveTab] = useState<ProfileTabType>('following')
 
+  const { t } = useTranslation('profile')
+
   const {
     profile,
     profileIsLoading,
@@ -35,7 +37,6 @@ export default function ProfilePage({ searchParams }: Props) {
     isFetchingMoreFollowers,
     isFetchingMoreFollowing
   } = useEFPProfile()
-  const { t } = useTranslation('profile')
 
   const mobileActiveEl = {
     following: (
@@ -65,7 +66,6 @@ export default function ProfilePage({ searchParams }: Props) {
 
   return (
     <main className='flex pb-8 min-h-full w-full justify-between xl:justify-center gap-y-4 flex-col md:flex-row flex-wrap xl:flex-nowrap items-start xl:gap-6 mt-32 md:mt-40 lg:mt-48 px-4 lg:px-8'>
-      {/* <HydrationBoundary state={dehydrate(queryClient)}> */}
       <div className='flex flex-col w-full xl:w-fit items-center gap-4'>
         <UserProfileCard profile={profile} following={following} isLoading={profileIsLoading} />
         <div className='flex flex-col gap-1 items-center'>
@@ -111,7 +111,6 @@ export default function ProfilePage({ searchParams }: Props) {
         </div>
         {mobileActiveEl}
       </div>
-      {/* </HydrationBoundary> */}
     </main>
   )
 }

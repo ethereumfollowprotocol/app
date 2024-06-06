@@ -21,10 +21,21 @@ type ProviderProps = {
   initialState?: State
 }
 
-// const persister = createSyncStoragePersister({
-//   serialize,
-//   deserialize,
+// const queryClient = new QueryClient({
+//   defaultOptions: {
+//     queries: {
+//       gcTime: 1000 * 60 * 60 * 24 // 24 hours
+//     }
+//   }
+// })
+
+// const localStoragePersister = createSyncStoragePersister({
 //   storage: window.localStorage
+// })
+
+// persistQueryClient({
+//   queryClient,
+//   persister: localStoragePersister
 // })
 
 export const DEFAULT_CHAIN_ID = optimismSepolia.id
