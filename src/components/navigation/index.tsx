@@ -4,14 +4,17 @@ import { useState } from 'react'
 import { useAccount } from 'wagmi'
 import { useClickAway } from '@uidotdev/usehooks'
 
-import Logo from 'public/assets/logo.svg'
-import FullLogo from 'public/assets/logo-full.svg'
 import { Search } from '../search'
+import Logo from 'public/assets/logo.svg'
+import useLanguage from './hooks/useLanguage.ts'
+import NavItems from './components/nav-items.tsx'
+import FullLogo from 'public/assets/logo-full.svg'
+import { LANGUAGES } from '#/lib/constants/index.ts'
+import MobileMenu from './components/mobile-menu.tsx'
 import { useCart } from '../../contexts/cart-context'
 import CartButton from './components/cart-button.tsx'
 import ConnectButton from './components/connect-button.tsx'
-import MobileMenu from './components/mobile-menu.tsx'
-import NavItems from './components/nav-items.tsx'
+import ArrowDown from 'public/assets/icons/arrow-down.svg'
 
 const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -20,6 +23,11 @@ const Navigation = () => {
   const { address: userAddress } = useAccount()
   const clickAwayRef = useClickAway<HTMLDivElement>(_ => {
     setMobileMenuOpen(false)
+  })
+
+  const { changeLanguage, languageMenOpenu, selectedLanguage, setLanguageMenuOpen } = useLanguage()
+  const clickAwayLanguageRef = useClickAway<HTMLDivElement>(_ => {
+    setLanguageMenuOpen(false)
   })
 
   return (
@@ -45,7 +53,46 @@ const Navigation = () => {
         <div className='flex lg:gap-6 xl:gap-12 items-center'>
           <NavItems />
           <div className='flex items-center gap-2 md:gap-4 xl:gap-6'>
-            {userAddress && <CartButton cartItemsCount={totalCartItems} />}
+            {userAddress ? (
+              <CartButton cartItemsCount={totalCartItems} />
+            ) : (
+              <div
+                ref={clickAwayLanguageRef}
+                className='w-8 z-50 sm:w-10 mr-0 xxs:mr-1 lg:mr-4 cursor-pointer group relative'
+              >
+                <div
+                  onClick={() => setLanguageMenuOpen(!languageMenOpenu)}
+                  className='flex gap-1 sm:gap-2 items-center w-full'
+                >
+                  <p className='group-hover:opacity-80 uppercase transition-opacity font-semibold'>
+                    {selectedLanguage?.key}
+                  </p>
+                  <Image
+                    src={ArrowDown}
+                    alt='Show languages'
+                    width={12}
+                    className='group-hover:opacity-80 transition-opacity'
+                  />
+                </div>
+                <div
+                  className={`absolute -left-4 top-4 ${
+                    languageMenOpenu ? 'block' : 'hidden'
+                  } group-hover:block pt-4`}
+                >
+                  <div className='flex flex-col gap-2 glass-card bg-white/90 border-2 border-gray-200 px-4 py-2 rounded-lg shadow-md'>
+                    {LANGUAGES.map(lang => (
+                      <p
+                        className=' text-darkGrey font-semibold hover:text-gray-500 transition-colors'
+                        key={lang.language}
+                        onClick={() => changeLanguage(lang)}
+                      >
+                        {lang.language}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
             <div ref={clickAwayRef} className='lg:hidden relative'>
               <div
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
