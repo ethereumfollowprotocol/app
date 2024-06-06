@@ -21,6 +21,11 @@ export function UserProfileCard({ profile, borderColor, isLoading, following }: 
   const { address: connectedAddress } = useAccount()
   const { t } = useTranslation('common', { keyPrefix: 'profile card' })
 
+  const isProfileValid = !(
+    Object.keys(profile || {}).includes('response') ||
+    Object.keys(profile || {}).includes('message')
+  )
+
   return (
     <div
       className={`flex glass-card xl:w-76 2xl:w-86 border-2 justify-center flex-col ${
@@ -29,7 +34,7 @@ export function UserProfileCard({ profile, borderColor, isLoading, following }: 
     >
       {isLoading ? (
         <LoadingProfileCard />
-      ) : profile ? (
+      ) : profile && isProfileValid ? (
         <>
           <div className='text-gray-500 absolute text-right xl:text-left px-2 w-full left-0 top-1 font-semibold'>
             #{profile?.primary_list ?? '-'}
@@ -78,7 +83,9 @@ export function UserProfileCard({ profile, borderColor, isLoading, following }: 
           </div>
         </>
       ) : (
-        <div>Invaid profile data</div>
+        <div className='w-full h-20 xl:h-72 text-xl flex items-center justify-center font-semibold italic'>
+          {t('profile error')}
+        </div>
       )}
     </div>
   )

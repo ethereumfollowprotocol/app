@@ -37,6 +37,7 @@ export function UserProfilePageTable({
 
   const pathname = usePathname()
   const { t } = useTranslation('profile')
+  const isProfile = pathname.includes('profile')
 
   const filteredFollowers = followers?.filter(follower =>
     follower?.ens.name?.toLowerCase().replaceAll('.eth', '').includes(search.toLowerCase())
@@ -46,7 +47,7 @@ export function UserProfilePageTable({
   )
 
   const chosenResponses = title === 'following' ? filteredFollowing : filteredFollowers
-  const showFollowsYouBadges = !pathname.includes('profile') || title === 'following'
+  const showFollowsYouBadges = !isProfile || title === 'following'
 
   const profiles =
     chosenResponses?.map(res => ({
@@ -86,15 +87,21 @@ export function UserProfilePageTable({
       />
       {!isLoading && chosenResponses?.length === 0 && (
         <div className='text-center font-semibold py-4'>
-          {title === 'followers' && <span className='text-lg'>{t('followers empty')}</span>}
+          {title === 'followers' && (
+            <span className='text-lg'>
+              {t(isProfile ? 'followers myprofile empty' : 'followers empty')}
+            </span>
+          )}
           {title === 'following' && (
             <div className='flex flex-col items-center'>
               <span className='text-xl text-darkGrey italic mb-4'>
-                {t('following empty first')}
+                {t(isProfile ? 'following myprofile empty first' : 'following empty first')}
               </span>
-              <span className='text-base text-darkGrey italic w-3/4 max-w-96'>
-                {t('following empty second')}
-              </span>
+              {isProfile && (
+                <span className='text-base text-darkGrey italic w-3/4 max-w-96'>
+                  {t('following myprofile empty second')}
+                </span>
+              )}
             </div>
           )}
         </div>
