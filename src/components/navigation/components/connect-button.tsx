@@ -2,9 +2,8 @@
 import i18n from '#/app/i18n'
 import Image from 'next/image'
 import { useAccount, useDisconnect } from 'wagmi'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useClickAway } from '@uidotdev/usehooks'
-import type { Address, GetEnsAvatarReturnType } from 'viem'
 import { useAccountModal, useConnectModal } from '@rainbow-me/rainbowkit'
 
 import { truncateAddress } from '#/lib/utilities'
@@ -14,6 +13,7 @@ import ArrowDown from 'public/assets/icons/arrow-down.svg'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 import { LANGUAGES } from '#/lib/constants'
 import { useTranslation } from 'react-i18next'
+import { useQuery } from '@tanstack/react-query'
 
 const nullEnsProfile = {
   name: null,
@@ -21,11 +21,6 @@ const nullEnsProfile = {
 }
 
 const ConnectButton = () => {
-  const [ensProfile, setENSProfile] = useState<{
-    name: string | null
-    avatar: GetEnsAvatarReturnType | null
-  }>(nullEnsProfile)
-
   const [walletMenOpenu, setWalletMenuOpen] = useState(false)
   const [languageMenOpenu, setLanguageMenuOpen] = useState(false)
   const [selectedLanguage, setSelectedLanguage] = useState(
@@ -45,19 +40,15 @@ const ConnectButton = () => {
   const { openConnectModal } = useConnectModal()
   const { openAccountModal } = useAccountModal()
 
-  const getENSProfile = async (address: Address) => {
-    const data = await resolveENSProfile(address)
-    setENSProfile(data)
-  }
+  const { data: ensProfile } = useQuery({
+    queryKey: ['ens-data', userAddress],
+    queryFn: async () => {
+      if (!userAddress) return nullEnsProfile
 
-  useEffect(() => {
-    if (!userAddress) {
-      setENSProfile(nullEnsProfile)
-      return
+      const data = await resolveENSProfile(userAddress)
+      return data
     }
-
-    getENSProfile(userAddress)
-  }, [userAddress])
+  })
 
   return (
     <div ref={clickAwayWalletRef} className='relative'>
@@ -76,7 +67,7 @@ const ConnectButton = () => {
         {userAddress ? (
           <>
             <Image
-              src={ensProfile.avatar || DefaultAvatar}
+              src={ensProfile?.avatar || DefaultAvatar}
               alt='ENS Avatar'
               width={36}
               height={36}
@@ -84,7 +75,7 @@ const ConnectButton = () => {
               unoptimized={true}
             />
             <p className='font-semibold hidden sm:block truncate text-sm'>
-              {ensProfile.name || truncateAddress(userAddress)}
+              {ensProfile?.name || truncateAddress(userAddress)}
             </p>
             <Image
               src={ArrowDown}
