@@ -16,7 +16,8 @@
     "following": "Following",
     "leaderboard": "Leaderboard",
     "follows you": "Follows you",
-    "profile error": "User doesn't exist"
+    "profile error": "User doesn't exist",
+    "connect wallet": "Connect wallet to view"
   },
   "follow btn": {
     "Follow": "Follow",

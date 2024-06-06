@@ -1,7 +1,7 @@
 'use client'
 
 import { useAccount } from 'wagmi'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
@@ -15,6 +15,11 @@ import { PrimaryButton } from '#/components/primary-button'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 export default function EditorPage() {
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
   const [isCheckingOut, setIsCheckingOut] = useState(false)
 
   const { isConnected } = useAccount()
@@ -37,7 +42,10 @@ export default function EditorPage() {
   )
 
   return (
-    <main className='flex flex-col-reverse xl:flex-row gap-4 min-h-full h-full w-full items-center xl:items-start justify-center text-center pt-10 xl:gap-6 pb-28 mt-20 md:mt-28 xl:mt-40 px-2 lg:px-8'>
+    <main
+      suppressHydrationWarning={true}
+      className='flex flex-col-reverse xl:flex-row gap-4 min-h-full h-full w-full items-center xl:items-start justify-center text-center pt-10 xl:gap-6 pb-40 mt-20 md:mt-28 xl:mt-40 px-2 lg:px-8'
+    >
       {isConnected && isCheckingOut ? (
         <div className='px-2'>
           <Checkout setOpen={setIsCheckingOut} hasCreatedEfpList={hasCreatedEfpList} />
@@ -64,8 +72,8 @@ export default function EditorPage() {
               canEditTags={true}
             />
           </div>
-          {totalCartItems > 0 && (
-            <div className='fixed w-full top-[87.5vh] lg:top-[85vh] right-0 px-4 lg:right-[5vw] flex justify-end'>
+          {isClient && totalCartItems > 0 && (
+            <div className='fixed w-full top-[85vh] lg:top-[85vh] right-0 px-4 lg:right-[5vw] flex justify-end'>
               <div className='flex gap-6 w-full border-[1px] border-gray-200 lg:w-fit items-center p-4 bg-white/10 justify-between glass-card bg-opacity-50 shadow-xl rounded-xl'>
                 <div className='flex gap-2 items-center'>
                   <p className='text-6xl font-bold'>{totalCartItems}</p>

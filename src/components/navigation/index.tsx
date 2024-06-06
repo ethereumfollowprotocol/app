@@ -6,7 +6,7 @@ import { useClickAway } from '@uidotdev/usehooks'
 
 import Logo from 'public/assets/logo.svg'
 import FullLogo from 'public/assets/logo-full.svg'
-import { Search } from '../../components/search.tsx'
+import { Search } from '../search'
 import { useCart } from '../../contexts/cart-context'
 import CartButton from './components/cart-button.tsx'
 import ConnectButton from './components/connect-button.tsx'

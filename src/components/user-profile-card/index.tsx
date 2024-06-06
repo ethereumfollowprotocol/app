@@ -9,6 +9,7 @@ import LoadingProfileCard from './loading-profile-card'
 import { FollowButton } from '#/components/follow-button'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 import type { FollowingResponse, ProfileDetailsResponse } from '#/api/requests'
+import { usePathname } from 'next/navigation'
 
 interface Props {
   profile?: ProfileDetailsResponse | null
@@ -18,8 +19,11 @@ interface Props {
 }
 
 export function UserProfileCard({ profile, borderColor, isLoading, following }: Props) {
+  const pathname = usePathname()
   const { address: connectedAddress } = useAccount()
   const { t } = useTranslation('common', { keyPrefix: 'profile card' })
+
+  const isConnectedUserCard = pathname === '/' || pathname.includes('/profile')
 
   const isProfileValid = !(
     Object.keys(profile || {}).includes('response') ||
@@ -84,7 +88,7 @@ export function UserProfileCard({ profile, borderColor, isLoading, following }: 
         </>
       ) : (
         <div className='w-full h-20 xl:h-72 text-xl flex items-center justify-center font-semibold italic'>
-          {t('profile error')}
+          {isConnectedUserCard ? t('connect wallet') : t('profile error')}
         </div>
       )}
     </div>

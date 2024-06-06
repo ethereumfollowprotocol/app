@@ -2,7 +2,7 @@ import { ENS_SUBGRAPH } from '#/lib/constants'
 
 const searchENSNames = async ({ search }: { search: string }) => {
   const sanitizedSearch = search.trim().toLowerCase()
-  if (search.length < 3) return []
+  if (search.length === 0) return []
 
   const response = await fetch(ENS_SUBGRAPH, {
     method: 'POST',
