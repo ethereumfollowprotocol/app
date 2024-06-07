@@ -12,6 +12,7 @@ import { createPublicClient, fromHex, getContract, http, type Address, type Chai
 import { efpContracts } from '#/lib/constants/contracts'
 import { efpListRegistryAbi } from '#/lib/abi'
 import { optimismSepolia } from 'viem/chains'
+import Cross from 'public/assets/icons/cross.svg'
 
 interface ListSettingsProps {
   onClose: () => void
@@ -60,8 +61,14 @@ const ListSettings: React.FC<ListSettingsProps> = ({ onClose, profile }) => {
   return (
     <div className='fixed z-50 top-0 flex items-center justify-center left-0 w-full h-full bg-black/50'>
       <div className='glass-card bg-white/40 gap-8 flex flex-col rounded-xl p-10 w-[554px]'>
-        <div>
+        <div className='w-full flex items-center justify-between'>
           <h3 className='text-5xl font-semibold'>List #{profile.primary_list}</h3>
+          <Image
+            src={Cross}
+            alt='Close list settings'
+            className='w-6 cursor-pointer hover:opacity-60 transition-opacity'
+            onClick={onClose}
+          />
         </div>
         <div className='flex w-full items-center justify-between'>
           <div>
@@ -125,15 +132,12 @@ const ListSettings: React.FC<ListSettingsProps> = ({ onClose, profile }) => {
             className='p-3 font-medium truncate rounded-lg w-full bg-white/70'
           />
         </div>
-        <div className='w-full mt-10 flex justify-between items-center'>
-          <CancelButton onClick={onClose} label='Exit' />
-          <PrimaryButton
-            label={'Save'}
-            onClick={() => {}}
-            className='text-lg w-32 h-12'
-            disabled={!Object.values(changedValues).includes(true)}
-          />
-        </div>
+        <PrimaryButton
+          label={'Save'}
+          onClick={() => {}}
+          className='text-lg mt-4 w-full h-12'
+          disabled={!Object.values(changedValues).includes(true)}
+        />
       </div>
     </div>
   )
