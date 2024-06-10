@@ -28,6 +28,10 @@
     "owner": "Owner",
     "manager": "Manager",
     "user": "User",
-    "save": "Save"
+    "save": "Save",
+    "set location": "Set list storage location",
+    "set owner": "Set list owner",
+    "set manager": "Set list manager",
+    "set user": "Set list user"
   }
 }

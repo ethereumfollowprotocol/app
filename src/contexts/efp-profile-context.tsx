@@ -1,6 +1,3 @@
-import { useAccount } from 'wagmi'
-import { createContext, useContext, useEffect, useState } from 'react'
-
 import {
   useQuery,
   useInfiniteQuery,
@@ -10,19 +7,29 @@ import {
   type FetchNextPageOptions,
   type InfiniteQueryObserverResult
 } from '@tanstack/react-query'
+import { useAccount, useChains } from 'wagmi'
+import { createContext, useContext, useEffect, useState } from 'react'
+
+import type {
+  ProfileRoles,
+  FollowerResponse,
+  FollowingResponse,
+  ProfileDetailsResponse
+} from '#/api/requests'
 import { useCart } from './cart-context'
-import type { ProfileTabType } from '#/types/common'
 import { FETCH_LIMIT_PARAM } from '#/lib/constants'
+import type { ProfileTabType } from '#/types/common'
+import fetchProfileRoles from '#/api/fetchProfileRoles'
 import fetchProfileDetails from '#/api/fetchProfileDetails'
 import fetchProfileFollowers from '#/api/fetchProfileFollowers'
 import fetchProfileFollowing from '#/api/fetchProfileFollowing'
-import type { FollowerResponse, FollowingResponse, ProfileDetailsResponse } from '#/api/requests'
 
 // Define the type for the profile context
 type EFPProfileContextType = {
   profile?: ProfileDetailsResponse | null
   followers: FollowerResponse[]
   following: FollowingResponse[]
+  roles?: ProfileRoles
   profileIsLoading: boolean
   followersIsLoading: boolean
   followingIsLoading: boolean
@@ -71,6 +78,7 @@ type EFPProfileContextType = {
       Error
     >
   >
+  refetchRoles: (options?: RefetchOptions) => Promise<QueryObserverResult<ProfileRoles, Error>>
   followingTags: string[]
   followersTags: string[]
   followingSort: string | undefined
@@ -95,6 +103,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   const [followingSort, setFollowingSort] = useState<string>('follower count')
   const [followersSort, setFollowersSort] = useState<string>('follower count')
 
+  const chains = useChains()
   const { resetCart } = useCart()
   const { address: userAddress } = useAccount()
   const {
@@ -210,12 +219,33 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     }
   }
 
+  const { data: roles, refetch: refetchRoles } = useQuery({
+    queryKey: ['userRoles', userAddress, profile],
+    queryFn: async () => {
+      if (!(profile?.primary_list && userAddress))
+        return {
+          isOwner: false,
+          isManager: false,
+          isUser: false
+        }
+
+      const fetchedRoles = await fetchProfileRoles({
+        primary_list: profile.primary_list,
+        chains,
+        userAddress
+      })
+
+      return fetchedRoles
+    }
+  })
+
   return (
     <EFPProfileContext.Provider
       value={{
         profile,
         followers,
         following,
+        roles,
         profileIsLoading,
         followersIsLoading,
         followingIsLoading,
@@ -226,6 +256,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         refetchProfile,
         refetchFollowers,
         refetchFollowing,
+        refetchRoles,
         followingTags,
         followersTags,
         followingSort,

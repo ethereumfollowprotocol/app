@@ -29,6 +29,7 @@ export default function ProfilePage({ searchParams }: Props) {
   const { t } = useTranslation('profile')
 
   const {
+    roles,
     profile,
     profileIsLoading,
     following,
@@ -49,7 +50,7 @@ export default function ProfilePage({ searchParams }: Props) {
         followers={followers}
         isFetchingMore={isFetchingMoreFollowing}
         fetchMore={() => fetchMoreFollowing()}
-        canEditTags={true}
+        canEditTags={roles?.isManager}
         title='following'
         customClass='border-t-0 rounded-t-none'
       />
@@ -100,7 +101,7 @@ export default function ProfilePage({ searchParams }: Props) {
             followers={followers}
             isFetchingMore={isFetchingMoreFollowing}
             fetchMore={() => fetchMoreFollowing()}
-            canEditTags={true}
+            canEditTags={roles?.isManager}
             title='following'
             customClass='hidden xl:flex'
           />

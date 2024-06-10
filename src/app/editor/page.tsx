@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import Legend from './components/legend'
-import Checkout from '../../components/checkout'
+import Checkout from './components'
 import { Search } from '#/components/search'
 import { useCart } from '#/contexts/cart-context'
 import { FollowList } from '#/components/follow-list'
@@ -27,7 +27,7 @@ export default function EditorPage() {
   const { openConnectModal } = useConnectModal()
   const { totalCartItems, cartAddresses } = useCart()
 
-  const { profile: connectedProfile } = useEFPProfile()
+  const { profile: connectedProfile, roles } = useEFPProfile()
   const hasCreatedEfpList = !!connectedProfile?.primary_list
 
   const profiles = useMemo(
@@ -69,7 +69,7 @@ export default function EditorPage() {
               listItemClassName='rounded-xl md:p-4 p-1.5 sm:p-2 hover:bg-white/80'
               showTags={true}
               createListItem={!hasCreatedEfpList}
-              canEditTags={true}
+              canEditTags={roles?.isManager}
             />
           </div>
           {isClient && totalCartItems > 0 && (

@@ -49,7 +49,7 @@ const useSearch = (isEditor?: boolean) => {
     enabled: Boolean(searchKey && searchKey.length > 0)
   })
 
-  const { following } = useEFPProfile()
+  const { following, roles } = useEFPProfile()
   const { addCartItem, hasListOpAddRecord } = useCart()
 
   const getFollowingState = (address: Address) => {
@@ -89,6 +89,8 @@ const useSearch = (isEditor?: boolean) => {
   }
 
   const addToCart = async (user: string) => {
+    if (!roles?.isManager) return
+
     const address = isAddress(user) ? user : await resolveENSAddress(user)
 
     if (!address) return

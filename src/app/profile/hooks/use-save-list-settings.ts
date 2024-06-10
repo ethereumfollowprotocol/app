@@ -17,6 +17,7 @@ import type { ProfileDetailsResponse } from '#/api/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
+import { useTranslation } from 'react-i18next'
 
 type SaveListSettingsParams = {
   profile: ProfileDetailsResponse
@@ -52,11 +53,12 @@ const useSaveListSettings = ({
 }: SaveListSettingsParams) => {
   const [currentStep, setCurrentStep] = useState(Step.InitiateTransactions)
 
-  const { refetchProfile, refetchFollowing } = useEFPProfile()
   const currentChainId = useChainId()
   const { switchChain } = useSwitchChain()
   const { data: walletClient } = useWalletClient()
+  const { refetchProfile, refetchFollowing, refetchRoles } = useEFPProfile()
   const { addActions, actions, executeActionByIndex, resetActions } = useActions()
+  const { t } = useTranslation('profile', { keyPrefix: 'list settings' })
 
   const listRegistryContract = getContract({
     address: efpContracts.EFPListRegistry,
@@ -129,7 +131,7 @@ const useSaveListSettings = ({
     const setListStorageLocation: Action = {
       id: EFPActionType.SetEFPListStorageLocation, // Unique identifier for the action
       type: EFPActionType.SetEFPListStorageLocation,
-      label: `Set list storage location`,
+      label: t('set location'),
       chainId: chain.id,
       execute: setListStorageLocationTx,
       isPendingConfirmation: false
@@ -137,7 +139,7 @@ const useSaveListSettings = ({
     const setListOwner: Action = {
       id: EFPActionType.SetEFPListOwner, // Unique identifier for the action
       type: EFPActionType.SetEFPListOwner,
-      label: `Set list owner`,
+      label: t('set owner'),
       chainId: chain.id,
       execute: setOwnerTx,
       isPendingConfirmation: false
@@ -145,7 +147,7 @@ const useSaveListSettings = ({
     const setListManager: Action = {
       id: EFPActionType.SetEFPListManager, // Unique identifier for the action
       type: EFPActionType.SetEFPListManager,
-      label: `Set list manager`,
+      label: t('set manager'),
       chainId: chain.id,
       execute: setManagerTx,
       isPendingConfirmation: false
@@ -153,7 +155,7 @@ const useSaveListSettings = ({
     const setListUser: Action = {
       id: EFPActionType.SetEFPListUser, // Unique identifier for the action
       type: EFPActionType.SetEFPListUser,
-      label: `Set list user`,
+      label: t('set user'),
       chainId: chain.id,
       execute: setUserTx,
       isPendingConfirmation: false
@@ -196,6 +198,7 @@ const useSaveListSettings = ({
     resetActions()
     refetchProfile()
     refetchFollowing()
+    refetchRoles()
     onCancel()
     onClose()
   }, [])

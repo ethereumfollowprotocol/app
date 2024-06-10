@@ -1,16 +1,14 @@
 import { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ChainIcon } from '#/components/chain-icon'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
 import { Step } from '../types'
 import useChain from '#/hooks/use-chain'
-import { useCart } from '#/contexts/cart-context'
 import CancelButton from '#/components/cancel-button'
 import TransactionDetails from './transaction-details'
 import { useActions } from '#/contexts/actions-context'
 import { PrimaryButton } from '#/components/primary-button'
-import { useTranslation } from 'react-i18next'
-import { useRouter } from 'next/navigation'
 
 interface TransactionStatusProps {
   onFinish: () => void

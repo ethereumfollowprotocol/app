@@ -28,6 +28,10 @@
     "owner": "Lastnik",
     "manager": "Upravnik",
     "user": "Uporabnik",
-    "save": "Shrani"
+    "save": "Shrani",
+    "set location": "Spremeni lokacijo seznama",
+    "set owner": "Spremeni lastnika seznama",
+    "set manager": "Spremeni upravnika seznama",
+    "set user": "Spremeni uporabnika seznama"
   }
 }
