@@ -1,6 +1,6 @@
 import i18n from '#/app/i18n'
 import { LANGUAGES } from '#/lib/constants'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const useLanguage = () => {
   const [languageMenOpenu, setLanguageMenuOpen] = useState(false)
@@ -16,6 +16,10 @@ const useLanguage = () => {
     setSelectedLanguage(lang)
     setLanguageMenuOpen(false)
   }
+
+  useEffect(() => {
+    setSelectedLanguage(LANGUAGES[LANGUAGES.map(lang => lang.key).indexOf(i18n.language || 'en')])
+  }, [i18n.language])
 
   return {
     changeLanguage,
