@@ -18,6 +18,7 @@ import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
 import { useTranslation } from 'react-i18next'
+import { useCart } from '#/contexts/cart-context'
 
 type SaveListSettingsParams = {
   profile: ProfileDetailsResponse
@@ -53,6 +54,7 @@ const useSaveListSettings = ({
 }: SaveListSettingsParams) => {
   const [currentStep, setCurrentStep] = useState(Step.InitiateTransactions)
 
+  const { resetCart } = useCart()
   const currentChainId = useChainId()
   const { switchChain } = useSwitchChain()
   const { data: walletClient } = useWalletClient()
@@ -195,13 +197,15 @@ const useSaveListSettings = ({
   }, [executeActionByIndex, currentChainId])
 
   const onFinish = useCallback(() => {
+    if (changedValues.manager) resetCart()
+
     resetActions()
+    refetchRoles()
     refetchProfile()
     refetchFollowing()
-    refetchRoles()
     onCancel()
     onClose()
-  }, [])
+  }, [changedValues])
 
   return {
     actions,
