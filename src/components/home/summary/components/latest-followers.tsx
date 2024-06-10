@@ -20,7 +20,7 @@ const LatestFollowers: React.FC<LatestFollowersProps> = ({ profiles, isLoading }
         showFollowsYouBadges={true}
         isLoading={isLoading}
         loadingRows={7}
-        listClassName='gap-7'
+        listClassName='gap-7 px-1 sm:px-0'
       />
     </div>
   )

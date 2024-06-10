@@ -29,7 +29,7 @@ const Recommendations = ({ header, className, limit }: RecommendationsProps) => 
       <FollowList
         isLoading={isLoading}
         loadingRows={limit}
-        listClassName='rounded-xl gap-7'
+        listClassName='rounded-xl px-1 sm:px-0 gap-7'
         profiles={displayedProfiles?.map(account => ({
           address: account.address,
           tags: [] as string[],

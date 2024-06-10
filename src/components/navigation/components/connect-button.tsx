@@ -1,19 +1,19 @@
 'use client'
-import i18n from '#/app/i18n'
 import Image from 'next/image'
-import { useAccount, useDisconnect } from 'wagmi'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useQuery } from '@tanstack/react-query'
+import { useAccount, useDisconnect } from 'wagmi'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useAccountModal, useConnectModal } from '@rainbow-me/rainbowkit'
 
+import { LANGUAGES } from '#/lib/constants'
+import useLanguage from '../hooks/useLanguage'
 import { truncateAddress } from '#/lib/utilities'
 import ArrowLeft from 'public/assets/icons/arrow-left.svg'
 import { resolveENSProfile } from '#/utils/resolveAddress'
 import ArrowDown from 'public/assets/icons/arrow-down.svg'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
-import { LANGUAGES } from '#/lib/constants'
-import { useTranslation } from 'react-i18next'
-import { useQuery } from '@tanstack/react-query'
 
 const nullEnsProfile = {
   name: null,
@@ -22,10 +22,8 @@ const nullEnsProfile = {
 
 const ConnectButton = () => {
   const [walletMenOpenu, setWalletMenuOpen] = useState(false)
-  const [languageMenOpenu, setLanguageMenuOpen] = useState(false)
-  const [selectedLanguage, setSelectedLanguage] = useState(
-    LANGUAGES[LANGUAGES.map(lang => lang.key).indexOf(i18n.language || 'en')]?.language
-  )
+
+  const { changeLanguage, languageMenOpenu, selectedLanguage, setLanguageMenuOpen } = useLanguage()
 
   const clickAwayWalletRef = useClickAway<HTMLDivElement>(_ => {
     setWalletMenuOpen(false)
@@ -106,7 +104,7 @@ const ConnectButton = () => {
                 className='group-hover:opacity-80 transition-opacity'
               />
               <p className='group-hover:opacity-80 transition-opacity font-semibold'>
-                {selectedLanguage}
+                {selectedLanguage?.language}
               </p>
             </div>
             <div
@@ -119,11 +117,7 @@ const ConnectButton = () => {
                   <p
                     className=' text-darkGrey font-semibold hover:text-gray-500 transition-colors'
                     key={lang.language}
-                    onClick={() => {
-                      i18n.changeLanguage(lang.key)
-                      setSelectedLanguage(lang.language)
-                      setLanguageMenuOpen(false)
-                    }}
+                    onClick={() => changeLanguage(lang)}
                   >
                     {lang.language}
                   </p>
