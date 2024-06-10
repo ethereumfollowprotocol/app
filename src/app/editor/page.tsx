@@ -52,7 +52,7 @@ export default function EditorPage() {
         </div>
       ) : (
         <>
-          <div className='flex flex-col glass-card gap-6 p-6 h-fit rounded-2xl border-2 border-gray-200 xl:max-w-116 w-full xl:w-1/3'>
+          <div className='flex flex-col glass-card gap-6 px-3 py-4 sm:p-6 h-fit rounded-2xl border-2 border-gray-200 xl:max-w-116 w-full xl:w-1/3'>
             <h1 className='text-left text-3xl font-semibold hidden xl:block'>{t('title')}</h1>
             <Search size='w-full z-50' isEditor={true} />
             <Recommendations header={t('recommendations')} />
