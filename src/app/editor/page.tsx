@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import Legend from './components/legend'
-import Checkout from './components/checkout'
+import Checkout from '../../components/checkout'
 import { Search } from '#/components/search'
 import { useCart } from '#/contexts/cart-context'
 import { FollowList } from '#/components/follow-list'

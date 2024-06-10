@@ -18,5 +18,16 @@
   "following myprofile empty second": "To get started, just browse and start following. Once you confirm them onchain, they'll show up here.",
   "followers myprofile empty": "No followers",
   "following empty first": "This user doesn't follow anybody.",
-  "followers empty": "This user doesn't have any followers"
+  "followers empty": "This user doesn't have any followers",
+  "list settings": {
+    "list": "List",
+    "followers": "Followers",
+    "following": "Following",
+    "leaderboard": "Leaderboard",
+    "location": "List storage location",
+    "owner": "Owner",
+    "manager": "Manager",
+    "user": "User",
+    "save": "Save"
+  }
 }

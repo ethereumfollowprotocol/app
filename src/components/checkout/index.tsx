@@ -13,11 +13,12 @@ const Checkout: React.FC<CheckoutProps> = ({ setOpen, hasCreatedEfpList }) => {
   const {
     chains,
     actions,
+    onFinish,
     currentStep,
-    setCurrentStep,
     selectedChain,
-    handleChainClick,
     handleNextStep,
+    setCurrentStep,
+    handleChainClick,
     handleInitiateActions
   } = useCheckout()
 
@@ -43,7 +44,7 @@ const Checkout: React.FC<CheckoutProps> = ({ setOpen, hasCreatedEfpList }) => {
       )}
       {currentStep === Step.TransactionStatus && (
         <TransactionStatus
-          setOpen={setOpen}
+          onFinish={() => onFinish()}
           setCurrentStep={setCurrentStep}
           handleReInitiateActions={handleInitiateActions}
         />
