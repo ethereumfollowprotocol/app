@@ -81,7 +81,7 @@ export function FollowButton({ address, className = '', ...props }: FollowButton
     address
   })
 
-  if (address?.toLowerCase() === userAddress?.toLowerCase()) return null
+  // if (address?.toLowerCase() === userAddress?.toLowerCase()) return null
 
   return (
     <button

@@ -3,7 +3,7 @@ import { useClickAway } from '@uidotdev/usehooks'
 import { useQueryState } from 'next-usequerystate'
 import { useCallback, useMemo, useRef, useState } from 'react'
 
-import searchENSNames from '#/api/fetchEnsName.ts'
+import searchENSNames from '#/api/searchENSNames'
 import { useRouter } from 'next/navigation'
 import { isAddress, type Address } from 'viem'
 import { useCart } from '#/contexts/cart-context.tsx'

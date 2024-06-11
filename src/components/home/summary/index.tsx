@@ -24,6 +24,7 @@ const Summary = () => {
       {address ? (
         <>
           <UserProfileCard
+            hideFollowButton={true}
             profile={profile}
             following={following}
             isLoading={profileIsLoading}

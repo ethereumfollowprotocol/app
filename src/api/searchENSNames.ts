@@ -1,23 +1,25 @@
-import { ENS_SUBGRAPH } from '#/lib/constants'
+import type { Address } from 'viem'
+import { normalize } from 'viem/ens'
+import { ENS_SUBGRAPH_URL } from '#/lib/constants'
 
 const searchENSNames = async ({ search }: { search: string }) => {
-  const sanitizedSearch = search.trim().toLowerCase()
+  const sanitizedSearch = normalize(search.trim())
   if (search.length === 0) return []
 
-  const response = await fetch(ENS_SUBGRAPH, {
+  const response = await fetch(ENS_SUBGRAPH_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       query: /*GraphQL*/ `
         query SearchQuery($search: String) {
           domains(
-            first: 15
+            first: 8
             orderBy: id
             orderDirection: asc
-            where: {and: [{name_starts_with: $search}, {name_ends_with: ".eth"}]}
+            where: {and: [{name_starts_with: $search}]}
           ) {
             name
-            registration { registrationDate }
+            resolvedAddress { id }
           }
         }`,
       variables: { search: sanitizedSearch },
@@ -28,13 +30,12 @@ const searchENSNames = async ({ search }: { search: string }) => {
   if (!response.ok) return []
 
   const json = (await response.json()) as {
-    data: { domains: { name: string; registration: { registrationDate: string } | null }[] }
+    data: { domains: { name: string; resolvedAddress: { id: Address } | null }[] }
   }
 
   return json.data.domains
-    .filter(domain => !!domain.registration)
-    .map(domain => domain.name)
-    .sort((a, b) => a.length - b.length)
+    .filter(domain => !!domain.resolvedAddress)
+    .sort((a, b) => a.name.length - b.name.length)
 }
 
 export default searchENSNames

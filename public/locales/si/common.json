@@ -5,7 +5,8 @@
     "leaderboard": "Lestvica",
     "connect": "Poveži denarnico",
     "disconnect": "Odpoveži denarnico",
-    "search placeholder": "Išci ENS ime ali 0x naslov"
+    "search placeholder": "Išci ENS ime ali 0x naslov",
+    "search no results": "Ni rezultatov"
   },
   "footer": {
     "team": "Ekipa",
