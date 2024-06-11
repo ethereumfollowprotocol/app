@@ -12,7 +12,7 @@ import type { FollowingResponse, ProfileDetailsResponse } from '#/api/requests'
 import { usePathname } from 'next/navigation'
 
 interface Props {
-  isProfilePage?: boolean
+  hideFollowButton?: boolean
   profile?: ProfileDetailsResponse | null
   following: FollowingResponse[]
   borderColor?: string
@@ -20,7 +20,7 @@ interface Props {
 }
 
 export function UserProfileCard({
-  isProfilePage,
+  hideFollowButton,
   profile,
   borderColor,
   isLoading,
@@ -70,7 +70,7 @@ export function UserProfileCard({
                       </div>
                     )
                   : null}
-                {!isProfilePage && profile.address && <FollowButton address={profile.address} />}
+                {!hideFollowButton && profile.address && <FollowButton address={profile.address} />}
               </div>
             </div>
             <div className='flex w-full flex-wrap xl:justify-center items-center mx-auto gap-0 justify-between sm:justify-start sm:gap-y-10 sm:gap-x-16 text-center'>
