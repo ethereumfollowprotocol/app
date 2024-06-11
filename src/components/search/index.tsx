@@ -115,7 +115,7 @@ export function Search({
                 key={result.name}
                 onClick={() => {
                   if (isEditor && result.resolvedAddress) addToCart(result.resolvedAddress.id)
-                  else router.push(`/${result.name}`)
+                  else router.push(`/${result.resolvedAddress?.id || result.name}`)
 
                   resetSearch()
                 }}
@@ -198,7 +198,7 @@ export function Search({
                     key={result.name}
                     onClick={() => {
                       if (isEditor && result.resolvedAddress) addToCart(result.resolvedAddress.id)
-                      else router.push(`/${result.name}`)
+                      else router.push(`/${result.resolvedAddress?.id || result.name}`)
                       resetSearch()
                     }}
                     className='max-w-full truncate text-md hover:opacity-75 cursor-pointer transition-opacity'
