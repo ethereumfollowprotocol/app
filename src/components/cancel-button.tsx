@@ -2,9 +2,10 @@ import { useTranslation } from 'react-i18next'
 
 interface CancelbuttonProps {
   onClick?: () => void
+  label?: string
 }
 
-const CancelButton: React.FC<CancelbuttonProps> = ({ onClick }) => {
+const CancelButton: React.FC<CancelbuttonProps> = ({ onClick, label }) => {
   const { t } = useTranslation('transactions')
 
   return (
@@ -12,7 +13,7 @@ const CancelButton: React.FC<CancelbuttonProps> = ({ onClick }) => {
       onClick={onClick}
       className='w-32 h-12 hover:opacity-90 bg-gray-300 rounded-full text-lg font-semibold'
     >
-      {t('cancel')}
+      {label ?? t('cancel')}
     </button>
   )
 }

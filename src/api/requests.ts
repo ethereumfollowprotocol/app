@@ -51,6 +51,12 @@ export interface ProfileDetailsResponse {
 
 type AddressOrName = Address | string
 
+export type ProfileRoles = {
+  isOwner: boolean
+  isManager: boolean
+  isUser: boolean
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // /users/:addressOrENS/profile
 ///////////////////////////////////////////////////////////////////////////////

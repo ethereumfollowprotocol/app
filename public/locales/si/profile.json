@@ -18,5 +18,20 @@
   "following myprofile empty second": "Prični z brskanjem in sledi drugim. Ko jih potrdiš \"onchain\" se bodo prikazali tukaj",
   "followers myprofile empty": "Nimaš sledilcev",
   "following empty first": "Ta uporabnik ne sledi nikomur",
-  "followers empty": "Ta uporabnik nima sledilcev"
+  "followers empty": "Ta uporabnik nima sledilcev",
+  "list settings": {
+    "list": "Seznam",
+    "followers": "Sledilci",
+    "following": "Slediš",
+    "leaderboard": "Lestvica",
+    "location": "Lokacija sezanama",
+    "owner": "Lastnik",
+    "manager": "Upravnik",
+    "user": "Uporabnik",
+    "save": "Shrani",
+    "set location": "Spremeni lokacijo seznama",
+    "set owner": "Spremeni lastnika seznama",
+    "set manager": "Spremeni upravnika seznama",
+    "set user": "Spremeni uporabnika seznama"
+  }
 }

@@ -3,18 +3,18 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import type { Address, GetEnsAvatarReturnType } from 'viem'
 
 import { Avatar } from '#/components/avatar'
-import { listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useCart } from '#/contexts/cart-context'
 import { truncateAddress } from '#/lib/utilities'
 import { DEFAULT_TAGS_TO_ADD } from '#/lib/constants'
 import Plus from 'public/assets/icons/plus-squared.svg'
 import { useFollowState } from '#/hooks/use-follow-state'
-import { usePathname } from 'next/navigation'
+import { listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
 
 interface FollowListItemNameProps {
   address: Address
