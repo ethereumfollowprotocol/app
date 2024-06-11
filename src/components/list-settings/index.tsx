@@ -1,18 +1,18 @@
 import Image from 'next/image'
 import { useState } from 'react'
 import { isAddress } from 'viem'
+import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
 
-import SaveSettings from './components/save-settings'
 import Cross from 'public/assets/icons/cross.svg'
 import type { ChainWithDetails } from '#/lib/wagmi'
 import { ChainIcon } from '#/components/chain-icon'
+import SaveSettings from './components/save-settings'
 import useListSettings from './hooks/use-list-settings'
 import ArrowDown from 'public/assets/icons/arrow-down.svg'
 import { PrimaryButton } from '#/components/primary-button'
 import type { ProfileDetailsResponse } from '#/api/requests'
-import { useAccount } from 'wagmi'
 
 interface ListSettingsProps {
   isSaving: boolean
