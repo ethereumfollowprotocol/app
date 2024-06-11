@@ -81,7 +81,12 @@ export default function ProfilePage({ searchParams }: Props) {
       {!isSaving && (
         <main className='flex pb-8 min-h-full w-full justify-between xl:justify-center gap-y-4 flex-col md:flex-row flex-wrap xl:flex-nowrap items-start xl:gap-6 mt-32 md:mt-40 lg:mt-48 px-4 lg:px-8'>
           <div className='flex flex-col w-full xl:w-fit items-center gap-4'>
-            <UserProfileCard profile={profile} following={following} isLoading={profileIsLoading} />
+            <UserProfileCard
+              isProfilePage={true}
+              profile={profile}
+              following={following}
+              isLoading={profileIsLoading}
+            />
             <div className='flex flex-col gap-1 items-center'>
               <p className='font-semibold '>{t('block-mute')}</p>
               {profile?.primary_list && (

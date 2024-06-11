@@ -12,13 +12,20 @@ import type { FollowingResponse, ProfileDetailsResponse } from '#/api/requests'
 import { usePathname } from 'next/navigation'
 
 interface Props {
+  isProfilePage?: boolean
   profile?: ProfileDetailsResponse | null
   following: FollowingResponse[]
   borderColor?: string
   isLoading?: boolean
 }
 
-export function UserProfileCard({ profile, borderColor, isLoading, following }: Props) {
+export function UserProfileCard({
+  isProfilePage,
+  profile,
+  borderColor,
+  isLoading,
+  following
+}: Props) {
   const pathname = usePathname()
   const { address: connectedAddress } = useAccount()
   const { t } = useTranslation('common', { keyPrefix: 'profile card' })
@@ -63,7 +70,7 @@ export function UserProfileCard({ profile, borderColor, isLoading, following }: 
                       </div>
                     )
                   : null}
-                {profile.address && <FollowButton address={profile.address} />}
+                {!isProfilePage && profile.address && <FollowButton address={profile.address} />}
               </div>
             </div>
             <div className='flex w-full flex-wrap xl:justify-center items-center mx-auto gap-0 justify-between sm:justify-start sm:gap-y-10 sm:gap-x-16 text-center'>
