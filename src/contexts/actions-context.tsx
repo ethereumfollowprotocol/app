@@ -6,7 +6,11 @@ import { createContext, useContext, useState, type ReactNode, useCallback, useMe
 
 export enum EFPActionType {
   CreateEFPList = 'CreateEFPList',
-  UpdateEFPList = 'UpdateEFPList'
+  UpdateEFPList = 'UpdateEFPList',
+  SetEFPListOwner = 'SetEFPListOwner',
+  SetEFPListManager = 'SetEFPListManager',
+  SetEFPListUser = 'SetEFPListUser',
+  SetEFPListStorageLocation = 'SetEFPListStorageLocation'
 }
 
 export type Action = {

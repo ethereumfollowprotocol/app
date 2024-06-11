@@ -1,8 +1,8 @@
-import { Step } from './types'
 import useCheckout from '#/hooks/use-checkout'
-import TransactionStatus from './transaction-status'
-import { SelectChainCard } from './select-chain-card'
-import { InitiateActionsCard } from './initiate-actions-card'
+import { Step } from '../../../components/checkout/types'
+import TransactionStatus from '../../../components/checkout/transaction-status'
+import { SelectChainCard } from '../../../components/checkout/select-chain-card'
+import { InitiateActionsCard } from '../../../components/checkout/initiate-actions-card'
 
 interface CheckoutProps {
   setOpen: (open: boolean) => void
@@ -13,11 +13,12 @@ const Checkout: React.FC<CheckoutProps> = ({ setOpen, hasCreatedEfpList }) => {
   const {
     chains,
     actions,
+    onFinish,
     currentStep,
-    setCurrentStep,
     selectedChain,
-    handleChainClick,
     handleNextStep,
+    setCurrentStep,
+    handleChainClick,
     handleInitiateActions
   } = useCheckout()
 
@@ -43,7 +44,7 @@ const Checkout: React.FC<CheckoutProps> = ({ setOpen, hasCreatedEfpList }) => {
       )}
       {currentStep === Step.TransactionStatus && (
         <TransactionStatus
-          setOpen={setOpen}
+          onFinish={() => onFinish()}
           setCurrentStep={setCurrentStep}
           handleReInitiateActions={handleInitiateActions}
         />

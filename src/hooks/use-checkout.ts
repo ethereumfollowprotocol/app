@@ -12,25 +12,27 @@ import {
 } from 'viem'
 
 import { useCart } from '#/contexts/cart-context'
+import { Step } from '#/components/checkout/types'
+import type { ChainWithDetails } from '#/lib/wagmi'
 import { useMintEFP } from './efp-actions/use-mint-efp'
 import { efpContracts } from '#/lib/constants/contracts'
-import { Step } from '#/app/editor/components/checkout/types'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { extractAddressAndTag, isTagListOp } from '#/utils/list-ops'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
-import type { ChainWithDetails } from '#/lib/wagmi'
+import { useRouter } from 'next/navigation'
 
 const useCheckout = () => {
   const chains = useChains()
 
+  const router = useRouter()
   const { profile } = useEFPProfile()
   const currentChainId = useChainId()
   const { switchChain } = useSwitchChain()
   const { mint, nonce: mintNonce } = useMintEFP()
-  const { totalCartItems, cartItems } = useCart()
   const { data: walletClient } = useWalletClient()
-  const { addActions, executeActionByIndex, actions } = useActions()
+  const { totalCartItems, cartItems, resetCart } = useCart()
+  const { addActions, executeActionByIndex, actions, resetActions } = useActions()
 
   // get contract for selected chain to pull list storage location from
   const listRegistryContract = getContract({
@@ -124,8 +126,10 @@ const useCheckout = () => {
     }
 
     // add Create list action if user doesn't have the EFP list yet
-    const actions = profile?.primary_list ? [cartItemAction] : [createEFPListAction, cartItemAction]
-    addActions(actions)
+    const actionsToExecute = profile?.primary_list
+      ? [cartItemAction]
+      : [createEFPListAction, cartItemAction]
+    addActions(actionsToExecute)
   }, [selectedChainId, totalCartItems, addActions, profile, walletClient])
 
   useEffect(() => {
@@ -169,9 +173,16 @@ const useCheckout = () => {
     executeActionByIndex(0)
   }, [executeActionByIndex, currentChainId])
 
+  const onFinish = useCallback(() => {
+    resetCart()
+    resetActions()
+    router.push('/profile')
+  }, [resetActions, resetCart])
+
   return {
     chains,
     actions,
+    onFinish,
     currentStep,
     setCurrentStep,
     selectedChain,

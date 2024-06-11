@@ -9,6 +9,7 @@ import {
 } from '#/utils/list-ops'
 import { useCart } from '#/contexts/cart-context'
 import { useFollowState } from '#/hooks/use-follow-state'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 export type FollowButtonState =
   | 'Block'
@@ -45,6 +46,7 @@ export const useFollowButton = ({
 }: {
   address: Address
 }) => {
+  const { roles } = useEFPProfile()
   const followState = useFollowState(address, 'followings')
   const { hasListOpAddRecord, hasListOpRemoveRecord, addCartItem, removeCartItem, cartItems } =
     useCart()
@@ -87,6 +89,9 @@ export const useFollowButton = ({
   }, [followState, isPendingFollow, isPendingUnfollow])
 
   const handleAction = () => {
+    // cannot perform list operations if not list manager
+    if (!roles?.isManager) return
+
     // remove address and tags for this address from cart if it's a pending follow
     if (isPendingFollow) {
       const addressTags = cartItems.filter(item =>

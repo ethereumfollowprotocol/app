@@ -1,19 +1,17 @@
 import { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ChainIcon } from '#/components/chain-icon'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
 import { Step } from '../types'
 import useChain from '#/hooks/use-chain'
-import { useCart } from '#/contexts/cart-context'
 import CancelButton from '#/components/cancel-button'
 import TransactionDetails from './transaction-details'
 import { useActions } from '#/contexts/actions-context'
 import { PrimaryButton } from '#/components/primary-button'
-import { useTranslation } from 'react-i18next'
-import { useRouter } from 'next/navigation'
 
 interface TransactionStatusProps {
-  setOpen?: (open: boolean) => void // setOpen prop for the parent modal
+  onFinish: () => void
   setCurrentStep: (step: Step) => void
   handleReInitiateActions: () => void
 }
@@ -25,41 +23,31 @@ interface TransactionStatusProps {
  * The component also provides a button to move to the next action, using the actions-context
  */
 const TransactionStatus: React.FC<TransactionStatusProps> = ({
-  setOpen,
+  onFinish,
   setCurrentStep,
   handleReInitiateActions
 }) => {
   const {
     actions,
-    resetActions,
     currentAction,
     moveToNextAction,
     currentActionIndex,
     executeActionByIndex,
     allActionsSuccessful
   } = useActions()
-  const { resetCart } = useCart()
   const chain = useChain(currentAction?.chainId)
   const { isSuccess } = useWaitForTransactionReceipt({
     hash: currentAction?.txHash,
     chainId: currentAction?.chainId
   })
 
-  const router = useRouter()
-  const { t } = useTranslation('transactions', { keyPrefix: 'action' })
   const { t: tBtn } = useTranslation('transactions')
+  const { t } = useTranslation('transactions', { keyPrefix: 'action' })
 
   const handleNextAction = useCallback(() => {
     const nextActionIndex = moveToNextAction()
     executeActionByIndex(nextActionIndex)
   }, [moveToNextAction, executeActionByIndex])
-
-  const handleFinish = useCallback(() => {
-    // Reset parameters and redirect to profile page
-    resetCart()
-    resetActions()
-    router.push('/profile')
-  }, [setOpen, resetActions, resetCart])
 
   // Disable the next button if the current action is not successful
   const nextButtonIsDisabled = !isSuccess
@@ -116,7 +104,7 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
         {showFinishButton && (
           <PrimaryButton
             label={tBtn('finish')}
-            onClick={handleFinish}
+            onClick={onFinish}
             className='text-lg w-32 h-12'
             disabled={finishButtonIsDisabled}
           />
