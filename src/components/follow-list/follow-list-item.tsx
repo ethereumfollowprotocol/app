@@ -30,7 +30,7 @@ export function FollowListItem({
 
   return (
     <div className={`flex items-center justify-between ${className}`}>
-      {/* Left section: Avatar and Name */}
+      {/* Left section: Avatar, Name, and Tags */}
       <FollowListItemName
         address={address}
         avatarUrl={profileAvatar}
@@ -40,16 +40,6 @@ export function FollowListItem({
         tags={tags}
         canEditTags={canEditTags}
       />
-
-      {/* Middle section: Tags (conditionally displayed) */}
-      {/* {showTags && tags.length > 0 && (
-        <FollowListItemTags
-          address={profileAddress}
-          className='flex w-fit items-center'
-          tags={tags}
-        />
-      )} */}
-
       {/* Right section: Follow Button with consistent width */}
       <FollowButton address={address} className='rounded-xl w-[107px]' />
     </div>

@@ -36,7 +36,7 @@ export function Name({
     <Link href={`/${name || address}`} className='w-full'>
       <p
         className={`font-bold sm:text-lg text-start  ${
-          showTags ? 'w-full text-nowrap' : 'w-[90%] truncate'
+          showTags ? 'w-full truncate' : 'w-[90%] truncate'
         } hover:opacity-75 transition-opacity`}
       >
         {name || truncateAddress(address)}

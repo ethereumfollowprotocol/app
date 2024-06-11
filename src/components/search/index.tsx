@@ -1,10 +1,11 @@
 'use client'
 
 import Image from 'next/image'
+import { useTranslation } from 'react-i18next'
+
+import useSearch from './hooks/useSearch.ts'
 import LoadingSpinner from '../loading-spinner.tsx'
 import MagnifyingGlass from 'public/assets/icons/magnifying-glass.svg'
-import { useTranslation } from 'react-i18next'
-import useSearch from './hooks/useSearch.ts'
 
 export function Search({
   disabled,
@@ -103,19 +104,26 @@ export function Search({
               <LoadingSpinner />
             </div>
           )}
-          {searchResult.map((result, index) => (
-            <p
-              key={result}
-              onClick={() => {
-                if (isEditor) addToCart(result)
-                else router.push(`/${result}`)
-                resetSearch()
-              }}
-              className='max-w-full truncate text-md hover:opacity-75 cursor-pointer transition-opacity'
-            >
-              {result}
-            </p>
-          ))}
+          {!isLoading && searchResult.length === 0 ? (
+            <div className='w-full h-16 flex items-center justify-center italic font-semibold text-gray-400'>
+              No results
+            </div>
+          ) : (
+            searchResult.map((result, index) => (
+              <p
+                key={result.name}
+                onClick={() => {
+                  if (isEditor && result.resolvedAddress) addToCart(result.resolvedAddress.id)
+                  else router.push(`/${result.name}`)
+
+                  resetSearch()
+                }}
+                className='max-w-full truncate text-md hover:opacity-75 cursor-pointer transition-opacity'
+              >
+                {result.name}
+              </p>
+            ))
+          )}
         </div>
       </div>
       <div className={` relative z-50 ${isEditor ? 'hidden' : 'md:hidden block'}`}>
@@ -178,15 +186,15 @@ export function Search({
               )}
               {searchResult.map(result => (
                 <div
-                  key={`${result}`}
+                  key={result.name}
                   onClick={() => {
-                    if (isEditor) addToCart(result)
-                    else router.push(`/${result}`)
+                    if (isEditor && result.resolvedAddress) addToCart(result.resolvedAddress.id)
+                    else router.push(`/${result.name}`)
                     resetSearch()
                   }}
                   className='max-w-full truncate text-md hover:opacity-75 cursor-pointer transition-opacity'
                 >
-                  {result}
+                  {result.name}
                 </div>
               ))}
             </div>
