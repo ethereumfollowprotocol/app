@@ -1,24 +1,24 @@
-import { optimismSepolia } from 'viem/chains'
-import { useCallback, useEffect, useState } from 'react'
-import { useChainId, useSwitchChain, useWalletClient } from 'wagmi'
 import {
   http,
   isAddress,
+  type Chain,
   getContract,
   type Address,
   encodePacked,
-  createPublicClient,
-  type Chain
+  createPublicClient
 } from 'viem'
+import { optimismSepolia } from 'viem/chains'
+import { useTranslation } from 'react-i18next'
+import { useCallback, useEffect, useState } from 'react'
+import { useChainId, useSwitchChain, useWalletClient } from 'wagmi'
 
+import { useCart } from '#/contexts/cart-context'
 import { Step } from '#/components/checkout/types'
 import { efpContracts } from '#/lib/constants/contracts'
 import type { ProfileDetailsResponse } from '#/api/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
-import { useTranslation } from 'react-i18next'
-import { useCart } from '#/contexts/cart-context'
 
 type SaveListSettingsParams = {
   profile: ProfileDetailsResponse

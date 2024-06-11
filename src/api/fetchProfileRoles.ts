@@ -1,10 +1,10 @@
 import { optimismSepolia } from 'viem/chains'
+import type { Config, UseChainsReturnType } from 'wagmi'
 import { createPublicClient, fromHex, getContract, http, type Address } from 'viem'
 
 import type { ProfileRoles } from './requests'
 import { efpContracts } from '#/lib/constants/contracts'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
-import type { Config, UseChainsReturnType } from 'wagmi'
 
 const fetchProfileRoles = async ({
   primary_list,

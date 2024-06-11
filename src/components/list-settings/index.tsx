@@ -4,14 +4,15 @@ import { isAddress } from 'viem'
 import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
 
-import SaveSettings from './save-settings'
+import SaveSettings from './components/save-settings'
 import Cross from 'public/assets/icons/cross.svg'
 import type { ChainWithDetails } from '#/lib/wagmi'
 import { ChainIcon } from '#/components/chain-icon'
-import useListSettings from '../hooks/use-list-settings'
+import useListSettings from './hooks/use-list-settings'
 import ArrowDown from 'public/assets/icons/arrow-down.svg'
 import { PrimaryButton } from '#/components/primary-button'
 import type { ProfileDetailsResponse } from '#/api/requests'
+import { useAccount } from 'wagmi'
 
 interface ListSettingsProps {
   isSaving: boolean
@@ -26,6 +27,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({ isSaving, onClose, setIsSav
     setChainDropdownOpen(false)
   })
 
+  const { address: connectedAddress } = useAccount()
   const listSettingsRef = useClickAway<HTMLDivElement>(onClose)
   const { t } = useTranslation('profile', { keyPrefix: 'list settings' })
 
@@ -47,7 +49,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({ isSaving, onClose, setIsSav
     fetchedManager,
     setChangedValues,
     fetchedListRecordsContractAddress
-  } = useListSettings({ profile, onClose })
+  } = useListSettings({ profile })
 
   return isSaving ? (
     <SaveSettings
@@ -104,7 +106,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({ isSaving, onClose, setIsSav
             <button
               className='w-[190px] flex items-center justify-between px-3 h-12 bg-white/50 p-1 hover:bg-white/60 rounded-xl disabled:hover:bg-white/50 disabled:opacity-75 disabled:cursor-not-allowed'
               onClick={() => setChainDropdownOpen(!chainDropdownOpen)}
-              disabled={profile.address.toLowerCase() !== fetchedOwner?.toLowerCase()}
+              disabled={connectedAddress?.toLowerCase() !== fetchedOwner?.toLowerCase()}
             >
               {chain && <ChainIcon chain={chain as ChainWithDetails} className={'h-6 w-6'} />}
               <p className='text-lg font-semibold truncate'>{chain?.name}</p>
@@ -151,7 +153,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({ isSaving, onClose, setIsSav
                 owner: isAddress(addr) && addr.toLowerCase() !== fetchedOwner?.toLowerCase()
               })
             }}
-            disabled={profile.address.toLowerCase() !== fetchedOwner?.toLowerCase()}
+            disabled={connectedAddress?.toLowerCase() !== fetchedOwner?.toLowerCase()}
             className='p-3 font-medium truncate rounded-lg w-full bg-white/70 disabled:text-gray-400 disabled:cursor-not-allowed'
           />
         </div>
@@ -169,7 +171,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({ isSaving, onClose, setIsSav
                 manager: isAddress(addr) && addr.toLowerCase() !== fetchedManager?.toLowerCase()
               })
             }}
-            disabled={profile.address.toLowerCase() !== fetchedManager?.toLowerCase()}
+            disabled={connectedAddress?.toLowerCase() !== fetchedManager?.toLowerCase()}
             className='p-3 font-medium truncate rounded-lg w-full bg-white/70 disabled:text-gray-400 disabled:cursor-not-allowed'
           />
         </div>
@@ -187,7 +189,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({ isSaving, onClose, setIsSav
                 user: isAddress(addr) && addr.toLowerCase() !== fetchedUser?.toLowerCase()
               })
             }}
-            disabled={profile.address.toLowerCase() !== fetchedManager?.toLowerCase()}
+            disabled={connectedAddress?.toLowerCase() !== fetchedManager?.toLowerCase()}
             className='p-3 font-medium truncate rounded-lg w-full bg-white/70 disabled:text-gray-400 disabled:cursor-not-allowed'
           />
         </div>

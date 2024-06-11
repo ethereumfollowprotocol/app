@@ -7,10 +7,7 @@ import { efpContracts } from '#/lib/constants/contracts'
 import type { ProfileDetailsResponse } from '#/api/requests'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 
-const useListSettings = ({
-  profile,
-  onClose
-}: { profile: ProfileDetailsResponse; onClose: () => void }) => {
+const useListSettings = ({ profile }: { profile: ProfileDetailsResponse }) => {
   const chains = useChains()
   const [chain, setChain] = useState<Chain>()
   const [fetchedChain, setFetchedChain] = useState<Chain>()
