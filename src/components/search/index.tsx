@@ -107,7 +107,7 @@ export function Search({
           )}
           {!isLoading && searchResult.length === 0 ? (
             <div className='w-full h-16 flex items-center justify-center italic font-semibold text-gray-400'>
-              No results
+              {t('navigation.search no results')}
             </div>
           ) : (
             searchResult.map((result, index) => (
@@ -188,19 +188,25 @@ export function Search({
                   <LoadingSpinner />
                 </div>
               )}
-              {searchResult.map(result => (
-                <div
-                  key={result.name}
-                  onClick={() => {
-                    if (isEditor && result.resolvedAddress) addToCart(result.resolvedAddress.id)
-                    else router.push(`/${result.name}`)
-                    resetSearch()
-                  }}
-                  className='max-w-full truncate text-md hover:opacity-75 cursor-pointer transition-opacity'
-                >
-                  {result.name}
+              {!isLoading && searchResult.length === 0 ? (
+                <div className='w-full h-16 flex items-center justify-center italic font-semibold text-gray-400'>
+                  {t('navigation.search no results')}
                 </div>
-              ))}
+              ) : (
+                searchResult.map(result => (
+                  <div
+                    key={result.name}
+                    onClick={() => {
+                      if (isEditor && result.resolvedAddress) addToCart(result.resolvedAddress.id)
+                      else router.push(`/${result.name}`)
+                      resetSearch()
+                    }}
+                    className='max-w-full truncate text-md hover:opacity-75 cursor-pointer transition-opacity'
+                  >
+                    {result.name}
+                  </div>
+                ))
+              )}
             </div>
           </div>
           <label className='sr-only'>Search</label>
