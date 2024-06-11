@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import useSearch from './hooks/useSearch.ts'
 import LoadingSpinner from '../loading-spinner.tsx'
 import MagnifyingGlass from 'public/assets/icons/magnifying-glass.svg'
+import { truncateAddress } from '#/lib/utilities.ts'
 
 export function Search({
   disabled,
@@ -118,9 +119,12 @@ export function Search({
 
                   resetSearch()
                 }}
-                className='max-w-full truncate text-md hover:opacity-75 cursor-pointer transition-opacity'
+                className='max-w-full truncate text-md flex items-center hover:opacity-75 gap-1 cursor-pointer transition-opacity'
               >
-                {result.name}
+                <p>{result.name}</p>
+                <p className='text-sm text-gray-400'>
+                  - {truncateAddress(result.resolvedAddress?.id)}
+                </p>
               </p>
             ))
           )}
