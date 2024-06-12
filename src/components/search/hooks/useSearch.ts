@@ -12,23 +12,26 @@ import { resolveENSAddress } from '#/utils/resolveAddress.ts'
 import { useEFPProfile } from '#/contexts/efp-profile-context.tsx'
 
 const useSearch = (isEditor?: boolean) => {
-  const router = useRouter()
-
-  const searchBarRef = useRef<HTMLInputElement>(null)
+  const [isAddingToCart, setIsAddingToCart] = useState(false)
+  const [addToCartError, setAddToCartError] = useState<string>()
   const [dropdownMenuOpen, setDropdownMenuOpen] = useState(false)
   const [dialogOpen, setDialogOpen] = useState<undefined | boolean>(undefined)
-
-  const clickAwayRef = useClickAway<HTMLDivElement>(_ => {
-    setDropdownMenuOpen(false)
-    setDialogOpen(false)
-  })
-
   const [currentSearch, setCurrentSearch] = useState('')
   const [search, setSearch] = useQueryState('search', {
     history: 'push',
     parse: value => value?.trim().toLowerCase(),
     serialize: value => value.trim().toLowerCase()
   })
+
+  const router = useRouter()
+  const { following, roles } = useEFPProfile()
+  const { addCartItem, hasListOpAddRecord } = useCart()
+
+  const clickAwayRef = useClickAway<HTMLDivElement>(_ => {
+    setDropdownMenuOpen(false)
+    setDialogOpen(false)
+  })
+  const searchBarRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
 
   const searchKey = useMemo(
     () => (isEditor ? currentSearch : search),
@@ -48,9 +51,13 @@ const useSearch = (isEditor?: boolean) => {
     refetchIntervalInBackground: false,
     enabled: Boolean(searchKey && searchKey.length > 0)
   })
+  const searchResult = searchResultStatus === 'success' ? data : []
 
-  const { following, roles } = useEFPProfile()
-  const { addCartItem, hasListOpAddRecord } = useCart()
+  const resetSearch = () => {
+    setCurrentSearch('')
+    setDropdownMenuOpen(false)
+    searchBarRef.current?.blur()
+  }
 
   const getFollowingState = (address: Address) => {
     if (!following) return 'none'
@@ -66,34 +73,35 @@ const useSearch = (isEditor?: boolean) => {
     return 'follows'
   }
 
-  const searchResult = searchResultStatus === 'success' ? data : []
-
   let searchTimeout: NodeJS.Timeout | null = null
 
   const handleSearchEvent = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      if (event?.target.value.includes(' ')) return
-      if (searchTimeout) clearTimeout(searchTimeout)
+    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setAddToCartError(undefined)
+
       const term = event?.target.value
-      setDropdownMenuOpen(term.length > 0)
+      if (!isEditor && term.includes(' ')) return
+      if (searchTimeout) clearTimeout(searchTimeout)
+
+      const hasMultipleNames =
+        isEditor && (term.includes(',') || term.includes(' ') || term.includes('\n'))
+      setDropdownMenuOpen(!hasMultipleNames && term.length > 0)
       setCurrentSearch(term)
+
       if (!isEditor) searchTimeout = setTimeout(() => setSearch(term), 500)
     },
     [searchTimeout]
   )
 
-  const resetSearch = () => {
-    setCurrentSearch('')
-    setDropdownMenuOpen(false)
-    searchBarRef.current?.blur()
-  }
-
   const addToCart = async (user: string) => {
-    if (!roles?.isManager) return
+    if (!roles?.isManager) {
+      setAddToCartError('Connected account is not the list manager')
+      return
+    }
 
     const address = isAddress(user) ? user : await resolveENSAddress(user)
 
-    if (!address) return
+    if (!address) return user
 
     const followState = getFollowingState(address)
     const isPendingFollow = hasListOpAddRecord(address)
@@ -102,11 +110,37 @@ const useSearch = (isEditor?: boolean) => {
 
     if (isPendingFollow) return
     if (followState === 'follows') return
-    if (followState === 'none') return addCartItem({ listOp: listOpAddListRecord(address) })
+    if (followState === 'none') addCartItem({ listOp: listOpAddListRecord(address) })
   }
 
-  const onSubmit = () => {
-    if (isEditor) return addToCart(currentSearch)
+  const onSubmit = async () => {
+    if (isEditor) {
+      if (!roles?.isManager) {
+        setAddToCartError('Connected account is not the list manager')
+        return
+      }
+
+      const hasMultipleNames =
+        isEditor &&
+        (currentSearch.includes(',') || currentSearch.includes(' ') || currentSearch.includes('\n'))
+
+      if (hasMultipleNames) {
+        setIsAddingToCart(true)
+        const namesToAdd = currentSearch
+          .replaceAll(',', ' ')
+          .replaceAll('\n', ' ')
+          .split(' ')
+          .map(name => name.trim())
+          .filter(name => !!name)
+
+        const addedToCart = await Promise.all(namesToAdd.map(async name => await addToCart(name)))
+        const erroredNames = addedToCart.filter(name => !!name)
+        if (erroredNames.length > 0) setAddToCartError(`Invalide names: ${erroredNames.join(', ')}`)
+        return setIsAddingToCart(false)
+      }
+
+      return addToCart(currentSearch)
+    }
 
     if (isAddress(currentSearch) || currentSearch.includes('.')) {
       router.push(`/${currentSearch}`)
@@ -116,20 +150,23 @@ const useSearch = (isEditor?: boolean) => {
 
   return {
     router,
-    searchBarRef,
-    dropdownMenuOpen,
-    dialogOpen,
-    clickAwayRef,
-    currentSearch,
     search,
-    isLoading,
-    searchResult,
-    handleSearchEvent,
-    resetSearch,
-    addToCart,
     onSubmit,
-    setDropdownMenuOpen,
-    setDialogOpen
+    addToCart,
+    isLoading,
+    dialogOpen,
+    resetSearch,
+    clickAwayRef,
+    searchBarRef,
+    searchResult,
+    setDialogOpen,
+    currentSearch,
+    addToCartError,
+    isAddingToCart,
+    dropdownMenuOpen,
+    handleSearchEvent,
+    setAddToCartError,
+    setDropdownMenuOpen
   }
 }
 
