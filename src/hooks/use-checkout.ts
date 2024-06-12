@@ -1,4 +1,3 @@
-import { optimismSepolia } from 'viem/chains'
 import { useCallback, useEffect, useState } from 'react'
 import { useChainId, useChains, useSwitchChain, useWalletClient } from 'wagmi'
 import {
@@ -21,6 +20,7 @@ import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { extractAddressAndTag, isTagListOp } from '#/utils/list-ops'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
 import { useRouter } from 'next/navigation'
+import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 
 const useCheckout = () => {
   const chains = useChains()
@@ -38,10 +38,10 @@ const useCheckout = () => {
   const listRegistryContract = getContract({
     address: efpContracts.EFPListRegistry,
     abi: efpListRegistryAbi,
-    client: createPublicClient({ chain: optimismSepolia, transport: http() })
+    client: createPublicClient({ chain: DEFAULT_CHAIN, transport: http() })
   })
 
-  const [selectedChainId, setSelectedChainId] = useState<number>()
+  const [selectedChainId, setSelectedChainId] = useState<number>(DEFAULT_CHAIN.id)
   // Set step to initiating transactions if the user has already created their EFP list
   // Selecting the chain is only an option when creating a new EFP list to select List records location
   const [currentStep, setCurrentStep] = useState(
@@ -120,7 +120,7 @@ const useCheckout = () => {
       id: EFPActionType.CreateEFPList, // Unique identifier for the action
       type: EFPActionType.CreateEFPList,
       label: 'create list',
-      chainId: optimismSepolia.id, // Chain ID where main contracts are stored at
+      chainId: DEFAULT_CHAIN.id, // Chain ID where main contracts are stored at
       execute: mint,
       isPendingConfirmation: false
     }
@@ -149,7 +149,7 @@ const useCheckout = () => {
   const handleInitiateActions = useCallback(async () => {
     const chainId =
       actions[0]?.label === 'create list'
-        ? optimismSepolia.id
+        ? DEFAULT_CHAIN.id
         : selectedList
           ? fromHex(
               `0x${(
