@@ -12,6 +12,7 @@ const Summary = () => {
   const { t } = useTranslation('home')
   const {
     profile,
+    selectedList,
     profileIsLoading,
     followersIsLoading,
     isFetchingMoreFollowers,
@@ -24,6 +25,7 @@ const Summary = () => {
       {address ? (
         <>
           <UserProfileCard
+            profileList={selectedList || profile?.primary_list}
             hideFollowButton={true}
             profile={profile}
             following={following}

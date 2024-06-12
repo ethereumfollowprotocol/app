@@ -21,6 +21,7 @@ import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
 
 type SaveListSettingsParams = {
+  selectedList: number
   profile: ProfileDetailsResponse
   chain?: Chain
   newChain?: Chain
@@ -40,6 +41,7 @@ type SaveListSettingsParams = {
 }
 
 const useSaveListSettings = ({
+  selectedList,
   profile,
   chain,
   newChain,
@@ -69,14 +71,14 @@ const useSaveListSettings = ({
   })
 
   const setListStorageLocationTx = useCallback(async () => {
-    if (!(newChain && slot && profile.primary_list)) return
+    if (!(newChain && slot)) return
 
     const data = encodePacked(
       ['uint256', 'address', 'uint'],
       [BigInt(newChain.id), efpContracts.EFPListRecords, slot]
     )
     const hash = await listRegistryContract.write.setListStorageLocation(
-      [BigInt(profile.primary_list), data],
+      [BigInt(selectedList), data],
       {
         account: profile.address
       }

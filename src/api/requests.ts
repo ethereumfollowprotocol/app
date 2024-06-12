@@ -4,6 +4,7 @@ import { formatAddressOrName } from '#/lib/utilities'
 
 export interface InfiniteProfileQueryProps {
   addressOrName: string
+  list?: number
   limit: number
   pageParam: number
 }
@@ -47,6 +48,11 @@ export interface ProfileDetailsResponse {
   ens: ENSProfile
   primary_list?: number | null
   stats?: StatsResponse | undefined
+}
+
+export interface ProfileListsResponse {
+  primary_list?: number | null
+  lists?: number[]
 }
 
 type AddressOrName = Address | string

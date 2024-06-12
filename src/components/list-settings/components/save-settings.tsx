@@ -7,6 +7,7 @@ import TransactionStatus from '#/components/checkout/transaction-status'
 import { InitiateActionsCard } from '#/components/checkout/initiate-actions-card'
 
 export interface SaveSettingsProps {
+  selectedList: number
   profile: ProfileDetailsResponse
   chain?: Chain
   newChain?: Chain
@@ -26,6 +27,7 @@ export interface SaveSettingsProps {
 }
 
 const SaveSettings: React.FC<SaveSettingsProps> = ({
+  selectedList,
   profile,
   chain,
   newChain,
@@ -40,6 +42,7 @@ const SaveSettings: React.FC<SaveSettingsProps> = ({
 }) => {
   const { actions, onFinish, currentStep, setCurrentStep, handleInitiateActions } =
     useSaveListSettings({
+      selectedList,
       profile,
       chain,
       newChain,

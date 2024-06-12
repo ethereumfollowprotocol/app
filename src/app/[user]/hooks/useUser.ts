@@ -6,12 +6,17 @@ import { FETCH_LIMIT_PARAM } from '#/lib/constants'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 
 const useUser = (user: string) => {
+  const userIsList = user[0] === '#'
+  const listNum = userIsList ? Number(user.slice(1, user.length)) : undefined
+
   const { data: profile, isLoading: profileIsLoading } = useQuery({
     queryKey: ['profile', user],
     queryFn: async () => {
       if (!user) return null
 
-      const fetchedProfile = await fetchProfileDetails(user)
+      const fetchedProfile = await (listNum
+        ? fetchProfileDetails('', listNum)
+        : fetchProfileDetails(user))
       return fetchedProfile
     },
     staleTime: 20000
@@ -33,6 +38,7 @@ const useUser = (user: string) => {
 
       const fetchedFollowers = await fetchProfileFollowers({
         addressOrName: user,
+        list: listNum,
         limit: FETCH_LIMIT_PARAM,
         pageParam
       })
@@ -59,6 +65,7 @@ const useUser = (user: string) => {
 
       const fetchedFollowers = await fetchProfileFollowing({
         addressOrName: user,
+        list: listNum,
         limit: FETCH_LIMIT_PARAM,
         pageParam
       })

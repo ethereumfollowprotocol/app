@@ -12,6 +12,7 @@ import type { FollowingResponse, ProfileDetailsResponse } from '#/api/requests'
 import { usePathname } from 'next/navigation'
 
 interface Props {
+  profileList?: number | null
   hideFollowButton?: boolean
   profile?: ProfileDetailsResponse | null
   following: FollowingResponse[]
@@ -20,6 +21,7 @@ interface Props {
 }
 
 export function UserProfileCard({
+  profileList,
   hideFollowButton,
   profile,
   borderColor,
@@ -48,7 +50,7 @@ export function UserProfileCard({
       ) : profile && isProfileValid ? (
         <>
           <div className='text-gray-500 absolute text-right xl:text-left px-2 w-full left-0 top-1 font-semibold'>
-            #{profile?.primary_list ?? '-'}
+            #{profileList ?? '-'}
           </div>
           <div className='flex w-full xl:items-center flex-col gap-5 sm:gap-6 md:gap-9 pt-2'>
             <div className='flex w-full flex-row xl:flex-col xl:justify-center items-center gap-4'>

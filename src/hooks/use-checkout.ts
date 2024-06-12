@@ -26,7 +26,7 @@ const useCheckout = () => {
   const chains = useChains()
 
   const router = useRouter()
-  const { profile } = useEFPProfile()
+  const { selectedList } = useEFPProfile()
   const currentChainId = useChainId()
   const { switchChain } = useSwitchChain()
   const { mint, nonce: mintNonce } = useMintEFP()
@@ -45,14 +45,14 @@ const useCheckout = () => {
   // Set step to initiating transactions if the user has already created their EFP list
   // Selecting the chain is only an option when creating a new EFP list to select List records location
   const [currentStep, setCurrentStep] = useState(
-    profile?.primary_list ? Step.InitiateTransactions : Step.SelectChain
+    selectedList ? Step.InitiateTransactions : Step.SelectChain
   )
   const selectedChain = chains.find(chain => chain.id === selectedChainId) as ChainWithDetails
 
   const listOpTx = useCallback(async () => {
     // Get list storage location via token ID
-    const listStorageLocation = profile?.primary_list
-      ? await listRegistryContract.read.getListStorageLocation([BigInt(profile?.primary_list)])
+    const listStorageLocation = selectedList
+      ? await listRegistryContract.read.getListStorageLocation([BigInt(selectedList)])
       : null
 
     // Get slot, chain, and List Records contract from storage location or use options from the mint
@@ -91,14 +91,14 @@ const useCheckout = () => {
 
     // return transaction hash to enable following transaction status in transaction details component
     return hash
-  }, [walletClient, selectedChain])
+  }, [walletClient, selectedChain, selectedList])
 
   const setActions = useCallback(async () => {
     // getting the chain ID where the list operations will be performed (selected chain ID if EFP list minted before)
-    const chainId = profile?.primary_list
+    const chainId = selectedList
       ? fromHex(
           `0x${(
-            await listRegistryContract.read.getListStorageLocation([BigInt(profile?.primary_list)])
+            await listRegistryContract.read.getListStorageLocation([BigInt(selectedList)])
           ).slice(64, 70)}`,
           'number'
         )
@@ -126,11 +126,9 @@ const useCheckout = () => {
     }
 
     // add Create list action if user doesn't have the EFP list yet
-    const actionsToExecute = profile?.primary_list
-      ? [cartItemAction]
-      : [createEFPListAction, cartItemAction]
+    const actionsToExecute = selectedList ? [cartItemAction] : [createEFPListAction, cartItemAction]
     addActions(actionsToExecute)
-  }, [selectedChainId, totalCartItems, addActions, profile, walletClient])
+  }, [selectedChainId, totalCartItems, addActions, selectedList, walletClient])
 
   useEffect(() => {
     setActions()
@@ -152,12 +150,10 @@ const useCheckout = () => {
     const chainId =
       actions[0]?.label === 'create list'
         ? optimismSepolia.id
-        : profile?.primary_list
+        : selectedList
           ? fromHex(
               `0x${(
-                await listRegistryContract.read.getListStorageLocation([
-                  BigInt(profile?.primary_list)
-                ])
+                await listRegistryContract.read.getListStorageLocation([BigInt(selectedList)])
               ).slice(64, 70)}`,
               'number'
             )

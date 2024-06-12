@@ -7,11 +7,11 @@ import { efpContracts } from '#/lib/constants/contracts'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 
 const fetchProfileRoles = async ({
-  primary_list,
+  list,
   userAddress,
   chains
 }: {
-  primary_list: number
+  list: number
   userAddress: Address
   chains: UseChainsReturnType<Config>
 }) => {
@@ -21,9 +21,7 @@ const fetchProfileRoles = async ({
     client: createPublicClient({ chain: optimismSepolia, transport: http() })
   })
 
-  const listStorageLocation = await listRegistryContract.read.getListStorageLocation([
-    BigInt(primary_list)
-  ])
+  const listStorageLocation = await listRegistryContract.read.getListStorageLocation([BigInt(list)])
 
   const listStorageLocationChainId = fromHex(`0x${listStorageLocation.slice(64, 70)}`, 'number')
 
@@ -42,7 +40,7 @@ const fetchProfileRoles = async ({
     })
   })
 
-  const listOwner = await listRegistryContract.read.ownerOf([BigInt(primary_list)])
+  const listOwner = await listRegistryContract.read.ownerOf([BigInt(list)])
   const listManager = await listRecordsContract.read.getListManager([slot])
   const listUser = await listRecordsContract.read.getListUser([slot])
 

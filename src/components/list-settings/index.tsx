@@ -15,13 +15,21 @@ import { PrimaryButton } from '#/components/primary-button'
 import type { ProfileDetailsResponse } from '#/api/requests'
 
 interface ListSettingsProps {
+  selectedList: number
+  lists?: number[]
   isSaving: boolean
   profile: ProfileDetailsResponse
   onClose: () => void
   setIsSaving: (state: boolean) => void
 }
 
-const ListSettings: React.FC<ListSettingsProps> = ({ isSaving, onClose, setIsSaving, profile }) => {
+const ListSettings: React.FC<ListSettingsProps> = ({
+  selectedList,
+  isSaving,
+  onClose,
+  setIsSaving,
+  profile
+}) => {
   const [chainDropdownOpen, setChainDropdownOpen] = useState(false)
   const chainDropdownRef = useClickAway<HTMLDivElement>(() => {
     setChainDropdownOpen(false)
@@ -49,10 +57,11 @@ const ListSettings: React.FC<ListSettingsProps> = ({ isSaving, onClose, setIsSav
     fetchedManager,
     setChangedValues,
     fetchedListRecordsContractAddress
-  } = useListSettings({ profile })
+  } = useListSettings({ profile, selectedList })
 
   return isSaving ? (
     <SaveSettings
+      selectedList={selectedList}
       newChain={chain}
       chain={fetchedChain}
       changedValues={changedValues}
@@ -73,7 +82,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({ isSaving, onClose, setIsSav
       >
         <div className='w-full flex items-center justify-between'>
           <h3 className='text-5xl font-semibold'>
-            {t('list')} #{profile.primary_list}
+            {t('list')} #{selectedList}
           </h3>
           <Image
             src={Cross}

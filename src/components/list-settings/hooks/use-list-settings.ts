@@ -7,7 +7,10 @@ import { efpContracts } from '#/lib/constants/contracts'
 import type { ProfileDetailsResponse } from '#/api/requests'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 
-const useListSettings = ({ profile }: { profile: ProfileDetailsResponse }) => {
+const useListSettings = ({
+  profile,
+  selectedList
+}: { profile: ProfileDetailsResponse; selectedList: number }) => {
   const chains = useChains()
   const [chain, setChain] = useState<Chain>()
   const [fetchedChain, setFetchedChain] = useState<Chain>()
@@ -36,12 +39,10 @@ const useListSettings = ({ profile }: { profile: ProfileDetailsResponse }) => {
   })
 
   const fetchListData = async () => {
-    if (!profile.primary_list) return
-
     const listStorageLocation = await listRegistryContract.read.getListStorageLocation([
-      BigInt(profile?.primary_list)
+      BigInt(selectedList)
     ])
-    const listOwner = await listRegistryContract.read.ownerOf([BigInt(profile?.primary_list)])
+    const listOwner = await listRegistryContract.read.ownerOf([BigInt(selectedList)])
     const listStorageLocationChainId = fromHex(`0x${listStorageLocation.slice(64, 70)}`, 'number')
 
     const slot = BigInt(`0x${listStorageLocation.slice(-64)}`)

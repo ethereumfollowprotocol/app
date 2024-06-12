@@ -12,16 +12,7 @@ import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { UserProfileCard } from '#/components/user-profile-card'
 import { UserProfilePageTable } from '#/components/profile-page-table'
 
-interface Props {
-  searchParams: {
-    'following-query'?: string
-    'following-filter'?: string
-    'followers-query'?: string
-    'followers-filter'?: string
-  }
-}
-
-export default function ProfilePage({ searchParams }: Props) {
+export default function ProfilePage() {
   const [isSaving, setIsSaving] = useState(false)
   const [listSettingsOpen, setListSettingsOpen] = useState(false)
   const [activeTab, setActiveTab] = useState<ProfileTabType>('following')
@@ -29,8 +20,10 @@ export default function ProfilePage({ searchParams }: Props) {
   const { t } = useTranslation('profile')
 
   const {
+    lists,
     roles,
     profile,
+    selectedList,
     profileIsLoading,
     following,
     followers,
@@ -70,8 +63,10 @@ export default function ProfilePage({ searchParams }: Props) {
 
   return (
     <>
-      {listSettingsOpen && profile && (
+      {listSettingsOpen && profile && selectedList && (
         <ListSettings
+          selectedList={selectedList}
+          lists={lists?.lists}
           isSaving={isSaving}
           profile={profile}
           setIsSaving={setIsSaving}
@@ -82,6 +77,7 @@ export default function ProfilePage({ searchParams }: Props) {
         <main className='flex pb-8 min-h-full w-full justify-between xl:justify-center gap-y-4 flex-col md:flex-row flex-wrap xl:flex-nowrap items-start xl:gap-6 mt-32 md:mt-40 lg:mt-48 px-4 lg:px-8'>
           <div className='flex flex-col w-full xl:w-fit items-center gap-4'>
             <UserProfileCard
+              profileList={selectedList || profile?.primary_list}
               hideFollowButton={true}
               profile={profile}
               following={following}
@@ -89,7 +85,7 @@ export default function ProfilePage({ searchParams }: Props) {
             />
             <div className='flex flex-col gap-1 items-center'>
               <p className='font-semibold '>{t('block-mute')}</p>
-              {profile?.primary_list && (
+              {selectedList && (
                 <div
                   className='flex gap-1 cursor-pointer hover:opacity-80 transition-opacity'
                   onClick={() => setListSettingsOpen(true)}
