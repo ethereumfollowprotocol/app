@@ -224,9 +224,9 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     queryFn: async () => {
       if (!(profile?.primary_list && userAddress))
         return {
-          isOwner: false,
-          isManager: false,
-          isUser: false
+          isOwner: true,
+          isManager: true,
+          isUser: true
         }
 
       const fetchedRoles = await fetchProfileRoles({
