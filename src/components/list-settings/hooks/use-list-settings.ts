@@ -1,11 +1,11 @@
 import { useChains } from 'wagmi'
 import { useEffect, useState } from 'react'
-import { optimismSepolia } from 'viem/chains'
 import { http, fromHex, getContract, createPublicClient, type Address, type Chain } from 'viem'
 
 import { efpContracts } from '#/lib/constants/contracts'
 import type { ProfileDetailsResponse } from '#/api/requests'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
+import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 
 const useListSettings = ({ profile }: { profile: ProfileDetailsResponse }) => {
   const chains = useChains()
@@ -32,7 +32,7 @@ const useListSettings = ({ profile }: { profile: ProfileDetailsResponse }) => {
   const listRegistryContract = getContract({
     address: efpContracts.EFPListRegistry,
     abi: efpListRegistryAbi,
-    client: createPublicClient({ chain: optimismSepolia, transport: http() })
+    client: createPublicClient({ chain: DEFAULT_CHAIN, transport: http() })
   })
 
   const fetchListData = async () => {
@@ -55,7 +55,7 @@ const useListSettings = ({ profile }: { profile: ProfileDetailsResponse }) => {
       address: listRecordsContractAddress,
       abi: efpListRecordsAbi,
       client: createPublicClient({
-        chain: listStorageLocationChain || optimismSepolia,
+        chain: listStorageLocationChain || DEFAULT_CHAIN,
         transport: http()
       })
     })

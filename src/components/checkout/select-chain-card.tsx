@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import type { TFunction } from 'i18next'
 import { useTranslation } from 'react-i18next'
-import { optimismSepolia, type Chain } from 'viem/chains'
+import type { Chain } from 'viem/chains'
 import { useChainId, useSwitchChain, type Config, type UseChainsReturnType } from 'wagmi'
 
 import type { ChainWithDetails } from '#/lib/wagmi'
@@ -9,6 +9,7 @@ import { ChainIcon } from '#/components/chain-icon'
 import CancelButton from '#/components/cancel-button'
 import { PrimaryButton } from '#/components/primary-button'
 import GreenCheck from 'public/assets/icons/check-green.svg'
+import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 
 export function SelectChainCard({
   chains,
@@ -54,7 +55,7 @@ export function SelectChainCard({
           label={t('next')}
           onClick={() => {
             if (!selectedChain) return
-            if (currentChainId !== optimismSepolia.id) switchChain({ chainId: optimismSepolia.id })
+            if (currentChainId !== DEFAULT_CHAIN.id) switchChain({ chainId: DEFAULT_CHAIN.id })
             handleNextStep()
           }}
           className='text-lg w-32 h-12'

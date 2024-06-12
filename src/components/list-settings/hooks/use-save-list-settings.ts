@@ -7,7 +7,6 @@ import {
   encodePacked,
   createPublicClient
 } from 'viem'
-import { optimismSepolia } from 'viem/chains'
 import { useTranslation } from 'react-i18next'
 import { useCallback, useEffect, useState } from 'react'
 import { useChainId, useSwitchChain, useWalletClient } from 'wagmi'
@@ -19,6 +18,7 @@ import type { ProfileDetailsResponse } from '#/api/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
+import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 
 type SaveListSettingsParams = {
   profile: ProfileDetailsResponse
@@ -65,7 +65,7 @@ const useSaveListSettings = ({
   const listRegistryContract = getContract({
     address: efpContracts.EFPListRegistry,
     abi: efpListRegistryAbi,
-    client: createPublicClient({ chain: optimismSepolia, transport: http() })
+    client: createPublicClient({ chain: DEFAULT_CHAIN, transport: http() })
   })
 
   const setListStorageLocationTx = useCallback(async () => {

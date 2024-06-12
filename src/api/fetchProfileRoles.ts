@@ -1,10 +1,10 @@
-import { optimismSepolia } from 'viem/chains'
 import type { Config, UseChainsReturnType } from 'wagmi'
 import { createPublicClient, fromHex, getContract, http, type Address } from 'viem'
 
 import type { ProfileRoles } from './requests'
 import { efpContracts } from '#/lib/constants/contracts'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
+import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 
 const fetchProfileRoles = async ({
   primary_list,
@@ -18,7 +18,7 @@ const fetchProfileRoles = async ({
   const listRegistryContract = getContract({
     address: efpContracts.EFPListRegistry,
     abi: efpListRegistryAbi,
-    client: createPublicClient({ chain: optimismSepolia, transport: http() })
+    client: createPublicClient({ chain: DEFAULT_CHAIN, transport: http() })
   })
 
   const listStorageLocation = await listRegistryContract.read.getListStorageLocation([
@@ -37,7 +37,7 @@ const fetchProfileRoles = async ({
     address: listRecordsContractAddress,
     abi: efpListRecordsAbi,
     client: createPublicClient({
-      chain: listStorageLocationChain || optimismSepolia,
+      chain: listStorageLocationChain || DEFAULT_CHAIN,
       transport: http()
     })
   })
