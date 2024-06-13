@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { PROFILE_TABS } from '#/lib/constants'
@@ -11,6 +11,7 @@ import SettingsIcon from 'public/assets/icons/settings.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { UserProfileCard } from '#/components/user-profile-card'
 import { UserProfilePageTable } from '#/components/profile-page-table'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 export default function ProfilePage() {
   const [isSaving, setIsSaving] = useState(false)
@@ -18,6 +19,11 @@ export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState<ProfileTabType>('following')
 
   const { t } = useTranslation('profile')
+  const { openConnectModal } = useConnectModal()
+
+  useEffect(() => {
+    if (openConnectModal) openConnectModal()
+  }, [])
 
   const {
     lists,
