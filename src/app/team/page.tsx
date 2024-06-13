@@ -21,10 +21,11 @@ const TeamPage = () => {
   return (
     <main className='mx-auto flex min-h-full w-full flex-col pt-60 gap-12 items-center overflow-scroll mb-12 px-4 text-center'>
       <h2 className='font-bold text-5xl'>Team</h2>
-      <div className='flex-col flex mx-auto lg:flex-row lg:gap-y-0 gap-y-6 space-x-0 md:space-x-12 align-middle justify-center items-center'>
+      <div className='flex-row flex-wrap flex mx-auto lg:flex-row gap-8 align-middle justify-center items-center'>
         {teamProfiles?.map(profile => (
           <div key={profile.address}>
             <UserProfileCard
+              isResponsive={false}
               profile={profile}
               // x={records?.['com.twitter'] ?? ''}
               // github={records?.['com.github'] ?? ''}
@@ -35,6 +36,7 @@ const TeamPage = () => {
           teamAddresses.map(address => (
             <UserProfileCard
               key={address}
+              isResponsive={false}
               isLoading={teamIsLoading}
               // x={records?.['com.twitter'] ?? ''}
               // github={records?.['com.github'] ?? ''}
