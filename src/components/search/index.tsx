@@ -7,6 +7,8 @@ import useSearch from './hooks/useSearch.ts'
 import LoadingSpinner from '../loading-spinner.tsx'
 import MagnifyingGlass from 'public/assets/icons/magnifying-glass.svg'
 import { truncateAddress } from '#/lib/utilities.ts'
+import type { LegacyRef } from 'react'
+import GraySpinner from '../gray-spinner.tsx'
 
 export function Search({
   disabled,
@@ -18,20 +20,23 @@ export function Search({
 
   const {
     router,
-    searchBarRef,
-    dropdownMenuOpen,
-    dialogOpen,
-    clickAwayRef,
-    currentSearch,
     search,
-    isLoading,
-    searchResult,
-    handleSearchEvent,
-    resetSearch,
-    addToCart,
     onSubmit,
-    setDropdownMenuOpen,
-    setDialogOpen
+    addToCart,
+    isLoading,
+    dialogOpen,
+    resetSearch,
+    clickAwayRef,
+    searchBarRef,
+    searchResult,
+    setDialogOpen,
+    currentSearch,
+    addToCartError,
+    isAddingToCart,
+    dropdownMenuOpen,
+    handleSearchEvent,
+    setAddToCartError,
+    setDropdownMenuOpen
   } = useSearch(isEditor)
 
   return (
@@ -41,47 +46,93 @@ export function Search({
       </label>
       <div className={`rounded-md  gap-2 ${isEditor ? 'flex' : 'hidden md:flex'}`}>
         <div className='w-full relative'>
-          <input
-            ref={searchBarRef}
-            type='text'
-            id='search'
-            name='search'
-            spellCheck={false}
-            autoComplete='off'
-            disabled={disabled}
-            value={currentSearch}
-            placeholder={t('navigation.search placeholder')}
-            onChange={handleSearchEvent}
-            onKeyDown={e => {
-              if (e.key === 'Enter') onSubmit()
-            }}
-            onClick={event => {
-              event.preventDefault()
-              setDropdownMenuOpen(
-                event.currentTarget.value.length >= 3 &&
-                  !!search &&
-                  search.length >= 3 &&
-                  !!searchResult
-              )
-            }}
-            className='h-12 block w-full pr-12 truncate font-medium rounded-xl border-2 border-gray-200 pl-4 sm:text-sm bg-white/70'
-          />
+          {isEditor ? (
+            <>
+              <p className='text-red-500 text-left text-sm truncate w-full absolute -top-5 left-0'>
+                {addToCartError}
+              </p>
+              <textarea
+                ref={searchBarRef as LegacyRef<HTMLTextAreaElement>}
+                id='search'
+                name='search'
+                rows={1}
+                cols={50}
+                spellCheck={false}
+                autoComplete='off'
+                disabled={disabled}
+                value={currentSearch}
+                onFocus={() => setAddToCartError(undefined)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' && e.shiftKey === false) {
+                    e.preventDefault()
+                    onSubmit()
+                  }
+                }}
+                placeholder={t('navigation.search placeholder')}
+                onChange={handleSearchEvent}
+                onClick={event => {
+                  event.preventDefault()
+                  setDropdownMenuOpen(
+                    event.currentTarget.value.length >= 3 &&
+                      !!search &&
+                      search.length >= 3 &&
+                      !!searchResult
+                  )
+                }}
+                className={`h-fit block text-wrap w-full py-3 pr-12 truncate outline-none font-medium rounded-xl border-2 ${
+                  addToCartError ? 'border-red-500' : 'border-gray-200'
+                } pl-4 sm:text-sm bg-white/70`}
+              />
+            </>
+          ) : (
+            <input
+              ref={searchBarRef as LegacyRef<HTMLInputElement>}
+              type='text'
+              id='search'
+              name='search'
+              spellCheck={false}
+              autoComplete='off'
+              disabled={disabled}
+              value={currentSearch}
+              placeholder={t('navigation.search placeholder')}
+              onChange={handleSearchEvent}
+              onKeyDown={e => {
+                if (e.key === 'Enter') onSubmit()
+              }}
+              onClick={event => {
+                event.preventDefault()
+                setDropdownMenuOpen(
+                  event.currentTarget.value.length >= 3 &&
+                    !!search &&
+                    search.length >= 3 &&
+                    !!searchResult
+                )
+              }}
+              className='h-12 block pr-12 w-full truncate font-medium rounded-xl border-2 border-gray-200 pl-4 sm:text-sm bg-white/70'
+            />
+          )}
           <div
-            className='pointer-events-none absolute inset-y-0 right-2 flex items-center'
+            className='pointer-events-none absolute inset-y-0 right-4 flex items-center'
             aria-hidden='true'
           >
-            <Image
-              src={MagnifyingGlass}
-              alt='Search'
-              className={`mr-2 h-5 w-5 text-grey`}
-              aria-hidden='true'
-            />
+            {isEditor && isAddingToCart ? (
+              <div className='mt-1'>
+                <GraySpinner />
+              </div>
+            ) : (
+              <Image
+                src={MagnifyingGlass}
+                alt='Search'
+                className={`h-5 w-5 text-grey`}
+                aria-hidden='true'
+              />
+            )}
           </div>
         </div>
         {isEditor && (
           <button
             className='bg-gradient-to-b capitalize font-semibold py-3 px-6 from-kournikova-300 rounded-full to-salmon-400 text-black h-auto'
-            onClick={() => addToCart(currentSearch)}
+            onClick={() => onSubmit()}
           >
             {tEditor('add')}
           </button>
