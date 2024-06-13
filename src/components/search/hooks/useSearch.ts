@@ -103,7 +103,7 @@ const useSearch = (isEditor?: boolean) => {
 
     const address = isAddress(user) ? user : await resolveENSAddress(user)
 
-    if (!address) return user
+    if (!address) return { user }
 
     const followState = getFollowingState(address)
     const isPendingFollow = hasListOpAddRecord(address)
@@ -111,14 +111,14 @@ const useSearch = (isEditor?: boolean) => {
     resetSearch()
 
     if (isPendingFollow) return
-    if (followState === 'follows') return
+    if (followState === 'follows') return { user, isFollowing: true }
     if (followState === 'none') addCartItem({ listOp: listOpAddListRecord(address) })
   }
 
   const onSubmit = async () => {
     if (isEditor) {
       if (!roles?.isManager) {
-        setAddToCartError('Connected account is not the list manager')
+        setAddToCartError(t('not manager'))
         return
       }
 
@@ -136,14 +136,26 @@ const useSearch = (isEditor?: boolean) => {
           .filter(name => !!name)
 
         const addedToCart = await Promise.all(namesToAdd.map(async name => await addToCart(name)))
-        const erroredNames = addedToCart.filter(name => !!name)
+
+        const namesInCart = addedToCart.filter(item => !!item?.isFollowing).map(item => item?.user)
+        const erroredNames = addedToCart
+          .filter(item => !item?.isFollowing)
+          .map(item => item?.user)
+          .filter(name => !!name)
+
         if (erroredNames.length > 0)
           setAddToCartError(`${t('unresolved')} ${erroredNames.join(', ')}`)
+        else if (namesInCart.length > 0)
+          setAddToCartError(`${t('already followed')} ${namesInCart.join(', ')}`)
+
         return setIsAddingToCart(false)
       }
 
       const erroredName = await addToCart(currentSearch)
-      if (erroredName) setAddToCartError(`${t('unresolved')} ${erroredName}`)
+      if (erroredName?.isFollowing)
+        setAddToCartError(`${t('already followed')} ${erroredName.user}`)
+      else setAddToCartError(`${t('unresolved')} ${erroredName?.user}`)
+
       return
     }
 
