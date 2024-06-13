@@ -13,5 +13,8 @@
   "muted": "Muted",
   "confirm": "Confirm",
   "unconfirmed": "Unconfirmed",
-  "changes": "Changes"
+  "changes": "Changes",
+  "invalid name": "Invalid names: ",
+  "unresolved": "Names don't resolve: ",
+  "not manager": "You are not the manager"
 }

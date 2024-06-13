@@ -13,5 +13,8 @@
   "muted": "Utišan",
   "confirm": "Potrdi",
   "unconfirmed": "Nepotrjene",
-  "changes": "Spremembe"
+  "changes": "Spremembe",
+  "invalid name": "Napačna imena: ",
+  "unresolved": "Imeana niso povezana: ",
+  "not manager": "Nisi upravitelj seznama"
 }

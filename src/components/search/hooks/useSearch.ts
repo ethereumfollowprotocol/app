@@ -10,6 +10,7 @@ import { useCart } from '#/contexts/cart-context.tsx'
 import { listOpAddListRecord } from '#/utils/list-ops.ts'
 import { resolveENSAddress } from '#/utils/resolveAddress.ts'
 import { useEFPProfile } from '#/contexts/efp-profile-context.tsx'
+import { useTranslation } from 'react-i18next'
 
 const useSearch = (isEditor?: boolean) => {
   const [isAddingToCart, setIsAddingToCart] = useState(false)
@@ -24,6 +25,7 @@ const useSearch = (isEditor?: boolean) => {
   })
 
   const router = useRouter()
+  const { t } = useTranslation('editor')
   const { following, roles } = useEFPProfile()
   const { addCartItem, hasListOpAddRecord } = useCart()
 
@@ -95,7 +97,7 @@ const useSearch = (isEditor?: boolean) => {
 
   const addToCart = async (user: string) => {
     if (!roles?.isManager) {
-      setAddToCartError('Connected account is not the list manager')
+      setAddToCartError(t('not manager'))
       return
     }
 
@@ -135,11 +137,14 @@ const useSearch = (isEditor?: boolean) => {
 
         const addedToCart = await Promise.all(namesToAdd.map(async name => await addToCart(name)))
         const erroredNames = addedToCart.filter(name => !!name)
-        if (erroredNames.length > 0) setAddToCartError(`Invalide names: ${erroredNames.join(', ')}`)
+        if (erroredNames.length > 0)
+          setAddToCartError(`${t('unresolved')} ${erroredNames.join(', ')}`)
         return setIsAddingToCart(false)
       }
 
-      return addToCart(currentSearch)
+      const erroredName = await addToCart(currentSearch)
+      if (erroredName) setAddToCartError(`${t('unresolved')} ${erroredName}`)
+      return
     }
 
     if (isAddress(currentSearch) || currentSearch.includes('.')) {
