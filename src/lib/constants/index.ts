@@ -10,11 +10,6 @@ export const APP_URL =
 
 export const ENS_SUBGRAPH_URL = `https://gateway-arbitrum.network.thegraph.com/api/${process.env.NEXT_PUBLIC_ENS_SUBGRAPH_API_KEY}/subgraphs/id/5XqPmWe6gjyrJtFn9cLy237i4cWw2j9HcUJEXsP5qGtH`
 
-export const teamAddresses: Address[] = [
-  '0x983110309620D911731Ac0932219af06091b6744',
-  '0xC983Ebc9dB969782D994627bdfFeC0ae6efee1b3'
-]
-
 export const FETCH_LIMIT_PARAM = 10
 
 export const SECOND = 1_000

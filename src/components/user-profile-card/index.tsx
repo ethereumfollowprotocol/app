@@ -2,6 +2,7 @@
 
 import { Avatar } from '../avatar'
 import { useAccount } from 'wagmi'
+import { usePathname } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 
 import { truncateAddress } from '#/lib/utilities'
@@ -9,12 +10,11 @@ import LoadingProfileCard from './loading-profile-card'
 import { FollowButton } from '#/components/follow-button'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 import type { FollowingResponse, ProfileDetailsResponse } from '#/api/requests'
-import { usePathname } from 'next/navigation'
 
 interface Props {
   hideFollowButton?: boolean
   profile?: ProfileDetailsResponse | null
-  following: FollowingResponse[]
+  following?: FollowingResponse[]
   borderColor?: string
   isLoading?: boolean
 }
