@@ -5,15 +5,16 @@ import { usePathname } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { useIntersectionObserver } from '@uidotdev/usehooks'
 
-import { FollowList } from '#/components/follow-list'
-import TableHeader from './components/table-headers'
-import type { FollowerResponse, FollowingResponse } from '#/api/requests'
 import { FETCH_LIMIT_PARAM } from '#/lib/constants'
+import TableHeader from './components/table-headers'
+import { FollowList } from '#/components/follow-list'
+import type { FollowerResponse, FollowingResponse } from '#/api/requests'
 
 /**
  * TODO: paginate
  */
 export function UserProfilePageTable({
+  displayedTitle,
   title,
   customClass,
   isLoading,
@@ -21,8 +22,11 @@ export function UserProfilePageTable({
   followers,
   following,
   fetchMore,
-  canEditTags
+  canEditTags,
+  showTagsByDefault,
+  isShowingBlocked
 }: {
+  displayedTitle?: string
   title: 'following' | 'followers'
   customClass?: string
   isLoading: boolean
@@ -31,9 +35,11 @@ export function UserProfilePageTable({
   following: FollowingResponse[]
   fetchMore: () => void
   canEditTags?: boolean
+  showTagsByDefault?: boolean
+  isShowingBlocked?: boolean
 }) {
   const [search, setSearch] = useState<string>('')
-  const [showTags, setShowTags] = useState(false)
+  const [showTags, setShowTags] = useState(!!showTagsByDefault)
 
   const pathname = usePathname()
   const { t } = useTranslation('profile')
@@ -78,12 +84,14 @@ export function UserProfilePageTable({
       } sm:p-4 w-full xl:w-[620px] border-2 rounded-2xl border-gray-200 ${customClass}`}
     >
       <TableHeader
+        displayedTitle={displayedTitle}
         allTags={allTags}
         search={search}
         setSearch={(input: string) => setSearch(input)}
         showTags={showTags}
         setShowTags={(option: boolean) => setShowTags(option)}
         title={title}
+        isShowingBlocked={isShowingBlocked}
       />
       {!isLoading && chosenResponses?.length === 0 && (
         <div className='text-center font-semibold py-4'>

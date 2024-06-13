@@ -1,5 +1,5 @@
 import type { Address } from 'viem'
-import type { ProfileTabType } from '#/types/common'
+import type { BlockedMutedTabType, ProfileTabType } from '#/types/common'
 
 export const APP_NAME = 'Ethereum Follow Protocol'
 export const APP_NAME_SHORT = 'EFP'
@@ -24,12 +24,14 @@ export const DAY = 24 * HOUR
 export const WEEK = 7 * DAY
 
 export const PROFILE_TABS: ProfileTabType[] = ['following', 'followers']
+export const BLOCKED_MUTED_TABS: BlockedMutedTabType[] = ['Blocked/Muted', 'Blocked/Muted by']
 export const LANGUAGES = [
   { language: 'English', key: 'en' },
   { language: 'Slovenščina', key: 'si' }
 ]
 export const DEFAULT_TAGS_TO_ADD = ['efp']
 export const DEFAULT_TAGS = ['no tag']
+export const BLOCKED_MUTED_TAGS = ['blocked', 'muted']
 export const SORT_OPTIONS = ['follower count', 'latest first', 'earliest first', 'alphabetical']
 
 export const NAV_ITEMS = [

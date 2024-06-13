@@ -1,30 +1,34 @@
 import Image from 'next/image'
 import { useMemo, useState } from 'react'
-
-import ArrowDown from 'public/assets/icons/arrow-down.svg'
-import SearchIcon from 'public/assets/icons/magnifying-glass.svg'
-import { DEFAULT_TAGS, SORT_OPTIONS } from '#/lib/constants'
-import { useEFPProfile } from '#/contexts/efp-profile-context'
-import type { ProfileTabType } from '#/types/common'
-import { useClickAway } from '@uidotdev/usehooks'
 import { useTranslation } from 'react-i18next'
+import { useClickAway } from '@uidotdev/usehooks'
+
+import type { ProfileTabType } from '#/types/common'
+import ArrowDown from 'public/assets/icons/arrow-down.svg'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
+import SearchIcon from 'public/assets/icons/magnifying-glass.svg'
+import { BLOCKED_MUTED_TAGS, DEFAULT_TAGS, SORT_OPTIONS } from '#/lib/constants'
 
 interface TableHeaderProps {
   title: ProfileTabType
+  displayedTitle?: string
   search: string
   showTags: boolean
   setShowTags: (input: boolean) => void
   setSearch: (input: string) => void
   allTags: string[]
+  isShowingBlocked?: boolean
 }
 
 const TableHeader: React.FC<TableHeaderProps> = ({
   title,
+  displayedTitle,
   showTags,
   setShowTags,
   search,
   setSearch,
-  allTags
+  allTags,
+  isShowingBlocked
 }) => {
   const [showSort, setShowSort] = useState(false)
   const [showSearch, setShowSearch] = useState(false)
@@ -37,6 +41,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
   })
 
   const tagsToDisplay = () => {
+    if (isShowingBlocked) return BLOCKED_MUTED_TAGS
     const seen: { [key: string]: boolean } = {}
     return [...DEFAULT_TAGS, ...allTags].filter(tag => {
       if (Object.keys(seen).includes(tag)) return false
@@ -78,7 +83,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
       <div className='flex justify-between w-full'>
         <div className='flex gap-4 justify-between items-center w-full'>
           <div ref={clickAwaySearchRef} className='flex gap-3 items-center'>
-            <p className='capitalize text-lg lg:text-xl font-bold'>{t(title)}</p>
+            <p className='capitalize text-lg lg:text-xl font-bold'>{t(displayedTitle || title)}</p>
             <div className='relative z-50'>
               <div
                 className='cursor-pointer max-w-40 flex items-center gap-2 hover:opacity-75'

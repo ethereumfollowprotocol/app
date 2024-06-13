@@ -11,6 +11,7 @@ import SettingsIcon from 'public/assets/icons/settings.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { UserProfileCard } from '#/components/user-profile-card'
 import { UserProfilePageTable } from '#/components/profile-page-table'
+import BlockedMuted from '#/components/blocked-muted'
 
 interface Props {
   searchParams: {
@@ -24,6 +25,7 @@ interface Props {
 export default function ProfilePage({ searchParams }: Props) {
   const [isSaving, setIsSaving] = useState(false)
   const [listSettingsOpen, setListSettingsOpen] = useState(false)
+  const [isBlockedMutedOpen, setIsBlockedMutedOpen] = useState(false)
   const [activeTab, setActiveTab] = useState<ProfileTabType>('following')
 
   const { t } = useTranslation('profile')
@@ -70,6 +72,13 @@ export default function ProfilePage({ searchParams }: Props) {
 
   return (
     <>
+      {isBlockedMutedOpen && profile && (
+        <BlockedMuted
+          profile={profile}
+          onClose={() => setIsBlockedMutedOpen(false)}
+          isManager={roles?.isManager}
+        />
+      )}
       {listSettingsOpen && profile && (
         <ListSettings
           isSaving={isSaving}
@@ -88,7 +97,12 @@ export default function ProfilePage({ searchParams }: Props) {
               isLoading={profileIsLoading}
             />
             <div className='flex flex-col gap-1 items-center'>
-              <p className='font-semibold '>{t('block-mute')}</p>
+              <p
+                onClick={() => setIsBlockedMutedOpen(true)}
+                className='font-semibold cursor-pointer hover:opacity-80 transition-opacity'
+              >
+                {t('block-mute')}
+              </p>
               {profile?.primary_list && (
                 <div
                   className='flex gap-1 cursor-pointer hover:opacity-80 transition-opacity'

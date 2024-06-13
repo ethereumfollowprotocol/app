@@ -1,6 +1,7 @@
 import type { Address } from 'viem'
 
 export type ProfileTabType = 'following' | 'followers'
+export type BlockedMutedTabType = 'Blocked/Muted' | 'Blocked/Muted by'
 
 export type DiscoverItemType = {
   name: string | null
