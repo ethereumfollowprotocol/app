@@ -58,7 +58,7 @@ const Navigation = () => {
             ) : (
               <div
                 ref={clickAwayLanguageRef}
-                className='w-8 z-50 sm:w-10 mr-0 xxs:mr-1 lg:mr-4 cursor-pointer group relative'
+                className='w-8 z-50 sm:w-10 mr-2 lg:mr-4 cursor-pointer group relative'
               >
                 <div
                   onClick={() => setLanguageMenuOpen(!languageMenOpenu)}
