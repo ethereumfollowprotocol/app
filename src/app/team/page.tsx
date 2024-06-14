@@ -1,8 +1,8 @@
 'use client'
 
+import { useQuery } from '@tanstack/react-query'
 import fetchProfileDetails from '#/api/fetchProfileDetails'
 import { UserProfileCard } from '#/components/user-profile-card'
-import { useQuery } from '@tanstack/react-query'
 
 const TeamPage = () => {
   const teamAddresses: string[] = process.env.NEXT_PUBLIC_TEAM_ADDRESSES?.split(' ') || []
