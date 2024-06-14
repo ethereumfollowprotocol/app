@@ -1,6 +1,5 @@
 import type { Address } from 'viem'
 import type { ENSProfile } from '#/lib/types'
-import { formatAddressOrName } from '#/lib/utilities'
 
 export interface InfiniteProfileQueryProps {
   addressOrName: string
@@ -76,9 +75,7 @@ export async function fetchUserFollowers(
     }
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${formatAddressOrName(
-      addressOrName
-    )}/followers?include=ens`,
+    `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/followers?include=ens`,
     {
       cache: 'default'
       // cache: "no-cache",
@@ -100,9 +97,7 @@ export async function fetchUserFollowing(
     }
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${formatAddressOrName(
-      addressOrName
-    )}/following?include=ens`,
+    `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/following?include=ens`,
     {
       cache: 'default'
       // cache: "no-cache",
@@ -130,9 +125,7 @@ export async function fetchUserStats(
     }
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${formatAddressOrName(
-      addressOrName
-    )}/profile?include=stats`,
+    `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/profile?include=stats`,
     {
       cache: 'default'
       // cache: "no-cache",

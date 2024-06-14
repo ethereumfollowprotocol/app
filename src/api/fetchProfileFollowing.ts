@@ -1,4 +1,3 @@
-import { formatAddressOrName } from '#/lib/utilities'
 import type { FollowingResponse, InfiniteProfileQueryProps } from './requests'
 
 const fetchProfileFollowing = async ({
@@ -8,13 +7,14 @@ const fetchProfileFollowing = async ({
   pageParam
 }: InfiniteProfileQueryProps) => {
   try {
-    const url = list
-      ? `${process.env.NEXT_PUBLIC_EFP_API_URL}/lists/${list}/following?include=ens&offset=${
-          pageParam * limit
-        }&limit=${limit}`
-      : `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${formatAddressOrName(
-          addressOrName
-        )}/following?include=ens&offset=${pageParam * limit}&limit=${limit}`
+    const url =
+      typeof list === 'number'
+        ? `${process.env.NEXT_PUBLIC_EFP_API_URL}/lists/${list}/following?include=ens&offset=${
+            pageParam * limit
+          }&limit=${limit}`
+        : `${
+            process.env.NEXT_PUBLIC_EFP_API_URL
+          }/users/${addressOrName}/following?include=ens&offset=${pageParam * limit}&limit=${limit}`
 
     const response = await fetch(url, {
       cache: 'default'

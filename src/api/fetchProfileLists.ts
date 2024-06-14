@@ -1,10 +1,9 @@
-import { formatAddressOrName } from '#/lib/utilities'
 import type { ProfileListsResponse } from './requests'
 
 const fetchProfileLists = async (addressOrName: string) => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${formatAddressOrName(addressOrName)}/lists`,
+      `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/lists`,
       {
         cache: 'default'
         // cache: "no-cache",

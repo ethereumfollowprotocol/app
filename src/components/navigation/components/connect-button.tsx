@@ -110,16 +110,6 @@ const ConnectButton = () => {
               } group-hover:block pr-5`}
             >
               <div className='flex flex-col gap-2 glass-card bg-white/90 border-2 border-gray-200 px-4 py-2 rounded-lg shadow-md'>
-                <p
-                  className=' text-darkGrey text-nowrap font-semibold hover:text-gray-500 transition-colors'
-                  key={'new list'}
-                  onClick={() => {
-                    setSelectedList(undefined)
-                    setListMenuOpen(false)
-                  }}
-                >
-                  Mint new List
-                </p>
                 {lists?.lists?.map(list => (
                   <p
                     className=' text-darkGrey text-nowrap font-semibold hover:text-gray-500 transition-colors'
@@ -132,6 +122,16 @@ const ConnectButton = () => {
                     List #{list}
                   </p>
                 ))}
+                <p
+                  className=' text-darkGrey text-nowrap font-semibold hover:text-gray-500 transition-colors'
+                  key={'new list'}
+                  onClick={() => {
+                    setSelectedList(undefined)
+                    setListMenuOpen(false)
+                  }}
+                >
+                  Mint new List
+                </p>
               </div>
             </div>
           </div>

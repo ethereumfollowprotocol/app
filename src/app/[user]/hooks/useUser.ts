@@ -4,19 +4,18 @@ import fetchProfileFollowing from '#/api/fetchProfileFollowing'
 import type { FollowerResponse, FollowingResponse } from '#/api/requests'
 import { FETCH_LIMIT_PARAM } from '#/lib/constants'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
+import { isAddress } from 'viem'
 
 const useUser = (user: string) => {
-  const userIsList = user[0] === '#'
-  const listNum = userIsList ? Number(user.slice(1, user.length)) : undefined
+  const userIsList = !(isAddress(user) || user.includes('.'))
+  const listNum = userIsList ? Number(user) : undefined
 
   const { data: profile, isLoading: profileIsLoading } = useQuery({
     queryKey: ['profile', user],
     queryFn: async () => {
       if (!user) return null
 
-      const fetchedProfile = await (listNum
-        ? fetchProfileDetails('', listNum)
-        : fetchProfileDetails(user))
+      const fetchedProfile = await fetchProfileDetails(user, listNum)
       return fetchedProfile
     },
     staleTime: 20000

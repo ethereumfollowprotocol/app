@@ -1,12 +1,11 @@
 import { isAddress, type Address } from 'viem'
 import type { ProfileResponse } from './requests'
-import { formatAddressOrName } from '#/lib/utilities'
 import { resolveENSAddress, resolveENSProfile } from '#/utils/resolveAddress'
 
 const fetchUserProfile = async (addressOrName: string) => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${formatAddressOrName(addressOrName)}/profile`,
+      `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/profile`,
       {
         cache: 'default'
         // cache: "no-cache",
