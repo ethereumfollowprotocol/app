@@ -13,7 +13,7 @@ import { useChainId, useSwitchChain, useWalletClient } from 'wagmi'
 
 import { useCart } from '#/contexts/cart-context'
 import { Step } from '#/components/checkout/types'
-import { efpContracts } from '#/lib/constants/contracts'
+import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
 import type { ProfileDetailsResponse } from '#/api/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
@@ -63,7 +63,7 @@ const useSaveListSettings = ({
   const { t } = useTranslation('profile', { keyPrefix: 'list settings' })
 
   const listRegistryContract = getContract({
-    address: efpContracts.EFPListRegistry,
+    address: coreEfpContracts.EFPListRegistry,
     abi: efpListRegistryAbi,
     client: createPublicClient({ chain: DEFAULT_CHAIN, transport: http() })
   })
@@ -71,9 +71,13 @@ const useSaveListSettings = ({
   const setListStorageLocationTx = useCallback(async () => {
     if (!(newChain && slot && profile.primary_list)) return
 
+    const listRecordsContractAddress = newChain
+      ? (ListRecordContracts[newChain?.id] as Address)
+      : coreEfpContracts.EFPListRecords
+
     const data = encodePacked(
       ['uint256', 'address', 'uint'],
-      [BigInt(newChain.id), efpContracts.EFPListRecords, slot]
+      [BigInt(newChain.id), listRecordsContractAddress, slot]
     )
     const hash = await listRegistryContract.write.setListStorageLocation(
       [BigInt(profile.primary_list), data],

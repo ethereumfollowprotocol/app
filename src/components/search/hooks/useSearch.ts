@@ -13,10 +13,11 @@ import { useEFPProfile } from '#/contexts/efp-profile-context.tsx'
 import { useTranslation } from 'react-i18next'
 
 const useSearch = (isEditor?: boolean) => {
-  const [isAddingToCart, setIsAddingToCart] = useState(false)
   const [addToCartError, setAddToCartError] = useState<string>()
+  const [isAddingToCart, setIsAddingToCart] = useState(false)
   const [dropdownMenuOpen, setDropdownMenuOpen] = useState(false)
   const [dialogOpen, setDialogOpen] = useState<undefined | boolean>(undefined)
+
   const [currentSearch, setCurrentSearch] = useState('')
   const [search, setSearch] = useQueryState('search', {
     history: 'push',
@@ -160,7 +161,11 @@ const useSearch = (isEditor?: boolean) => {
     }
 
     if (isAddress(currentSearch) || currentSearch.includes('.')) {
-      router.push(`/${currentSearch}`)
+      const address = isAddress(currentSearch)
+        ? currentSearch
+        : await resolveENSAddress(currentSearch)
+
+      router.push(`/${address || currentSearch}`)
       resetSearch()
     }
   }

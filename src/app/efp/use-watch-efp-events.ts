@@ -1,6 +1,6 @@
 import * as abi from '#/lib/abi.ts'
 import { useWatchContractEvent } from 'wagmi'
-import { efpContracts } from '#/lib/constants/contracts'
+import { coreEfpContracts } from '#/lib/constants/contracts'
 
 type Props = {
   accountMetadata?: boolean
@@ -11,7 +11,7 @@ type Props = {
 export function useWatchEfpEvents({ accountMetadata, listRegistry, listRecords, all }: Props) {
   useWatchContractEvent({
     enabled: listRegistry || all,
-    address: efpContracts['EFPListRegistry'],
+    address: coreEfpContracts['EFPListRegistry'],
     abi: abi.efpListRegistryAbi,
     syncConnectedChain: true,
     onLogs: logs => {
@@ -26,7 +26,7 @@ export function useWatchEfpEvents({ accountMetadata, listRegistry, listRecords, 
   })
   useWatchContractEvent({
     enabled: listRecords || all,
-    address: efpContracts['EFPListRecords'],
+    address: coreEfpContracts['EFPListRecords'],
     abi: abi.efpListRecordsAbi,
     syncConnectedChain: true,
     onLogs: logs => {
@@ -41,7 +41,7 @@ export function useWatchEfpEvents({ accountMetadata, listRegistry, listRecords, 
   })
   useWatchContractEvent({
     enabled: accountMetadata || all,
-    address: efpContracts['EFPAccountMetadata'],
+    address: coreEfpContracts['EFPAccountMetadata'],
     abi: abi.efpAccountMetadataAbi,
     syncConnectedChain: true,
     onLogs: logs => {
