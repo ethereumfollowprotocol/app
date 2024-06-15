@@ -17,7 +17,7 @@
   "action": {
     "title": "Onchain update",
     "summary": "Summary",
-    "of": "od",
+    "of": "of",
     "actions": "Actions",
     "action": "Action",
     "create list": "Create new EFP List",

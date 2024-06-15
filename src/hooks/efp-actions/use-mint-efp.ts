@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { encodePacked, type Address } from 'viem'
 import { useAccount, useWalletClient } from 'wagmi'
 
@@ -8,6 +8,7 @@ import { generateListStorageLocationSlot } from '#/app/efp/utilities.ts'
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 
 export function useMintEFP() {
+  const [listHasBeenMinted, setListHasBeenMinted] = useState(false)
   const { address: accountAddress } = useAccount()
   const { data: walletClient } = useWalletClient()
   const nonce = useMemo(() => generateListStorageLocationSlot(), [])
@@ -24,6 +25,7 @@ export function useMintEFP() {
         // address: coreEfpContracts.EFPListRegistry,
         // abi: abi.efpListRegistryAbi,
         // functionName: 'mint',
+        chain: DEFAULT_CHAIN,
         address: coreEfpContracts.EFPListMinter,
         abi: abi.efpListMinterAbi,
         functionName: 'easyMint',
@@ -35,15 +37,18 @@ export function useMintEFP() {
         ]
       })
 
+      setListHasBeenMinted(true)
       return hash
     } catch (e: any) {
+      setListHasBeenMinted(false)
       throw new Error(e)
     }
   }
 
   return {
     mint,
+    nonce,
     walletClient,
-    nonce
+    listHasBeenMinted
   }
 }

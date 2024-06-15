@@ -1,4 +1,3 @@
-import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ChainIcon } from '#/components/chain-icon'
 import { useWaitForTransactionReceipt } from 'wagmi'
@@ -14,6 +13,7 @@ interface TransactionStatusProps {
   onFinish: () => void
   setCurrentStep: (step: Step) => void
   handleReInitiateActions: () => void
+  handleNextAction: () => void
 }
 
 /**
@@ -25,16 +25,10 @@ interface TransactionStatusProps {
 const TransactionStatus: React.FC<TransactionStatusProps> = ({
   onFinish,
   setCurrentStep,
-  handleReInitiateActions
+  handleReInitiateActions,
+  handleNextAction
 }) => {
-  const {
-    actions,
-    currentAction,
-    moveToNextAction,
-    currentActionIndex,
-    executeActionByIndex,
-    allActionsSuccessful
-  } = useActions()
+  const { actions, currentAction, currentActionIndex, allActionsSuccessful } = useActions()
   const chain = useChain(currentAction?.chainId)
   const { isSuccess } = useWaitForTransactionReceipt({
     hash: currentAction?.txHash,
@@ -43,11 +37,6 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
 
   const { t: tBtn } = useTranslation('transactions')
   const { t } = useTranslation('transactions', { keyPrefix: 'action' })
-
-  const handleNextAction = useCallback(() => {
-    const nextActionIndex = moveToNextAction()
-    executeActionByIndex(nextActionIndex)
-  }, [moveToNextAction, executeActionByIndex])
 
   // Disable the next button if the current action is not successful
   const nextButtonIsDisabled = !isSuccess

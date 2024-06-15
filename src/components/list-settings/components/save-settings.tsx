@@ -38,20 +38,26 @@ const SaveSettings: React.FC<SaveSettingsProps> = ({
   onClose,
   onCancel
 }) => {
-  const { actions, onFinish, currentStep, setCurrentStep, handleInitiateActions } =
-    useSaveListSettings({
-      profile,
-      chain,
-      newChain,
-      slot,
-      owner,
-      manager,
-      user,
-      listRecordsContractAddress,
-      changedValues,
-      onClose,
-      onCancel
-    })
+  const {
+    actions,
+    onFinish,
+    currentStep,
+    setCurrentStep,
+    handleInitiateActions,
+    handleNextAction
+  } = useSaveListSettings({
+    profile,
+    chain,
+    newChain,
+    slot,
+    owner,
+    manager,
+    user,
+    listRecordsContractAddress,
+    changedValues,
+    onClose,
+    onCancel
+  })
 
   return (
     <main className='h-screen w-full flex justify-center items-center'>
@@ -68,6 +74,7 @@ const SaveSettings: React.FC<SaveSettingsProps> = ({
           <TransactionStatus
             onFinish={onFinish}
             setCurrentStep={setCurrentStep}
+            handleNextAction={handleNextAction}
             handleReInitiateActions={handleInitiateActions}
           />
         )}
