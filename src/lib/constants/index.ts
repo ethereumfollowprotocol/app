@@ -1,4 +1,3 @@
-import type { Address } from 'viem'
 import type { BlockedMutedTabType, ProfileTabType } from '#/types/common'
 
 export const APP_NAME = 'Ethereum Follow Protocol'
