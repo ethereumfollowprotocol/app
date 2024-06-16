@@ -146,8 +146,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   })
 
   useEffect(() => {
-    if (lists?.primary_list) setSelectedList(lists.primary_list)
-    if (lists?.lists && lists?.lists?.length > 0) setSelectedList(lists?.lists[0])
+    if (lists?.primary_list) setSelectedList(Number(lists.primary_list))
+    if (lists?.lists && lists?.lists?.length > 0) setSelectedList(Number(lists?.lists[0]))
   }, [lists])
 
   const {
@@ -209,7 +209,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   } = useInfiniteQuery({
     queryKey: ['following', userAddress, selectedList],
     queryFn: async ({ pageParam = 0 }) => {
-      if (!userAddress)
+      if (!(userAddress && selectedList))
         return {
           following: [],
           nextPageParam: pageParam
