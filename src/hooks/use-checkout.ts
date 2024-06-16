@@ -1,5 +1,3 @@
-import { useCallback, useEffect, useState } from 'react'
-import { useChainId, useChains, useSwitchChain, useWalletClient } from 'wagmi'
 import {
   http,
   toHex,
@@ -9,44 +7,53 @@ import {
   type Address,
   createPublicClient
 } from 'viem'
+import { useRouter } from 'next/navigation'
+import { useCallback, useEffect, useState } from 'react'
+import { useChainId, useChains, useSwitchChain, useWalletClient } from 'wagmi'
 
 import { useCart } from '#/contexts/cart-context'
 import { Step } from '#/components/checkout/types'
 import type { ChainWithDetails } from '#/lib/wagmi'
+import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import { useMintEFP } from './efp-actions/use-mint-efp'
-import { efpContracts } from '#/lib/constants/contracts'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { extractAddressAndTag, isTagListOp } from '#/utils/list-ops'
+import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
-import { useRouter } from 'next/navigation'
-import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 
 const useCheckout = () => {
   const chains = useChains()
-
   const router = useRouter()
-  const { profile } = useEFPProfile()
   const currentChainId = useChainId()
   const { switchChain } = useSwitchChain()
-  const { mint, nonce: mintNonce } = useMintEFP()
   const { data: walletClient } = useWalletClient()
   const { totalCartItems, cartItems, resetCart } = useCart()
-  const { addActions, executeActionByIndex, actions, resetActions } = useActions()
+  const { mint, nonce: mintNonce, listHasBeenMinted } = useMintEFP()
+  const { profile, refetchFollowing, refetchProfile } = useEFPProfile()
+  const {
+    addActions,
+    executeActionByIndex,
+    actions,
+    resetActions,
+    currentActionIndex,
+    moveToNextAction
+  } = useActions()
 
   // get contract for selected chain to pull list storage location from
   const listRegistryContract = getContract({
-    address: efpContracts.EFPListRegistry,
+    address: coreEfpContracts.EFPListRegistry,
     abi: efpListRegistryAbi,
     client: createPublicClient({ chain: DEFAULT_CHAIN, transport: http() })
   })
 
-  const [selectedChainId, setSelectedChainId] = useState<number>(DEFAULT_CHAIN.id)
   // Set step to initiating transactions if the user has already created their EFP list
   // Selecting the chain is only an option when creating a new EFP list to select List records location
   const [currentStep, setCurrentStep] = useState(
     profile?.primary_list ? Step.InitiateTransactions : Step.SelectChain
   )
+
+  const [selectedChainId, setSelectedChainId] = useState<number>(DEFAULT_CHAIN.id)
   const selectedChain = chains.find(chain => chain.id === selectedChainId) as ChainWithDetails
 
   const listOpTx = useCallback(async () => {
@@ -56,10 +63,17 @@ const useCheckout = () => {
       : null
 
     // Get slot, chain, and List Records contract from storage location or use options from the mint
+    const chainId = listStorageLocation
+      ? fromHex(`0x${listStorageLocation.slice(64, 70)}`, 'number')
+      : selectedChain?.id
+    const fetchedChain = chains.find(chain => chain.id === chainId)
+
     const nonce = listStorageLocation ? BigInt(`0x${listStorageLocation.slice(-64)}`) : mintNonce
     const ListRecordsContract = listStorageLocation
       ? (`0x${listStorageLocation.slice(70, 110)}` as Address)
-      : efpContracts.EFPListRecords
+      : selectedChainId
+        ? (ListRecordContracts[selectedChainId] as Address)
+        : coreEfpContracts.EFPListRecords
 
     // format list operations
     const operations = cartItems.map(item => {
@@ -83,6 +97,7 @@ const useCheckout = () => {
 
     // initiate  'applyListOps' transaction
     const hash = await walletClient?.writeContract({
+      chain: fetchedChain,
       address: ListRecordsContract,
       abi: efpListRecordsAbi,
       functionName: 'applyListOps',
@@ -91,7 +106,7 @@ const useCheckout = () => {
 
     // return transaction hash to enable following transaction status in transaction details component
     return hash
-  }, [walletClient, selectedChain])
+  }, [selectedChain, walletClient])
 
   const setActions = useCallback(async () => {
     // getting the chain ID where the list operations will be performed (selected chain ID if EFP list minted before)
@@ -121,16 +136,17 @@ const useCheckout = () => {
       type: EFPActionType.CreateEFPList,
       label: 'create list',
       chainId: DEFAULT_CHAIN.id, // Chain ID where main contracts are stored at
-      execute: mint,
+      execute: async () => await mint(selectedChainId),
       isPendingConfirmation: false
     }
 
     // add Create list action if user doesn't have the EFP list yet
-    const actionsToExecute = profile?.primary_list
-      ? [cartItemAction]
-      : [createEFPListAction, cartItemAction]
+    const actionsToExecute =
+      profile?.primary_list || listHasBeenMinted
+        ? [cartItemAction]
+        : [createEFPListAction, cartItemAction]
     addActions(actionsToExecute)
-  }, [selectedChainId, totalCartItems, addActions, profile, walletClient])
+  }, [selectedChainId, totalCartItems, listOpTx])
 
   useEffect(() => {
     setActions()
@@ -147,10 +163,9 @@ const useCheckout = () => {
     setCurrentStep(Step.InitiateTransactions)
   }, [selectedChain])
 
-  // Handle action initiation
-  const handleInitiateActions = useCallback(async () => {
-    const chainId =
-      actions[0]?.label === 'create list'
+  const getRequiredChain = useCallback(
+    async (index: number) =>
+      actions[index || 0]?.label === 'create list'
         ? DEFAULT_CHAIN.id
         : profile?.primary_list
           ? fromHex(
@@ -161,8 +176,13 @@ const useCheckout = () => {
               ).slice(64, 70)}`,
               'number'
             )
-          : selectedChain?.id
+          : selectedChainId,
+    [actions, listRegistryContract, profile, selectedChainId]
+  )
 
+  // Handle action initiation
+  const handleInitiateActions = useCallback(async () => {
+    const chainId = await getRequiredChain(currentActionIndex)
     if (!chainId) return
     if (currentChainId !== chainId) {
       switchChain({ chainId })
@@ -170,12 +190,35 @@ const useCheckout = () => {
     }
 
     setCurrentStep(Step.TransactionStatus)
-    executeActionByIndex(0)
-  }, [executeActionByIndex, currentChainId])
+    executeActionByIndex(currentActionIndex || 0)
+  }, [executeActionByIndex, currentChainId, getRequiredChain])
+
+  const handleNextAction = useCallback(async () => {
+    const chainId = await getRequiredChain(currentActionIndex + 1)
+    if (!chainId) return
+    if (currentChainId !== chainId) {
+      switchChain(
+        { chainId },
+        {
+          onSettled: () => {
+            setCurrentStep(Step.InitiateTransactions)
+            // const nextActionIndex = moveToNextAction()
+            // executeActionByIndex(nextActionIndex)
+          }
+        }
+      )
+      return
+    }
+
+    const nextActionIndex = moveToNextAction()
+    executeActionByIndex(nextActionIndex)
+  }, [moveToNextAction, executeActionByIndex, getRequiredChain, currentChainId, currentActionIndex])
 
   const onFinish = useCallback(() => {
     resetCart()
     resetActions()
+    refetchProfile()
+    refetchFollowing()
     router.push('/profile')
   }, [resetActions, resetCart])
 
@@ -190,7 +233,8 @@ const useCheckout = () => {
     setSelectedChainId,
     handleChainClick,
     handleNextStep,
-    handleInitiateActions
+    handleInitiateActions,
+    handleNextAction
   }
 }
 

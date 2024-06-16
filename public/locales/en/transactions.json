@@ -11,12 +11,13 @@
     "comment": "You can always change this later",
     "select": "Select one",
     "Low gas fees": "Low gas fees",
+    "Super Low gas fees": "Super Low gas fees",
     "High gas fees": "High gas fees"
   },
   "action": {
     "title": "Onchain update",
     "summary": "Summary",
-    "of": "od",
+    "of": "of",
     "actions": "Actions",
     "action": "Action",
     "create list": "Create new EFP List",

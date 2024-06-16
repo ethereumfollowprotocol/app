@@ -2,7 +2,7 @@ import type { Config, UseChainsReturnType } from 'wagmi'
 import { createPublicClient, fromHex, getContract, http, type Address } from 'viem'
 
 import type { ProfileRoles } from './requests'
-import { efpContracts } from '#/lib/constants/contracts'
+import { coreEfpContracts } from '#/lib/constants/contracts'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 
@@ -16,7 +16,7 @@ const fetchProfileRoles = async ({
   chains: UseChainsReturnType<Config>
 }) => {
   const listRegistryContract = getContract({
-    address: efpContracts.EFPListRegistry,
+    address: coreEfpContracts.EFPListRegistry,
     abi: efpListRegistryAbi,
     client: createPublicClient({ chain: DEFAULT_CHAIN, transport: http() })
   })
@@ -31,7 +31,7 @@ const fetchProfileRoles = async ({
   const listStorageLocationChain = chains.find(item => item.id === listStorageLocationChainId)
   const listRecordsContractAddress = listStorageLocation
     ? (`0x${listStorageLocation.slice(70, 110)}` as Address)
-    : efpContracts.EFPListRecords
+    : coreEfpContracts.EFPListRecords
 
   const listRecordsContract = getContract({
     address: listRecordsContractAddress,

@@ -13,12 +13,12 @@ import { useChainId, useSwitchChain, useWalletClient } from 'wagmi'
 
 import { useCart } from '#/contexts/cart-context'
 import { Step } from '#/components/checkout/types'
-import { efpContracts } from '#/lib/constants/contracts'
+import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import type { ProfileDetailsResponse } from '#/api/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
+import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
-import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 
 type SaveListSettingsParams = {
   profile: ProfileDetailsResponse
@@ -58,12 +58,12 @@ const useSaveListSettings = ({
   const currentChainId = useChainId()
   const { switchChain } = useSwitchChain()
   const { data: walletClient } = useWalletClient()
-  const { refetchProfile, refetchFollowing, refetchRoles } = useEFPProfile()
-  const { addActions, actions, executeActionByIndex, resetActions } = useActions()
   const { t } = useTranslation('profile', { keyPrefix: 'list settings' })
+  const { refetchProfile, refetchFollowing, refetchRoles } = useEFPProfile()
+  const { addActions, actions, executeActionByIndex, resetActions, moveToNextAction } = useActions()
 
   const listRegistryContract = getContract({
-    address: efpContracts.EFPListRegistry,
+    address: coreEfpContracts.EFPListRegistry,
     abi: efpListRegistryAbi,
     client: createPublicClient({ chain: DEFAULT_CHAIN, transport: http() })
   })
@@ -71,9 +71,13 @@ const useSaveListSettings = ({
   const setListStorageLocationTx = useCallback(async () => {
     if (!(newChain && slot && profile.primary_list)) return
 
+    const listRecordsContractAddress = newChain
+      ? (ListRecordContracts[newChain?.id] as Address)
+      : coreEfpContracts.EFPListRecords
+
     const data = encodePacked(
       ['uint256', 'address', 'uint'],
-      [BigInt(newChain.id), efpContracts.EFPListRecords, slot]
+      [BigInt(newChain.id), listRecordsContractAddress, slot]
     )
     const hash = await listRegistryContract.write.setListStorageLocation(
       [BigInt(profile.primary_list), data],
@@ -196,6 +200,26 @@ const useSaveListSettings = ({
     executeActionByIndex(0)
   }, [executeActionByIndex, currentChainId])
 
+  const handleNextAction = useCallback(async () => {
+    if (!chain) return
+    if (currentChainId !== chain.id) {
+      switchChain(
+        { chainId: chain.id },
+        {
+          onSettled: () => {
+            setCurrentStep(Step.InitiateTransactions)
+            // const nextActionIndex = moveToNextAction()
+            // executeActionByIndex(nextActionIndex)
+          }
+        }
+      )
+      return
+    }
+
+    const nextActionIndex = moveToNextAction()
+    executeActionByIndex(nextActionIndex)
+  }, [moveToNextAction, executeActionByIndex, currentChainId])
+
   const onFinish = useCallback(() => {
     if (changedValues.manager) resetCart()
 
@@ -212,6 +236,7 @@ const useSaveListSettings = ({
     onFinish,
     currentStep,
     setCurrentStep,
+    handleNextAction,
     handleInitiateActions
   }
 }

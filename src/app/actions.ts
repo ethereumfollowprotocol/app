@@ -6,7 +6,7 @@ import type { ENSProfile } from '#/lib/types.ts'
 //   return await client.readContract({
 //     abi: abi.efpListRegistryAbi,
 //     functionName: 'getMintState',
-//     address: efpContracts.EFPListRegistry,
+//     address: coreEfpContracts.EFPListRegistry,
 //     args: undefined
 //   })
 // }

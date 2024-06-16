@@ -82,7 +82,7 @@ export default function UserPage({ params }: Props) {
           <div className='flex flex-col w-full xl:w-fit items-center gap-4'>
             <UserProfileCard profile={profile} following={following} isLoading={profileIsLoading} />
             <div className='flex flex-col gap-1 items-center'>
-              <p className='font-semibold '>{t('block-mute')}</p>
+              {/* <p className='font-semibold '>{t('block-mute')}</p> */}
               {profile?.primary_list && (
                 <div
                   className='flex gap-1 cursor-pointer hover:opacity-80 transition-opacity'
