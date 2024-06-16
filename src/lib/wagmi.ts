@@ -1,10 +1,11 @@
 'use client'
 
-import { APP_DESCRIPTION, APP_NAME, APP_URL } from '#/lib/constants'
-import { mainnet, sepolia, optimism, optimismSepolia, baseSepolia } from 'wagmi/chains'
-import { http, fallback, createStorage, cookieStorage, createConfig } from 'wagmi'
 import { type Chain, connectorsForWallets } from '@rainbow-me/rainbowkit'
+import { http, fallback, createStorage, cookieStorage, createConfig } from 'wagmi'
 import { injectedWallet, walletConnectWallet } from '@rainbow-me/rainbowkit/wallets'
+import { mainnet, sepolia, optimism, optimismSepolia, baseSepolia } from 'wagmi/chains'
+
+import { APP_DESCRIPTION, APP_NAME, APP_URL } from '#/lib/constants'
 
 // Define the connectors for the app
 // Purposely using only these for now because of a localStorage error with the Coinbase Wallet connector

@@ -3,9 +3,9 @@ import { encodePacked, type Address } from 'viem'
 import { useAccount, useWalletClient } from 'wagmi'
 
 import * as abi from 'src/lib/abi.ts'
-import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts.ts'
-import { generateListStorageLocationSlot } from '#/app/efp/utilities.ts'
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
+import { generateListStorageLocationSlot } from '#/app/efp/utilities.ts'
+import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts.ts'
 
 export function useMintEFP() {
   const [listHasBeenMinted, setListHasBeenMinted] = useState(false)
@@ -22,9 +22,6 @@ export function useMintEFP() {
 
     try {
       const hash = await walletClient?.writeContract({
-        // address: coreEfpContracts.EFPListRegistry,
-        // abi: abi.efpListRegistryAbi,
-        // functionName: 'mint',
         chain: DEFAULT_CHAIN,
         address: coreEfpContracts.EFPListMinter,
         abi: abi.efpListMinterAbi,

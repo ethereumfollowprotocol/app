@@ -13,12 +13,12 @@ import { useChainId, useSwitchChain, useWalletClient } from 'wagmi'
 
 import { useCart } from '#/contexts/cart-context'
 import { Step } from '#/components/checkout/types'
-import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
+import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import type { ProfileDetailsResponse } from '#/api/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
+import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
-import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 
 type SaveListSettingsParams = {
   profile: ProfileDetailsResponse
