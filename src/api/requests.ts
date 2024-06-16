@@ -78,13 +78,12 @@ export async function fetchUserFollowers(
     `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/followers?include=ens`,
     {
       cache: 'default'
-      // cache: "no-cache",
     }
   )
   const data = (await response.json()) as {
     followers: FollowerResponse[]
   }
-  // console.log('fetchFollowers', data)
+
   return data
 }
 
@@ -107,6 +106,7 @@ export async function fetchUserFollowing(
   const data = (await response.json()) as {
     following: Omit<FollowingResponse, 'address'>[]
   }
+
   // add address field
   const modifiedData = data.following.map(following => ({
     ...following,
@@ -128,11 +128,9 @@ export async function fetchUserStats(
     `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/profile?include=stats`,
     {
       cache: 'default'
-      // cache: "no-cache",
     }
   )
 
   const data = (await response.json()) as { stats: StatsResponse }
-  // console.log('fetchFollowing', data)
   return data
 }

@@ -10,8 +10,7 @@
   "sort": {
     "follower count": "Število sledilcev",
     "latest first": "Najnovejši",
-    "earliest first": "Prvi",
-    "alphabetical": "Po abecedi"
+    "earliest first": "Prvi"
   },
   "search placeholder": "Išci ENS ime ali naslov",
   "following myprofile empty first": "Na žalost ne slediš nikomur! 😢",

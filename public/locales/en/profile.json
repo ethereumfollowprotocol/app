@@ -10,8 +10,7 @@
   "sort": {
     "follower count": "Follower Count",
     "latest first": "Latest First",
-    "earliest first": "Earliest First",
-    "alphabetical": "Alphabetical"
+    "earliest first": "Earliest First"
   },
   "search placeholder": "Search ENS or Address",
   "following myprofile empty first": "You don't follow anyone yet. Sad! 😢",

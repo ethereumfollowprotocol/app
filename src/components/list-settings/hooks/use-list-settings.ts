@@ -2,7 +2,7 @@ import { useChains } from 'wagmi'
 import { useEffect, useState } from 'react'
 import { http, fromHex, getContract, createPublicClient, type Address, type Chain } from 'viem'
 
-import { efpContracts } from '#/lib/constants/contracts'
+import { coreEfpContracts } from '#/lib/constants/contracts'
 import type { ProfileDetailsResponse } from '#/api/requests'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
@@ -33,7 +33,7 @@ const useListSettings = ({
     useState<Address>()
 
   const listRegistryContract = getContract({
-    address: efpContracts.EFPListRegistry,
+    address: coreEfpContracts.EFPListRegistry,
     abi: efpListRegistryAbi,
     client: createPublicClient({ chain: DEFAULT_CHAIN, transport: http() })
   })
@@ -50,7 +50,7 @@ const useListSettings = ({
     const listStorageLocationChain = chains.find(item => item.id === listStorageLocationChainId)
     const listRecordsContractAddress = listStorageLocation
       ? (`0x${listStorageLocation.slice(70, 110)}` as Address)
-      : efpContracts.EFPListRecords
+      : coreEfpContracts.EFPListRecords
 
     const listRecordsContract = getContract({
       address: listRecordsContractAddress,
