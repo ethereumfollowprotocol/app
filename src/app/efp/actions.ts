@@ -1,6 +1,6 @@
 // import { type Account, encodePacked } from 'viem'
 // import * as abi from '#/lib/abi.ts'
-// import { efpContracts } from '#/lib/constants/contracts.ts'
+// import { coreEfpContracts } from '#/lib/constants/contracts.ts'
 // import type { Address } from '#/lib/types.ts'
 // import { raise } from '#/lib/utilities.ts'
 // import type { EVMClient } from '#/lib/viem.ts'
@@ -29,12 +29,12 @@
 
 //   const listStorageLocation = encodePacked(
 //     ['uint8', 'uint8', 'uint256', 'address', 'uint'],
-//     [version, locationType, BigInt(chainId), efpContracts.EFPListRecords, slot]
+//     [version, locationType, BigInt(chainId), coreEfpContracts.EFPListRecords, slot]
 //   )
 
 //   const hash = await walletClient?.writeContract({
 //     account,
-//     address: efpContracts.EFPListRegistry,
+//     address: coreEfpContracts.EFPListRegistry,
 //     abi: abi.efpListRegistryAbi,
 //     functionName: 'mint',
 //     args: [listStorageLocation],
@@ -58,7 +58,7 @@
 // }) {
 //   const { request } = await client.simulateContract({
 //     account,
-//     address: efpContracts.EFPListRecords,
+//     address: coreEfpContracts.EFPListRecords,
 //     abi: abi.efpListRecordsAbi,
 //     functionName: 'claimListManager',
 //     args: [slot]
@@ -87,7 +87,7 @@
 //   const listRecordToFollow = encodePacked(['uint8', 'uint8', 'address'], [1, 1, address])
 //   const hash = await walletClient?.writeContract({
 //     account,
-//     address: efpContracts.EFPListRecords,
+//     address: coreEfpContracts.EFPListRecords,
 //     abi: abi.efpListRecordsAbi,
 //     functionName: 'applyListOp',
 //     args: [slot, encodePacked(['uint8', 'uint8', 'bytes'], [1, 1, listRecordToFollow])]
@@ -100,7 +100,7 @@
 //   return await client.readContract({
 //     abi: abi.efpListRegistryAbi,
 //     functionName: 'getMintState',
-//     address: efpContracts.EFPListRegistry
+//     address: coreEfpContracts.EFPListRegistry
 //   })
 // }
 
@@ -124,7 +124,7 @@
 //     account,
 //     abi: abi.efpListRegistryAbi,
 //     functionName: 'setMintState',
-//     address: efpContracts.EFPListRegistry,
+//     address: coreEfpContracts.EFPListRegistry,
 //     args: [mintStateRecord[mintState]]
 //   })
 

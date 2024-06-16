@@ -1,10 +1,11 @@
 'use client'
 
-import { APP_DESCRIPTION, APP_NAME, APP_URL } from '#/lib/constants'
-import { mainnet, sepolia, optimism, optimismSepolia } from 'wagmi/chains'
-import { http, fallback, createStorage, cookieStorage, createConfig } from 'wagmi'
 import { type Chain, connectorsForWallets } from '@rainbow-me/rainbowkit'
+import { http, fallback, createStorage, cookieStorage, createConfig } from 'wagmi'
 import { injectedWallet, walletConnectWallet } from '@rainbow-me/rainbowkit/wallets'
+import { mainnet, sepolia, optimism, optimismSepolia, baseSepolia } from 'wagmi/chains'
+
+import { APP_DESCRIPTION, APP_NAME, APP_URL } from '#/lib/constants'
 
 // Define the connectors for the app
 // Purposely using only these for now because of a localStorage error with the Coinbase Wallet connector
@@ -47,14 +48,22 @@ export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
   //   }
   // },
   {
-    ...sepolia,
-    iconBackground: 'bg-gray-200',
-    iconUrl: '/assets/chains/ethereum.svg',
+    ...baseSepolia,
+    iconUrl: '/assets/chains/base.svg',
     custom: {
       chainDetail: 'Testnet',
-      gasFeeDetail: 'Low gas fees'
+      gasFeeDetail: 'Super Low gas fees'
     }
   },
+  // {
+  //   ...sepolia,
+  //   iconBackground: 'bg-gray-200',
+  //   iconUrl: '/assets/chains/ethereum.svg',
+  //   custom: {
+  //     chainDetail: 'Testnet',
+  //     gasFeeDetail: 'Low gas fees'
+  //   }
+  // },
   // {
   //   ...optimism,
   //   iconUrl: '/assets/chains/optimism.svg',
@@ -130,6 +139,15 @@ const config = createConfig({
         // }),
         http('https://sepolia.optimism.io', { batch: true }),
         http('https://sepolia-rollup.arbitrum.io/rpc', { batch: true })
+      ],
+      { rank: true }
+    ),
+    [baseSepolia.id]: fallback(
+      [
+        // http(`https://optimism-sepolia.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`, {
+        //   batch: true
+        // }),
+        http('https://sepolia.base.org', { batch: true })
       ],
       { rank: true }
     )

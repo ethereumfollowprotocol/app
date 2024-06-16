@@ -105,7 +105,11 @@ export function UserProfileCard({
               }  items-center mx-autotext-center`}
             >
               <div>
-                <div className={`${isResponsive ? 'text-xl sm:text-2xl' : 'text-2xl'} font-bold`}>
+                <div
+                  className={`${
+                    isResponsive ? 'text-xl sm:text-2xl' : 'text-2xl'
+                  } text-center font-bold`}
+                >
                   {profile.stats === undefined ? '-' : profile.stats.following_count}
                 </div>
                 <div
@@ -115,7 +119,11 @@ export function UserProfileCard({
                 </div>
               </div>
               <div>
-                <div className={`${isResponsive ? 'text-xl sm:text-2xl' : 'text-2xl'} font-bold`}>
+                <div
+                  className={`${
+                    isResponsive ? 'text-xl sm:text-2xl' : 'text-2xl'
+                  } text-center font-bold`}
+                >
                   {profile.stats === undefined ? '-' : profile.stats.followers_count}
                 </div>
                 <div
@@ -125,7 +133,11 @@ export function UserProfileCard({
                 </div>
               </div>
               <div>
-                <div className={`${isResponsive ? 'text-xl sm:text-2xl' : 'text-2xl'} font-bold`}>
+                <div
+                  className={`${
+                    isResponsive ? 'text-xl sm:text-2xl' : 'text-2xl'
+                  } text-center font-bold`}
+                >
                   # -
                 </div>
                 <div

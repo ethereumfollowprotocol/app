@@ -24,7 +24,7 @@ export const LANGUAGES = [
 ]
 export const DEFAULT_TAGS_TO_ADD = ['efp']
 export const DEFAULT_TAGS = ['no tag']
-export const SORT_OPTIONS = ['follower count', 'latest first', 'earliest first', 'alphabetical']
+export const SORT_OPTIONS = ['latest first', 'earliest first', 'follower count']
 
 export const NAV_ITEMS = [
   {

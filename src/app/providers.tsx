@@ -1,44 +1,25 @@
 'use client'
 
-import { optimismSepolia } from 'viem/chains'
+import { useState } from 'react'
 import { WagmiProvider, type State } from 'wagmi'
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental'
 
-import { useState } from 'react'
 import wagmiConfig from '#/lib/wagmi'
 import { DAY, MINUTE } from '#/lib/constants'
 import Navigation from '#/components/navigation'
+import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import { CartProvider } from '#/contexts/cart-context'
 import { ActionsProvider } from '#/contexts/actions-context'
-import { TransactionsProvider } from '#/contexts/transactions-context'
 import { EFPProfileProvider } from '#/contexts/efp-profile-context'
+import { TransactionsProvider } from '#/contexts/transactions-context'
 
 type ProviderProps = {
   children: React.ReactNode
   initialState?: State
 }
-
-// const queryClient = new QueryClient({
-//   defaultOptions: {
-//     queries: {
-//       gcTime: 1000 * 60 * 60 * 24 // 24 hours
-//     }
-//   }
-// })
-
-// const localStoragePersister = createSyncStoragePersister({
-//   storage: window.localStorage
-// })
-
-// persistQueryClient({
-//   queryClient,
-//   persister: localStoragePersister
-// })
-
-export const DEFAULT_CHAIN_ID = optimismSepolia.id
 
 const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
   const [queryClient] = useState(
@@ -57,7 +38,7 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
           {/* <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}> */}
           <RainbowKitProvider
             coolMode={true}
-            initialChain={DEFAULT_CHAIN_ID}
+            initialChain={DEFAULT_CHAIN.id}
             showRecentTransactions={true}
           >
             <CartProvider>

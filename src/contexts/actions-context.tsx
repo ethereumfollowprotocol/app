@@ -114,6 +114,13 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
 
       try {
         const hash = await actionToExecute.execute()
+        if (!hash)
+          return updateAction({
+            ...actionToExecute,
+            isPendingConfirmation: false,
+            isConfirmationError: true
+          })
+
         updateAction({
           ...actionToExecute,
           isPendingConfirmation: false,
