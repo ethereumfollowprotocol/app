@@ -5,10 +5,10 @@ import { usePathname } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { useIntersectionObserver } from '@uidotdev/usehooks'
 
-import { FollowList } from '#/components/follow-list'
-import TableHeader from './components/table-headers'
-import type { FollowerResponse, FollowingResponse } from '#/api/requests'
 import { FETCH_LIMIT_PARAM } from '#/lib/constants'
+import TableHeader from './components/table-headers'
+import { FollowList } from '#/components/follow-list'
+import type { FollowerResponse, FollowingResponse } from '#/api/requests'
 
 /**
  * TODO: paginate

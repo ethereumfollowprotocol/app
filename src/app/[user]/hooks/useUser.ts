@@ -2,11 +2,11 @@ import { isAddress } from 'viem'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 
 import { FETCH_LIMIT_PARAM } from '#/lib/constants'
+import fetchProfileLists from '#/api/fetchProfileLists'
 import fetchProfileDetails from '#/api/fetchProfileDetails'
 import fetchProfileFollowers from '#/api/fetchProfileFollowers'
 import fetchProfileFollowing from '#/api/fetchProfileFollowing'
 import type { FollowerResponse, FollowingResponse } from '#/api/requests'
-import fetchProfileLists from '#/api/fetchProfileLists'
 
 const useUser = (user: string) => {
   const userIsList = !(isAddress(user) || user.includes('.'))

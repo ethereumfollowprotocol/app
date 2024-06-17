@@ -5,6 +5,8 @@
     "leaderboard": "Lestvica",
     "connect": "Poveži denarnico",
     "disconnect": "Odpoveži denarnico",
+    "mint new list": "Nov seznam",
+    "list": "Seznam",
     "search placeholder": "Išci ENS ime ali 0x naslov",
     "search no results": "Ni rezultatov"
   },

@@ -1,4 +1,12 @@
 import {
+  useState,
+  useEffect,
+  useContext,
+  createContext,
+  type Dispatch,
+  type SetStateAction
+} from 'react'
+import {
   useQuery,
   useInfiniteQuery,
   type InfiniteData,
@@ -8,30 +16,22 @@ import {
   type InfiniteQueryObserverResult
 } from '@tanstack/react-query'
 import { useAccount, useChains } from 'wagmi'
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  type Dispatch,
-  type SetStateAction
-} from 'react'
 
 import type {
   ProfileRoles,
   FollowerResponse,
   FollowingResponse,
-  ProfileDetailsResponse,
-  ProfileListsResponse
+  ProfileListsResponse,
+  ProfileDetailsResponse
 } from '#/api/requests'
 import { useCart } from './cart-context'
 import { FETCH_LIMIT_PARAM } from '#/lib/constants'
 import type { ProfileTabType } from '#/types/common'
 import fetchProfileRoles from '#/api/fetchProfileRoles'
+import fetchProfileLists from '#/api/fetchProfileLists'
 import fetchProfileDetails from '#/api/fetchProfileDetails'
 import fetchProfileFollowers from '#/api/fetchProfileFollowers'
 import fetchProfileFollowing from '#/api/fetchProfileFollowing'
-import fetchProfileLists from '#/api/fetchProfileLists'
 
 // Define the type for the profile context
 type EFPProfileContextType = {

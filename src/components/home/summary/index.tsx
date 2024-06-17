@@ -1,11 +1,12 @@
 'use client'
 
+import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
+
 import Recommendations from '#/components/recommendations'
 import LatestFollowers from './components/latest-followers'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { UserProfileCard } from '#/components/user-profile-card'
-import { useAccount } from 'wagmi'
 
 const Summary = () => {
   const { address } = useAccount()

@@ -1,16 +1,16 @@
+import { useRouter } from 'next/navigation'
+import { useTranslation } from 'react-i18next'
+import { isAddress, type Address } from 'viem'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useQueryState } from 'next-usequerystate'
 import { useCallback, useMemo, useRef, useState } from 'react'
 
 import searchENSNames from '#/api/searchENSNames'
-import { useRouter } from 'next/navigation'
-import { isAddress, type Address } from 'viem'
 import { useCart } from '#/contexts/cart-context.tsx'
 import { listOpAddListRecord } from '#/utils/list-ops.ts'
 import { resolveENSAddress } from '#/utils/resolveAddress.ts'
 import { useEFPProfile } from '#/contexts/efp-profile-context.tsx'
-import { useTranslation } from 'react-i18next'
 
 const useSearch = (isEditor?: boolean) => {
   const [addToCartError, setAddToCartError] = useState<string>()

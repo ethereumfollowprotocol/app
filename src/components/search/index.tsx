@@ -1,14 +1,14 @@
 'use client'
 
 import Image from 'next/image'
+import type { LegacyRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import useSearch from './hooks/useSearch.ts'
-import LoadingSpinner from '../loading-spinner.tsx'
-import MagnifyingGlass from 'public/assets/icons/magnifying-glass.svg'
-import { truncateAddress } from '#/lib/utilities.ts'
-import type { LegacyRef } from 'react'
 import GraySpinner from '../gray-spinner.tsx'
+import LoadingSpinner from '../loading-spinner.tsx'
+import { truncateAddress } from '#/lib/utilities.ts'
+import MagnifyingGlass from 'public/assets/icons/magnifying-glass.svg'
 
 export function Search({
   disabled,

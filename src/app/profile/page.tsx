@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import { PROFILE_TABS } from '#/lib/constants'
 import type { ProfileTabType } from '#/types/common'
@@ -11,7 +12,6 @@ import SettingsIcon from 'public/assets/icons/settings.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { UserProfileCard } from '#/components/user-profile-card'
 import { UserProfilePageTable } from '#/components/profile-page-table'
-import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 export default function ProfilePage() {
   const [isSaving, setIsSaving] = useState(false)

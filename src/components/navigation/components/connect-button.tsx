@@ -13,8 +13,8 @@ import { truncateAddress } from '#/lib/utilities'
 import ArrowLeft from 'public/assets/icons/arrow-left.svg'
 import { resolveENSProfile } from '#/utils/resolveAddress'
 import ArrowDown from 'public/assets/icons/arrow-down.svg'
-import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
+import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 
 const nullEnsProfile = {
   name: null,
@@ -101,7 +101,9 @@ const ConnectButton = () => {
             >
               <Image src={ArrowLeft} alt='Show lists' />
               <p className=' font-semibold'>
-                {selectedList ? `List #${selectedList}` : 'Mint new List'}
+                {selectedList
+                  ? `${t('navigation.list')} #${selectedList}`
+                  : t('navigation.mint new list')}
               </p>
             </div>
             <div
@@ -123,7 +125,7 @@ const ConnectButton = () => {
                       setListMenuOpen(false)
                     }}
                   >
-                    List #{list}
+                    {t('navigation.list')} #{list}
                   </p>
                 ))}
                 <p
@@ -134,7 +136,7 @@ const ConnectButton = () => {
                     setListMenuOpen(false)
                   }}
                 >
-                  Mint new List
+                  {t('navigation.mint new list')}
                 </p>
               </div>
             </div>
