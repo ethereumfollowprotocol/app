@@ -115,7 +115,7 @@ const ConnectButton = () => {
                     className=' text-darkGrey text-nowrap font-semibold hover:text-gray-500 transition-colors'
                     key={list}
                     onClick={() => {
-                      setSelectedList(list)
+                      setSelectedList(Number(list))
                       setListMenuOpen(false)
                     }}
                   >

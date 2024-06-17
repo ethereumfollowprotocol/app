@@ -7,10 +7,7 @@ import type { ProfileDetailsResponse } from '#/api/requests'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 
-const useListSettings = ({
-  profile,
-  selectedList
-}: { profile: ProfileDetailsResponse; selectedList: number }) => {
+const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; list: number }) => {
   const chains = useChains()
   const [chain, setChain] = useState<Chain>()
   const [fetchedChain, setFetchedChain] = useState<Chain>()
@@ -40,9 +37,9 @@ const useListSettings = ({
 
   const fetchListData = async () => {
     const listStorageLocation = await listRegistryContract.read.getListStorageLocation([
-      BigInt(selectedList)
+      BigInt(list)
     ])
-    const listOwner = await listRegistryContract.read.ownerOf([BigInt(selectedList)])
+    const listOwner = await listRegistryContract.read.ownerOf([BigInt(list)])
     const listStorageLocationChainId = fromHex(`0x${listStorageLocation.slice(64, 70)}`, 'number')
 
     const slot = BigInt(`0x${listStorageLocation.slice(-64)}`)
@@ -87,7 +84,13 @@ const useListSettings = ({
 
   useEffect(() => {
     fetchListData()
-  }, [profile])
+    setChangedValues({
+      chain: false,
+      owner: false,
+      manager: false,
+      user: false
+    })
+  }, [profile, list])
 
   return {
     chain,

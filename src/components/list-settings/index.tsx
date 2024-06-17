@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { isAddress } from 'viem'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
@@ -27,12 +27,19 @@ const ListSettings: React.FC<ListSettingsProps> = ({
   selectedList,
   isSaving,
   onClose,
+  lists,
   setIsSaving,
   profile
 }) => {
+  const [currentList, setCurrentList] = useState(selectedList)
   const [chainDropdownOpen, setChainDropdownOpen] = useState(false)
   const chainDropdownRef = useClickAway<HTMLDivElement>(() => {
     setChainDropdownOpen(false)
+  })
+
+  const [listsDropdownOpen, setListsDropdownOpen] = useState(false)
+  const listsDropdownRef = useClickAway<HTMLDivElement>(() => {
+    setListsDropdownOpen(false)
   })
 
   const { address: connectedAddress } = useAccount()
@@ -57,11 +64,11 @@ const ListSettings: React.FC<ListSettingsProps> = ({
     fetchedManager,
     setChangedValues,
     fetchedListRecordsContractAddress
-  } = useListSettings({ profile, selectedList })
+  } = useListSettings({ profile, list: currentList })
 
   return isSaving ? (
     <SaveSettings
-      selectedList={selectedList}
+      selectedList={currentList}
       newChain={chain}
       chain={fetchedChain}
       changedValues={changedValues}
@@ -81,9 +88,37 @@ const ListSettings: React.FC<ListSettingsProps> = ({
         className='glass-card bg-white/40 gap-8 flex flex-col rounded-xl p-10 w-[554px]'
       >
         <div className='w-full flex items-center justify-between'>
-          <h3 className='text-5xl font-semibold'>
-            {t('list')} #{selectedList}
-          </h3>
+          <div ref={listsDropdownRef} className='relative'>
+            <div
+              onClick={() => setListsDropdownOpen(!listsDropdownOpen)}
+              className='flex items-center gap-2 cursor-pointer'
+            >
+              <h3 className='text-5xl font-semibold'>
+                {t('list')} #{currentList}
+              </h3>
+              <Image
+                src={ArrowDown}
+                alt='Open list storage location chains'
+                className={`w-5 ${listsDropdownOpen ? 'rotate-180' : ''} transition-transform`}
+              />
+            </div>
+            {listsDropdownOpen && (
+              <div className='absolute top-14 flex bg-white/90 flex-col rounded-xl w-full'>
+                {lists?.map(item => (
+                  <div
+                    key={item}
+                    onClick={() => {
+                      setCurrentList(Number(item))
+                      setListsDropdownOpen(false)
+                    }}
+                    className='w-full hover:bg-white cursor-pointer rounded-xl flex items-center gap-3 p-3'
+                  >
+                    <p className='text-lg font-semibold truncate'>List #{item}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
           <Image
             src={Cross}
             alt='Close list settings'

@@ -25,7 +25,7 @@ const Summary = () => {
       {address ? (
         <>
           <UserProfileCard
-            profileList={selectedList || profile?.primary_list}
+            profileList={selectedList}
             hideFollowButton={true}
             profile={profile}
             following={following}

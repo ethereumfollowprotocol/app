@@ -30,7 +30,7 @@ const useCheckout = () => {
   const { data: walletClient } = useWalletClient()
   const { totalCartItems, cartItems, resetCart } = useCart()
   const { mint, nonce: mintNonce, listHasBeenMinted } = useMintEFP()
-  const { profile, refetchFollowing, refetchProfile, selectedList } = useEFPProfile()
+  const { profile, refetchFollowing, refetchProfile, selectedList, refetchLists } = useEFPProfile()
   const {
     addActions,
     executeActionByIndex,
@@ -142,9 +142,7 @@ const useCheckout = () => {
 
     // add Create list action if user doesn't have the EFP list yet
     const actionsToExecute =
-      selectedList || listHasBeenMinted
-        ? [cartItemAction]
-        : [createEFPListAction, cartItemAction]
+      selectedList || listHasBeenMinted ? [cartItemAction] : [createEFPListAction, cartItemAction]
     addActions(actionsToExecute)
   }, [selectedChainId, totalCartItems, listOpTx])
 
@@ -215,8 +213,11 @@ const useCheckout = () => {
   const onFinish = useCallback(() => {
     resetCart()
     resetActions()
-    refetchProfile()
-    refetchFollowing()
+    if (selectedList === undefined) refetchLists()
+    else {
+      refetchProfile()
+      refetchFollowing()
+    }
     router.push('/profile')
   }, [resetActions, resetCart])
 

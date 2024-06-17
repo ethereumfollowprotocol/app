@@ -147,7 +147,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     if (lists?.primary_list) setSelectedList(Number(lists.primary_list))
-    if (lists?.lists && lists?.lists?.length > 0) setSelectedList(Number(lists?.lists[0]))
+    else if (lists?.lists && lists?.lists?.length > 0) setSelectedList(Number(lists?.lists[0]))
   }, [lists])
 
   const {

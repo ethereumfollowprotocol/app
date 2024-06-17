@@ -44,19 +44,22 @@ export function UserProfileCard({
   return (
     <div
       className={`flex glass-card ${
-        isResponsive ? 'xl:w-76 w-full 2xl:w-86 py-3 px-4 sm:p-6' : 'w-86 p-6'
+        isResponsive ? 'xl:w-76 w-full 2xl:w-86 py-4 px-4 sm:p-6 sm:py-7' : 'w-86 p-6'
       } border-2 justify-center flex-col ${borderColor || 'border-[#FFDBD9]'} rounded-xl relative`}
     >
       {isLoading ? (
-        <LoadingProfileCard isResponsive={isResponsive} />
+        <LoadingProfileCard isResponsive={isResponsive} hideFollowButton={hideFollowButton} />
       ) : profile && isProfileValid ? (
         <>
           <div
-            className={`text-gray-500 absolute ${
-              isResponsive ? 'text-right xl:text-left' : 'text-left'
+            className={`text-gray-500 flex gap-2 items-center absolute ${
+              isResponsive ? 'justify-end xl:justify-between' : 'justify-start'
             } px-2 w-full left-0 top-1 font-semibold`}
           >
-            #{profileList ?? '-'}
+            <p>#{profileList ?? '-'}</p>
+            {profileList && profileList === profile.primary_list && (
+              <p className='text-xs italic text-gray-400'>{t('not primary list')}</p>
+            )}
           </div>
           <div className='flex w-full xl:items-center flex-col gap-5 sm:gap-6 md:gap-9 pt-2'>
             <div
@@ -112,7 +115,11 @@ export function UserProfileCard({
                     isResponsive ? 'text-xl sm:text-2xl' : 'text-2xl'
                   } text-center font-bold`}
                 >
-                  {profile.stats === undefined ? '-' : profile.stats.following_count}
+                  {profile.stats === undefined
+                    ? '-'
+                    : profileList
+                      ? profile.stats.following_count
+                      : 0}
                 </div>
                 <div
                   className={`${isResponsive ? 'sm:text-lg' : 'text-lg'} font-bold text-gray-500`}
@@ -152,7 +159,11 @@ export function UserProfileCard({
           </div>
         </>
       ) : (
-        <div className='w-full h-20 xl:h-72 text-xl flex items-center justify-center font-semibold italic'>
+        <div
+          className={`w-full h-20 ${
+            hideFollowButton ? 'xl:h-[360px]' : 'xl:h-[420px]'
+          } text-lg 2xl:text-xl flex items-center justify-center font-semibold italic`}
+        >
           {isConnectedUserCard ? t('connect wallet') : t('profile error')}
         </div>
       )}
