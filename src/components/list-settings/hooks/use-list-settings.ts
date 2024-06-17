@@ -2,10 +2,10 @@ import { useChains } from 'wagmi'
 import { useEffect, useState } from 'react'
 import { http, fromHex, getContract, createPublicClient, type Address, type Chain } from 'viem'
 
+import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import { coreEfpContracts } from '#/lib/constants/contracts'
 import type { ProfileDetailsResponse } from '#/api/requests'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
-import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 
 const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; list: number }) => {
   const chains = useChains()

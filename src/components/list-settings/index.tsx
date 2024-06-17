@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { isAddress } from 'viem'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
