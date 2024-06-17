@@ -61,7 +61,8 @@ const useSaveListSettings = ({
   const { switchChain } = useSwitchChain()
   const { data: walletClient } = useWalletClient()
   const { t } = useTranslation('profile', { keyPrefix: 'list settings' })
-  const { refetchProfile, refetchFollowing, refetchRoles } = useEFPProfile()
+  const { refetchProfile, refetchFollowing, refetchRoles, refetchLists, refetchFollowers } =
+    useEFPProfile()
   const { addActions, actions, executeActionByIndex, resetActions, moveToNextAction } = useActions()
 
   const listRegistryContract = getContract({
@@ -225,10 +226,14 @@ const useSaveListSettings = ({
   const onFinish = useCallback(() => {
     if (changedValues.manager) resetCart()
 
-    resetActions()
+    // Refetch all related data
+    refetchLists()
     refetchRoles()
     refetchProfile()
     refetchFollowing()
+    refetchFollowers()
+
+    resetActions()
     onCancel()
     onClose()
   }, [changedValues])

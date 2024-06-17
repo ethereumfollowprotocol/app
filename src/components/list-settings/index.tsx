@@ -96,13 +96,15 @@ const ListSettings: React.FC<ListSettingsProps> = ({
               <h3 className='text-5xl font-semibold'>
                 {t('list')} #{currentList}
               </h3>
-              <Image
-                src={ArrowDown}
-                alt='Open list storage location chains'
-                className={`w-5 ${listsDropdownOpen ? 'rotate-180' : ''} transition-transform`}
-              />
+              {(lists?.length || 0) > 1 && (
+                <Image
+                  src={ArrowDown}
+                  alt='Open list storage location chains'
+                  className={`w-5 ${listsDropdownOpen ? 'rotate-180' : ''} transition-transform`}
+                />
+              )}
             </div>
-            {listsDropdownOpen && (
+            {(lists?.length || 0) > 1 && listsDropdownOpen && (
               <div className='absolute top-14 flex bg-white/90 flex-col rounded-xl w-full'>
                 {lists?.map(item => (
                   <div

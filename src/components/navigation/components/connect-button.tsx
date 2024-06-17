@@ -105,9 +105,13 @@ const ConnectButton = () => {
               </p>
             </div>
             <div
-              className={`absolute right-[100%] -top-3 ${
-                (lists?.lists?.length || 0) > 0 && listMenuOpen ? 'block' : 'hidden'
-              } group-hover:block pr-5`}
+              className={`absolute right-[100%] group-hover:block -top-3 ${
+                lists?.lists && lists?.lists?.length > 0
+                  ? listMenuOpen
+                    ? 'block'
+                    : 'hidden'
+                  : 'hidden group-hover:hidden'
+              } pr-5`}
             >
               <div className='flex flex-col gap-2 glass-card bg-white/90 border-2 border-gray-200 px-4 py-2 rounded-lg shadow-md'>
                 {lists?.lists?.map(list => (

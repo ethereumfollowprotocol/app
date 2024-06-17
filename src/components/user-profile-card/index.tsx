@@ -44,7 +44,7 @@ export function UserProfileCard({
   return (
     <div
       className={`flex glass-card ${
-        isResponsive ? 'xl:w-76 w-full 2xl:w-86 py-4 px-4 sm:p-6 sm:py-7' : 'w-86 p-6'
+        isResponsive ? 'xl:w-76 w-full 2xl:w-86 py-6 px-4 sm:p-6 sm:py-7' : 'w-86 p-6'
       } border-2 justify-center flex-col ${borderColor || 'border-[#FFDBD9]'} rounded-xl relative`}
     >
       {isLoading ? (
@@ -52,14 +52,18 @@ export function UserProfileCard({
       ) : profile && isProfileValid ? (
         <>
           <div
-            className={`text-gray-500 flex gap-2 items-center absolute ${
-              isResponsive ? 'justify-end xl:justify-between' : 'justify-start'
+            className={`flex gap-2 items-center absolute ${
+              isResponsive ? 'justify-end xl:justify-start' : 'justify-start'
             } px-2 w-full left-0 top-1 font-semibold`}
           >
-            <p>#{profileList ?? '-'}</p>
-            {profileList && profileList !== Number(profile.primary_list) && (
-              <p className='text-xs italic text-gray-400'>{t('not primary list')}</p>
-            )}
+            <p className='text-gray-500 text-sm sm:text-base'>#{profileList ?? '-'}</p>
+            {profileList
+              ? profileList !== Number(profile.primary_list) && (
+                  <p className='w-full text-xs italic text-end text-gray-400'>
+                    {t('not primary list')}
+                  </p>
+                )
+              : null}
           </div>
           <div className='flex w-full xl:items-center flex-col gap-5 sm:gap-6 md:gap-9 pt-2'>
             <div

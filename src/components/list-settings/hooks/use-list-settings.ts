@@ -12,12 +12,12 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
   const [chain, setChain] = useState<Chain>()
   const [fetchedChain, setFetchedChain] = useState<Chain>()
 
-  const [user, setUser] = useState<string>()
-  const [fetchedUser, setFetchedUser] = useState<string>()
-  const [owner, setOwner] = useState<string>()
-  const [fetchedOwner, setFetchedOwner] = useState<string>()
-  const [manager, setManager] = useState<string>()
-  const [fetchedManager, setFetchedManager] = useState<string>()
+  const [user, setUser] = useState<string>('')
+  const [fetchedUser, setFetchedUser] = useState<string>('')
+  const [owner, setOwner] = useState<string>('')
+  const [fetchedOwner, setFetchedOwner] = useState<string>('')
+  const [manager, setManager] = useState<string>('')
+  const [fetchedManager, setFetchedManager] = useState<string>('')
   const [changedValues, setChangedValues] = useState({
     chain: false,
     owner: false,
