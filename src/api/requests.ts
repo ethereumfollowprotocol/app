@@ -34,7 +34,7 @@ export interface ProfileResponse {
   ens: ENSProfile
   fresh?: number
   resolver?: string
-  primary_list?: number | null
+  primary_list?: string | null
   stats?: StatsResponse | undefined
   followers?: FollowerResponse[]
   following?: FollowingResponse[]
@@ -45,12 +45,12 @@ export interface ProfileResponse {
 export interface ProfileDetailsResponse {
   address: Address
   ens: ENSProfile
-  primary_list?: number | null
+  primary_list?: string | null
   stats?: StatsResponse | undefined
 }
 
 export interface ProfileListsResponse {
-  primary_list?: number | null
+  primary_list?: string | null
   lists?: number[]
 }
 

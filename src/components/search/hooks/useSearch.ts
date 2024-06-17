@@ -153,14 +153,18 @@ const useSearch = (isEditor?: boolean) => {
       }
 
       const erroredName = await addToCart(currentSearch)
-      if (erroredName?.isFollowing)
+      if (!!erroredName && erroredName.isFollowing)
         setAddToCartError(`${t('already followed')} ${erroredName.user}`)
       else setAddToCartError(`${t('unresolved')} ${erroredName?.user}`)
 
       return
     }
 
-    if (isAddress(currentSearch) || currentSearch.includes('.')) {
+    if (
+      isAddress(currentSearch) ||
+      currentSearch.includes('.') ||
+      !Number.isNaN(Number(currentSearch))
+    ) {
       const address = isAddress(currentSearch)
         ? currentSearch
         : await resolveENSAddress(currentSearch)

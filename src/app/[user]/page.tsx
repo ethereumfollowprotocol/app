@@ -29,6 +29,7 @@ export default function UserPage({ params }: Props) {
   const { address: connectedUserAddress } = useAccount()
 
   const {
+    lists,
     profile,
     followers,
     following,
@@ -74,7 +75,8 @@ export default function UserPage({ params }: Props) {
     <>
       {listSettingsOpen && profile && profile.primary_list && (
         <ListSettings
-          selectedList={profile.primary_list}
+          lists={lists?.lists}
+          selectedList={Number(profile.primary_list)}
           isSaving={isSaving}
           profile={profile}
           setIsSaving={setIsSaving}
@@ -85,7 +87,7 @@ export default function UserPage({ params }: Props) {
         <main className='flex pb-8 min-h-full w-full justify-between xl:justify-center gap-y-4 flex-col md:flex-row flex-wrap xl:flex-nowrap items-start xl:gap-6 mt-32 md:mt-40 lg:mt-48 px-4 lg:px-8'>
           <div className='flex flex-col w-full xl:w-fit items-center gap-4'>
             <UserProfileCard
-              profileList={profile?.primary_list}
+              profileList={Number(profile?.primary_list)}
               profile={profile}
               following={following}
               isLoading={profileIsLoading}

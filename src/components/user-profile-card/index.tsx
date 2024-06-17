@@ -57,7 +57,7 @@ export function UserProfileCard({
             } px-2 w-full left-0 top-1 font-semibold`}
           >
             <p>#{profileList ?? '-'}</p>
-            {profileList && profileList === profile.primary_list && (
+            {profileList && profileList !== Number(profile.primary_list) && (
               <p className='text-xs italic text-gray-400'>{t('not primary list')}</p>
             )}
           </div>

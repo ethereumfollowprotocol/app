@@ -1,10 +1,12 @@
+import { isAddress } from 'viem'
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
+
+import { FETCH_LIMIT_PARAM } from '#/lib/constants'
 import fetchProfileDetails from '#/api/fetchProfileDetails'
 import fetchProfileFollowers from '#/api/fetchProfileFollowers'
 import fetchProfileFollowing from '#/api/fetchProfileFollowing'
 import type { FollowerResponse, FollowingResponse } from '#/api/requests'
-import { FETCH_LIMIT_PARAM } from '#/lib/constants'
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
-import { isAddress } from 'viem'
+import fetchProfileLists from '#/api/fetchProfileLists'
 
 const useUser = (user: string) => {
   const userIsList = !(isAddress(user) || user.includes('.'))
@@ -19,6 +21,17 @@ const useUser = (user: string) => {
       return fetchedProfile
     },
     staleTime: 20000
+  })
+
+  const { data: lists } = useQuery({
+    queryKey: ['lists', profile],
+    queryFn: async () => {
+      if (!profile?.address) return null
+
+      const fetchedLists = await fetchProfileLists(profile.address)
+      return fetchedLists
+    },
+    staleTime: 3600000
   })
 
   const {
@@ -37,7 +50,7 @@ const useUser = (user: string) => {
 
       const fetchedFollowers = await fetchProfileFollowers({
         addressOrName: user,
-        list: listNum,
+        // list: listNum,
         limit: FETCH_LIMIT_PARAM,
         pageParam
       })
@@ -90,6 +103,7 @@ const useUser = (user: string) => {
     : []
 
   return {
+    lists,
     profile,
     followers,
     following,
