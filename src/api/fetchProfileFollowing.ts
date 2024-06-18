@@ -9,7 +9,7 @@ const fetchProfileFollowing = async ({
   try {
     const url =
       typeof list === 'number'
-        ? `${process.env.NEXT_PUBLIC_EFP_API_URL}/lists/${list}/following?include=ens&offset=${
+        ? `${process.env.NEXT_PUBLIC_EFP_API_URL}/lists/${list}/following?offset=${
             pageParam * limit
           }&limit=${limit}`
         : `${

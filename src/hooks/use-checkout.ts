@@ -8,6 +8,7 @@ import {
   createPublicClient
 } from 'viem'
 import { useRouter } from 'next/navigation'
+import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useState } from 'react'
 import { useChainId, useChains, useSwitchChain, useWalletClient } from 'wagmi'
 
@@ -23,22 +24,23 @@ import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
 
 const useCheckout = () => {
+  const {
+    actions,
+    addActions,
+    resetActions,
+    moveToNextAction,
+    currentActionIndex,
+    executeActionByIndex
+  } = useActions()
   const chains = useChains()
   const router = useRouter()
   const currentChainId = useChainId()
+  const queryClient = useQueryClient()
   const { switchChain } = useSwitchChain()
   const { data: walletClient } = useWalletClient()
   const { totalCartItems, cartItems, resetCart } = useCart()
   const { mint, nonce: mintNonce, listHasBeenMinted } = useMintEFP()
   const { profile, refetchFollowing, refetchProfile, selectedList, refetchLists } = useEFPProfile()
-  const {
-    addActions,
-    executeActionByIndex,
-    actions,
-    resetActions,
-    currentActionIndex,
-    moveToNextAction
-  } = useActions()
 
   // get contract for selected chain to pull list storage location from
   const listRegistryContract = getContract({
@@ -211,13 +213,17 @@ const useCheckout = () => {
   }, [moveToNextAction, executeActionByIndex, getRequiredChain, currentChainId, currentActionIndex])
 
   const onFinish = useCallback(() => {
+    queryClient.invalidateQueries({ queryKey: ['follow state'] })
+
     resetCart()
     resetActions()
+
     if (selectedList === undefined) refetchLists()
     else {
       refetchProfile()
       refetchFollowing()
     }
+
     router.push('/profile')
   }, [resetActions, resetCart])
 

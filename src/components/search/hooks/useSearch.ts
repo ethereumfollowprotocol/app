@@ -8,8 +8,8 @@ import { useCallback, useMemo, useRef, useState } from 'react'
 
 import searchENSNames from '#/api/searchENSNames'
 import { useCart } from '#/contexts/cart-context.tsx'
+import { resolveENSAddress } from '#/utils/resolveENS'
 import { listOpAddListRecord } from '#/utils/list-ops.ts'
-import { resolveENSAddress } from '#/utils/resolveAddress.ts'
 import { useEFPProfile } from '#/contexts/efp-profile-context.tsx'
 
 const useSearch = (isEditor?: boolean) => {

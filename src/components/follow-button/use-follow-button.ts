@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
 
 import {
@@ -43,6 +44,7 @@ type FollowButtonText =
 
 export const useFollowButton = ({ address }: { address: Address }) => {
   const { roles } = useEFPProfile()
+  const { address: userAddress } = useAccount()
   const { followState, isFollowStateLoading } = useFollowState({
     address,
     type: 'followings'
@@ -57,6 +59,8 @@ export const useFollowButton = ({ address }: { address: Address }) => {
   )
 
   const buttonState = useMemo<FollowButtonState>(() => {
+    if (!userAddress) return 'Follow'
+
     if (isPendingFollow) return 'Pending Following'
     if (isPendingUnfollow) return 'Pending Unfollow'
     switch (followState) {
@@ -69,9 +73,11 @@ export const useFollowButton = ({ address }: { address: Address }) => {
       default:
         return 'Follow'
     }
-  }, [isPendingFollow, isPendingUnfollow, followState])
+  }, [isPendingFollow, isPendingUnfollow, followState, userAddress])
 
   const buttonText = useMemo<FollowButtonText>(() => {
+    if (!userAddress) return 'Follow'
+
     if (isPendingFollow) return 'Following'
     if (isPendingUnfollow) return 'Unfollow'
 
@@ -85,7 +91,7 @@ export const useFollowButton = ({ address }: { address: Address }) => {
       default:
         return 'Follow'
     }
-  }, [followState, isPendingFollow, isPendingUnfollow])
+  }, [followState, isPendingFollow, isPendingUnfollow, userAddress])
 
   const handleAction = () => {
     // cannot perform list operations if not list manager

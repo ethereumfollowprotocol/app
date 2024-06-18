@@ -141,8 +141,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
 
       const fetchedLists = await fetchProfileLists(userAddress)
       return fetchedLists
-    },
-    staleTime: 3600000
+    }
   })
 
   useEffect(() => {
@@ -163,8 +162,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       const fetchedProfile = await fetchProfileDetails(userAddress, selectedList)
       return fetchedProfile
     },
-    refetchInterval: 60000,
-    staleTime: 10000
+    refetchInterval: 60000
   })
 
   // Fetch followings depending on the selected list
@@ -194,8 +192,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     },
     initialPageParam: 0,
     getNextPageParam: lastPage => lastPage.nextPageParam,
-    refetchInterval: 60000,
-    staleTime: 10000
+    refetchInterval: 60000
   })
 
   // fetch followers depending on list for the user of the list you are viewing or show connected address followers if no list is selected
@@ -224,9 +221,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       return fetchedFollowers
     },
     initialPageParam: 0,
-    getNextPageParam: lastPage => lastPage.nextPageParam,
-    refetchInterval: 60000,
-    staleTime: 10000
+    getNextPageParam: lastPage => lastPage.nextPageParam
   })
 
   const followers = fetchedFollowers

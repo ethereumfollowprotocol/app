@@ -85,7 +85,7 @@ export async function fetchUserFollowers(
     }
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/followers?include=ens`,
+    `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/followers`,
     {
       cache: 'default'
     }
@@ -106,7 +106,7 @@ export async function fetchUserFollowing(
     }
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/following?include=ens`,
+    `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/following`,
     {
       cache: 'default'
       // cache: "no-cache",

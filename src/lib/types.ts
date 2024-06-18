@@ -34,6 +34,29 @@ export interface ENSProfile {
   errors?: { [key: string]: string }
 }
 
+export interface ENSMetadataProfile {
+  uri: string
+  is_owner: boolean
+  full_image: string
+  full_svg: string
+  svg: string
+  host_meta: {
+    chain_id: string | number
+    namespace: string
+    contract_address: string
+    token_id: string | number
+    reference_url: string
+  }
+  name: string
+  description: string
+  attribute: string
+  image: string
+  image_url: string
+  image_data: string
+  background_color: string
+  youtube_url: string
+}
+
 export type NoRepetition<U extends string, ResultT extends any[] = []> =
   | ResultT
   | {

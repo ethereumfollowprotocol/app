@@ -4,8 +4,6 @@ interface EnvironmentVariables {
   readonly APP_VERSION: string
   readonly EFP_API_URL: string
   readonly NEXT_PUBLIC_EFP_API_URL: string
-  readonly ENS_API_URL: string
-  readonly NEXT_PUBLIC_ENS_API_URL: string
   readonly NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA: string
   readonly NEXT_PUBLIC_BASE_URL: string
   readonly NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID: string
@@ -17,6 +15,14 @@ interface EnvironmentVariables {
   readonly NEXT_PUBLIC_OPTIMISM_ALCHEMY_ID: string
   readonly SEPOLIA_ALCHEMY_ID: string
   readonly NEXT_PUBLIC_SEPOLIA_ALCHEMY_ID: string
+  readonly BASE_ALCHEMY_ID: string
+  readonly NEXT_PUBLIC_BASE_ALCHEMY_ID: string
+  readonly BASE_SEPOLIA_ALCHEMY_ID: string
+  readonly NEXT_PUBLIC_BASE_SEPOLIA_ALCHEMY_ID: string
+  readonly OPTIMISM_ALCHEMY_ID: string
+  readonly NEXT_PUBLIC_OPTIMISM_ALCHEMY_ID: string
+  readonly OP_SEPOLIA_ALCHEMY_ID: string
+  readonly NEXT_PUBLIC_OP_SEPOLIA_ALCHEMY_ID: string
   readonly LLAMAFOLIO_ID: string
   readonly NEXT_PUBLIC_LLAMAFOLIO_ID: string
   readonly INFURA_ID: string

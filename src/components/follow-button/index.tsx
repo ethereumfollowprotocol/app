@@ -7,8 +7,8 @@ import type { Address } from 'viem'
 import { useTranslation } from 'react-i18next'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
-import { type FollowButtonState, useFollowButton } from './use-follow-button'
 import LoadingCell from '../loading-cell'
+import { type FollowButtonState, useFollowButton } from './use-follow-button'
 
 const theme = {
   Follow: {

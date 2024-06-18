@@ -2,9 +2,9 @@ import type { Address } from 'viem'
 import { useCallback, useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
 
+import type { FollowState } from '#/types/common'
 import fetchFollowingState from '#/api/fetchFollowingStatus'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import type { FollowState } from '#/types/common'
 
 /**
  * @description
@@ -28,15 +28,13 @@ const useFollowState = ({
   const { followers, selectedList, followersIsLoading } = useEFPProfile()
 
   const { data: followingStatus, isLoading: isFollowingStatusLoading } = useQuery({
-    queryKey: ['follow button', address, selectedList],
+    queryKey: ['follow state', address, selectedList],
     queryFn: async () => {
       if (!address) return null
 
       const fetchedProfile = await fetchFollowingState({ address: address, list: selectedList })
       return fetchedProfile
-    },
-    refetchInterval: 60000,
-    staleTime: 10000
+    }
   })
 
   const followerState = useCallback((): FollowState => {

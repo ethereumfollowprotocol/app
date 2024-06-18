@@ -17,9 +17,7 @@ export async function fetchLeaderboard({
     // if (filter !== "followers") return [];
     // const params = include.map(key => `include=${key}`).join('&')
     // console.log(`${process.env.EFP_API_URL}/leaderboard/${filter}?limit=${limit}&${params}`)
-    const response = await fetch(
-      `${process.env.EFP_API_URL}/leaderboard/${filter}?limit=${limit}&include=ens`
-    )
+    const response = await fetch(`${process.env.EFP_API_URL}/leaderboard/${filter}?limit=${limit}`)
 
     // When there is no ens name, the API returns an object with a message property
     if (!response.ok) {

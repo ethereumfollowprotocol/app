@@ -9,12 +9,12 @@ const fetchProfileFollowers = async ({
   try {
     const url =
       typeof list === 'number'
-        ? `${process.env.NEXT_PUBLIC_EFP_API_URL}/lists/${list}/followers?include=ens&offset=${
+        ? `${process.env.NEXT_PUBLIC_EFP_API_URL}/lists/${list}/followers?offset=${
             pageParam * limit
           }&limit=${limit}`
-        : `${
-            process.env.NEXT_PUBLIC_EFP_API_URL
-          }/users/${addressOrName}/followers?include=ens&offset=${pageParam * limit}&limit=${limit}`
+        : `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/followers?offset=${
+            pageParam * limit
+          }&limit=${limit}`
 
     const response = await fetch(url, {
       cache: 'default'
