@@ -8,7 +8,7 @@ import {
   listOpRemoveListRecord
 } from '#/utils/list-ops'
 import { useCart } from '#/contexts/cart-context'
-import { useFollowState } from '#/hooks/use-follow-state'
+import useFollowState from '#/hooks/use-follow-state'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 export type FollowButtonState =
@@ -43,7 +43,7 @@ type FollowButtonText =
 
 export const useFollowButton = ({ address }: { address: Address }) => {
   const { roles } = useEFPProfile()
-  const followState = useFollowState({
+  const { followState, isFollowStateLoading } = useFollowState({
     address,
     type: 'followings'
   })
@@ -113,5 +113,5 @@ export const useFollowButton = ({ address }: { address: Address }) => {
     if (buttonText === 'Following') return addCartItem({ listOp: listOpRemoveListRecord(address) })
   }
 
-  return { buttonText, buttonState, handleAction }
+  return { buttonText, buttonState, handleAction, isLoading: isFollowStateLoading }
 }

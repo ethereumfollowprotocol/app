@@ -11,9 +11,9 @@ import { Avatar } from '#/components/avatar'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useCart } from '#/contexts/cart-context'
 import { truncateAddress } from '#/lib/utilities'
+import useFollowState from '#/hooks/use-follow-state'
 import { DEFAULT_TAGS_TO_ADD } from '#/lib/constants'
 import Plus from 'public/assets/icons/plus-squared.svg'
-import { useFollowState } from '#/hooks/use-follow-state'
 import { listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
 
 interface FollowListItemNameProps {
@@ -66,11 +66,11 @@ export function FollowListItemName({
 
   const { t } = useTranslation()
   const { t: tEditor } = useTranslation('editor')
-  const isFollower =
-    useFollowState({
-      address,
-      type: 'followers'
-    }) === 'follows'
+  const { followState } = useFollowState({
+    address,
+    type: 'followers'
+  })
+  const isFollower = followState === 'follows'
 
   const {
     addCartItem,

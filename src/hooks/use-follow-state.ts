@@ -2,9 +2,9 @@ import type { Address } from 'viem'
 import { useCallback, useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
 
-import type { FollowState } from '#/types/common'
 import fetchFollowingState from '#/api/fetchFollowingStatus'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
+import type { FollowState } from '#/types/common'
 
 /**
  * @description
@@ -15,19 +15,19 @@ import { useEFPProfile } from '#/contexts/efp-profile-context'
  *
  * @param address - The address whose follow state is to be determined relative to the connected user's profile.
  * @param type - The type of followers or followings to check
- * @returns {FollowState} - The follow state as a string, which can be 'follows', 'blocks', 'mutes', or 'none'
+ * @returns {FollowState: FollowState, isFollowStateLoading: boolean} - The follow state as a string, which can be 'follows', 'blocks', 'mutes', or 'none'
  * indicating the relationship status from the perspective of the connected user towards the specified address.
  */
-export function useFollowState({
+const useFollowState = ({
   address,
   type
 }: {
   address: Address
   type: 'followers' | 'followings'
-}): FollowState {
-  const { followers, selectedList } = useEFPProfile()
+}) => {
+  const { followers, selectedList, followersIsLoading } = useEFPProfile()
 
-  const { data: followingStatus } = useQuery({
+  const { data: followingStatus, isLoading: isFollowingStatusLoading } = useQuery({
     queryKey: ['follow button', address, selectedList],
     queryFn: async () => {
       if (!address) return null
@@ -39,7 +39,7 @@ export function useFollowState({
     staleTime: 10000
   })
 
-  const followerState = useCallback(() => {
+  const followerState = useCallback((): FollowState => {
     if (!followers) return 'none'
 
     const follower = followers?.find(
@@ -54,7 +54,7 @@ export function useFollowState({
     return 'none'
   }, [followers, address])
 
-  const followingState = useCallback(() => {
+  const followingState = useCallback((): FollowState => {
     if (!followingStatus) return 'none'
 
     if (followingStatus.state.is_blocked) return 'blocks'
@@ -73,5 +73,15 @@ export function useFollowState({
     [followerState, followingState, type]
   )
 
-  return followState()
+  const isFollowStateLoading = {
+    followers: followersIsLoading,
+    followings: isFollowingStatusLoading
+  }[type]
+
+  return {
+    followState: followState(),
+    isFollowStateLoading
+  }
 }
+
+export default useFollowState
