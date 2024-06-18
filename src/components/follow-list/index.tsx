@@ -40,7 +40,7 @@ export function FollowList({
 
   return (
     <div className={`flex flex-col min-w-max ${listClassName}`}>
-      {(profiles?.length || 0) > 0 && createListItem && (
+      {profiles && profiles?.length > 0 && createListItem && (
         <div className='flex w-[350px] sm:w-full items-center gap-2 md:p-4 p-1.5 sm:p-2 sm:gap-3'>
           <Image
             src={EFPLogo}
@@ -55,20 +55,18 @@ export function FollowList({
           </div>
         </div>
       )}
-      {profiles?.map(({ address, tags, ens }) => {
-        return (
-          <FollowListItem
-            className={listItemClassName}
-            key={address}
-            address={address}
-            ensProfile={ens}
-            showFollowsYouBadges={showFollowsYouBadges}
-            showTags={showTags}
-            tags={tags}
-            canEditTags={canEditTags}
-          />
-        )
-      })}
+      {profiles?.map(({ address, tags, ens }) => (
+        <FollowListItem
+          className={listItemClassName}
+          key={address}
+          address={address}
+          ensProfile={ens}
+          showFollowsYouBadges={showFollowsYouBadges}
+          showTags={showTags}
+          tags={tags}
+          canEditTags={canEditTags}
+        />
+      ))}
       {isLoading &&
         new Array(loadingRows)
           .fill(1)

@@ -1,9 +1,10 @@
 import type { Address } from 'viem'
-import type { FollowState } from '#/types/common'
-import { useEFPProfile } from '#/contexts/efp-profile-context'
-import { useQuery } from '@tanstack/react-query'
-import fetchFollowingState from '#/api/fetchFollowingStatus'
 import { useCallback, useMemo } from 'react'
+import { useQuery } from '@tanstack/react-query'
+
+import type { FollowState } from '#/types/common'
+import fetchFollowingState from '#/api/fetchFollowingStatus'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 /**
  * @description

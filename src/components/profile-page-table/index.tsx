@@ -68,14 +68,15 @@ export function UserProfilePageTable({
   const [loadMoreRef, entry] = useIntersectionObserver()
 
   useEffect(() => {
-    if (entry?.isIntersecting) return
+    if (!entry?.isIntersecting) return
+
     if (
       !(isLoading || isFetchingMore) &&
       chosenResponses.length > 0 &&
       chosenResponses.length % FETCH_LIMIT_PARAM === 0
     )
       fetchMore()
-  }, [entry?.isIntersecting])
+  }, [entry?.isIntersecting, chosenResponses])
 
   return (
     <div

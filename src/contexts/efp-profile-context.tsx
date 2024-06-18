@@ -244,10 +244,20 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     : []
 
   useEffect(() => {
+    const cartList = localStorage.getItem('cart list')
     const cartAddress = localStorage.getItem('cart address')
-    if (userAddress?.toLowerCase() === cartAddress?.toLowerCase() || !userAddress) return
+
+    if (
+      ((userAddress?.toLowerCase() === cartAddress?.toLowerCase() || !userAddress) &&
+        Number(cartList) === Number(selectedList)) ||
+      lists === undefined
+    )
+      return
+
     resetCart()
-  }, [userAddress])
+
+    if (selectedList) localStorage.setItem('cart list', selectedList.toString())
+  }, [userAddress, selectedList])
 
   const toggleTag = (tab: ProfileTabType, tag: string) => {
     if (tab === 'following') {
