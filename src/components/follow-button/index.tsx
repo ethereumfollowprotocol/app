@@ -70,16 +70,15 @@ const theme = {
 
 interface FollowButtonProps {
   address: Address
+  list?: string | number
   className?: string
 }
 
-export function FollowButton({ address, className = '', ...props }: FollowButtonProps) {
+export function FollowButton({ address, list, className = '', ...props }: FollowButtonProps) {
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
   const { t } = useTranslation('common', { keyPrefix: 'follow btn' })
-  const { buttonText, buttonState, handleAction } = useFollowButton({
-    address
-  })
+  const { buttonText, buttonState, handleAction } = useFollowButton({ address })
 
   // if (address?.toLowerCase() === userAddress?.toLowerCase()) return null
 

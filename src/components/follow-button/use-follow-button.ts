@@ -41,13 +41,12 @@ type FollowButtonText =
   | 'Unmute'
   | 'Unsubscribe'
 
-export const useFollowButton = ({
-  address
-}: {
-  address: Address
-}) => {
+export const useFollowButton = ({ address }: { address: Address }) => {
   const { roles } = useEFPProfile()
-  const followState = useFollowState(address, 'followings')
+  const followState = useFollowState({
+    address,
+    type: 'followings'
+  })
   const { hasListOpAddRecord, hasListOpRemoveRecord, addCartItem, removeCartItem, cartItems } =
     useCart()
 

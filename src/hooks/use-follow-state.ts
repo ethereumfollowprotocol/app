@@ -1,6 +1,9 @@
 import type { Address } from 'viem'
 import type { FollowState } from '#/types/common'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
+import { useQuery } from '@tanstack/react-query'
+import fetchFollowingState from '#/api/fetchFollowingStatus'
+import { useCallback, useMemo } from 'react'
 
 /**
  * @description
@@ -14,10 +17,28 @@ import { useEFPProfile } from '#/contexts/efp-profile-context'
  * @returns {FollowState} - The follow state as a string, which can be 'follows', 'blocks', 'mutes', or 'none'
  * indicating the relationship status from the perspective of the connected user towards the specified address.
  */
-export function useFollowState(address: Address, type: 'followers' | 'followings'): FollowState {
-  const { followers, following } = useEFPProfile()
+export function useFollowState({
+  address,
+  type
+}: {
+  address: Address
+  type: 'followers' | 'followings'
+}): FollowState {
+  const { followers, selectedList } = useEFPProfile()
 
-  const followerState = () => {
+  const { data: followingStatus } = useQuery({
+    queryKey: ['follow button', address, selectedList],
+    queryFn: async () => {
+      if (!address) return null
+
+      const fetchedProfile = await fetchFollowingState({ address: address, list: selectedList })
+      return fetchedProfile
+    },
+    refetchInterval: 60000,
+    staleTime: 10000
+  })
+
+  const followerState = useCallback(() => {
     if (!followers) return 'none'
 
     const follower = followers?.find(
@@ -30,26 +51,26 @@ export function useFollowState(address: Address, type: 'followers' | 'followings
     if (follower) return 'follows'
 
     return 'none'
-  }
+  }, [followers, address])
 
-  const followingState = () => {
-    if (!following) return 'none'
+  const followingState = useCallback(() => {
+    if (!followingStatus) return 'none'
 
-    const followingItem = following?.find(
-      follower => follower?.data?.toLowerCase() === address?.toLowerCase()
-    )
-    if (!followingItem) return 'none'
+    if (followingStatus.state.is_blocked) return 'blocks'
+    if (followingStatus.state.is_muted) return 'mutes'
+    if (followingStatus.state.is_following) return 'follows'
 
-    if (followingItem.tags.includes('Blocked')) return 'blocks'
-    if (followingItem.tags.includes('Muted')) return 'mutes'
+    return 'none'
+  }, [followingStatus])
 
-    return 'follows'
-  }
-
-  const followState = {
-    followers: followerState,
-    followings: followingState
-  }[type]
+  const followState = useMemo(
+    () =>
+      ({
+        followers: followerState,
+        followings: followingState
+      })[type],
+    [followerState, followingState, type]
+  )
 
   return followState()
 }

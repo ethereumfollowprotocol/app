@@ -24,6 +24,16 @@ export interface FollowingResponse {
   ens?: ENSProfile
 }
 
+export interface FollowingStatusResponse {
+  token_id: string
+  address: Address
+  state: {
+    is_following: boolean
+    is_blocked: boolean
+    is_muted: boolean
+  }
+}
+
 export interface StatsResponse {
   followers_count: number
   following_count: number

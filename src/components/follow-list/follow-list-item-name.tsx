@@ -66,7 +66,11 @@ export function FollowListItemName({
 
   const { t } = useTranslation()
   const { t: tEditor } = useTranslation('editor')
-  const isFollower = useFollowState(address, 'followers') === 'follows'
+  const isFollower =
+    useFollowState({
+      address,
+      type: 'followers'
+    }) === 'follows'
 
   const {
     addCartItem,
