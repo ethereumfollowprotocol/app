@@ -17,6 +17,7 @@ import { Step } from '#/components/checkout/types'
 import type { ChainWithDetails } from '#/lib/wagmi'
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import { useMintEFP } from './efp-actions/use-mint-efp'
+import { rpcProviders } from '#/lib/constants/providers'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { extractAddressAndTag, isTagListOp } from '#/utils/list-ops'
@@ -46,7 +47,10 @@ const useCheckout = () => {
   const listRegistryContract = getContract({
     address: coreEfpContracts.EFPListRegistry,
     abi: efpListRegistryAbi,
-    client: createPublicClient({ chain: DEFAULT_CHAIN, transport: http() })
+    client: createPublicClient({
+      chain: DEFAULT_CHAIN,
+      transport: http(rpcProviders[DEFAULT_CHAIN.id])
+    })
   })
 
   // Set step to initiating transactions if the user has already created their EFP list

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { http, fromHex, getContract, createPublicClient, type Address, type Chain } from 'viem'
 
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
+import { rpcProviders } from '#/lib/constants/providers'
 import { coreEfpContracts } from '#/lib/constants/contracts'
 import type { ProfileDetailsResponse } from '#/api/requests'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
@@ -32,7 +33,10 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
   const listRegistryContract = getContract({
     address: coreEfpContracts.EFPListRegistry,
     abi: efpListRegistryAbi,
-    client: createPublicClient({ chain: DEFAULT_CHAIN, transport: http() })
+    client: createPublicClient({
+      chain: DEFAULT_CHAIN,
+      transport: http(rpcProviders[DEFAULT_CHAIN.id])
+    })
   })
 
   const fetchListData = async () => {
@@ -54,7 +58,7 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
       abi: efpListRecordsAbi,
       client: createPublicClient({
         chain: listStorageLocationChain || DEFAULT_CHAIN,
-        transport: http()
+        transport: http(rpcProviders[listStorageLocationChain?.id || DEFAULT_CHAIN.id])
       })
     })
 

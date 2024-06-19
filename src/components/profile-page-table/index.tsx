@@ -123,7 +123,7 @@ export function UserProfilePageTable({
         showFollowsYouBadges={showFollowsYouBadges}
         canEditTags={canEditTags}
       />
-      {!(isLoading || isFetchingMore) && <div ref={loadMoreRef} className='h-px w-full' />}
+      <div ref={loadMoreRef} className='h-px w-full' />
     </div>
   )
 }

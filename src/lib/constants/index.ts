@@ -8,9 +8,6 @@ export const APP_URL =
   process.env.NEXT_PUBLIC_VERCEL_URL || process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:4321'
 
 export const ENS_SUBGRAPH_URL = `https://gateway-arbitrum.network.thegraph.com/api/${process.env.NEXT_PUBLIC_ENS_SUBGRAPH_API_KEY}/subgraphs/id/5XqPmWe6gjyrJtFn9cLy237i4cWw2j9HcUJEXsP5qGtH`
-export const alchemyMainnetUrl = `https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_MAINNET_ALCHEMY_ID}`
-export const alchemyOptimismUrl = `https://opt-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_OPTIMISM_ALCHEMY_ID}`
-export const optimismBaseUrl = `https://base-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_BASE_ALCHEMY_ID}`
 
 export const FETCH_LIMIT_PARAM = 10
 
@@ -25,7 +22,7 @@ export const LANGUAGES = [
   { language: 'English', key: 'en' },
   { language: 'Slovenščina', key: 'si' }
 ]
-export const DEFAULT_TAGS_TO_ADD = ['efp']
+export const DEFAULT_TAGS_TO_ADD = ['friend', 'IRL', 'family', 'work', 'crypto']
 export const DEFAULT_TAGS = ['no tag']
 export const SORT_OPTIONS = ['latest first', 'earliest first', 'follower count']
 

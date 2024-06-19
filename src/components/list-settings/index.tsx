@@ -82,10 +82,14 @@ const ListSettings: React.FC<ListSettingsProps> = ({
       listRecordsContractAddress={fetchedListRecordsContractAddress}
     />
   ) : (
-    <div className='fixed z-50 top-0 flex items-center justify-center left-0 w-full h-full bg-black/50'>
+    <div
+      className={`fixed z-50 overflow-y-auto top-0 px-4 left-0 flex ${
+        window.innerHeight > 720 ? 'items-center' : 'py-8'
+      } justify-center w-full h-full bg-black/50`}
+    >
       <div
         ref={listSettingsRef}
-        className='glass-card bg-white/40 gap-8 flex flex-col rounded-xl p-10 w-[554px]'
+        className='glass-card h-fit bg-white/40 gap-5 sm:gap-8 flex flex-col rounded-xl p-6 py-8 sm:p-10 w-[554px]'
       >
         <div className='w-full flex items-center justify-between'>
           <div ref={listsDropdownRef} className='relative'>
@@ -93,14 +97,14 @@ const ListSettings: React.FC<ListSettingsProps> = ({
               onClick={() => setListsDropdownOpen(!listsDropdownOpen)}
               className='flex items-center gap-2 cursor-pointer'
             >
-              <h3 className='text-5xl font-semibold'>
+              <h3 className='text-4xl sm:text-5xl font-semibold'>
                 {t('list')} #{currentList}
               </h3>
               {(lists?.length || 0) > 1 && (
                 <Image
                   src={ArrowDown}
                   alt='Open list storage location chains'
-                  className={`w-5 ${listsDropdownOpen ? 'rotate-180' : ''} transition-transform`}
+                  className={` ${listsDropdownOpen ? 'rotate-180' : ''} w-5 transition-transform`}
                 />
               )}
             </div>
@@ -115,7 +119,9 @@ const ListSettings: React.FC<ListSettingsProps> = ({
                     }}
                     className='w-full hover:bg-white cursor-pointer rounded-xl flex items-center gap-3 p-3'
                   >
-                    <p className='text-lg font-semibold truncate'>List #{item}</p>
+                    <p className='text-lg font-semibold truncate'>
+                      {t('list')} #{item}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -146,16 +152,16 @@ const ListSettings: React.FC<ListSettingsProps> = ({
             <div className='sm:text-lg font-bold text-gray-500'>{t('leaderboard')}</div>
           </div>
         </div>
-        <div className='flex items-center justify-between'>
-          <p className='font-semibold text-xl'>{t('location')}</p>
+        <div className='flex items-center justify-between gap-2'>
+          <p className='font-semibold text-base sm:text-xl'>{t('location')}</p>
           <div className='relative' ref={chainDropdownRef}>
             <button
-              className='w-[190px] flex items-center justify-between px-3 h-12 bg-white/50 p-1 hover:bg-white/60 rounded-xl disabled:hover:bg-white/50 disabled:opacity-75 disabled:cursor-not-allowed'
+              className='w-[180px] sm:w-[190px] gap-1 flex items-center justify-between px-2 sm:px-3 h-12 bg-white/50 p-1 hover:bg-white/60 rounded-xl disabled:hover:bg-white/50 disabled:opacity-75 disabled:cursor-not-allowed'
               onClick={() => setChainDropdownOpen(!chainDropdownOpen)}
               disabled={connectedAddress?.toLowerCase() !== fetchedOwner?.toLowerCase()}
             >
               {chain && <ChainIcon chain={chain as ChainWithDetails} className={'h-6 w-6'} />}
-              <p className='text-lg font-semibold truncate'>{chain?.name}</p>
+              <p className='sm:text-lg font-semibold truncate'>{chain?.name}</p>
               <Image
                 src={ArrowDown}
                 alt='Open list storage location chains'
@@ -177,8 +183,11 @@ const ListSettings: React.FC<ListSettingsProps> = ({
                     }}
                     className='w-full hover:bg-white cursor-pointer rounded-xl flex items-center gap-3 p-3'
                   >
-                    <ChainIcon chain={item as ChainWithDetails} className={'h-7 w-7'} />
-                    <p className='text-lg font-semibold truncate'>{item?.name}</p>
+                    <ChainIcon
+                      chain={item as ChainWithDetails}
+                      className={'h-6 sm:h-7 w-6 sm:w-7'}
+                    />
+                    <p className='sm:text-lg font-semibold truncate'>{item?.name}</p>
                   </div>
                 ))}
               </div>
