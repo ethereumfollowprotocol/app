@@ -1,7 +1,7 @@
 import type { Chain, Address } from 'viem'
 
 import { Step } from '#/components/checkout/types'
-import type { ProfileDetailsResponse } from '#/api/requests'
+import type { ProfileDetailsResponse } from '#/types/requests'
 import useSaveListSettings from '../hooks/use-save-list-settings'
 import TransactionStatus from '#/components/checkout/transaction-status'
 import { InitiateActionsCard } from '#/components/checkout/initiate-actions-card'

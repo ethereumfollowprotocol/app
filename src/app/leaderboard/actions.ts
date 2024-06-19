@@ -1,7 +1,6 @@
 'use server'
 
 import { raise } from 'src/lib/utilities'
-import type { NoRepetition } from '#/lib/types.ts'
 import type { LeaderboardFilter, LeaderboardEntry } from './types.ts'
 
 export async function fetchLeaderboard({
@@ -10,7 +9,7 @@ export async function fetchLeaderboard({
   include = []
 }: {
   filter: LeaderboardFilter
-  include?: NoRepetition<'ens' | 'mutuals' | 'blocked' | 'muted'>
+  include?: ('ens' | 'mutuals' | 'blocked' | 'muted')[]
   limit?: number
 }): Promise<LeaderboardEntry[]> {
   try {

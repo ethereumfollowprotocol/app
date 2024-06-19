@@ -1,4 +1,4 @@
-import type { FollowingResponse, InfiniteProfileQueryProps } from './requests'
+import type { FollowingResponse, InfiniteProfileQueryProps } from '#/types/requests'
 
 const fetchProfileFollowing = async ({
   addressOrName,

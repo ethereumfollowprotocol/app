@@ -5,7 +5,7 @@ import { http, fromHex, getContract, createPublicClient, type Address, type Chai
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import { rpcProviders } from '#/lib/constants/providers'
 import { coreEfpContracts } from '#/lib/constants/contracts'
-import type { ProfileDetailsResponse } from '#/api/requests'
+import type { ProfileDetailsResponse } from '#/types/requests'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 
 const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; list: number }) => {

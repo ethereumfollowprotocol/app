@@ -4,6 +4,7 @@ interface EnvironmentVariables {
   readonly APP_VERSION: string
   readonly EFP_API_URL: string
   readonly NEXT_PUBLIC_EFP_API_URL: string
+  readonly NEXT_PUBLIC_ENS_SUBGRAPH_API_KEY: string
   readonly NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA: string
   readonly NEXT_PUBLIC_BASE_URL: string
   readonly NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID: string

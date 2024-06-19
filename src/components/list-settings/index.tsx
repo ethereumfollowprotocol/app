@@ -12,7 +12,7 @@ import SaveSettings from './components/save-settings'
 import useListSettings from './hooks/use-list-settings'
 import ArrowDown from 'public/assets/icons/arrow-down.svg'
 import { PrimaryButton } from '#/components/primary-button'
-import type { ProfileDetailsResponse } from '#/api/requests'
+import type { ProfileDetailsResponse } from '#/types/requests'
 
 interface ListSettingsProps {
   selectedList: number

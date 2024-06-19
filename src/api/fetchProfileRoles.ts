@@ -1,7 +1,7 @@
 import type { Config, UseChainsReturnType } from 'wagmi'
 import { createPublicClient, fromHex, getContract, http, type Address } from 'viem'
 
-import type { ProfileRoles } from './requests'
+import type { ProfileRoles } from '#/types/requests'
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import { rpcProviders } from '#/lib/constants/providers'
 import { coreEfpContracts } from '#/lib/constants/contracts'

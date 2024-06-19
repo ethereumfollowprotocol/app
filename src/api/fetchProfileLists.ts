@@ -1,4 +1,4 @@
-import type { ProfileListsResponse } from './requests'
+import type { ProfileListsResponse } from '#/types/requests'
 
 const fetchProfileLists = async (addressOrName: string) => {
   try {

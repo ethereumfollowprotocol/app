@@ -71,11 +71,10 @@ const theme = {
 
 interface FollowButtonProps {
   address: Address
-  list?: string | number
   className?: string
 }
 
-export function FollowButton({ address, list, className = '', ...props }: FollowButtonProps) {
+export function FollowButton({ address, className = '', ...props }: FollowButtonProps) {
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
   const { t } = useTranslation('common', { keyPrefix: 'follow btn' })

@@ -23,7 +23,7 @@ import type {
   FollowingResponse,
   ProfileListsResponse,
   ProfileDetailsResponse
-} from '#/api/requests'
+} from '#/types/requests'
 import { useCart } from './cart-context'
 import { FETCH_LIMIT_PARAM } from '#/lib/constants'
 import type { ProfileTabType } from '#/types/common'

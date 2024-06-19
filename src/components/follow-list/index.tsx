@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import LoadingRow from './loading-row'
 import EFPLogo from 'public/assets/logo.svg'
-import type { ENSProfile } from '#/lib/types'
+import type { ENSProfile } from '#/types/requests'
 import { FollowListItem } from './follow-list-item'
 
 export interface FollowListProfile {

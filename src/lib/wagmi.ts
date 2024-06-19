@@ -130,8 +130,7 @@ const config = createConfig({
             batch: true
           }
         ),
-        http('https://sepolia.optimism.io', { batch: true }),
-        http('https://sepolia-rollup.arbitrum.io/rpc', { batch: true })
+        http('https://sepolia.optimism.io', { batch: true })
       ],
       { rank: true }
     ),

@@ -6,7 +6,7 @@ import fetchProfileLists from '#/api/fetchProfileLists'
 import fetchProfileDetails from '#/api/fetchProfileDetails'
 import fetchProfileFollowers from '#/api/fetchProfileFollowers'
 import fetchProfileFollowing from '#/api/fetchProfileFollowing'
-import type { FollowerResponse, FollowingResponse } from '#/api/requests'
+import type { FollowerResponse, FollowingResponse } from '#/types/requests'
 
 const useUser = (user: string) => {
   const userIsList = !(isAddress(user) || user.includes('.'))

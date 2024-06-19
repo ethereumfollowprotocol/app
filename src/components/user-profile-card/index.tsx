@@ -12,7 +12,7 @@ import { resolveENSProfile } from '#/utils/resolveENS'
 import LoadingProfileCard from './loading-profile-card'
 import { FollowButton } from '#/components/follow-button'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
-import type { FollowingResponse, ProfileDetailsResponse } from '#/api/requests'
+import type { FollowingResponse, ProfileDetailsResponse } from '#/types/requests'
 
 interface Props {
   profileList?: number | null

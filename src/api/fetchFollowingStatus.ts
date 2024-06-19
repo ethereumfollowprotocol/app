@@ -1,5 +1,5 @@
 import type { Address } from 'viem'
-import type { FollowingStatusResponse } from './requests'
+import type { FollowingStatusResponse } from '#/types/requests'
 
 const fetchFollowingState = async ({
   address,

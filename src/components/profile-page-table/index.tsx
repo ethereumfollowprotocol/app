@@ -8,7 +8,7 @@ import { useIntersectionObserver } from '@uidotdev/usehooks'
 import { FETCH_LIMIT_PARAM } from '#/lib/constants'
 import TableHeader from './components/table-headers'
 import { FollowList } from '#/components/follow-list'
-import type { FollowerResponse, FollowingResponse } from '#/api/requests'
+import type { FollowerResponse, FollowingResponse } from '#/types/requests'
 
 /**
  * TODO: paginate
