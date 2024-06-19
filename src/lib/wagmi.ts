@@ -7,10 +7,6 @@ import { mainnet, sepolia, optimism, optimismSepolia, baseSepolia, base } from '
 
 import { APP_DESCRIPTION, APP_NAME, APP_URL } from '#/lib/constants'
 
-export const alchemyMainnetUrl = `https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_MAINNET_ALCHEMY_ID}`
-export const alchemyOptimismUrl = `https://opt-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_OPTIMISM_ALCHEMY_ID}`
-export const optimismBaseUrl = `https://base-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_BASE_ALCHEMY_ID}`
-
 // Define the connectors for the app
 // Purposely using only these for now because of a localStorage error with the Coinbase Wallet connector
 const connectors = connectorsForWallets(
@@ -37,6 +33,10 @@ export type ChainWithDetails = Chain & {
     gasFeeDetail?: string
   }
 }
+
+export const alchemyMainnetUrl = `https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_MAINNET_ALCHEMY_ID}`
+export const alchemyOptimismUrl = `https://opt-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_OPTIMISM_ALCHEMY_ID}`
+export const optimismBaseUrl = `https://base-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_BASE_ALCHEMY_ID}`
 
 // Define the chains for rainbow/wagmi and their respective icons
 // These are the current supported chains for this app
