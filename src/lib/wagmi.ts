@@ -34,10 +34,6 @@ export type ChainWithDetails = Chain & {
   }
 }
 
-export const alchemyMainnetUrl = `https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_MAINNET_ALCHEMY_ID}`
-export const alchemyOptimismUrl = `https://opt-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_OPTIMISM_ALCHEMY_ID}`
-export const optimismBaseUrl = `https://base-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_BASE_ALCHEMY_ID}`
-
 // Define the chains for rainbow/wagmi and their respective icons
 // These are the current supported chains for this app
 // `chainDetail` and `gasFeeDetail` are custom fields to be used in the ChainList component
@@ -97,7 +93,7 @@ const config = createConfig({
     // [foundry.id]: http(process.env.NEXT_PUBLIC_LOCAL_RPC || 'http://0.0.0.0:8545', { batch: true }),
     [mainnet.id]: fallback(
       [
-        http(alchemyMainnetUrl, {
+        http(`https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_MAINNET_ALCHEMY_ID}`, {
           batch: true
         }),
         http(`https://mainnet.infura.io/v3/`, {
@@ -108,7 +104,10 @@ const config = createConfig({
     ),
     [optimism.id]: fallback(
       [
-        http(alchemyOptimismUrl, { batch: true }),
+        http(
+          `https://opt-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_OPTIMISM_ALCHEMY_ID}`,
+          { batch: true }
+        ),
         http(`https://mainnet.optimism.io`, {
           batch: true
         })
