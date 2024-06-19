@@ -7,6 +7,10 @@ import { mainnet, sepolia, optimism, optimismSepolia, baseSepolia, base } from '
 
 import { APP_DESCRIPTION, APP_NAME, APP_URL } from '#/lib/constants'
 
+export const alchemyMainnetUrl = `https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_MAINNET_ALCHEMY_ID}`
+export const alchemyOptimismUrl = `https://opt-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_OPTIMISM_ALCHEMY_ID}`
+export const optimismBaseUrl = `https://base-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_BASE_ALCHEMY_ID}`
+
 // Define the connectors for the app
 // Purposely using only these for now because of a localStorage error with the Coinbase Wallet connector
 const connectors = connectorsForWallets(
@@ -93,7 +97,7 @@ const config = createConfig({
     // [foundry.id]: http(process.env.NEXT_PUBLIC_LOCAL_RPC || 'http://0.0.0.0:8545', { batch: true }),
     [mainnet.id]: fallback(
       [
-        http(`https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_MAINNET_ALCHEMY_ID}`, {
+        http(alchemyMainnetUrl, {
           batch: true
         }),
         http(`https://mainnet.infura.io/v3/`, {
@@ -104,10 +108,7 @@ const config = createConfig({
     ),
     [optimism.id]: fallback(
       [
-        http(
-          `https://opt-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_OPTIMISM_ALCHEMY_ID}`,
-          { batch: true }
-        ),
+        http(alchemyOptimismUrl, { batch: true }),
         http(`https://mainnet.optimism.io`, {
           batch: true
         })

@@ -1,6 +1,7 @@
 import { normalize } from 'viem/ens'
 import { mainnet } from 'viem/chains'
 import { createPublicClient, http, type Address } from 'viem'
+import { alchemyMainnetUrl } from '#/lib/wagmi'
 
 export const resolveENSProfile = async (address: `0x${string}`) => {
   const resolvedName = await resolveENSName(address)
@@ -20,9 +21,7 @@ export const resolveENSProfile = async (address: `0x${string}`) => {
 export const resolveENSName = async (address: `0x${string}`) => {
   const publicClient = createPublicClient({
     chain: mainnet,
-    transport: http(
-      `https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_MAINNET_ALCHEMY_ID}`
-    )
+    transport: http(alchemyMainnetUrl)
   })
   const lookup = await publicClient.getEnsName({ address })
 
@@ -32,9 +31,7 @@ export const resolveENSName = async (address: `0x${string}`) => {
 export const resolveENSAddress = async (name: string) => {
   const publicClient = createPublicClient({
     chain: mainnet,
-    transport: http(
-      `https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_MAINNET_ALCHEMY_ID}`
-    )
+    transport: http(alchemyMainnetUrl)
   })
   const ensAddress = await publicClient.getEnsAddress({
     name: normalize(name)
