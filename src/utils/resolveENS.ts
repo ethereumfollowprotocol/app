@@ -1,7 +1,7 @@
 import { normalize } from 'viem/ens'
 import { mainnet } from 'viem/chains'
-import { createPublicClient, http, type Address } from 'viem'
 import { alchemyMainnetUrl } from '#/lib/wagmi'
+import { createPublicClient, http, type Address } from 'viem'
 
 export const resolveENSProfile = async (address: `0x${string}`) => {
   const resolvedName = await resolveENSName(address)
