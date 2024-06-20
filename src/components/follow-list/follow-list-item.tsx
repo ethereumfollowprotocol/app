@@ -1,10 +1,10 @@
 import type { Address } from 'viem'
 import { useQuery } from '@tanstack/react-query'
 
+import type { ENSProfile } from '#/types/requests'
 import { resolveENSProfile } from '#/utils/resolveENS'
 import { FollowButton } from '#/components/follow-button'
 import { FollowListItemName } from './follow-list-item-name'
-import type { ENSProfile } from '#/types/requests'
 
 export interface FollowListItemProps {
   className?: string
