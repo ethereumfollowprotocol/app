@@ -6,7 +6,7 @@ import { BLOCKED_MUTED_TABS } from '#/lib/constants'
 import useBlockedMuted from './hooks/use-blocked-muted'
 import type { BlockedMutedTabType } from '#/types/common'
 import { UserProfilePageTable } from '../profile-page-table'
-import type { ProfileDetailsResponse } from '#/api/requests'
+import type { ProfileDetailsResponse } from '#/types/requests'
 
 interface BlockedMutedProps {
   profile: ProfileDetailsResponse
