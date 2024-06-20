@@ -5,14 +5,14 @@ import fetchProfileFollowers from '#/api/fetchProfileFollowers'
 import fetchProfileFollowing from '#/api/fetchProfileFollowing'
 import type { FollowerResponse, FollowingResponse } from '#/types/requests'
 
-const useBlockedMuted = (user: string) => {
+const useBlockedMuted = (user: string, list?: string | number) => {
   const {
     data: fetchedFollowers,
     isLoading: followersIsLoading,
     fetchNextPage: fetchMoreFollowers,
     isFetchingNextPage: isFetchingMoreFollowers
   } = useInfiniteQuery({
-    queryKey: ['followers', user],
+    queryKey: ['followers', user, list],
     queryFn: async ({ pageParam = 0 }) => {
       if (!user)
         return {
@@ -22,6 +22,7 @@ const useBlockedMuted = (user: string) => {
 
       const fetchedFollowers = await fetchProfileFollowers({
         addressOrName: user,
+        list,
         limit: FETCH_LIMIT_PARAM,
         pageParam
       })
@@ -38,7 +39,7 @@ const useBlockedMuted = (user: string) => {
     fetchNextPage: fetchMoreFollowing,
     isFetchingNextPage: isFetchingMoreFollowing
   } = useInfiniteQuery({
-    queryKey: ['following', user],
+    queryKey: ['following', user, list],
     queryFn: async ({ pageParam = 0 }) => {
       if (!user)
         return {
@@ -48,6 +49,7 @@ const useBlockedMuted = (user: string) => {
 
       const fetchedFollowers = await fetchProfileFollowing({
         addressOrName: user,
+        list,
         limit: FETCH_LIMIT_PARAM,
         pageParam
       })

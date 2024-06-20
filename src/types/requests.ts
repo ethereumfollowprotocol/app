@@ -44,10 +44,14 @@ export interface ENSMetadataProfile {
   youtube_url: string
 }
 
+export type FollowSortType = 'latest first' | 'earliest first' | 'follower count'
+
 export interface InfiniteProfileQueryProps {
   addressOrName: string
-  list?: number
+  list?: number | string
   limit: number
+  tags?: string[]
+  sort?: FollowSortType
   pageParam: number
 }
 export interface FollowerResponse {

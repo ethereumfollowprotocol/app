@@ -22,7 +22,8 @@ import type {
   FollowerResponse,
   FollowingResponse,
   ProfileListsResponse,
-  ProfileDetailsResponse
+  ProfileDetailsResponse,
+  FollowSortType
 } from '#/types/requests'
 import { useCart } from './cart-context'
 import { FETCH_LIMIT_PARAM } from '#/lib/constants'
@@ -100,8 +101,8 @@ type EFPProfileContextType = {
   followingSort: string | undefined
   followersSort: string | undefined
   toggleTag: (tab: ProfileTabType, tag: string) => void
-  setFollowingSort: (option: string) => void
-  setFollowersSort: (option: string) => void
+  setFollowingSort: (option: FollowSortType) => void
+  setFollowersSort: (option: FollowSortType) => void
   listsError: Error | null
   profileError: Error | null
   followersError: Error | null
@@ -119,8 +120,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   const [selectedList, setSelectedList] = useState<number>()
   const [followingTags, setFollowingTags] = useState<string[]>([])
   const [followersTags, setFollowersTags] = useState<string[]>([])
-  const [followingSort, setFollowingSort] = useState<string>('follower count')
-  const [followersSort, setFollowersSort] = useState<string>('follower count')
+  const [followingSort, setFollowingSort] = useState<FollowSortType>('latest first')
+  const [followersSort, setFollowersSort] = useState<FollowSortType>('latest first')
 
   const chains = useChains()
   const { resetCart } = useCart()
@@ -174,7 +175,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     isFetchingNextPage: isFetchingMoreFollowers,
     refetch: refetchFollowers
   } = useInfiniteQuery({
-    queryKey: ['followers', userAddress, selectedList],
+    queryKey: ['followers', userAddress, selectedList, followersSort, followersTags],
     queryFn: async ({ pageParam = 0 }) => {
       if (!userAddress)
         return {
@@ -186,6 +187,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         addressOrName: userAddress,
         list: selectedList,
         limit: FETCH_LIMIT_PARAM,
+        sort: followersSort,
+        tags: followersTags,
         pageParam
       })
       return fetchedFollowers
@@ -204,7 +207,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     error: followingError,
     refetch: refetchFollowing
   } = useInfiniteQuery({
-    queryKey: ['following', userAddress, selectedList],
+    queryKey: ['following', userAddress, selectedList, followingSort, followingTags],
     queryFn: async ({ pageParam = 0 }) => {
       if (!(userAddress && selectedList))
         return {
@@ -216,6 +219,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         addressOrName: userAddress,
         list: selectedList,
         limit: FETCH_LIMIT_PARAM,
+        sort: followingSort,
+        tags: followingTags,
         pageParam
       })
       return fetchedFollowers
@@ -320,10 +325,10 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         followingSort,
         followersSort,
         toggleTag,
-        setFollowingSort: (option: string) => {
+        setFollowingSort: (option: FollowSortType) => {
           setFollowingSort(option)
         },
-        setFollowersSort: (option: string) => {
+        setFollowersSort: (option: FollowSortType) => {
           setFollowersSort(option)
         },
         listsError,

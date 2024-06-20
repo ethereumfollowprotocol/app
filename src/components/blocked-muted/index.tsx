@@ -10,12 +10,17 @@ import type { ProfileDetailsResponse } from '#/types/requests'
 
 interface BlockedMutedProps {
   profile: ProfileDetailsResponse
+  list?: string | number
   isManager?: boolean
   onClose: () => void
 }
 
-const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, isManager, onClose }) => {
+const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, onClose }) => {
   const [activeTab, setActiveTab] = useState<BlockedMutedTabType>('Blocked/Muted')
+
+  const blockedMutedRef = useClickAway<HTMLDivElement>(() => {
+    onClose()
+  })
 
   const {
     followers,
@@ -26,12 +31,8 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, isManager, onClose
     fetchMoreFollowing,
     isFetchingMoreFollowers,
     isFetchingMoreFollowing
-  } = useBlockedMuted(profile.address)
+  } = useBlockedMuted(profile.address, list)
   const { t } = useTranslation('profile')
-
-  const blockedMutedRef = useClickAway<HTMLDivElement>(() => {
-    onClose()
-  })
 
   const mobileActiveEl = {
     'Blocked/Muted': (
@@ -69,7 +70,7 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, isManager, onClose
     <div className='fixed z-50 top-0 flex overflow-scroll justify-center left-0 w-full h-full bg-black/50'>
       <div
         ref={blockedMutedRef}
-        className='gap-8 flex h-fit w-full rounded-xl mt-32 md:mt-40 mb-24 px-4 lg:mt-48 '
+        className='gap-6 2xl:gap-8 flex h-fit rounded-xl mt-16 md:mt-24 mb-24 w-full xl:w-fit px-4 md:px-6 lg:mt-32 '
       >
         <div className='bg-white/80 h-fit rounded-2xl hidden xl:block'>
           <UserProfilePageTable

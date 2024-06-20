@@ -74,6 +74,7 @@ export default function ProfilePage() {
       {isBlockedMutedOpen && profile && selectedList && (
         <BlockedMuted
           profile={profile}
+          list={selectedList}
           onClose={() => setIsBlockedMutedOpen(false)}
           isManager={roles?.isManager}
         />
@@ -99,13 +100,14 @@ export default function ProfilePage() {
               isLoading={profileIsLoading}
             />
             <div className='flex flex-col gap-1 items-center'>
-              <p
-                onClick={() => setIsBlockedMutedOpen(true)}
-                className='font-semibold cursor-pointer hover:opacity-80 transition-opacity'
-              >
-                {t('block-mute')}
-              </p>
-              <p className='font-semibold '>{t('block-mute')}</p>
+              {selectedList && (
+                <p
+                  onClick={() => setIsBlockedMutedOpen(true)}
+                  className='font-semibold cursor-pointer hover:opacity-80 transition-opacity'
+                >
+                  {t('block-mute')}
+                </p>
+              )}
               {selectedList && (
                 <div
                   className='flex gap-1 cursor-pointer hover:opacity-80 transition-opacity'
