@@ -23,7 +23,7 @@ const TeamPage = () => {
       <h2 className='font-bold text-5xl'>Team</h2>
       <div className='flex-row flex-wrap flex mx-auto lg:flex-row gap-8 align-middle justify-center items-center'>
         {teamProfiles?.map(profile => (
-          <div key={profile.address}>
+          <div key={profile?.address}>
             <UserProfileCard
               isResponsive={false}
               profile={profile}

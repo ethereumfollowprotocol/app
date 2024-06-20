@@ -7,31 +7,33 @@ import { usePathname } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import type { Address, GetEnsAvatarReturnType } from 'viem'
 
+import LoadingCell from '../loading-cell'
 import { Avatar } from '#/components/avatar'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useCart } from '#/contexts/cart-context'
 import { truncateAddress } from '#/lib/utilities'
+import useFollowState from '#/hooks/use-follow-state'
 import { DEFAULT_TAGS_TO_ADD } from '#/lib/constants'
 import Plus from 'public/assets/icons/plus-squared.svg'
-import { useFollowState } from '#/hooks/use-follow-state'
 import { listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
 
 interface FollowListItemNameProps {
   address: Address
   avatarUrl?: string | GetEnsAvatarReturnType
   className?: string
-  name?: string
+  name?: string | null
   showFollowsYouBadges?: boolean
   showTags?: boolean
   tags: string[]
   canEditTags?: boolean
+  isEnsProfileLoading?: boolean
 }
 
 export function Name({
   name,
   address,
   showTags
-}: { name?: string; address: Address; showTags?: boolean }) {
+}: { name?: string | null; address: Address; showTags?: boolean }) {
   return (
     <Link href={`/${name || address}`} className='w-full'>
       <p
@@ -53,7 +55,8 @@ export function FollowListItemName({
   avatarUrl,
   className = '',
   showFollowsYouBadges,
-  canEditTags
+  canEditTags,
+  isEnsProfileLoading
 }: FollowListItemNameProps) {
   const [tagDropdownOpen, setTagDropdownOpen] = useState(false)
   const [customTagInput, setCustomTagInput] = useState('')
@@ -66,7 +69,11 @@ export function FollowListItemName({
 
   const { t } = useTranslation()
   const { t: tEditor } = useTranslation('editor')
-  const isFollower = useFollowState(address, 'followers') === 'follows'
+  const { followState } = useFollowState({
+    address,
+    type: 'followers'
+  })
+  const isFollower = followState === 'follows'
 
   const {
     addCartItem,
@@ -130,13 +137,17 @@ export function FollowListItemName({
         width: 'calc(100% - 110px)'
       }}
     >
-      <Avatar
-        name={name || address}
-        avatarUrl={avatarUrl}
-        size='h-[45px] w-[45px] md:h-[50px] md:w-[50px]'
-      />
+      {isEnsProfileLoading ? (
+        <LoadingCell className='h-[45px] w-[45px] md:h-[50px] md:w-[50px] rounded-full' />
+      ) : (
+        <Avatar
+          name={name || address}
+          avatarUrl={avatarUrl}
+          size='h-[45px] w-[45px] md:h-[50px] md:w-[50px]'
+        />
+      )}
       <div
-        className={`flex flex-col w-full ${
+        className={`flex flex-col w-3/4 ${
           isEditor ? 'md:flex-row md:gap-3' : 'md:flex-row md:gap-3'
         } gap-[2px]`}
       >
@@ -145,7 +156,11 @@ export function FollowListItemName({
             isEditor ? 'md:w-52' : showTags ? 'w-fit' : 'w-full'
           } items-start tabular-nums relative`}
         >
-          <Name name={name} address={address} showTags={showTags} />
+          {isEnsProfileLoading ? (
+            <LoadingCell className='w-40 xl:w-32 h-7 rounded-lg' />
+          ) : (
+            <Name name={name} address={address} showTags={showTags} />
+          )}
           {showFollowsYouBadges && isFollower && (
             <div className='rounded-full font-bold text-[10px] mb-1 flex items-center justify-center bg-gray-300 h-5 w-20'>
               {t('profile card.follows you')}

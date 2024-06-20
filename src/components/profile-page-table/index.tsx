@@ -8,7 +8,7 @@ import { useIntersectionObserver } from '@uidotdev/usehooks'
 import { FETCH_LIMIT_PARAM } from '#/lib/constants'
 import TableHeader from './components/table-headers'
 import { FollowList } from '#/components/follow-list'
-import type { FollowerResponse, FollowingResponse } from '#/api/requests'
+import type { FollowerResponse, FollowingResponse } from '#/types/requests'
 
 /**
  * TODO: paginate
@@ -45,12 +45,18 @@ export function UserProfilePageTable({
   const { t } = useTranslation('profile')
   const isProfile = pathname.includes('profile')
 
-  const filteredFollowers = followers?.filter(follower =>
-    follower?.ens.name?.toLowerCase().replaceAll('.eth', '').includes(search.toLowerCase())
-  )
-  const filteredFollowing = following?.filter(following =>
-    following?.data?.toLowerCase().includes(search.toLowerCase())
-  )
+  const filteredFollowers =
+    search.length === 0
+      ? followers
+      : followers?.filter(follower =>
+          follower?.ens?.name?.toLowerCase().replaceAll('.eth', '').includes(search.toLowerCase())
+        )
+  const filteredFollowing =
+    search.length === 0
+      ? following
+      : following?.filter(following =>
+          following?.data?.toLowerCase().includes(search.toLowerCase())
+        )
 
   const chosenResponses = title === 'following' ? filteredFollowing : filteredFollowers
   const showFollowsYouBadges = !isProfile || title === 'following'
@@ -68,14 +74,15 @@ export function UserProfilePageTable({
   const [loadMoreRef, entry] = useIntersectionObserver()
 
   useEffect(() => {
-    if (entry?.isIntersecting) return
+    if (!entry?.isIntersecting) return
+
     if (
       !(isLoading || isFetchingMore) &&
       chosenResponses.length > 0 &&
       chosenResponses.length % FETCH_LIMIT_PARAM === 0
     )
       fetchMore()
-  }, [entry?.isIntersecting])
+  }, [entry?.isIntersecting, chosenResponses])
 
   return (
     <div
@@ -124,7 +131,7 @@ export function UserProfilePageTable({
         showFollowsYouBadges={showFollowsYouBadges}
         canEditTags={canEditTags}
       />
-      {!(isLoading || isFetchingMore) && <div ref={loadMoreRef} className='h-px w-full' />}
+      <div ref={loadMoreRef} className='h-px w-full' />
     </div>
   )
 }

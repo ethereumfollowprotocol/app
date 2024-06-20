@@ -23,7 +23,7 @@ const LatestFollowers: React.FC<LatestFollowersProps> = ({ profiles, isLoading }
       />
       {!isLoading && profiles?.length === 0 && (
         <div className='w-full lg:h-[638px] flex justify-center items-center font-semibold italic text-lg'>
-          No results
+          {t('no followers')}
         </div>
       )}
     </div>

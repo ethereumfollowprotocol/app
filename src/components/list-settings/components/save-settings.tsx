@@ -1,12 +1,13 @@
 import type { Chain, Address } from 'viem'
 
 import { Step } from '#/components/checkout/types'
-import type { ProfileDetailsResponse } from '#/api/requests'
+import type { ProfileDetailsResponse } from '#/types/requests'
 import useSaveListSettings from '../hooks/use-save-list-settings'
 import TransactionStatus from '#/components/checkout/transaction-status'
 import { InitiateActionsCard } from '#/components/checkout/initiate-actions-card'
 
 export interface SaveSettingsProps {
+  selectedList: number
   profile: ProfileDetailsResponse
   chain?: Chain
   newChain?: Chain
@@ -26,6 +27,7 @@ export interface SaveSettingsProps {
 }
 
 const SaveSettings: React.FC<SaveSettingsProps> = ({
+  selectedList,
   profile,
   chain,
   newChain,
@@ -46,6 +48,7 @@ const SaveSettings: React.FC<SaveSettingsProps> = ({
     handleInitiateActions,
     handleNextAction
   } = useSaveListSettings({
+    selectedList,
     profile,
     chain,
     newChain,

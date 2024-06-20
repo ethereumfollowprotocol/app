@@ -23,7 +23,7 @@ export const LANGUAGES = [
   { language: 'English', key: 'en' },
   { language: 'Slovenščina', key: 'si' }
 ]
-export const DEFAULT_TAGS_TO_ADD = ['efp']
+export const DEFAULT_TAGS_TO_ADD = ['friend', 'IRL', 'family', 'work', 'crypto']
 export const DEFAULT_TAGS = ['no tag']
 export const BLOCKED_MUTED_TAGS = ['blocked', 'muted']
 export const SORT_OPTIONS = ['latest first', 'earliest first', 'follower count']

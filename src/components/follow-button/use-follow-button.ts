@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
 
 import {
@@ -8,7 +9,7 @@ import {
   listOpRemoveListRecord
 } from '#/utils/list-ops'
 import { useCart } from '#/contexts/cart-context'
-import { useFollowState } from '#/hooks/use-follow-state'
+import useFollowState from '#/hooks/use-follow-state'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 export type FollowButtonState =
@@ -41,13 +42,13 @@ type FollowButtonText =
   | 'Unmute'
   | 'Unsubscribe'
 
-export const useFollowButton = ({
-  address
-}: {
-  address: Address
-}) => {
+export const useFollowButton = ({ address }: { address: Address }) => {
   const { roles } = useEFPProfile()
-  const followState = useFollowState(address, 'followings')
+  const { address: userAddress } = useAccount()
+  const { followState, isFollowStateLoading } = useFollowState({
+    address,
+    type: 'followings'
+  })
   const { hasListOpAddRecord, hasListOpRemoveRecord, addCartItem, removeCartItem, cartItems } =
     useCart()
 
@@ -58,6 +59,8 @@ export const useFollowButton = ({
   )
 
   const buttonState = useMemo<FollowButtonState>(() => {
+    if (!userAddress) return 'Follow'
+
     if (isPendingFollow) return 'Pending Following'
     if (isPendingUnfollow) return 'Pending Unfollow'
     switch (followState) {
@@ -70,9 +73,11 @@ export const useFollowButton = ({
       default:
         return 'Follow'
     }
-  }, [isPendingFollow, isPendingUnfollow, followState])
+  }, [isPendingFollow, isPendingUnfollow, followState, userAddress])
 
   const buttonText = useMemo<FollowButtonText>(() => {
+    if (!userAddress) return 'Follow'
+
     if (isPendingFollow) return 'Following'
     if (isPendingUnfollow) return 'Unfollow'
 
@@ -86,7 +91,7 @@ export const useFollowButton = ({
       default:
         return 'Follow'
     }
-  }, [followState, isPendingFollow, isPendingUnfollow])
+  }, [followState, isPendingFollow, isPendingUnfollow, userAddress])
 
   const handleAction = () => {
     // cannot perform list operations if not list manager
@@ -114,5 +119,5 @@ export const useFollowButton = ({
     if (buttonText === 'Following') return addCartItem({ listOp: listOpRemoveListRecord(address) })
   }
 
-  return { buttonText, buttonState, handleAction }
+  return { buttonText, buttonState, handleAction, isLoading: isFollowStateLoading }
 }

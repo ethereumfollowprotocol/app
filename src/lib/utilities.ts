@@ -57,7 +57,3 @@ export function checkAddressOrEnsValid(value: string) {
 export function hexlify(data: Buffer): `0x${string}` {
   return `0x${data.toString('hex')}`
 }
-
-export function formatAddressOrName(addressOrName: string) {
-  return isAddress(addressOrName) ? addressOrName : `${addressOrName.replace('.eth', '')}.eth`
-}

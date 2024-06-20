@@ -10,9 +10,10 @@ import { useAccountModal, useConnectModal } from '@rainbow-me/rainbowkit'
 import { LANGUAGES } from '#/lib/constants'
 import useLanguage from '../hooks/useLanguage'
 import { truncateAddress } from '#/lib/utilities'
+import { resolveENSProfile } from '#/utils/resolveENS'
 import ArrowLeft from 'public/assets/icons/arrow-left.svg'
-import { resolveENSProfile } from '#/utils/resolveAddress'
 import ArrowDown from 'public/assets/icons/arrow-down.svg'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 
 const nullEnsProfile = {
@@ -22,11 +23,14 @@ const nullEnsProfile = {
 
 const ConnectButton = () => {
   const [walletMenOpenu, setWalletMenuOpen] = useState(false)
-
+  const [listMenuOpen, setListMenuOpen] = useState(false)
   const { changeLanguage, languageMenOpenu, selectedLanguage, setLanguageMenuOpen } = useLanguage()
 
   const clickAwayWalletRef = useClickAway<HTMLDivElement>(_ => {
     setWalletMenuOpen(false)
+  })
+  const clickAwayListRef = useClickAway<HTMLDivElement>(_ => {
+    setListMenuOpen(false)
   })
   const clickAwayLanguageRef = useClickAway<HTMLDivElement>(_ => {
     setLanguageMenuOpen(false)
@@ -37,6 +41,7 @@ const ConnectButton = () => {
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
   const { openAccountModal } = useAccountModal()
+  const { selectedList, lists, setSelectedList } = useEFPProfile()
 
   const { data: ensProfile } = useQuery({
     queryKey: ['ens-data', userAddress],
@@ -89,9 +94,52 @@ const ConnectButton = () => {
       </button>
       {walletMenOpenu && (
         <div className='p-3 flex gap-1.5 w-fit z-50 shadow-md border-2 rounded-lg bg-white/95 border-gray-200 absolute top-[120%] flex-col items-end right-0'>
-          <div className='flex justify-between items-center w-full hover:opacity-80 transition-opacity cursor-pointer'>
-            <Image src={ArrowLeft} alt='Show lists' />
-            <p className=' font-semibold'>List #0</p>
+          <div ref={clickAwayListRef} className='w-full cursor-pointer group relative'>
+            <div
+              onClick={() => setListMenuOpen(!listMenuOpen)}
+              className='flex justify-between items-center w-full hover:opacity-80 transition-opacity cursor-pointer'
+            >
+              <Image src={ArrowLeft} alt='Show lists' />
+              <p className=' font-semibold'>
+                {selectedList
+                  ? `${t('navigation.list')} #${selectedList}`
+                  : t('navigation.mint new list')}
+              </p>
+            </div>
+            <div
+              className={`absolute right-[100%] group-hover:block -top-3 ${
+                lists?.lists && lists?.lists?.length > 0
+                  ? listMenuOpen
+                    ? 'block'
+                    : 'hidden'
+                  : 'hidden group-hover:hidden'
+              } pr-5`}
+            >
+              <div className='flex flex-col gap-2 glass-card bg-white/90 border-2 border-gray-200 px-4 py-2 rounded-lg shadow-md'>
+                {lists?.lists?.map(list => (
+                  <p
+                    className=' text-darkGrey text-nowrap font-semibold hover:text-gray-500 transition-colors'
+                    key={list}
+                    onClick={() => {
+                      setSelectedList(Number(list))
+                      setListMenuOpen(false)
+                    }}
+                  >
+                    {t('navigation.list')} #{list}
+                  </p>
+                ))}
+                <p
+                  className=' text-darkGrey text-nowrap font-semibold hover:text-gray-500 transition-colors'
+                  key={'new list'}
+                  onClick={() => {
+                    setSelectedList(undefined)
+                    setListMenuOpen(false)
+                  }}
+                >
+                  {t('navigation.mint new list')}
+                </p>
+              </div>
+            </div>
           </div>
           <div ref={clickAwayLanguageRef} className='w-full cursor-pointer group relative'>
             <div

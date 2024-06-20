@@ -35,8 +35,8 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
             }
           />
           <div
-            className={`flex w-full ${
-              isResponsive ? 'xl:items-center items-start' : 'items-center'
+            className={`flex  ${
+              isResponsive ? 'xl:items-center items-start w-3/4 xl:w-full' : 'items-center w-full'
             } flex-col gap-2 justify-center`}
           >
             <LoadingCell className='w-48 sm:w-68 xl:w-3/4 h-7 rounded-lg' />

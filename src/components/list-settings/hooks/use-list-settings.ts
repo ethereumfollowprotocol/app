@@ -2,22 +2,23 @@ import { useChains } from 'wagmi'
 import { useEffect, useState } from 'react'
 import { http, fromHex, getContract, createPublicClient, type Address, type Chain } from 'viem'
 
-import { coreEfpContracts } from '#/lib/constants/contracts'
-import type { ProfileDetailsResponse } from '#/api/requests'
-import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
+import { rpcProviders } from '#/lib/constants/providers'
+import { coreEfpContracts } from '#/lib/constants/contracts'
+import type { ProfileDetailsResponse } from '#/types/requests'
+import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 
-const useListSettings = ({ profile }: { profile: ProfileDetailsResponse }) => {
+const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; list: number }) => {
   const chains = useChains()
   const [chain, setChain] = useState<Chain>()
   const [fetchedChain, setFetchedChain] = useState<Chain>()
 
-  const [user, setUser] = useState<string>()
-  const [fetchedUser, setFetchedUser] = useState<string>()
-  const [owner, setOwner] = useState<string>()
-  const [fetchedOwner, setFetchedOwner] = useState<string>()
-  const [manager, setManager] = useState<string>()
-  const [fetchedManager, setFetchedManager] = useState<string>()
+  const [user, setUser] = useState<string>('')
+  const [fetchedUser, setFetchedUser] = useState<string>('')
+  const [owner, setOwner] = useState<string>('')
+  const [fetchedOwner, setFetchedOwner] = useState<string>('')
+  const [manager, setManager] = useState<string>('')
+  const [fetchedManager, setFetchedManager] = useState<string>('')
   const [changedValues, setChangedValues] = useState({
     chain: false,
     owner: false,
@@ -32,16 +33,17 @@ const useListSettings = ({ profile }: { profile: ProfileDetailsResponse }) => {
   const listRegistryContract = getContract({
     address: coreEfpContracts.EFPListRegistry,
     abi: efpListRegistryAbi,
-    client: createPublicClient({ chain: DEFAULT_CHAIN, transport: http() })
+    client: createPublicClient({
+      chain: DEFAULT_CHAIN,
+      transport: http(rpcProviders[DEFAULT_CHAIN.id])
+    })
   })
 
   const fetchListData = async () => {
-    if (!profile.primary_list) return
-
     const listStorageLocation = await listRegistryContract.read.getListStorageLocation([
-      BigInt(profile?.primary_list)
+      BigInt(list)
     ])
-    const listOwner = await listRegistryContract.read.ownerOf([BigInt(profile?.primary_list)])
+    const listOwner = await listRegistryContract.read.ownerOf([BigInt(list)])
     const listStorageLocationChainId = fromHex(`0x${listStorageLocation.slice(64, 70)}`, 'number')
 
     const slot = BigInt(`0x${listStorageLocation.slice(-64)}`)
@@ -56,7 +58,7 @@ const useListSettings = ({ profile }: { profile: ProfileDetailsResponse }) => {
       abi: efpListRecordsAbi,
       client: createPublicClient({
         chain: listStorageLocationChain || DEFAULT_CHAIN,
-        transport: http()
+        transport: http(rpcProviders[listStorageLocationChain?.id || DEFAULT_CHAIN.id])
       })
     })
 
@@ -86,7 +88,13 @@ const useListSettings = ({ profile }: { profile: ProfileDetailsResponse }) => {
 
   useEffect(() => {
     fetchListData()
-  }, [profile])
+    setChangedValues({
+      chain: false,
+      owner: false,
+      manager: false,
+      user: false
+    })
+  }, [profile, list])
 
   return {
     chain,

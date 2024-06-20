@@ -8,10 +8,6 @@ export const EnvironmentVariableSchema = v.object({
   APP_VERSION: v.string(),
   EFP_API_URL: v.string('EFP_API_URL must be a string', [v.url()]),
   NEXT_PUBLIC_EFP_API_URL: v.string('NEXT_PUBLIC_EFP_API_URL must be a string', [v.url()]),
-  ENS_API_URL: v.string('ENS_API_URL must be a string', [v.url()]),
-  NEXT_PUBLIC_ENS_API_URL: v.string('NEXT_PUBLIC_ENS_API_URL must be a string', [v.url()]),
-  ENS_SUBGRAPH_API_KEY: v.string('ENS_SUBGRAPH_API_KEY must be a string'),
-  NEXT_PUBLIC_ENS_SUBGRAPH_API_KEY: v.string('ENS_SUBGRAPH_API_KEY must be a string'),
   NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID: v.string(
     'NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID must be a string'
   )

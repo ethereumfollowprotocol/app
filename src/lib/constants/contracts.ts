@@ -1,4 +1,4 @@
-import type { Address } from '#/lib/types.ts'
+import type { Address } from 'viem'
 import { baseSepolia, optimismSepolia } from 'viem/chains'
 
 export const coreEfpContracts: {

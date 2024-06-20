@@ -20,7 +20,6 @@ export const Avatar = ({
       className={clsx('auto rounded-full my-auto ', size)}
       height={50}
       width={50}
-      // src={avatarUrl || `${process.env.NEXT_PUBLIC_ENS_API_URL}/i/${name}` || DefaultAvatar}
       src={avatarUrl || DefaultAvatar}
       unoptimized={true}
     />

@@ -1,21 +1,25 @@
-import { formatAddressOrName } from '#/lib/utilities'
-import type { FollowingResponse, InfiniteProfileQueryProps } from './requests'
+import type { FollowingResponse, InfiniteProfileQueryProps } from '#/types/requests'
 
 const fetchProfileFollowing = async ({
   addressOrName,
+  list,
   limit,
   pageParam
 }: InfiniteProfileQueryProps) => {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${formatAddressOrName(
-        addressOrName
-      )}/following?include=ens&offset=${pageParam * limit}&limit=${limit}`,
-      {
-        cache: 'default'
-        // cache: "no-cache",
-      }
-    )
+    const url =
+      typeof list === 'number'
+        ? `${process.env.NEXT_PUBLIC_EFP_API_URL}/lists/${list}/following?offset=${
+            pageParam * limit
+          }&limit=${limit}`
+        : `${
+            process.env.NEXT_PUBLIC_EFP_API_URL
+          }/users/${addressOrName}/following?include=ens&offset=${pageParam * limit}&limit=${limit}`
+
+    const response = await fetch(url, {
+      cache: 'default'
+      // cache: "no-cache",
+    })
 
     const data = (await response.json()).following as FollowingResponse[]
     return {

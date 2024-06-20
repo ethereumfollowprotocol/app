@@ -1,16 +1,17 @@
+import { useRouter } from 'next/navigation'
+import { useTranslation } from 'react-i18next'
+import { isAddress, type Address } from 'viem'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useQueryState } from 'next-usequerystate'
 import { useCallback, useMemo, useRef, useState } from 'react'
 
 import searchENSNames from '#/api/searchENSNames'
-import { useRouter } from 'next/navigation'
-import { isAddress, type Address } from 'viem'
 import { useCart } from '#/contexts/cart-context.tsx'
+import { resolveENSAddress } from '#/utils/resolveENS'
 import { listOpAddListRecord } from '#/utils/list-ops.ts'
-import { resolveENSAddress } from '#/utils/resolveAddress.ts'
 import { useEFPProfile } from '#/contexts/efp-profile-context.tsx'
-import { useTranslation } from 'react-i18next'
+import fetchFollowingState from '#/api/fetchFollowingStatus'
 
 const useSearch = (isEditor?: boolean) => {
   const [addToCartError, setAddToCartError] = useState<string>()
@@ -27,7 +28,7 @@ const useSearch = (isEditor?: boolean) => {
 
   const router = useRouter()
   const { t } = useTranslation('editor')
-  const { following, roles } = useEFPProfile()
+  const { roles, selectedList } = useEFPProfile()
   const { addCartItem, hasListOpAddRecord } = useCart()
 
   const clickAwayRef = useClickAway<HTMLDivElement>(_ => {
@@ -62,18 +63,16 @@ const useSearch = (isEditor?: boolean) => {
     searchBarRef.current?.blur()
   }
 
-  const getFollowingState = (address: Address) => {
-    if (!following) return 'none'
+  const getFollowingState = async (address: Address) => {
+    const followingStatus = await fetchFollowingState({ address: address, list: selectedList })
 
-    const followingItem = following?.find(
-      follower => follower?.data?.toLowerCase() === address?.toLowerCase()
-    )
-    if (!followingItem) return 'none'
+    if (!followingStatus) return 'none'
 
-    if (followingItem.tags.includes('Blocked')) return 'blocks'
-    if (followingItem.tags.includes('Muted')) return 'mutes'
+    if (followingStatus.state.is_blocked) return 'blocks'
+    if (followingStatus.state.is_muted) return 'mutes'
+    if (followingStatus.state.is_following) return 'follows'
 
-    return 'follows'
+    return 'none'
   }
 
   let searchTimeout: NodeJS.Timeout | null = null
@@ -106,7 +105,7 @@ const useSearch = (isEditor?: boolean) => {
 
     if (!address) return { user }
 
-    const followState = getFollowingState(address)
+    const followState = await getFollowingState(address)
     const isPendingFollow = hasListOpAddRecord(address)
 
     resetSearch()
@@ -123,12 +122,13 @@ const useSearch = (isEditor?: boolean) => {
         return
       }
 
+      setIsAddingToCart(true)
+
       const hasMultipleNames =
         isEditor &&
         (currentSearch.includes(',') || currentSearch.includes(' ') || currentSearch.includes('\n'))
 
       if (hasMultipleNames) {
-        setIsAddingToCart(true)
         const namesToAdd = currentSearch
           .replaceAll(',', ' ')
           .replaceAll('\n', ' ')
@@ -155,12 +155,16 @@ const useSearch = (isEditor?: boolean) => {
       const erroredName = await addToCart(currentSearch)
       if (erroredName?.isFollowing)
         setAddToCartError(`${t('already followed')} ${erroredName.user}`)
-      else setAddToCartError(`${t('unresolved')} ${erroredName?.user}`)
+      else if (erroredName) setAddToCartError(`${t('unresolved')} ${erroredName?.user}`)
 
-      return
+      return setIsAddingToCart(false)
     }
 
-    if (isAddress(currentSearch) || currentSearch.includes('.')) {
+    if (
+      isAddress(currentSearch) ||
+      currentSearch.includes('.') ||
+      !Number.isNaN(Number(currentSearch))
+    ) {
       const address = isAddress(currentSearch)
         ? currentSearch
         : await resolveENSAddress(currentSearch)

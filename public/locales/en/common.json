@@ -5,6 +5,8 @@
     "leaderboard": "Leaderboard",
     "connect": "Connect Wallet",
     "disconnect": "Disconnect Wallet",
+    "list": "List",
+    "mint new list": "Mint new list",
     "search placeholder": "Search ENS or 0x address",
     "search no results": "No results"
   },
@@ -18,7 +20,8 @@
     "leaderboard": "Leaderboard",
     "follows you": "Follows you",
     "profile error": "User doesn't exist",
-    "connect wallet": "Connect wallet to view"
+    "connect wallet": "Connect wallet to view",
+    "not primary list": "Not a primary list"
   },
   "follow btn": {
     "Follow": "Follow",
