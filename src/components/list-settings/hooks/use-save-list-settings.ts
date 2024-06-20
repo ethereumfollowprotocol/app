@@ -1,26 +1,19 @@
-import {
-  http,
-  isAddress,
-  type Chain,
-  getContract,
-  type Address,
-  encodePacked,
-  createPublicClient
-} from 'viem'
 import { useTranslation } from 'react-i18next'
 import { useCallback, useEffect, useState } from 'react'
 import { useChainId, useSwitchChain, useWalletClient } from 'wagmi'
+import { isAddress, type Chain, type Address, encodePacked } from 'viem'
 
 import { useCart } from '#/contexts/cart-context'
 import { Step } from '#/components/checkout/types'
-import { DEFAULT_CHAIN } from '#/lib/constants/chain'
-import type { ProfileDetailsResponse } from '#/api/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
+import type { ProfileDetailsResponse } from '#/types/requests'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
+import { generateListStorageLocationSlot } from '#/app/efp/utilities'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
 
 type SaveListSettingsParams = {
+  selectedList: number
   profile: ProfileDetailsResponse
   chain?: Chain
   newChain?: Chain
@@ -40,6 +33,7 @@ type SaveListSettingsParams = {
 }
 
 const useSaveListSettings = ({
+  selectedList,
   profile,
   chain,
   newChain,
@@ -59,17 +53,14 @@ const useSaveListSettings = ({
   const { switchChain } = useSwitchChain()
   const { data: walletClient } = useWalletClient()
   const { t } = useTranslation('profile', { keyPrefix: 'list settings' })
-  const { refetchProfile, refetchFollowing, refetchRoles } = useEFPProfile()
+  const { refetchProfile, refetchFollowing, refetchRoles, refetchLists, refetchFollowers } =
+    useEFPProfile()
   const { addActions, actions, executeActionByIndex, resetActions, moveToNextAction } = useActions()
 
-  const listRegistryContract = getContract({
-    address: coreEfpContracts.EFPListRegistry,
-    abi: efpListRegistryAbi,
-    client: createPublicClient({ chain: DEFAULT_CHAIN, transport: http() })
-  })
-
   const setListStorageLocationTx = useCallback(async () => {
-    if (!(newChain && slot && profile.primary_list)) return
+    if (!newChain) return
+
+    const newSlot = generateListStorageLocationSlot()
 
     const listRecordsContractAddress = newChain
       ? (ListRecordContracts[newChain?.id] as Address)
@@ -77,14 +68,16 @@ const useSaveListSettings = ({
 
     const data = encodePacked(
       ['uint256', 'address', 'uint'],
-      [BigInt(newChain.id), listRecordsContractAddress, slot]
+      [BigInt(newChain.id), listRecordsContractAddress, newSlot]
     )
-    const hash = await listRegistryContract.write.setListStorageLocation(
-      [BigInt(profile.primary_list), data],
-      {
-        account: profile.address
-      }
-    )
+
+    const hash = await walletClient?.writeContract({
+      address: coreEfpContracts.EFPListRegistry,
+      abi: efpListRegistryAbi,
+      functionName: 'setListStorageLocation',
+      args: [BigInt(selectedList), data]
+    })
+
     // return transaction hash to enable following transaction status in transaction details component
     return hash
   }, [profile, walletClient, slot, newChain])
@@ -92,8 +85,11 @@ const useSaveListSettings = ({
   const setOwnerTx = useCallback(async () => {
     if (!(listRecordsContractAddress && isAddress(owner || ''))) return
 
-    const hash = await listRegistryContract.write.transferOwnership([owner as Address], {
-      account: profile.address
+    const hash = await walletClient?.writeContract({
+      address: coreEfpContracts.EFPListRegistry,
+      abi: efpListRegistryAbi,
+      functionName: 'transferOwnership',
+      args: [owner as Address]
     })
 
     // return transaction hash to enable following transaction status in transaction details component
@@ -223,10 +219,14 @@ const useSaveListSettings = ({
   const onFinish = useCallback(() => {
     if (changedValues.manager) resetCart()
 
-    resetActions()
+    // Refetch all related data
+    refetchLists()
     refetchRoles()
     refetchProfile()
     refetchFollowing()
+    refetchFollowers()
+
+    resetActions()
     onCancel()
     onClose()
   }, [changedValues])

@@ -2,7 +2,6 @@ import clsx from 'clsx'
 import Link from 'next/link'
 import type { Address } from 'viem'
 import { FollowButton } from '#/components/follow-button'
-import Image from 'next/image'
 
 interface Row {
   address: Address
@@ -12,7 +11,6 @@ interface Row {
   followers: number
   mutuals: number
   blockedMuted: number
-  status: 'followed' | 'blocked' | 'muted' | 'none'
 }
 
 export function TableRow({
@@ -22,8 +20,7 @@ export function TableRow({
   following,
   followers,
   mutuals,
-  blockedMuted,
-  status
+  blockedMuted
 }: Row) {
   const rankedAs = rank <= 3 ? 'top-three' : rank <= 10 ? 'top-ten' : 'regular'
   const rankNumber = {
@@ -45,10 +42,6 @@ export function TableRow({
       <div data-name='name-column'>
         <Link href={`/${name}`}>
           <div className='flex gap-2'>
-            <Image
-              src={`${process.env.NEXT_PUBLIC_ENS_API_URL}/i/${name}`}
-              alt={`${name} avatar`}
-            />
             <div className='flex flex-col items-start justify-center text-left'>
               <p className='font-bold sm:text-lg text-sm hover:text-pink-400'>{name}</p>
               <div className='font-bold rounded-full text-[10px] bg-grey text-darkGrey'>

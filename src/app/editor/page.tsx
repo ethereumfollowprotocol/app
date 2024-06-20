@@ -27,8 +27,8 @@ export default function EditorPage() {
   const { openConnectModal } = useConnectModal()
   const { totalCartItems, cartAddresses } = useCart()
 
-  const { profile: connectedProfile, roles } = useEFPProfile()
-  const hasCreatedEfpList = !!connectedProfile?.primary_list
+  const { selectedList, roles } = useEFPProfile()
+  const hasCreatedEfpList = !!selectedList
 
   const profiles = useMemo(
     () =>

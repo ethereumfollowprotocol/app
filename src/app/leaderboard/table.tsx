@@ -43,27 +43,6 @@ export function LeaderboardTable({
             <Searchbar queryKey='query' placeholder='Search...' />
           </Suspense>
         </div>
-
-        {/* <Suspense>
-          <SelectWithFilter
-            dropdownOnly={false}
-            filterQueryKey='filter'
-            placeholder='Select a filter'
-            items={['following', 'followers', 'mutuals', 'blocked+muted']}
-          />
-        </Suspense> */}
-        {/* <div className='w-min'>
-          <IconButton
-            radius='full'
-            mr='2'
-            size='1'
-            variant='soft'
-            my='auto'
-            className='bg-white font-bold text-gray-400 ml-auto'
-          >
-            ?
-          </IconButton>
-        </div> */}
         <div className='mt-2 min-w-fit'>
           <p className='h-2 font-semibold text-sm sm:text-md w-full leading-none sm:leading-normal'>
             {filteredLeaderboard.length} account
@@ -91,9 +70,6 @@ export function LeaderboardTable({
         </div>
         <div>
           {filteredLeaderboard.map((entry, index) => (
-            /**
-             * TODO: update the 0s once the API is ready
-             */
             <TableRow
               key={`${entry.address}-${index}`}
               rank={entry.rank}
@@ -102,7 +78,6 @@ export function LeaderboardTable({
               followers={entry.followers_count || 0}
               mutuals={entry.mutuals_count || 0}
               blockedMuted={entry.blocked_count + entry.muted_count || 0}
-              status='none'
               address={entry.address}
             />
           ))}

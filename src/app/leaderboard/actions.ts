@@ -1,7 +1,6 @@
 'use server'
 
 import { raise } from 'src/lib/utilities'
-import type { NoRepetition } from '#/lib/types.ts'
 import type { LeaderboardFilter, LeaderboardEntry } from './types.ts'
 
 export async function fetchLeaderboard({
@@ -10,16 +9,14 @@ export async function fetchLeaderboard({
   include = []
 }: {
   filter: LeaderboardFilter
-  include?: NoRepetition<'ens' | 'mutuals' | 'blocked' | 'muted'>
+  include?: ('ens' | 'mutuals' | 'blocked' | 'muted')[]
   limit?: number
 }): Promise<LeaderboardEntry[]> {
   try {
     // if (filter !== "followers") return [];
     // const params = include.map(key => `include=${key}`).join('&')
     // console.log(`${process.env.EFP_API_URL}/leaderboard/${filter}?limit=${limit}&${params}`)
-    const response = await fetch(
-      `${process.env.EFP_API_URL}/leaderboard/${filter}?limit=${limit}&include=ens`
-    )
+    const response = await fetch(`${process.env.EFP_API_URL}/leaderboard/${filter}?limit=${limit}`)
 
     // When there is no ens name, the API returns an object with a message property
     if (!response.ok) {

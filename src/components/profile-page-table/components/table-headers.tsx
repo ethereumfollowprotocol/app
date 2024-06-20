@@ -1,13 +1,13 @@
 import Image from 'next/image'
 import { useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useClickAway } from '@uidotdev/usehooks'
 
+import type { ProfileTabType } from '#/types/common'
 import ArrowDown from 'public/assets/icons/arrow-down.svg'
-import SearchIcon from 'public/assets/icons/magnifying-glass.svg'
 import { DEFAULT_TAGS, SORT_OPTIONS } from '#/lib/constants'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import type { ProfileTabType } from '#/types/common'
-import { useClickAway } from '@uidotdev/usehooks'
-import { useTranslation } from 'react-i18next'
+import SearchIcon from 'public/assets/icons/magnifying-glass.svg'
 
 interface TableHeaderProps {
   title: ProfileTabType

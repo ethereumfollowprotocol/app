@@ -5,6 +5,8 @@
     "leaderboard": "Lestvica",
     "connect": "Poveži denarnico",
     "disconnect": "Odpoveži denarnico",
+    "mint new list": "Nov seznam",
+    "list": "Seznam",
     "search placeholder": "Išci ENS ime ali 0x naslov",
     "search no results": "Ni rezultatov"
   },
@@ -18,7 +20,8 @@
     "leaderboard": "Lestvica",
     "follows you": "Ti sledi",
     "profile error": "Uporabnik ne obstaja",
-    "connect wallet": "Poveži denarnico za ogled"
+    "connect wallet": "Poveži denarnico za ogled",
+    "not primary list": "Ni glavni seznam"
   },
   "follow btn": {
     "Follow": "Sledi",

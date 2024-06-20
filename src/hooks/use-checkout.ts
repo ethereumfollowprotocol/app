@@ -8,6 +8,7 @@ import {
   createPublicClient
 } from 'viem'
 import { useRouter } from 'next/navigation'
+import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useState } from 'react'
 import { useChainId, useChains, useSwitchChain, useWalletClient } from 'wagmi'
 
@@ -16,6 +17,7 @@ import { Step } from '#/components/checkout/types'
 import type { ChainWithDetails } from '#/lib/wagmi'
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import { useMintEFP } from './efp-actions/use-mint-efp'
+import { rpcProviders } from '#/lib/constants/providers'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { extractAddressAndTag, isTagListOp } from '#/utils/list-ops'
@@ -23,34 +25,38 @@ import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
 
 const useCheckout = () => {
+  const {
+    actions,
+    addActions,
+    resetActions,
+    moveToNextAction,
+    currentActionIndex,
+    executeActionByIndex
+  } = useActions()
   const chains = useChains()
   const router = useRouter()
   const currentChainId = useChainId()
+  const queryClient = useQueryClient()
   const { switchChain } = useSwitchChain()
   const { data: walletClient } = useWalletClient()
   const { totalCartItems, cartItems, resetCart } = useCart()
   const { mint, nonce: mintNonce, listHasBeenMinted } = useMintEFP()
-  const { profile, refetchFollowing, refetchProfile } = useEFPProfile()
-  const {
-    addActions,
-    executeActionByIndex,
-    actions,
-    resetActions,
-    currentActionIndex,
-    moveToNextAction
-  } = useActions()
+  const { profile, refetchFollowing, refetchProfile, selectedList, refetchLists } = useEFPProfile()
 
   // get contract for selected chain to pull list storage location from
   const listRegistryContract = getContract({
     address: coreEfpContracts.EFPListRegistry,
     abi: efpListRegistryAbi,
-    client: createPublicClient({ chain: DEFAULT_CHAIN, transport: http() })
+    client: createPublicClient({
+      chain: DEFAULT_CHAIN,
+      transport: http(rpcProviders[DEFAULT_CHAIN.id])
+    })
   })
 
   // Set step to initiating transactions if the user has already created their EFP list
   // Selecting the chain is only an option when creating a new EFP list to select List records location
   const [currentStep, setCurrentStep] = useState(
-    profile?.primary_list ? Step.InitiateTransactions : Step.SelectChain
+    selectedList ? Step.InitiateTransactions : Step.SelectChain
   )
 
   const [selectedChainId, setSelectedChainId] = useState<number>(DEFAULT_CHAIN.id)
@@ -58,8 +64,8 @@ const useCheckout = () => {
 
   const listOpTx = useCallback(async () => {
     // Get list storage location via token ID
-    const listStorageLocation = profile?.primary_list
-      ? await listRegistryContract.read.getListStorageLocation([BigInt(profile?.primary_list)])
+    const listStorageLocation = selectedList
+      ? await listRegistryContract.read.getListStorageLocation([BigInt(selectedList)])
       : null
 
     // Get slot, chain, and List Records contract from storage location or use options from the mint
@@ -106,14 +112,14 @@ const useCheckout = () => {
 
     // return transaction hash to enable following transaction status in transaction details component
     return hash
-  }, [selectedChain, walletClient])
+  }, [walletClient, selectedChain, selectedList])
 
   const setActions = useCallback(async () => {
     // getting the chain ID where the list operations will be performed (selected chain ID if EFP list minted before)
-    const chainId = profile?.primary_list
+    const chainId = selectedList
       ? fromHex(
           `0x${(
-            await listRegistryContract.read.getListStorageLocation([BigInt(profile?.primary_list)])
+            await listRegistryContract.read.getListStorageLocation([BigInt(selectedList)])
           ).slice(64, 70)}`,
           'number'
         )
@@ -142,9 +148,7 @@ const useCheckout = () => {
 
     // add Create list action if user doesn't have the EFP list yet
     const actionsToExecute =
-      profile?.primary_list || listHasBeenMinted
-        ? [cartItemAction]
-        : [createEFPListAction, cartItemAction]
+      selectedList || listHasBeenMinted ? [cartItemAction] : [createEFPListAction, cartItemAction]
     addActions(actionsToExecute)
   }, [selectedChainId, totalCartItems, listOpTx])
 
@@ -167,12 +171,10 @@ const useCheckout = () => {
     async (index: number) =>
       actions[index || 0]?.label === 'create list'
         ? DEFAULT_CHAIN.id
-        : profile?.primary_list
+        : selectedList
           ? fromHex(
               `0x${(
-                await listRegistryContract.read.getListStorageLocation([
-                  BigInt(profile?.primary_list)
-                ])
+                await listRegistryContract.read.getListStorageLocation([BigInt(selectedList)])
               ).slice(64, 70)}`,
               'number'
             )
@@ -215,10 +217,17 @@ const useCheckout = () => {
   }, [moveToNextAction, executeActionByIndex, getRequiredChain, currentChainId, currentActionIndex])
 
   const onFinish = useCallback(() => {
+    queryClient.invalidateQueries({ queryKey: ['follow state'] })
+
     resetCart()
     resetActions()
-    refetchProfile()
-    refetchFollowing()
+
+    if (selectedList === undefined) refetchLists()
+    else {
+      refetchProfile()
+      refetchFollowing()
+    }
+
     router.push('/profile')
   }, [resetActions, resetCart])
 

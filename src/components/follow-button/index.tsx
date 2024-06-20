@@ -7,6 +7,7 @@ import type { Address } from 'viem'
 import { useTranslation } from 'react-i18next'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
+import LoadingCell from '../loading-cell'
 import { type FollowButtonState, useFollowButton } from './use-follow-button'
 
 const theme = {
@@ -77,13 +78,15 @@ export function FollowButton({ address, className = '', ...props }: FollowButton
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
   const { t } = useTranslation('common', { keyPrefix: 'follow btn' })
-  const { buttonText, buttonState, handleAction } = useFollowButton({
-    address
-  })
+  const { buttonText, buttonState, handleAction, isLoading } = useFollowButton({ address })
 
   // if (address?.toLowerCase() === userAddress?.toLowerCase()) return null
 
-  return (
+  return isLoading ? (
+    <div className='rounded-lg w-[107px] h-[37px]'>
+      <LoadingCell className='h-full w-full rounded-lg' />
+    </div>
+  ) : (
     <button
       className={clsx([
         theme[buttonState].bg,

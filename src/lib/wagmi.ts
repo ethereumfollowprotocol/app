@@ -3,7 +3,7 @@
 import { type Chain, connectorsForWallets } from '@rainbow-me/rainbowkit'
 import { http, fallback, createStorage, cookieStorage, createConfig } from 'wagmi'
 import { injectedWallet, walletConnectWallet } from '@rainbow-me/rainbowkit/wallets'
-import { mainnet, sepolia, optimism, optimismSepolia, baseSepolia } from 'wagmi/chains'
+import { mainnet, sepolia, optimism, optimismSepolia, baseSepolia, base } from 'wagmi/chains'
 
 import { APP_DESCRIPTION, APP_NAME, APP_URL } from '#/lib/constants'
 
@@ -47,14 +47,6 @@ export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
   //     gasFeeDetail: 'High gas fees'
   //   }
   // },
-  {
-    ...baseSepolia,
-    iconUrl: '/assets/chains/base.svg',
-    custom: {
-      chainDetail: 'Testnet',
-      gasFeeDetail: 'Super Low gas fees'
-    }
-  },
   // {
   //   ...sepolia,
   //   iconBackground: 'bg-gray-200',
@@ -64,6 +56,22 @@ export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
   //     gasFeeDetail: 'Low gas fees'
   //   }
   // },
+  // {
+  //   ...base,
+  //   iconUrl: '/assets/chains/base.svg',
+  //   custom: {
+  //     chainDetail: '',
+  //     gasFeeDetail: 'Super Low gas fees'
+  //   }
+  // },
+  {
+    ...baseSepolia,
+    iconUrl: '/assets/chains/base.svg',
+    custom: {
+      chainDetail: 'Testnet',
+      gasFeeDetail: 'Super Low gas fees'
+    }
+  },
   // {
   //   ...optimism,
   //   iconUrl: '/assets/chains/optimism.svg',
@@ -90,67 +98,51 @@ const config = createConfig({
     storage: cookieStorage
   }),
   transports: {
-    // [foundry.id]: http(process.env.NEXT_PUBLIC_LOCAL_RPC || 'http://0.0.0.0:8545', { batch: true }),
-    [mainnet.id]: fallback(
-      [
-        // http(`https://rpc.ankr.com/eth/${process.env.NEXT_PUBLIC_ANKR_ID}`, { batch: true }),
-        // http(`https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`, { batch: true }),
-        // http(`https://mainnet.ethfollow.xyz/v1/mainnet`, { batch: true }),
-        // http(`https://eth.llamarpc.com/rpc/${process.env.NEXT_PUBLIC_LLAMAFOLIO_ID}`, {
-        //   batch: true
-        // }),
-        http(`https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_MAINNET_ALCHEMY_ID}`, {
+    [mainnet.id]: fallback([
+      http(`https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_MAINNET_ALCHEMY_ID}`, {
+        batch: true
+      }),
+      http(`https://mainnet.infura.io/v3/`, {
+        batch: true
+      })
+    ]),
+    [optimism.id]: fallback([
+      http(`https://opt-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_OPTIMISM_ALCHEMY_ID}`, {
+        batch: true
+      }),
+      http(`https://mainnet.optimism.io`, {
+        batch: true
+      })
+    ]),
+    [sepolia.id]: fallback([
+      http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_SEPOLIA_ALCHEMY_ID}`, {
+        batch: true
+      })
+    ]),
+    [optimismSepolia.id]: fallback([
+      http(
+        `https://opt-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_OP_SEPOLIA_ALCHEMY_ID}`,
+        {
           batch: true
-        })
-      ],
-      { rank: true }
-    ),
-    [optimism.id]: fallback(
-      [
-        // http(`https://rpc.ankr.com/optimism/${process.env.NEXT_PUBLIC_ANKR_ID}`, { batch: true }),
-        http(
-          `https://opt-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_OPTIMISM_ALCHEMY_ID}`,
-          { batch: true }
-        )
-        // http(`https://optimism-mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`, {
-        //   batch: true
-        // }),
-        // http(`https://optimism.llamarpc.com/rpc/${process.env.NEXT_PUBLIC_LLAMAFOLIO_ID}`, {
-        //   batch: true
-        // })
-      ],
-      { rank: true }
-    ),
-    [sepolia.id]: fallback(
-      [
-        // http(`https://rpc.ankr.com/eth_sepolia/${process.env.NEXT_PUBLIC_ANKR_ID}`, {
-        //   batch: true
-        // }),
-        http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_SEPOLIA_ALCHEMY_ID}`, {
+        }
+      ),
+      http('https://sepolia.optimism.io', { batch: true })
+    ]),
+    [base.id]: fallback([
+      http(`https://base-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_BASE_ALCHEMY_ID}`, {
+        batch: true
+      }),
+      http('https://mainnet.base.org/', { batch: true })
+    ]),
+    [baseSepolia.id]: fallback([
+      http(
+        `https://base-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_BASE_SEPOLIA_ALCHEMY_ID}`,
+        {
           batch: true
-        })
-      ],
-      { rank: true }
-    ),
-    [optimismSepolia.id]: fallback(
-      [
-        // http(`https://optimism-sepolia.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`, {
-        //   batch: true
-        // }),
-        http('https://sepolia.optimism.io', { batch: true }),
-        http('https://sepolia-rollup.arbitrum.io/rpc', { batch: true })
-      ],
-      { rank: true }
-    ),
-    [baseSepolia.id]: fallback(
-      [
-        // http(`https://optimism-sepolia.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`, {
-        //   batch: true
-        // }),
-        http('https://sepolia.base.org', { batch: true })
-      ],
-      { rank: true }
-    )
+        }
+      ),
+      http('https://sepolia.base.org', { batch: true })
+    ])
   }
 })
 

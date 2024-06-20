@@ -4,25 +4,18 @@ interface EnvironmentVariables {
   readonly APP_VERSION: string
   readonly EFP_API_URL: string
   readonly NEXT_PUBLIC_EFP_API_URL: string
-  readonly ENS_API_URL: string
-  readonly NEXT_PUBLIC_ENS_API_URL: string
+  readonly NEXT_PUBLIC_ENS_SUBGRAPH_API_KEY: string
   readonly NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA: string
   readonly NEXT_PUBLIC_BASE_URL: string
   readonly NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID: string
-  readonly LOCAL_RPC: string
   readonly NEXT_PUBLIC_LOCAL_RPC: string
-  readonly MAINNET_ALCHEMY_ID: string
   readonly NEXT_PUBLIC_MAINNET_ALCHEMY_ID: string
-  readonly OPTIMISM_ALCHEMY_ID: string
-  readonly NEXT_PUBLIC_OPTIMISM_ALCHEMY_ID: string
-  readonly SEPOLIA_ALCHEMY_ID: string
   readonly NEXT_PUBLIC_SEPOLIA_ALCHEMY_ID: string
-  readonly LLAMAFOLIO_ID: string
-  readonly NEXT_PUBLIC_LLAMAFOLIO_ID: string
-  readonly INFURA_ID: string
-  readonly NEXT_PUBLIC_INFURA_ID: string
-  readonly ANKR_ID: string
-  readonly NEXT_PUBLIC_ANKR_ID: string
+  readonly NEXT_PUBLIC_OPTIMISM_ALCHEMY_ID: string
+  readonly NEXT_PUBLIC_BASE_ALCHEMY_ID: string
+  readonly NEXT_PUBLIC_BASE_SEPOLIA_ALCHEMY_ID: string
+  readonly NEXT_PUBLIC_OPTIMISM_ALCHEMY_ID: string
+  readonly NEXT_PUBLIC_OP_SEPOLIA_ALCHEMY_ID: string
   readonly ANVIL_ACCOUNT_PRIVATE_KEY: `0x${string}`
   readonly NEXT_PUBLIC_ANVIL_ACCOUNT_PRIVATE_KEY: `0x${string}`
   readonly NEXT_PUBLIC_SITE_URL: string
