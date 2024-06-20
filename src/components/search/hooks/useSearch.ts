@@ -1,3 +1,4 @@
+import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { isAddress, type Address } from 'viem'
@@ -10,8 +11,8 @@ import searchENSNames from '#/api/searchENSNames'
 import { useCart } from '#/contexts/cart-context.tsx'
 import { resolveENSAddress } from '#/utils/resolveENS'
 import { listOpAddListRecord } from '#/utils/list-ops.ts'
-import { useEFPProfile } from '#/contexts/efp-profile-context.tsx'
 import fetchFollowingState from '#/api/fetchFollowingStatus'
+import { useEFPProfile } from '#/contexts/efp-profile-context.tsx'
 
 const useSearch = (isEditor?: boolean) => {
   const [addToCartError, setAddToCartError] = useState<string>()
@@ -30,6 +31,7 @@ const useSearch = (isEditor?: boolean) => {
   const { t } = useTranslation('editor')
   const { roles, selectedList } = useEFPProfile()
   const { addCartItem, hasListOpAddRecord } = useCart()
+  const { t: tFollowBtn } = useTranslation('common', { keyPrefix: 'follow btn' })
 
   const clickAwayRef = useClickAway<HTMLDivElement>(_ => {
     setDropdownMenuOpen(false)
@@ -97,7 +99,8 @@ const useSearch = (isEditor?: boolean) => {
 
   const addToCart = async (user: string) => {
     if (!roles?.isManager) {
-      setAddToCartError(t('not manager'))
+      toast.error(tFollowBtn('not manager'))
+      setAddToCartError(tFollowBtn('not manager'))
       return
     }
 
@@ -118,7 +121,8 @@ const useSearch = (isEditor?: boolean) => {
   const onSubmit = async () => {
     if (isEditor) {
       if (!roles?.isManager) {
-        setAddToCartError(t('not manager'))
+        toast.error(tFollowBtn('not manager'))
+        setAddToCartError(tFollowBtn('not manager'))
         return
       }
 

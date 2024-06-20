@@ -37,7 +37,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           backgroundImage: `url(assets/art/waves-background.svg)`
         }}
       >
-        <Toaster />
+        <Toaster richColors={true} />
         <Providers initialState={initialState}>{children}</Providers>
         {/* <VercelToolbar /> */}
         <Production>

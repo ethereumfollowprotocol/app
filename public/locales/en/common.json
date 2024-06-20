@@ -29,6 +29,7 @@
     "Unfollow": "Unfollow",
     "Blocked": "Blocked",
     "Block": "Block",
-    "Unblock": "Unblock"
+    "Unblock": "Unblock",
+    "not manager": "You are not the manager of the list."
   }
 }

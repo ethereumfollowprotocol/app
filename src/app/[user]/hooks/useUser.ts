@@ -105,8 +105,10 @@ const useUser = (user: string) => {
   return {
     lists,
     profile,
+    listNum,
     followers,
     following,
+    userIsList,
     profileIsLoading,
     followersIsLoading,
     followingIsLoading,
