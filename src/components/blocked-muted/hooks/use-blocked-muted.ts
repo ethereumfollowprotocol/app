@@ -1,8 +1,9 @@
+import { useInfiniteQuery } from '@tanstack/react-query'
+
+import { FETCH_LIMIT_PARAM } from '#/lib/constants'
 import fetchProfileFollowers from '#/api/fetchProfileFollowers'
 import fetchProfileFollowing from '#/api/fetchProfileFollowing'
-import type { FollowerResponse, FollowingResponse } from '#/api/requests'
-import { FETCH_LIMIT_PARAM } from '#/lib/constants'
-import { useInfiniteQuery } from '@tanstack/react-query'
+import type { FollowerResponse, FollowingResponse } from '#/types/requests'
 
 const useBlockedMuted = (user: string) => {
   const {
