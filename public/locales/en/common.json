@@ -21,7 +21,7 @@
     "follows you": "Follows you",
     "profile error": "User doesn't exist",
     "connect wallet": "Connect wallet to view",
-    "not primary list": "Not a primary list"
+    "not primary list": "Not a Primary List"
   },
   "follow btn": {
     "Follow": "Follow",
@@ -30,6 +30,6 @@
     "Blocked": "Blocked",
     "Block": "Block",
     "Unblock": "Unblock",
-    "not manager": "You are not the manager of the list."
+    "not manager": "You are not the Manager of the list."
   }
 }
