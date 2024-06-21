@@ -1,8 +1,14 @@
 'use client'
 
+import {
+  coinbaseWallet,
+  injectedWallet,
+  metaMaskWallet,
+  rainbowWallet,
+  walletConnectWallet
+} from '@rainbow-me/rainbowkit/wallets'
 import { type Chain, connectorsForWallets } from '@rainbow-me/rainbowkit'
 import { http, fallback, createStorage, cookieStorage, createConfig } from 'wagmi'
-import { injectedWallet, walletConnectWallet } from '@rainbow-me/rainbowkit/wallets'
 import { mainnet, sepolia, optimism, optimismSepolia, baseSepolia, base } from 'wagmi/chains'
 
 import { APP_DESCRIPTION, APP_NAME, APP_URL } from '#/lib/constants'
@@ -13,7 +19,7 @@ const connectors = connectorsForWallets(
   [
     {
       groupName: 'Recommended',
-      wallets: [injectedWallet, walletConnectWallet]
+      wallets: [coinbaseWallet, rainbowWallet, metaMaskWallet, walletConnectWallet, injectedWallet]
     }
   ],
   {
