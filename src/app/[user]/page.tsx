@@ -75,10 +75,18 @@ export default function UserPage({ params }: Props) {
 
   return (
     <>
-      {listSettingsOpen && profile && profile.primary_list && (
+      {listSettingsOpen && profile && (userIsList ? listNum : profile.primary_list) && (
         <ListSettings
+          showSingleList={userIsList}
           lists={lists?.lists}
-          selectedList={Number(profile.primary_list)}
+          // @ts-ignore
+          selectedList={
+            userIsList
+              ? (listNum as number)
+              : profile?.primary_list
+                ? Number(profile?.primary_list)
+                : undefined
+          }
           isSaving={isSaving}
           profile={profile}
           setIsSaving={setIsSaving}
