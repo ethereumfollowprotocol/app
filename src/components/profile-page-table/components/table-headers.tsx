@@ -1,34 +1,42 @@
 import Image from 'next/image'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
 
-import type { ProfileTabType } from '#/types/common'
+import { SORT_OPTIONS } from '#/lib/constants'
+import LoadingCell from '#/components/loading-cell'
+import type { FollowSortType } from '#/types/requests'
 import ArrowDown from 'public/assets/icons/arrow-down.svg'
-import { useEFPProfile } from '#/contexts/efp-profile-context'
+import type { ProfileTableTitleType } from '#/types/common'
 import SearchIcon from 'public/assets/icons/magnifying-glass.svg'
-import { BLOCKED_MUTED_TAGS, DEFAULT_TAGS, SORT_OPTIONS } from '#/lib/constants'
 
 interface TableHeaderProps {
-  title: ProfileTabType
-  displayedTitle?: string
+  title: ProfileTableTitleType
   search: string
   showTags: boolean
   setShowTags: (input: boolean) => void
   setSearch: (input: string) => void
-  allTags: string[]
+  allTags?: string[]
+  tagsLoading?: boolean
+  selectedTags?: string[]
+  sort: FollowSortType
+  setSort: (option: FollowSortType) => void
+  toggleSelectedTags: (title: ProfileTableTitleType, tag: string) => void
   isShowingBlocked?: boolean
 }
 
 const TableHeader: React.FC<TableHeaderProps> = ({
   title,
-  displayedTitle,
   showTags,
   setShowTags,
   search,
   setSearch,
   allTags,
-  isShowingBlocked
+  tagsLoading,
+  selectedTags,
+  toggleSelectedTags,
+  sort,
+  setSort
 }) => {
   const [showSort, setShowSort] = useState(false)
   const [showSearch, setShowSearch] = useState(false)
@@ -40,50 +48,14 @@ const TableHeader: React.FC<TableHeaderProps> = ({
     setShowSearch(false)
   })
 
-  const tagsToDisplay = () => {
-    if (isShowingBlocked) return BLOCKED_MUTED_TAGS
-    const seen: { [key: string]: boolean } = {}
-    return [...DEFAULT_TAGS, ...allTags].filter(tag => {
-      if (Object.keys(seen).includes(tag)) return false
-      seen[tag] = true
-      return true
-    })
-  }
-
-  const {
-    setFollowersSort,
-    setFollowingSort,
-    followersSort,
-    followingSort,
-    toggleTag,
-    followersTags,
-    followingTags
-  } = useEFPProfile()
   const { t } = useTranslation('profile')
-
-  const tags = useMemo(
-    () =>
-      ({
-        following: followingTags,
-        followers: followersTags
-      })[title],
-    [followersTags, followingTags, title]
-  )
-  const sort = {
-    following: followingSort,
-    followers: followersSort
-  }[title]
-  const setSort = {
-    following: setFollowingSort,
-    followers: setFollowersSort
-  }[title]
 
   return (
     <div className='flex flex-col gap-4 w-full'>
       <div className='flex justify-between w-full'>
         <div className='flex gap-4 justify-between items-center w-full'>
           <div ref={clickAwaySearchRef} className='flex gap-3 items-center'>
-            <p className='capitalize text-lg lg:text-xl font-bold'>{t(displayedTitle || title)}</p>
+            <p className='capitalize text-lg lg:text-xl font-bold'>{t(title)}</p>
             <div className='relative z-50'>
               <div
                 className='cursor-pointer max-w-40 flex items-center gap-2 hover:opacity-75'
@@ -171,20 +143,30 @@ const TableHeader: React.FC<TableHeaderProps> = ({
       </div>
       {showTags && (
         <div className='flex flex-wrap w-full gap-2'>
-          {tagsToDisplay().map(tag => (
-            <button
-              key={tag.toLowerCase()}
-              className={`text-sm px-4 py-2 font-semibold italic ${
-                tags.includes(tag)
-                  ? 'text-darkGrey bg-white shadow-inner shadow-black/40'
-                  : 'text-gray-500 bg-gray-300/80'
-              } rounded-full`}
-              name={tag.toLowerCase()}
-              onClick={() => toggleTag(title, tag)}
-            >
-              {t(tag)}
-            </button>
-          ))}
+          {tagsLoading ? (
+            <>
+              <LoadingCell className='w-28 h-6 rounded-full' />
+              <LoadingCell className='w-28 h-6 rounded-full' />
+              <LoadingCell className='w-28 h-6 rounded-full' />
+            </>
+          ) : allTags?.length === 0 || !allTags ? (
+            <p className='text-center w-full font-semibold text-gray-500 italic'>No tags</p>
+          ) : (
+            allTags?.map(tag => (
+              <button
+                key={tag.toLowerCase()}
+                className={`text-sm px-4 py-2 font-semibold italic ${
+                  selectedTags?.includes(tag)
+                    ? 'text-darkGrey bg-white shadow-inner shadow-black/40'
+                    : 'text-gray-500 bg-gray-300/80'
+                } rounded-full`}
+                name={tag.toLowerCase()}
+                onClick={() => toggleSelectedTags(title, tag)}
+              >
+                {t(tag)}
+              </button>
+            ))
+          )}
         </div>
       )}
     </div>

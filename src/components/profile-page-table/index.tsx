@@ -8,33 +8,42 @@ import { useIntersectionObserver } from '@uidotdev/usehooks'
 import { FETCH_LIMIT_PARAM } from '#/lib/constants'
 import TableHeader from './components/table-headers'
 import { FollowList } from '#/components/follow-list'
-import type { FollowerResponse, FollowingResponse } from '#/types/requests'
+import type { ProfileTableTitleType } from '#/types/common'
+import type { FollowerResponse, FollowingResponse, FollowSortType } from '#/types/requests'
 
 /**
  * TODO: paginate
  */
 export function UserProfilePageTable({
-  displayedTitle,
   title,
   customClass,
   isLoading,
   isFetchingMore,
-  followers,
-  following,
+  results,
   fetchMore,
   canEditTags,
+  allTags,
+  tagsLoading,
+  selectedTags,
+  toggleSelectedTags,
+  sort,
+  setSort,
   showTagsByDefault,
   isShowingBlocked
 }: {
-  displayedTitle?: string
-  title: 'following' | 'followers'
+  title: ProfileTableTitleType
   customClass?: string
   isLoading: boolean
   isFetchingMore: boolean
-  followers: FollowerResponse[]
-  following: FollowingResponse[]
+  results: FollowerResponse[] | FollowingResponse[]
   fetchMore: () => void
   canEditTags?: boolean
+  allTags?: string[]
+  tagsLoading?: boolean
+  selectedTags?: string[]
+  sort: FollowSortType
+  setSort: (option: FollowSortType) => void
+  toggleSelectedTags: (title: ProfileTableTitleType, tag: string) => void
   showTagsByDefault?: boolean
   isShowingBlocked?: boolean
 }) {
@@ -45,31 +54,14 @@ export function UserProfilePageTable({
   const { t } = useTranslation('profile')
   const isProfile = pathname.includes('profile')
 
-  const filteredFollowers =
-    search.length === 0
-      ? followers
-      : followers?.filter(follower =>
-          follower?.ens?.name?.toLowerCase().replaceAll('.eth', '').includes(search.toLowerCase())
-        )
-  const filteredFollowing =
-    search.length === 0
-      ? following
-      : following?.filter(following =>
-          following?.data?.toLowerCase().includes(search.toLowerCase())
-        )
-
-  const chosenResponses = title === 'following' ? filteredFollowing : filteredFollowers
   const showFollowsYouBadges = !isProfile || title === 'following'
 
   const profiles =
-    chosenResponses?.map(res => ({
-      ens: res.ens,
+    results?.map(res => ({
       tags: res.tags,
       // @ts-ignore
       address: title === 'following' ? res.data : res.address
     })) || []
-
-  const allTags = chosenResponses?.flatMap(item => item.tags) || []
 
   const [loadMoreRef, entry] = useIntersectionObserver()
 
@@ -78,11 +70,48 @@ export function UserProfilePageTable({
 
     if (
       !(isLoading || isFetchingMore) &&
-      chosenResponses.length > 0 &&
-      chosenResponses.length % FETCH_LIMIT_PARAM === 0
+      results.length > 0 &&
+      results.length % FETCH_LIMIT_PARAM === 0
     )
       fetchMore()
-  }, [entry?.isIntersecting, chosenResponses])
+  }, [entry?.isIntersecting, results])
+
+  const noResults = {
+    following: (
+      <div className='text-center font-semibold py-4'>
+        {title === 'followers' && (
+          <span className='text-lg'>
+            {t(isProfile ? 'followers myprofile empty' : 'followers empty')}
+          </span>
+        )}
+        {title === 'following' && (
+          <div className='flex flex-col items-center'>
+            <span className='text-xl text-darkGrey italic mb-4'>
+              {t(isProfile ? 'following myprofile empty first' : 'following empty first')}
+            </span>
+            {isProfile && (
+              <span className='text-base text-darkGrey italic w-3/4 max-w-96'>
+                {t('following myprofile empty second')}
+              </span>
+            )}
+          </div>
+        )}
+      </div>
+    ),
+    followers: (
+      <span className='text-lg'>
+        {t(isProfile ? 'followers myprofile empty' : 'followers empty')}
+      </span>
+    ),
+    'Blocked/Muted by': (
+      <span className='text-lg'>{t(isProfile ? 'blocked myprofile empty' : 'blocked empty')}</span>
+    ),
+    'Blocked/Muted': (
+      <span className='text-lg'>
+        {t(isProfile ? 'blocking myprofile empty' : 'blocking empty')}
+      </span>
+    )
+  }[title]
 
   return (
     <div
@@ -91,35 +120,21 @@ export function UserProfilePageTable({
       } sm:p-4 w-full xl:w-[620px] border-2 rounded-2xl border-gray-200 ${customClass}`}
     >
       <TableHeader
-        displayedTitle={displayedTitle}
-        allTags={allTags}
         search={search}
         setSearch={(input: string) => setSearch(input)}
         showTags={showTags}
         setShowTags={(option: boolean) => setShowTags(option)}
         title={title}
+        allTags={allTags}
+        tagsLoading={tagsLoading}
+        selectedTags={selectedTags}
+        sort={sort}
+        setSort={setSort}
+        toggleSelectedTags={toggleSelectedTags}
         isShowingBlocked={isShowingBlocked}
       />
-      {!isLoading && chosenResponses?.length === 0 && (
-        <div className='text-center font-semibold py-4'>
-          {title === 'followers' && (
-            <span className='text-lg'>
-              {t(isProfile ? 'followers myprofile empty' : 'followers empty')}
-            </span>
-          )}
-          {title === 'following' && (
-            <div className='flex flex-col items-center'>
-              <span className='text-xl text-darkGrey italic mb-4'>
-                {t(isProfile ? 'following myprofile empty first' : 'following empty first')}
-              </span>
-              {isProfile && (
-                <span className='text-base text-darkGrey italic w-3/4 max-w-96'>
-                  {t('following myprofile empty second')}
-                </span>
-              )}
-            </div>
-          )}
-        </div>
+      {!isLoading && results?.length === 0 && (
+        <div className='text-center font-semibold py-4'>{noResults}</div>
       )}
       <FollowList
         isLoading={isLoading || isFetchingMore}

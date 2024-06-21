@@ -6,9 +6,17 @@ import fetchProfileLists from '#/api/fetchProfileLists'
 import fetchProfileDetails from '#/api/fetchProfileDetails'
 import fetchProfileFollowers from '#/api/fetchProfileFollowers'
 import fetchProfileFollowing from '#/api/fetchProfileFollowing'
-import type { FollowerResponse, FollowingResponse } from '#/types/requests'
+import type { FollowerResponse, FollowingResponse, FollowSortType } from '#/types/requests'
+import fetchFollowingTags from '#/api/fetchFollowingTags'
+import { useState } from 'react'
+import type { ProfileTableTitleType } from '#/types/common'
 
 const useUser = (user: string) => {
+  const [followingTagsFilter, setFollowingTagsFilter] = useState<string[]>([])
+  const [followersTagsFilter, setFollowersTagsFilter] = useState<string[]>([])
+  const [followingSort, setFollowingSort] = useState<FollowSortType>('latest first')
+  const [followersSort, setFollowersSort] = useState<FollowSortType>('latest first')
+
   const userIsList = !(isAddress(user) || user.includes('.'))
   const listNum = userIsList ? Number(user) : undefined
 
@@ -61,6 +69,17 @@ const useUser = (user: string) => {
     staleTime: 120000
   })
 
+  const { data: followingTags, isLoading: followingTagsLoading } = useQuery({
+    queryKey: ['following tags', user],
+    queryFn: async () => {
+      if (!user) return
+
+      const fetchedProfile = await fetchFollowingTags(user, listNum)
+      return fetchedProfile
+    },
+    refetchInterval: 60000
+  })
+
   const {
     data: fetchedFollowing,
     isLoading: followingIsLoading,
@@ -102,18 +121,45 @@ const useUser = (user: string) => {
       )
     : []
 
+  const toggleTag = (tab: ProfileTableTitleType, tag: string) => {
+    if (tab === 'following') {
+      if (followingTagsFilter.includes(tag)) {
+        setFollowingTagsFilter(followingTagsFilter.filter(item => item !== tag))
+      } else {
+        setFollowingTagsFilter([...followingTagsFilter, tag])
+      }
+    }
+
+    if (tab === 'followers') {
+      if (followersTagsFilter.includes(tag)) {
+        setFollowersTagsFilter(followersTagsFilter.filter(item => item !== tag))
+      } else {
+        setFollowersTagsFilter([...followersTagsFilter, tag])
+      }
+    }
+  }
+
   return {
     lists,
     profile,
     followers,
     following,
+    followingTags,
     profileIsLoading,
     followersIsLoading,
     followingIsLoading,
+    followingTagsLoading,
     fetchMoreFollowers,
     fetchMoreFollowing,
     isFetchingMoreFollowers,
-    isFetchingMoreFollowing
+    isFetchingMoreFollowing,
+    followingTagsFilter,
+    followersTagsFilter,
+    followingSort,
+    setFollowingSort,
+    followersSort,
+    toggleTag,
+    setFollowersSort
   }
 }
 

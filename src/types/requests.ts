@@ -106,6 +106,15 @@ export interface ProfileDetailsResponse {
   stats?: StatsResponse | undefined
 }
 
+export interface FollowingTagsResponse {
+  token_id: string | number
+  tags: string[]
+  taggedAddresses: {
+    address: Address
+    tag: string
+  }[]
+}
+
 export interface ProfileListsResponse {
   primary_list?: string | null
   lists?: number[]

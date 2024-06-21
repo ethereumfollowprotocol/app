@@ -35,6 +35,14 @@ export default function ProfilePage() {
     profileIsLoading,
     following,
     followers,
+    followingTags,
+    followingTagsLoading,
+    followingTagsFilter,
+    toggleTag,
+    followersSort,
+    followingSort,
+    setFollowersSort,
+    setFollowingSort,
     followingIsLoading,
     followersIsLoading,
     fetchMoreFollowers,
@@ -47,8 +55,13 @@ export default function ProfilePage() {
     following: (
       <UserProfilePageTable
         isLoading={followingIsLoading}
-        following={following}
-        followers={followers}
+        results={following}
+        allTags={followingTags?.tags}
+        tagsLoading={followingTagsLoading}
+        selectedTags={followingTagsFilter}
+        toggleSelectedTags={toggleTag}
+        sort={followingSort}
+        setSort={setFollowingSort}
         isFetchingMore={isFetchingMoreFollowing}
         fetchMore={() => fetchMoreFollowing()}
         canEditTags={roles?.isManager}
@@ -59,8 +72,10 @@ export default function ProfilePage() {
     followers: (
       <UserProfilePageTable
         isLoading={followersIsLoading}
-        following={following}
-        followers={followers}
+        results={followers}
+        toggleSelectedTags={toggleTag}
+        sort={followersSort}
+        setSort={setFollowersSort}
         isFetchingMore={isFetchingMoreFollowers}
         fetchMore={() => fetchMoreFollowers()}
         title='followers'
@@ -121,8 +136,13 @@ export default function ProfilePage() {
           </div>
           <UserProfilePageTable
             isLoading={followingIsLoading}
-            following={following}
-            followers={followers}
+            results={following}
+            allTags={followingTags?.tags}
+            tagsLoading={followingTagsLoading}
+            selectedTags={followingTagsFilter}
+            toggleSelectedTags={toggleTag}
+            sort={followingSort}
+            setSort={setFollowingSort}
             isFetchingMore={isFetchingMoreFollowing}
             fetchMore={() => fetchMoreFollowing()}
             canEditTags={roles?.isManager}
@@ -131,8 +151,10 @@ export default function ProfilePage() {
           />
           <UserProfilePageTable
             isLoading={followersIsLoading}
-            following={following}
-            followers={followers}
+            results={followers}
+            toggleSelectedTags={toggleTag}
+            sort={followersSort}
+            setSort={setFollowersSort}
             isFetchingMore={isFetchingMoreFollowers}
             fetchMore={() => fetchMoreFollowers()}
             title='followers'

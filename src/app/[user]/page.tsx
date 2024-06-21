@@ -33,21 +33,35 @@ export default function UserPage({ params }: Props) {
     profile,
     followers,
     following,
+    followingTags,
+    followingTagsLoading,
     profileIsLoading,
     followersIsLoading,
     followingIsLoading,
     fetchMoreFollowers,
     fetchMoreFollowing,
     isFetchingMoreFollowers,
-    isFetchingMoreFollowing
+    isFetchingMoreFollowing,
+    followingTagsFilter,
+    followersTagsFilter,
+    followingSort,
+    setFollowingSort,
+    followersSort,
+    setFollowersSort,
+    toggleTag
   } = useUser(user)
 
   const mobileActiveEl = {
     following: (
       <UserProfilePageTable
         isLoading={followingIsLoading}
-        following={following}
-        followers={followers}
+        results={following}
+        allTags={followingTags?.tags}
+        tagsLoading={followingTagsLoading}
+        selectedTags={followingTagsFilter}
+        toggleSelectedTags={toggleTag}
+        sort={followingSort}
+        setSort={setFollowingSort}
         isFetchingMore={isFetchingMoreFollowing}
         fetchMore={() => fetchMoreFollowing()}
         title='following'
@@ -61,8 +75,11 @@ export default function UserPage({ params }: Props) {
     followers: (
       <UserProfilePageTable
         isLoading={followersIsLoading}
-        following={following}
-        followers={followers}
+        results={followers}
+        selectedTags={followersTagsFilter}
+        toggleSelectedTags={toggleTag}
+        sort={followersSort}
+        setSort={setFollowersSort}
         isFetchingMore={isFetchingMoreFollowers}
         fetchMore={() => fetchMoreFollowers()}
         title='followers'
@@ -107,8 +124,13 @@ export default function UserPage({ params }: Props) {
           </div>
           <UserProfilePageTable
             isLoading={followingIsLoading}
-            following={following}
-            followers={followers}
+            results={following}
+            allTags={followingTags?.tags}
+            tagsLoading={followingTagsLoading}
+            selectedTags={followingTagsFilter}
+            toggleSelectedTags={toggleTag}
+            sort={followingSort}
+            setSort={setFollowingSort}
             isFetchingMore={isFetchingMoreFollowing}
             fetchMore={() => fetchMoreFollowing()}
             canEditTags={
@@ -120,8 +142,11 @@ export default function UserPage({ params }: Props) {
           />
           <UserProfilePageTable
             isLoading={followersIsLoading}
-            following={following}
-            followers={followers}
+            results={followers}
+            selectedTags={followersTagsFilter}
+            toggleSelectedTags={toggleTag}
+            sort={followersSort}
+            setSort={setFollowersSort}
             isFetchingMore={isFetchingMoreFollowers}
             fetchMore={() => fetchMoreFollowers()}
             title='followers'

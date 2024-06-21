@@ -1,5 +1,5 @@
-import type { BlockedMutedTabType, ProfileTabType } from '#/types/common'
 import type { FollowSortType } from '#/types/requests'
+import type { ProfileTableTitleType, ProfileTabType } from '#/types/common'
 
 export const APP_NAME = 'Ethereum Follow Protocol'
 export const APP_NAME_SHORT = 'EFP'
@@ -19,7 +19,7 @@ export const DAY = 24 * HOUR
 export const WEEK = 7 * DAY
 
 export const PROFILE_TABS: ProfileTabType[] = ['following', 'followers']
-export const BLOCKED_MUTED_TABS: BlockedMutedTabType[] = ['Blocked/Muted', 'Blocked/Muted by']
+export const BLOCKED_MUTED_TABS: ProfileTableTitleType[] = ['Blocked/Muted', 'Blocked/Muted by']
 export const LANGUAGES = [
   { language: 'English', key: 'en' },
   { language: 'Slovenščina', key: 'si' }

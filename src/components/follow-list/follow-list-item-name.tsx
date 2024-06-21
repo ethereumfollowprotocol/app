@@ -153,7 +153,7 @@ export function FollowListItemName({
       >
         <div
           className={`flex flex-col justify-center  ${
-            isEditor ? 'md:w-52' : showTags ? 'w-fit' : 'w-full'
+            isEditor ? 'md:w-52' : showTags ? 'w-full xl:max-w-[100px] 2xl:max-w-[138px]' : 'w-full'
           } items-start tabular-nums relative`}
         >
           {isEnsProfileLoading ? (

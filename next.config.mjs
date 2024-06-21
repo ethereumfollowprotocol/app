@@ -44,7 +44,7 @@ const nextConfig = {
     fetches: { fullUrl: true }
   },
   images: {
-    domains: ['ipfs.io'],
+    domains: ['ipfs.io', 'imgur.com'],
     remotePatterns: [
       /**
        * Temporarily accept all domains during development
