@@ -120,6 +120,8 @@ const useSearch = (isEditor?: boolean) => {
 
   const onSubmit = async () => {
     if (isEditor) {
+      searchBarRef.current?.focus()
+
       if (!roles?.isManager) {
         toast.error(tFollowBtn('not manager'))
         setAddToCartError(tFollowBtn('not manager'))

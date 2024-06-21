@@ -1,10 +1,10 @@
 'use client'
 
 import {
+  rainbowWallet,
   coinbaseWallet,
   injectedWallet,
   metaMaskWallet,
-  rainbowWallet,
   walletConnectWallet
 } from '@rainbow-me/rainbowkit/wallets'
 import { type Chain, connectorsForWallets } from '@rainbow-me/rainbowkit'
