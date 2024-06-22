@@ -1,18 +1,28 @@
+import { useState } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
 
 import { FETCH_LIMIT_PARAM } from '#/lib/constants'
+import type { ProfileTableTitleType } from '#/types/common'
 import fetchProfileFollowers from '#/api/fetchProfileFollowers'
 import fetchProfileFollowing from '#/api/fetchProfileFollowing'
-import type { FollowerResponse, FollowingResponse } from '#/types/requests'
+import type { FollowerResponse, FollowingResponse, FollowSortType } from '#/types/requests'
+
+export const TAGS = ['All', 'blocked', 'muted']
+const QUERY_BLOCK_TAGS = ['blocked', 'muted']
 
 const useBlockedMuted = (user: string, list?: string | number) => {
+  const [blockingTagsFilter, setBlockingTagsFilter] = useState<string[]>(['All'])
+  const [blockedByTagsFilter, setBlockedByTagsFilter] = useState<string[]>(['All'])
+  const [blockingSort, setBlockingSort] = useState<FollowSortType>('latest first')
+  const [blockedBySort, setBlockedBySort] = useState<FollowSortType>('latest first')
+
   const {
-    data: fetchedFollowers,
-    isLoading: followersIsLoading,
-    fetchNextPage: fetchMoreFollowers,
-    isFetchingNextPage: isFetchingMoreFollowers
+    data: fetchedBlockedBy,
+    isLoading: blockedByIsLoading,
+    fetchNextPage: fetchMoreBlockedBy,
+    isFetchingNextPage: isFetchingMoreBlockedBy
   } = useInfiniteQuery({
-    queryKey: ['followers', user, list],
+    queryKey: ['followers', user, list, blockedBySort, blockedByTagsFilter],
     queryFn: async ({ pageParam = 0 }) => {
       if (!user)
         return {
@@ -20,13 +30,15 @@ const useBlockedMuted = (user: string, list?: string | number) => {
           nextPageParam: pageParam
         }
 
-      const fetchedFollowers = await fetchProfileFollowers({
+      const fetchedBlockedBy = await fetchProfileFollowers({
         addressOrName: user,
         list,
+        sort: blockedBySort,
+        tags: blockedByTagsFilter.includes('All') ? QUERY_BLOCK_TAGS : blockedByTagsFilter,
         limit: FETCH_LIMIT_PARAM,
         pageParam
       })
-      return fetchedFollowers
+      return fetchedBlockedBy
     },
     initialPageParam: 0,
     getNextPageParam: lastPage => lastPage.nextPageParam,
@@ -34,12 +46,12 @@ const useBlockedMuted = (user: string, list?: string | number) => {
   })
 
   const {
-    data: fetchedFollowing,
-    isLoading: followingIsLoading,
-    fetchNextPage: fetchMoreFollowing,
-    isFetchingNextPage: isFetchingMoreFollowing
+    data: fetchedBlocking,
+    isLoading: blockingIsLoading,
+    fetchNextPage: fetchMoreBlocking,
+    isFetchingNextPage: isFetchingMoreBlocking
   } = useInfiniteQuery({
-    queryKey: ['following', user, list],
+    queryKey: ['following', user, list, blockingSort, blockingTagsFilter],
     queryFn: async ({ pageParam = 0 }) => {
       if (!user)
         return {
@@ -47,42 +59,58 @@ const useBlockedMuted = (user: string, list?: string | number) => {
           nextPageParam: pageParam
         }
 
-      const fetchedFollowers = await fetchProfileFollowing({
+      const fetchedBlockedBy = await fetchProfileFollowing({
         addressOrName: user,
         list,
+        sort: blockingSort,
+        tags: blockingTagsFilter.includes('All') ? QUERY_BLOCK_TAGS : blockingTagsFilter,
         limit: FETCH_LIMIT_PARAM,
         pageParam
       })
-      return fetchedFollowers
+      return fetchedBlockedBy
     },
     initialPageParam: 0,
     getNextPageParam: lastPage => lastPage.nextPageParam,
     staleTime: 120000
   })
 
-  const followers = fetchedFollowers
-    ? fetchedFollowers.pages.reduce(
+  const blockedBy = fetchedBlockedBy
+    ? fetchedBlockedBy.pages.reduce(
         (acc, el) => [...acc, ...el.followers],
         [] as FollowerResponse[]
       )
     : []
 
-  const following = fetchedFollowing
-    ? fetchedFollowing.pages.reduce(
+  const blocking = fetchedBlocking
+    ? fetchedBlocking.pages.reduce(
         (acc, el) => [...acc, ...el.following],
         [] as FollowingResponse[]
       )
     : []
 
+  console.log(blocking)
+
+  const toggleTag = (tab: ProfileTableTitleType, tag: string) => {
+    if (tab === 'Blocked/Muted') setBlockingTagsFilter([tag])
+    if (tab === 'Blocked/Muted By') setBlockedByTagsFilter([tag])
+  }
+
   return {
-    followers,
-    following,
-    followersIsLoading,
-    followingIsLoading,
-    fetchMoreFollowers,
-    fetchMoreFollowing,
-    isFetchingMoreFollowers,
-    isFetchingMoreFollowing
+    blocking,
+    blockedBy,
+    blockedByIsLoading,
+    blockingIsLoading,
+    fetchMoreBlockedBy,
+    fetchMoreBlocking,
+    isFetchingMoreBlockedBy,
+    isFetchingMoreBlocking,
+    blockingTagsFilter,
+    blockedByTagsFilter,
+    blockingSort,
+    setBlockingSort,
+    blockedBySort,
+    setBlockedBySort,
+    toggleTag
   }
 }
 

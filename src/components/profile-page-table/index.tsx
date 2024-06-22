@@ -60,7 +60,7 @@ export function UserProfilePageTable({
     results?.map(res => ({
       tags: res.tags,
       // @ts-ignore
-      address: title === 'following' ? res.data : res.address
+      address: title === 'following' || title === 'Blocked/Muted' ? res.data : res.address
     })) || []
 
   const [loadMoreRef, entry] = useIntersectionObserver()
@@ -103,7 +103,7 @@ export function UserProfilePageTable({
         {t(isProfile ? 'followers myprofile empty' : 'followers empty')}
       </span>
     ),
-    'Blocked/Muted by': (
+    'Blocked/Muted By': (
       <span className='text-lg'>{t(isProfile ? 'blocked myprofile empty' : 'blocked empty')}</span>
     ),
     'Blocked/Muted': (

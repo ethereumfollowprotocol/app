@@ -19,7 +19,7 @@ export const DAY = 24 * HOUR
 export const WEEK = 7 * DAY
 
 export const PROFILE_TABS: ProfileTabType[] = ['following', 'followers']
-export const BLOCKED_MUTED_TABS: ProfileTableTitleType[] = ['Blocked/Muted', 'Blocked/Muted by']
+export const BLOCKED_MUTED_TABS: ProfileTableTitleType[] = ['Blocked/Muted', 'Blocked/Muted By']
 export const LANGUAGES = [
   { language: 'English', key: 'en' },
   { language: 'Slovenščina', key: 'si' }

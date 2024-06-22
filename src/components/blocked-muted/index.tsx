@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
 
 import { BLOCKED_MUTED_TABS } from '#/lib/constants'
-import useBlockedMuted from './hooks/use-blocked-muted'
 import type { BlockedMutedTabType } from '#/types/common'
 import { UserProfilePageTable } from '../profile-page-table'
 import type { ProfileDetailsResponse } from '#/types/requests'
+import useBlockedMuted, { TAGS } from './hooks/use-blocked-muted'
 
 interface BlockedMutedProps {
   profile: ProfileDetailsResponse
@@ -23,44 +23,57 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
   })
 
   const {
-    followers,
-    following,
-    followersIsLoading,
-    followingIsLoading,
-    fetchMoreFollowers,
-    fetchMoreFollowing,
-    isFetchingMoreFollowers,
-    isFetchingMoreFollowing
+    blocking,
+    blockedBy,
+    blockedByIsLoading,
+    blockingIsLoading,
+    fetchMoreBlockedBy,
+    fetchMoreBlocking,
+    isFetchingMoreBlockedBy,
+    isFetchingMoreBlocking,
+    blockingTagsFilter,
+    blockedByTagsFilter,
+    blockingSort,
+    setBlockingSort,
+    blockedBySort,
+    setBlockedBySort,
+    toggleTag
   } = useBlockedMuted(profile.address, list)
   const { t } = useTranslation('profile')
 
   const mobileActiveEl = {
     'Blocked/Muted': (
       <UserProfilePageTable
-        isLoading={followingIsLoading}
-        following={following}
-        followers={followers}
-        isFetchingMore={isFetchingMoreFollowing}
-        fetchMore={() => fetchMoreFollowing()}
+        isLoading={blockingIsLoading}
+        results={blocking}
+        allTags={TAGS}
+        selectedTags={blockingTagsFilter}
+        toggleSelectedTags={toggleTag}
+        sort={blockingSort}
+        setSort={setBlockingSort}
+        isFetchingMore={isFetchingMoreBlocking}
+        fetchMore={() => fetchMoreBlocking()}
         canEditTags={isManager}
         showTagsByDefault={true}
         isShowingBlocked={true}
-        title='following'
-        displayedTitle='Blocked/Muted'
+        title='Blocked/Muted'
         customClass='border-t-0 rounded-t-none'
       />
     ),
-    'Blocked/Muted by': (
+    'Blocked/Muted By': (
       <UserProfilePageTable
-        isLoading={followersIsLoading}
-        following={following}
-        followers={followers}
-        isFetchingMore={isFetchingMoreFollowers}
-        fetchMore={() => fetchMoreFollowers()}
+        isLoading={blockedByIsLoading}
+        results={blockedBy}
+        allTags={TAGS}
+        selectedTags={blockedByTagsFilter}
+        toggleSelectedTags={toggleTag}
+        sort={blockedBySort}
+        setSort={setBlockedBySort}
+        isFetchingMore={isFetchingMoreBlockedBy}
+        fetchMore={() => fetchMoreBlockedBy()}
         showTagsByDefault={true}
         isShowingBlocked={true}
-        title='followers'
-        displayedTitle='Blocked/Muted By'
+        title='Blocked/Muted By'
         customClass='border-t-0 rounded-t-none'
       />
     )
@@ -74,30 +87,36 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
       >
         <div className='bg-white/80 h-fit rounded-2xl hidden xl:block'>
           <UserProfilePageTable
-            isLoading={followingIsLoading}
-            following={following}
-            followers={followers}
-            isFetchingMore={isFetchingMoreFollowing}
-            fetchMore={() => fetchMoreFollowing()}
+            isLoading={blockingIsLoading}
+            results={blocking}
+            allTags={TAGS}
+            selectedTags={blockingTagsFilter}
+            toggleSelectedTags={toggleTag}
+            sort={blockingSort}
+            setSort={setBlockingSort}
+            isFetchingMore={isFetchingMoreBlocking}
+            fetchMore={() => fetchMoreBlocking()}
             canEditTags={isManager}
             showTagsByDefault={true}
             isShowingBlocked={true}
-            title='following'
-            displayedTitle='Blocked/Muted'
+            title='Blocked/Muted'
             customClass='hidden xl:flex'
           />
         </div>
         <div className='bg-white/80 h-fit rounded-2xl hidden xl:block'>
           <UserProfilePageTable
-            isLoading={followersIsLoading}
-            following={following}
-            followers={followers}
-            isFetchingMore={isFetchingMoreFollowers}
-            fetchMore={() => fetchMoreFollowers()}
+            isLoading={blockedByIsLoading}
+            results={blockedBy}
+            allTags={TAGS}
+            selectedTags={blockedByTagsFilter}
+            toggleSelectedTags={toggleTag}
+            sort={blockedBySort}
+            setSort={setBlockedBySort}
+            isFetchingMore={isFetchingMoreBlockedBy}
+            fetchMore={() => fetchMoreBlockedBy()}
             showTagsByDefault={true}
             isShowingBlocked={true}
-            title='followers'
-            displayedTitle='Blocked/Muted By'
+            title='Blocked/Muted By'
             customClass='hidden xl:flex'
           />
         </div>
@@ -106,7 +125,7 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
             {BLOCKED_MUTED_TABS.map(option => (
               <button
                 key={option}
-                onClick={() => setActiveTab(option)}
+                onClick={() => setActiveTab(option as BlockedMutedTabType)}
                 className={`w-1/2 capitalize  text-lg py-2 font-semibold glass-card border-2 border-gray-200 rounded-t-lg ${
                   activeTab === option ? 'bg-white/60' : 'bg-white/20 hover:bg-white/40'
                 }`}
