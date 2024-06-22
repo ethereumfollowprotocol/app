@@ -88,8 +88,6 @@ const useBlockedMuted = (user: string, list?: string | number) => {
       )
     : []
 
-  console.log(blocking)
-
   const toggleTag = (tab: ProfileTableTitleType, tag: string) => {
     if (tab === 'Blocked/Muted') setBlockingTagsFilter([tag])
     if (tab === 'Blocked/Muted By') setBlockedByTagsFilter([tag])
