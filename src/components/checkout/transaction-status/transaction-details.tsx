@@ -1,29 +1,18 @@
 import clsx from 'clsx'
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
 import useChain from '#/hooks/use-chain'
 import type { Action } from '#/contexts/actions-context'
-import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { useTranslation } from 'react-i18next'
 
 const TransactionDetails = ({ action }: { action: Action }) => {
   const chain = useChain(action.chainId)
-
-  const { refetchProfile, refetchFollowing } = useEFPProfile()
   const { t } = useTranslation('transactions', { keyPrefix: 'status' })
   const { isPending, isSuccess, isError, error } = useWaitForTransactionReceipt({
     hash: action.txHash,
     chainId: action.chainId
   })
-
-  useEffect(() => {
-    if (!isSuccess) return
-    setTimeout(() => {
-      refetchProfile()
-      refetchFollowing()
-    }, 1500)
-  }, [isSuccess])
 
   const statusDescription = useMemo(() => {
     if (action.isPendingConfirmation) return t('approve')
