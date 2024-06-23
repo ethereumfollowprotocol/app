@@ -61,7 +61,7 @@ export default function EditorPage() {
               <h3 className='font-bold text-left text-2xl'>{t('unc-changes')}</h3>
               {/* <Legend /> */}
             </div>
-            {totalCartItems === 0 && (
+            {isClient && totalCartItems === 0 && (
               <div className='font-semibold h-28 xl:h-80 px-4 justify-center flex text-lg items-center italic text-darkGrey'>
                 {t('empty cart')}
               </div>
