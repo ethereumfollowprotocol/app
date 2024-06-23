@@ -41,7 +41,15 @@ const useCheckout = () => {
   const { data: walletClient } = useWalletClient()
   const { totalCartItems, cartItems, resetCart } = useCart()
   const { mint, nonce: mintNonce, listHasBeenMinted } = useMintEFP()
-  const { profile, refetchFollowing, refetchProfile, selectedList, refetchLists } = useEFPProfile()
+  const {
+    profile,
+    refetchFollowing,
+    refetchProfile,
+    selectedList,
+    refetchLists,
+    setIsRefetchingProfile,
+    setIsRefetchingFollowing
+  } = useEFPProfile()
 
   // get contract for selected chain to pull list storage location from
   const listRegistryContract = getContract({
@@ -217,12 +225,14 @@ const useCheckout = () => {
   }, [moveToNextAction, executeActionByIndex, getRequiredChain, currentChainId, currentActionIndex])
 
   const onFinish = useCallback(() => {
+    setIsRefetchingProfile(true)
+    setIsRefetchingFollowing(true)
     queryClient.invalidateQueries({ queryKey: ['follow state'] })
 
     resetCart()
     resetActions()
 
-    if (selectedList === undefined) refetchLists()
+    if (listHasBeenMinted || selectedList === undefined) refetchLists()
     else {
       refetchProfile()
       refetchFollowing()

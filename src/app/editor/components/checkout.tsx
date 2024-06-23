@@ -45,7 +45,7 @@ const Checkout: React.FC<CheckoutProps> = ({ setOpen, hasCreatedEfpList }) => {
       )}
       {currentStep === Step.TransactionStatus && (
         <TransactionStatus
-          onFinish={() => onFinish()}
+          onFinish={onFinish}
           setCurrentStep={setCurrentStep}
           handleNextAction={handleNextAction}
           handleReInitiateActions={handleInitiateActions}

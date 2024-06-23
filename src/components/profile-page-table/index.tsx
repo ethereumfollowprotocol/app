@@ -114,7 +114,8 @@ export function UserProfilePageTable({
         </div>
       )}
       <FollowList
-        isLoading={isLoading || isFetchingMore}
+        isLoading={isLoading}
+        isLoadingMore={isFetchingMore}
         loadingRows={10}
         listClassName='gap-2 rounded-xl'
         listItemClassName='rounded-xl hover:bg-white/50 px-0 py-2 sm:p-2'
