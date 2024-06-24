@@ -18,6 +18,7 @@ export function UserProfilePageTable({
   customClass,
   isLoading,
   isFetchingMore,
+  isEndOfResults,
   followers,
   following,
   fetchMore,
@@ -26,6 +27,7 @@ export function UserProfilePageTable({
   title: 'following' | 'followers'
   customClass?: string
   isLoading: boolean
+  isEndOfResults?: boolean
   isFetchingMore: boolean
   followers: FollowerResponse[]
   following: FollowingResponse[]
@@ -68,7 +70,7 @@ export function UserProfilePageTable({
   const [loadMoreRef, entry] = useIntersectionObserver()
 
   useEffect(() => {
-    if (!entry?.isIntersecting) return
+    if (!entry?.isIntersecting || isEndOfResults) return
 
     if (
       !(isLoading || isFetchingMore) &&

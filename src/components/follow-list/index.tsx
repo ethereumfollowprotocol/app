@@ -76,7 +76,7 @@ export function FollowList({
               canEditTags={canEditTags}
             />
           ))}
-          {isLoading &&
+          {isLoadingMore &&
             new Array(loadingRows).fill(1).map((_, i) => (
               // biome-ignore lint/suspicious/noArrayIndexKey: no unique param to use as key
               <LoadingRow key={i} className={listItemClassName} showTags={showTags} />

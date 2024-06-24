@@ -48,6 +48,8 @@ type EFPProfileContextType = {
   followingIsLoading: boolean
   isFetchingMoreFollowers: boolean
   isFetchingMoreFollowing: boolean
+  isEndOfFollowers: boolean
+  isEndOfFollowing: boolean
   fetchMoreFollowers: (options?: FetchNextPageOptions) => Promise<
     InfiniteQueryObserverResult<
       InfiniteData<
@@ -175,6 +177,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     refetchInterval: 60000
   })
 
+  const [isEndOfFollowers, setIsEndOfFollowers] = useState(false)
   // Fetch followings depending on the selected list
   const {
     data: fetchedFollowers,
@@ -186,6 +189,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   } = useInfiniteQuery({
     queryKey: ['followers', userAddress, selectedList],
     queryFn: async ({ pageParam = 0 }) => {
+      setIsEndOfFollowers(true)
+
       if (!userAddress) {
         return {
           followers: [],
@@ -199,6 +204,9 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         limit: FETCH_LIMIT_PARAM,
         pageParam
       })
+
+      if (fetchedFollowers.followers.length === 0) setIsEndOfFollowers(true)
+
       return fetchedFollowers
     },
     initialPageParam: 0,
@@ -206,6 +214,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     refetchInterval: 60000
   })
 
+  const [isEndOfFollowing, setIsEndOfFollowing] = useState(false)
   // fetch followers depending on list for the user of the list you are viewing or show connected address followers if no list is selected
   const {
     data: fetchedFollowing,
@@ -217,6 +226,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   } = useInfiniteQuery({
     queryKey: ['following', userAddress, selectedList],
     queryFn: async ({ pageParam = 0 }) => {
+      setIsEndOfFollowing(false)
+
       if (!(userAddress && selectedList)) {
         setIsRefetchingFollowing(false)
         return {
@@ -224,16 +235,17 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
           nextPageParam: pageParam
         }
       }
-      const fetchedFollowers = await fetchProfileFollowing({
+      const fetchedFollowing = await fetchProfileFollowing({
         addressOrName: userAddress,
         list: selectedList,
         limit: FETCH_LIMIT_PARAM,
         pageParam
       })
 
+      if (fetchedFollowing.following.length === 0) setIsEndOfFollowing(true)
       setIsRefetchingFollowing(false)
 
-      return fetchedFollowers
+      return fetchedFollowing
     },
     initialPageParam: 0,
     getNextPageParam: lastPage => lastPage.nextPageParam
@@ -321,8 +333,10 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         profileIsLoading: isRefetchingProfile || profileIsLoading,
         followingIsLoading: isRefetchingFollowing || followingIsLoading,
         followersIsLoading: followersIsLoading,
-        isFetchingMoreFollowers,
-        isFetchingMoreFollowing,
+        isFetchingMoreFollowers: !isEndOfFollowers && isFetchingMoreFollowers,
+        isFetchingMoreFollowing: !isEndOfFollowing && isFetchingMoreFollowing,
+        isEndOfFollowers,
+        isEndOfFollowing,
         fetchMoreFollowers,
         fetchMoreFollowing,
         refetchLists,
