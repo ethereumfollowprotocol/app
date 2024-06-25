@@ -235,6 +235,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
           nextPageParam: pageParam
         }
       }
+
       const fetchedFollowing = await fetchProfileFollowing({
         addressOrName: userAddress,
         list: selectedList,
@@ -242,7 +243,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         pageParam
       })
 
-      if (fetchedFollowing.following.length === 0) setIsEndOfFollowing(true)
+      if (fetchedFollowing?.following?.length === 0) setIsEndOfFollowing(true)
       setIsRefetchingFollowing(false)
 
       return fetchedFollowing

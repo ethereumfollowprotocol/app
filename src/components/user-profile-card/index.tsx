@@ -36,7 +36,7 @@ export function UserProfileCard({
   const { data: fetchedEnsProfile, isLoading: isProfileLoading } = useQuery({
     queryKey: ['ens metadata', profile],
     queryFn: async () => {
-      if (!profile) return
+      if (!profile) return null
       return await resolveENSProfile(profile?.address)
     }
   })

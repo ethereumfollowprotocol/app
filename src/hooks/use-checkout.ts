@@ -10,7 +10,7 @@ import {
 import { useRouter } from 'next/navigation'
 import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useState } from 'react'
-import { useChainId, useChains, useSwitchChain, useWalletClient } from 'wagmi'
+import { useAccount, useChainId, useChains, useSwitchChain, useWalletClient } from 'wagmi'
 
 import { useCart } from '#/contexts/cart-context'
 import { Step } from '#/components/checkout/types'
@@ -23,6 +23,7 @@ import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { extractAddressAndTag, isTagListOp } from '#/utils/list-ops'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
+import type { FollowingResponse } from '#/types/requests'
 
 const useCheckout = () => {
   const {
@@ -33,23 +34,24 @@ const useCheckout = () => {
     currentActionIndex,
     executeActionByIndex
   } = useActions()
+  const {
+    profile,
+    refetchLists,
+    selectedList,
+    refetchProfile,
+    refetchFollowing,
+    setIsRefetchingProfile,
+    setIsRefetchingFollowing
+  } = useEFPProfile()
   const chains = useChains()
   const router = useRouter()
   const currentChainId = useChainId()
   const queryClient = useQueryClient()
   const { switchChain } = useSwitchChain()
+  const { address: userAddress } = useAccount()
   const { data: walletClient } = useWalletClient()
   const { totalCartItems, cartItems, resetCart } = useCart()
   const { mint, nonce: mintNonce, listHasBeenMinted } = useMintEFP()
-  const {
-    profile,
-    refetchFollowing,
-    refetchProfile,
-    selectedList,
-    refetchLists,
-    setIsRefetchingProfile,
-    setIsRefetchingFollowing
-  } = useEFPProfile()
 
   // get contract for selected chain to pull list storage location from
   const listRegistryContract = getContract({
@@ -234,6 +236,17 @@ const useCheckout = () => {
 
     if (listHasBeenMinted || selectedList === undefined) refetchLists()
     else {
+      queryClient.setQueryData(
+        ['following', userAddress, selectedList],
+        (prev: {
+          pages: FollowingResponse[][]
+          pageParams: number[]
+        }) => ({
+          pages: prev.pages.slice(0, 1),
+          pageParams: prev.pageParams.slice(0, 1)
+        })
+      )
+
       refetchProfile()
       refetchFollowing()
     }
