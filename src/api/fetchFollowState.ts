@@ -1,10 +1,11 @@
 import type { Address } from 'viem'
 import type { FollowingStatusResponse } from '#/types/requests'
 
-const fetchFollowingState = async ({
+const fetchFollowState = async ({
   address,
-  list
-}: { address: Address; list?: string | number }) => {
+  list,
+  type
+}: { address: Address; list?: string | number; type: 'following' | 'follower' }) => {
   try {
     if (!list)
       return {
@@ -16,7 +17,10 @@ const fetchFollowingState = async ({
           is_muted: false
         }
       }
-    const url = `${process.env.NEXT_PUBLIC_EFP_API_URL}/lists/${list}/${address}/buttonState`
+
+    const url = `${process.env.NEXT_PUBLIC_EFP_API_URL}/lists/${list}/${address}/${
+      type === 'following' ? 'buttonState' : 'followerState'
+    }`
 
     const response = await fetch(url, {
       cache: 'default'
@@ -38,4 +42,4 @@ const fetchFollowingState = async ({
   }
 }
 
-export default fetchFollowingState
+export default fetchFollowState

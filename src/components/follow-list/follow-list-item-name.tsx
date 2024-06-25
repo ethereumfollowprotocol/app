@@ -69,11 +69,11 @@ export function FollowListItemName({
 
   const { t } = useTranslation()
   const { t: tEditor } = useTranslation('editor')
-  const { followState } = useFollowState({
+
+  const { followerTag } = useFollowState({
     address,
-    type: 'followers'
+    type: 'follower'
   })
-  const isFollower = followState === 'follows'
 
   const {
     addCartItem,
@@ -161,9 +161,11 @@ export function FollowListItemName({
           ) : (
             <Name name={name} address={address} showTags={showTags} />
           )}
-          {showFollowsYouBadges && isFollower && (
-            <div className='rounded-full font-bold text-[10px] mb-1 flex items-center justify-center bg-gray-300 h-5 w-20'>
-              {t('profile card.follows you')}
+          {showFollowsYouBadges && (
+            <div
+              className={`rounded-full font-bold text-[10px] mb-1 flex items-center justify-center bg-gray-300 h-5 w-20 ${followerTag.className}`}
+            >
+              {t(`profile card.${followerTag.text}`)}
             </div>
           )}
         </div>

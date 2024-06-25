@@ -10,8 +10,8 @@ import { useCallback, useMemo, useRef, useState } from 'react'
 import searchENSNames from '#/api/searchENSNames'
 import { useCart } from '#/contexts/cart-context.tsx'
 import { resolveENSAddress } from '#/utils/resolveENS'
+import fetchFollowingState from '#/api/fetchFollowState'
 import { listOpAddListRecord } from '#/utils/list-ops.ts'
-import fetchFollowingState from '#/api/fetchFollowingStatus'
 import { useEFPProfile } from '#/contexts/efp-profile-context.tsx'
 
 const useSearch = (isEditor?: boolean) => {
@@ -66,7 +66,11 @@ const useSearch = (isEditor?: boolean) => {
   }
 
   const getFollowingState = async (address: Address) => {
-    const followingStatus = await fetchFollowingState({ address: address, list: selectedList })
+    const followingStatus = await fetchFollowingState({
+      address: address,
+      list: selectedList,
+      type: 'following'
+    })
 
     if (!followingStatus) return 'none'
 

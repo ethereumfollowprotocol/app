@@ -49,7 +49,7 @@ export const useFollowButton = ({ address }: { address: Address }) => {
   const { address: userAddress } = useAccount()
   const { followState, isFollowStateLoading } = useFollowState({
     address,
-    type: 'followings'
+    type: 'following'
   })
   const { t } = useTranslation('common', { keyPrefix: 'follow btn' })
   const { hasListOpAddRecord, hasListOpRemoveRecord, addCartItem, removeCartItem, cartItems } =
