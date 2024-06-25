@@ -30,16 +30,20 @@ export default function UserPage({ params }: Props) {
 
   const {
     lists,
+    listNum,
     profile,
     followers,
     following,
     followingTags,
     followingTagsLoading,
+    userIsList,
     profileIsLoading,
     followersIsLoading,
     followingIsLoading,
     fetchMoreFollowers,
     fetchMoreFollowing,
+    isEndOfFollowing,
+    isEndOfFollowers,
     isFetchingMoreFollowers,
     isFetchingMoreFollowing,
     followingTagsFilter,
@@ -62,6 +66,7 @@ export default function UserPage({ params }: Props) {
         toggleSelectedTags={toggleTag}
         sort={followingSort}
         setSort={setFollowingSort}
+        isEndOfResults={isEndOfFollowing}
         isFetchingMore={isFetchingMoreFollowing}
         fetchMore={() => fetchMoreFollowing()}
         title='following'
@@ -80,6 +85,7 @@ export default function UserPage({ params }: Props) {
         toggleSelectedTags={toggleTag}
         sort={followersSort}
         setSort={setFollowersSort}
+        isEndOfResults={isEndOfFollowers}
         isFetchingMore={isFetchingMoreFollowers}
         fetchMore={() => fetchMoreFollowers()}
         title='followers'
@@ -90,10 +96,18 @@ export default function UserPage({ params }: Props) {
 
   return (
     <>
-      {listSettingsOpen && profile && profile.primary_list && (
+      {listSettingsOpen && profile && (userIsList ? listNum : profile.primary_list) && (
         <ListSettings
+          showSingleList={userIsList}
           lists={lists?.lists}
-          selectedList={Number(profile.primary_list)}
+          // @ts-ignore
+          selectedList={
+            userIsList
+              ? (listNum as number)
+              : profile?.primary_list
+                ? Number(profile?.primary_list)
+                : undefined
+          }
           isSaving={isSaving}
           profile={profile}
           setIsSaving={setIsSaving}
@@ -104,7 +118,13 @@ export default function UserPage({ params }: Props) {
         <main className='flex pb-8 min-h-full w-full justify-between xl:justify-center gap-y-4 flex-col md:flex-row flex-wrap xl:flex-nowrap items-start xl:gap-6 mt-32 md:mt-40 lg:mt-48 px-4 lg:px-8'>
           <div className='flex flex-col w-full xl:w-fit items-center gap-4'>
             <UserProfileCard
-              profileList={profile?.primary_list ? Number(profile?.primary_list) : undefined}
+              profileList={
+                userIsList
+                  ? listNum
+                  : profile?.primary_list
+                    ? Number(profile?.primary_list)
+                    : undefined
+              }
               profile={profile}
               following={following}
               isLoading={profileIsLoading}
@@ -131,6 +151,7 @@ export default function UserPage({ params }: Props) {
             toggleSelectedTags={toggleTag}
             sort={followingSort}
             setSort={setFollowingSort}
+            isEndOfResults={isEndOfFollowing}
             isFetchingMore={isFetchingMoreFollowing}
             fetchMore={() => fetchMoreFollowing()}
             canEditTags={
@@ -147,6 +168,7 @@ export default function UserPage({ params }: Props) {
             toggleSelectedTags={toggleTag}
             sort={followersSort}
             setSort={setFollowersSort}
+            isEndOfResults={isEndOfFollowers}
             isFetchingMore={isFetchingMoreFollowers}
             fetchMore={() => fetchMoreFollowers()}
             title='followers'

@@ -22,6 +22,7 @@ interface FollowListProps {
   createListItem?: boolean
   loadingRows?: number
   isLoading: boolean
+  isLoadingMore?: boolean
   canEditTags?: boolean
 }
 
@@ -34,44 +35,54 @@ export function FollowList({
   createListItem,
   loadingRows = 7,
   isLoading,
+  isLoadingMore,
   canEditTags
 }: FollowListProps) {
   const { t } = useTranslation('editor')
 
   return (
     <div className={`flex flex-col min-w-max ${listClassName}`}>
-      {profiles && profiles?.length > 0 && createListItem && (
-        <div className='flex w-[350px] sm:w-full items-center gap-2 md:p-4 p-1.5 sm:p-2 sm:gap-3'>
-          <Image
-            src={EFPLogo}
-            alt='EFP List'
-            className='rounded-full h-[45px] w-[45px] md:h-[50px] md:w-[50px]'
-          />
-          <div className='flex flex-col md:flex-row md:items-center'>
-            <p className='text-lg font-semibold w-fit sm:w-56 text-left'>{t('mint name')}</p>
-            <p className='font-semibold text-sm sm:text-base text-left italic text-grey'>
-              {t('mint description')}
-            </p>
-          </div>
-        </div>
-      )}
-      {profiles?.map(({ address, tags, ens }) => (
-        <FollowListItem
-          className={listItemClassName}
-          key={address}
-          address={address}
-          ensProfile={ens}
-          showFollowsYouBadges={showFollowsYouBadges}
-          showTags={showTags}
-          tags={tags}
-          canEditTags={canEditTags}
-        />
-      ))}
-      {isLoading &&
+      {isLoading ? (
         new Array(loadingRows)
           .fill(1)
           // biome-ignore lint/suspicious/noArrayIndexKey: no unique param to use as key
-          .map((_, i) => <LoadingRow key={i} className={listItemClassName} showTags={showTags} />)}
+          .map((_, i) => <LoadingRow key={i} className={listItemClassName} showTags={showTags} />)
+      ) : (
+        <>
+          {profiles && profiles?.length > 0 && createListItem && (
+            <div className='flex w-[350px] sm:w-full items-center gap-2 md:p-4 p-1.5 sm:p-2 sm:gap-3'>
+              <Image
+                src={EFPLogo}
+                alt='EFP List'
+                className='rounded-full h-[45px] w-[45px] md:h-[50px] md:w-[50px]'
+              />
+              <div className='flex flex-col md:flex-row md:items-center'>
+                <p className='text-lg font-semibold w-fit sm:w-56 text-left'>{t('mint name')}</p>
+                <p className='font-semibold text-sm sm:text-base text-left italic text-grey'>
+                  {t('mint description')}
+                </p>
+              </div>
+            </div>
+          )}
+          {profiles?.map(({ address, tags, ens }) => (
+            <FollowListItem
+              className={listItemClassName}
+              key={address}
+              address={address}
+              ensProfile={ens}
+              showFollowsYouBadges={showFollowsYouBadges}
+              showTags={showTags}
+              tags={tags}
+              canEditTags={canEditTags}
+            />
+          ))}
+          {isLoadingMore &&
+            new Array(loadingRows).fill(1).map((_, i) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: no unique param to use as key
+              <LoadingRow key={i} className={listItemClassName} showTags={showTags} />
+            ))}
+        </>
+      )}
     </div>
   )
 }

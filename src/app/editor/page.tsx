@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next'
 import { useEffect, useMemo, useState } from 'react'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
-import Legend from './components/legend'
 import Checkout from './components/checkout'
 import { Search } from '#/components/search'
 import { useCart } from '#/contexts/cart-context'
@@ -60,8 +59,13 @@ export default function EditorPage() {
           <div className='flex h-full flex-col glass-card rounded-2xl border-2 border-gray-200 gap-3 md:gap-4 md:py-8 py-6 px-1 sm:px-3 md:px-4 w-full xl:w-2/3'>
             <div className='flex sm:justify-between flex-col gap-2 sm:flex-row sm:items-center px-3 md:px-4'>
               <h3 className='font-bold text-left text-2xl'>{t('unc-changes')}</h3>
-              <Legend />
+              {/* <Legend /> */}
             </div>
+            {isClient && totalCartItems === 0 && (
+              <div className='font-semibold h-28 xl:h-80 px-4 justify-center flex text-lg items-center italic text-darkGrey'>
+                {t('empty cart')}
+              </div>
+            )}
             <FollowList
               isLoading={false}
               profiles={profiles}
@@ -73,7 +77,7 @@ export default function EditorPage() {
             />
           </div>
           {isClient && totalCartItems > 0 && (
-            <div className='fixed w-full top-[85vh] lg:top-[85vh] right-0 px-4 lg:right-[5vw] flex justify-end'>
+            <div className='fixed md:w-fit w-full top-[85vh] sm:top-[87.5vh] lg:top-[90vh] right-0 px-4 lg:right-[5vw] flex justify-end'>
               <div className='flex gap-6 w-full border-[1px] border-gray-200 lg:w-fit items-center p-4 bg-white/10 justify-between glass-card bg-opacity-50 shadow-xl rounded-xl'>
                 <div className='flex gap-2 items-center'>
                   <p className='text-6xl font-bold'>{totalCartItems}</p>

@@ -16,12 +16,12 @@ export const resolveENSProfile = async (address: `0x${string}`) => {
     return {
       name: resolvedName,
       // name: address.toLowerCase() === ensAddress?.toLowerCase() ? resolvedName : null,
-      avatar: response.ok ? avatarUrl : undefined
+      avatar: response.ok ? avatarUrl : null
     }
   } catch (e: any) {
     return {
       name: resolvedName ?? null,
-      avatar: undefined
+      avatar: null
     }
   }
 }

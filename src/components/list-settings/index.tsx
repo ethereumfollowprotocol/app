@@ -15,6 +15,7 @@ import { PrimaryButton } from '#/components/primary-button'
 import type { ProfileDetailsResponse } from '#/types/requests'
 
 interface ListSettingsProps {
+  showSingleList?: boolean
   selectedList: number
   lists?: number[]
   isSaving: boolean
@@ -24,6 +25,7 @@ interface ListSettingsProps {
 }
 
 const ListSettings: React.FC<ListSettingsProps> = ({
+  showSingleList,
   selectedList,
   isSaving,
   onClose,
@@ -100,7 +102,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
               <h3 className='text-4xl sm:text-5xl font-semibold'>
                 {t('list')} #{currentList}
               </h3>
-              {(lists?.length || 0) > 1 && (
+              {(lists?.length || 0) > 1 && !showSingleList && (
                 <Image
                   src={ArrowDown}
                   alt='Open list storage location chains'
@@ -108,7 +110,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
                 />
               )}
             </div>
-            {(lists?.length || 0) > 1 && listsDropdownOpen && (
+            {(lists?.length || 0) > 1 && listsDropdownOpen && !showSingleList && (
               <div className='absolute top-14 flex bg-white/90 flex-col rounded-xl w-full'>
                 {lists?.map(item => (
                   <div

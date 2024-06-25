@@ -21,7 +21,7 @@
     "follows you": "Ti sledi",
     "profile error": "Uporabnik ne obstaja",
     "connect wallet": "Poveži denarnico za ogled",
-    "not primary list": "Ni glavni seznam"
+    "not primary list": "Ni Glavni Seznam"
   },
   "follow btn": {
     "Follow": "Sledi",
@@ -29,6 +29,7 @@
     "Unfollow": "Ne Sledi",
     "Blocked": "Blockiran",
     "Block": "Blokiraj",
-    "Unblock": "Odblokiraj"
+    "Unblock": "Odblokiraj",
+    "not manager": "Nisi Upravitelj tega seznama."
   }
 }

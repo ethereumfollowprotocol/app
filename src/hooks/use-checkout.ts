@@ -10,7 +10,7 @@ import {
 import { useRouter } from 'next/navigation'
 import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useState } from 'react'
-import { useChainId, useChains, useSwitchChain, useWalletClient } from 'wagmi'
+import { useAccount, useChainId, useChains, useSwitchChain, useWalletClient } from 'wagmi'
 
 import { useCart } from '#/contexts/cart-context'
 import { Step } from '#/components/checkout/types'
@@ -18,6 +18,7 @@ import type { ChainWithDetails } from '#/lib/wagmi'
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import { useMintEFP } from './efp-actions/use-mint-efp'
 import { rpcProviders } from '#/lib/constants/providers'
+import type { FollowingResponse } from '#/types/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { extractAddressAndTag, isTagListOp } from '#/utils/list-ops'
@@ -33,15 +34,24 @@ const useCheckout = () => {
     currentActionIndex,
     executeActionByIndex
   } = useActions()
+  const {
+    profile,
+    refetchLists,
+    selectedList,
+    refetchProfile,
+    refetchFollowing,
+    setIsRefetchingProfile,
+    setIsRefetchingFollowing
+  } = useEFPProfile()
   const chains = useChains()
   const router = useRouter()
   const currentChainId = useChainId()
   const queryClient = useQueryClient()
   const { switchChain } = useSwitchChain()
+  const { address: userAddress } = useAccount()
   const { data: walletClient } = useWalletClient()
   const { totalCartItems, cartItems, resetCart } = useCart()
   const { mint, nonce: mintNonce, listHasBeenMinted } = useMintEFP()
-  const { profile, refetchFollowing, refetchProfile, selectedList, refetchLists } = useEFPProfile()
 
   // get contract for selected chain to pull list storage location from
   const listRegistryContract = getContract({
@@ -217,13 +227,26 @@ const useCheckout = () => {
   }, [moveToNextAction, executeActionByIndex, getRequiredChain, currentChainId, currentActionIndex])
 
   const onFinish = useCallback(() => {
+    setIsRefetchingProfile(true)
+    setIsRefetchingFollowing(true)
     queryClient.invalidateQueries({ queryKey: ['follow state'] })
 
     resetCart()
     resetActions()
 
-    if (selectedList === undefined) refetchLists()
+    if (listHasBeenMinted || selectedList === undefined) refetchLists()
     else {
+      queryClient.setQueryData(
+        ['following', userAddress, selectedList],
+        (prev: {
+          pages: FollowingResponse[][]
+          pageParams: number[]
+        }) => ({
+          pages: prev.pages.slice(0, 1),
+          pageParams: prev.pageParams.slice(0, 1)
+        })
+      )
+
       refetchProfile()
       refetchFollowing()
     }

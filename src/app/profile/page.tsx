@@ -7,12 +7,12 @@ import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import { PROFILE_TABS } from '#/lib/constants'
 import type { ProfileTabType } from '#/types/common'
+import BlockedMuted from '#/components/blocked-muted'
 import ListSettings from '../../components/list-settings'
 import SettingsIcon from 'public/assets/icons/settings.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { UserProfileCard } from '#/components/user-profile-card'
 import { UserProfilePageTable } from '#/components/profile-page-table'
-import BlockedMuted from '#/components/blocked-muted'
 
 export default function ProfilePage() {
   const [isSaving, setIsSaving] = useState(false)
@@ -47,6 +47,8 @@ export default function ProfilePage() {
     followersIsLoading,
     fetchMoreFollowers,
     fetchMoreFollowing,
+    isEndOfFollowers,
+    isEndOfFollowing,
     isFetchingMoreFollowers,
     isFetchingMoreFollowing
   } = useEFPProfile()
@@ -62,6 +64,7 @@ export default function ProfilePage() {
         toggleSelectedTags={toggleTag}
         sort={followingSort}
         setSort={setFollowingSort}
+        isEndOfResults={isEndOfFollowing}
         isFetchingMore={isFetchingMoreFollowing}
         fetchMore={() => fetchMoreFollowing()}
         canEditTags={roles?.isManager}
@@ -76,6 +79,7 @@ export default function ProfilePage() {
         toggleSelectedTags={toggleTag}
         sort={followersSort}
         setSort={setFollowersSort}
+        isEndOfResults={isEndOfFollowers}
         isFetchingMore={isFetchingMoreFollowers}
         fetchMore={() => fetchMoreFollowers()}
         title='followers'
@@ -143,6 +147,7 @@ export default function ProfilePage() {
             toggleSelectedTags={toggleTag}
             sort={followingSort}
             setSort={setFollowingSort}
+            isEndOfResults={isEndOfFollowing}
             isFetchingMore={isFetchingMoreFollowing}
             fetchMore={() => fetchMoreFollowing()}
             canEditTags={roles?.isManager}
@@ -155,6 +160,7 @@ export default function ProfilePage() {
             toggleSelectedTags={toggleTag}
             sort={followersSort}
             setSort={setFollowersSort}
+            isEndOfResults={isEndOfFollowers}
             isFetchingMore={isFetchingMoreFollowers}
             fetchMore={() => fetchMoreFollowers()}
             title='followers'

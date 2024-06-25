@@ -1,6 +1,8 @@
+import { toast } from 'sonner'
 import { useMemo } from 'react'
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
+import { useTranslation } from 'react-i18next'
 
 import {
   isTagListOp,
@@ -49,6 +51,7 @@ export const useFollowButton = ({ address }: { address: Address }) => {
     address,
     type: 'followings'
   })
+  const { t } = useTranslation('common', { keyPrefix: 'follow btn' })
   const { hasListOpAddRecord, hasListOpRemoveRecord, addCartItem, removeCartItem, cartItems } =
     useCart()
 
@@ -95,7 +98,7 @@ export const useFollowButton = ({ address }: { address: Address }) => {
 
   const handleAction = () => {
     // cannot perform list operations if not list manager
-    if (!roles?.isManager) return
+    if (!roles?.isManager) return toast.error(t('not manager'))
 
     // remove address and tags for this address from cart if it's a pending follow
     if (isPendingFollow) {

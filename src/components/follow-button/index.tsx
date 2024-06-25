@@ -74,7 +74,7 @@ interface FollowButtonProps {
   className?: string
 }
 
-export function FollowButton({ address, className = '', ...props }: FollowButtonProps) {
+export const FollowButton = ({ address, className = '', ...props }: FollowButtonProps) => {
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
   const { t } = useTranslation('common', { keyPrefix: 'follow btn' })
@@ -91,7 +91,7 @@ export function FollowButton({ address, className = '', ...props }: FollowButton
       className={clsx([
         theme[buttonState].bg,
         theme[buttonState].text,
-        buttonState === 'Following' && 'border-2 border-darkGrey',
+        buttonState === 'Following' && 'border-2 border-gray-300',
         'rounded-lg text-sm flex items-center gap-1.5 justify-center font-bold',
         'w-[107px] h-[37px] px-2 py-1.5', // Fixed width for consistent layout
         className
