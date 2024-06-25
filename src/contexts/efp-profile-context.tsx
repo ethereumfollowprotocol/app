@@ -112,10 +112,6 @@ type EFPProfileContextType = {
   toggleTag: (tab: ProfileTableTitleType, tag: string) => void
   setFollowingSort: (option: FollowSortType) => void
   setFollowersSort: (option: FollowSortType) => void
-  listsError: Error | null
-  profileError: Error | null
-  followersError: Error | null
-  followingError: Error | null
   setIsRefetchingProfile: (state: boolean) => void
   setIsRefetchingFollowing: (state: boolean) => void
 }
@@ -382,10 +378,6 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         setFollowersSort: (option: FollowSortType) => {
           setFollowersSort(option)
         },
-        listsError,
-        profileError,
-        followersError,
-        followingError,
         setIsRefetchingProfile,
         setIsRefetchingFollowing
       }}
