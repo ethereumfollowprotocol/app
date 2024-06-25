@@ -37,6 +37,8 @@ export default function ProfilePage() {
     followersIsLoading,
     fetchMoreFollowers,
     fetchMoreFollowing,
+    isEndOfFollowers,
+    isEndOfFollowing,
     isFetchingMoreFollowers,
     isFetchingMoreFollowing
   } = useEFPProfile()
@@ -47,6 +49,7 @@ export default function ProfilePage() {
         isLoading={followingIsLoading}
         following={following}
         followers={followers}
+        isEndOfResults={isEndOfFollowing}
         isFetchingMore={isFetchingMoreFollowing}
         fetchMore={() => fetchMoreFollowing()}
         canEditTags={roles?.isManager}
@@ -59,6 +62,7 @@ export default function ProfilePage() {
         isLoading={followersIsLoading}
         following={following}
         followers={followers}
+        isEndOfResults={isEndOfFollowers}
         isFetchingMore={isFetchingMoreFollowers}
         fetchMore={() => fetchMoreFollowers()}
         title='followers'
@@ -106,6 +110,7 @@ export default function ProfilePage() {
             isLoading={followingIsLoading}
             following={following}
             followers={followers}
+            isEndOfResults={isEndOfFollowing}
             isFetchingMore={isFetchingMoreFollowing}
             fetchMore={() => fetchMoreFollowing()}
             canEditTags={roles?.isManager}
@@ -116,6 +121,7 @@ export default function ProfilePage() {
             isLoading={followersIsLoading}
             following={following}
             followers={followers}
+            isEndOfResults={isEndOfFollowers}
             isFetchingMore={isFetchingMoreFollowers}
             fetchMore={() => fetchMoreFollowers()}
             title='followers'

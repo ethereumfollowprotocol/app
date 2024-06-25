@@ -29,6 +29,7 @@ const ibmPlexMonoFont = IBM_Plex_Mono({
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   const initialState = cookieToInitialState(wagmiConfig, headers().get('cookie'))
+
   return (
     <html lang='en' className={clsx([inteFont.variable, ibmPlexMonoFont.variable, 'light'])}>
       <HeadTag />
@@ -53,7 +54,7 @@ const HeadTag = () => {
   return (
     <head>
       <meta charSet='utf-8' />
-      <meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no' />
+      <meta name='viewport' content='width=device-width, initial-scale=1' />
       <title>{APP_NAME}</title>
       <meta name='description' content={APP_DESCRIPTION} />
       <link rel='manifest' href='/site.webmanifest' crossOrigin='use-credentials' />

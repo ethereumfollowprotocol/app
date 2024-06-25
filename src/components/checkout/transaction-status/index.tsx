@@ -93,7 +93,7 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
         {showFinishButton && (
           <PrimaryButton
             label={tBtn('finish')}
-            onClick={onFinish}
+            onClick={() => onFinish()}
             className='text-lg w-32 h-12'
             disabled={finishButtonIsDisabled}
           />

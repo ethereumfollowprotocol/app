@@ -48,6 +48,8 @@ type EFPProfileContextType = {
   followingIsLoading: boolean
   isFetchingMoreFollowers: boolean
   isFetchingMoreFollowing: boolean
+  isEndOfFollowers: boolean
+  isEndOfFollowing: boolean
   fetchMoreFollowers: (options?: FetchNextPageOptions) => Promise<
     InfiniteQueryObserverResult<
       InfiniteData<
@@ -106,6 +108,8 @@ type EFPProfileContextType = {
   profileError: Error | null
   followersError: Error | null
   followingError: Error | null
+  setIsRefetchingProfile: (state: boolean) => void
+  setIsRefetchingFollowing: (state: boolean) => void
 }
 
 type Props = {
@@ -115,6 +119,8 @@ type Props = {
 const EFPProfileContext = createContext<EFPProfileContextType | undefined>(undefined)
 
 export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
+  const [isRefetchingProfile, setIsRefetchingProfile] = useState(false)
+  const [isRefetchingFollowing, setIsRefetchingFollowing] = useState(false)
   // selectedList = undefined will mean that the connected user can create a new list
   const [selectedList, setSelectedList] = useState<number>()
   const [followingTags, setFollowingTags] = useState<string[]>([])
@@ -157,14 +163,21 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   } = useQuery({
     queryKey: ['profile', userAddress, selectedList],
     queryFn: async () => {
-      if (!userAddress) return null
+      if (!userAddress) {
+        setIsRefetchingProfile(false)
+        return null
+      }
 
       const fetchedProfile = await fetchProfileDetails(userAddress, selectedList)
+
+      setIsRefetchingProfile(false)
+
       return fetchedProfile
     },
     refetchInterval: 60000
   })
 
+  const [isEndOfFollowers, setIsEndOfFollowers] = useState(false)
   // Fetch followings depending on the selected list
   const {
     data: fetchedFollowers,
@@ -176,11 +189,14 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   } = useInfiniteQuery({
     queryKey: ['followers', userAddress, selectedList],
     queryFn: async ({ pageParam = 0 }) => {
-      if (!userAddress)
+      setIsEndOfFollowers(true)
+
+      if (!userAddress) {
         return {
           followers: [],
           nextPageParam: pageParam
         }
+      }
 
       const fetchedFollowers = await fetchProfileFollowers({
         addressOrName: userAddress,
@@ -188,6 +204,9 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         limit: FETCH_LIMIT_PARAM,
         pageParam
       })
+
+      if (fetchedFollowers.followers.length === 0) setIsEndOfFollowers(true)
+
       return fetchedFollowers
     },
     initialPageParam: 0,
@@ -195,6 +214,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     refetchInterval: 60000
   })
 
+  const [isEndOfFollowing, setIsEndOfFollowing] = useState(false)
   // fetch followers depending on list for the user of the list you are viewing or show connected address followers if no list is selected
   const {
     data: fetchedFollowing,
@@ -206,19 +226,27 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   } = useInfiniteQuery({
     queryKey: ['following', userAddress, selectedList],
     queryFn: async ({ pageParam = 0 }) => {
-      if (!(userAddress && selectedList))
+      setIsEndOfFollowing(false)
+
+      if (!(userAddress && selectedList)) {
+        setIsRefetchingFollowing(false)
         return {
           following: [],
           nextPageParam: pageParam
         }
+      }
 
-      const fetchedFollowers = await fetchProfileFollowing({
+      const fetchedFollowing = await fetchProfileFollowing({
         addressOrName: userAddress,
         list: selectedList,
         limit: FETCH_LIMIT_PARAM,
         pageParam
       })
-      return fetchedFollowers
+
+      if (fetchedFollowing?.following?.length === 0) setIsEndOfFollowing(true)
+      setIsRefetchingFollowing(false)
+
+      return fetchedFollowing
     },
     initialPageParam: 0,
     getNextPageParam: lastPage => lastPage.nextPageParam
@@ -303,11 +331,13 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         following,
         roles,
         listsIsLoading,
-        profileIsLoading,
-        followersIsLoading,
-        followingIsLoading,
-        isFetchingMoreFollowers,
-        isFetchingMoreFollowing,
+        profileIsLoading: isRefetchingProfile || profileIsLoading,
+        followingIsLoading: isRefetchingFollowing || followingIsLoading,
+        followersIsLoading: followersIsLoading,
+        isFetchingMoreFollowers: !isEndOfFollowers && isFetchingMoreFollowers,
+        isFetchingMoreFollowing: !isEndOfFollowing && isFetchingMoreFollowing,
+        isEndOfFollowers,
+        isEndOfFollowing,
         fetchMoreFollowers,
         fetchMoreFollowing,
         refetchLists,
@@ -329,7 +359,9 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         listsError,
         profileError,
         followersError,
-        followingError
+        followingError,
+        setIsRefetchingProfile,
+        setIsRefetchingFollowing
       }}
     >
       {children}

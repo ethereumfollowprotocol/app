@@ -18,6 +18,7 @@ export function UserProfilePageTable({
   customClass,
   isLoading,
   isFetchingMore,
+  isEndOfResults,
   followers,
   following,
   fetchMore,
@@ -26,6 +27,7 @@ export function UserProfilePageTable({
   title: 'following' | 'followers'
   customClass?: string
   isLoading: boolean
+  isEndOfResults?: boolean
   isFetchingMore: boolean
   followers: FollowerResponse[]
   following: FollowingResponse[]
@@ -68,7 +70,7 @@ export function UserProfilePageTable({
   const [loadMoreRef, entry] = useIntersectionObserver()
 
   useEffect(() => {
-    if (!entry?.isIntersecting) return
+    if (!entry?.isIntersecting || isEndOfResults) return
 
     if (
       !(isLoading || isFetchingMore) &&
@@ -114,7 +116,8 @@ export function UserProfilePageTable({
         </div>
       )}
       <FollowList
-        isLoading={isLoading || isFetchingMore}
+        isLoading={isLoading}
+        isLoadingMore={isFetchingMore}
         loadingRows={10}
         listClassName='gap-2 rounded-xl'
         listItemClassName='rounded-xl hover:bg-white/50 px-0 py-2 sm:p-2'

@@ -48,13 +48,20 @@ const useSaveListSettings = ({
 }: SaveListSettingsParams) => {
   const [currentStep, setCurrentStep] = useState(Step.InitiateTransactions)
 
+  const {
+    refetchLists,
+    refetchRoles,
+    refetchProfile,
+    refetchFollowing,
+    refetchFollowers,
+    setIsRefetchingProfile,
+    setIsRefetchingFollowing
+  } = useEFPProfile()
   const { resetCart } = useCart()
   const currentChainId = useChainId()
   const { switchChain } = useSwitchChain()
   const { data: walletClient } = useWalletClient()
   const { t } = useTranslation('profile', { keyPrefix: 'list settings' })
-  const { refetchProfile, refetchFollowing, refetchRoles, refetchLists, refetchFollowers } =
-    useEFPProfile()
   const { addActions, actions, executeActionByIndex, resetActions, moveToNextAction } = useActions()
 
   const setListStorageLocationTx = useCallback(async () => {
@@ -217,6 +224,9 @@ const useSaveListSettings = ({
   }, [moveToNextAction, executeActionByIndex, currentChainId])
 
   const onFinish = useCallback(() => {
+    setIsRefetchingProfile(true)
+    setIsRefetchingFollowing(true)
+
     if (changedValues.manager) resetCart()
 
     // Refetch all related data

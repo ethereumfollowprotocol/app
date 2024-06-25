@@ -40,6 +40,8 @@ export default function UserPage({ params }: Props) {
     followingIsLoading,
     fetchMoreFollowers,
     fetchMoreFollowing,
+    isEndOfFollowing,
+    isEndOfFollowers,
     isFetchingMoreFollowers,
     isFetchingMoreFollowing
   } = useUser(user)
@@ -50,6 +52,7 @@ export default function UserPage({ params }: Props) {
         isLoading={followingIsLoading}
         following={following}
         followers={followers}
+        isEndOfResults={isEndOfFollowing}
         isFetchingMore={isFetchingMoreFollowing}
         fetchMore={() => fetchMoreFollowing()}
         title='following'
@@ -65,6 +68,7 @@ export default function UserPage({ params }: Props) {
         isLoading={followersIsLoading}
         following={following}
         followers={followers}
+        isEndOfResults={isEndOfFollowers}
         isFetchingMore={isFetchingMoreFollowers}
         fetchMore={() => fetchMoreFollowers()}
         title='followers'
@@ -125,6 +129,7 @@ export default function UserPage({ params }: Props) {
             isLoading={followingIsLoading}
             following={following}
             followers={followers}
+            isEndOfResults={isEndOfFollowing}
             isFetchingMore={isFetchingMoreFollowing}
             fetchMore={() => fetchMoreFollowing()}
             canEditTags={
@@ -138,6 +143,7 @@ export default function UserPage({ params }: Props) {
             isLoading={followersIsLoading}
             following={following}
             followers={followers}
+            isEndOfResults={isEndOfFollowers}
             isFetchingMore={isFetchingMoreFollowers}
             fetchMore={() => fetchMoreFollowers()}
             title='followers'

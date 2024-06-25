@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { isAddress } from 'viem'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 
@@ -34,6 +35,7 @@ const useUser = (user: string) => {
     staleTime: 3600000
   })
 
+  const [isEndOfFollowers, setIsEndOfFollowers] = useState(false)
   const {
     data: fetchedFollowers,
     isLoading: followersIsLoading,
@@ -42,6 +44,8 @@ const useUser = (user: string) => {
   } = useInfiniteQuery({
     queryKey: ['followers', user],
     queryFn: async ({ pageParam = 0 }) => {
+      setIsEndOfFollowers(false)
+
       if (!user)
         return {
           followers: [],
@@ -54,6 +58,9 @@ const useUser = (user: string) => {
         limit: FETCH_LIMIT_PARAM,
         pageParam
       })
+
+      if (fetchedFollowers.followers.length === 0) setIsEndOfFollowers(true)
+
       return fetchedFollowers
     },
     initialPageParam: 0,
@@ -61,6 +68,7 @@ const useUser = (user: string) => {
     staleTime: 120000
   })
 
+  const [isEndOfFollowing, setIsEndOfFollowing] = useState(false)
   const {
     data: fetchedFollowing,
     isLoading: followingIsLoading,
@@ -69,19 +77,24 @@ const useUser = (user: string) => {
   } = useInfiniteQuery({
     queryKey: ['following', user],
     queryFn: async ({ pageParam = 0 }) => {
+      setIsEndOfFollowing(false)
+
       if (!user)
         return {
           following: [],
           nextPageParam: pageParam
         }
 
-      const fetchedFollowers = await fetchProfileFollowing({
+      const fetchedFollowing = await fetchProfileFollowing({
         addressOrName: user,
         list: listNum,
         limit: FETCH_LIMIT_PARAM,
         pageParam
       })
-      return fetchedFollowers
+
+      if (fetchedFollowing.following.length === 0) setIsEndOfFollowing(true)
+
+      return fetchedFollowing
     },
     initialPageParam: 0,
     getNextPageParam: lastPage => lastPage.nextPageParam,
@@ -114,6 +127,8 @@ const useUser = (user: string) => {
     followingIsLoading,
     fetchMoreFollowers,
     fetchMoreFollowing,
+    isEndOfFollowing,
+    isEndOfFollowers,
     isFetchingMoreFollowers,
     isFetchingMoreFollowing
   }
