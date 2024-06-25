@@ -18,12 +18,12 @@ import type { ChainWithDetails } from '#/lib/wagmi'
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import { useMintEFP } from './efp-actions/use-mint-efp'
 import { rpcProviders } from '#/lib/constants/providers'
+import type { FollowingResponse } from '#/types/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { extractAddressAndTag, isTagListOp } from '#/utils/list-ops'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
-import type { FollowingResponse } from '#/types/requests'
 
 const useCheckout = () => {
   const {
