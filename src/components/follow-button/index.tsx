@@ -13,61 +13,75 @@ import { type FollowButtonState, useFollowButton } from './use-follow-button'
 const theme = {
   Follow: {
     bg: 'bg-kournikova-300',
-    text: 'text-zinc-800'
+    text: 'text-zinc-800',
+    border: 'border-0 '
   },
   'Pending Following': {
     bg: 'bg-addition',
-    text: 'text-zinc-800'
+    text: 'text-zinc-800',
+    border: 'border-0 '
   },
   Following: {
     bg: 'bg-white',
-    text: 'text-gray-900'
+    text: 'text-gray-900',
+    border: 'border-2 border-gray-200'
   },
   'Pending Unfollow': {
     bg: 'bg-deletion',
-    text: 'text-gray-900'
+    text: 'text-gray-900',
+    border: 'border-0 '
   },
   Unfollow: {
     bg: 'bg-deletion',
-    text: 'text-gray-900'
+    text: 'text-gray-900',
+    border: 'border-0 '
   },
   Subscribe: {
     bg: 'bg-kournikova-300',
-    text: 'text-zinc-800'
+    text: 'text-zinc-800',
+    border: 'border-0 '
   },
   Subscribed: {
     bg: 'bg-addition',
-    text: 'text-zinc-800'
+    text: 'text-zinc-800',
+    border: 'border-2 border-gray-200'
   },
   Unsubscribe: {
     bg: 'bg-deletion',
-    text: 'text-gray-900'
+    text: 'text-gray-900',
+    border: 'border-0 '
   },
   Block: {
     bg: 'bg-kournikova-300',
-    text: 'text-zinc-800'
+    text: 'text-zinc-800',
+    border: 'border-0 '
   },
   Blocked: {
-    bg: 'bg-gray-200',
-    text: 'text-salmon-500'
+    bg: 'bg-white',
+    text: 'deletion',
+    border: 'border-2 border-red-500'
   },
   Unblock: {
     bg: 'bg-deletion',
-    text: 'text-zinc-800'
+    text: 'text-zinc-800',
+    border: 'border-0 '
   },
   Mute: {
     bg: 'bg-kournikova-300',
-    text: 'text-salmon-500'
+    text: 'text-deletion',
+    border: 'border-0 '
   },
   Muted: {
-    bg: 'bg-gray-200',
-    text: 'text-salmon-500'
+    bg: 'bg-white',
+    text: 'text-deletion',
+    border: 'border-2 border-red-500'
   },
   Unmute: {
     bg: 'bg-deletion',
-    text: 'text-red-700'
+    text: 'text-red-700',
+    border: 'border-0 '
   }
-} satisfies Record<FollowButtonState, { bg: string; text: string }>
+} satisfies Record<FollowButtonState, { bg: string; text: string; border: string }>
 
 interface FollowButtonProps {
   address: Address
@@ -91,7 +105,7 @@ export const FollowButton = ({ address, className = '', ...props }: FollowButton
       className={clsx([
         theme[buttonState].bg,
         theme[buttonState].text,
-        buttonState === 'Following' && 'border-2 border-gray-300',
+        theme[buttonState].border,
         'rounded-lg text-sm flex items-center gap-1.5 justify-center font-bold',
         'w-[107px] h-[37px] px-2 py-1.5', // Fixed width for consistent layout
         className

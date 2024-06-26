@@ -52,9 +52,32 @@ export const useFollowButton = ({ address }: { address: Address }) => {
     type: 'followings'
   })
   const { t } = useTranslation('common', { keyPrefix: 'follow btn' })
-  const { hasListOpAddRecord, hasListOpRemoveRecord, addCartItem, removeCartItem, cartItems } =
-    useCart()
+  const {
+    hasListOpAddRecord,
+    hasListOpRemoveRecord,
+    hasListOpAddTag,
+    hasListOpRemoveTag,
+    addCartItem,
+    removeCartItem,
+    cartItems
+  } = useCart()
 
+  const isPendingBlock = useMemo(
+    () => hasListOpAddTag({ address, tag: 'block' }),
+    [hasListOpAddTag, address]
+  )
+  const isPendingUnblock = useMemo(
+    () => hasListOpRemoveTag({ address, tag: 'block' }),
+    [hasListOpRemoveTag, address]
+  )
+  const isPendingMute = useMemo(
+    () => hasListOpAddTag({ address, tag: 'mute' }),
+    [hasListOpAddTag, address]
+  )
+  const isPendingUnmute = useMemo(
+    () => hasListOpRemoveTag({ address, tag: 'mute' }),
+    [hasListOpRemoveTag, address]
+  )
   const isPendingFollow = useMemo(() => hasListOpAddRecord(address), [hasListOpAddRecord, address])
   const isPendingUnfollow = useMemo(
     () => hasListOpRemoveRecord(address),
