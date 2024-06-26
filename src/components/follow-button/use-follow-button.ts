@@ -22,7 +22,8 @@ export type FollowButtonState =
   | 'Mute'
   | 'Muted'
   | 'Pending Following'
-  | 'Pending Unfollow'
+  | 'Pending Block'
+  | 'Pending Mute'
   | 'Subscribe'
   | 'Subscribed'
   | 'Unblock'
@@ -64,19 +65,19 @@ export const useFollowButton = ({ address }: { address: Address }) => {
 
   const isPendingBlock = useMemo(
     () => hasListOpAddTag({ address, tag: 'block' }),
-    [hasListOpAddTag, address]
+    [hasListOpAddTag, address, cartItems]
   )
   const isPendingUnblock = useMemo(
     () => hasListOpRemoveTag({ address, tag: 'block' }),
-    [hasListOpRemoveTag, address]
+    [hasListOpRemoveTag, address, cartItems]
   )
   const isPendingMute = useMemo(
     () => hasListOpAddTag({ address, tag: 'mute' }),
-    [hasListOpAddTag, address]
+    [hasListOpAddTag, address, cartItems]
   )
   const isPendingUnmute = useMemo(
     () => hasListOpRemoveTag({ address, tag: 'mute' }),
-    [hasListOpRemoveTag, address]
+    [hasListOpRemoveTag, address, cartItems]
   )
   const isPendingFollow = useMemo(() => hasListOpAddRecord(address), [hasListOpAddRecord, address])
   const isPendingUnfollow = useMemo(
@@ -87,8 +88,13 @@ export const useFollowButton = ({ address }: { address: Address }) => {
   const buttonState = useMemo<FollowButtonState>(() => {
     if (!userAddress) return 'Follow'
 
+    if (isPendingBlock) return 'Pending Block'
+    if (isPendingUnblock) return 'Unblock'
+    if (isPendingMute) return 'Pending Mute'
+    if (isPendingUnmute) return 'Unmute'
     if (isPendingFollow) return 'Pending Following'
-    if (isPendingUnfollow) return 'Pending Unfollow'
+    if (isPendingUnfollow) return 'Unfollow'
+
     switch (followState) {
       case 'follows':
         return 'Following'
@@ -104,6 +110,10 @@ export const useFollowButton = ({ address }: { address: Address }) => {
   const buttonText = useMemo<FollowButtonText>(() => {
     if (!userAddress) return 'Follow'
 
+    if (isPendingBlock) return 'Block'
+    if (isPendingUnblock) return 'Unblock'
+    if (isPendingMute) return 'Mute'
+    if (isPendingUnmute) return 'Unmute'
     if (isPendingFollow) return 'Following'
     if (isPendingUnfollow) return 'Unfollow'
 

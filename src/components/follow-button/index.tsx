@@ -17,19 +17,14 @@ const theme = {
     border: 'border-0 '
   },
   'Pending Following': {
-    bg: 'bg-addition',
-    text: 'text-zinc-800',
-    border: 'border-0 '
+    bg: 'bg-white',
+    text: 'text-gray-900',
+    border: 'border-2 border-gray-200'
   },
   Following: {
     bg: 'bg-white',
     text: 'text-gray-900',
     border: 'border-2 border-gray-200'
-  },
-  'Pending Unfollow': {
-    bg: 'bg-deletion',
-    text: 'text-gray-900',
-    border: 'border-0 '
   },
   Unfollow: {
     bg: 'bg-deletion',
@@ -56,6 +51,11 @@ const theme = {
     text: 'text-zinc-800',
     border: 'border-0 '
   },
+  'Pending Block': {
+    bg: 'bg-white',
+    text: 'deletion',
+    border: 'border-2 border-red-500'
+  },
   Blocked: {
     bg: 'bg-white',
     text: 'deletion',
@@ -70,6 +70,11 @@ const theme = {
     bg: 'bg-kournikova-300',
     text: 'text-deletion',
     border: 'border-0 '
+  },
+  'Pending Mute': {
+    bg: 'bg-white',
+    text: 'deletion',
+    border: 'border-2 border-red-500'
   },
   Muted: {
     bg: 'bg-white',
