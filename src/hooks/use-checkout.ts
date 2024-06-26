@@ -147,16 +147,6 @@ const useCheckout = () => {
       splitListOps.push(cartItems.slice(i, i + splitSize))
     }
 
-    // Prepare and set actions when selectedChain is updated and not null
-    // const cartItemAction: Action = {
-    //   id: EFPActionType.UpdateEFPList, // Unique identifier for the action
-    //   type: EFPActionType.UpdateEFPList,
-    //   label: `${totalCartItems} List ops`,
-    //   chainId,
-    //   execute: listOpTx,
-    //   isPendingConfirmation: false
-    // }
-
     const cartItemActions: Action[] = splitListOps.map((listOps, i) => ({
       id: `${EFPActionType.UpdateEFPList} ${i}`, // Unique identifier for the action
       type: EFPActionType.UpdateEFPList,
