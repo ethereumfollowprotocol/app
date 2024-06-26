@@ -12,7 +12,6 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useState } from 'react'
 import { useAccount, useChainId, useChains, useSwitchChain, useWalletClient } from 'wagmi'
 
-import { useCart } from '#/contexts/cart-context'
 import { Step } from '#/components/checkout/types'
 import type { ChainWithDetails } from '#/lib/wagmi'
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
@@ -20,6 +19,7 @@ import { useMintEFP } from './efp-actions/use-mint-efp'
 import { rpcProviders } from '#/lib/constants/providers'
 import type { FollowingResponse } from '#/types/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
+import { useCart, type CartItem } from '#/contexts/cart-context'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { extractAddressAndTag, isTagListOp } from '#/utils/list-ops'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
@@ -72,57 +72,60 @@ const useCheckout = () => {
   const [selectedChainId, setSelectedChainId] = useState<number>(DEFAULT_CHAIN.id)
   const selectedChain = chains.find(chain => chain.id === selectedChainId) as ChainWithDetails
 
-  const listOpTx = useCallback(async () => {
-    // Get list storage location via token ID
-    const listStorageLocation = selectedList
-      ? await listRegistryContract.read.getListStorageLocation([BigInt(selectedList)])
-      : null
+  const listOpTx = useCallback(
+    async (items: CartItem[]) => {
+      // Get list storage location via token ID
+      const listStorageLocation = selectedList
+        ? await listRegistryContract.read.getListStorageLocation([BigInt(selectedList)])
+        : null
 
-    // Get slot, chain, and List Records contract from storage location or use options from the mint
-    const chainId = listStorageLocation
-      ? fromHex(`0x${listStorageLocation.slice(64, 70)}`, 'number')
-      : selectedChain?.id
-    const fetchedChain = chains.find(chain => chain.id === chainId)
+      // Get slot, chain, and List Records contract from storage location or use options from the mint
+      const chainId = listStorageLocation
+        ? fromHex(`0x${listStorageLocation.slice(64, 70)}`, 'number')
+        : selectedChain?.id
+      const fetchedChain = chains.find(chain => chain.id === chainId)
 
-    const nonce = listStorageLocation ? BigInt(`0x${listStorageLocation.slice(-64)}`) : mintNonce
-    const ListRecordsContract = listStorageLocation
-      ? (`0x${listStorageLocation.slice(70, 110)}` as Address)
-      : selectedChainId
-        ? (ListRecordContracts[selectedChainId] as Address)
-        : coreEfpContracts.EFPListRecords
+      const nonce = listStorageLocation ? BigInt(`0x${listStorageLocation.slice(-64)}`) : mintNonce
+      const ListRecordsContract = listStorageLocation
+        ? (`0x${listStorageLocation.slice(70, 110)}` as Address)
+        : selectedChainId
+          ? (ListRecordContracts[selectedChainId] as Address)
+          : coreEfpContracts.EFPListRecords
 
-    // format list operations
-    const operations = cartItems.map(item => {
-      // append mandatory types and data
-      const types = ['uint8', 'uint8', 'uint8', 'uint8', 'address']
-      const data: (string | number)[] = [item.listOp.version, item.listOp.opcode, 1, 1]
+      // format list operations
+      const operations = items.map(item => {
+        // append mandatory types and data
+        const types = ['uint8', 'uint8', 'uint8', 'uint8', 'address']
+        const data: (string | number)[] = [item.listOp.version, item.listOp.opcode, 1, 1]
 
-      if (item.listOp.opcode > 2 && isTagListOp(item.listOp)) {
-        // add 'bytes' type for the tag and address and tag to data
-        const addrrAndTag = extractAddressAndTag(item.listOp)
-        types.push('bytes')
-        data.push(...[addrrAndTag.address, toHex(addrrAndTag.tag)])
-      } else {
-        // add address to data
-        data.push(`0x${item.listOp.data.toString('hex')}`)
-      }
+        if (item.listOp.opcode > 2 && isTagListOp(item.listOp)) {
+          // add 'bytes' type for the tag and address and tag to data
+          const addrrAndTag = extractAddressAndTag(item.listOp)
+          types.push('bytes')
+          data.push(...[addrrAndTag.address, toHex(addrrAndTag.tag)])
+        } else {
+          // add address to data
+          data.push(`0x${item.listOp.data.toString('hex')}`)
+        }
 
-      // return encoded data into a single HEX string
-      return encodePacked(types, data)
-    })
+        // return encoded data into a single HEX string
+        return encodePacked(types, data)
+      })
 
-    // initiate  'applyListOps' transaction
-    const hash = await walletClient?.writeContract({
-      chain: fetchedChain,
-      address: ListRecordsContract,
-      abi: efpListRecordsAbi,
-      functionName: 'applyListOps',
-      args: [nonce, operations]
-    })
+      // initiate  'applyListOps' transaction
+      const hash = await walletClient?.writeContract({
+        chain: fetchedChain,
+        address: ListRecordsContract,
+        abi: efpListRecordsAbi,
+        functionName: 'applyListOps',
+        args: [nonce, operations]
+      })
 
-    // return transaction hash to enable following transaction status in transaction details component
-    return hash
-  }, [walletClient, selectedChain, selectedList])
+      // return transaction hash to enable following transaction status in transaction details component
+      return hash
+    },
+    [walletClient, selectedChain, selectedList]
+  )
 
   const setActions = useCallback(async () => {
     // getting the chain ID where the list operations will be performed (selected chain ID if EFP list minted before)
@@ -137,15 +140,31 @@ const useCheckout = () => {
 
     if (!chainId) return
 
-    // Prepare and set actions when selectedChain is updated and not null
-    const cartItemAction: Action = {
-      id: EFPActionType.UpdateEFPList, // Unique identifier for the action
-      type: EFPActionType.UpdateEFPList,
-      label: `${totalCartItems} List ops`,
-      chainId,
-      execute: listOpTx,
-      isPendingConfirmation: false
+    const splitListOps: CartItem[][] = []
+    const splitSize = 10
+
+    for (let i = 0; i < cartItems.length; i += splitSize) {
+      splitListOps.push(cartItems.slice(i, i + splitSize))
     }
+
+    // Prepare and set actions when selectedChain is updated and not null
+    // const cartItemAction: Action = {
+    //   id: EFPActionType.UpdateEFPList, // Unique identifier for the action
+    //   type: EFPActionType.UpdateEFPList,
+    //   label: `${totalCartItems} List ops`,
+    //   chainId,
+    //   execute: listOpTx,
+    //   isPendingConfirmation: false
+    // }
+
+    const cartItemActions: Action[] = splitListOps.map((listOps, i) => ({
+      id: `${EFPActionType.UpdateEFPList} ${i}`, // Unique identifier for the action
+      type: EFPActionType.UpdateEFPList,
+      label: `${listOps.length} List ops`,
+      chainId,
+      execute: async () => await listOpTx(listOps),
+      isPendingConfirmation: false
+    }))
 
     const createEFPListAction: Action = {
       id: EFPActionType.CreateEFPList, // Unique identifier for the action
@@ -158,7 +177,9 @@ const useCheckout = () => {
 
     // add Create list action if user doesn't have the EFP list yet
     const actionsToExecute =
-      selectedList || listHasBeenMinted ? [cartItemAction] : [createEFPListAction, cartItemAction]
+      selectedList || listHasBeenMinted
+        ? [...cartItemActions]
+        : [createEFPListAction, ...cartItemActions]
     addActions(actionsToExecute)
   }, [selectedChainId, totalCartItems, listOpTx])
 
