@@ -219,27 +219,29 @@ export function FollowListItemName({
                 </div>
               </div>
             )}
-            {displayedtags.map(tag => {
-              const addingTag = hasListOpAddTag({ address, tag })
-              const removingTag = hasListOpRemoveTag({ address, tag })
+            {displayedtags
+              .filter(tag => !['block', 'mute'].includes(tag))
+              .map(tag => {
+                const addingTag = hasListOpAddTag({ address, tag })
+                const removingTag = hasListOpRemoveTag({ address, tag })
 
-              return (
-                <button
-                  key={tag}
-                  className={`
+                return (
+                  <button
+                    key={tag}
+                    className={`
                     font-semibold py-1 px-2 max-w-[80%] sm:max-w-full sm:py-1.5 sm:px-3 truncate text-sm hover:opacity-80 rounded-full ${
                       addingTag ? 'bg-addition' : removingTag ? 'bg-deletion' : 'bg-gray-300'
                     }
                   `}
-                  onClick={() => {
-                    if (!canEditTags) return
-                    removeTag(tag)
-                  }}
-                >
-                  {tEditor(tag)}
-                </button>
-              )
-            })}
+                    onClick={() => {
+                      if (!canEditTags) return
+                      removeTag(tag)
+                    }}
+                  >
+                    {tEditor(tag)}
+                  </button>
+                )
+              })}
           </div>
         )}
       </div>

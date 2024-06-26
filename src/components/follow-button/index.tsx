@@ -10,7 +10,10 @@ import { useConnectModal } from '@rainbow-me/rainbowkit'
 import LoadingCell from '../loading-cell'
 import { type FollowButtonState, useFollowButton } from './use-follow-button'
 
-const theme = {
+const theme: Record<
+  FollowButtonState,
+  { bg: string; text: string; border: string; imageSrc?: string }
+> = {
   Follow: {
     bg: 'bg-kournikova-300',
     text: 'text-zinc-800',
@@ -19,7 +22,8 @@ const theme = {
   'Pending Following': {
     bg: 'bg-white',
     text: 'text-gray-900',
-    border: 'border-2 border-gray-200'
+    border:
+      'border-2 border-gray-200 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400'
   },
   Following: {
     bg: 'bg-white',
@@ -53,13 +57,16 @@ const theme = {
   },
   'Pending Block': {
     bg: 'bg-white',
-    text: 'deletion',
-    border: 'border-2 border-red-500'
+    text: 'text-red-500',
+    border:
+      'border-2 border-red-500 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400',
+    imageSrc: '/assets/mainnet-red.svg'
   },
   Blocked: {
     bg: 'bg-white',
-    text: 'deletion',
-    border: 'border-2 border-red-500'
+    text: 'text-red-500',
+    border: 'border-2 border-red-500',
+    imageSrc: '/assets/mainnet-red.svg'
   },
   Unblock: {
     bg: 'bg-deletion',
@@ -68,25 +75,28 @@ const theme = {
   },
   Mute: {
     bg: 'bg-kournikova-300',
-    text: 'text-deletion',
+    text: 'text-red-500',
     border: 'border-0 '
   },
   'Pending Mute': {
     bg: 'bg-white',
-    text: 'deletion',
-    border: 'border-2 border-red-500'
+    text: 'text-red-500',
+    border:
+      'border-2 border-red-500 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400',
+    imageSrc: '/assets/mainnet-red.svg'
   },
   Muted: {
     bg: 'bg-white',
-    text: 'text-deletion',
-    border: 'border-2 border-red-500'
+    text: 'text-red-500',
+    border: 'border-2 border-red-500',
+    imageSrc: '/assets/mainnet-red.svg'
   },
   Unmute: {
     bg: 'bg-deletion',
-    text: 'text-red-700',
+    text: 'text-zinc-800',
     border: 'border-0 '
   }
-} satisfies Record<FollowButtonState, { bg: string; text: string; border: string }>
+}
 
 interface FollowButtonProps {
   address: Address
@@ -111,7 +121,7 @@ export const FollowButton = ({ address, className = '', ...props }: FollowButton
         theme[buttonState].bg,
         theme[buttonState].text,
         theme[buttonState].border,
-        'rounded-lg text-sm flex items-center gap-1.5 justify-center font-bold',
+        'rounded-lg relative text-sm flex items-center gap-1.5 justify-center font-bold',
         'w-[107px] h-[37px] px-2 py-1.5', // Fixed width for consistent layout
         className
       ])}
@@ -125,7 +135,13 @@ export const FollowButton = ({ address, className = '', ...props }: FollowButton
       }}
       {...props}
     >
-      <Image alt='mainnet logo' src='/assets/mainnet-black.svg' width={16} height={16} />
+      <Image
+        alt='mainnet logo'
+        src={theme[buttonState].imageSrc || '/assets/mainnet-black.svg'}
+        className='text-red-500'
+        width={16}
+        height={16}
+      />
       {t(buttonText)}
     </button>
   )

@@ -30,6 +30,9 @@
     "Blocked": "Blockiran",
     "Block": "Blokiraj",
     "Unblock": "Odblokiraj",
+    "Mute": "Utišaj",
+    "Muted": "Utišan",
+    "Unmute": "Unmute",
     "not manager": "Nisi Upravitelj tega seznama."
   }
 }
