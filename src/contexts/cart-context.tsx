@@ -1,5 +1,6 @@
 'use client'
 
+import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
 import { hexlify } from '#/lib/utilities'
 import { createContext, useContext, useState, type ReactNode, useCallback, useEffect } from 'react'
@@ -13,10 +14,9 @@ import {
 } from '#/utils/list-ops'
 import { useIsEditView } from '#/hooks/use-is-edit-view'
 import type { ListOp, ListOpTagOpParams } from '#/types/list-op'
-import { useAccount } from 'wagmi'
 
 // Define the type for each cart item
-type CartItem = {
+export type CartItem = {
   listOp: ListOp
 }
 
