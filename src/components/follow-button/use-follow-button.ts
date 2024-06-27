@@ -6,10 +6,10 @@ import { useTranslation } from 'react-i18next'
 
 import {
   isTagListOp,
+  listOpRemoveTag,
   listOpAddListRecord,
   extractAddressAndTag,
-  listOpRemoveListRecord,
-  listOpRemoveTag
+  listOpRemoveListRecord
 } from '#/utils/list-ops'
 import { useCart } from '#/contexts/cart-context'
 import useFollowState from '#/hooks/use-follow-state'
