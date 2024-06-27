@@ -58,7 +58,7 @@ const { colors, fontFamily, fontSize, keyframes, animation, spacing, screens } =
     grey: '#999999',
     darkGrey: '#333333',
     addition: '#A1F783',
-    deletion: '#FF8080'
+    deletion: '#FF7C7C'
   },
   fontFamily: {
     sans: ['var(--font-inter)'],

@@ -30,6 +30,9 @@
     "Blocked": "Blocked",
     "Block": "Block",
     "Unblock": "Unblock",
+    "Mute": "Mute",
+    "Muted": "Muted",
+    "Unmute": "Unmute",
     "not manager": "You are not the Manager of the list."
   }
 }

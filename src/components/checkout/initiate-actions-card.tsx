@@ -1,25 +1,48 @@
-import { Step } from './types'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { Step } from './types'
 import useChain from '#/hooks/use-chain'
+import { useCart } from '#/contexts/cart-context'
 import { ChainIcon } from '#/components/chain-icon'
 import CancelButton from '#/components/cancel-button'
-import type { Action } from '#/contexts/actions-context'
+import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import { PrimaryButton } from '#/components/primary-button'
+import { EFPActionType, type Action } from '#/contexts/actions-context'
 
-export function InitiateActionsCard({
-  actions,
-  onCancel,
-  setCurrentStep,
-  handleInitiateActions
-}: {
+interface InitiateActionsCardProps {
   actions: Action[]
   onCancel: () => void
   setCurrentStep: (step: Step) => void
   handleInitiateActions: () => void
-}) {
+}
+
+const InitiateActionsCard: React.FC<InitiateActionsCardProps> = ({
+  actions,
+  onCancel,
+  setCurrentStep,
+  handleInitiateActions
+}) => {
+  const { totalCartItems } = useCart()
   const { t: tBtn } = useTranslation('transactions')
   const { t } = useTranslation('transactions', { keyPrefix: 'action' })
+
+  const listOpActions = actions.filter(action => action.type === EFPActionType.UpdateEFPList)
+  const transformedActions = useMemo(() => {
+    const cartActions = actions.filter(action => action.type === EFPActionType.UpdateEFPList)
+    const otherActions = actions.filter(action => action.type !== EFPActionType.UpdateEFPList)
+
+    const totalCartAction = {
+      id: `${EFPActionType.UpdateEFPList}`, // Unique identifier for the action
+      type: EFPActionType.UpdateEFPList,
+      label: `${totalCartItems} List ops`,
+      chainId: cartActions[0]?.chainId || DEFAULT_CHAIN.id,
+      execute: cartActions[0]?.execute,
+      isPendingConfirmation: false
+    }
+
+    return cartActions.length === 0 ? [...otherActions] : [...otherActions, totalCartAction]
+  }, [actions])
 
   return (
     <>
@@ -30,7 +53,7 @@ export function InitiateActionsCard({
       <div className='flex flex-col items-center gap-4 sm:gap-6'>
         <p className='text-xl sm:text-2xl font-bold'>{t('actions')}</p>
         <div>
-          {actions
+          {transformedActions
             .filter(action => action.chainId)
             .map((action, index) => (
               <div className='flex flex-col items-center' key={`${action.id}-${index}`}>
@@ -46,10 +69,16 @@ export function InitiateActionsCard({
       </div>
       <div className='flex flex-col gap-2 items-center'>
         <p className='text-center text-xl font-bold'>{t('req transactions')}</p>
-        {actions
+        {transformedActions
           .filter(action => action.chainId)
           .map((action, index) => (
-            <RequiredTransaction key={`${action.id}-${index}`} chainId={action.chainId} />
+            <RequiredTransaction
+              key={`${action.id}-${index}`}
+              chainId={action.chainId}
+              transactions={
+                action.type === EFPActionType.UpdateEFPList ? listOpActions.length : undefined
+              }
+            />
           ))}
       </div>
       <div className='flex w-full gap-8 mt-4 justify-between'>
@@ -73,7 +102,10 @@ export function InitiateActionsCard({
   )
 }
 
-const RequiredTransaction = ({ chainId }: { chainId: number }) => {
+const RequiredTransaction = ({
+  chainId,
+  transactions = 1
+}: { chainId: number; transactions?: number }) => {
   const chain = useChain(chainId)
 
   if (!chain) return null
@@ -81,10 +113,12 @@ const RequiredTransaction = ({ chainId }: { chainId: number }) => {
   return (
     <div className='grid grid-cols-2 items-center justify-items-center gap-2'>
       <div className='flex items-center gap-2'>
-        <p className='font-bold'>1 tx</p>
+        <p className='font-bold'>{transactions} tx</p>
         <ChainIcon chain={chain} className='h-[30px] w-[30px]' />
       </div>
       <p className='justify-self-start'>{chain.name}</p>
     </div>
   )
 }
+
+export default InitiateActionsCard

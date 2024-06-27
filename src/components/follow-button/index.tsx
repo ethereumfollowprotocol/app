@@ -10,64 +10,93 @@ import { useConnectModal } from '@rainbow-me/rainbowkit'
 import LoadingCell from '../loading-cell'
 import { type FollowButtonState, useFollowButton } from './use-follow-button'
 
-const theme = {
+const theme: Record<
+  FollowButtonState,
+  { bg: string; text: string; border: string; imageSrc?: string }
+> = {
   Follow: {
     bg: 'bg-kournikova-300',
-    text: 'text-zinc-800'
+    text: 'text-zinc-800',
+    border: 'border-0 '
   },
   'Pending Following': {
-    bg: 'bg-addition',
-    text: 'text-zinc-800'
+    bg: 'bg-white',
+    text: 'text-gray-900',
+    border:
+      'border-2 border-gray-200 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400'
   },
   Following: {
     bg: 'bg-white',
-    text: 'text-gray-900'
-  },
-  'Pending Unfollow': {
-    bg: 'bg-deletion',
-    text: 'text-gray-900'
+    text: 'text-gray-900',
+    border: 'border-2 border-gray-200'
   },
   Unfollow: {
     bg: 'bg-deletion',
-    text: 'text-gray-900'
+    text: 'text-gray-900',
+    border: 'border-0 '
   },
   Subscribe: {
     bg: 'bg-kournikova-300',
-    text: 'text-zinc-800'
+    text: 'text-zinc-800',
+    border: 'border-0 '
   },
   Subscribed: {
     bg: 'bg-addition',
-    text: 'text-zinc-800'
+    text: 'text-zinc-800',
+    border: 'border-2 border-gray-200'
   },
   Unsubscribe: {
     bg: 'bg-deletion',
-    text: 'text-gray-900'
+    text: 'text-gray-900',
+    border: 'border-0 '
   },
   Block: {
     bg: 'bg-kournikova-300',
-    text: 'text-zinc-800'
+    text: 'text-zinc-800',
+    border: 'border-0 '
+  },
+  'Pending Block': {
+    bg: 'bg-white',
+    text: 'text-red-500',
+    border:
+      'border-2 border-red-500 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400',
+    imageSrc: '/assets/mainnet-red.svg'
   },
   Blocked: {
-    bg: 'bg-gray-200',
-    text: 'text-salmon-500'
+    bg: 'bg-white',
+    text: 'text-red-500',
+    border: 'border-2 border-red-500',
+    imageSrc: '/assets/mainnet-red.svg'
   },
   Unblock: {
     bg: 'bg-deletion',
-    text: 'text-zinc-800'
+    text: 'text-zinc-800',
+    border: 'border-0 '
   },
   Mute: {
     bg: 'bg-kournikova-300',
-    text: 'text-salmon-500'
+    text: 'text-red-500',
+    border: 'border-0 '
+  },
+  'Pending Mute': {
+    bg: 'bg-white',
+    text: 'text-red-500',
+    border:
+      'border-2 border-red-500 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400',
+    imageSrc: '/assets/mainnet-red.svg'
   },
   Muted: {
-    bg: 'bg-gray-200',
-    text: 'text-salmon-500'
+    bg: 'bg-white',
+    text: 'text-red-500',
+    border: 'border-2 border-red-500',
+    imageSrc: '/assets/mainnet-red.svg'
   },
   Unmute: {
     bg: 'bg-deletion',
-    text: 'text-red-700'
+    text: 'text-zinc-800',
+    border: 'border-0 '
   }
-} satisfies Record<FollowButtonState, { bg: string; text: string }>
+}
 
 interface FollowButtonProps {
   address: Address
@@ -91,8 +120,8 @@ export const FollowButton = ({ address, className = '', ...props }: FollowButton
       className={clsx([
         theme[buttonState].bg,
         theme[buttonState].text,
-        buttonState === 'Following' && 'border-2 border-gray-300',
-        'rounded-lg text-sm flex items-center gap-1.5 justify-center font-bold',
+        theme[buttonState].border,
+        'rounded-lg relative text-sm flex items-center gap-1.5 justify-center font-bold',
         'w-[107px] h-[37px] px-2 py-1.5', // Fixed width for consistent layout
         className
       ])}
@@ -106,7 +135,13 @@ export const FollowButton = ({ address, className = '', ...props }: FollowButton
       }}
       {...props}
     >
-      <Image alt='mainnet logo' src='/assets/mainnet-black.svg' width={16} height={16} />
+      <Image
+        alt='mainnet logo'
+        src={theme[buttonState].imageSrc || '/assets/mainnet-black.svg'}
+        className='text-red-500'
+        width={16}
+        height={16}
+      />
       {t(buttonText)}
     </button>
   )
