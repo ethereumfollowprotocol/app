@@ -29,7 +29,11 @@ const useFollowState = ({
 }) => {
   const { selectedList } = useEFPProfile()
 
-  const { data: followerStatus, isLoading: isFollowerStatusLoading } = useQuery({
+  const { 
+    data: followerStatus,
+    isLoading: isFollowerStatusLoading,
+    isRefetching: isFollowerStateRefetching
+  } = useQuery({
     queryKey: ['follower state', address, selectedList],
     queryFn: async () => {
       if (!address) return null
@@ -44,19 +48,20 @@ const useFollowState = ({
     }
   })
 
-  const { data: followingStatus, isLoading: isFollowingStatusLoading } = useQuery({
-    queryKey: ['following state', address, selectedList],
+  const {
+    data: followingStatus,
+    isLoading: isFollowingStatusLoading,
+    isRefetching: isFollowingStatusRefetching
+  } = useQuery({
+    queryKey: ['follow state', address, selectedList],
     queryFn: async () => {
       if (!address) return null
 
-      const fetchedStatus = await fetchFollowState({
-        address: address,
-        list: selectedList,
-        type: 'following'
-      })
-
-      return fetchedStatus
-    }
+      const fetchedProfile = await fetchFollowingState({ address: address, list: selectedList })
+      return fetchedProfile
+    },
+    staleTime: Infinity,
+    refetchOnWindowFocus: false
   })
 
   const followState = useMemo((): FollowState => {
@@ -71,8 +76,8 @@ const useFollowState = ({
   }, [followerStatus, followingStatus, type])
 
   const isFollowStateLoading = {
-    follower: isFollowerStatusLoading,
-    following: isFollowingStatusLoading
+    followers: isFollowerStatusLoading || isFollowerStateRefetching,
+    followings: isFollowingStatusLoading || isFollowingStatusRefetching
   }[type]
 
   const followerTag = {

@@ -5,24 +5,30 @@ import { useTranslation } from 'react-i18next'
 
 import Recommendations from '#/components/recommendations'
 import LatestFollowers from './components/latest-followers'
+import UserProfileCard from '#/components/user-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import { UserProfileCard } from '#/components/user-profile-card'
 
 const Summary = () => {
-  const { address } = useAccount()
-  const { t } = useTranslation('home')
   const {
     profile,
+    followers,
+    following,
     selectedList,
     profileIsLoading,
     followersIsLoading,
-    isFetchingMoreFollowers,
-    followers,
-    following
+    isFetchingMoreFollowers
   } = useEFPProfile()
+  const { address } = useAccount()
+  const { t } = useTranslation('home')
+
+  const isFollowersEmpty = followers.length === 0
 
   return (
-    <div className='mt-36 md:mt-48 w-full lg:mt-52 xl:mt-60 px-4 xl:px-0 2xl:px-8 flex items-start lg:justify-between xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4 xl:gap-4'>
+    <div
+      className={`mt-36 md:mt-48 w-full lg:mt-52 xl:mt-60 px-4 xl:px-0 2xl:px-8 flex items-start ${
+        isFollowersEmpty || !address ? 'lg:justify-center lg:gap-4' : 'lg:justify-between xl:gap-4'
+      } xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4`}
+    >
       {address ? (
         <>
           <UserProfileCard
@@ -33,24 +39,30 @@ const Summary = () => {
             isLoading={profileIsLoading}
             borderColor='border-[#FFDBD9]'
           />
-          <LatestFollowers
-            isLoading={followersIsLoading || isFetchingMoreFollowers}
-            profiles={followers?.map(follower => ({
-              tags: follower.tags,
-              address: follower.address,
-              ens: follower.ens
-            }))}
-          />
+          {!isFollowersEmpty && (
+            <LatestFollowers
+              isLoading={followersIsLoading || isFetchingMoreFollowers}
+              profiles={followers?.map(follower => ({
+                tags: follower.tags,
+                address: follower.address,
+                ens: follower.ens
+              }))}
+            />
+          )}
         </>
       ) : (
-        <div className='h-36 w-full lg:w-[49%] xl:w-[770px] 2xl:w-[816px] lg:h-[638px] italic text-xl font-semibold rounded-2xl flex items-center justify-center glass-card border-2 border-gray-200 '>
+        <div className='h-24 w-full lg:w-80 xl:w-86 lg:h-[412px] italic text-xl font-semibold rounded-2xl flex items-center justify-center glass-card border-2 border-gray-200 '>
           {t('connect wallet')}
         </div>
       )}
       <Recommendations
         limit={7}
         header={t('discover')}
-        className='h-fit p-2 lg:h-[638px] w-full lg:w-[49%] xl:w-[470px] 2xl:w-[650px] py-4 sm:p-6 glass-card border-2 border-gray-200 rounded-2xl'
+        className={`h-fit w-full p-2 ${
+          isFollowersEmpty || !address
+            ? 'lg:w-2/3 xl:max-w-[900px]'
+            : 'lg:h-[638px] lg:w-[49%] xl:w-[470px] 2xl:w-[650px]'
+        } py-4 sm:p-6 glass-card border-2 border-gray-200 rounded-2xl`}
       />
     </div>
   )

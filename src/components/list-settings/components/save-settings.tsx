@@ -4,7 +4,7 @@ import { Step } from '#/components/checkout/types'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import useSaveListSettings from '../hooks/use-save-list-settings'
 import TransactionStatus from '#/components/checkout/transaction-status'
-import { InitiateActionsCard } from '#/components/checkout/initiate-actions-card'
+import InitiateActionsCard from '#/components/checkout/initiate-actions-card'
 
 export interface SaveSettingsProps {
   selectedList: number
@@ -45,21 +45,21 @@ const SaveSettings: React.FC<SaveSettingsProps> = ({
     onFinish,
     currentStep,
     setCurrentStep,
-    handleInitiateActions,
-    handleNextAction
+    handleNextAction,
+    handleInitiateActions
   } = useSaveListSettings({
-    selectedList,
-    profile,
-    chain,
-    newChain,
     slot,
-    owner,
-    manager,
     user,
-    listRecordsContractAddress,
-    changedValues,
+    owner,
+    chain,
+    profile,
+    manager,
     onClose,
-    onCancel
+    onCancel,
+    newChain,
+    selectedList,
+    changedValues,
+    listRecordsContractAddress
   })
 
   return (

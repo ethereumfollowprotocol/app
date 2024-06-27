@@ -14,7 +14,7 @@ import { FollowButton } from '#/components/follow-button'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 import type { FollowingResponse, ProfileDetailsResponse } from '#/types/requests'
 
-interface Props {
+interface UserProfileCardProps {
   profileList?: number | null
   isResponsive?: boolean
   hideFollowButton?: boolean
@@ -24,7 +24,7 @@ interface Props {
   isLoading?: boolean
 }
 
-export function UserProfileCard({
+const UserProfileCard: React.FC<UserProfileCardProps> = ({
   profileList,
   isResponsive = true,
   hideFollowButton,
@@ -32,7 +32,7 @@ export function UserProfileCard({
   borderColor,
   isLoading,
   following
-}: Props) {
+}) => {
   const { data: fetchedEnsProfile, isLoading: isProfileLoading } = useQuery({
     queryKey: ['ens metadata', profile],
     queryFn: async () => {
@@ -43,8 +43,6 @@ export function UserProfileCard({
 
   const profileName = fetchedEnsProfile?.name
   const profileAvatar = fetchedEnsProfile?.avatar
-  // const profileName = profile ? profile.ens.name : fetchedEnsProfile?.name
-  // const profileAvatar = fetchedEnsProfile?.avatar
 
   const pathname = usePathname()
   const { address: connectedAddress } = useAccount()
@@ -119,7 +117,7 @@ export function UserProfileCard({
                       isResponsive
                         ? 'w-[90%] xl:w-full xl:max-w-72 2xl:max-w-[332px] sm:text-2xl text-xl text-start xl:text-center'
                         : 'w-full max-w-[332px] text-2xl text-center'
-                    } truncate  font-bold`}
+                    } truncate font-bold`}
                   >
                     {profileName || truncateAddress(profile.address)}
                   </div>
@@ -204,3 +202,5 @@ export function UserProfileCard({
     </div>
   )
 }
+
+export default UserProfileCard
