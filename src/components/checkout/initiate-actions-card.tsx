@@ -6,21 +6,23 @@ import useChain from '#/hooks/use-chain'
 import { useCart } from '#/contexts/cart-context'
 import { ChainIcon } from '#/components/chain-icon'
 import CancelButton from '#/components/cancel-button'
+import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import { PrimaryButton } from '#/components/primary-button'
 import { EFPActionType, type Action } from '#/contexts/actions-context'
-import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 
-export function InitiateActionsCard({
-  actions,
-  onCancel,
-  setCurrentStep,
-  handleInitiateActions
-}: {
+interface InitiateActionsCardProps {
   actions: Action[]
   onCancel: () => void
   setCurrentStep: (step: Step) => void
   handleInitiateActions: () => void
-}) {
+}
+
+const InitiateActionsCard: React.FC<InitiateActionsCardProps> = ({
+  actions,
+  onCancel,
+  setCurrentStep,
+  handleInitiateActions
+}) => {
   const { totalCartItems } = useCart()
   const { t: tBtn } = useTranslation('transactions')
   const { t } = useTranslation('transactions', { keyPrefix: 'action' })
@@ -118,3 +120,5 @@ const RequiredTransaction = ({
     </div>
   )
 }
+
+export default InitiateActionsCard
