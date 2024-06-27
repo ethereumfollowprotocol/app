@@ -29,7 +29,7 @@ const useFollowState = ({
 }) => {
   const { selectedList } = useEFPProfile()
 
-  const { 
+  const {
     data: followerStatus,
     isLoading: isFollowerStatusLoading,
     isRefetching: isFollowerStateRefetching
@@ -57,7 +57,11 @@ const useFollowState = ({
     queryFn: async () => {
       if (!address) return null
 
-      const fetchedProfile = await fetchFollowingState({ address: address, list: selectedList })
+      const fetchedProfile = await fetchFollowState({
+        address: address,
+        list: selectedList,
+        type: 'following'
+      })
       return fetchedProfile
     },
     staleTime: Infinity,
@@ -76,8 +80,8 @@ const useFollowState = ({
   }, [followerStatus, followingStatus, type])
 
   const isFollowStateLoading = {
-    followers: isFollowerStatusLoading || isFollowerStateRefetching,
-    followings: isFollowingStatusLoading || isFollowingStatusRefetching
+    follower: isFollowerStatusLoading || isFollowerStateRefetching,
+    following: isFollowingStatusLoading || isFollowingStatusRefetching
   }[type]
 
   const followerTag = {
