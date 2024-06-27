@@ -76,6 +76,7 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
       // Update the action
       const updatedActions = [...actions]
       updatedActions[index] = updatedAction
+
       setActions(updatedActions)
     },
     [actions]
