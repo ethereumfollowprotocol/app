@@ -1,13 +1,14 @@
+import Image from 'next/image'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
 
+import Cross from 'public/assets/icons/cross.svg'
 import { BLOCKED_MUTED_TABS } from '#/lib/constants'
 import type { BlockedMutedTabType } from '#/types/common'
 import { UserProfilePageTable } from '../profile-page-table'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import useBlockedMuted, { TAGS } from './hooks/use-blocked-muted'
-
 interface BlockedMutedProps {
   profile: ProfileDetailsResponse
   list?: string | number
@@ -83,8 +84,14 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
     <div className='fixed z-50 top-0 flex overflow-scroll justify-center left-0 w-full h-full bg-black/50'>
       <div
         ref={blockedMutedRef}
-        className='gap-6 2xl:gap-8 flex h-fit rounded-xl mt-16 md:mt-24 mb-24 w-full xl:w-fit px-4 md:px-6 lg:mt-32 '
+        className='gap-6 2xl:gap-8 relative flex h-fit rounded-xl mt-16 md:mt-24 mb-24 w-full xl:w-fit px-4 md:px-6 lg:mt-32 '
       >
+        <div
+          onClick={onClose}
+          className='absolute cursor-pointer hover:opacity-80 rounded-2xl bg-white/80 p-4 -top-[70px] right-6'
+        >
+          <Image src={Cross} alt='close blocked and muted list' className='h-6 w-6' />
+        </div>
         <div className='bg-white/80 h-fit rounded-2xl hidden xl:block'>
           <UserProfilePageTable
             isLoading={blockingIsLoading}

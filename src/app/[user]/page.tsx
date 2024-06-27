@@ -13,6 +13,7 @@ import SettingsIcon from 'public/assets/icons/settings.svg'
 import UserProfileCard from '#/components/user-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { UserProfilePageTable } from '#/components/profile-page-table'
+import BlockedMuted from '#/components/blocked-muted'
 
 interface Props {
   params: { user: string }
@@ -22,10 +23,11 @@ export default function UserPage({ params }: Props) {
   const { user } = params
   const [isSaving, setIsSaving] = useState(false)
   const [listSettingsOpen, setListSettingsOpen] = useState(false)
+  const [isBlockedMutedOpen, setIsBlockedMutedOpen] = useState(false)
   const [activeTab, setActiveTab] = useState<ProfileTabType>('following')
 
-  const { roles } = useEFPProfile()
   const { t } = useTranslation('profile')
+  const { roles, selectedList } = useEFPProfile()
   const { address: connectedUserAddress } = useAccount()
 
   const {
@@ -34,25 +36,25 @@ export default function UserPage({ params }: Props) {
     profile,
     followers,
     following,
-    followingTags,
-    followingTagsLoading,
+    toggleTag,
     userIsList,
+    followersSort,
+    followingSort,
+    followingTags,
     profileIsLoading,
+    isEndOfFollowing,
+    isEndOfFollowers,
+    setFollowingSort,
+    setFollowersSort,
     followersIsLoading,
     followingIsLoading,
     fetchMoreFollowers,
     fetchMoreFollowing,
-    isEndOfFollowing,
-    isEndOfFollowers,
-    isFetchingMoreFollowers,
-    isFetchingMoreFollowing,
     followingTagsFilter,
     followersTagsFilter,
-    followingSort,
-    setFollowingSort,
-    followersSort,
-    setFollowersSort,
-    toggleTag
+    followingTagsLoading,
+    isFetchingMoreFollowers,
+    isFetchingMoreFollowing
   } = useUser(user)
 
   const mobileActiveEl = {
@@ -71,8 +73,7 @@ export default function UserPage({ params }: Props) {
         fetchMore={() => fetchMoreFollowing()}
         title='following'
         canEditTags={
-          profile?.address?.toLowerCase() === connectedUserAddress?.toLowerCase() &&
-          roles?.isManager
+          Number(userIsList ? listNum : profile?.primary_list) === selectedList && roles?.isManager
         }
         customClass='border-t-0 rounded-t-none'
       />
@@ -96,6 +97,17 @@ export default function UserPage({ params }: Props) {
 
   return (
     <>
+      {isBlockedMutedOpen && profile && (
+        <BlockedMuted
+          profile={profile}
+          list={profile.primary_list ?? undefined}
+          onClose={() => setIsBlockedMutedOpen(false)}
+          isManager={
+            Number(userIsList ? listNum : profile?.primary_list) === selectedList &&
+            roles?.isManager
+          }
+        />
+      )}
       {listSettingsOpen && profile && (userIsList ? listNum : profile.primary_list) && (
         <ListSettings
           showSingleList={userIsList}
@@ -128,9 +140,19 @@ export default function UserPage({ params }: Props) {
               profile={profile}
               following={following}
               isLoading={profileIsLoading}
+              showMoreOptions={
+                profile?.address.toLowerCase() !== connectedUserAddress?.toLowerCase()
+              }
             />
             <div className='flex flex-col gap-1 items-center'>
-              {/* <p className='font-semibold '>{t('block-mute')}</p> */}
+              {profile?.primary_list && (
+                <p
+                  onClick={() => setIsBlockedMutedOpen(true)}
+                  className='font-semibold cursor-pointer hover:opacity-80 transition-opacity'
+                >
+                  {t('block-mute')}
+                </p>
+              )}
               {profile?.primary_list && (
                 <div
                   className='flex gap-1 cursor-pointer hover:opacity-80 transition-opacity'
@@ -155,7 +177,7 @@ export default function UserPage({ params }: Props) {
             isFetchingMore={isFetchingMoreFollowing}
             fetchMore={() => fetchMoreFollowing()}
             canEditTags={
-              profile?.address?.toLowerCase() === connectedUserAddress?.toLowerCase() &&
+              Number(userIsList ? listNum : profile?.primary_list) === selectedList &&
               roles?.isManager
             }
             title='following'

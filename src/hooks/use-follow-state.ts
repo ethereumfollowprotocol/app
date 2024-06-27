@@ -22,7 +22,7 @@ const useFollowState = ({
   address,
   type
 }: {
-  address: Address
+  address?: Address
   type: 'followers' | 'followings'
 }) => {
   const { followers, selectedList, followersIsLoading } = useEFPProfile()

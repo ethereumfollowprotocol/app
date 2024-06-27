@@ -1,13 +1,24 @@
 'use client'
 
-import { Avatar } from '../avatar'
+import Image from 'next/image'
+import { useState } from 'react'
 import { useAccount } from 'wagmi'
 import { usePathname } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
+import { useClickAway } from '@uidotdev/usehooks'
 
+import {
+  listOpAddTag,
+  listOpRemoveTag,
+  listOpAddListRecord,
+  listOpRemoveListRecord
+} from '#/utils/list-ops'
+import { Avatar } from '../avatar'
 import LoadingCell from '../loading-cell'
+import { useCart } from '#/contexts/cart-context'
 import { truncateAddress } from '#/lib/utilities'
+import useFollowState from '#/hooks/use-follow-state'
 import { resolveENSProfile } from '#/utils/resolveENS'
 import LoadingProfileCard from './loading-profile-card'
 import { FollowButton } from '#/components/follow-button'
@@ -22,6 +33,7 @@ interface UserProfileCardProps {
   following?: FollowingResponse[]
   borderColor?: string
   isLoading?: boolean
+  showMoreOptions?: boolean
 }
 
 const UserProfileCard: React.FC<UserProfileCardProps> = ({
@@ -31,8 +43,14 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   profile,
   borderColor,
   isLoading,
-  following
+  following,
+  showMoreOptions
 }) => {
+  const [moreOptionsDropdownOpen, setMoreOptionsDropdownOpen] = useState(false)
+  const clickAwayMoreOptionsRef = useClickAway<HTMLDivElement>(() => {
+    setMoreOptionsDropdownOpen(false)
+  })
+
   const { data: fetchedEnsProfile, isLoading: isProfileLoading } = useQuery({
     queryKey: ['ens metadata', profile],
     queryFn: async () => {
@@ -44,6 +62,11 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const profileName = fetchedEnsProfile?.name
   const profileAvatar = fetchedEnsProfile?.avatar
 
+  const { followState } = useFollowState({
+    address: profile?.address,
+    type: 'followings'
+  })
+
   const pathname = usePathname()
   const { address: connectedAddress } = useAccount()
   const { t } = useTranslation('common', { keyPrefix: 'profile card' })
@@ -54,6 +77,67 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
     Object.keys(profile || {}).includes('response') ||
     Object.keys(profile || {}).includes('message')
   )
+
+  const { addCartItem, removeCartItem, hasListOpAddTag, hasListOpRemoveTag } = useCart()
+  const isPendingBlock = profile && hasListOpAddTag({ address: profile.address, tag: 'block' })
+  const isPendingUnblock = profile && hasListOpRemoveTag({ address: profile.address, tag: 'block' })
+  const isPendingMute = profile && hasListOpAddTag({ address: profile.address, tag: 'mute' })
+  const isPendingUnmute = profile && hasListOpRemoveTag({ address: profile.address, tag: 'mute' })
+
+  const onClickOption = (buttonText: 'Block' | 'Mute') => {
+    if (!profile) return
+
+    setMoreOptionsDropdownOpen(false)
+
+    if (buttonText === 'Block') {
+      if (isPendingBlock || isPendingUnblock) {
+        if (isPendingBlock && followState === 'none')
+          removeCartItem(listOpAddListRecord(profile?.address))
+        if (isPendingUnblock && followState === 'blocks')
+          removeCartItem(listOpRemoveListRecord(profile?.address))
+
+        return removeCartItem(
+          followState === 'blocks'
+            ? listOpRemoveTag(profile?.address, 'block')
+            : listOpAddTag(profile?.address, 'block')
+        )
+      }
+
+      if (followState === 'none') addCartItem({ listOp: listOpAddListRecord(profile?.address) })
+      if (followState === 'blocks')
+        addCartItem({ listOp: listOpRemoveListRecord(profile?.address) })
+      addCartItem({
+        listOp:
+          followState === 'blocks'
+            ? listOpRemoveTag(profile?.address, 'block')
+            : listOpAddTag(profile?.address, 'block')
+      })
+    }
+
+    if (buttonText === 'Mute') {
+      if (isPendingMute || isPendingUnmute) {
+        if (isPendingMute && followState === 'none')
+          removeCartItem(listOpAddListRecord(profile?.address))
+        if (isPendingUnmute && followState === 'mutes')
+          removeCartItem(listOpRemoveListRecord(profile?.address))
+
+        return removeCartItem(
+          followState === 'mutes'
+            ? listOpRemoveTag(profile?.address, 'mute')
+            : listOpAddTag(profile?.address, 'mute')
+        )
+      }
+
+      if (followState === 'none') addCartItem({ listOp: listOpAddListRecord(profile?.address) })
+      if (followState === 'mutes') addCartItem({ listOp: listOpRemoveListRecord(profile?.address) })
+      addCartItem({
+        listOp:
+          followState === 'mutes'
+            ? listOpRemoveTag(profile?.address, 'mute')
+            : listOpAddTag(profile?.address, 'mute')
+      })
+    }
+  }
 
   return (
     <div
@@ -113,13 +197,71 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                   <LoadingCell className='w-48 sm:w-68 xl:w-3/4 h-7 rounded-lg' />
                 ) : (
                   <div
-                    className={` ${
+                    className={`${
                       isResponsive
-                        ? 'w-[90%] xl:w-full xl:max-w-72 2xl:max-w-[332px] sm:text-2xl text-xl text-start xl:text-center'
-                        : 'w-full max-w-[332px] text-2xl text-center'
-                    } truncate font-bold`}
+                        ? 'max-w-[90%] xl:max-w-72 2xl:max-w-[325px] sm:text-2xl text-xl text-start xl:text-center'
+                        : ' max-w-[332px] text-2xl text-center'
+                    } font-bold flex gap-1.5 items-center relative`}
                   >
-                    {profileName || truncateAddress(profile.address)}
+                    <p className='truncate'>{profileName || truncateAddress(profile.address)}</p>
+                    {showMoreOptions && (
+                      <div ref={clickAwayMoreOptionsRef}>
+                        <div
+                          className='flex gap-[3px] cursor-pointer items-center hover:opacity-50 transition-opacity'
+                          onClick={() => setMoreOptionsDropdownOpen(!moreOptionsDropdownOpen)}
+                        >
+                          <div className='h-[5px] w-[5px] bg-black rounded-full'></div>
+                          <div className='h-[5px] w-[5px] bg-black rounded-full'></div>
+                          <div className='h-[5px] w-[5px] bg-black rounded-full'></div>
+                        </div>
+                        {showMoreOptions && moreOptionsDropdownOpen && (
+                          <div className='absolute top-10 flex-col flex gap-2 right-0 p-2 bg-white border-gray-200 border-2 rounded-xl z-50 drop-shadow-lg'>
+                            <button
+                              onClick={() => onClickOption('Block')}
+                              className='rounded-lg cursor-pointer bg-deletion relative text-sm flex items-center gap-1.5 justify-center font-bold w-[107px] h-[37px] px-2 py-1.5'
+                            >
+                              <Image
+                                alt='mainnet logo'
+                                src='/assets/mainnet-black.svg'
+                                className='text-red-500'
+                                width={16}
+                                height={16}
+                              />
+                              <p>
+                                {followState === 'blocks'
+                                  ? isPendingUnblock
+                                    ? 'Block'
+                                    : 'Unblock'
+                                  : isPendingBlock
+                                    ? 'Unblock'
+                                    : 'Block'}
+                              </p>
+                            </button>
+                            <button
+                              onClick={() => onClickOption('Mute')}
+                              className='rounded-lg cursor-pointer bg-deletion relative text-sm flex items-center gap-1.5 justify-center font-bold w-[107px] h-[37px] px-2 py-1.5'
+                            >
+                              <Image
+                                alt='mainnet logo'
+                                src='/assets/mainnet-black.svg'
+                                className='text-red-500'
+                                width={16}
+                                height={16}
+                              />
+                              <p>
+                                {followState === 'mutes'
+                                  ? isPendingUnmute
+                                    ? 'Mute'
+                                    : 'Unmute'
+                                  : isPendingMute
+                                    ? 'Unmute'
+                                    : 'Mute'}
+                              </p>
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 )}
                 {following && connectedAddress
