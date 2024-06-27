@@ -66,37 +66,18 @@ export const useFollowButton = ({ address }: { address: Address }) => {
     cartItems
   } = useCart()
 
-  const isPendingBlock = useMemo(
-    () => hasListOpAddTag({ address, tag: 'block' }),
-    [hasListOpAddTag, address]
-  )
-  const isPendingUnblock = useMemo(
-    () => hasListOpRemoveTag({ address, tag: 'block' }),
-    [hasListOpRemoveTag, address]
-  )
-  const isPendingMute = useMemo(
-    () => hasListOpAddTag({ address, tag: 'mute' }),
-    [hasListOpAddTag, address]
-  )
-  const isPendingUnmute = useMemo(
-    () => hasListOpRemoveTag({ address, tag: 'mute' }),
-    [hasListOpRemoveTag, address]
-  )
-  const isPendingFollow = useMemo(() => hasListOpAddRecord(address), [hasListOpAddRecord, address])
-  const isPendingUnfollow = useMemo(
-    () => hasListOpRemoveRecord(address),
-    [hasListOpRemoveRecord, address]
-  )
+  const pendingState = useMemo(() => {
+    if (hasListOpAddTag({ address, tag: 'block' })) return 'Pending Block'
+    if (hasListOpRemoveTag({ address, tag: 'block' })) return 'Unblock'
+    if (hasListOpAddTag({ address, tag: 'mute' })) return 'Pending Mute'
+    if (hasListOpRemoveTag({ address, tag: 'mute' })) return 'Unmute'
+    if (hasListOpAddRecord(address)) return 'Pending Following'
+    if (hasListOpRemoveRecord(address)) return 'Unfollow'
+  }, [address, cartItems])
 
   const buttonState = useMemo<FollowButtonState>(() => {
     if (!userAddress) return 'Follow'
-
-    if (isPendingBlock) return 'Pending Block'
-    if (isPendingUnblock) return 'Unblock'
-    if (isPendingMute) return 'Pending Mute'
-    if (isPendingUnmute) return 'Unmute'
-    if (isPendingFollow) return 'Pending Following'
-    if (isPendingUnfollow) return 'Unfollow'
+    if (pendingState) return pendingState
 
     switch (followState) {
       case 'follows':
@@ -108,26 +89,15 @@ export const useFollowButton = ({ address }: { address: Address }) => {
       default:
         return 'Follow'
     }
-  }, [
-    isPendingBlock,
-    isPendingUnblock,
-    isPendingMute,
-    isPendingUnmute,
-    isPendingFollow,
-    isPendingUnfollow,
-    followState,
-    userAddress
-  ])
+  }, [pendingState, followState, userAddress])
 
   const buttonText = useMemo<FollowButtonText>(() => {
     if (!userAddress) return 'Follow'
 
-    if (isPendingBlock) return 'Blocked'
-    if (isPendingUnblock) return 'Unblock'
-    if (isPendingMute) return 'Muted'
-    if (isPendingUnmute) return 'Unmute'
-    if (isPendingFollow) return 'Following'
-    if (isPendingUnfollow) return 'Unfollow'
+    if (pendingState === 'Pending Block') return 'Blocked'
+    if (pendingState === 'Pending Mute') return 'Muted'
+    if (pendingState === 'Pending Following') return 'Following'
+    if (pendingState) return pendingState
 
     switch (followState) {
       case 'follows':
@@ -139,45 +109,36 @@ export const useFollowButton = ({ address }: { address: Address }) => {
       default:
         return 'Follow'
     }
-  }, [
-    isPendingBlock,
-    isPendingUnblock,
-    isPendingMute,
-    isPendingUnmute,
-    followState,
-    isPendingFollow,
-    isPendingUnfollow,
-    userAddress
-  ])
+  }, [pendingState, followState, userAddress])
 
   const handleAction = () => {
     // cannot perform list operations if not list manager
     if (!roles?.isManager) return toast.error(t('not manager'))
 
-    if (isPendingBlock) {
+    if (buttonState === 'Pending Block') {
       removeCartItem(listOpAddListRecord(address))
       removeAddTagFromCart({ address, tag: 'block' })
       return
     }
-
-    if (isPendingUnblock) {
+    if (buttonState === 'Unblock') {
       removeRemoveTagFromCart({ address, tag: 'block' })
+      removeCartItem(listOpRemoveListRecord(address))
       return
     }
 
-    if (isPendingMute) {
+    if (buttonState === 'Pending Mute') {
       removeCartItem(listOpAddListRecord(address))
       removeAddTagFromCart({ address, tag: 'mute' })
       return
     }
-
-    if (isPendingUnmute) {
+    if (buttonState === 'Unmute') {
       removeRemoveTagFromCart({ address, tag: 'mute' })
+      removeCartItem(listOpRemoveListRecord(address))
       return
     }
 
     // remove address and tags for this address from cart if it's a pending follow
-    if (isPendingFollow) {
+    if (buttonState === 'Pending Following') {
       const addressTags = cartItems.filter(item =>
         item.listOp.opcode > 2 && isTagListOp(item.listOp)
           ? extractAddressAndTag(item.listOp).address === address
@@ -187,17 +148,17 @@ export const useFollowButton = ({ address }: { address: Address }) => {
       addressTags.flatMap(item => removeCartItem(item.listOp))
       return
     }
-
     // remove from cart if it's a pending unfollow
-    if (isPendingUnfollow) return removeCartItem(listOpRemoveListRecord(address))
+    if (buttonState === 'Unfollow') return removeCartItem(listOpRemoveListRecord(address))
 
     if (buttonText === 'Block') {
       if (followState !== 'follows') addCartItem({ listOp: listOpRemoveListRecord(address) })
       return addCartItem({ listOp: listOpRemoveTag(address, 'block') })
     }
     if (buttonText === 'Blocked') {
-      // addCartItem({ listOp: listOpRemoveListRecord(address) })
-      return addCartItem({ listOp: listOpRemoveTag(address, 'block') })
+      addCartItem({ listOp: listOpRemoveListRecord(address) })
+      addCartItem({ listOp: listOpRemoveTag(address, 'block') })
+      return
     }
 
     if (buttonText === 'Mute') {
@@ -205,8 +166,9 @@ export const useFollowButton = ({ address }: { address: Address }) => {
       return addCartItem({ listOp: listOpRemoveTag(address, 'mute') })
     }
     if (buttonText === 'Muted') {
-      // addCartItem({ listOp: listOpRemoveListRecord(address) })
-      return addCartItem({ listOp: listOpRemoveTag(address, 'mute') })
+      addCartItem({ listOp: listOpRemoveListRecord(address) })
+      addCartItem({ listOp: listOpRemoveTag(address, 'mute') })
+      return
     }
 
     // add to cart if it's a follow

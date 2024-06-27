@@ -83,7 +83,9 @@ export function FollowListItemName({
     hasListOpRemoveRecord,
     getTagsFromCartByAddress
   } = useCart()
-  const isBeingremoved = hasListOpRemoveRecord(address)
+  const isBeingRemoved = hasListOpRemoveRecord(address)
+  const isBeingUnrestricted =
+    hasListOpRemoveTag({ address, tag: 'block' }) || hasListOpRemoveTag({ address, tag: 'mute' })
 
   const tagsFromCart = getTagsFromCartByAddress(address)
   const inintialDisplayedTags = () => {
@@ -123,12 +125,12 @@ export function FollowListItemName({
   }
 
   useEffect(() => {
-    if (!isBeingremoved) return
+    if (!isBeingRemoved || isBeingUnrestricted) return
 
     tagsFromCart.map(tag => {
       removeTag(tag)
     })
-  }, [isBeingremoved])
+  }, [isBeingRemoved])
 
   return (
     <div
@@ -167,7 +169,7 @@ export function FollowListItemName({
             </div>
           )}
         </div>
-        {showTags && !isBeingremoved && (
+        {showTags && !isBeingRemoved && !isBeingUnrestricted && (
           <div
             className={`relative flex ${
               isEditor

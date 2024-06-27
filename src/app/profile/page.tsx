@@ -9,8 +9,8 @@ import { PROFILE_TABS } from '#/lib/constants'
 import type { ProfileTabType } from '#/types/common'
 import ListSettings from '../../components/list-settings'
 import SettingsIcon from 'public/assets/icons/settings.svg'
+import UserProfileCard from '#/components/user-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import { UserProfileCard } from '#/components/user-profile-card'
 import { UserProfilePageTable } from '#/components/profile-page-table'
 
 export default function ProfilePage() {

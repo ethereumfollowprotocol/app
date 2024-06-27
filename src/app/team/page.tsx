@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query'
 import fetchProfileDetails from '#/api/fetchProfileDetails'
-import { UserProfileCard } from '#/components/user-profile-card'
+import UserProfileCard from '#/components/user-profile-card'
 
 const TeamPage = () => {
   const teamAddresses: string[] = process.env.NEXT_PUBLIC_TEAM_ADDRESSES?.split(' ') || []
