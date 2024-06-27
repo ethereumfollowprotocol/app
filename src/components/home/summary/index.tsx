@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next'
 
 import Recommendations from '#/components/recommendations'
 import LatestFollowers from './components/latest-followers'
+import UserProfileCard from '#/components/user-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import { UserProfileCard } from '#/components/user-profile-card'
 
 const Summary = () => {
   const {

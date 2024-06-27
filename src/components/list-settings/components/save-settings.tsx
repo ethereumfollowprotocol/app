@@ -45,21 +45,21 @@ const SaveSettings: React.FC<SaveSettingsProps> = ({
     onFinish,
     currentStep,
     setCurrentStep,
-    handleInitiateActions,
-    handleNextAction
+    handleNextAction,
+    handleInitiateActions
   } = useSaveListSettings({
-    selectedList,
-    profile,
-    chain,
-    newChain,
     slot,
-    owner,
-    manager,
     user,
-    listRecordsContractAddress,
-    changedValues,
+    owner,
+    chain,
+    profile,
+    manager,
     onClose,
-    onCancel
+    onCancel,
+    newChain,
+    selectedList,
+    changedValues,
+    listRecordsContractAddress
   })
 
   return (

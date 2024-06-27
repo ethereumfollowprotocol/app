@@ -15,7 +15,7 @@ const CartButton = ({ cartItemsCount }: { cartItemsCount: number }) => {
       >
         <Image src={Pencil} alt='cart button' className='text-gray-200' width='20' height='20' />
         {cartItemsCount === 0 ? null : (
-          <span className='absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-rose-500 p-2 text-xs font-bold text-white'>
+          <span className='absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-green-400 p-2 text-xs font-bold text-black'>
             {cartItemsCount}
           </span>
         )}

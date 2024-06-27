@@ -111,8 +111,6 @@ const useSearch = (isEditor?: boolean) => {
     const followState = await getFollowingState(address)
     const isPendingFollow = hasListOpAddRecord(address)
 
-    resetSearch()
-
     if (isPendingFollow) return
     if (followState === 'follows') return { user, isFollowing: true }
     if (followState === 'none') addCartItem({ listOp: listOpAddListRecord(address) })
@@ -120,6 +118,7 @@ const useSearch = (isEditor?: boolean) => {
 
   const onSubmit = async () => {
     if (isEditor) {
+      resetSearch()
       searchBarRef.current?.focus()
 
       if (!roles?.isManager) {

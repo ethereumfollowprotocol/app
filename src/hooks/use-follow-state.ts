@@ -27,14 +27,20 @@ const useFollowState = ({
 }) => {
   const { followers, selectedList, followersIsLoading } = useEFPProfile()
 
-  const { data: followingStatus, isLoading: isFollowingStatusLoading } = useQuery({
+  const {
+    data: followingStatus,
+    isLoading: isFollowingStatusLoading,
+    isRefetching: isFollowingStatusRefetching
+  } = useQuery({
     queryKey: ['follow state', address, selectedList],
     queryFn: async () => {
       if (!address) return null
 
       const fetchedProfile = await fetchFollowingState({ address: address, list: selectedList })
       return fetchedProfile
-    }
+    },
+    staleTime: Infinity,
+    refetchOnWindowFocus: false
   })
 
   const followerState = useCallback((): FollowState => {
@@ -73,7 +79,7 @@ const useFollowState = ({
 
   const isFollowStateLoading = {
     followers: followersIsLoading,
-    followings: isFollowingStatusLoading
+    followings: isFollowingStatusLoading || isFollowingStatusRefetching
   }[type]
 
   return {
