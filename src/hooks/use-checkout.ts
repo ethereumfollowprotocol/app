@@ -113,13 +113,18 @@ const useCheckout = () => {
         return encodePacked(types, data)
       })
 
+      console.log(selectedList ? 'applyListOps' : 'setMetadataValuesAndApplyListOps')
+
       // initiate  'applyListOps' transaction
       const hash = await walletClient?.writeContract({
         chain: fetchedChain,
         address: ListRecordsContract,
         abi: efpListRecordsAbi,
-        functionName: 'applyListOps',
-        args: [nonce, operations]
+        functionName: selectedList ? 'applyListOps' : 'setMetadataValuesAndApplyListOps',
+        // @ts-ignore - diff data type handled
+        args: selectedList
+          ? [nonce, operations]
+          : [nonce, { key: 'user', value: userAddress }, operations]
       })
 
       // return transaction hash to enable following transaction status in transaction details component
