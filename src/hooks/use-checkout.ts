@@ -113,8 +113,6 @@ const useCheckout = () => {
         return encodePacked(types, data)
       })
 
-      console.log(selectedList ? 'applyListOps' : 'setMetadataValuesAndApplyListOps')
-
       // initiate  'applyListOps' transaction
       const hash = await walletClient?.writeContract({
         chain: fetchedChain,
