@@ -7,9 +7,9 @@ import { useChainId, useSwitchChain, type Config, type UseChainsReturnType } fro
 import type { ChainWithDetails } from '#/lib/wagmi'
 import { ChainIcon } from '#/components/chain-icon'
 import CancelButton from '#/components/cancel-button'
+import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import { PrimaryButton } from '#/components/primary-button'
 import GreenCheck from 'public/assets/icons/check-green.svg'
-import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 
 export function SelectChainCard({
   chains,
@@ -17,7 +17,8 @@ export function SelectChainCard({
   onCancel,
   handleChainClick,
   selectedChain,
-  handleNextStep
+  handleNextStep,
+  setSetNewListAsPrimary
 }: {
   chains: UseChainsReturnType<Config>
   isCreatingNewList: boolean
@@ -25,6 +26,7 @@ export function SelectChainCard({
   handleChainClick: (chainId: number) => void
   selectedChain: ChainWithDetails | undefined
   handleNextStep: () => void
+  setSetNewListAsPrimary: (state: boolean) => void
 }) {
   const currentChainId = useChainId()
   const { switchChain } = useSwitchChain()
@@ -49,7 +51,16 @@ export function SelectChainCard({
           selectedChain={selectedChain}
         />
       </div>
-      <div className='w-full mt-10 flex justify-between items-center'>
+      <div className='flex mt-4 items-center gap-3 sm:gap-5'>
+        <p className='text-lg font-bold'>Set new list as primary list?</p>
+        <input
+          className='toggle'
+          type='checkbox'
+          defaultChecked={true}
+          onChange={e => setSetNewListAsPrimary(e.target.checked)}
+        />
+      </div>
+      <div className='w-full mt-8 flex justify-between items-center'>
         <CancelButton onClick={onCancel} />
         <PrimaryButton
           label={t('next')}
