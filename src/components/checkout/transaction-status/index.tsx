@@ -49,8 +49,8 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
   const nextButtonIsDisabled = !isSuccess
   // Disable the finish button if not all actions are successful
   const finishButtonIsDisabled = !transactionsAreFinished
-  const showNextButton = !(currentAction?.isConfirmationError || allActionsSuccessful)
-  const showFinishButton = !currentAction?.isConfirmationError && allActionsSuccessful
+  const showNextButton = !(currentAction?.isConfirmationError || transactionsAreFinished)
+  const showFinishButton = !currentAction?.isConfirmationError && transactionsAreFinished
 
   if (!currentAction) return null
 
@@ -77,7 +77,10 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
           </div>
         </div>
       )}
-      <TransactionDetails action={currentAction} />
+      <TransactionDetails
+        action={currentAction}
+        isLastAction={currentActionIndex + 1 === actions.length}
+      />
       <div className='w-full sm:mt-10 mt-6 gap-8 flex justify-between items-center'>
         <CancelButton onClick={() => setCurrentStep(Step.InitiateTransactions)} />
         {currentAction.isConfirmationError && (
