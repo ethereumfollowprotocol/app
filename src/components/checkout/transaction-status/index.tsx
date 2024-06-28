@@ -8,6 +8,7 @@ import CancelButton from '#/components/cancel-button'
 import TransactionDetails from './transaction-details'
 import { useActions } from '#/contexts/actions-context'
 import { PrimaryButton } from '#/components/primary-button'
+import { useEffect, useState } from 'react'
 
 interface TransactionStatusProps {
   onFinish: () => void
@@ -38,11 +39,16 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
   const { t: tBtn } = useTranslation('transactions')
   const { t } = useTranslation('transactions', { keyPrefix: 'action' })
 
+  // Add separate transaction finished state for custom delay to wait for backend to update after finishing the llast transaction
+  const [transactionsAreFinished, setTransactionsAreFinished] = useState(false)
+  useEffect(() => {
+    if (allActionsSuccessful) setTimeout(() => setTransactionsAreFinished(true), 2000)
+  }, [allActionsSuccessful])
+
   // Disable the next button if the current action is not successful
   const nextButtonIsDisabled = !isSuccess
   // Disable the finish button if not all actions are successful
-  const finishButtonIsDisabled = !allActionsSuccessful
-
+  const finishButtonIsDisabled = !transactionsAreFinished
   const showNextButton = !(currentAction?.isConfirmationError || allActionsSuccessful)
   const showFinishButton = !currentAction?.isConfirmationError && allActionsSuccessful
 
@@ -52,7 +58,6 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
     <>
       <div className='flex flex-col gap-2'>
         <h1 className='text-2xl sm:text-3xl font-semibold'>{t('title')}</h1>
-
         <p className='text-lg font-bold'>
           {currentActionIndex + 1} {t('of')} {actions.length}
         </p>
