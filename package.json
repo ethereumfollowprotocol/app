@@ -36,7 +36,7 @@
     "tailwind-merge": "^2.2.1",
     "valibot": "^0.27.0",
     "viem": "^2.16.3",
-    "wagmi": "^2.5.19"
+    "wagmi": "^2.10.8"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.7.3",
@@ -46,12 +46,12 @@
     "@tailwindcss/typography": "^0.5.10",
     "@tanstack/react-query-devtools": "^5.17.21",
     "@total-typescript/ts-reset": "^0.5.1",
-    "@types/bun": "^1.0.4",
-    "@types/node": "^20.11.6",
+    "@types/bun": "^1.1.6",
+    "@types/node": "^20.14.9",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vercel/analytics": "^1.1.2",
-    "@vercel/blob": "^0.19.0",
+    "@vercel/blob": "^0.23.3",
     "@vercel/speed-insights": "^1.0.7",
     "@vercel/toolbar": "^0.1.10",
     "autoprefixer": "^10.4.17",
