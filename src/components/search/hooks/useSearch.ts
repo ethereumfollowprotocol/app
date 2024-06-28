@@ -9,10 +9,10 @@ import { useCallback, useMemo, useRef, useState } from 'react'
 
 import searchENSNames from '#/api/searchENSNames'
 import { useCart } from '#/contexts/cart-context.tsx'
+import fetchFollowState from '#/api/fetchFollowState'
 import { resolveENSAddress } from '#/utils/resolveENS'
 import { listOpAddListRecord } from '#/utils/list-ops.ts'
 import { useEFPProfile } from '#/contexts/efp-profile-context.tsx'
-import fetchFollowState from '#/api/fetchFollowState'
 
 const useSearch = (isEditor?: boolean) => {
   const [addToCartError, setAddToCartError] = useState<string>()
