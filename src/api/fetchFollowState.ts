@@ -1,5 +1,5 @@
 import type { Address } from 'viem'
-import type { FollowingStatusResponse } from '#/types/requests'
+import type { FollowStatusResponse } from '#/types/requests'
 
 const fetchFollowState = async ({
   address,
@@ -12,9 +12,9 @@ const fetchFollowState = async ({
         token_id: undefined,
         address,
         state: {
-          is_following: false,
-          is_blocked: false,
-          is_muted: false
+          follow: false,
+          block: false,
+          mute: false
         }
       }
 
@@ -27,16 +27,16 @@ const fetchFollowState = async ({
       // cache: "no-cache",
     })
 
-    const data = (await response.json()) as FollowingStatusResponse
+    const data = (await response.json()) as FollowStatusResponse
     return data
   } catch (err: unknown) {
     return {
       token_id: undefined,
       address,
       state: {
-        is_following: false,
-        is_blocked: false,
-        is_muted: false
+        follow: false,
+        block: false,
+        mute: false
       }
     }
   }

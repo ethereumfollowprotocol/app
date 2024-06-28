@@ -19,9 +19,9 @@ export type UserFollowerType = {
   efp_list_nft_token_id: number | null
   address: Address
   tags: []
-  is_following: boolean
-  is_blocked: boolean
-  is_muted: boolean
+  follow: boolean
+  block: boolean
+  mute: boolean
   ens: {
     name: string | null
     address: Address

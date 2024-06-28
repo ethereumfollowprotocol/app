@@ -72,9 +72,9 @@ const useFollowState = ({
     const selectedStatus = type === 'following' ? followingStatus : followerStatus
     if (!selectedStatus) return 'none'
 
-    if (selectedStatus.state.is_blocked) return 'blocks'
-    if (selectedStatus.state.is_muted) return 'mutes'
-    if (selectedStatus.state.is_following) return 'follows'
+    if (selectedStatus.state.block) return 'blocks'
+    if (selectedStatus.state.mute) return 'mutes'
+    if (selectedStatus.state.follow) return 'follows'
 
     return 'none'
   }, [followerStatus, followingStatus, type])

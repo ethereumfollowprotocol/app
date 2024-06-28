@@ -10,9 +10,9 @@ import { useCallback, useMemo, useRef, useState } from 'react'
 import searchENSNames from '#/api/searchENSNames'
 import { useCart } from '#/contexts/cart-context.tsx'
 import { resolveENSAddress } from '#/utils/resolveENS'
-import fetchFollowingState from '#/api/fetchFollowState'
 import { listOpAddListRecord } from '#/utils/list-ops.ts'
 import { useEFPProfile } from '#/contexts/efp-profile-context.tsx'
+import fetchFollowState from '#/api/fetchFollowState'
 
 const useSearch = (isEditor?: boolean) => {
   const [addToCartError, setAddToCartError] = useState<string>()
@@ -66,7 +66,7 @@ const useSearch = (isEditor?: boolean) => {
   }
 
   const getFollowingState = async (address: Address) => {
-    const followingStatus = await fetchFollowingState({
+    const followingStatus = await fetchFollowState({
       address: address,
       list: selectedList,
       type: 'following'
@@ -74,9 +74,9 @@ const useSearch = (isEditor?: boolean) => {
 
     if (!followingStatus) return 'none'
 
-    if (followingStatus.state.is_blocked) return 'blocks'
-    if (followingStatus.state.is_muted) return 'mutes'
-    if (followingStatus.state.is_following) return 'follows'
+    if (followingStatus.state.block) return 'blocks'
+    if (followingStatus.state.mute) return 'mutes'
+    if (followingStatus.state.follow) return 'follows'
 
     return 'none'
   }
