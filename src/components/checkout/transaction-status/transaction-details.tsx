@@ -1,10 +1,10 @@
 import clsx from 'clsx'
-import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useWaitForTransactionReceipt } from 'wagmi'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import useChain from '#/hooks/use-chain'
-import type { Action } from '#/contexts/actions-context'
 import { useTranslation } from 'react-i18next'
+import type { Action } from '#/contexts/actions-context'
 
 const TransactionDetails = ({
   action,
