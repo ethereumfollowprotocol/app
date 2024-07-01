@@ -15,15 +15,12 @@ const fetchRecommendations = async (
       }
     )
 
-    console.log(res)
-
     const data = (await res.json()) as DiscoverResponseType
     const formattedData =
       endpoint === 'recommended' ? data.recommended.map(addr => ({ address: addr })) : data.discover
 
     return formattedData
   } catch (e) {
-    console.error(e)
     return []
   }
 }
