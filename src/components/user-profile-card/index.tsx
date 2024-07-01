@@ -64,7 +64,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
 
   const { followState } = useFollowState({
     address: profile?.address,
-    type: 'followings'
+    type: 'following'
   })
 
   const pathname = usePathname()

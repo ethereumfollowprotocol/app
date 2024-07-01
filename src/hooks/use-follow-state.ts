@@ -24,7 +24,7 @@ const useFollowState = ({
   address,
   type
 }: {
-  address: Address
+  address?: Address
   type: FollowStateType
 }) => {
   const { selectedList } = useEFPProfile()
