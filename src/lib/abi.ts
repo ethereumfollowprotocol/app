@@ -210,6 +210,16 @@ export const efpListMinterAbi = [
     ]
   },
   {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'ens', internalType: 'contract ENS', type: 'address' },
+      { name: 'claimant', internalType: 'address', type: 'address' }
+    ],
+    name: 'claimReverseENS',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }]
+  },
+  {
     stateMutability: 'payable',
     type: 'function',
     inputs: [{ name: 'listStorageLocation', internalType: 'bytes', type: 'bytes' }],
@@ -234,11 +244,42 @@ export const efpListMinterAbi = [
     outputs: [{ name: '', internalType: 'contract IEFPListRecords', type: 'address' }]
   },
   {
+    stateMutability: 'payable',
+    type: 'function',
+    inputs: [{ name: 'listStorageLocation', internalType: 'bytes', type: 'bytes' }],
+    name: 'mintNoMeta',
+    outputs: []
+  },
+  {
+    stateMutability: 'payable',
+    type: 'function',
+    inputs: [
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'listStorageLocation', internalType: 'bytes', type: 'bytes' }
+    ],
+    name: 'mintToNoMeta',
+    outputs: []
+  },
+  {
     stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'owner',
     outputs: [{ name: '', internalType: 'address', type: 'address' }]
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'pause',
+    outputs: []
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'paused',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }]
   },
   {
     stateMutability: 'view',
@@ -263,8 +304,25 @@ export const efpListMinterAbi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
+    inputs: [
+      { name: 'ens', internalType: 'contract ENS', type: 'address' },
+      { name: 'name', internalType: 'string', type: 'string' }
+    ],
+    name: 'setReverseENS',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }]
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
     inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
     name: 'transferOwnership',
+    outputs: []
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'unpause',
     outputs: []
   },
   {
@@ -285,6 +343,32 @@ export const efpListMinterAbi = [
       }
     ],
     name: 'OwnershipTransferred'
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: false
+      }
+    ],
+    name: 'Paused'
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: false
+      }
+    ],
+    name: 'Unpaused'
   }
 ] as const
 
@@ -294,266 +378,287 @@ export const efpListMinterAbi = [
 
 export const efpListRecordsAbi = [
   {
-    stateMutability: 'nonpayable',
-    type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
-      { name: 'op', internalType: 'bytes', type: 'bytes' }
+      { internalType: 'uint256', name: 'slot', type: 'uint256' },
+      { internalType: 'address', name: 'manager', type: 'address' }
+    ],
+    name: 'SlotAlreadyClaimed',
+    type: 'error'
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'uint256', name: 'slot', type: 'uint256' },
+      { indexed: false, internalType: 'bytes', name: 'op', type: 'bytes' }
+    ],
+    name: 'ListOp',
+    type: 'event'
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'address', name: 'previousOwner', type: 'address' },
+      { indexed: true, internalType: 'address', name: 'newOwner', type: 'address' }
+    ],
+    name: 'OwnershipTransferred',
+    type: 'event'
+  },
+  {
+    anonymous: false,
+    inputs: [{ indexed: false, internalType: 'address', name: 'account', type: 'address' }],
+    name: 'Paused',
+    type: 'event'
+  },
+  {
+    anonymous: false,
+    inputs: [{ indexed: false, internalType: 'address', name: 'account', type: 'address' }],
+    name: 'Unpaused',
+    type: 'event'
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'uint256', name: 'slot', type: 'uint256' },
+      { indexed: false, internalType: 'string', name: 'key', type: 'string' },
+      { indexed: false, internalType: 'bytes', name: 'value', type: 'bytes' }
+    ],
+    name: 'UpdateListMetadata',
+    type: 'event'
+  },
+  {
+    inputs: [
+      { internalType: 'uint256', name: 'slot', type: 'uint256' },
+      { internalType: 'bytes', name: 'op', type: 'bytes' }
     ],
     name: 'applyListOp',
-    outputs: []
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
   },
   {
-    stateMutability: 'nonpayable',
-    type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
-      { name: 'ops', internalType: 'bytes[]', type: 'bytes[]' }
+      { internalType: 'uint256', name: 'slot', type: 'uint256' },
+      { internalType: 'bytes[]', name: 'ops', type: 'bytes[]' }
     ],
     name: 'applyListOps',
-    outputs: []
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
   },
   {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [{ name: 'nonce', internalType: 'uint256', type: 'uint256' }],
+    inputs: [{ internalType: 'uint256', name: 'slot', type: 'uint256' }],
     name: 'claimListManager',
-    outputs: []
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
   },
   {
-    stateMutability: 'nonpayable',
-    type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
-      { name: 'manager', internalType: 'address', type: 'address' }
+      { internalType: 'uint256', name: 'slot', type: 'uint256' },
+      { internalType: 'address', name: 'manager', type: 'address' }
     ],
     name: 'claimListManagerForAddress',
-    outputs: []
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: 'nonce', internalType: 'uint256', type: 'uint256' }],
-    name: 'getAllListOps',
-    outputs: [{ name: '', internalType: 'bytes[]', type: 'bytes[]' }]
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: 'nonce', internalType: 'uint256', type: 'uint256' }],
-    name: 'getListManager',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }]
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
-      { name: 'index', internalType: 'uint256', type: 'uint256' }
+      { internalType: 'contract ENS', name: 'ens', type: 'address' },
+      { internalType: 'address', name: 'claimant', type: 'address' }
+    ],
+    name: 'claimReverseENS',
+    outputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [{ internalType: 'uint256', name: 'slot', type: 'uint256' }],
+    name: 'getAllListOps',
+    outputs: [{ internalType: 'bytes[]', name: '', type: 'bytes[]' }],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [{ internalType: 'uint256', name: 'slot', type: 'uint256' }],
+    name: 'getListManager',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [
+      { internalType: 'uint256', name: 'slot', type: 'uint256' },
+      { internalType: 'uint256', name: 'index', type: 'uint256' }
     ],
     name: 'getListOp',
-    outputs: [{ name: '', internalType: 'bytes', type: 'bytes' }]
+    outputs: [{ internalType: 'bytes', name: '', type: 'bytes' }],
+    stateMutability: 'view',
+    type: 'function'
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: 'nonce', internalType: 'uint256', type: 'uint256' }],
+    inputs: [{ internalType: 'uint256', name: 'slot', type: 'uint256' }],
     name: 'getListOpCount',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }]
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function'
   },
   {
-    stateMutability: 'view',
-    type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
-      { name: 'start', internalType: 'uint256', type: 'uint256' },
-      { name: 'end', internalType: 'uint256', type: 'uint256' }
+      { internalType: 'uint256', name: 'slot', type: 'uint256' },
+      { internalType: 'uint256', name: 'start', type: 'uint256' },
+      { internalType: 'uint256', name: 'end', type: 'uint256' }
     ],
     name: 'getListOpsInRange',
-    outputs: [{ name: '', internalType: 'bytes[]', type: 'bytes[]' }]
+    outputs: [{ internalType: 'bytes[]', name: '', type: 'bytes[]' }],
+    stateMutability: 'view',
+    type: 'function'
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: 'nonce', internalType: 'uint256', type: 'uint256' }],
+    inputs: [{ internalType: 'uint256', name: 'slot', type: 'uint256' }],
     name: 'getListUser',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }]
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function'
   },
   {
-    stateMutability: 'view',
-    type: 'function',
     inputs: [
-      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
-      { name: 'key', internalType: 'string', type: 'string' }
+      { internalType: 'uint256', name: 'tokenId', type: 'uint256' },
+      { internalType: 'string', name: 'key', type: 'string' }
     ],
     name: 'getMetadataValue',
-    outputs: [{ name: '', internalType: 'bytes', type: 'bytes' }]
+    outputs: [{ internalType: 'bytes', name: '', type: 'bytes' }],
+    stateMutability: 'view',
+    type: 'function'
   },
   {
-    stateMutability: 'view',
-    type: 'function',
     inputs: [
-      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
-      { name: 'keys', internalType: 'string[]', type: 'string[]' }
+      { internalType: 'uint256', name: 'tokenId', type: 'uint256' },
+      { internalType: 'string[]', name: 'keys', type: 'string[]' }
     ],
     name: 'getMetadataValues',
-    outputs: [{ name: '', internalType: 'bytes[]', type: 'bytes[]' }]
+    outputs: [{ internalType: 'bytes[]', name: '', type: 'bytes[]' }],
+    stateMutability: 'view',
+    type: 'function'
   },
   {
-    stateMutability: 'view',
-    type: 'function',
     inputs: [
-      { name: '', internalType: 'uint256', type: 'uint256' },
-      { name: '', internalType: 'uint256', type: 'uint256' }
+      { internalType: 'uint256', name: '', type: 'uint256' },
+      { internalType: 'uint256', name: '', type: 'uint256' }
     ],
     name: 'listOps',
-    outputs: [{ name: '', internalType: 'bytes', type: 'bytes' }]
+    outputs: [{ internalType: 'bytes', name: '', type: 'bytes' }],
+    stateMutability: 'view',
+    type: 'function'
   },
   {
-    stateMutability: 'view',
-    type: 'function',
     inputs: [],
     name: 'owner',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }]
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  { inputs: [], name: 'pause', outputs: [], stateMutability: 'nonpayable', type: 'function' },
+  {
+    inputs: [],
+    name: 'paused',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'view',
+    type: 'function'
   },
   {
-    stateMutability: 'nonpayable',
-    type: 'function',
     inputs: [],
     name: 'renounceOwnership',
-    outputs: []
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
   },
   {
-    stateMutability: 'nonpayable',
-    type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
-      { name: 'manager', internalType: 'address', type: 'address' }
+      { internalType: 'uint256', name: 'slot', type: 'uint256' },
+      { internalType: 'address', name: 'manager', type: 'address' }
     ],
     name: 'setListManager',
-    outputs: []
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
   },
   {
-    stateMutability: 'nonpayable',
-    type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
-      { name: 'user', internalType: 'address', type: 'address' }
+      { internalType: 'uint256', name: 'slot', type: 'uint256' },
+      { internalType: 'address', name: 'user', type: 'address' }
     ],
     name: 'setListUser',
-    outputs: []
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
   },
   {
-    stateMutability: 'nonpayable',
-    type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
-      { name: 'key', internalType: 'string', type: 'string' },
-      { name: 'value', internalType: 'bytes', type: 'bytes' }
+      { internalType: 'uint256', name: 'slot', type: 'uint256' },
+      { internalType: 'string', name: 'key', type: 'string' },
+      { internalType: 'bytes', name: 'value', type: 'bytes' }
     ],
     name: 'setMetadataValue',
-    outputs: []
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
   },
   {
-    stateMutability: 'nonpayable',
-    type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { internalType: 'uint256', name: 'slot', type: 'uint256' },
       {
-        name: 'records',
-        internalType: 'struct IEFPListMetadata.KeyValue[]',
-        type: 'tuple[]',
         components: [
-          { name: 'key', internalType: 'string', type: 'string' },
-          { name: 'value', internalType: 'bytes', type: 'bytes' }
-        ]
+          { internalType: 'string', name: 'key', type: 'string' },
+          { internalType: 'bytes', name: 'value', type: 'bytes' }
+        ],
+        internalType: 'struct IEFPListMetadata.KeyValue[]',
+        name: 'records',
+        type: 'tuple[]'
       }
     ],
     name: 'setMetadataValues',
-    outputs: []
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
   },
   {
-    stateMutability: 'nonpayable',
-    type: 'function',
     inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
+      { internalType: 'uint256', name: 'slot', type: 'uint256' },
       {
-        name: 'records',
-        internalType: 'struct IEFPListMetadata.KeyValue[]',
-        type: 'tuple[]',
         components: [
-          { name: 'key', internalType: 'string', type: 'string' },
-          { name: 'value', internalType: 'bytes', type: 'bytes' }
-        ]
+          { internalType: 'string', name: 'key', type: 'string' },
+          { internalType: 'bytes', name: 'value', type: 'bytes' }
+        ],
+        internalType: 'struct IEFPListMetadata.KeyValue[]',
+        name: 'records',
+        type: 'tuple[]'
       },
-      { name: 'ops', internalType: 'bytes[]', type: 'bytes[]' }
+      { internalType: 'bytes[]', name: 'ops', type: 'bytes[]' }
     ],
     name: 'setMetadataValuesAndApplyListOps',
-    outputs: []
-  },
-  {
+    outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
+    type: 'function'
+  },
+  {
+    inputs: [
+      { internalType: 'contract ENS', name: 'ens', type: 'address' },
+      { internalType: 'string', name: 'name', type: 'string' }
+    ],
+    name: 'setReverseENS',
+    outputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [{ internalType: 'address', name: 'newOwner', type: 'address' }],
     name: 'transferOwnership',
-    outputs: []
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
   },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
-        name: 'nonce',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: true
-      },
-      { name: 'op', internalType: 'bytes', type: 'bytes', indexed: false }
-    ],
-    name: 'ListOp'
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
-        name: 'previousOwner',
-        internalType: 'address',
-        type: 'address',
-        indexed: true
-      },
-      {
-        name: 'newOwner',
-        internalType: 'address',
-        type: 'address',
-        indexed: true
-      }
-    ],
-    name: 'OwnershipTransferred'
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
-        name: 'nonce',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: true
-      },
-      { name: 'key', internalType: 'string', type: 'string', indexed: false },
-      { name: 'value', internalType: 'bytes', type: 'bytes', indexed: false }
-    ],
-    name: 'UpdateListMetadata'
-  },
-  {
-    type: 'error',
-    inputs: [
-      { name: 'nonce', internalType: 'uint256', type: 'uint256' },
-      { name: 'manager', internalType: 'address', type: 'address' }
-    ],
-    name: 'NonceAlreadyClaimed'
-  }
+  { inputs: [], name: 'unpause', outputs: [], stateMutability: 'nonpayable', type: 'function' }
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

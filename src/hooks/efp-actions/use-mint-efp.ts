@@ -13,7 +13,10 @@ export function useMintEFP() {
   const { data: walletClient } = useWalletClient()
   const nonce = useMemo(() => generateListStorageLocationSlot(), [])
 
-  const mint = async (selectedChainId?: number) => {
+  const mint = async ({
+    selectedChainId,
+    setNewListAsPrimary
+  }: { selectedChainId?: number; setNewListAsPrimary?: boolean }) => {
     if (!accountAddress) return
 
     const listRecordsContractAddress = selectedChainId
@@ -25,7 +28,7 @@ export function useMintEFP() {
         chain: DEFAULT_CHAIN,
         address: coreEfpContracts.EFPListMinter,
         abi: abi.efpListMinterAbi,
-        functionName: 'easyMint',
+        functionName: setNewListAsPrimary ? 'easyMint' : 'mintNoMeta',
         args: [
           encodePacked(
             ['uint8', 'uint8', 'uint256', 'address', 'uint'],
