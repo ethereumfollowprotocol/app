@@ -8,10 +8,12 @@ import {
   createPublicClient
 } from 'viem'
 import { useRouter } from 'next/navigation'
+import { getWalletClient } from '@wagmi/core'
 import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useState } from 'react'
-import { useAccount, useChainId, useChains, useSwitchChain, useWalletClient } from 'wagmi'
+import { useAccount, useChainId, useChains, useSwitchChain } from 'wagmi'
 
+import config from '#/lib/wagmi'
 import { Step } from '#/components/checkout/types'
 import type { ChainWithDetails } from '#/lib/wagmi'
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
@@ -41,6 +43,7 @@ const useCheckout = () => {
     refetchProfile,
     refetchFollowing,
     setIsRefetchingProfile,
+    setSetNewListAsSelected,
     setIsRefetchingFollowing
   } = useEFPProfile()
   const chains = useChains()
@@ -49,7 +52,6 @@ const useCheckout = () => {
   const queryClient = useQueryClient()
   const { switchChain } = useSwitchChain()
   const { address: userAddress } = useAccount()
-  const { data: walletClient } = useWalletClient()
   const { totalCartItems, cartItems, resetCart } = useCart()
   const { mint, nonce: mintNonce, listHasBeenMinted } = useMintEFP()
 
@@ -75,6 +77,7 @@ const useCheckout = () => {
 
   const listOpTx = useCallback(
     async (items: CartItem[]) => {
+      const walletClient = await getWalletClient(config)
       // Get list storage location via token ID
       const listStorageLocation = selectedList
         ? await listRegistryContract.read.getListStorageLocation([BigInt(selectedList)])
@@ -114,7 +117,7 @@ const useCheckout = () => {
       })
 
       // initiate  'applyListOps' transaction
-      const hash = await walletClient?.writeContract({
+      const hash = await walletClient.writeContract({
         chain: fetchedChain,
         address: ListRecordsContract,
         abi: efpListRecordsAbi,
@@ -128,7 +131,7 @@ const useCheckout = () => {
       // return transaction hash to enable following transaction status in transaction details component
       return hash
     },
-    [walletClient, selectedChain, selectedList]
+    [currentChainId, selectedChain, selectedList]
   )
 
   const setActions = useCallback(async () => {
@@ -249,6 +252,7 @@ const useCheckout = () => {
     resetCart()
     resetActions()
 
+    if (!setNewListAsPrimary) setSetNewListAsSelected(true)
     if (listHasBeenMinted || selectedList === undefined) refetchLists()
     else {
       queryClient.setQueryData(
@@ -267,7 +271,7 @@ const useCheckout = () => {
     }
 
     router.push('/profile')
-  }, [resetActions, resetCart])
+  }, [resetActions, resetCart, setNewListAsPrimary])
 
   return {
     chains,

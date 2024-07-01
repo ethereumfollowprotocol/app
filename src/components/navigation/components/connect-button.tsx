@@ -99,7 +99,11 @@ const ConnectButton = () => {
               onClick={() => setListMenuOpen(!listMenuOpen)}
               className='flex justify-between items-center w-full hover:opacity-80 transition-opacity cursor-pointer'
             >
-              <Image src={ArrowLeft} alt='Show lists' />
+              {lists?.lists && lists?.lists?.length > 0 ? (
+                <Image src={ArrowLeft} alt='Show lists' />
+              ) : (
+                <div></div>
+              )}
               <p className=' font-semibold'>
                 {selectedList
                   ? `${t('navigation.list')} #${selectedList}`

@@ -1,7 +1,9 @@
+import { useAccount } from 'wagmi'
 import { useMemo, useState } from 'react'
+import { getWalletClient } from '@wagmi/core'
 import { encodePacked, type Address } from 'viem'
-import { useAccount, useWalletClient } from 'wagmi'
 
+import config from '#/lib/wagmi'
 import * as abi from 'src/lib/abi.ts'
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import { generateListStorageLocationSlot } from '#/app/efp/utilities.ts'
@@ -9,8 +11,8 @@ import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts
 
 export function useMintEFP() {
   const [listHasBeenMinted, setListHasBeenMinted] = useState(false)
+
   const { address: accountAddress } = useAccount()
-  const { data: walletClient } = useWalletClient()
   const nonce = useMemo(() => generateListStorageLocationSlot(), [])
 
   const mint = async ({
@@ -18,6 +20,8 @@ export function useMintEFP() {
     setNewListAsPrimary
   }: { selectedChainId?: number; setNewListAsPrimary?: boolean }) => {
     if (!accountAddress) return
+
+    const walletClient = await getWalletClient(config)
 
     const listRecordsContractAddress = selectedChainId
       ? (ListRecordContracts[selectedChainId] as Address)
@@ -48,7 +52,6 @@ export function useMintEFP() {
   return {
     mint,
     nonce,
-    walletClient,
     listHasBeenMinted
   }
 }
