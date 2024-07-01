@@ -257,8 +257,8 @@ const useCheckout = () => {
           pages: FollowingResponse[][]
           pageParams: number[]
         }) => ({
-          pages: prev.pages.slice(0, 1),
-          pageParams: prev.pageParams.slice(0, 1)
+          pages: prev?.pages?.slice(0, 1),
+          pageParams: prev?.pageParams?.slice(0, 1)
         })
       )
 
