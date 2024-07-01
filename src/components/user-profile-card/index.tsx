@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import LoadingCell from '../loading-cell'
 import { truncateAddress } from '#/lib/utilities'
-import { resolveENSProfile } from '#/utils/resolveENS'
+import { resolveENSProfile } from '#/utils/resolveEns'
 import LoadingProfileCard from './loading-profile-card'
 import { FollowButton } from '#/components/follow-button'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
