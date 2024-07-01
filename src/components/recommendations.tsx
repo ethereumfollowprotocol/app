@@ -3,20 +3,23 @@
 import clsx from 'clsx'
 import { useQuery } from '@tanstack/react-query'
 
-import fetchDiscover from '#/api/fetchDiscover'
+import fetchRecommendations from '#/api/fetchRecommendations'
 import { FollowList } from '#/components/follow-list'
+import { useAccount } from 'wagmi'
 
 interface RecommendationsProps {
   header: string
   className?: string
   limit?: number
+  endpoint: 'discover' | 'recommended'
 }
 
-const Recommendations = ({ header, className, limit }: RecommendationsProps) => {
+const Recommendations = ({ header, className, limit, endpoint }: RecommendationsProps) => {
+  const { address: userAddress } = useAccount()
   const { data: profilesToRecommend, isLoading } = useQuery({
-    queryKey: ['discover'],
+    queryKey: [endpoint, userAddress],
     queryFn: async () => {
-      const discoverAccounts = await fetchDiscover()
+      const discoverAccounts = await fetchRecommendations(endpoint, userAddress)
       return discoverAccounts
     }
   })
@@ -33,12 +36,7 @@ const Recommendations = ({ header, className, limit }: RecommendationsProps) => 
         profiles={displayedProfiles?.map(account => ({
           address: account.address,
           tags: [] as string[],
-          ens: account.name
-            ? {
-                name: account.name,
-                avatar: account.avatar
-              }
-            : undefined
+          ens: undefined
         }))}
         showFollowsYouBadges={true}
         showTags={false}
