@@ -122,7 +122,7 @@ const useCheckout = () => {
         // @ts-ignore - diff data type handled
         args: selectedList
           ? [nonce, operations]
-          : [nonce, { key: 'user', value: userAddress }, operations]
+          : [nonce, [{ key: 'user', value: userAddress }], operations]
       })
 
       // return transaction hash to enable following transaction status in transaction details component
