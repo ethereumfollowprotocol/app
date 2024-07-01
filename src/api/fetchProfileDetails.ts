@@ -1,6 +1,6 @@
 import { isAddress, type Address } from 'viem'
 import type { ProfileDetailsResponse } from '#/types/requests'
-import { resolveEnsAddress, resolveEnsProfile } from '#/utils/resolveEns'
+import { resolveEnsAddress, resolveEnsProfile } from '#/utils/ens'
 
 const fetchProfileDetails = async (addressOrName: string, list?: number) => {
   try {

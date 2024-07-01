@@ -7,10 +7,10 @@ import { useClickAway } from '@uidotdev/usehooks'
 import { useQueryState } from 'next-usequerystate'
 import { useCallback, useMemo, useRef, useState } from 'react'
 
+import { resolveEnsAddress } from '#/utils/ens'
 import searchENSNames from '#/api/searchENSNames'
 import { useCart } from '#/contexts/cart-context.tsx'
 import fetchFollowState from '#/api/fetchFollowState'
-import { resolveEnsAddress } from '#/utils/resolveEns'
 import { listOpAddListRecord } from '#/utils/list-ops.ts'
 import { useEFPProfile } from '#/contexts/efp-profile-context.tsx'
 

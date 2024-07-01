@@ -1,8 +1,8 @@
 import type { Address } from 'viem'
 import { useQuery } from '@tanstack/react-query'
 
+import { resolveEnsProfile } from '#/utils/ens'
 import type { ENSProfile } from '#/types/requests'
-import { resolveEnsProfile } from '#/utils/resolveEns'
 import { FollowButton } from '#/components/follow-button'
 import { FollowListItemName } from './follow-list-item-name'
 
