@@ -12,7 +12,7 @@ const fetchProfileRoles = async ({
   userAddress,
   chains
 }: {
-  list: number
+  list: number | string
   userAddress: Address
   chains: UseChainsReturnType<Config>
 }) => {
