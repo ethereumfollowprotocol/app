@@ -10,7 +10,7 @@ import { useAccountModal, useConnectModal } from '@rainbow-me/rainbowkit'
 import { LANGUAGES } from '#/lib/constants'
 import useLanguage from '../hooks/useLanguage'
 import { truncateAddress } from '#/lib/utilities'
-import { resolveENSProfile } from '#/utils/resolveEns'
+import { resolveEnsProfile } from '#/utils/resolveEns'
 import ArrowLeft from 'public/assets/icons/arrow-left.svg'
 import ArrowDown from 'public/assets/icons/arrow-down.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
@@ -48,7 +48,7 @@ const ConnectButton = () => {
     queryFn: async () => {
       if (!userAddress) return nullEnsProfile
 
-      const data = await resolveENSProfile(userAddress)
+      const data = await resolveEnsProfile(userAddress)
       return data
     }
   })

@@ -2,7 +2,7 @@ import type { Address } from 'viem'
 import { useQuery } from '@tanstack/react-query'
 
 import type { ENSProfile } from '#/types/requests'
-import { resolveENSProfile } from '#/utils/resolveEns'
+import { resolveEnsProfile } from '#/utils/resolveEns'
 import { FollowButton } from '#/components/follow-button'
 import { FollowListItemName } from './follow-list-item-name'
 
@@ -27,7 +27,7 @@ export function FollowListItem({
 }: FollowListItemProps) {
   const { data: fetchedEnsProfile, isLoading: isEnsProfileLoading } = useQuery({
     queryKey: ['ens metadata', address],
-    queryFn: async () => await resolveENSProfile(address)
+    queryFn: async () => await resolveEnsProfile(address)
   })
 
   const profileName = ensProfile ? ensProfile.name : fetchedEnsProfile?.name

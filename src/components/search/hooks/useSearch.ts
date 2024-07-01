@@ -10,7 +10,7 @@ import { useCallback, useMemo, useRef, useState } from 'react'
 import searchENSNames from '#/api/searchENSNames'
 import { useCart } from '#/contexts/cart-context.tsx'
 import fetchFollowState from '#/api/fetchFollowState'
-import { resolveENSAddress } from '#/utils/resolveEns'
+import { resolveEnsAddress } from '#/utils/resolveEns'
 import { listOpAddListRecord } from '#/utils/list-ops.ts'
 import { useEFPProfile } from '#/contexts/efp-profile-context.tsx'
 
@@ -108,7 +108,7 @@ const useSearch = (isEditor?: boolean) => {
       return
     }
 
-    const address = isAddress(user) ? user : await resolveENSAddress(user)
+    const address = isAddress(user) ? user : await resolveEnsAddress(user)
 
     if (!address) return { user }
 
@@ -176,7 +176,7 @@ const useSearch = (isEditor?: boolean) => {
     ) {
       const address = isAddress(currentSearch)
         ? currentSearch
-        : await resolveENSAddress(currentSearch)
+        : await resolveEnsAddress(currentSearch)
 
       router.push(`/${address || currentSearch}`)
       resetSearch()
