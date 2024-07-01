@@ -18,6 +18,8 @@
     "followers": "Followers",
     "following": "Following",
     "leaderboard": "Leaderboard",
+    "blocks you": "Blocks you",
+    "mutes you": "Mutes you",
     "follows you": "Follows you",
     "profile error": "User doesn't exist",
     "connect wallet": "Connect wallet to view",

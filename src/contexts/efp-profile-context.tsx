@@ -154,8 +154,10 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   })
 
   useEffect(() => {
-    if (lists?.primary_list) setSelectedList(Number(lists.primary_list))
-    else if (lists?.lists && lists?.lists?.length > 0) setSelectedList(Number(lists?.lists[0]))
+    if (lists?.primary_list) return setSelectedList(Number(lists.primary_list))
+    if (lists?.lists && lists?.lists?.length > 0) return setSelectedList(Number(lists?.lists[0]))
+
+    setSelectedList(undefined)
   }, [lists])
 
   const {
@@ -352,9 +354,9 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         roles,
         listsIsLoading,
         followingTagsLoading,
-        profileIsLoading: isRefetchingProfile || profileIsLoading,
-        followingIsLoading: isRefetchingFollowing || followingIsLoading,
-        followersIsLoading: followersIsLoading,
+        profileIsLoading: listsIsLoading || isRefetchingProfile || profileIsLoading,
+        followingIsLoading: listsIsLoading || isRefetchingFollowing || followingIsLoading,
+        followersIsLoading: listsIsLoading || followersIsLoading,
         isFetchingMoreFollowers: !isEndOfFollowers && isFetchingMoreFollowers,
         isFetchingMoreFollowing: !isEndOfFollowing && isFetchingMoreFollowing,
         isEndOfFollowers,

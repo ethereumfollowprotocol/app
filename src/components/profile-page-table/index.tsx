@@ -141,7 +141,7 @@ export function UserProfilePageTable({
       <FollowList
         isLoading={isLoading}
         isLoadingMore={isFetchingMore}
-        loadingRows={10}
+        loadingRows={FETCH_LIMIT_PARAM}
         listClassName='gap-2 rounded-xl'
         listItemClassName='rounded-xl hover:bg-white/50 px-0 py-2 sm:p-2'
         profiles={profiles}

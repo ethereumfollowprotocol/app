@@ -60,7 +60,7 @@ const Summary = () => {
         header={t('discover')}
         className={`h-fit w-full p-2 ${
           isFollowersEmpty || !address
-            ? 'lg:w-2/3 xl:max-w-[900px]'
+            ? 'xl:w-2/3 xl:max-w-[900px]'
             : 'lg:h-[638px] lg:w-[49%] xl:w-[470px] 2xl:w-[650px]'
         } py-4 sm:p-6 glass-card border-2 border-gray-200 rounded-2xl`}
       />

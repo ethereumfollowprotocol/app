@@ -69,6 +69,7 @@ const useCheckout = () => {
     selectedList ? Step.InitiateTransactions : Step.SelectChain
   )
 
+  const [setNewListAsPrimary, setSetNewListAsPrimary] = useState(true)
   const [selectedChainId, setSelectedChainId] = useState<number>(DEFAULT_CHAIN.id)
   const selectedChain = chains.find(chain => chain.id === selectedChainId) as ChainWithDetails
 
@@ -117,8 +118,11 @@ const useCheckout = () => {
         chain: fetchedChain,
         address: ListRecordsContract,
         abi: efpListRecordsAbi,
-        functionName: 'applyListOps',
-        args: [nonce, operations]
+        functionName: selectedList ? 'applyListOps' : 'setMetadataValuesAndApplyListOps',
+        // @ts-ignore - diff data type handled
+        args: selectedList
+          ? [nonce, operations]
+          : [nonce, [{ key: 'user', value: userAddress }], operations]
       })
 
       // return transaction hash to enable following transaction status in transaction details component
@@ -161,7 +165,7 @@ const useCheckout = () => {
       type: EFPActionType.CreateEFPList,
       label: 'create list',
       chainId: DEFAULT_CHAIN.id, // Chain ID where main contracts are stored at
-      execute: async () => await mint(selectedChainId),
+      execute: async () => await mint({ selectedChainId, setNewListAsPrimary }),
       isPendingConfirmation: false
     }
 
@@ -171,7 +175,7 @@ const useCheckout = () => {
         ? [...cartItemActions]
         : [createEFPListAction, ...cartItemActions]
     addActions(actionsToExecute)
-  }, [selectedChainId, totalCartItems, listOpTx])
+  }, [selectedChainId, setNewListAsPrimary, totalCartItems, listOpTx])
 
   useEffect(() => {
     setActions()
@@ -277,7 +281,9 @@ const useCheckout = () => {
     handleChainClick,
     handleNextStep,
     handleInitiateActions,
-    handleNextAction
+    handleNextAction,
+    setNewListAsPrimary,
+    setSetNewListAsPrimary
   }
 }
 

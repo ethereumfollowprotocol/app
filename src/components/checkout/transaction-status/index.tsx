@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ChainIcon } from '#/components/chain-icon'
 import { useWaitForTransactionReceipt } from 'wagmi'
@@ -38,13 +39,19 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
   const { t: tBtn } = useTranslation('transactions')
   const { t } = useTranslation('transactions', { keyPrefix: 'action' })
 
-  // Disable the next button if the current action is not successful
-  const nextButtonIsDisabled = !isSuccess
-  // Disable the finish button if not all actions are successful
-  const finishButtonIsDisabled = !allActionsSuccessful
+  // Add separate transaction finished state for custom delay to wait for backend to update after finishing the llast transaction
+  const [transactionsAreFinished, setTransactionsAreFinished] = useState(false)
+  useEffect(() => {
+    if (allActionsSuccessful) setTimeout(() => setTransactionsAreFinished(true), 2000)
+  }, [allActionsSuccessful])
 
-  const showNextButton = !(currentAction?.isConfirmationError || allActionsSuccessful)
-  const showFinishButton = !currentAction?.isConfirmationError && allActionsSuccessful
+  const isLastAction = currentActionIndex + 1 === actions.length
+  // Disable the next button if the current action is not successful
+  const nextButtonIsDisabled = isLastAction ? !transactionsAreFinished : !isSuccess
+  // Disable the finish button if not all actions are successful
+  const finishButtonIsDisabled = !transactionsAreFinished
+  const showNextButton = !(currentAction?.isConfirmationError || transactionsAreFinished)
+  const showFinishButton = !currentAction?.isConfirmationError && transactionsAreFinished
 
   if (!currentAction) return null
 
@@ -52,7 +59,6 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
     <>
       <div className='flex flex-col gap-2'>
         <h1 className='text-2xl sm:text-3xl font-semibold'>{t('title')}</h1>
-
         <p className='text-lg font-bold'>
           {currentActionIndex + 1} {t('of')} {actions.length}
         </p>
@@ -72,7 +78,7 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
           </div>
         </div>
       )}
-      <TransactionDetails action={currentAction} />
+      <TransactionDetails action={currentAction} isLastAction={isLastAction} />
       <div className='w-full sm:mt-10 mt-6 gap-8 flex justify-between items-center'>
         <CancelButton onClick={() => setCurrentStep(Step.InitiateTransactions)} />
         {currentAction.isConfirmationError && (

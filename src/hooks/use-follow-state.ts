@@ -1,10 +1,12 @@
+import { useMemo } from 'react'
 import type { Address } from 'viem'
-import { useCallback, useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
 
 import type { FollowState } from '#/types/common'
-import fetchFollowingState from '#/api/fetchFollowingStatus'
+import fetchFollowState from '#/api/fetchFollowState'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
+
+type FollowStateType = 'follower' | 'following'
 
 /**
  * @description
@@ -22,10 +24,29 @@ const useFollowState = ({
   address,
   type
 }: {
-  address?: Address
-  type: 'followers' | 'followings'
+  address: Address
+  type: FollowStateType
 }) => {
-  const { followers, selectedList, followersIsLoading } = useEFPProfile()
+  const { selectedList } = useEFPProfile()
+
+  const {
+    data: followerStatus,
+    isLoading: isFollowerStatusLoading,
+    isRefetching: isFollowerStateRefetching
+  } = useQuery({
+    queryKey: ['follower state', address, selectedList],
+    queryFn: async () => {
+      if (!address) return null
+
+      const fetchedStatus = await fetchFollowState({
+        address: address,
+        list: selectedList,
+        type: 'follower'
+      })
+
+      return fetchedStatus
+    }
+  })
 
   const {
     data: followingStatus,
@@ -36,54 +57,55 @@ const useFollowState = ({
     queryFn: async () => {
       if (!address) return null
 
-      const fetchedProfile = await fetchFollowingState({ address: address, list: selectedList })
+      const fetchedProfile = await fetchFollowState({
+        address: address,
+        list: selectedList,
+        type: 'following'
+      })
       return fetchedProfile
     },
     staleTime: Infinity,
     refetchOnWindowFocus: false
   })
 
-  const followerState = useCallback((): FollowState => {
-    if (!followers) return 'none'
+  const followState = useMemo((): FollowState => {
+    const selectedStatus = type === 'following' ? followingStatus : followerStatus
+    if (!selectedStatus) return 'none'
 
-    const follower = followers?.find(
-      follower => follower?.address?.toLowerCase() === address?.toLowerCase()
-    )
-    if (!follower) return 'none'
-
-    if (follower?.is_blocked) return 'blocks'
-    if (follower.is_muted) return 'mutes'
-    if (follower) return 'follows'
+    if (selectedStatus.state.block) return 'blocks'
+    if (selectedStatus.state.mute) return 'mutes'
+    if (selectedStatus.state.follow) return 'follows'
 
     return 'none'
-  }, [followers, address])
-
-  const followingState = useCallback((): FollowState => {
-    if (!followingStatus) return 'none'
-
-    if (followingStatus.state.is_blocked) return 'blocks'
-    if (followingStatus.state.is_muted) return 'mutes'
-    if (followingStatus.state.is_following) return 'follows'
-
-    return 'none'
-  }, [followingStatus])
-
-  const followState = useMemo(
-    () =>
-      ({
-        followers: followerState,
-        followings: followingState
-      })[type],
-    [followerState, followingState, type]
-  )
+  }, [followerStatus, followingStatus, type])
 
   const isFollowStateLoading = {
-    followers: followersIsLoading,
-    followings: isFollowingStatusLoading || isFollowingStatusRefetching
+    follower: isFollowerStatusLoading || isFollowerStateRefetching,
+    following: isFollowingStatusLoading || isFollowingStatusRefetching
   }[type]
 
+  const followerTag = {
+    blocks: {
+      text: 'blocks you',
+      className: 'text-darkGray'
+    },
+    mutes: {
+      text: 'mutes you',
+      className: 'text-darkGray'
+    },
+    follows: {
+      text: 'follows you',
+      className: 'text-darkGray'
+    },
+    none: {
+      text: '',
+      className: 'hidden text-darkGray'
+    }
+  }[followState]
+
   return {
-    followState: followState(),
+    followState,
+    followerTag,
     isFollowStateLoading
   }
 }

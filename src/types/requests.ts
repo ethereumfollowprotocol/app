@@ -71,13 +71,13 @@ export interface FollowingResponse {
   ens?: ENSProfile
 }
 
-export interface FollowingStatusResponse {
+export interface FollowStatusResponse {
   token_id: string
   address: Address
   state: {
-    is_following: boolean
-    is_blocked: boolean
-    is_muted: boolean
+    follow: boolean
+    block: boolean
+    mute: boolean
   }
 }
 

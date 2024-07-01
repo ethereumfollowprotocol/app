@@ -118,7 +118,7 @@ const ConnectButton = () => {
               <div className='flex flex-col gap-2 glass-card bg-white/90 border-2 border-gray-200 px-4 py-2 rounded-lg shadow-md'>
                 {lists?.lists?.map(list => (
                   <p
-                    className=' text-darkGrey text-nowrap font-semibold hover:text-gray-500 transition-colors'
+                    className=' text-darkGrey text-nowrap font-semibold hover:text-gray-400'
                     key={list}
                     onClick={() => {
                       setSelectedList(Number(list))
@@ -129,7 +129,7 @@ const ConnectButton = () => {
                   </p>
                 ))}
                 <p
-                  className=' text-darkGrey text-nowrap font-semibold hover:text-gray-500 transition-colors'
+                  className=' text-darkGrey text-nowrap font-semibold hover:text-gray-400'
                   key={'new list'}
                   onClick={() => {
                     setSelectedList(undefined)
