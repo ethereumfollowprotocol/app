@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation'
 import { getWalletClient } from '@wagmi/core'
 import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useState } from 'react'
-import { useAccount, useChainId, useChains, useSwitchChain } from 'wagmi'
+import { useAccount, useChainId, useChains, useSwitchChain, useWalletClient } from 'wagmi'
 
 import config from '#/lib/wagmi'
 import { Step } from '#/components/checkout/types'
@@ -55,6 +55,7 @@ const useCheckout = () => {
   const queryClient = useQueryClient()
   const { switchChain } = useSwitchChain()
   const { address: userAddress } = useAccount()
+  const { data: walletClient } = useWalletClient()
   const { totalCartItems, cartItems, resetCart } = useCart()
   const { mint, nonce: mintNonce, listHasBeenMinted } = useMintEFP()
 
@@ -78,14 +79,8 @@ const useCheckout = () => {
   const [selectedChainId, setSelectedChainId] = useState<number>(DEFAULT_CHAIN.id)
   const selectedChain = chains.find(chain => chain.id === selectedChainId) as ChainWithDetails
 
-  const [isClient, setIsClient] = useState(false)
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
-
   const listOpTx = useCallback(
     async (items: CartItem[]) => {
-      const walletClient = isClient ? await getWalletClient(config) : undefined
       // Get list storage location via token ID
       const listStorageLocation = selectedList
         ? await listRegistryContract.read.getListStorageLocation([BigInt(selectedList)])
