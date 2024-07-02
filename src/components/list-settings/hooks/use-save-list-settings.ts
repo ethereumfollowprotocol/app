@@ -11,6 +11,7 @@ import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { generateListStorageLocationSlot } from '#/app/efp/utilities'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
+import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 
 type SaveListSettingsParams = {
   selectedList: number
@@ -47,6 +48,12 @@ const useSaveListSettings = ({
   onCancel
 }: SaveListSettingsParams) => {
   const [currentStep, setCurrentStep] = useState(Step.InitiateTransactions)
+  const [completeTrabsactions, setCompleteTransactions] = useState({
+    user: false,
+    manager: false,
+    owner: false,
+    chain: false
+  })
 
   const {
     refetchLists,
@@ -63,7 +70,14 @@ const useSaveListSettings = ({
   const { data: walletClient } = useWalletClient()
   const { address: userAddress } = useAccount()
   const { t } = useTranslation('profile', { keyPrefix: 'list settings' })
-  const { addActions, actions, executeActionByIndex, resetActions, moveToNextAction } = useActions()
+  const {
+    addActions,
+    actions,
+    executeActionByIndex,
+    resetActions,
+    moveToNextAction,
+    currentActionIndex
+  } = useActions()
 
   const setListStorageLocationTx = useCallback(async () => {
     if (!newChain) return
@@ -87,6 +101,13 @@ const useSaveListSettings = ({
       args: [BigInt(selectedList), data]
     })
 
+    if (hash) {
+      setCompleteTransactions(prev => ({
+        ...prev,
+        chain: true
+      }))
+    }
+
     // return transaction hash to enable following transaction status in transaction details component
     return hash
   }, [profile, slot, newChain, walletClient])
@@ -102,6 +123,13 @@ const useSaveListSettings = ({
       functionName: 'transferFrom',
       args: [userAddress, owner as Address, BigInt(selectedList)]
     })
+
+    if (hash) {
+      setCompleteTransactions(prev => ({
+        ...prev,
+        owner: true
+      }))
+    }
 
     // return transaction hash to enable following transaction status in transaction details component
     return hash
@@ -120,6 +148,13 @@ const useSaveListSettings = ({
       args: [slot, manager as Address]
     })
 
+    if (hash) {
+      setCompleteTransactions(prev => ({
+        ...prev,
+        manager: true
+      }))
+    }
+
     // return transaction hash to enable following transaction status in transaction details component
     return hash
   }, [slot, listRecordsContractAddress, manager, walletClient])
@@ -136,6 +171,13 @@ const useSaveListSettings = ({
       functionName: 'setListUser',
       args: [slot, user as Address]
     })
+
+    if (hash) {
+      setCompleteTransactions(prev => ({
+        ...prev,
+        user: true
+      }))
+    }
 
     // return transaction hash to enable following transaction status in transaction details component
     return hash
@@ -157,7 +199,7 @@ const useSaveListSettings = ({
       id: EFPActionType.SetEFPListOwner, // Unique identifier for the action
       type: EFPActionType.SetEFPListOwner,
       label: t('set owner'),
-      chainId: chain.id,
+      chainId: DEFAULT_CHAIN.id,
       execute: setOwnerTx,
       isPendingConfirmation: false
     }
@@ -179,10 +221,12 @@ const useSaveListSettings = ({
     }
 
     const actionsToExecute: Action[] = []
-    if (changedValues.user) actionsToExecute.push(setListUser)
-    if (changedValues.manager) actionsToExecute.push(setListManager)
-    if (changedValues.owner) actionsToExecute.push(setListOwner)
-    if (changedValues.chain) actionsToExecute.push(setListStorageLocation)
+    if (!completeTrabsactions.user && changedValues.user) actionsToExecute.push(setListUser)
+    if (!completeTrabsactions.manager && changedValues.manager)
+      actionsToExecute.push(setListManager)
+    if (!completeTrabsactions.owner && changedValues.owner) actionsToExecute.push(setListOwner)
+    if (!completeTrabsactions.chain && changedValues.chain)
+      actionsToExecute.push(setListStorageLocation)
 
     addActions(actionsToExecute)
   }, [
@@ -201,8 +245,14 @@ const useSaveListSettings = ({
 
   const handleInitiateActions = useCallback(() => {
     if (!chain) return
-    if (currentChainId !== chain?.id) {
-      switchChain({ chainId: chain.id })
+    if (
+      actions[0]?.type === EFPActionType.SetEFPListOwner
+        ? currentChainId !== DEFAULT_CHAIN.id
+        : currentChainId !== chain?.id
+    ) {
+      switchChain({
+        chainId: actions[0]?.type === EFPActionType.SetEFPListOwner ? DEFAULT_CHAIN.id : chain.id
+      })
       return
     }
 
@@ -212,9 +262,18 @@ const useSaveListSettings = ({
 
   const handleNextAction = useCallback(async () => {
     if (!chain) return
-    if (currentChainId !== chain.id) {
+    if (
+      actions[currentActionIndex + 1]?.type === EFPActionType.SetEFPListOwner
+        ? currentChainId !== DEFAULT_CHAIN.id
+        : currentChainId !== chain?.id
+    ) {
       switchChain(
-        { chainId: chain.id },
+        {
+          chainId:
+            actions[currentActionIndex + 1]?.type === EFPActionType.SetEFPListOwner
+              ? DEFAULT_CHAIN.id
+              : chain.id
+        },
         {
           onSettled: () => {
             setCurrentStep(Step.InitiateTransactions)
@@ -228,7 +287,7 @@ const useSaveListSettings = ({
 
     const nextActionIndex = moveToNextAction()
     executeActionByIndex(nextActionIndex)
-  }, [moveToNextAction, executeActionByIndex, currentChainId])
+  }, [moveToNextAction, executeActionByIndex, currentChainId, currentActionIndex])
 
   const onFinish = useCallback(() => {
     setIsRefetchingProfile(true)
