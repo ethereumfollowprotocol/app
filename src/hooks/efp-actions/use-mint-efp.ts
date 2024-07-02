@@ -53,6 +53,7 @@ export function useMintEFP() {
   return {
     mint,
     nonce,
+    walletClient,
     listHasBeenMinted
   }
 }

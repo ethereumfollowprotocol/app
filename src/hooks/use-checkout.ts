@@ -134,7 +134,7 @@ const useCheckout = () => {
       // return transaction hash to enable following transaction status in transaction details component
       return hash
     },
-    [currentChainId, selectedChain, selectedList]
+    [currentChainId, selectedChain, selectedList, walletClient]
   )
 
   const setActions = useCallback(async () => {
