@@ -162,7 +162,7 @@ export function Search({
             </div>
           ) : (
             searchResult.map((result, index) => (
-              <p
+              <div
                 key={result.name}
                 onClick={() => {
                   if (isEditor && result.resolvedAddress) addToCart(result.resolvedAddress.id)
@@ -176,7 +176,7 @@ export function Search({
                 <p className='text-sm text-gray-400'>
                   - {truncateAddress(result.resolvedAddress?.id)}
                 </p>
-              </p>
+              </div>
             ))
           )}
         </div>

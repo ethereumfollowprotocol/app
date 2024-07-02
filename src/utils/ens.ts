@@ -4,9 +4,9 @@ import { createPublicClient, http, type Address } from 'viem'
 
 import { rpcProviders } from '#/lib/constants/providers'
 
-export const resolveENSProfile = async (address: `0x${string}`) => {
-  const resolvedName = await resolveENSName(address)
-  // const ensAddress = resolvedName ? await resolveENSAddress(resolvedName) : null
+export const resolveEnsProfile = async (address: `0x${string}`) => {
+  const resolvedName = await resolveEnsName(address)
+  // const ensAddress = resolvedName ? await resolveEnsAddress(resolvedName) : null
 
   const avatarUrl = `https://metadata.ens.domains/mainnet/avatar/${resolvedName}`
 
@@ -26,7 +26,7 @@ export const resolveENSProfile = async (address: `0x${string}`) => {
   }
 }
 
-export const resolveENSName = async (address: `0x${string}`) => {
+export const resolveEnsName = async (address: `0x${string}`) => {
   const publicClient = createPublicClient({
     chain: mainnet,
     transport: http(rpcProviders[1])
@@ -36,7 +36,7 @@ export const resolveENSName = async (address: `0x${string}`) => {
   return lookup ?? undefined
 }
 
-export const resolveENSAddress = async (name: string) => {
+export const resolveEnsAddress = async (name: string) => {
   const publicClient = createPublicClient({
     chain: mainnet,
     transport: http(rpcProviders[1])

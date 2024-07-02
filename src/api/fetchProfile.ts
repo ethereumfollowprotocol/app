@@ -1,6 +1,6 @@
 import { isAddress, type Address } from 'viem'
 import type { ProfileResponse } from '#/types/requests'
-import { resolveENSAddress, resolveENSProfile } from '#/utils/resolveENS'
+import { resolveEnsAddress, resolveEnsProfile } from '#/utils/ens'
 
 const fetchUserProfile = async (addressOrName: string) => {
   try {
@@ -17,8 +17,8 @@ const fetchUserProfile = async (addressOrName: string) => {
   } catch (err: unknown) {
     const address = isAddress(addressOrName)
       ? addressOrName
-      : await resolveENSAddress(`${addressOrName.replace('.eth', '')}.eth`)
-    const data = await resolveENSProfile(address)
+      : await resolveEnsAddress(`${addressOrName.replace('.eth', '')}.eth`)
+    const data = await resolveEnsProfile(address)
 
     if (data?.name && data?.avatar)
       return {
