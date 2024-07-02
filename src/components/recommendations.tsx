@@ -1,11 +1,11 @@
 'use client'
 
 import clsx from 'clsx'
+import { useAccount } from 'wagmi'
 import { useQuery } from '@tanstack/react-query'
 
-import fetchRecommendations from '#/api/fetchRecommendations'
 import { FollowList } from '#/components/follow-list'
-import { useAccount } from 'wagmi'
+import fetchRecommendations from '#/api/fetchRecommendations'
 
 interface RecommendationsProps {
   header: string

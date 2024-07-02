@@ -1,5 +1,3 @@
-'use client'
-
 import { useMemo, useState } from 'react'
 import { encodePacked, type Address } from 'viem'
 import { useAccount, useWalletClient } from 'wagmi'

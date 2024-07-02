@@ -2,9 +2,9 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
+import { useEffect, useRef, useState } from 'react'
 import type { Address, GetEnsAvatarReturnType } from 'viem'
 
 import LoadingCell from '../loading-cell'
