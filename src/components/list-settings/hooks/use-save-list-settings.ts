@@ -89,7 +89,7 @@ const useSaveListSettings = ({
 
     // return transaction hash to enable following transaction status in transaction details component
     return hash
-  }, [profile, slot, newChain])
+  }, [profile, slot, newChain, walletClient])
 
   const setOwnerTx = useCallback(async () => {
     if (!(listRecordsContractAddress && isAddress(owner || '') && userAddress)) return
@@ -105,7 +105,7 @@ const useSaveListSettings = ({
 
     // return transaction hash to enable following transaction status in transaction details component
     return hash
-  }, [owner, listRecordsContractAddress])
+  }, [owner, listRecordsContractAddress, walletClient])
 
   const setManagerTx = useCallback(async () => {
     if (!(listRecordsContractAddress && slot && isAddress(manager || ''))) return
@@ -122,7 +122,7 @@ const useSaveListSettings = ({
 
     // return transaction hash to enable following transaction status in transaction details component
     return hash
-  }, [slot, listRecordsContractAddress, manager])
+  }, [slot, listRecordsContractAddress, manager, walletClient])
 
   const setUserTx = useCallback(async () => {
     if (!(listRecordsContractAddress && slot && isAddress(user || ''))) return
@@ -139,7 +139,7 @@ const useSaveListSettings = ({
 
     // return transaction hash to enable following transaction status in transaction details component
     return hash
-  }, [slot, listRecordsContractAddress, user])
+  }, [slot, listRecordsContractAddress, user, walletClient])
 
   const setActions = useCallback(() => {
     if (!chain) return
