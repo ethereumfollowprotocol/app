@@ -10,12 +10,10 @@ import {
   createPublicClient
 } from 'viem'
 import { useRouter } from 'next/navigation'
-import { getWalletClient } from '@wagmi/core'
 import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useState } from 'react'
 import { useAccount, useChainId, useChains, useSwitchChain, useWalletClient } from 'wagmi'
 
-import config from '#/lib/wagmi'
 import { Step } from '#/components/checkout/types'
 import type { ChainWithDetails } from '#/lib/wagmi'
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
@@ -81,6 +79,8 @@ const useCheckout = () => {
 
   const listOpTx = useCallback(
     async (items: CartItem[]) => {
+      // const walletClient = await getWalletClient(config)
+
       // Get list storage location via token ID
       const listStorageLocation = selectedList
         ? await listRegistryContract.read.getListStorageLocation([BigInt(selectedList)])
