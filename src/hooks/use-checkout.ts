@@ -39,6 +39,7 @@ const useCheckout = () => {
     executeActionByIndex
   } = useActions()
   const {
+    lists,
     profile,
     refetchLists,
     selectedList,
@@ -73,7 +74,7 @@ const useCheckout = () => {
     selectedList ? Step.InitiateTransactions : Step.SelectChain
   )
 
-  const [setNewListAsPrimary, setSetNewListAsPrimary] = useState(true)
+  const [setNewListAsPrimary, setSetNewListAsPrimary] = useState(!!lists?.primary_list)
   const [selectedChainId, setSelectedChainId] = useState<number>(DEFAULT_CHAIN.id)
   const selectedChain = chains.find(chain => chain.id === selectedChainId) as ChainWithDetails
 

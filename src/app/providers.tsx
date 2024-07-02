@@ -36,11 +36,7 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
       <ReactQueryStreamedHydration>
         <WagmiProvider config={wagmiConfig} initialState={initialState}>
           {/* <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}> */}
-          <RainbowKitProvider
-            coolMode={true}
-            initialChain={DEFAULT_CHAIN.id}
-            showRecentTransactions={true}
-          >
+          <RainbowKitProvider coolMode={true} initialChain={DEFAULT_CHAIN.id}>
             <CartProvider>
               <EFPProfileProvider>
                 <TransactionsProvider>

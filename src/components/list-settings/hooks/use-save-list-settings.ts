@@ -1,12 +1,10 @@
 'use client'
 
-import { getWalletClient } from '@wagmi/core'
 import { useTranslation } from 'react-i18next'
 import { useCallback, useEffect, useState } from 'react'
-import { useChainId, useSwitchChain, useAccount } from 'wagmi'
 import { isAddress, type Chain, type Address, encodePacked } from 'viem'
+import { useChainId, useSwitchChain, useAccount, useWalletClient } from 'wagmi'
 
-import config from '#/lib/wagmi'
 import { useCart } from '#/contexts/cart-context'
 import { Step } from '#/components/checkout/types'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
@@ -61,17 +59,18 @@ const useSaveListSettings = ({
     setIsRefetchingProfile,
     setIsRefetchingFollowing
   } = useEFPProfile()
-  const { address: userAddress } = useAccount()
   const { resetCart } = useCart()
   const currentChainId = useChainId()
   const { switchChain } = useSwitchChain()
+  const { data: walletClient } = useWalletClient()
+  const { address: userAddress } = useAccount()
   const { t } = useTranslation('profile', { keyPrefix: 'list settings' })
   const { addActions, actions, executeActionByIndex, resetActions, moveToNextAction } = useActions()
 
   const setListStorageLocationTx = useCallback(async () => {
     if (!newChain) return
 
-    const walletClient = await getWalletClient(config)
+    // const walletClient = await getWalletClient(config)
     const newSlot = generateListStorageLocationSlot()
 
     const listRecordsContractAddress = newChain
@@ -97,7 +96,7 @@ const useSaveListSettings = ({
   const setOwnerTx = useCallback(async () => {
     if (!(listRecordsContractAddress && isAddress(owner || '') && userAddress)) return
 
-    const walletClient = await getWalletClient(config)
+    // const walletClient = await getWalletClient(config)
 
     const hash = await walletClient?.writeContract({
       address: coreEfpContracts.EFPListRegistry,
@@ -113,7 +112,7 @@ const useSaveListSettings = ({
   const setManagerTx = useCallback(async () => {
     if (!(listRecordsContractAddress && slot && isAddress(manager || ''))) return
 
-    const walletClient = await getWalletClient(config)
+    // const walletClient = await getWalletClient(config)
 
     // initiate  'applyListOps' transaction
     const hash = await walletClient?.writeContract({
@@ -130,7 +129,7 @@ const useSaveListSettings = ({
   const setUserTx = useCallback(async () => {
     if (!(listRecordsContractAddress && slot && isAddress(user || ''))) return
 
-    const walletClient = await getWalletClient(config)
+    // const walletClient = await getWalletClient(config)
 
     // initiate  'applyListOps' transaction
     const hash = await walletClient?.writeContract({

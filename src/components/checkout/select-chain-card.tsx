@@ -55,11 +55,11 @@ export function SelectChainCard({
       </div>
       {lists?.lists && lists.lists.length > 0 && (
         <div className='flex mt-4 items-center gap-3 sm:gap-5'>
-          <p className='text-lg font-bold'>Set new list as primary list?</p>
+          <p className='text-lg font-bold'>Set new list as Primary List?</p>
           <input
             className='toggle'
             type='checkbox'
-            defaultChecked={true}
+            defaultChecked={!!lists.primary_list}
             onChange={e => setSetNewListAsPrimary(e.target.checked)}
           />
         </div>
