@@ -1,3 +1,5 @@
+'use client'
+
 import { getWalletClient } from '@wagmi/core'
 import { useTranslation } from 'react-i18next'
 import { useCallback, useEffect, useState } from 'react'

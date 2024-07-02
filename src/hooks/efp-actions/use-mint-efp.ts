@@ -1,3 +1,5 @@
+'use client'
+
 import { useAccount } from 'wagmi'
 import { useMemo, useState } from 'react'
 import { getWalletClient } from '@wagmi/core'
