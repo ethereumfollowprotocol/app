@@ -5,13 +5,13 @@ import { useChainId, useSwitchChain, useAccount, useWalletClient } from 'wagmi'
 
 import { useCart } from '#/contexts/cart-context'
 import { Step } from '#/components/checkout/types'
+import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { generateListStorageLocationSlot } from '#/app/efp/utilities'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
-import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 
 type SaveListSettingsParams = {
   selectedList: number
