@@ -10,6 +10,7 @@ import CancelButton from '#/components/cancel-button'
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import { PrimaryButton } from '#/components/primary-button'
 import GreenCheck from 'public/assets/icons/check-green.svg'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 export function SelectChainCard({
   chains,
@@ -31,6 +32,7 @@ export function SelectChainCard({
   const currentChainId = useChainId()
   const { switchChain } = useSwitchChain()
 
+  const { lists } = useEFPProfile()
   const { t } = useTranslation('transactions')
   const { t: tChain } = useTranslation('transactions', { keyPrefix: 'select chain' })
 
@@ -51,15 +53,17 @@ export function SelectChainCard({
           selectedChain={selectedChain}
         />
       </div>
-      <div className='flex mt-4 items-center gap-3 sm:gap-5'>
-        <p className='text-lg font-bold'>Set new list as primary list?</p>
-        <input
-          className='toggle'
-          type='checkbox'
-          defaultChecked={true}
-          onChange={e => setSetNewListAsPrimary(e.target.checked)}
-        />
-      </div>
+      {lists?.lists && lists.lists.length > 0 && (
+        <div className='flex mt-4 items-center gap-3 sm:gap-5'>
+          <p className='text-lg font-bold'>Set new list as Primary List?</p>
+          <input
+            className='toggle'
+            type='checkbox'
+            defaultChecked={!!lists.primary_list}
+            onChange={e => setSetNewListAsPrimary(e.target.checked)}
+          />
+        </div>
+      )}
       <div className='w-full mt-8 flex justify-between items-center'>
         <CancelButton onClick={onCancel} />
         <PrimaryButton

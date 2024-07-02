@@ -35,12 +35,14 @@ const useCheckout = () => {
     executeActionByIndex
   } = useActions()
   const {
+    lists,
     profile,
     refetchLists,
     selectedList,
     refetchProfile,
     refetchFollowing,
     setIsRefetchingProfile,
+    setSetNewListAsSelected,
     setIsRefetchingFollowing
   } = useEFPProfile()
   const chains = useChains()
@@ -69,12 +71,14 @@ const useCheckout = () => {
     selectedList ? Step.InitiateTransactions : Step.SelectChain
   )
 
-  const [setNewListAsPrimary, setSetNewListAsPrimary] = useState(true)
+  const [setNewListAsPrimary, setSetNewListAsPrimary] = useState(!!lists?.primary_list)
   const [selectedChainId, setSelectedChainId] = useState<number>(DEFAULT_CHAIN.id)
   const selectedChain = chains.find(chain => chain.id === selectedChainId) as ChainWithDetails
 
   const listOpTx = useCallback(
     async (items: CartItem[]) => {
+      // const walletClient = await getWalletClient(config)
+
       // Get list storage location via token ID
       const listStorageLocation = selectedList
         ? await listRegistryContract.read.getListStorageLocation([BigInt(selectedList)])
@@ -128,7 +132,7 @@ const useCheckout = () => {
       // return transaction hash to enable following transaction status in transaction details component
       return hash
     },
-    [walletClient, selectedChain, selectedList]
+    [currentChainId, selectedChain, selectedList, walletClient]
   )
 
   const setActions = useCallback(async () => {
@@ -249,6 +253,7 @@ const useCheckout = () => {
     resetCart()
     resetActions()
 
+    if (!setNewListAsPrimary) setSetNewListAsSelected(true)
     if (listHasBeenMinted || selectedList === undefined) refetchLists()
     else {
       queryClient.setQueryData(
@@ -267,7 +272,7 @@ const useCheckout = () => {
     }
 
     router.push('/profile')
-  }, [resetActions, resetCart])
+  }, [resetActions, resetCart, setNewListAsPrimary])
 
   return {
     chains,

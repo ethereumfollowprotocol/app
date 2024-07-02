@@ -7,8 +7,8 @@ import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
 
 import LoadingCell from '../loading-cell'
+import { resolveEnsProfile } from '#/utils/ens'
 import { truncateAddress } from '#/lib/utilities'
-import { resolveENSProfile } from '#/utils/resolveENS'
 import LoadingProfileCard from './loading-profile-card'
 import { FollowButton } from '#/components/follow-button'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
@@ -37,7 +37,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
     queryKey: ['ens metadata', profile],
     queryFn: async () => {
       if (!profile) return null
-      return await resolveENSProfile(profile?.address)
+      return await resolveEnsProfile(profile?.address)
     }
   })
 
