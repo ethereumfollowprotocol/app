@@ -78,9 +78,14 @@ const useCheckout = () => {
   const [selectedChainId, setSelectedChainId] = useState<number>(DEFAULT_CHAIN.id)
   const selectedChain = chains.find(chain => chain.id === selectedChainId) as ChainWithDetails
 
+  const [isClient, setIsClient] = useState(false)
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
   const listOpTx = useCallback(
     async (items: CartItem[]) => {
-      const walletClient = await getWalletClient(config)
+      const walletClient = isClient ? await getWalletClient(config) : undefined
       // Get list storage location via token ID
       const listStorageLocation = selectedList
         ? await listRegistryContract.read.getListStorageLocation([BigInt(selectedList)])
@@ -120,7 +125,7 @@ const useCheckout = () => {
       })
 
       // initiate  'applyListOps' transaction
-      const hash = await walletClient.writeContract({
+      const hash = await walletClient?.writeContract({
         chain: fetchedChain,
         address: ListRecordsContract,
         abi: efpListRecordsAbi,
