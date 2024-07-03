@@ -5,11 +5,13 @@ import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
 
+import ProfileStats from '../profile-stats'
 import Cross from 'public/assets/icons/cross.svg'
 import type { ChainWithDetails } from '#/lib/wagmi'
 import { ChainIcon } from '#/components/chain-icon'
 import SaveSettings from './components/save-settings'
 import useListSettings from './hooks/use-list-settings'
+import SettingsInput from './components/settings-input'
 import ArrowDown from 'public/assets/icons/arrow-down.svg'
 import { PrimaryButton } from '#/components/primary-button'
 import type { ProfileDetailsResponse } from '#/types/requests'
@@ -33,15 +35,10 @@ const ListSettings: React.FC<ListSettingsProps> = ({
   setIsSaving,
   profile
 }) => {
-  const [currentList, setCurrentList] = useState(selectedList)
+  const [isEditingSettings, setIsEditingSettings] = useState(false)
   const [chainDropdownOpen, setChainDropdownOpen] = useState(false)
   const chainDropdownRef = useClickAway<HTMLDivElement>(() => {
     setChainDropdownOpen(false)
-  })
-
-  const [listsDropdownOpen, setListsDropdownOpen] = useState(false)
-  const listsDropdownRef = useClickAway<HTMLDivElement>(() => {
-    setListsDropdownOpen(false)
   })
 
   const { address: connectedAddress } = useAccount()
@@ -66,11 +63,11 @@ const ListSettings: React.FC<ListSettingsProps> = ({
     fetchedManager,
     setChangedValues,
     fetchedListRecordsContractAddress
-  } = useListSettings({ profile, list: currentList })
+  } = useListSettings({ profile, list: selectedList })
 
   return isSaving ? (
     <SaveSettings
-      selectedList={currentList}
+      selectedList={selectedList}
       newChain={chain}
       chain={fetchedChain}
       changedValues={changedValues}
@@ -94,40 +91,12 @@ const ListSettings: React.FC<ListSettingsProps> = ({
         className='glass-card h-fit bg-white/40 gap-5 sm:gap-8 flex flex-col rounded-xl p-6 py-8 sm:p-10 w-[554px]'
       >
         <div className='w-full flex items-center justify-between'>
-          <div ref={listsDropdownRef} className='relative'>
-            <div
-              onClick={() => setListsDropdownOpen(!listsDropdownOpen)}
-              className='flex items-center gap-2 cursor-pointer'
-            >
+          <div className='relative'>
+            <div className='flex items-center gap-2 cursor-pointer'>
               <h3 className='text-4xl sm:text-5xl font-semibold'>
-                {t('list')} #{currentList}
+                {t('list')} #{selectedList}
               </h3>
-              {(lists?.length || 0) > 1 && !showSingleList && (
-                <Image
-                  src={ArrowDown}
-                  alt='Open list storage location chains'
-                  className={` ${listsDropdownOpen ? 'rotate-180' : ''} w-5 transition-transform`}
-                />
-              )}
             </div>
-            {(lists?.length || 0) > 1 && listsDropdownOpen && !showSingleList && (
-              <div className='absolute top-14 flex bg-white/90 flex-col rounded-xl w-full'>
-                {lists?.map(item => (
-                  <div
-                    key={item}
-                    onClick={() => {
-                      setCurrentList(Number(item))
-                      setListsDropdownOpen(false)
-                    }}
-                    className='w-full hover:bg-white cursor-pointer rounded-xl flex items-center gap-3 p-3'
-                  >
-                    <p className='text-lg font-semibold truncate'>
-                      {t('list')} #{item}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
           <Image
             src={Cross}
@@ -136,39 +105,29 @@ const ListSettings: React.FC<ListSettingsProps> = ({
             onClick={onClose}
           />
         </div>
-        <div className='flex w-full items-center justify-between'>
-          <div>
-            <div className='text-xl text-center sm:text-2xl font-bold'>
-              {profile.stats === undefined ? '-' : profile.stats.following_count}
-            </div>
-            <div className='sm:text-lg font-bold text-gray-500'>{t('following')}</div>
-          </div>
-          <div>
-            <div className='text-xl text-center sm:text-2xl font-bold'>
-              {profile.stats === undefined ? '-' : profile.stats.followers_count}
-            </div>
-            <div className='sm:text-lg text-gray-500 font-bold'>{t('followers')}</div>
-          </div>
-          <div>
-            <div className='text-xl text-center sm:text-2xl font-bold'># -</div>
-            <div className='sm:text-lg font-bold text-gray-500'>{t('leaderboard')}</div>
-          </div>
-        </div>
+        <ProfileStats stats={profile.stats} />
         <div className='flex items-center justify-between gap-2'>
           <p className='font-semibold text-base sm:text-xl'>{t('location')}</p>
           <div className='relative' ref={chainDropdownRef}>
             <button
               className='w-[180px] sm:w-[190px] gap-1 flex items-center justify-between px-2 sm:px-3 h-12 bg-white/50 p-1 hover:bg-white/60 rounded-xl disabled:hover:bg-white/50 disabled:opacity-75 disabled:cursor-not-allowed'
               onClick={() => setChainDropdownOpen(!chainDropdownOpen)}
-              disabled={connectedAddress?.toLowerCase() !== fetchedOwner?.toLowerCase()}
+              disabled={
+                !isEditingSettings ||
+                connectedAddress?.toLowerCase() !== fetchedOwner?.toLowerCase()
+              }
             >
               {chain && <ChainIcon chain={chain as ChainWithDetails} className={'h-6 w-6'} />}
               <p className='sm:text-lg font-semibold truncate'>{chain?.name}</p>
-              <Image
-                src={ArrowDown}
-                alt='Open list storage location chains'
-                className={`w-5 ${chainDropdownOpen ? 'rotate-180' : ''} transition-transform`}
-              />
+              {isEditingSettings ? (
+                <Image
+                  src={ArrowDown}
+                  alt='Open list storage location chains'
+                  className={`w-5 ${chainDropdownOpen ? 'rotate-180' : ''} transition-transform`}
+                />
+              ) : (
+                <div />
+              )}
             </button>
             {chainDropdownOpen && (
               <div className='absolute top-14 flex bg-white/90 flex-col rounded-xl w-full'>
@@ -196,66 +155,73 @@ const ListSettings: React.FC<ListSettingsProps> = ({
             )}
           </div>
         </div>
-        <div className=' flex flex-col gap-1'>
-          <p className='font-semibold text-lg'>{t('owner')}</p>
-          <input
-            value={owner}
-            placeholder={fetchedOwner || 'Address or ENS name'}
-            onChange={e => {
-              const addr = e.target.value
-              if (addr.includes(' ')) return
-              setOwner(addr)
-              setChangedValues({
-                ...changedValues,
-                owner: isAddress(addr) && addr.toLowerCase() !== fetchedOwner?.toLowerCase()
-              })
-            }}
-            disabled={connectedAddress?.toLowerCase() !== fetchedOwner?.toLowerCase()}
-            className='p-3 font-medium truncate rounded-lg w-full bg-white/70 disabled:text-gray-400 disabled:cursor-not-allowed'
-          />
-        </div>
-        <div className=' flex flex-col gap-1'>
-          <p className='font-semibold text-lg'>{t('manager')}</p>
-          <input
-            value={manager}
-            placeholder={fetchedManager || 'Address or ENS name'}
-            onChange={e => {
-              const addr = e.target.value
-              if (addr.includes(' ')) return
-              setManager(addr)
-              setChangedValues({
-                ...changedValues,
-                manager: isAddress(addr) && addr.toLowerCase() !== fetchedManager?.toLowerCase()
-              })
-            }}
-            disabled={connectedAddress?.toLowerCase() !== fetchedManager?.toLowerCase()}
-            className='p-3 font-medium truncate rounded-lg w-full bg-white/70 disabled:text-gray-400 disabled:cursor-not-allowed'
-          />
-        </div>
-        <div className=' flex flex-col gap-1'>
-          <p className='font-semibold text-lg'>{t('user')}</p>
-          <input
-            value={user}
-            placeholder={fetchedUser || 'Address or ENS name'}
-            onChange={e => {
-              const addr = e.target.value
-              if (addr.includes(' ')) return
-              setUser(addr)
-              setChangedValues({
-                ...changedValues,
-                user: isAddress(addr) && addr.toLowerCase() !== fetchedUser?.toLowerCase()
-              })
-            }}
-            disabled={connectedAddress?.toLowerCase() !== fetchedManager?.toLowerCase()}
-            className='p-3 font-medium truncate rounded-lg w-full bg-white/70 disabled:text-gray-400 disabled:cursor-not-allowed'
-          />
-        </div>
-        <PrimaryButton
-          label={t('save')}
-          onClick={() => setIsSaving(true)}
-          className='text-lg mt-4 w-full h-12'
-          disabled={!Object.values(changedValues).includes(true)}
+        <SettingsInput
+          option={t('owner')}
+          value={owner}
+          placeholder={fetchedOwner || 'Address or ENS name'}
+          disableValue={fetchedOwner}
+          setValue={setOwner}
+          setChangedValues={(input: string) => {
+            setChangedValues(changedValues => ({
+              ...changedValues,
+              owner: isAddress(input) && input.toLowerCase() !== fetchedOwner?.toLowerCase()
+            }))
+          }}
+          isEditingSettings={isEditingSettings}
         />
+        <SettingsInput
+          option={t('manager')}
+          value={manager}
+          placeholder={fetchedManager || 'Address or ENS name'}
+          disableValue={fetchedManager}
+          setValue={setManager}
+          setChangedValues={(input: string) => {
+            setChangedValues(changedValues => ({
+              ...changedValues,
+              manager: isAddress(input) && input.toLowerCase() !== fetchedManager?.toLowerCase()
+            }))
+          }}
+          isEditingSettings={isEditingSettings}
+        />
+        <SettingsInput
+          option={t('user')}
+          value={user}
+          placeholder={fetchedUser || 'Address or ENS name'}
+          disableValue={fetchedManager}
+          setValue={setUser}
+          setChangedValues={(input: string) => {
+            setChangedValues(changedValues => ({
+              ...changedValues,
+              user: isAddress(input) && input.toLowerCase() !== fetchedUser?.toLowerCase()
+            }))
+          }}
+          isEditingSettings={isEditingSettings}
+        />
+        {connectedAddress?.toLowerCase() !== fetchedManager?.toLowerCase() &&
+        connectedAddress?.toLowerCase() !==
+          fetchedOwner?.toLowerCase() ? null : isEditingSettings ? (
+          <div className='w-full flex justify-between'>
+            <button
+              onClick={() => setIsEditingSettings(false)}
+              className='text-lg mt-4 w-[47.5%] font-semibold hover:opacity-90 bg-[#a8a8a8] rounded-full h-12'
+            >
+              Cancel
+            </button>
+            <PrimaryButton
+              label={t('save')}
+              onClick={() => setIsSaving(true)}
+              className='text-lg mt-4 w-[47.5%] h-12'
+              disabled={!Object.values(changedValues).includes(true)}
+            />
+          </div>
+        ) : (
+          <button
+            onClick={() => setIsEditingSettings(true)}
+            className='text-lg mt-4 w-full font-semibold hover:opacity-90 bg-[#a8a8a8] rounded-full h-12'
+          >
+            Edit Settings
+          </button>
+        )}
       </div>
     </div>
   )

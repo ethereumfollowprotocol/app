@@ -56,7 +56,14 @@ const useSaveListSettings = ({
   })
 
   const {
-    refetchLists,
+    actions,
+    addActions,
+    resetActions,
+    moveToNextAction,
+    currentActionIndex,
+    executeActionByIndex
+  } = useActions()
+  const {
     refetchRoles,
     refetchProfile,
     refetchFollowing,
@@ -70,19 +77,10 @@ const useSaveListSettings = ({
   const { data: walletClient } = useWalletClient()
   const { address: userAddress } = useAccount()
   const { t } = useTranslation('profile', { keyPrefix: 'list settings' })
-  const {
-    addActions,
-    actions,
-    executeActionByIndex,
-    resetActions,
-    moveToNextAction,
-    currentActionIndex
-  } = useActions()
 
   const setListStorageLocationTx = useCallback(async () => {
     if (!newChain) return
 
-    // const walletClient = await getWalletClient(config)
     const newSlot = generateListStorageLocationSlot()
 
     const listRecordsContractAddress = newChain
@@ -115,8 +113,6 @@ const useSaveListSettings = ({
   const setOwnerTx = useCallback(async () => {
     if (!(listRecordsContractAddress && isAddress(owner || '') && userAddress)) return
 
-    // const walletClient = await getWalletClient(config)
-
     const hash = await walletClient?.writeContract({
       address: coreEfpContracts.EFPListRegistry,
       abi: efpListRegistryAbi,
@@ -137,8 +133,6 @@ const useSaveListSettings = ({
 
   const setManagerTx = useCallback(async () => {
     if (!(listRecordsContractAddress && slot && isAddress(manager || ''))) return
-
-    // const walletClient = await getWalletClient(config)
 
     // initiate  'applyListOps' transaction
     const hash = await walletClient?.writeContract({
@@ -161,8 +155,6 @@ const useSaveListSettings = ({
 
   const setUserTx = useCallback(async () => {
     if (!(listRecordsContractAddress && slot && isAddress(user || ''))) return
-
-    // const walletClient = await getWalletClient(config)
 
     // initiate  'applyListOps' transaction
     const hash = await walletClient?.writeContract({
@@ -296,7 +288,6 @@ const useSaveListSettings = ({
     if (changedValues.manager) resetCart()
 
     // Refetch all related data
-    refetchLists()
     refetchRoles()
     refetchProfile()
     refetchFollowing()
