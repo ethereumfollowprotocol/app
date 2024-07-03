@@ -9,6 +9,7 @@ import type { FollowSortType } from '#/types/requests'
 import ArrowDown from 'public/assets/icons/arrow-down.svg'
 import type { ProfileTableTitleType } from '#/types/common'
 import SearchIcon from 'public/assets/icons/magnifying-glass.svg'
+import { QUERY_BLOCK_TAGS } from '#/components/blocked-muted/hooks/use-blocked-muted'
 
 interface TableHeaderProps {
   title: ProfileTableTitleType
@@ -36,7 +37,8 @@ const TableHeader: React.FC<TableHeaderProps> = ({
   selectedTags,
   toggleSelectedTags,
   sort,
-  setSort
+  setSort,
+  isShowingBlocked
 }) => {
   const [showSort, setShowSort] = useState(false)
   const [showSearch, setShowSearch] = useState(false)
@@ -152,20 +154,22 @@ const TableHeader: React.FC<TableHeaderProps> = ({
           ) : allTags?.length === 0 || !allTags ? (
             <p className='text-center w-full font-semibold text-gray-500 italic'>No tags</p>
           ) : (
-            allTags?.map(tag => (
-              <button
-                key={tag.toLowerCase()}
-                className={`text-sm px-4 py-2 font-semibold italic ${
-                  selectedTags?.includes(tag)
-                    ? 'text-darkGrey bg-white shadow-inner shadow-black/40'
-                    : 'text-gray-500 bg-gray-300/80'
-                } rounded-full`}
-                name={tag.toLowerCase()}
-                onClick={() => toggleSelectedTags(title, tag)}
-              >
-                {t(tag)}
-              </button>
-            ))
+            allTags
+              ?.filter(tag => (isShowingBlocked ? true : !QUERY_BLOCK_TAGS.includes(tag)))
+              .map(tag => (
+                <button
+                  key={tag.toLowerCase()}
+                  className={`text-sm px-4 py-2 font-semibold italic ${
+                    selectedTags?.includes(tag)
+                      ? 'text-darkGrey bg-white shadow-inner shadow-black/40'
+                      : 'text-gray-500 bg-gray-300/80'
+                  } rounded-full`}
+                  name={tag.toLowerCase()}
+                  onClick={() => toggleSelectedTags(title, tag)}
+                >
+                  {t(tag)}
+                </button>
+              ))
           )}
         </div>
       )}

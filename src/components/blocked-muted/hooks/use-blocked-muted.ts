@@ -7,8 +7,8 @@ import fetchProfileFollowers from '#/api/fetchProfileFollowers'
 import fetchProfileFollowing from '#/api/fetchProfileFollowing'
 import type { FollowerResponse, FollowingResponse, FollowSortType } from '#/types/requests'
 
-export const TAGS = ['All', 'blocked', 'muted']
-const QUERY_BLOCK_TAGS = ['blocked', 'muted']
+export const TAGS = ['All', 'block', 'mute']
+export const QUERY_BLOCK_TAGS = ['block', 'mute']
 
 const useBlockedMuted = (user: string, list?: string | number) => {
   const [blockingTagsFilter, setBlockingTagsFilter] = useState<string[]>(['All'])
