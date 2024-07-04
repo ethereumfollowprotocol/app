@@ -85,10 +85,10 @@ const useCheckout = () => {
         : null
 
       // Get slot, chain, and List Records contract from storage location or use options from the mint
-      const chainId = listStorageLocation
-        ? fromHex(`0x${listStorageLocation.slice(64, 70)}`, 'number')
-        : selectedChain?.id
-      const fetchedChain = chains.find(chain => chain.id === chainId)
+      // const chainId = listStorageLocation
+      //   ? fromHex(`0x${listStorageLocation.slice(64, 70)}`, 'number')
+      //   : selectedChain?.id
+      // const fetchedChain = chains.find(chain => chain.id === chainId)
 
       const nonce = listStorageLocation ? BigInt(`0x${listStorageLocation.slice(-64)}`) : mintNonce
       const ListRecordsContract = listStorageLocation
@@ -119,7 +119,6 @@ const useCheckout = () => {
 
       // initiate  'applyListOps' transaction
       const hash = await walletClient?.writeContract({
-        chain: fetchedChain,
         address: ListRecordsContract,
         abi: efpListRecordsAbi,
         functionName: selectedList ? 'applyListOps' : 'setMetadataValuesAndApplyListOps',
@@ -249,6 +248,7 @@ const useCheckout = () => {
     setIsRefetchingProfile(true)
     setIsRefetchingFollowing(true)
     queryClient.invalidateQueries({ queryKey: ['follow state'] })
+    queryClient.invalidateQueries({ queryKey: ['list state'] })
 
     resetCart()
     resetActions()

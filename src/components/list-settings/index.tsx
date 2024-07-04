@@ -54,6 +54,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
     manager,
     setChain,
     setOwner,
+    listState,
     setManager,
     fetchedUser,
     fetchedSlot,
@@ -62,6 +63,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
     changedValues,
     fetchedManager,
     setChangedValues,
+    isListStateLoading,
     fetchedListRecordsContractAddress
   } = useListSettings({ profile, list: selectedList })
 
@@ -79,6 +81,8 @@ const ListSettings: React.FC<ListSettingsProps> = ({
       onCancel={() => setIsSaving(false)}
       onClose={onClose}
       listRecordsContractAddress={fetchedListRecordsContractAddress}
+      listState={listState}
+      isListStateLoading={isListStateLoading}
     />
   ) : (
     <div

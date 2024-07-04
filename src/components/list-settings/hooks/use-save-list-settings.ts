@@ -1,15 +1,21 @@
 import { useTranslation } from 'react-i18next'
-import { useCallback, useEffect, useState } from 'react'
-import { isAddress, type Chain, type Address, encodePacked } from 'viem'
-import { useChainId, useSwitchChain, useAccount, useWalletClient } from 'wagmi'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useAccount, useChainId, useSwitchChain, useWalletClient } from 'wagmi'
+import { isAddress, type Chain, type Address, encodePacked, toHex } from 'viem'
 
-import { useCart } from '#/contexts/cart-context'
+import {
+  isTagListOp,
+  listOpAddTag,
+  listOpAddListRecord,
+  extractAddressAndTag
+} from '#/utils/list-ops'
 import { Step } from '#/components/checkout/types'
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import type { ProfileDetailsResponse } from '#/types/requests'
+import { useCart, type CartItem } from '#/contexts/cart-context'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { generateListStorageLocationSlot } from '#/app/efp/utilities'
+import type { FollowingResponse, ProfileDetailsResponse } from '#/types/requests'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
 
@@ -31,6 +37,7 @@ type SaveListSettingsParams = {
   }
   onClose: () => void
   onCancel: () => void
+  listState?: FollowingResponse[]
 }
 
 const useSaveListSettings = ({
@@ -45,10 +52,11 @@ const useSaveListSettings = ({
   listRecordsContractAddress,
   changedValues,
   onClose,
-  onCancel
+  onCancel,
+  listState
 }: SaveListSettingsParams) => {
   const [currentStep, setCurrentStep] = useState(Step.InitiateTransactions)
-  const [completeTrabsactions, setCompleteTransactions] = useState({
+  const [completeTransactions, setCompleteTransactions] = useState({
     user: false,
     manager: false,
     owner: false,
@@ -74,22 +82,21 @@ const useSaveListSettings = ({
   const { resetCart } = useCart()
   const currentChainId = useChainId()
   const { switchChain } = useSwitchChain()
-  const { data: walletClient } = useWalletClient()
   const { address: userAddress } = useAccount()
+  const { data: walletClient } = useWalletClient()
+  const newSlot = useMemo(() => generateListStorageLocationSlot(), [])
   const { t } = useTranslation('profile', { keyPrefix: 'list settings' })
 
   const setListStorageLocationTx = useCallback(async () => {
     if (!newChain) return
-
-    const newSlot = generateListStorageLocationSlot()
 
     const listRecordsContractAddress = newChain
       ? (ListRecordContracts[newChain?.id] as Address)
       : coreEfpContracts.EFPListRecords
 
     const data = encodePacked(
-      ['uint256', 'address', 'uint'],
-      [BigInt(newChain.id), listRecordsContractAddress, newSlot]
+      ['uint8', 'uint8', 'uint256', 'address', 'uint'],
+      [1, 1, BigInt(newChain.id), listRecordsContractAddress, newSlot]
     )
 
     const hash = await walletClient?.writeContract({
@@ -108,10 +115,51 @@ const useSaveListSettings = ({
 
     // return transaction hash to enable following transaction status in transaction details component
     return hash
-  }, [profile, slot, newChain, walletClient])
+  }, [walletClient, newChain])
+
+  const listOpTx = useCallback(
+    async (items: CartItem[]) => {
+      const listRecordsContract = newChain
+        ? (ListRecordContracts[newChain?.id] as Address)
+        : coreEfpContracts.EFPListRecords
+
+      // format list operations
+      const operations = items.map(item => {
+        // append mandatory types and data
+        const types = ['uint8', 'uint8', 'uint8', 'uint8', 'address']
+        const data: (string | number)[] = [item.listOp.version, item.listOp.opcode, 1, 1]
+
+        if (item.listOp.opcode > 2 && isTagListOp(item.listOp)) {
+          // add 'bytes' type for the tag and address and tag to data
+          const addrrAndTag = extractAddressAndTag(item.listOp)
+          types.push('bytes')
+          data.push(...[addrrAndTag.address, toHex(addrrAndTag.tag)])
+        } else {
+          // add address to data
+          data.push(`0x${item.listOp.data.toString('hex')}`)
+        }
+
+        // return encoded data into a single HEX string
+        return encodePacked(types, data)
+      })
+
+      // initiate  'applyListOps' transaction
+      const hash = await walletClient?.writeContract({
+        address: listRecordsContract,
+        abi: efpListRecordsAbi,
+        functionName: 'setMetadataValuesAndApplyListOps',
+        // @ts-ignore - diff data type handled
+        args: [newSlot, [{ key: 'user', value: userAddress }], operations]
+      })
+
+      // return transaction hash to enable following transaction status in transaction details component
+      return hash
+    },
+    [walletClient, selectedList]
+  )
 
   const setOwnerTx = useCallback(async () => {
-    if (!(listRecordsContractAddress && isAddress(owner || '') && userAddress)) return
+    if (!(isAddress(owner || '') && userAddress)) return
 
     const hash = await walletClient?.writeContract({
       address: coreEfpContracts.EFPListRegistry,
@@ -129,7 +177,7 @@ const useSaveListSettings = ({
 
     // return transaction hash to enable following transaction status in transaction details component
     return hash
-  }, [owner, listRecordsContractAddress, walletClient])
+  }, [owner, walletClient])
 
   const setManagerTx = useCallback(async () => {
     if (!(listRecordsContractAddress && slot && isAddress(manager || ''))) return
@@ -156,7 +204,7 @@ const useSaveListSettings = ({
   const setUserTx = useCallback(async () => {
     if (!(listRecordsContractAddress && slot && isAddress(user || ''))) return
 
-    // initiate  'applyListOps' transaction
+    // initiate  'setListUser' transaction
     const hash = await walletClient?.writeContract({
       address: listRecordsContractAddress,
       abi: efpListRecordsAbi,
@@ -183,7 +231,7 @@ const useSaveListSettings = ({
       id: EFPActionType.SetEFPListStorageLocation, // Unique identifier for the action
       type: EFPActionType.SetEFPListStorageLocation,
       label: t('set location'),
-      chainId: chain.id,
+      chainId: DEFAULT_CHAIN.id,
       execute: setListStorageLocationTx,
       isPendingConfirmation: false
     }
@@ -213,16 +261,48 @@ const useSaveListSettings = ({
     }
 
     const actionsToExecute: Action[] = []
-    if (!completeTrabsactions.user && changedValues.user) actionsToExecute.push(setListUser)
-    if (!completeTrabsactions.manager && changedValues.manager)
+    if (!completeTransactions.user && changedValues.user) actionsToExecute.push(setListUser)
+    if (!completeTransactions.manager && changedValues.manager)
       actionsToExecute.push(setListManager)
-    if (!completeTrabsactions.owner && changedValues.owner) actionsToExecute.push(setListOwner)
-    if (!completeTrabsactions.chain && changedValues.chain)
-      actionsToExecute.push(setListStorageLocation)
+    if (changedValues.chain && newChain) {
+      if (listState) {
+        const listOps = listState.flatMap(item => {
+          const operations: CartItem[] = []
+          operations.push({ listOp: listOpAddListRecord(item.data) })
+          if (item.tags.length > 0)
+            item.tags.map(tag => {
+              operations.push({ listOp: listOpAddTag(item.data, tag) })
+            })
+          return operations
+        })
+
+        const splitListOps: CartItem[][] = []
+        const splitSize = 100
+
+        for (let i = 0; i < listOps.length; i += splitSize) {
+          splitListOps.push(listOps.slice(i, i + splitSize))
+        }
+
+        const cartItemActions: Action[] = splitListOps.map((listOps, i) => ({
+          id: `${EFPActionType.UpdateEFPList} ${i}`, // Unique identifier for the action
+          type: EFPActionType.UpdateEFPList,
+          label: `Transfer List State ${i + 1}/${splitListOps.length}`,
+          chainId: newChain.id,
+          execute: async () => await listOpTx(listOps),
+          isPendingConfirmation: false
+        }))
+
+        if (completeTransactions.chain) actionsToExecute.push(...cartItemActions)
+        else actionsToExecute.push(...[setListStorageLocation, ...cartItemActions])
+      } else if (!completeTransactions.chain) {
+        actionsToExecute.push(setListStorageLocation)
+      }
+    }
+    if (!completeTransactions.owner && changedValues.owner) actionsToExecute.push(setListOwner)
 
     addActions(actionsToExecute)
   }, [
-    addActions,
+    listOpTx,
     setListStorageLocationTx,
     setOwnerTx,
     setManagerTx,
@@ -238,12 +318,21 @@ const useSaveListSettings = ({
   const handleInitiateActions = useCallback(() => {
     if (!chain) return
     if (
-      actions[0]?.type === EFPActionType.SetEFPListOwner
+      actions[0]?.type === EFPActionType.SetEFPListOwner ||
+      actions[0]?.type === EFPActionType.SetEFPListStorageLocation
         ? currentChainId !== DEFAULT_CHAIN.id
-        : currentChainId !== chain?.id
+        : actions[0]?.type === EFPActionType.UpdateEFPList
+          ? newChain?.id !== currentChainId
+          : currentChainId !== chain?.id
     ) {
       switchChain({
-        chainId: actions[0]?.type === EFPActionType.SetEFPListOwner ? DEFAULT_CHAIN.id : chain.id
+        chainId:
+          actions[0]?.type === EFPActionType.SetEFPListOwner ||
+          actions[0]?.type === EFPActionType.SetEFPListStorageLocation
+            ? DEFAULT_CHAIN.id
+            : actions[0]?.type === EFPActionType.UpdateEFPList && newChain
+              ? newChain.id
+              : chain.id
       })
       return
     }
@@ -255,16 +344,22 @@ const useSaveListSettings = ({
   const handleNextAction = useCallback(async () => {
     if (!chain) return
     if (
-      actions[currentActionIndex + 1]?.type === EFPActionType.SetEFPListOwner
+      actions[currentActionIndex + 1]?.type === EFPActionType.SetEFPListOwner ||
+      actions[currentActionIndex + 1]?.type === EFPActionType.SetEFPListStorageLocation
         ? currentChainId !== DEFAULT_CHAIN.id
-        : currentChainId !== chain?.id
+        : actions[currentActionIndex + 1]?.type === EFPActionType.UpdateEFPList
+          ? newChain?.id !== currentChainId
+          : currentChainId !== chain?.id
     ) {
       switchChain(
         {
           chainId:
-            actions[currentActionIndex + 1]?.type === EFPActionType.SetEFPListOwner
+            actions[currentActionIndex + 1]?.type === EFPActionType.SetEFPListOwner ||
+            actions[currentActionIndex + 1]?.type === EFPActionType.SetEFPListStorageLocation
               ? DEFAULT_CHAIN.id
-              : chain.id
+              : actions[currentActionIndex + 1]?.type === EFPActionType.UpdateEFPList && newChain
+                ? newChain?.id
+                : chain.id
         },
         {
           onSettled: () => {
