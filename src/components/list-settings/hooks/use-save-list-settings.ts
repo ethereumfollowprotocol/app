@@ -144,8 +144,6 @@ const useSaveListSettings = ({
         return encodePacked(types, data)
       })
 
-      console.log([newSlot, [{ key: 'user', value: userAddress }], operations])
-
       // initiate  'applyListOps' transaction
       const hash = await walletClient?.writeContract({
         address: listRecordsContract,
