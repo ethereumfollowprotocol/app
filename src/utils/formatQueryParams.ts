@@ -20,7 +20,7 @@ export const formatQueryParams = ({
     },
     {
       param: 'sort',
-      value: sort
+      value: sort?.split(' ')[0]
     },
     {
       param: 'tags',

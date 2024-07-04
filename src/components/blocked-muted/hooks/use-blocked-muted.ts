@@ -36,7 +36,8 @@ const useBlockedMuted = (user: string, list?: string | number) => {
         sort: blockedBySort,
         tags: blockedByTagsFilter.includes('All') ? QUERY_BLOCK_TAGS : blockedByTagsFilter,
         limit: FETCH_LIMIT_PARAM,
-        pageParam
+        pageParam,
+        allResults: true
       })
       return fetchedBlockedBy
     },
@@ -65,7 +66,8 @@ const useBlockedMuted = (user: string, list?: string | number) => {
         sort: blockingSort,
         tags: blockingTagsFilter.includes('All') ? QUERY_BLOCK_TAGS : blockingTagsFilter,
         limit: FETCH_LIMIT_PARAM,
-        pageParam
+        pageParam,
+        allResults: true
       })
       return fetchedBlockedBy
     },

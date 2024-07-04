@@ -53,6 +53,7 @@ export interface InfiniteProfileQueryProps {
   tags?: string[]
   sort?: FollowSortType
   pageParam: number
+  allResults?: boolean
 }
 export interface FollowerResponse {
   address: Address

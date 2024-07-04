@@ -7,7 +7,8 @@ const fetchProfileFollowing = async ({
   limit,
   sort,
   tags,
-  pageParam
+  pageParam,
+  allResults
 }: InfiniteProfileQueryProps) => {
   try {
     const queryParams = formatQueryParams({
@@ -19,8 +20,12 @@ const fetchProfileFollowing = async ({
 
     const url =
       list !== undefined
-        ? `${process.env.NEXT_PUBLIC_EFP_API_URL}/lists/${list}/following?${queryParams}`
-        : `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/following?${queryParams}`
+        ? `${process.env.NEXT_PUBLIC_EFP_API_URL}/lists/${list}/${
+            allResults ? 'allFollowing' : 'following'
+          }?${queryParams}`
+        : `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/${
+            allResults ? 'allFollowing' : 'following'
+          }?${queryParams}`
 
     const response = await fetch(url, {
       cache: 'default'
