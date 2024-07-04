@@ -114,6 +114,7 @@ type EFPProfileContextType = {
   setFollowersSort: (option: FollowSortType) => void
   setIsRefetchingProfile: (state: boolean) => void
   setIsRefetchingFollowing: (state: boolean) => void
+  setSetNewListAsSelected: (state: boolean) => void
 }
 
 type Props = {
@@ -124,6 +125,7 @@ const EFPProfileContext = createContext<EFPProfileContextType | undefined>(undef
 
 export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   const [isRefetchingProfile, setIsRefetchingProfile] = useState(false)
+  const [setNewListAsSelected, setSetNewListAsSelected] = useState(false)
   const [isRefetchingFollowing, setIsRefetchingFollowing] = useState(false)
   // selectedList = undefined will mean that the connected user can create a new list
   const [selectedList, setSelectedList] = useState<number>()
@@ -154,6 +156,12 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   })
 
   useEffect(() => {
+    if (lists?.lists && setNewListAsSelected) {
+      setSetNewListAsSelected(false)
+      setSelectedList(Math.max(...lists.lists.map(list => Number(list))))
+      return
+    }
+
     if (lists?.primary_list) return setSelectedList(Number(lists.primary_list))
     if (lists?.lists && lists?.lists?.length > 0) return setSelectedList(Number(lists?.lists[0]))
 
@@ -381,7 +389,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
           setFollowersSort(option)
         },
         setIsRefetchingProfile,
-        setIsRefetchingFollowing
+        setIsRefetchingFollowing,
+        setSetNewListAsSelected
       }}
     >
       {children}

@@ -16,10 +16,10 @@ import {
 } from '#/utils/list-ops'
 import { Avatar } from '../avatar'
 import LoadingCell from '../loading-cell'
+import { resolveEnsProfile } from '#/utils/ens'
 import { useCart } from '#/contexts/cart-context'
 import { truncateAddress } from '#/lib/utilities'
 import useFollowState from '#/hooks/use-follow-state'
-import { resolveENSProfile } from '#/utils/resolveENS'
 import LoadingProfileCard from './loading-profile-card'
 import { FollowButton } from '#/components/follow-button'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
@@ -55,7 +55,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
     queryKey: ['ens metadata', profile],
     queryFn: async () => {
       if (!profile) return null
-      return await resolveENSProfile(profile?.address)
+      return await resolveEnsProfile(profile?.address)
     }
   })
 

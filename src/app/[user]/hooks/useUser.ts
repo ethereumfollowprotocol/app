@@ -38,8 +38,7 @@ const useUser = (user: string) => {
 
       const fetchedLists = await fetchProfileLists(profile.address)
       return fetchedLists
-    },
-    staleTime: 3600000
+    }
   })
 
   const [isEndOfFollowers, setIsEndOfFollowers] = useState(false)
@@ -71,8 +70,7 @@ const useUser = (user: string) => {
       return fetchedFollowers
     },
     initialPageParam: 0,
-    getNextPageParam: lastPage => lastPage.nextPageParam,
-    staleTime: 120000
+    getNextPageParam: lastPage => lastPage.nextPageParam
   })
 
   const { data: followingTags, isLoading: followingTagsLoading } = useQuery({
@@ -115,8 +113,7 @@ const useUser = (user: string) => {
       return fetchedFollowing
     },
     initialPageParam: 0,
-    getNextPageParam: lastPage => lastPage.nextPageParam,
-    staleTime: 120000
+    getNextPageParam: lastPage => lastPage.nextPageParam
   })
 
   const followers = fetchedFollowers

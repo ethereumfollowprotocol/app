@@ -9,8 +9,9 @@ import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts
 
 export function useMintEFP() {
   const [listHasBeenMinted, setListHasBeenMinted] = useState(false)
-  const { address: accountAddress } = useAccount()
+
   const { data: walletClient } = useWalletClient()
+  const { address: accountAddress } = useAccount()
   const nonce = useMemo(() => generateListStorageLocationSlot(), [])
 
   const mint = async ({
@@ -18,6 +19,8 @@ export function useMintEFP() {
     setNewListAsPrimary
   }: { selectedChainId?: number; setNewListAsPrimary?: boolean }) => {
     if (!accountAddress) return
+
+    // const walletClient = await getWalletClient(config)
 
     const listRecordsContractAddress = selectedChainId
       ? (ListRecordContracts[selectedChainId] as Address)

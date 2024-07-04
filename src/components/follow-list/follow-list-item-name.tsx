@@ -2,9 +2,9 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
+import { useEffect, useRef, useState } from 'react'
 import type { Address, GetEnsAvatarReturnType } from 'viem'
 
 import LoadingCell from '../loading-cell'
@@ -64,6 +64,7 @@ export function FollowListItemName({
     setTagDropdownOpen(false)
   })
 
+  const tagInputRef = useRef<HTMLInputElement>(null)
   const pathname = usePathname()
   const isEditor = pathname.includes('/editor')
 
@@ -123,6 +124,10 @@ export function FollowListItemName({
     addTag(customTagInput)
     setCustomTagInput('')
   }
+
+  useEffect(() => {
+    if (tagInputRef && tagDropdownOpen) tagInputRef.current?.focus()
+  }, [tagDropdownOpen])
 
   useEffect(() => {
     if (!isBeingRemoved || isBeingUnrestricted) return
@@ -192,6 +197,7 @@ export function FollowListItemName({
               <div className='absolute z-50 flex flex-col w-60 gap-2 left-0 top-8 glass-card bg-white/50 p-2 border-2 border-gray-200 rounded-lg'>
                 <div className='w-full flex items-center gap-1.5 justify-between bg-gray-300 rounded-lg font-bold p-1 text-left'>
                   <input
+                    ref={tagInputRef}
                     placeholder={tEditor('custom tag')}
                     value={customTagInput}
                     onChange={e => {

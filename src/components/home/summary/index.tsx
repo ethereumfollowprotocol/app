@@ -57,6 +57,7 @@ const Summary = () => {
       )}
       <Recommendations
         limit={7}
+        endpoint='discover'
         header={t('discover')}
         className={`h-fit w-full p-2 ${
           isFollowersEmpty || !address

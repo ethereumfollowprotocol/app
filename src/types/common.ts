@@ -13,6 +13,7 @@ export type DiscoverItemType = {
 
 export type DiscoverResponseType = {
   discover: DiscoverItemType[]
+  recommended: Address[]
 }
 
 export type FollowState = 'follows' | 'blocks' | 'mutes' | 'none'

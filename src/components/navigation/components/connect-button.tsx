@@ -9,8 +9,8 @@ import { useAccountModal, useConnectModal } from '@rainbow-me/rainbowkit'
 
 import { LANGUAGES } from '#/lib/constants'
 import useLanguage from '../hooks/useLanguage'
+import { resolveEnsProfile } from '#/utils/ens'
 import { truncateAddress } from '#/lib/utilities'
-import { resolveENSProfile } from '#/utils/resolveENS'
 import ArrowLeft from 'public/assets/icons/arrow-left.svg'
 import ArrowDown from 'public/assets/icons/arrow-down.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
@@ -48,7 +48,7 @@ const ConnectButton = () => {
     queryFn: async () => {
       if (!userAddress) return nullEnsProfile
 
-      const data = await resolveENSProfile(userAddress)
+      const data = await resolveEnsProfile(userAddress)
       return data
     }
   })
@@ -99,7 +99,11 @@ const ConnectButton = () => {
               onClick={() => setListMenuOpen(!listMenuOpen)}
               className='flex justify-between items-center w-full hover:opacity-80 transition-opacity cursor-pointer'
             >
-              <Image src={ArrowLeft} alt='Show lists' />
+              {lists?.lists && lists?.lists?.length > 0 ? (
+                <Image src={ArrowLeft} alt='Show lists' />
+              ) : (
+                <div></div>
+              )}
               <p className=' font-semibold'>
                 {selectedList
                   ? `${t('navigation.list')} #${selectedList}`

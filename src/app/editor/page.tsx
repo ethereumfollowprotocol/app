@@ -54,7 +54,7 @@ export default function EditorPage() {
           <div className='flex flex-col glass-card gap-6 px-3 py-4 sm:p-6 h-fit rounded-2xl border-2 border-gray-200 xl:max-w-116 w-full xl:w-1/3'>
             <h1 className='text-left text-3xl font-semibold hidden xl:block'>{t('title')}</h1>
             <Search size='w-full z-50' isEditor={true} />
-            <Recommendations header={t('recommendations')} />
+            <Recommendations header={t('recommendations')} endpoint='recommended' />
           </div>
           <div className='flex h-full flex-col glass-card rounded-2xl border-2 border-gray-200 gap-3 md:gap-4 md:py-8 py-6 px-1 sm:px-3 md:px-4 w-full xl:w-2/3'>
             <div className='flex sm:justify-between flex-col gap-2 sm:flex-row sm:items-center px-3 md:px-4'>
