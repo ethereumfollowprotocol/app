@@ -117,8 +117,6 @@ const useCheckout = () => {
         return encodePacked(types, data)
       })
 
-      console.log(listStorageLocation ? `0x${listStorageLocation.slice(-64)}` : 'none', mintNonce)
-
       // initiate  'applyListOps' transaction
       const hash = await walletClient?.writeContract({
         chain: fetchedChain,

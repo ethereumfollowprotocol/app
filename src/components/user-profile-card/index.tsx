@@ -91,11 +91,16 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
 
     if (buttonText === 'Block') {
       if (isPendingBlock || isPendingUnblock) {
-        if (isPendingBlock && followState === 'none')
-          removeCartItem(listOpAddListRecord(profile?.address))
-        if (isPendingUnblock && followState === 'blocks')
-          removeCartItem(listOpRemoveListRecord(profile?.address))
+        if (isPendingBlock) {
+          if (followState === 'none') removeCartItem(listOpAddListRecord(profile?.address))
+          if (followState === 'mutes') removeCartItem(listOpRemoveTag(profile?.address, 'mute'))
+        }
 
+        if (isPendingUnblock) {
+          if (followState === 'blocks') removeCartItem(listOpRemoveListRecord(profile?.address))
+          if (isPendingMute && followState === 'blocks')
+            removeCartItem(listOpAddTag(profile?.address, 'mute'))
+        }
         return removeCartItem(
           followState === 'blocks'
             ? listOpRemoveTag(profile?.address, 'block')
@@ -103,9 +108,17 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
         )
       }
 
+      if (followState === 'mutes') {
+        addCartItem({
+          listOp: listOpRemoveTag(profile?.address, 'mute')
+        })
+        if (isPendingUnmute) removeCartItem(listOpRemoveListRecord(profile?.address))
+      }
+      if (isPendingMute) removeCartItem(listOpAddTag(profile?.address, 'mute'))
       if (followState === 'none') addCartItem({ listOp: listOpAddListRecord(profile?.address) })
       if (followState === 'blocks')
         addCartItem({ listOp: listOpRemoveListRecord(profile?.address) })
+
       addCartItem({
         listOp:
           followState === 'blocks'
@@ -116,10 +129,17 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
 
     if (buttonText === 'Mute') {
       if (isPendingMute || isPendingUnmute) {
-        if (isPendingMute && followState === 'none')
-          removeCartItem(listOpAddListRecord(profile?.address))
-        if (isPendingUnmute && followState === 'mutes')
+        if (isPendingMute) {
+          if (followState === 'none') removeCartItem(listOpAddListRecord(profile?.address))
+          if (isPendingUnblock) removeCartItem(listOpRemoveTag(profile?.address, 'block'))
+        }
+
+        if (isPendingUnmute) {
           removeCartItem(listOpRemoveListRecord(profile?.address))
+          if (followState === 'blocks') removeCartItem(listOpRemoveListRecord(profile?.address))
+          if (isPendingBlock && followState === 'mutes')
+            removeCartItem(listOpAddTag(profile?.address, 'block'))
+        }
 
         return removeCartItem(
           followState === 'mutes'
@@ -128,6 +148,13 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
         )
       }
 
+      if (followState === 'blocks') {
+        addCartItem({
+          listOp: listOpRemoveTag(profile?.address, 'block')
+        })
+        if (isPendingUnblock) removeCartItem(listOpRemoveListRecord(profile?.address))
+      }
+      if (isPendingBlock) removeCartItem(listOpAddTag(profile?.address, 'block'))
       if (followState === 'none') addCartItem({ listOp: listOpAddListRecord(profile?.address) })
       if (followState === 'mutes') addCartItem({ listOp: listOpRemoveListRecord(profile?.address) })
       addCartItem({
