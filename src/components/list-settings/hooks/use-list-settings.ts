@@ -5,8 +5,9 @@ import { http, fromHex, getContract, createPublicClient, type Address, type Chai
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import { rpcProviders } from '#/lib/constants/providers'
 import { coreEfpContracts } from '#/lib/constants/contracts'
-import type { ProfileDetailsResponse } from '#/types/requests'
+import type { FollowingResponse, ProfileDetailsResponse } from '#/types/requests'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
+import { useQuery } from '@tanstack/react-query'
 
 const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; list: number }) => {
   const chains = useChains()
@@ -24,6 +25,15 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
     owner: false,
     manager: false,
     user: false
+  })
+
+  const { data: listState } = useQuery({
+    queryKey: ['list state', list],
+    queryFn: async () => {
+      const listStateReq = await fetch(`${process.env.NEXT_PUBLIC_EFP_API_URL}/exportState/${list}`)
+      const listStateRes = await listStateReq.json()
+      return listStateRes.following as FollowingResponse[]
+    }
   })
 
   const [fetchedSlot, setFetchedSlot] = useState<bigint>()
@@ -113,7 +123,8 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
     setOwner,
     setChain,
     fetchedManager,
-    fetchedUser
+    fetchedUser,
+    listState
   }
 }
 
