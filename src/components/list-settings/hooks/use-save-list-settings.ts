@@ -55,6 +55,7 @@ const useSaveListSettings = ({
   onCancel,
   listState
 }: SaveListSettingsParams) => {
+  const [changedValuesState] = useState(changedValues)
   const [currentStep, setCurrentStep] = useState(Step.InitiateTransactions)
   const [completeTransactions, setCompleteTransactions] = useState({
     user: false,
@@ -261,10 +262,10 @@ const useSaveListSettings = ({
     }
 
     const actionsToExecute: Action[] = []
-    if (!completeTransactions.user && changedValues.user) actionsToExecute.push(setListUser)
-    if (!completeTransactions.manager && changedValues.manager)
+    if (!completeTransactions.user && changedValuesState.user) actionsToExecute.push(setListUser)
+    if (!completeTransactions.manager && changedValuesState.manager)
       actionsToExecute.push(setListManager)
-    if (changedValues.chain && newChain) {
+    if (changedValuesState.chain && newChain) {
       if (listState) {
         const listOps = listState.flatMap(item => {
           const operations: CartItem[] = []
@@ -298,7 +299,7 @@ const useSaveListSettings = ({
         actionsToExecute.push(setListStorageLocation)
       }
     }
-    if (!completeTransactions.owner && changedValues.owner) actionsToExecute.push(setListOwner)
+    if (!completeTransactions.owner && changedValuesState.owner) actionsToExecute.push(setListOwner)
 
     addActions(actionsToExecute)
   }, [
@@ -307,7 +308,7 @@ const useSaveListSettings = ({
     setOwnerTx,
     setManagerTx,
     setUserTx,
-    changedValues,
+    changedValuesState,
     chain
   ])
 
@@ -380,7 +381,7 @@ const useSaveListSettings = ({
     setIsRefetchingProfile(true)
     setIsRefetchingFollowing(true)
 
-    if (changedValues.manager) resetCart()
+    if (changedValuesState.manager) resetCart()
 
     // Refetch all related data
     refetchRoles()
@@ -391,7 +392,7 @@ const useSaveListSettings = ({
     resetActions()
     onCancel()
     onClose()
-  }, [changedValues])
+  }, [changedValuesState])
 
   return {
     actions,
