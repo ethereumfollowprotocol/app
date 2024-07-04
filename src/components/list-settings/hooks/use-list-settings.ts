@@ -1,13 +1,13 @@
 import { useChains } from 'wagmi'
 import { useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { http, fromHex, getContract, createPublicClient, type Address, type Chain } from 'viem'
 
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import { rpcProviders } from '#/lib/constants/providers'
 import { coreEfpContracts } from '#/lib/constants/contracts'
-import type { FollowingResponse, ProfileDetailsResponse } from '#/types/requests'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
-import { useQuery } from '@tanstack/react-query'
+import type { FollowingResponse, ProfileDetailsResponse } from '#/types/requests'
 
 const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; list: number }) => {
   const chains = useChains()

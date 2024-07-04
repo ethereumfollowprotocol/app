@@ -3,21 +3,21 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useAccount, useChainId, useSwitchChain, useWalletClient } from 'wagmi'
 import { isAddress, type Chain, type Address, encodePacked, toHex } from 'viem'
 
-import { useCart, type CartItem } from '#/contexts/cart-context'
+import {
+  isTagListOp,
+  listOpAddTag,
+  listOpAddListRecord,
+  extractAddressAndTag
+} from '#/utils/list-ops'
 import { Step } from '#/components/checkout/types'
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import type { FollowingResponse, ProfileDetailsResponse } from '#/types/requests'
+import { useCart, type CartItem } from '#/contexts/cart-context'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { generateListStorageLocationSlot } from '#/app/efp/utilities'
+import type { FollowingResponse, ProfileDetailsResponse } from '#/types/requests'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
-import {
-  extractAddressAndTag,
-  isTagListOp,
-  listOpAddListRecord,
-  listOpAddTag
-} from '#/utils/list-ops'
 
 type SaveListSettingsParams = {
   selectedList: number
