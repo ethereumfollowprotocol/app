@@ -24,6 +24,7 @@ interface FollowListProps {
   isLoading: boolean
   isLoadingMore?: boolean
   canEditTags?: boolean
+  isBlockedList?: boolean
 }
 
 export function FollowList({
@@ -36,7 +37,8 @@ export function FollowList({
   loadingRows = 7,
   isLoading,
   isLoadingMore,
-  canEditTags
+  canEditTags,
+  isBlockedList
 }: FollowListProps) {
   const { t } = useTranslation('editor')
 
@@ -45,7 +47,6 @@ export function FollowList({
       {isLoading ? (
         new Array(loadingRows)
           .fill(1)
-          // biome-ignore lint/suspicious/noArrayIndexKey: no unique param to use as key
           .map((_, i) => <LoadingRow key={i} className={listItemClassName} showTags={showTags} />)
       ) : (
         <>
@@ -74,13 +75,15 @@ export function FollowList({
               showTags={showTags}
               tags={tags}
               canEditTags={canEditTags}
+              isBlockedList={isBlockedList}
             />
           ))}
           {isLoadingMore &&
-            new Array(loadingRows).fill(1).map((_, i) => (
-              // biome-ignore lint/suspicious/noArrayIndexKey: no unique param to use as key
-              <LoadingRow key={i} className={listItemClassName} showTags={showTags} />
-            ))}
+            new Array(loadingRows)
+              .fill(1)
+              .map((_, i) => (
+                <LoadingRow key={i} className={listItemClassName} showTags={showTags} />
+              ))}
         </>
       )}
     </div>

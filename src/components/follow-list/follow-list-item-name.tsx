@@ -27,6 +27,7 @@ interface FollowListItemNameProps {
   tags: string[]
   canEditTags?: boolean
   isEnsProfileLoading?: boolean
+  isBlockedList?: boolean
 }
 
 export function Name({
@@ -56,21 +57,21 @@ export function FollowListItemName({
   className = '',
   showFollowsYouBadges,
   canEditTags,
-  isEnsProfileLoading
+  isEnsProfileLoading,
+  isBlockedList
 }: FollowListItemNameProps) {
   const [tagDropdownOpen, setTagDropdownOpen] = useState(false)
   const [customTagInput, setCustomTagInput] = useState('')
+
+  const tagInputRef = useRef<HTMLInputElement>(null)
   const clickAwayTagDropwdownRef = useClickAway<HTMLDivElement>(() => {
     setTagDropdownOpen(false)
   })
 
-  const tagInputRef = useRef<HTMLInputElement>(null)
   const pathname = usePathname()
-  const isEditor = pathname.includes('/editor')
-
   const { t } = useTranslation()
+  const isEditor = pathname.includes('/editor')
   const { t: tEditor } = useTranslation('editor')
-
   const { followerTag } = useFollowState({
     address,
     type: 'follower'
@@ -87,6 +88,9 @@ export function FollowListItemName({
   const isBeingRemoved = hasListOpRemoveRecord(address)
   const isBeingUnrestricted =
     hasListOpRemoveTag({ address, tag: 'block' }) || hasListOpRemoveTag({ address, tag: 'mute' })
+  const isBeingRestricted =
+    hasListOpAddTag({ address, tag: 'block' }) || hasListOpAddTag({ address, tag: 'mute' })
+  const isRestriction = isBeingUnrestricted || isBeingRestricted
 
   const tagsFromCart = getTagsFromCartByAddress(address)
   const inintialDisplayedTags = () => {
@@ -176,7 +180,7 @@ export function FollowListItemName({
             </div>
           )}
         </div>
-        {showTags && !isBeingRemoved && !isBeingUnrestricted && (
+        {showTags && !isBlockedList && (!isBeingRemoved || isRestriction) && (
           <div
             className={`relative flex ${
               isEditor
@@ -185,7 +189,7 @@ export function FollowListItemName({
             } flex-wrap gap-2 items-center`}
             ref={clickAwayTagDropwdownRef}
           >
-            {canEditTags && (
+            {canEditTags && !isRestriction && (
               <button
                 className='h-5 w-5 flex items-center justify-center rounded-full hover:opacity-80 bg-gray-300'
                 onClick={() => setTagDropdownOpen(!tagDropdownOpen)}
@@ -229,20 +233,18 @@ export function FollowListItemName({
                 </div>
               </div>
             )}
-            {displayedtags
-              .filter(tag => !['block', 'mute'].includes(tag))
-              .map(tag => {
-                const addingTag = hasListOpAddTag({ address, tag })
-                const removingTag = hasListOpRemoveTag({ address, tag })
+            {displayedtags.map((tag, i) => {
+              const addingTag = hasListOpAddTag({ address, tag })
+              const removingTag = hasListOpRemoveTag({ address, tag })
 
-                return (
+              return (
+                <div key={tag + i} className='relative max-w-[80%] sm:max-w-[90%]'>
                   <button
-                    key={tag}
                     className={`
-                    font-semibold py-1 px-2 max-w-[80%] sm:max-w-full sm:py-1.5 sm:px-3 truncate text-sm hover:opacity-80 rounded-full ${
-                      addingTag ? 'bg-addition' : removingTag ? 'bg-deletion' : 'bg-gray-300'
-                    }
-                  `}
+                      font-semibold py-1 px-2 sm:py-1.5 max-w-full sm:px-3 truncate text-sm hover:opacity-80 rounded-full ${
+                        removingTag ? 'bg-deletion' : 'bg-gray-300'
+                      }
+                    `}
                     onClick={() => {
                       if (!canEditTags) return
                       removeTag(tag)
@@ -250,8 +252,12 @@ export function FollowListItemName({
                   >
                     {tEditor(tag)}
                   </button>
-                )
-              })}
+                  {(removingTag || addingTag) && (
+                    <div className='absolute h-4 w-4 rounded-full -top-1 -right-1 bg-green-400' />
+                  )}
+                </div>
+              )
+            })}
           </div>
         )}
       </div>

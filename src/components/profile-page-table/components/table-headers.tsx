@@ -156,9 +156,9 @@ const TableHeader: React.FC<TableHeaderProps> = ({
           ) : (
             allTags
               ?.filter(tag => (isShowingBlocked ? true : !QUERY_BLOCK_TAGS.includes(tag)))
-              .map(tag => (
+              .map((tag, i) => (
                 <button
-                  key={tag.toLowerCase()}
+                  key={tag + i}
                   className={`text-sm px-4 py-2 font-semibold italic ${
                     selectedTags?.includes(tag)
                       ? 'text-darkGrey bg-white shadow-inner shadow-black/40'

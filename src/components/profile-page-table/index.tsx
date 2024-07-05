@@ -148,6 +148,7 @@ export function UserProfilePageTable({
         showTags={showTags}
         showFollowsYouBadges={showFollowsYouBadges}
         canEditTags={canEditTags}
+        isBlockedList={isShowingBlocked}
       />
       <div ref={loadMoreRef} className='h-px w-full' />
     </div>

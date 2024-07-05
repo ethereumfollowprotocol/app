@@ -184,7 +184,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
             <p className='text-gray-500 text-sm sm:text-base'>#{profileList ?? '-'}</p>
             {profileList
               ? profileList !== Number(profile.primary_list) && (
-                  <p className='w-full text-xs italic text-end text-gray-400'>
+                  <p className='w-full text-sm italic text-end text-red-400'>
                     {t('not primary list')}
                   </p>
                 )
