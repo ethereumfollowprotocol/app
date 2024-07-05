@@ -1,5 +1,5 @@
-import type { StatsResponse } from '#/types/requests'
 import { useTranslation } from 'react-i18next'
+import type { StatsResponse } from '#/types/requests'
 
 interface ProfileStatsProps {
   stats?: StatsResponse

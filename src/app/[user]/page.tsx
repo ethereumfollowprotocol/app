@@ -31,7 +31,6 @@ export default function UserPage({ params }: Props) {
   const { address: connectedUserAddress } = useAccount()
 
   const {
-    lists,
     listNum,
     profile,
     followers,
@@ -110,8 +109,6 @@ export default function UserPage({ params }: Props) {
       )}
       {listSettingsOpen && profile && (userIsList ? listNum : profile.primary_list) && (
         <ListSettings
-          showSingleList={userIsList}
-          lists={lists?.lists}
           // @ts-ignore
           selectedList={
             userIsList
