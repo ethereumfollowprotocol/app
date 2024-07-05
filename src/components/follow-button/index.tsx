@@ -33,7 +33,8 @@ const theme: Record<
   Unfollow: {
     bg: 'bg-deletion',
     text: 'text-gray-900',
-    border: 'border-0 '
+    border:
+      'border-0 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-1.5 after:-right-1.5 after:bg-green-400'
   },
   Subscribe: {
     bg: 'bg-kournikova-300',
@@ -48,7 +49,8 @@ const theme: Record<
   Unsubscribe: {
     bg: 'bg-deletion',
     text: 'text-gray-900',
-    border: 'border-0 '
+    border:
+      'border-0 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-1.5 after:-right-1.5 after:bg-green-400'
   },
   Block: {
     bg: 'bg-kournikova-300',
@@ -71,7 +73,8 @@ const theme: Record<
   Unblock: {
     bg: 'bg-deletion',
     text: 'text-zinc-800',
-    border: 'border-0 '
+    border:
+      'border-0 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-1.5 after:-right-1.5 after:bg-green-400'
   },
   Mute: {
     bg: 'bg-kournikova-300',
@@ -94,7 +97,8 @@ const theme: Record<
   Unmute: {
     bg: 'bg-deletion',
     text: 'text-zinc-800',
-    border: 'border-0 '
+    border:
+      'border-0 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-1.5 after:-right-1.5 after:bg-green-400'
   }
 }
 

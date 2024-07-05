@@ -27,6 +27,7 @@ interface FollowListItemNameProps {
   tags: string[]
   canEditTags?: boolean
   isEnsProfileLoading?: boolean
+  isBlockedList?: boolean
 }
 
 export function Name({
@@ -38,7 +39,7 @@ export function Name({
     <Link href={`/${name || address}`} className='w-full'>
       <p
         className={`font-bold sm:text-lg text-start  ${
-          showTags ? 'w-full truncate' : 'w-[90%] truncate'
+          showTags ? 'max-w-full truncate' : 'w-fit max-w-full truncate'
         } hover:opacity-75 transition-opacity`}
       >
         {name || truncateAddress(address)}
@@ -56,21 +57,21 @@ export function FollowListItemName({
   className = '',
   showFollowsYouBadges,
   canEditTags,
-  isEnsProfileLoading
+  isEnsProfileLoading,
+  isBlockedList
 }: FollowListItemNameProps) {
   const [tagDropdownOpen, setTagDropdownOpen] = useState(false)
   const [customTagInput, setCustomTagInput] = useState('')
+
+  const tagInputRef = useRef<HTMLInputElement>(null)
   const clickAwayTagDropwdownRef = useClickAway<HTMLDivElement>(() => {
     setTagDropdownOpen(false)
   })
 
-  const tagInputRef = useRef<HTMLInputElement>(null)
   const pathname = usePathname()
-  const isEditor = pathname.includes('/editor')
-
   const { t } = useTranslation()
+  const isEditor = pathname.includes('/editor')
   const { t: tEditor } = useTranslation('editor')
-
   const { followerTag } = useFollowState({
     address,
     type: 'follower'
@@ -87,6 +88,9 @@ export function FollowListItemName({
   const isBeingRemoved = hasListOpRemoveRecord(address)
   const isBeingUnrestricted =
     hasListOpRemoveTag({ address, tag: 'block' }) || hasListOpRemoveTag({ address, tag: 'mute' })
+  const isBeingRestricted =
+    hasListOpAddTag({ address, tag: 'block' }) || hasListOpAddTag({ address, tag: 'mute' })
+  const isRestriction = isBeingUnrestricted || isBeingRestricted
 
   const tagsFromCart = getTagsFromCartByAddress(address)
   const inintialDisplayedTags = () => {
@@ -139,7 +143,7 @@ export function FollowListItemName({
 
   return (
     <div
-      className={`flex gap-2 sm:gap-3 items-center ${className}`}
+      className={`flex gap-2 sm:gap-3 w-[calc(100% - 115px)] items-center p-0 ${className}`}
       style={{
         width: 'calc(100% - 110px)'
       }}
@@ -154,17 +158,20 @@ export function FollowListItemName({
         />
       )}
       <div
-        className={`flex flex-col w-3/4 ${
+        className={`flex flex-col w-full ${
           isEditor ? 'md:flex-row md:gap-3' : 'md:flex-row md:gap-3'
         } gap-[2px]`}
       >
         <div
           className={`flex flex-col justify-center  ${
-            isEditor ? 'md:w-52' : showTags ? 'w-fit' : 'w-full'
+            isEditor ? 'md:w-52' : 'w-fit max-w-[90%] sm:max-w-full'
+            // : showTags && displayedtags.length > 0
+            //   ? 'w-full xl:max-w-[100px] 2xl:max-w-[138px]'
+            //   : 'w-fit max-w-[90%] sm:max-w-full'
           } items-start tabular-nums relative`}
         >
           {isEnsProfileLoading ? (
-            <LoadingCell className='w-40 xl:w-32 h-7 rounded-lg' />
+            <LoadingCell className='w-432 xl:w-32 h-7 rounded-lg' />
           ) : (
             <Name name={name} address={address} showTags={showTags} />
           )}
@@ -176,16 +183,16 @@ export function FollowListItemName({
             </div>
           )}
         </div>
-        {showTags && !isBeingRemoved && !isBeingUnrestricted && (
+        {showTags && !isBlockedList && (!isBeingRemoved || isRestriction) && (
           <div
             className={`relative flex ${
               isEditor
-                ? 'max-w-[165px] xxs:max-w-[220px] xs:max-w-[270px] sm:max-w-[400px] md:max-w-[300px] lg:max-w-[490px] w-fit xl:max-w-[370px] 2xl:max-w-[700px]'
+                ? 'max-w-[165px] xxs:max-w-[220px] xs:max-w-[270px] sm:max-w-[400px] md:max-w-[300px] lg:max-w-[490px] w-fit xl:max-w-[330px] 2xl:max-w-[550px]'
                 : 'max-w-[165px] xxs:max-w-[200px] xs:max-w-[270px] sm:max-w-[400px] md:max-w-[300px] lg:max-w-[530px] w-fit xl:max-w-[200px] 2xl:max-w-[210px]'
             } flex-wrap gap-2 items-center`}
             ref={clickAwayTagDropwdownRef}
           >
-            {canEditTags && (
+            {canEditTags && !isRestriction && (
               <button
                 className='h-5 w-5 flex items-center justify-center rounded-full hover:opacity-80 bg-gray-300'
                 onClick={() => setTagDropdownOpen(!tagDropdownOpen)}
@@ -229,20 +236,18 @@ export function FollowListItemName({
                 </div>
               </div>
             )}
-            {displayedtags
-              .filter(tag => !['block', 'mute'].includes(tag))
-              .map(tag => {
-                const addingTag = hasListOpAddTag({ address, tag })
-                const removingTag = hasListOpRemoveTag({ address, tag })
+            {displayedtags.map((tag, i) => {
+              const addingTag = hasListOpAddTag({ address, tag })
+              const removingTag = hasListOpRemoveTag({ address, tag })
 
-                return (
+              return (
+                <div key={tag + i} className='relative max-w-full w-fit'>
                   <button
-                    key={tag}
                     className={`
-                    font-semibold py-1 px-2 max-w-[80%] sm:max-w-full sm:py-1.5 sm:px-3 truncate text-sm hover:opacity-80 rounded-full ${
-                      addingTag ? 'bg-addition' : removingTag ? 'bg-deletion' : 'bg-gray-300'
-                    }
-                  `}
+                      font-semibold py-1 px-2 sm:py-1.5 max-w-full sm:px-3 truncate text-sm hover:opacity-80 rounded-full ${
+                        removingTag ? 'bg-deletion' : 'bg-gray-300'
+                      }
+                    `}
                     onClick={() => {
                       if (!canEditTags) return
                       removeTag(tag)
@@ -250,8 +255,12 @@ export function FollowListItemName({
                   >
                     {tEditor(tag)}
                   </button>
-                )
-              })}
+                  {(removingTag || addingTag) && (
+                    <div className='absolute h-4 w-4 rounded-full -top-1 -right-1 bg-green-400' />
+                  )}
+                </div>
+              )
+            })}
           </div>
         )}
       </div>

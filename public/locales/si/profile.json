@@ -18,6 +18,10 @@
   "followers myprofile empty": "Nimaš sledilcev",
   "following empty first": "Ta uporabnik ne sledi nikomur",
   "followers empty": "Ta uporabnik nima sledilcev",
+  "blocking myprofile empty": "None",
+  "blocked myprofile empty": "None",
+  "blocking empty": "None",
+  "blocked empty": "None",
   "list settings": {
     "list": "Seznam",
     "followers": "Sledilci",

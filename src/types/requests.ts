@@ -44,11 +44,16 @@ export interface ENSMetadataProfile {
   youtube_url: string
 }
 
+export type FollowSortType = 'latest first' | 'earliest first' | 'follower count'
+
 export interface InfiniteProfileQueryProps {
   addressOrName: string
-  list?: number
+  list?: number | string
   limit: number
+  tags?: string[]
+  sort?: FollowSortType
   pageParam: number
+  allResults?: boolean
 }
 export interface FollowerResponse {
   address: Address
@@ -100,6 +105,15 @@ export interface ProfileDetailsResponse {
   ens: ENSProfile
   primary_list?: string | null
   stats?: StatsResponse | undefined
+}
+
+export interface FollowingTagsResponse {
+  token_id: string | number
+  tags: string[]
+  taggedAddresses: {
+    address: Address
+    tag: string
+  }[]
 }
 
 export interface ProfileListsResponse {

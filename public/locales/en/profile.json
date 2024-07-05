@@ -18,6 +18,10 @@
   "followers myprofile empty": "No followers",
   "following empty first": "This user doesn't follow anybody.",
   "followers empty": "This user doesn't have any followers",
+  "blocked myprofile empty": "None",
+  "blocking myprofile empty": "None",
+  "blocking empty": "None",
+  "blocked empty": "None",
   "list settings": {
     "list": "List",
     "followers": "Followers",

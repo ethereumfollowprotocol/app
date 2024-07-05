@@ -1,20 +1,31 @@
+import { formatQueryParams } from '#/utils/formatQueryParams'
 import type { FollowerResponse, InfiniteProfileQueryProps } from '#/types/requests'
 
 const fetchProfileFollowers = async ({
   addressOrName,
   list,
   limit,
-  pageParam
+  sort,
+  tags,
+  pageParam,
+  allResults
 }: InfiniteProfileQueryProps) => {
   try {
+    const queryParams = formatQueryParams({
+      limit,
+      offset: pageParam * limit,
+      sort,
+      tags
+    })
+
     const url =
-      typeof list === 'number'
-        ? `${process.env.NEXT_PUBLIC_EFP_API_URL}/lists/${list}/followers?offset=${
-            pageParam * limit
-          }&limit=${limit}`
-        : `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/followers?offset=${
-            pageParam * limit
-          }&limit=${limit}`
+      list !== undefined
+        ? `${process.env.NEXT_PUBLIC_EFP_API_URL}/lists/${list}/${
+            allResults ? 'allFollowers' : 'followers'
+          }?${queryParams}`
+        : `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/${
+            allResults ? 'allFollowers' : 'followers'
+          }?${queryParams}`
 
     const response = await fetch(url, {
       cache: 'default'

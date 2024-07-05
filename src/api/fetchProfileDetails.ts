@@ -2,10 +2,10 @@ import { isAddress, type Address } from 'viem'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import { resolveEnsAddress, resolveEnsProfile } from '#/utils/ens'
 
-const fetchProfileDetails = async (addressOrName: string, list?: number) => {
+const fetchProfileDetails = async (addressOrName: string, list?: number | string) => {
   try {
     const url =
-      typeof list === 'number'
+      list !== undefined
         ? `${process.env.NEXT_PUBLIC_EFP_API_URL}/lists/${list}/details`
         : `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/details`
     const response = await fetch(url, {

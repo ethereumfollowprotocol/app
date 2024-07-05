@@ -97,6 +97,7 @@
         "all": true,
         "noConsoleLog": "off",
         "noExplicitAny": "off",
+        "noArrayIndexKey": "off",
         "noEmptyInterface": "off"
       },
       "complexity": {
