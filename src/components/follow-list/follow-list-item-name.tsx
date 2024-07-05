@@ -187,7 +187,7 @@ export function FollowListItemName({
           <div
             className={`relative flex ${
               isEditor
-                ? 'max-w-[165px] xxs:max-w-[220px] xs:max-w-[270px] sm:max-w-[400px] md:max-w-[300px] lg:max-w-[490px] w-fit xl:max-w-[370px] 2xl:max-w-[540px]'
+                ? 'max-w-[165px] xxs:max-w-[220px] xs:max-w-[270px] sm:max-w-[400px] md:max-w-[300px] lg:max-w-[490px] w-fit xl:max-w-[330px] 2xl:max-w-[550px]'
                 : 'max-w-[165px] xxs:max-w-[200px] xs:max-w-[270px] sm:max-w-[400px] md:max-w-[300px] lg:max-w-[530px] w-fit xl:max-w-[200px] 2xl:max-w-[210px]'
             } flex-wrap gap-2 items-center`}
             ref={clickAwayTagDropwdownRef}
@@ -241,7 +241,7 @@ export function FollowListItemName({
               const removingTag = hasListOpRemoveTag({ address, tag })
 
               return (
-                <div key={tag + i} className='relative max-w-[95%] w-fit'>
+                <div key={tag + i} className='relative max-w-full w-fit'>
                   <button
                     className={`
                       font-semibold py-1 px-2 sm:py-1.5 max-w-full sm:px-3 truncate text-sm hover:opacity-80 rounded-full ${
