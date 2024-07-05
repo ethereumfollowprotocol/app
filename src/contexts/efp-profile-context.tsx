@@ -183,8 +183,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       setIsRefetchingProfile(false)
 
       return fetchedProfile
-    },
-    refetchInterval: 60000
+    }
+    // refetchInterval: 60000
   })
 
   const [isEndOfFollowers, setIsEndOfFollowers] = useState(false)
@@ -220,8 +220,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       return fetchedFollowers
     },
     initialPageParam: 0,
-    getNextPageParam: lastPage => lastPage.nextPageParam,
-    refetchInterval: 60000
+    getNextPageParam: lastPage => lastPage.nextPageParam
+    // refetchInterval: 60000
   })
 
   const [isEndOfFollowing, setIsEndOfFollowing] = useState(false)

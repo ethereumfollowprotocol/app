@@ -1,11 +1,11 @@
 import type { Chain, Address } from 'viem'
 
 import { Step } from '#/components/checkout/types'
+import LoadingSpinner from '#/components/loading-spinner'
 import useSaveListSettings from '../hooks/use-save-list-settings'
 import TransactionStatus from '#/components/checkout/transaction-status'
 import InitiateActionsCard from '#/components/checkout/initiate-actions-card'
 import type { FollowingResponse, ProfileDetailsResponse } from '#/types/requests'
-import LoadingSpinner from '#/components/loading-spinner'
 
 export interface SaveSettingsProps {
   selectedList: number
