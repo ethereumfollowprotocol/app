@@ -238,8 +238,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
 
       const fetchedProfile = await fetchFollowingTags(userAddress, selectedList)
       return fetchedProfile
-    },
-    refetchInterval: 60000
+    }
+    // refetchInterval: 60000
   })
 
   const [isEndOfFollowing, setIsEndOfFollowing] = useState(false)

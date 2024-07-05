@@ -9,6 +9,7 @@ import type { BlockedMutedTabType } from '#/types/common'
 import { UserProfilePageTable } from '../profile-page-table'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import useBlockedMuted, { TAGS } from './hooks/use-blocked-muted'
+
 interface BlockedMutedProps {
   profile: ProfileDetailsResponse
   list?: string | number

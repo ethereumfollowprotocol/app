@@ -9,11 +9,11 @@ import useUser from './hooks/useUser'
 import { PROFILE_TABS } from '#/lib/constants'
 import type { ProfileTabType } from '#/types/common'
 import ListSettings from '#/components/list-settings'
+import BlockedMuted from '#/components/blocked-muted'
 import SettingsIcon from 'public/assets/icons/settings.svg'
 import UserProfileCard from '#/components/user-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { UserProfilePageTable } from '#/components/profile-page-table'
-import BlockedMuted from '#/components/blocked-muted'
 
 interface Props {
   params: { user: string }

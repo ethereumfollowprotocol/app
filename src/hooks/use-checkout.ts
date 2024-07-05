@@ -41,6 +41,7 @@ const useCheckout = () => {
     selectedList,
     refetchProfile,
     refetchFollowing,
+    refetchFollowingTags,
     setIsRefetchingProfile,
     setSetNewListAsSelected,
     setIsRefetchingFollowing
@@ -269,6 +270,7 @@ const useCheckout = () => {
 
       refetchProfile()
       refetchFollowing()
+      refetchFollowingTags()
     }
 
     router.push('/profile')

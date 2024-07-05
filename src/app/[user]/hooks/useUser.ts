@@ -80,8 +80,8 @@ const useUser = (user: string) => {
 
       const fetchedProfile = await fetchFollowingTags(user, listNum)
       return fetchedProfile
-    },
-    refetchInterval: 60000
+    }
+    // refetchInterval: 60000
   })
 
   const [isEndOfFollowing, setIsEndOfFollowing] = useState(false)
