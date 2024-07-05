@@ -39,7 +39,7 @@ export function Name({
     <Link href={`/${name || address}`} className='w-full'>
       <p
         className={`font-bold sm:text-lg text-start  ${
-          showTags ? 'w-full truncate' : 'w-[90%] truncate'
+          showTags ? 'w-full truncate' : 'w-fit max-w-full truncate'
         } hover:opacity-75 transition-opacity`}
       >
         {name || truncateAddress(address)}
@@ -164,7 +164,11 @@ export function FollowListItemName({
       >
         <div
           className={`flex flex-col justify-center  ${
-            isEditor ? 'md:w-52' : showTags ? 'w-full xl:max-w-[100px] 2xl:max-w-[138px]' : 'w-full'
+            isEditor
+              ? 'md:w-52'
+              : showTags && displayedtags.length > 0
+                ? 'w-full xl:max-w-[100px] 2xl:max-w-[138px]'
+                : 'w-fit max-w-[90%] sm:max-w-full'
           } items-start tabular-nums relative`}
         >
           {isEnsProfileLoading ? (
@@ -238,7 +242,7 @@ export function FollowListItemName({
               const removingTag = hasListOpRemoveTag({ address, tag })
 
               return (
-                <div key={tag + i} className='relative max-w-[80%] sm:max-w-[90%]'>
+                <div key={tag + i} className='relative w-fit max-w-[80%] sm:max-w-[90%]'>
                   <button
                     className={`
                       font-semibold py-1 px-2 sm:py-1.5 max-w-full sm:px-3 truncate text-sm hover:opacity-80 rounded-full ${
