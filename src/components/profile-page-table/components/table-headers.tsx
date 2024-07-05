@@ -167,7 +167,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                   name={tag.toLowerCase()}
                   onClick={() => toggleSelectedTags(title, tag)}
                 >
-                  {t(tag)}
+                  {tag}
                 </button>
               ))
           )}

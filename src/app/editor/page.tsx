@@ -43,7 +43,7 @@ export default function EditorPage() {
   return (
     <main
       suppressHydrationWarning={true}
-      className='flex flex-col-reverse xl:flex-row gap-4 min-h-full h-full w-full items-center xl:items-start justify-center text-center pt-10 xl:gap-6 pb-40 mt-20 md:mt-28 xl:mt-40 px-2 lg:px-8'
+      className='flex flex-col-reverse xl:flex-row gap-4 min-h-full h-full w-full items-center xl:items-start justify-center text-center xl:gap-6 pt-4 pb-40 mt-24 sm:mt-28 lg:mt-32 xl:mt-40 px-2 lg:px-8'
     >
       {isConnected && isCheckingOut ? (
         <div className='px-2'>

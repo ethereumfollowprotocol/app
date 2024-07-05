@@ -25,7 +25,7 @@ const Summary = () => {
 
   return (
     <div
-      className={`mt-36 md:mt-48 w-full lg:mt-52 xl:mt-60 px-4 xl:px-0 2xl:px-8 flex items-start ${
+      className={`mt-20 md:mt-28 w-full lg:mt-32 xl:mt-40 px-4 xl:px-0 2xl:px-8 flex items-start ${
         isFollowersEmpty || !address ? 'lg:justify-center lg:gap-4' : 'lg:justify-between xl:gap-4'
       } xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4`}
     >

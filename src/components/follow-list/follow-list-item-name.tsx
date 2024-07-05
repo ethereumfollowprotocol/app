@@ -39,7 +39,7 @@ export function Name({
     <Link href={`/${name || address}`} className='w-full'>
       <p
         className={`font-bold sm:text-lg text-start  ${
-          showTags ? 'w-full truncate' : 'w-fit max-w-full truncate'
+          showTags ? 'max-w-full truncate' : 'w-fit max-w-full truncate'
         } hover:opacity-75 transition-opacity`}
       >
         {name || truncateAddress(address)}
@@ -143,7 +143,7 @@ export function FollowListItemName({
 
   return (
     <div
-      className={`flex gap-2 sm:gap-3 items-center ${className}`}
+      className={`flex gap-2 sm:gap-3 w-[calc(100% - 115px)] items-center p-0 ${className}`}
       style={{
         width: 'calc(100% - 110px)'
       }}
@@ -158,21 +158,20 @@ export function FollowListItemName({
         />
       )}
       <div
-        className={`flex flex-col w-3/4 ${
+        className={`flex flex-col w-full ${
           isEditor ? 'md:flex-row md:gap-3' : 'md:flex-row md:gap-3'
         } gap-[2px]`}
       >
         <div
           className={`flex flex-col justify-center  ${
-            isEditor
-              ? 'md:w-52'
-              : showTags && displayedtags.length > 0
-                ? 'w-full xl:max-w-[100px] 2xl:max-w-[138px]'
-                : 'w-fit max-w-[90%] sm:max-w-full'
+            isEditor ? 'md:w-52' : 'w-fit max-w-[90%] sm:max-w-full'
+            // : showTags && displayedtags.length > 0
+            //   ? 'w-full xl:max-w-[100px] 2xl:max-w-[138px]'
+            //   : 'w-fit max-w-[90%] sm:max-w-full'
           } items-start tabular-nums relative`}
         >
           {isEnsProfileLoading ? (
-            <LoadingCell className='w-40 xl:w-32 h-7 rounded-lg' />
+            <LoadingCell className='w-432 xl:w-32 h-7 rounded-lg' />
           ) : (
             <Name name={name} address={address} showTags={showTags} />
           )}
@@ -188,7 +187,7 @@ export function FollowListItemName({
           <div
             className={`relative flex ${
               isEditor
-                ? 'max-w-[165px] xxs:max-w-[220px] xs:max-w-[270px] sm:max-w-[400px] md:max-w-[300px] lg:max-w-[490px] w-fit xl:max-w-[370px] 2xl:max-w-[700px]'
+                ? 'max-w-[165px] xxs:max-w-[220px] xs:max-w-[270px] sm:max-w-[400px] md:max-w-[300px] lg:max-w-[490px] w-fit xl:max-w-[370px] 2xl:max-w-[540px]'
                 : 'max-w-[165px] xxs:max-w-[200px] xs:max-w-[270px] sm:max-w-[400px] md:max-w-[300px] lg:max-w-[530px] w-fit xl:max-w-[200px] 2xl:max-w-[210px]'
             } flex-wrap gap-2 items-center`}
             ref={clickAwayTagDropwdownRef}
@@ -242,7 +241,7 @@ export function FollowListItemName({
               const removingTag = hasListOpRemoveTag({ address, tag })
 
               return (
-                <div key={tag + i} className='relative w-fit max-w-[80%] sm:max-w-[90%]'>
+                <div key={tag + i} className='relative max-w-[95%] w-fit'>
                   <button
                     className={`
                       font-semibold py-1 px-2 sm:py-1.5 max-w-full sm:px-3 truncate text-sm hover:opacity-80 rounded-full ${

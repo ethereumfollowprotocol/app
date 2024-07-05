@@ -127,7 +127,7 @@ export default function UserPage({ params }: Props) {
         />
       )}
       {!isSaving && (
-        <main className='flex pb-8 min-h-full w-full justify-between xl:justify-center gap-y-4 flex-col md:flex-row flex-wrap xl:flex-nowrap items-start xl:gap-6 mt-32 md:mt-40 lg:mt-48 px-4 lg:px-8'>
+        <main className='flex pb-8 min-h-full w-full justify-between xl:justify-center gap-y-4 flex-col md:flex-row flex-wrap xl:flex-nowrap items-start xl:gap-6 mt-24 sm:mt-28 lg:mt-32 xl:mt-40 px-4 lg:px-8'>
           <div className='flex flex-col w-full xl:w-fit items-center gap-4'>
             <UserProfileCard
               profileList={
@@ -145,14 +145,12 @@ export default function UserPage({ params }: Props) {
               }
             />
             <div className='flex flex-col gap-1 items-center'>
-              {profile?.primary_list && (
-                <p
-                  onClick={() => setIsBlockedMutedOpen(true)}
-                  className='font-semibold cursor-pointer hover:opacity-80 transition-opacity'
-                >
-                  {t('block-mute')}
-                </p>
-              )}
+              <p
+                onClick={() => setIsBlockedMutedOpen(true)}
+                className='font-semibold cursor-pointer hover:opacity-80 transition-opacity'
+              >
+                {t('block-mute')}
+              </p>
               {profile?.primary_list && (
                 <div
                   className='flex gap-1 cursor-pointer hover:opacity-80 transition-opacity'
