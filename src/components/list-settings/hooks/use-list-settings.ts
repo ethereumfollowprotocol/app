@@ -33,7 +33,8 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
       const listStateReq = await fetch(`${process.env.NEXT_PUBLIC_EFP_API_URL}/exportState/${list}`)
       const listStateRes = await listStateReq.json()
       return listStateRes.following as FollowingResponse[]
-    }
+    },
+    staleTime: 180000
   })
 
   const [fetchedSlot, setFetchedSlot] = useState<bigint>()
