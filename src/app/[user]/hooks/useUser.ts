@@ -69,6 +69,7 @@ const useUser = (user: string) => {
 
       return fetchedFollowers
     },
+    staleTime: 20000,
     initialPageParam: 0,
     getNextPageParam: lastPage => lastPage.nextPageParam
   })
@@ -80,8 +81,8 @@ const useUser = (user: string) => {
 
       const fetchedProfile = await fetchFollowingTags(user, listNum)
       return fetchedProfile
-    }
-    // refetchInterval: 60000
+    },
+    staleTime: 20000
   })
 
   const [isEndOfFollowing, setIsEndOfFollowing] = useState(false)
@@ -112,6 +113,7 @@ const useUser = (user: string) => {
 
       return fetchedFollowing
     },
+    staleTime: 20000,
     initialPageParam: 0,
     getNextPageParam: lastPage => lastPage.nextPageParam
   })

@@ -77,7 +77,7 @@ export default function EditorPage() {
             />
           </div>
           {isClient && totalCartItems > 0 && (
-            <div className='fixed md:w-fit w-full top-[85vh] sm:top-[87.5vh] lg:top-[90vh] right-0 px-4 lg:right-[5vw] flex justify-end'>
+            <div className='fixed md:w-fit w-full top-[85vh] sm:top-[87.5vh] lg:top-[85vh] right-0 px-4 lg:right-[5vw] flex justify-end'>
               <div className='flex gap-6 w-full border-[1px] border-gray-200 lg:w-fit items-center p-4 bg-white/10 justify-between glass-card bg-opacity-50 shadow-xl rounded-xl'>
                 <div className='flex gap-2 items-center'>
                   <p className='text-6xl font-bold'>{totalCartItems}</p>

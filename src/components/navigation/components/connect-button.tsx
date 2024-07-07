@@ -1,9 +1,9 @@
 'use client'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
-import { useAccount, useDisconnect } from 'wagmi'
+import { useAccount, useDisconnect, useWalletClient } from 'wagmi'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useAccountModal, useConnectModal } from '@rainbow-me/rainbowkit'
 
@@ -38,10 +38,25 @@ const ConnectButton = () => {
 
   const { t } = useTranslation()
   const { disconnect } = useDisconnect()
-  const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
   const { openAccountModal } = useAccountModal()
+  const { address: userAddress, isConnected, connector } = useAccount()
   const { selectedList, lists, setSelectedList } = useEFPProfile()
+  const { isLoading: isLoadingWalletClient, data: walletClient } = useWalletClient()
+
+  useEffect(() => {
+    if (
+      isConnected &&
+      userAddress !== undefined &&
+      connector !== undefined &&
+      !isLoadingWalletClient &&
+      !walletClient
+    ) {
+      disconnect()
+    }
+
+    console.log(isConnected, userAddress, connector, isLoadingWalletClient, walletClient)
+  }, [connector, walletClient, isLoadingWalletClient])
 
   const { data: ensProfile } = useQuery({
     queryKey: ['ens-data', userAddress],

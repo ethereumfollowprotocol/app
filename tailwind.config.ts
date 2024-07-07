@@ -8,6 +8,8 @@ import defaultTheme from 'tailwindcss/defaultTheme'
 
 const { colors, fontFamily, fontSize, keyframes, animation, spacing, screens } = {
   screens: {
+    '3xl': '1850px',
+    '3xs': '390px',
     xxs: '420px',
     xs: '500px',
     ...defaultTheme.screens

@@ -21,7 +21,7 @@ const Summary = () => {
   const { address } = useAccount()
   const { t } = useTranslation('home')
 
-  const isFollowersEmpty = followers.length === 0
+  const isFollowersEmpty = !followersIsLoading && followers.length === 0
 
   return (
     <div
@@ -42,7 +42,7 @@ const Summary = () => {
           {!isFollowersEmpty && (
             <LatestFollowers
               isLoading={followersIsLoading || isFetchingMoreFollowers}
-              profiles={followers?.map(follower => ({
+              profiles={followers?.slice(0, 7).map(follower => ({
                 tags: follower.tags,
                 address: follower.address,
                 ens: follower.ens
