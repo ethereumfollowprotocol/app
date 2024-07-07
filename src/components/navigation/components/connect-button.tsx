@@ -54,8 +54,6 @@ const ConnectButton = () => {
     ) {
       disconnect()
     }
-
-    console.log(isConnected, userAddress, connector, isLoadingWalletClient, walletClient)
   }, [connector, walletClient, isLoadingWalletClient])
 
   const { data: ensProfile } = useQuery({
