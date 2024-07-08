@@ -228,7 +228,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                       isResponsive
                         ? 'max-w-[90%] xl:max-w-72 2xl:max-w-[325px] sm:text-2xl text-xl text-start xl:text-center'
                         : ' max-w-[332px] text-2xl text-center'
-                    } font-bold flex gap-1.5 items-center relative`}
+                    } font-bold flex gap-2 items-center relative`}
                   >
                     <p className='truncate'>{profileName || truncateAddress(profile.address)}</p>
                     {showMoreOptions && (
