@@ -228,18 +228,18 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                       isResponsive
                         ? 'max-w-[90%] xl:max-w-72 2xl:max-w-[325px] sm:text-2xl text-xl text-start xl:text-center'
                         : ' max-w-[332px] text-2xl text-center'
-                    } font-bold flex gap-1.5 items-center relative`}
+                    } font-bold flex gap-2 items-center relative`}
                   >
                     <p className='truncate'>{profileName || truncateAddress(profile.address)}</p>
                     {showMoreOptions && (
                       <div ref={clickAwayMoreOptionsRef}>
                         <div
-                          className='flex gap-[3px] cursor-pointer items-center hover:opacity-50 transition-opacity'
+                          className='flex gap-[3px] p-1 h-[26px] rounded-full bg-gray-300 cursor-pointer items-center hover:opacity-50 transition-opacity'
                           onClick={() => setMoreOptionsDropdownOpen(!moreOptionsDropdownOpen)}
                         >
-                          <div className='h-[5px] w-[5px] bg-black rounded-full'></div>
-                          <div className='h-[5px] w-[5px] bg-black rounded-full'></div>
-                          <div className='h-[5px] w-[5px] bg-black rounded-full'></div>
+                          <div className='h-1 w-1 bg-black rounded-full'></div>
+                          <div className='h-1 w-1 bg-black rounded-full'></div>
+                          <div className='h-1 w-1 bg-black rounded-full'></div>
                         </div>
                         {showMoreOptions && moreOptionsDropdownOpen && (
                           <div className='absolute top-10 flex-col flex gap-2 right-0 p-2 bg-white border-gray-200 border-2 rounded-xl z-50 drop-shadow-lg'>

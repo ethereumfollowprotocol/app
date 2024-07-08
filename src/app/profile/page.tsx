@@ -148,7 +148,7 @@ export default function ProfilePage() {
             fetchMore={() => fetchMoreFollowing()}
             canEditTags={roles?.isManager}
             title='following'
-            customClass='hidden xl:flex'
+            customClass='hidden xl:flex xl:max-w-[520px] 2xl:max-w-[40%]'
           />
           <UserProfilePageTable
             isLoading={followersIsLoading}
@@ -160,7 +160,7 @@ export default function ProfilePage() {
             isFetchingMore={isFetchingMoreFollowers}
             fetchMore={() => fetchMoreFollowers()}
             title='followers'
-            customClass='hidden xl:flex'
+            customClass='hidden xl:flex xl:max-w-[520px] 2xl:max-w-[40%]'
           />
           <div className=' w-full mt-12 relative xl:hidden'>
             <div className='w-full absolute -top-12 left-0'>

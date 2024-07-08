@@ -42,7 +42,7 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
   // Add separate transaction finished state for custom delay to wait for backend to update after finishing the llast transaction
   const [transactionsAreFinished, setTransactionsAreFinished] = useState(false)
   useEffect(() => {
-    if (allActionsSuccessful) setTimeout(() => setTransactionsAreFinished(true), 3000)
+    if (allActionsSuccessful) setTimeout(() => setTransactionsAreFinished(true), 4000)
   }, [allActionsSuccessful])
 
   const isLastAction = currentActionIndex + 1 === actions.length

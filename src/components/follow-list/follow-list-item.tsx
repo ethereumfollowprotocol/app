@@ -13,6 +13,7 @@ export interface FollowListItemProps {
   showFollowsYouBadges?: boolean
   showTags?: boolean
   tags: string[]
+  isFollowers?: boolean
   canEditTags?: boolean
   isBlockedList?: boolean
 }
@@ -24,6 +25,7 @@ export function FollowListItem({
   showFollowsYouBadges,
   showTags,
   tags,
+  isFollowers,
   canEditTags,
   isBlockedList
 }: FollowListItemProps) {
@@ -47,6 +49,7 @@ export function FollowListItem({
         showFollowsYouBadges={showFollowsYouBadges}
         showTags={showTags}
         tags={tags}
+        isFollowers={isFollowers}
         canEditTags={canEditTags}
         isEnsProfileLoading={isEnsProfileLoading}
         isBlockedList={isBlockedList}

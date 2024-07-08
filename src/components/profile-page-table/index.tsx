@@ -117,9 +117,9 @@ export function UserProfilePageTable({
 
   return (
     <div
-      className={`glass-card flex flex-col gap-4 p-3 ${
+      className={`glass-card flex flex-col w-full gap-4 p-3 ${
         !(isLoading || isFetchingMore) && 'pb-0 sm:pb-0'
-      } sm:p-4 w-full xl:w-[620px] border-2 rounded-2xl border-gray-200 ${customClass}`}
+      } sm:p-4 border-2 rounded-2xl border-gray-200 ${customClass}`}
     >
       <TableHeader
         search={search}
@@ -142,12 +142,13 @@ export function UserProfilePageTable({
         isLoading={isLoading}
         isLoadingMore={isFetchingMore}
         loadingRows={FETCH_LIMIT_PARAM}
-        listClassName='gap-2 rounded-xl'
-        listItemClassName='rounded-xl hover:bg-white/50 px-0 py-2 sm:p-2'
+        listClassName='gap-2 rounded-xl w-full'
+        listItemClassName='rounded-xl w-full hover:bg-white/50 px-0 py-2 sm:p-2'
         profiles={profiles}
         showTags={showTags}
         showFollowsYouBadges={showFollowsYouBadges}
         canEditTags={canEditTags}
+        isFollowers={title === 'followers' || title === 'Blocked/Muted By'}
         isBlockedList={isShowingBlocked}
       />
       <div ref={loadMoreRef} className='h-px w-full' />

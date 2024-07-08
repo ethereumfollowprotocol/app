@@ -20,7 +20,10 @@ const Recommendations = ({ header, className, limit, endpoint }: Recommendations
     queryKey: [endpoint, userAddress],
     queryFn: async () => {
       const discoverAccounts = await fetchRecommendations(endpoint, userAddress)
-      return discoverAccounts
+
+      return discoverAccounts.filter(
+        account => account.address.toLowerCase() !== userAddress?.toLowerCase()
+      )
     }
   })
 
