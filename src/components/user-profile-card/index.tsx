@@ -234,7 +234,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                     {showMoreOptions && (
                       <div ref={clickAwayMoreOptionsRef}>
                         <div
-                          className='flex gap-[3px] p-1 h-[26px] rounded-full bg-gray-300 cursor-pointer items-center hover:opacity-50 transition-opacity'
+                          className='flex gap-[3px] px-1.5 py-2 rounded-md bg-gray-300 cursor-pointer items-center hover:opacity-50 transition-opacity'
                           onClick={() => setMoreOptionsDropdownOpen(!moreOptionsDropdownOpen)}
                         >
                           <div className='h-1 w-1 bg-black rounded-full'></div>

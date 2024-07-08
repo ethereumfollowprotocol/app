@@ -147,9 +147,9 @@ const TableHeader: React.FC<TableHeaderProps> = ({
         <div className='flex flex-wrap w-full gap-2'>
           {tagsLoading ? (
             <>
-              <LoadingCell className='w-28 h-6 rounded-full' />
-              <LoadingCell className='w-28 h-6 rounded-full' />
-              <LoadingCell className='w-28 h-6 rounded-full' />
+              <LoadingCell className='w-20 h-7 md:h-9 rounded-full' />
+              <LoadingCell className='w-20 h-7 md:h-9 rounded-full' />
+              <LoadingCell className='w-20 h-7 md:h-9 rounded-full' />
             </>
           ) : allTags?.length === 0 || !allTags ? (
             <p className='text-center w-full font-semibold text-gray-500 italic'>No tags</p>

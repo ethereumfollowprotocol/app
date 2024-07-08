@@ -171,7 +171,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   const {
     data: profile,
     isLoading: profileIsLoading,
-    refetch: refetchProfile
+    refetch: refetchProfile,
+    isRefetching: isRefetchingProfileQuery
   } = useQuery({
     queryKey: ['profile', userAddress, selectedList],
     queryFn: async () => {
@@ -196,7 +197,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     isLoading: followersIsLoading,
     fetchNextPage: fetchMoreFollowers,
     isFetchingNextPage: isFetchingMoreFollowers,
-    refetch: refetchFollowers
+    refetch: refetchFollowers,
+    isRefetching: isRefetchingFollowersQuery
   } = useInfiniteQuery({
     queryKey: ['followers', userAddress, selectedList, followersSort, followersTagsFilter],
     queryFn: async ({ pageParam = 0 }) => {
@@ -230,7 +232,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   const {
     data: followingTags,
     isLoading: followingTagsLoading,
-    refetch: refetchFollowingTags
+    refetch: refetchFollowingTags,
+    isRefetching: isRefetchingFollowingTagsQuery
   } = useQuery({
     queryKey: ['following tags', userAddress, selectedList],
     queryFn: async () => {
@@ -249,7 +252,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     isLoading: followingIsLoading,
     fetchNextPage: fetchMoreFollowing,
     isFetchingNextPage: isFetchingMoreFollowing,
-    refetch: refetchFollowing
+    refetch: refetchFollowing,
+    isRefetching: isRefetchingFollowingQuery
   } = useInfiniteQuery({
     queryKey: ['following', userAddress, selectedList, followingSort, followingTagsFilter],
     queryFn: async ({ pageParam = 0 }) => {
@@ -361,10 +365,15 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         following,
         roles,
         listsIsLoading,
-        followingTagsLoading,
-        profileIsLoading: listsIsLoading || isRefetchingProfile || profileIsLoading,
-        followingIsLoading: listsIsLoading || isRefetchingFollowing || followingIsLoading,
-        followersIsLoading: listsIsLoading || followersIsLoading,
+        followingTagsLoading: followingTagsLoading || isRefetchingFollowingTagsQuery,
+        profileIsLoading:
+          listsIsLoading || isRefetchingProfile || profileIsLoading || isRefetchingProfileQuery,
+        followingIsLoading:
+          listsIsLoading ||
+          isRefetchingFollowing ||
+          followingIsLoading ||
+          isRefetchingFollowingQuery,
+        followersIsLoading: listsIsLoading || followersIsLoading || isRefetchingFollowersQuery,
         isFetchingMoreFollowers: !isEndOfFollowers && isFetchingMoreFollowers,
         isFetchingMoreFollowing: !isEndOfFollowing && isFetchingMoreFollowing,
         isEndOfFollowers,
