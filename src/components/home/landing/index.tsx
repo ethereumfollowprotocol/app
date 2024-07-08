@@ -6,7 +6,7 @@ import Phrase from './components/phrase'
 
 const Landing = () => {
   return (
-    <div className='mt-20 px-4 md:mt-36 lg:mt-44 xl:mt-60 gap-[50px] lg:gap-[150px] flex flex-col items-center mb-[100px] lg:mb-[170px]'>
+    <div className='mt-24 px-4 md:mt-36 lg:mt-44 xl:mt-60 gap-[50px] lg:gap-[150px] flex flex-col items-center mb-[100px] lg:mb-[170px]'>
       <Phrase />
       <SocialGraph />
       <FollowGhost />
