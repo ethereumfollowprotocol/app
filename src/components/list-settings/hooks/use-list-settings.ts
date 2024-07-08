@@ -4,19 +4,19 @@ import { useQuery } from '@tanstack/react-query'
 import {
   http,
   fromHex,
-  getContract,
-  createPublicClient,
-  type Address,
+  isAddress,
   type Chain,
-  isAddress
+  getContract,
+  type Address,
+  createPublicClient
 } from 'viem'
 
+import { resolveEnsAddress } from '#/utils/ens'
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import { rpcProviders } from '#/lib/constants/providers'
 import { coreEfpContracts } from '#/lib/constants/contracts'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import type { FollowingResponse, ProfileDetailsResponse } from '#/types/requests'
-import { resolveEnsAddress } from '#/utils/ens'
 
 const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; list: number }) => {
   const chains = useChains()
@@ -44,7 +44,7 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
 
   useEffect(() => {
     const updateValue = async () => {
-      if (isAddress(currentUser)) {
+      if (isAddress(currentUser) && currentUser.toLowerCase() !== fetchedUser.toLowerCase()) {
         setUser(currentUser)
         setUserLoading(false)
         return setChangedValues(currValues => ({
@@ -58,29 +58,37 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
         if (resolvedAddress) {
           setUser(resolvedAddress)
           setUserLoading(false)
-          return setChangedValues(currValues => ({
-            ...currValues,
-            user: true
-          }))
+          if (resolvedAddress.toLowerCase() !== fetchedUser.toLowerCase())
+            setChangedValues(currValues => ({
+              ...currValues,
+              user: true
+            }))
+
+          return
         }
       }
 
-      if (changedValues.user)
+      if (changedValues.user) {
+        setUser('')
         setChangedValues(currValues => ({
           ...currValues,
           user: false
         }))
-
+      }
       setUserLoading(false)
     }
 
     setUserLoading(true)
-    updateValue()
+    const userTimeout = setTimeout(updateValue, 500)
+    return () => clearTimeout(userTimeout)
   }, [currentUser])
 
   useEffect(() => {
     const updateValue = async () => {
-      if (isAddress(currentManager)) {
+      if (
+        isAddress(currentManager) &&
+        currentManager.toLowerCase() !== fetchedManager.toLowerCase()
+      ) {
         setManager(currentManager)
         setManagerLoading(false)
         return setChangedValues(currValues => ({
@@ -94,31 +102,37 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
         if (resolvedAddress) {
           setManager(resolvedAddress)
           setManagerLoading(false)
-          return setChangedValues(currValues => ({
-            ...currValues,
-            manager: true
-          }))
+
+          if (resolvedAddress.toLowerCase() !== fetchedManager.toLowerCase())
+            setChangedValues(currValues => ({
+              ...currValues,
+              manager: true
+            }))
+
+          return
         }
 
         setManager('')
       }
 
-      if (changedValues.manager)
+      if (changedValues.manager) {
+        setManager('')
         setChangedValues(currValues => ({
           ...currValues,
           manager: false
         }))
-
+      }
       setManagerLoading(false)
     }
 
     setManagerLoading(true)
-    updateValue()
+    const managerTimeout = setTimeout(updateValue, 500)
+    return () => clearTimeout(managerTimeout)
   }, [currentManager])
 
   useEffect(() => {
     const updateValue = async () => {
-      if (isAddress(currentOwner)) {
+      if (isAddress(currentOwner) && currentOwner.toLowerCase() !== fetchedOwner.toLowerCase()) {
         setOwner(currentOwner)
         setOwnerLoading(false)
         return setChangedValues(currValues => ({
@@ -130,27 +144,34 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
       if (currentOwner.includes('.')) {
         const resolvedAddress = await resolveEnsAddress(currentOwner)
 
-        if (resolvedAddress) {
+        if (isAddress(resolvedAddress)) {
           setOwner(resolvedAddress)
           setOwnerLoading(false)
-          return setChangedValues(currValues => ({
-            ...currValues,
-            owner: true
-          }))
+
+          if (resolvedAddress.toLowerCase() !== fetchedOwner.toLowerCase())
+            setChangedValues(currValues => ({
+              ...currValues,
+              owner: true
+            }))
+
+          return
         }
       }
 
-      if (changedValues.owner)
+      if (changedValues.owner) {
+        setOwner('')
         setChangedValues(currValues => ({
           ...currValues,
           owner: false
         }))
+      }
 
       setOwnerLoading(false)
     }
 
     setOwnerLoading(true)
-    updateValue()
+    const ownerTimeout = setTimeout(updateValue, 500)
+    return () => clearTimeout(ownerTimeout)
   }, [currentOwner])
 
   const { data: listState, isLoading: isListStateLoading } = useQuery({

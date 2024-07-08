@@ -1,5 +1,5 @@
 import { useAccount } from 'wagmi'
-import GraySpinner from '#/components/gray-spinner'
+import LoadingCell, { LIGHT_LOADING_GRADIENT } from '#/components/loading-cell'
 
 interface SettingsInputProps {
   option: string
@@ -46,9 +46,9 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
             resolvedAddress && resolvedAddress?.length > 0 ? 'text-gray-400' : 'text-red-400'
           }`}
         >
-          <p>Resolved:</p>
+          <p className='text-gray-400'>Resolved:</p>
           {isLoading ? (
-            <GraySpinner />
+            <LoadingCell className='w-full h-5 rounded-md' gradient={LIGHT_LOADING_GRADIENT} />
           ) : (
             <p>
               {resolvedAddress && resolvedAddress?.length > 0

@@ -20,7 +20,11 @@ const useUser = (user: string) => {
   const userIsList = !(isAddress(user) || user.includes('.'))
   const listNum = userIsList ? Number(user) : undefined
 
-  const { data: profile, isLoading: profileIsLoading } = useQuery({
+  const {
+    data: profile,
+    isLoading: profileIsLoading,
+    isRefetching: isRefetchingProfile
+  } = useQuery({
     queryKey: ['profile', user],
     queryFn: async () => {
       if (!user) return null
@@ -28,7 +32,7 @@ const useUser = (user: string) => {
       const fetchedProfile = await fetchProfileDetails(user, listNum)
       return fetchedProfile
     },
-    staleTime: 20000
+    staleTime: 30000
   })
 
   const { data: lists } = useQuery({
@@ -46,7 +50,8 @@ const useUser = (user: string) => {
     data: fetchedFollowers,
     isLoading: followersIsLoading,
     fetchNextPage: fetchMoreFollowers,
-    isFetchingNextPage: isFetchingMoreFollowers
+    isFetchingNextPage: isFetchingMoreFollowers,
+    isRefetching: isRefetchingFollowers
   } = useInfiniteQuery({
     queryKey: ['followers', user],
     queryFn: async ({ pageParam = 0 }) => {
@@ -69,12 +74,16 @@ const useUser = (user: string) => {
 
       return fetchedFollowers
     },
-    staleTime: 20000,
+    staleTime: 30000,
     initialPageParam: 0,
     getNextPageParam: lastPage => lastPage.nextPageParam
   })
 
-  const { data: followingTags, isLoading: followingTagsLoading } = useQuery({
+  const {
+    data: followingTags,
+    isLoading: followingTagsLoading,
+    isRefetching: isRefetchingFollowingTags
+  } = useQuery({
     queryKey: ['following tags', user],
     queryFn: async () => {
       if (!user) return
@@ -82,7 +91,7 @@ const useUser = (user: string) => {
       const fetchedProfile = await fetchFollowingTags(user, listNum)
       return fetchedProfile
     },
-    staleTime: 20000
+    staleTime: 30000
   })
 
   const [isEndOfFollowing, setIsEndOfFollowing] = useState(false)
@@ -90,7 +99,8 @@ const useUser = (user: string) => {
     data: fetchedFollowing,
     isLoading: followingIsLoading,
     fetchNextPage: fetchMoreFollowing,
-    isFetchingNextPage: isFetchingMoreFollowing
+    isFetchingNextPage: isFetchingMoreFollowing,
+    isRefetching: isRefetchingFollowing
   } = useInfiniteQuery({
     queryKey: ['following', user],
     queryFn: async ({ pageParam = 0 }) => {
@@ -113,7 +123,7 @@ const useUser = (user: string) => {
 
       return fetchedFollowing
     },
-    staleTime: 20000,
+    staleTime: 30000,
     initialPageParam: 0,
     getNextPageParam: lastPage => lastPage.nextPageParam
   })
@@ -158,10 +168,10 @@ const useUser = (user: string) => {
     following,
     followingTags,
     userIsList,
-    profileIsLoading,
-    followersIsLoading,
-    followingIsLoading,
-    followingTagsLoading,
+    profileIsLoading: profileIsLoading || isRefetchingProfile,
+    followersIsLoading: followersIsLoading || isRefetchingFollowers,
+    followingIsLoading: followingIsLoading || isRefetchingFollowing,
+    followingTagsLoading: followingTagsLoading || isRefetchingFollowingTags,
     fetchMoreFollowers,
     fetchMoreFollowing,
     isEndOfFollowing,

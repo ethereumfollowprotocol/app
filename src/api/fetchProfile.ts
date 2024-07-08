@@ -18,7 +18,7 @@ const fetchUserProfile = async (addressOrName: string) => {
     const address = isAddress(addressOrName)
       ? addressOrName
       : await resolveEnsAddress(`${addressOrName.replace('.eth', '')}.eth`)
-    const data = await resolveEnsProfile(address)
+    const data = await resolveEnsProfile(address as Address)
 
     if (data?.name && data?.avatar)
       return {
