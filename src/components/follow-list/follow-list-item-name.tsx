@@ -25,6 +25,7 @@ interface FollowListItemNameProps {
   showFollowsYouBadges?: boolean
   showTags?: boolean
   tags: string[]
+  isFollowers?: boolean
   canEditTags?: boolean
   isEnsProfileLoading?: boolean
   isBlockedList?: boolean
@@ -39,7 +40,7 @@ export function Name({
     <Link href={`/${name || address}`} className='w-full'>
       <p
         className={`font-bold sm:text-lg text-start  ${
-          showTags ? 'max-w-full truncate' : 'w-fit max-w-full truncate'
+          showTags ? 'w-full truncate' : 'w-fit max-w-full truncate'
         } hover:opacity-75 transition-opacity`}
       >
         {name || truncateAddress(address)}
@@ -57,6 +58,7 @@ export function FollowListItemName({
   className = '',
   showFollowsYouBadges,
   canEditTags,
+  isFollowers,
   isEnsProfileLoading,
   isBlockedList
 }: FollowListItemNameProps) {
@@ -93,25 +95,25 @@ export function FollowListItemName({
   const isRestriction = isBeingUnrestricted || isBeingRestricted
 
   const tagsFromCart = getTagsFromCartByAddress(address)
-  const inintialDisplayedTags = () => {
+  const inintialdisplayedTags = () => {
     const seen: { [key: string]: boolean } = {}
-    return [...tags, ...tagsFromCart].filter(tag => {
+    return [...tags, ...(isFollowers ? [] : tagsFromCart)].filter(tag => {
       if (Object.keys(seen).includes(tag)) return false
       seen[tag] = true
       return true
     })
   }
-  const [displayedtags, setDisplayedTags] = useState(inintialDisplayedTags)
+  const [displayedTags, setdisplayedTags] = useState(inintialdisplayedTags)
 
   const addTag = (tag: string) => {
-    if (!displayedtags.includes(tag)) setDisplayedTags(prevTags => [...prevTags, tag])
+    if (!displayedTags.includes(tag)) setdisplayedTags(prevTags => [...prevTags, tag])
     addCartItem({ listOp: listOpAddTag(address, tag) })
   }
 
   const removeTag = (tag: string) => {
     if (hasListOpAddTag({ address, tag })) {
       removeCartItem(listOpAddTag(address, tag))
-      setDisplayedTags(prevTags => prevTags.filter(prevTag => prevTag !== tag))
+      setdisplayedTags(prevTags => prevTags.filter(prevTag => prevTag !== tag))
       return
     }
 
@@ -143,7 +145,7 @@ export function FollowListItemName({
 
   return (
     <div
-      className={`flex gap-2 sm:gap-3 w-[calc(100% - 115px)] items-center p-0 ${className}`}
+      className={`flex gap-2 sm:gap-3 w-[calc(100% - 125px)] items-center p-0 ${className}`}
       style={{
         width: 'calc(100% - 110px)'
       }}
@@ -157,21 +159,18 @@ export function FollowListItemName({
           size='h-[45px] w-[45px] md:h-[50px] md:w-[50px]'
         />
       )}
-      <div
-        className={`flex flex-col w-full ${
-          isEditor ? 'md:flex-row md:gap-3' : 'md:flex-row md:gap-3'
-        } gap-[2px]`}
-      >
+      <div className='flex flex-col md:flex-row w-full md:gap-3 xl:gap-2 2xl:gap-3 gap-[2px]'>
         <div
           className={`flex flex-col justify-center  ${
-            isEditor ? 'md:w-52' : 'w-fit max-w-[90%] sm:max-w-full'
-            // : showTags && displayedtags.length > 0
-            //   ? 'w-full xl:max-w-[100px] 2xl:max-w-[138px]'
-            //   : 'w-fit max-w-[90%] sm:max-w-full'
-          } items-start tabular-nums relative`}
+            isEditor
+              ? 'md:w-52'
+              : !isBlockedList && showTags && displayedTags.length > 0
+                ? 'xl:max-w-[40%] 2xl:max-w-[45%]'
+                : ''
+          } max-w-[80%] 3xs:max-w-[90%] xxs:max-w-[95%] items-start tabular-nums relative`}
         >
           {isEnsProfileLoading ? (
-            <LoadingCell className='w-432 xl:w-32 h-7 rounded-lg' />
+            <LoadingCell className='w-32 xl:w-32 h-7 rounded-lg' />
           ) : (
             <Name name={name} address={address} showTags={showTags} />
           )}
@@ -185,10 +184,10 @@ export function FollowListItemName({
         </div>
         {showTags && !isBlockedList && (!isBeingRemoved || isRestriction) && (
           <div
-            className={`relative flex ${
+            className={`relative flex max-w-[70%] 3xs:max-w-[75%] xxs:max-w-[80%] md:max-w-[50%] ${
               isEditor
-                ? 'max-w-[165px] xxs:max-w-[220px] xs:max-w-[270px] sm:max-w-[400px] md:max-w-[300px] lg:max-w-[490px] w-fit xl:max-w-[330px] 2xl:max-w-[550px]'
-                : 'max-w-[165px] xxs:max-w-[200px] xs:max-w-[270px] sm:max-w-[400px] md:max-w-[300px] lg:max-w-[530px] w-fit xl:max-w-[200px] 2xl:max-w-[210px]'
+                ? 'xl:max-w-[55%] 2xl:max-w-[65%] 3xl:max-w-[75%]'
+                : 'xl:max-w-[45%] 2xl:max-w-[42.5%] 3xl:max-w-[47.5%]'
             } flex-wrap gap-2 items-center`}
             ref={clickAwayTagDropwdownRef}
           >
@@ -236,15 +235,15 @@ export function FollowListItemName({
                 </div>
               </div>
             )}
-            {displayedtags.map((tag, i) => {
+            {displayedTags.map((tag, i) => {
               const addingTag = hasListOpAddTag({ address, tag })
               const removingTag = hasListOpRemoveTag({ address, tag })
 
               return (
-                <div key={tag + i} className='relative max-w-full w-fit'>
+                <div key={tag + i} className='relative max-w-full'>
                   <button
                     className={`
-                      font-semibold py-1 px-2 sm:py-1.5 max-w-full sm:px-3 truncate text-sm hover:opacity-80 rounded-full ${
+                      font-semibold py-1 px-2 sm:py-1.5 max-w-full w-fit sm:px-3 truncate text-sm hover:opacity-80 rounded-full ${
                         removingTag ? 'bg-deletion' : 'bg-gray-300'
                       }
                     `}

@@ -85,7 +85,7 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
     <div className='fixed z-50 top-0 flex overflow-scroll justify-center left-0 w-full h-full bg-black/50'>
       <div
         ref={blockedMutedRef}
-        className='gap-6 2xl:gap-8 relative flex h-fit rounded-xl mt-16 md:mt-24 mb-24 w-full xl:w-fit px-4 md:px-6 lg:mt-32 '
+        className='gap-6 2xl:gap-8 relative flex h-fit rounded-xl mt-[85px] md:mt-24 mb-24 w-full xl:w-fit px-4 md:px-6 lg:mt-32 '
       >
         <div
           onClick={onClose}
@@ -93,7 +93,7 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
         >
           <Image src={Cross} alt='close blocked and muted list' className='h-6 w-6' />
         </div>
-        <div className='bg-white/80 h-fit rounded-2xl hidden xl:block'>
+        <div className='bg-white/80 h-fit rounded-2xl w-full hidden xl:block'>
           <UserProfilePageTable
             isLoading={blockingIsLoading}
             results={blocking}
@@ -108,10 +108,10 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
             showTagsByDefault={true}
             isShowingBlocked={true}
             title='Blocked/Muted'
-            customClass='hidden xl:flex'
+            customClass='hidden xl:flex min-w-[600px] max-w-[47.5%]'
           />
         </div>
-        <div className='bg-white/80 h-fit rounded-2xl hidden xl:block'>
+        <div className='bg-white/80 h-fit w-full rounded-2xl hidden xl:block'>
           <UserProfilePageTable
             isLoading={blockedByIsLoading}
             results={blockedBy}
@@ -125,7 +125,7 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
             showTagsByDefault={true}
             isShowingBlocked={true}
             title='Blocked/Muted By'
-            customClass='hidden xl:flex'
+            customClass='hidden xl:flex min-w-[600px] max-w-[47.5%]'
           />
         </div>
         <div className='w-full mt-12 relative bg-white/80 h-fit rounded-2xl xl:hidden'>

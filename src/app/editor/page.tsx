@@ -43,7 +43,7 @@ export default function EditorPage() {
   return (
     <main
       suppressHydrationWarning={true}
-      className='flex flex-col-reverse xl:flex-row gap-4 min-h-full h-full w-full items-center xl:items-start justify-center text-center xl:gap-6 pt-4 pb-40 mt-24 sm:mt-28 lg:mt-32 xl:mt-40 px-2 lg:px-8'
+      className='flex flex-col-reverse xl:flex-row gap-4 min-h-full h-full w-full items-center xl:items-start justify-center text-center xl:gap-6 pt-4 pb-40 mt-24 sm:mt-28 lg:mt-32 xl:mt-36 px-2 lg:px-8'
     >
       {isConnected && isCheckingOut ? (
         <div className='px-2'>
@@ -77,7 +77,7 @@ export default function EditorPage() {
             />
           </div>
           {isClient && totalCartItems > 0 && (
-            <div className='fixed md:w-fit w-full top-[85vh] sm:top-[87.5vh] lg:top-[90vh] right-0 px-4 lg:right-[5vw] flex justify-end'>
+            <div className='fixed md:w-fit w-full top-[85vh] sm:top-[87.5vh] lg:top-[85vh] right-0 px-4 lg:right-[5vw] flex justify-end'>
               <div className='flex gap-6 w-full border-[1px] border-gray-200 lg:w-fit items-center p-4 bg-white/10 justify-between glass-card bg-opacity-50 shadow-xl rounded-xl'>
                 <div className='flex gap-2 items-center'>
                   <p className='text-6xl font-bold'>{totalCartItems}</p>

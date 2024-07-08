@@ -21,11 +21,11 @@ const Summary = () => {
   const { address } = useAccount()
   const { t } = useTranslation('home')
 
-  const isFollowersEmpty = followers.length === 0
+  const isFollowersEmpty = !followersIsLoading && followers.length === 0
 
   return (
     <div
-      className={`mt-20 md:mt-28 w-full lg:mt-32 xl:mt-40 px-4 xl:px-0 2xl:px-8 flex items-start ${
+      className={`mt-24 md:mt-28 w-full lg:mt-32 xl:mt-40 px-4 xl:px-0 2xl:px-8 flex items-start ${
         isFollowersEmpty || !address ? 'lg:justify-center lg:gap-4' : 'lg:justify-between xl:gap-4'
       } xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4`}
     >
@@ -42,7 +42,7 @@ const Summary = () => {
           {!isFollowersEmpty && (
             <LatestFollowers
               isLoading={followersIsLoading || isFetchingMoreFollowers}
-              profiles={followers?.map(follower => ({
+              profiles={followers?.slice(0, 7).map(follower => ({
                 tags: follower.tags,
                 address: follower.address,
                 ens: follower.ens

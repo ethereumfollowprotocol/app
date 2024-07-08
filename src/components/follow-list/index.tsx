@@ -25,6 +25,7 @@ interface FollowListProps {
   isLoadingMore?: boolean
   canEditTags?: boolean
   isBlockedList?: boolean
+  isFollowers?: boolean
 }
 
 export function FollowList({
@@ -38,12 +39,13 @@ export function FollowList({
   isLoading,
   isLoadingMore,
   canEditTags,
-  isBlockedList
+  isBlockedList,
+  isFollowers
 }: FollowListProps) {
   const { t } = useTranslation('editor')
 
   return (
-    <div className={`flex flex-col min-w-max ${listClassName}`}>
+    <div className={`flex flex-col w-full ${listClassName}`}>
       {isLoading ? (
         new Array(loadingRows)
           .fill(1)
@@ -76,6 +78,7 @@ export function FollowList({
               tags={tags}
               canEditTags={canEditTags}
               isBlockedList={isBlockedList}
+              isFollowers={isFollowers}
             />
           ))}
           {isLoadingMore &&
