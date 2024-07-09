@@ -49,9 +49,9 @@ const fetchProfileRoles = async ({
   const listUser = await listRecordsContract.read.getListUser([slot])
 
   return {
-    isOwner: listOwner.toLowerCase() === userAddress?.toLowerCase(),
-    isManager: listManager.toLowerCase() === userAddress?.toLowerCase(),
-    isUser: listUser.toLowerCase() === userAddress?.toLowerCase()
+    isOwner: listOwner?.toLowerCase() === userAddress?.toLowerCase(),
+    isManager: listManager?.toLowerCase() === userAddress?.toLowerCase(),
+    isUser: listUser?.toLowerCase() === userAddress?.toLowerCase()
   } as ProfileRoles
 }
 

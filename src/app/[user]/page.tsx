@@ -138,7 +138,7 @@ export default function UserPage({ params }: Props) {
               following={following}
               isLoading={profileIsLoading}
               showMoreOptions={
-                profile?.address.toLowerCase() !== connectedUserAddress?.toLowerCase()
+                profile?.address?.toLowerCase() !== connectedUserAddress?.toLowerCase()
               }
             />
             <div className='flex flex-col gap-1 items-center'>

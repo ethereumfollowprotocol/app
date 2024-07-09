@@ -45,7 +45,7 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
 
   useEffect(() => {
     const updateValue = async () => {
-      if (isAddress(currentUser) && currentUser.toLowerCase() !== fetchedUser.toLowerCase()) {
+      if (isAddress(currentUser) && currentUser.toLowerCase() !== fetchedUser?.toLowerCase()) {
         setUser(currentUser)
         setUserLoading(false)
         return setChangedValues(currValues => ({
@@ -59,7 +59,7 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
         if (resolvedAddress) {
           setUser(resolvedAddress)
           setUserLoading(false)
-          if (resolvedAddress.toLowerCase() !== fetchedUser.toLowerCase())
+          if (resolvedAddress.toLowerCase() !== fetchedUser?.toLowerCase())
             setChangedValues(currValues => ({
               ...currValues,
               user: true
@@ -88,7 +88,7 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
     const updateValue = async () => {
       if (
         isAddress(currentManager) &&
-        currentManager.toLowerCase() !== fetchedManager.toLowerCase()
+        currentManager.toLowerCase() !== fetchedManager?.toLowerCase()
       ) {
         setManager(currentManager)
         setManagerLoading(false)
@@ -104,7 +104,7 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
           setManager(resolvedAddress)
           setManagerLoading(false)
 
-          if (resolvedAddress.toLowerCase() !== fetchedManager.toLowerCase())
+          if (resolvedAddress.toLowerCase() !== fetchedManager?.toLowerCase())
             setChangedValues(currValues => ({
               ...currValues,
               manager: true
@@ -133,7 +133,7 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
 
   useEffect(() => {
     const updateValue = async () => {
-      if (isAddress(currentOwner) && currentOwner.toLowerCase() !== fetchedOwner.toLowerCase()) {
+      if (isAddress(currentOwner) && currentOwner.toLowerCase() !== fetchedOwner?.toLowerCase()) {
         setOwner(currentOwner)
         setOwnerLoading(false)
         return setChangedValues(currValues => ({
@@ -149,7 +149,7 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
           setOwner(resolvedAddress)
           setOwnerLoading(false)
 
-          if (resolvedAddress.toLowerCase() !== fetchedOwner.toLowerCase())
+          if (resolvedAddress.toLowerCase() !== fetchedOwner?.toLowerCase())
             setChangedValues(currValues => ({
               ...currValues,
               owner: true

@@ -17,7 +17,7 @@ const fetchUserProfile = async (addressOrName: string) => {
   } catch (err: unknown) {
     const address = isAddress(addressOrName)
       ? addressOrName
-      : await resolveEnsAddress(`${addressOrName.replace('.eth', '')}.eth`)
+      : await resolveEnsAddress(addressOrName)
     const data = await resolveEnsProfile(address as Address)
 
     if (data?.name && data?.avatar)
