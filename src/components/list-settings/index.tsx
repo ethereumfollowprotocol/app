@@ -4,6 +4,7 @@ import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
 
+import LoadingCell from '../loading-cell'
 import ProfileStats from '../profile-stats'
 import Cross from 'public/assets/icons/cross.svg'
 import type { ChainWithDetails } from '#/lib/wagmi'
@@ -53,18 +54,19 @@ const ListSettings: React.FC<ListSettingsProps> = ({
     setCurrentManager,
     fetchedUser,
     currentUser,
+    userLoading,
     fetchedSlot,
     fetchedOwner,
     currentOwner,
     fetchedChain,
+    ownerLoading,
     changedValues,
     fetchedManager,
+    managerLoading,
     currentManager,
     setChangedValues,
     isListStateLoading,
-    userLoading,
-    ownerLoading,
-    managerLoading,
+    isListSettingsLoading,
     fetchedListRecordsContractAddress
   } = useListSettings({ profile, list: selectedList })
 
@@ -122,8 +124,16 @@ const ListSettings: React.FC<ListSettingsProps> = ({
                 connectedAddress?.toLowerCase() !== fetchedOwner?.toLowerCase()
               }
             >
-              {chain && <ChainIcon chain={chain as ChainWithDetails} className={'h-6 w-6'} />}
-              <p className='sm:text-lg font-semibold truncate'>{chain?.name}</p>
+              {isListSettingsLoading ? (
+                <LoadingCell className='h-8 w-full rounded-lg' />
+              ) : (
+                <>
+                  {chain && (
+                    <ChainIcon chain={chain as ChainWithDetails} className={'h-6 w-6 rounded-lg'} />
+                  )}
+                  <p className='sm:text-lg font-semibold truncate'>{chain?.name}</p>
+                </>
+              )}
               {isEditingSettings ? (
                 <Image
                   src={ArrowDown}
@@ -169,6 +179,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
           setValue={setCurrentOwner}
           isEditingSettings={isEditingSettings}
           isLoading={ownerLoading}
+          isSettingsLoading={isListSettingsLoading}
         />
         <SettingsInput
           option={t('manager')}
@@ -179,6 +190,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
           setValue={setCurrentManager}
           isEditingSettings={isEditingSettings}
           isLoading={managerLoading}
+          isSettingsLoading={isListSettingsLoading}
         />
         <SettingsInput
           option={t('user')}
@@ -189,6 +201,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
           setValue={setCurrentUser}
           isEditingSettings={isEditingSettings}
           isLoading={userLoading}
+          isSettingsLoading={isListSettingsLoading}
         />
         {connectedAddress?.toLowerCase() !== fetchedManager?.toLowerCase() &&
         connectedAddress?.toLowerCase() !==

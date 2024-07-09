@@ -23,6 +23,7 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
   const [chain, setChain] = useState<Chain>()
   const [fetchedChain, setFetchedChain] = useState<Chain>()
 
+  const [isListSettingsLoading, setIsListSettingsLoading] = useState(false)
   const [user, setUser] = useState<string>('')
   const [userLoading, setUserLoading] = useState(false)
   const [currentUser, setCurrentUser] = useState<string>('')
@@ -242,9 +243,12 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
       setFetchedUser(listUser)
       setCurrentUser(listUser)
     }
+
+    setIsListSettingsLoading(false)
   }
 
   useEffect(() => {
+    setIsListSettingsLoading(true)
     fetchListData()
     setChangedValues({
       chain: false,
@@ -279,7 +283,8 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
     isListStateLoading,
     userLoading,
     managerLoading,
-    ownerLoading
+    ownerLoading,
+    isListSettingsLoading
   }
 }
 
