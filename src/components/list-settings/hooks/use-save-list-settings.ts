@@ -13,7 +13,7 @@ import { Step } from '#/components/checkout/types'
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { useCart, type CartItem } from '#/contexts/cart-context'
-import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
+import { efpAccountMetadataAbi, efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { generateListStorageLocationSlot } from '#/app/efp/utilities'
 import type { FollowingResponse, ProfileDetailsResponse } from '#/types/requests'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
@@ -34,15 +34,17 @@ type SaveListSettingsParams = {
     owner: boolean
     manager: boolean
     user: boolean
+    setPrimary: boolean
   }
   onClose: () => void
   onCancel: () => void
   listState?: FollowingResponse[]
+  isPrimaryList: boolean
 }
 
 const useSaveListSettings = ({
   selectedList,
-  profile,
+  // profile,
   chain,
   newChain,
   slot,
@@ -53,7 +55,8 @@ const useSaveListSettings = ({
   changedValues,
   onClose,
   onCancel,
-  listState
+  listState,
+  isPrimaryList
 }: SaveListSettingsParams) => {
   const [changedValuesState] = useState(changedValues)
   const [currentStep, setCurrentStep] = useState(Step.InitiateTransactions)
@@ -61,7 +64,8 @@ const useSaveListSettings = ({
     user: false,
     manager: false,
     owner: false,
-    chain: false
+    chain: false,
+    setPrimary: false
   })
 
   const {
@@ -180,6 +184,33 @@ const useSaveListSettings = ({
     return hash
   }, [owner, walletClient])
 
+  const setPrimaryListTx = useCallback(async () => {
+    if (!userAddress) return
+
+    const hash = await walletClient?.writeContract({
+      address: coreEfpContracts.EFPAccountMetadata,
+      abi: efpAccountMetadataAbi,
+      functionName: 'setValueForAddress',
+      args: [
+        userAddress,
+        'primary-list',
+        encodePacked(['string'], [isPrimaryList ? selectedList.toString() : ''])
+      ]
+    })
+
+    console.log(isPrimaryList ? selectedList.toString() : '')
+
+    if (hash) {
+      setCompleteTransactions(prev => ({
+        ...prev,
+        setPrimary: true
+      }))
+    }
+
+    // return transaction hash to enable following transaction status in transaction details component
+    return hash
+  }, [selectedList, isPrimaryList, walletClient])
+
   const setManagerTx = useCallback(async () => {
     if (!(listRecordsContractAddress && slot && isAddress(manager || ''))) return
 
@@ -260,6 +291,14 @@ const useSaveListSettings = ({
       execute: setUserTx,
       isPendingConfirmation: false
     }
+    const setPrimaryList: Action = {
+      id: EFPActionType.SetEFPListUser, // Unique identifier for the action
+      type: EFPActionType.SetEFPListUser,
+      label: t('set primary'),
+      chainId: DEFAULT_CHAIN.id,
+      execute: setPrimaryListTx,
+      isPendingConfirmation: false
+    }
 
     const actionsToExecute: Action[] = []
     if (!completeTransactions.user && changedValuesState.user) actionsToExecute.push(setListUser)
@@ -300,6 +339,8 @@ const useSaveListSettings = ({
       }
     }
     if (!completeTransactions.owner && changedValuesState.owner) actionsToExecute.push(setListOwner)
+    if (!completeTransactions.setPrimary && changedValuesState.setPrimary)
+      actionsToExecute.push(setPrimaryList)
 
     addActions(actionsToExecute)
   }, [

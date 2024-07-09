@@ -61,9 +61,11 @@ const ListSettings: React.FC<ListSettingsProps> = ({
     fetchedChain,
     ownerLoading,
     changedValues,
+    isPrimaryList,
     fetchedManager,
     managerLoading,
     currentManager,
+    setIsPrimaryList,
     setChangedValues,
     isListStateLoading,
     isListSettingsLoading,
@@ -86,6 +88,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
       listRecordsContractAddress={fetchedListRecordsContractAddress}
       listState={listState}
       isListStateLoading={isListStateLoading}
+      isPrimaryList={isPrimaryList}
     />
   ) : (
     <div
@@ -170,6 +173,25 @@ const ListSettings: React.FC<ListSettingsProps> = ({
             )}
           </div>
         </div>
+        {(user
+          ? connectedAddress?.toLowerCase() === user.toLowerCase()
+          : connectedAddress?.toLowerCase() === fetchedUser.toLowerCase()) && (
+          <div className='flex items-center w-full justify-between'>
+            <p className='text-lg font-bold'>Set selected List as Primary List</p>
+            <input
+              className='toggle'
+              type='checkbox'
+              defaultChecked={isPrimaryList}
+              onChange={e => {
+                setIsPrimaryList(e.target.checked)
+                setChangedValues(prev => ({
+                  ...prev,
+                  setPrimary: e.target.checked !== (Number(profile.primary_list) === selectedList)
+                }))
+              }}
+            />
+          </div>
+        )}
         <SettingsInput
           option={t('owner')}
           value={currentOwner}

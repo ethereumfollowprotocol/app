@@ -36,11 +36,15 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
   const [managerLoading, setManagerLoading] = useState(false)
   const [currentManager, setCurrentManager] = useState<string>('')
   const [fetchedManager, setFetchedManager] = useState<string>('')
+  const [isPrimaryList, setIsPrimaryList] = useState(
+    profile.primary_list ? Number(profile.primary_list) === list : false
+  )
   const [changedValues, setChangedValues] = useState({
     chain: false,
     owner: false,
     manager: false,
-    user: false
+    user: false,
+    setPrimary: false
   })
 
   useEffect(() => {
@@ -254,7 +258,8 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
       chain: false,
       owner: false,
       manager: false,
-      user: false
+      user: false,
+      setPrimary: false
     })
   }, [profile, list])
 
@@ -267,6 +272,8 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
     manager,
     currentManager,
     user,
+    isPrimaryList,
+    setIsPrimaryList,
     currentUser,
     fetchedSlot,
     fetchedListRecordsContractAddress,

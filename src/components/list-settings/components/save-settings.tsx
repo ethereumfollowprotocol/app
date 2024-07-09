@@ -22,11 +22,13 @@ export interface SaveSettingsProps {
     owner: boolean
     manager: boolean
     user: boolean
+    setPrimary: boolean
   }
   onClose: () => void
   onCancel: () => void
   listState?: FollowingResponse[]
   isListStateLoading?: boolean
+  isPrimaryList: boolean
 }
 
 const SaveSettings: React.FC<SaveSettingsProps> = ({
@@ -43,7 +45,8 @@ const SaveSettings: React.FC<SaveSettingsProps> = ({
   onClose,
   onCancel,
   listState,
-  isListStateLoading
+  isListStateLoading,
+  isPrimaryList
 }) => {
   const {
     actions,
@@ -65,6 +68,7 @@ const SaveSettings: React.FC<SaveSettingsProps> = ({
     listState,
     selectedList,
     changedValues,
+    isPrimaryList,
     listRecordsContractAddress
   })
 
