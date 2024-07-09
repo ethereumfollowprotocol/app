@@ -31,7 +31,7 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
 }) => {
   const { actions, currentAction, currentActionIndex, allActionsSuccessful } = useActions()
   const chain = useChain(currentAction?.chainId)
-  const { isSuccess } = useWaitForTransactionReceipt({
+  const { isSuccess, isLoading } = useWaitForTransactionReceipt({
     hash: currentAction?.txHash,
     chainId: currentAction?.chainId
   })
@@ -50,8 +50,8 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
   const nextButtonIsDisabled = isLastAction ? !transactionsAreFinished : !isSuccess
   // Disable the finish button if not all actions are successful
   const finishButtonIsDisabled = !transactionsAreFinished
-  const showNextButton = !(currentAction?.isConfirmationError || transactionsAreFinished)
-  const showFinishButton = !currentAction?.isConfirmationError && transactionsAreFinished
+  const showNextButton = !isLastAction
+  const showFinishButton = isLastAction
 
   if (!currentAction) return null
 
@@ -80,7 +80,11 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
       )}
       <TransactionDetails action={currentAction} isLastAction={isLastAction} />
       <div className='w-full sm:mt-10 mt-6 gap-8 flex justify-between items-center'>
-        <CancelButton onClick={() => setCurrentStep(Step.InitiateTransactions)} />
+        <CancelButton
+          label={tBtn('back')}
+          onClick={() => setCurrentStep(Step.InitiateTransactions)}
+          disabled={isLastAction || isLoading}
+        />
         {currentAction.isConfirmationError && (
           <PrimaryButton
             label={tBtn('reinitiate')}

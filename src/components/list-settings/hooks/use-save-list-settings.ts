@@ -19,6 +19,12 @@ import type { FollowingResponse, ProfileDetailsResponse } from '#/types/requests
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
 
+const DEFAULT_CHAIN_LIST_ACTIONS = [
+  EFPActionType.SetEFPListOwner,
+  EFPActionType.SetEFPListStorageLocation,
+  EFPActionType.SetPrimaryList
+]
+
 type SaveListSettingsParams = {
   selectedList: number
   profile: ProfileDetailsResponse
@@ -191,14 +197,8 @@ const useSaveListSettings = ({
       address: coreEfpContracts.EFPAccountMetadata,
       abi: efpAccountMetadataAbi,
       functionName: 'setValueForAddress',
-      args: [
-        userAddress,
-        'primary-list',
-        encodePacked(['string'], [isPrimaryList ? selectedList.toString() : ''])
-      ]
+      args: [userAddress, 'primary-list', toHex(isPrimaryList ? selectedList : '')]
     })
-
-    console.log(isPrimaryList ? selectedList.toString() : '')
 
     if (hash) {
       setCompleteTransactions(prev => ({
@@ -292,8 +292,8 @@ const useSaveListSettings = ({
       isPendingConfirmation: false
     }
     const setPrimaryList: Action = {
-      id: EFPActionType.SetEFPListUser, // Unique identifier for the action
-      type: EFPActionType.SetEFPListUser,
+      id: EFPActionType.SetPrimaryList, // Unique identifier for the action
+      type: EFPActionType.SetPrimaryList,
       label: t('set primary'),
       chainId: DEFAULT_CHAIN.id,
       execute: setPrimaryListTx,
@@ -304,6 +304,8 @@ const useSaveListSettings = ({
     if (!completeTransactions.user && changedValuesState.user) actionsToExecute.push(setListUser)
     if (!completeTransactions.manager && changedValuesState.manager)
       actionsToExecute.push(setListManager)
+    if (!completeTransactions.setPrimary && changedValuesState.setPrimary)
+      actionsToExecute.push(setPrimaryList)
     if (changedValuesState.chain && newChain) {
       if (listState) {
         const listOps = listState.flatMap(item => {
@@ -339,8 +341,6 @@ const useSaveListSettings = ({
       }
     }
     if (!completeTransactions.owner && changedValuesState.owner) actionsToExecute.push(setListOwner)
-    if (!completeTransactions.setPrimary && changedValuesState.setPrimary)
-      actionsToExecute.push(setPrimaryList)
 
     addActions(actionsToExecute)
   }, [
@@ -360,8 +360,7 @@ const useSaveListSettings = ({
   const handleInitiateActions = useCallback(() => {
     if (!chain) return
     if (
-      actions[0]?.type === EFPActionType.SetEFPListOwner ||
-      actions[0]?.type === EFPActionType.SetEFPListStorageLocation
+      actions[0] && DEFAULT_CHAIN_LIST_ACTIONS.includes(actions[0]?.type)
         ? currentChainId !== DEFAULT_CHAIN.id
         : actions[0]?.type === EFPActionType.UpdateEFPList
           ? newChain?.id !== currentChainId
@@ -369,8 +368,7 @@ const useSaveListSettings = ({
     ) {
       switchChain({
         chainId:
-          actions[0]?.type === EFPActionType.SetEFPListOwner ||
-          actions[0]?.type === EFPActionType.SetEFPListStorageLocation
+          actions[0] && DEFAULT_CHAIN_LIST_ACTIONS.includes(actions[0]?.type)
             ? DEFAULT_CHAIN.id
             : actions[0]?.type === EFPActionType.UpdateEFPList && newChain
               ? newChain.id

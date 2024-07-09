@@ -1,6 +1,3 @@
-import { useChains } from 'wagmi'
-import { useEffect, useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
 import {
   http,
   fromHex,
@@ -10,6 +7,9 @@ import {
   type Address,
   createPublicClient
 } from 'viem'
+import { useEffect, useState } from 'react'
+import { useAccount, useChains } from 'wagmi'
+import { useQuery } from '@tanstack/react-query'
 
 import { resolveEnsAddress } from '#/utils/ens'
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
@@ -36,9 +36,12 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
   const [managerLoading, setManagerLoading] = useState(false)
   const [currentManager, setCurrentManager] = useState<string>('')
   const [fetchedManager, setFetchedManager] = useState<string>('')
-  const [isPrimaryList, setIsPrimaryList] = useState(
-    profile.primary_list ? Number(profile.primary_list) === list : false
-  )
+
+  const initialPrimaryListState = profile.primary_list
+    ? Number(profile.primary_list) === list
+    : false
+  const [isPrimaryList, setIsPrimaryList] = useState(initialPrimaryListState)
+
   const [changedValues, setChangedValues] = useState({
     chain: false,
     owner: false,
@@ -47,14 +50,18 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
     setPrimary: false
   })
 
+  const { address: connectedAddress } = useAccount()
+
   useEffect(() => {
     const updateValue = async () => {
       if (isAddress(currentUser) && currentUser.toLowerCase() !== fetchedUser?.toLowerCase()) {
         setUser(currentUser)
         setUserLoading(false)
+        if (currentUser.toLowerCase() === connectedAddress?.toLowerCase()) setIsPrimaryList(false)
         return setChangedValues(currValues => ({
           ...currValues,
-          user: true
+          user: true,
+          setPrimary: false
         }))
       }
 
@@ -63,11 +70,15 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
         if (resolvedAddress) {
           setUser(resolvedAddress)
           setUserLoading(false)
-          if (resolvedAddress.toLowerCase() !== fetchedUser?.toLowerCase())
+          if (resolvedAddress.toLowerCase() !== fetchedUser?.toLowerCase()) {
+            if (resolvedAddress.toLowerCase() === connectedAddress?.toLowerCase())
+              setIsPrimaryList(false)
             setChangedValues(currValues => ({
               ...currValues,
-              user: true
+              user: true,
+              setPrimary: false
             }))
+          }
 
           return
         }
@@ -77,7 +88,8 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
         setUser('')
         setChangedValues(currValues => ({
           ...currValues,
-          user: false
+          user: false,
+          setPrimary: isPrimaryList !== initialPrimaryListState
         }))
       }
       setUserLoading(false)

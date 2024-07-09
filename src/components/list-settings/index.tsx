@@ -148,7 +148,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
               )}
             </button>
             {chainDropdownOpen && (
-              <div className='absolute top-14 flex bg-white/90 flex-col rounded-xl w-full'>
+              <div className='absolute top-14 z-10 flex bg-white/90 flex-col rounded-xl w-full'>
                 {chains.map(item => (
                   <div
                     key={item.id}
@@ -177,18 +177,24 @@ const ListSettings: React.FC<ListSettingsProps> = ({
           ? connectedAddress?.toLowerCase() === user.toLowerCase()
           : connectedAddress?.toLowerCase() === fetchedUser.toLowerCase()) && (
           <div className='flex items-center w-full justify-between'>
-            <p className='text-lg font-bold'>Set selected List as Primary List</p>
+            <p className='text-base sm:text-lg font-bold w-3/4 sm:w-fit'>
+              Set selected List as Primary List
+            </p>
             <input
-              className='toggle'
+              className='toggle disabled:opacity-40 disabled:cursor-not-allowed'
               type='checkbox'
               defaultChecked={isPrimaryList}
               onChange={e => {
                 setIsPrimaryList(e.target.checked)
                 setChangedValues(prev => ({
                   ...prev,
-                  setPrimary: e.target.checked !== (Number(profile.primary_list) === selectedList)
+                  setPrimary:
+                    user.toLowerCase() === connectedAddress?.toLowerCase()
+                      ? e.target.checked
+                      : e.target.checked !== (Number(profile.primary_list) === selectedList)
                 }))
               }}
+              disabled={!isEditingSettings}
             />
           </div>
         )}
