@@ -50,8 +50,8 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
   const nextButtonIsDisabled = isLastAction ? !transactionsAreFinished : !isSuccess
   // Disable the finish button if not all actions are successful
   const finishButtonIsDisabled = !transactionsAreFinished
-  const showNextButton = !isLastAction
-  const showFinishButton = isLastAction
+  const showNextButton = !(isLastAction || currentAction?.isConfirmationError)
+  const showFinishButton = isLastAction && !currentAction?.isConfirmationError
 
   if (!currentAction) return null
 
