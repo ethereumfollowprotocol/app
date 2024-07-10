@@ -13,11 +13,11 @@ import { Step } from '#/components/checkout/types'
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { useCart, type CartItem } from '#/contexts/cart-context'
-import { efpAccountMetadataAbi, efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { generateListStorageLocationSlot } from '#/app/efp/utilities'
 import type { FollowingResponse, ProfileDetailsResponse } from '#/types/requests'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
+import { efpAccountMetadataAbi, efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 
 const DEFAULT_CHAIN_LIST_ACTIONS = [
   EFPActionType.SetEFPListOwner,
