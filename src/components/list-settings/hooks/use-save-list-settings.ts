@@ -13,11 +13,17 @@ import { Step } from '#/components/checkout/types'
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { useCart, type CartItem } from '#/contexts/cart-context'
-import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { generateListStorageLocationSlot } from '#/app/efp/utilities'
 import type { FollowingResponse, ProfileDetailsResponse } from '#/types/requests'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
+import { efpAccountMetadataAbi, efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
+
+const DEFAULT_CHAIN_LIST_ACTIONS = [
+  EFPActionType.SetEFPListOwner,
+  EFPActionType.SetEFPListStorageLocation,
+  EFPActionType.SetPrimaryList
+]
 
 type SaveListSettingsParams = {
   selectedList: number
@@ -34,15 +40,17 @@ type SaveListSettingsParams = {
     owner: boolean
     manager: boolean
     user: boolean
+    setPrimary: boolean
   }
   onClose: () => void
   onCancel: () => void
   listState?: FollowingResponse[]
+  isPrimaryList: boolean
 }
 
 const useSaveListSettings = ({
   selectedList,
-  profile,
+  // profile,
   chain,
   newChain,
   slot,
@@ -53,7 +61,8 @@ const useSaveListSettings = ({
   changedValues,
   onClose,
   onCancel,
-  listState
+  listState,
+  isPrimaryList
 }: SaveListSettingsParams) => {
   const [changedValuesState] = useState(changedValues)
   const [currentStep, setCurrentStep] = useState(Step.InitiateTransactions)
@@ -61,7 +70,8 @@ const useSaveListSettings = ({
     user: false,
     manager: false,
     owner: false,
-    chain: false
+    chain: false,
+    setPrimary: false
   })
 
   const {
@@ -180,6 +190,27 @@ const useSaveListSettings = ({
     return hash
   }, [owner, walletClient])
 
+  const setPrimaryListTx = useCallback(async () => {
+    if (!userAddress) return
+
+    const hash = await walletClient?.writeContract({
+      address: coreEfpContracts.EFPAccountMetadata,
+      abi: efpAccountMetadataAbi,
+      functionName: 'setValueForAddress',
+      args: [userAddress, 'primary-list', toHex(isPrimaryList ? selectedList : '')]
+    })
+
+    if (hash) {
+      setCompleteTransactions(prev => ({
+        ...prev,
+        setPrimary: true
+      }))
+    }
+
+    // return transaction hash to enable following transaction status in transaction details component
+    return hash
+  }, [selectedList, isPrimaryList, walletClient])
+
   const setManagerTx = useCallback(async () => {
     if (!(listRecordsContractAddress && slot && isAddress(manager || ''))) return
 
@@ -260,11 +291,21 @@ const useSaveListSettings = ({
       execute: setUserTx,
       isPendingConfirmation: false
     }
+    const setPrimaryList: Action = {
+      id: EFPActionType.SetPrimaryList, // Unique identifier for the action
+      type: EFPActionType.SetPrimaryList,
+      label: t('set primary'),
+      chainId: DEFAULT_CHAIN.id,
+      execute: setPrimaryListTx,
+      isPendingConfirmation: false
+    }
 
     const actionsToExecute: Action[] = []
     if (!completeTransactions.user && changedValuesState.user) actionsToExecute.push(setListUser)
     if (!completeTransactions.manager && changedValuesState.manager)
       actionsToExecute.push(setListManager)
+    if (!completeTransactions.setPrimary && changedValuesState.setPrimary)
+      actionsToExecute.push(setPrimaryList)
     if (changedValuesState.chain && newChain) {
       if (listState) {
         const listOps = listState.flatMap(item => {
@@ -319,8 +360,7 @@ const useSaveListSettings = ({
   const handleInitiateActions = useCallback(() => {
     if (!chain) return
     if (
-      actions[0]?.type === EFPActionType.SetEFPListOwner ||
-      actions[0]?.type === EFPActionType.SetEFPListStorageLocation
+      actions[0] && DEFAULT_CHAIN_LIST_ACTIONS.includes(actions[0]?.type)
         ? currentChainId !== DEFAULT_CHAIN.id
         : actions[0]?.type === EFPActionType.UpdateEFPList
           ? newChain?.id !== currentChainId
@@ -328,8 +368,7 @@ const useSaveListSettings = ({
     ) {
       switchChain({
         chainId:
-          actions[0]?.type === EFPActionType.SetEFPListOwner ||
-          actions[0]?.type === EFPActionType.SetEFPListStorageLocation
+          actions[0] && DEFAULT_CHAIN_LIST_ACTIONS.includes(actions[0]?.type)
             ? DEFAULT_CHAIN.id
             : actions[0]?.type === EFPActionType.UpdateEFPList && newChain
               ? newChain.id

@@ -19,6 +19,7 @@ const useBlockedMuted = (user: string, list?: string | number) => {
   const {
     data: fetchedBlockedBy,
     isLoading: blockedByIsLoading,
+    isRefetching: blockedByIsRefetching,
     fetchNextPage: fetchMoreBlockedBy,
     isFetchingNextPage: isFetchingMoreBlockedBy
   } = useInfiniteQuery({
@@ -43,12 +44,13 @@ const useBlockedMuted = (user: string, list?: string | number) => {
     },
     initialPageParam: 0,
     getNextPageParam: lastPage => lastPage.nextPageParam,
-    staleTime: 120000
+    staleTime: 30000
   })
 
   const {
     data: fetchedBlocking,
     isLoading: blockingIsLoading,
+    isRefetching: blockingIsRefetching,
     fetchNextPage: fetchMoreBlocking,
     isFetchingNextPage: isFetchingMoreBlocking
   } = useInfiniteQuery({
@@ -73,7 +75,7 @@ const useBlockedMuted = (user: string, list?: string | number) => {
     },
     initialPageParam: 0,
     getNextPageParam: lastPage => lastPage.nextPageParam,
-    staleTime: 120000
+    staleTime: 30000
   })
 
   const blockedBy = fetchedBlockedBy
@@ -98,8 +100,8 @@ const useBlockedMuted = (user: string, list?: string | number) => {
   return {
     blocking,
     blockedBy,
-    blockedByIsLoading,
-    blockingIsLoading,
+    blockedByIsLoading: blockedByIsLoading || blockedByIsRefetching,
+    blockingIsLoading: blockingIsLoading || blockingIsRefetching,
     fetchMoreBlockedBy,
     fetchMoreBlocking,
     isFetchingMoreBlockedBy,

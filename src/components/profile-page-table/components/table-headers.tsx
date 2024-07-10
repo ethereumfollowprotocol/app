@@ -52,6 +52,10 @@ const TableHeader: React.FC<TableHeaderProps> = ({
 
   const { t } = useTranslation('profile')
 
+  const displayedTags = allTags?.filter(tag =>
+    isShowingBlocked ? true : !QUERY_BLOCK_TAGS.includes(tag)
+  )
+
   return (
     <div className='flex flex-col gap-4 w-full'>
       <div className='flex justify-between w-full'>
@@ -151,25 +155,23 @@ const TableHeader: React.FC<TableHeaderProps> = ({
               <LoadingCell className='w-20 h-7 md:h-9 rounded-full' />
               <LoadingCell className='w-20 h-7 md:h-9 rounded-full' />
             </>
-          ) : allTags?.length === 0 || !allTags ? (
+          ) : !displayedTags || displayedTags.length === 0 ? (
             <p className='text-center w-full font-semibold text-gray-500 italic'>No tags</p>
           ) : (
-            allTags
-              ?.filter(tag => (isShowingBlocked ? true : !QUERY_BLOCK_TAGS.includes(tag)))
-              .map((tag, i) => (
-                <button
-                  key={tag + i}
-                  className={`text-sm px-4 py-2 font-semibold italic ${
-                    selectedTags?.includes(tag)
-                      ? 'text-darkGrey bg-white shadow-inner shadow-black/40'
-                      : 'text-gray-500 bg-gray-300/80'
-                  } rounded-full`}
-                  name={tag.toLowerCase()}
-                  onClick={() => toggleSelectedTags(title, tag)}
-                >
-                  {tag}
-                </button>
-              ))
+            displayedTags?.map((tag, i) => (
+              <button
+                key={tag + i}
+                className={`text-sm px-4 py-2 font-semibold italic ${
+                  selectedTags?.includes(tag)
+                    ? 'text-darkGrey bg-white shadow-inner shadow-black/40'
+                    : 'text-gray-500 bg-gray-300/80'
+                } rounded-full`}
+                name={tag.toLowerCase()}
+                onClick={() => toggleSelectedTags(title, tag)}
+              >
+                {tag}
+              </button>
+            ))
           )}
         </div>
       )}

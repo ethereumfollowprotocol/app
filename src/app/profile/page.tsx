@@ -28,7 +28,6 @@ export default function ProfilePage() {
   }, [])
 
   const {
-    lists,
     roles,
     profile,
     selectedList,
@@ -101,7 +100,6 @@ export default function ProfilePage() {
       {listSettingsOpen && profile && selectedList && (
         <ListSettings
           selectedList={selectedList}
-          lists={lists?.lists}
           isSaving={isSaving}
           profile={profile}
           setIsSaving={setIsSaving}

@@ -151,7 +151,7 @@ export function FollowListItemName({
       }}
     >
       {isEnsProfileLoading ? (
-        <LoadingCell className='h-[45px] w-[45px] md:h-[50px] md:w-[50px] rounded-full' />
+        <LoadingCell className='h-[45px] w-[45px] min-w-[45px] md:h-[50px] md:w-[50px] md:min-w-[50px] rounded-full' />
       ) : (
         <Avatar
           name={name || address}

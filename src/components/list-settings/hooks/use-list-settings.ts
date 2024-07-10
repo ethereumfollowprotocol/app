@@ -1,8 +1,17 @@
-import { useChains } from 'wagmi'
+import {
+  http,
+  fromHex,
+  isAddress,
+  type Chain,
+  getContract,
+  type Address,
+  createPublicClient
+} from 'viem'
 import { useEffect, useState } from 'react'
+import { useAccount, useChains } from 'wagmi'
 import { useQuery } from '@tanstack/react-query'
-import { http, fromHex, getContract, createPublicClient, type Address, type Chain } from 'viem'
 
+import { resolveEnsAddress } from '#/utils/ens'
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import { rpcProviders } from '#/lib/constants/providers'
 import { coreEfpContracts } from '#/lib/constants/contracts'
@@ -14,18 +23,173 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
   const [chain, setChain] = useState<Chain>()
   const [fetchedChain, setFetchedChain] = useState<Chain>()
 
+  const [isListSettingsLoading, setIsListSettingsLoading] = useState(false)
   const [user, setUser] = useState<string>('')
+  const [userLoading, setUserLoading] = useState(false)
+  const [currentUser, setCurrentUser] = useState<string>('')
   const [fetchedUser, setFetchedUser] = useState<string>('')
   const [owner, setOwner] = useState<string>('')
+  const [ownerLoading, setOwnerLoading] = useState(false)
+  const [currentOwner, setCurrentOwner] = useState<string>('')
   const [fetchedOwner, setFetchedOwner] = useState<string>('')
   const [manager, setManager] = useState<string>('')
+  const [managerLoading, setManagerLoading] = useState(false)
+  const [currentManager, setCurrentManager] = useState<string>('')
   const [fetchedManager, setFetchedManager] = useState<string>('')
+
+  const initialPrimaryListState = profile.primary_list
+    ? Number(profile.primary_list) === list
+    : false
+  const [isPrimaryList, setIsPrimaryList] = useState(initialPrimaryListState)
+
   const [changedValues, setChangedValues] = useState({
     chain: false,
     owner: false,
     manager: false,
-    user: false
+    user: false,
+    setPrimary: false
   })
+
+  const { address: connectedAddress } = useAccount()
+
+  useEffect(() => {
+    const updateValue = async () => {
+      if (isAddress(currentUser) && currentUser.toLowerCase() !== fetchedUser?.toLowerCase()) {
+        setUser(currentUser)
+        setUserLoading(false)
+        if (currentUser.toLowerCase() === connectedAddress?.toLowerCase()) setIsPrimaryList(false)
+        return setChangedValues(currValues => ({
+          ...currValues,
+          user: true,
+          setPrimary: false
+        }))
+      }
+
+      if (currentUser.includes('.')) {
+        const resolvedAddress = await resolveEnsAddress(currentUser)
+        if (resolvedAddress) {
+          setUser(resolvedAddress)
+          setUserLoading(false)
+          if (resolvedAddress.toLowerCase() !== fetchedUser?.toLowerCase()) {
+            if (resolvedAddress.toLowerCase() === connectedAddress?.toLowerCase())
+              setIsPrimaryList(false)
+            setChangedValues(currValues => ({
+              ...currValues,
+              user: true,
+              setPrimary: false
+            }))
+          }
+
+          return
+        }
+      }
+
+      if (changedValues.user) {
+        setUser('')
+        setChangedValues(currValues => ({
+          ...currValues,
+          user: false,
+          setPrimary: isPrimaryList !== initialPrimaryListState
+        }))
+      }
+      setUserLoading(false)
+    }
+
+    setUserLoading(true)
+    const userTimeout = setTimeout(updateValue, 500)
+    return () => clearTimeout(userTimeout)
+  }, [currentUser])
+
+  useEffect(() => {
+    const updateValue = async () => {
+      if (
+        isAddress(currentManager) &&
+        currentManager.toLowerCase() !== fetchedManager?.toLowerCase()
+      ) {
+        setManager(currentManager)
+        setManagerLoading(false)
+        return setChangedValues(currValues => ({
+          ...currValues,
+          manager: true
+        }))
+      }
+
+      if (currentManager.includes('.')) {
+        const resolvedAddress = await resolveEnsAddress(currentManager)
+        if (resolvedAddress) {
+          setManager(resolvedAddress)
+          setManagerLoading(false)
+
+          if (resolvedAddress.toLowerCase() !== fetchedManager?.toLowerCase())
+            setChangedValues(currValues => ({
+              ...currValues,
+              manager: true
+            }))
+
+          return
+        }
+
+        setManager('')
+      }
+
+      if (changedValues.manager) {
+        setManager('')
+        setChangedValues(currValues => ({
+          ...currValues,
+          manager: false
+        }))
+      }
+      setManagerLoading(false)
+    }
+
+    setManagerLoading(true)
+    const managerTimeout = setTimeout(updateValue, 500)
+    return () => clearTimeout(managerTimeout)
+  }, [currentManager])
+
+  useEffect(() => {
+    const updateValue = async () => {
+      if (isAddress(currentOwner) && currentOwner.toLowerCase() !== fetchedOwner?.toLowerCase()) {
+        setOwner(currentOwner)
+        setOwnerLoading(false)
+        return setChangedValues(currValues => ({
+          ...currValues,
+          owner: true
+        }))
+      }
+
+      if (currentOwner.includes('.')) {
+        const resolvedAddress = await resolveEnsAddress(currentOwner)
+
+        if (isAddress(resolvedAddress)) {
+          setOwner(resolvedAddress)
+          setOwnerLoading(false)
+
+          if (resolvedAddress.toLowerCase() !== fetchedOwner?.toLowerCase())
+            setChangedValues(currValues => ({
+              ...currValues,
+              owner: true
+            }))
+
+          return
+        }
+      }
+
+      if (changedValues.owner) {
+        setOwner('')
+        setChangedValues(currValues => ({
+          ...currValues,
+          owner: false
+        }))
+      }
+
+      setOwnerLoading(false)
+    }
+
+    setOwnerLoading(true)
+    const ownerTimeout = setTimeout(updateValue, 500)
+    return () => clearTimeout(ownerTimeout)
+  }, [currentOwner])
 
   const { data: listState, isLoading: isListStateLoading } = useQuery({
     queryKey: ['list state', list],
@@ -85,25 +249,29 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
     }
     if (listOwner) {
       setFetchedOwner(listOwner)
-      setOwner(listOwner)
+      setCurrentOwner(listOwner)
     }
     if (listManager) {
       setFetchedManager(listManager)
-      setManager(listManager)
+      setCurrentManager(listManager)
     }
     if (listUser) {
       setFetchedUser(listUser)
-      setUser(listUser)
+      setCurrentUser(listUser)
     }
+
+    setIsListSettingsLoading(false)
   }
 
   useEffect(() => {
+    setIsListSettingsLoading(true)
     fetchListData()
     setChangedValues({
       chain: false,
       owner: false,
       manager: false,
-      user: false
+      user: false,
+      setPrimary: false
     })
   }, [profile, list])
 
@@ -111,22 +279,31 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
     chain,
     fetchedChain,
     changedValues,
-    manager,
     owner,
+    currentOwner,
+    manager,
+    currentManager,
     user,
+    isPrimaryList,
+    setIsPrimaryList,
+    currentUser,
     fetchedSlot,
     fetchedListRecordsContractAddress,
     fetchedOwner,
     chains,
     setChangedValues,
-    setUser,
-    setManager,
-    setOwner,
+    setCurrentOwner,
+    setCurrentManager,
+    setCurrentUser,
     setChain,
     fetchedManager,
     fetchedUser,
     listState,
-    isListStateLoading
+    isListStateLoading,
+    userLoading,
+    managerLoading,
+    ownerLoading,
+    isListSettingsLoading
   }
 }
 

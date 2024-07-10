@@ -35,6 +35,7 @@
     "set location": "Set list storage location",
     "set owner": "Set list owner",
     "set manager": "Set list manager",
-    "set user": "Set list user"
+    "set user": "Set list user",
+    "set primary": "Set Primary List"
   }
 }

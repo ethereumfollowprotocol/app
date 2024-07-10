@@ -35,6 +35,7 @@
     "set location": "Spremeni lokacijo seznama",
     "set owner": "Spremeni lastnika seznama",
     "set manager": "Spremeni upravnika seznama",
-    "set user": "Spremeni uporabnika seznama"
+    "set user": "Spremeni uporabnika seznama",
+    "set primary": "Nastavi kot Glavni Seznam"
   }
 }

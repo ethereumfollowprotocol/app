@@ -1,10 +1,10 @@
 import Image from 'next/image'
 import { useState } from 'react'
-import { isAddress } from 'viem'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
 
+import LoadingCell from '../loading-cell'
 import ProfileStats from '../profile-stats'
 import Cross from 'public/assets/icons/cross.svg'
 import type { ChainWithDetails } from '#/lib/wagmi'
@@ -17,9 +17,7 @@ import { PrimaryButton } from '#/components/primary-button'
 import type { ProfileDetailsResponse } from '#/types/requests'
 
 interface ListSettingsProps {
-  showSingleList?: boolean
   selectedList: number
-  lists?: number[]
   isSaving: boolean
   profile: ProfileDetailsResponse
   onClose: () => void
@@ -27,11 +25,9 @@ interface ListSettingsProps {
 }
 
 const ListSettings: React.FC<ListSettingsProps> = ({
-  showSingleList,
   selectedList,
   isSaving,
   onClose,
-  lists,
   setIsSaving,
   profile
 }) => {
@@ -50,20 +46,29 @@ const ListSettings: React.FC<ListSettingsProps> = ({
     owner,
     chain,
     chains,
-    setUser,
+    setCurrentUser,
     manager,
     setChain,
-    setOwner,
+    setCurrentOwner,
     listState,
-    setManager,
+    setCurrentManager,
     fetchedUser,
+    currentUser,
+    userLoading,
     fetchedSlot,
     fetchedOwner,
+    currentOwner,
     fetchedChain,
+    ownerLoading,
     changedValues,
+    isPrimaryList,
     fetchedManager,
+    managerLoading,
+    currentManager,
+    setIsPrimaryList,
     setChangedValues,
     isListStateLoading,
+    isListSettingsLoading,
     fetchedListRecordsContractAddress
   } = useListSettings({ profile, list: selectedList })
 
@@ -83,6 +88,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
       listRecordsContractAddress={fetchedListRecordsContractAddress}
       listState={listState}
       isListStateLoading={isListStateLoading}
+      isPrimaryList={isPrimaryList}
     />
   ) : (
     <div
@@ -121,8 +127,16 @@ const ListSettings: React.FC<ListSettingsProps> = ({
                 connectedAddress?.toLowerCase() !== fetchedOwner?.toLowerCase()
               }
             >
-              {chain && <ChainIcon chain={chain as ChainWithDetails} className={'h-6 w-6'} />}
-              <p className='sm:text-lg font-semibold truncate'>{chain?.name}</p>
+              {isListSettingsLoading ? (
+                <LoadingCell className='h-8 w-full rounded-lg' />
+              ) : (
+                <>
+                  {chain && (
+                    <ChainIcon chain={chain as ChainWithDetails} className={'h-6 w-6 rounded-lg'} />
+                  )}
+                  <p className='sm:text-lg font-semibold truncate'>{chain?.name}</p>
+                </>
+              )}
               {isEditingSettings ? (
                 <Image
                   src={ArrowDown}
@@ -134,7 +148,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
               )}
             </button>
             {chainDropdownOpen && (
-              <div className='absolute top-14 flex bg-white/90 flex-col rounded-xl w-full'>
+              <div className='absolute top-14 z-10 flex bg-white/90 flex-col rounded-xl w-full'>
                 {chains.map(item => (
                   <div
                     key={item.id}
@@ -159,47 +173,63 @@ const ListSettings: React.FC<ListSettingsProps> = ({
             )}
           </div>
         </div>
+        {(user
+          ? connectedAddress?.toLowerCase() === user.toLowerCase()
+          : connectedAddress?.toLowerCase() === fetchedUser.toLowerCase()) && (
+          <div className='flex items-center w-full justify-between'>
+            <p className='text-base sm:text-lg font-bold w-3/4 sm:w-fit'>
+              Set selected List as Primary List
+            </p>
+            <input
+              className='toggle disabled:opacity-40 disabled:cursor-not-allowed'
+              type='checkbox'
+              defaultChecked={isPrimaryList}
+              onChange={e => {
+                setIsPrimaryList(e.target.checked)
+                setChangedValues(prev => ({
+                  ...prev,
+                  setPrimary:
+                    user.toLowerCase() === connectedAddress?.toLowerCase()
+                      ? e.target.checked
+                      : e.target.checked !== (Number(profile.primary_list) === selectedList)
+                }))
+              }}
+              disabled={!isEditingSettings}
+            />
+          </div>
+        )}
         <SettingsInput
           option={t('owner')}
-          value={owner}
+          value={currentOwner}
+          resolvedAddress={owner}
           placeholder={fetchedOwner || 'Address or ENS name'}
           disableValue={fetchedOwner}
-          setValue={setOwner}
-          setChangedValues={(input: string) => {
-            setChangedValues(changedValues => ({
-              ...changedValues,
-              owner: isAddress(input) && input.toLowerCase() !== fetchedOwner?.toLowerCase()
-            }))
-          }}
+          setValue={setCurrentOwner}
           isEditingSettings={isEditingSettings}
+          isLoading={ownerLoading}
+          isSettingsLoading={isListSettingsLoading}
         />
         <SettingsInput
           option={t('manager')}
-          value={manager}
+          value={currentManager}
+          resolvedAddress={manager}
           placeholder={fetchedManager || 'Address or ENS name'}
           disableValue={fetchedManager}
-          setValue={setManager}
-          setChangedValues={(input: string) => {
-            setChangedValues(changedValues => ({
-              ...changedValues,
-              manager: isAddress(input) && input.toLowerCase() !== fetchedManager?.toLowerCase()
-            }))
-          }}
+          setValue={setCurrentManager}
           isEditingSettings={isEditingSettings}
+          isLoading={managerLoading}
+          isSettingsLoading={isListSettingsLoading}
         />
         <SettingsInput
           option={t('user')}
-          value={user}
+          value={currentUser}
+          resolvedAddress={user}
           placeholder={fetchedUser || 'Address or ENS name'}
           disableValue={fetchedManager}
-          setValue={setUser}
-          setChangedValues={(input: string) => {
-            setChangedValues(changedValues => ({
-              ...changedValues,
-              user: isAddress(input) && input.toLowerCase() !== fetchedUser?.toLowerCase()
-            }))
-          }}
+          setValue={setCurrentUser}
           isEditingSettings={isEditingSettings}
+          isLoading={userLoading}
+          isSettingsLoading={isListSettingsLoading}
         />
         {connectedAddress?.toLowerCase() !== fetchedManager?.toLowerCase() &&
         connectedAddress?.toLowerCase() !==

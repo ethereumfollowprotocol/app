@@ -31,7 +31,6 @@ export default function UserPage({ params }: Props) {
   const { address: connectedUserAddress } = useAccount()
 
   const {
-    lists,
     listNum,
     profile,
     followers,
@@ -110,8 +109,6 @@ export default function UserPage({ params }: Props) {
       )}
       {listSettingsOpen && profile && (userIsList ? listNum : profile.primary_list) && (
         <ListSettings
-          showSingleList={userIsList}
-          lists={lists?.lists}
           // @ts-ignore
           selectedList={
             userIsList
@@ -141,7 +138,7 @@ export default function UserPage({ params }: Props) {
               following={following}
               isLoading={profileIsLoading}
               showMoreOptions={
-                profile?.address.toLowerCase() !== connectedUserAddress?.toLowerCase()
+                profile?.address?.toLowerCase() !== connectedUserAddress?.toLowerCase()
               }
             />
             <div className='flex flex-col gap-1 items-center'>

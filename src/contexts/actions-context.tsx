@@ -10,6 +10,7 @@ export enum EFPActionType {
   SetEFPListOwner = 'SetEFPListOwner',
   SetEFPListManager = 'SetEFPListManager',
   SetEFPListUser = 'SetEFPListUser',
+  SetPrimaryList = 'SetEFPPrimaryList',
   SetEFPListStorageLocation = 'SetEFPListStorageLocation'
 }
 

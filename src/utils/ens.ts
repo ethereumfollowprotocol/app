@@ -37,13 +37,17 @@ export const resolveEnsName = async (address: `0x${string}`) => {
 }
 
 export const resolveEnsAddress = async (name: string) => {
-  const publicClient = createPublicClient({
-    chain: mainnet,
-    transport: http(rpcProviders[1])
-  })
-  const ensAddress = await publicClient.getEnsAddress({
-    name: normalize(name)
-  })
+  try {
+    const publicClient = createPublicClient({
+      chain: mainnet,
+      transport: http(rpcProviders[1])
+    })
+    const ensAddress = await publicClient.getEnsAddress({
+      name: normalize(name)
+    })
 
-  return ensAddress as Address
+    return ensAddress as Address
+  } catch {
+    return '' as Address
+  }
 }
