@@ -55,7 +55,7 @@ export function SelectChainCard({
       </div>
       {lists?.lists && lists.lists.length > 0 && (
         <div className='flex mt-4 items-center gap-3 sm:gap-5'>
-          <p className='text-lg font-bold'>Set new list as Primary List?</p>
+          <p className='text-lg font-bold'>{t('set primary')}</p>
           <input
             className='toggle'
             type='checkbox'

@@ -31,6 +31,7 @@ const TransactionDetails = ({
     if (isPending) return t('pending')
     if (!isLastAction && isSuccess) return t('successful')
     if (isLastAction && isLastActionSuccessful) return t('successful')
+    if (isLastAction && isSuccess) return t('finishing')
     if (isLastAction && !isLastActionSuccessful) return t('pending')
     if (isError) return `${t('error')} ${error}`
   }, [
@@ -49,6 +50,7 @@ const TransactionDetails = ({
     if (isPending) return 'text-kournikova-600'
     if (!isLastAction && isSuccess) return 'text-lime-600'
     if (isLastAction && isLastActionSuccessful) return 'text-lime-600'
+    if (isLastAction && isSuccess) return 'text-kournikova-600'
     if (isLastAction && !isLastActionSuccessful) return 'text-kournikova-600'
     if (isError) return 'text-red-600'
   }, [
