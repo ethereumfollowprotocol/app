@@ -14,6 +14,7 @@ import SettingsIcon from 'public/assets/icons/settings.svg'
 import UserProfileCard from '#/components/user-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { UserProfilePageTable } from '#/components/profile-page-table'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 interface Props {
   params: { user: string }
@@ -21,11 +22,15 @@ interface Props {
 
 export default function UserPage({ params }: Props) {
   const { user } = params
+  const searchParams = useSearchParams()
+  const initialBlockedOpen = searchParams.toString().includes('blocked')
+
   const [isSaving, setIsSaving] = useState(false)
   const [listSettingsOpen, setListSettingsOpen] = useState(false)
-  const [isBlockedMutedOpen, setIsBlockedMutedOpen] = useState(false)
   const [activeTab, setActiveTab] = useState<ProfileTabType>('following')
+  const [isBlockedMutedOpen, setIsBlockedMutedOpen] = useState(initialBlockedOpen)
 
+  const router = useRouter()
   const { t } = useTranslation('profile')
   const { roles, selectedList } = useEFPProfile()
   const { address: connectedUserAddress } = useAccount()
@@ -100,7 +105,10 @@ export default function UserPage({ params }: Props) {
         <BlockedMuted
           profile={profile}
           list={profile.primary_list ?? undefined}
-          onClose={() => setIsBlockedMutedOpen(false)}
+          onClose={() => {
+            setIsBlockedMutedOpen(false)
+            router.push(`/${user}`)
+          }}
           isManager={
             Number(userIsList ? listNum : profile?.primary_list) === selectedList &&
             roles?.isManager
@@ -143,7 +151,10 @@ export default function UserPage({ params }: Props) {
             />
             <div className='flex flex-col gap-1 items-center'>
               <p
-                onClick={() => setIsBlockedMutedOpen(true)}
+                onClick={() => {
+                  setIsBlockedMutedOpen(true)
+                  router.push(`/${user}?blocked`)
+                }}
                 className='font-semibold cursor-pointer hover:opacity-80 transition-opacity'
               >
                 {t('block-mute')}

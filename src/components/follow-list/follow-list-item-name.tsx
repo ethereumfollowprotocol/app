@@ -97,11 +97,13 @@ export function FollowListItemName({
   const tagsFromCart = getTagsFromCartByAddress(address)
   const inintialdisplayedTags = () => {
     const seen: { [key: string]: boolean } = {}
-    return [...tags, ...(isFollowers ? [] : tagsFromCart)].filter(tag => {
-      if (Object.keys(seen).includes(tag)) return false
-      seen[tag] = true
-      return true
-    })
+    return [...tags, ...(isFollowers ? [] : tagsFromCart)]
+      .filter(tag => {
+        if (Object.keys(seen).includes(tag)) return false
+        seen[tag] = true
+        return true
+      })
+      .filter(tag => (isBlockedList ? ['block', 'mute'].includes(tag) : true))
   }
   const [displayedTags, setdisplayedTags] = useState(inintialdisplayedTags)
 
@@ -182,7 +184,7 @@ export function FollowListItemName({
             </div>
           )}
         </div>
-        {showTags && !isBlockedList && (!isBeingRemoved || isRestriction) && (
+        {showTags && (!isBeingRemoved || isRestriction) && (
           <div
             className={`relative flex max-w-[70%] 3xs:max-w-[75%] xxs:max-w-[80%] md:max-w-[50%] ${
               isEditor
@@ -248,7 +250,7 @@ export function FollowListItemName({
                       }
                     `}
                     onClick={() => {
-                      if (!canEditTags) return
+                      if (!canEditTags || isBlockedList) return
                       removeTag(tag)
                     }}
                   >
