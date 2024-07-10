@@ -83,7 +83,7 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
         <CancelButton
           label={tBtn('back')}
           onClick={() => setCurrentStep(Step.InitiateTransactions)}
-          disabled={isLastAction || isLoading}
+          disabled={!finishButtonIsDisabled || isLoading}
         />
         {currentAction.isConfirmationError && (
           <PrimaryButton

@@ -3,9 +3,9 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
-import { useAccount, useDisconnect, useWalletClient } from 'wagmi'
 import { useClickAway } from '@uidotdev/usehooks'
-import { useAccountModal, useConnectModal } from '@rainbow-me/rainbowkit'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
+import { useAccount, useDisconnect, useWalletClient } from 'wagmi'
 
 import { LANGUAGES } from '#/lib/constants'
 import useLanguage from '../hooks/useLanguage'
@@ -39,9 +39,8 @@ const ConnectButton = () => {
   const { t } = useTranslation()
   const { disconnect } = useDisconnect()
   const { openConnectModal } = useConnectModal()
-  const { openAccountModal } = useAccountModal()
-  const { address: userAddress, isConnected, connector } = useAccount()
   const { selectedList, lists, setSelectedList } = useEFPProfile()
+  const { address: userAddress, isConnected, connector } = useAccount()
   const { isLoading: isLoadingWalletClient, data: walletClient } = useWalletClient()
 
   useEffect(() => {
@@ -73,7 +72,7 @@ const ConnectButton = () => {
         // className='bg-gradient-to-br p-[2px] from-yellow to-pink cursor-pointer h-12 rounded-full w-40'
         className='border-[#FFC057] z-50 hover:bg-[#FFC057]/10 px-1 transition-colors border-2 gap-[6px] cursor-pointer flex justify-between items-center h-12 glass-card rounded-full w-fit sm:w-48'
         onClick={() =>
-          userAddress && openAccountModal
+          userAddress
             ? setWalletMenuOpen(!walletMenOpenu)
             : openConnectModal
               ? openConnectModal()

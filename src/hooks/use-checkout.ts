@@ -48,13 +48,25 @@ const useCheckout = () => {
   } = useEFPProfile()
   const chains = useChains()
   const router = useRouter()
-  const currentChainId = useChainId()
   const queryClient = useQueryClient()
   const { switchChain } = useSwitchChain()
+  const initialCurrentChainId = useChainId()
   const { address: userAddress } = useAccount()
   const { data: walletClient } = useWalletClient()
   const { totalCartItems, cartItems, resetCart } = useCart()
   const { mint, nonce: mintNonce, listHasBeenMinted } = useMintEFP()
+
+  const [currentChainId, setCurrentChainId] = useState(initialCurrentChainId)
+  const getCurrentChain = useCallback(async () => {
+    if (!walletClient) return
+
+    const chainId = await walletClient.getChainId()
+    setCurrentChainId(chainId)
+  }, [walletClient])
+
+  useEffect(() => {
+    getCurrentChain()
+  }, [walletClient])
 
   // get contract for selected chain to pull list storage location from
   const listRegistryContract = getContract({
@@ -216,7 +228,12 @@ const useCheckout = () => {
     const chainId = await getRequiredChain(currentActionIndex)
     if (!chainId) return
     if (currentChainId !== chainId) {
-      switchChain({ chainId })
+      switchChain(
+        { chainId },
+        {
+          onSuccess: () => setCurrentChainId(chainId)
+        }
+      )
       return
     }
 
@@ -231,10 +248,9 @@ const useCheckout = () => {
       switchChain(
         { chainId },
         {
-          onSettled: () => {
+          onSuccess: () => {
+            setCurrentChainId(chainId)
             setCurrentStep(Step.InitiateTransactions)
-            // const nextActionIndex = moveToNextAction()
-            // executeActionByIndex(nextActionIndex)
           }
         }
       )
