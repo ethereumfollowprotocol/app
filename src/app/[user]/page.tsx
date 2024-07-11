@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 import useUser from './hooks/useUser'
 import { PROFILE_TABS } from '#/lib/constants'
@@ -14,7 +15,6 @@ import SettingsIcon from 'public/assets/icons/settings.svg'
 import UserProfileCard from '#/components/user-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { UserProfilePageTable } from '#/components/profile-page-table'
-import { useRouter, useSearchParams } from 'next/navigation'
 
 interface Props {
   params: { user: string }
@@ -23,7 +23,7 @@ interface Props {
 export default function UserPage({ params }: Props) {
   const { user } = params
   const searchParams = useSearchParams()
-  const initialBlockedOpen = searchParams.toString().includes('blocked')
+  const initialBlockedOpen = searchParams.get('modal') === 'blocked'
 
   const [isSaving, setIsSaving] = useState(false)
   const [listSettingsOpen, setListSettingsOpen] = useState(false)
@@ -153,7 +153,7 @@ export default function UserPage({ params }: Props) {
               <p
                 onClick={() => {
                   setIsBlockedMutedOpen(true)
-                  router.push(`/${user}?blocked`)
+                  router.push(`/${user}?modal=blocked`)
                 }}
                 className='font-semibold cursor-pointer hover:opacity-80 transition-opacity'
               >

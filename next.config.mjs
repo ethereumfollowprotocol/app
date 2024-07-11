@@ -8,10 +8,10 @@
 import million from 'million/compiler'
 import childProcess from 'node:child_process'
 import { withSentryConfig } from '@sentry/nextjs'
-import { withVercelToolbar } from '@vercel/toolbar/plugins/next'
+// import { withVercelToolbar } from '@vercel/toolbar/plugins/next'
 
 /** @type {NextConfigPlugins} */
-const plugins = [withVercelToolbar()]
+const plugins = []
 
 if (process.env['ANALYZE']) {
   const { default: withBundleAnalyzer } = await import('@next/bundle-analyzer')

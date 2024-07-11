@@ -1,11 +1,11 @@
 import { toast } from 'sonner'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { isAddress, type Address } from 'viem'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useQueryState } from 'next-usequerystate'
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { resolveEnsAddress } from '#/utils/ens'
 import searchENSNames from '#/api/searchENSNames'
@@ -20,7 +20,9 @@ const useSearch = (isEditor?: boolean) => {
   const [dropdownMenuOpen, setDropdownMenuOpen] = useState(false)
   const [dialogOpen, setDialogOpen] = useState<undefined | boolean>(undefined)
 
-  const [currentSearch, setCurrentSearch] = useState('')
+  const searchParams = useSearchParams()
+  const initialSearch = searchParams.get('search')
+  const [currentSearch, setCurrentSearch] = useState(initialSearch ?? '')
   const [search, setSearch] = useQueryState('search', {
     history: 'push',
     parse: value => value?.trim().toLowerCase(),
@@ -38,6 +40,14 @@ const useSearch = (isEditor?: boolean) => {
     setDialogOpen(false)
   })
   const searchBarRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
+  useEffect(() => {
+    if (initialSearch && initialSearch?.length > 0 && searchBarRef) {
+      searchBarRef.current?.focus()
+      searchBarRef.current?.setSelectionRange(initialSearch?.length, initialSearch.length)
+      setDropdownMenuOpen(true)
+      setDialogOpen(true)
+    }
+  }, [searchBarRef])
 
   const searchKey = useMemo(
     () => (isEditor ? currentSearch : search),

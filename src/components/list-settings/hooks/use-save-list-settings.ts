@@ -1,17 +1,17 @@
+import {
+  http,
+  toHex,
+  fromHex,
+  isAddress,
+  type Chain,
+  getContract,
+  type Address,
+  encodePacked,
+  createPublicClient
+} from 'viem'
 import { useTranslation } from 'react-i18next'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useAccount, useChainId, useSwitchChain, useWalletClient } from 'wagmi'
-import {
-  isAddress,
-  type Chain,
-  type Address,
-  encodePacked,
-  toHex,
-  fromHex,
-  getContract,
-  createPublicClient,
-  http
-} from 'viem'
 
 import {
   isTagListOp,
