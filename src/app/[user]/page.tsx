@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 import useUser from './hooks/useUser'
 import { PROFILE_TABS } from '#/lib/constants'
@@ -21,11 +22,15 @@ interface Props {
 
 export default function UserPage({ params }: Props) {
   const { user } = params
+  const searchParams = useSearchParams()
+  const initialBlockedOpen = searchParams.get('modal') === 'blocked'
+
   const [isSaving, setIsSaving] = useState(false)
   const [listSettingsOpen, setListSettingsOpen] = useState(false)
-  const [isBlockedMutedOpen, setIsBlockedMutedOpen] = useState(false)
   const [activeTab, setActiveTab] = useState<ProfileTabType>('following')
+  const [isBlockedMutedOpen, setIsBlockedMutedOpen] = useState(initialBlockedOpen)
 
+  const router = useRouter()
   const { t } = useTranslation('profile')
   const { roles, selectedList } = useEFPProfile()
   const { address: connectedUserAddress } = useAccount()
@@ -100,7 +105,10 @@ export default function UserPage({ params }: Props) {
         <BlockedMuted
           profile={profile}
           list={profile.primary_list ?? undefined}
-          onClose={() => setIsBlockedMutedOpen(false)}
+          onClose={() => {
+            setIsBlockedMutedOpen(false)
+            router.push(`/${user}`)
+          }}
           isManager={
             Number(userIsList ? listNum : profile?.primary_list) === selectedList &&
             roles?.isManager
@@ -143,7 +151,10 @@ export default function UserPage({ params }: Props) {
             />
             <div className='flex flex-col gap-1 items-center'>
               <p
-                onClick={() => setIsBlockedMutedOpen(true)}
+                onClick={() => {
+                  setIsBlockedMutedOpen(true)
+                  router.push(`/${user}?modal=blocked`)
+                }}
                 className='font-semibold cursor-pointer hover:opacity-80 transition-opacity'
               >
                 {t('block-mute')}

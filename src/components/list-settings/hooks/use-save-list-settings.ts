@@ -1,7 +1,17 @@
+import {
+  http,
+  toHex,
+  fromHex,
+  isAddress,
+  type Chain,
+  getContract,
+  type Address,
+  encodePacked,
+  createPublicClient
+} from 'viem'
 import { useTranslation } from 'react-i18next'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useAccount, useChainId, useSwitchChain, useWalletClient } from 'wagmi'
-import { isAddress, type Chain, type Address, encodePacked, toHex } from 'viem'
 
 import {
   isTagListOp,
@@ -11,6 +21,7 @@ import {
 } from '#/utils/list-ops'
 import { Step } from '#/components/checkout/types'
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
+import { rpcProviders } from '#/lib/constants/providers'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { useCart, type CartItem } from '#/contexts/cart-context'
 import { generateListStorageLocationSlot } from '#/app/efp/utilities'
@@ -91,12 +102,33 @@ const useSaveListSettings = ({
     setIsRefetchingFollowing
   } = useEFPProfile()
   const { resetCart } = useCart()
-  const currentChainId = useChainId()
   const { switchChain } = useSwitchChain()
+  const initialCurrentChainId = useChainId()
   const { address: userAddress } = useAccount()
   const { data: walletClient } = useWalletClient()
   const newSlot = useMemo(() => generateListStorageLocationSlot(), [])
   const { t } = useTranslation('profile', { keyPrefix: 'list settings' })
+
+  const [currentChainId, setCurrentChainId] = useState(initialCurrentChainId)
+  const getCurrentChain = useCallback(async () => {
+    if (!walletClient) return
+
+    const chainId = await walletClient.getChainId()
+    setCurrentChainId(chainId)
+  }, [walletClient])
+
+  useEffect(() => {
+    getCurrentChain()
+  }, [walletClient])
+
+  const listRegistryContract = getContract({
+    address: coreEfpContracts.EFPListRegistry,
+    abi: efpListRegistryAbi,
+    client: createPublicClient({
+      chain: DEFAULT_CHAIN,
+      transport: http(rpcProviders[DEFAULT_CHAIN.id])
+    })
+  })
 
   const setListStorageLocationTx = useCallback(async () => {
     if (!newChain) return
@@ -357,60 +389,44 @@ const useSaveListSettings = ({
     setActions()
   }, [setActions])
 
-  const handleInitiateActions = useCallback(() => {
-    if (!chain) return
-    if (
-      actions[0] && DEFAULT_CHAIN_LIST_ACTIONS.includes(actions[0]?.type)
-        ? currentChainId !== DEFAULT_CHAIN.id
-        : actions[0]?.type === EFPActionType.UpdateEFPList
-          ? newChain?.id !== currentChainId
-          : currentChainId !== chain?.id
-    ) {
-      switchChain({
-        chainId:
-          actions[0] && DEFAULT_CHAIN_LIST_ACTIONS.includes(actions[0]?.type)
-            ? DEFAULT_CHAIN.id
-            : actions[0]?.type === EFPActionType.UpdateEFPList && newChain
-              ? newChain.id
-              : chain.id
-      })
-      return
-    }
+  const getRequiredChain = useCallback(
+    async (index: number) =>
+      DEFAULT_CHAIN_LIST_ACTIONS.includes(actions[index || 0]?.type || '')
+        ? DEFAULT_CHAIN.id
+        : selectedList
+          ? fromHex(
+              `0x${(
+                await listRegistryContract.read.getListStorageLocation([BigInt(selectedList)])
+              ).slice(64, 70)}`,
+              'number'
+            )
+          : chain?.id,
+    [actions, listRegistryContract, chain]
+  )
+
+  const handleInitiateActions = useCallback(async () => {
+    const chainId = await getRequiredChain(0)
+    if (!chainId) return
+    if (currentChainId !== chainId)
+      return switchChain({ chainId }, { onSuccess: () => setCurrentChainId(chainId) })
 
     setCurrentStep(Step.TransactionStatus)
     executeActionByIndex(0)
   }, [executeActionByIndex, currentChainId])
 
   const handleNextAction = useCallback(async () => {
-    if (!chain) return
-    if (
-      actions[currentActionIndex + 1]?.type === EFPActionType.SetEFPListOwner ||
-      actions[currentActionIndex + 1]?.type === EFPActionType.SetEFPListStorageLocation
-        ? currentChainId !== DEFAULT_CHAIN.id
-        : actions[currentActionIndex + 1]?.type === EFPActionType.UpdateEFPList
-          ? newChain?.id !== currentChainId
-          : currentChainId !== chain?.id
-    ) {
-      switchChain(
+    const chainId = await getRequiredChain(currentActionIndex + 1)
+    if (!chainId) return
+    if (currentChainId !== chainId)
+      return switchChain(
+        { chainId },
         {
-          chainId:
-            actions[currentActionIndex + 1]?.type === EFPActionType.SetEFPListOwner ||
-            actions[currentActionIndex + 1]?.type === EFPActionType.SetEFPListStorageLocation
-              ? DEFAULT_CHAIN.id
-              : actions[currentActionIndex + 1]?.type === EFPActionType.UpdateEFPList && newChain
-                ? newChain?.id
-                : chain.id
-        },
-        {
-          onSettled: () => {
+          onSuccess: () => {
+            setCurrentChainId(chainId)
             setCurrentStep(Step.InitiateTransactions)
-            // const nextActionIndex = moveToNextAction()
-            // executeActionByIndex(nextActionIndex)
           }
         }
       )
-      return
-    }
 
     const nextActionIndex = moveToNextAction()
     executeActionByIndex(nextActionIndex)

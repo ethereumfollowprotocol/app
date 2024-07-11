@@ -6,6 +6,7 @@
   "network": "Zamenjaj omrežje",
   "reinitiate": "Izvedi ponovno",
   "finish": "Zaključi",
+  "set primary": "Nastavi ov seznam kot Glavni Seznam?",
   "select chain": {
     "title create list": "Kje bi radi shranili svoj nov EFP seznam?",
     "title list op": "Kje bi radi opravili opercije seznama?",
@@ -32,6 +33,7 @@
     "approved": "Transakcija potrjena",
     "pending": "Transakcija se izvaja",
     "successful": "Transakcija uspešna",
+    "finishing": "Transakcija se zaključuje",
     "error": "Transakcija neuspešna",
     "confirmation error": "Transakcija je bila zavrnjena",
     "check wallet": "Preverite svojo denarnico",

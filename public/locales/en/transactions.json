@@ -6,6 +6,7 @@
   "network": "Switch Nework",
   "reinitiate": "Reinitiate",
   "finish": "Finish",
+  "set primary": "Set new List as Primary List?",
   "select chain": {
     "title create list": "Where would you like to store you EFP list?",
     "title list op": "Where would you like to perform list operations?",
@@ -32,6 +33,7 @@
     "approved": "Transaction approved",
     "pending": "Transaction pending",
     "successful": "Transaction successful",
+    "finishing": "Transaction finishing",
     "error": "Transaction error",
     "confirmation error": "Transacation was declined",
     "check wallet": "Check your wallet",

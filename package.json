@@ -53,7 +53,6 @@
     "@vercel/analytics": "^1.1.2",
     "@vercel/blob": "^0.19.0",
     "@vercel/speed-insights": "^1.0.7",
-    "@vercel/toolbar": "^0.1.10",
     "autoprefixer": "^10.4.17",
     "bufferutil": "^4.0.8",
     "encoding": "^0.1.13",
