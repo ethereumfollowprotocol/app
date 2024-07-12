@@ -152,7 +152,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
 
       const fetchedLists = await fetchProfileLists(userAddress)
       return fetchedLists
-    }
+    },
+    refetchOnWindowFocus: false
   })
 
   useEffect(() => {
@@ -186,8 +187,9 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       setIsRefetchingProfile(false)
 
       return fetchedProfile
-    }
+    },
     // refetchInterval: 60000
+    refetchOnWindowFocus: false
   })
 
   const [isEndOfFollowers, setIsEndOfFollowers] = useState(false)
@@ -241,7 +243,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
 
       const fetchedProfile = await fetchFollowingTags(userAddress, selectedList)
       return fetchedProfile
-    }
+    },
+    refetchOnWindowFocus: false
     // refetchInterval: 60000
   })
 
@@ -305,14 +308,14 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
 
     if (
       ((userAddress?.toLowerCase() === cartAddress?.toLowerCase() || !userAddress) &&
-        Number(cartList) === Number(selectedList)) ||
+        cartList === (selectedList || 'none')) ||
       lists === undefined
     )
       return
 
     resetCart()
 
-    if (selectedList) localStorage.setItem('cart list', selectedList.toString())
+    localStorage.setItem('cart list', selectedList ? selectedList.toString() : 'none')
   }, [userAddress, selectedList])
 
   const toggleTag = (tab: ProfileTableTitleType, tag: string) => {

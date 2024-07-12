@@ -8,7 +8,11 @@ const fetchRecommendations = async (
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_EFP_API_URL}/${
-        endpoint === 'recommended' ? `users/${addressOrName}/recommended` : endpoint
+        endpoint === 'recommended'
+          ? addressOrName
+            ? `users/${addressOrName}/recommended`
+            : 'discover'
+          : endpoint
       }`,
       {
         cache: 'default'

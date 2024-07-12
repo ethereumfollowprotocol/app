@@ -55,6 +55,13 @@ export interface InfiniteProfileQueryProps {
   pageParam: number
   allResults?: boolean
 }
+
+export interface InfiniteLeaderboardQueryProps {
+  limit: number
+  sort?: FollowSortType
+  pageParam: number
+}
+
 export interface FollowerResponse {
   address: Address
   ens: ENSProfile
@@ -80,6 +87,12 @@ export interface FollowStatusResponse {
     block: boolean
     mute: boolean
   }
+}
+
+export interface LeaderboardResponse {
+  address: Address
+  rank: number
+  followers_count: string[]
 }
 
 export interface StatsResponse {

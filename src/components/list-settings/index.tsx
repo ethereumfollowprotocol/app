@@ -15,6 +15,7 @@ import SettingsInput from './components/settings-input'
 import ArrowDown from 'public/assets/icons/arrow-down.svg'
 import { PrimaryButton } from '#/components/primary-button'
 import type { ProfileDetailsResponse } from '#/types/requests'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 interface ListSettingsProps {
   selectedList: number
@@ -37,6 +38,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
     setChainDropdownOpen(false)
   })
 
+  const { roles } = useEFPProfile()
   const { address: connectedAddress } = useAccount()
   const listSettingsRef = useClickAway<HTMLDivElement>(onClose)
   const { t } = useTranslation('profile', { keyPrefix: 'list settings' })
@@ -173,9 +175,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
             )}
           </div>
         </div>
-        {(user
-          ? connectedAddress?.toLowerCase() === user.toLowerCase()
-          : connectedAddress?.toLowerCase() === fetchedUser.toLowerCase()) && (
+        {(user ? connectedAddress?.toLowerCase() === user.toLowerCase() : roles?.isUser) && (
           <div className='flex items-center w-full justify-between'>
             <p className='text-base sm:text-lg font-bold w-3/4 sm:w-fit'>
               Set selected List as Primary List
@@ -231,31 +231,31 @@ const ListSettings: React.FC<ListSettingsProps> = ({
           isLoading={userLoading}
           isSettingsLoading={isListSettingsLoading}
         />
-        {connectedAddress?.toLowerCase() !== fetchedManager?.toLowerCase() &&
-        connectedAddress?.toLowerCase() !==
-          fetchedOwner?.toLowerCase() ? null : isEditingSettings ? (
-          <div className='w-full flex justify-between'>
+        {roles?.isOwner || roles?.isManager || roles?.isUser ? (
+          isEditingSettings ? (
+            <div className='w-full flex justify-between'>
+              <button
+                onClick={() => setIsEditingSettings(false)}
+                className='text-lg mt-4 w-[47.5%] font-semibold hover:opacity-90 bg-[#a8a8a8] rounded-full h-12'
+              >
+                Cancel
+              </button>
+              <PrimaryButton
+                label={t('save')}
+                onClick={() => setIsSaving(true)}
+                className='text-lg mt-4 w-[47.5%] h-12'
+                disabled={!Object.values(changedValues).includes(true)}
+              />
+            </div>
+          ) : (
             <button
-              onClick={() => setIsEditingSettings(false)}
-              className='text-lg mt-4 w-[47.5%] font-semibold hover:opacity-90 bg-[#a8a8a8] rounded-full h-12'
+              onClick={() => setIsEditingSettings(true)}
+              className='text-lg mt-4 w-full font-semibold hover:opacity-90 bg-[#a8a8a8] rounded-full h-12'
             >
-              Cancel
+              Edit Settings
             </button>
-            <PrimaryButton
-              label={t('save')}
-              onClick={() => setIsSaving(true)}
-              className='text-lg mt-4 w-[47.5%] h-12'
-              disabled={!Object.values(changedValues).includes(true)}
-            />
-          </div>
-        ) : (
-          <button
-            onClick={() => setIsEditingSettings(true)}
-            className='text-lg mt-4 w-full font-semibold hover:opacity-90 bg-[#a8a8a8] rounded-full h-12'
-          >
-            Edit Settings
-          </button>
-        )}
+          )
+        ) : null}
       </div>
     </div>
   )
