@@ -232,8 +232,9 @@ const ListSettings: React.FC<ListSettingsProps> = ({
           isSettingsLoading={isListSettingsLoading}
         />
         {connectedAddress?.toLowerCase() !== fetchedManager?.toLowerCase() &&
+        connectedAddress?.toLowerCase() !== fetchedOwner?.toLowerCase() &&
         connectedAddress?.toLowerCase() !==
-          fetchedOwner?.toLowerCase() ? null : isEditingSettings ? (
+          fetchedUser?.toLowerCase() ? null : isEditingSettings ? (
           <div className='w-full flex justify-between'>
             <button
               onClick={() => setIsEditingSettings(false)}

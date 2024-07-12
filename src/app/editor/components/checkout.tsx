@@ -20,6 +20,7 @@ const Checkout: React.FC<CheckoutProps> = ({ setOpen, hasCreatedEfpList }) => {
     setCurrentStep,
     handleChainClick,
     handleNextAction,
+    setNewListAsPrimary,
     handleInitiateActions,
     setSetNewListAsPrimary
   } = useCheckout()
@@ -34,6 +35,7 @@ const Checkout: React.FC<CheckoutProps> = ({ setOpen, hasCreatedEfpList }) => {
           handleChainClick={handleChainClick}
           selectedChain={selectedChain}
           handleNextStep={handleNextStep}
+          setNewListAsPrimary={setNewListAsPrimary}
           setSetNewListAsPrimary={setSetNewListAsPrimary}
         />
       )}
