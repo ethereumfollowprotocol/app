@@ -22,7 +22,7 @@ const TeamPage = () => {
   )
 
   return (
-    <main className='mx-auto flex min-h-full w-full flex-col pt-60 gap-12 items-center overflow-scroll mb-12 px-4 text-center'>
+    <main className='mx-auto flex min-h-full w-full flex-col pt-32 gap-12 items-center overflow-scroll mb-12 px-4 text-center'>
       <h2 className='font-bold text-5xl'>Team</h2>
       <div className='flex-row flex-wrap flex mx-auto lg:flex-row gap-8 align-middle justify-center items-center'>
         {teamProfiles?.map((profile, i) => (
@@ -31,6 +31,8 @@ const TeamPage = () => {
             <UserProfileCard
               isResponsive={false}
               profile={profile}
+              profileList={Number(profile?.primary_list)}
+              showMoreOptions={true}
               // x={records?.['com.twitter'] ?? ''}
               // github={records?.['com.github'] ?? ''}
             />
