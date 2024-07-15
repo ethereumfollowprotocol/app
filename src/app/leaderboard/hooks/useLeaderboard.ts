@@ -1,9 +1,10 @@
+import { useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { useInfiniteQuery } from '@tanstack/react-query'
+
+import type { LeaderboardFilter } from '#/types/common'
 import { fetchleaderboard } from '#/api/fetchLeaderboard'
 import type { LeaderboardResponse } from '#/types/requests'
-import { useInfiniteQuery } from '@tanstack/react-query'
-import { useSearchParams } from 'next/navigation'
-import { useState } from 'react'
-import type { LeaderboardFilter } from './types'
 
 const useLeaderboard = () => {
   const searchParams = useSearchParams()

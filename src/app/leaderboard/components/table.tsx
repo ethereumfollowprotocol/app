@@ -4,7 +4,7 @@ import { Suspense } from 'react'
 import { useRouter } from 'next/navigation'
 
 import { TableRow } from './row.tsx'
-import useLeaderboard from './useLeaderboard.ts'
+import useLeaderboard from '../hooks/useLeaderboard.ts'
 import { Searchbar } from '#/components/searchbar.tsx'
 import type { LeaderboardResponse } from '#/types/requests.ts'
 import { leaderboardFilters, leaderboardFiltersEmojies } from '#/lib/constants/index.ts'
@@ -39,8 +39,7 @@ const LeaderboardTable = () => {
         </div>
         <div className=''>
           <p className='h-2 font-semibold text-sm sm:text-lg'>
-            {leaderboard.length} account
-            {leaderboard.length === 1 ? '' : 's'}
+            {`${leaderboard.length} account${leaderboard.length === 1 ? '' : 's'}`}
           </p>
         </div>
       </div>

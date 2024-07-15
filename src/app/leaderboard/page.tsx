@@ -1,4 +1,4 @@
-import LeaderboardTable from './table.tsx'
+import LeaderboardTable from './components/table.tsx'
 
 const Leaderboard = () => {
   return (

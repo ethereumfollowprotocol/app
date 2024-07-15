@@ -1,5 +1,5 @@
-import type { LeaderboardFilter } from '#/app/leaderboard/types'
 import type { Address, GetEnsAvatarReturnType } from 'viem'
+import type { LeaderboardFilter } from './common'
 
 declare global {
   interface Window {
