@@ -225,17 +225,13 @@ const useSaveListSettings = ({
   const setPrimaryListTx = useCallback(async () => {
     if (!userAddress) return
 
+    const listHex = toHex(isPrimaryList ? selectedList : '').replace('0x', '')
+
     const hash = await walletClient?.writeContract({
       address: coreEfpContracts.EFPAccountMetadata,
       abi: efpAccountMetadataAbi,
       functionName: 'setValueForAddress',
-      args: [
-        userAddress,
-        'primary-list',
-        `0x${toHex(isPrimaryList ? selectedList : '')
-          .replace('0x', '')
-          .padStart(64, '0')}`
-      ]
+      args: [userAddress, 'primary-list', `0x${listHex.padStart(65 - listHex.length, '0')}`]
     })
 
     if (hash) {
