@@ -3,6 +3,7 @@ import type { InfiniteLeaderboardQueryProps, LeaderboardResponse } from '#/types
 
 export const fetchleaderboard = async ({
   limit,
+  search,
   filter,
   pageParam
 }: InfiniteLeaderboardQueryProps) => {
@@ -10,10 +11,10 @@ export const fetchleaderboard = async ({
     const queryParams = formatQueryParams({
       limit,
       offset: pageParam * limit,
-      filter
+      search
     })
 
-    const url = `${process.env.NEXT_PUBLIC_EFP_API_URL}/leaderboard/followers?${queryParams}`
+    const url = `${process.env.NEXT_PUBLIC_EFP_API_URL}/leaderboard/${filter}?${queryParams}`
     const response = await fetch(url, {
       cache: 'default'
       // cache: "no-cache",

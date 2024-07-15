@@ -12,6 +12,6 @@ export interface LeaderboardEntry {
   muted_count: number
 }
 
-export const leaderboardFilters = ['following', 'followers', 'mutuals', 'blocked+muted'] as const
+export const leaderboardFilters = ['following', 'followers', 'mutuals', 'blocked'] as const
 
 export type LeaderboardFilter = (typeof leaderboardFilters)[number]

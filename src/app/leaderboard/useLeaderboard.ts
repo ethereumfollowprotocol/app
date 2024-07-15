@@ -8,6 +8,7 @@ import type { LeaderboardFilter } from './types'
 const useLeaderboard = () => {
   const searchParams = useSearchParams()
   const initialFilter = searchParams.get('filter') || 'followers'
+  const search = searchParams.get('query')
 
   const [filter, setFilter] = useState(initialFilter as LeaderboardFilter)
 
@@ -16,12 +17,13 @@ const useLeaderboard = () => {
     isLoading: isResultsLoading,
     refetch: refetchResults
   } = useInfiniteQuery({
-    queryKey: ['leaderboard'],
+    queryKey: ['leaderboard', filter, search],
     queryFn: async ({ pageParam = 0 }) => {
       const data = await fetchleaderboard({
         limit: 100,
         pageParam,
-        filter
+        filter,
+        search
       })
 
       return data
@@ -31,10 +33,22 @@ const useLeaderboard = () => {
   })
 
   const leaderboard = results
-    ? results.pages.reduce((acc, el) => [...acc, ...el.results], [] as LeaderboardResponse[])
+    ? results?.pages.reduce(
+        // @ts-ignore
+        (acc, el) => (el.results.error ? [...acc] : [...acc, ...el.results]),
+        [] as LeaderboardResponse[]
+      )
     : []
 
-  return { leaderboard, page: results?.pageParams, isResultsLoading, refetchResults, setFilter }
+  return {
+    leaderboard,
+    page: results?.pageParams,
+    isResultsLoading,
+    refetchResults,
+    filter,
+    setFilter,
+    search
+  }
 }
 
 export default useLeaderboard

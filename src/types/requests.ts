@@ -59,8 +59,9 @@ export interface InfiniteProfileQueryProps {
 
 export interface InfiniteLeaderboardQueryProps {
   limit: number
-  filter?: LeaderboardFilter
   pageParam: number
+  search?: string | null
+  filter?: LeaderboardFilter
 }
 
 export interface FollowerResponse {
@@ -93,7 +94,10 @@ export interface FollowStatusResponse {
 export interface LeaderboardResponse {
   address: Address
   rank: number
-  followers_count: string
+  following_count?: string
+  followers_count?: string
+  blocked_by_count?: string
+  mutuals_count?: string
 }
 
 export interface StatsResponse {

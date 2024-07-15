@@ -42,42 +42,40 @@ export function TableRow({ address, rank, following, followers, mutuals, blocked
   return (
     <div className='flex items-center w-full gap-8 h-[75px]'>
       <div className='tabular-nums w-10 flex justify-center text-right'>{rankNumber}</div>
-      <div className='flex gap-2 items-center w-1/4' data-name='name-column'>
+      <div className='flex gap-2 items-center md:w-1/3 2xl:w-1/4' data-name='name-column'>
         <Avatar
           name={name || address}
           avatarUrl={avatarUrl}
           size='h-[45px] w-[45px] md:h-[50px] md:w-[50px]'
         />
-        <div className='flex gap-2'>
-          <div className='flex flex-col items-start justify-center text-left'>
-            <Link href={`/${name || address}`}>
-              <p className='font-bold sm:text-lg hover:opacity-60 text-sm hover:text-pink-400'>
-                {name || truncateAddress(address)}
-              </p>
-            </Link>
-            <div className='font-bold rounded-full mb-1 px-2 text-[10px] py-px bg-gray-300 text-darkGrey'>
-              Follows you
-            </div>
+        <div className='flex flex-col items-start justify-center text-left'>
+          <Link href={`/${name || address}`}>
+            <p className='font-bold sm:text-lg truncate max-w-full hover:opacity-60 text-sm hover:text-pink-400'>
+              {name || truncateAddress(address)}
+            </p>
+          </Link>
+          <div className='font-bold rounded-full mb-1 px-2 text-[10px] py-px bg-gray-300 text-darkGrey'>
+            Follows you
           </div>
         </div>
       </div>
-      <div className='flex flex-col items-center w-[10%]'>
+      <div className='flex flex-col items-center w-[15%] lg:w-[12.5%] xl:w-[11%]'>
         <p className='font-bold text-sm sm:text-lg'>{following || 0}</p>
         <p className='font-medium'>Following</p>
       </div>
-      <div className='flex flex-col items-center w-[10%]'>
+      <div className='flex flex-col items-center w-[15%] lg:w-[12.5%] xl:w-[11%]'>
         <p className='font-bold text-sm sm:text-lg'>{followers || 0}</p>
         <p className='font-medium'>Followers</p>
       </div>
-      <div className='flex flex-col items-center w-[10%]'>
+      <div className=' flex-col items-center w-[12.5%] xl:w-[11%] hidden lg:flex'>
         <p className='font-bold text-sm sm:text-lg'>{mutuals || 0}</p>
         <p className='font-medium'>Mutuals</p>
       </div>
-      <div className='flex flex-col items-center w-[12.5%]'>
+      <div className='flex-col items-center w-[11%] hidden xl:flex'>
         <p className='font-bold text-sm sm:text-lg'>{blockedMuted || 0}</p>
-        <p className='font-medium'> Blocked/Muted</p>
+        <p className='font-medium'> Blocked</p>
       </div>
-      <div className='w-[15%] flex justify-end'>
+      <div className='lg:w-[15%] 2xl:w-[12.5%] flex justify-end'>
         <FollowButton address={address} />
       </div>
     </div>
