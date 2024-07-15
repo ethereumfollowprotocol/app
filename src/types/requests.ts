@@ -1,4 +1,4 @@
-import type { LeaderboardEntry, LeaderboardFilter } from '#/app/leaderboard/types'
+import type { LeaderboardFilter } from '#/app/leaderboard/types'
 import type { Address, GetEnsAvatarReturnType } from 'viem'
 
 declare global {

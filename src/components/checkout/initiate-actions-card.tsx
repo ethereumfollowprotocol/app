@@ -37,7 +37,7 @@ const InitiateActionsCard: React.FC<InitiateActionsCardProps> = ({
       type: EFPActionType.UpdateEFPList,
       label: cartActions[0]?.label.includes('Transfer List State')
         ? 'Transfer List State'
-        : `${totalCartItems} List ops`,
+        : `${totalCartItems} List operations`,
       chainId: cartActions[0]?.chainId || DEFAULT_CHAIN.id,
       execute: cartActions[0]?.execute,
       isPendingConfirmation: false

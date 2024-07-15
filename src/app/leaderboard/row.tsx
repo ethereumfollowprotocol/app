@@ -1,12 +1,11 @@
-import clsx from 'clsx'
 import Link from 'next/link'
 import type { Address } from 'viem'
 import { useQuery } from '@tanstack/react-query'
 
-import { resolveEnsProfile } from '#/utils/ens'
-import { FollowButton } from '#/components/follow-button'
 import { Avatar } from '#/components/avatar'
+import { resolveEnsProfile } from '#/utils/ens'
 import { truncateAddress } from '#/lib/utilities'
+import { FollowButton } from '#/components/follow-button'
 
 interface Row {
   address: Address
@@ -24,7 +23,7 @@ export function TableRow({ address, rank, following, followers, mutuals, blocked
       <img
         alt={`${rank}`}
         src={`/assets/leaderboard/${rank}.png`}
-        width={38 - (rank > 1 ? rank * 5 : 0)}
+        width={38 - (rank > 1 ? rank * 3 : 0)}
         className='mx-auto overflow-hidden select-none -mb-1 pointer-events-none'
       />
     ),
@@ -32,7 +31,7 @@ export function TableRow({ address, rank, following, followers, mutuals, blocked
     regular: <p className='text-2xl font-bold w-min mx-auto'>{rank}</p>
   }[rankedAs]
 
-  const { data: fetchedEnsProfile, isLoading: isEnsProfileLoading } = useQuery({
+  const { data: fetchedEnsProfile } = useQuery({
     queryKey: ['ens metadata', address],
     queryFn: async () => await resolveEnsProfile(address)
   })
