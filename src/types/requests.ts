@@ -1,3 +1,4 @@
+import type { LeaderboardEntry, LeaderboardFilter } from '#/app/leaderboard/types'
 import type { Address, GetEnsAvatarReturnType } from 'viem'
 
 declare global {
@@ -58,7 +59,7 @@ export interface InfiniteProfileQueryProps {
 
 export interface InfiniteLeaderboardQueryProps {
   limit: number
-  sort?: FollowSortType
+  filter?: LeaderboardFilter
   pageParam: number
 }
 
@@ -92,7 +93,7 @@ export interface FollowStatusResponse {
 export interface LeaderboardResponse {
   address: Address
   rank: number
-  followers_count: string[]
+  followers_count: string
 }
 
 export interface StatsResponse {

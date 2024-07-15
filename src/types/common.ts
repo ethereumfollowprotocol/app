@@ -1,3 +1,4 @@
+import type { leaderboardFilters } from '#/lib/constants'
 import type { Address } from 'viem'
 
 export type ProfileTabType = 'following' | 'followers'
@@ -32,3 +33,5 @@ export type UserFollowerType = {
     updated_at: string
   }
 }
+
+export type LeaderboardFilter = (typeof leaderboardFilters)[number]

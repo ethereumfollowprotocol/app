@@ -84,7 +84,6 @@ const useCheckout = () => {
     selectedList ? Step.InitiateTransactions : Step.SelectChain
   )
 
-  console.log(!lists?.primary_list)
   const [setNewListAsPrimary, setSetNewListAsPrimary] = useState(!lists?.primary_list)
   const [selectedChainId, setSelectedChainId] = useState<number>(DEFAULT_CHAIN.id)
   const selectedChain = chains.find(chain => chain.id === selectedChainId) as ChainWithDetails
