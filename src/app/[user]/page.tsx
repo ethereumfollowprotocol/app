@@ -159,7 +159,7 @@ export default function UserPage({ params }: Props) {
               >
                 {t('block-mute')}
               </p>
-              {profile?.primary_list && (
+              {(profile?.primary_list || userIsList) && (
                 <div
                   className='flex gap-1 cursor-pointer hover:opacity-80 transition-opacity'
                   onClick={() => setListSettingsOpen(true)}

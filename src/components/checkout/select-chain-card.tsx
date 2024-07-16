@@ -19,6 +19,7 @@ export function SelectChainCard({
   handleChainClick,
   selectedChain,
   handleNextStep,
+  setNewListAsPrimary,
   setSetNewListAsPrimary
 }: {
   chains: UseChainsReturnType<Config>
@@ -60,7 +61,7 @@ export function SelectChainCard({
           <input
             className='toggle'
             type='checkbox'
-            defaultChecked={!lists.primary_list}
+            defaultChecked={setNewListAsPrimary}
             onChange={e => setSetNewListAsPrimary(e.target.checked)}
           />
         </div>
