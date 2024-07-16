@@ -232,32 +232,31 @@ const ListSettings: React.FC<ListSettingsProps> = ({
           isSettingsLoading={isListSettingsLoading}
         />
         {connectedAddress?.toLowerCase() !== fetchedManager?.toLowerCase() &&
-          connectedAddress?.toLowerCase() !== fetchedOwner?.toLowerCase() &&
-          connectedAddress?.toLowerCase() !==
+        connectedAddress?.toLowerCase() !== fetchedOwner?.toLowerCase() &&
+        connectedAddress?.toLowerCase() !==
           fetchedUser?.toLowerCase() ? null : isEditingSettings ? (
           <div className='w-full flex justify-between'>
-              <button
-                onClick={() => setIsEditingSettings(false)}
-                className='text-lg mt-4 w-[47.5%] font-semibold hover:opacity-90 bg-[#a8a8a8] rounded-full h-12'
-              >
-                Cancel
-              </button>
-              <PrimaryButton
-                label={t('save')}
-                onClick={() => setIsSaving(true)}
-                className='text-lg mt-4 w-[47.5%] h-12'
-                disabled={!Object.values(changedValues).includes(true)}
-              />
-            </div>
-          ) : (
             <button
-              onClick={() => setIsEditingSettings(true)}
-              className='text-lg mt-4 w-full font-semibold hover:opacity-90 bg-[#a8a8a8] rounded-full h-12'
+              onClick={() => setIsEditingSettings(false)}
+              className='text-lg mt-4 w-[47.5%] font-semibold hover:opacity-90 bg-[#a8a8a8] rounded-full h-12'
             >
-              Edit Settings
+              Cancel
             </button>
-          )
-        ) : null}
+            <PrimaryButton
+              label={t('save')}
+              onClick={() => setIsSaving(true)}
+              className='text-lg mt-4 w-[47.5%] h-12'
+              disabled={!Object.values(changedValues).includes(true)}
+            />
+          </div>
+        ) : (
+          <button
+            onClick={() => setIsEditingSettings(true)}
+            className='text-lg mt-4 w-full font-semibold hover:opacity-90 bg-[#a8a8a8] rounded-full h-12'
+          >
+            Edit Settings
+          </button>
+        )}
       </div>
     </div>
   )
