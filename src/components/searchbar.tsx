@@ -28,7 +28,7 @@ export function Searchbar({
   }
 
   return (
-    <div className='relative w-[260px] 2xl:w-[300px]'>
+    <div className='relative w-full sm:w-[260px] 2xl:w-[300px]'>
       <label htmlFor='search' className='sr-only'>
         Search
       </label>
