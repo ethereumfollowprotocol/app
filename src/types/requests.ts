@@ -118,7 +118,7 @@ export interface FollowingTagsResponse {
 
 export interface ProfileListsResponse {
   primary_list?: string | null
-  lists?: number[]
+  lists?: string[]
 }
 
 export type ProfileRoles = {

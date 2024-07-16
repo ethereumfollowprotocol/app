@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useMemo, useState } from 'react'
@@ -8,6 +9,7 @@ import { useConnectModal } from '@rainbow-me/rainbowkit'
 import Checkout from './components/checkout'
 import { Search } from '#/components/search'
 import { useCart } from '#/contexts/cart-context'
+import Trash from 'public/assets/icons/trash.svg'
 import { FollowList } from '#/components/follow-list'
 import Recommendations from '#/components/recommendations'
 import { PrimaryButton } from '#/components/primary-button'
@@ -24,7 +26,7 @@ export default function EditorPage() {
   const { isConnected } = useAccount()
   const { t } = useTranslation('editor')
   const { openConnectModal } = useConnectModal()
-  const { totalCartItems, cartAddresses } = useCart()
+  const { totalCartItems, cartAddresses, resetCart } = useCart()
 
   const { selectedList, roles } = useEFPProfile()
   const hasCreatedEfpList = !!selectedList
@@ -60,6 +62,15 @@ export default function EditorPage() {
             <div className='flex sm:justify-between flex-col gap-2 sm:flex-row sm:items-center px-3 md:px-4'>
               <h3 className='font-bold text-left text-2xl'>{t('unc-changes')}</h3>
               {/* <Legend /> */}
+              {totalCartItems > 0 && (
+                <div
+                  className='flex gap-2 cursor-pointer items-center hover:opacity-70'
+                  onClick={resetCart}
+                >
+                  <p className='font-semibold'>Clear Cart</p>
+                  <Image src={Trash} alt='empty cart' width={18} height={20} />
+                </div>
+              )}
             </div>
             {isClient && totalCartItems === 0 && (
               <div className='font-semibold h-28 xl:h-80 px-4 justify-center flex text-lg items-center italic text-darkGrey'>

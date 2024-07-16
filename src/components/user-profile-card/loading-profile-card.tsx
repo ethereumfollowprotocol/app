@@ -14,11 +14,7 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
 
   return (
     <>
-      <div
-        className={`pointer-events-none text-gray-500 absolute flex ${
-          isResponsive ? 'justify-end xl:justify-start' : 'justify-start'
-        } px-2 w-full left-0 top-1 font-semibold`}
-      >
+      <div className='pointer-events-none text-gray-500 absolute flex justify-start px-2 w-full left-0 top-1 font-semibold'>
         <LoadingCell className='w-10 h-5 mt-1 rounded-lg' />
       </div>
       <div className='pointer-events-none flex w-full xl:items-center flex-col gap-5 sm:gap-6 md:gap-10 pt-2'>

@@ -133,19 +133,28 @@ const ConnectButton = () => {
             >
               <div className='flex flex-col gap-2 glass-card bg-white/90 border-2 border-gray-200 px-4 py-2 rounded-lg shadow-md'>
                 {lists?.lists?.map(list => (
-                  <p
-                    className=' text-darkGrey text-nowrap font-semibold hover:text-gray-400'
+                  <div
+                    className='flex items-center w-fit gap-1 text-darkGrey hover:text-gray-500'
                     key={list}
-                    onClick={() => {
-                      setSelectedList(Number(list))
-                      setListMenuOpen(false)
-                    }}
                   >
-                    {t('navigation.list')} #{list}
-                  </p>
+                    <p
+                      className='text-nowrap font-semibold'
+                      onClick={() => {
+                        setSelectedList(Number(list))
+                        setListMenuOpen(false)
+                      }}
+                    >
+                      {`${t('navigation.list')} #${list}`}
+                    </p>
+                    {lists.primary_list === list && (
+                      <p className='mb-0.5 text-sm italic text-nowrap font-medium text-gray-400'>
+                        - Primary
+                      </p>
+                    )}
+                  </div>
                 ))}
                 <p
-                  className=' text-darkGrey text-nowrap font-semibold hover:text-gray-400'
+                  className=' text-darkGrey text-nowrap font-semibold hover:text-gray-500'
                   key={'new list'}
                   onClick={() => {
                     setSelectedList(undefined)

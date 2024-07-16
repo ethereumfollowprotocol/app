@@ -176,15 +176,11 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
         <LoadingProfileCard isResponsive={isResponsive} hideFollowButton={hideFollowButton} />
       ) : profile && isProfileValid ? (
         <>
-          <div
-            className={`flex gap-2 items-center absolute ${
-              isResponsive ? 'justify-end xl:justify-start' : 'justify-start'
-            } px-2 w-full left-0 top-1 font-semibold`}
-          >
-            <p className='text-gray-500 text-sm sm:text-base'>#{profileList ?? '-'}</p>
+          <div className='flex gap-2 items-center absolute justify-between px-2 w-full left-0 top-1 font-semibold'>
+            {profileList && <p className='text-gray-500 text-sm sm:text-base'>#{profileList}</p>}
             {profileList
               ? profileList !== Number(profile.primary_list) && (
-                  <p className='w-full text-sm italic text-end text-red-400'>
+                  <p className='text-[11px] italic text-end rounded-full py-0.5 px-2 bg-gray-300'>
                     {t('not primary list')}
                   </p>
                 )
