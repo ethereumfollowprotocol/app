@@ -107,7 +107,7 @@ const ConnectButton = () => {
         )}
       </button>
       {walletMenOpenu && (
-        <div className='p-1 flex w-fit z-50 shadow-md border-2 rounded-lg bg-white/95 border-gray-200 absolute top-[120%] flex-col items-end right-0'>
+        <div className='p-1 flex w-[190px] z-50 shadow-md border-2 rounded-lg bg-white/95 border-gray-200 absolute top-[120%] flex-col items-end right-0'>
           <div ref={clickAwayListRef} className='w-full cursor-pointer group relative'>
             <div
               onClick={() => setListMenuOpen(!listMenuOpen)}
@@ -199,7 +199,7 @@ const ConnectButton = () => {
             </div>
           </div>
           <p
-            className='text-red-500 p-3 font-semibold w-full text-nowrap rounded-md hover:bg-slate-100 transition-opacity cursor-pointer'
+            className='text-red-500 p-3 text-right font-semibold w-full text-nowrap rounded-md hover:bg-slate-100 transition-opacity cursor-pointer'
             onClick={() => {
               disconnect()
               setWalletMenuOpen(false)

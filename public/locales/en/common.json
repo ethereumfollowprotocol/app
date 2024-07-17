@@ -4,7 +4,7 @@
     "profile": "My Profile",
     "leaderboard": "Leaderboard",
     "connect": "Connect Wallet",
-    "disconnect": "Disconnect Wallet",
+    "disconnect": "Disconnect",
     "list": "List",
     "mint new list": "Mint new list",
     "search placeholder": "Search ENS or 0x address",
