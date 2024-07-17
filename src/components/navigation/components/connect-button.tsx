@@ -13,6 +13,7 @@ import { resolveEnsProfile } from '#/utils/ens'
 import { truncateAddress } from '#/lib/utilities'
 import ArrowLeft from 'public/assets/icons/arrow-left.svg'
 import ArrowDown from 'public/assets/icons/arrow-down.svg'
+import GreenCheck from 'public/assets/icons/check-green.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 
@@ -129,7 +130,7 @@ const ConnectButton = () => {
               </p>
             </div>
             <div
-              className={`absolute right-[95%] group-hover:block -top-[6px] ${
+              className={`absolute right-[95%] group-hover:block min-w-full -top-[6px] ${
                 lists?.lists && lists?.lists?.length > 0
                   ? listMenuOpen
                     ? 'block'
@@ -140,7 +141,7 @@ const ConnectButton = () => {
               <div className='flex flex-col gap-2 glass-card bg-white/90 border-2 border-gray-200 p-1 rounded-lg shadow-md'>
                 {lists?.lists?.map(list => (
                   <div
-                    className='flex items-center p-3 w-full gap-1 text-darkGrey rounded-md hover:bg-slate-100'
+                    className='flex items-center relative p-3 pl-8 w-full gap-1 text-darkGrey rounded-md hover:bg-slate-100'
                     key={list}
                     onClick={() => {
                       localStorage.setItem('selected-list', list)
@@ -149,6 +150,14 @@ const ConnectButton = () => {
                       setWalletMenuOpen(false)
                     }}
                   >
+                    {selectedList === Number(list) && (
+                      <Image
+                        src={GreenCheck}
+                        alt='List selected'
+                        width={16}
+                        className='absolute left-2 top-[17px]'
+                      />
+                    )}
                     <p className='text-nowrap font-semibold'>
                       {`${t('navigation.list')} #${list}`}
                     </p>
@@ -159,17 +168,28 @@ const ConnectButton = () => {
                     )}
                   </div>
                 ))}
-                <p
-                  className=' text-darkGrey p-3 text-nowrap font-semibold rounded-md hover:bg-slate-100'
+                <div
                   key={'new list'}
+                  className='flex gap-2 p-3 pl-8 relative hover:bg-slate-100 rounded-md'
                   onClick={() => {
                     localStorage.setItem('selected-list', 'new list')
                     setSelectedList(undefined)
                     setListMenuOpen(false)
+                    setWalletMenuOpen(false)
                   }}
                 >
-                  {t('navigation.mint new list')}
-                </p>
+                  {selectedList === undefined && (
+                    <Image
+                      src={GreenCheck}
+                      alt='List selected'
+                      width={16}
+                      className='absolute left-2 top-[17px]'
+                    />
+                  )}
+                  <p className='text-darkGrey text-nowrap font-semibold'>
+                    {t('navigation.mint new list')}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -188,16 +208,24 @@ const ConnectButton = () => {
             >
               <div className='flex flex-col gap-2 glass-card bg-white/90 border-2 border-gray-200 p-1 rounded-lg shadow-md'>
                 {LANGUAGES.map(lang => (
-                  <p
-                    className=' text-darkGrey p-3 font-semibold rounded-md hover:bg-slate-100 transition-colors'
+                  <div
+                    className=' text-darkGrey p-3 pl-8 relative font-semibold rounded-md hover:bg-slate-100 transition-colors'
                     key={lang.language}
                     onClick={() => {
                       changeLanguage(lang)
                       setWalletMenuOpen(false)
                     }}
                   >
-                    {lang.language}
-                  </p>
+                    {selectedLanguage && selectedLanguage.key === lang.key && (
+                      <Image
+                        src={GreenCheck}
+                        alt='List selected'
+                        width={16}
+                        className='absolute left-2 top-[17px]'
+                      />
+                    )}
+                    <p>{lang.language}</p>
+                  </div>
                 ))}
               </div>
             </div>

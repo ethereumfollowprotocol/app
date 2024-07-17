@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
 import { useAccount } from 'wagmi'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
@@ -68,6 +68,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
     type: 'following'
   })
 
+  const router = useRouter()
   const pathname = usePathname()
   const { address: connectedAddress } = useAccount()
   const { t } = useTranslation('common', { keyPrefix: 'profile card' })
@@ -205,10 +206,11 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 <Avatar
                   avatarUrl={profileAvatar || DefaultAvatar}
                   name={profileName || profile.address}
+                  onClick={() => router.push(`/${profile.address}`)}
                   size={
                     isResponsive
-                      ? 'h-[70px] w-[70px] sm:h-[75px] sm:w-[75px] xl:h-[100px] xl:w-[100px]'
-                      : 'h-[100px] w-[100px]'
+                      ? 'h-[70px] w-[70px] sm:h-[75px] sm:w-[75px] xl:h-[100px] xl:w-[100px] cursor-pointer'
+                      : 'h-[100px] w-[100px] cursor-pointer'
                   }
                 />
               )}

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useRef, useState } from 'react'
 import type { Address, GetEnsAvatarReturnType } from 'viem'
@@ -71,6 +71,7 @@ export function FollowListItemName({
     setTagDropdownOpen(false)
   })
 
+  const router = useRouter()
   const pathname = usePathname()
   const { t } = useTranslation()
   const isEditor = pathname.includes('/editor')
@@ -159,7 +160,8 @@ export function FollowListItemName({
         <Avatar
           name={name || address}
           avatarUrl={avatarUrl}
-          size='h-[45px] w-[45px] md:h-[50px] md:w-[50px]'
+          onClick={() => router.push(`/${address || name}`)}
+          size='h-[45px] w-[45px] md:h-[50px] cursor-pointer md:w-[50px]'
         />
       )}
       <div className='flex flex-col md:flex-row w-full md:gap-3 xl:gap-2 2xl:gap-3 gap-[2px]'>
@@ -203,42 +205,48 @@ export function FollowListItemName({
               </button>
             )}
             {canEditTags && tagDropdownOpen && (
-              <div className='absolute z-50 flex flex-col w-60 gap-2 left-0 top-8 glass-card bg-white/50 p-2 border-2 border-gray-200 rounded-lg'>
-                <div className='w-full flex items-center gap-1.5 justify-between bg-gray-300 rounded-lg font-bold p-1 text-left'>
-                  <input
-                    ref={tagInputRef}
-                    placeholder={tEditor('custom tag')}
-                    value={customTagInput}
-                    onChange={e => {
-                      const validString = e.target.value.match(tagRegex)?.join('')
-                      if (e.target.value.length === 0 || validString)
-                        setCustomTagInput(e.target.value.trim())
-                    }}
-                    maxLength={68}
-                    onKeyDown={e => {
-                      if (e.key === 'Enter') addCustomTag()
-                    }}
-                    className='p-1 pl-2 rounded-md w-full'
-                  />
-                  <button
-                    className='flex items-center rounded-full hover:opacity-80 bg-white justify-center h-[26px] w-[29px]'
-                    onClick={() => addCustomTag()}
-                  >
-                    <Image src={Plus} alt='Add Tag' height={12} width={12} />
-                  </button>
-                </div>
-                <div className='w-full flex flex-wrap items-center gap-2'>
-                  {DEFAULT_TAGS_TO_ADD.map(tag => (
+              <>
+                <div
+                  className='fixed z-40 top-0 left-0 w-screen h-screen bg-transparent'
+                  onClick={() => setTagDropdownOpen(false)}
+                ></div>
+                <div className='absolute z-50 flex flex-col w-60 gap-2 left-0 top-8 glass-card bg-white/50 p-2 border-2 border-gray-200 rounded-lg'>
+                  <div className='w-full flex items-center gap-1.5 justify-between bg-gray-300 rounded-lg font-bold p-1 text-left'>
+                    <input
+                      ref={tagInputRef}
+                      placeholder={tEditor('custom tag')}
+                      value={customTagInput}
+                      onChange={e => {
+                        const validString = e.target.value.match(tagRegex)?.join('')
+                        if (e.target.value.length === 0 || validString)
+                          setCustomTagInput(e.target.value.trim())
+                      }}
+                      maxLength={68}
+                      onKeyDown={e => {
+                        if (e.key === 'Enter') addCustomTag()
+                      }}
+                      className='p-1 pl-2 rounded-md w-full'
+                    />
                     <button
-                      key={tag}
-                      className='font-semibold py-2 px-3 hover:opacity-80 bg-gray-300 rounded-full'
-                      onClick={() => addTag(tag)}
+                      className='flex items-center rounded-full hover:opacity-80 bg-white justify-center h-[26px] w-[29px]'
+                      onClick={() => addCustomTag()}
                     >
-                      {tEditor(tag)}
+                      <Image src={Plus} alt='Add Tag' height={12} width={12} />
                     </button>
-                  ))}
+                  </div>
+                  <div className='w-full flex flex-wrap items-center gap-2'>
+                    {DEFAULT_TAGS_TO_ADD.map(tag => (
+                      <button
+                        key={tag}
+                        className='font-semibold py-2 px-3 hover:opacity-80 bg-gray-300 rounded-full'
+                        onClick={() => addTag(tag)}
+                      >
+                        {tEditor(tag)}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              </>
             )}
             {displayedTags.map((tag, i) => {
               const addingTag = hasListOpAddTag({ address, tag })

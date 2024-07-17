@@ -131,7 +131,7 @@ export function Search({
         </div>
         {isEditor && (
           <button
-            className='bg-gradient-to-b capitalize font-semibold py-3 px-6 from-kournikova-300 rounded-full to-salmon-400 text-black h-auto'
+            className='bg-gradient-to-b capitalize font-semibold py-3 px-6 from-[#FFDE60] rounded-full to-[#FFA997] text-black h-auto'
             onClick={() => onSubmit()}
           >
             {tEditor('add')}
