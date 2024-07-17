@@ -156,14 +156,34 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   })
 
   useEffect(() => {
-    if (lists?.lists && setNewListAsSelected) {
+    if (!lists?.lists) return setSelectedList(undefined)
+
+    if (setNewListAsSelected) {
       setSetNewListAsSelected(false)
+      localStorage.setItem(
+        'selected-list',
+        Math.max(...lists.lists.map(list => Number(list))).toString()
+      )
       setSelectedList(Math.max(...lists.lists.map(list => Number(list))))
       return
     }
 
-    if (lists?.primary_list) return setSelectedList(Number(lists.primary_list))
-    if (lists?.lists && lists?.lists?.length > 0) return setSelectedList(Number(lists?.lists[0]))
+    const persistedList = localStorage.getItem('selected-list')
+    if (persistedList && lists.lists.includes(persistedList))
+      return setSelectedList(Number(persistedList))
+    if (persistedList === 'new list') return setSelectedList(undefined)
+
+    if (lists?.primary_list) {
+      localStorage.setItem('selected-list', lists.primary_list)
+      return setSelectedList(Number(lists.primary_list))
+    }
+    if (lists?.lists?.length > 0) {
+      localStorage.setItem(
+        'selected-list',
+        Math.min(...lists.lists.map(list => Number(list))).toString()
+      )
+      return setSelectedList(Math.min(...lists.lists.map(list => Number(list))))
+    }
 
     setSelectedList(undefined)
   }, [lists])

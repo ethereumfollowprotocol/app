@@ -140,6 +140,7 @@ const ConnectButton = () => {
                     <p
                       className='text-nowrap font-semibold'
                       onClick={() => {
+                        localStorage.setItem('selected-list', list)
                         setSelectedList(Number(list))
                         setListMenuOpen(false)
                       }}
@@ -157,6 +158,7 @@ const ConnectButton = () => {
                   className=' text-darkGrey text-nowrap font-semibold hover:text-gray-500'
                   key={'new list'}
                   onClick={() => {
+                    localStorage.setItem('selected-list', 'new list')
                     setSelectedList(undefined)
                     setListMenuOpen(false)
                   }}
