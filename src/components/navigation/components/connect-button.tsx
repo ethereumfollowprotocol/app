@@ -70,7 +70,7 @@ const ConnectButton = () => {
       <button
         type='button'
         // className='bg-gradient-to-br p-[2px] from-yellow to-pink cursor-pointer h-12 rounded-full w-40'
-        className='border-[#FFC057] z-50 hover:bg-[#FFC057]/10 px-1 transition-colors border-2 gap-[6px] cursor-pointer flex justify-between items-center h-14 glass-card rounded-full w-fit sm:w-48'
+        className='border-[#FFC057] z-50 hover:bg-[#FFC057]/10 px-1 transition-colors border-2 gap-[6px] cursor-pointer flex justify-between items-center h-[60px] glass-card rounded-full w-fit sm:w-56'
         onClick={() =>
           userAddress
             ? setWalletMenuOpen(!walletMenOpenu)
@@ -84,12 +84,12 @@ const ConnectButton = () => {
             <Image
               src={ensProfile?.avatar || DefaultAvatar}
               alt='ENS Avatar'
-              width={46}
-              height={46}
+              width={50}
+              height={50}
               className='rounded-full'
               unoptimized={true}
             />
-            <p className='font-semibold hidden sm:block truncate text-sm'>
+            <p className='font-semibold hidden sm:block truncate text-lg'>
               {ensProfile?.name || truncateAddress(userAddress)}
             </p>
             <Image
