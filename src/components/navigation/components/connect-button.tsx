@@ -70,7 +70,7 @@ const ConnectButton = () => {
       <button
         type='button'
         // className='bg-gradient-to-br p-[2px] from-yellow to-pink cursor-pointer h-12 rounded-full w-40'
-        className='border-[#FFC057] z-50 hover:bg-[#FFC057]/10 px-1 transition-colors border-2 gap-[6px] cursor-pointer flex justify-between items-center h-[60px] glass-card rounded-full w-fit sm:w-54'
+        className='z-50 px-1 connect-button transition-colors border-2 gap-[6px] cursor-pointer flex justify-between items-center h-[60px] glass-card rounded-full w-fit sm:w-56'
         onClick={() =>
           userAddress
             ? setWalletMenuOpen(!walletMenOpenu)
@@ -81,7 +81,7 @@ const ConnectButton = () => {
       >
         {userAddress ? (
           <>
-            <div className='flex items-center gap-[6px]'>
+            <div className='flex items-center max-w-[85%] h-fit gap-[12px]'>
               <Image
                 src={ensProfile?.avatar || DefaultAvatar}
                 alt='ENS Avatar'
@@ -90,19 +90,21 @@ const ConnectButton = () => {
                 className='rounded-full'
                 unoptimized={true}
               />
-              <p className='font-semibold w-fit hidden sm:block truncate text-lg'>
+              <p className='font-semibold hidden sm:block truncate text-lg'>
                 {ensProfile?.name || truncateAddress(userAddress)}
               </p>
             </div>
             <Image
               src={ArrowDown}
               alt='Open button'
-              className={`${walletMenOpenu ? 'rotate-180' : ''} transition-transform w-4 mr-3`}
+              className={`${walletMenOpenu ? 'rotate-180' : ''} transition-transform w-4 mr-1`}
             />
           </>
         ) : (
           <div className='w-full sm:w-54 h-full flex items-center justify-center rounded-full'>
-            <p className='font-semibold text-nowrap px-1 text-black'>{t('navigation.connect')}</p>
+            <p className='font-semibold text-lg text-nowrap px-1 text-black'>
+              {t('navigation.connect')}
+            </p>
           </div>
         )}
       </button>

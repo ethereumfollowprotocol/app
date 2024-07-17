@@ -50,7 +50,7 @@ const Navigation = () => {
             <Search size='md:w-4/5 xl:w-full max-w-[400px]' />
           </div>
         </div>
-        <div className='flex lg:gap-6 xl:gap-8 items-center'>
+        <div className='flex lg:gap-6 xl:gap-8 w-full justify-end items-center'>
           <NavItems />
           <div className='flex items-center gap-2 md:gap-4 xl:gap-6'>
             {userAddress ? (
