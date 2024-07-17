@@ -70,7 +70,9 @@ const ConnectButton = () => {
       <button
         type='button'
         // className='bg-gradient-to-br p-[2px] from-yellow to-pink cursor-pointer h-12 rounded-full w-40'
-        className='z-50 px-1 connect-button transition-colors border-2 gap-[6px] cursor-pointer flex justify-between items-center h-[60px] glass-card rounded-full w-fit sm:w-56'
+        className={`z-50 px-1 ${
+          walletMenOpenu ? 'connect-button-open' : 'connect-button'
+        } transition-colors border-2 gap-[6px] cursor-pointer flex justify-between items-center h-[60px] glass-card rounded-full w-fit sm:w-56`}
         onClick={() =>
           userAddress
             ? setWalletMenuOpen(!walletMenOpenu)
