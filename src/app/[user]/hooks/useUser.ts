@@ -65,7 +65,7 @@ const useUser = (user: string) => {
 
       const fetchedFollowers = await fetchProfileFollowers({
         addressOrName: user,
-        // list: listNum,
+        list: listNum,
         limit: FETCH_LIMIT_PARAM,
         pageParam
       })
