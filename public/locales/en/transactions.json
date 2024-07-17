@@ -23,6 +23,7 @@
     "actions": "Actions",
     "action": "Action",
     "create list": "Create new EFP List",
+    "list ops": "list operations",
     "edits": "edits to list records",
     "req transactions": "Required transactions",
     "chain": "Chain"

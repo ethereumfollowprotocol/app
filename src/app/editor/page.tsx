@@ -26,7 +26,7 @@ export default function EditorPage() {
   const { isConnected } = useAccount()
   const { t } = useTranslation('editor')
   const { openConnectModal } = useConnectModal()
-  const { totalCartItems, cartAddresses, resetCart } = useCart()
+  const { totalCartItems, cartAddresses, resetCart, cartItems } = useCart()
 
   const { selectedList, roles } = useEFPProfile()
   const hasCreatedEfpList = !!selectedList
@@ -41,6 +41,18 @@ export default function EditorPage() {
         : [],
     [cartAddresses]
   )
+  const transactionsCount = useMemo(() => {
+    let count = 0
+    const splitSize = 100
+
+    for (let i = 0; i < cartItems.length; i += splitSize) {
+      count += 1
+    }
+
+    if (selectedList === undefined) count += 1
+
+    return count
+  }, [cartItems, selectedList])
 
   return (
     <main
@@ -90,12 +102,17 @@ export default function EditorPage() {
           {isClient && totalCartItems > 0 && (
             <div className='fixed md:w-fit w-full top-[85vh] sm:top-[87.5vh] lg:top-[85vh] right-0 px-4 lg:right-[5vw] flex justify-end'>
               <div className='flex gap-6 w-full border-[1px] border-gray-200 lg:w-fit items-center p-4 bg-white/10 justify-between glass-card bg-opacity-50 shadow-xl rounded-xl'>
-                <div className='flex gap-2 items-center'>
-                  <p className='text-6xl font-bold'>{totalCartItems}</p>
-                  <div className='flex flex-col text-lg text-left'>
-                    <p className='font-bold'>{t('unconfirmed')}</p>
-                    <p className='font-bold'>{t('changes')}</p>
+                <div className='flex flex-col gap-1 items-start'>
+                  <div className='flex gap-2 items-center'>
+                    <p className='text-6xl font-bold'>{totalCartItems}</p>
+                    <div className='flex flex-col text-lg text-left'>
+                      <p className='font-bold'>{t('unconfirmed')}</p>
+                      <p className='font-bold'>{t('changes')}</p>
+                    </div>
                   </div>
+                  <p className='text-base pl-2 font-medium'>{`${transactionsCount} ${t(
+                    'transactions'
+                  )}`}</p>
                 </div>
                 <PrimaryButton
                   className='py-[14px] px-4 text-xl font-medium rounded-full'

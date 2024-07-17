@@ -270,9 +270,10 @@ const useCheckout = () => {
     resetCart()
     resetActions()
 
-    if (!setNewListAsPrimary) setSetNewListAsSelected(true)
-    if (listHasBeenMinted || selectedList === undefined) refetchLists()
-    else {
+    if (listHasBeenMinted || selectedList === undefined) {
+      refetchLists()
+      setSetNewListAsSelected(true)
+    } else {
       queryClient.setQueryData(
         ['following', userAddress, selectedList],
         (prev: {

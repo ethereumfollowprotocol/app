@@ -207,7 +207,7 @@ export function FollowListItemName({
             {canEditTags && tagDropdownOpen && (
               <>
                 <div
-                  className='fixed z-40 top-0 left-0 w-screen h-screen bg-transparent'
+                  className='fixed z-40 top-0 left-0 w-full h-full bg-transparent'
                   onClick={() => setTagDropdownOpen(false)}
                 ></div>
                 <div className='absolute z-50 flex flex-col w-60 gap-2 left-0 top-8 glass-card bg-white/50 p-2 border-2 border-gray-200 rounded-lg'>
