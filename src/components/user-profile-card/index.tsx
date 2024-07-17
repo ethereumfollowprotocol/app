@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
 import { useAccount } from 'wagmi'
@@ -226,7 +227,11 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                         : ' max-w-[332px] text-2xl text-center'
                     } font-bold flex gap-2 items-center relative`}
                   >
-                    <p className='truncate'>{profileName || truncateAddress(profile.address)}</p>
+                    <Link href={`/${profile.address}`}>
+                      <p className='truncate hover:opacity-70'>
+                        {profileName || truncateAddress(profile.address)}
+                      </p>
+                    </Link>
                     {showMoreOptions && (
                       <div ref={clickAwayMoreOptionsRef}>
                         <div

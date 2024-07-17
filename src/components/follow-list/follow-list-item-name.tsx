@@ -9,6 +9,7 @@ import type { Address, GetEnsAvatarReturnType } from 'viem'
 
 import LoadingCell from '../loading-cell'
 import { Avatar } from '#/components/avatar'
+import { tagRegex } from '#/lib/constants/regex'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useCart } from '#/contexts/cart-context'
 import { truncateAddress } from '#/lib/utilities'
@@ -209,7 +210,9 @@ export function FollowListItemName({
                     placeholder={tEditor('custom tag')}
                     value={customTagInput}
                     onChange={e => {
-                      setCustomTagInput(e.target.value.replaceAll(' ', ''))
+                      const validString = e.target.value.match(tagRegex)?.join('')
+                      if (e.target.value.length === 0 || validString)
+                        setCustomTagInput(e.target.value.trim())
                     }}
                     maxLength={68}
                     onKeyDown={e => {
