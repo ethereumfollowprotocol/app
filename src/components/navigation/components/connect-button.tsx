@@ -70,7 +70,7 @@ const ConnectButton = () => {
       <button
         type='button'
         // className='bg-gradient-to-br p-[2px] from-yellow to-pink cursor-pointer h-12 rounded-full w-40'
-        className='border-[#FFC057] z-50 hover:bg-[#FFC057]/10 px-1 transition-colors border-2 gap-[6px] cursor-pointer flex justify-between items-center h-[60px] glass-card rounded-full w-fit sm:w-56'
+        className='border-[#FFC057] z-50 hover:bg-[#FFC057]/10 px-1 transition-colors border-2 gap-[6px] cursor-pointer flex justify-between items-center h-[60px] glass-card rounded-full w-fit sm:w-54'
         onClick={() =>
           userAddress
             ? setWalletMenuOpen(!walletMenOpenu)
@@ -81,25 +81,27 @@ const ConnectButton = () => {
       >
         {userAddress ? (
           <>
-            <Image
-              src={ensProfile?.avatar || DefaultAvatar}
-              alt='ENS Avatar'
-              width={50}
-              height={50}
-              className='rounded-full'
-              unoptimized={true}
-            />
-            <p className='font-semibold hidden sm:block truncate text-lg'>
-              {ensProfile?.name || truncateAddress(userAddress)}
-            </p>
+            <div className='flex items-center gap-[6px]'>
+              <Image
+                src={ensProfile?.avatar || DefaultAvatar}
+                alt='ENS Avatar'
+                width={50}
+                height={50}
+                className='rounded-full'
+                unoptimized={true}
+              />
+              <p className='font-semibold w-fit hidden sm:block truncate text-lg'>
+                {ensProfile?.name || truncateAddress(userAddress)}
+              </p>
+            </div>
             <Image
               src={ArrowDown}
               alt='Open button'
-              className={`${walletMenOpenu ? 'rotate-180' : ''} transition-transform w-4 mr-1`}
+              className={`${walletMenOpenu ? 'rotate-180' : ''} transition-transform w-4 mr-3`}
             />
           </>
         ) : (
-          <div className='w-full h-full flex items-center justify-center  rounded-full'>
+          <div className='w-full sm:w-54 h-full flex items-center justify-center rounded-full'>
             <p className='font-semibold text-nowrap px-1 text-black'>{t('navigation.connect')}</p>
           </div>
         )}
@@ -136,15 +138,14 @@ const ConnectButton = () => {
                   <div
                     className='flex items-center p-3 w-full gap-1 text-darkGrey rounded-md hover:bg-slate-100'
                     key={list}
+                    onClick={() => {
+                      localStorage.setItem('selected-list', list)
+                      setSelectedList(Number(list))
+                      setListMenuOpen(false)
+                      setWalletMenuOpen(false)
+                    }}
                   >
-                    <p
-                      className='text-nowrap font-semibold'
-                      onClick={() => {
-                        localStorage.setItem('selected-list', list)
-                        setSelectedList(Number(list))
-                        setListMenuOpen(false)
-                      }}
-                    >
+                    <p className='text-nowrap font-semibold'>
                       {`${t('navigation.list')} #${list}`}
                     </p>
                     {lists.primary_list === list && (
@@ -186,7 +187,10 @@ const ConnectButton = () => {
                   <p
                     className=' text-darkGrey p-3 font-semibold rounded-md hover:bg-slate-100 transition-colors'
                     key={lang.language}
-                    onClick={() => changeLanguage(lang)}
+                    onClick={() => {
+                      changeLanguage(lang)
+                      setWalletMenuOpen(false)
+                    }}
                   >
                     {lang.language}
                   </p>

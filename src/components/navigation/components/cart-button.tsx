@@ -10,7 +10,7 @@ const CartButton = ({ cartItemsCount }: { cartItemsCount: number }) => {
     <Link href='/editor' passHref={true} legacyBehavior={true}>
       <div
         className={clsx(
-          'glass-card border-2 h-[45px] justify-center items-center w-[45px] border-gray-200 cursor-pointer hover:opacity-80 relative flex rounded-full'
+          'glass-card border-2 h-[48px] justify-center items-center w-[48px] border-gray-200 cursor-pointer hover:opacity-80 relative flex rounded-full'
         )}
       >
         <Image src={Cart} alt='cart button' className='text-gray-200' width='22' height='22' />
