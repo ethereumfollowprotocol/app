@@ -5,10 +5,10 @@ import { useClickAway } from '@uidotdev/usehooks'
 
 import { SORT_OPTIONS } from '#/lib/constants'
 import LoadingCell from '#/components/loading-cell'
-import type { FollowSortType, TagCountType } from '#/types/requests'
 import ArrowDown from 'public/assets/icons/arrow-down.svg'
 import type { ProfileTableTitleType } from '#/types/common'
 import SearchIcon from 'public/assets/icons/magnifying-glass.svg'
+import type { FollowSortType, TagCountType } from '#/types/requests'
 import { QUERY_BLOCK_TAGS } from '#/components/blocked-muted/hooks/use-blocked-muted'
 
 interface TableHeaderProps {

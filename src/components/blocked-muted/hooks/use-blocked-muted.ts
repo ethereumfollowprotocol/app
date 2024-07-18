@@ -27,7 +27,7 @@ const useBlockedMuted = (user: string, list?: string | number) => {
     isLoading: blockedByTagsLoading,
     isRefetching: blockedByTagsRefetching
   } = useQuery({
-    queryKey: ['following tags', user, list],
+    queryKey: ['follower tags', user, list],
     queryFn: async () => {
       if (!user) return
 

@@ -35,6 +35,7 @@ import type { ProfileTableTitleType } from '#/types/common'
 import fetchProfileDetails from '#/api/fetchProfileDetails'
 import fetchProfileFollowers from '#/api/fetchProfileFollowers'
 import fetchProfileFollowing from '#/api/fetchProfileFollowing'
+import fetchFollowerTags from '#/api/fetchFollowerTags'
 
 // Define the type for the profile context
 type EFPProfileContextType = {
@@ -43,12 +44,14 @@ type EFPProfileContextType = {
   lists?: ProfileListsResponse | null
   profile?: ProfileDetailsResponse | null
   followingTags?: FollowingTagsResponse
+  followerTags?: FollowingTagsResponse
   followers: FollowerResponse[]
   following: FollowingResponse[]
   roles?: ProfileRoles
   listsIsLoading: boolean
   profileIsLoading: boolean
   followingTagsLoading: boolean
+  followerTagsLoading: boolean
   followersIsLoading: boolean
   followingIsLoading: boolean
   isFetchingMoreFollowers: boolean
@@ -86,6 +89,9 @@ type EFPProfileContextType = {
     options?: RefetchOptions
   ) => Promise<QueryObserverResult<ProfileDetailsResponse | null, Error>>
   refetchFollowingTags: (
+    options?: RefetchOptions
+  ) => Promise<QueryObserverResult<FollowingTagsResponse | undefined, Error>>
+  refetchFollowerTags: (
     options?: RefetchOptions
   ) => Promise<QueryObserverResult<FollowingTagsResponse | undefined, Error>>
   refetchFollowers: (
@@ -210,15 +216,30 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     // refetchInterval: 60000
   })
 
+  const {
+    data: followerTags,
+    refetch: refetchFollowerTags,
+    isLoading: followerTagsLoading,
+    isRefetching: isRefetchingFollowerTagsQuery
+  } = useQuery({
+    queryKey: ['follower tags', userAddress, selectedList],
+    queryFn: async () => {
+      if (!userAddress) return
+
+      const fetchedTags = await fetchFollowerTags(userAddress, selectedList)
+      return fetchedTags
+    }
+  })
+
   const [isEndOfFollowers, setIsEndOfFollowers] = useState(false)
   // Fetch followings depending on the selected list
   const {
     data: fetchedFollowers,
+    refetch: refetchFollowers,
     isLoading: followersIsLoading,
     fetchNextPage: fetchMoreFollowers,
-    isFetchingNextPage: isFetchingMoreFollowers,
-    refetch: refetchFollowers,
-    isRefetching: isRefetchingFollowersQuery
+    isRefetching: isRefetchingFollowersQuery,
+    isFetchingNextPage: isFetchingMoreFollowers
   } = useInfiniteQuery({
     queryKey: ['followers', userAddress, selectedList, followersSort, followersTagsFilter],
     queryFn: async ({ pageParam = 0 }) => {
@@ -380,11 +401,13 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         setSelectedList,
         lists,
         profile,
+        followerTags,
         followingTags,
         followers,
         following,
         roles,
         listsIsLoading,
+        followerTagsLoading: followerTagsLoading || isRefetchingFollowerTagsQuery,
         followingTagsLoading: followingTagsLoading || isRefetchingFollowingTagsQuery,
         profileIsLoading:
           listsIsLoading || isRefetchingProfile || profileIsLoading || isRefetchingProfileQuery,
@@ -404,6 +427,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         refetchProfile,
         refetchFollowers,
         refetchFollowing,
+        refetchFollowerTags,
         refetchFollowingTags,
         refetchRoles,
         followingTagsFilter,

@@ -4,8 +4,8 @@ const fetchFollowerTags = async (addressOrName: string, list?: number | string) 
   try {
     const url =
       list !== undefined
-        ? `${process.env.NEXT_PUBLIC_EFP_API_URL}/lists/${list}/tags`
-        : `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/tags`
+        ? `${process.env.NEXT_PUBLIC_EFP_API_URL}/lists/${list}/taggedAs`
+        : `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/taggedAs`
     const response = await fetch(url, {
       cache: 'default'
       // cache: "no-cache",

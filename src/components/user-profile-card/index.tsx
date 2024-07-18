@@ -4,10 +4,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
 import { useAccount } from 'wagmi'
-import { usePathname, useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
+import { usePathname, useRouter } from 'next/navigation'
 
 import {
   listOpAddTag,
