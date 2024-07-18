@@ -57,7 +57,7 @@ export default function ProfilePage() {
       <UserProfilePageTable
         isLoading={followingIsLoading}
         results={following}
-        allTags={followingTags?.tags}
+        allTags={followingTags?.tagCounts}
         tagsLoading={followingTagsLoading}
         selectedTags={followingTagsFilter}
         toggleSelectedTags={toggleTag}
@@ -137,7 +137,7 @@ export default function ProfilePage() {
           <UserProfilePageTable
             isLoading={followingIsLoading}
             results={following}
-            allTags={followingTags?.tags}
+            allTags={followingTags?.tagCounts}
             tagsLoading={followingTagsLoading}
             selectedTags={followingTagsFilter}
             toggleSelectedTags={toggleTag}

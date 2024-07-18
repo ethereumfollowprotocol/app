@@ -38,7 +38,7 @@ export function Name({
   showTags
 }: { name?: string | null; address: Address; showTags?: boolean }) {
   return (
-    <Link href={`/${name || address}`} className='w-full'>
+    <Link href={`/${address || name}`} className='w-full'>
       <p
         className={`font-bold sm:text-lg text-start  ${
           showTags ? 'w-full truncate' : 'w-fit max-w-full truncate'
@@ -169,10 +169,12 @@ export function FollowListItemName({
           className={`flex flex-col justify-center  ${
             isEditor
               ? 'md:w-52'
-              : !isBlockedList && showTags && displayedTags.length > 0
-                ? 'xl:max-w-[40%] 2xl:max-w-[45%]'
-                : ''
-          } max-w-[80%] 3xs:max-w-[90%] xxs:max-w-[95%] items-start tabular-nums relative`}
+              : !isBlockedList && showTags
+                ? displayedTags.length > 0
+                  ? 'xl:max-w-[40%] 2xl:max-w-[45%]'
+                  : 'max-w-[70%] 3xs:max-w-[70%] xxs:max-w-[75%]'
+                : 'max-w-[80%] 3xs:max-w-[90%] xxs:max-w-[95%]'
+          }  items-start tabular-nums relative`}
         >
           {isEnsProfileLoading ? (
             <LoadingCell className='w-32 xl:w-32 h-7 rounded-lg' />

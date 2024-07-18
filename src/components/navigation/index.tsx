@@ -33,21 +33,21 @@ const Navigation = () => {
   return (
     <header className='w-full fixed z-50 glass-card bg-white/50 top-0 left-0 font-sans border-b-[1px] border-gray-200 p-4 lg:px-6 md:py-6 xl:px-8'>
       <nav className='my-auto flex w-full flex-row items-center justify-between'>
-        <div className='flex w-fit sm:w-full justify-start items-center gap-4 md:gap-6 xl:gap-8'>
+        <div className='flex w-2/5 sm:w-full justify-start items-center gap-4 md:gap-6 xl:gap-8'>
           <Link href='/' className='select-none' aria-label='Ethereum Follow Protocol Logo link'>
             <Image
               src={FullLogo}
-              className='hidden sm:block sm:w-[186px] select-none'
+              className='hidden sm:block sm:max-w-[130px] select-none'
               alt='Ethereum Follow Protocol Logo'
             />
             <Image
               src={Logo}
-              className='w-12 sm:hidden select-none'
+              className='w-[60px] sm:hidden select-none'
               alt='Ethereum Follow Protocol Logo'
             />
           </Link>
           <div className='sm:w-3/5 md:w-full'>
-            <Search size='md:w-4/5 xl:w-full max-w-[400px]' />
+            <Search size='md:w-4/5 xl:w-full max-w-[200px] xxs:max-w-[400px]' />
           </div>
         </div>
         <div className='flex lg:gap-6 xl:gap-8 w-full justify-end items-center'>

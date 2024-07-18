@@ -9,7 +9,12 @@ import { FETCH_LIMIT_PARAM } from '#/lib/constants'
 import TableHeader from './components/table-headers'
 import { FollowList } from '#/components/follow-list'
 import type { ProfileTableTitleType } from '#/types/common'
-import type { FollowerResponse, FollowingResponse, FollowSortType } from '#/types/requests'
+import type {
+  FollowerResponse,
+  FollowingResponse,
+  FollowSortType,
+  TagCountType
+} from '#/types/requests'
 
 /**
  * TODO: paginate
@@ -40,7 +45,7 @@ export function UserProfilePageTable({
   results: FollowerResponse[] | FollowingResponse[]
   fetchMore: () => void
   canEditTags?: boolean
-  allTags?: string[]
+  allTags?: TagCountType[]
   tagsLoading?: boolean
   selectedTags?: string[]
   sort: FollowSortType

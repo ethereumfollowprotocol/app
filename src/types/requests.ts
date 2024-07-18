@@ -107,9 +107,15 @@ export interface ProfileDetailsResponse {
   stats?: StatsResponse | undefined
 }
 
+export type TagCountType = {
+  tag: string
+  count: number
+}
+
 export interface FollowingTagsResponse {
   token_id: string | number
   tags: string[]
+  tagCounts: TagCountType[]
   taggedAddresses: {
     address: Address
     tag: string

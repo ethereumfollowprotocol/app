@@ -40,7 +40,7 @@ export function TableRow({
     <div className='flex items-center justify-between w-full h-[75px]'>
       <div className='tabular-nums text-right'>{rankNumber}</div>
       <div data-name='name-column'>
-        <Link href={`/${name}`}>
+        <Link href={`/${address}`}>
           <div className='flex gap-2'>
             <div className='flex flex-col items-start justify-center text-left'>
               <p className='font-bold sm:text-lg text-sm hover:text-pink-400'>{name}</p>
