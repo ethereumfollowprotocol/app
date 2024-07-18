@@ -88,8 +88,8 @@ const useUser = (user: string) => {
     queryFn: async () => {
       if (!user) return
 
-      const fetchedProfile = await fetchFollowingTags(user, listNum)
-      return fetchedProfile
+      const fetchedTags = await fetchFollowingTags(user, listNum)
+      return fetchedTags
     },
     staleTime: 30000
   })

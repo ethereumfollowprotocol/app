@@ -67,6 +67,10 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
     address: profile?.address,
     type: 'following'
   })
+  const { followerTag } = useFollowState({
+    address: profile?.address,
+    type: 'follower'
+  })
 
   const router = useRouter()
   const pathname = usePathname()
@@ -298,8 +302,10 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                   ? following
                       ?.map(follower => follower.data.toLowerCase())
                       .includes(connectedAddress.toLowerCase()) && (
-                      <div className='rounded-full font-bold text-[10px] mb-1 flex items-center justify-center bg-gray-300 h-5 w-20'>
-                        {t('follows you')}
+                      <div
+                        className={`rounded-full font-bold text-[10px] mb-1 flex items-center justify-center bg-gray-300 h-5 w-20 ${followerTag.className}`}
+                      >
+                        {t(followerTag.text)}
                       </div>
                     )
                   : null}

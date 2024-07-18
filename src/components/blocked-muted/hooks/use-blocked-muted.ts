@@ -1,13 +1,19 @@
 import { useState } from 'react'
-import { useInfiniteQuery } from '@tanstack/react-query'
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 
 import { FETCH_LIMIT_PARAM } from '#/lib/constants'
+import fetchFollowerTags from '#/api/fetchFollowerTags'
+import fetchFollowingTags from '#/api/fetchFollowingTags'
 import type { ProfileTableTitleType } from '#/types/common'
 import fetchProfileFollowers from '#/api/fetchProfileFollowers'
 import fetchProfileFollowing from '#/api/fetchProfileFollowing'
 import type { FollowerResponse, FollowingResponse, FollowSortType } from '#/types/requests'
 
 export const TAGS = ['All', 'block', 'mute']
+export const EMPTY_COUNT_TAGS = [
+  { tag: 'block', count: 0 },
+  { tag: 'mute', count: 0 }
+]
 export const QUERY_BLOCK_TAGS = ['block', 'mute']
 
 const useBlockedMuted = (user: string, list?: string | number) => {
@@ -15,6 +21,21 @@ const useBlockedMuted = (user: string, list?: string | number) => {
   const [blockedByTagsFilter, setBlockedByTagsFilter] = useState<string[]>(['All'])
   const [blockingSort, setBlockingSort] = useState<FollowSortType>('latest first')
   const [blockedBySort, setBlockedBySort] = useState<FollowSortType>('latest first')
+
+  const {
+    data: blockedByTags,
+    isLoading: blockedByTagsLoading,
+    isRefetching: blockedByTagsRefetching
+  } = useQuery({
+    queryKey: ['following tags', user, list],
+    queryFn: async () => {
+      if (!user) return
+
+      const fetchedTags = await fetchFollowerTags(user, list)
+      return fetchedTags
+    },
+    staleTime: 30000
+  })
 
   const {
     data: fetchedBlockedBy,
@@ -44,6 +65,21 @@ const useBlockedMuted = (user: string, list?: string | number) => {
     },
     initialPageParam: 0,
     getNextPageParam: lastPage => lastPage.nextPageParam,
+    staleTime: 30000
+  })
+
+  const {
+    data: blockingTags,
+    isLoading: blockingTagsLoading,
+    isRefetching: blockingTagsRefetching
+  } = useQuery({
+    queryKey: ['following tags', user, list],
+    queryFn: async () => {
+      if (!user) return
+
+      const fetchedTags = await fetchFollowingTags(user, list)
+      return fetchedTags
+    },
     staleTime: 30000
   })
 
@@ -100,8 +136,12 @@ const useBlockedMuted = (user: string, list?: string | number) => {
   return {
     blocking,
     blockedBy,
+    blockingTags,
+    blockedByTags,
     blockedByIsLoading: blockedByIsLoading || blockedByIsRefetching,
     blockingIsLoading: blockingIsLoading || blockingIsRefetching,
+    blockingTagsLoading: blockingTagsLoading || blockingTagsRefetching,
+    blockedByTagsLoading: blockedByTagsLoading || blockedByTagsRefetching,
     fetchMoreBlockedBy,
     fetchMoreBlocking,
     isFetchingMoreBlockedBy,

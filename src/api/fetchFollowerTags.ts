@@ -1,6 +1,6 @@
 import type { FollowingTagsResponse } from '#/types/requests'
 
-const fetchFollowingTags = async (addressOrName: string, list?: number | string) => {
+const fetchFollowerTags = async (addressOrName: string, list?: number | string) => {
   try {
     const url =
       list !== undefined
@@ -23,4 +23,4 @@ const fetchFollowingTags = async (addressOrName: string, list?: number | string)
   }
 }
 
-export default fetchFollowingTags
+export default fetchFollowerTags

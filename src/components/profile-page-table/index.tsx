@@ -5,16 +5,16 @@ import { usePathname } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { useIntersectionObserver } from '@uidotdev/usehooks'
 
+import type {
+  TagCountType,
+  FollowSortType,
+  FollowerResponse,
+  FollowingResponse
+} from '#/types/requests'
 import { FETCH_LIMIT_PARAM } from '#/lib/constants'
 import TableHeader from './components/table-headers'
 import { FollowList } from '#/components/follow-list'
 import type { ProfileTableTitleType } from '#/types/common'
-import type {
-  FollowerResponse,
-  FollowingResponse,
-  FollowSortType,
-  TagCountType
-} from '#/types/requests'
 
 /**
  * TODO: paginate
