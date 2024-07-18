@@ -8,7 +8,7 @@ import { BLOCKED_MUTED_TABS } from '#/lib/constants'
 import type { BlockedMutedTabType } from '#/types/common'
 import { UserProfilePageTable } from '../profile-page-table'
 import type { ProfileDetailsResponse } from '#/types/requests'
-import useBlockedMuted, { TAGS } from './hooks/use-blocked-muted'
+import useBlockedMuted, { EMPTY_COUNT_TAGS, TAGS } from './hooks/use-blocked-muted'
 
 interface BlockedMutedProps {
   profile: ProfileDetailsResponse
@@ -27,28 +27,46 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
   const {
     blocking,
     blockedBy,
-    blockedByIsLoading,
+    toggleTag,
+    blockingTags,
+    blockingSort,
+    blockedBySort,
+    blockedByTags,
+    setBlockingSort,
+    setBlockedBySort,
+    fetchMoreBlocking,
     blockingIsLoading,
     fetchMoreBlockedBy,
-    fetchMoreBlocking,
-    isFetchingMoreBlockedBy,
-    isFetchingMoreBlocking,
+    blockedByIsLoading,
     blockingTagsFilter,
     blockedByTagsFilter,
-    blockingSort,
-    setBlockingSort,
-    blockedBySort,
-    setBlockedBySort,
-    toggleTag
+    blockingTagsLoading,
+    blockedByTagsLoading,
+    isFetchingMoreBlocking,
+    isFetchingMoreBlockedBy
   } = useBlockedMuted(profile.address, list)
   const { t } = useTranslation('profile')
+
+  const filteredBlockingTags = blockingTags?.tagCounts?.filter(tag => TAGS.includes(tag.tag)) || []
+  const displayedBlockingTags = [
+    { tag: 'All', count: filteredBlockingTags?.reduce((acc, tag) => acc + tag.count, 0) },
+    ...(filteredBlockingTags.length > 0 ? filteredBlockingTags : EMPTY_COUNT_TAGS)
+  ]
+
+  const filteredBlockedByTags =
+    blockedByTags?.tagCounts?.filter(tag => TAGS.includes(tag.tag)) || []
+  const displayedBlockedByTags = [
+    { tag: 'All', count: filteredBlockedByTags?.reduce((acc, tag) => acc + tag.count, 0) },
+    ...(filteredBlockedByTags.length > 0 ? filteredBlockedByTags : EMPTY_COUNT_TAGS)
+  ]
 
   const mobileActiveEl = {
     'Blocked/Muted': (
       <UserProfilePageTable
         isLoading={blockingIsLoading}
         results={blocking}
-        allTags={TAGS}
+        allTags={displayedBlockingTags}
+        tagsLoading={blockingTagsLoading}
         selectedTags={blockingTagsFilter}
         toggleSelectedTags={toggleTag}
         sort={blockingSort}
@@ -66,7 +84,8 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
       <UserProfilePageTable
         isLoading={blockedByIsLoading}
         results={blockedBy}
-        allTags={TAGS}
+        allTags={displayedBlockedByTags}
+        tagsLoading={blockedByIsLoading}
         selectedTags={blockedByTagsFilter}
         toggleSelectedTags={toggleTag}
         sort={blockedBySort}
@@ -97,7 +116,8 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
           <UserProfilePageTable
             isLoading={blockingIsLoading}
             results={blocking}
-            allTags={TAGS}
+            allTags={displayedBlockingTags}
+            tagsLoading={blockingTagsLoading}
             selectedTags={blockingTagsFilter}
             toggleSelectedTags={toggleTag}
             sort={blockingSort}
@@ -115,7 +135,8 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
           <UserProfilePageTable
             isLoading={blockedByIsLoading}
             results={blockedBy}
-            allTags={TAGS}
+            allTags={displayedBlockedByTags}
+            tagsLoading={blockedByTagsLoading}
             selectedTags={blockedByTagsFilter}
             toggleSelectedTags={toggleTag}
             sort={blockedBySort}

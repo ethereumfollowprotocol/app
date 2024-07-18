@@ -13,6 +13,7 @@ import { resolveEnsProfile } from '#/utils/ens'
 import { truncateAddress } from '#/lib/utilities'
 import ArrowLeft from 'public/assets/icons/arrow-left.svg'
 import ArrowDown from 'public/assets/icons/arrow-down.svg'
+import GreenCheck from 'public/assets/icons/check-green.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 
@@ -70,7 +71,9 @@ const ConnectButton = () => {
       <button
         type='button'
         // className='bg-gradient-to-br p-[2px] from-yellow to-pink cursor-pointer h-12 rounded-full w-40'
-        className='border-[#FFC057] z-50 hover:bg-[#FFC057]/10 px-1 transition-colors border-2 gap-[6px] cursor-pointer flex justify-between items-center h-12 glass-card rounded-full w-fit sm:w-48'
+        className={`z-50 px-1 ${
+          walletMenOpenu ? 'connect-button-open' : 'connect-button'
+        } transition-colors border-2 gap-[6px] cursor-pointer flex justify-between items-center h-[60px] glass-card rounded-full w-fit sm:w-56`}
         onClick={() =>
           userAddress
             ? setWalletMenuOpen(!walletMenOpenu)
@@ -81,17 +84,19 @@ const ConnectButton = () => {
       >
         {userAddress ? (
           <>
-            <Image
-              src={ensProfile?.avatar || DefaultAvatar}
-              alt='ENS Avatar'
-              width={36}
-              height={36}
-              className='rounded-full'
-              unoptimized={true}
-            />
-            <p className='font-semibold hidden sm:block truncate text-sm'>
-              {ensProfile?.name || truncateAddress(userAddress)}
-            </p>
+            <div className='flex items-center max-w-[85%] h-fit gap-[12px]'>
+              <Image
+                src={ensProfile?.avatar || DefaultAvatar}
+                alt='ENS Avatar'
+                width={50}
+                height={50}
+                className='rounded-full'
+                unoptimized={true}
+              />
+              <p className='font-semibold hidden sm:block truncate text-lg'>
+                {ensProfile?.name || truncateAddress(userAddress)}
+              </p>
+            </div>
             <Image
               src={ArrowDown}
               alt='Open button'
@@ -99,17 +104,19 @@ const ConnectButton = () => {
             />
           </>
         ) : (
-          <div className='w-full h-full flex items-center justify-center  rounded-full'>
-            <p className='font-semibold text-nowrap px-1 text-black'>{t('navigation.connect')}</p>
+          <div className='w-full sm:w-54 h-full flex items-center justify-center rounded-full'>
+            <p className='font-semibold text-lg text-nowrap px-1 text-black'>
+              {t('navigation.connect')}
+            </p>
           </div>
         )}
       </button>
       {walletMenOpenu && (
-        <div className='p-3 flex gap-1.5 w-fit z-50 shadow-md border-2 rounded-lg bg-white/95 border-gray-200 absolute top-[120%] flex-col items-end right-0'>
+        <div className='p-1 flex w-[190px] z-50 shadow-md border-2 rounded-lg bg-white/95 border-gray-200 absolute top-[120%] flex-col items-end right-0'>
           <div ref={clickAwayListRef} className='w-full cursor-pointer group relative'>
             <div
               onClick={() => setListMenuOpen(!listMenuOpen)}
-              className='flex justify-between items-center w-full hover:opacity-80 transition-opacity cursor-pointer'
+              className='flex justify-between items-center w-full group-hover:bg-slate-100 p-3 rounded-md transition-opacity cursor-pointer'
             >
               {lists?.lists && lists?.lists?.length > 0 ? (
                 <Image src={ArrowLeft} alt='Show lists' />
@@ -123,7 +130,7 @@ const ConnectButton = () => {
               </p>
             </div>
             <div
-              className={`absolute right-[100%] group-hover:block -top-3 ${
+              className={`absolute right-[95%] group-hover:block min-w-full -top-[6px] ${
                 lists?.lists && lists?.lists?.length > 0
                   ? listMenuOpen
                     ? 'block'
@@ -131,66 +138,100 @@ const ConnectButton = () => {
                   : 'hidden group-hover:hidden'
               } pr-5`}
             >
-              <div className='flex flex-col gap-2 glass-card bg-white/90 border-2 border-gray-200 px-4 py-2 rounded-lg shadow-md'>
+              <div className='flex flex-col gap-2 glass-card bg-white/90 border-2 border-gray-200 p-1 rounded-lg shadow-md'>
                 {lists?.lists?.map(list => (
-                  <p
-                    className=' text-darkGrey text-nowrap font-semibold hover:text-gray-400'
+                  <div
+                    className='flex items-center relative p-3 pl-8 w-full gap-1 text-darkGrey rounded-md hover:bg-slate-100'
                     key={list}
                     onClick={() => {
+                      localStorage.setItem('selected-list', list)
                       setSelectedList(Number(list))
                       setListMenuOpen(false)
+                      setWalletMenuOpen(false)
                     }}
                   >
-                    {t('navigation.list')} #{list}
-                  </p>
+                    {selectedList === Number(list) && (
+                      <Image
+                        src={GreenCheck}
+                        alt='List selected'
+                        width={16}
+                        className='absolute left-2 top-[17px]'
+                      />
+                    )}
+                    <p className='text-nowrap font-semibold'>
+                      {`${t('navigation.list')} #${list}`}
+                    </p>
+                    {lists.primary_list === list && (
+                      <p className='mb-0.5 text-sm italic text-nowrap font-medium text-gray-400'>
+                        - Primary
+                      </p>
+                    )}
+                  </div>
                 ))}
-                <p
-                  className=' text-darkGrey text-nowrap font-semibold hover:text-gray-400'
+                <div
                   key={'new list'}
+                  className='flex gap-2 p-3 pl-8 relative hover:bg-slate-100 rounded-md'
                   onClick={() => {
+                    localStorage.setItem('selected-list', 'new list')
                     setSelectedList(undefined)
                     setListMenuOpen(false)
+                    setWalletMenuOpen(false)
                   }}
                 >
-                  {t('navigation.mint new list')}
-                </p>
+                  {selectedList === undefined && (
+                    <Image
+                      src={GreenCheck}
+                      alt='List selected'
+                      width={16}
+                      className='absolute left-2 top-[17px]'
+                    />
+                  )}
+                  <p className='text-darkGrey text-nowrap font-semibold'>
+                    {t('navigation.mint new list')}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
           <div ref={clickAwayLanguageRef} className='w-full cursor-pointer group relative'>
             <div
               onClick={() => setLanguageMenuOpen(!languageMenOpenu)}
-              className='flex justify-between items-center w-full'
+              className='flex justify-between p-3 rounded-md group-hover:bg-slate-100 items-center w-full'
             >
-              <Image
-                src={ArrowLeft}
-                alt='Show languages'
-                className='group-hover:opacity-80 transition-opacity'
-              />
-              <p className='group-hover:opacity-80 transition-opacity font-semibold'>
-                {selectedLanguage?.language}
-              </p>
+              <Image src={ArrowLeft} alt='Show languages' />
+              <p className='font-semibold'>{selectedLanguage?.language}</p>
             </div>
             <div
-              className={`absolute right-[100%] -top-2 ${
+              className={`absolute right-[95%] -top-[6px] ${
                 languageMenOpenu ? 'block' : 'hidden'
               } group-hover:block pr-5`}
             >
-              <div className='flex flex-col gap-2 glass-card bg-white/90 border-2 border-gray-200 px-4 py-2 rounded-lg shadow-md'>
+              <div className='flex flex-col gap-2 glass-card bg-white/90 border-2 border-gray-200 p-1 rounded-lg shadow-md'>
                 {LANGUAGES.map(lang => (
-                  <p
-                    className=' text-darkGrey font-semibold hover:text-gray-500 transition-colors'
+                  <div
+                    className=' text-darkGrey p-3 pl-8 relative font-semibold rounded-md hover:bg-slate-100 transition-colors'
                     key={lang.language}
-                    onClick={() => changeLanguage(lang)}
+                    onClick={() => {
+                      changeLanguage(lang)
+                      setWalletMenuOpen(false)
+                    }}
                   >
-                    {lang.language}
-                  </p>
+                    {selectedLanguage && selectedLanguage.key === lang.key && (
+                      <Image
+                        src={GreenCheck}
+                        alt='List selected'
+                        width={16}
+                        className='absolute left-2 top-[17px]'
+                      />
+                    )}
+                    <p>{lang.language}</p>
+                  </div>
                 ))}
               </div>
             </div>
           </div>
           <p
-            className='text-red-500 font-semibold w-full text-nowrap hover:text-opacity-75 transition-opacity cursor-pointer'
+            className='text-red-500 p-3 text-right font-semibold w-full text-nowrap rounded-md hover:bg-slate-100 transition-opacity cursor-pointer'
             onClick={() => {
               disconnect()
               setWalletMenuOpen(false)

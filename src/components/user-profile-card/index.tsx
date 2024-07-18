@@ -1,12 +1,13 @@
 'use client'
 
+import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
 import { useAccount } from 'wagmi'
-import { usePathname } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
+import { usePathname, useRouter } from 'next/navigation'
 
 import {
   listOpAddTag,
@@ -66,7 +67,12 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
     address: profile?.address,
     type: 'following'
   })
+  const { followerTag } = useFollowState({
+    address: profile?.address,
+    type: 'follower'
+  })
 
+  const router = useRouter()
   const pathname = usePathname()
   const { address: connectedAddress } = useAccount()
   const { t } = useTranslation('common', { keyPrefix: 'profile card' })
@@ -176,15 +182,11 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
         <LoadingProfileCard isResponsive={isResponsive} hideFollowButton={hideFollowButton} />
       ) : profile && isProfileValid ? (
         <>
-          <div
-            className={`flex gap-2 items-center absolute ${
-              isResponsive ? 'justify-end xl:justify-start' : 'justify-start'
-            } px-2 w-full left-0 top-1 font-semibold`}
-          >
-            <p className='text-gray-500 text-sm sm:text-base'>#{profileList ?? '-'}</p>
+          <div className='flex gap-2 items-center absolute justify-between px-2 w-full left-0 top-1 font-semibold'>
+            {profileList && <p className='text-gray-500 text-sm sm:text-base'>#{profileList}</p>}
             {profileList
               ? profileList !== Number(profile.primary_list) && (
-                  <p className='w-full text-sm italic text-end text-red-400'>
+                  <p className='text-[11px] italic text-end rounded-full py-0.5 px-2 bg-gray-300'>
                     {t('not primary list')}
                   </p>
                 )
@@ -208,10 +210,11 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 <Avatar
                   avatarUrl={profileAvatar || DefaultAvatar}
                   name={profileName || profile.address}
+                  onClick={() => router.push(`/${profile.address}`)}
                   size={
                     isResponsive
-                      ? 'h-[70px] w-[70px] sm:h-[75px] sm:w-[75px] xl:h-[100px] xl:w-[100px]'
-                      : 'h-[100px] w-[100px]'
+                      ? 'h-[70px] w-[70px] sm:h-[75px] sm:w-[75px] xl:h-[100px] xl:w-[100px] cursor-pointer'
+                      : 'h-[100px] w-[100px] cursor-pointer'
                   }
                 />
               )}
@@ -230,7 +233,11 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                         : ' max-w-[332px] text-2xl text-center'
                     } font-bold flex gap-2 items-center relative`}
                   >
-                    <p className='truncate'>{profileName || truncateAddress(profile.address)}</p>
+                    <Link href={`/${profile.address}`}>
+                      <p className='truncate hover:opacity-70'>
+                        {profileName || truncateAddress(profile.address)}
+                      </p>
+                    </Link>
                     {showMoreOptions && (
                       <div ref={clickAwayMoreOptionsRef}>
                         <div
@@ -295,8 +302,10 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                   ? following
                       ?.map(follower => follower.data.toLowerCase())
                       .includes(connectedAddress.toLowerCase()) && (
-                      <div className='rounded-full font-bold text-[10px] mb-1 flex items-center justify-center bg-gray-300 h-5 w-20'>
-                        {t('follows you')}
+                      <div
+                        className={`rounded-full font-bold text-[10px] mb-1 flex items-center justify-center bg-gray-300 h-5 w-20 ${followerTag.className}`}
+                      >
+                        {t(followerTag.text)}
                       </div>
                     )
                   : null}

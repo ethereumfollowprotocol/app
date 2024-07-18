@@ -4,6 +4,7 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 
 import { FETCH_LIMIT_PARAM } from '#/lib/constants'
 import fetchProfileLists from '#/api/fetchProfileLists'
+import fetchFollowerTags from '#/api/fetchFollowerTags'
 import fetchFollowingTags from '#/api/fetchFollowingTags'
 import fetchProfileDetails from '#/api/fetchProfileDetails'
 import type { ProfileTableTitleType } from '#/types/common'
@@ -45,6 +46,21 @@ const useUser = (user: string) => {
     }
   })
 
+  const {
+    data: followerTags,
+    isLoading: followerTagsLoading,
+    isRefetching: isRefetchingFollowerTags
+  } = useQuery({
+    queryKey: ['follower tags', user],
+    queryFn: async () => {
+      if (!user) return
+
+      const fetchedTags = await fetchFollowerTags(user)
+      return fetchedTags
+    },
+    staleTime: 30000
+  })
+
   const [isEndOfFollowers, setIsEndOfFollowers] = useState(false)
   const {
     data: fetchedFollowers,
@@ -65,7 +81,7 @@ const useUser = (user: string) => {
 
       const fetchedFollowers = await fetchProfileFollowers({
         addressOrName: user,
-        // list: listNum,
+        list: listNum,
         limit: FETCH_LIMIT_PARAM,
         pageParam
       })
@@ -88,8 +104,8 @@ const useUser = (user: string) => {
     queryFn: async () => {
       if (!user) return
 
-      const fetchedProfile = await fetchFollowingTags(user, listNum)
-      return fetchedProfile
+      const fetchedTags = await fetchFollowingTags(user, listNum)
+      return fetchedTags
     },
     staleTime: 30000
   })
@@ -166,11 +182,13 @@ const useUser = (user: string) => {
     listNum,
     followers,
     following,
+    followerTags,
     followingTags,
     userIsList,
     profileIsLoading: profileIsLoading || isRefetchingProfile,
     followersIsLoading: followersIsLoading || isRefetchingFollowers,
     followingIsLoading: followingIsLoading || isRefetchingFollowing,
+    followerTagsLoading: followerTagsLoading || isRefetchingFollowerTags,
     followingTagsLoading: followingTagsLoading || isRefetchingFollowingTags,
     fetchMoreFollowers,
     fetchMoreFollowing,

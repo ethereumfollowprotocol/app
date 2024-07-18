@@ -42,6 +42,7 @@ export default function UserPage({ params }: Props) {
     following,
     toggleTag,
     userIsList,
+    followerTags,
     followersSort,
     followingSort,
     followingTags,
@@ -56,6 +57,7 @@ export default function UserPage({ params }: Props) {
     fetchMoreFollowing,
     followingTagsFilter,
     followersTagsFilter,
+    followerTagsLoading,
     followingTagsLoading,
     isFetchingMoreFollowers,
     isFetchingMoreFollowing
@@ -66,7 +68,7 @@ export default function UserPage({ params }: Props) {
       <UserProfilePageTable
         isLoading={followingIsLoading}
         results={following}
-        allTags={followingTags?.tags}
+        allTags={followingTags?.tagCounts}
         tagsLoading={followingTagsLoading}
         selectedTags={followingTagsFilter}
         toggleSelectedTags={toggleTag}
@@ -86,6 +88,8 @@ export default function UserPage({ params }: Props) {
       <UserProfilePageTable
         isLoading={followersIsLoading}
         results={followers}
+        allTags={followerTags?.tagCounts}
+        tagsLoading={followerTagsLoading}
         selectedTags={followersTagsFilter}
         toggleSelectedTags={toggleTag}
         sort={followersSort}
@@ -173,7 +177,7 @@ export default function UserPage({ params }: Props) {
           <UserProfilePageTable
             isLoading={followingIsLoading}
             results={following}
-            allTags={followingTags?.tags}
+            allTags={followingTags?.tagCounts}
             tagsLoading={followingTagsLoading}
             selectedTags={followingTagsFilter}
             toggleSelectedTags={toggleTag}
@@ -192,6 +196,8 @@ export default function UserPage({ params }: Props) {
           <UserProfilePageTable
             isLoading={followersIsLoading}
             results={followers}
+            allTags={followerTags?.tagCounts}
+            tagsLoading={followerTagsLoading}
             selectedTags={followersTagsFilter}
             toggleSelectedTags={toggleTag}
             sort={followersSort}

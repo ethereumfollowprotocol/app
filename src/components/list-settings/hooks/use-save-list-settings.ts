@@ -98,6 +98,8 @@ const useSaveListSettings = ({
     refetchProfile,
     refetchFollowing,
     refetchFollowers,
+    refetchFollowerTags,
+    refetchFollowingTags,
     setIsRefetchingProfile,
     setIsRefetchingFollowing
   } = useEFPProfile()
@@ -445,6 +447,8 @@ const useSaveListSettings = ({
     refetchProfile()
     refetchFollowing()
     refetchFollowers()
+    refetchFollowerTags()
+    refetchFollowingTags()
 
     resetActions()
     onCancel()

@@ -22,7 +22,7 @@ const TransactionDetails = ({
 
   const [isLastActionSuccessful, setIsLastActionSuccessful] = useState(false)
   useEffect(() => {
-    if (isSuccess && isLastAction) setTimeout(() => setIsLastActionSuccessful(true), 4000)
+    if (isSuccess && isLastAction) setTimeout(() => setIsLastActionSuccessful(true), 5000)
   }, [isSuccess])
 
   const statusDescription = useMemo(() => {

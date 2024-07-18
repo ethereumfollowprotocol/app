@@ -238,21 +238,21 @@ const ListSettings: React.FC<ListSettingsProps> = ({
           <div className='w-full flex justify-between'>
             <button
               onClick={() => setIsEditingSettings(false)}
-              className='text-lg mt-4 w-[47.5%] font-semibold hover:opacity-90 bg-[#a8a8a8] rounded-full h-12'
+              className='text-lg mt-4 w-32 font-semibold hover:opacity-90 bg-[#a8a8a8] rounded-full h-12'
             >
               Cancel
             </button>
             <PrimaryButton
               label={t('save')}
               onClick={() => setIsSaving(true)}
-              className='text-lg mt-4 w-[47.5%] h-12'
+              className='text-lg mt-4 w-32 h-12'
               disabled={!Object.values(changedValues).includes(true)}
             />
           </div>
         ) : (
           <button
             onClick={() => setIsEditingSettings(true)}
-            className='text-lg mt-4 w-full font-semibold hover:opacity-90 bg-[#a8a8a8] rounded-full h-12'
+            className='text-lg mt-4 px-6 mx-auto font-semibold hover:opacity-90 bg-[#a8a8a8] rounded-full h-12'
           >
             Edit Settings
           </button>

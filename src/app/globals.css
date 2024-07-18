@@ -51,10 +51,11 @@ body::-webkit-scrollbar-thumb {
 .glass-card {
     background: linear-gradient(
         to right bottom,
-        rgba(245, 245, 245, 0.55),
-        rgba(245, 245, 245, 0.35)
-    );
-    backdrop-filter: blur(0.9rem);
+        rgba(245, 245, 245, 0.45),
+        rgba(245, 245, 245, 0.25)
+    ) padding-box;
+    /* linear-gradient(135deg, #faf35f, #ffbce3) border-box; */
+    backdrop-filter: blur(1rem);
 }
 
 :focus:not(:focus-visible) {
@@ -125,6 +126,32 @@ input {
 
 .title {
   text-wrap: balance;
+}
+
+.connect-button {
+    background:
+      linear-gradient(#fafafa, #fafafa) padding-box,
+      linear-gradient(135deg, #faf35f, #ffbce3) border-box;
+      border: 5px solid transparent;
+      border-radius: 40px;
+  transition: background 100ms ease-in-out;
+
+}
+
+.connect-button:hover {
+  background:
+  linear-gradient(135deg, #fffee2, #fdf2f9) padding-box,
+  linear-gradient(135deg, #faf35f, #ffbce3) border-box;
+}
+
+.connect-button-open {
+  background:
+  linear-gradient(135deg, #fffee2, #fdf2f9) padding-box,
+  linear-gradient(135deg, #faf35f, #ffbce3) border-box;
+  border: 5px solid transparent;
+  border-radius: 40px;
+  transition: background 100ms ease-in-out;
+
 }
 
 .loader {
