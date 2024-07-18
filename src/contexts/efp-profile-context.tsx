@@ -30,12 +30,12 @@ import { useCart } from './cart-context'
 import { FETCH_LIMIT_PARAM } from '#/lib/constants'
 import fetchProfileRoles from '#/api/fetchProfileRoles'
 import fetchProfileLists from '#/api/fetchProfileLists'
+import fetchFollowerTags from '#/api/fetchFollowerTags'
 import fetchFollowingTags from '#/api/fetchFollowingTags'
 import type { ProfileTableTitleType } from '#/types/common'
 import fetchProfileDetails from '#/api/fetchProfileDetails'
 import fetchProfileFollowers from '#/api/fetchProfileFollowers'
 import fetchProfileFollowing from '#/api/fetchProfileFollowing'
-import fetchFollowerTags from '#/api/fetchFollowerTags'
 
 // Define the type for the profile context
 type EFPProfileContextType = {
