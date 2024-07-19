@@ -102,7 +102,7 @@ const Navigation = () => {
                 <div className='w-5 h-[3px] bg-darkGrey rounded-full'></div>
                 <div className='w-5 h-[3px] bg-darkGrey rounded-full'></div>
               </div>
-              <MobileMenu open={mobileMenuOpen} />
+              <MobileMenu open={mobileMenuOpen} setOpen={setMobileMenuOpen} />
             </div>
             <ConnectButton />
             {/* <Menu /> */}

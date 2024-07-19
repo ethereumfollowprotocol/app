@@ -53,15 +53,15 @@ export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
   //     gasFeeDetail: 'High gas fees'
   //   }
   // },
-  // {
-  //   ...sepolia,
-  //   iconBackground: 'bg-gray-200',
-  //   iconUrl: '/assets/chains/ethereum.svg',
-  //   custom: {
-  //     chainDetail: 'Testnet',
-  //     gasFeeDetail: 'Low gas fees'
-  //   }
-  // },
+  {
+    ...sepolia,
+    iconBackground: 'bg-gray-200',
+    iconUrl: '/assets/chains/ethereum.svg',
+    custom: {
+      chainDetail: 'Testnet',
+      gasFeeDetail: 'Low gas fees'
+    }
+  },
   // {
   //   ...base,
   //   iconUrl: '/assets/chains/base.svg',
