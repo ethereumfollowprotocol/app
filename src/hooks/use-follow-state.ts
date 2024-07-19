@@ -87,11 +87,11 @@ const useFollowState = ({
   const followerTag = {
     blocks: {
       text: 'blocks you',
-      className: 'text-darkGray'
+      className: 'text-red-500'
     },
     mutes: {
       text: 'mutes you',
-      className: 'text-darkGray'
+      className: 'text-red-500'
     },
     follows: {
       text: 'follows you',

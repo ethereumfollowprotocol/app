@@ -6,7 +6,7 @@
   "network": "Zamenjaj omrežje",
   "reinitiate": "Izvedi ponovno",
   "finish": "Zaključi",
-  "set primary": "Nastavi ov seznam kot Glavni Seznam?",
+  "set primary": "Nastavi nov seznam kot Glavni Seznam?",
   "select chain": {
     "title create list": "Kje bi radi shranili svoj nov EFP seznam?",
     "title list op": "Kje bi radi opravili opercije seznama?",
