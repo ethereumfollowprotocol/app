@@ -11,6 +11,7 @@ import { LANGUAGES } from '#/lib/constants'
 import useLanguage from '../hooks/useLanguage'
 import { resolveEnsProfile } from '#/utils/ens'
 import { truncateAddress } from '#/lib/utilities'
+import Wallet from 'public/assets/icons/wallet.svg'
 import ArrowLeft from 'public/assets/icons/arrow-left.svg'
 import ArrowDown from 'public/assets/icons/arrow-down.svg'
 import GreenCheck from 'public/assets/icons/check-green.svg'
@@ -105,9 +106,16 @@ const ConnectButton = () => {
           </>
         ) : (
           <div className='w-full sm:w-54 h-full flex items-center justify-center rounded-full'>
-            <p className='font-semibold text-lg text-nowrap px-1 text-black'>
+            <p className='hidden xxs:block font-semibold text-lg text-nowrap px-1 text-black'>
               {t('navigation.connect')}
             </p>
+            <Image
+              src={Wallet}
+              alt='Connect Wallet'
+              width={30}
+              height={32}
+              className='bloxk xxs:hidden mx-2'
+            />
           </div>
         )}
       </button>
@@ -130,7 +138,7 @@ const ConnectButton = () => {
               </p>
             </div>
             <div
-              className={`absolute right-[95%] group-hover:block min-w-full -top-[6px] ${
+              className={`absolute -right-[14.6%] sm:right-[97.2%] group-hover:block min-w-[190px] block z-50 -top-[6px] ${
                 lists?.lists && lists?.lists?.length > 0
                   ? listMenuOpen
                     ? 'block'
@@ -138,7 +146,18 @@ const ConnectButton = () => {
                   : 'hidden group-hover:hidden'
               } pr-5`}
             >
-              <div className='flex flex-col gap-2 glass-card bg-white/90 border-2 border-gray-200 p-1 rounded-lg shadow-md'>
+              <div className='flex flex-col gap-2 glass-card w-full min-w-[190px] max-h-[75vh] sm:max-h-[80vh] overflow-scroll border-2 rounded-lg bg-white/90 border-gray-200 p-1  shadow-md'>
+                <div
+                  onClick={() => setListMenuOpen(false)}
+                  className='flex sm:hidden justify-between items-center w-full group-hover:bg-slate-100 p-3 rounded-md transition-opacity cursor-pointer'
+                >
+                  {lists?.lists && lists?.lists?.length > 0 ? (
+                    <Image src={ArrowLeft} alt='Show lists' />
+                  ) : (
+                    <div></div>
+                  )}
+                  <p className=' font-semibold'>Back</p>
+                </div>
                 {lists?.lists?.map(list => (
                   <div
                     className='flex items-center relative p-3 pl-8 w-full gap-1 text-darkGrey rounded-md hover:bg-slate-100'
@@ -202,11 +221,22 @@ const ConnectButton = () => {
               <p className='font-semibold'>{selectedLanguage?.language}</p>
             </div>
             <div
-              className={`absolute right-[95%] -top-[6px] ${
+              className={`absolute -right-[14.6%] sm:right-[95%] -top-[54px] sm:-top-[6px] ${
                 languageMenOpenu ? 'block' : 'hidden'
               } group-hover:block pr-5`}
             >
-              <div className='flex flex-col gap-2 glass-card bg-white/90 border-2 border-gray-200 p-1 rounded-lg shadow-md'>
+              <div className='flex flex-col gap-2 min-w-[190px] glass-card bg-white/90 border-2 border-gray-200 p-1 rounded-lg shadow-md'>
+                <div
+                  onClick={() => setLanguageMenuOpen(false)}
+                  className='flex sm:hidden justify-between items-center w-full group-hover:bg-slate-100 p-3 rounded-md transition-opacity cursor-pointer'
+                >
+                  {lists?.lists && lists?.lists?.length > 0 ? (
+                    <Image src={ArrowLeft} alt='Show lists' />
+                  ) : (
+                    <div></div>
+                  )}
+                  <p className=' font-semibold'>Back</p>
+                </div>
                 {LANGUAGES.map(lang => (
                   <div
                     className=' text-darkGrey p-3 pl-8 relative font-semibold rounded-md hover:bg-slate-100 transition-colors'

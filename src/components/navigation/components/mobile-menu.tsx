@@ -6,12 +6,14 @@ import { useTranslation } from 'react-i18next'
 
 import { NAV_ITEMS } from '#/lib/constants'
 import { usePathname } from 'next/navigation'
+import type { Dispatch, SetStateAction } from 'react'
 
 interface MobileMenuProps {
   open: boolean
+  setOpen: Dispatch<SetStateAction<boolean>>
 }
 
-const MobileMenu: React.FC<MobileMenuProps> = ({ open }) => {
+const MobileMenu: React.FC<MobileMenuProps> = ({ open, setOpen }) => {
   const pathname = usePathname()
   const { t } = useTranslation()
 
@@ -24,6 +26,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ open }) => {
           <Link
             prefetch={true}
             href={item.href}
+            onClick={() => setOpen(false)}
             className={clsx([
               'capitalize xl:text-xl lg:text-lg transition-colors',
               pathname === item.href ? 'text-darkGrey' : 'text-grey hover:text-gray-500'
