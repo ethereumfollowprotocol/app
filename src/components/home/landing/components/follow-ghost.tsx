@@ -29,7 +29,7 @@ const FollowGhost = () => {
         alt='Social Graph'
         width={350}
         height={262}
-        className='pointer-events-none lg:hidden'
+        className='pointer-events-none z-10 lg:hidden'
       />
       <Image
         src={LineDesktop}
@@ -50,7 +50,7 @@ const FollowGhost = () => {
         alt='line'
         width={4}
         height={301}
-        className='pointer-events-none absolute lg:hidden left-[287px] top-[315px]'
+        className='pointer-events-none absolute lg:hidden left-[287px] top-[312px]'
       />
     </div>
   )

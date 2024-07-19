@@ -21,7 +21,7 @@ export default function SocialGraph() {
         alt='Social Graph'
         width={500}
         height={500}
-        className='pointer-events-none z-10 mr-8 md:mr-10 w-[350px] md:w-[450px] lg:w-[425px] lg:h-[425px] xl:h-[500px] xl:w-[500px]'
+        className='pointer-events-none z-10 mr-8 md:mr-10 w-[330px] md:w-[450px] lg:w-[425px] lg:h-[425px] xl:h-[500px] xl:w-[500px]'
       />
       <Image
         src={LineDesktop}
@@ -42,7 +42,7 @@ export default function SocialGraph() {
         alt='line'
         width={3}
         height={301}
-        className='pointer-events-none absolute w-1 top-[466px] md:top-[570px] lg:hidden'
+        className='pointer-events-none absolute w-1 top-[445px] md:top-[570px] lg:hidden'
       />
     </div>
   )
