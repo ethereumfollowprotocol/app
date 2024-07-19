@@ -301,17 +301,13 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                     )}
                   </div>
                 )}
-                {following && connectedAddress
-                  ? following
-                      ?.map(follower => follower.data.toLowerCase())
-                      .includes(connectedAddress.toLowerCase()) && (
-                      <div
-                        className={`rounded-full font-bold text-[10px] mb-1 flex items-center justify-center bg-gray-300 h-5 w-20 ${followerTag.className}`}
-                      >
-                        {t(followerTag.text)}
-                      </div>
-                    )
-                  : null}
+                {followerTag && connectedAddress && (
+                  <div
+                    className={`rounded-full font-bold text-[10px] mb-1 flex items-center justify-center bg-gray-300 h-5 w-20 ${followerTag.className}`}
+                  >
+                    {t(followerTag.text)}
+                  </div>
+                )}
                 {!hideFollowButton && profile.address && <FollowButton address={profile.address} />}
               </div>
             </div>
