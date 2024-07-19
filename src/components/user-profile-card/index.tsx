@@ -233,7 +233,10 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                         : ' max-w-[332px] text-2xl text-center'
                     } font-bold flex gap-2 items-center relative`}
                   >
-                    <Link href={`/${profile.address}`}>
+                    <Link
+                      href={`/${profile.address}`}
+                      className={showMoreOptions ? 'w-[87.5%]' : 'w-full'}
+                    >
                       <p className='truncate hover:opacity-70'>
                         {profileName || truncateAddress(profile.address)}
                       </p>
