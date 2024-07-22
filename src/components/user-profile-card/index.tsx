@@ -259,7 +259,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                           <div className='absolute top-10 flex-col flex gap-2 right-0 p-2 bg-white border-gray-200 border-2 rounded-xl z-50 drop-shadow-lg'>
                             <button
                               onClick={() => onClickOption('Block')}
-                              className='rounded-lg cursor-pointer bg-deletion relative text-sm flex items-center gap-1.5 justify-center font-bold w-[114px] h-[37px] px-2 py-1.5'
+                              className='rounded-lg cursor-pointer bg-deletion relative text-sm flex items-center gap-1.5 justify-center font-bold w-[107px] h-[37px] px-2 py-1.5'
                             >
                               <Image
                                 alt='mainnet logo'
@@ -280,7 +280,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                             </button>
                             <button
                               onClick={() => onClickOption('Mute')}
-                              className='rounded-lg cursor-pointer bg-deletion relative text-sm flex items-center gap-1.5 justify-center font-bold w-[114px] h-[37px] px-2 py-1.5'
+                              className='rounded-lg cursor-pointer bg-deletion relative text-sm flex items-center gap-1.5 justify-center font-bold w-[107px] h-[37px] px-2 py-1.5'
                             >
                               <Image
                                 alt='mainnet logo'

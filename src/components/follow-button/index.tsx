@@ -125,7 +125,7 @@ export const FollowButton = ({
   // if (address?.toLowerCase() === userAddress?.toLowerCase()) return null
 
   return isLoading ? (
-    <div className='rounded-lg w-[114px] h-[37px]'>
+    <div className={`rounded-xl ${isBlockedBy ? 'w-[114px]' : 'w-[107px]'} h-[37px]`}>
       <LoadingCell className='h-full w-full rounded-lg' />
     </div>
   ) : (
@@ -134,9 +134,10 @@ export const FollowButton = ({
         theme[buttonState].bg,
         theme[buttonState].text,
         theme[buttonState].border,
-        'rounded-lg relative text-sm flex items-center gap-1.5 justify-center font-bold',
-        'w-[114px] h-[37px] px-2 py-1.5', // Fixed width for consistent layout
-        className
+        'rounded-xl relative text-sm flex items-center gap-1.5 justify-center font-bold',
+        'h-[37px] px-2 py-1.5', // Fixed width for consistent layout
+        className,
+        isBlockedBy ? 'w-[114px]' : 'w-[107px]'
       ])}
       onClick={() => {
         if (!userAddress && openConnectModal) {

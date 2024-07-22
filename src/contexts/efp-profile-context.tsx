@@ -383,7 +383,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   }
 
   const addRecentTag = (tag: string) => {
-    setRecentTags([tag, ...recentTags].slice(0, 5))
+    setRecentTags([tag, ...recentTags.filter(recentTag => recentTag !== tag)].slice(0, 5))
   }
 
   useEffect(() => {

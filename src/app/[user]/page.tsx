@@ -23,7 +23,7 @@ interface Props {
 export default function UserPage({ params }: Props) {
   const { user } = params
   const searchParams = useSearchParams()
-  const initialBlockedOpen = searchParams.get('modal') === 'blocked'
+  const initialBlockedOpen = searchParams.get('modal') === 'blockmutelists'
 
   const [isSaving, setIsSaving] = useState(false)
   const [listSettingsOpen, setListSettingsOpen] = useState(false)
@@ -161,7 +161,7 @@ export default function UserPage({ params }: Props) {
               <p
                 onClick={() => {
                   setIsBlockedMutedOpen(true)
-                  router.push(`/${user}?modal=blocked`)
+                  router.push(`/${user}?modal=blockmutelists`)
                 }}
                 className='font-semibold cursor-pointer hover:opacity-80 transition-opacity'
               >

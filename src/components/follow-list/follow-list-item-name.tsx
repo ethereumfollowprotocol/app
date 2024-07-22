@@ -111,6 +111,7 @@ export function FollowListItemName({
   const [displayedTags, setdisplayedTags] = useState(inintialdisplayedTags)
 
   const addTag = (tag: string) => {
+    addRecentTag(tag)
     if (!displayedTags.includes(tag)) setdisplayedTags(prevTags => [...prevTags, tag])
     addCartItem({ listOp: listOpAddTag(address, tag) })
   }
@@ -132,7 +133,6 @@ export function FollowListItemName({
 
   const addCustomTag = () => {
     if (customTagInput.length === 0) return
-    addRecentTag(customTagInput)
     addTag(customTagInput)
     setCustomTagInput('')
   }
@@ -200,9 +200,15 @@ export function FollowListItemName({
             } flex-wrap gap-2 items-center`}
             ref={clickAwayTagDropwdownRef}
           >
+            {canEditTags && tagDropdownOpen && (
+              <div
+                className='fixed z-40 top-0 left-0 w-full h-full bg-transparent'
+                onClick={() => setTagDropdownOpen(false)}
+              ></div>
+            )}
             {canEditTags && !isRestriction && (
               <button
-                className='p-[5px] rounded-full hover:opacity-80 bg-gray-300'
+                className='w-6 h-6 flex items-center justify-center rounded-full hover:opacity-80 bg-gray-300'
                 onClick={() => setTagDropdownOpen(!tagDropdownOpen)}
               >
                 <Image src={Plus} alt='Add Tag' width={10} />
@@ -210,10 +216,6 @@ export function FollowListItemName({
             )}
             {canEditTags && tagDropdownOpen && (
               <>
-                <div
-                  className='fixed z-40 top-0 left-0 w-full h-full bg-transparent'
-                  onClick={() => setTagDropdownOpen(false)}
-                ></div>
                 <div className='absolute z-50 flex flex-col w-60 gap-2 left-0 top-8 glass-card bg-white/50 p-2 border-2 border-gray-200 rounded-lg'>
                   <div className='w-full flex items-center gap-1.5 justify-between bg-gray-300 rounded-lg font-bold p-1 text-left'>
                     <input
@@ -223,13 +225,13 @@ export function FollowListItemName({
                       onChange={e => {
                         const validString = e.target.value.match(tagRegex)?.join('')
                         if (e.target.value.length === 0 || validString)
-                          setCustomTagInput(e.target.value.trim())
+                          setCustomTagInput(e.target.value.trim().toLowerCase())
                       }}
                       maxLength={68}
                       onKeyDown={e => {
                         if (e.key === 'Enter') addCustomTag()
                       }}
-                      className='p-1 pl-2 rounded-md w-full'
+                      className='p-1 pl-2 rounded-md lowercase w-full'
                     />
                     <button
                       className='flex items-center rounded-full hover:opacity-80 bg-white justify-center h-[26px] w-[29px]'

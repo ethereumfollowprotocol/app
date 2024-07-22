@@ -57,7 +57,7 @@ export function FollowListItem({
         isBlockedList={isBlockedList}
       />
       {/* Right section: Follow Button with consistent width */}
-      <FollowButton isBlockedBy={isBlockedBy} address={address} className='rounded-xl w-[114px]' />
+      <FollowButton isBlockedBy={isBlockedBy} address={address} />
     </div>
   )
 }

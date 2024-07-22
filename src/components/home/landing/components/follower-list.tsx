@@ -34,7 +34,7 @@ const FollowerList = () => {
         alt='line'
         width={4}
         height={154}
-        className='absolute lg:hidden top-[114px] sm:top-[118px] md:top-[126px] '
+        className='absolute lg:hidden top-[107px] sm:top-[118px] md:top-[126px] '
       />
     </div>
   )
