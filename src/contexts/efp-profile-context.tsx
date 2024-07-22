@@ -27,7 +27,6 @@ import type {
   FollowingTagsResponse
 } from '#/types/requests'
 import { useCart } from './cart-context'
-import { FETCH_LIMIT_PARAM } from '#/lib/constants'
 import fetchProfileRoles from '#/api/fetchProfileRoles'
 import fetchProfileLists from '#/api/fetchProfileLists'
 import fetchFollowerTags from '#/api/fetchFollowerTags'
@@ -36,6 +35,7 @@ import type { ProfileTableTitleType } from '#/types/common'
 import fetchProfileDetails from '#/api/fetchProfileDetails'
 import fetchProfileFollowers from '#/api/fetchProfileFollowers'
 import fetchProfileFollowing from '#/api/fetchProfileFollowing'
+import { BLOCKED_MUTED_TAGS, DEFAULT_TAGS_TO_ADD, FETCH_LIMIT_PARAM } from '#/lib/constants'
 
 // Define the type for the profile context
 type EFPProfileContextType = {
@@ -111,13 +111,17 @@ type EFPProfileContextType = {
     >
   >
   refetchRoles: (options?: RefetchOptions) => Promise<QueryObserverResult<ProfileRoles, Error>>
+  recentTags: string[]
   followingTagsFilter: string[]
   followersTagsFilter: string[]
   followingSort: FollowSortType
   followersSort: FollowSortType
+  addRecentTag: (tag: string) => void
   toggleTag: (tab: ProfileTableTitleType, tag: string) => void
   setFollowingSort: (option: FollowSortType) => void
   setFollowersSort: (option: FollowSortType) => void
+  setFollowingTagsFilter: Dispatch<SetStateAction<string[]>>
+  setFollowersTagsFilter: Dispatch<SetStateAction<string[]>>
   setIsRefetchingProfile: (state: boolean) => void
   setIsRefetchingFollowing: (state: boolean) => void
   setSetNewListAsSelected: (state: boolean) => void
@@ -131,14 +135,18 @@ const EFPProfileContext = createContext<EFPProfileContextType | undefined>(undef
 
 export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   const [isRefetchingProfile, setIsRefetchingProfile] = useState(false)
-  const [setNewListAsSelected, setSetNewListAsSelected] = useState(false)
   const [isRefetchingFollowing, setIsRefetchingFollowing] = useState(false)
+
   // selectedList = undefined will mean that the connected user can create a new list
   const [selectedList, setSelectedList] = useState<number>()
+  const [setNewListAsSelected, setSetNewListAsSelected] = useState(false)
+
   const [followingTagsFilter, setFollowingTagsFilter] = useState<string[]>([])
   const [followersTagsFilter, setFollowersTagsFilter] = useState<string[]>([])
   const [followingSort, setFollowingSort] = useState<FollowSortType>('latest first')
   const [followersSort, setFollowersSort] = useState<FollowSortType>('latest first')
+
+  const [recentTags, setRecentTags] = useState(DEFAULT_TAGS_TO_ADD)
 
   const chains = useChains()
   const { resetCart } = useCart()
@@ -374,6 +382,21 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     }
   }
 
+  const addRecentTag = (tag: string) => {
+    setRecentTags([tag, ...recentTags].slice(0, 5))
+  }
+
+  useEffect(() => {
+    if (followingTags)
+      setRecentTags(
+        followingTags?.tagCounts
+          .sort((a, b) => b.count - a.count)
+          .map(tag => tag.tag)
+          .filter(tag => !BLOCKED_MUTED_TAGS.includes(tag))
+          .slice(0, 5)
+      )
+  }, [followingTags])
+
   const { data: roles, refetch: refetchRoles } = useQuery({
     queryKey: ['userRoles', userAddress, selectedList],
     queryFn: async () => {
@@ -430,10 +453,12 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         refetchFollowerTags,
         refetchFollowingTags,
         refetchRoles,
+        recentTags,
         followingTagsFilter,
         followersTagsFilter,
         followingSort,
         followersSort,
+        addRecentTag,
         toggleTag,
         setFollowingSort: (option: FollowSortType) => {
           setFollowingSort(option)
@@ -441,6 +466,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         setFollowersSort: (option: FollowSortType) => {
           setFollowersSort(option)
         },
+        setFollowingTagsFilter,
+        setFollowersTagsFilter,
         setIsRefetchingProfile,
         setIsRefetchingFollowing,
         setSetNewListAsSelected

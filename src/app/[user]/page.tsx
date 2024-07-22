@@ -60,7 +60,9 @@ export default function UserPage({ params }: Props) {
     followerTagsLoading,
     followingTagsLoading,
     isFetchingMoreFollowers,
-    isFetchingMoreFollowing
+    isFetchingMoreFollowing,
+    setFollowersTagsFilter,
+    setFollowingTagsFilter
   } = useUser(user)
 
   const mobileActiveEl = {
@@ -72,6 +74,7 @@ export default function UserPage({ params }: Props) {
         tagsLoading={followingTagsLoading}
         selectedTags={followingTagsFilter}
         toggleSelectedTags={toggleTag}
+        setSelectedTags={setFollowingTagsFilter}
         sort={followingSort}
         setSort={setFollowingSort}
         isEndOfResults={isEndOfFollowing}
@@ -91,6 +94,7 @@ export default function UserPage({ params }: Props) {
         allTags={followerTags?.tagCounts}
         tagsLoading={followerTagsLoading}
         selectedTags={followersTagsFilter}
+        setSelectedTags={setFollowersTagsFilter}
         toggleSelectedTags={toggleTag}
         sort={followersSort}
         setSort={setFollowersSort}
@@ -181,6 +185,7 @@ export default function UserPage({ params }: Props) {
             tagsLoading={followingTagsLoading}
             selectedTags={followingTagsFilter}
             toggleSelectedTags={toggleTag}
+            setSelectedTags={setFollowingTagsFilter}
             sort={followingSort}
             setSort={setFollowingSort}
             isEndOfResults={isEndOfFollowing}
@@ -200,6 +205,7 @@ export default function UserPage({ params }: Props) {
             tagsLoading={followerTagsLoading}
             selectedTags={followersTagsFilter}
             toggleSelectedTags={toggleTag}
+            setSelectedTags={setFollowersTagsFilter}
             sort={followersSort}
             setSort={setFollowersSort}
             isEndOfResults={isEndOfFollowers}

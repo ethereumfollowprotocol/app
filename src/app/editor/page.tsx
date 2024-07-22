@@ -110,9 +110,9 @@ export default function EditorPage() {
                       <p className='font-bold'>{t('changes')}</p>
                     </div>
                   </div>
-                  <p className='text-base pl-2 font-medium'>{`${transactionsCount} ${t(
-                    'transactions'
-                  )}`}</p>
+                  <p className='text-base pl-2 font-medium'>{`${transactionsCount} ${
+                    transactionsCount === 1 ? t('transaction') : t('transactions')
+                  }`}</p>
                 </div>
                 <PrimaryButton
                   className='py-[14px] px-4 text-xl font-medium rounded-full'

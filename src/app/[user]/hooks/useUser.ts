@@ -69,7 +69,7 @@ const useUser = (user: string) => {
     isFetchingNextPage: isFetchingMoreFollowers,
     isRefetching: isRefetchingFollowers
   } = useInfiniteQuery({
-    queryKey: ['followers', user],
+    queryKey: ['followers', user, followersSort, followersTagsFilter],
     queryFn: async ({ pageParam = 0 }) => {
       setIsEndOfFollowers(false)
 
@@ -83,7 +83,9 @@ const useUser = (user: string) => {
         addressOrName: user,
         list: listNum,
         limit: FETCH_LIMIT_PARAM,
-        pageParam
+        pageParam,
+        tags: followersTagsFilter,
+        sort: followersSort
       })
 
       if (fetchedFollowers.followers.length === 0) setIsEndOfFollowers(true)
@@ -118,7 +120,7 @@ const useUser = (user: string) => {
     isFetchingNextPage: isFetchingMoreFollowing,
     isRefetching: isRefetchingFollowing
   } = useInfiniteQuery({
-    queryKey: ['following', user],
+    queryKey: ['following', user, followingSort, followingTagsFilter],
     queryFn: async ({ pageParam = 0 }) => {
       setIsEndOfFollowing(false)
 
@@ -132,7 +134,9 @@ const useUser = (user: string) => {
         addressOrName: user,
         list: listNum,
         limit: FETCH_LIMIT_PARAM,
-        pageParam
+        pageParam,
+        tags: followingTagsFilter,
+        sort: followingSort
       })
 
       if (fetchedFollowing.following.length === 0) setIsEndOfFollowing(true)
@@ -202,7 +206,9 @@ const useUser = (user: string) => {
     setFollowingSort,
     followersSort,
     toggleTag,
-    setFollowersSort
+    setFollowersSort,
+    setFollowersTagsFilter,
+    setFollowingTagsFilter
   }
 }
 

@@ -14,8 +14,8 @@ import { useClickAway } from '@uidotdev/usehooks'
 import { useCart } from '#/contexts/cart-context'
 import { truncateAddress } from '#/lib/utilities'
 import useFollowState from '#/hooks/use-follow-state'
-import { DEFAULT_TAGS_TO_ADD } from '#/lib/constants'
 import Plus from 'public/assets/icons/plus-squared.svg'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
 
 interface FollowListItemNameProps {
@@ -89,6 +89,7 @@ export function FollowListItemName({
     hasListOpRemoveRecord,
     getTagsFromCartByAddress
   } = useCart()
+  const { recentTags, addRecentTag } = useEFPProfile()
   const isBeingRemoved = hasListOpRemoveRecord(address)
   const isBeingUnrestricted =
     hasListOpRemoveTag({ address, tag: 'block' }) || hasListOpRemoveTag({ address, tag: 'mute' })
@@ -131,6 +132,7 @@ export function FollowListItemName({
 
   const addCustomTag = () => {
     if (customTagInput.length === 0) return
+    addRecentTag(customTagInput)
     addTag(customTagInput)
     setCustomTagInput('')
   }
@@ -237,7 +239,7 @@ export function FollowListItemName({
                     </button>
                   </div>
                   <div className='w-full flex flex-wrap items-center gap-2'>
-                    {DEFAULT_TAGS_TO_ADD.map(tag => (
+                    {recentTags.map(tag => (
                       <button
                         key={tag}
                         className='font-semibold py-2 px-3 hover:opacity-80 bg-gray-300 rounded-full'
