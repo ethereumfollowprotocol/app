@@ -387,10 +387,10 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   }
 
   useEffect(() => {
-    if (followingTags)
+    if (followingTags?.tagCounts && followingTags?.tagCounts.length > 0)
       setRecentTags(
         followingTags?.tagCounts
-          .sort((a, b) => b.count - a.count)
+          ?.sort((a, b) => b.count - a.count)
           .map(tag => tag.tag)
           .filter(tag => !BLOCKED_MUTED_TAGS.includes(tag))
           .slice(0, 5)

@@ -28,7 +28,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ showTags, className }) => {
           )}
         </div>
       </div>
-      <LoadingCell className='w-[107px] h-[37px] rounded-xl' />
+      <LoadingCell className='w-[114px] h-[37px] rounded-xl' />
     </div>
   )
 }

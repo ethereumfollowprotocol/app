@@ -161,6 +161,7 @@ export function UserProfilePageTable({
         canEditTags={canEditTags}
         isFollowers={title === 'followers' || title === 'Blocked/Muted By'}
         isBlockedList={isShowingBlocked}
+        isBlockedBy={title === 'Blocked/Muted By' && isProfile}
       />
       <div ref={loadMoreRef} className='h-px w-full' />
     </div>

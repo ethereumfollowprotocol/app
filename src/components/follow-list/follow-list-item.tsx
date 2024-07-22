@@ -16,6 +16,7 @@ export interface FollowListItemProps {
   isFollowers?: boolean
   canEditTags?: boolean
   isBlockedList?: boolean
+  isBlockedBy?: boolean
 }
 
 export function FollowListItem({
@@ -27,7 +28,8 @@ export function FollowListItem({
   tags,
   isFollowers,
   canEditTags,
-  isBlockedList
+  isBlockedList,
+  isBlockedBy
 }: FollowListItemProps) {
   const { data: fetchedEnsProfile, isLoading: isEnsProfileLoading } = useQuery({
     queryKey: ['ens metadata', address],
@@ -55,7 +57,7 @@ export function FollowListItem({
         isBlockedList={isBlockedList}
       />
       {/* Right section: Follow Button with consistent width */}
-      <FollowButton address={address} className='rounded-xl w-[107px]' />
+      <FollowButton isBlockedBy={isBlockedBy} address={address} className='rounded-xl w-[114px]' />
     </div>
   )
 }

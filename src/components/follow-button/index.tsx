@@ -53,7 +53,7 @@ const theme: Record<
       'border-0 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-1.5 after:-right-1.5 after:bg-green-400'
   },
   Block: {
-    bg: 'bg-kournikova-300',
+    bg: 'bg-deletion',
     text: 'text-zinc-800',
     border: 'border-0 '
   },
@@ -105,18 +105,27 @@ const theme: Record<
 interface FollowButtonProps {
   address: Address
   className?: string
+  isBlockedBy?: boolean
 }
 
-export const FollowButton = ({ address, className = '', ...props }: FollowButtonProps) => {
+export const FollowButton = ({
+  address,
+  className = '',
+  isBlockedBy,
+  ...props
+}: FollowButtonProps) => {
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
   const { t } = useTranslation('common', { keyPrefix: 'follow btn' })
-  const { buttonText, buttonState, handleAction, isLoading } = useFollowButton({ address })
+  const { buttonText, buttonState, handleAction, isLoading } = useFollowButton({
+    address,
+    isBlockedBy
+  })
 
   // if (address?.toLowerCase() === userAddress?.toLowerCase()) return null
 
   return isLoading ? (
-    <div className='rounded-lg w-[107px] h-[37px]'>
+    <div className='rounded-lg w-[114px] h-[37px]'>
       <LoadingCell className='h-full w-full rounded-lg' />
     </div>
   ) : (
@@ -126,7 +135,7 @@ export const FollowButton = ({ address, className = '', ...props }: FollowButton
         theme[buttonState].text,
         theme[buttonState].border,
         'rounded-lg relative text-sm flex items-center gap-1.5 justify-center font-bold',
-        'w-[107px] h-[37px] px-2 py-1.5', // Fixed width for consistent layout
+        'w-[114px] h-[37px] px-2 py-1.5', // Fixed width for consistent layout
         className
       ])}
       onClick={() => {

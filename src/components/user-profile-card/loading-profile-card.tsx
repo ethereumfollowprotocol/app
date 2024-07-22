@@ -36,7 +36,7 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
             } flex-col gap-2 justify-center`}
           >
             <LoadingCell className='w-48 sm:w-68 xl:w-3/4 h-7 rounded-lg' />
-            {!hideFollowButton && <LoadingCell className='w-[107px] h-[37px] rounded-xl' />}
+            {!hideFollowButton && <LoadingCell className='w-[114px] h-[37px] rounded-xl' />}
           </div>
         </div>
         <div

@@ -189,12 +189,12 @@ const useSearch = (isEditor?: boolean) => {
       currentSearch.includes('.') ||
       !Number.isNaN(Number(currentSearch))
     ) {
+      resetSearch()
       const address = isAddress(currentSearch)
         ? currentSearch
         : await resolveEnsAddress(currentSearch)
 
       router.push(`/${address || currentSearch}`)
-      resetSearch()
     }
   }
 

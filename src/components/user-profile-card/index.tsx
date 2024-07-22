@@ -175,7 +175,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   return (
     <div
       className={`flex glass-card ${
-        isResponsive ? 'xl:w-76 w-full 2xl:w-86 py-6 px-4 sm:p-6 sm:py-7' : 'w-86 p-6'
+        isResponsive ? 'xl:w-76 w-full 2xl:w-86 py-6 px-4 sm:p-6 sm:py-7' : 'w-76 3xs:w-86 p-6'
       } border-2 justify-center flex-col ${borderColor || 'border-[#FFDBD9]'} rounded-xl relative`}
     >
       {isLoading ? (
@@ -192,7 +192,11 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 )
               : null}
           </div>
-          <div className='flex w-full xl:items-center flex-col gap-5 sm:gap-6 md:gap-9 pt-2'>
+          <div
+            className={`flex w-full xl:items-center flex-col pt-2 ${
+              followerTag.text === '' && !isResponsive ? 'gap-[68px]' : 'gap-5 sm:gap-6 md:gap-9'
+            }`}
+          >
             <div
               className={`flex w-full ${
                 isResponsive ? 'flex-row xl:flex-col xl:justify-center' : 'flex-col justify-center'
@@ -255,7 +259,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                           <div className='absolute top-10 flex-col flex gap-2 right-0 p-2 bg-white border-gray-200 border-2 rounded-xl z-50 drop-shadow-lg'>
                             <button
                               onClick={() => onClickOption('Block')}
-                              className='rounded-lg cursor-pointer bg-deletion relative text-sm flex items-center gap-1.5 justify-center font-bold w-[107px] h-[37px] px-2 py-1.5'
+                              className='rounded-lg cursor-pointer bg-deletion relative text-sm flex items-center gap-1.5 justify-center font-bold w-[114px] h-[37px] px-2 py-1.5'
                             >
                               <Image
                                 alt='mainnet logo'
@@ -276,7 +280,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                             </button>
                             <button
                               onClick={() => onClickOption('Mute')}
-                              className='rounded-lg cursor-pointer bg-deletion relative text-sm flex items-center gap-1.5 justify-center font-bold w-[107px] h-[37px] px-2 py-1.5'
+                              className='rounded-lg cursor-pointer bg-deletion relative text-sm flex items-center gap-1.5 justify-center font-bold w-[114px] h-[37px] px-2 py-1.5'
                             >
                               <Image
                                 alt='mainnet logo'

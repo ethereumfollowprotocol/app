@@ -74,8 +74,8 @@ export function FollowListItemName({
   const router = useRouter()
   const pathname = usePathname()
   const { t } = useTranslation()
-  const isEditor = pathname.includes('/editor')
   const { t: tEditor } = useTranslation('editor')
+  const isEditor = pathname.includes('/editor')
   const { followerTag } = useFollowState({
     address,
     type: 'follower'
@@ -193,7 +193,7 @@ export function FollowListItemName({
         </div>
         {showTags && (!isBeingRemoved || isRestriction) && (
           <div
-            className={`relative flex max-w-[70%] 3xs:max-w-[75%] xxs:max-w-[80%] md:max-w-[50%] ${
+            className={`relative min-h-8 flex max-w-[70%] 3xs:max-w-[75%] xxs:max-w-[80%] md:max-w-[50%] ${
               isEditor
                 ? 'xl:max-w-[55%] 2xl:max-w-[65%] 3xl:max-w-[75%]'
                 : 'xl:max-w-[45%] 2xl:max-w-[42.5%] 3xl:max-w-[47.5%]'
@@ -202,10 +202,10 @@ export function FollowListItemName({
           >
             {canEditTags && !isRestriction && (
               <button
-                className='h-5 w-5 flex items-center justify-center rounded-full hover:opacity-80 bg-gray-300'
+                className='p-[5px] rounded-full hover:opacity-80 bg-gray-300'
                 onClick={() => setTagDropdownOpen(!tagDropdownOpen)}
               >
-                <Image src={Plus} alt='Add Tag' height={10} width={10} />
+                <Image src={Plus} alt='Add Tag' width={10} />
               </button>
             )}
             {canEditTags && tagDropdownOpen && (
@@ -238,11 +238,11 @@ export function FollowListItemName({
                       <Image src={Plus} alt='Add Tag' height={12} width={12} />
                     </button>
                   </div>
-                  <div className='w-full flex flex-wrap items-center gap-2'>
+                  <div className='w-full flex max-w-full flex-wrap items-center gap-2'>
                     {recentTags.map(tag => (
                       <button
                         key={tag}
-                        className='font-semibold py-2 px-3 hover:opacity-80 bg-gray-300 rounded-full'
+                        className='font-semibold py-2 truncate px-3 hover:opacity-80 bg-gray-300 rounded-full'
                         onClick={() => addTag(tag)}
                       >
                         {tEditor(tag)}
