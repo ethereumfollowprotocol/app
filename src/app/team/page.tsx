@@ -1,6 +1,8 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
+
+import LoadingCell from '#/components/loading-cell'
 import fetchProfileDetails from '#/api/fetchProfileDetails'
 import UserProfileCard from '#/components/user-profile-card'
 
@@ -40,13 +42,15 @@ const TeamPage = () => {
         ))}
         {teamIsLoading &&
           teamAddresses.map(address => (
-            <UserProfileCard
-              key={address}
-              isResponsive={false}
-              isLoading={teamIsLoading}
-              // x={records?.['com.twitter'] ?? ''}
-              // github={records?.['com.github'] ?? ''}
-            />
+            <div key={address} className='flex flex-col items-center gap-2'>
+              <LoadingCell className='rounded-lg h-7 w-52' />
+              <UserProfileCard
+                isResponsive={false}
+                isLoading={teamIsLoading}
+                // x={records?.['com.twitter'] ?? ''}
+                // github={records?.['com.github'] ?? ''}
+              />
+            </div>
           ))}
       </div>
     </main>

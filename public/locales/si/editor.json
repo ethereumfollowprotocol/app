@@ -18,6 +18,7 @@
   "already followed": "Že slediš: ",
   "unresolved": "Imeana niso povezana: ",
   "not manager": "Nisi upravitelj seznama",
-  "transactions": "Transakcij-a/-e",
+  "transactions": "Transakcije",
+  "transaction": "Transakcija",
   "empty cart": "Vaša košarica je prazna. Sledi ljudem in jim dodaj oznake, da napolniš svojo košarico."
 }

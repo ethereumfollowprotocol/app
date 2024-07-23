@@ -121,55 +121,84 @@ const ConnectButton = () => {
       </button>
       {walletMenOpenu && (
         <div className='p-1 flex w-[190px] z-50 shadow-md border-2 rounded-lg bg-white/95 border-gray-200 absolute top-[120%] flex-col items-end right-0'>
-          <div ref={clickAwayListRef} className='w-full cursor-pointer group relative'>
-            <div
-              onClick={() => setListMenuOpen(!listMenuOpen)}
-              className='flex justify-between items-center w-full group-hover:bg-slate-100 p-3 rounded-md transition-opacity cursor-pointer'
-            >
-              {lists?.lists && lists?.lists?.length > 0 ? (
-                <Image src={ArrowLeft} alt='Show lists' />
-              ) : (
-                <div></div>
-              )}
-              <p className=' font-semibold'>
-                {selectedList
-                  ? `${t('navigation.list')} #${selectedList}`
-                  : t('navigation.mint new list')}
-              </p>
-            </div>
-            <div
-              className={`absolute -right-[14.6%] sm:right-[97.2%] group-hover:block min-w-[190px] block z-50 -top-[6px] ${
-                lists?.lists && lists?.lists?.length > 0
-                  ? listMenuOpen
-                    ? 'block'
-                    : 'hidden'
-                  : 'hidden group-hover:hidden'
-              } pr-5`}
-            >
-              <div className='flex flex-col gap-2 glass-card w-full min-w-[190px] max-h-[75vh] sm:max-h-[80vh] overflow-scroll border-2 rounded-lg bg-white/90 border-gray-200 p-1  shadow-md'>
-                <div
-                  onClick={() => setListMenuOpen(false)}
-                  className='flex sm:hidden justify-between items-center w-full group-hover:bg-slate-100 p-3 rounded-md transition-opacity cursor-pointer'
-                >
-                  {lists?.lists && lists?.lists?.length > 0 ? (
-                    <Image src={ArrowLeft} alt='Show lists' />
-                  ) : (
-                    <div></div>
-                  )}
-                  <p className=' font-semibold'>Back</p>
-                </div>
-                {lists?.lists?.map(list => (
+          {lists?.lists && lists.lists.length > 0 && (
+            <div ref={clickAwayListRef} className='w-full cursor-pointer group relative'>
+              <div
+                onClick={() => setListMenuOpen(!listMenuOpen)}
+                className='flex justify-between items-center w-full group-hover:bg-slate-100 p-3 rounded-md transition-opacity cursor-pointer'
+              >
+                {lists?.lists && lists?.lists?.length > 0 ? (
+                  <Image src={ArrowLeft} alt='Show lists' />
+                ) : (
+                  <div></div>
+                )}
+                <p className=' font-semibold'>
+                  {selectedList
+                    ? `${t('navigation.list')} #${selectedList}`
+                    : t('navigation.mint new list')}
+                </p>
+              </div>
+              <div
+                className={`absolute -right-[14.6%] sm:right-[97.2%] group-hover:block min-w-[190px] block z-50 -top-[6px] ${
+                  lists?.lists && lists?.lists?.length > 0
+                    ? listMenuOpen
+                      ? 'block'
+                      : 'hidden'
+                    : 'hidden group-hover:hidden'
+                } pr-5`}
+              >
+                <div className='flex flex-col gap-2 glass-card w-full min-w-[190px] max-h-[75vh] sm:max-h-[80vh] overflow-scroll border-2 rounded-lg bg-white/90 border-gray-200 p-1  shadow-md'>
                   <div
-                    className='flex items-center relative p-3 pl-8 w-full gap-1 text-darkGrey rounded-md hover:bg-slate-100'
-                    key={list}
+                    onClick={() => setListMenuOpen(false)}
+                    className='flex sm:hidden justify-between items-center w-full group-hover:bg-slate-100 p-3 rounded-md transition-opacity cursor-pointer'
+                  >
+                    {lists?.lists && lists?.lists?.length > 0 ? (
+                      <Image src={ArrowLeft} alt='Show lists' />
+                    ) : (
+                      <div></div>
+                    )}
+                    <p className=' font-semibold'>Back</p>
+                  </div>
+                  {lists?.lists?.map(list => (
+                    <div
+                      className='flex items-center relative p-3 pl-8 w-full gap-1 text-darkGrey rounded-md hover:bg-slate-100'
+                      key={list}
+                      onClick={() => {
+                        localStorage.setItem('selected-list', list)
+                        setSelectedList(Number(list))
+                        setListMenuOpen(false)
+                        setWalletMenuOpen(false)
+                      }}
+                    >
+                      {selectedList === Number(list) && (
+                        <Image
+                          src={GreenCheck}
+                          alt='List selected'
+                          width={16}
+                          className='absolute left-2 top-[17px]'
+                        />
+                      )}
+                      <p className='text-nowrap font-semibold'>
+                        {`${t('navigation.list')} #${list}`}
+                      </p>
+                      {lists.primary_list === list && (
+                        <p className='mb-0.5 text-sm italic text-nowrap font-medium text-gray-400'>
+                          - Primary
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                  <div
+                    key={'new list'}
+                    className='flex gap-2 p-3 pl-8 relative hover:bg-slate-100 rounded-md'
                     onClick={() => {
-                      localStorage.setItem('selected-list', list)
-                      setSelectedList(Number(list))
+                      localStorage.setItem('selected-list', 'new list')
+                      setSelectedList(undefined)
                       setListMenuOpen(false)
                       setWalletMenuOpen(false)
                     }}
                   >
-                    {selectedList === Number(list) && (
+                    {selectedList === undefined && (
                       <Image
                         src={GreenCheck}
                         alt='List selected'
@@ -177,41 +206,14 @@ const ConnectButton = () => {
                         className='absolute left-2 top-[17px]'
                       />
                     )}
-                    <p className='text-nowrap font-semibold'>
-                      {`${t('navigation.list')} #${list}`}
+                    <p className='text-darkGrey text-nowrap font-semibold'>
+                      {t('navigation.mint new list')}
                     </p>
-                    {lists.primary_list === list && (
-                      <p className='mb-0.5 text-sm italic text-nowrap font-medium text-gray-400'>
-                        - Primary
-                      </p>
-                    )}
                   </div>
-                ))}
-                <div
-                  key={'new list'}
-                  className='flex gap-2 p-3 pl-8 relative hover:bg-slate-100 rounded-md'
-                  onClick={() => {
-                    localStorage.setItem('selected-list', 'new list')
-                    setSelectedList(undefined)
-                    setListMenuOpen(false)
-                    setWalletMenuOpen(false)
-                  }}
-                >
-                  {selectedList === undefined && (
-                    <Image
-                      src={GreenCheck}
-                      alt='List selected'
-                      width={16}
-                      className='absolute left-2 top-[17px]'
-                    />
-                  )}
-                  <p className='text-darkGrey text-nowrap font-semibold'>
-                    {t('navigation.mint new list')}
-                  </p>
                 </div>
               </div>
             </div>
-          </div>
+          )}
           <div ref={clickAwayLanguageRef} className='w-full cursor-pointer group relative'>
             <div
               onClick={() => setLanguageMenuOpen(!languageMenOpenu)}

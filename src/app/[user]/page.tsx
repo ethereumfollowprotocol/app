@@ -23,7 +23,7 @@ interface Props {
 export default function UserPage({ params }: Props) {
   const { user } = params
   const searchParams = useSearchParams()
-  const initialBlockedOpen = searchParams.get('modal') === 'blocked'
+  const initialBlockedOpen = searchParams.get('modal') === 'blockmutelists'
 
   const [isSaving, setIsSaving] = useState(false)
   const [listSettingsOpen, setListSettingsOpen] = useState(false)
@@ -60,7 +60,9 @@ export default function UserPage({ params }: Props) {
     followerTagsLoading,
     followingTagsLoading,
     isFetchingMoreFollowers,
-    isFetchingMoreFollowing
+    isFetchingMoreFollowing,
+    setFollowersTagsFilter,
+    setFollowingTagsFilter
   } = useUser(user)
 
   const mobileActiveEl = {
@@ -72,6 +74,7 @@ export default function UserPage({ params }: Props) {
         tagsLoading={followingTagsLoading}
         selectedTags={followingTagsFilter}
         toggleSelectedTags={toggleTag}
+        setSelectedTags={setFollowingTagsFilter}
         sort={followingSort}
         setSort={setFollowingSort}
         isEndOfResults={isEndOfFollowing}
@@ -91,6 +94,7 @@ export default function UserPage({ params }: Props) {
         allTags={followerTags?.tagCounts}
         tagsLoading={followerTagsLoading}
         selectedTags={followersTagsFilter}
+        setSelectedTags={setFollowersTagsFilter}
         toggleSelectedTags={toggleTag}
         sort={followersSort}
         setSort={setFollowersSort}
@@ -147,7 +151,6 @@ export default function UserPage({ params }: Props) {
                     : undefined
               }
               profile={profile}
-              following={following}
               isLoading={profileIsLoading}
               showMoreOptions={
                 profile?.address?.toLowerCase() !== connectedUserAddress?.toLowerCase()
@@ -157,7 +160,7 @@ export default function UserPage({ params }: Props) {
               <p
                 onClick={() => {
                   setIsBlockedMutedOpen(true)
-                  router.push(`/${user}?modal=blocked`)
+                  router.push(`/${user}?modal=blockmutelists`)
                 }}
                 className='font-semibold cursor-pointer hover:opacity-80 transition-opacity'
               >
@@ -181,6 +184,7 @@ export default function UserPage({ params }: Props) {
             tagsLoading={followingTagsLoading}
             selectedTags={followingTagsFilter}
             toggleSelectedTags={toggleTag}
+            setSelectedTags={setFollowingTagsFilter}
             sort={followingSort}
             setSort={setFollowingSort}
             isEndOfResults={isEndOfFollowing}
@@ -200,6 +204,7 @@ export default function UserPage({ params }: Props) {
             tagsLoading={followerTagsLoading}
             selectedTags={followersTagsFilter}
             toggleSelectedTags={toggleTag}
+            setSelectedTags={setFollowersTagsFilter}
             sort={followersSort}
             setSort={setFollowersSort}
             isEndOfResults={isEndOfFollowers}

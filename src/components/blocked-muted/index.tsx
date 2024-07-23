@@ -42,6 +42,8 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
     blockedByTagsFilter,
     blockingTagsLoading,
     blockedByTagsLoading,
+    setBlockingTagsFilter,
+    setBlockedByTagsFilter,
     isFetchingMoreBlocking,
     isFetchingMoreBlockedBy
   } = useBlockedMuted(profile.address, list)
@@ -69,6 +71,7 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
         tagsLoading={blockingTagsLoading}
         selectedTags={blockingTagsFilter}
         toggleSelectedTags={toggleTag}
+        setSelectedTags={setBlockingTagsFilter}
         sort={blockingSort}
         setSort={setBlockingSort}
         isFetchingMore={isFetchingMoreBlocking}
@@ -87,6 +90,7 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
         allTags={displayedBlockedByTags}
         tagsLoading={blockedByIsLoading}
         selectedTags={blockedByTagsFilter}
+        setSelectedTags={setBlockedByTagsFilter}
         toggleSelectedTags={toggleTag}
         sort={blockedBySort}
         setSort={setBlockedBySort}
@@ -119,6 +123,7 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
             allTags={displayedBlockingTags}
             tagsLoading={blockingTagsLoading}
             selectedTags={blockingTagsFilter}
+            setSelectedTags={setBlockingTagsFilter}
             toggleSelectedTags={toggleTag}
             sort={blockingSort}
             setSort={setBlockingSort}
@@ -138,6 +143,7 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
             allTags={displayedBlockedByTags}
             tagsLoading={blockedByTagsLoading}
             selectedTags={blockedByTagsFilter}
+            setSelectedTags={setBlockedByTagsFilter}
             toggleSelectedTags={toggleTag}
             sort={blockedBySort}
             setSort={setBlockedBySort}

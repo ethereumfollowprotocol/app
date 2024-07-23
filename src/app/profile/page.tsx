@@ -48,6 +48,8 @@ export default function ProfilePage() {
     fetchMoreFollowing,
     isEndOfFollowers,
     isEndOfFollowing,
+    setFollowingTagsFilter,
+    setFollowersTagsFilter,
     isFetchingMoreFollowers,
     isFetchingMoreFollowing
   } = useEFPProfile()
@@ -61,6 +63,7 @@ export default function ProfilePage() {
         tagsLoading={followingTagsLoading}
         selectedTags={followingTagsFilter}
         toggleSelectedTags={toggleTag}
+        setSelectedTags={setFollowingTagsFilter}
         sort={followingSort}
         setSort={setFollowingSort}
         isEndOfResults={isEndOfFollowing}
@@ -76,6 +79,7 @@ export default function ProfilePage() {
         isLoading={followersIsLoading}
         results={followers}
         toggleSelectedTags={toggleTag}
+        setSelectedTags={setFollowersTagsFilter}
         sort={followersSort}
         setSort={setFollowersSort}
         isEndOfResults={isEndOfFollowers}
@@ -113,7 +117,6 @@ export default function ProfilePage() {
               profileList={selectedList}
               hideFollowButton={true}
               profile={profile}
-              following={following}
               isLoading={profileIsLoading}
             />
             <div className='flex flex-col gap-1 items-center'>
@@ -140,6 +143,7 @@ export default function ProfilePage() {
             allTags={followingTags?.tagCounts}
             tagsLoading={followingTagsLoading}
             selectedTags={followingTagsFilter}
+            setSelectedTags={setFollowingTagsFilter}
             toggleSelectedTags={toggleTag}
             sort={followingSort}
             setSort={setFollowingSort}
@@ -154,6 +158,7 @@ export default function ProfilePage() {
             isLoading={followersIsLoading}
             results={followers}
             toggleSelectedTags={toggleTag}
+            setSelectedTags={setFollowersTagsFilter}
             sort={followersSort}
             setSort={setFollowersSort}
             isEndOfResults={isEndOfFollowers}

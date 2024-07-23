@@ -152,7 +152,9 @@ const useBlockedMuted = (user: string, list?: string | number) => {
     setBlockingSort,
     blockedBySort,
     setBlockedBySort,
-    toggleTag
+    toggleTag,
+    setBlockingTagsFilter,
+    setBlockedByTagsFilter
   }
 }
 

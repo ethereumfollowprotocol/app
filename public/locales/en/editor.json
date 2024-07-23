@@ -15,6 +15,7 @@
   "unconfirmed": "Unconfirmed",
   "changes": "Changes",
   "transactions": "Transactions",
+  "transaction": "Transaction",
   "already followed": "Already following: ",
   "unresolved": "Names don't resolve: ",
   "not manager": "You are not the manager.",
