@@ -151,7 +151,6 @@ export default function UserPage({ params }: Props) {
                     : undefined
               }
               profile={profile}
-              following={following}
               isLoading={profileIsLoading}
               showMoreOptions={
                 profile?.address?.toLowerCase() !== connectedUserAddress?.toLowerCase()

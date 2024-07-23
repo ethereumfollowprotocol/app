@@ -12,7 +12,6 @@ const Summary = () => {
   const {
     profile,
     followers,
-    following,
     selectedList,
     profileIsLoading,
     followersIsLoading,
@@ -29,32 +28,24 @@ const Summary = () => {
         isFollowersEmpty || !address ? 'lg:justify-center lg:gap-4' : 'lg:justify-between xl:gap-4'
       } xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4`}
     >
-      {address ? (
-        <>
-          <UserProfileCard
-            profileList={selectedList}
-            hideFollowButton={true}
-            profile={profile}
-            following={following}
-            isLoading={profileIsLoading}
-            borderColor='border-[#FFDBD9]'
-          />
-          {!isFollowersEmpty && (
-            <LatestFollowers
-              isLoading={followersIsLoading || isFetchingMoreFollowers}
-              profiles={followers?.slice(0, 7).map(follower => ({
-                tags: follower.tags,
-                address: follower.address,
-                ens: follower.ens
-              }))}
-            />
-          )}
-        </>
-      ) : (
-        <div className='h-24 w-full lg:w-80 xl:w-86 lg:h-[412px] italic text-xl font-semibold rounded-2xl flex items-center justify-center glass-card border-2 border-gray-200 '>
-          {t('connect wallet')}
-        </div>
+      <UserProfileCard
+        profileList={selectedList}
+        hideFollowButton={true}
+        profile={profile}
+        isLoading={profileIsLoading}
+        borderColor='border-[#FFDBD9]'
+      />
+      {!isFollowersEmpty && address && (
+        <LatestFollowers
+          isLoading={followersIsLoading || isFetchingMoreFollowers}
+          profiles={followers?.slice(0, 7).map(follower => ({
+            tags: follower.tags,
+            address: follower.address,
+            ens: follower.ens
+          }))}
+        />
       )}
+
       <Recommendations
         limit={7}
         endpoint='discover'

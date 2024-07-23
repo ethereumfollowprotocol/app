@@ -117,7 +117,6 @@ export default function ProfilePage() {
               profileList={selectedList}
               hideFollowButton={true}
               profile={profile}
-              following={following}
               isLoading={profileIsLoading}
             />
             <div className='flex flex-col gap-1 items-center'>

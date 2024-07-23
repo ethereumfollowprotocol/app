@@ -24,14 +24,13 @@ import useFollowState from '#/hooks/use-follow-state'
 import LoadingProfileCard from './loading-profile-card'
 import { FollowButton } from '#/components/follow-button'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
-import type { FollowingResponse, ProfileDetailsResponse } from '#/types/requests'
+import type { ProfileDetailsResponse } from '#/types/requests'
 
 interface UserProfileCardProps {
   profileList?: number | null
   isResponsive?: boolean
   hideFollowButton?: boolean
   profile?: ProfileDetailsResponse | null
-  following?: FollowingResponse[]
   borderColor?: string
   isLoading?: boolean
   showMoreOptions?: boolean
@@ -44,7 +43,6 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   profile,
   borderColor,
   isLoading,
-  following,
   showMoreOptions
 }) => {
   const [moreOptionsDropdownOpen, setMoreOptionsDropdownOpen] = useState(false)
@@ -371,13 +369,19 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
             </div>
           </div>
         </>
+      ) : isConnectedUserCard ? (
+        <LoadingProfileCard
+          isResponsive={isResponsive}
+          hideFollowButton={hideFollowButton}
+          isStatic={!isLoading}
+        />
       ) : (
         <div
           className={`w-full h-20 ${
             hideFollowButton ? 'xl:h-[360px]' : 'xl:h-[420px]'
           } text-lg 2xl:text-xl flex items-center justify-center font-semibold italic`}
         >
-          {isConnectedUserCard ? t('connect wallet') : t('profile error')}
+          {t('profile error')}
         </div>
       )}
     </div>

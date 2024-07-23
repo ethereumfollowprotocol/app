@@ -111,9 +111,11 @@ export function FollowListItemName({
   const [displayedTags, setdisplayedTags] = useState(inintialdisplayedTags)
 
   const addTag = (tag: string) => {
-    addRecentTag(tag)
-    if (!displayedTags.includes(tag)) setdisplayedTags(prevTags => [...prevTags, tag])
-    addCartItem({ listOp: listOpAddTag(address, tag) })
+    if (!displayedTags.includes(tag)) {
+      addRecentTag(tag)
+      setdisplayedTags(prevTags => [...prevTags, tag])
+      addCartItem({ listOp: listOpAddTag(address, tag) })
+    }
   }
 
   const removeTag = (tag: string) => {
@@ -200,12 +202,6 @@ export function FollowListItemName({
             } flex-wrap gap-2 items-center`}
             ref={clickAwayTagDropwdownRef}
           >
-            {canEditTags && tagDropdownOpen && (
-              <div
-                className='fixed z-40 top-0 left-0 w-full h-full bg-transparent'
-                onClick={() => setTagDropdownOpen(false)}
-              ></div>
-            )}
             {canEditTags && !isRestriction && (
               <button
                 className='w-6 h-6 flex items-center justify-center rounded-full hover:opacity-80 bg-gray-300'
@@ -259,7 +255,10 @@ export function FollowListItemName({
               const removingTag = hasListOpRemoveTag({ address, tag })
 
               return (
-                <div key={tag + i} className='relative max-w-full'>
+                <div
+                  key={tag + i}
+                  className={`relative ${tagDropdownOpen ? 'z-40' : 'z-10'} max-w-full`}
+                >
                   <button
                     className={`
                       font-semibold py-1 px-2 sm:py-1.5 max-w-full w-fit sm:px-3 truncate text-sm hover:opacity-80 rounded-full ${
@@ -279,6 +278,12 @@ export function FollowListItemName({
                 </div>
               )
             })}
+            {canEditTags && tagDropdownOpen && (
+              <div
+                className='fixed z-30 top-0 left-0 w-full h-full bg-transparent'
+                onClick={() => setTagDropdownOpen(false)}
+              ></div>
+            )}
           </div>
         )}
       </div>
