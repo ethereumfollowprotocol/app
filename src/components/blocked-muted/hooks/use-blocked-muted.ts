@@ -2,11 +2,11 @@ import { useState } from 'react'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 
 import { FETCH_LIMIT_PARAM } from '#/lib/constants'
-import fetchFollowerTags from '#/api/fetchFollowerTags'
-import fetchFollowingTags from '#/api/fetchFollowingTags'
 import type { ProfileTableTitleType } from '#/types/common'
 import fetchProfileFollowers from '#/api/fetchProfileFollowers'
 import fetchProfileFollowing from '#/api/fetchProfileFollowing'
+import fetchFollowerTags, { nullFollowerTags } from '#/api/fetchFollowerTags'
+import fetchFollowingTags, { nullFollowingTags } from '#/api/fetchFollowingTags'
 import type { FollowerResponse, FollowingResponse, FollowSortType } from '#/types/requests'
 
 export const TAGS = ['All', 'block', 'mute']
@@ -29,7 +29,7 @@ const useBlockedMuted = (user: string, list?: string | number) => {
   } = useQuery({
     queryKey: ['follower tags', user, list],
     queryFn: async () => {
-      if (!user) return
+      if (!user) return nullFollowerTags
 
       const fetchedTags = await fetchFollowerTags(user, list)
       return fetchedTags
@@ -75,7 +75,7 @@ const useBlockedMuted = (user: string, list?: string | number) => {
   } = useQuery({
     queryKey: ['following tags', user, list],
     queryFn: async () => {
-      if (!user) return
+      if (!user) return nullFollowingTags
 
       const fetchedTags = await fetchFollowingTags(user, list)
       return fetchedTags

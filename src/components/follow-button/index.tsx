@@ -8,6 +8,8 @@ import { useTranslation } from 'react-i18next'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import LoadingCell from '../loading-cell'
+import MainnetRed from 'public/assets/mainnet-red.svg'
+import MainnetBlack from 'public/assets/mainnet-black.svg'
 import { type FollowButtonState, useFollowButton } from './use-follow-button'
 
 const theme: Record<
@@ -62,13 +64,13 @@ const theme: Record<
     text: 'text-red-500',
     border:
       'border-2 border-red-500 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400',
-    imageSrc: '/assets/mainnet-red.svg'
+    imageSrc: MainnetRed
   },
   Blocked: {
     bg: 'bg-white',
     text: 'text-red-500',
     border: 'border-2 border-red-500',
-    imageSrc: '/assets/mainnet-red.svg'
+    imageSrc: MainnetRed
   },
   Unblock: {
     bg: 'bg-deletion',
@@ -86,13 +88,13 @@ const theme: Record<
     text: 'text-red-500',
     border:
       'border-2 border-red-500 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400',
-    imageSrc: '/assets/mainnet-red.svg'
+    imageSrc: MainnetRed
   },
   Muted: {
     bg: 'bg-white',
     text: 'text-red-500',
     border: 'border-2 border-red-500',
-    imageSrc: '/assets/mainnet-red.svg'
+    imageSrc: MainnetRed
   },
   Unmute: {
     bg: 'bg-deletion',
@@ -149,13 +151,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
       }}
       {...props}
     >
-      <Image
-        alt='mainnet logo'
-        src={theme[buttonState].imageSrc || '/assets/mainnet-black.svg'}
-        className='text-red-500'
-        width={16}
-        height={16}
-      />
+      <Image alt='mainnet logo' src={theme[buttonState].imageSrc || MainnetBlack} width={16} />
       {t(buttonText)}
     </button>
   )

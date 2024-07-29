@@ -37,11 +37,13 @@ const Navigation = () => {
           <Link href='/' className='select-none' aria-label='Ethereum Follow Protocol Logo link'>
             <Image
               src={FullLogo}
+              priority={true}
               className='hidden sm:block sm:max-w-[130px] select-none'
               alt='Ethereum Follow Protocol Logo'
             />
             <Image
               src={Logo}
+              priority={true}
               className='w-[60px] sm:hidden select-none'
               alt='Ethereum Follow Protocol Logo'
             />

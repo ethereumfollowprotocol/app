@@ -98,7 +98,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
     >
       <div
         ref={listSettingsRef}
-        className='glass-card h-fit bg-white/40 gap-5 sm:gap-8 flex flex-col rounded-xl p-6 py-8 sm:p-10 w-[554px]'
+        className='glass-card h-fit bg-white/40 gap-5 sm:gap-7 flex flex-col rounded-xl p-6 py-8 sm:p-9 w-[554px]'
       >
         <div className='w-full flex items-center justify-between'>
           <div className='relative'>

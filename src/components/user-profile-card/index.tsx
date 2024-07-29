@@ -271,7 +271,6 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                               <Image
                                 alt='mainnet logo'
                                 src='/assets/mainnet-black.svg'
-                                className='text-red-500'
                                 width={16}
                                 height={16}
                               />
@@ -292,7 +291,6 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                               <Image
                                 alt='mainnet logo'
                                 src='/assets/mainnet-black.svg'
-                                className='text-red-500'
                                 width={16}
                                 height={16}
                               />
