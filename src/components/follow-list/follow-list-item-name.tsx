@@ -50,7 +50,7 @@ export function Name({
   )
 }
 
-export function FollowListItemName({
+const FollowListItemName: React.FC<FollowListItemNameProps> = ({
   name,
   tags,
   address,
@@ -62,7 +62,7 @@ export function FollowListItemName({
   isFollowers,
   isEnsProfileLoading,
   isBlockedList
-}: FollowListItemNameProps) {
+}) => {
   const [tagDropdownOpen, setTagDropdownOpen] = useState(false)
   const [customTagInput, setCustomTagInput] = useState('')
 
@@ -290,3 +290,5 @@ export function FollowListItemName({
     </div>
   )
 }
+
+export default FollowListItemName

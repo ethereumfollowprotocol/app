@@ -108,12 +108,12 @@ interface FollowButtonProps {
   isBlockedBy?: boolean
 }
 
-export const FollowButton = ({
+const FollowButton: React.FC<FollowButtonProps> = ({
   address,
   className = '',
   isBlockedBy,
   ...props
-}: FollowButtonProps) => {
+}) => {
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
   const { t } = useTranslation('common', { keyPrefix: 'follow btn' })
@@ -160,3 +160,5 @@ export const FollowButton = ({
     </button>
   )
 }
+
+export default FollowButton
