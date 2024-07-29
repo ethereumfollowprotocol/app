@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next'
 
 import LoadingRow from './loading-row'
 import EFPLogo from 'public/assets/logo.svg'
+import FollowListItem from './follow-list-item'
 import type { ENSProfile } from '#/types/requests'
-import { FollowListItem } from './follow-list-item'
 
 export interface FollowListProfile {
   address: Address
@@ -25,6 +25,7 @@ interface FollowListProps {
   isLoadingMore?: boolean
   canEditTags?: boolean
   isBlockedList?: boolean
+  isBlockedBy?: boolean
   isFollowers?: boolean
 }
 
@@ -40,6 +41,7 @@ export function FollowList({
   isLoadingMore,
   canEditTags,
   isBlockedList,
+  isBlockedBy,
   isFollowers
 }: FollowListProps) {
   const { t } = useTranslation('editor')
@@ -78,6 +80,7 @@ export function FollowList({
               tags={tags}
               canEditTags={canEditTags}
               isBlockedList={isBlockedList}
+              isBlockedBy={isBlockedBy}
               isFollowers={isFollowers}
             />
           ))}

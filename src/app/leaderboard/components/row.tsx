@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Avatar } from '#/components/avatar'
 import { resolveEnsProfile } from '#/utils/ens'
 import { truncateAddress } from '#/lib/utilities'
-import { FollowButton } from '#/components/follow-button'
+import FollowButton from '#/components/follow-button'
 
 interface TableRowProps {
   address: Address

@@ -8,6 +8,8 @@ import { useTranslation } from 'react-i18next'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import LoadingCell from '../loading-cell'
+import MainnetRed from 'public/assets/mainnet-red.svg'
+import MainnetBlack from 'public/assets/mainnet-black.svg'
 import { type FollowButtonState, useFollowButton } from './use-follow-button'
 
 const theme: Record<
@@ -53,7 +55,7 @@ const theme: Record<
       'border-0 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-1.5 after:-right-1.5 after:bg-green-400'
   },
   Block: {
-    bg: 'bg-kournikova-300',
+    bg: 'bg-deletion',
     text: 'text-zinc-800',
     border: 'border-0 '
   },
@@ -62,13 +64,13 @@ const theme: Record<
     text: 'text-red-500',
     border:
       'border-2 border-red-500 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400',
-    imageSrc: '/assets/mainnet-red.svg'
+    imageSrc: MainnetRed
   },
   Blocked: {
     bg: 'bg-white',
     text: 'text-red-500',
     border: 'border-2 border-red-500',
-    imageSrc: '/assets/mainnet-red.svg'
+    imageSrc: MainnetRed
   },
   Unblock: {
     bg: 'bg-deletion',
@@ -86,13 +88,13 @@ const theme: Record<
     text: 'text-red-500',
     border:
       'border-2 border-red-500 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400',
-    imageSrc: '/assets/mainnet-red.svg'
+    imageSrc: MainnetRed
   },
   Muted: {
     bg: 'bg-white',
     text: 'text-red-500',
     border: 'border-2 border-red-500',
-    imageSrc: '/assets/mainnet-red.svg'
+    imageSrc: MainnetRed
   },
   Unmute: {
     bg: 'bg-deletion',
@@ -105,18 +107,27 @@ const theme: Record<
 interface FollowButtonProps {
   address: Address
   className?: string
+  isBlockedBy?: boolean
 }
 
-export const FollowButton = ({ address, className = '', ...props }: FollowButtonProps) => {
+const FollowButton: React.FC<FollowButtonProps> = ({
+  address,
+  className = '',
+  isBlockedBy,
+  ...props
+}) => {
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
   const { t } = useTranslation('common', { keyPrefix: 'follow btn' })
-  const { buttonText, buttonState, handleAction, isLoading } = useFollowButton({ address })
+  const { buttonText, buttonState, handleAction, isLoading } = useFollowButton({
+    address,
+    isBlockedBy
+  })
 
   // if (address?.toLowerCase() === userAddress?.toLowerCase()) return null
 
   return isLoading ? (
-    <div className='rounded-lg w-[107px] h-[37px]'>
+    <div className={`rounded-xl ${isBlockedBy ? 'w-[114px]' : 'w-[107px]'} h-[37px]`}>
       <LoadingCell className='h-full w-full rounded-lg' />
     </div>
   ) : (
@@ -125,9 +136,10 @@ export const FollowButton = ({ address, className = '', ...props }: FollowButton
         theme[buttonState].bg,
         theme[buttonState].text,
         theme[buttonState].border,
-        'rounded-lg relative text-sm flex items-center gap-1.5 justify-center font-bold',
-        'w-[107px] h-[37px] px-2 py-1.5', // Fixed width for consistent layout
-        className
+        'rounded-xl relative text-sm flex items-center gap-1.5 justify-center font-bold',
+        'h-[37px] px-2 py-1.5', // Fixed width for consistent layout
+        className,
+        isBlockedBy ? 'w-[114px]' : 'w-[107px]'
       ])}
       onClick={() => {
         if (!userAddress && openConnectModal) {
@@ -139,14 +151,10 @@ export const FollowButton = ({ address, className = '', ...props }: FollowButton
       }}
       {...props}
     >
-      <Image
-        alt='mainnet logo'
-        src={theme[buttonState].imageSrc || '/assets/mainnet-black.svg'}
-        className='text-red-500'
-        width={16}
-        height={16}
-      />
+      <Image alt='mainnet logo' src={theme[buttonState].imageSrc || MainnetBlack} width={16} />
       {t(buttonText)}
     </button>
   )
 }
+
+export default FollowButton

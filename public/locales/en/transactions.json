@@ -23,6 +23,7 @@
     "actions": "Actions",
     "action": "Action",
     "create list": "Create new EFP List",
+    "list ops": "list operations",
     "edits": "edits to list records",
     "req transactions": "Required transactions",
     "chain": "Chain"
@@ -33,7 +34,7 @@
     "approved": "Transaction approved",
     "pending": "Transaction pending",
     "successful": "Transaction successful",
-    "finishing": "Transaction finishing",
+    "finishing": "Updating list data...",
     "error": "Transaction error",
     "confirmation error": "Transacation was declined",
     "check wallet": "Check your wallet",

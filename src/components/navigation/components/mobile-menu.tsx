@@ -2,18 +2,29 @@
 
 import clsx from 'clsx'
 import Link from 'next/link'
+import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
+import type { Dispatch, SetStateAction } from 'react'
 
 import { NAV_ITEMS } from '#/lib/constants'
 import { usePathname } from 'next/navigation'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 interface MobileMenuProps {
   open: boolean
+  setOpen: Dispatch<SetStateAction<boolean>>
 }
 
-const MobileMenu: React.FC<MobileMenuProps> = ({ open }) => {
+const MobileMenu: React.FC<MobileMenuProps> = ({ open, setOpen }) => {
   const pathname = usePathname()
   const { t } = useTranslation()
+  const { address: userAddress } = useAccount()
+  const { selectedList, profile } = useEFPProfile()
+  const itemUrl =
+    pathname.split('?')[0]?.toLowerCase() === `/${userAddress?.toLowerCase()}` &&
+    selectedList === Number(profile?.primary_list)
+      ? userAddress
+      : selectedList?.toString() ?? userAddress
 
   if (!open) return null
 
@@ -23,10 +34,11 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ open }) => {
         <div className='font-bold' key={`${item.name}`}>
           <Link
             prefetch={true}
-            href={item.href}
+            href={item.href(itemUrl)}
+            onClick={() => setOpen(false)}
             className={clsx([
               'capitalize xl:text-xl lg:text-lg transition-colors',
-              pathname === item.href ? 'text-darkGrey' : 'text-grey hover:text-gray-500'
+              pathname === item.href(itemUrl) ? 'text-darkGrey' : 'text-grey hover:text-gray-500'
             ])}
           >
             <span className='block text-nowrap'>{t(`navigation.${item.name}`)}</span>

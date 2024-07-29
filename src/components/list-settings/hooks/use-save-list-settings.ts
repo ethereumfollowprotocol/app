@@ -24,7 +24,7 @@ import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import { rpcProviders } from '#/lib/constants/providers'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { useCart, type CartItem } from '#/contexts/cart-context'
-import { generateListStorageLocationSlot } from '#/app/efp/utilities'
+import { generateListStorageLocationSlot } from '#/utils/generateSlot'
 import type { FollowingResponse, ProfileDetailsResponse } from '#/types/requests'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
@@ -98,6 +98,8 @@ const useSaveListSettings = ({
     refetchProfile,
     refetchFollowing,
     refetchFollowers,
+    refetchFollowerTags,
+    refetchFollowingTags,
     setIsRefetchingProfile,
     setIsRefetchingFollowing
   } = useEFPProfile()
@@ -445,6 +447,8 @@ const useSaveListSettings = ({
     refetchProfile()
     refetchFollowing()
     refetchFollowers()
+    refetchFollowerTags()
+    refetchFollowingTags()
 
     resetActions()
     onCancel()

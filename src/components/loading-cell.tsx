@@ -8,11 +8,13 @@ export const LIGHT_LOADING_GRADIENT =
 interface LoadingCellProps {
   className?: string
   gradient?: string
+  isStatic?: boolean
 }
 
 const LoadingCell: React.FC<LoadingCellProps> = ({
   className,
-  gradient = DEFAULT_LOADING_GRADIENT
+  gradient = DEFAULT_LOADING_GRADIENT,
+  isStatic
 }) => {
   return (
     <div
@@ -21,7 +23,7 @@ const LoadingCell: React.FC<LoadingCellProps> = ({
         backgroundSize: '400%',
         animationFillMode: 'forwards'
       }}
-      className={clsx('animate-loading bg-repeat-x', className)}
+      className={clsx('bg-repeat-x', className, isStatic ? 'animate-none ' : 'animate-loading ')}
     />
   )
 }

@@ -27,14 +27,15 @@ import type {
   FollowingTagsResponse
 } from '#/types/requests'
 import { useCart } from './cart-context'
-import { FETCH_LIMIT_PARAM } from '#/lib/constants'
 import fetchProfileRoles from '#/api/fetchProfileRoles'
 import fetchProfileLists from '#/api/fetchProfileLists'
-import fetchFollowingTags from '#/api/fetchFollowingTags'
 import type { ProfileTableTitleType } from '#/types/common'
 import fetchProfileDetails from '#/api/fetchProfileDetails'
 import fetchProfileFollowers from '#/api/fetchProfileFollowers'
 import fetchProfileFollowing from '#/api/fetchProfileFollowing'
+import fetchFollowerTags, { nullFollowerTags } from '#/api/fetchFollowerTags'
+import fetchFollowingTags, { nullFollowingTags } from '#/api/fetchFollowingTags'
+import { BLOCKED_MUTED_TAGS, DEFAULT_TAGS_TO_ADD, FETCH_LIMIT_PARAM } from '#/lib/constants'
 
 // Define the type for the profile context
 type EFPProfileContextType = {
@@ -43,12 +44,14 @@ type EFPProfileContextType = {
   lists?: ProfileListsResponse | null
   profile?: ProfileDetailsResponse | null
   followingTags?: FollowingTagsResponse
+  followerTags?: FollowingTagsResponse
   followers: FollowerResponse[]
   following: FollowingResponse[]
   roles?: ProfileRoles
   listsIsLoading: boolean
   profileIsLoading: boolean
   followingTagsLoading: boolean
+  followerTagsLoading: boolean
   followersIsLoading: boolean
   followingIsLoading: boolean
   isFetchingMoreFollowers: boolean
@@ -88,6 +91,9 @@ type EFPProfileContextType = {
   refetchFollowingTags: (
     options?: RefetchOptions
   ) => Promise<QueryObserverResult<FollowingTagsResponse | undefined, Error>>
+  refetchFollowerTags: (
+    options?: RefetchOptions
+  ) => Promise<QueryObserverResult<FollowingTagsResponse | undefined, Error>>
   refetchFollowers: (
     options?: RefetchOptions | undefined
   ) => Promise<
@@ -105,13 +111,17 @@ type EFPProfileContextType = {
     >
   >
   refetchRoles: (options?: RefetchOptions) => Promise<QueryObserverResult<ProfileRoles, Error>>
+  recentTags: string[]
   followingTagsFilter: string[]
   followersTagsFilter: string[]
   followingSort: FollowSortType
   followersSort: FollowSortType
+  addRecentTag: (tag: string) => void
   toggleTag: (tab: ProfileTableTitleType, tag: string) => void
   setFollowingSort: (option: FollowSortType) => void
   setFollowersSort: (option: FollowSortType) => void
+  setFollowingTagsFilter: Dispatch<SetStateAction<string[]>>
+  setFollowersTagsFilter: Dispatch<SetStateAction<string[]>>
   setIsRefetchingProfile: (state: boolean) => void
   setIsRefetchingFollowing: (state: boolean) => void
   setSetNewListAsSelected: (state: boolean) => void
@@ -125,14 +135,18 @@ const EFPProfileContext = createContext<EFPProfileContextType | undefined>(undef
 
 export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   const [isRefetchingProfile, setIsRefetchingProfile] = useState(false)
-  const [setNewListAsSelected, setSetNewListAsSelected] = useState(false)
   const [isRefetchingFollowing, setIsRefetchingFollowing] = useState(false)
+
   // selectedList = undefined will mean that the connected user can create a new list
   const [selectedList, setSelectedList] = useState<number>()
+  const [setNewListAsSelected, setSetNewListAsSelected] = useState(false)
+
   const [followingTagsFilter, setFollowingTagsFilter] = useState<string[]>([])
   const [followersTagsFilter, setFollowersTagsFilter] = useState<string[]>([])
   const [followingSort, setFollowingSort] = useState<FollowSortType>('latest first')
   const [followersSort, setFollowersSort] = useState<FollowSortType>('latest first')
+
+  const [recentTags, setRecentTags] = useState(DEFAULT_TAGS_TO_ADD)
 
   const chains = useChains()
   const { resetCart } = useCart()
@@ -157,14 +171,34 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   })
 
   useEffect(() => {
-    if (lists?.lists && setNewListAsSelected) {
+    if (!lists?.lists) return setSelectedList(undefined)
+
+    if (setNewListAsSelected) {
       setSetNewListAsSelected(false)
+      localStorage.setItem(
+        'selected-list',
+        Math.max(...lists.lists.map(list => Number(list))).toString()
+      )
       setSelectedList(Math.max(...lists.lists.map(list => Number(list))))
       return
     }
 
-    if (lists?.primary_list) return setSelectedList(Number(lists.primary_list))
-    if (lists?.lists && lists?.lists?.length > 0) return setSelectedList(Number(lists?.lists[0]))
+    const persistedList = localStorage.getItem('selected-list')
+    if (persistedList && lists.lists.includes(persistedList))
+      return setSelectedList(Number(persistedList))
+    if (persistedList === 'new list') return setSelectedList(undefined)
+
+    if (lists?.primary_list) {
+      localStorage.setItem('selected-list', lists.primary_list)
+      return setSelectedList(Number(lists.primary_list))
+    }
+    if (lists?.lists?.length > 0) {
+      localStorage.setItem(
+        'selected-list',
+        Math.min(...lists.lists.map(list => Number(list))).toString()
+      )
+      return setSelectedList(Math.min(...lists.lists.map(list => Number(list))))
+    }
 
     setSelectedList(undefined)
   }, [lists])
@@ -192,15 +226,30 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     refetchOnWindowFocus: false
   })
 
+  const {
+    data: followerTags,
+    refetch: refetchFollowerTags,
+    isLoading: followerTagsLoading,
+    isRefetching: isRefetchingFollowerTagsQuery
+  } = useQuery({
+    queryKey: ['follower tags', userAddress, selectedList],
+    queryFn: async () => {
+      if (!userAddress) return nullFollowerTags
+
+      const fetchedTags = await fetchFollowerTags(userAddress, selectedList)
+      return fetchedTags
+    }
+  })
+
   const [isEndOfFollowers, setIsEndOfFollowers] = useState(false)
   // Fetch followings depending on the selected list
   const {
     data: fetchedFollowers,
+    refetch: refetchFollowers,
     isLoading: followersIsLoading,
     fetchNextPage: fetchMoreFollowers,
-    isFetchingNextPage: isFetchingMoreFollowers,
-    refetch: refetchFollowers,
-    isRefetching: isRefetchingFollowersQuery
+    isRefetching: isRefetchingFollowersQuery,
+    isFetchingNextPage: isFetchingMoreFollowers
   } = useInfiniteQuery({
     queryKey: ['followers', userAddress, selectedList, followersSort, followersTagsFilter],
     queryFn: async ({ pageParam = 0 }) => {
@@ -239,7 +288,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   } = useQuery({
     queryKey: ['following tags', userAddress, selectedList],
     queryFn: async () => {
-      if (!userAddress) return
+      if (!userAddress) return nullFollowingTags
 
       const fetchedProfile = await fetchFollowingTags(userAddress, selectedList)
       return fetchedProfile
@@ -336,6 +385,21 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     }
   }
 
+  const addRecentTag = (tag: string) => {
+    setRecentTags([tag, ...recentTags.filter(recentTag => recentTag !== tag)].slice(0, 5))
+  }
+
+  useEffect(() => {
+    if (followingTags?.tagCounts && followingTags?.tagCounts.length > 0)
+      setRecentTags(
+        followingTags?.tagCounts
+          ?.sort((a, b) => b.count - a.count)
+          .map(tag => tag.tag)
+          .filter(tag => !BLOCKED_MUTED_TAGS.includes(tag))
+          .slice(0, 5)
+      )
+  }, [followingTags])
+
   const { data: roles, refetch: refetchRoles } = useQuery({
     queryKey: ['userRoles', userAddress, selectedList],
     queryFn: async () => {
@@ -363,11 +427,13 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         setSelectedList,
         lists,
         profile,
+        followerTags,
         followingTags,
         followers,
         following,
         roles,
         listsIsLoading,
+        followerTagsLoading: followerTagsLoading || isRefetchingFollowerTagsQuery,
         followingTagsLoading: followingTagsLoading || isRefetchingFollowingTagsQuery,
         profileIsLoading:
           listsIsLoading || isRefetchingProfile || profileIsLoading || isRefetchingProfileQuery,
@@ -387,12 +453,15 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         refetchProfile,
         refetchFollowers,
         refetchFollowing,
+        refetchFollowerTags,
         refetchFollowingTags,
         refetchRoles,
+        recentTags,
         followingTagsFilter,
         followersTagsFilter,
         followingSort,
         followersSort,
+        addRecentTag,
         toggleTag,
         setFollowingSort: (option: FollowSortType) => {
           setFollowingSort(option)
@@ -400,6 +469,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         setFollowersSort: (option: FollowSortType) => {
           setFollowersSort(option)
         },
+        setFollowingTagsFilter,
+        setFollowersTagsFilter,
         setIsRefetchingProfile,
         setIsRefetchingFollowing,
         setSetNewListAsSelected

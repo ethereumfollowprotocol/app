@@ -48,6 +48,8 @@ export default function ProfilePage() {
     fetchMoreFollowing,
     isEndOfFollowers,
     isEndOfFollowing,
+    setFollowingTagsFilter,
+    setFollowersTagsFilter,
     isFetchingMoreFollowers,
     isFetchingMoreFollowing
   } = useEFPProfile()
@@ -57,10 +59,11 @@ export default function ProfilePage() {
       <UserProfilePageTable
         isLoading={followingIsLoading}
         results={following}
-        allTags={followingTags?.tags}
+        allTags={followingTags?.tagCounts}
         tagsLoading={followingTagsLoading}
         selectedTags={followingTagsFilter}
         toggleSelectedTags={toggleTag}
+        setSelectedTags={setFollowingTagsFilter}
         sort={followingSort}
         setSort={setFollowingSort}
         isEndOfResults={isEndOfFollowing}
@@ -76,6 +79,7 @@ export default function ProfilePage() {
         isLoading={followersIsLoading}
         results={followers}
         toggleSelectedTags={toggleTag}
+        setSelectedTags={setFollowersTagsFilter}
         sort={followersSort}
         setSort={setFollowersSort}
         isEndOfResults={isEndOfFollowers}
@@ -107,13 +111,12 @@ export default function ProfilePage() {
         />
       )}
       {!isSaving && (
-        <main className='flex pb-8 min-h-full w-full justify-between xl:justify-center gap-y-4 flex-col md:flex-row flex-wrap xl:flex-nowrap items-start xl:gap-6 mt-24 sm:mt-28 lg:mt-32 xl:mt-40 px-4 lg:px-8'>
+        <main className='flex pb-8 min-h-full w-full justify-between xl:justify-center gap-y-4 flex-col md:flex-row flex-wrap xl:flex-nowrap items-start xl:gap-6 mt-[108px] sm:mt-28 lg:mt-32 xl:mt-40 px-4 lg:px-8'>
           <div className='flex flex-col w-full xl:w-fit items-center gap-4'>
             <UserProfileCard
               profileList={selectedList}
               hideFollowButton={true}
               profile={profile}
-              following={following}
               isLoading={profileIsLoading}
             />
             <div className='flex flex-col gap-1 items-center'>
@@ -137,9 +140,10 @@ export default function ProfilePage() {
           <UserProfilePageTable
             isLoading={followingIsLoading}
             results={following}
-            allTags={followingTags?.tags}
+            allTags={followingTags?.tagCounts}
             tagsLoading={followingTagsLoading}
             selectedTags={followingTagsFilter}
+            setSelectedTags={setFollowingTagsFilter}
             toggleSelectedTags={toggleTag}
             sort={followingSort}
             setSort={setFollowingSort}
@@ -154,6 +158,7 @@ export default function ProfilePage() {
             isLoading={followersIsLoading}
             results={followers}
             toggleSelectedTags={toggleTag}
+            setSelectedTags={setFollowersTagsFilter}
             sort={followersSort}
             setSort={setFollowersSort}
             isEndOfResults={isEndOfFollowers}

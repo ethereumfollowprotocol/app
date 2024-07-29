@@ -23,7 +23,7 @@ interface Props {
 export default function UserPage({ params }: Props) {
   const { user } = params
   const searchParams = useSearchParams()
-  const initialBlockedOpen = searchParams.get('modal') === 'blocked'
+  const initialBlockedOpen = searchParams.get('modal') === 'blockmutelists'
 
   const [isSaving, setIsSaving] = useState(false)
   const [listSettingsOpen, setListSettingsOpen] = useState(false)
@@ -42,6 +42,7 @@ export default function UserPage({ params }: Props) {
     following,
     toggleTag,
     userIsList,
+    followerTags,
     followersSort,
     followingSort,
     followingTags,
@@ -56,9 +57,12 @@ export default function UserPage({ params }: Props) {
     fetchMoreFollowing,
     followingTagsFilter,
     followersTagsFilter,
+    followerTagsLoading,
     followingTagsLoading,
     isFetchingMoreFollowers,
-    isFetchingMoreFollowing
+    isFetchingMoreFollowing,
+    setFollowersTagsFilter,
+    setFollowingTagsFilter
   } = useUser(user)
 
   const mobileActiveEl = {
@@ -66,10 +70,11 @@ export default function UserPage({ params }: Props) {
       <UserProfilePageTable
         isLoading={followingIsLoading}
         results={following}
-        allTags={followingTags?.tags}
+        allTags={followingTags?.tagCounts}
         tagsLoading={followingTagsLoading}
         selectedTags={followingTagsFilter}
         toggleSelectedTags={toggleTag}
+        setSelectedTags={setFollowingTagsFilter}
         sort={followingSort}
         setSort={setFollowingSort}
         isEndOfResults={isEndOfFollowing}
@@ -86,7 +91,10 @@ export default function UserPage({ params }: Props) {
       <UserProfilePageTable
         isLoading={followersIsLoading}
         results={followers}
+        allTags={followerTags?.tagCounts}
+        tagsLoading={followerTagsLoading}
         selectedTags={followersTagsFilter}
+        setSelectedTags={setFollowersTagsFilter}
         toggleSelectedTags={toggleTag}
         sort={followersSort}
         setSort={setFollowersSort}
@@ -132,7 +140,7 @@ export default function UserPage({ params }: Props) {
         />
       )}
       {!isSaving && (
-        <main className='flex pb-8 min-h-full w-full justify-between xl:justify-center gap-y-4 flex-col md:flex-row flex-wrap xl:flex-nowrap items-start xl:gap-6 mt-24 sm:mt-28 lg:mt-32 xl:mt-40 px-4 lg:px-8'>
+        <main className='flex pb-8 min-h-full w-full justify-between xl:justify-center gap-y-4 flex-col md:flex-row flex-wrap xl:flex-nowrap items-start xl:gap-6 mt-[108px] sm:mt-28 md:mt-32 xl:mt-40 px-4 lg:px-8'>
           <div className='flex flex-col w-full xl:w-fit items-center gap-4'>
             <UserProfileCard
               profileList={
@@ -143,7 +151,6 @@ export default function UserPage({ params }: Props) {
                     : undefined
               }
               profile={profile}
-              following={following}
               isLoading={profileIsLoading}
               showMoreOptions={
                 profile?.address?.toLowerCase() !== connectedUserAddress?.toLowerCase()
@@ -153,7 +160,7 @@ export default function UserPage({ params }: Props) {
               <p
                 onClick={() => {
                   setIsBlockedMutedOpen(true)
-                  router.push(`/${user}?modal=blocked`)
+                  router.push(`/${user}?modal=blockmutelists`)
                 }}
                 className='font-semibold cursor-pointer hover:opacity-80 transition-opacity'
               >
@@ -173,10 +180,11 @@ export default function UserPage({ params }: Props) {
           <UserProfilePageTable
             isLoading={followingIsLoading}
             results={following}
-            allTags={followingTags?.tags}
+            allTags={followingTags?.tagCounts}
             tagsLoading={followingTagsLoading}
             selectedTags={followingTagsFilter}
             toggleSelectedTags={toggleTag}
+            setSelectedTags={setFollowingTagsFilter}
             sort={followingSort}
             setSort={setFollowingSort}
             isEndOfResults={isEndOfFollowing}
@@ -192,8 +200,11 @@ export default function UserPage({ params }: Props) {
           <UserProfilePageTable
             isLoading={followersIsLoading}
             results={followers}
+            allTags={followerTags?.tagCounts}
+            tagsLoading={followerTagsLoading}
             selectedTags={followersTagsFilter}
             toggleSelectedTags={toggleTag}
+            setSelectedTags={setFollowersTagsFilter}
             sort={followersSort}
             setSort={setFollowersSort}
             isEndOfResults={isEndOfFollowers}

@@ -1,12 +1,13 @@
 'use client'
 
+import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
 import { useAccount } from 'wagmi'
-import { usePathname } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
+import { usePathname, useRouter } from 'next/navigation'
 
 import {
   listOpAddTag,
@@ -19,18 +20,18 @@ import LoadingCell from '../loading-cell'
 import { resolveEnsProfile } from '#/utils/ens'
 import { useCart } from '#/contexts/cart-context'
 import { truncateAddress } from '#/lib/utilities'
+import FollowButton from '#/components/follow-button'
 import useFollowState from '#/hooks/use-follow-state'
 import LoadingProfileCard from './loading-profile-card'
-import { FollowButton } from '#/components/follow-button'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
+import type { ProfileDetailsResponse } from '#/types/requests'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
-import type { FollowingResponse, ProfileDetailsResponse } from '#/types/requests'
 
 interface UserProfileCardProps {
   profileList?: number | null
   isResponsive?: boolean
   hideFollowButton?: boolean
   profile?: ProfileDetailsResponse | null
-  following?: FollowingResponse[]
   borderColor?: string
   isLoading?: boolean
   showMoreOptions?: boolean
@@ -43,7 +44,6 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   profile,
   borderColor,
   isLoading,
-  following,
   showMoreOptions
 }) => {
   const [moreOptionsDropdownOpen, setMoreOptionsDropdownOpen] = useState(false)
@@ -66,12 +66,22 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
     address: profile?.address,
     type: 'following'
   })
+  const { followerTag } = useFollowState({
+    address: profile?.address,
+    type: 'follower'
+  })
 
+  const router = useRouter()
   const pathname = usePathname()
+  const { selectedList } = useEFPProfile()
   const { address: connectedAddress } = useAccount()
   const { t } = useTranslation('common', { keyPrefix: 'profile card' })
 
-  const isConnectedUserCard = pathname === '/' || pathname.includes('/profile')
+  const isConnectedUserCard =
+    pathname === '/' ||
+    (pathname.split('?')[0]?.toLowerCase() === `/${connectedAddress?.toLowerCase()}` &&
+      selectedList === Number(profile?.primary_list)) ||
+    pathname.split('?')[0] === `/${selectedList?.toString() ?? connectedAddress}`
 
   const isProfileValid = !(
     Object.keys(profile || {}).includes('response') ||
@@ -169,28 +179,31 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   return (
     <div
       className={`flex glass-card ${
-        isResponsive ? 'xl:w-76 w-full 2xl:w-86 py-6 px-4 sm:p-6 sm:py-7' : 'w-86 p-6'
+        isResponsive ? 'xl:w-76 w-full 2xl:w-86 py-6 px-4 sm:p-6 sm:py-7' : 'w-76 3xs:w-86 p-6'
       } border-2 justify-center flex-col ${borderColor || 'border-[#FFDBD9]'} rounded-xl relative`}
     >
       {isLoading ? (
-        <LoadingProfileCard isResponsive={isResponsive} hideFollowButton={hideFollowButton} />
+        <LoadingProfileCard
+          isResponsive={isResponsive}
+          hideFollowButton={hideFollowButton || isConnectedUserCard}
+        />
       ) : profile && isProfileValid ? (
         <>
-          <div
-            className={`flex gap-2 items-center absolute ${
-              isResponsive ? 'justify-end xl:justify-start' : 'justify-start'
-            } px-2 w-full left-0 top-1 font-semibold`}
-          >
-            <p className='text-gray-500 text-sm sm:text-base'>#{profileList ?? '-'}</p>
+          <div className='flex gap-2 items-center absolute justify-between px-2 w-full left-0 top-1 font-semibold'>
+            {profileList && <p className='text-gray-500 text-sm sm:text-base'>#{profileList}</p>}
             {profileList
               ? profileList !== Number(profile.primary_list) && (
-                  <p className='w-full text-sm italic text-end text-red-400'>
+                  <p className='text-[11px] italic text-end rounded-full py-0.5 px-2 bg-gray-300'>
                     {t('not primary list')}
                   </p>
                 )
               : null}
           </div>
-          <div className='flex w-full xl:items-center flex-col gap-5 sm:gap-6 md:gap-9 pt-2'>
+          <div
+            className={`flex w-full xl:items-center flex-col pt-2 ${
+              followerTag.text === '' && !isResponsive ? 'gap-[68px]' : 'gap-5 sm:gap-6 md:gap-9'
+            }`}
+          >
             <div
               className={`flex w-full ${
                 isResponsive ? 'flex-row xl:flex-col xl:justify-center' : 'flex-col justify-center'
@@ -208,10 +221,11 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 <Avatar
                   avatarUrl={profileAvatar || DefaultAvatar}
                   name={profileName || profile.address}
+                  onClick={() => router.push(`/${profile.address}`)}
                   size={
                     isResponsive
-                      ? 'h-[70px] w-[70px] sm:h-[75px] sm:w-[75px] xl:h-[100px] xl:w-[100px]'
-                      : 'h-[100px] w-[100px]'
+                      ? 'h-[70px] w-[70px] sm:h-[75px] sm:w-[75px] xl:h-[100px] xl:w-[100px] cursor-pointer'
+                      : 'h-[100px] w-[100px] cursor-pointer'
                   }
                 />
               )}
@@ -230,7 +244,14 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                         : ' max-w-[332px] text-2xl text-center'
                     } font-bold flex gap-2 items-center relative`}
                   >
-                    <p className='truncate'>{profileName || truncateAddress(profile.address)}</p>
+                    <Link
+                      href={`/${profile.address}`}
+                      className={showMoreOptions ? 'w-[87.5%]' : 'w-full'}
+                    >
+                      <p className='truncate hover:opacity-70'>
+                        {profileName || truncateAddress(profile.address)}
+                      </p>
+                    </Link>
                     {showMoreOptions && (
                       <div ref={clickAwayMoreOptionsRef}>
                         <div
@@ -250,7 +271,6 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                               <Image
                                 alt='mainnet logo'
                                 src='/assets/mainnet-black.svg'
-                                className='text-red-500'
                                 width={16}
                                 height={16}
                               />
@@ -271,7 +291,6 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                               <Image
                                 alt='mainnet logo'
                                 src='/assets/mainnet-black.svg'
-                                className='text-red-500'
                                 width={16}
                                 height={16}
                               />
@@ -291,16 +310,16 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                     )}
                   </div>
                 )}
-                {following && connectedAddress
-                  ? following
-                      ?.map(follower => follower.data.toLowerCase())
-                      .includes(connectedAddress.toLowerCase()) && (
-                      <div className='rounded-full font-bold text-[10px] mb-1 flex items-center justify-center bg-gray-300 h-5 w-20'>
-                        {t('follows you')}
-                      </div>
-                    )
-                  : null}
-                {!hideFollowButton && profile.address && <FollowButton address={profile.address} />}
+                {followerTag && connectedAddress && (
+                  <div
+                    className={`rounded-full font-bold text-[10px] mb-1 flex items-center justify-center bg-gray-300 h-5 w-20 ${followerTag.className}`}
+                  >
+                    {t(followerTag.text)}
+                  </div>
+                )}
+                {!(hideFollowButton || isConnectedUserCard) && profile.address && (
+                  <FollowButton address={profile.address} />
+                )}
               </div>
             </div>
             <div
@@ -359,13 +378,19 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
             </div>
           </div>
         </>
+      ) : isConnectedUserCard ? (
+        <LoadingProfileCard
+          isResponsive={isResponsive}
+          hideFollowButton={true}
+          isStatic={!isLoading}
+        />
       ) : (
         <div
           className={`w-full h-20 ${
             hideFollowButton ? 'xl:h-[360px]' : 'xl:h-[420px]'
           } text-lg 2xl:text-xl flex items-center justify-center font-semibold italic`}
         >
-          {isConnectedUserCard ? t('connect wallet') : t('profile error')}
+          {t('profile error')}
         </div>
       )}
     </div>

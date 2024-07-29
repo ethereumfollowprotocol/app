@@ -4,11 +4,12 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 
 import { FETCH_LIMIT_PARAM } from '#/lib/constants'
 import fetchProfileLists from '#/api/fetchProfileLists'
-import fetchFollowingTags from '#/api/fetchFollowingTags'
 import fetchProfileDetails from '#/api/fetchProfileDetails'
 import type { ProfileTableTitleType } from '#/types/common'
 import fetchProfileFollowers from '#/api/fetchProfileFollowers'
 import fetchProfileFollowing from '#/api/fetchProfileFollowing'
+import fetchFollowerTags, { nullFollowerTags } from '#/api/fetchFollowerTags'
+import fetchFollowingTags, { nullFollowingTags } from '#/api/fetchFollowingTags'
 import type { FollowerResponse, FollowingResponse, FollowSortType } from '#/types/requests'
 
 const useUser = (user: string) => {
@@ -45,6 +46,21 @@ const useUser = (user: string) => {
     }
   })
 
+  const {
+    data: followerTags,
+    isLoading: followerTagsLoading,
+    isRefetching: isRefetchingFollowerTags
+  } = useQuery({
+    queryKey: ['follower tags', user],
+    queryFn: async () => {
+      if (!user) return nullFollowerTags
+
+      const fetchedTags = await fetchFollowerTags(user)
+      return fetchedTags
+    },
+    staleTime: 30000
+  })
+
   const [isEndOfFollowers, setIsEndOfFollowers] = useState(false)
   const {
     data: fetchedFollowers,
@@ -53,7 +69,7 @@ const useUser = (user: string) => {
     isFetchingNextPage: isFetchingMoreFollowers,
     isRefetching: isRefetchingFollowers
   } = useInfiniteQuery({
-    queryKey: ['followers', user],
+    queryKey: ['followers', user, followersSort, followersTagsFilter],
     queryFn: async ({ pageParam = 0 }) => {
       setIsEndOfFollowers(false)
 
@@ -65,9 +81,11 @@ const useUser = (user: string) => {
 
       const fetchedFollowers = await fetchProfileFollowers({
         addressOrName: user,
-        // list: listNum,
+        list: listNum,
         limit: FETCH_LIMIT_PARAM,
-        pageParam
+        pageParam,
+        tags: followersTagsFilter,
+        sort: followersSort
       })
 
       if (fetchedFollowers.followers.length === 0) setIsEndOfFollowers(true)
@@ -86,10 +104,10 @@ const useUser = (user: string) => {
   } = useQuery({
     queryKey: ['following tags', user],
     queryFn: async () => {
-      if (!user) return
+      if (!user) return nullFollowingTags
 
-      const fetchedProfile = await fetchFollowingTags(user, listNum)
-      return fetchedProfile
+      const fetchedTags = await fetchFollowingTags(user, listNum)
+      return fetchedTags
     },
     staleTime: 30000
   })
@@ -102,7 +120,7 @@ const useUser = (user: string) => {
     isFetchingNextPage: isFetchingMoreFollowing,
     isRefetching: isRefetchingFollowing
   } = useInfiniteQuery({
-    queryKey: ['following', user],
+    queryKey: ['following', user, followingSort, followingTagsFilter],
     queryFn: async ({ pageParam = 0 }) => {
       setIsEndOfFollowing(false)
 
@@ -116,7 +134,9 @@ const useUser = (user: string) => {
         addressOrName: user,
         list: listNum,
         limit: FETCH_LIMIT_PARAM,
-        pageParam
+        pageParam,
+        tags: followingTagsFilter,
+        sort: followingSort
       })
 
       if (fetchedFollowing.following.length === 0) setIsEndOfFollowing(true)
@@ -166,11 +186,13 @@ const useUser = (user: string) => {
     listNum,
     followers,
     following,
+    followerTags,
     followingTags,
     userIsList,
     profileIsLoading: profileIsLoading || isRefetchingProfile,
     followersIsLoading: followersIsLoading || isRefetchingFollowers,
     followingIsLoading: followingIsLoading || isRefetchingFollowing,
+    followerTagsLoading: followerTagsLoading || isRefetchingFollowerTags,
     followingTagsLoading: followingTagsLoading || isRefetchingFollowingTags,
     fetchMoreFollowers,
     fetchMoreFollowing,
@@ -184,7 +206,9 @@ const useUser = (user: string) => {
     setFollowingSort,
     followersSort,
     toggleTag,
-    setFollowersSort
+    setFollowersSort,
+    setFollowersTagsFilter,
+    setFollowingTagsFilter
   }
 }
 

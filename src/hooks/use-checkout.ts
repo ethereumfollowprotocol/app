@@ -170,7 +170,7 @@ const useCheckout = () => {
     const cartItemActions: Action[] = splitListOps.map((listOps, i) => ({
       id: `${EFPActionType.UpdateEFPList} ${i}`, // Unique identifier for the action
       type: EFPActionType.UpdateEFPList,
-      label: `${listOps.length} List ops`,
+      label: `${listOps.length} list Operations`,
       chainId,
       execute: async () => await listOpTx(listOps),
       isPendingConfirmation: false
@@ -270,9 +270,10 @@ const useCheckout = () => {
     resetCart()
     resetActions()
 
-    if (!setNewListAsPrimary) setSetNewListAsSelected(true)
-    if (listHasBeenMinted || selectedList === undefined) refetchLists()
-    else {
+    if (listHasBeenMinted || selectedList === undefined) {
+      refetchLists()
+      setSetNewListAsSelected(true)
+    } else {
       queryClient.setQueryData(
         ['following', userAddress, selectedList],
         (prev: {
@@ -289,7 +290,7 @@ const useCheckout = () => {
       refetchFollowingTags()
     }
 
-    router.push('/profile')
+    router.push(`/${selectedList ?? userAddress}`)
   }, [resetActions, resetCart, setNewListAsPrimary])
 
   return {

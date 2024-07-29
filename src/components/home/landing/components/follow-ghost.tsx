@@ -21,36 +21,31 @@ const FollowGhost = () => {
         src={FriendsEnemies}
         alt='Social Graph'
         width={400}
-        height={262}
         className='pointer-events-none hidden lg:block lg:w-[360px] xl:w-[400px]'
       />
       <Image
         src={FriendsEnemiesMobile}
         alt='Social Graph'
         width={350}
-        height={262}
-        className='pointer-events-none lg:hidden'
+        className='pointer-events-none z-10 lg:hidden'
       />
       <Image
         src={LineDesktop}
         alt='line'
         width={441}
-        height={301}
         className='pointer-events-none hidden lg:block absolute w-[448px] xl:w-[441px] top-[165px] xl:top-[185px] left-[353px] xl:left-[434px]'
       />
       <Image
         src={LineMobileFirst}
         alt='line'
         width={3}
-        height={301}
         className='pointer-events-none absolute lg:hidden left-[160px] top-[116px]'
       />
       <Image
         src={LineMobileSecond}
         alt='line'
         width={4}
-        height={301}
-        className='pointer-events-none absolute lg:hidden left-[287px] top-[315px]'
+        className='pointer-events-none absolute lg:hidden left-[287px] top-[312px]'
       />
     </div>
   )

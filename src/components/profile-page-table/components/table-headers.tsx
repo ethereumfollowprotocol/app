@@ -5,10 +5,10 @@ import { useClickAway } from '@uidotdev/usehooks'
 
 import { SORT_OPTIONS } from '#/lib/constants'
 import LoadingCell from '#/components/loading-cell'
-import type { FollowSortType } from '#/types/requests'
 import ArrowDown from 'public/assets/icons/arrow-down.svg'
 import type { ProfileTableTitleType } from '#/types/common'
 import SearchIcon from 'public/assets/icons/magnifying-glass.svg'
+import type { FollowSortType, TagCountType } from '#/types/requests'
 import { QUERY_BLOCK_TAGS } from '#/components/blocked-muted/hooks/use-blocked-muted'
 
 interface TableHeaderProps {
@@ -17,7 +17,7 @@ interface TableHeaderProps {
   showTags: boolean
   setShowTags: (input: boolean) => void
   setSearch: (input: string) => void
-  allTags?: string[]
+  allTags?: TagCountType[]
   tagsLoading?: boolean
   selectedTags?: string[]
   sort: FollowSortType
@@ -53,7 +53,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
   const { t } = useTranslation('profile')
 
   const displayedTags = allTags?.filter(tag =>
-    isShowingBlocked ? true : !QUERY_BLOCK_TAGS.includes(tag)
+    isShowingBlocked ? true : !QUERY_BLOCK_TAGS.includes(tag.tag)
   )
 
   return (
@@ -160,16 +160,17 @@ const TableHeader: React.FC<TableHeaderProps> = ({
           ) : (
             displayedTags?.map((tag, i) => (
               <button
-                key={tag + i}
-                className={`text-sm px-4 py-2 font-semibold italic ${
-                  selectedTags?.includes(tag)
+                key={tag.tag + i}
+                className={`text-sm flex gap-1.5 px-4 py-2 font-semibold items-center italic ${
+                  selectedTags?.includes(tag.tag)
                     ? 'text-darkGrey bg-white shadow-inner shadow-black/40'
                     : 'text-gray-500 bg-gray-300/80'
                 } rounded-full`}
-                name={tag.toLowerCase()}
-                onClick={() => toggleSelectedTags(title, tag)}
+                name={tag.tag.toLowerCase()}
+                onClick={() => toggleSelectedTags(title, tag.tag)}
               >
-                {tag}
+                <p>{tag.tag}</p>
+                <p className='text-xs text-gray-400'>{tag.count}</p>
               </button>
             ))
           )}

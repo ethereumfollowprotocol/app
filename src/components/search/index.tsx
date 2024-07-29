@@ -67,6 +67,10 @@ export function Search({
                     e.preventDefault()
                     onSubmit()
                   }
+                  if (e.key === 'Escape') {
+                    searchBarRef.current?.blur()
+                    setDropdownMenuOpen(false)
+                  }
                 }}
                 placeholder={t('navigation.search placeholder')}
                 onChange={handleSearchEvent}
@@ -98,6 +102,10 @@ export function Search({
               onChange={handleSearchEvent}
               onKeyDown={e => {
                 if (e.key === 'Enter') onSubmit()
+                if (e.key === 'Escape') {
+                  searchBarRef.current?.blur()
+                  setDropdownMenuOpen(false)
+                }
               }}
               onClick={event => {
                 event.preventDefault()
@@ -131,7 +139,7 @@ export function Search({
         </div>
         {isEditor && (
           <button
-            className='bg-gradient-to-b capitalize font-semibold py-3 px-6 from-kournikova-300 rounded-full to-salmon-400 text-black h-auto'
+            className='bg-gradient-to-b capitalize font-semibold py-3 px-6 from-[#FFDE60] rounded-full to-[#FFA997] text-black h-auto'
             onClick={() => onSubmit()}
           >
             {tEditor('add')}
@@ -186,7 +194,7 @@ export function Search({
           src={MagnifyingGlass}
           onClick={() => setDialogOpen(true)}
           alt='Search'
-          className='h-5 w-5'
+          className='h-5 w-5 cursor-pointer hover:opacity-65'
           aria-hidden='true'
         />
         <div
@@ -198,6 +206,7 @@ export function Search({
           <div>
             <input
               name='search'
+              ref={searchBarRef as LegacyRef<HTMLInputElement>}
               className='h-11 rounded-xl border-2 w-full shadow-md border-gray-200 px-2'
               spellCheck={false}
               placeholder={t('navigation.search placeholder')}
@@ -206,6 +215,7 @@ export function Search({
               value={currentSearch}
               onKeyDown={e => {
                 if (e.key === 'Enter') onSubmit()
+                if (e.key === 'Escape') setDialogOpen(false)
               }}
               onChange={handleSearchEvent}
               onClick={event => {
@@ -244,17 +254,21 @@ export function Search({
                   {t('navigation.search no results')}
                 </div>
               ) : (
-                searchResult.map(result => (
+                searchResult.map((result, index) => (
                   <div
                     key={result.name}
                     onClick={() => {
                       if (isEditor && result.resolvedAddress) addToCart(result.resolvedAddress.id)
                       else router.push(`/${result.resolvedAddress?.id || result.name}`)
+
                       resetSearch()
                     }}
-                    className='max-w-full truncate text-md hover:opacity-75 cursor-pointer transition-opacity'
+                    className='max-w-full truncate text-md flex items-center hover:opacity-75 gap-1 cursor-pointer transition-opacity'
                   >
-                    {result.name}
+                    <p>{result.name}</p>
+                    <p className='text-sm text-gray-400'>
+                      - {truncateAddress(result.resolvedAddress?.id)}
+                    </p>
                   </div>
                 ))
               )}

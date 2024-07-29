@@ -9,7 +9,8 @@ import {
   listOpRemoveTag,
   listOpAddListRecord,
   extractAddressAndTag,
-  listOpRemoveListRecord
+  listOpRemoveListRecord,
+  listOpAddTag
 } from '#/utils/list-ops'
 import { useCart } from '#/contexts/cart-context'
 import useFollowState from '#/hooks/use-follow-state'
@@ -34,6 +35,7 @@ export type FollowButtonState =
 
 type FollowButtonText =
   | 'Block'
+  | 'Block Back'
   | 'Blocked'
   | 'Follow'
   | 'Following'
@@ -46,7 +48,10 @@ type FollowButtonText =
   | 'Unmute'
   | 'Unsubscribe'
 
-export const useFollowButton = ({ address }: { address: Address }) => {
+export const useFollowButton = ({
+  address,
+  isBlockedBy
+}: { address: Address; isBlockedBy?: boolean }) => {
   const { roles } = useEFPProfile()
   const { address: userAddress } = useAccount()
   const { followState, isFollowStateLoading } = useFollowState({
@@ -79,6 +84,8 @@ export const useFollowButton = ({ address }: { address: Address }) => {
     if (!userAddress) return 'Follow'
     if (pendingState) return pendingState
 
+    if ((followState === 'none' || followState === 'follows') && isBlockedBy) return 'Block'
+
     switch (followState) {
       case 'follows':
         return 'Following'
@@ -98,6 +105,8 @@ export const useFollowButton = ({ address }: { address: Address }) => {
     if (pendingState === 'Pending Mute') return 'Muted'
     if (pendingState === 'Pending Following') return 'Following'
     if (pendingState) return pendingState
+
+    if ((followState === 'none' || followState === 'follows') && isBlockedBy) return 'Block Back'
 
     switch (followState) {
       case 'follows':
@@ -153,21 +162,21 @@ export const useFollowButton = ({ address }: { address: Address }) => {
     // remove from cart if it's a pending unfollow
     if (buttonState === 'Unfollow') return removeCartItem(listOpRemoveListRecord(address))
 
-    if (buttonText === 'Block') {
-      if (followState !== 'follows') addCartItem({ listOp: listOpRemoveListRecord(address) })
-      return addCartItem({ listOp: listOpRemoveTag(address, 'block') })
+    if (buttonState === 'Block') {
+      if (followState !== 'follows') addCartItem({ listOp: listOpAddListRecord(address) })
+      return addCartItem({ listOp: listOpAddTag(address, 'block') })
     }
-    if (buttonText === 'Blocked') {
+    if (buttonState === 'Blocked') {
       addCartItem({ listOp: listOpRemoveListRecord(address) })
       addCartItem({ listOp: listOpRemoveTag(address, 'block') })
       return
     }
 
-    if (buttonText === 'Mute') {
+    if (buttonState === 'Mute') {
       if (followState !== 'follows') addCartItem({ listOp: listOpRemoveListRecord(address) })
       return addCartItem({ listOp: listOpRemoveTag(address, 'mute') })
     }
-    if (buttonText === 'Muted') {
+    if (buttonState === 'Muted') {
       addCartItem({ listOp: listOpRemoveListRecord(address) })
       addCartItem({ listOp: listOpRemoveTag(address, 'mute') })
       return

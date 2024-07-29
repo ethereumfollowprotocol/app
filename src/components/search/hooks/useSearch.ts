@@ -40,6 +40,7 @@ const useSearch = (isEditor?: boolean) => {
     setDialogOpen(false)
   })
   const searchBarRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
+
   useEffect(() => {
     if (initialSearch && initialSearch?.length > 0 && searchBarRef) {
       searchBarRef.current?.focus()
@@ -48,6 +49,10 @@ const useSearch = (isEditor?: boolean) => {
       setDialogOpen(true)
     }
   }, [searchBarRef])
+
+  useEffect(() => {
+    if (dialogOpen) searchBarRef.current?.focus()
+  }, [dialogOpen])
 
   const searchKey = useMemo(
     () => (isEditor ? currentSearch : search),
@@ -184,12 +189,12 @@ const useSearch = (isEditor?: boolean) => {
       currentSearch.includes('.') ||
       !Number.isNaN(Number(currentSearch))
     ) {
+      resetSearch()
       const address = isAddress(currentSearch)
         ? currentSearch
         : await resolveEnsAddress(currentSearch)
 
       router.push(`/${address || currentSearch}`)
-      resetSearch()
     }
   }
 

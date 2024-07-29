@@ -45,29 +45,28 @@ export type ChainWithDetails = Chain & {
 // `chainDetail` and `gasFeeDetail` are custom fields to be used in the ChainList component
 export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
   // {
+  //   ...base,
+  //   iconUrl: '/assets/chains/base.svg',
+  //   custom: {
+  //     chainDetail: '',
+  //     gasFeeDetail: 'Super Low gas fees'
+  //   }
+  // },
+  // {
+  //   ...optimism,
+  //   iconUrl: '/assets/chains/optimism.svg',
+  //   custom: {
+  //     chainDetail: 'Ethereum L2',
+  //     gasFeeDetail: 'Low gas fees'
+  //   }
+  // },
+  // {
   //   ...mainnet,
   //   iconBackground: 'bg-gray-300',
   //   iconUrl: '/assets/chains/ethereum.svg',
   //   custom: {
   //     chainDetail: '',
   //     gasFeeDetail: 'High gas fees'
-  //   }
-  // },
-  // {
-  //   ...sepolia,
-  //   iconBackground: 'bg-gray-200',
-  //   iconUrl: '/assets/chains/ethereum.svg',
-  //   custom: {
-  //     chainDetail: 'Testnet',
-  //     gasFeeDetail: 'Low gas fees'
-  //   }
-  // },
-  // {
-  //   ...base,
-  //   iconUrl: '/assets/chains/base.svg',
-  //   custom: {
-  //     chainDetail: '',
-  //     gasFeeDetail: 'Super Low gas fees'
   //   }
   // },
   {
@@ -78,19 +77,20 @@ export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
       gasFeeDetail: 'Super Low gas fees'
     }
   },
-  // {
-  //   ...optimism,
-  //   iconUrl: '/assets/chains/optimism.svg',
-  //   custom: {
-  //     chainDetail: 'Ethereum L2',
-  //     gasFeeDetail: 'Low gas fees'
-  //   }
-  // },
   {
     ...optimismSepolia,
     iconUrl: '/assets/chains/optimism.svg',
     custom: {
       chainDetail: 'Ethereum L2 Testnet',
+      gasFeeDetail: 'Low gas fees'
+    }
+  },
+  {
+    ...sepolia,
+    iconBackground: 'bg-gray-200',
+    iconUrl: '/assets/chains/ethereum.svg',
+    custom: {
+      chainDetail: 'Testnet',
       gasFeeDetail: 'Low gas fees'
     }
   }

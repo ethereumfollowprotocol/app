@@ -100,7 +100,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
     >
       <div
         ref={listSettingsRef}
-        className='glass-card h-fit bg-white/40 gap-5 sm:gap-8 flex flex-col rounded-xl p-6 py-8 sm:p-10 w-[554px]'
+        className='glass-card h-fit bg-white/40 gap-5 sm:gap-7 flex flex-col rounded-xl p-6 py-8 sm:p-9 w-[554px]'
       >
         <div className='w-full flex items-center justify-between'>
           <div className='relative'>
@@ -238,21 +238,21 @@ const ListSettings: React.FC<ListSettingsProps> = ({
           <div className='w-full flex justify-between'>
             <button
               onClick={() => setIsEditingSettings(false)}
-              className='text-lg mt-4 w-[47.5%] font-semibold hover:opacity-90 bg-[#a8a8a8] rounded-full h-12'
+              className='text-lg mt-4 w-32 font-semibold hover:opacity-90 bg-[#a8a8a8] rounded-full h-12'
             >
               Cancel
             </button>
             <PrimaryButton
               label={t('save')}
               onClick={() => setIsSaving(true)}
-              className='text-lg mt-4 w-[47.5%] h-12'
+              className='text-lg mt-4 w-32 h-12'
               disabled={!Object.values(changedValues).includes(true)}
             />
           </div>
         ) : (
           <button
             onClick={() => setIsEditingSettings(true)}
-            className='text-lg mt-4 w-full font-semibold hover:opacity-90 bg-[#a8a8a8] rounded-full h-12'
+            className='text-lg mt-4 px-6 mx-auto font-semibold hover:opacity-90 bg-[#a8a8a8] rounded-full h-12'
           >
             Edit Settings
           </button>

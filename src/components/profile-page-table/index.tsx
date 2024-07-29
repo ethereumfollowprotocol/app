@@ -5,11 +5,16 @@ import { usePathname } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { useIntersectionObserver } from '@uidotdev/usehooks'
 
+import type {
+  TagCountType,
+  FollowSortType,
+  FollowerResponse,
+  FollowingResponse
+} from '#/types/requests'
 import { FETCH_LIMIT_PARAM } from '#/lib/constants'
 import TableHeader from './components/table-headers'
 import { FollowList } from '#/components/follow-list'
 import type { ProfileTableTitleType } from '#/types/common'
-import type { FollowerResponse, FollowingResponse, FollowSortType } from '#/types/requests'
 
 /**
  * TODO: paginate
@@ -30,7 +35,8 @@ export function UserProfilePageTable({
   sort,
   setSort,
   showTagsByDefault,
-  isShowingBlocked
+  isShowingBlocked,
+  setSelectedTags
 }: {
   title: ProfileTableTitleType
   customClass?: string
@@ -40,7 +46,7 @@ export function UserProfilePageTable({
   results: FollowerResponse[] | FollowingResponse[]
   fetchMore: () => void
   canEditTags?: boolean
-  allTags?: string[]
+  allTags?: TagCountType[]
   tagsLoading?: boolean
   selectedTags?: string[]
   sort: FollowSortType
@@ -48,9 +54,14 @@ export function UserProfilePageTable({
   toggleSelectedTags: (title: ProfileTableTitleType, tag: string) => void
   showTagsByDefault?: boolean
   isShowingBlocked?: boolean
+  setSelectedTags: (tags: string[]) => void
 }) {
   const [search, setSearch] = useState<string>('')
   const [showTags, setShowTags] = useState(!!showTagsByDefault)
+
+  useEffect(() => {
+    if (!showTags) setSelectedTags(isShowingBlocked ? ['All'] : [])
+  }, [showTags])
 
   const pathname = usePathname()
   const { t } = useTranslation('profile')
@@ -80,7 +91,7 @@ export function UserProfilePageTable({
 
   const noResults = {
     following: (
-      <div className='text-center font-semibold py-4'>
+      <div className='text-center font-semibold'>
         {title === 'followers' && (
           <span className='text-lg'>
             {t(isProfile ? 'followers myprofile empty' : 'followers empty')}
@@ -150,6 +161,7 @@ export function UserProfilePageTable({
         canEditTags={canEditTags}
         isFollowers={title === 'followers' || title === 'Blocked/Muted By'}
         isBlockedList={isShowingBlocked}
+        isBlockedBy={title === 'Blocked/Muted By' && isProfile}
       />
       <div ref={loadMoreRef} className='h-px w-full' />
     </div>

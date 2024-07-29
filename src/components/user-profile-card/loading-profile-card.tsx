@@ -1,33 +1,51 @@
 import { useTranslation } from 'react-i18next'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
+
 import LoadingCell from '../loading-cell'
 
 interface LoadingProfileCardProps {
   isResponsive?: boolean
   hideFollowButton?: boolean
+  isStatic?: boolean
 }
 
 const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
   isResponsive,
-  hideFollowButton
+  hideFollowButton,
+  isStatic
 }) => {
+  const { openConnectModal } = useConnectModal()
   const { t } = useTranslation('common', { keyPrefix: 'profile card' })
 
   return (
     <>
-      <div
-        className={`pointer-events-none text-gray-500 absolute flex ${
-          isResponsive ? 'justify-end xl:justify-start' : 'justify-start'
-        } px-2 w-full left-0 top-1 font-semibold`}
-      >
-        <LoadingCell className='w-10 h-5 mt-1 rounded-lg' />
+      {isStatic && (
+        <div className='absolute w-full left-0 top-2/5 flex items-center justify-center'>
+          <button
+            className='glass-card bg-white/40 hover:bg-white/80 cursor-pointer font-semibold text-lg p-4 rounded-xl border-2 shadow-lg border-gray-300'
+            onClick={() => {
+              if (openConnectModal) openConnectModal()
+            }}
+          >
+            {t('connect wallet')}
+          </button>
+        </div>
+      )}
+      <div className='pointer-events-none text-gray-500 absolute flex justify-start px-2 w-full left-0 top-1 font-semibold'>
+        <LoadingCell isStatic={isStatic} className='w-10 h-5 mt-1 rounded-lg' />
       </div>
-      <div className='pointer-events-none flex w-full xl:items-center flex-col gap-5 sm:gap-6 md:gap-10 pt-2'>
+      <div
+        className={`pointer-events-none flex w-full xl:items-center flex-col ${
+          isResponsive ? 'gap-5 sm:gap-6 md:gap-10' : 'gap-[68px]'
+        } pt-2`}
+      >
         <div
           className={`flex w-full ${
             isResponsive ? 'flex-row xl:flex-col xl:justify-center' : 'flex-col justify-center'
           } items-center gap-5`}
         >
           <LoadingCell
+            isStatic={isStatic}
             className={
               isResponsive
                 ? 'h-[70px] w-[70px] sm:h-[75px] sm:w-[75px] xl:h-[100px] xl:w-[100px] rounded-full'
@@ -39,8 +57,10 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
               isResponsive ? 'xl:items-center items-start w-3/4 xl:w-full' : 'items-center w-full'
             } flex-col gap-2 justify-center`}
           >
-            <LoadingCell className='w-48 sm:w-68 xl:w-3/4 h-7 rounded-lg' />
-            {!hideFollowButton && <LoadingCell className='w-[107px] h-[37px] rounded-xl' />}
+            <LoadingCell isStatic={isStatic} className='w-48 sm:w-68 xl:w-3/4 h-7 rounded-lg' />
+            {!hideFollowButton && (
+              <LoadingCell isStatic={isStatic} className='w-[107px] h-9 rounded-lg' />
+            )}
           </div>
         </div>
         <div
@@ -51,19 +71,19 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
           }  items-center mx-autotext-center`}
         >
           <div className='flex flex-col items-center gap-2'>
-            <LoadingCell className='w-12 h-6 rounded-lg' />
+            <LoadingCell isStatic={isStatic} className='w-12 h-6 rounded-lg' />
             <div className={`${isResponsive ? 'sm:text-lg' : 'text-lg'} font-bold text-gray-500`}>
               {t('following')}
             </div>
           </div>
           <div className='flex flex-col items-center gap-2'>
-            <LoadingCell className='w-12 h-6 rounded-lg' />
+            <LoadingCell isStatic={isStatic} className='w-12 h-6 rounded-lg' />
             <div className={`${isResponsive ? 'sm:text-lg' : 'text-lg'} font-bold text-gray-500`}>
               {t('followers')}
             </div>
           </div>
           <div className='flex flex-col items-center gap-2'>
-            <LoadingCell className='w-12 h-6 rounded-lg' />
+            <LoadingCell isStatic={isStatic} className='w-12 h-6 rounded-lg' />
             <div className={`${isResponsive ? 'sm:text-lg' : 'text-lg'} font-bold text-gray-500`}>
               {t('leaderboard')}
             </div>

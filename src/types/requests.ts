@@ -125,9 +125,15 @@ export interface ProfileDetailsResponse {
   stats?: StatsResponse | undefined
 }
 
+export type TagCountType = {
+  tag: string
+  count: number
+}
+
 export interface FollowingTagsResponse {
   token_id: string | number
   tags: string[]
+  tagCounts: TagCountType[]
   taggedAddresses: {
     address: Address
     tag: string
@@ -136,7 +142,7 @@ export interface FollowingTagsResponse {
 
 export interface ProfileListsResponse {
   primary_list?: string | null
-  lists?: number[]
+  lists?: string[]
 }
 
 export type ProfileRoles = {
