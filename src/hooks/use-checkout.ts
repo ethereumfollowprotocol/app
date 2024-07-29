@@ -290,7 +290,7 @@ const useCheckout = () => {
       refetchFollowingTags()
     }
 
-    router.push('/profile')
+    router.push(`/${selectedList ?? userAddress}`)
   }, [resetActions, resetCart, setNewListAsPrimary])
 
   return {
