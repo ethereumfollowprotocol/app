@@ -20,8 +20,6 @@ const NavItems = () => {
       ? userAddress?.toLowerCase()
       : selectedList?.toString() ?? userAddress?.toLowerCase()
 
-  console.log(itemUrl)
-
   return (
     <ul className='lg:flex hidden lg:gap-6 xl:gap-9 items-center'>
       {NAV_ITEMS.map((item, index) => (
