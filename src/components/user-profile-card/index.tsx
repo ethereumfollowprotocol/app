@@ -23,8 +23,9 @@ import { truncateAddress } from '#/lib/utilities'
 import FollowButton from '#/components/follow-button'
 import useFollowState from '#/hooks/use-follow-state'
 import LoadingProfileCard from './loading-profile-card'
-import DefaultAvatar from 'public/assets/art/default-avatar.svg'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { ProfileDetailsResponse } from '#/types/requests'
+import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 
 interface UserProfileCardProps {
   profileList?: number | null
@@ -72,10 +73,15 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
 
   const router = useRouter()
   const pathname = usePathname()
+  const { selectedList } = useEFPProfile()
   const { address: connectedAddress } = useAccount()
   const { t } = useTranslation('common', { keyPrefix: 'profile card' })
 
-  const isConnectedUserCard = pathname === '/' || pathname.includes('/profile')
+  const isConnectedUserCard =
+    pathname === '/' ||
+    (pathname.split('?')[0]?.toLowerCase() === `/${connectedAddress?.toLowerCase()}` &&
+      selectedList === Number(profile?.primary_list)) ||
+    pathname.split('?')[0] === `/${selectedList?.toString() ?? connectedAddress}`
 
   const isProfileValid = !(
     Object.keys(profile || {}).includes('response') ||
@@ -177,7 +183,10 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
       } border-2 justify-center flex-col ${borderColor || 'border-[#FFDBD9]'} rounded-xl relative`}
     >
       {isLoading ? (
-        <LoadingProfileCard isResponsive={isResponsive} hideFollowButton={hideFollowButton} />
+        <LoadingProfileCard
+          isResponsive={isResponsive}
+          hideFollowButton={hideFollowButton || isConnectedUserCard}
+        />
       ) : profile && isProfileValid ? (
         <>
           <div className='flex gap-2 items-center absolute justify-between px-2 w-full left-0 top-1 font-semibold'>
@@ -308,7 +317,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                     {t(followerTag.text)}
                   </div>
                 )}
-                {!hideFollowButton && profile.address && <FollowButton address={profile.address} />}
+                {!(hideFollowButton || isConnectedUserCard) && profile.address && (
+                  <FollowButton address={profile.address} />
+                )}
               </div>
             </div>
             <div
@@ -370,7 +381,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
       ) : isConnectedUserCard ? (
         <LoadingProfileCard
           isResponsive={isResponsive}
-          hideFollowButton={hideFollowButton}
+          hideFollowButton={true}
           isStatic={!isLoading}
         />
       ) : (

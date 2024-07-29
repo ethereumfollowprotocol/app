@@ -20,8 +20,8 @@ export function FollowListItemTags({
   className = '',
   tags: initialTags
 }: FollowListItemTagsProps) {
-  const canAddTag = useCanAddTag(address)
   const isEditView = useIsEditView()
+  const canAddTag = useCanAddTag(address)
   const { getTagsFromCartByAddress } = useCart()
 
   const [showAllTags, setShowAllTags] = useState(false)

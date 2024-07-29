@@ -13,8 +13,8 @@ import { LANGUAGES } from '#/lib/constants/index.ts'
 import MobileMenu from './components/mobile-menu.tsx'
 import { useCart } from '../../contexts/cart-context'
 import CartButton from './components/cart-button.tsx'
-import ConnectButton from './components/connect-button.tsx'
 import ArrowDown from 'public/assets/icons/arrow-down.svg'
+import ConnectButton from './components/connect-button.tsx'
 
 const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -107,7 +107,6 @@ const Navigation = () => {
               <MobileMenu open={mobileMenuOpen} setOpen={setMobileMenuOpen} />
             </div>
             <ConnectButton />
-            {/* <Menu /> */}
           </div>
         </div>
       </nav>
