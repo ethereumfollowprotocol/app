@@ -19,22 +19,19 @@ const FollowerList = () => {
         src={FollowerListArt}
         alt='Social Graph'
         width={350}
-        height={262}
         className='hidden lg:block lg:w-[350px]'
       />
       <Image
         src={LineDesktop}
         alt='line'
         width={3}
-        height={154}
         className='absolute hidden lg:block top-[165px] xl:top-[190px] left-[760px] xl:left-[768px]'
       />
       <Image
         src={LineMobile}
         alt='line'
         width={4}
-        height={154}
-        className='absolute lg:hidden top-[107px] sm:top-[118px] md:top-[126px] '
+        className='absolute lg:hidden top-[112px] sm:top-[118px] md:top-[126px] '
       />
     </div>
   )

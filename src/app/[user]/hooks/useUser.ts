@@ -4,12 +4,12 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 
 import { FETCH_LIMIT_PARAM } from '#/lib/constants'
 import fetchProfileLists from '#/api/fetchProfileLists'
-import fetchFollowerTags from '#/api/fetchFollowerTags'
-import fetchFollowingTags from '#/api/fetchFollowingTags'
 import fetchProfileDetails from '#/api/fetchProfileDetails'
 import type { ProfileTableTitleType } from '#/types/common'
 import fetchProfileFollowers from '#/api/fetchProfileFollowers'
 import fetchProfileFollowing from '#/api/fetchProfileFollowing'
+import fetchFollowerTags, { nullFollowerTags } from '#/api/fetchFollowerTags'
+import fetchFollowingTags, { nullFollowingTags } from '#/api/fetchFollowingTags'
 import type { FollowerResponse, FollowingResponse, FollowSortType } from '#/types/requests'
 
 const useUser = (user: string) => {
@@ -53,7 +53,7 @@ const useUser = (user: string) => {
   } = useQuery({
     queryKey: ['follower tags', user],
     queryFn: async () => {
-      if (!user) return
+      if (!user) return nullFollowerTags
 
       const fetchedTags = await fetchFollowerTags(user)
       return fetchedTags
@@ -104,7 +104,7 @@ const useUser = (user: string) => {
   } = useQuery({
     queryKey: ['following tags', user],
     queryFn: async () => {
-      if (!user) return
+      if (!user) return nullFollowingTags
 
       const fetchedTags = await fetchFollowingTags(user, listNum)
       return fetchedTags

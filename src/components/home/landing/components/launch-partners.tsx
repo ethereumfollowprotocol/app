@@ -27,8 +27,7 @@ const LaunchPartners = () => {
                   src={partner.logo}
                   alt={partner.name}
                   width={70}
-                  height={70}
-                  className='mx-auto rounded-full sm:w-19 sm:h-19'
+                  className='mx-auto rounded-full sm:w-19'
                 />
                 <p
                   className='pt-1 mt-2 text-base sm:text-[1.3rem] font-bold'
@@ -50,14 +49,16 @@ const LaunchPartners = () => {
       />
       <div className='glass-card w-full p-6 mx-auto border-2 border-[#FF79C9] text-dark-gray font-bold text-center text-sm rounded-3xl max-w-4xl'>
         <p className=' text-2xl sm:text-3xl font-bold pb-8'>{t('sponsors')}</p>
-        <Link target='_blank' rel='noopener noreferrer' href='https://ensdao.org/'>
-          <Image
-            src={EnsDao}
-            width='180'
-            alt='ens dao'
-            className='mx-auto w-44 sm:w-60 rounded-[2rem] border-2 border-[#B879FF]'
-          />
-        </Link>
+        <div className='mx-auto w-fit'>
+          <Link target='_blank' rel='noopener noreferrer' href='https://ensdao.org/'>
+            <Image
+              src={EnsDao}
+              width='180'
+              alt='ens dao'
+              className='mx-auto w-44 sm:w-60 rounded-[2rem] border-2 border-[#B879FF]'
+            />
+          </Link>
+        </div>
       </div>
     </div>
   )

@@ -20,29 +20,25 @@ export default function SocialGraph() {
         src={SocialGraphImage}
         alt='Social Graph'
         width={500}
-        height={500}
-        className='pointer-events-none z-10 mr-8 md:mr-10 w-[330px] md:w-[450px] lg:w-[425px] lg:h-[425px] xl:h-[500px] xl:w-[500px]'
+        className='pointer-events-none z-10 mr-8 md:mr-10 w-[330px] md:w-[450px] lg:w-[425px] xl:w-[500px]'
       />
       <Image
         src={LineDesktop}
         alt='line'
         width={418}
-        height={301}
         className='pointer-events-none hidden lg:block absolute lg:w-[390px] xl:w-[418px] lg:top-[287px] lg:left-[361px] xl:top-[336px] xl:left-[420px]'
       />
       <Image
         src={LineMobileFirst}
         alt='line'
         width={3}
-        height={301}
         className='pointer-events-none absolute top-[112px] md:top-[120px] lg:hidden'
       />
       <Image
         src={LineMobileSecond}
         alt='line'
         width={3}
-        height={301}
-        className='pointer-events-none absolute w-1 top-[445px] md:top-[570px] lg:hidden'
+        className='pointer-events-none absolute w-1 top-[443px] md:top-[565px] lg:hidden'
       />
     </div>
   )

@@ -1,5 +1,6 @@
 import { useAccount } from 'wagmi'
 import LoadingCell, { LIGHT_LOADING_GRADIENT } from '#/components/loading-cell'
+import { useTranslation } from 'react-i18next'
 
 interface SettingsInputProps {
   option: string
@@ -24,6 +25,7 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
   isLoading,
   isSettingsLoading
 }) => {
+  const { t } = useTranslation('profile', { keyPrefix: 'list settings' })
   const { address: connectedAddress } = useAccount()
 
   return (
@@ -50,18 +52,18 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
       )}
       {value.includes('.') && (
         <div
-          className={`font-medium items-center flex gap-2 text-sm ${
+          className={`font-medium items-center flex gap-2 h-5 text-sm ${
             resolvedAddress && resolvedAddress?.length > 0 ? 'text-gray-400' : 'text-red-400'
           }`}
         >
-          <p className='text-gray-400'>Resolved:</p>
+          <p className='text-gray-400 h-full'>{t('resolved')}</p>
           {isLoading ? (
-            <LoadingCell className='w-full h-5 rounded-md' gradient={LIGHT_LOADING_GRADIENT} />
+            <LoadingCell className='w-full h-full rounded-md' gradient={LIGHT_LOADING_GRADIENT} />
           ) : (
-            <p>
+            <p className='h-full'>
               {resolvedAddress && resolvedAddress?.length > 0
                 ? resolvedAddress
-                : "Name doesn't resolve"}
+                : t('no resolution')}
             </p>
           )}
         </div>

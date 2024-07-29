@@ -29,12 +29,12 @@ import type {
 import { useCart } from './cart-context'
 import fetchProfileRoles from '#/api/fetchProfileRoles'
 import fetchProfileLists from '#/api/fetchProfileLists'
-import fetchFollowerTags from '#/api/fetchFollowerTags'
-import fetchFollowingTags from '#/api/fetchFollowingTags'
 import type { ProfileTableTitleType } from '#/types/common'
 import fetchProfileDetails from '#/api/fetchProfileDetails'
 import fetchProfileFollowers from '#/api/fetchProfileFollowers'
 import fetchProfileFollowing from '#/api/fetchProfileFollowing'
+import fetchFollowerTags, { nullFollowerTags } from '#/api/fetchFollowerTags'
+import fetchFollowingTags, { nullFollowingTags } from '#/api/fetchFollowingTags'
 import { BLOCKED_MUTED_TAGS, DEFAULT_TAGS_TO_ADD, FETCH_LIMIT_PARAM } from '#/lib/constants'
 
 // Define the type for the profile context
@@ -232,7 +232,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   } = useQuery({
     queryKey: ['follower tags', userAddress, selectedList],
     queryFn: async () => {
-      if (!userAddress) return
+      if (!userAddress) return nullFollowerTags
 
       const fetchedTags = await fetchFollowerTags(userAddress, selectedList)
       return fetchedTags
@@ -286,7 +286,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   } = useQuery({
     queryKey: ['following tags', userAddress, selectedList],
     queryFn: async () => {
-      if (!userAddress) return
+      if (!userAddress) return nullFollowingTags
 
       const fetchedProfile = await fetchFollowingTags(userAddress, selectedList)
       return fetchedProfile
