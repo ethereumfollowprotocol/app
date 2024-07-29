@@ -75,6 +75,10 @@ const TableRow: React.FC<TableRowProps> = ({
           </div>
         </div>
       </div>
+      <div className=' flex-col items-center w-[12.5%] xl:w-[11%] hidden lg:flex'>
+        <p className='font-bold text-sm sm:text-lg'>{mutuals || 0}</p>
+        <p className='font-medium'>Mutuals</p>
+      </div>
       <div className='hidden md:flex flex-col items-center w-[15%] lg:w-[12.5%] xl:w-[11%]'>
         <p className='font-bold text-sm sm:text-lg'>{following || 0}</p>
         <p className='font-medium'>Following</p>
@@ -82,10 +86,6 @@ const TableRow: React.FC<TableRowProps> = ({
       <div className='hidden sm:flex flex-col items-center w-[15%] lg:w-[12.5%] xl:w-[11%]'>
         <p className='font-bold text-sm sm:text-lg'>{followers || 0}</p>
         <p className='font-medium'>Followers</p>
-      </div>
-      <div className=' flex-col items-center w-[12.5%] xl:w-[11%] hidden lg:flex'>
-        <p className='font-bold text-sm sm:text-lg'>{mutuals || 0}</p>
-        <p className='font-medium'>Mutuals</p>
       </div>
       <div className='flex-col items-center w-[11%] hidden xl:flex'>
         <p className='font-bold text-sm sm:text-lg'>{blockedMuted || 0}</p>
