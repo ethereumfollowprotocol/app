@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import type { Address } from 'viem'
-import { FollowButton } from '#/components/follow-button'
+import FollowButton from '#/components/follow-button'
 
 interface Row {
   address: Address

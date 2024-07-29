@@ -3,8 +3,8 @@ import { useQuery } from '@tanstack/react-query'
 
 import { resolveEnsProfile } from '#/utils/ens'
 import type { ENSProfile } from '#/types/requests'
-import { FollowButton } from '#/components/follow-button'
-import { FollowListItemName } from './follow-list-item-name'
+import FollowButton from '#/components/follow-button'
+import FollowListItemName from './follow-list-item-name'
 
 export interface FollowListItemProps {
   className?: string
@@ -19,7 +19,7 @@ export interface FollowListItemProps {
   isBlockedBy?: boolean
 }
 
-export function FollowListItem({
+const FollowListItem: React.FC<FollowListItemProps> = ({
   className = '',
   address,
   ensProfile,
@@ -30,7 +30,7 @@ export function FollowListItem({
   canEditTags,
   isBlockedList,
   isBlockedBy
-}: FollowListItemProps) {
+}) => {
   const { data: fetchedEnsProfile, isLoading: isEnsProfileLoading } = useQuery({
     queryKey: ['ens metadata', address],
     queryFn: async () => await resolveEnsProfile(address)
@@ -61,3 +61,5 @@ export function FollowListItem({
     </div>
   )
 }
+
+export default FollowListItem
