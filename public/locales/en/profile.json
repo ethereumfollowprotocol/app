@@ -36,6 +36,8 @@
     "set owner": "Set list owner",
     "set manager": "Set list manager",
     "set user": "Set list user",
-    "set primary": "Set Primary List"
+    "set primary": "Set Primary List",
+    "resolved": "Resolved:",
+    "no resolution": "Name doesn't resolve"
   }
 }

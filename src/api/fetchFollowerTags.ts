@@ -1,5 +1,12 @@
 import type { FollowingTagsResponse } from '#/types/requests'
 
+export const nullFollowerTags = {
+  token_id: 0,
+  tags: [],
+  tagCounts: [],
+  taggedAddresses: []
+}
+
 const fetchFollowerTags = async (addressOrName: string, list?: number | string) => {
   try {
     const url =
@@ -14,12 +21,7 @@ const fetchFollowerTags = async (addressOrName: string, list?: number | string) 
     const data = (await response.json()) as FollowingTagsResponse
     return data
   } catch (err: unknown) {
-    return {
-      token_id: 0,
-      tags: [],
-      tagCounts: [],
-      taggedAddresses: []
-    }
+    return nullFollowerTags
   }
 }
 
