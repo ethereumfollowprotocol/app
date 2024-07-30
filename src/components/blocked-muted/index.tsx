@@ -5,8 +5,10 @@ import { useClickAway } from '@uidotdev/usehooks'
 
 import Cross from 'public/assets/icons/cross.svg'
 import { BLOCKED_MUTED_TABS } from '#/lib/constants'
+import { useIsEditView } from '#/hooks/use-is-edit-view'
 import type { BlockedMutedTabType } from '#/types/common'
 import { UserProfilePageTable } from '../profile-page-table'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import useBlockedMuted, { EMPTY_COUNT_TAGS, TAGS } from './hooks/use-blocked-muted'
 
@@ -23,6 +25,9 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
   const blockedMutedRef = useClickAway<HTMLDivElement>(() => {
     onClose()
   })
+
+  const isMyProfile = useIsEditView()
+  const { selectedList } = useEFPProfile()
 
   const {
     blocking,
@@ -51,8 +56,18 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
 
   const filteredBlockingTags = blockingTags?.tagCounts?.filter(tag => TAGS.includes(tag.tag)) || []
   const displayedBlockingTags = [
-    { tag: 'All', count: filteredBlockingTags?.reduce((acc, tag) => acc + tag.count, 0) },
-    ...(filteredBlockingTags.length > 0 ? filteredBlockingTags : EMPTY_COUNT_TAGS)
+    {
+      tag: 'All',
+      count:
+        isMyProfile && !selectedList
+          ? 0
+          : filteredBlockingTags?.reduce((acc, tag) => acc + tag.count, 0)
+    },
+    ...(filteredBlockingTags.length > 0
+      ? isMyProfile && !selectedList
+        ? EMPTY_COUNT_TAGS
+        : filteredBlockingTags
+      : EMPTY_COUNT_TAGS)
   ]
 
   const filteredBlockedByTags =
@@ -62,11 +77,13 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
     ...(filteredBlockedByTags.length > 0 ? filteredBlockedByTags : EMPTY_COUNT_TAGS)
   ]
 
+  const displayedBlocking = isMyProfile && !selectedList ? [] : blocking
+
   const mobileActiveEl = {
     'Blocked/Muted': (
       <UserProfilePageTable
         isLoading={blockingIsLoading}
-        results={blocking}
+        results={displayedBlocking}
         allTags={displayedBlockingTags}
         tagsLoading={blockingTagsLoading}
         selectedTags={blockingTagsFilter}
@@ -119,7 +136,7 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
         <div className='bg-white/80 h-fit rounded-2xl w-full hidden xl:block'>
           <UserProfilePageTable
             isLoading={blockingIsLoading}
-            results={blocking}
+            results={displayedBlocking}
             allTags={displayedBlockingTags}
             tagsLoading={blockingTagsLoading}
             selectedTags={blockingTagsFilter}

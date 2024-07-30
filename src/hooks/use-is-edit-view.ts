@@ -15,9 +15,14 @@ export const useIsEditView = (): boolean => {
   const isEditor = pathname === '/editor'
   const isProfile =
     (pathname?.toLowerCase() === `/${userAddress?.toLowerCase()}` &&
-      selectedList === Number(profile?.primary_list)) ||
+      (profile?.primary_list && selectedList
+        ? selectedList === Number(profile?.primary_list)
+        : true)) ||
     pathname === `/${selectedList?.toString() ?? userAddress}`
 
-  const isEditView = useMemo(() => isEditor || isProfile, [pathname, isEditor, isProfile])
+  const isEditView = useMemo(
+    () => isEditor || isProfile,
+    [pathname, isEditor, isProfile, selectedList, profile]
+  )
   return isEditView
 }
