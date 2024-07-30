@@ -49,7 +49,7 @@ const Navigation = () => {
             />
           </Link>
           <div className='sm:w-3/5 md:w-full'>
-            <Search size='md:w-4/5 xl:w-full max-w-[200px] xxs:max-w-[400px]' />
+            <Search size='w-full max-w-[200px] lg:w-5/6 xl:w-full xxs:max-w-[350px]' />
           </div>
         </div>
         <div className='flex lg:gap-6 xl:gap-8 w-full justify-end items-center'>

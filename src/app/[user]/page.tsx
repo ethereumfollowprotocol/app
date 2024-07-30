@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import useUser from './hooks/useUser'
 import { PROFILE_TABS } from '#/lib/constants'
@@ -14,6 +14,7 @@ import BlockedMuted from '#/components/blocked-muted'
 import SettingsIcon from 'public/assets/icons/settings.svg'
 import UserProfileCard from '#/components/user-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
+import type { ProfileDetailsResponse } from '#/types/requests'
 import { UserProfilePageTable } from '#/components/profile-page-table'
 
 interface Props {
@@ -31,39 +32,117 @@ export default function UserPage({ params }: Props) {
   const [isBlockedMutedOpen, setIsBlockedMutedOpen] = useState(initialBlockedOpen)
 
   const router = useRouter()
+  const pathname = usePathname()
   const { t } = useTranslation('profile')
-  const { roles, selectedList } = useEFPProfile()
   const { address: connectedUserAddress } = useAccount()
+
+  const isLoadPage = pathname === '/loading'
+
+  const {
+    roles,
+    profile: profileProfile,
+    selectedList,
+    profileIsLoading: profileProfileIsLoading,
+    following: profileFollowing,
+    followers: profileFollowers,
+    followingTags: profileFollowingTags,
+    followingTagsLoading: profileFollowingTagsLoading,
+    followingTagsFilter: profileFollowingTagsFilter,
+    followersTagsFilter: profileFollowersTagsFilter,
+    toggleTag: profileToggleTag,
+    followersSort: profileFollowersSort,
+    followingSort: profileFollowingSort,
+    setFollowersSort: profileSetFollowersSort,
+    setFollowingSort: profileSetFollowingSort,
+    followingIsLoading: profileFollowingIsLoading,
+    followersIsLoading: profileFollowersIsLoading,
+    fetchMoreFollowers: profileFetchMoreFollowers,
+    fetchMoreFollowing: profileFetchMoreFollowing,
+    isEndOfFollowers: profileIsEndOfFollowers,
+    isEndOfFollowing: profileIsEndOfFollowing,
+    followerTagsLoading: profileFollowerTagsLoading,
+    followerTags: profileFollowerTags,
+    setFollowingTagsFilter: profileSetFollowingTagsFilter,
+    setFollowersTagsFilter: profileSetFollowersTagsFilter,
+    isFetchingMoreFollowers: profileIsFetchingMoreFollowers,
+    isFetchingMoreFollowing: profileIsFetchingMoreFollowing
+  } = useEFPProfile()
+
+  const isMyProfile: boolean =
+    (pathname?.toLowerCase() === `/${connectedUserAddress?.toLowerCase()}` &&
+      selectedList === Number(profileProfile?.primary_list)) ||
+    pathname === `/${selectedList?.toString() ?? connectedUserAddress}`
 
   const {
     listNum,
-    profile,
-    followers,
-    following,
-    toggleTag,
+    profile: userProfile,
+    followers: userFollowers,
+    following: userFollowing,
+    toggleTag: userToggleTag,
     userIsList,
-    followerTags,
-    followersSort,
-    followingSort,
-    followingTags,
-    profileIsLoading,
-    isEndOfFollowing,
-    isEndOfFollowers,
-    setFollowingSort,
-    setFollowersSort,
-    followersIsLoading,
-    followingIsLoading,
-    fetchMoreFollowers,
-    fetchMoreFollowing,
-    followingTagsFilter,
-    followersTagsFilter,
-    followerTagsLoading,
-    followingTagsLoading,
-    isFetchingMoreFollowers,
-    isFetchingMoreFollowing,
-    setFollowersTagsFilter,
-    setFollowingTagsFilter
+    followerTags: userFollowerTags,
+    followersSort: userFollowerSort,
+    followingSort: userFollowingSort,
+    followingTags: userFollowingTags,
+    profileIsLoading: userProfileIsLoading,
+    isEndOfFollowing: userIsEndOfFollowing,
+    isEndOfFollowers: userIsEndOfFollowers,
+    setFollowingSort: userSetFollowingSort,
+    setFollowersSort: userSetFollowerSort,
+    followersIsLoading: userFollowersIsLoading,
+    followingIsLoading: userFollowingIsLoading,
+    fetchMoreFollowers: userFetchMoreFollowers,
+    fetchMoreFollowing: userFetchMoreFollowing,
+    followingTagsFilter: userFollowingTagsFilter,
+    followersTagsFilter: userFollowersTagsFilter,
+    followerTagsLoading: userFollowerTagsLoading,
+    followingTagsLoading: userFollowingTagsLoading,
+    isFetchingMoreFollowers: userIsFetchingMoreFollowers,
+    isFetchingMoreFollowing: userIsFetchingMoreFollowing,
+    setFollowersTagsFilter: userSetFollowersTagsFilter,
+    setFollowingTagsFilter: userSetFollowingTagsFilter
   } = useUser(user)
+
+  const profile: ProfileDetailsResponse | null | undefined = isMyProfile
+    ? profileProfile
+    : userProfile
+  const profileIsLoading =
+    isLoadPage || (isMyProfile ? profileProfileIsLoading : userProfileIsLoading)
+  const following = isMyProfile ? profileFollowing : userFollowing
+  const followers = isMyProfile ? profileFollowers : userFollowers
+  const followingTags = isMyProfile ? profileFollowingTags : userFollowingTags
+  const followingTagsLoading =
+    isLoadPage || (isMyProfile ? profileFollowingTagsLoading : userFollowingTagsLoading)
+  const followingTagsFilter = isMyProfile ? profileFollowingTagsFilter : userFollowingTagsFilter
+  const followersTagsFilter = isMyProfile ? profileFollowersTagsFilter : userFollowersTagsFilter
+  const toggleTag = isMyProfile ? profileToggleTag : userToggleTag
+  const followersSort = isMyProfile ? profileFollowersSort : userFollowerSort
+  const followingSort = isMyProfile ? profileFollowingSort : userFollowingSort
+  const setFollowersSort = isMyProfile ? profileSetFollowersSort : userSetFollowerSort
+  const setFollowingSort = isMyProfile ? profileSetFollowingSort : userSetFollowingSort
+  const followingIsLoading =
+    isLoadPage || (isMyProfile ? profileFollowingIsLoading : userFollowingIsLoading)
+  const followersIsLoading =
+    isLoadPage || (isMyProfile ? profileFollowersIsLoading : userFollowersIsLoading)
+  const fetchMoreFollowers = isMyProfile ? profileFetchMoreFollowers : userFetchMoreFollowers
+  const fetchMoreFollowing = isMyProfile ? profileFetchMoreFollowing : userFetchMoreFollowing
+  const isEndOfFollowers = isMyProfile ? profileIsEndOfFollowers : userIsEndOfFollowers
+  const isEndOfFollowing = isMyProfile ? profileIsEndOfFollowing : userIsEndOfFollowing
+  const followerTagsLoading =
+    isLoadPage || (isMyProfile ? profileFollowerTagsLoading : userFollowerTagsLoading)
+  const followerTags = isMyProfile ? profileFollowerTags : userFollowerTags
+  const setFollowingTagsFilter = isMyProfile
+    ? profileSetFollowingTagsFilter
+    : userSetFollowingTagsFilter
+  const setFollowersTagsFilter = isMyProfile
+    ? profileSetFollowersTagsFilter
+    : userSetFollowersTagsFilter
+  const isFetchingMoreFollowers = isMyProfile
+    ? profileIsFetchingMoreFollowers
+    : userIsFetchingMoreFollowers
+  const isFetchingMoreFollowing = isMyProfile
+    ? profileIsFetchingMoreFollowing
+    : userIsFetchingMoreFollowing
 
   const mobileActiveEl = {
     following: (
