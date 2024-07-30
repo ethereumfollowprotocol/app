@@ -273,22 +273,24 @@ const useCheckout = () => {
     if (listHasBeenMinted || selectedList === undefined) {
       refetchLists()
       setSetNewListAsSelected(true)
-    } else {
-      queryClient.setQueryData(
-        ['following', userAddress, selectedList],
-        (prev: {
-          pages: FollowingResponse[][]
-          pageParams: number[]
-        }) => ({
-          pages: prev?.pages?.slice(0, 1),
-          pageParams: prev?.pageParams?.slice(0, 1)
-        })
-      )
-
-      refetchProfile()
-      refetchFollowing()
-      refetchFollowingTags()
+      router.push('/loading')
+      return
     }
+
+    queryClient.setQueryData(
+      ['following', userAddress, selectedList],
+      (prev: {
+        pages: FollowingResponse[][]
+        pageParams: number[]
+      }) => ({
+        pages: prev?.pages?.slice(0, 1),
+        pageParams: prev?.pageParams?.slice(0, 1)
+      })
+    )
+
+    refetchProfile()
+    refetchFollowing()
+    refetchFollowingTags()
 
     router.push(`/${selectedList ?? userAddress}`)
   }, [resetActions, resetCart, setNewListAsPrimary])

@@ -9,6 +9,7 @@ import CancelButton from '#/components/cancel-button'
 import TransactionDetails from './transaction-details'
 import { useActions } from '#/contexts/actions-context'
 import { PrimaryButton } from '#/components/primary-button'
+import { useCart } from '#/contexts/cart-context'
 
 interface TransactionStatusProps {
   onFinish: () => void
@@ -39,10 +40,12 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
   const { t: tBtn } = useTranslation('transactions')
   const { t } = useTranslation('transactions', { keyPrefix: 'action' })
 
+  const { totalCartItems } = useCart()
   // Add separate transaction finished state for custom delay to wait for backend to update after finishing the llast transaction
   const [transactionsAreFinished, setTransactionsAreFinished] = useState(false)
   useEffect(() => {
-    if (allActionsSuccessful) setTimeout(() => setTransactionsAreFinished(true), 5000)
+    if (allActionsSuccessful)
+      setTimeout(() => setTransactionsAreFinished(true), 5000 + (totalCartItems / 100) * 2)
   }, [allActionsSuccessful])
 
   const isLastAction = currentActionIndex + 1 === actions.length

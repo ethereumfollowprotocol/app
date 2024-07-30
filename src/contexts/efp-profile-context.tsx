@@ -15,6 +15,7 @@ import {
   type FetchNextPageOptions,
   type InfiniteQueryObserverResult
 } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 import { useAccount, useChains } from 'wagmi'
 
 import type {
@@ -149,6 +150,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   const [recentTags, setRecentTags] = useState(DEFAULT_TAGS_TO_ADD)
 
   const chains = useChains()
+  const router = useRouter()
   const { resetCart } = useCart()
   const { address: userAddress } = useAccount()
 
@@ -174,11 +176,13 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
 
     if (setNewListAsSelected) {
       setSetNewListAsSelected(false)
-      localStorage.setItem(
-        'selected-list',
-        Math.max(...lists.lists.map(list => Number(list))).toString()
-      )
-      setSelectedList(Math.max(...lists.lists.map(list => Number(list))))
+
+      const newList = Math.max(...lists.lists.map(list => Number(list)))
+
+      router.push(`/${newList}`)
+      localStorage.setItem('selected-list', newList.toString())
+      setSelectedList(newList)
+
       return
     }
 

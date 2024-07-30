@@ -12,7 +12,6 @@ import {
   listOpAsHexstring,
   extractAddressAndTag
 } from '#/utils/list-ops'
-import { useIsEditView } from '#/hooks/use-is-edit-view'
 import type { ListOp, ListOpTagOpParams } from '#/types/list-op'
 
 // Define the type for each cart item
@@ -59,7 +58,6 @@ type Props = {
 // Define the provider component
 export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   const { address } = useAccount()
-  const isEditView = useIsEditView()
 
   const storedCartItems =
     typeof window !== 'undefined' && localStorage.getItem('cart')
@@ -241,7 +239,6 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
       hasListOpAddTag,
       hasListOpRemoveRecord,
       hasListOpRemoveTag,
-      isEditView,
       removeAddTagFromCart,
       removeRemoveTagFromCart
     ]
