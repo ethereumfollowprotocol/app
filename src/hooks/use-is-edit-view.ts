@@ -1,7 +1,7 @@
+import { useMemo } from 'react'
 import { useAccount } from 'wagmi'
 import { usePathname } from 'next/navigation'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import { useMemo } from 'react'
 
 /**
  * @description Returns whether the user can "edit" or update the cart based on the current page
@@ -19,6 +19,5 @@ export const useIsEditView = (): boolean => {
     pathname === `/${selectedList?.toString() ?? userAddress}`
 
   const isEditView = useMemo(() => isEditor || isProfile, [pathname, isEditor, isProfile])
-
   return isEditView
 }
