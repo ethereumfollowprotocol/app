@@ -49,3 +49,6 @@ export const NAV_ITEMS = [
     private: false
   }
 ]
+
+export const leaderboardFilters = ['following', 'followers', 'mutuals', 'blocked'] as const
+export const leaderboardFiltersEmojies = ['👀', '🤩', '🫂', '🚫'] as const

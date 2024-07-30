@@ -1,13 +1,19 @@
+import type { LeaderboardFilter } from '#/types/common'
+
 export const formatQueryParams = ({
   limit,
   offset,
   sort,
-  tags
+  tags,
+  filter,
+  search
 }: {
   limit?: string | number
   offset?: string | number
   sort?: string
   tags?: string[]
+  filter?: LeaderboardFilter
+  search?: string | null
 }) =>
   [
     {
@@ -25,6 +31,14 @@ export const formatQueryParams = ({
     {
       param: 'tags',
       value: tags?.join(',')
+    },
+    {
+      param: 'filter',
+      value: filter
+    },
+    {
+      param: 'search',
+      value: search
     }
   ]
     .filter(param => !!param.value)

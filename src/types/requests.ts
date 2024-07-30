@@ -1,4 +1,5 @@
 import type { Address, GetEnsAvatarReturnType } from 'viem'
+import type { LeaderboardFilter } from './common'
 
 declare global {
   interface Window {
@@ -55,6 +56,14 @@ export interface InfiniteProfileQueryProps {
   pageParam: number
   allResults?: boolean
 }
+
+export interface InfiniteLeaderboardQueryProps {
+  limit: number
+  pageParam: number
+  search?: string | null
+  filter?: LeaderboardFilter
+}
+
 export interface FollowerResponse {
   address: Address
   ens: ENSProfile
@@ -80,6 +89,15 @@ export interface FollowStatusResponse {
     block: boolean
     mute: boolean
   }
+}
+
+export interface LeaderboardResponse {
+  address: Address
+  rank: number
+  following_count?: string
+  followers_count?: string
+  blocked_by_count?: string
+  mutuals_count?: string
 }
 
 export interface StatsResponse {
