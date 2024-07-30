@@ -43,7 +43,7 @@ export const NAV_ITEMS = [
     private: true
   },
   {
-    href: () => '/leaderboard?filter=followers',
+    href: () => '/leaderboard',
     emoji: '🏆',
     name: 'leaderboard',
     private: false

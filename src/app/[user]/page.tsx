@@ -69,9 +69,9 @@ export default function UserPage({ params }: Props) {
   } = useEFPProfile()
 
   const isMyProfile: boolean =
-    (pathname.split('?')[0]?.toLowerCase() === `/${connectedUserAddress?.toLowerCase()}` &&
+    (pathname?.toLowerCase() === `/${connectedUserAddress?.toLowerCase()}` &&
       selectedList === Number(profileProfile?.primary_list)) ||
-    pathname.split('?')[0] === `/${selectedList?.toString() ?? connectedUserAddress}`
+    pathname === `/${selectedList?.toString() ?? connectedUserAddress}`
 
   const {
     listNum,

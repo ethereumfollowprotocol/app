@@ -12,7 +12,7 @@ import MagnifyingGlass from 'public/assets/icons/magnifying-glass.svg'
 
 export function Search({
   disabled,
-  size = 'w-full max-w-[400px]',
+  size = 'w-full max-w-[350px]',
   isEditor
 }: { disabled?: boolean; size?: string; isEditor?: boolean }) {
   const { t } = useTranslation()
@@ -83,7 +83,7 @@ export function Search({
                       !!searchResult
                   )
                 }}
-                className={`h-fit block text-wrap w-full py-3 pr-12 truncate outline-none font-medium rounded-xl border-2 ${
+                className={`max-h-20 min-h-12 block text-wrap w-full py-3 pr-12 truncate outline-none font-medium rounded-xl border-2 ${
                   addToCartError ? 'border-red-500' : 'border-gray-200'
                 } pl-4 sm:text-sm bg-white/70`}
               />
