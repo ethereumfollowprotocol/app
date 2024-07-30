@@ -241,6 +241,21 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     }
   })
 
+  const {
+    data: followerTags,
+    refetch: refetchFollowerTags,
+    isLoading: followerTagsLoading,
+    isRefetching: isRefetchingFollowerTagsQuery
+  } = useQuery({
+    queryKey: ['follower tags', userAddress, selectedList],
+    queryFn: async () => {
+      if (!userAddress) return nullFollowerTags
+
+      const fetchedTags = await fetchFollowerTags(userAddress, selectedList)
+      return fetchedTags
+    }
+  })
+
   const [isEndOfFollowers, setIsEndOfFollowers] = useState(false)
   // Fetch followings depending on the selected list
   const {
