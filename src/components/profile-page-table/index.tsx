@@ -10,11 +10,13 @@ import type {
   FollowerResponse,
   FollowingResponse
 } from '#/types/requests'
+import Recommendations from '../recommendations'
 import { FETCH_LIMIT_PARAM } from '#/lib/constants'
 import TableHeader from './components/table-headers'
 import { FollowList } from '#/components/follow-list'
 import { useIsEditView } from '#/hooks/use-is-edit-view'
 import type { ProfileTableTitleType } from '#/types/common'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 /**
  * TODO: paginate
@@ -63,6 +65,7 @@ export function UserProfilePageTable({
     if (!showTags) setSelectedTags(isShowingBlocked ? ['All'] : [])
   }, [showTags])
 
+  const { lists } = useEFPProfile()
   const isProfile = useIsEditView()
   const { t } = useTranslation('profile')
 
@@ -148,21 +151,30 @@ export function UserProfilePageTable({
       {!isLoading && results?.length === 0 && (
         <div className='text-center font-semibold py-4'>{noResults}</div>
       )}
-      <FollowList
-        isLoading={isLoading}
-        isLoadingMore={isFetchingMore}
-        loadingRows={FETCH_LIMIT_PARAM}
-        listClassName='gap-2 rounded-xl w-full'
-        listItemClassName='rounded-xl w-full hover:bg-white/50 px-0 py-2 sm:p-2'
-        profiles={profiles}
-        showTags={showTags}
-        showFollowsYouBadges={showFollowsYouBadges}
-        canEditTags={canEditTags}
-        isFollowers={title === 'followers' || title === 'Blocked/Muted By'}
-        isBlockedList={isShowingBlocked}
-        isBlockedBy={title === 'Blocked/Muted By' && isProfile}
-      />
-      <div ref={loadMoreRef} className='h-px w-full' />
+      <div className='flex flex-col pb-4'>
+        <FollowList
+          isLoading={isLoading}
+          isLoadingMore={isFetchingMore}
+          loadingRows={FETCH_LIMIT_PARAM}
+          listClassName='gap-2 rounded-xl w-full'
+          listItemClassName='rounded-xl w-full hover:bg-white/50 px-0 py-2 sm:p-2'
+          profiles={profiles}
+          showTags={showTags}
+          showFollowsYouBadges={showFollowsYouBadges}
+          canEditTags={canEditTags}
+          isFollowers={title === 'followers' || title === 'Blocked/Muted By'}
+          isBlockedList={isShowingBlocked}
+          isBlockedBy={title === 'Blocked/Muted By' && isProfile}
+        />
+        <div ref={loadMoreRef} className='h-px w-full' />
+        {title === 'following' && isProfile && lists?.lists && lists.lists.length === 0 && (
+          <Recommendations
+            endpoint='recommended'
+            description='Those are recommended profiles and not people you follow'
+            className='p-2'
+          />
+        )}
+      </div>
     </div>
   )
 }

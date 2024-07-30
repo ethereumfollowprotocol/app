@@ -8,13 +8,20 @@ import { FollowList } from '#/components/follow-list'
 import fetchRecommendations from '#/api/fetchRecommendations'
 
 interface RecommendationsProps {
-  header: string
+  header?: string
+  description?: string
   className?: string
   limit?: number
   endpoint: 'discover' | 'recommended'
 }
 
-const Recommendations = ({ header, className, limit, endpoint }: RecommendationsProps) => {
+const Recommendations = ({
+  header,
+  description,
+  className,
+  limit,
+  endpoint
+}: RecommendationsProps) => {
   const { address: userAddress } = useAccount()
   const { data: profilesToRecommend, isLoading } = useQuery({
     queryKey: [endpoint, userAddress],
@@ -31,7 +38,10 @@ const Recommendations = ({ header, className, limit, endpoint }: Recommendations
 
   return (
     <div className={clsx('flex flex-col gap-8', className)}>
-      <h2 className='text-center lg:text-start text-3xl font-bold'>{header}</h2>
+      <div>
+        <h2 className='text-center lg:text-start text-3xl font-bold'>{header}</h2>
+        <p className='text-center text-xs text-gray-400 italic font-medium'>{description}</p>
+      </div>
       <FollowList
         isLoading={isLoading}
         loadingRows={limit}

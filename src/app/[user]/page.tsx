@@ -11,8 +11,10 @@ import { PROFILE_TABS } from '#/lib/constants'
 import type { ProfileTabType } from '#/types/common'
 import ListSettings from '#/components/list-settings'
 import BlockedMuted from '#/components/blocked-muted'
+import { useIsEditView } from '#/hooks/use-is-edit-view'
 import SettingsIcon from 'public/assets/icons/settings.svg'
 import UserProfileCard from '#/components/user-profile-card'
+import { nullFollowingTags } from '#/api/fetchFollowingTags'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import { UserProfilePageTable } from '#/components/profile-page-table'
@@ -68,10 +70,7 @@ export default function UserPage({ params }: Props) {
     isFetchingMoreFollowing: profileIsFetchingMoreFollowing
   } = useEFPProfile()
 
-  const isMyProfile: boolean =
-    (pathname?.toLowerCase() === `/${connectedUserAddress?.toLowerCase()}` &&
-      selectedList === Number(profileProfile?.primary_list)) ||
-    pathname === `/${selectedList?.toString() ?? connectedUserAddress}`
+  const isMyProfile = useIsEditView()
 
   const {
     listNum,
@@ -108,9 +107,13 @@ export default function UserPage({ params }: Props) {
     : userProfile
   const profileIsLoading =
     isLoadPage || (isMyProfile ? profileProfileIsLoading : userProfileIsLoading)
-  const following = isMyProfile ? profileFollowing : userFollowing
+  const following = isMyProfile ? (selectedList ? profileFollowing : []) : userFollowing
   const followers = isMyProfile ? profileFollowers : userFollowers
-  const followingTags = isMyProfile ? profileFollowingTags : userFollowingTags
+  const followingTags = isMyProfile
+    ? selectedList
+      ? profileFollowingTags
+      : nullFollowingTags
+    : userFollowingTags
   const followingTagsLoading =
     isLoadPage || (isMyProfile ? profileFollowingTagsLoading : userFollowingTagsLoading)
   const followingTagsFilter = isMyProfile ? profileFollowingTagsFilter : userFollowingTagsFilter
