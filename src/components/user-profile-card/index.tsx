@@ -79,9 +79,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
 
   const isConnectedUserCard =
     pathname === '/' ||
-    (pathname.split('?')[0]?.toLowerCase() === `/${connectedAddress?.toLowerCase()}` &&
+    (pathname?.toLowerCase() === `/${connectedAddress?.toLowerCase()}` &&
       selectedList === Number(profile?.primary_list)) ||
-    pathname.split('?')[0] === `/${selectedList?.toString() ?? connectedAddress}`
+    pathname === `/${selectedList?.toString() ?? connectedAddress}`
 
   const isProfileValid = !(
     Object.keys(profile || {}).includes('response') ||

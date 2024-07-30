@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { usePathname } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { useIntersectionObserver } from '@uidotdev/usehooks'
 
@@ -14,6 +13,7 @@ import type {
 import { FETCH_LIMIT_PARAM } from '#/lib/constants'
 import TableHeader from './components/table-headers'
 import { FollowList } from '#/components/follow-list'
+import { useIsEditView } from '#/hooks/use-is-edit-view'
 import type { ProfileTableTitleType } from '#/types/common'
 
 /**
@@ -63,9 +63,8 @@ export function UserProfilePageTable({
     if (!showTags) setSelectedTags(isShowingBlocked ? ['All'] : [])
   }, [showTags])
 
-  const pathname = usePathname()
+  const isProfile = useIsEditView()
   const { t } = useTranslation('profile')
-  const isProfile = pathname.includes('profile')
 
   const showFollowsYouBadges = !isProfile || title === 'following'
 

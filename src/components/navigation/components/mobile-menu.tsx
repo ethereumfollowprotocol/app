@@ -21,7 +21,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ open, setOpen }) => {
   const { address: userAddress } = useAccount()
   const { selectedList, profile } = useEFPProfile()
   const itemUrl =
-    pathname.split('?')[0]?.toLowerCase() === `/${userAddress?.toLowerCase()}` &&
+    pathname?.toLowerCase() === `/${userAddress?.toLowerCase()}` &&
     selectedList === Number(profile?.primary_list)
       ? userAddress
       : selectedList?.toString() ?? userAddress

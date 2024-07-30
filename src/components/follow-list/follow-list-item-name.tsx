@@ -204,10 +204,10 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
           >
             {canEditTags && !isRestriction && (
               <button
-                className='w-6 h-6 flex items-center justify-center rounded-full hover:opacity-80 bg-gray-300'
+                className='p-1.5 rounded-full hover:opacity-80 bg-gray-300'
                 onClick={() => setTagDropdownOpen(!tagDropdownOpen)}
               >
-                <Image src={Plus} alt='Add Tag' width={10} />
+                <Image src={Plus} alt='Add Tag' width={12} />
               </button>
             )}
             {canEditTags && tagDropdownOpen && (
@@ -262,7 +262,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
                   <button
                     className={`
                       font-semibold py-1 px-2 sm:py-1.5 max-w-full w-fit sm:px-3 truncate text-sm hover:opacity-80 rounded-full ${
-                        removingTag ? 'bg-deletion' : 'bg-gray-300'
+                        !isFollowers && removingTag ? 'bg-deletion' : 'bg-gray-300'
                       }
                     `}
                     onClick={() => {
@@ -272,7 +272,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
                   >
                     {tEditor(tag)}
                   </button>
-                  {(removingTag || addingTag) && (
+                  {(removingTag || addingTag) && !isFollowers && (
                     <div className='absolute h-4 w-4 rounded-full -top-1 -right-1 bg-green-400' />
                   )}
                 </div>

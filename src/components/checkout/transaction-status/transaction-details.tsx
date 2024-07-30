@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import useChain from '#/hooks/use-chain'
 import { useTranslation } from 'react-i18next'
 import type { Action } from '#/contexts/actions-context'
+import { useCart } from '#/contexts/cart-context'
 
 const TransactionDetails = ({
   action,
@@ -14,6 +15,7 @@ const TransactionDetails = ({
   isLastAction?: boolean
 }) => {
   const chain = useChain(action.chainId)
+  const { totalCartItems } = useCart()
   const { t } = useTranslation('transactions', { keyPrefix: 'status' })
   const { isPending, isSuccess, isError, error } = useWaitForTransactionReceipt({
     hash: action.txHash,
@@ -22,7 +24,8 @@ const TransactionDetails = ({
 
   const [isLastActionSuccessful, setIsLastActionSuccessful] = useState(false)
   useEffect(() => {
-    if (isSuccess && isLastAction) setTimeout(() => setIsLastActionSuccessful(true), 5000)
+    if (isSuccess && isLastAction)
+      setTimeout(() => setIsLastActionSuccessful(true), 5000 + (totalCartItems / 100) * 2)
   }, [isSuccess])
 
   const statusDescription = useMemo(() => {
