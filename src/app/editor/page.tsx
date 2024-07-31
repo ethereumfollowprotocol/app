@@ -10,13 +10,18 @@ import Checkout from './components/checkout'
 import { Search } from '#/components/search'
 import { useCart } from '#/contexts/cart-context'
 import Trash from 'public/assets/icons/trash.svg'
+import ImportModal from './components/importModal'
+import LensIcon from 'public/assets/icons/lens.png'
 import { FollowList } from '#/components/follow-list'
 import Recommendations from '#/components/recommendations'
 import { PrimaryButton } from '#/components/primary-button'
+import FarcasterIcon from 'public/assets/icons/farcaster.png'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 export default function EditorPage() {
   const [isClient, setIsClient] = useState(false)
+  const [importModalOpen, setImportModalOpen] = useState(false)
+  const [platform, setPlatform] = useState<'farcaster' | 'lens'>('farcaster')
 
   useEffect(() => {
     setIsClient(true)
@@ -28,8 +33,9 @@ export default function EditorPage() {
   const { openConnectModal } = useConnectModal()
   const { totalCartItems, cartAddresses, resetCart, cartItems } = useCart()
 
-  const { selectedList, roles } = useEFPProfile()
+  const { selectedList, roles, lists } = useEFPProfile()
   const hasCreatedEfpList = !!selectedList
+  const hasNoList = lists?.lists && lists.lists.length === 0
 
   const profiles = useMemo(
     () =>
@@ -65,8 +71,38 @@ export default function EditorPage() {
         </div>
       ) : (
         <>
+          {importModalOpen && (
+            <ImportModal onClose={() => setImportModalOpen(false)} platform={platform} />
+          )}
           <div className='flex flex-col glass-card gap-6 px-3 py-4 sm:p-6 h-fit rounded-2xl border-2 border-gray-200 xl:max-w-116 w-full xl:w-1/3'>
-            <h1 className='text-left text-3xl font-semibold hidden xl:block'>{t('title')}</h1>
+            <div className='w-full flex justify-between items-center'>
+              <h1 className='text-left text-3xl font-semibold hidden xl:block'>{t('title')}</h1>
+              {!hasNoList && (
+                <div className='flex gap-1'>
+                  <p className='text-lg font-semibold mr-1'>Import</p>
+                  <Image
+                    src={FarcasterIcon}
+                    alt='Import from Farcaster'
+                    width={30}
+                    className='cursor-pointer hover:opacity-75 transition-opacity'
+                    onClick={() => {
+                      setImportModalOpen(true)
+                      setPlatform('farcaster')
+                    }}
+                  />
+                  <Image
+                    src={LensIcon}
+                    alt='Import from Lens'
+                    width={30}
+                    className='cursor-pointer hover:opacity-75 transition-opacity'
+                    onClick={() => {
+                      setImportModalOpen(true)
+                      setPlatform('lens')
+                    }}
+                  />
+                </div>
+              )}
+            </div>
             <Search size='w-full z-50' isEditor={true} />
             <Recommendations header={t('recommendations')} endpoint='recommended' />
           </div>

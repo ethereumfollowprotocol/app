@@ -106,7 +106,6 @@ const TableHeader: React.FC<TableHeaderProps> = ({
               onClick={() => setShowTags(!showTags)}
               className='cursor-pointer flex items-center gap-1'
             >
-              {/* <Searchbar queryKey={searchQueryKey} placeholder='Search...' /> */}
               <p className='text-sm font-bold'>{t('tags')}</p>
               <Image
                 src={ArrowDown}
@@ -121,7 +120,6 @@ const TableHeader: React.FC<TableHeaderProps> = ({
               onClick={() => setShowSort(!showSort)}
               className='cursor-pointer flex relative items-center gap-1'
             >
-              {/* <Searchbar queryKey={searchQueryKey} placeholder='Search...' /> */}
               <p className='text-sm capitalize font-bold'>{t(`sort.${sort}`)}</p>
               <Image
                 src={ArrowDown}
