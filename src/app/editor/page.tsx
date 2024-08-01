@@ -50,12 +50,18 @@ export default function EditorPage() {
   const socialProfiles = [
     {
       platform: 'farcaster',
-      profiles: socialAddresses.farcaster,
+      profiles: socialAddresses.farcaster.map(address => ({
+        address,
+        tags: []
+      })),
       icon: FarcasterIcon
     },
     {
       platform: 'lens',
-      profiles: socialAddresses.lens,
+      profiles: socialAddresses.lens.map(address => ({
+        address,
+        tags: []
+      })),
       icon: LensIcon
     }
   ]
@@ -139,6 +145,7 @@ export default function EditorPage() {
             <FollowList
               isLoading={false}
               profiles={profiles}
+              socialProfiles={socialProfiles}
               listClassName='rounded-xl gap-1 sm:gap-0'
               listItemClassName='rounded-xl md:p-4 p-1.5 sm:p-2 hover:bg-white/80'
               showTags={true}
