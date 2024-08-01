@@ -1,14 +1,15 @@
 import type React from 'react'
 import Image from 'next/image'
+import { useTranslation } from 'react-i18next'
 
+import { Avatar } from '#/components/avatar'
+import { truncateAddress } from '#/lib/utilities'
 import LensIcon from 'public/assets/icons/lens.png'
+import LoadingCell from '#/components/loading-cell'
 import useImportModal from '../hooks/useImportModal'
 import FarcasterIcon from 'public/assets/icons/farcaster.png'
 import MagnifyingGlass from 'public/assets/icons/magnifying-glass-white.svg'
-import { Avatar } from '#/components/avatar'
-import LoadingCell from '#/components/loading-cell'
-import { truncateAddress } from '#/lib/utilities'
-import { useTranslation } from 'react-i18next'
+import { PrimaryButton } from '#/components/primary-button'
 
 interface ImportModalprops {
   onClose: () => void
@@ -17,8 +18,13 @@ interface ImportModalprops {
 
 const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
   const { t } = useTranslation('editor', { keyPrefix: 'import' })
-  const { inputAddress, setInputAddress, socialProfile, isSocialProfileLoading } =
-    useImportModal(platform)
+  const {
+    currInputAddress,
+    setCurrInputAddress,
+    socialProfile,
+    isSocialProfileLoading,
+    onAddFollowings
+  } = useImportModal(platform)
 
   return (
     <div
@@ -48,9 +54,9 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
             name='search'
             spellCheck={false}
             autoComplete='off'
-            value={inputAddress}
+            value={currInputAddress}
             placeholder={'Enter address or ENS name'}
-            onChange={e => setInputAddress(e.target.value)}
+            onChange={e => setCurrInputAddress(e.target.value)}
             // onKeyDown={e => {
             //   if (e.key === 'Enter') onSubmit()
             //   if (e.key === 'Escape') {
@@ -89,7 +95,12 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
               <div className='text-lg font-bold text-gray-500'>{t('following')}</div>
             </div>
           </div>
-        ) : null}
+        ) : (
+          <div className='h-[50px] w-full justify-center flex items-center font-semibold'>
+            No profile
+          </div>
+        )}
+        <PrimaryButton label='Add' onClick={() => onAddFollowings()} className='py-2' />
       </div>
     </div>
   )

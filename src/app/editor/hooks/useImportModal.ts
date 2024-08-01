@@ -10,10 +10,16 @@ init('0366bbe276e04996af5f92ebb7899f19', { env: 'dev', cache: true })
 
 const useImportModal = (platform: ImportPlatformType) => {
   const [inputAddress, setInputAddress] = useState('')
+  const [currInputAddress, setCurrInputAddress] = useState('')
   const [followings, setFollowings] = useState<Address[]>([])
   const [isFollowingsLoading, setIsFollowingsLoading] = useState(false)
 
   const { addCartItem } = useCart()
+
+  useEffect(() => {
+    const inputTimeout = setTimeout(() => setInputAddress(currInputAddress), 500)
+    return () => clearTimeout(inputTimeout)
+  }, [currInputAddress])
 
   const profileQuery = `
     query ProfileQuery ($platform: SocialDappName) {
@@ -56,8 +62,6 @@ const useImportModal = (platform: ImportPlatformType) => {
     pagination: { hasNextPage, getNextPage, hasPrevPage }
   } = useQueryWithPagination(followingsQuery, { platform })
 
-  console.log(socialProfile, followings)
-
   useEffect(() => {
     if (!hasPrevPage) setFollowings([])
     if (hasNextPage) getNextPage()
@@ -82,8 +86,8 @@ const useImportModal = (platform: ImportPlatformType) => {
 
   // add query to fetch airstack profile and all following addresses, download AIrstack SDK
   return {
-    inputAddress,
-    setInputAddress,
+    currInputAddress,
+    setCurrInputAddress,
     socialProfile,
     followings,
     isSocialProfileLoading,

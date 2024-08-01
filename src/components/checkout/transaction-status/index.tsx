@@ -45,7 +45,7 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
   const [transactionsAreFinished, setTransactionsAreFinished] = useState(false)
   useEffect(() => {
     if (allActionsSuccessful)
-      setTimeout(() => setTransactionsAreFinished(true), 5000 + (totalCartItems / 100) * 2)
+      setTimeout(() => setTransactionsAreFinished(true), 5000 + (totalCartItems / 10) * 2)
   }, [allActionsSuccessful])
 
   const isLastAction = currentActionIndex + 1 === actions.length

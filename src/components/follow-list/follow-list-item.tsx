@@ -33,7 +33,7 @@ const FollowListItem: React.FC<FollowListItemProps> = ({
 }) => {
   const { data: fetchedEnsProfile, isLoading: isEnsProfileLoading } = useQuery({
     queryKey: ['ens metadata', address],
-    queryFn: async () => await resolveEnsProfile(address)
+    queryFn: async () => (ensProfile ? ensProfile : await resolveEnsProfile(address))
   })
 
   const profileName = ensProfile ? ensProfile.name : fetchedEnsProfile?.name
