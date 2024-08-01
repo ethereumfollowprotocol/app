@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image, { type StaticImageData } from 'next/image'
 import type { Address } from 'viem'
 import { useTranslation } from 'react-i18next'
 
@@ -13,10 +13,17 @@ export interface FollowListProfile {
   tags: string[]
 }
 
+export interface SocialFollowListProfile {
+  platform: string
+  profiles: FollowListProfile[]
+  icon: StaticImageData
+}
+
 interface FollowListProps {
   listClassName?: string
   listItemClassName?: string
   profiles?: FollowListProfile[]
+  socialProfiles?: SocialFollowListProfile[]
   showFollowsYouBadges?: boolean // Prop to handle showing "Follows you" badges in the FollowList
   showTags?: boolean
   createListItem?: boolean
@@ -33,6 +40,7 @@ export function FollowList({
   listClassName = '',
   listItemClassName = '',
   profiles,
+  socialProfiles,
   showFollowsYouBadges,
   showTags,
   createListItem,
@@ -69,6 +77,7 @@ export function FollowList({
               </div>
             </div>
           )}
+          {/* {socialProfiles?.map()} */}
           {profiles?.map(({ address, tags, ens }) => (
             <FollowListItem
               className={listItemClassName}

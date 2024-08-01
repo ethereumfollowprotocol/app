@@ -31,11 +31,10 @@ export default function EditorPage() {
   const { isConnected } = useAccount()
   const { t } = useTranslation('editor')
   const { openConnectModal } = useConnectModal()
-  const { totalCartItems, cartAddresses, resetCart, cartItems } = useCart()
+  const { totalCartItems, cartAddresses, socialAddresses, resetCart, cartItems } = useCart()
 
-  const { selectedList, roles, lists } = useEFPProfile()
+  const { selectedList, roles } = useEFPProfile()
   const hasCreatedEfpList = !!selectedList
-  const hasNoList = lists?.lists && lists.lists.length === 0
 
   const profiles = useMemo(
     () =>
@@ -47,6 +46,20 @@ export default function EditorPage() {
         : [],
     [cartAddresses]
   )
+
+  const socialProfiles = [
+    {
+      platform: 'farcaster',
+      profiles: socialAddresses.farcaster,
+      icon: FarcasterIcon
+    },
+    {
+      platform: 'lens',
+      profiles: socialAddresses.lens,
+      icon: LensIcon
+    }
+  ]
+
   const transactionsCount = useMemo(() => {
     let count = 0
     const splitSize = 100
@@ -77,31 +90,29 @@ export default function EditorPage() {
           <div className='flex flex-col glass-card gap-6 px-3 py-4 sm:p-6 h-fit rounded-2xl border-2 border-gray-200 xl:max-w-116 w-full xl:w-1/3'>
             <div className='w-full flex justify-between items-center'>
               <h1 className='text-left text-3xl font-semibold hidden xl:block'>{t('title')}</h1>
-              {!hasNoList && (
-                <div className='flex gap-1'>
-                  <p className='text-lg font-semibold mr-1'>Import</p>
-                  <Image
-                    src={FarcasterIcon}
-                    alt='Import from Farcaster'
-                    width={30}
-                    className='cursor-pointer hover:opacity-75 transition-opacity'
-                    onClick={() => {
-                      setImportModalOpen(true)
-                      setPlatform('farcaster')
-                    }}
-                  />
-                  <Image
-                    src={LensIcon}
-                    alt='Import from Lens'
-                    width={30}
-                    className='cursor-pointer hover:opacity-75 transition-opacity'
-                    onClick={() => {
-                      setImportModalOpen(true)
-                      setPlatform('lens')
-                    }}
-                  />
-                </div>
-              )}
+              <div className='flex gap-1'>
+                <p className='text-lg font-semibold mr-1'>Import</p>
+                <Image
+                  src={FarcasterIcon}
+                  alt='Import from Farcaster'
+                  width={30}
+                  className='cursor-pointer hover:opacity-75 transition-opacity'
+                  onClick={() => {
+                    setImportModalOpen(true)
+                    setPlatform('farcaster')
+                  }}
+                />
+                <Image
+                  src={LensIcon}
+                  alt='Import from Lens'
+                  width={30}
+                  className='cursor-pointer hover:opacity-75 transition-opacity'
+                  onClick={() => {
+                    setImportModalOpen(true)
+                    setPlatform('lens')
+                  }}
+                />
+              </div>
             </div>
             <Search size='w-full z-50' isEditor={true} />
             <Recommendations header={t('recommendations')} endpoint='recommended' />
@@ -136,7 +147,7 @@ export default function EditorPage() {
             />
           </div>
           {isClient && totalCartItems > 0 && (
-            <div className='fixed md:w-fit w-full top-[85vh] sm:top-[87.5vh] lg:top-[85vh] right-0 px-4 lg:right-[5vw] flex justify-end'>
+            <div className='fixed md:w-fit w-full top-[85vh] sm:top-[85vh] lg:top-[82.5vh] right-0 px-4 lg:right-[5vw] flex justify-end'>
               <div className='flex gap-6 w-full border-[1px] border-gray-200 lg:w-fit items-center p-4 bg-white/10 justify-between glass-card bg-opacity-50 shadow-xl rounded-xl'>
                 <div className='flex flex-col gap-1 items-start'>
                   <div className='flex gap-2 items-center'>

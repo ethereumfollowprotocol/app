@@ -1,51 +1,37 @@
-import { useEffect, useState } from 'react'
+import type { Address } from 'viem'
+import { useEffect, useMemo, useState } from 'react'
 import { init, useQuery, useQueryWithPagination } from '@airstack/airstack-react'
 
 import { useCart } from '#/contexts/cart-context'
-import type { ImportPlatformType } from '#/types/common'
 import { listOpAddListRecord } from '#/utils/list-ops'
-import type { Address } from 'viem'
+import type { ImportPlatformType } from '#/types/common'
 
 init('0366bbe276e04996af5f92ebb7899f19', { env: 'dev', cache: true })
 
 const useImportModal = (platform: ImportPlatformType) => {
-  const [inputAddress, setInputAddress] = useState('')
-  const [currInputAddress, setCurrInputAddress] = useState('')
+  const [handle, setHandle] = useState('')
+  const [currHandle, setCurrHandle] = useState('')
   const [followings, setFollowings] = useState<Address[]>([])
   const [isFollowingsLoading, setIsFollowingsLoading] = useState(false)
 
   const { addCartItem } = useCart()
 
   useEffect(() => {
-    const inputTimeout = setTimeout(() => setInputAddress(currInputAddress), 500)
+    const inputTimeout = setTimeout(() => setHandle(currHandle), 500)
     return () => clearTimeout(inputTimeout)
-  }, [currInputAddress])
+  }, [currHandle])
 
+  // TODO: if itproves that lens uses addresses and not other identities than switch to filter by userId for lens, as the lens uses profile addresses as user IDs
   const profileQuery = `
     query ProfileQuery ($platform: SocialDappName) {
       Socials(
-        input: {filter: {dappName: {_eq: $platform}, identity: {_eq: "${inputAddress}"}}, blockchain: ethereum, limit: 1}
+        input: {filter: {dappName: {_eq: $platform}, profileName: {_eq: "${handle}"}}, blockchain: ethereum, limit: 1}
       ) {
         Social {
-          userAssociatedAddresses
-          followerCount
-          followingCount
           profileImage
           profileHandle
-          profileDisplayName
-        }
-      }
-    }
-  `
-  const followingsQuery = `
-    query FollowingsQuery ($platform: SocialDappName) {
-      SocialFollowings(
-        input: {filter: {dappName: {_eq: $platform}, identity: {_eq: "${inputAddress}"}}, blockchain: ALL, limit: 200}
-      ) {
-        Following {
-          followingAddress {
-            addresses
-          }
+          profileName
+          userAddress
         }
       }
     }
@@ -55,6 +41,23 @@ const useImportModal = (platform: ImportPlatformType) => {
     platform
   })
   const socialProfile = fetchedProfile?.Socials?.Social?.[0]
+
+  const followingsQuery = useMemo(
+    () => `
+  query FollowingsQuery ($platform: SocialDappName) {
+    SocialFollowings(
+      input: {filter: {dappName: {_eq: $platform}, identity: {_eq: "${socialProfile?.userAddress}"}}, blockchain: ALL, limit: 200}
+    ) {
+      Following {
+        followingAddress {
+          addresses
+        }
+      }
+    }
+}
+`,
+    [socialProfile]
+  )
 
   const {
     data: fetchedFollowings,
@@ -80,14 +83,14 @@ const useImportModal = (platform: ImportPlatformType) => {
 
   const onAddFollowings = () => {
     followings.map(followingAddress =>
-      addCartItem({ listOp: listOpAddListRecord(followingAddress as Address) })
+      addCartItem({ listOp: listOpAddListRecord(followingAddress as Address), import: platform })
     )
   }
 
   // add query to fetch airstack profile and all following addresses, download AIrstack SDK
   return {
-    currInputAddress,
-    setCurrInputAddress,
+    currHandle,
+    setCurrHandle,
     socialProfile,
     followings,
     isSocialProfileLoading,

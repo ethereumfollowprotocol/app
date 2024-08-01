@@ -7,23 +7,27 @@ import { truncateAddress } from '#/lib/utilities'
 import LensIcon from 'public/assets/icons/lens.png'
 import LoadingCell from '#/components/loading-cell'
 import useImportModal from '../hooks/useImportModal'
+import CancelButton from '#/components/cancel-button'
+import type { ImportPlatformType } from '#/types/common'
+import { PrimaryButton } from '#/components/primary-button'
 import FarcasterIcon from 'public/assets/icons/farcaster.png'
 import MagnifyingGlass from 'public/assets/icons/magnifying-glass-white.svg'
-import { PrimaryButton } from '#/components/primary-button'
 
 interface ImportModalprops {
   onClose: () => void
-  platform: 'farcaster' | 'lens'
+  platform: ImportPlatformType
 }
 
 const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
   const { t } = useTranslation('editor', { keyPrefix: 'import' })
   const {
-    currInputAddress,
-    setCurrInputAddress,
+    currHandle,
+    setCurrHandle,
     socialProfile,
     isSocialProfileLoading,
-    onAddFollowings
+    isFollowingsLoading,
+    onAddFollowings,
+    followings
   } = useImportModal(platform)
 
   return (
@@ -34,7 +38,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
       onClick={onClose}
     >
       <div
-        className='glass-card w-[500px] flex flex-col gap-4 p-6 bg-white/60 rounded-xl'
+        className='glass-card w-[500px] flex flex-col gap-6 p-6 bg-white/75 rounded-xl'
         onClick={e => e.stopPropagation()}
       >
         <div className='w-full flex justify-between items-center'>
@@ -54,9 +58,9 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
             name='search'
             spellCheck={false}
             autoComplete='off'
-            value={currInputAddress}
+            value={currHandle}
             placeholder={'Enter address or ENS name'}
-            onChange={e => setCurrInputAddress(e.target.value)}
+            onChange={e => setCurrHandle(e.target.value)}
             // onKeyDown={e => {
             //   if (e.key === 'Enter') onSubmit()
             //   if (e.key === 'Escape') {
@@ -71,28 +75,54 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
           </div>
         </div>
         {isSocialProfileLoading ? (
-          <div className='flex justify-between items-center'>
-            <div className='flex gap-2 items-center'>
-              <LoadingCell className='rounded-full h-[50px] w-[50px]' />
+          <div className='flex flex-row justify-center gap-3 w-full items-center'>
+            <LoadingCell className='rounded-full h-[50px] w-[50px]' />
+            <div className='flex flex-col items-start gap-0.5'>
               <LoadingCell className='rounded-lg h-7 w-40' />
+              <p className='text-gray-400 text-sm font-semibold'>Farcaster ID</p>
             </div>
           </div>
         ) : socialProfile ? (
-          <div className='flex justify-between items-center'>
-            <div className='flex gap-2 items-center'>
+          <div className='flex flex-col gap-6'>
+            <div className='flex justify-center gap-3 items-center'>
               <Avatar
-                name={socialProfile.profileDisplayName}
+                name={socialProfile.profileName}
                 avatarUrl={socialProfile.profileImage}
                 size='h-[50px] w-[50px]'
               />
-              <p className='text-lg font-semibold'>
-                {socialProfile.profileDisplayName ||
-                  truncateAddress(socialProfile.userAssociatedAddresses?.[0])}
-              </p>
+              <div className='flex flex-col items-start'>
+                <p className='text-lg font-semibold'>
+                  {socialProfile.profileName ||
+                    truncateAddress(socialProfile.userAssociatedAddresses?.[0])}
+                </p>
+                <p className='font-medium text-gray-400'>Farcaster ID</p>
+              </div>
             </div>
-            <div className='flex flex-col items-center gap-2'>
-              <p>{socialProfile.followingCount}</p>
-              <div className='text-lg font-bold text-gray-500'>{t('following')}</div>
+            <div className='bg-white/95 rounded-lg flex flex-col gap-4 p-4'>
+              <div className='w-full flex justify-between items-center'>
+                <p className='text-gray-400 text-sm font-medium'>You follow on Farcaster</p>
+                {isFollowingsLoading ? (
+                  <LoadingCell className='h-5 w-24 rounded-md' />
+                ) : (
+                  <p className='text-gray-400 text-sm font-medium'>{followings.length} accounts</p>
+                )}
+              </div>
+              <div className='w-full flex justify-between items-center'>
+                <p className='text-gray-400 text-sm font-medium'>You already follow on EFP</p>
+                {isFollowingsLoading ? (
+                  <LoadingCell className='h-5 w-24 rounded-md' />
+                ) : (
+                  <p className='text-gray-400 text-sm font-medium'>-{0} accounts</p>
+                )}
+              </div>
+              <div className='w-full flex justify-between items-center'>
+                <p className='text-gray-400 text-sm font-medium'>Total to add to cart</p>
+                {isFollowingsLoading ? (
+                  <LoadingCell className='h-5 w-24 rounded-md' />
+                ) : (
+                  <p className='text-gray-400 text-sm font-medium'>{followings.length} accounts</p>
+                )}
+              </div>
             </div>
           </div>
         ) : (
@@ -100,7 +130,15 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
             No profile
           </div>
         )}
-        <PrimaryButton label='Add' onClick={() => onAddFollowings()} className='py-2' />
+        <div className='w-full flex items-center justify-between'>
+          <CancelButton onClick={onClose} />
+          <PrimaryButton
+            label='Add'
+            onClick={() => onAddFollowings()}
+            className='py-3 w-32'
+            disabled={isFollowingsLoading || followings.length === 0}
+          />
+        </div>
       </div>
     </div>
   )
