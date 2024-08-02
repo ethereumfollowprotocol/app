@@ -12,8 +12,8 @@ import {
   listOpAsHexstring,
   extractAddressAndTag
 } from '#/utils/list-ops'
-import type { ListOp, ListOpTagOpParams } from '#/types/list-op'
 import type { ImportPlatformType } from '#/types/common'
+import type { ListOp, ListOpTagOpParams } from '#/types/list-op'
 
 // Define the type for each cart item
 export type CartItem = {
@@ -26,6 +26,7 @@ type StoredCartItem = {
   version: number
   address: Address
   tag?: string
+  import?: ImportPlatformType
 }
 
 // Define the type for the context value
@@ -84,7 +85,8 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
                   Buffer.from(item.tag, 'utf8')
                 ])
               : Buffer.from(item.address.slice(2), 'hex')
-          }
+          },
+          import: item.import
         }))
       : []
 
@@ -93,21 +95,23 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   useEffect(() => {
     if (!address) return
 
-    const transformedCartItems = cartItems.map(({ listOp }) => {
+    const transformedCartItems = cartItems.map(({ listOp, import: platform }) => {
       if (isTagListOp(listOp)) {
         const { address, tag } = extractAddressAndTag(listOp)
         return {
           opcode: listOp.opcode,
           version: listOp.version,
           address,
-          tag
+          tag,
+          import: platform
         }
       }
 
       return {
         opcode: listOp.opcode,
         version: listOp.version,
-        address: hexlify(listOp.data)
+        address: hexlify(listOp.data),
+        import: platform
       }
     })
 
@@ -292,7 +296,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   const cartAddresses = getAddressesFromCart()
   const socialAddresses = {
     farcaster: getAddressesFromCart('farcaster'),
-    lens: getAddressesFromCart('farcaster')
+    lens: getAddressesFromCart('lens')
   }
 
   return (

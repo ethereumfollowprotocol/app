@@ -134,7 +134,10 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
           <CancelButton onClick={onClose} />
           <PrimaryButton
             label='Add'
-            onClick={() => onAddFollowings()}
+            onClick={() => {
+              onAddFollowings()
+              onClose()
+            }}
             className='py-3 w-32'
             disabled={isFollowingsLoading || followings.length === 0}
           />

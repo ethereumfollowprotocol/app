@@ -360,9 +360,9 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     const cartAddress = localStorage.getItem('cart address')
 
     if (
+      lists === undefined ||
       ((userAddress?.toLowerCase() === cartAddress?.toLowerCase() || !userAddress) &&
-        cartList === (selectedList || 'none')) ||
-      lists === undefined
+        Number(cartList) === (selectedList || 'none'))
     )
       return
 

@@ -99,21 +99,20 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
 
   const tagsFromCart = getTagsFromCartByAddress(address)
   const inintialdisplayedTags = () => {
-    const seen: { [key: string]: boolean } = {}
-    return [...tags, ...(isFollowers ? [] : tagsFromCart)]
-      .filter(tag => {
-        if (Object.keys(seen).includes(tag)) return false
-        seen[tag] = true
-        return true
-      })
-      .filter(tag => (isBlockedList ? ['block', 'mute'].includes(tag) : true))
+    return [
+      ...new Set(
+        [...tags, ...(isFollowers ? [] : tagsFromCart)].filter(tag =>
+          isBlockedList ? ['block', 'mute'].includes(tag) : true
+        )
+      )
+    ]
   }
-  const [displayedTags, setdisplayedTags] = useState(inintialdisplayedTags)
+  const [displayedTags, setDisplayedTags] = useState(inintialdisplayedTags)
 
   const addTag = (tag: string) => {
     if (!displayedTags.includes(tag)) {
       addRecentTag(tag)
-      setdisplayedTags(prevTags => [...prevTags, tag])
+      setDisplayedTags(prevTags => [...prevTags, tag])
       addCartItem({ listOp: listOpAddTag(address, tag) })
     }
   }
@@ -121,7 +120,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
   const removeTag = (tag: string) => {
     if (hasListOpAddTag({ address, tag })) {
       removeCartItem(listOpAddTag(address, tag))
-      setdisplayedTags(prevTags => prevTags.filter(prevTag => prevTag !== tag))
+      setDisplayedTags(prevTags => prevTags.filter(prevTag => prevTag !== tag))
       return
     }
 

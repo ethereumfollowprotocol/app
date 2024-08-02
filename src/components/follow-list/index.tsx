@@ -6,6 +6,8 @@ import LoadingRow from './loading-row'
 import EFPLogo from 'public/assets/logo.svg'
 import FollowListItem from './follow-list-item'
 import type { ENSProfile } from '#/types/requests'
+import SocialTagDropdown from './components/socialTagDropdown'
+import type { ImportPlatformType } from '#/types/common'
 
 export interface FollowListProfile {
   address: Address
@@ -77,7 +79,33 @@ export function FollowList({
               </div>
             </div>
           )}
-          {/* {socialProfiles?.map()} */}
+          {socialProfiles?.map(
+            social =>
+              social.profiles.length > 0 && (
+                <div
+                  key={social.platform}
+                  className='flex sm:w-full items-center gap-2 md:p-4 p-1.5 sm:p-2 sm:gap-3'
+                >
+                  <Image
+                    src={social.icon}
+                    alt={social.platform}
+                    className='rounded-xl h-[45px] w-[45px] md:h-[50px] md:w-[50px]'
+                  />
+                  <div className='flex flex-col items-start min-w-52 gap-px'>
+                    <p className='text-lg font-semibold'>
+                      Import from <span className='capitalize'>{social.platform}</span>
+                    </p>
+                    <p className='font-medium text-sm text-gray-500'>
+                      Adding: {social.profiles.length}
+                    </p>
+                  </div>
+                  <SocialTagDropdown
+                    profiles={social.profiles}
+                    platform={social.platform as ImportPlatformType}
+                  />
+                </div>
+              )
+          )}
           {profiles?.map(({ address, tags, ens }) => (
             <FollowListItem
               className={listItemClassName}
