@@ -93,6 +93,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
               />
               <div className='flex flex-col items-start'>
                 <p className='text-lg font-semibold'>
+                  @
                   {socialProfile.profileName ||
                     truncateAddress(socialProfile.userAssociatedAddresses?.[0])}
                 </p>
@@ -119,11 +120,11 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
                 )}
               </div>
               <div className='w-full flex justify-between items-center'>
-                <p className='text-gray-400 text-sm font-medium'>Total to add to cart</p>
+                <p className='text-darkGrey text-lg font-semibold'>Total to add to cart</p>
                 {isFollowingsLoading ? (
                   <LoadingCell className='h-5 w-24 rounded-md' />
                 ) : (
-                  <p className='text-gray-400 text-sm font-medium'>
+                  <p className='text-darkGrey text-lg font-bold'>
                     {followings.length - alreadyFollow.length} accounts
                   </p>
                 )}
