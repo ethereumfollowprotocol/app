@@ -18,5 +18,9 @@
   "already followed": "Already following: ",
   "unresolved": "Names don't resolve: ",
   "not manager": "You are not the manager.",
-  "empty cart": "Your cart is empty. Follow some people and add a few tags to fill up your cart."
+  "empty cart": "Your cart is empty. Follow some people and add a few tags to fill up your cart.",
+  "import": {
+    "title": "Import who you follow on",
+    "following": "Following"
+  }
 }

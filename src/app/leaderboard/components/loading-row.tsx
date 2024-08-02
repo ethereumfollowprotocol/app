@@ -19,13 +19,13 @@ const LoadingRow = () => {
         <LoadingCell className='w-10 h-5 rounded-lg' />
         <p className='font-medium'>Mutuals</p>
       </div>
-      <div className='hidden md:flex flex-col items-center w-[15%] lg:w-[12.5%] xl:w-[11%]'>
-        <LoadingCell className='w-10 h-5 rounded-lg' />
-        <p className='font-medium'>Following</p>
-      </div>
       <div className='hidden sm:flex flex-col items-center w-[15%] lg:w-[12.5%] xl:w-[11%]'>
         <LoadingCell className='w-10 h-5 rounded-lg' />
         <p className='font-medium'>Followers</p>
+      </div>
+      <div className='hidden md:flex flex-col items-center w-[15%] lg:w-[12.5%] xl:w-[11%]'>
+        <LoadingCell className='w-10 h-5 rounded-lg' />
+        <p className='font-medium'>Following</p>
       </div>
       <div className='flex-col items-center w-[11%] hidden xl:flex'>
         <LoadingCell className='w-10 h-5 rounded-lg' />

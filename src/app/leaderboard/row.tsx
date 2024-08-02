@@ -53,7 +53,7 @@ export function TableRow({
       </div>
       <div>
         <div className='text-center'>
-          <p className='font-bold text-sm sm:text-lg'>{following}</p>
+          <p className='font-bold text-sm sm:text-lg'>{mutuals}</p>
         </div>
       </div>
       <div>
@@ -63,7 +63,7 @@ export function TableRow({
       </div>
       <div>
         <div className='text-center'>
-          <p className='font-bold text-sm sm:text-lg'>{mutuals}</p>
+          <p className='font-bold text-sm sm:text-lg'>{following}</p>
         </div>
       </div>
       <div>

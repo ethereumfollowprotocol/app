@@ -10,13 +10,18 @@ import Checkout from './components/checkout'
 import { Search } from '#/components/search'
 import { useCart } from '#/contexts/cart-context'
 import Trash from 'public/assets/icons/trash.svg'
+import ImportModal from './components/importModal'
+import LensIcon from 'public/assets/icons/lens.png'
 import { FollowList } from '#/components/follow-list'
 import Recommendations from '#/components/recommendations'
 import { PrimaryButton } from '#/components/primary-button'
+import FarcasterIcon from 'public/assets/icons/farcaster.png'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 export default function EditorPage() {
   const [isClient, setIsClient] = useState(false)
+  const [importModalOpen, setImportModalOpen] = useState(false)
+  const [platform, setPlatform] = useState<'farcaster' | 'lens'>('farcaster')
 
   useEffect(() => {
     setIsClient(true)
@@ -26,7 +31,7 @@ export default function EditorPage() {
   const { isConnected } = useAccount()
   const { t } = useTranslation('editor')
   const { openConnectModal } = useConnectModal()
-  const { totalCartItems, cartAddresses, resetCart, cartItems } = useCart()
+  const { totalCartItems, cartAddresses, socialAddresses, resetCart, cartItems } = useCart()
 
   const { selectedList, roles } = useEFPProfile()
   const hasCreatedEfpList = !!selectedList
@@ -41,6 +46,26 @@ export default function EditorPage() {
         : [],
     [cartAddresses]
   )
+
+  const socialProfiles = [
+    {
+      platform: 'farcaster',
+      profiles: socialAddresses.farcaster.map(address => ({
+        address,
+        tags: []
+      })),
+      icon: FarcasterIcon
+    },
+    {
+      platform: 'lens',
+      profiles: socialAddresses.lens.map(address => ({
+        address,
+        tags: []
+      })),
+      icon: LensIcon
+    }
+  ]
+
   const transactionsCount = useMemo(() => {
     let count = 0
     const splitSize = 100
@@ -65,15 +90,42 @@ export default function EditorPage() {
         </div>
       ) : (
         <>
+          {importModalOpen && (
+            <ImportModal onClose={() => setImportModalOpen(false)} platform={platform} />
+          )}
           <div className='flex flex-col glass-card gap-6 px-3 py-4 sm:p-6 h-fit rounded-2xl border-2 border-gray-200 xl:max-w-116 w-full xl:w-1/3'>
-            <h1 className='text-left text-3xl font-semibold hidden xl:block'>{t('title')}</h1>
+            <div className='w-full flex justify-between items-center'>
+              <h1 className='text-left text-3xl font-semibold hidden xl:block'>{t('title')}</h1>
+              <div className='flex gap-1'>
+                <p className='text-lg font-semibold mr-1'>Import</p>
+                <Image
+                  src={FarcasterIcon}
+                  alt='Import from Farcaster'
+                  width={30}
+                  className='cursor-pointer hover:opacity-75 transition-opacity'
+                  onClick={() => {
+                    setImportModalOpen(true)
+                    setPlatform('farcaster')
+                  }}
+                />
+                <Image
+                  src={LensIcon}
+                  alt='Import from Lens'
+                  width={30}
+                  className='cursor-pointer hover:opacity-75 transition-opacity'
+                  onClick={() => {
+                    setImportModalOpen(true)
+                    setPlatform('lens')
+                  }}
+                />
+              </div>
+            </div>
             <Search size='w-full z-50' isEditor={true} />
             <Recommendations header={t('recommendations')} endpoint='recommended' />
           </div>
           <div className='flex h-full flex-col glass-card rounded-2xl border-2 border-gray-200 gap-3 md:gap-4 md:py-8 py-6 px-1 sm:px-3 md:px-4 w-full xl:w-2/3'>
             <div className='flex sm:justify-between flex-col gap-2 sm:flex-row sm:items-center px-3 md:px-4'>
               <h3 className='font-bold text-left text-2xl'>{t('unc-changes')}</h3>
-              {/* <Legend /> */}
               {totalCartItems > 0 && (
                 <div
                   className='flex gap-2 cursor-pointer items-center hover:opacity-70'
@@ -92,6 +144,7 @@ export default function EditorPage() {
             <FollowList
               isLoading={false}
               profiles={profiles}
+              socialProfiles={socialProfiles}
               listClassName='rounded-xl gap-1 sm:gap-0'
               listItemClassName='rounded-xl md:p-4 p-1.5 sm:p-2 hover:bg-white/80'
               showTags={true}
@@ -100,7 +153,7 @@ export default function EditorPage() {
             />
           </div>
           {isClient && totalCartItems > 0 && (
-            <div className='fixed md:w-fit w-full top-[85vh] sm:top-[87.5vh] lg:top-[85vh] right-0 px-4 lg:right-[5vw] flex justify-end'>
+            <div className='fixed md:w-fit w-full top-[85vh] sm:top-[85vh] lg:top-[82.5vh] right-0 px-4 lg:right-[5vw] flex justify-end'>
               <div className='flex gap-6 w-full border-[1px] border-gray-200 lg:w-fit items-center p-4 bg-white/10 justify-between glass-card bg-opacity-50 shadow-xl rounded-xl'>
                 <div className='flex flex-col gap-1 items-start'>
                   <div className='flex gap-2 items-center'>

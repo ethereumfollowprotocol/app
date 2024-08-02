@@ -25,7 +25,7 @@ const TransactionDetails = ({
   const [isLastActionSuccessful, setIsLastActionSuccessful] = useState(false)
   useEffect(() => {
     if (isSuccess && isLastAction)
-      setTimeout(() => setIsLastActionSuccessful(true), 5000 + (totalCartItems / 100) * 2)
+      setTimeout(() => setIsLastActionSuccessful(true), 5000 + (totalCartItems / 10) * 2)
   }, [isSuccess])
 
   const statusDescription = useMemo(() => {

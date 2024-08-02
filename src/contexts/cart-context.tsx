@@ -12,11 +12,13 @@ import {
   listOpAsHexstring,
   extractAddressAndTag
 } from '#/utils/list-ops'
+import type { ImportPlatformType } from '#/types/common'
 import type { ListOp, ListOpTagOpParams } from '#/types/list-op'
 
 // Define the type for each cart item
 export type CartItem = {
   listOp: ListOp
+  import?: ImportPlatformType
 }
 
 type StoredCartItem = {
@@ -24,6 +26,7 @@ type StoredCartItem = {
   version: number
   address: Address
   tag?: string
+  import?: ImportPlatformType
 }
 
 // Define the type for the context value
@@ -32,6 +35,11 @@ type CartContextType = {
   addCartItem: (item: CartItem) => void
   addRemoveTagToCart: (params: ListOpTagOpParams) => void
   cartAddresses: Address[]
+  // socialAddresses: Record<string, Address[]>
+  socialAddresses: {
+    farcaster: Address[]
+    lens: Address[]
+  }
   cartItems: CartItem[]
   getAddressesFromCart: () => string[]
   getTagsFromCartByAddress: (address: Address) => string[]
@@ -71,11 +79,14 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
             version: item.version,
             data: item.tag
               ? Buffer.concat([
+                  // @ts-ignore
                   Buffer.from(item.address.slice(2), 'hex'),
+                  // @ts-ignore
                   Buffer.from(item.tag, 'utf8')
                 ])
               : Buffer.from(item.address.slice(2), 'hex')
-          }
+          },
+          import: item.import
         }))
       : []
 
@@ -84,21 +95,23 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   useEffect(() => {
     if (!address) return
 
-    const transformedCartItems = cartItems.map(({ listOp }) => {
+    const transformedCartItems = cartItems.map(({ listOp, import: platform }) => {
       if (isTagListOp(listOp)) {
         const { address, tag } = extractAddressAndTag(listOp)
         return {
           opcode: listOp.opcode,
           version: listOp.version,
           address,
-          tag
+          tag,
+          import: platform
         }
       }
 
       return {
         opcode: listOp.opcode,
         version: listOp.version,
-        address: hexlify(listOp.data)
+        address: hexlify(listOp.data),
+        import: platform
       }
     })
 
@@ -261,13 +274,18 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   )
 
   // Retrieves all unique addresses involved in the cart items.
-  const getAddressesFromCart = useCallback((): Address[] => {
-    const addresses = cartItems.map(({ listOp }) =>
-      isTagListOp(listOp) ? extractAddressAndTag(listOp).address : hexlify(listOp.data)
-    )
+  const getAddressesFromCart = useCallback(
+    (platform?: ImportPlatformType): Address[] => {
+      const addresses = cartItems
+        .filter(item => item.import === platform)
+        .map(({ listOp }) =>
+          isTagListOp(listOp) ? extractAddressAndTag(listOp).address : hexlify(listOp.data)
+        )
 
-    return [...new Set(addresses)]
-  }, [cartItems])
+      return [...new Set(addresses)]
+    },
+    [cartItems]
+  )
 
   // Resets the cart items
   const resetCart = () => {
@@ -276,6 +294,10 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
 
   const totalCartItems = cartItems.length
   const cartAddresses = getAddressesFromCart()
+  const socialAddresses = {
+    farcaster: getAddressesFromCart('farcaster'),
+    lens: getAddressesFromCart('lens')
+  }
 
   return (
     <CartContext.Provider
@@ -284,6 +306,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
         addCartItem,
         addRemoveTagToCart,
         cartAddresses,
+        socialAddresses,
         cartItems,
         getAddressesFromCart,
         getTagsFromCartByAddress,
