@@ -27,7 +27,8 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
     isSocialProfileLoading,
     isFollowingsLoading,
     onAddFollowings,
-    followings
+    followings,
+    alreadyFollow
   } = useImportModal(platform)
 
   return (
@@ -112,7 +113,9 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
                 {isFollowingsLoading ? (
                   <LoadingCell className='h-5 w-24 rounded-md' />
                 ) : (
-                  <p className='text-gray-400 text-sm font-medium'>-{0} accounts</p>
+                  <p className='text-gray-400 text-sm font-medium'>
+                    -{alreadyFollow.length} accounts
+                  </p>
                 )}
               </div>
               <div className='w-full flex justify-between items-center'>
@@ -120,7 +123,9 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
                 {isFollowingsLoading ? (
                   <LoadingCell className='h-5 w-24 rounded-md' />
                 ) : (
-                  <p className='text-gray-400 text-sm font-medium'>{followings.length} accounts</p>
+                  <p className='text-gray-400 text-sm font-medium'>
+                    {followings.length - alreadyFollow.length} accounts
+                  </p>
                 )}
               </div>
             </div>
@@ -139,7 +144,11 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
               onClose()
             }}
             className='py-3 w-32'
-            disabled={isFollowingsLoading || followings.length === 0}
+            disabled={
+              isFollowingsLoading ||
+              followings.length === 0 ||
+              alreadyFollow.length === followings.length
+            }
           />
         </div>
       </div>
