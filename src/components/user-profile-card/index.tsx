@@ -343,9 +343,11 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 >
                   {profile.stats === undefined
                     ? '-'
-                    : profileList
-                      ? profile.stats.following_count
-                      : 0}
+                    : isConnectedUserCard && selectedList === undefined
+                      ? 0
+                      : profileList
+                        ? profile.stats.following_count
+                        : 0}
                 </div>
                 <div
                   className={`${isResponsive ? 'sm:text-lg' : 'text-lg'} font-bold text-gray-500`}
@@ -384,7 +386,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
             </div>
           </div>
         </>
-      ) : isConnectedUserCard ? (
+      ) : !connectedAddress && isConnectedUserCard ? (
         <LoadingProfileCard
           isResponsive={isResponsive}
           hideFollowButton={true}
