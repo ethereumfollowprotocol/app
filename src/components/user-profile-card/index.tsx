@@ -192,10 +192,12 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
       ) : profile && isProfileValid ? (
         <>
           <div className='flex gap-2 items-center absolute justify-between px-2 w-full left-0 top-1 font-semibold'>
-            {(isConnectedUserCard ? selectedList : profileList) && (
-              <p className='text-gray-500 text-sm sm:text-base'>
-                #{isConnectedUserCard ? selectedList : profileList}
-              </p>
+            {isConnectedUserCard ? (
+              selectedList ? (
+                <p className='text-gray-500 text-sm sm:text-base'>#{profileList}</p>
+              ) : null
+            ) : (
+              <p className='text-gray-500 text-sm sm:text-base'>#{profileList}</p>
             )}
             {profileList
               ? profileList !== Number(profile.primary_list) && (
