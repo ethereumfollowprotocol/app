@@ -1,11 +1,13 @@
 import Link from 'next/link'
 import type { Address } from 'viem'
+import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
 
 import { Avatar } from '#/components/avatar'
 import { resolveEnsProfile } from '#/utils/ens'
 import { truncateAddress } from '#/lib/utilities'
 import FollowButton from '#/components/follow-button'
+import useFollowState from '#/hooks/use-follow-state'
 
 interface TableRowProps {
   address: Address
@@ -47,6 +49,12 @@ const TableRow: React.FC<TableRowProps> = ({
     queryFn: async () => await resolveEnsProfile(address)
   })
 
+  const { t } = useTranslation()
+  const { followerTag } = useFollowState({
+    address,
+    type: 'follower'
+  })
+
   const name = fetchedEnsProfile?.name
   const avatarUrl = fetchedEnsProfile?.avatar
 
@@ -70,8 +78,10 @@ const TableRow: React.FC<TableRowProps> = ({
               {name || truncateAddress(address)}
             </p>
           </Link>
-          <div className='font-bold rounded-full mb-1 px-2 text-[10px] py-px bg-gray-300 text-darkGrey'>
-            Follows you
+          <div
+            className={`rounded-full font-bold text-[10px] flex items-center justify-center bg-gray-300 h-5 w-20 ${followerTag.className}`}
+          >
+            {t(`profile card.${followerTag.text}`)}
           </div>
         </div>
       </div>
