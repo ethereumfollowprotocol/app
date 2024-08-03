@@ -15,6 +15,7 @@ import {
   type FetchNextPageOptions,
   type InfiniteQueryObserverResult
 } from '@tanstack/react-query'
+import type { Address } from 'viem'
 import { useRouter } from 'next/navigation'
 import { useAccount, useChains } from 'wagmi'
 
@@ -37,6 +38,7 @@ import fetchProfileFollowing from '#/api/fetchProfileFollowing'
 import fetchFollowerTags, { nullFollowerTags } from '#/api/fetchFollowerTags'
 import fetchFollowingTags, { nullFollowingTags } from '#/api/fetchFollowingTags'
 import { BLOCKED_MUTED_TAGS, DEFAULT_TAGS_TO_ADD, FETCH_LIMIT_PARAM } from '#/lib/constants'
+import fetchProfileAllFollowings from '#/api/fetchProfileAllFollowings'
 
 // Define the type for the profile context
 type EFPProfileContextType = {
@@ -48,6 +50,7 @@ type EFPProfileContextType = {
   followerTags?: FollowingTagsResponse
   followers: FollowerResponse[]
   following: FollowingResponse[]
+  allFollowingAddresses?: Address[]
   roles?: ProfileRoles
   listsIsLoading: boolean
   profileIsLoading: boolean
@@ -111,6 +114,7 @@ type EFPProfileContextType = {
       Error
     >
   >
+  refetchAllFollowings: (options?: RefetchOptions) => Promise<QueryObserverResult<Address[], Error>>
   refetchRoles: (options?: RefetchOptions) => Promise<QueryObserverResult<ProfileRoles, Error>>
   recentTags: string[]
   followingTagsFilter: string[]
@@ -424,6 +428,16 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     }
   })
 
+  const { data: allFollowingAddresses, refetch: refetchAllFollowings } = useQuery({
+    queryKey: ['all followings', userAddress, selectedList],
+    queryFn: async () => {
+      if (!(selectedList && userAddress)) return []
+
+      const fetchedRoles = await fetchProfileAllFollowings(selectedList)
+      return fetchedRoles
+    }
+  })
+
   return (
     <EFPProfileContext.Provider
       value={{
@@ -435,6 +449,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         followingTags,
         followers,
         following,
+        allFollowingAddresses,
         roles,
         listsIsLoading,
         followerTagsLoading: followerTagsLoading || isRefetchingFollowerTagsQuery,
@@ -459,6 +474,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         refetchFollowing,
         refetchFollowerTags,
         refetchFollowingTags,
+        refetchAllFollowings,
         refetchRoles,
         recentTags,
         followingTagsFilter,

@@ -192,10 +192,12 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
       ) : profile && isProfileValid ? (
         <>
           <div className='flex gap-2 items-center absolute justify-between px-2 w-full left-0 top-1 font-semibold'>
-            {(isConnectedUserCard ? selectedList : profileList) && (
-              <p className='text-gray-500 text-sm sm:text-base'>
-                #{isConnectedUserCard ? selectedList : profileList}
-              </p>
+            {isConnectedUserCard ? (
+              selectedList ? (
+                <p className='text-gray-500 text-sm sm:text-base'>#{profileList}</p>
+              ) : null
+            ) : (
+              <p className='text-gray-500 text-sm sm:text-base'>#{profileList}</p>
             )}
             {profileList
               ? profileList !== Number(profile.primary_list) && (
@@ -343,9 +345,11 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 >
                   {profile.stats === undefined
                     ? '-'
-                    : profileList
-                      ? profile.stats.following_count
-                      : 0}
+                    : isConnectedUserCard && selectedList === undefined
+                      ? 0
+                      : profileList
+                        ? profile.stats.following_count
+                        : 0}
                 </div>
                 <div
                   className={`${isResponsive ? 'sm:text-lg' : 'text-lg'} font-bold text-gray-500`}
@@ -384,7 +388,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
             </div>
           </div>
         </>
-      ) : isConnectedUserCard ? (
+      ) : !connectedAddress && isConnectedUserCard ? (
         <LoadingProfileCard
           isResponsive={isResponsive}
           hideFollowButton={true}

@@ -5,6 +5,7 @@ import { init, useQuery, useQueryWithPagination } from '@airstack/airstack-react
 import { useCart } from '#/contexts/cart-context'
 import { listOpAddListRecord } from '#/utils/list-ops'
 import type { ImportPlatformType } from '#/types/common'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 init('0366bbe276e04996af5f92ebb7899f19', { env: 'dev', cache: true })
 
@@ -15,6 +16,7 @@ const useImportModal = (platform: ImportPlatformType) => {
   const [isFollowingsLoading, setIsFollowingsLoading] = useState(false)
 
   const { addCartItem } = useCart()
+  const { allFollowingAddresses } = useEFPProfile()
 
   useEffect(() => {
     const inputTimeout = setTimeout(() => setHandle(currHandle), 500)
@@ -25,7 +27,7 @@ const useImportModal = (platform: ImportPlatformType) => {
   const profileQuery = `
     query ProfileQuery ($platform: SocialDappName) {
       Socials(
-        input: {filter: {dappName: {_eq: $platform}, profileName: {_eq: "${handle}"}}, blockchain: ethereum, limit: 1}
+        input: {filter: {dappName: {_eq: $platform}, profileName: {_eq: "${handle.replace('@', '')}"}}, blockchain: ethereum, limit: 1}
       ) {
         Social {
           profileImage
@@ -82,10 +84,16 @@ const useImportModal = (platform: ImportPlatformType) => {
   }, [fetchedFollowings])
 
   const onAddFollowings = () => {
-    followings.map(followingAddress =>
-      addCartItem({ listOp: listOpAddListRecord(followingAddress as Address), import: platform })
-    )
+    followings
+      .filter(addr => !allFollowingAddresses?.includes(addr.toLowerCase()))
+      .map(followingAddress =>
+        addCartItem({ listOp: listOpAddListRecord(followingAddress as Address), import: platform })
+      )
   }
+
+  const alreadyFollow = followings.filter(addr =>
+    allFollowingAddresses?.includes(addr.toLowerCase())
+  )
 
   // add query to fetch airstack profile and all following addresses, download AIrstack SDK
   return {
@@ -95,7 +103,8 @@ const useImportModal = (platform: ImportPlatformType) => {
     followings,
     isSocialProfileLoading,
     isFollowingsLoading: isFollowingsLoading || isFetchedFollowingsLoading,
-    onAddFollowings
+    onAddFollowings,
+    alreadyFollow
   }
 }
 

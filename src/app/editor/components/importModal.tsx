@@ -27,7 +27,8 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
     isSocialProfileLoading,
     isFollowingsLoading,
     onAddFollowings,
-    followings
+    followings,
+    alreadyFollow
   } = useImportModal(platform)
 
   return (
@@ -92,6 +93,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
               />
               <div className='flex flex-col items-start'>
                 <p className='text-lg font-semibold'>
+                  @
                   {socialProfile.profileName ||
                     truncateAddress(socialProfile.userAssociatedAddresses?.[0])}
                 </p>
@@ -112,15 +114,19 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
                 {isFollowingsLoading ? (
                   <LoadingCell className='h-5 w-24 rounded-md' />
                 ) : (
-                  <p className='text-gray-400 text-sm font-medium'>-{0} accounts</p>
+                  <p className='text-gray-400 text-sm font-medium'>
+                    -{alreadyFollow.length} accounts
+                  </p>
                 )}
               </div>
               <div className='w-full flex justify-between items-center'>
-                <p className='text-gray-400 text-sm font-medium'>Total to add to cart</p>
+                <p className='text-darkGrey text-lg font-semibold'>Total to add to cart</p>
                 {isFollowingsLoading ? (
                   <LoadingCell className='h-5 w-24 rounded-md' />
                 ) : (
-                  <p className='text-gray-400 text-sm font-medium'>{followings.length} accounts</p>
+                  <p className='text-darkGrey text-lg font-bold'>
+                    {followings.length - alreadyFollow.length} accounts
+                  </p>
                 )}
               </div>
             </div>
@@ -139,7 +145,11 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
               onClose()
             }}
             className='py-3 w-32'
-            disabled={isFollowingsLoading || followings.length === 0}
+            disabled={
+              isFollowingsLoading ||
+              followings.length === 0 ||
+              alreadyFollow.length === followings.length
+            }
           />
         </div>
       </div>

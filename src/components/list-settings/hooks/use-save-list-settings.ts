@@ -94,6 +94,7 @@ const useSaveListSettings = ({
     executeActionByIndex
   } = useActions()
   const {
+    refetchLists,
     refetchRoles,
     refetchProfile,
     refetchFollowing,
@@ -441,6 +442,7 @@ const useSaveListSettings = ({
     setIsRefetchingFollowing(true)
 
     if (changedValuesState.manager) resetCart()
+    if (changedValuesState.setPrimary || changedValues.user) refetchLists()
 
     // Refetch all related data
     refetchRoles()

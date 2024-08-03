@@ -13,10 +13,10 @@ const NavItems = () => {
   const pathname = usePathname()
   const { t } = useTranslation()
   const { address: userAddress } = useAccount()
-  const { selectedList, profile } = useEFPProfile()
+  const { selectedList, lists } = useEFPProfile()
   const itemUrl =
     pathname?.toLowerCase() === `/${userAddress?.toLowerCase()}` &&
-    selectedList === Number(profile?.primary_list)
+    selectedList === Number(lists?.primary_list)
       ? userAddress?.toLowerCase()
       : selectedList?.toString() ?? userAddress?.toLowerCase()
 
