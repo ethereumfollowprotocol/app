@@ -5,16 +5,19 @@ export const fetchleaderboard = async ({
   limit,
   search,
   filter,
-  pageParam
+  pageParam,
+  direction
 }: InfiniteLeaderboardQueryProps) => {
   try {
     const queryParams = formatQueryParams({
       limit,
       offset: pageParam * limit,
-      search
+      search,
+      sort: filter,
+      direction
     })
 
-    const url = `${process.env.NEXT_PUBLIC_EFP_API_URL}/leaderboard/${filter}?${queryParams}`
+    const url = `${process.env.NEXT_PUBLIC_EFP_API_URL}/leaderboard/ranked?${queryParams}`
     const response = await fetch(url, {
       cache: 'default'
       // cache: "no-cache",

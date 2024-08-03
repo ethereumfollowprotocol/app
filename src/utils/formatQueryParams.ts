@@ -6,7 +6,8 @@ export const formatQueryParams = ({
   sort,
   tags,
   filter,
-  search
+  search,
+  direction
 }: {
   limit?: string | number
   offset?: string | number
@@ -14,6 +15,7 @@ export const formatQueryParams = ({
   tags?: string[]
   filter?: LeaderboardFilter
   search?: string | null
+  direction?: string | null
 }) =>
   [
     {
@@ -39,6 +41,10 @@ export const formatQueryParams = ({
     {
       param: 'search',
       value: search
+    },
+    {
+      param: 'direction',
+      value: direction
     }
   ]
     .filter(param => !!param.value)

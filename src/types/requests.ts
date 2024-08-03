@@ -57,11 +57,14 @@ export interface InfiniteProfileQueryProps {
   allResults?: boolean
 }
 
+export type LeaderboardDirection = 'asc' | 'desc'
+
 export interface InfiniteLeaderboardQueryProps {
   limit: number
   pageParam: number
   search?: string | null
   filter?: LeaderboardFilter
+  direction?: LeaderboardDirection
 }
 
 export interface FollowerResponse {
@@ -93,11 +96,13 @@ export interface FollowStatusResponse {
 
 export interface LeaderboardResponse {
   address: Address
-  rank: number
-  following_count?: string
-  followers_count?: string
-  blocked_by_count?: string
-  mutuals_count?: string
+  name: string | null
+  avatar: string | null
+  mutuals_rank: string
+  following?: string
+  followers: string
+  blocks?: string
+  mutuals?: string
 }
 
 export interface StatsResponse {

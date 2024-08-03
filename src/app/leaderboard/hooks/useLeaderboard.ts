@@ -16,7 +16,9 @@ const useLeaderboard = () => {
   const {
     data: results,
     isLoading: isLeaderboardLoading,
-    refetch: refetchLeaderboard
+    refetch: refetchLeaderboard,
+    fetchNextPage: fetchMoreLeaderboard,
+    isFetchingNextPage: isFetchingMoreLeaderboard
   } = useInfiniteQuery({
     queryKey: ['leaderboard', filter, search],
     queryFn: async ({ pageParam = 0 }) => {
@@ -48,6 +50,8 @@ const useLeaderboard = () => {
     refetchLeaderboard,
     filter,
     setFilter,
+    fetchMoreLeaderboard,
+    isFetchingMoreLeaderboard,
     search
   }
 }

@@ -69,12 +69,14 @@ const LeaderboardTable = () => {
           leaderboard.map((entry: LeaderboardResponse, index) => (
             <TableRow
               key={`${entry.address}-${index}`}
-              rank={entry.rank}
               address={entry.address}
-              followers={Number(entry.followers_count) || 0}
-              following={Number(entry.following_count) || 0}
-              mutuals={Number(entry.mutuals_count) || 0}
-              blockedMuted={Number(entry.blocked_by_count) || 0}
+              name={entry.name}
+              avatar={entry.avatar}
+              rank={index + 1 || Number(entry.mutuals_rank)}
+              followers={Number(entry.followers) || 0}
+              following={Number(entry.following) || 0}
+              mutuals={Number(entry.mutuals) || 0}
+              blockedMuted={Number(entry.blocks) || 0}
             />
           ))
         )}
