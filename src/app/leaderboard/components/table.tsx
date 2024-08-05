@@ -12,7 +12,15 @@ import { leaderboardFilters, leaderboardFiltersEmojies } from '#/lib/constants/i
 
 const LeaderboardTable = () => {
   const router = useRouter()
-  const { leaderboard, filter, setFilter, search, isLeaderboardLoading } = useLeaderboard()
+  const {
+    leaderboard,
+    filter,
+    setFilter,
+    search,
+    loadMoreRef,
+    isFetchingMoreLeaderboard,
+    isLeaderboardLoading
+  } = useLeaderboard()
 
   return (
     <div className='flex flex-col mt-6 gap-6 w-full max-w-[1400px]'>
@@ -61,25 +69,22 @@ const LeaderboardTable = () => {
         </div>
       </div>
       <div className='glass-card border-gray-200 border-2 rounded-xl flex flex-col gap-4 p-3 sm:px-8 sm:py-6 lg:px-12 lg:py-10 relative'>
-        {isLeaderboardLoading ? (
-          new Array(20).fill(1).map((_, i) => <LoadingRow key={i} />)
-        ) : leaderboard.length === 0 ? (
-          <div className='text-3xl font-semibold'>No results</div>
-        ) : (
-          leaderboard.map((entry: LeaderboardResponse, index) => (
-            <TableRow
-              key={`${entry.address}-${index}`}
-              address={entry.address}
-              name={entry.name}
-              avatar={entry.avatar}
-              rank={index + 1 || Number(entry.mutuals_rank)}
-              followers={Number(entry.followers) || 0}
-              following={Number(entry.following) || 0}
-              mutuals={Number(entry.mutuals) || 0}
-              blockedMuted={Number(entry.blocks) || 0}
-            />
-          ))
-        )}
+        {leaderboard.map((entry: LeaderboardResponse, index) => (
+          <TableRow
+            key={`${entry.address}-${index}`}
+            address={entry.address}
+            name={entry.name}
+            avatar={entry.avatar}
+            rank={index + 1 || Number(entry.mutuals_rank)}
+            followers={Number(entry.followers) || 0}
+            following={Number(entry.following) || 0}
+            mutuals={Number(entry.mutuals) || 0}
+            blockedMuted={Number(entry.blocks) || 0}
+          />
+        ))}
+        {(isLeaderboardLoading || isFetchingMoreLeaderboard) &&
+          new Array(100).fill(1).map((_, i) => <LoadingRow key={i} />)}
+        <div ref={loadMoreRef} className='h-px w-full' />
       </div>
     </div>
   )
