@@ -1,6 +1,9 @@
 import { useAccount } from 'wagmi'
 import LoadingCell, { LIGHT_LOADING_GRADIENT } from '#/components/loading-cell'
 import { useTranslation } from 'react-i18next'
+import { useQuery } from '@tanstack/react-query'
+import { resolveEnsName } from '#/utils/ens'
+import type { Address } from 'viem'
 
 interface SettingsInputProps {
   option: string
@@ -28,6 +31,11 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
   const { t } = useTranslation('profile', { keyPrefix: 'list settings' })
   const { address: connectedAddress } = useAccount()
 
+  const { data: resolvedName, isLoading: isNameLoading } = useQuery({
+    queryKey: ['ens name', value],
+    queryFn: async () => value && (await resolveEnsName(value as Address))
+  })
+
   return (
     <div className='flex flex-col gap-1'>
       <p className='font-semibold text-lg'>{option}</p>
@@ -50,20 +58,24 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
           className='p-3 font-medium truncate rounded-lg w-full bg-white/70 disabled:text-gray-400 disabled:cursor-not-allowed'
         />
       )}
-      {value.includes('.') && (
+      {(value.includes('.') || resolvedName) && (
         <div
           className={`font-medium items-center flex gap-2 h-5 text-sm ${
-            resolvedAddress && resolvedAddress?.length > 0 ? 'text-gray-400' : 'text-red-400'
+            (value.includes('.') && resolvedAddress && resolvedAddress?.length > 0) || resolvedName
+              ? 'text-gray-500'
+              : 'text-red-400'
           }`}
         >
-          <p className='text-gray-400 h-full'>{t('resolved')}</p>
-          {isLoading ? (
+          <p className='text-gray-500 h-full'>{t('resolved')}</p>
+          {isLoading || isNameLoading ? (
             <LoadingCell className='w-full h-full rounded-md' gradient={LIGHT_LOADING_GRADIENT} />
           ) : (
             <p className='h-full'>
-              {resolvedAddress && resolvedAddress?.length > 0
-                ? resolvedAddress
-                : t('no resolution')}
+              {value.includes('.')
+                ? resolvedAddress && resolvedAddress?.length > 0
+                  ? resolvedAddress
+                  : t('no resolution')
+                : resolvedName}
             </p>
           )}
         </div>

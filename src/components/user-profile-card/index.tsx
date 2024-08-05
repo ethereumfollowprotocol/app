@@ -192,8 +192,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
       ) : profile && isProfileValid ? (
         <>
           <div className='flex gap-2 items-center absolute justify-between px-2 w-full left-0 top-1 font-semibold'>
-            <p className='text-gray-500 text-sm sm:text-base'>#{profileList}</p>
-
+            {profileList && <p className='text-gray-500 text-sm sm:text-base'>#{profileList}</p>}
             {profileList
               ? profileList !== Number(profile.primary_list) && (
                   <p className='text-[11px] italic text-end rounded-full py-0.5 px-2 bg-gray-300'>
@@ -340,7 +339,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 >
                   {profile.stats === undefined
                     ? '-'
-                    : isConnectedUserCard && selectedList === undefined
+                    : isConnectedUserCard && profileList === undefined
                       ? 0
                       : profileList
                         ? profile.stats.following_count

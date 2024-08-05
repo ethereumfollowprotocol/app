@@ -15,7 +15,6 @@ import { listOpAddListRecord } from '#/utils/list-ops.ts'
 import { useEFPProfile } from '#/contexts/efp-profile-context.tsx'
 
 const useSearch = (isEditor?: boolean) => {
-  const [addToCartError, setAddToCartError] = useState<string>()
   const [isAddingToCart, setIsAddingToCart] = useState(false)
   const [dropdownMenuOpen, setDropdownMenuOpen] = useState(false)
   const [dialogOpen, setDialogOpen] = useState<undefined | boolean>(undefined)
@@ -100,8 +99,6 @@ const useSearch = (isEditor?: boolean) => {
 
   const handleSearchEvent = useCallback(
     (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setAddToCartError(undefined)
-
       const term = event?.target.value
       if (!isEditor && term.includes(' ')) return
       if (searchTimeout) clearTimeout(searchTimeout)
@@ -119,7 +116,6 @@ const useSearch = (isEditor?: boolean) => {
   const addToCart = async (user: string) => {
     if (!roles?.isManager) {
       toast.error(tFollowBtn('not manager'))
-      setAddToCartError(tFollowBtn('not manager'))
       return
     }
 
@@ -130,21 +126,20 @@ const useSearch = (isEditor?: boolean) => {
     const followState = await getFollowingState(address)
     const isPendingFollow = hasListOpAddRecord(address)
 
-    if (isPendingFollow) return
+    if (isPendingFollow) return { user, isFollowing: false, inCart: true }
     if (followState === 'follows') return { user, isFollowing: true }
     if (followState === 'none') addCartItem({ listOp: listOpAddListRecord(address) })
   }
+
+  const formatError = (names: (string | undefined)[]) =>
+    `${names.slice(0, 10).join(', ')}${names.length > 10 ? ', ...' : ''}`
 
   const onSubmit = async () => {
     if (isEditor) {
       resetSearch()
       searchBarRef.current?.focus()
 
-      if (!roles?.isManager) {
-        toast.error(tFollowBtn('not manager'))
-        setAddToCartError(tFollowBtn('not manager'))
-        return
-      }
+      if (!roles?.isManager) return toast.error(tFollowBtn('not manager'))
 
       setIsAddingToCart(true)
 
@@ -162,24 +157,26 @@ const useSearch = (isEditor?: boolean) => {
 
         const addedToCart = await Promise.all(namesToAdd.map(async name => await addToCart(name)))
 
-        const namesInCart = addedToCart.filter(item => !!item?.isFollowing).map(item => item?.user)
-        const erroredNames = addedToCart
-          .filter(item => !item?.isFollowing)
+        const namesInCart = addedToCart.filter(item => item?.inCart).map(item => item?.user)
+        const alreadyFollowed = addedToCart
+          .filter(item => item?.isFollowing)
           .map(item => item?.user)
-          .filter(name => !!name)
+        const erroredNames = addedToCart
+          .filter(item => !(item?.inCart || item?.isFollowing) && !!item?.user)
+          .map(item => item?.user)
 
-        if (erroredNames.length > 0)
-          setAddToCartError(`${t('unresolved')} ${erroredNames.join(', ')}`)
-        else if (namesInCart.length > 0)
-          setAddToCartError(`${t('already followed')} ${namesInCart.join(', ')}`)
+        if (erroredNames.length > 0) toast.error(`${t('unresolved')} ${formatError(erroredNames)}`)
+        if (namesInCart.length > 0) toast.error(`${t('in cart')} ${formatError(namesInCart)}`)
+        if (alreadyFollowed.length > 0)
+          toast.error(`${t('already followed')} ${formatError(alreadyFollowed)}`)
 
         return setIsAddingToCart(false)
       }
 
       const erroredName = await addToCart(currentSearch)
-      if (erroredName?.isFollowing)
-        setAddToCartError(`${t('already followed')} ${erroredName.user}`)
-      else if (erroredName) setAddToCartError(`${t('unresolved')} ${erroredName?.user}`)
+      if (erroredName?.isFollowing) toast.error(`${t('already followed')} ${erroredName.user}`)
+      else if (erroredName?.inCart) toast.error(`${t('in cart')} ${erroredName.user}`)
+      else if (erroredName) toast.error(`${t('unresolved')} ${erroredName?.user}`)
 
       return setIsAddingToCart(false)
     }
@@ -211,11 +208,9 @@ const useSearch = (isEditor?: boolean) => {
     searchResult,
     setDialogOpen,
     currentSearch,
-    addToCartError,
     isAddingToCart,
     dropdownMenuOpen,
     handleSearchEvent,
-    setAddToCartError,
     setDropdownMenuOpen
   }
 }

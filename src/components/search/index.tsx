@@ -31,11 +31,9 @@ export function Search({
     searchResult,
     setDialogOpen,
     currentSearch,
-    addToCartError,
     isAddingToCart,
     dropdownMenuOpen,
     handleSearchEvent,
-    setAddToCartError,
     setDropdownMenuOpen
   } = useSearch(isEditor)
 
@@ -48,9 +46,6 @@ export function Search({
         <div className='w-full relative'>
           {isEditor ? (
             <>
-              <p className='text-red-500 text-left text-sm truncate w-full absolute -top-5 left-0'>
-                {addToCartError}
-              </p>
               <textarea
                 ref={searchBarRef as LegacyRef<HTMLTextAreaElement>}
                 id='search'
@@ -61,7 +56,6 @@ export function Search({
                 autoComplete='off'
                 disabled={disabled}
                 value={currentSearch}
-                onFocus={() => setAddToCartError(undefined)}
                 onKeyDown={e => {
                   if (e.key === 'Enter' && e.shiftKey === false) {
                     e.preventDefault()
@@ -83,9 +77,7 @@ export function Search({
                       !!searchResult
                   )
                 }}
-                className={`max-h-20 min-h-12 block text-wrap w-full py-3 pr-12 truncate outline-none font-medium rounded-xl border-2 ${
-                  addToCartError ? 'border-red-500' : 'border-gray-200'
-                } pl-4 sm:text-sm bg-white/70`}
+                className='max-h-20 min-h-12 block text-wrap w-full py-3 pr-12 truncate outline-none font-medium rounded-xl border-2 border-gray-200 pl-4 sm:text-sm bg-white/70'
               />
             </>
           ) : (

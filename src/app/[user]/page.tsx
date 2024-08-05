@@ -107,7 +107,7 @@ export default function UserPage({ params }: Props) {
     : userProfile
   const profileIsLoading =
     isLoadPage || (isMyProfile ? profileProfileIsLoading : userProfileIsLoading)
-  const following = isMyProfile ? (selectedList ? profileFollowing : []) : userFollowing
+  const following = selectedList !== undefined && isMyProfile ? profileFollowing : userFollowing
   const followers = isMyProfile ? profileFollowers : userFollowers
   const followingTags = isMyProfile
     ? selectedList
