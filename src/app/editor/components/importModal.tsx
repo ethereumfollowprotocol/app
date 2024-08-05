@@ -4,13 +4,13 @@ import { useTranslation } from 'react-i18next'
 
 import { Avatar } from '#/components/avatar'
 import { truncateAddress } from '#/lib/utilities'
-import LensIcon from 'public/assets/icons/lens.png'
+import LensIcon from 'public/assets/icons/lens.svg'
 import LoadingCell from '#/components/loading-cell'
 import useImportModal from '../hooks/useImportModal'
 import CancelButton from '#/components/cancel-button'
 import type { ImportPlatformType } from '#/types/common'
 import { PrimaryButton } from '#/components/primary-button'
-import FarcasterIcon from 'public/assets/icons/farcaster.png'
+import FarcasterIcon from 'public/assets/icons/farcaster.svg'
 import MagnifyingGlass from 'public/assets/icons/magnifying-glass-white.svg'
 
 interface ImportModalprops {
@@ -49,6 +49,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
           <Image
             src={platform === 'lens' ? LensIcon : FarcasterIcon}
             alt='Import from Farcaster'
+            className='rounded-lg'
             width={30}
           />
         </div>

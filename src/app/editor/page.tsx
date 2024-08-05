@@ -11,11 +11,11 @@ import { Search } from '#/components/search'
 import { useCart } from '#/contexts/cart-context'
 import Trash from 'public/assets/icons/trash.svg'
 import ImportModal from './components/importModal'
-import LensIcon from 'public/assets/icons/lens.png'
+import LensIcon from 'public/assets/icons/lens.svg'
 import { FollowList } from '#/components/follow-list'
 import Recommendations from '#/components/recommendations'
 import { PrimaryButton } from '#/components/primary-button'
-import FarcasterIcon from 'public/assets/icons/farcaster.png'
+import FarcasterIcon from 'public/assets/icons/farcaster.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 export default function EditorPage() {
@@ -102,7 +102,7 @@ export default function EditorPage() {
                   src={FarcasterIcon}
                   alt='Import from Farcaster'
                   width={30}
-                  className='cursor-pointer hover:opacity-75 transition-opacity'
+                  className='cursor-pointer rounded-lg hover:opacity-75 transition-opacity'
                   onClick={() => {
                     setImportModalOpen(true)
                     setPlatform('farcaster')
@@ -112,7 +112,7 @@ export default function EditorPage() {
                   src={LensIcon}
                   alt='Import from Lens'
                   width={30}
-                  className='cursor-pointer hover:opacity-75 transition-opacity'
+                  className='cursor-pointer rounded-lg hover:opacity-75 transition-opacity'
                   onClick={() => {
                     setImportModalOpen(true)
                     setPlatform('lens')
