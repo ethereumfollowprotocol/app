@@ -1,14 +1,16 @@
 import Link from 'next/link'
 import type { Address } from 'viem'
-import { useQuery } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 
 import { Avatar } from '#/components/avatar'
-import { resolveEnsProfile } from '#/utils/ens'
 import { truncateAddress } from '#/lib/utilities'
 import FollowButton from '#/components/follow-button'
+import useFollowState from '#/hooks/use-follow-state'
 
 interface TableRowProps {
   address: Address
+  name: string | null
+  avatar: string | null
   rank: number
   following?: number
   followers?: number
@@ -18,6 +20,8 @@ interface TableRowProps {
 
 const TableRow: React.FC<TableRowProps> = ({
   address,
+  name,
+  avatar,
   rank,
   following,
   followers,
@@ -42,13 +46,19 @@ const TableRow: React.FC<TableRowProps> = ({
     regular: <p className='text xxs:text-xl sm:text-2xl font-bold w-min mx-auto'>{rank}</p>
   }[rankedAs]
 
-  const { data: fetchedEnsProfile } = useQuery({
-    queryKey: ['ens metadata', address],
-    queryFn: async () => await resolveEnsProfile(address)
+  // const { data: fetchedEnsProfile } = useQuery({
+  //   queryKey: ['ens metadata', address],
+  //   queryFn: async () => await resolveEnsProfile(address)
+  // })
+
+  const { t } = useTranslation()
+  const { followerTag } = useFollowState({
+    address,
+    type: 'follower'
   })
 
-  const name = fetchedEnsProfile?.name
-  const avatarUrl = fetchedEnsProfile?.avatar
+  // const name = fetchedEnsProfile?.name
+  // const avatarUrl = fetchedEnsProfile?.avatar
 
   return (
     <div className='flex items-center w-full gap-4 sm:gap-6 md:gap-8 h-[75px]'>
@@ -61,7 +71,7 @@ const TableRow: React.FC<TableRowProps> = ({
       >
         <Avatar
           name={name || address}
-          avatarUrl={avatarUrl}
+          avatarUrl={avatar}
           size='h-[45px] w-[45px] md:h-[50px] md:w-[50px]'
         />
         <div className='flex flex-col items-start max-w-[calc(100% - 45px)] md:max-w-[calc(100% - 50px)] truncate justify-center text-left'>
@@ -70,8 +80,10 @@ const TableRow: React.FC<TableRowProps> = ({
               {name || truncateAddress(address)}
             </p>
           </Link>
-          <div className='font-bold rounded-full mb-1 px-2 text-[10px] py-px bg-gray-300 text-darkGrey'>
-            Follows you
+          <div
+            className={`rounded-full font-bold text-[10px] flex items-center justify-center bg-gray-300 h-5 w-20 ${followerTag.className}`}
+          >
+            {t(`profile card.${followerTag.text}`)}
           </div>
         </div>
       </div>

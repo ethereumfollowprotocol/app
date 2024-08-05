@@ -261,7 +261,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   } = useInfiniteQuery({
     queryKey: ['followers', userAddress, selectedList, followersSort, followersTagsFilter],
     queryFn: async ({ pageParam = 0 }) => {
-      setIsEndOfFollowers(true)
+      setIsEndOfFollowers(false)
 
       if (!userAddress) {
         return {
