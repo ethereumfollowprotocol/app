@@ -23,7 +23,7 @@ const LeaderboardTable = () => {
   } = useLeaderboard()
 
   return (
-    <div className='flex flex-col mt-6 gap-6 w-full max-w-[1400px]'>
+    <div className='flex flex-col mt-6 gap-6 w-full max-w-[1200px]'>
       <div className='flex w-full flex-wrap justify-center lg:hidden items-center gap-4'>
         {leaderboardFilters.map((item, i) => (
           <div

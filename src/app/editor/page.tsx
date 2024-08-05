@@ -158,9 +158,8 @@ export default function EditorPage() {
                 <div className='flex flex-col gap-1 items-start'>
                   <div className='flex gap-2 items-center'>
                     <p className='text-6xl font-bold'>{totalCartItems}</p>
-                    <div className='flex flex-col text-lg text-left'>
-                      <p className='font-bold'>{t('unconfirmed')}</p>
-                      <p className='font-bold'>{t('changes')}</p>
+                    <div className='flex flex-col font-bold text-lg text-left whitespace-break-spaces'>
+                      {t('unc-changes')}
                     </div>
                   </div>
                   <p className='text-base pl-2 font-medium'>{`${transactionsCount} ${

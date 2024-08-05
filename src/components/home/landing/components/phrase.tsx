@@ -19,7 +19,7 @@ export default function Phrase() {
         src={LineDesktop}
         alt='line'
         width={79}
-        className='pointer-events-none absolute lg:block hidden top-[41px] w-[71px] xl:w-[79px] left-[310px] xl:top-[53px] xl:left-[388px]'
+        className='pointer-events-none absolute lg:block hidden top-[41px] w-[71px] xl:w-[79px] left-[310px] xl:top-[53px] xl:left-[390px]'
       />
       <Image
         src={LineMobile}

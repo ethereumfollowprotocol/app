@@ -25,8 +25,8 @@ export default function SocialGraph() {
       <Image
         src={LineDesktop}
         alt='line'
-        width={418}
-        className='pointer-events-none hidden lg:block absolute lg:w-[390px] xl:w-[418px] lg:top-[287px] lg:left-[361px] xl:top-[336px] xl:left-[420px]'
+        width={415}
+        className='pointer-events-none hidden lg:block absolute lg:w-[390px] xl:w-[418px] lg:top-[287px] lg:left-[361px] xl:top-[325px] xl:left-[420px]'
       />
       <Image
         src={LineMobileFirst}
