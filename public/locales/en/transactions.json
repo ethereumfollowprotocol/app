@@ -34,7 +34,7 @@
     "approved": "Transaction approved",
     "pending": "Transaction pending",
     "successful": "Transaction successful",
-    "finishing": "Indexing list data ...",
+    "finishing": "Indexing list data...",
     "error": "Transaction error",
     "confirmation error": "Transacation was declined",
     "check wallet": "Check your wallet",

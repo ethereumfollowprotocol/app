@@ -17,7 +17,7 @@ export const PrimaryButton = forwardRef<HTMLButtonElement, PrimaryButtonProps>(
         className={clsx(
           /* Prioritize the provided bg color, or use default bg color */
           !className?.includes('bg') && 'bg-gradient-to-b from-[#FFDE60] to-[#FFA997]',
-          'text-darkGrey rounded-full font-semibold hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:opacity-40',
+          'text-darkGrey relative rounded-full font-semibold hover:opacity-85 disabled:cursor-not-allowed disabled:after:absolute disabled:after:w-full disabled:after:h-full disabled:after:top-0 disabled:after:left-0 disabled:after:bg-gray-400/50 disabled:after:rounded-full disabled:hover:opacity-100',
           className
         )}
         {...props}

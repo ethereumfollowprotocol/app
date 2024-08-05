@@ -61,7 +61,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
             spellCheck={false}
             autoComplete='off'
             value={currHandle}
-            placeholder={'Enter address or ENS name'}
+            placeholder={`Enter ${platform} ID`}
             onChange={e => setCurrHandle(e.target.value)}
             // onKeyDown={e => {
             //   if (e.key === 'Enter') onSubmit()
@@ -76,28 +76,28 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
             <Image src={MagnifyingGlass} alt='Search Account' width={20} className='text-white' />
           </div>
         </div>
-        {isSocialProfileLoading ? (
-          <div className='flex flex-row justify-center gap-3 w-full items-center'>
-            <LoadingCell className='rounded-full h-[50px] w-[50px]' />
-            <div className='flex flex-col items-start gap-0.5'>
-              <LoadingCell className='rounded-lg h-7 w-40' />
-              <p className='text-gray-400 text-sm font-semibold'>Farcaster ID</p>
-            </div>
-          </div>
-        ) : socialProfile ? (
+        {socialProfile ? (
           <div className='flex flex-col gap-6'>
             <div className='flex justify-center gap-3 items-center'>
-              <Avatar
-                name={socialProfile.profileName}
-                avatarUrl={socialProfile.profileImage}
-                size='h-[50px] w-[50px]'
-              />
+              {isSocialProfileLoading ? (
+                <LoadingCell className='rounded-full h-[50px] w-[50px]' />
+              ) : (
+                <Avatar
+                  name={socialProfile.profileName}
+                  avatarUrl={socialProfile.profileImage}
+                  size='h-[50px] w-[50px]'
+                />
+              )}
               <div className='flex flex-col items-start'>
-                <p className='text-lg font-semibold'>
-                  @
-                  {socialProfile.profileName ||
-                    truncateAddress(socialProfile.userAssociatedAddresses?.[0])}
-                </p>
+                {isSocialProfileLoading ? (
+                  <LoadingCell className='rounded-lg h-7 w-40' />
+                ) : (
+                  <p className='text-lg font-semibold'>
+                    @
+                    {socialProfile.profileName ||
+                      truncateAddress(socialProfile.userAssociatedAddresses?.[0])}
+                  </p>
+                )}
                 <p className='font-medium text-gray-400'>Farcaster ID</p>
               </div>
             </div>
@@ -133,7 +133,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
             </div>
           </div>
         ) : (
-          <div className='h-[50px] w-full justify-center flex items-center font-semibold'>
+          <div className='h-[208px] w-full justify-center flex items-center font-semibold'>
             No profile
           </div>
         )}
