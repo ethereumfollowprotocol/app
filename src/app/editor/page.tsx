@@ -13,6 +13,7 @@ import Trash from 'public/assets/icons/trash.svg'
 import ImportModal from './components/importModal'
 import LensIcon from 'public/assets/icons/lens.svg'
 import { FollowList } from '#/components/follow-list'
+import ClearCartModal from './components/clear-cart-modal'
 import Recommendations from '#/components/recommendations'
 import { PrimaryButton } from '#/components/primary-button'
 import FarcasterIcon from 'public/assets/icons/farcaster.svg'
@@ -21,6 +22,7 @@ import { useEFPProfile } from '#/contexts/efp-profile-context'
 export default function EditorPage() {
   const [isClient, setIsClient] = useState(false)
   const [importModalOpen, setImportModalOpen] = useState(false)
+  const [clearCartModalOpen, setClearCartModalOpen] = useState(false)
   const [platform, setPlatform] = useState<'farcaster' | 'lens'>('farcaster')
 
   useEffect(() => {
@@ -31,7 +33,7 @@ export default function EditorPage() {
   const { isConnected } = useAccount()
   const { t } = useTranslation('editor')
   const { openConnectModal } = useConnectModal()
-  const { totalCartItems, cartAddresses, socialAddresses, resetCart, cartItems } = useCart()
+  const { totalCartItems, cartAddresses, socialAddresses, cartItems } = useCart()
 
   const { selectedList, roles } = useEFPProfile()
   const hasCreatedEfpList = !!selectedList
@@ -93,6 +95,7 @@ export default function EditorPage() {
           {importModalOpen && (
             <ImportModal onClose={() => setImportModalOpen(false)} platform={platform} />
           )}
+          {clearCartModalOpen && <ClearCartModal closeModal={() => setClearCartModalOpen(false)} />}
           <div className='flex flex-col glass-card gap-6 px-3 py-4 sm:p-6 h-fit rounded-2xl border-2 border-gray-200 xl:max-w-116 w-full xl:w-1/3'>
             <div className='w-full flex justify-between items-center'>
               <h1 className='text-left text-3xl font-semibold hidden xl:block'>{t('title')}</h1>
@@ -127,13 +130,13 @@ export default function EditorPage() {
             <div className='flex sm:justify-between flex-col gap-2 sm:flex-row sm:items-center px-3 md:px-4'>
               <h3 className='font-bold text-left text-2xl'>{t('unc-changes')}</h3>
               {totalCartItems > 0 && (
-                <div
+                <button
                   className='flex gap-2 cursor-pointer items-center hover:opacity-70'
-                  onClick={resetCart}
+                  onClick={() => setClearCartModalOpen(true)}
                 >
                   <p className='font-semibold'>Clear Cart</p>
                   <Image src={Trash} alt='empty cart' width={18} height={20} />
-                </div>
+                </button>
               )}
             </div>
             {isClient && totalCartItems === 0 && (

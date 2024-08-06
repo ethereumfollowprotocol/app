@@ -2,6 +2,7 @@ import type React from 'react'
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
 
+import Modal from '#/components/modal'
 import { Avatar } from '#/components/avatar'
 import { truncateAddress } from '#/lib/utilities'
 import LensIcon from 'public/assets/icons/lens.svg'
@@ -19,32 +20,26 @@ interface ImportModalprops {
 }
 
 const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
-  const { t } = useTranslation('editor', { keyPrefix: 'import' })
   const {
+    followings,
     currHandle,
     setCurrHandle,
     socialProfile,
-    isSocialProfileLoading,
-    isFollowingsLoading,
+    alreadyFollow,
     onAddFollowings,
-    followings,
-    alreadyFollow
+    isFollowingsLoading,
+    isSocialProfileLoading
   } = useImportModal(platform)
+  const { t } = useTranslation('editor', { keyPrefix: 'import' })
 
   return (
-    <div
-      className={`fixed z-50 overflow-y-auto top-0 px-4 left-0 flex ${
-        window.innerHeight > 720 ? 'items-center' : 'py-8'
-      } justify-center w-full h-full bg-black/50`}
-      onClick={onClose}
-    >
-      <div
-        className='glass-card w-[500px] flex flex-col gap-6 p-6 bg-white/75 rounded-xl'
-        onClick={e => e.stopPropagation()}
-      >
-        <div className='w-full flex justify-between items-center'>
+    <Modal onCancel={onClose}>
+      <div className='w-full sm:w-[500px] sm:p-0 p-2 flex flex-col gap-6'>
+        <div className='w-full gap-2 flex justify-between items-center'>
           <p className='text-xl font-semibold'>
-            {t('title')} <span className='capitalize'>{platform}</span>
+            <span className='hidden sm:inline'>{t('title desktop')}</span>
+            <span className='inline sm:hidden'>{t('title mobile')}</span>{' '}
+            <span className='capitalize'>{platform}</span>
           </p>
           <Image
             src={platform === 'lens' ? LensIcon : FarcasterIcon}
@@ -63,13 +58,6 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
             value={currHandle}
             placeholder={`Enter ${platform} ID`}
             onChange={e => setCurrHandle(e.target.value)}
-            // onKeyDown={e => {
-            //   if (e.key === 'Enter') onSubmit()
-            //   if (e.key === 'Escape') {
-            //     searchBarRef.current?.blur()
-            //     setDropdownMenuOpen(false)
-            //   }
-            // }}
             className='h-12 block pr-12 w-full truncate font-medium rounded-xl border-2 border-gray-200 pl-4 sm:text-sm bg-white/70'
           />
           <div className='absolute w-8 rounded-lg right-2 top-2 h-8 flex justify-center items-center bg-gray-300'>
@@ -103,29 +91,37 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
             </div>
             <div className='bg-white/95 rounded-lg flex flex-col gap-4 p-4'>
               <div className='w-full flex justify-between items-center'>
-                <p className='text-gray-400 text-sm font-medium'>You follow on Farcaster</p>
-                {isFollowingsLoading ? (
+                <p className='text-gray-400 text-xs xxs:text-sm font-medium'>
+                  You follow on Farcaster
+                </p>
+                {isFollowingsLoading || isSocialProfileLoading ? (
                   <LoadingCell className='h-5 w-24 rounded-md' />
                 ) : (
-                  <p className='text-gray-400 text-sm font-medium'>{followings.length} accounts</p>
+                  <p className='text-gray-400 text-xs xxs:text-sm font-medium'>
+                    {followings.length} accounts
+                  </p>
                 )}
               </div>
               <div className='w-full flex justify-between items-center'>
-                <p className='text-gray-400 text-sm font-medium'>You already follow on EFP</p>
-                {isFollowingsLoading ? (
+                <p className='text-gray-400 text-xs xxs:text-sm font-medium'>
+                  You already follow on EFP
+                </p>
+                {isFollowingsLoading || isSocialProfileLoading ? (
                   <LoadingCell className='h-5 w-24 rounded-md' />
                 ) : (
-                  <p className='text-gray-400 text-sm font-medium'>
+                  <p className='text-gray-400 text-xs xxs:text-sm font-medium'>
                     -{alreadyFollow.length} accounts
                   </p>
                 )}
               </div>
               <div className='w-full flex justify-between items-center'>
-                <p className='text-darkGrey text-lg font-semibold'>Total to add to cart</p>
-                {isFollowingsLoading ? (
+                <p className='text-darkGrey text-sm xxs:text-base sm:text-lg font-semibold'>
+                  Total to add to cart
+                </p>
+                {isFollowingsLoading || isSocialProfileLoading ? (
                   <LoadingCell className='h-5 w-24 rounded-md' />
                 ) : (
-                  <p className='text-darkGrey text-lg font-bold'>
+                  <p className='text-darkGrey text-sm xxs:text-base sm:text-lg font-bold'>
                     {followings.length - alreadyFollow.length} accounts
                   </p>
                 )}
@@ -138,7 +134,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
           </div>
         )}
         <div className='w-full flex items-center justify-between'>
-          <CancelButton onClick={onClose} />
+          <CancelButton onClick={onClose} className='bg-[#bbb]' />
           <PrimaryButton
             label='Add'
             onClick={() => {
@@ -154,7 +150,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
           />
         </div>
       </div>
-    </div>
+    </Modal>
   )
 }
 

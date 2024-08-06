@@ -22,7 +22,8 @@
   "transaction": "Transakcija",
   "empty cart": "Vaša košarica je prazna. Sledi ljudem in jim dodaj oznake, da napolniš svojo košarico.",
   "import": {
-    "title": "Dodaj kogar slediŠ na",
+    "title desktop": "Dodaj kogar slediš na",
+    "title mobile": "Uvozi iz",
     "following": "Slediš"
   }
 }

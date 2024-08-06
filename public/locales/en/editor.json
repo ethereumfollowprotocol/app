@@ -19,7 +19,8 @@
   "not manager": "You are not the manager.",
   "empty cart": "Your cart is empty. Follow some people and add a few tags to fill up your cart.",
   "import": {
-    "title": "Import who you follow on",
+    "title desktop": "Import who you follow on",
+    "title mobile": "Import from",
     "following": "Following"
   }
 }

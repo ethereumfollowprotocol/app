@@ -69,9 +69,9 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
         >
           <p className='text-gray-500 h-full'>{t('resolved')}</p>
           {isLoading || isNameLoading ? (
-            <LoadingCell className='w-full h-full rounded-md' gradient={LIGHT_LOADING_GRADIENT} />
+            <LoadingCell className='w-full h-5 rounded-md' gradient={LIGHT_LOADING_GRADIENT} />
           ) : (
-            <p className='h-full'>
+            <p className='h-full truncate'>
               {value.includes('.')
                 ? resolvedAddress && resolvedAddress?.length > 0
                   ? resolvedAddress

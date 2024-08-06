@@ -4,8 +4,8 @@ import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
 
+import Modal from '../modal'
 import LoadingCell from '../loading-cell'
-import ProfileStats from '../profile-stats'
 import Cross from 'public/assets/icons/cross.svg'
 import type { ChainWithDetails } from '#/lib/wagmi'
 import { ChainIcon } from '#/components/chain-icon'
@@ -40,7 +40,6 @@ const ListSettings: React.FC<ListSettingsProps> = ({
 
   const { roles } = useEFPProfile()
   const { address: connectedAddress } = useAccount()
-  const listSettingsRef = useClickAway<HTMLDivElement>(onClose)
   const { t } = useTranslation('profile', { keyPrefix: 'list settings' })
 
   const {
@@ -93,15 +92,8 @@ const ListSettings: React.FC<ListSettingsProps> = ({
       isPrimaryList={isPrimaryList}
     />
   ) : (
-    <div
-      className={`fixed z-50 overflow-y-auto top-0 px-4 left-0 flex ${
-        window.innerHeight > 720 ? 'items-center' : 'py-8'
-      } justify-center w-full h-full bg-black/50`}
-    >
-      <div
-        ref={listSettingsRef}
-        className='glass-card h-fit bg-white/40 gap-5 sm:gap-7 flex flex-col rounded-xl p-6 py-8 sm:p-9 w-[554px]'
-      >
+    <Modal onCancel={onClose}>
+      <div className='gap-5 sm:gap-7 flex flex-col rounded-xl p-1 sm:p-3 max-w-full w-full sm:w-[554px]'>
         <div className='w-full flex items-center justify-between'>
           <div className='relative'>
             <div className='flex items-center gap-2 cursor-pointer'>
@@ -117,12 +109,12 @@ const ListSettings: React.FC<ListSettingsProps> = ({
             onClick={onClose}
           />
         </div>
-        <ProfileStats stats={profile.stats} />
-        <div className='flex items-center justify-between gap-2'>
+        {/* <ProfileStats stats={profile.stats} /> */}
+        <div className='flex items-center max-w-full justify-between gap-2'>
           <p className='font-semibold text-base sm:text-xl'>{t('location')}</p>
           <div className='relative' ref={chainDropdownRef}>
             <button
-              className='w-[180px] sm:w-[190px] gap-1 flex items-center justify-between px-2 sm:px-3 h-12 bg-white/50 p-1 hover:bg-white/60 rounded-xl disabled:hover:bg-white/50 disabled:opacity-75 disabled:cursor-not-allowed'
+              className='w-[170px] sm:w-[190px] gap-0.5 flex items-center justify-between px-2 sm:px-3 h-[42px] sm:h-12 bg-white/50 p-1 hover:bg-white/60 rounded-xl disabled:hover:bg-white/50 disabled:opacity-75 disabled:cursor-not-allowed'
               onClick={() => setChainDropdownOpen(!chainDropdownOpen)}
               disabled={
                 !isEditingSettings ||
@@ -150,7 +142,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
               )}
             </button>
             {chainDropdownOpen && (
-              <div className='absolute top-14 z-10 flex bg-white/90 flex-col rounded-xl w-full'>
+              <div className='absolute top-12 sm:top-14 z-10 flex bg-white/90 flex-col rounded-xl w-full'>
                 {chains.map(item => (
                   <div
                     key={item.id}
@@ -258,7 +250,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
           </button>
         )}
       </div>
-    </div>
+    </Modal>
   )
 }
 
