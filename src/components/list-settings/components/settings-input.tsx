@@ -1,9 +1,10 @@
 import { useAccount } from 'wagmi'
-import LoadingCell, { LIGHT_LOADING_GRADIENT } from '#/components/loading-cell'
+import type { Address } from 'viem'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
+
 import { resolveEnsName } from '#/utils/ens'
-import type { Address } from 'viem'
+import LoadingCell, { LIGHT_LOADING_GRADIENT } from '#/components/loading-cell'
 
 interface SettingsInputProps {
   option: string
