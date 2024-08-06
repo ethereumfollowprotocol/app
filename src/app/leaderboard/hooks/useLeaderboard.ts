@@ -1,32 +1,34 @@
-import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { useInfiniteQuery } from '@tanstack/react-query'
+import { useEffect, useMemo, useState } from 'react'
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
 
 import type { LeaderboardFilter } from '#/types/common'
 import { fetchleaderboard } from '#/api/fetchLeaderboard'
 import type { LeaderboardResponse } from '#/types/requests'
-import { useIntersectionObserver } from '@uidotdev/usehooks'
 import { LEADERBOARD_FETCH_LIMIT_PARAM } from '#/lib/constants'
 
 const useLeaderboard = () => {
+  const queryClient = useQueryClient()
   const searchParams = useSearchParams()
   const search = searchParams.get('query')
   const initialFilter = searchParams.get('filter') || 'mutuals'
+  const initialPageParam = Number(searchParams.get('page'))
 
+  const [page, setPage] = useState(initialPageParam || 1)
   const [filter, setFilter] = useState(initialFilter as LeaderboardFilter)
-  const [isEndOfLeaderboard, setIsEndOfLeaderboard] = useState(false)
+  const [isRefetchingLeaderboard, setIsRefetchingLeaderboard] = useState(false)
 
   const {
     data: results,
-    isLoading: isLeaderboardLoading,
     refetch: refetchLeaderboard,
-    fetchNextPage: fetchMoreLeaderboard,
-    isFetchingNextPage: isFetchingMoreLeaderboard
+    isLoading: isLeaderboardLoading,
+    fetchNextPage: fetchNextLeaderboard,
+    fetchPreviousPage: fetchPreviousLeaderboard,
+    isFetchingNextPage: isFetchingNextLeaderboard,
+    isFetchingPreviousPage: isFetchingPreviousLeaderboard
   } = useInfiniteQuery({
     queryKey: ['leaderboard', filter, search],
     queryFn: async ({ pageParam = 0 }) => {
-      setIsEndOfLeaderboard(false)
-
       const data = await fetchleaderboard({
         limit: LEADERBOARD_FETCH_LIMIT_PARAM,
         pageParam,
@@ -34,47 +36,70 @@ const useLeaderboard = () => {
         search
       })
 
-      if (data.results.length === 0) setIsEndOfLeaderboard(true)
-
       return data
     },
-    initialPageParam: 0,
+    initialPageParam: page - 1,
     getNextPageParam: lastPage => lastPage.nextPageParam,
+    getPreviousPageParam: lastPage => lastPage.prevPageParam,
     staleTime: 600000
   })
 
-  const leaderboard = results
-    ? results?.pages.reduce(
-        // @ts-ignore
-        (acc, el) => (el.results.error ? [...acc] : [...acc, ...el.results]),
-        [] as LeaderboardResponse[]
-      )
-    : []
-
-  const [loadMoreRef, entry] = useIntersectionObserver()
-
   useEffect(() => {
-    if (!entry?.isIntersecting || isEndOfLeaderboard) return
+    const pageIndex = results?.pageParams.indexOf(page - 1)
+    if (pageIndex === -1) {
+      setIsRefetchingLeaderboard(true)
 
-    if (
-      !(isLeaderboardLoading || isFetchingMoreLeaderboard) &&
-      results &&
-      leaderboard.length > 0 &&
-      leaderboard.length % LEADERBOARD_FETCH_LIMIT_PARAM === 0
-    )
-      fetchMoreLeaderboard()
-  }, [entry?.isIntersecting, results])
+      const fetchNewPage = async () => {
+        const data = await fetchleaderboard({
+          limit: LEADERBOARD_FETCH_LIMIT_PARAM,
+          pageParam: page - 1,
+          filter,
+          search
+        })
+
+        queryClient.setQueryData(
+          ['leaderboard', filter, search],
+          (oldData: {
+            pages: LeaderboardResponse[][]
+            pageParams: number[]
+          }) => ({
+            pages: [
+              ...oldData.pages,
+              {
+                results: data.results,
+                nextPageParam: page,
+                prevPageParam: page === 1 ? 0 : page - 2
+              }
+            ],
+            pageParams: [...oldData.pageParams, page - 1]
+          })
+        )
+
+        setIsRefetchingLeaderboard(false)
+      }
+
+      fetchNewPage()
+    }
+  }, [filter, results])
+
+  const leaderboard = useMemo(() => {
+    const pageIndex = results?.pageParams.indexOf(page - 1) || 0
+    return results?.pages[pageIndex]?.results as LeaderboardResponse[]
+  }, [results, page])
 
   return {
-    leaderboard,
-    page: results?.pageParams,
-    isLeaderboardLoading,
-    isFetchingMoreLeaderboard,
-    refetchLeaderboard,
+    page,
+    search,
     filter,
+    setPage,
     setFilter,
-    loadMoreRef,
-    search
+    leaderboard,
+    refetchLeaderboard,
+    fetchNextLeaderboard,
+    fetchPreviousLeaderboard,
+    isFetchingNextLeaderboard,
+    isFetchingPreviousLeaderboard,
+    isLeaderboardLoading: isLeaderboardLoading || isRefetchingLeaderboard
   }
 }
 

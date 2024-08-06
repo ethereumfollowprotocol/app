@@ -66,7 +66,7 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
           {currentActionIndex + 1} {t('of')} {actions.length}
         </p>
       </div>
-      <div className='flex flex-col gap-4'>
+      <div className='flex flex-col gap-2'>
         <p className='text-xl sm:text-2xl font-bold'>{t('action')}</p>
         <p className='text-lg sm:text-xl font-bold'>
           {currentAction.label === 'create list' ? t(currentAction.label) : currentAction.label}

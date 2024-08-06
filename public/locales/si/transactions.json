@@ -35,6 +35,7 @@
     "pending": "Transakcija se izvaja",
     "successful": "Transakcija uspešna",
     "finishing": "Posodabljanje seznama",
+    "finished": "Uspešno posodobljeno",
     "error": "Transakcija neuspešna",
     "confirmation error": "Transakcija je bila zavrnjena",
     "check wallet": "Preverite svojo denarnico",

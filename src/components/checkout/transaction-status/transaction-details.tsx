@@ -32,10 +32,10 @@ const TransactionDetails = ({
     if (action.isPendingConfirmation) return t('approve')
     if (action.isConfirmationError) return `${t('error')}: ${t('confirmation error')}`
     if (isPending) return t('pending')
-    if (!isLastAction && isSuccess) return t('successful')
-    if (isLastAction && isLastActionSuccessful) return t('successful')
-    if (isLastAction && isSuccess) return t('finishing')
-    if (isLastAction && !isLastActionSuccessful) return t('pending')
+    if (isSuccess) return t('successful')
+    // if (isLastAction && isLastActionSuccessful) return t('successful')
+    // if (isLastAction && isSuccess) return t('finishing')
+    // if (isLastAction && !isLastActionSuccessful) return t('pending')
     if (isError) return `${t('error')} ${error}`
   }, [
     action.isPendingConfirmation,
@@ -51,10 +51,10 @@ const TransactionDetails = ({
     if (action.isPendingConfirmation) return 'text-salmon-500'
     if (action.isConfirmationError) return 'text-salmon-500'
     if (isPending) return 'text-kournikova-600'
-    if (!isLastAction && isSuccess) return 'text-lime-600'
-    if (isLastAction && isLastActionSuccessful) return 'text-lime-600'
-    if (isLastAction && isSuccess) return 'text-kournikova-600'
-    if (isLastAction && !isLastActionSuccessful) return 'text-kournikova-600'
+    if (isSuccess) return 'text-lime-600'
+    // if (isLastAction && isLastActionSuccessful) return 'text-lime-600'
+    // if (isLastAction && isSuccess) return 'text-kournikova-600'
+    // if (isLastAction && !isLastActionSuccessful) return 'text-kournikova-600'
     if (isError) return 'text-red-600'
   }, [
     action.isPendingConfirmation,
@@ -70,9 +70,19 @@ const TransactionDetails = ({
   const explorerUrl = `${chain?.blockExplorers?.default.url}/tx/${action.txHash}`
 
   return shouldShowComponent ? (
-    <div className='flex gap-1 sm:gap-2 flex-col'>
+    <div className='flex gap-2 sm:gap-2 flex-col'>
       <p className='text-xl sm:text-2xl font-bold'>{t('title')}</p>
       <p className={clsx(getStatusColor(), 'text-lg font-bold')}>{statusDescription}</p>
+      {isLastAction && isSuccess && (
+        <p
+          className={clsx(
+            isLastActionSuccessful ? 'text-lime-600' : 'text-kournikova-600',
+            'font-bold'
+          )}
+        >
+          {isLastActionSuccessful ? t('finished') : t('finishing')}
+        </p>
+      )}
       {action.isPendingConfirmation ? (
         <p className='text-lg text-gray-400 italic font-bold'>{t('check wallet')}</p>
       ) : (

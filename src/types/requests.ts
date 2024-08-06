@@ -99,6 +99,9 @@ export interface LeaderboardResponse {
   name: string | null
   avatar: string | null
   mutuals_rank: string
+  followers_rank: string
+  following_rank: string
+  blocks_rank: string
   following?: string
   followers: string
   blocks?: string

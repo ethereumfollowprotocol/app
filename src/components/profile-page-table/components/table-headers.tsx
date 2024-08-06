@@ -161,7 +161,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 key={tag.tag + i}
                 className={`text-sm flex gap-1.5 px-4 py-2 font-semibold items-center ${
                   selectedTags?.includes(tag.tag)
-                    ? 'text-darkGrey bg-white shadow-inner shadow-black/40'
+                    ? 'text-darkGrey bg-gray-100 shadow-inner shadow-black/10'
                     : 'text-gray-500 bg-gray-300/80'
                 } rounded-full`}
                 name={tag.tag.toLowerCase()}
