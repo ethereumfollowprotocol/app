@@ -29,16 +29,16 @@ import type {
   FollowingTagsResponse
 } from '#/types/requests'
 import { useCart } from './cart-context'
-import fetchProfileRoles from '#/api/fetchProfileRoles'
-import fetchProfileLists from '#/api/fetchProfileLists'
+import { fetchProfileRoles } from '#/api/fetchProfileRoles'
+import { fetchProfileLists } from '#/api/fetchProfileLists'
 import type { ProfileTableTitleType } from '#/types/common'
-import fetchProfileDetails from '#/api/fetchProfileDetails'
-import fetchProfileFollowers from '#/api/fetchProfileFollowers'
-import fetchProfileFollowing from '#/api/fetchProfileFollowing'
-import fetchFollowerTags, { nullFollowerTags } from '#/api/fetchFollowerTags'
-import fetchFollowingTags, { nullFollowingTags } from '#/api/fetchFollowingTags'
+import { fetchProfileDetails } from '#/api/fetchProfileDetails'
+import { fetchProfileFollowers } from '#/api/fetchProfileFollowers'
+import { fetchProfileFollowing } from '#/api/fetchProfileFollowing'
+import { fetchProfileAllFollowings } from '#/api/fetchProfileAllFollowings'
+import { fetchFollowerTags, nullFollowerTags } from '#/api/fetchFollowerTags'
+import { fetchFollowingTags, nullFollowingTags } from '#/api/fetchFollowingTags'
 import { BLOCKED_MUTED_TAGS, DEFAULT_TAGS_TO_ADD, FETCH_LIMIT_PARAM } from '#/lib/constants'
-import fetchProfileAllFollowings from '#/api/fetchProfileAllFollowings'
 
 // Define the type for the profile context
 type EFPProfileContextType = {

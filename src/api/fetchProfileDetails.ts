@@ -2,7 +2,7 @@ import { isAddress, type Address } from 'viem'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import { resolveEnsAddress, resolveEnsProfile } from '#/utils/ens'
 
-const fetchProfileDetails = async (addressOrName: string, list?: number | string) => {
+export const fetchProfileDetails = async (addressOrName: string, list?: number | string) => {
   try {
     const url =
       list !== undefined
@@ -35,5 +35,3 @@ const fetchProfileDetails = async (addressOrName: string, list?: number | string
     } as ProfileDetailsResponse
   }
 }
-
-export default fetchProfileDetails

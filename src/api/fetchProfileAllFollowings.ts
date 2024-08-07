@@ -1,6 +1,6 @@
 import type { Address } from 'viem'
 
-const fetchProfileAllFollowings = async (list: number) => {
+export const fetchProfileAllFollowings = async (list: number) => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_EFP_API_URL}/lists/${list}/allFollowingAddresses`,
@@ -16,5 +16,3 @@ const fetchProfileAllFollowings = async (list: number) => {
     return [] as Address[]
   }
 }
-
-export default fetchProfileAllFollowings

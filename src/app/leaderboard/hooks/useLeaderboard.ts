@@ -1,11 +1,12 @@
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
-import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
+import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import type { LeaderboardFilter } from '#/types/common'
 import { fetchleaderboard } from '#/api/fetchLeaderboard'
 import type { LeaderboardResponse } from '#/types/requests'
 import { LEADERBOARD_FETCH_LIMIT_PARAM } from '#/lib/constants'
+import { fetchLeaderboardCount } from '#/api/fetchLeaderboardCount'
 
 const useLeaderboard = () => {
   const queryClient = useQueryClient()
@@ -17,6 +18,14 @@ const useLeaderboard = () => {
   const [page, setPage] = useState(initialPageParam || 1)
   const [filter, setFilter] = useState(initialFilter as LeaderboardFilter)
   const [isRefetchingLeaderboard, setIsRefetchingLeaderboard] = useState(false)
+
+  const { data: leaderboardCount, isLoading: isLeaderboardCountLoading } = useQuery({
+    queryKey: ['leaderboard', 'total'],
+    queryFn: async () => {
+      const data = await fetchLeaderboardCount()
+      return data
+    }
+  })
 
   const {
     data: results,
@@ -94,9 +103,11 @@ const useLeaderboard = () => {
     setPage,
     setFilter,
     leaderboard,
+    leaderboardCount,
     refetchLeaderboard,
     fetchNextLeaderboard,
     fetchPreviousLeaderboard,
+    isLeaderboardCountLoading,
     isFetchingNextLeaderboard,
     isFetchingPreviousLeaderboard,
     isLeaderboardLoading: isLeaderboardLoading || isRefetchingLeaderboard

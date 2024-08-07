@@ -2,7 +2,7 @@ import type { Address } from 'viem'
 import { normalize } from 'viem/ens'
 import { ENS_SUBGRAPH_URL } from '#/lib/constants'
 
-const searchENSNames = async ({ search }: { search: string }) => {
+export const searchENSNames = async ({ search }: { search: string }) => {
   const sanitizedSearch = normalize(search.trim())
   if (search.length === 0) return []
 
@@ -37,5 +37,3 @@ const searchENSNames = async ({ search }: { search: string }) => {
     .filter(domain => !!domain.resolvedAddress)
     .sort((a, b) => a.name.length - b.name.length)
 }
-
-export default searchENSNames

@@ -7,10 +7,11 @@ import TableRow from './row.tsx'
 import LoadingRow from './loading-row.tsx'
 import PageSelector from './page-selector.tsx'
 import { Searchbar } from '#/components/searchbar.tsx'
+import LoadingCell from '#/components/loading-cell.tsx'
 import useLeaderboard from '../hooks/useLeaderboard.ts'
+import type { LeaderboardFilter } from '#/types/common.ts'
 import type { LeaderboardResponse } from '#/types/requests.ts'
 import { leaderboardFilters, leaderboardFiltersEmojies } from '#/lib/constants/index.ts'
-import type { LeaderboardFilter } from '#/types/common.ts'
 
 const LeaderboardTable = () => {
   const router = useRouter()
@@ -21,9 +22,11 @@ const LeaderboardTable = () => {
     setPage,
     setFilter,
     leaderboard,
+    leaderboardCount,
     isLeaderboardLoading,
     fetchNextLeaderboard,
     fetchPreviousLeaderboard,
+    isLeaderboardCountLoading,
     isFetchingNextLeaderboard,
     isFetchingPreviousLeaderboard
   } = useLeaderboard()
@@ -79,10 +82,12 @@ const LeaderboardTable = () => {
             </div>
           ))}
         </div>
-        <div className='hidden sm:block'>
-          <p className='h-2 font-semibold text-sm sm:text-lg'>
-            {`${leaderboard?.length} account${leaderboard?.length === 1 ? '' : 's'}`}
-          </p>
+        <div className='hidden h-fit sm:block'>
+          {isLeaderboardCountLoading ? (
+            <LoadingCell className='h-7 w-40 rounded-lg' />
+          ) : (
+            <p className='h-2 font-semibold text-sm sm:text-lg'>{`${leaderboardCount?.leaderboardCount} accounts`}</p>
+          )}
         </div>
       </div>
       <div className='glass-card border-gray-200 border-2 rounded-xl flex flex-col gap-8 p-3 sm:px-8 sm:py-6 lg:px-12 lg:py-10 relative'>

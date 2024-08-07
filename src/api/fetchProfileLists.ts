@@ -1,6 +1,6 @@
 import type { ProfileListsResponse } from '#/types/requests'
 
-const fetchProfileLists = async (addressOrName: string) => {
+export const fetchProfileLists = async (addressOrName: string) => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/lists`,
@@ -19,5 +19,3 @@ const fetchProfileLists = async (addressOrName: string) => {
     } as ProfileListsResponse
   }
 }
-
-export default fetchProfileLists

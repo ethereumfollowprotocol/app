@@ -3,10 +3,10 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 
 import { FETCH_LIMIT_PARAM } from '#/lib/constants'
 import type { ProfileTableTitleType } from '#/types/common'
-import fetchProfileFollowers from '#/api/fetchProfileFollowers'
-import fetchProfileFollowing from '#/api/fetchProfileFollowing'
-import fetchFollowerTags, { nullFollowerTags } from '#/api/fetchFollowerTags'
-import fetchFollowingTags, { nullFollowingTags } from '#/api/fetchFollowingTags'
+import { fetchProfileFollowers } from '#/api/fetchProfileFollowers'
+import { fetchProfileFollowing } from '#/api/fetchProfileFollowing'
+import { fetchFollowerTags, nullFollowerTags } from '#/api/fetchFollowerTags'
+import { fetchFollowingTags, nullFollowingTags } from '#/api/fetchFollowingTags'
 import type { FollowerResponse, FollowingResponse, FollowSortType } from '#/types/requests'
 
 export const TAGS = ['All', 'block', 'mute']

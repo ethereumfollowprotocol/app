@@ -3,13 +3,12 @@ import { isAddress } from 'viem'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 
 import { FETCH_LIMIT_PARAM } from '#/lib/constants'
-import fetchProfileLists from '#/api/fetchProfileLists'
-import fetchProfileDetails from '#/api/fetchProfileDetails'
 import type { ProfileTableTitleType } from '#/types/common'
-import fetchProfileFollowers from '#/api/fetchProfileFollowers'
-import fetchProfileFollowing from '#/api/fetchProfileFollowing'
-import fetchFollowerTags, { nullFollowerTags } from '#/api/fetchFollowerTags'
-import fetchFollowingTags, { nullFollowingTags } from '#/api/fetchFollowingTags'
+import { fetchProfileDetails } from '#/api/fetchProfileDetails'
+import { fetchProfileFollowers } from '#/api/fetchProfileFollowers'
+import { fetchProfileFollowing } from '#/api/fetchProfileFollowing'
+import { fetchFollowerTags, nullFollowerTags } from '#/api/fetchFollowerTags'
+import { fetchFollowingTags, nullFollowingTags } from '#/api/fetchFollowingTags'
 import type { FollowerResponse, FollowingResponse, FollowSortType } from '#/types/requests'
 
 const useUser = (user: string) => {
@@ -34,16 +33,6 @@ const useUser = (user: string) => {
       return fetchedProfile
     },
     staleTime: 30000
-  })
-
-  const { data: lists } = useQuery({
-    queryKey: ['lists', profile],
-    queryFn: async () => {
-      if (!profile?.address) return null
-
-      const fetchedLists = await fetchProfileLists(profile.address)
-      return fetchedLists
-    }
   })
 
   const {
@@ -181,7 +170,6 @@ const useUser = (user: string) => {
   }
 
   return {
-    lists,
     profile,
     listNum,
     followers,

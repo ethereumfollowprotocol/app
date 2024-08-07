@@ -3,8 +3,8 @@
 import { useQuery } from '@tanstack/react-query'
 
 import LoadingCell from '#/components/loading-cell'
-import fetchProfileDetails from '#/api/fetchProfileDetails'
 import UserProfileCard from '#/components/user-profile-card'
+import { fetchProfileDetails } from '#/api/fetchProfileDetails'
 
 const TeamPage = () => {
   const teamAddresses: string[] = process.env.NEXT_PUBLIC_TEAM_ADDRESSES?.split(' ') || []

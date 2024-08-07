@@ -7,7 +7,7 @@ import { rpcProviders } from '#/lib/constants/providers'
 import { coreEfpContracts } from '#/lib/constants/contracts'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 
-const fetchProfileRoles = async ({
+export const fetchProfileRoles = async ({
   list,
   userAddress,
   chains
@@ -54,5 +54,3 @@ const fetchProfileRoles = async ({
     isUser: listUser?.toLowerCase() === userAddress?.toLowerCase()
   } as ProfileRoles
 }
-
-export default fetchProfileRoles

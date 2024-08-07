@@ -5,7 +5,7 @@ import { useAccount } from 'wagmi'
 import { useQuery } from '@tanstack/react-query'
 
 import { FollowList } from '#/components/follow-list'
-import fetchRecommendations from '#/api/fetchRecommendations'
+import { fetchRecommendations } from '#/api/fetchRecommendations'
 
 interface RecommendationsProps {
   header?: string

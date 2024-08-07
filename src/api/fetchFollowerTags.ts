@@ -7,7 +7,7 @@ export const nullFollowerTags = {
   taggedAddresses: []
 }
 
-const fetchFollowerTags = async (addressOrName: string, list?: number | string) => {
+export const fetchFollowerTags = async (addressOrName: string, list?: number | string) => {
   try {
     const url =
       list !== undefined
@@ -24,5 +24,3 @@ const fetchFollowerTags = async (addressOrName: string, list?: number | string) 
     return nullFollowerTags
   }
 }
-
-export default fetchFollowerTags

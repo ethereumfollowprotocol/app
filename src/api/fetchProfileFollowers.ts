@@ -1,7 +1,7 @@
 import { formatQueryParams } from '#/utils/formatQueryParams'
 import type { FollowerResponse, InfiniteProfileQueryProps } from '#/types/requests'
 
-const fetchProfileFollowers = async ({
+export const fetchProfileFollowers = async ({
   addressOrName,
   list,
   limit,
@@ -44,5 +44,3 @@ const fetchProfileFollowers = async ({
     }
   }
 }
-
-export default fetchProfileFollowers

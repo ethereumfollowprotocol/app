@@ -1,7 +1,7 @@
 import type { Address } from 'viem'
 import type { FollowStatusResponse } from '#/types/requests'
 
-const fetchFollowState = async ({
+export const fetchFollowState = async ({
   address,
   list,
   type
@@ -41,5 +41,3 @@ const fetchFollowState = async ({
     }
   }
 }
-
-export default fetchFollowState
