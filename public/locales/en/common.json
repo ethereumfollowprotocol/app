@@ -23,7 +23,11 @@
     "follows you": "Follows you",
     "profile error": "User doesn't exist",
     "connect wallet": "Connect wallet to view",
-    "not primary list": "Not confirmed by user"
+    "not primary list": "Not confirmed by user",
+    "mutuals_rank": "Mutuals",
+    "followers_rank": "Followers",
+    "following_rank": "Following",
+    "blocks_rank": "Blocks"
   },
   "follow btn": {
     "Follow": "Follow",

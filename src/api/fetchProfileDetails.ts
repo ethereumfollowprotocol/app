@@ -31,7 +31,13 @@ export const fetchProfileDetails = async (addressOrName: string, list?: number |
 
     return {
       address: address as Address,
-      ens: { address: address as Address }
+      ens: { address: address as Address },
+      ranks: {
+        mutuals_rank: 0,
+        followers_rank: 0,
+        following_rank: 0,
+        blocks_rank: 0
+      }
     } as ProfileDetailsResponse
   }
 }

@@ -130,6 +130,12 @@ export interface ProfileDetailsResponse {
   address: Address
   ens: ENSProfile
   primary_list?: string | null
+  ranks: {
+    mutuals_rank: number
+    followers_rank: number
+    following_rank: number
+    blocks_rank: number
+  }
   stats?: StatsResponse | undefined
 }
 

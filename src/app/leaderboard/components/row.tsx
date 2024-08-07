@@ -31,12 +31,17 @@ const TableRow: React.FC<TableRowProps> = ({
   const rankedAs = rank <= 3 ? 'top-three' : rank <= 10 ? 'top-ten' : 'regular'
   const rankNumber = {
     'top-three': (
-      <img
-        alt={`${rank}`}
-        src={`/assets/leaderboard/${rank}.png`}
-        width={38 - (rank > 1 ? rank * 3 : 0)}
-        className='mx-auto overflow-hidden select-none -mb-1 pointer-events-none'
-      />
+      <p
+        className={
+          {
+            1: 'first-place',
+            2: 'second-place',
+            3: 'third-place'
+          }[rank]
+        }
+      >
+        {rank}
+      </p>
     ),
     'top-ten': (
       <p className='text-2xl xxs:text-3xl sm:text-4xl md:text-5xl font-bold w-min mx-auto'>

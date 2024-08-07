@@ -178,6 +178,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
     }
   }
 
+  const rankTitles = Object.keys(profile?.ranks || {})
+  const ranks = Object.values(profile?.ranks || {})
+
   return (
     <div
       className={`flex glass-card ${
@@ -327,7 +330,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
             <div
               className={`flex w-full flex-wrap ${
                 isResponsive
-                  ? 'justify-between sm:justify-start xl:justify-center gap-0 sm:gap-y-10 sm:gap-x-16'
+                  ? 'justify-between sm:justify-start xl:justify-center gap-0 sm:gap-y-9 sm:gap-x-[60px]'
                   : 'gap-y-10 gap-x-16 justify-center'
               }  items-center mx-autotext-center`}
             >
@@ -365,19 +368,21 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                   {t('followers')}
                 </div>
               </div>
-              <div>
+              <div className='flex flex-col items-center gap-3 w-56'>
                 <div
-                  className={`${
-                    isResponsive ? 'text-xl sm:text-2xl' : 'text-2xl'
-                  } text-center font-bold`}
-                >
-                  # -
-                </div>
-                <div
-                  className={`${isResponsive ? 'sm:text-lg' : 'text-lg'} font-bold text-gray-500`}
+                  className={`${isResponsive ? 'sm:text-lg' : 'text-lg'} font-bold text-darkGrey`}
                 >
                   {t('leaderboard')}
                 </div>
+                {ranks.map((rank, i) => (
+                  <div
+                    key={rankTitles[i]}
+                    className='flex w-full justify-between items-center font-semibold'
+                  >
+                    <p className='text-[#888]'>{t(rankTitles[i] || '')}</p>
+                    <p>#{rank}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
