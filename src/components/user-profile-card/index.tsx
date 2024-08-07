@@ -184,7 +184,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   return (
     <div
       className={`flex glass-card ${
-        isResponsive ? 'xl:w-76 w-full 2xl:w-86 py-6 px-4 sm:p-6 sm:py-7' : 'w-76 3xs:w-86 p-6'
+        isResponsive
+          ? 'xl:w-76 w-full sm:w-fit 2xl:w-86 py-6 px-4 sm:p-6 sm:py-7'
+          : 'w-76 3xs:w-86 p-6'
       } border-2 justify-center flex-col ${borderColor || 'border-[#FFDBD9]'} rounded-xl relative`}
     >
       {isLoading ? (
@@ -205,15 +207,13 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
               : null}
           </div>
           <div
-            className={`flex w-full xl:items-center flex-col pt-2 ${
-              followerTag.text === '' && !isResponsive ? 'gap-[68px]' : 'gap-5 sm:gap-6 md:gap-9'
+            className={`flex w-full items-center flex-col pt-2 ${
+              followerTag.text === '' && !isResponsive
+                ? 'gap-5 sm:gap-6 md:gap-[68px]'
+                : 'gap-5 sm:gap-6 md:gap-9'
             }`}
           >
-            <div
-              className={`flex w-full ${
-                isResponsive ? 'flex-row xl:flex-col xl:justify-center' : 'flex-col justify-center'
-              } items-center gap-4`}
-            >
+            <div className='flex w-full flex-col justify-center items-center gap-4'>
               {isProfileLoading ? (
                 <LoadingCell
                   className={
@@ -234,20 +234,16 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                   }
                 />
               )}
-              <div
-                className={`flex w-full ${
-                  isResponsive ? 'xl:items-center items-start' : 'items-center'
-                } flex-col gap-2 justify-center`}
-              >
+              <div className='flex w-full items-center flex-col gap-2 justify-center'>
                 {isProfileLoading ? (
                   <LoadingCell className='w-48 sm:w-68 xl:w-3/4 h-7 rounded-lg' />
                 ) : (
                   <div
                     className={`${
                       isResponsive
-                        ? 'max-w-[90%] xl:max-w-72 2xl:max-w-[325px] sm:text-2xl text-xl text-start xl:text-center'
-                        : ' max-w-[332px] text-2xl text-center'
-                    } font-bold flex gap-2 items-center relative`}
+                        ? 'max-w-[90%] xl:max-w-72 2xl:max-w-[325px] sm:text-2xl text-xl'
+                        : 'max-w-[332px] text-2xl'
+                    } font-bold flex gap-2 items-center relative text-center`}
                   >
                     <Link
                       href={`/${profile.address}`}
@@ -327,19 +323,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 )}
               </div>
             </div>
-            <div
-              className={`flex w-full flex-wrap ${
-                isResponsive
-                  ? 'justify-between sm:justify-start xl:justify-center gap-0 sm:gap-y-9 sm:gap-x-[60px]'
-                  : 'gap-y-10 gap-x-16 justify-center'
-              }  items-center mx-autotext-center`}
-            >
+            <div className='flex w-full flex-wrap justify-center gap-10 gap-y-6 sm:gap-y-9 sm:gap-x-[60px] items-center mx-auto text-center'>
               <div>
-                <div
-                  className={`${
-                    isResponsive ? 'text-xl sm:text-2xl' : 'text-2xl'
-                  } text-center font-bold`}
-                >
+                <div className='text-2xl text-center font-bold'>
                   {profile.stats === undefined
                     ? '-'
                     : isConnectedUserCard && profileList === undefined
@@ -348,41 +334,41 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                         ? profile.stats.following_count
                         : 0}
                 </div>
-                <div
-                  className={`${isResponsive ? 'sm:text-lg' : 'text-lg'} font-bold text-gray-500`}
-                >
-                  {t('following')}
-                </div>
+                <div className='text-lg font-bold text-gray-500'>{t('following')}</div>
               </div>
               <div>
-                <div
-                  className={`${
-                    isResponsive ? 'text-xl sm:text-2xl' : 'text-2xl'
-                  } text-center font-bold`}
-                >
+                <div className='text-2xl text-center font-bold'>
                   {profile.stats === undefined ? '-' : profile.stats.followers_count}
                 </div>
-                <div
-                  className={`${isResponsive ? 'sm:text-lg' : 'text-lg'} font-bold text-gray-500`}
-                >
-                  {t('followers')}
-                </div>
+                <div className='text-lg font-bold text-gray-500'>{t('followers')}</div>
               </div>
-              <div className='flex flex-col items-center gap-3 w-56'>
+              <div className='flex flex-col w-full items-center gap-3 xl:w-56'>
                 <div
                   className={`${isResponsive ? 'sm:text-lg' : 'text-lg'} font-bold text-darkGrey`}
                 >
                   {t('leaderboard')}
                 </div>
-                {ranks.map((rank, i) => (
-                  <div
-                    key={rankTitles[i]}
-                    className='flex w-full justify-between items-center font-semibold'
-                  >
-                    <p className='text-[#888]'>{t(rankTitles[i] || '')}</p>
-                    <p>#{rank}</p>
-                  </div>
-                ))}
+                <div className='flex xl:flex-col xl:w-full justify-center flex-wrap gap-4 xxs:gap-8 gap-y-3 xxs:gap-y-3 xl:gap-3'>
+                  {ranks.map((rank, i) => (
+                    <div
+                      key={rankTitles[i]}
+                      className='flex xl:w-full gap-3 justify-between items-center font-semibold'
+                    >
+                      <p className='text-[#888]'>{t(rankTitles[i] || '')}</p>
+                      <p
+                        className={
+                          {
+                            1: 'first-place text-xl',
+                            2: 'second-place text-xl',
+                            3: 'third-place text-xl'
+                          }[rank]
+                        }
+                      >
+                        #{rank}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

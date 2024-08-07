@@ -44,7 +44,7 @@ const Navigation = () => {
             <Image
               src={Logo}
               priority={true}
-              className='w-[60px] sm:hidden select-none'
+              className='w-[56px] sm:hidden select-none'
               alt='Ethereum Follow Protocol Logo'
             />
           </Link>

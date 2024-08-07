@@ -35,11 +35,11 @@ export function Footer() {
             width={180}
             height={180}
             alt='Ethereum Follow Protocol'
-            className='w-[150px] sm:w-[180px]'
+            className='w-[120px] sm:w-[180px]'
           />
         </section>
         <section className='my-auto flex align-middle'>
-          <div className='my-auto flex flex-col justify-center gap-6'>
+          <div className='my-auto flex flex-col justify-center gap-4 sm:gap-6'>
             <Pages />
             <div className='flex items-center gap-10'>
               {socials.map(item => (

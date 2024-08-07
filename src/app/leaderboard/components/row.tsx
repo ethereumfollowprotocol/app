@@ -32,19 +32,20 @@ const TableRow: React.FC<TableRowProps> = ({
   const rankNumber = {
     'top-three': (
       <p
-        className={
+        className={`text-2xl xxs:text-3xl sm:text-4xl md:text-5xl ${
           {
             1: 'first-place',
             2: 'second-place',
             3: 'third-place'
           }[rank]
         }
+        `}
       >
         {rank}
       </p>
     ),
     'top-ten': (
-      <p className='text-2xl xxs:text-3xl sm:text-4xl md:text-5xl font-bold w-min mx-auto'>
+      <p className='text-2xl xxs:text-3xl text-darkGrey sm:text-4xl md:text-5xl font-bold w-min mx-auto'>
         {rank}
       </p>
     ),

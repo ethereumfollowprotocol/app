@@ -17,6 +17,8 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
   const { openConnectModal } = useConnectModal()
   const { t } = useTranslation('common', { keyPrefix: 'profile card' })
 
+  const ranks = ['mutuals', 'followers', 'following', 'blocks']
+
   return (
     <>
       {isStatic && (
@@ -39,22 +41,11 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
           isResponsive ? 'gap-5 sm:gap-6 md:gap-10' : 'gap-[68px]'
         } pt-2`}
       >
-        <div
-          className={`flex w-full ${
-            isResponsive ? 'flex-row xl:flex-col xl:justify-center' : 'flex-col justify-center'
-          } items-center gap-5`}
-        >
-          <LoadingCell
-            isStatic={isStatic}
-            className={
-              isResponsive
-                ? 'h-[70px] w-[70px] sm:h-[75px] sm:w-[75px] xl:h-[100px] xl:w-[100px] rounded-full'
-                : 'h-[100px] w-[100px] rounded-full'
-            }
-          />
+        <div className='flex w-full flex-col justify-center items-center gap-5'>
+          <LoadingCell isStatic={isStatic} className='h-[100px] w-[100px] rounded-full' />
           <div
-            className={`flex  ${
-              isResponsive ? 'xl:items-center items-start w-3/4 xl:w-full' : 'items-center w-full'
+            className={`flex items-center ${
+              isResponsive ? 'w-3/4 xl:w-full' : 'w-full'
             } flex-col gap-2 justify-center`}
           >
             <LoadingCell isStatic={isStatic} className='w-48 sm:w-68 xl:w-3/4 h-7 rounded-lg' />
@@ -63,29 +54,27 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
             )}
           </div>
         </div>
-        <div
-          className={`flex w-full flex-wrap ${
-            isResponsive
-              ? 'justify-between sm:justify-start xl:justify-center gap-0 sm:gap-y-10 sm:gap-x-16'
-              : 'gap-y-10 gap-x-16 justify-center'
-          }  items-center mx-autotext-center`}
-        >
+        <div className='flex w-full flex-wrap justify-center gap-10 gap-y-6 sm:gap-y-9 sm:gap-x-[60px] items-center mx-auto text-center'>
           <div className='flex flex-col items-center gap-2'>
             <LoadingCell isStatic={isStatic} className='w-12 h-6 rounded-lg' />
-            <div className={`${isResponsive ? 'sm:text-lg' : 'text-lg'} font-bold text-gray-500`}>
-              {t('following')}
-            </div>
+            <div className='text-lg font-bold text-gray-500'>{t('following')}</div>
           </div>
           <div className='flex flex-col items-center gap-2'>
             <LoadingCell isStatic={isStatic} className='w-12 h-6 rounded-lg' />
-            <div className={`${isResponsive ? 'sm:text-lg' : 'text-lg'} font-bold text-gray-500`}>
-              {t('followers')}
-            </div>
+            <div className='text-lg font-bold text-gray-500'>{t('followers')}</div>
           </div>
-          <div className='flex flex-col items-center gap-2'>
-            <LoadingCell isStatic={isStatic} className='w-12 h-6 rounded-lg' />
-            <div className={`${isResponsive ? 'sm:text-lg' : 'text-lg'} font-bold text-gray-500`}>
-              {t('leaderboard')}
+          <div className='flex flex-col w-full items-center gap-3 xl:w-56'>
+            <div className='text-lg font-bold text-darkGrey'>{t('leaderboard')}</div>
+            <div className='flex xl:flex-col xl:w-full justify-center flex-wrap gap-3 xxs:gap-8 gap-y-3 xxs:gap-y-3 xl:gap-3'>
+              {ranks.map((rank, i) => (
+                <div
+                  key={i}
+                  className='flex xl:w-full gap-3 justify-between items-center font-semibold'
+                >
+                  <p className='text-[#888] capitalize'>{rank}</p>
+                  <LoadingCell className='h-5 w-10 rounded-md' />
+                </div>
+              ))}
             </div>
           </div>
         </div>
