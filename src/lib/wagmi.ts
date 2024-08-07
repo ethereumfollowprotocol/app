@@ -147,6 +147,12 @@ const config = createConfig({
           batch: true
         }
       ),
+      http(
+        `https://smart-cosmological-telescope.base-sepolia.quiknode.pro/${process.env.NEXT_PUBLIC_BASE_SEPOLIA_ALCHEMY_ID}`,
+        {
+          batch: true
+        }
+      ),
       http('https://sepolia.base.org', { batch: true })
     ])
   }
