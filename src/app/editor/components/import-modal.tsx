@@ -134,14 +134,14 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
           </div>
         )}
         <div className='w-full flex items-center justify-between'>
-          <CancelButton onClick={onClose} className='bg-[#bbb]' />
+          <CancelButton onClick={onClose} />
           <PrimaryButton
             label='Add'
             onClick={() => {
               onAddFollowings()
               onClose()
             }}
-            className='py-3 w-32'
+            className='py-[10px] w-32'
             disabled={
               isFollowingsLoading ||
               followings.length === 0 ||

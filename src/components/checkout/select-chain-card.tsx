@@ -75,7 +75,7 @@ export function SelectChainCard({
             if (currentChainId !== DEFAULT_CHAIN.id) switchChain({ chainId: DEFAULT_CHAIN.id })
             handleNextStep()
           }}
-          className='text-lg w-32 h-12'
+          className='text-lg w-32 h-12 bg-[#cccccc]'
           disabled={!selectedChain}
         />
       </div>

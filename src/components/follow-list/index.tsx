@@ -6,6 +6,7 @@ import LoadingRow from './loading-row'
 import EFPLogo from 'public/assets/logo.svg'
 import FollowListItem from './follow-list-item'
 import type { ENSProfile } from '#/types/requests'
+import { formatNumber } from '#/utils/formatNumber'
 import type { ImportPlatformType } from '#/types/common'
 import SocialTagDropdown from './components/socialTagDropdown'
 
@@ -98,7 +99,7 @@ export function FollowList({
                       Import from <span className='capitalize'>{social.platform}</span>
                     </p>
                     <p className='font-medium text-sm text-gray-500'>
-                      Adding: {social.profiles.length}
+                      Adding: {formatNumber(social.profiles.length)}
                     </p>
                   </div>
                   <SocialTagDropdown

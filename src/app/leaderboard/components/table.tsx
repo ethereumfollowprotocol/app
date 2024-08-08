@@ -1,12 +1,9 @@
 'use client'
-
-import { Suspense } from 'react'
 import { useRouter } from 'next/navigation'
 
 import TableRow from './row.tsx'
 import LoadingRow from './loading-row.tsx'
 import PageSelector from './page-selector.tsx'
-import { Searchbar } from '#/components/searchbar.tsx'
 import LoadingCell from '#/components/loading-cell.tsx'
 import useLeaderboard from '../hooks/useLeaderboard.ts'
 import type { LeaderboardFilter } from '#/types/common.ts'
@@ -22,7 +19,9 @@ const LeaderboardTable = () => {
     setPage,
     setFilter,
     leaderboard,
+    currentSearch,
     leaderboardCount,
+    handleSearchEvent,
     isLeaderboardLoading,
     fetchNextLeaderboard,
     fetchPreviousLeaderboard,
@@ -73,9 +72,13 @@ const LeaderboardTable = () => {
         </div>
         <div className='flex justify-between gap-4'>
           <div className='w-full sm:max-w-sm sm:w-52'>
-            <Suspense>
-              <Searchbar queryKey='query' placeholder='Search...' />
-            </Suspense>
+            <input
+              className='h-9 rounded-lg border-2 w-full border-gray-200 px-2'
+              spellCheck={false}
+              placeholder='Search ENS Name'
+              value={currentSearch}
+              onChange={handleSearchEvent}
+            />
           </div>
           <div className='hidden lg:flex items-center gap-4'>
             {leaderboardFilters.map((item, i) => (

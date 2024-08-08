@@ -12,12 +12,14 @@ export const fetchleaderboard = async ({
     const queryParams = formatQueryParams({
       limit,
       offset: pageParam * limit,
-      search,
       sort: filter,
       direction
     })
 
-    const url = `${process.env.NEXT_PUBLIC_EFP_API_URL}/leaderboard/ranked?${queryParams}`
+    const url =
+      search && search.length > 0
+        ? `${process.env.NEXT_PUBLIC_EFP_API_URL}/leaderboard/search?term=${search}`
+        : `${process.env.NEXT_PUBLIC_EFP_API_URL}/leaderboard/ranked?${queryParams}`
     const response = await fetch(url, {
       cache: 'default',
       headers: {

@@ -10,8 +10,9 @@ import Checkout from './components/checkout'
 import { Search } from '#/components/search'
 import { useCart } from '#/contexts/cart-context'
 import Trash from 'public/assets/icons/trash.svg'
-import ImportModal from './components/importModal'
+import ImportModal from './components/import-modal'
 import LensIcon from 'public/assets/icons/lens.svg'
+import { formatNumber } from '#/utils/formatNumber'
 import { FollowList } from '#/components/follow-list'
 import ClearCartModal from './components/clear-cart-modal'
 import Recommendations from '#/components/recommendations'
@@ -161,11 +162,11 @@ export default function EditorPage() {
                 <div className='flex flex-col gap-1 items-start'>
                   <div className='flex gap-2 items-center'>
                     <p className='text-6xl font-bold'>{totalCartItems}</p>
-                    <div className='flex flex-col font-bold text-lg text-left whitespace-break-spaces'>
+                    <div className='flex flex-col w-28 font-bold text-lg text-left whitespace-break-spaces'>
                       {t('unc-changes')}
                     </div>
                   </div>
-                  <p className='text-base pl-2 font-medium'>{`${transactionsCount} ${
+                  <p className='text-base pl-2 font-medium'>{`${formatNumber(transactionsCount)} ${
                     transactionsCount === 1 ? t('transaction') : t('transactions')
                   }`}</p>
                 </div>

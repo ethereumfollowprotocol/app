@@ -41,5 +41,11 @@
     "Muted": "Muted",
     "Unmute": "Unmute",
     "not manager": "You are not the Manager of the list."
+  },
+  "editor": {
+    "clear cart": {
+      "title": "Clear Cart",
+      "message": "This will remove all of your items from cart. Are you sure you want to clear your cart?"
+    }
   }
 }

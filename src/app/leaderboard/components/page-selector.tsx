@@ -18,6 +18,12 @@ const PageSelector: React.FC<PageSelectorProps> = ({
   fetchNext,
   fetchPrevious
 }) => {
+  // const [pageValue, setPageValue] = useState(page.toString())
+
+  // useEffect(() => {
+  //   setPageValue(page.toString())
+  // }, [page])
+
   const router = useRouter()
   const searchParams = useSearchParams()
   const search = searchParams.get('query')
@@ -45,7 +51,7 @@ const PageSelector: React.FC<PageSelectorProps> = ({
       <button
         onClick={() => handlePageChange(1)}
         disabled={page === 1}
-        className='text-darkGrey flex items-center justify-center font-semibold hover:opacity-100 h-9 w-9 border-2 border-darkGrey opacity-50 transition-opacity rounded-md disabled:opacity-20'
+        className='text-darkGrey glass-card flex items-center justify-center font-semibold hover:opacity-100 h-9 w-9 border-2 border-darkGrey opacity-40 transition-opacity rounded-[10px] disabled:opacity-10'
       >
         <Image src={ArrowLeft} alt='Previous page' width={9} height={12} />
         <Image src={ArrowLeft} alt='Previous page' width={9} height={12} />
@@ -53,17 +59,34 @@ const PageSelector: React.FC<PageSelectorProps> = ({
       <button
         onClick={() => handlePageChange(page - 1)}
         disabled={page === 1}
-        className='text-darkGrey flex items-center justify-center font-semibold hover:opacity-100 h-9 w-9 border-2 border-darkGrey opacity-50 transition-opacity rounded-md disabled:opacity-20'
+        className='text-darkGrey glass-card flex items-center justify-center font-semibold hover:opacity-100 h-9 w-9 border-2 border-darkGrey opacity-40 transition-opacity rounded-[10px] disabled:opacity-10'
       >
         <Image src={ArrowLeft} alt='Previous page' width={8} height={10} />
       </button>
-      <p className='text-darkGrey flex items-center justify-center font-semibold h-9 w-9 border-2 border-darkGrey transition-opacity rounded-md'>
+      <p className='text-darkGrey glass-card flex items-center justify-center font-semibold h-9 w-9 border-2 border-darkGrey transition-opacity rounded-[10px]'>
         {page}
       </p>
+      {/* <input
+        type='number'
+        placeholder='1'
+        value={pageValue}
+        onChange={e => {
+          const value = e.target.value
+          setPageValue(value)
+        }}
+        onKeyDown={e => {
+          if (e.key === 'Enter') {
+            handlePageChange(Number(Number(pageValue) > 0 ? Number(pageValue) : 1), true)
+          }
+        }}
+        className={`text-darkGrey flex items-center text-center bg-transparent justify-center font-semibold h-9 w-[${
+          36 + (pageValue.length - 1) * 10
+        }px] border-2 border-darkGrey transition-opacity rounded-md`}
+      /> */}
       <button
         onClick={() => handlePageChange(page + 1)}
         disabled={!hasNextPage}
-        className='text-darkGrey flex items-center justify-center font-semibold hover:opacity-100 h-9 w-9 border-2 border-darkGrey opacity-50 transition-opacity rounded-md disabled:opacity-20'
+        className='text-darkGrey glass-card flex items-center justify-center font-semibold hover:opacity-100 h-9 w-9 border-2 border-darkGrey opacity-40 transition-opacity rounded-[10px] disabled:opacity-10'
       >
         <Image src={ArrowLeft} alt='Next page' width={9} height={12} className='rotate-180' />
       </button>

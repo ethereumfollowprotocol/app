@@ -87,6 +87,7 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
           label={tBtn('back')}
           onClick={() => setCurrentStep(Step.InitiateTransactions)}
           disabled={!finishButtonIsDisabled || isLoading}
+          className='bg-[#cccccc]'
         />
         {currentAction.isConfirmationError && (
           <PrimaryButton

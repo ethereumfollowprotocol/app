@@ -16,6 +16,7 @@ import ArrowDown from 'public/assets/icons/arrow-down.svg'
 import { PrimaryButton } from '#/components/primary-button'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
+import CancelButton from '../cancel-button'
 
 interface ListSettingsProps {
   selectedList: number
@@ -227,24 +228,19 @@ const ListSettings: React.FC<ListSettingsProps> = ({
         connectedAddress?.toLowerCase() !== fetchedOwner?.toLowerCase() &&
         connectedAddress?.toLowerCase() !==
           fetchedUser?.toLowerCase() ? null : isEditingSettings ? (
-          <div className='w-full flex justify-between'>
-            <button
-              onClick={() => setIsEditingSettings(false)}
-              className='text-lg mt-4 w-32 font-semibold hover:opacity-90 bg-[#a8a8a8] rounded-full h-12'
-            >
-              Cancel
-            </button>
+          <div className='w-full flex items-center mt-4 justify-between'>
+            <CancelButton onClick={() => setIsEditingSettings(false)} />
             <PrimaryButton
               label={t('save')}
               onClick={() => setIsSaving(true)}
-              className='text-lg mt-4 w-32 h-12'
+              className='text-lg w-32 h-12'
               disabled={!Object.values(changedValues).includes(true)}
             />
           </div>
         ) : (
           <button
             onClick={() => setIsEditingSettings(true)}
-            className='text-lg mt-4 px-6 mx-auto font-semibold hover:opacity-90 bg-[#a8a8a8] rounded-full h-12'
+            className='text-lg mt-4 px-6 mx-auto font-semibold hover:opacity-90 bg-[#bbbbbb] rounded-full h-12'
           >
             Edit Settings
           </button>

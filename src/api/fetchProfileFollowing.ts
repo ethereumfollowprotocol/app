@@ -15,7 +15,13 @@ export const fetchProfileFollowing = async ({
       limit,
       offset: pageParam * limit,
       tags,
-      sort
+      sort: sort
+        ? {
+            'earliest first': 'earliest',
+            'latest first': 'latest',
+            'follower count': 'followers'
+          }[sort]
+        : undefined
     })
 
     const url =

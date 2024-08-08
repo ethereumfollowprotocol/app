@@ -41,5 +41,11 @@
     "Muted": "Utišan",
     "Unmute": "Unmute",
     "not manager": "Nisi Upravitelj tega seznama."
+  },
+  "editor": {
+    "clear cart": {
+      "title": "Počisti Košarico",
+      "message": "To bo odstranilo vse elemente iz tvoje košarice. Ali si prepričan, da želiš počistiti košarico?"
+    }
   }
 }

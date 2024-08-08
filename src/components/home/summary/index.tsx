@@ -23,11 +23,7 @@ const Summary = () => {
   const isFollowersEmpty = !followersIsLoading && followers.length === 0
 
   return (
-    <div
-      className={`mt-[108px] md:mt-28 w-full lg:mt-32 xl:mt-40 px-4 xl:px-0 2xl:px-8 flex items-start ${
-        isFollowersEmpty || !address ? 'lg:justify-center lg:gap-4' : 'lg:justify-between xl:gap-4'
-      } xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4`}
-    >
+    <div className='mt-[108px] md:mt-28 w-full lg:mt-32 xl:mt-40 px-4 xl:px-0 2xl:px-8 flex items-start lg:justify-center lg:gap-4 xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4'>
       <UserProfileCard
         profileList={selectedList}
         hideFollowButton={true}

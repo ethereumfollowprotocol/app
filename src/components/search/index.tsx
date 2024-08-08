@@ -9,6 +9,7 @@ import GraySpinner from '../gray-spinner.tsx'
 import LoadingSpinner from '../loading-spinner.tsx'
 import { truncateAddress } from '#/lib/utilities.ts'
 import MagnifyingGlass from 'public/assets/icons/magnifying-glass.svg'
+import { PrimaryButton } from '../primary-button.tsx'
 
 export function Search({
   disabled,
@@ -130,12 +131,11 @@ export function Search({
           </div>
         </div>
         {isEditor && (
-          <button
-            className='bg-gradient-to-b capitalize font-semibold py-3 px-6 from-[#FFDE60] rounded-full to-[#FFA997] text-black h-auto'
+          <PrimaryButton
+            label={tEditor('add')}
+            className='w-32 h-12 text-lg'
             onClick={() => onSubmit()}
-          >
-            {tEditor('add')}
-          </button>
+          />
         )}
       </div>
       <div

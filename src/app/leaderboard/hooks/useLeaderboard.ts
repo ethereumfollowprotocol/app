@@ -1,5 +1,5 @@
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import type { LeaderboardFilter } from '#/types/common'
@@ -7,16 +7,40 @@ import { fetchleaderboard } from '#/api/fetchLeaderboard'
 import type { LeaderboardResponse } from '#/types/requests'
 import { LEADERBOARD_FETCH_LIMIT_PARAM } from '#/lib/constants'
 import { fetchLeaderboardCount } from '#/api/fetchLeaderboardCount'
+import { useQueryState } from 'next-usequerystate'
 
 const useLeaderboard = () => {
   const queryClient = useQueryClient()
   const searchParams = useSearchParams()
-  const search = searchParams.get('query')
-  const initialFilter = searchParams.get('filter') || 'mutuals'
-  const initialPageParam = Number(searchParams.get('page'))
 
-  const [page, setPage] = useState(initialPageParam || 1)
+  const initialFilter = searchParams.get('filter') || 'mutuals'
   const [filter, setFilter] = useState(initialFilter as LeaderboardFilter)
+
+  const initialPageParam = Number(searchParams.get('page'))
+  const [page, setPage] = useState(initialPageParam || 1)
+
+  const initialSearch = searchParams.get('search')
+  const [currentSearch, setCurrentSearch] = useState(initialSearch ?? '')
+  const [search, setSearch] = useQueryState('query', {
+    history: 'push',
+    parse: value => value?.trim().toLowerCase(),
+    serialize: value => value.trim().toLowerCase()
+  })
+
+  let searchTimeout: NodeJS.Timeout | null = null
+
+  const handleSearchEvent = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const term = event?.target.value
+      if (searchTimeout) clearTimeout(searchTimeout)
+
+      setCurrentSearch(term)
+
+      searchTimeout = setTimeout(() => setSearch(term), 500)
+    },
+    [searchTimeout]
+  )
+
   const [isRefetchingLeaderboard, setIsRefetchingLeaderboard] = useState(false)
 
   const { data: leaderboardCount, isLoading: isLeaderboardCountLoading } = useQuery({
@@ -103,7 +127,9 @@ const useLeaderboard = () => {
     setPage,
     setFilter,
     leaderboard,
+    currentSearch,
     leaderboardCount,
+    handleSearchEvent,
     refetchLeaderboard,
     fetchNextLeaderboard,
     fetchPreviousLeaderboard,

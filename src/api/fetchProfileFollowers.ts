@@ -14,7 +14,13 @@ export const fetchProfileFollowers = async ({
     const queryParams = formatQueryParams({
       limit,
       offset: pageParam * limit,
-      sort,
+      sort: sort
+        ? {
+            'earliest first': 'earliest',
+            'latest first': 'latest',
+            'follower count': 'followers'
+          }[sort]
+        : undefined,
       tags
     })
 

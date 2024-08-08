@@ -72,7 +72,7 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
                   className='flex xl:w-full gap-3 justify-between items-center font-semibold'
                 >
                   <p className='text-[#888]'>{t(rank)}</p>
-                  <LoadingCell className='h-5 w-10 rounded-md' />
+                  <LoadingCell className='h-5 w-10 rounded-md' isStatic={isStatic} />
                 </div>
               ))}
             </div>

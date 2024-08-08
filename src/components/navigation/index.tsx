@@ -15,6 +15,7 @@ import { useCart } from '../../contexts/cart-context'
 import CartButton from './components/cart-button.tsx'
 import ArrowDown from 'public/assets/icons/arrow-down.svg'
 import ConnectButton from './components/connect-button.tsx'
+import GreenCheck from 'public/assets/icons/check-green.svg'
 
 const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -81,15 +82,26 @@ const Navigation = () => {
                     languageMenOpenu ? 'block' : 'hidden'
                   } group-hover:block pt-4`}
                 >
-                  <div className='flex flex-col gap-2 glass-card bg-white/90 border-2 border-gray-200 px-4 py-2 rounded-lg shadow-md'>
+                  <div className='flex flex-col glass-card bg-white/90 border-2 border-gray-200 p-1 rounded-lg shadow-md'>
                     {LANGUAGES.map(lang => (
-                      <p
-                        className=' text-darkGrey font-semibold hover:text-gray-500 transition-colors'
+                      <div
+                        className=' text-darkGrey p-3 pl-8 relative font-semibold rounded-md hover:bg-slate-100 transition-colors'
                         key={lang.language}
-                        onClick={() => changeLanguage(lang)}
+                        onClick={() => {
+                          changeLanguage(lang)
+                          setLanguageMenuOpen(false)
+                        }}
                       >
-                        {lang.language}
-                      </p>
+                        {selectedLanguage && selectedLanguage.key === lang.key && (
+                          <Image
+                            src={GreenCheck}
+                            alt='List selected'
+                            width={16}
+                            className='absolute left-2 top-[17px]'
+                          />
+                        )}
+                        <p>{lang.language}</p>
+                      </div>
                     ))}
                   </div>
                 </div>

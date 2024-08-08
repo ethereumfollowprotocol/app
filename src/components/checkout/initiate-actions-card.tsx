@@ -93,6 +93,7 @@ const InitiateActionsCard: React.FC<InitiateActionsCardProps> = ({
 
             onCancel()
           }}
+          className='bg-[#cccccc]'
         />
         <PrimaryButton
           label={tBtn('initiate')}

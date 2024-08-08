@@ -77,6 +77,18 @@ input[type="search"]::-webkit-search-results-decoration {
   display: none;
 }
 
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 /** scrollbar */
 *::-webkit-scrollbar {
   height: 0rem;
@@ -303,7 +315,7 @@ input {
 		-webkit-background-clip: text;
 		background-clip: text;
 		animation: shine 2s ease-in-out infinite;
-    animation-delay: 200ms;
+    animation-delay: 250ms;
 }
 
 .second-place:before {
@@ -334,7 +346,7 @@ input {
   -webkit-background-clip: text;
   background-clip: text;
   animation: shine 2s ease-in-out infinite;
-  animation-delay: 400ms;
+  animation-delay: 500ms;
 }
 
 .third-place:before {

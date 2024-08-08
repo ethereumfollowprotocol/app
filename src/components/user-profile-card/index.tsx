@@ -326,7 +326,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
             </div>
             <div className='flex w-full flex-wrap justify-center gap-10 gap-y-6 sm:gap-y-9 sm:gap-x-[60px] items-center mx-auto text-center'>
               <div>
-                <div className='text-2xl text-center font-bold'>
+                <div className='text-2xl sm:text-2xl text-center font-bold'>
                   {profile.stats === undefined
                     ? '-'
                     : profileList
@@ -339,13 +339,13 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                     //     ? formatNumber(profile.stats.following_count)
                     //     : 0 */}
                 </div>
-                <div className='text-lg font-bold text-gray-500'>{t('following')}</div>
+                <div className='text-lg font-bold text-[#888]'>{t('following')}</div>
               </div>
               <div>
-                <div className='text-2xl text-center font-bold'>
+                <div className='text-xl sm:text-2xl text-center font-bold'>
                   {profile.stats === undefined ? '-' : formatNumber(profile.stats.followers_count)}
                 </div>
-                <div className='text-lg font-bold text-gray-500'>{t('followers')}</div>
+                <div className='text-lg font-bold text-[#888]'>{t('followers')}</div>
               </div>
               <div className='flex flex-col w-full items-center gap-3 xl:w-56'>
                 <div
