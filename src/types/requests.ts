@@ -94,7 +94,7 @@ export interface FollowStatusResponse {
   }
 }
 
-export interface LeaderboardResponse {
+export type LeaderboardItem = {
   address: Address
   name: string | null
   avatar: string | null
@@ -106,6 +106,11 @@ export interface LeaderboardResponse {
   followers: string
   blocks?: string
   mutuals?: string
+}
+
+export interface LeaderboardResponse {
+  last_updated: string
+  results: LeaderboardItem[]
 }
 
 export interface StatsResponse {

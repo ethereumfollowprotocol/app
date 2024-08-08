@@ -1,13 +1,13 @@
 import { useSearchParams } from 'next/navigation'
+import { useQueryState } from 'next-usequerystate'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import type { LeaderboardFilter } from '#/types/common'
+import type { LeaderboardItem } from '#/types/requests'
 import { fetchleaderboard } from '#/api/fetchLeaderboard'
-import type { LeaderboardResponse } from '#/types/requests'
 import { LEADERBOARD_FETCH_LIMIT_PARAM } from '#/lib/constants'
 import { fetchLeaderboardCount } from '#/api/fetchLeaderboardCount'
-import { useQueryState } from 'next-usequerystate'
 
 const useLeaderboard = () => {
   const queryClient = useQueryClient()
@@ -93,7 +93,7 @@ const useLeaderboard = () => {
         queryClient.setQueryData(
           ['leaderboard', filter, search],
           (oldData: {
-            pages: LeaderboardResponse[][]
+            pages: LeaderboardItem[][]
             pageParams: number[]
           }) => ({
             pages: [
@@ -115,9 +115,14 @@ const useLeaderboard = () => {
     }
   }, [filter, results])
 
+  const timeStamp = new Date(results?.pages[0]?.results.last_updated || 0).toLocaleString('en-US', {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true
+  })
   const leaderboard = useMemo(() => {
     const pageIndex = results?.pageParams.indexOf(page - 1) || 0
-    return results?.pages[pageIndex]?.results as LeaderboardResponse[]
+    return results?.pages[pageIndex]?.results.results as LeaderboardItem[]
   }, [results, page])
 
   return {
@@ -126,6 +131,7 @@ const useLeaderboard = () => {
     filter,
     setPage,
     setFilter,
+    timeStamp,
     leaderboard,
     currentSearch,
     leaderboardCount,

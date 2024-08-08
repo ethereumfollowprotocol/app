@@ -29,7 +29,7 @@ export const fetchleaderboard = async ({
       // cache: "no-cache",
     })
 
-    const data = (await response.json()) as LeaderboardResponse[]
+    const data = (await response.json()) as LeaderboardResponse
     return {
       results: data ?? [],
       nextPageParam: pageParam + 1,
@@ -37,7 +37,10 @@ export const fetchleaderboard = async ({
     }
   } catch (err: unknown) {
     return {
-      results: [],
+      results: {
+        last_updated: 0,
+        results: []
+      },
       nextPageParam: pageParam + 1,
       prevPageParam: pageParam > 0 ? pageParam - 1 : 0
     }
