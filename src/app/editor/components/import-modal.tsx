@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import Modal from '#/components/modal'
 import { Avatar } from '#/components/avatar'
 import { truncateAddress } from '#/lib/utilities'
+import { formatNumber } from '#/utils/formatNumber'
 import LensIcon from 'public/assets/icons/lens.svg'
 import LoadingCell from '#/components/loading-cell'
 import useImportModal from '../hooks/useImportModal'
@@ -98,7 +99,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
                   <LoadingCell className='h-5 w-24 rounded-md' />
                 ) : (
                   <p className='text-gray-400 text-xs xxs:text-sm font-medium'>
-                    {followings.length} accounts
+                    {formatNumber(followings.length)} accounts
                   </p>
                 )}
               </div>
@@ -110,7 +111,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
                   <LoadingCell className='h-5 w-24 rounded-md' />
                 ) : (
                   <p className='text-gray-400 text-xs xxs:text-sm font-medium'>
-                    -{alreadyFollow.length} accounts
+                    -{formatNumber(alreadyFollow.length)} accounts
                   </p>
                 )}
               </div>
@@ -122,7 +123,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
                   <LoadingCell className='h-5 w-24 rounded-md' />
                 ) : (
                   <p className='text-darkGrey text-sm xxs:text-base sm:text-lg font-bold'>
-                    {followings.length - alreadyFollow.length} accounts
+                    {formatNumber(followings.length - alreadyFollow.length)} accounts
                   </p>
                 )}
               </div>

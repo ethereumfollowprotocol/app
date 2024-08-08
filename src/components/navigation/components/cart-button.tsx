@@ -1,6 +1,5 @@
 'use client'
 
-import clsx from 'clsx'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
@@ -13,10 +12,9 @@ const CartButton = ({ cartItemsCount }: { cartItemsCount: number }) => {
   return (
     <Link href='/editor' passHref={true} legacyBehavior={true}>
       <div
-        className={clsx(
-          'glass-card border-2 h-[48px] group justify-center items-center border-opacity-40 w-[48px] border-darkGrey transition-all cursor-pointer hover:border-opacity-100 relative flex rounded-full',
-          pathname === '/editor' && 'border-opacity-100'
-        )}
+        className={`glass-card border-2 h-[48px] group justify-center items-center w-[48px] border-darkGrey transition-all cursor-pointer hover:border-opacity-100 relative flex rounded-full ${
+          pathname === '/editor' ? 'border-opacity-100' : 'border-opacity-40'
+        }`}
       >
         <Image
           src={Cart}

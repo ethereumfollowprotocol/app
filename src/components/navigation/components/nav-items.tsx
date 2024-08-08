@@ -8,11 +8,13 @@ import { useTranslation } from 'react-i18next'
 import { NAV_ITEMS } from '#/lib/constants'
 import { usePathname } from 'next/navigation'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 const NavItems = () => {
   const pathname = usePathname()
   const { t } = useTranslation()
   const { address: userAddress } = useAccount()
+  const { openConnectModal } = useConnectModal()
   const { selectedList, lists } = useEFPProfile()
   const itemUrl =
     pathname?.toLowerCase() === `/${userAddress?.toLowerCase()}` &&
@@ -22,17 +24,25 @@ const NavItems = () => {
 
   return (
     <ul className='lg:flex hidden lg:gap-6 xl:gap-9 items-center'>
-      {NAV_ITEMS.map((item, index) => (
+      {NAV_ITEMS.map(item => (
         <li className='font-bold' key={`${item.name}`}>
           <Link
             prefetch={true}
             href={item.href(itemUrl)}
             className={clsx([
               'capitalize xl:text-xl lg:text-lg transition-colors',
-              item.href(itemUrl) === pathname.toLowerCase()
-                ? 'text-darkGrey'
-                : 'text-grey hover:text-gray-500'
+              item.name === 'profile' && !userAddress
+                ? 'text-grey hover:text-gray-500'
+                : item.href(itemUrl) === pathname.toLowerCase()
+                  ? 'text-darkGrey'
+                  : 'text-grey hover:text-gray-500'
             ])}
+            onClick={e => {
+              if (item.name === 'profile' && !userAddress && openConnectModal) {
+                e.preventDefault()
+                openConnectModal()
+              }
+            }}
           >
             <span className='hidden sm:block text-nowrap'>{t(`navigation.${item.name}`)}</span>
           </Link>

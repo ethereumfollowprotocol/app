@@ -1,14 +1,18 @@
 'use client'
+
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
 import TableRow from './row.tsx'
 import LoadingRow from './loading-row.tsx'
 import PageSelector from './page-selector.tsx'
+import { formatNumber } from '#/utils/formatNumber.ts'
 import LoadingCell from '#/components/loading-cell.tsx'
 import useLeaderboard from '../hooks/useLeaderboard.ts'
 import type { LeaderboardItem } from '#/types/requests.ts'
 import type { LeaderboardFilter } from '#/types/common.ts'
 import { leaderboardFilters, leaderboardFiltersEmojies } from '#/lib/constants/index.ts'
+import MagnifyingGlass from 'public/assets/icons/magnifying-glass.svg'
 
 const LeaderboardTable = () => {
   const router = useRouter()
@@ -20,6 +24,7 @@ const LeaderboardTable = () => {
     setFilter,
     timeStamp,
     leaderboard,
+    resetSearch,
     currentSearch,
     leaderboardCount,
     handleSearchEvent,
@@ -41,6 +46,9 @@ const LeaderboardTable = () => {
     router.push(`/leaderboard?${params.toString()}`)
   }
 
+  const isLoading =
+    isLeaderboardLoading || isFetchingNextLeaderboard || isFetchingPreviousLeaderboard
+
   const selectedRank = {
     followers: (entry: LeaderboardItem) => entry.followers_rank,
     following: (entry: LeaderboardItem) => entry.following_rank,
@@ -54,10 +62,12 @@ const LeaderboardTable = () => {
         {isLeaderboardCountLoading ? (
           <LoadingCell className='h-7 w-40 rounded-lg' />
         ) : (
-          <p className='h-2 font-semibold text-sm sm:text-lg'>{`${leaderboardCount?.leaderboardCount} accounts`}</p>
+          <p className='h-2 font-semibold text-sm sm:text-lg'>{`${formatNumber(
+            Number(leaderboardCount?.leaderboardCount)
+          )} accounts`}</p>
         )}
       </div>
-      <div className='flex w-full justify-end text-sm mb-2 font-semibold text-[#CDCDCD] italic'>
+      <div className='flex w-full justify-center lg:justify-end max-w-[1200px] text-sm mb-2 font-semibold text-[#aaaaaa] md:text-[#CDCDCD] italic'>
         Last updated {timeStamp}
       </div>
       <div className='flex flex-col gap-6 w-full max-w-[1200px]'>
@@ -75,14 +85,31 @@ const LeaderboardTable = () => {
           ))}
         </div>
         <div className='flex justify-between gap-4'>
-          <div className='w-full sm:max-w-sm sm:w-52'>
-            <input
-              className='h-9 rounded-lg border-2 w-full border-gray-200 px-2'
-              spellCheck={false}
-              placeholder='Search ENS Name'
-              value={currentSearch}
-              onChange={handleSearchEvent}
-            />
+          <div className='relative w-full sm:w-[260px] 2xl:w-[300px]'>
+            <label htmlFor='search' className='sr-only'>
+              Search
+            </label>
+            <div className='rounded-lg w-full glass-card border-2 border-gray-200'>
+              <div
+                className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3'
+                aria-hidden='true'
+              >
+                <Image
+                  src={MagnifyingGlass}
+                  alt='Search'
+                  className='mr-3 h-4 w-4 text-gray-400'
+                  aria-hidden='true'
+                />
+              </div>
+              <input
+                type='text'
+                spellCheck={false}
+                placeholder='Search ENS Name'
+                value={currentSearch}
+                onChange={handleSearchEvent}
+                className='lowercase h-9 block w-full rounded-lg border-0 font-medium border-transparent pl-9 pr-10 sm:text-sm'
+              />
+            </div>
           </div>
           <div className='hidden lg:flex items-center gap-4'>
             {leaderboardFilters.map((item, i) => (
@@ -119,15 +146,20 @@ const LeaderboardTable = () => {
               blockedMuted={Number(entry.blocks) || 0}
             />
           ))}
-          {new Array(
-            isLeaderboardLoading || isFetchingNextLeaderboard || isFetchingPreviousLeaderboard
-              ? 100
-              : 0
-          )
-            .fill(1)
-            .map((_, i) => (
-              <LoadingRow key={i} />
-            ))}
+          {new Array(isLoading ? 100 : 0).fill(1).map((_, i) => (
+            <LoadingRow key={i} />
+          ))}
+          {!isLoading && leaderboard?.length === 0 && (
+            <div className='flex justify-center flex-col items-center h-40'>
+              <p className='text-lg font-semibold'>No results found</p>
+              <p
+                className='transition-colors italic hover:text-gray-700 text-gray-400 cursor-pointer font-semibold'
+                onClick={() => resetSearch()}
+              >
+                Clear Search
+              </p>
+            </div>
+          )}
         </div>
         <PageSelector
           page={page}

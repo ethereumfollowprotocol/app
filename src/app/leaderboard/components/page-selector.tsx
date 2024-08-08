@@ -61,7 +61,7 @@ const PageSelector: React.FC<PageSelectorProps> = ({
         disabled={page === 1}
         className='text-darkGrey glass-card flex items-center justify-center font-semibold hover:opacity-100 h-9 w-9 border-2 border-darkGrey opacity-40 transition-opacity rounded-[10px] disabled:opacity-10'
       >
-        <Image src={ArrowLeft} alt='Previous page' width={8} height={10} />
+        <Image src={ArrowLeft} alt='Previous page' width={9} height={12} />
       </button>
       <p className='text-darkGrey glass-card flex items-center justify-center font-semibold h-9 w-9 border-2 border-darkGrey transition-opacity rounded-[10px]'>
         {page}

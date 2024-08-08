@@ -4,7 +4,7 @@ import { isAddress, type Address } from 'viem'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useQueryState } from 'next-usequerystate'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { resolveEnsAddress } from '#/utils/ens'
@@ -29,6 +29,7 @@ const useSearch = (isEditor?: boolean) => {
   })
 
   const router = useRouter()
+  const pathname = usePathname()
   const { t } = useTranslation('editor')
   const { roles, selectedList } = useEFPProfile()
   const { addCartItem, hasListOpAddRecord } = useCart()
@@ -108,7 +109,13 @@ const useSearch = (isEditor?: boolean) => {
       setDropdownMenuOpen(!hasMultipleNames && term.length > 0)
       setCurrentSearch(term)
 
-      if (!isEditor) searchTimeout = setTimeout(() => setSearch(term), 500)
+      if (!isEditor) {
+        if (term) searchTimeout = setTimeout(() => setSearch(term), 500)
+        else {
+          setSearch('')
+          router.push(pathname.replace('query=', ''))
+        }
+      }
     },
     [searchTimeout]
   )

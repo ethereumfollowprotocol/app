@@ -161,7 +161,7 @@ export default function EditorPage() {
               <div className='flex gap-6 w-full border-[1px] border-gray-200 lg:w-fit items-center p-4 bg-white/10 justify-between glass-card bg-opacity-50 shadow-xl rounded-xl'>
                 <div className='flex flex-col gap-1 items-start'>
                   <div className='flex gap-2 items-center'>
-                    <p className='text-6xl font-bold'>{totalCartItems}</p>
+                    <p className='text-6xl font-bold'>{formatNumber(totalCartItems)}</p>
                     <div className='flex flex-col w-28 font-bold text-lg text-left whitespace-break-spaces'>
                       {t('unc-changes')}
                     </div>

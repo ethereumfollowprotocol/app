@@ -1,4 +1,4 @@
-import { useSearchParams } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useQueryState } from 'next-usequerystate'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query'
@@ -10,6 +10,8 @@ import { LEADERBOARD_FETCH_LIMIT_PARAM } from '#/lib/constants'
 import { fetchLeaderboardCount } from '#/api/fetchLeaderboardCount'
 
 const useLeaderboard = () => {
+  const router = useRouter()
+  const pathname = usePathname()
   const queryClient = useQueryClient()
   const searchParams = useSearchParams()
 
@@ -35,11 +37,23 @@ const useLeaderboard = () => {
       if (searchTimeout) clearTimeout(searchTimeout)
 
       setCurrentSearch(term)
+      if (term.length > 2) setPage(1)
 
-      searchTimeout = setTimeout(() => setSearch(term), 500)
+      if (term) searchTimeout = setTimeout(() => setSearch(term), 500)
+      else {
+        setSearch('')
+        router.push(pathname.replace('query=', ''))
+      }
     },
     [searchTimeout]
   )
+
+  const resetSearch = useCallback(() => {
+    setPage(1)
+    setSearch('')
+    setCurrentSearch('')
+    router.push(pathname.replace('query=', ''))
+  }, [setSearch])
 
   const [isRefetchingLeaderboard, setIsRefetchingLeaderboard] = useState(false)
 
@@ -60,7 +74,7 @@ const useLeaderboard = () => {
     isFetchingNextPage: isFetchingNextLeaderboard,
     isFetchingPreviousPage: isFetchingPreviousLeaderboard
   } = useInfiniteQuery({
-    queryKey: ['leaderboard', filter, search],
+    queryKey: ['leaderboard', filter, search && search?.length > 2 ? search : ''],
     queryFn: async ({ pageParam = 0 }) => {
       const data = await fetchleaderboard({
         limit: LEADERBOARD_FETCH_LIMIT_PARAM,
@@ -91,7 +105,7 @@ const useLeaderboard = () => {
         })
 
         queryClient.setQueryData(
-          ['leaderboard', filter, search],
+          ['leaderboard', filter, search && search?.length > 2 ? search : ''],
           (oldData: {
             pages: LeaderboardItem[][]
             pageParams: number[]
@@ -120,6 +134,7 @@ const useLeaderboard = () => {
     minute: 'numeric',
     hour12: true
   })
+
   const leaderboard = useMemo(() => {
     const pageIndex = results?.pageParams.indexOf(page - 1) || 0
     return results?.pages[pageIndex]?.results.results as LeaderboardItem[]
@@ -133,6 +148,7 @@ const useLeaderboard = () => {
     setFilter,
     timeStamp,
     leaderboard,
+    resetSearch,
     currentSearch,
     leaderboardCount,
     handleSearchEvent,
