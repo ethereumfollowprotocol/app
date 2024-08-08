@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
-import ArrowDown from 'public/assets/icons/arrow-down.svg'
+
+import ArrowLeft from 'public/assets/icons/arrow-left-leaderboard.svg'
 
 interface PageSelectorProps {
   page: number
@@ -22,11 +23,13 @@ const PageSelector: React.FC<PageSelectorProps> = ({
   const search = searchParams.get('query')
   const filter = searchParams.get('filter')
 
-  const handlePageChange = (newPage: number) => {
+  const handlePageChange = (newPage: number, skipsToFirst?: boolean) => {
     window.scrollTo({ top: 0, behavior: 'instant' })
 
-    if (newPage > page) fetchNext()
-    else fetchPrevious()
+    if (!skipsToFirst) {
+      if (newPage > page) fetchNext()
+      else fetchPrevious()
+    }
 
     const params = new URLSearchParams()
     if (filter) params.set('filter', filter)
@@ -38,23 +41,31 @@ const PageSelector: React.FC<PageSelectorProps> = ({
   }
 
   return (
-    <div className='flex w-full items-center justify-between px-1'>
+    <div className='flex gap-2 items-center justify-end px-1'>
+      <button
+        onClick={() => handlePageChange(1)}
+        disabled={page === 1}
+        className='text-darkGrey flex items-center justify-center font-semibold hover:opacity-100 h-9 w-9 border-2 border-darkGrey opacity-50 transition-opacity rounded-md disabled:opacity-20'
+      >
+        <Image src={ArrowLeft} alt='Previous page' width={9} height={12} />
+        <Image src={ArrowLeft} alt='Previous page' width={9} height={12} />
+      </button>
       <button
         onClick={() => handlePageChange(page - 1)}
         disabled={page === 1}
-        className=' text-darkGrey flex items-center gap-1 font-semibold hover:opacity-75 transition-opacity rounded-md disabled:opacity-50'
+        className='text-darkGrey flex items-center justify-center font-semibold hover:opacity-100 h-9 w-9 border-2 border-darkGrey opacity-50 transition-opacity rounded-md disabled:opacity-20'
       >
-        <Image src={ArrowDown} alt='Previous page' width={14} height={14} className='rotate-90' />
-        Previous
+        <Image src={ArrowLeft} alt='Previous page' width={8} height={10} />
       </button>
-      <p className='text-darkGrey font-semibold'>{`Page ${page}`}</p>
+      <p className='text-darkGrey flex items-center justify-center font-semibold h-9 w-9 border-2 border-darkGrey transition-opacity rounded-md'>
+        {page}
+      </p>
       <button
         onClick={() => handlePageChange(page + 1)}
         disabled={!hasNextPage}
-        className=' text-darkGrey flex items-center gap-1 font-semibold hover:opacity-75 transition-opacity rounded-md disabled:opacity-50'
+        className='text-darkGrey flex items-center justify-center font-semibold hover:opacity-100 h-9 w-9 border-2 border-darkGrey opacity-50 transition-opacity rounded-md disabled:opacity-20'
       >
-        Next
-        <Image src={ArrowDown} alt='Next page' width={14} height={14} className='-rotate-90' />
+        <Image src={ArrowLeft} alt='Next page' width={9} height={12} className='rotate-180' />
       </button>
     </div>
   )

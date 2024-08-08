@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import { Avatar } from '#/components/avatar'
 import { truncateAddress } from '#/lib/utilities'
+import { formatNumber } from '#/utils/formatNumber'
 import FollowButton from '#/components/follow-button'
 import useFollowState from '#/hooks/use-follow-state'
 
@@ -49,7 +50,9 @@ const TableRow: React.FC<TableRowProps> = ({
         {rank}
       </p>
     ),
-    regular: <p className='text xxs:text-xl sm:text-2xl font-bold w-min mx-auto'>{rank}</p>
+    regular: (
+      <p className='text xxs:text-xl sm:text-2xl font-bold w-min mx-auto'>{formatNumber(rank)}</p>
+    )
   }[rankedAs]
 
   // const { data: fetchedEnsProfile } = useQuery({

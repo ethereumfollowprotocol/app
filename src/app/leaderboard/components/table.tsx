@@ -71,7 +71,7 @@ const LeaderboardTable = () => {
             </div>
           ))}
         </div>
-        <div className='flex justify-between'>
+        <div className='flex justify-between gap-4'>
           <div className='w-full sm:max-w-sm sm:w-52'>
             <Suspense>
               <Searchbar queryKey='query' placeholder='Search...' />
@@ -90,8 +90,6 @@ const LeaderboardTable = () => {
               </div>
             ))}
           </div>
-        </div>
-        <div className='glass-card border-gray-200 border-2 rounded-xl flex flex-col gap-8 p-3 sm:px-8 sm:py-6 lg:px-12 lg:py-10 relative'>
           <PageSelector
             page={page}
             setPage={setPage}
@@ -99,38 +97,38 @@ const LeaderboardTable = () => {
             fetchNext={() => fetchNextLeaderboard()}
             fetchPrevious={() => fetchPreviousLeaderboard()}
           />
-          <div className='w-full flex flex-col gap-4'>
-            {leaderboard?.map((entry: LeaderboardResponse, index) => (
-              <TableRow
-                key={entry.address}
-                address={entry.address}
-                name={entry.name}
-                avatar={entry.avatar}
-                rank={Number(selectedRank(entry))}
-                followers={Number(entry.followers) || 0}
-                following={Number(entry.following) || 0}
-                mutuals={Number(entry.mutuals) || 0}
-                blockedMuted={Number(entry.blocks) || 0}
-              />
+        </div>
+        <div className='glass-card border-gray-200 border-2 rounded-xl flex flex-col gap-4 p-3 sm:px-8 sm:py-6 lg:px-12 lg:py-10 relative'>
+          {leaderboard?.map((entry: LeaderboardResponse, index) => (
+            <TableRow
+              key={entry.address}
+              address={entry.address}
+              name={entry.name}
+              avatar={entry.avatar}
+              rank={Number(selectedRank(entry))}
+              followers={Number(entry.followers) || 0}
+              following={Number(entry.following) || 0}
+              mutuals={Number(entry.mutuals) || 0}
+              blockedMuted={Number(entry.blocks) || 0}
+            />
+          ))}
+          {new Array(
+            isLeaderboardLoading || isFetchingNextLeaderboard || isFetchingPreviousLeaderboard
+              ? 100
+              : 0
+          )
+            .fill(1)
+            .map((_, i) => (
+              <LoadingRow key={i} />
             ))}
-            {new Array(
-              isLeaderboardLoading || isFetchingNextLeaderboard || isFetchingPreviousLeaderboard
-                ? 100
-                : 0
-            )
-              .fill(1)
-              .map((_, i) => (
-                <LoadingRow key={i} />
-              ))}
-          </div>
-          <PageSelector
-            page={page}
-            setPage={setPage}
-            hasNextPage={leaderboard?.length === 100}
-            fetchNext={() => fetchNextLeaderboard()}
-            fetchPrevious={() => fetchPreviousLeaderboard()}
-          />
         </div>
+        <PageSelector
+          page={page}
+          setPage={setPage}
+          hasNextPage={leaderboard?.length === 100}
+          fetchNext={() => fetchNextLeaderboard()}
+          fetchPrevious={() => fetchPreviousLeaderboard()}
+        />
       </div>
     </>
   )

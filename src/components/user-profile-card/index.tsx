@@ -26,6 +26,7 @@ import LoadingProfileCard from './loading-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
+import { formatNumber } from '#/utils/formatNumber'
 
 interface UserProfileCardProps {
   profileList?: number | null
@@ -328,17 +329,21 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 <div className='text-2xl text-center font-bold'>
                   {profile.stats === undefined
                     ? '-'
-                    : isConnectedUserCard && profileList === undefined
-                      ? 0
-                      : profileList
-                        ? profile.stats.following_count
-                        : 0}
+                    : profileList
+                      ? formatNumber(profile.stats.following_count)
+                      : 0}
+                  {/* // ? '-'
+                    // : isConnectedUserCard && profileList === undefined
+                    //   ? 0
+                    //   : profileList
+                    //     ? formatNumber(profile.stats.following_count)
+                    //     : 0 */}
                 </div>
                 <div className='text-lg font-bold text-gray-500'>{t('following')}</div>
               </div>
               <div>
                 <div className='text-2xl text-center font-bold'>
-                  {profile.stats === undefined ? '-' : profile.stats.followers_count}
+                  {profile.stats === undefined ? '-' : formatNumber(profile.stats.followers_count)}
                 </div>
                 <div className='text-lg font-bold text-gray-500'>{t('followers')}</div>
               </div>

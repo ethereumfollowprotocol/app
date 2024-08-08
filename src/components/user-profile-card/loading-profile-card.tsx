@@ -17,7 +17,7 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
   const { openConnectModal } = useConnectModal()
   const { t } = useTranslation('common', { keyPrefix: 'profile card' })
 
-  const ranks = ['mutuals', 'followers', 'following', 'blocks']
+  const ranks = ['mutuals_rank', 'followers_rank', 'following_rank', 'blocks_rank']
 
   return (
     <>
@@ -71,7 +71,7 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
                   key={i}
                   className='flex xl:w-full gap-3 justify-between items-center font-semibold'
                 >
-                  <p className='text-[#888] capitalize'>{rank}</p>
+                  <p className='text-[#888]'>{t(rank)}</p>
                   <LoadingCell className='h-5 w-10 rounded-md' />
                 </div>
               ))}
