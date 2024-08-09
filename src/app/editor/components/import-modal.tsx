@@ -65,7 +65,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
             <Image src={MagnifyingGlass} alt='Search Account' width={20} className='text-white' />
           </div>
         </div>
-        {socialProfile ? (
+        {socialProfile || (isSocialProfileLoading && currHandle.length > 0) ? (
           <div className='flex flex-col gap-6'>
             <div className='flex justify-center gap-3 items-center'>
               {isSocialProfileLoading ? (
