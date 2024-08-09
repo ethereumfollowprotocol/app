@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import { FollowList } from '#/components/follow-list'
 import { fetchRecommendations } from '#/api/fetchRecommendations'
+import type { DiscoverItemType } from '#/types/common'
 
 interface RecommendationsProps {
   header?: string
@@ -49,7 +50,14 @@ const Recommendations = ({
         profiles={displayedProfiles?.map(account => ({
           address: account.address,
           tags: [] as string[],
-          ens: undefined
+          ens: undefined,
+          counts:
+            endpoint === 'discover'
+              ? {
+                  followers: (account as DiscoverItemType).followersCount,
+                  following: (account as DiscoverItemType).followingCount
+                }
+              : undefined
         }))}
         showFollowsYouBadges={true}
         showTags={false}

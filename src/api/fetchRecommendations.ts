@@ -1,5 +1,5 @@
 import type { Address } from 'viem'
-import type { DiscoverResponseType } from '#/types/common'
+import type { DiscoverItemType, DiscoverResponseType } from '#/types/common'
 
 export const fetchRecommendations = async (
   endpoint: 'discover' | 'recommended',
@@ -11,8 +11,8 @@ export const fetchRecommendations = async (
         endpoint === 'recommended'
           ? addressOrName
             ? `users/${addressOrName}/recommended`
-            : 'discover'
-          : endpoint
+            : 'discover?include=counts'
+          : `${endpoint}?include=counts`
       }`,
       {
         cache: 'default'
@@ -20,8 +20,11 @@ export const fetchRecommendations = async (
     )
 
     const data = (await res.json()) as DiscoverResponseType
+
     const formattedData =
-      endpoint === 'recommended' ? data.recommended.map(addr => ({ address: addr })) : data.discover
+      endpoint === 'recommended'
+        ? data.recommended.map(addr => ({ address: addr }))
+        : (data.discover as DiscoverItemType[])
 
     return formattedData
   } catch (err: unknown) {

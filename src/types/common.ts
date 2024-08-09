@@ -6,10 +6,9 @@ export type BlockedMutedTabType = 'Blocked/Muted' | 'Blocked/Muted By'
 export type ProfileTableTitleType = 'following' | 'followers' | 'Blocked/Muted By' | 'Blocked/Muted'
 
 export type DiscoverItemType = {
-  name: string | null
   address: Address
-  avatar: string | null
-  updated_at: string
+  followersCount: number
+  followingCount: number
 }
 
 export type DiscoverResponseType = {

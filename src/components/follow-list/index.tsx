@@ -14,6 +14,10 @@ export interface FollowListProfile {
   address: Address
   ens?: ENSProfile
   tags: string[]
+  counts?: {
+    followers: number
+    following: number
+  }
 }
 
 export interface SocialFollowListProfile {
@@ -109,7 +113,7 @@ export function FollowList({
                 </div>
               )
           )}
-          {profiles?.map(({ address, tags, ens }) => (
+          {profiles?.map(({ address, tags, ens, counts }) => (
             <FollowListItem
               className={listItemClassName}
               key={address}
@@ -118,6 +122,7 @@ export function FollowList({
               showFollowsYouBadges={showFollowsYouBadges}
               showTags={showTags}
               tags={tags}
+              counts={counts}
               canEditTags={canEditTags}
               isBlockedList={isBlockedList}
               isBlockedBy={isBlockedBy}

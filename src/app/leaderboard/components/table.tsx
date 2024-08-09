@@ -68,7 +68,10 @@ const LeaderboardTable = () => {
         )}
       </div>
       <div className='flex w-full justify-center lg:justify-end max-w-[1200px] text-sm mb-2 font-semibold text-[#aaaaaa] md:text-[#CDCDCD] italic'>
-        Last updated {timeStamp}
+        Last updated &nbsp;
+        <span>
+          {isLeaderboardLoading ? <LoadingCell className='h-5 w-16 rounded-md' /> : timeStamp}
+        </span>
       </div>
       <div className='flex flex-col gap-6 w-full max-w-[1200px]'>
         <div className='flex w-full flex-wrap justify-center lg:hidden items-center gap-4'>

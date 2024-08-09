@@ -22,6 +22,10 @@ interface FollowListItemNameProps {
   address: Address
   avatarUrl?: string | GetEnsAvatarReturnType
   className?: string
+  counts?: {
+    followers: number
+    following: number
+  }
   name?: string | null
   showFollowsYouBadges?: boolean
   showTags?: boolean
@@ -53,6 +57,7 @@ export function Name({
 const FollowListItemName: React.FC<FollowListItemNameProps> = ({
   name,
   tags,
+  counts,
   address,
   showTags,
   avatarUrl,
@@ -152,7 +157,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
 
   return (
     <div
-      className={`flex gap-2 sm:gap-3 w-[calc(100% - 125px)] items-center p-0 ${className}`}
+      className={`flex gap-2 sm:gap-3 items-center p-0 ${className}`}
       style={{
         width: 'calc(100% - 110px)'
       }}
@@ -167,16 +172,22 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
           size='h-[45px] w-[45px] md:h-[50px] cursor-pointer md:w-[50px]'
         />
       )}
-      <div className='flex flex-col md:flex-row w-full md:gap-3 xl:gap-2 2xl:gap-3 gap-[2px]'>
+      <div
+        className={`flex flex-col md:flex-row ${
+          counts ? 'w-1/2 sm:w-[45%] md:w-1/2 xl:w-[45%] 2xl:w-1/2' : 'w-full'
+        } md:gap-3 xl:gap-2 2xl:gap-3 gap-[2px]`}
+      >
         <div
-          className={`flex flex-col justify-center  ${
+          className={`flex flex-col justify-center ${
             isEditor
               ? 'md:w-52'
               : !isBlockedList && showTags
                 ? displayedTags.length > 0
                   ? 'xl:max-w-[40%] 2xl:max-w-[45%]'
                   : 'max-w-[70%] 3xs:max-w-[70%] xxs:max-w-[75%]'
-                : 'max-w-[80%] 3xs:max-w-[90%] xxs:max-w-[95%]'
+                : counts
+                  ? 'max-w-[80%] 3xs:max-w-[80%] xxs:max-w-[90%]'
+                  : 'max-w-[80%] 3xs:max-w-[90%] xxs:max-w-[95%]'
           }  items-start tabular-nums relative`}
         >
           {isEnsProfileLoading ? (
@@ -192,6 +203,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
             </div>
           )}
         </div>
+
         {showTags && (!isBeingRemoved || isRestriction) && (
           <div
             className={`relative min-h-8 flex max-w-[70%] 3xs:max-w-[75%] xxs:max-w-[80%] md:max-w-[50%] ${
@@ -286,6 +298,18 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
           </div>
         )}
       </div>
+      {counts && (
+        <div className=' items-center justify-end gap-8 md:gap-16 pr-6 lg:gap-6 hidden xs:flex'>
+          <div className='flex-col items-center 2xl:flex lg:hidden hidden sm:flex'>
+            <p className='font-semibold text-lg text-darkGrey'>{counts.following}</p>
+            <p className='font-semibold text-sm text-gray-500'>{t('profile card.following')}</p>
+          </div>
+          <div className='flex flex-col items-center'>
+            <p className='font-semibold text-lg text-darkGrey'>{counts.followers}</p>
+            <p className='font-semibold text-sm text-gray-500'>{t('profile card.followers')}</p>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

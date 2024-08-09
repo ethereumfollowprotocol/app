@@ -13,6 +13,10 @@ export interface FollowListItemProps {
   showFollowsYouBadges?: boolean
   showTags?: boolean
   tags: string[]
+  counts?: {
+    followers: number
+    following: number
+  }
   isFollowers?: boolean
   canEditTags?: boolean
   isBlockedList?: boolean
@@ -26,6 +30,7 @@ const FollowListItem: React.FC<FollowListItemProps> = ({
   showFollowsYouBadges,
   showTags,
   tags,
+  counts,
   isFollowers,
   canEditTags,
   isBlockedList,
@@ -48,6 +53,7 @@ const FollowListItem: React.FC<FollowListItemProps> = ({
         address={address}
         avatarUrl={profileAvatar}
         name={profileName}
+        counts={counts}
         showFollowsYouBadges={showFollowsYouBadges}
         showTags={showTags}
         tags={tags}
