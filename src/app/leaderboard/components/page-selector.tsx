@@ -51,17 +51,35 @@ const PageSelector: React.FC<PageSelectorProps> = ({
       <button
         onClick={() => handlePageChange(1)}
         disabled={page === 1}
-        className='text-darkGrey glass-card flex items-center justify-center font-semibold hover:opacity-100 h-9 w-9 border-2 border-darkGrey opacity-40 transition-opacity rounded-[10px] disabled:opacity-10'
+        className='text-darkGrey glass-card flex items-center justify-center font-semibold group hover:border-opacity-100 h-9 w-9 border-2 border-darkGrey border-opacity-40 transition-opacity rounded-[10px] disabled:border-opacity-10'
       >
-        <Image src={ArrowLeft} alt='Previous page' width={9} height={12} />
-        <Image src={ArrowLeft} alt='Previous page' width={9} height={12} />
+        <Image
+          src={ArrowLeft}
+          alt='Previous page'
+          width={9}
+          height={12}
+          className='group-hover:opacity-100 opacity-40 group-disabled:opacity-10'
+        />
+        <Image
+          src={ArrowLeft}
+          alt='Previous page'
+          width={9}
+          height={12}
+          className='group-hover:opacity-100 opacity-40 group-disabled:opacity-10'
+        />
       </button>
       <button
         onClick={() => handlePageChange(page - 1)}
         disabled={page === 1}
-        className='text-darkGrey glass-card flex items-center justify-center font-semibold hover:opacity-100 h-9 w-9 border-2 border-darkGrey opacity-40 transition-opacity rounded-[10px] disabled:opacity-10'
+        className='text-darkGrey glass-card flex items-center justify-center font-semibold group hover:border-opacity-100 h-9 w-9 border-2 border-darkGrey border-opacity-40 transition-opacity rounded-[10px] disabled:border-opacity-10'
       >
-        <Image src={ArrowLeft} alt='Previous page' width={9} height={12} />
+        <Image
+          src={ArrowLeft}
+          alt='Previous page'
+          width={9}
+          height={12}
+          className='group-hover:opacity-100 opacity-40 group-disabled:opacity-10'
+        />
       </button>
       <p className='text-darkGrey glass-card flex items-center justify-center font-semibold h-9 w-9 border-2 border-darkGrey transition-opacity rounded-[10px]'>
         {page}
@@ -86,9 +104,15 @@ const PageSelector: React.FC<PageSelectorProps> = ({
       <button
         onClick={() => handlePageChange(page + 1)}
         disabled={!hasNextPage}
-        className='text-darkGrey glass-card flex items-center justify-center font-semibold hover:opacity-100 h-9 w-9 border-2 border-darkGrey opacity-40 transition-opacity rounded-[10px] disabled:opacity-10'
+        className='text-darkGrey glass-card flex items-center justify-center font-semibold group hover:border-opacity-100 h-9 w-9 border-2 border-darkGrey border-opacity-40 transition-opacity rounded-[10px] disabled:border-opacity-10'
       >
-        <Image src={ArrowLeft} alt='Next page' width={9} height={12} className='rotate-180' />
+        <Image
+          src={ArrowLeft}
+          alt='Next page'
+          width={9}
+          height={12}
+          className='rotate-180 group-hover:opacity-100 opacity-40 group-disabled:opacity-10'
+        />
       </button>
     </div>
   )

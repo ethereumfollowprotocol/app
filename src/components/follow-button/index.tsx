@@ -138,9 +138,11 @@ const FollowButton: React.FC<FollowButtonProps> = ({
         theme[buttonState].border,
         'rounded-xl relative text-sm flex items-center gap-1.5 justify-center font-bold',
         'h-[37px] px-2 py-1.5', // Fixed width for consistent layout
-        className,
-        isBlockedBy ? 'w-[114px]' : 'w-[107px]'
+        className
       ])}
+      style={{
+        width: isBlockedBy ? '114px' : '107px'
+      }}
       onClick={() => {
         if (!userAddress && openConnectModal) {
           openConnectModal()

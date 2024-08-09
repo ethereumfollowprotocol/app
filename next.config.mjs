@@ -44,7 +44,7 @@ const nextConfig = {
     fetches: { fullUrl: true }
   },
   images: {
-    domains: ['ipfs.io', 'imgur.com'],
+    domains: ['ipfs.io', 'imgur.com', 'gateway.pinata.cloud'],
     remotePatterns: [
       {
         protocol: 'https',
