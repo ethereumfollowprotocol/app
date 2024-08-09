@@ -83,7 +83,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
                 ) : (
                   <p className='text-lg font-semibold'>
                     @
-                    {socialProfile.profileName.replace('lens/@', '') ||
+                    {socialProfile.profileName?.replace('lens/@', '') ||
                       truncateAddress(socialProfile.userAssociatedAddresses?.[0])}
                   </p>
                 )}

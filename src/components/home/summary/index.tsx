@@ -9,16 +9,9 @@ import UserProfileCard from '#/components/user-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 const Summary = () => {
-  const {
-    profile,
-    followers,
-    selectedList,
-    profileIsLoading,
-    followersIsLoading,
-    isFetchingMoreFollowers
-  } = useEFPProfile()
   const { address } = useAccount()
   const { t } = useTranslation('home')
+  const { profile, followers, selectedList, profileIsLoading, followersIsLoading } = useEFPProfile()
 
   const isFollowersEmpty = !followersIsLoading && followers.length === 0
 
@@ -33,7 +26,7 @@ const Summary = () => {
       />
       {!isFollowersEmpty && address && (
         <LatestFollowers
-          isLoading={followersIsLoading || isFetchingMoreFollowers}
+          isLoading={followersIsLoading}
           profiles={followers?.slice(0, 7).map(follower => ({
             tags: follower.tags,
             address: follower.address,

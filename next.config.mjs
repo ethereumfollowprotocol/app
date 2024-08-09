@@ -46,12 +46,15 @@ const nextConfig = {
   images: {
     domains: ['ipfs.io', 'imgur.com'],
     remotePatterns: [
-      /**
-       * Temporarily accept all domains during development
-       */
       {
         protocol: 'https',
         hostname: 'euc.li',
+        port: '',
+        pathname: '/*',
+      },
+      {
+        protocol: 'https',
+        hostname: 'gateway.pinata.cloud',
         port: '',
         pathname: '/*',
       },

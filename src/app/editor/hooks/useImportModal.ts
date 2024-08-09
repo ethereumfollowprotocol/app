@@ -44,7 +44,15 @@ const useImportModal = (platform: ImportPlatformType) => {
   const { data: fetchedProfile, loading: isSocialProfileLoading } = useQuery(profileQuery, {
     platform
   })
-  const socialProfile = fetchedProfile?.Socials?.Social?.[0]
+  const socialProfile = {
+    ...fetchedProfile?.Socials?.Social?.[0],
+    profileImage: fetchedProfile?.Socials?.Social?.[0]?.profileImage?.includes('ipfs')
+      ? `https://gateway.pinata.cloud//ipfs/${fetchedProfile?.Socials?.Social?.[0]?.profileImage.replace(
+          'ipfs://',
+          ''
+        )}`
+      : fetchedProfile?.Socials?.Social?.[0]?.profileImage
+  }
 
   const followingsQuery = useMemo(
     () => `

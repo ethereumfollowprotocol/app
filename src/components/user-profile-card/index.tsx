@@ -185,9 +185,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   return (
     <div
       className={`flex glass-card ${
-        isResponsive
-          ? 'xl:w-76 w-full sm:w-fit 2xl:w-86 py-6 px-4 sm:p-6 sm:py-7'
-          : 'w-76 3xs:w-86 p-6'
+        isResponsive ? 'xl:w-76 w-full 2xl:w-86 py-6 px-4 sm:p-6 sm:py-7' : 'w-76 3xs:w-86 p-6'
       } border-2 justify-center flex-col ${borderColor || 'border-[#FFDBD9]'} rounded-xl relative`}
     >
       {isLoading ? (
@@ -369,7 +367,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                           }[rank]
                         }
                       >
-                        #{rank}
+                        #{rank || '-'}
                       </p>
                     </div>
                   ))}

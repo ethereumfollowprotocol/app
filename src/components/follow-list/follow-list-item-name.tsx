@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useRef, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
@@ -79,6 +80,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
   const router = useRouter()
   const pathname = usePathname()
   const { t } = useTranslation()
+  const { address: userAddress } = useAccount()
   const { t: tEditor } = useTranslation('editor')
   const isEditor = pathname.includes('/editor')
   const { followerTag } = useFollowState({
@@ -94,8 +96,8 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
     hasListOpRemoveRecord,
     getTagsFromCartByAddress
   } = useCart()
-  const { recentTags, addRecentTag } = useEFPProfile()
   const isBeingRemoved = hasListOpRemoveRecord(address)
+  const { recentTags, addRecentTag, followers, followersIsLoading } = useEFPProfile()
   const isBeingUnrestricted =
     hasListOpRemoveTag({ address, tag: 'block' }) || hasListOpRemoveTag({ address, tag: 'mute' })
   const isBeingRestricted =
@@ -299,8 +301,20 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
         )}
       </div>
       {counts && (
-        <div className=' items-center justify-end gap-8 md:gap-16 pr-6 lg:gap-6 hidden xs:flex'>
-          <div className='flex-col items-center 2xl:flex lg:hidden hidden sm:flex'>
+        <div
+          className={`items-center justify-end hidden xs:flex pr-6 ${
+            !followersIsLoading && userAddress && followers && followers.length > 0
+              ? 'gap-16 lg:gap-6 xl:gap-10'
+              : ' gap-16 lg:gap-32 xl:gap-20'
+          }`}
+        >
+          <div
+            className={`flex-col items-center 2xl:flex ${
+              !followersIsLoading && userAddress && followers && followers.length > 0
+                ? 'lg:hidden'
+                : ''
+            } hidden sm:flex`}
+          >
             <p className='font-semibold text-lg text-darkGrey'>{counts.following}</p>
             <p className='font-semibold text-sm text-gray-500'>{t('profile card.following')}</p>
           </div>

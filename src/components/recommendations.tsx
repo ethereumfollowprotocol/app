@@ -63,7 +63,7 @@ const Recommendations = ({
         showTags={false}
       />
       {!isLoading && displayedProfiles?.length === 0 && (
-        <div className='w-full h-3/4 flex justify-center items-center font-semibold italic text-lg'>
+        <div className='w-full h-28 mb-14 flex justify-center items-center font-semibold italic text-lg'>
           No results
         </div>
       )}
