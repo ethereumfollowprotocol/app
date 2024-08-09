@@ -34,7 +34,7 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
     hasListOpRemoveTag,
     getTagsFromCartByAddress
   } = useCart()
-  const { t: tEditor } = useTranslation('editor')
+  const { t } = useTranslation()
   const { recentTags, addRecentTag } = useEFPProfile()
 
   const inintialDisplayedTags = () => {
@@ -113,7 +113,7 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
               <div className='w-full flex items-center gap-1.5 justify-between bg-gray-300 rounded-lg font-bold p-1 text-left'>
                 <input
                   ref={tagInputRef}
-                  placeholder={tEditor('custom tag')}
+                  placeholder={t('custom tag')}
                   value={customTagInput}
                   onChange={e => {
                     const validString = e.target.value.match(tagRegex)?.join('')
@@ -140,7 +140,7 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
                     className='font-semibold py-2 truncate px-3 hover:opacity-80 bg-gray-300 rounded-full'
                     onClick={() => addTag(tag)}
                   >
-                    {tEditor(tag)}
+                    {tag}
                   </button>
                 ))}
               </div>
@@ -165,7 +165,7 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
                 }`}
                 onClick={() => removeTag(tag)}
               >
-                {tEditor(tag)}
+                {tag}
               </button>
               {(removingTag || addingTag) && (
                 <div className='absolute h-4 w-4 rounded-full -top-1 -right-1 bg-green-400' />
@@ -190,7 +190,7 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
         className='min-w-[107px] bg-white text-gray-900 border-2 border-gray-200 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400 rounded-xl relative text-sm flex items-center gap-1.5 justify-center font-bold h-[37px] px-2 py-1.5'
       >
         <Image alt='mainnet logo' src={MainnetBlack} width={16} />
-        Following
+        {t('following')}
       </button>
     </div>
   )

@@ -92,7 +92,7 @@ const TableRow: React.FC<TableRowProps> = ({
           <div
             className={`rounded-full font-bold text-[10px] flex items-center justify-center bg-gray-300 h-5 w-20 ${followerTag.className}`}
           >
-            {t(`profile card.${followerTag.text}`)}
+            {t(followerTag.text)}
           </div>
         </div>
       </div>

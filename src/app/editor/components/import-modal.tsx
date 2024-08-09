@@ -31,15 +31,15 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
     isFollowingsLoading,
     isSocialProfileLoading
   } = useImportModal(platform)
-  const { t } = useTranslation('editor', { keyPrefix: 'import' })
+  const { t } = useTranslation()
 
   return (
     <Modal onCancel={onClose}>
       <div className='w-full sm:w-[500px] sm:p-0 p-2 flex flex-col gap-6'>
         <div className='w-full gap-2 flex justify-between items-center'>
           <p className='text-xl font-semibold'>
-            <span className='hidden sm:inline'>{t('title desktop')}</span>
-            <span className='inline sm:hidden'>{t('title mobile')}</span>{' '}
+            <span className='hidden sm:inline'>{t('import title desktop')}</span>
+            <span className='inline sm:hidden'>{t('import title mobile')}</span>{' '}
             <span className='capitalize'>{platform}</span>
           </p>
           <Image
@@ -93,37 +93,37 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
             <div className='bg-white/95 rounded-lg flex flex-col gap-4 p-4'>
               <div className='w-full flex justify-between items-center'>
                 <p className='text-gray-400 text-xs xxs:text-sm font-medium'>
-                  You follow on Farcaster
+                  {t('follow on')} <span className='capitalize'>{platform}</span>
                 </p>
                 {isFollowingsLoading || isSocialProfileLoading ? (
                   <LoadingCell className='h-5 w-24 rounded-md' />
                 ) : (
                   <p className='text-gray-400 text-xs xxs:text-sm font-medium'>
-                    {formatNumber(followings.length)} accounts
+                    {formatNumber(followings.length)} {t('accounts')}
                   </p>
                 )}
               </div>
               <div className='w-full flex justify-between items-center'>
                 <p className='text-gray-400 text-xs xxs:text-sm font-medium'>
-                  You already follow on EFP
+                  {t('follow on efp')}
                 </p>
                 {isFollowingsLoading || isSocialProfileLoading ? (
                   <LoadingCell className='h-5 w-24 rounded-md' />
                 ) : (
                   <p className='text-gray-400 text-xs xxs:text-sm font-medium'>
-                    -{formatNumber(alreadyFollow.length)} accounts
+                    -{formatNumber(alreadyFollow.length)} {t('accounts')}
                   </p>
                 )}
               </div>
               <div className='w-full flex justify-between items-center'>
                 <p className='text-darkGrey text-sm xxs:text-base sm:text-lg font-semibold'>
-                  Total to add to cart
+                  {t('to add')}
                 </p>
                 {isFollowingsLoading || isSocialProfileLoading ? (
                   <LoadingCell className='h-5 w-24 rounded-md' />
                 ) : (
                   <p className='text-darkGrey text-sm xxs:text-base sm:text-lg font-bold'>
-                    {formatNumber(followings.length - alreadyFollow.length)} accounts
+                    {formatNumber(followings.length - alreadyFollow.length)} {t('accounts')}
                   </p>
                 )}
               </div>

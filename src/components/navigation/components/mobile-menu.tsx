@@ -41,7 +41,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ open, setOpen }) => {
               pathname === item.href(itemUrl) ? 'text-darkGrey' : 'text-grey hover:text-gray-500'
             ])}
           >
-            <span className='block text-nowrap'>{t(`navigation.${item.name}`)}</span>
+            <span className='block text-nowrap'>{t(`${item.name}`)}</span>
           </Link>
         </div>
       ))}

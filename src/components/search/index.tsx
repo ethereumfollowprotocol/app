@@ -17,7 +17,6 @@ export function Search({
   isEditor
 }: { disabled?: boolean; size?: string; isEditor?: boolean }) {
   const { t } = useTranslation()
-  const { t: tEditor } = useTranslation('editor')
 
   const {
     router,
@@ -67,7 +66,7 @@ export function Search({
                     setDropdownMenuOpen(false)
                   }
                 }}
-                placeholder={t('navigation.search placeholder')}
+                placeholder={t('search placeholder')}
                 onChange={handleSearchEvent}
                 onClick={event => {
                   event.preventDefault()
@@ -91,7 +90,7 @@ export function Search({
               autoComplete='off'
               disabled={disabled}
               value={currentSearch}
-              placeholder={t('navigation.search placeholder')}
+              placeholder={t('search placeholder')}
               onChange={handleSearchEvent}
               onKeyDown={e => {
                 if (e.key === 'Enter') onSubmit()
@@ -132,7 +131,7 @@ export function Search({
         </div>
         {isEditor && (
           <PrimaryButton
-            label={tEditor('add')}
+            label={t('add')}
             className='w-32 h-12 text-lg'
             onClick={() => onSubmit()}
           />
@@ -158,7 +157,7 @@ export function Search({
           )}
           {!isLoading && searchResult.length === 0 ? (
             <div className='w-full h-16 flex items-center justify-center italic font-semibold text-gray-400'>
-              {t('navigation.search no results')}
+              {t('search no results')}
             </div>
           ) : (
             searchResult.map((result, index) => (
@@ -201,7 +200,7 @@ export function Search({
               ref={searchBarRef as LegacyRef<HTMLInputElement>}
               className='h-11 rounded-xl border-2 w-full shadow-md border-gray-200 px-2'
               spellCheck={false}
-              placeholder={t('navigation.search placeholder')}
+              placeholder={t('search placeholder')}
               disabled={disabled}
               onSubmit={onSubmit}
               value={currentSearch}
@@ -243,7 +242,7 @@ export function Search({
               )}
               {!isLoading && searchResult.length === 0 ? (
                 <div className='w-full h-16 flex items-center pb-4 justify-center italic font-semibold text-gray-400'>
-                  {t('navigation.search no results')}
+                  {t('search no results')}
                 </div>
               ) : (
                 searchResult.map((result, index) => (

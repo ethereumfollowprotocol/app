@@ -41,7 +41,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
 
   const { roles } = useEFPProfile()
   const { address: connectedAddress } = useAccount()
-  const { t } = useTranslation('profile', { keyPrefix: 'list settings' })
+  const { t } = useTranslation()
 
   const {
     user,

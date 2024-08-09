@@ -14,8 +14,8 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
   hideFollowButton,
   isStatic
 }) => {
+  const { t } = useTranslation()
   const { openConnectModal } = useConnectModal()
-  const { t } = useTranslation('common', { keyPrefix: 'profile card' })
 
   const ranks = ['mutuals_rank', 'followers_rank', 'following_rank', 'blocks_rank']
 

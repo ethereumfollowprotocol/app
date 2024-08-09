@@ -29,7 +29,7 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
   isLoading,
   isSettingsLoading
 }) => {
-  const { t } = useTranslation('profile', { keyPrefix: 'list settings' })
+  const { t } = useTranslation()
   const { address: connectedAddress } = useAccount()
 
   const { data: resolvedName, isLoading: isNameLoading } = useQuery({

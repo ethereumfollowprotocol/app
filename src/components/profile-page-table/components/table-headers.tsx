@@ -51,7 +51,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
     setShowSearch(false)
   })
 
-  const { t } = useTranslation('profile')
+  const { t } = useTranslation()
 
   const displayedTags = allTags?.filter(tag =>
     isShowingBlocked ? true : !QUERY_BLOCK_TAGS.includes(tag.tag)
@@ -121,7 +121,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
               onClick={() => setShowSort(!showSort)}
               className='cursor-pointer flex relative items-center gap-1'
             >
-              <p className='text-sm capitalize font-bold'>{t(`sort.${sort}`)}</p>
+              <p className='text-sm capitalize font-bold'>{t(sort)}</p>
               <Image
                 src={ArrowDown}
                 alt='open sort'
@@ -137,7 +137,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                       key={option}
                       onClick={() => setSort(option)}
                     >
-                      {t(`sort.${option}`)}
+                      {t(option)}
                     </div>
                   ))}
                 </div>

@@ -44,7 +44,7 @@ const NavItems = () => {
               }
             }}
           >
-            <span className='hidden sm:block text-nowrap'>{t(`navigation.${item.name}`)}</span>
+            <span className='hidden sm:block text-nowrap'>{t(`${item.name}`)}</span>
           </Link>
         </li>
       ))}

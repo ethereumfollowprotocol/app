@@ -7,7 +7,7 @@ import LineMobile from 'public/assets/lines/mobile/line-6.svg'
 import FollowerListArt from 'public/assets/art/follower-list.png'
 
 const FollowerList = () => {
-  const { t } = useTranslation('home')
+  const { t } = useTranslation()
 
   return (
     <div className='flex flex-col lg:flex-row-reverse gap-10 lg:gap-40 xl:gap-52 items-center relative'>

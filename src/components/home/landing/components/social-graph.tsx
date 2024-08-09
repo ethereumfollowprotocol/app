@@ -8,7 +8,7 @@ import LineMobileFirst from 'public/assets/lines/mobile/line-2.svg'
 import LineMobileSecond from 'public/assets/lines/mobile/line-3.svg'
 
 export default function SocialGraph() {
-  const { t } = useTranslation('home')
+  const { t } = useTranslation()
 
   return (
     <div className='flex flex-col lg:flex-row-reverse gap-8 lg:gap-[90px] xl:gap-32 items-center relative'>

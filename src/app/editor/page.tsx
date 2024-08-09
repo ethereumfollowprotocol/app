@@ -32,7 +32,7 @@ export default function EditorPage() {
   const [isCheckingOut, setIsCheckingOut] = useState(false)
 
   const { isConnected } = useAccount()
-  const { t } = useTranslation('editor')
+  const { t } = useTranslation()
   const { openConnectModal } = useConnectModal()
   const { totalCartItems, cartAddresses, socialAddresses, cartItems } = useCart()
 
@@ -99,7 +99,9 @@ export default function EditorPage() {
           {clearCartModalOpen && <ClearCartModal closeModal={() => setClearCartModalOpen(false)} />}
           <div className='flex flex-col glass-card gap-6 px-3 py-4 sm:p-6 h-fit rounded-2xl border-2 border-gray-200 xl:max-w-116 w-full xl:w-1/3'>
             <div className='w-full flex justify-between items-center'>
-              <h1 className='text-left text-3xl font-semibold hidden xl:block'>{t('title')}</h1>
+              <h1 className='text-left text-3xl font-semibold hidden xl:block'>
+                {t('editor title')}
+              </h1>
               <div className='flex gap-1'>
                 <p className='text-lg font-semibold mr-1'>Import</p>
                 <Image

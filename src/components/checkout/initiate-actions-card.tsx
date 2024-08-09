@@ -24,8 +24,7 @@ const InitiateActionsCard: React.FC<InitiateActionsCardProps> = ({
   handleInitiateActions
 }) => {
   const { totalCartItems } = useCart()
-  const { t: tBtn } = useTranslation('transactions')
-  const { t } = useTranslation('transactions', { keyPrefix: 'action' })
+  const { t } = useTranslation()
 
   const listOpActions = actions.filter(action => action.type === EFPActionType.UpdateEFPList)
   const transformedActions = useMemo(() => {
@@ -37,7 +36,7 @@ const InitiateActionsCard: React.FC<InitiateActionsCardProps> = ({
       type: EFPActionType.UpdateEFPList,
       label: cartActions[0]?.label.includes('Transfer List State')
         ? 'Transfer List State'
-        : `${totalCartItems} List Operations`,
+        : `${totalCartItems} ${t('list ops')}`,
       chainId: cartActions[0]?.chainId || DEFAULT_CHAIN.id,
       execute: cartActions[0]?.execute,
       isPendingConfirmation: false
@@ -49,7 +48,7 @@ const InitiateActionsCard: React.FC<InitiateActionsCardProps> = ({
   return (
     <>
       <div className='flex flex-col gap-2'>
-        <h1 className='text-2xl sm:text-3xl font-semibold'>{t('title')}</h1>
+        <h1 className='text-2xl sm:text-3xl font-semibold'>{t('action title')}</h1>
         <p className='text-lg'>{t('summary')}</p>
       </div>
       <div className='flex flex-col items-center gap-4 sm:gap-6'>
@@ -96,7 +95,7 @@ const InitiateActionsCard: React.FC<InitiateActionsCardProps> = ({
           className='bg-[#cccccc]'
         />
         <PrimaryButton
-          label={tBtn('initiate')}
+          label={t('initiate')}
           onClick={handleInitiateActions}
           className='text-lg w-auto px-4 min-w-32 h-12'
         />

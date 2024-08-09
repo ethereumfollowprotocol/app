@@ -8,7 +8,7 @@ import Line from 'public/assets/lines/desktop/line-5.svg'
 import EnsDao from 'public/assets/sponsors/ensdao.png'
 
 const LaunchPartners = () => {
-  const { t } = useTranslation('home')
+  const { t } = useTranslation()
 
   return (
     <div className='flex flex-col items-center gap-14 relative'>

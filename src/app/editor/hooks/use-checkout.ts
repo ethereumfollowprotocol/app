@@ -8,6 +8,7 @@ import {
   createPublicClient
 } from 'viem'
 import { useRouter } from 'next/navigation'
+import { useTranslation } from 'react-i18next'
 import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useState } from 'react'
 import { useAccount, useChainId, useChains, useSwitchChain, useWalletClient } from 'wagmi'
@@ -48,6 +49,7 @@ const useCheckout = () => {
   } = useEFPProfile()
   const chains = useChains()
   const router = useRouter()
+  const { t } = useTranslation()
   const queryClient = useQueryClient()
   const { switchChain } = useSwitchChain()
   const initialCurrentChainId = useChainId()
@@ -170,7 +172,7 @@ const useCheckout = () => {
     const cartItemActions: Action[] = splitListOps.map((listOps, i) => ({
       id: `${EFPActionType.UpdateEFPList} ${i}`, // Unique identifier for the action
       type: EFPActionType.UpdateEFPList,
-      label: `${listOps.length} list Operations`,
+      label: `${listOps.length} ${t('list ops')}`,
       chainId,
       execute: async () => await listOpTx(listOps),
       isPendingConfirmation: false

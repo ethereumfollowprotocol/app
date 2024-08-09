@@ -7,7 +7,7 @@ interface LatestFollowersProps {
 }
 
 const LatestFollowers: React.FC<LatestFollowersProps> = ({ profiles, isLoading }) => {
-  const { t } = useTranslation('home')
+  const { t } = useTranslation()
 
   return (
     <div className='glass-card lg:max-h-[638px] w-full lg:w-[49%] xl:w-[450px] 2xl:w-108 px-2 py-4 sm:p-6 flex flex-col gap-8 rounded-2xl border-2 border-gray-200'>

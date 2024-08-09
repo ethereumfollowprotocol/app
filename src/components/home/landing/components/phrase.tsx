@@ -6,7 +6,7 @@ import LineMobile from 'public/assets/lines/mobile/line-1.svg'
 import LineDesktop from 'public/assets/lines/desktop/line-1.svg'
 
 export default function Phrase() {
-  const { t } = useTranslation('home')
+  const { t } = useTranslation()
 
   return (
     <div className='relative'>

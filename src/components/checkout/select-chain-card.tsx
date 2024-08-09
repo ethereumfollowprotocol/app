@@ -1,7 +1,6 @@
 import Image from 'next/image'
-import type { TFunction } from 'i18next'
-import { useTranslation } from 'react-i18next'
 import type { Chain } from 'viem/chains'
+import { useTranslation } from 'react-i18next'
 import { useChainId, useSwitchChain, type Config, type UseChainsReturnType } from 'wagmi'
 
 import type { ChainWithDetails } from '#/lib/wagmi'
@@ -35,25 +34,19 @@ export function SelectChainCard({
   const { switchChain } = useSwitchChain()
 
   const { lists } = useEFPProfile()
-  const { t } = useTranslation('transactions')
-  const { t: tChain } = useTranslation('transactions', { keyPrefix: 'select chain' })
+  const { t } = useTranslation()
 
   return (
     <>
       <div className='flex flex-col gap-2'>
         <h1 className='text-2xl sm:text-3xl font-semibold'>
-          {tChain(isCreatingNewList ? 'title create list' : 'title list op')}
+          {t(isCreatingNewList ? 'title create list' : 'title list op')}
         </h1>
-        {isCreatingNewList && <p className=' font-medium text-gray-400'>{tChain('comment')}</p>}
+        {isCreatingNewList && <p className=' font-medium text-gray-400'>{t('comment')}</p>}
       </div>
       <div className='flex flex-col items-center gap-4 sm:gap-6'>
-        <p className='text-xl sm:text-2xl font-bold'>{tChain('select')}</p>
-        <ChainList
-          chains={chains}
-          onClick={handleChainClick}
-          translations={tChain}
-          selectedChain={selectedChain}
-        />
+        <p className='text-xl sm:text-2xl font-bold'>{t('select')}</p>
+        <ChainList chains={chains} onClick={handleChainClick} selectedChain={selectedChain} />
       </div>
       {lists?.lists && lists.lists.length > 0 && (
         <div className='flex mt-4 items-center gap-3 sm:gap-5'>
@@ -86,12 +79,10 @@ export function SelectChainCard({
 export function ChainList({
   chains,
   onClick,
-  translations,
   selectedChain
 }: {
   chains: UseChainsReturnType<Config>
   onClick: (chainId: number) => void
-  translations: TFunction<'transactions', 'select chain'>
   selectedChain: ChainWithDetails | undefined
 }) {
   return (
@@ -101,7 +92,6 @@ export function ChainList({
           key={chain.id}
           chain={chain}
           onClick={onClick}
-          translations={translations}
           isSelected={chain.id === selectedChain?.id}
         />
       ))}
@@ -112,14 +102,14 @@ export function ChainList({
 function ChainItem({
   chain,
   onClick,
-  isSelected,
-  translations
+  isSelected
 }: {
   isSelected: boolean
   chain: Chain
   onClick: (chainId: number) => void
-  translations: TFunction<'transactions', 'select chain'>
 }) {
+  const { t } = useTranslation()
+
   return (
     <div
       className='flex items-center relative gap-2 hover:cursor-pointer'
@@ -138,7 +128,7 @@ function ChainItem({
       <div className='flex flex-col items-start '>
         <p>{chain?.custom?.chainDetail as string}</p>
         <p className='text-lg font-bold'>{chain.name}</p>
-        <p>{translations(chain?.custom?.gasFeeDetail as string)}</p>
+        <p>{t(chain?.custom?.gasFeeDetail as string)}</p>
       </div>
     </div>
   )

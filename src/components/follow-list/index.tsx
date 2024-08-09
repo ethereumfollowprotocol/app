@@ -59,7 +59,7 @@ export function FollowList({
   isBlockedBy,
   isFollowers
 }: FollowListProps) {
-  const { t } = useTranslation('editor')
+  const { t } = useTranslation()
 
   return (
     <div className={`flex flex-col w-full ${listClassName}`}>
@@ -100,7 +100,8 @@ export function FollowList({
                   />
                   <div className='flex flex-col items-start min-w-52 gap-px'>
                     <p className='text-lg font-semibold'>
-                      Import from <span className='capitalize'>{social.platform}</span>
+                      {t('import title mobile')}{' '}
+                      <span className='capitalize'>{social.platform}</span>
                     </p>
                     <p className='font-medium text-sm text-gray-500'>
                       Adding: {formatNumber(social.profiles.length)}

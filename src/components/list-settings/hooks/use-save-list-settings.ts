@@ -104,13 +104,13 @@ const useSaveListSettings = ({
     setIsRefetchingProfile,
     setIsRefetchingFollowing
   } = useEFPProfile()
+  const { t } = useTranslation()
   const { resetCart } = useCart()
   const { switchChain } = useSwitchChain()
   const initialCurrentChainId = useChainId()
   const { address: userAddress } = useAccount()
   const { data: walletClient } = useWalletClient()
   const newSlot = useMemo(() => generateListStorageLocationSlot(), [])
-  const { t } = useTranslation('profile', { keyPrefix: 'list settings' })
 
   const [currentChainId, setCurrentChainId] = useState(initialCurrentChainId)
   const getCurrentChain = useCallback(async () => {

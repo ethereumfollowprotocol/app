@@ -67,7 +67,7 @@ export function UserProfilePageTable({
 
   const { lists } = useEFPProfile()
   const isProfile = useIsEditView()
-  const { t } = useTranslation('profile')
+  const { t } = useTranslation()
 
   const showFollowsYouBadges = !isProfile || title === 'following'
 

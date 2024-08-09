@@ -10,7 +10,7 @@ import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 const Summary = () => {
   const { address } = useAccount()
-  const { t } = useTranslation('home')
+  const { t } = useTranslation()
   const { profile, followers, selectedList, profileIsLoading, followersIsLoading } = useEFPProfile()
 
   const isFollowersEmpty = !followersIsLoading && followers.length === 0

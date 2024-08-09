@@ -9,7 +9,7 @@ interface CancelbuttonProps {
 }
 
 const CancelButton: React.FC<CancelbuttonProps> = ({ onClick, label, disabled, className }) => {
-  const { t } = useTranslation('transactions')
+  const { t } = useTranslation()
 
   return (
     <button

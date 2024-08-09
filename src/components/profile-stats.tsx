@@ -6,7 +6,7 @@ interface ProfileStatsProps {
 }
 
 const ProfileStats: React.FC<ProfileStatsProps> = ({ stats }) => {
-  const { t } = useTranslation('profile', { keyPrefix: 'list settings' })
+  const { t } = useTranslation()
 
   return (
     <div className='flex w-full items-center justify-between'>

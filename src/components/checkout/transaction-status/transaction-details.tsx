@@ -16,7 +16,7 @@ const TransactionDetails = ({
 }) => {
   const chain = useChain(action.chainId)
   const { totalCartItems } = useCart()
-  const { t } = useTranslation('transactions', { keyPrefix: 'status' })
+  const { t } = useTranslation()
   const { isPending, isSuccess, isError, error } = useWaitForTransactionReceipt({
     hash: action.txHash,
     chainId: action.chainId
@@ -29,10 +29,10 @@ const TransactionDetails = ({
   }, [isSuccess])
 
   const statusDescription = useMemo(() => {
-    if (action.isPendingConfirmation) return t('approve')
+    if (action.isPendingConfirmation) return 'approve'
     if (action.isConfirmationError) return `${t('error')}: ${t('confirmation error')}`
-    if (isPending) return t('pending')
-    if (isSuccess) return t('successful')
+    if (isPending) return 'pending'
+    if (isSuccess) return 'successful'
     // if (isLastAction && isLastActionSuccessful) return t('successful')
     // if (isLastAction && isSuccess) return t('finishing')
     // if (isLastAction && !isLastActionSuccessful) return t('pending')
@@ -71,8 +71,8 @@ const TransactionDetails = ({
 
   return shouldShowComponent ? (
     <div className='flex gap-2 sm:gap-2 flex-col'>
-      <p className='text-xl sm:text-2xl font-bold'>{t('title')}</p>
-      <p className={clsx(getStatusColor(), 'text-lg font-bold')}>{statusDescription}</p>
+      <p className='text-xl sm:text-2xl font-bold'>{t('status title')}</p>
+      <p className={clsx(getStatusColor(), 'text-lg font-bold')}>{t(statusDescription || '')}</p>
       {isLastAction && isSuccess && (
         <p
           className={clsx(

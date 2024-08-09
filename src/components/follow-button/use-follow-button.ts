@@ -58,7 +58,7 @@ export const useFollowButton = ({
     address,
     type: 'following'
   })
-  const { t } = useTranslation('common', { keyPrefix: 'follow btn' })
+  const { t } = useTranslation()
   const {
     hasListOpAddRecord,
     hasListOpRemoveRecord,

@@ -9,7 +9,7 @@ import FriendsEnemies from 'public/assets/art/friends-enemies.png'
 import FriendsEnemiesMobile from 'public/assets/art/friends-enemies-mobile.png'
 
 const FollowGhost = () => {
-  const { t } = useTranslation('home')
+  const { t } = useTranslation()
 
   return (
     <div className='flex flex-col lg:flex-row gap-[52px] lg:gap-16 xl:gap-40 items-center relative'>

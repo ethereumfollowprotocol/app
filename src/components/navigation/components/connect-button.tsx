@@ -106,7 +106,7 @@ const ConnectButton = () => {
         ) : (
           <div className='w-full sm:w-54 h-full flex items-center justify-center rounded-full'>
             <p className='hidden xxs:block font-semibold text-lg text-nowrap px-1 text-black'>
-              {t('navigation.connect')}
+              {t('connect')}
             </p>
             <Image
               src={Wallet}
@@ -132,9 +132,7 @@ const ConnectButton = () => {
                   <div></div>
                 )}
                 <p className=' font-semibold'>
-                  {selectedList
-                    ? `${t('navigation.list')} #${selectedList}`
-                    : t('navigation.mint new list')}
+                  {selectedList ? `${t('list')} #${selectedList}` : t('mint new list')}
                 </p>
               </div>
               <div
@@ -177,9 +175,7 @@ const ConnectButton = () => {
                           className='absolute left-2 top-[17px]'
                         />
                       )}
-                      <p className='text-nowrap font-semibold'>
-                        {`${t('navigation.list')} #${list}`}
-                      </p>
+                      <p className='text-nowrap font-semibold'>{`${t('list')} #${list}`}</p>
                       {lists.primary_list === list && (
                         <p className='mb-0.5 text-sm italic text-nowrap font-medium text-gray-400'>
                           - Primary
@@ -205,9 +201,7 @@ const ConnectButton = () => {
                         className='absolute left-2 top-[17px]'
                       />
                     )}
-                    <p className='text-darkGrey text-nowrap font-semibold'>
-                      {t('navigation.mint new list')}
-                    </p>
+                    <p className='text-darkGrey text-nowrap font-semibold'>{t('mint new list')}</p>
                   </div>
                 </div>
               </div>
@@ -268,7 +262,7 @@ const ConnectButton = () => {
               setWalletMenuOpen(false)
             }}
           >
-            {t('navigation.disconnect')}
+            {t('disconnect')}
           </p>
         </div>
       )}

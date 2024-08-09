@@ -118,7 +118,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
 }) => {
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
-  const { t } = useTranslation('common', { keyPrefix: 'follow btn' })
+  const { t } = useTranslation()
   const { buttonText, buttonState, handleAction, isLoading } = useFollowButton({
     address,
     isBlockedBy
@@ -127,7 +127,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
   // if (address?.toLowerCase() === userAddress?.toLowerCase()) return null
 
   return isLoading ? (
-    <div className={`rounded-xl ${isBlockedBy ? 'w-[114px]' : 'w-[107px]'} h-[37px]`}>
+    <div className={`rounded-xl ${isBlockedBy ? 'w-[132px]' : 'w-[107px]'} h-[37px]`}>
       <LoadingCell className='h-full w-full rounded-lg' />
     </div>
   ) : (
@@ -141,7 +141,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
         className
       ])}
       style={{
-        width: isBlockedBy ? '114px' : '107px'
+        width: isBlockedBy ? '132px' : '107px'
       }}
       onClick={() => {
         if (!userAddress && openConnectModal) {

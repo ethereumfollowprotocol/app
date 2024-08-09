@@ -52,7 +52,7 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
     isFetchingMoreBlocking,
     isFetchingMoreBlockedBy
   } = useBlockedMuted(profile.address, list)
-  const { t } = useTranslation('profile')
+  const { t } = useTranslation()
 
   const filteredBlockingTags = blockingTags?.tagCounts?.filter(tag => TAGS.includes(tag.tag)) || []
   const displayedBlockingTags = [

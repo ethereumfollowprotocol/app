@@ -35,7 +35,7 @@ export default function UserPage({ params }: Props) {
 
   const router = useRouter()
   const pathname = usePathname()
-  const { t } = useTranslation('profile')
+  const { t } = useTranslation()
   const { address: connectedUserAddress } = useAccount()
 
   const isLoadPage = pathname === '/loading'

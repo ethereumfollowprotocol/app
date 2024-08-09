@@ -18,6 +18,7 @@ import useFollowState from '#/hooks/use-follow-state'
 import Plus from 'public/assets/icons/plus-squared.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
+import { BLOCKED_MUTED_TAGS } from '#/lib/constants'
 
 interface FollowListItemNameProps {
   address: Address
@@ -81,7 +82,6 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
   const pathname = usePathname()
   const { t } = useTranslation()
   const { address: userAddress } = useAccount()
-  const { t: tEditor } = useTranslation('editor')
   const isEditor = pathname.includes('/editor')
   const { followerTag } = useFollowState({
     address,
@@ -161,7 +161,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
     <div
       className={`flex gap-2 sm:gap-3 items-center p-0 ${className}`}
       style={{
-        width: 'calc(100% - 110px)'
+        width: isBlockedList ? 'calc(100% - 132px)' : 'calc(100% - 110px)'
       }}
     >
       {isEnsProfileLoading ? (
@@ -201,7 +201,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
             <div
               className={`rounded-full font-bold text-[10px] flex items-center justify-center bg-gray-300 h-5 w-20 ${followerTag.className}`}
             >
-              {t(`profile card.${followerTag.text}`)}
+              {t(followerTag.text)}
             </div>
           )}
         </div>
@@ -229,7 +229,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
                   <div className='w-full flex items-center gap-1.5 justify-between bg-gray-300 rounded-lg font-bold p-1 text-left'>
                     <input
                       ref={tagInputRef}
-                      placeholder={tEditor('custom tag')}
+                      placeholder={t('custom tag')}
                       value={customTagInput}
                       onChange={e => {
                         const validString = e.target.value.match(tagRegex)?.join('')
@@ -256,7 +256,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
                         className='font-semibold py-2 truncate px-3 hover:opacity-80 bg-gray-300 rounded-full'
                         onClick={() => addTag(tag)}
                       >
-                        {tEditor(tag)}
+                        {'tag'}
                       </button>
                     ))}
                   </div>
@@ -283,7 +283,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
                       removeTag(tag)
                     }}
                   >
-                    {tEditor(tag)}
+                    {BLOCKED_MUTED_TAGS.includes(tag) ? t(tag) : tag}
                   </button>
                   {(removingTag || addingTag) && !isFollowers && (
                     <div className='absolute h-4 w-4 rounded-full -top-1 -right-1 bg-green-400' />
@@ -316,11 +316,11 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
             } hidden sm:flex`}
           >
             <p className='font-semibold text-lg text-darkGrey'>{counts.following}</p>
-            <p className='font-semibold text-sm text-gray-500'>{t('profile card.following')}</p>
+            <p className='font-semibold text-sm text-gray-500'>{t('following')}</p>
           </div>
           <div className='flex flex-col items-center'>
             <p className='font-semibold text-lg text-darkGrey'>{counts.followers}</p>
-            <p className='font-semibold text-sm text-gray-500'>{t('profile card.followers')}</p>
+            <p className='font-semibold text-sm text-gray-500'>{t('followers')}</p>
           </div>
         </div>
       )}

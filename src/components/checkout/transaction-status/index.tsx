@@ -37,9 +37,7 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
     chainId: currentAction?.chainId
   })
 
-  const { t: tBtn } = useTranslation('transactions')
-  const { t } = useTranslation('transactions', { keyPrefix: 'action' })
-
+  const { t } = useTranslation()
   const { totalCartItems } = useCart()
   // Add separate transaction finished state for custom delay to wait for backend to update after finishing the llast transaction
   const [transactionsAreFinished, setTransactionsAreFinished] = useState(false)
@@ -61,7 +59,7 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
   return (
     <>
       <div className='flex flex-col gap-2'>
-        <h1 className='text-2xl sm:text-3xl font-semibold'>{t('title')}</h1>
+        <h1 className='text-2xl sm:text-3xl font-semibold'>{t('status title')}</h1>
         <p className='text-lg font-bold'>
           {currentActionIndex + 1} {t('of')} {actions.length}
         </p>
@@ -84,21 +82,21 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
       <TransactionDetails action={currentAction} isLastAction={isLastAction} />
       <div className='w-full sm:mt-10 mt-6 gap-8 flex justify-between items-center'>
         <CancelButton
-          label={tBtn('back')}
+          label={t('back')}
           onClick={() => setCurrentStep(Step.InitiateTransactions)}
           disabled={!finishButtonIsDisabled || isLoading}
           className='bg-[#cccccc]'
         />
         {currentAction.isConfirmationError && (
           <PrimaryButton
-            label={tBtn('reinitiate')}
+            label={t('reinitiate')}
             onClick={handleReInitiateActions}
             className='text-lg w-fit px-4 min-w-32 h-12'
           />
         )}
         {showNextButton && (
           <PrimaryButton
-            label={tBtn('next')}
+            label={t('next')}
             onClick={handleNextAction}
             className='text-lg w-32 h-12'
             disabled={nextButtonIsDisabled}
@@ -106,7 +104,7 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
         )}
         {showFinishButton && (
           <PrimaryButton
-            label={tBtn('finish')}
+            label={t('finish')}
             onClick={() => onFinish()}
             className='text-lg w-32 h-12'
             disabled={finishButtonIsDisabled}

@@ -76,7 +76,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const pathname = usePathname()
   const { selectedList } = useEFPProfile()
   const { address: connectedAddress } = useAccount()
-  const { t } = useTranslation('common', { keyPrefix: 'profile card' })
+  const { t } = useTranslation()
 
   const isConnectedUserCard =
     pathname === '/' ||

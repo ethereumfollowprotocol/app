@@ -30,10 +30,9 @@ const useSearch = (isEditor?: boolean) => {
 
   const router = useRouter()
   const pathname = usePathname()
-  const { t } = useTranslation('editor')
+  const { t } = useTranslation()
   const { roles, selectedList } = useEFPProfile()
   const { addCartItem, hasListOpAddRecord } = useCart()
-  const { t: tFollowBtn } = useTranslation('common', { keyPrefix: 'follow btn' })
 
   const clickAwayRef = useClickAway<HTMLDivElement>(_ => {
     setDropdownMenuOpen(false)
@@ -122,7 +121,7 @@ const useSearch = (isEditor?: boolean) => {
 
   const addToCart = async (user: string) => {
     if (!roles?.isManager) {
-      toast.error(tFollowBtn('not manager'))
+      toast.error(t('not manager'))
       return
     }
 
@@ -146,7 +145,7 @@ const useSearch = (isEditor?: boolean) => {
       resetSearch()
       searchBarRef.current?.focus()
 
-      if (!roles?.isManager) return toast.error(tFollowBtn('not manager'))
+      if (!roles?.isManager) return toast.error(t('not manager'))
 
       setIsAddingToCart(true)
 
