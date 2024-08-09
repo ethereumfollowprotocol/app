@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { useTranslation } from 'react-i18next'
 
 import TableRow from './row.tsx'
 import LoadingRow from './loading-row.tsx'
@@ -11,8 +12,8 @@ import LoadingCell from '#/components/loading-cell.tsx'
 import useLeaderboard from '../hooks/useLeaderboard.ts'
 import type { LeaderboardItem } from '#/types/requests.ts'
 import type { LeaderboardFilter } from '#/types/common.ts'
-import { leaderboardFilters, leaderboardFiltersEmojies } from '#/lib/constants/index.ts'
 import MagnifyingGlass from 'public/assets/icons/magnifying-glass.svg'
+import { leaderboardFilters, leaderboardFiltersEmojies } from '#/lib/constants/index.ts'
 
 const LeaderboardTable = () => {
   const router = useRouter()
@@ -35,6 +36,7 @@ const LeaderboardTable = () => {
     isFetchingNextLeaderboard,
     isFetchingPreviousLeaderboard
   } = useLeaderboard()
+  const { t } = useTranslation()
 
   const onSelectFilter = (newFilter: LeaderboardFilter) => {
     setFilter(newFilter)
@@ -64,11 +66,11 @@ const LeaderboardTable = () => {
         ) : (
           <p className='h-2 font-semibold text-sm sm:text-lg'>{`${formatNumber(
             Number(leaderboardCount?.leaderboardCount)
-          )} accounts`}</p>
+          )} ${t('accounts')}`}</p>
         )}
       </div>
       <div className='flex w-full justify-center lg:justify-end max-w-[1200px] text-sm mb-2 font-semibold text-[#aaaaaa] md:text-[#CDCDCD] italic'>
-        Last updated &nbsp;
+        {t('last updated')}&nbsp;
         <span>
           {isLeaderboardLoading ? <LoadingCell className='h-5 w-16 rounded-md' /> : timeStamp}
         </span>
@@ -83,7 +85,7 @@ const LeaderboardTable = () => {
               }`}
               onClick={() => onSelectFilter(item)}
             >
-              {`${item} ${leaderboardFiltersEmojies[i]}`}
+              {`${t(item)} ${leaderboardFiltersEmojies[i]}`}
             </div>
           ))}
         </div>
@@ -107,7 +109,7 @@ const LeaderboardTable = () => {
               <input
                 type='text'
                 spellCheck={false}
-                placeholder='Search ENS Name'
+                placeholder={t('search placeholder')}
                 value={currentSearch}
                 onChange={handleSearchEvent}
                 className='lowercase h-9 block w-full rounded-lg border-0 font-medium border-transparent pl-9 pr-10 sm:text-sm'
@@ -123,7 +125,7 @@ const LeaderboardTable = () => {
                 }`}
                 onClick={() => onSelectFilter(item)}
               >
-                {`${item} ${leaderboardFiltersEmojies[i]}`}
+                {`${t(item)} ${leaderboardFiltersEmojies[i]}`}
               </div>
             ))}
           </div>

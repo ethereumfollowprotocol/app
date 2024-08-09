@@ -103,7 +103,7 @@ export default function EditorPage() {
                 {t('editor title')}
               </h1>
               <div className='flex gap-1'>
-                <p className='text-lg font-semibold mr-1'>Import</p>
+                <p className='text-lg font-semibold mr-1'>{t('import')}</p>
                 <Image
                   src={FarcasterIcon}
                   alt='Import from Farcaster'

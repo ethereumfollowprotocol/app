@@ -20,13 +20,13 @@ import LoadingCell from '../loading-cell'
 import { resolveEnsProfile } from '#/utils/ens'
 import { useCart } from '#/contexts/cart-context'
 import { truncateAddress } from '#/lib/utilities'
+import { formatNumber } from '#/utils/formatNumber'
 import FollowButton from '#/components/follow-button'
 import useFollowState from '#/hooks/use-follow-state'
 import LoadingProfileCard from './loading-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
-import { formatNumber } from '#/utils/formatNumber'
 
 interface UserProfileCardProps {
   profileList?: number | null
@@ -73,10 +73,10 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   })
 
   const router = useRouter()
+  const { t } = useTranslation()
   const pathname = usePathname()
   const { selectedList } = useEFPProfile()
   const { address: connectedAddress } = useAccount()
-  const { t } = useTranslation()
 
   const isConnectedUserCard =
     pathname === '/' ||
@@ -246,13 +246,13 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                   >
                     <Link
                       href={`/${profile.address}`}
-                      className={showMoreOptions ? 'w-[87.5%]' : 'w-full'}
+                      className={showMoreOptions && !isConnectedUserCard ? 'w-[87.5%]' : 'w-full'}
                     >
                       <p className='truncate hover:opacity-70'>
                         {profileName || truncateAddress(profile.address)}
                       </p>
                     </Link>
-                    {showMoreOptions && (
+                    {showMoreOptions && !isConnectedUserCard && (
                       <div ref={clickAwayMoreOptionsRef}>
                         <div
                           className='flex gap-[3px] px-1.5 py-2 rounded-md bg-gray-300 cursor-pointer items-center hover:opacity-50 transition-opacity'
@@ -262,7 +262,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                           <div className='h-1 w-1 bg-black rounded-full'></div>
                           <div className='h-1 w-1 bg-black rounded-full'></div>
                         </div>
-                        {showMoreOptions && moreOptionsDropdownOpen && (
+                        {showMoreOptions && isConnectedUserCard && moreOptionsDropdownOpen && (
                           <div className='absolute top-10 flex-col flex gap-2 right-0 p-2 bg-white border-gray-200 border-2 rounded-xl z-50 drop-shadow-lg'>
                             <button
                               onClick={() => onClickOption('Block')}

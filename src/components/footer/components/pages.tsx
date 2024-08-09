@@ -28,7 +28,7 @@ const Pages = () => {
             target={route.target}
             rel='noreferrer'
           >
-            <span>{t(`footer.${route.text}`)}</span>
+            <span>{t(route.text)}</span>
           </a>
         </div>
       ))}

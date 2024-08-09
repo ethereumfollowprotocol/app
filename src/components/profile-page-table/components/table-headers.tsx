@@ -3,12 +3,12 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
 
-import { SORT_OPTIONS } from '#/lib/constants'
 import LoadingCell from '#/components/loading-cell'
 import { formatNumber } from '#/utils/formatNumber'
 import ArrowDown from 'public/assets/icons/arrow-down.svg'
 import type { ProfileTableTitleType } from '#/types/common'
 import SearchIcon from 'public/assets/icons/magnifying-glass.svg'
+import { BLOCKED_MUTED_TAGS, SORT_OPTIONS } from '#/lib/constants'
 import type { FollowSortType, TagCountType } from '#/types/requests'
 import { QUERY_BLOCK_TAGS } from '#/components/blocked-muted/hooks/use-blocked-muted'
 
@@ -155,7 +155,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
               <LoadingCell className='w-20 h-7 md:h-9 rounded-full' />
             </>
           ) : !displayedTags || displayedTags.length === 0 ? (
-            <p className='text-center w-full font-semibold text-gray-500 italic'>No tags</p>
+            <p className='text-center w-full font-semibold text-gray-500 italic'>{t('no tags')}</p>
           ) : (
             displayedTags?.map((tag, i) => (
               <button
@@ -168,7 +168,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 name={tag.tag.toLowerCase()}
                 onClick={() => toggleSelectedTags(title, tag.tag)}
               >
-                <p>{tag.tag}</p>
+                <p>{BLOCKED_MUTED_TAGS.includes(tag.tag) ? t(tag.tag) : tag.tag}</p>
                 <p className='text-xs text-gray-400'>{formatNumber(tag.count)}</p>
               </button>
             ))

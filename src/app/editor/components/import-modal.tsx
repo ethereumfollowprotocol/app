@@ -57,7 +57,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
             spellCheck={false}
             autoComplete='off'
             value={currHandle}
-            placeholder={`Enter ${platform} ID`}
+            placeholder={`${t('enter')} ${platform} ID`}
             onChange={e => setCurrHandle(e.target.value)}
             className='h-12 block pr-12 w-full truncate font-medium rounded-xl border-2 border-gray-200 pl-4 sm:text-sm bg-white/70'
           />
@@ -131,13 +131,13 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
           </div>
         ) : (
           <div className='h-[208px] w-full justify-center flex items-center font-semibold'>
-            No profile
+            {t('no profile')}
           </div>
         )}
         <div className='w-full flex items-center justify-between'>
           <CancelButton onClick={onClose} />
           <PrimaryButton
-            label='Add'
+            label={t('add')}
             onClick={() => {
               onAddFollowings()
               onClose()

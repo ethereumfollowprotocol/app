@@ -1,6 +1,6 @@
-import Image, { type StaticImageData } from 'next/image'
 import type { Address } from 'viem'
 import { useTranslation } from 'react-i18next'
+import Image, { type StaticImageData } from 'next/image'
 
 import LoadingRow from './loading-row'
 import EFPLogo from 'public/assets/logo.svg'
@@ -9,6 +9,7 @@ import type { ENSProfile } from '#/types/requests'
 import { formatNumber } from '#/utils/formatNumber'
 import type { ImportPlatformType } from '#/types/common'
 import SocialTagDropdown from './components/socialTagDropdown'
+import SocialFollowButton from './components/social-follow-button'
 
 export interface FollowListProfile {
   address: Address
@@ -91,26 +92,36 @@ export function FollowList({
               social.profiles.length > 0 && (
                 <div
                   key={social.platform}
-                  className='flex sm:w-full items-center gap-2 md:p-4 p-1.5 sm:p-2 sm:gap-3'
+                  className='flex sm:w-full justify-between items-center gap-2 md:p-4 p-1.5 sm:p-2 sm:gap-3'
                 >
-                  <Image
-                    src={social.icon}
-                    alt={social.platform}
-                    className='rounded-xl h-[45px] w-[45px] md:h-[50px] md:w-[50px]'
-                  />
-                  <div className='flex flex-col items-start min-w-52 gap-px'>
-                    <p className='text-lg font-semibold'>
-                      {t('import title mobile')}{' '}
-                      <span className='capitalize'>{social.platform}</span>
-                    </p>
-                    <p className='font-medium text-sm text-gray-500'>
-                      Adding: {formatNumber(social.profiles.length)}
-                    </p>
+                  <div
+                    className='flex sm:w-full items-center gap-2 md:p-4 p-1.5 sm:p-2 sm:gap-3'
+                    style={{
+                      width: 'calc(100% - 117px)'
+                    }}
+                  >
+                    <Image
+                      src={social.icon}
+                      alt={social.platform}
+                      className='rounded-xl h-[45px] w-[45px] md:h-[50px] md:w-[50px]'
+                    />
+                    <div className='flex flex-col sm:flex-row gap-1 w-full sm:gap-3 md:gap-4'>
+                      <div className='flex flex-col items-start min-w-52 gap-px'>
+                        <p className='text-lg font-semibold'>
+                          {t('import title mobile')}{' '}
+                          <span className='capitalize'>{social.platform}</span>
+                        </p>
+                        <p className='font-medium text-sm text-gray-500'>
+                          {t('adding')}: {formatNumber(social.profiles.length)}
+                        </p>
+                      </div>
+                      <SocialTagDropdown
+                        profiles={social.profiles}
+                        platform={social.platform as ImportPlatformType}
+                      />
+                    </div>
                   </div>
-                  <SocialTagDropdown
-                    profiles={social.profiles}
-                    platform={social.platform as ImportPlatformType}
-                  />
+                  <SocialFollowButton profiles={social.profiles} />
                 </div>
               )
           )}

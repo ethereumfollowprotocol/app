@@ -14,11 +14,11 @@ import { tagRegex } from '#/lib/constants/regex'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useCart } from '#/contexts/cart-context'
 import { truncateAddress } from '#/lib/utilities'
+import { BLOCKED_MUTED_TAGS } from '#/lib/constants'
 import useFollowState from '#/hooks/use-follow-state'
 import Plus from 'public/assets/icons/plus-squared.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
-import { BLOCKED_MUTED_TAGS } from '#/lib/constants'
 
 interface FollowListItemNameProps {
   address: Address
@@ -256,7 +256,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
                         className='font-semibold py-2 truncate px-3 hover:opacity-80 bg-gray-300 rounded-full'
                         onClick={() => addTag(tag)}
                       >
-                        {'tag'}
+                        {tag}
                       </button>
                     ))}
                   </div>

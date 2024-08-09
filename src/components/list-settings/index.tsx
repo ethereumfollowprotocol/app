@@ -170,9 +170,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
         </div>
         {(user ? connectedAddress?.toLowerCase() === user.toLowerCase() : roles?.isUser) && (
           <div className='flex items-center w-full justify-between'>
-            <p className='text-base sm:text-lg font-bold w-3/4 sm:w-fit'>
-              Set selected List as Primary List
-            </p>
+            <p className='text-base sm:text-lg font-bold w-3/4 sm:w-fit'>{t('set as primary')}</p>
             <input
               className='toggle disabled:opacity-40 disabled:cursor-not-allowed'
               type='checkbox'

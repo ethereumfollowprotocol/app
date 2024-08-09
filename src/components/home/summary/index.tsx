@@ -9,8 +9,8 @@ import UserProfileCard from '#/components/user-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 const Summary = () => {
-  const { address } = useAccount()
   const { t } = useTranslation()
+  const { address } = useAccount()
   const { profile, followers, selectedList, profileIsLoading, followersIsLoading } = useEFPProfile()
 
   const isFollowersEmpty = !followersIsLoading && followers.length === 0
@@ -18,7 +18,7 @@ const Summary = () => {
   return (
     <div className='mt-[108px] md:mt-28 w-full lg:mt-32 xl:mt-40 px-4 xl:px-0 2xl:px-8 flex items-start lg:justify-center lg:gap-4 xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4'>
       <UserProfileCard
-        profileList={selectedList}
+        profileList={selectedList || Number(profile?.primary_list)}
         hideFollowButton={true}
         profile={profile}
         isLoading={profileIsLoading}
