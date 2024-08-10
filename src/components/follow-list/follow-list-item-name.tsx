@@ -236,7 +236,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
                         if (e.target.value.length === 0 || validString)
                           setCustomTagInput(e.target.value.trim().toLowerCase())
                       }}
-                      maxLength={68}
+                      maxLength={80}
                       onKeyDown={e => {
                         if (e.key === 'Enter') addCustomTag()
                       }}

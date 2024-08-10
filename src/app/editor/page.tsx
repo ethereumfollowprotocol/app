@@ -187,7 +187,7 @@ export default function EditorPage() {
               </div>
             </div>
           )}
-          <h1 className='text-center text-4xl font-semibold mb-6 xl:hidden'>{t('title')}</h1>
+          <h1 className='text-center text-4xl font-semibold mb-6 xl:hidden'>{t('editor title')}</h1>
         </>
       )}
     </main>

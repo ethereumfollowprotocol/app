@@ -92,12 +92,12 @@ export function FollowList({
               social.profiles.length > 0 && (
                 <div
                   key={social.platform}
-                  className='flex sm:w-full justify-between items-center gap-2 md:p-4 p-1.5 sm:p-2 sm:gap-3'
+                  className='flex sm:w-full justify-between items-center md:p-4 p-1.5 sm:p-2'
                 >
                   <div
-                    className='flex sm:w-full items-center gap-2 md:p-4 p-1.5 sm:p-2 sm:gap-3'
+                    className='flex items-center gap-2 sm:gap-3'
                     style={{
-                      width: 'calc(100% - 117px)'
+                      width: 'calc(100% - 114px)'
                     }}
                   >
                     <Image
@@ -105,8 +105,8 @@ export function FollowList({
                       alt={social.platform}
                       className='rounded-xl h-[45px] w-[45px] md:h-[50px] md:w-[50px]'
                     />
-                    <div className='flex flex-col sm:flex-row gap-1 w-full sm:gap-3 md:gap-4'>
-                      <div className='flex flex-col items-start min-w-52 gap-px'>
+                    <div className='flex flex-col items-start sm:items-center sm:flex-row gap-1 w-full sm:gap-3 md:gap-4'>
+                      <div className='flex flex-col items-start min-w-52 max-w-52 gap-px'>
                         <p className='text-lg font-semibold'>
                           {t('import title mobile')}{' '}
                           <span className='capitalize'>{social.platform}</span>

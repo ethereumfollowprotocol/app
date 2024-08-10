@@ -96,7 +96,7 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
 
   return (
     <div
-      className='relative min-h-8 flex  flex-wrap gap-2 items-center w-4/5 sm:w-48 md:w-68 lg:w-2/3 xl:w-[55%] 2xl:w-2/3'
+      className='relative min-h-8 flex w-3/4 xxs:w-4/5 sm:w-2/5 md:w-[49%] lg:w-[63%] xl:w-[54%] 2xl:w-[63.5%] 3xl:w-full flex-wrap gap-2 items-center'
       ref={clickAwayTagDropwdownRef}
     >
       <button
@@ -118,7 +118,7 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
                   if (e.target.value.length === 0 || validString)
                     setCustomTagInput(e.target.value.trim().toLowerCase())
                 }}
-                maxLength={68}
+                maxLength={80}
                 onKeyDown={e => {
                   if (e.key === 'Enter') addCustomTag()
                 }}
@@ -153,9 +153,9 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
         const removingTag = hasListOpRemoveTag({ address, tag })
 
         return (
-          <div key={tag + i} className={`relative ${tagDropdownOpen ? 'z-40' : 'z-10'} max-w-full`}>
+          <div key={tag + i} className={`relative ${tagDropdownOpen ? 'z-40' : 'z-0'} max-w-full`}>
             <button
-              className={`font-semibold py-1 px-2 sm:py-1.5 max-w-full w-fit sm:px-3 truncate text-sm hover:opacity-80 rounded-full ${
+              className={`font-semibold py-1 px-2 sm:py-1.5 max-w-full sm:px-3 truncate text-sm hover:opacity-80 rounded-full ${
                 removingTag ? 'bg-deletion' : 'bg-gray-300'
               }`}
               onClick={() => removeTag(tag)}
