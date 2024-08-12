@@ -93,28 +93,28 @@ export function UserProfilePageTable({
 
   const noResults = {
     following: (
-      <div className='text-center h-12 font-semibold'>
+      <div className='text-center min-h-12  font-semibold'>
         {title === 'followers' && (
-          <span className='text-lg'>
+          <p className='text-lg'>
             {t(isProfile ? 'followers myprofile empty' : 'followers empty')}
-          </span>
+          </p>
         )}
         {title === 'following' && (
-          <div className='flex flex-col items-center'>
-            <span className='text-xl text-darkGrey italic mb-4'>
+          <div className='flex flex-col justify-center min-h-12 gap-4 items-center'>
+            <p className='text-xl text-darkGrey italic'>
               {t(isProfile ? 'following myprofile empty first' : 'following empty first')}
-            </span>
+            </p>
             {isProfile && (
-              <span className='text-base text-darkGrey italic w-3/4 max-w-96'>
+              <p className='text-base text-darkGrey italic w-3/4 max-w-96'>
                 {t('following myprofile empty second')}
-              </span>
+              </p>
             )}
           </div>
         )}
       </div>
     ),
     followers: (
-      <p className='text-xl text-darkGrey italic h-12'>
+      <p className='text-xl text-darkGrey italic flex justify-center items-center min-h-12'>
         {t(isProfile ? 'followers myprofile empty' : 'followers empty')}
       </p>
     ),
