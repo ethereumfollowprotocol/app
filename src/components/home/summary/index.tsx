@@ -34,7 +34,6 @@ const Summary = () => {
           }))}
         />
       )}
-
       <Recommendations
         limit={7}
         endpoint='discover'
@@ -42,7 +41,7 @@ const Summary = () => {
         className={`h-fit w-full p-2 ${
           isFollowersEmpty || !address
             ? 'xl:w-2/3 xl:max-w-[900px]'
-            : 'lg:h-[638px] lg:w-[49%] xl:w-[470px] 2xl:w-[650px]'
+            : 'lg:h-[638px] lg:w-[49%] xl:min- xl:w-[36%] w-[470px] 2xl:min-w-[650px] 2xl:w-[45%]'
         } py-4 sm:p-6 glass-card border-2 border-gray-200 rounded-2xl`}
       />
     </div>

@@ -262,7 +262,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                           <div className='h-1 w-1 bg-black rounded-full'></div>
                           <div className='h-1 w-1 bg-black rounded-full'></div>
                         </div>
-                        {showMoreOptions && isConnectedUserCard && moreOptionsDropdownOpen && (
+                        {showMoreOptions && !isConnectedUserCard && moreOptionsDropdownOpen && (
                           <div className='absolute top-10 flex-col flex gap-2 right-0 p-2 bg-white border-gray-200 border-2 rounded-xl z-50 drop-shadow-lg'>
                             <button
                               onClick={() => onClickOption('Block')}

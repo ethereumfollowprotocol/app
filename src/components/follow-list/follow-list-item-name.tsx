@@ -103,6 +103,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
   const isBeingRestricted =
     hasListOpAddTag({ address, tag: 'block' }) || hasListOpAddTag({ address, tag: 'mute' })
   const isRestriction = isBeingUnrestricted || isBeingRestricted
+  const isFollowersEmpty = !followersIsLoading && followers.length === 0
 
   const tagsFromCart = getTagsFromCartByAddress(address)
   const inintialdisplayedTags = () => {
@@ -176,7 +177,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
       )}
       <div
         className={`flex flex-col md:flex-row ${
-          counts ? 'w-1/2 sm:w-[45%] md:w-1/2 xl:w-[45%] 2xl:w-1/2' : 'w-full'
+          counts ? 'w-1/2 sm:w-[45%] md:w-1/2 xl:w-1/2' : 'w-full'
         } md:gap-3 xl:gap-2 2xl:gap-3 gap-[2px]`}
       >
         <div
@@ -303,16 +304,14 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
       {counts && (
         <div
           className={`items-center justify-end hidden xs:flex pr-6 ${
-            !followersIsLoading && userAddress && followers && followers.length > 0
+            !followersIsLoading && userAddress && !isFollowersEmpty
               ? 'gap-16 lg:gap-6 xl:gap-10'
               : ' gap-16 lg:gap-32 xl:gap-20'
           }`}
         >
           <div
             className={`flex-col items-center 2xl:flex ${
-              !followersIsLoading && userAddress && followers && followers.length > 0
-                ? 'lg:hidden'
-                : ''
+              userAddress && !isFollowersEmpty ? 'lg:hidden' : ''
             } hidden sm:flex`}
           >
             <p className='font-semibold text-lg text-darkGrey'>{counts.following}</p>

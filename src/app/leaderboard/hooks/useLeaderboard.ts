@@ -62,7 +62,8 @@ const useLeaderboard = () => {
     queryFn: async () => {
       const data = await fetchLeaderboardCount()
       return data
-    }
+    },
+    refetchInterval: 600000
   })
 
   const {
