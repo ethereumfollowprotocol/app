@@ -11,7 +11,7 @@ export const resolveEnsProfile = async (address: `0x${string}`) => {
   const avatarUrl = `https://metadata.ens.domains/mainnet/avatar/${resolvedName}`
 
   try {
-    const response = await fetch(avatarUrl)
+    const response = resolvedName ? await fetch(avatarUrl) : { ok: false }
 
     return {
       name: resolvedName,

@@ -93,7 +93,7 @@ export function UserProfilePageTable({
 
   const noResults = {
     following: (
-      <div className='text-center font-semibold'>
+      <div className='text-center h-12 font-semibold'>
         {title === 'followers' && (
           <span className='text-lg'>
             {t(isProfile ? 'followers myprofile empty' : 'followers empty')}
@@ -114,18 +114,12 @@ export function UserProfilePageTable({
       </div>
     ),
     followers: (
-      <span className='text-lg'>
+      <p className='text-xl text-darkGrey italic h-12'>
         {t(isProfile ? 'followers myprofile empty' : 'followers empty')}
-      </span>
+      </p>
     ),
-    'Blocked/Muted By': (
-      <span className='text-lg'>{t(isProfile ? 'blocked myprofile empty' : 'blocked empty')}</span>
-    ),
-    'Blocked/Muted': (
-      <span className='text-lg'>
-        {t(isProfile ? 'blocking myprofile empty' : 'blocking empty')}
-      </span>
-    )
+    'Blocked/Muted By': <span className='text-lg'>{t('none')}</span>,
+    'Blocked/Muted': <span className='text-lg'>{t('none')}</span>
   }[title]
 
   return (

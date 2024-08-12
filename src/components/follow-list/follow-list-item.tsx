@@ -43,8 +43,6 @@ const FollowListItem: React.FC<FollowListItemProps> = ({
 
   const profileName = ensProfile ? ensProfile.name : fetchedEnsProfile?.name
   const profileAvatar = fetchedEnsProfile?.avatar
-  // const profileName = ensProfile ? ensProfile.name : fetchedEnsProfile?.name
-  // const profileAvatar = ensProfile ? ensProfile.avatar ? fetchedEnsProfile?.avatar
 
   return (
     <div className={`flex items-center justify-between ${className}`}>

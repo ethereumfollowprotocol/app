@@ -32,10 +32,10 @@ const NavItems = () => {
             className={clsx([
               'capitalize xl:text-xl lg:text-lg transition-colors',
               item.name === 'profile' && !userAddress
-                ? 'text-grey hover:text-gray-500'
+                ? 'text-grey hover:text-darkGrey'
                 : item.href(itemUrl) === pathname.toLowerCase()
                   ? 'text-darkGrey'
-                  : 'text-grey hover:text-gray-500'
+                  : 'text-grey hover:text-darkGrey'
             ])}
             onClick={e => {
               if (item.name === 'profile' && !userAddress && openConnectModal) {

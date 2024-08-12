@@ -105,7 +105,10 @@ const config = createConfig({
   }),
   transports: {
     [mainnet.id]: fallback([
-      http(`https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_MAINNET_ALCHEMY_ID}`, {
+      http(`https://eth-mainnet.g.alchemy.com/v2/${process.env.MAINNET_ALCHEMY_ID}`, {
+        batch: true
+      }),
+      http(`https://smart-cosmological-telescope.quiknode.pro/${process.env.QUICKNODE_ID}`, {
         batch: true
       }),
       http(`https://mainnet.infura.io/v3/`, {
@@ -113,21 +116,36 @@ const config = createConfig({
       })
     ]),
     [optimism.id]: fallback([
-      http(`https://opt-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_OPTIMISM_ALCHEMY_ID}`, {
+      http(`https://opt-mainnet.g.alchemy.com/v2/${process.env.OPTIMISM_ALCHEMY_ID}`, {
         batch: true
       }),
+      http(
+        `https://smart-cosmological-telescope.optimism.quiknode.pro/${process.env.QUICKNODE_ID}`,
+        {
+          batch: true
+        }
+      ),
       http(`https://mainnet.optimism.io`, {
         batch: true
       })
     ]),
     [sepolia.id]: fallback([
-      http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_SEPOLIA_ALCHEMY_ID}`, {
+      http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.SEPOLIA_ALCHEMY_ID}`, {
         batch: true
-      })
+      }),
+      http(
+        `https://smart-cosmological-telescope.ethereum-sepolia.quiknode.pro/${process.env.QUICKNODE_ID}`,
+        {
+          batch: true
+        }
+      )
     ]),
     [optimismSepolia.id]: fallback([
+      http(`https://opt-sepolia.g.alchemy.com/v2/${process.env.OP_SEPOLIA_ALCHEMY_ID}`, {
+        batch: true
+      }),
       http(
-        `https://opt-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_OP_SEPOLIA_ALCHEMY_ID}`,
+        `https://smart-cosmological-telescope.optimism-sepolia.quiknode.pro/${process.env.QUICKNODE_ID}`,
         {
           batch: true
         }
@@ -135,20 +153,23 @@ const config = createConfig({
       http('https://sepolia.optimism.io', { batch: true })
     ]),
     [base.id]: fallback([
-      http(`https://base-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_BASE_ALCHEMY_ID}`, {
+      http(`https://base-mainnet.g.alchemy.com/v2/${process.env.BASE_ALCHEMY_ID}`, {
         batch: true
       }),
-      http('https://mainnet.base.org/', { batch: true })
-    ]),
-    [baseSepolia.id]: fallback([
       http(
-        `https://base-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_BASE_SEPOLIA_ALCHEMY_ID}`,
+        `https://smart-cosmological-telescope.base-mainnet.quiknode.pro/${process.env.QUICKNODE_ID}`,
         {
           batch: true
         }
       ),
+      http('https://mainnet.base.org/', { batch: true })
+    ]),
+    [baseSepolia.id]: fallback([
+      http(`https://base-sepolia.g.alchemy.com/v2/${process.env.BASE_SEPOLIA_ALCHEMY_ID}`, {
+        batch: true
+      }),
       http(
-        `https://smart-cosmological-telescope.base-sepolia.quiknode.pro/${process.env.NEXT_PUBLIC_BASE_SEPOLIA_ALCHEMY_ID}`,
+        `https://smart-cosmological-telescope.base-sepolia.quiknode.pro/${process.env.QUICKNODE_ID}`,
         {
           batch: true
         }

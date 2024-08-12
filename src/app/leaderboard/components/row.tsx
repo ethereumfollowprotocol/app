@@ -99,19 +99,19 @@ const TableRow: React.FC<TableRowProps> = ({
       <div className='items-center justify-between hidden sm:flex sm:w-1/4 md:w-[55%]'>
         <div className=' flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 hidden lg:flex'>
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(mutuals || 0)}</p>
-          <p className='font-semibold text-lg text-gray-500'>Mutuals</p>
+          <p className='font-semibold text-sm text-gray-500'>Mutuals</p>
         </div>
         <div className='hidden sm:flex flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4'>
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(followers || 0)}</p>
-          <p className='font-semibold text-lg text-gray-500'>Followers</p>
+          <p className='font-semibold text-sm text-gray-500'>Followers</p>
         </div>
         <div className='hidden md:flex flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4'>
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(following || 0)}</p>
-          <p className='font-semibold text-lg text-gray-500'>Following</p>
+          <p className='font-semibold text-sm text-gray-500'>Following</p>
         </div>
         <div className='flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 hidden xl:flex'>
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(blockedMuted || 0)}</p>
-          <p className='font-semibold text-lg text-gray-500'>Blocked</p>
+          <p className='font-semibold text-sm text-gray-500'>Blocked</p>
         </div>
       </div>
       <div className='w-fit lg:w-[15%] 2xl:w-[10%] flex justify-end'>

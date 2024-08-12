@@ -13,14 +13,14 @@ import { withSentryConfig } from '@sentry/nextjs'
 /** @type {NextConfigPlugins} */
 const plugins = []
 
-if (process.env['ANALYZE']) {
+if (process.env.ANALYZE) {
   const { default: withBundleAnalyzer } = await import('@next/bundle-analyzer')
   plugins.push(withBundleAnalyzer({ enabled: true }))
 }
 
 // curl https://api.github.com/repos/ethereumfollowprotocol/app/commits/develop | jq --raw-output '.sha'
 const APP_VERSION =
-  process.env['NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA'] ||
+  process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA ||
   childProcess.execSync('git rev-parse --short HEAD || echo "no-git"').toString().trim()
 
 console.info(`\nBuilding with app version: ${APP_VERSION}\n`)
@@ -38,7 +38,15 @@ const nextConfig = {
   env: {
     NEXT_TELEMETRY_DISABLED: '1',
     APP_VERSION,
-    APP_VERSION_SHORT: APP_VERSION?.slice(0, 7)
+    APP_VERSION_SHORT: APP_VERSION?.slice(0, 7),
+    ENS_SUBGRAPH_API_KEY: process.env.ENS_SUBGRAPH_API_KEY,
+    QUICKNODE_ID: process.env.QUICKNODE_ID,
+    MAINNET_ALCHEMY_ID: process.env.MAINNET_ALCHEMY_ID,
+    SEPOLIA_ALCHEMY_ID: process.env.SEPOLIA_ALCHEMY_ID,
+    BASE_ALCHEMY_ID: process.env.BASE_ALCHEMY_ID,
+    BASE_SEPOLIA_ALCHEMY_ID: process.env.BASE_SEPOLIA_ALCHEMY_ID,
+    OPTIMISM_ALCHEMY_ID: process.env.OPTIMISM_ALCHEMY_ID,
+    OP_SEPOLIA_ALCHEMY_ID: process.env.OP_SEPOLIA_ALCHEMY_ID,
   },
   logging: {
     fetches: { fullUrl: true }
@@ -171,7 +179,7 @@ const nextConfig = {
 
 // https://github.com/getsentry/sentry-webpack-plugin#options
 const nextConfigWithSentry = withSentryConfig(nextConfig, {
-  authToken: process.env['SENTRY_AUTH_TOKEN'],
+  authToken: process.env.SENTRY_AUTH_TOKEN,
   org: 'efp',
   project: 'web',
   silent: process.env['NODE_ENV'] !== 'development'

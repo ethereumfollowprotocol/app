@@ -33,7 +33,7 @@ const useLeaderboard = () => {
 
   const handleSearchEvent = useCallback(
     (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const term = event?.target.value
+      const term = event?.target.value.toLowerCase().trim()
       if (searchTimeout) clearTimeout(searchTimeout)
 
       setCurrentSearch(term)

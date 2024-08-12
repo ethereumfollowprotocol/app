@@ -4,6 +4,7 @@ import '@rainbow-me/rainbowkit/styles.css'
 
 import clsx from 'clsx'
 import { Toaster } from 'sonner'
+import type { Metadata } from 'next'
 import { headers } from 'next/headers'
 import Providers from './providers.tsx'
 import { cookieToInitialState } from 'wagmi'
@@ -14,6 +15,9 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import wagmiConfig from '../lib/wagmi.ts'
 import { Production } from './production.tsx'
 import { APP_NAME, APP_DESCRIPTION } from '../lib/constants/index.ts'
+import { sharedMetadata } from '#/lib/metadata.ts'
+
+export const metadata: Metadata = sharedMetadata
 
 const inteFont = Inter({
   subsets: ['latin'],

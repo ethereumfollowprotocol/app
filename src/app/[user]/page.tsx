@@ -239,16 +239,18 @@ export default function UserPage({ params }: Props) {
               }
             />
             <div className='flex flex-col gap-1 items-center'>
-              <p
-                onClick={() => {
-                  setIsBlockedMutedOpen(true)
-                  router.push(`/${user}?modal=blockmutelists`)
-                }}
-                className='font-semibold cursor-pointer hover:opacity-80 transition-opacity'
-              >
-                {t('block-mute')}
-              </p>
-              {(profile?.primary_list || userIsList) && (
+              {profile?.address && (
+                <p
+                  onClick={() => {
+                    setIsBlockedMutedOpen(true)
+                    router.push(`/${user}?modal=blockmutelists`)
+                  }}
+                  className='font-semibold cursor-pointer hover:opacity-80 transition-opacity'
+                >
+                  {t('block-mute')}
+                </p>
+              )}
+              {profile?.address && (profile?.primary_list || userIsList) && (
                 <div
                   className='flex gap-1 cursor-pointer hover:opacity-80 transition-opacity'
                   onClick={() => setListSettingsOpen(true)}

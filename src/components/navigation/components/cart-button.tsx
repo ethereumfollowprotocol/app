@@ -25,7 +25,7 @@ const CartButton = ({ cartItemsCount }: { cartItemsCount: number }) => {
           } group-hover:opacity-100 transition-opacity`}
         />
         {cartItemsCount === 0 ? null : (
-          <span className='absolute -right-1.5 -top-1.5 flex h-5 w-fit min-w-5 items-center px-0.5 justify-center rounded-full bg-green-400 text-xs font-bold text-black'>
+          <span className='absolute -right-2 -top-2 flex h-6 w-fit min-w-6 items-center px-1 justify-center rounded-full bg-green-400 text-sm font-bold text-black'>
             {formatNumber(cartItemsCount)}
           </span>
         )}
