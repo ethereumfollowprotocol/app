@@ -12,6 +12,8 @@ export async function generateMetadata(
   // read route params
   const user = params.user
 
+  if (!Number.isNaN(Number(user))) return { title: 'User - Ethereum Follow Protocol' }
+
   // fetch data
   const response = await fetch(`https://api.ensdata.net/${user}`).then(res => res.json())
   const previousImages = (await response).avatar_url
