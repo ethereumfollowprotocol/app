@@ -15,14 +15,18 @@ export async function generateMetadata(
   if (!Number.isNaN(Number(user))) return { title: 'User - Ethereum Follow Protocol' }
 
   // fetch data
-  const response = await fetch(`https://api.ensdata.net/${user}`).then(res => res.json())
-  const previousImages = (await response).avatar_url
+  try {
+    const response = await fetch(`https://api.ensdata.net/${user}`).then(res => res.json())
+    const previousImages = (await response).avatar_url
 
-  return {
-    title: `${response.ens_primary}`,
-    openGraph: {
-      images: ['/some-specific-page-image.jpg', ...previousImages]
+    return {
+      title: `${response.ens_primary}`,
+      openGraph: {
+        images: ['/some-specific-page-image.jpg', ...previousImages]
+      }
     }
+  } catch (e: any) {
+    return { title: 'User - Ethereum Follow Protocol' }
   }
 }
 
