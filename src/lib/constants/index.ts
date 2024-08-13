@@ -1,6 +1,9 @@
 import type { FollowSortType } from '#/types/requests'
 import type { ProfileTableTitleType, ProfileTabType } from '#/types/common'
 
+import SloveniaFlag from 'public/assets/icons/flags/slovenia.png'
+import USAFlag from 'public/assets/icons/flags/united-states-of-america.png'
+
 export const APP_NAME = 'Ethereum Follow Protocol'
 export const APP_NAME_SHORT = 'EFP'
 export const APP_DESCRIPTION =
@@ -21,10 +24,12 @@ export const WEEK = 7 * DAY
 
 export const PROFILE_TABS: ProfileTabType[] = ['following', 'followers']
 export const BLOCKED_MUTED_TABS: ProfileTableTitleType[] = ['Blocked/Muted', 'Blocked/Muted By']
+
 export const LANGUAGES = [
-  { language: 'English', key: 'en' },
-  { language: 'Slovenščina', key: 'si' }
+  { language: 'English', key: 'en', icon: USAFlag },
+  { language: 'Slovenščina', key: 'si', icon: SloveniaFlag }
 ]
+
 export const DEFAULT_TAGS_TO_ADD = ['crypto', 'friend', 'family', 'irl', 'work']
 export const DEFAULT_TAGS = ['no tag']
 export const BLOCKED_MUTED_TAGS = ['block', 'mute']

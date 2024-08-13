@@ -213,7 +213,15 @@ const ConnectButton = () => {
               className='flex justify-between p-3 rounded-md group-hover:bg-slate-100 items-center w-full'
             >
               <Image src={ArrowLeft} alt='Show languages' />
-              <p className='font-semibold'>{selectedLanguage?.language}</p>
+              <div className='flex gap-2'>
+                <Image
+                  src={selectedLanguage?.icon || ''}
+                  alt='Language icon'
+                  width={24}
+                  height={8}
+                />
+                <p className='font-semibold '>{selectedLanguage?.language}</p>
+              </div>
             </div>
             <div
               className={`absolute -right-[14.6%] sm:right-[95%] -top-[54px] sm:-top-[6px] ${
@@ -249,7 +257,10 @@ const ConnectButton = () => {
                         className='absolute left-2 top-[17px]'
                       />
                     )}
-                    <p>{lang.language}</p>
+                    <div className='flex gap-2 pr-3'>
+                      <Image src={lang.icon} alt='Language icon' width={24} height={8} />
+                      <p>{lang.language}</p>
+                    </div>
                   </div>
                 ))}
               </div>
