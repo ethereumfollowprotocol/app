@@ -1,5 +1,6 @@
 import i18n from '#/app/i18n'
 import { LANGUAGES } from '#/lib/constants'
+import type { StaticImageData } from 'next/image'
 import { useEffect, useState } from 'react'
 
 const useLanguage = () => {
@@ -11,6 +12,7 @@ const useLanguage = () => {
   const changeLanguage = (lang: {
     language: string
     key: string
+    icon: StaticImageData
   }) => {
     i18n.changeLanguage(lang.key)
     setSelectedLanguage(lang)
