@@ -9,19 +9,22 @@ interface LoadingCellProps {
   className?: string
   gradient?: string
   isStatic?: boolean
+  style?: React.CSSProperties
 }
 
 const LoadingCell: React.FC<LoadingCellProps> = ({
   className,
   gradient = DEFAULT_LOADING_GRADIENT,
-  isStatic
+  isStatic,
+  style
 }) => {
   return (
     <div
       style={{
         background: gradient,
         backgroundSize: '400%',
-        animationFillMode: 'forwards'
+        animationFillMode: 'forwards',
+        ...style
       }}
       className={clsx('bg-repeat-x', className, isStatic ? 'animate-none ' : 'animate-loading ')}
     />

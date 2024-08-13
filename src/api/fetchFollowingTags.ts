@@ -14,8 +14,11 @@ export const fetchFollowingTags = async (addressOrName: string, list?: number | 
         ? `${process.env.NEXT_PUBLIC_EFP_API_URL}/lists/${list}/tags`
         : `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/tags`
     const response = await fetch(url, {
-      cache: 'default'
-      // cache: "no-cache",
+      cache: 'default',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      }
     })
 
     const data = (await response.json()) as FollowingTagsResponse

@@ -34,8 +34,11 @@ export const fetchProfileFollowers = async ({
           }?${queryParams}`
 
     const response = await fetch(url, {
-      cache: 'default'
-      // cache: "no-cache",
+      cache: 'default',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      }
     })
 
     const data = (await response.json()).followers as FollowerResponse[]

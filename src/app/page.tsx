@@ -1,16 +1,11 @@
 import { Footer } from '#/components/footer'
 import Summary from '#/components/home/summary'
 import Landing from '#/components/home/landing'
+import type { Metadata } from 'next'
 
-// export const metadata = {
-//   metadataBase: new URL('https://app.ethfollow.xyz'),
-//   openGraph: {
-//     images: [{ url: '/assets/banner.png', alt: 'Ethereum Follow Protocol' }]
-//   },
-//   twitter: {
-//     images: [{ url: '/assets/banner.png', alt: 'Ethereum Follow Protocol' }]
-//   }
-// } satisfies Metadata
+export const metadata: Metadata = {
+  title: 'Ethereum Follow Protocol'
+}
 
 const HomePage = () => {
   return (

@@ -1,8 +1,8 @@
 {
   "name": "Ethereum Follow Protocol",
   "short_name": "EFP",
-  "theme_color": "#fde047",
-  "background_color": "#fde047",
+  "theme_color": "#FFDBD9",
+  "background_color": "#ffffff",
   "start_url": "/",
   "display": "standalone",
   "icons": [

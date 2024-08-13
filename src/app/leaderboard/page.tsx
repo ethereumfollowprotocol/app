@@ -1,4 +1,9 @@
+import type { Metadata } from 'next'
 import LeaderboardTable from './components/table.tsx'
+
+export const metadata: Metadata = {
+  title: 'Leaderboard - Ethereum Follow Protocol'
+}
 
 const Leaderboard = () => {
   return (

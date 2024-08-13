@@ -5,8 +5,11 @@ export const fetchProfileLists = async (addressOrName: string) => {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/lists`,
       {
-        cache: 'default'
-        // cache: "no-cache",
+        cache: 'default',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        }
       }
     )
 

@@ -27,6 +27,7 @@ import LoadingProfileCard from './loading-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
+import CommonFollowers from './components/common-followers'
 
 interface UserProfileCardProps {
   profileList?: number | null
@@ -185,7 +186,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   return (
     <div
       className={`flex glass-card ${
-        isResponsive ? 'xl:w-76 w-full 2xl:w-86 py-6 px-4 sm:p-6 sm:py-7' : 'w-76 3xs:w-86 p-6'
+        isResponsive ? 'xl:w-76 w-full 2xl:w-86' : 'w-76 3xs:w-86'
       } border-2 justify-center flex-col ${borderColor || 'border-[#FFDBD9]'} rounded-xl relative`}
     >
       {isLoading ? (
@@ -196,7 +197,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
       ) : profile && isProfileValid ? (
         <>
           <div className='flex gap-2 items-center absolute justify-between px-2 w-full left-0 top-1 font-semibold'>
-            {profileList && <p className='text-gray-500 text-sm sm:text-base'>#{profileList}</p>}
+            {!!profileList && <p className='text-gray-500 text-sm sm:text-base'>#{profileList}</p>}
             {profileList
               ? profileList !== Number(profile.primary_list) && (
                   <p className='text-[11px] italic text-end rounded-full py-0.5 px-2 bg-gray-300'>
@@ -206,7 +207,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
               : null}
           </div>
           <div
-            className={`flex w-full items-center flex-col pt-2 ${
+            className={`flex w-full items-center flex-col pt-8 px-4 sm:p-6 sm:pt-9 ${
               followerTag.text === '' && !isResponsive
                 ? 'gap-5 sm:gap-6 md:gap-[68px]'
                 : 'gap-5 sm:gap-6 md:gap-9'
@@ -375,6 +376,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
               </div>
             </div>
           </div>
+          {!isConnectedUserCard && <CommonFollowers address={profile.address} />}
         </>
       ) : !connectedAddress && isConnectedUserCard ? (
         <LoadingProfileCard

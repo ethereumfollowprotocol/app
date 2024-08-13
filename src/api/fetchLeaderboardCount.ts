@@ -4,9 +4,9 @@ export const fetchLeaderboardCount = async () => {
     const response = await fetch(url, {
       cache: 'default',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
       }
-      // cache: "no-cache",
     })
 
     const data = (await response.json()) as { leaderboardCount: number }

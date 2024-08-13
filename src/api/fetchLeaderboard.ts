@@ -26,7 +26,6 @@ export const fetchleaderboard = async ({
         'Content-Type': 'application/json',
         cors: 'no-cors'
       }
-      // cache: "no-cache",
     })
 
     const data = (await response.json()) as LeaderboardResponse

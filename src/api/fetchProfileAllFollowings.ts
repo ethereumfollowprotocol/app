@@ -5,8 +5,11 @@ export const fetchProfileAllFollowings = async (list: number) => {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_EFP_API_URL}/lists/${list}/allFollowingAddresses`,
       {
-        cache: 'default'
-        // cache: "no-cache",
+        cache: 'default',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        }
       }
     )
 

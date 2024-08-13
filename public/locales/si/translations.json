@@ -97,6 +97,7 @@
   "edits": "sprememba/-e seznama zapisov",
   "req transactions": "Potrebne transakcije",
   "chain": "Omrežje",
+  "set new primary": "Nastavi nov seznam kot Glavni Seznam",
 
   "status title": "Status",
   "approve": "Transakcija potrebuje potrdilo",

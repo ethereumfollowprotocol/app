@@ -15,7 +15,11 @@ export const fetchRecommendations = async (
           : `${endpoint}?include=counts`
       }`,
       {
-        cache: 'default'
+        cache: 'default',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        }
       }
     )
 

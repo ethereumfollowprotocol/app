@@ -4,7 +4,6 @@ import '@rainbow-me/rainbowkit/styles.css'
 
 import clsx from 'clsx'
 import { Toaster } from 'sonner'
-import type { Metadata } from 'next'
 import { headers } from 'next/headers'
 import Providers from './providers.tsx'
 import { cookieToInitialState } from 'wagmi'
@@ -14,8 +13,9 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 
 import wagmiConfig from '../lib/wagmi.ts'
 import { Production } from './production.tsx'
-import { APP_NAME, APP_DESCRIPTION } from '../lib/constants/index.ts'
+import { APP_DESCRIPTION } from '../lib/constants/index.ts'
 import { sharedMetadata } from '#/lib/metadata.ts'
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = sharedMetadata
 
@@ -59,7 +59,6 @@ const HeadTag = () => {
     <head>
       <meta charSet='utf-8' />
       <meta name='viewport' content='width=device-width, initial-scale=1' />
-      <title>{APP_NAME}</title>
       <meta name='description' content={APP_DESCRIPTION} />
       <link rel='manifest' href='/site.webmanifest' crossOrigin='use-credentials' />
       <link rel='icon' href='/assets/favicon.ico' sizes='any' />

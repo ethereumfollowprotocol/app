@@ -46,7 +46,7 @@
   "set manager": "Set list manager",
   "set user": "Set list user",
   "set primary": "Set Primary List",
-  "set as primary": "Set selected List as Primary List",
+  "set as primary": "Set List as Primary List",
   "resolved": "Resolved:",
   "no resolution": "Doesn't resolve",
 
@@ -95,6 +95,7 @@
   "High gas fees": "High gas fees",
   "Low gas fees": "Low gas fees",
   "Super Low gas fees": "Super Low gas fees",
+  "set new primary": "Set new list as Primary List",
 
   "action title": "Onchain update",
   "summary": "Summary",

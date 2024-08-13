@@ -37,9 +37,9 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
         <LoadingCell isStatic={isStatic} className='w-10 h-5 mt-1 rounded-lg' />
       </div>
       <div
-        className={`pointer-events-none flex w-full xl:items-center flex-col ${
+        className={`pointer-events-none flex w-full xl:items-center flex-col pt-8 px-4 sm:p-6 sm:pt-9 ${
           isResponsive ? 'gap-5 sm:gap-6 md:gap-10' : 'gap-[68px]'
-        } pt-2`}
+        }`}
       >
         <div className='flex w-full flex-col justify-center items-center gap-5'>
           <LoadingCell isStatic={isStatic} className='h-[100px] w-[100px] rounded-full' />
@@ -78,6 +78,18 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
             </div>
           </div>
         </div>
+      </div>
+      <div className='w-full flex items-center justify-center gap-2 p-4'>
+        <div className='flex items-center'>
+          <LoadingCell isStatic={isStatic} className='w-9 h-9 rounded-full z-0 ' />
+          <LoadingCell isStatic={isStatic} className='w-9 h-9 rounded-full z-10 -ml-[18px]' />
+          <LoadingCell isStatic={isStatic} className='w-9 h-9 rounded-full z-20 -ml-[18px]' />
+        </div>
+        <LoadingCell
+          isStatic={isStatic}
+          className='h-10 rounded-xl'
+          style={{ width: 'calc(100% - 80px)' }}
+        />
       </div>
     </>
   )
