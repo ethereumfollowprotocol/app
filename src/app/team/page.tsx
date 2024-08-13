@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Members from './components/members'
 
 export const metadata: Metadata = {
-  title: 'Team - Ethereum Follow Protocol'
+  title: 'Team | EFP'
 }
 
 const TeamPage = () => {

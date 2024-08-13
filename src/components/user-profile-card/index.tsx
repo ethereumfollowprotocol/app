@@ -356,9 +356,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                   {ranks.map((rank, i) => (
                     <div
                       key={rankTitles[i]}
-                      className='flex xl:w-full gap-3 justify-between items-center font-semibold'
+                      className='flex xl:w-full gap-3 justify-between text-lg items-center font-semibold'
                     >
-                      <p className='text-lg font-bold text-[#888]'>{t(rankTitles[i] || '')}</p>
+                      <p className='font-bold text-[#888]'>{t(rankTitles[i] || '')}</p>
                       <p
                         className={
                           {

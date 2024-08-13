@@ -66,7 +66,8 @@ const CommonFollowers: React.FC<CommonFollowersProps> = ({ address }) => {
                 }${profile.name || truncateAddress(profile.address)}`
             )
             .join(', ')}{' '}
-          {resultLength > 3 && `and ${resultLength - 3} others you know`}{' '}
+          {resultLength > 3 &&
+            `and ${resultLength - 3} ${resultLength === 4 ? 'other' : 'others'} you know`}{' '}
           {resultLength === 1 ? 'follows' : 'follow'} them
         </p>
       )}

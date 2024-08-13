@@ -12,7 +12,7 @@ import LoadingCell from '#/components/loading-cell.tsx'
 import useLeaderboard from '../hooks/useLeaderboard.ts'
 import type { LeaderboardItem } from '#/types/requests.ts'
 import type { LeaderboardFilter } from '#/types/common.ts'
-import MagnifyingGlass from 'public/assets/icons/magnifying-glass.svg'
+import MagnifyingGlass from 'public/assets/icons/magnifying-glass-dark.svg'
 import { leaderboardFilters, leaderboardFiltersEmojies } from '#/lib/constants/index.ts'
 
 const LeaderboardTable = () => {
@@ -91,7 +91,7 @@ const LeaderboardTable = () => {
         </div>
         <div className='flex justify-between gap-4'>
           <div className='relative w-full sm:w-[260px] 2xl:w-[300px]'>
-            <div className='rounded-xl w-full glass-card border-2 border-gray-200'>
+            <div className='rounded-xl w-full group glass-card border-2 border-gray-200 hover:border-darkGrey focus-within:border-darkGrey transition-colors'>
               <div
                 className='pointer-events-none absolute inset-y-0 right-0 flex items-center pl-3'
                 aria-hidden='true'
@@ -99,7 +99,7 @@ const LeaderboardTable = () => {
                 <Image
                   src={MagnifyingGlass}
                   alt='Search'
-                  className='mr-3 h-4 w-4 text-gray-400'
+                  className='mr-3 h-4 w-4 opacity-30 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity'
                   aria-hidden='true'
                 />
               </div>
@@ -109,7 +109,7 @@ const LeaderboardTable = () => {
                 placeholder={t('search placeholder')}
                 value={currentSearch}
                 onChange={handleSearchEvent}
-                className='h-9 block w-full rounded-lg border-0 font-medium border-transparent pl-4 pr-10 sm:text-sm'
+                className='h-[44px] block w-full rounded-lg border-0 font-medium border-transparent pl-4 pr-10 sm:text-sm'
               />
             </div>
           </div>
@@ -134,7 +134,7 @@ const LeaderboardTable = () => {
             fetchPrevious={() => fetchPreviousLeaderboard()}
           />
         </div>
-        <div className='glass-card border-gray-200 border-2 rounded-xl flex flex-col gap-4 p-3 sm:px-8 sm:py-6 lg:px-12 lg:py-10 relative'>
+        <div className='glass-card border-gray-200 border-2 rounded-xl flex flex-col gap-4 p-3 sm:px-8 sm:py-6 lg:px-12 relative'>
           {leaderboard?.map((entry: LeaderboardItem, index) => (
             <TableRow
               key={entry.address}

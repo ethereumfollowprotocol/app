@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
-import Cart from 'public/assets/icons/cart.svg'
+import Cart from 'public/assets/icons/cart.png'
 import { formatNumber } from '#/utils/formatNumber'
 
 const CartButton = ({ cartItemsCount }: { cartItemsCount: number }) => {

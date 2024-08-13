@@ -12,21 +12,20 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const user = params.user
 
-  if (Number.isInteger(Number(user)) && !isAddress(user))
-    return { title: 'User - Ethereum Follow Protocol' }
+  if (Number.isInteger(Number(user)) && !isAddress(user)) return { title: `List ${user} | EFP` }
 
   try {
     const response = await fetch(`https://api.ensdata.net/${user}`).then(res => res.json())
-    const newImage = response.avatar_url
+    // const newImage = response.avatar_url
 
     return {
-      title: response.error ? 'User - Ethereum Follow Protocol' : response.ens_primary,
-      openGraph: {
-        url: newImage
-      }
+      title: `${response.error ? user : response.ens_primary} | EFP`
+      // openGraph: {
+      //   url: newImage
+      // }
     }
   } catch (err: unknown) {
-    return { title: 'User - Ethereum Follow Protocol' }
+    return { title: `${user} | EFP` }
   }
 }
 

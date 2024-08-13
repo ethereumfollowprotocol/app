@@ -62,7 +62,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
       <div className='flex justify-between w-full'>
         <div className='flex gap-4 justify-between items-center w-full'>
           <div ref={clickAwaySearchRef} className='flex gap-3 items-center'>
-            <p className='capitalize text-lg lg:text-xl font-bold'>{t(title)}</p>
+            <p className='capitalize text-lg lg:text-2xl font-bold'>{t(title)}</p>
             <div className='relative z-50'>
               <div
                 className='cursor-pointer max-w-40 flex items-center gap-2 hover:opacity-75'

@@ -8,7 +8,7 @@ import useSearch from './hooks/useSearch.ts'
 import GraySpinner from '../gray-spinner.tsx'
 import LoadingSpinner from '../loading-spinner.tsx'
 import { truncateAddress } from '#/lib/utilities.ts'
-import MagnifyingGlass from 'public/assets/icons/magnifying-glass.svg'
+import MagnifyingGlass from 'public/assets/icons/magnifying-glass-dark.svg'
 import { PrimaryButton } from '../primary-button.tsx'
 
 export function Search({
@@ -43,7 +43,7 @@ export function Search({
         Search
       </label>
       <div className={`rounded-md  gap-2 ${isEditor ? 'flex' : 'hidden md:flex'}`}>
-        <div className='w-full relative'>
+        <div className='w-full relative group'>
           {isEditor ? (
             <>
               <textarea
@@ -77,7 +77,7 @@ export function Search({
                       !!searchResult
                   )
                 }}
-                className='max-h-20 min-h-12 block text-wrap w-full py-3 pr-12 truncate outline-none font-medium rounded-xl border-2 border-gray-200 pl-4 sm:text-sm bg-white/70'
+                className='max-h-20 min-h-12 block text-wrap w-full py-3 pr-12 truncate outline-none font-medium rounded-xl border-2 hover:border-darkGrey focus:border-darkGrey transition-colors border-gray-200 pl-4 sm:text-sm bg-white/70'
               />
             </>
           ) : (
@@ -108,7 +108,7 @@ export function Search({
                     !!searchResult
                 )
               }}
-              className='h-12 block pr-12 w-full truncate font-medium rounded-xl border-2 border-gray-200 pl-4 sm:text-sm bg-white/70'
+              className='h-12 block pr-12 w-full truncate font-medium rounded-xl border-2 border-gray-200 pl-4 sm:text-sm bg-white/70 focus:border-darkGrey hover:border-darkGrey transition-colors'
             />
           )}
           <div
@@ -123,7 +123,7 @@ export function Search({
               <Image
                 src={MagnifyingGlass}
                 alt='Search'
-                className={`h-5 w-5 text-grey`}
+                className='h-5 w-5 opacity-30 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100'
                 aria-hidden='true'
               />
             )}

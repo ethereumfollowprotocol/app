@@ -14,6 +14,7 @@ import { tagRegex } from '#/lib/constants/regex'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useCart } from '#/contexts/cart-context'
 import { truncateAddress } from '#/lib/utilities'
+import { formatNumber } from '#/utils/formatNumber'
 import { BLOCKED_MUTED_TAGS } from '#/lib/constants'
 import useFollowState from '#/hooks/use-follow-state'
 import Plus from 'public/assets/icons/plus-squared.svg'
@@ -314,11 +315,11 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
               userAddress && !isFollowersEmpty ? 'lg:hidden' : ''
             } hidden sm:flex`}
           >
-            <p className='font-semibold text-lg text-darkGrey'>{counts.following}</p>
+            <p className='font-semibold text-lg text-darkGrey'>{formatNumber(counts.following)}</p>
             <p className='font-semibold text-sm text-gray-500'>{t('following')}</p>
           </div>
           <div className='flex flex-col items-center'>
-            <p className='font-semibold text-lg text-darkGrey'>{counts.followers}</p>
+            <p className='font-semibold text-lg text-darkGrey'>{formatNumber(counts.followers)}</p>
             <p className='font-semibold text-sm text-gray-500'>{t('followers')}</p>
           </div>
         </div>

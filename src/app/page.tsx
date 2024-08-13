@@ -4,7 +4,7 @@ import Landing from '#/components/home/landing'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Ethereum Follow Protocol'
+  title: 'Home | EFP'
 }
 
 const HomePage = () => {

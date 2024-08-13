@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Cart from './components/cart'
 
 export const metadata: Metadata = {
-  title: 'Editor - Ethereum Follow Protocol'
+  title: 'Cart | EFP'
 }
 
 export default function EditorPage() {
