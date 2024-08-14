@@ -58,7 +58,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
   )
 
   return (
-    <div className='flex flex-col gap-4 w-full'>
+    <div className='flex flex-col gap-4 px-2 pt-3 w-full'>
       <div className='flex justify-between w-full'>
         <div className='flex gap-4 justify-between items-center w-full'>
           <div ref={clickAwaySearchRef} className='flex gap-3 items-center'>

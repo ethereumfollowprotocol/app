@@ -3,8 +3,9 @@ import type { Address } from 'viem'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
 
-import { resolveEnsName } from '#/utils/ens'
+import { resolveEnsProfile } from '#/utils/ens'
 import LoadingCell, { LIGHT_LOADING_GRADIENT } from '#/components/loading-cell'
+import { Avatar } from '#/components/avatar'
 
 interface SettingsInputProps {
   option: string
@@ -32,9 +33,15 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
   const { t } = useTranslation()
   const { address: connectedAddress } = useAccount()
 
-  const { data: resolvedName, isLoading: isNameLoading } = useQuery({
-    queryKey: ['ens name', value],
-    queryFn: async () => value && (await resolveEnsName(value as Address))
+  const { data: resolvedProfile, isLoading: isNameLoading } = useQuery({
+    queryKey: ['ens metadata', value],
+    queryFn: async () =>
+      value
+        ? await resolveEnsProfile(value as Address)
+        : {
+            name: null,
+            avatar: null
+          }
   })
 
   return (
@@ -59,24 +66,30 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
           className='p-3 font-medium truncate rounded-lg w-full bg-white/70 disabled:text-gray-400 disabled:cursor-not-allowed'
         />
       )}
-      {(value.includes('.') || resolvedName) && (
+      {(value.includes('.') || resolvedProfile?.name) && (
         <div
-          className={`font-medium items-center flex gap-2 h-5 text-sm ${
-            (value.includes('.') && resolvedAddress && resolvedAddress?.length > 0) || resolvedName
+          className={`font-medium flex items-center gap-2 h-10 text-sm ${
+            (value.includes('.') && resolvedAddress && resolvedAddress?.length > 0) ||
+            resolvedProfile?.name
               ? 'text-gray-500'
               : 'text-red-400'
           }`}
         >
-          <p className='text-gray-500 h-full'>{t('resolved')}</p>
+          {/* <p className='text-gray-500 h-full'>{t('resolved')}</p> */}
+          <Avatar
+            name={resolvedProfile?.name || value}
+            size='h-8 w-8 rounded-full'
+            avatarUrl={resolvedProfile?.avatar}
+          />
           {isLoading || isNameLoading ? (
             <LoadingCell className='w-full h-5 rounded-md' gradient={LIGHT_LOADING_GRADIENT} />
           ) : (
-            <p className='h-full truncate'>
+            <p className='font-semibold truncate'>
               {value.includes('.')
                 ? resolvedAddress && resolvedAddress?.length > 0
                   ? resolvedAddress
                   : t('no resolution')
-                : resolvedName}
+                : resolvedProfile?.name}
             </p>
           )}
         </div>

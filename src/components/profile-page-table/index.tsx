@@ -65,9 +65,9 @@ export function UserProfilePageTable({
     if (!showTags) setSelectedTags(isShowingBlocked ? ['All'] : [])
   }, [showTags])
 
+  const { t } = useTranslation()
   const { lists } = useEFPProfile()
   const isProfile = useIsEditView()
-  const { t } = useTranslation()
 
   const showFollowsYouBadges = !isProfile || title === 'following'
 

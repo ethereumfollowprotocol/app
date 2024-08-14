@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
 import LineDesktop from 'public/assets/lines/desktop/line-2.svg'
-import SocialGraphImage from 'public/assets/art/social-graph.png'
+import SocialGraphImage from 'public/assets/art/social-graph.svg'
 import LineMobileFirst from 'public/assets/lines/mobile/line-2.svg'
 import LineMobileSecond from 'public/assets/lines/mobile/line-3.svg'
 
