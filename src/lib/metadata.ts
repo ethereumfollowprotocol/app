@@ -15,22 +15,22 @@ export const sharedMetadataIcons: Metadata['icons'] = [
 export const sharedMetadataOpenGraph: Metadata['openGraph'] = {
   type: 'website',
   // title: metadataTitle,
-  description: metadataDescription,
+  // description: metadataDescription,
   locale: 'en_US',
-  siteName: metadataSiteName,
-  url: 'https://testing.ethfollow.xyz',
-  emails: ['contact@ethfollow.xyz'],
-  images: [
-    {
-      url: 'https://testing.ethfollow.xyz/assets/banner.png'
-    }
-  ]
+  // siteName: metadataSiteName,
+  // url: 'https://testing.ethfollow.xyz',
+  emails: ['contact@ethfollow.xyz']
+  // images: [
+  //   {
+  //     url: 'https://testing.ethfollow.xyz/assets/banner.png'
+  //   }
+  // ]
 }
 export const sharedMetadataTwitter: Metadata['twitter'] = {
   card: 'summary_large_image',
   site: '@ethfollowpr',
-  creator: '@ethfollowpr',
-  images: 'https://testing.ethfollow.xyz/assets/banner.png'
+  creator: '@ethfollowpr'
+  // images: 'https://testing.ethfollow.xyz/assets/banner.png'
 }
 
 export const sharedMetadata: Metadata = {

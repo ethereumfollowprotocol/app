@@ -4,7 +4,21 @@ import Landing from '#/components/home/landing'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Home | EFP'
+  title: 'Home | EFP',
+  openGraph: {
+    title: 'Home | EFP',
+    siteName: 'App - Ethereum Follow Protocol',
+    description: 'Social graph for Ethereum',
+    url: 'https://testing.ethfollow.xyz',
+    images: [
+      {
+        url: 'https://testing.ethfollow.xyz/assets/banners/home.png'
+      }
+    ]
+  },
+  twitter: {
+    images: 'https://testing.ethfollow.xyz/assets/banners/home.png'
+  }
 }
 
 const HomePage = () => {

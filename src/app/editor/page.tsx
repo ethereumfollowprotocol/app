@@ -2,7 +2,21 @@ import type { Metadata } from 'next'
 import Cart from './components/cart'
 
 export const metadata: Metadata = {
-  title: 'Cart | EFP'
+  title: 'Cart | EFP',
+  openGraph: {
+    title: 'Cart | EFP',
+    siteName: 'Cart - Ethereum Follow Protocol',
+    description: 'Confirm your changes on chain',
+    url: 'https://testing.ethfollow.xyz/editor',
+    images: [
+      {
+        url: 'https://testing.ethfollow.xyz/assets/banners/editor.png'
+      }
+    ]
+  },
+  twitter: {
+    images: 'https://testing.ethfollow.xyz/assets/banners/editor.png'
+  }
 }
 
 export default function EditorPage() {

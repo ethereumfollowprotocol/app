@@ -2,7 +2,21 @@ import type { Metadata } from 'next'
 import Members from './components/members'
 
 export const metadata: Metadata = {
-  title: 'Team | EFP'
+  title: 'Team | EFP',
+  openGraph: {
+    title: 'Team | EFP',
+    siteName: 'Team - Ethereum Follow Protocol',
+    description: 'Discover the team behind Ethereum Follow Protocol',
+    url: 'https://testing.ethfollow.xyz/leaderboard',
+    images: [
+      {
+        url: 'https://testing.ethfollow.xyz/assets/banners/team.png'
+      }
+    ]
+  },
+  twitter: {
+    images: 'https://testing.ethfollow.xyz/assets/banners/team.png'
+  }
 }
 
 const TeamPage = () => {
