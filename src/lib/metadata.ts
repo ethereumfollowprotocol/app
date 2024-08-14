@@ -4,7 +4,7 @@ export const metadataBaseUrl = new URL('https://testing.ethfollow.xyz')
 
 // export const metadataTitle = 'Ethereum Follow Protocol'
 export const metadataSiteName = 'App - Ethereum Follow Protocol'
-export const metadataDescription = 'Social graph for Ethereum'
+export const metadataDescription = "It's about who you know. The social graph for Ethereum."
 
 export const sharedMetadataIcons: Metadata['icons'] = [
   {
@@ -15,7 +15,7 @@ export const sharedMetadataIcons: Metadata['icons'] = [
 export const sharedMetadataOpenGraph: Metadata['openGraph'] = {
   type: 'website',
   // title: metadataTitle,
-  // description: metadataDescription,
+  description: metadataDescription,
   locale: 'en_US',
   // siteName: metadataSiteName,
   // url: 'https://testing.ethfollow.xyz',
@@ -29,7 +29,8 @@ export const sharedMetadataOpenGraph: Metadata['openGraph'] = {
 export const sharedMetadataTwitter: Metadata['twitter'] = {
   card: 'summary_large_image',
   site: '@ethfollowpr',
-  creator: '@ethfollowpr'
+  creator: '@ethfollowpr',
+  description: metadataDescription
   // images: 'https://testing.ethfollow.xyz/assets/banner.png'
 }
 

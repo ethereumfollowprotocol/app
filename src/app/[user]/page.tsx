@@ -10,7 +10,24 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const user = params.user
 
-  if (Number.isInteger(Number(user)) && !isAddress(user)) return { title: `List ${user} | EFP` }
+  if (Number.isInteger(Number(user)) && !isAddress(user))
+    return {
+      title: `List #${user} | EFP`,
+      openGraph: {
+        title: `List #${user} | EFP`,
+        siteName: `List #${user} - EFP profile`,
+        description: `List #${user} - EFP profile`,
+        url: `https://testing.ethfollow.xyz/${user}`,
+        images: [
+          {
+            url: `https://testing.ethfollow.xyz/og?user=${user}`
+          }
+        ]
+      },
+      twitter: {
+        images: `https://testing.ethfollow.xyz/og?user=${user}`
+      }
+    }
 
   try {
     const response = await fetch(`https://api.ensdata.net/${user}`).then(res => res.json())

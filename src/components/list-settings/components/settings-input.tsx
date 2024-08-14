@@ -1,5 +1,5 @@
 import { useAccount } from 'wagmi'
-import type { Address } from 'viem'
+import { isAddress, type Address } from 'viem'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
 
@@ -36,8 +36,8 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
   const { data: resolvedProfile, isLoading: isNameLoading } = useQuery({
     queryKey: ['ens metadata', value],
     queryFn: async () =>
-      value
-        ? await resolveEnsProfile(value as Address)
+      isAddress(value) || isAddress(resolvedAddress || '')
+        ? await resolveEnsProfile((resolvedAddress || value) as Address)
         : {
             name: null,
             avatar: null
