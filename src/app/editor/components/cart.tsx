@@ -128,7 +128,7 @@ const Cart = () => {
           </div>
           <div className='flex h-full flex-col glass-card rounded-2xl border-2 border-gray-200 gap-3 md:gap-4 md:py-8 pt-5 pb-2 px-1 sm:px-3 md:px-4 w-full xl:w-2/3'>
             <div className='flex justify-between gap-2 flex-row items-center px-3 md:px-4'>
-              <h3 className='font-bold text-left text-xl sm:text-2xl'>{t('unc-changes')}</h3>
+              <h3 className='font-bold text-left text-xl sm:text-2xl'>{t('cart unc-changes')}</h3>
               {totalCartItems > 0 && (
                 <button
                   className='flex gap-2 cursor-pointer items-center hover:opacity-70'

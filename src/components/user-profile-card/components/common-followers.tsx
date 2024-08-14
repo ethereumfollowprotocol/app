@@ -57,14 +57,7 @@ const CommonFollowers: React.FC<CommonFollowersProps> = ({ address }) => {
           style={{ maxWidth: 'calc(100% - 84px)' }}
         >
           {displayedResults
-            ?.map(
-              (profile, index) =>
-                `${
-                  (resultLength === 3 && index === 2) || (resultLength === 2 && index === 1)
-                    ? 'and '
-                    : ''
-                }${profile.name || truncateAddress(profile.address)}`
-            )
+            ?.map(profile => profile.name || truncateAddress(profile.address))
             .join(', ')}{' '}
           {resultLength > 3 &&
             `and ${resultLength - 3} ${resultLength === 4 ? 'other' : 'others'} you know`}{' '}

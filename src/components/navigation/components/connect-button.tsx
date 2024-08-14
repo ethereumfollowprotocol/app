@@ -218,7 +218,7 @@ const ConnectButton = () => {
                   src={selectedLanguage?.icon || ''}
                   alt='Language icon'
                   width={24}
-                  height={8}
+                  height={10}
                 />
                 <p className='font-semibold '>{selectedLanguage?.language}</p>
               </div>
@@ -258,7 +258,7 @@ const ConnectButton = () => {
                       />
                     )}
                     <div className='flex gap-2 pr-3'>
-                      <Image src={lang.icon} alt='Language icon' width={24} height={8} />
+                      <Image src={lang.icon} alt='Language icon' width={24} height={10} />
                       <p>{lang.language}</p>
                     </div>
                   </div>

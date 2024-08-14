@@ -28,7 +28,7 @@ export const fetchRecommendations = async (
     const formattedData =
       endpoint === 'recommended'
         ? data.recommended.map(addr => ({ address: addr }))
-        : (data.discover as DiscoverItemType[])
+        : (data.latestFollows as DiscoverItemType[])
 
     return formattedData
   } catch (err: unknown) {

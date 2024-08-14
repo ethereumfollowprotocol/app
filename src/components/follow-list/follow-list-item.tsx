@@ -41,7 +41,7 @@ const FollowListItem: React.FC<FollowListItemProps> = ({
     queryFn: async () => (ensProfile ? ensProfile : await resolveEnsProfile(address))
   })
 
-  const profileName = ensProfile ? ensProfile.name : fetchedEnsProfile?.name
+  const profileName = fetchedEnsProfile?.name
   const profileAvatar = fetchedEnsProfile?.avatar
 
   return (

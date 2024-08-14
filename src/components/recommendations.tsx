@@ -50,12 +50,18 @@ const Recommendations = ({
         profiles={displayedProfiles?.map(account => ({
           address: account.address,
           tags: [] as string[],
-          ens: undefined,
+          ens:
+            endpoint === 'discover'
+              ? {
+                  name: (account as DiscoverItemType).name || undefined,
+                  avatar: (account as DiscoverItemType).avatar || undefined
+                }
+              : undefined,
           counts:
             endpoint === 'discover'
               ? {
-                  followers: (account as DiscoverItemType).followersCount,
-                  following: (account as DiscoverItemType).followingCount
+                  followers: (account as DiscoverItemType).followers,
+                  following: (account as DiscoverItemType).following
                 }
               : undefined
         }))}

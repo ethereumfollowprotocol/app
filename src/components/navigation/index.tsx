@@ -100,8 +100,8 @@ const Navigation = () => {
                             className='absolute left-2 top-[17px]'
                           />
                         )}
-                        <div className='flex gap-2 pr-3'>
-                          <Image src={lang.icon} alt='Language icon' width={16} height={8} />
+                        <div className='flex gap-2 pr-5'>
+                          <Image src={lang.icon} alt='Language icon' width={24} height={10} />
                           <p>{lang.language}</p>
                         </div>
                       </div>

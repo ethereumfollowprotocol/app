@@ -7,12 +7,14 @@ export type ProfileTableTitleType = 'following' | 'followers' | 'Blocked/Muted B
 
 export type DiscoverItemType = {
   address: Address
-  followersCount: number
-  followingCount: number
+  name: string | null
+  avatar: string | null
+  followers: number
+  following: number
 }
 
 export type DiscoverResponseType = {
-  discover: DiscoverItemType[]
+  latestFollows: DiscoverItemType[]
   recommended: Address[]
 }
 

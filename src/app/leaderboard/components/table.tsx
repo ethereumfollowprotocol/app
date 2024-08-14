@@ -62,15 +62,15 @@ const LeaderboardTable = () => {
     <>
       <div className='mb-10'>
         {isLeaderboardCountLoading ? (
-          <LoadingCell className='h-7 w-40 rounded-lg' />
+          <LoadingCell className='h-6 w-40 rounded-lg' />
         ) : (
           <p className='h-2 font-semibold text-sm sm:text-lg'>{`${formatNumber(
             Number(leaderboardCount?.leaderboardCount)
           )} ${t('accounts')}`}</p>
         )}
       </div>
-      <div className='flex w-full justify-center lg:justify-end max-w-[1200px] text-sm mb-2 font-semibold text-[#aaaaaa] md:text-[#CDCDCD] italic'>
-        {t('last updated')}&nbsp;
+      <div className='flex w-full gap-1.5 justify-center lg:justify-end max-w-[1200px] text-sm mb-2 font-semibold text-[#aaaaaa] md:text-[#CDCDCD] italic'>
+        {t('last updated')}
         <span>
           {isLeaderboardLoading ? <LoadingCell className='h-5 w-16 rounded-md' /> : timeStamp}
         </span>
@@ -99,7 +99,7 @@ const LeaderboardTable = () => {
                 <Image
                   src={MagnifyingGlass}
                   alt='Search'
-                  className='mr-3 h-4 w-4 opacity-30 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity'
+                  className='mr-3 h-5 w-5 opacity-30 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity'
                   aria-hidden='true'
                 />
               </div>
@@ -109,7 +109,7 @@ const LeaderboardTable = () => {
                 placeholder={t('search placeholder')}
                 value={currentSearch}
                 onChange={handleSearchEvent}
-                className='h-[44px] block w-full rounded-lg border-0 font-medium border-transparent pl-4 pr-10 sm:text-sm'
+                className='h-[44px] block w-full rounded-xl border-0 font-medium border-transparent pl-4 pr-10 sm:text-sm'
               />
             </div>
           </div>
