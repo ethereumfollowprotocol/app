@@ -22,13 +22,13 @@ const theme: Record<
     border: 'border-0 '
   },
   'Pending Following': {
-    bg: 'bg-white hover:bg-[#C6C6C6]',
+    bg: 'bg-white hover:bg-[#D0D0D0]',
     text: 'text-gray-900',
     border:
       'border-2 border-gray-200 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400'
   },
   Following: {
-    bg: 'bg-white hover:bg-[#C6C6C6]',
+    bg: 'bg-white hover:bg-[#D0D0D0]',
     text: 'text-gray-900',
     border: 'border-2 border-gray-200'
   },
