@@ -12,7 +12,7 @@ export const useIsEditView = (): boolean => {
   const { address: userAddress } = useAccount()
   const { selectedList, lists } = useEFPProfile()
 
-  const isEditor = pathname === '/editor'
+  const isEditor = pathname === '/cart'
   const isProfile =
     (pathname?.toLowerCase() === `/${userAddress?.toLowerCase()}` &&
       (selectedList ? selectedList === Number(lists?.primary_list) : true)) ||

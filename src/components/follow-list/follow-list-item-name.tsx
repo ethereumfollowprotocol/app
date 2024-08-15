@@ -83,7 +83,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
   const pathname = usePathname()
   const { t } = useTranslation()
   const { address: userAddress } = useAccount()
-  const isEditor = pathname.includes('/editor')
+  const isEditor = pathname.includes('/cart')
   const { followerTag } = useFollowState({
     address,
     type: 'follower'

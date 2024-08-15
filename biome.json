@@ -60,6 +60,7 @@
         "noNamespaceImport": "off",
         "useFragmentSyntax": "off",
         "useBlockStatements": "off",
+        "useShorthandAssign": "off",
         "useNumberNamespace": "off",
         "useNamingConvention": "off",
         "useShorthandArrayType": "off",

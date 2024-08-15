@@ -26,7 +26,8 @@ const CommonFollowers: React.FC<CommonFollowersProps> = ({ address }) => {
 
   if (!userAddress || data?.results.length === 0) return null
 
-  const displayedResults = data?.results.slice(0, 3)
+  const displayedAvatars = data?.results.slice(0, 3)
+  const displayedNames = data?.results.slice(0, 2)
   const resultLength = data?.length || 0
 
   return (
@@ -39,7 +40,7 @@ const CommonFollowers: React.FC<CommonFollowersProps> = ({ address }) => {
             <LoadingCell className='w-9 h-9 rounded-full z-20 -ml-[18px]' />
           </>
         ) : (
-          displayedResults?.map((result, index) => (
+          displayedAvatars?.map((result, index) => (
             <Avatar
               key={result.address}
               size={`w-9 h-9 rounded-full ${index === 0 ? 'z-0' : `-ml-[18px] z-${index * 10}`}`}
@@ -56,11 +57,11 @@ const CommonFollowers: React.FC<CommonFollowersProps> = ({ address }) => {
           className='text-left font-medium text-[#888] text-sm overflow-hidden'
           style={{ maxWidth: 'calc(100% - 84px)' }}
         >
-          {displayedResults
+          {displayedNames
             ?.map(profile => profile.name || truncateAddress(profile.address))
             .join(', ')}{' '}
-          {resultLength > 3 &&
-            `and ${resultLength - 3} ${resultLength === 4 ? 'other' : 'others'} you know`}{' '}
+          {resultLength > 2 &&
+            `and ${resultLength - 2} ${resultLength === 3 ? 'other' : 'others'} you know`}{' '}
           {resultLength === 1 ? 'follows' : 'follow'} them
         </p>
       )}

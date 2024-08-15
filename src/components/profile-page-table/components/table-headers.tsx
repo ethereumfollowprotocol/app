@@ -7,6 +7,7 @@ import LoadingCell from '#/components/loading-cell'
 import { formatNumber } from '#/utils/formatNumber'
 import ArrowDown from 'public/assets/icons/arrow-down.svg'
 import type { ProfileTableTitleType } from '#/types/common'
+import GreenCheck from 'public/assets/icons/check-green.svg'
 import SearchIcon from 'public/assets/icons/magnifying-glass.svg'
 import { BLOCKED_MUTED_TAGS, SORT_OPTIONS } from '#/lib/constants'
 import type { FollowSortType, TagCountType } from '#/types/requests'
@@ -130,14 +131,22 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 className={`transition-transform ${showSort ? 'rotate-180' : ''}`}
               />
               {showSort && (
-                <div className=' bg-white/80 w-44 glass-card p-1 gap-1 z-50 shadow-md border-2 rounded-md border-gray-200 absolute top-[120%] flex flex-col items-center right-0'>
+                <div className=' bg-white/80 glass-card p-1 gap-1 z-50 shadow-md border-2 rounded-md border-gray-200 absolute top-[120%] flex flex-col items-center right-0'>
                   {SORT_OPTIONS.map(option => (
                     <div
-                      className='font-bold capitalize w-full rounded-md hover:bg-slate-100 transition-colors p-3 text-center text-gray-500 hover:text-darkGrey'
+                      className='font-bold capitalize w-full text-nowrap relative rounded-md hover:bg-slate-100 transition-colors p-3 pl-8 text-gray-500 hover:text-darkGrey'
                       key={option}
                       onClick={() => setSort(option)}
                     >
-                      {t(option)}
+                      {sort === option && (
+                        <Image
+                          src={GreenCheck}
+                          alt='List selected'
+                          width={16}
+                          className='absolute left-2 top-[17px]'
+                        />
+                      )}
+                      <p>{t(option)}</p>
                     </div>
                   ))}
                 </div>

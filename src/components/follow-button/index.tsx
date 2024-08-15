@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import LoadingCell from '../loading-cell'
+import { useCoolMode } from './useCoolMode'
 import MainnetRed from 'public/assets/mainnet-red.svg'
 import MainnetBlack from 'public/assets/mainnet-black.svg'
 import { type FollowButtonState, useFollowButton } from './use-follow-button'
@@ -124,38 +125,40 @@ const FollowButton: React.FC<FollowButtonProps> = ({
     isBlockedBy
   })
 
-  // if (address?.toLowerCase() === userAddress?.toLowerCase()) return null
+  const coolEfpLogo = useCoolMode('/assets/mainnet-black.svg', false, true, isLoading)
 
   return isLoading ? (
     <div className={`rounded-xl ${isBlockedBy ? 'w-[132px]' : 'w-[107px]'} h-[37px]`}>
       <LoadingCell className='h-full w-full rounded-lg' />
     </div>
   ) : (
-    <button
-      className={clsx([
-        theme[buttonState].bg,
-        theme[buttonState].text,
-        theme[buttonState].border,
-        'rounded-xl relative text-sm flex items-center transition-colors gap-1.5 justify-center font-bold',
-        'h-[37px] px-2 py-1.5', // Fixed width for consistent layout
-        className
-      ])}
-      style={{
-        width: isBlockedBy ? '132px' : '107px'
-      }}
-      onClick={() => {
-        if (!userAddress && openConnectModal) {
-          openConnectModal()
-          return
-        }
+    <div ref={coolEfpLogo}>
+      <button
+        className={clsx([
+          theme[buttonState].bg,
+          theme[buttonState].text,
+          theme[buttonState].border,
+          'rounded-xl relative text-sm flex items-center transition-colors gap-1.5 justify-center font-bold',
+          'h-[37px] px-2 py-1.5', // Fixed width for consistent layout
+          className
+        ])}
+        style={{
+          width: isBlockedBy ? '132px' : '107px'
+        }}
+        onClick={() => {
+          if (!userAddress && openConnectModal) {
+            openConnectModal()
+            return
+          }
 
-        handleAction()
-      }}
-      {...props}
-    >
-      <Image alt='mainnet logo' src={theme[buttonState].imageSrc || MainnetBlack} width={16} />
-      {t(buttonText)}
-    </button>
+          handleAction()
+        }}
+        {...props}
+      >
+        <Image alt='mainnet logo' src={theme[buttonState].imageSrc || MainnetBlack} width={16} />
+        {t(buttonText)}
+      </button>
+    </div>
   )
 }
 

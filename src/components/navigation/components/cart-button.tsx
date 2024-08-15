@@ -10,10 +10,10 @@ import { formatNumber } from '#/utils/formatNumber'
 const CartButton = ({ cartItemsCount }: { cartItemsCount: number }) => {
   const pathname = usePathname()
   return (
-    <Link href='/editor' passHref={true} legacyBehavior={true}>
+    <Link href='/cart' passHref={true} legacyBehavior={true}>
       <div
         className={`glass-card border-2 h-[48px] group justify-center items-center w-[48px] border-darkGrey transition-all cursor-pointer hover:border-opacity-100 relative flex rounded-full ${
-          pathname === '/editor' ? 'border-opacity-100' : 'border-opacity-40'
+          pathname === '/cart' ? 'border-opacity-100' : 'border-opacity-40'
         }`}
       >
         <Image
@@ -21,7 +21,7 @@ const CartButton = ({ cartItemsCount }: { cartItemsCount: number }) => {
           alt='cart button'
           width='22'
           className={`${
-            pathname === '/editor' ? 'opacity-100' : 'opacity-40'
+            pathname === '/cart' ? 'opacity-100' : 'opacity-40'
           } group-hover:opacity-100 transition-opacity -translate-x-px`}
         />
         {cartItemsCount === 0 ? null : (

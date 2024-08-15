@@ -27,7 +27,7 @@
   "latest first": "Latest First",
   "earliest first": "Earliest First",
   "not primary list": "Not confirmed by user",
-  "not primary list tooltip": "This list is not confirmed to be owned by the listed user. A user must set a list as their Primary List to confirm it is their list.",
+  "not primary list tooltip": "This list is not confirmed to be owned by the displayed user. A user must set a list as their Primary List to confirm it as their list.",
   "following myprofile empty first": "You don't follow anyone yet. Sad! 😢",
   "following myprofile empty second": "To get started, just browse and start following. Once you confirm them onchain, they'll show up here.",
   "followers myprofile empty": "No followers",

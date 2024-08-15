@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     title: 'Cart | EFP',
     siteName: 'Cart - Ethereum Follow Protocol',
     description: 'Confirm your changes on chain',
-    url: 'https://testing.ethfollow.xyz/editor',
+    url: 'https://testing.ethfollow.xyz/cart',
     images: [
       {
         url: 'https://testing.ethfollow.xyz/assets/banners/editor.png'

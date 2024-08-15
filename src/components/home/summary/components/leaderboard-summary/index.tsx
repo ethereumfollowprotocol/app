@@ -1,5 +1,5 @@
 const LeaderboardSummary = () => {
-  return <div>LeaderboardSummary</div>
+  return <div></div>
 }
 
 export default LeaderboardSummary
