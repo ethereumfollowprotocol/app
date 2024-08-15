@@ -2,7 +2,7 @@ import LoadingCell from '#/components/loading-cell'
 
 const LoadingRow = () => {
   return (
-    <div className='flex items-center w-full gap-4 md:gap-8 h-[75px]'>
+    <div className='flex items-center w-full gap-4 p-2 sm:p-4 md:gap-8 h-[75px]'>
       <div className='tabular-nums w-6 xxs:w-8 sm:w-10 flex justify-center text-right'>
         <LoadingCell className='h-10 sm:h-12 w-6 xxs:w-8 sm:w-10 rounded-lg' />
       </div>

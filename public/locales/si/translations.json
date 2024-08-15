@@ -20,6 +20,7 @@
   "no profile": "Ni profila",
   "profile error": "Uporabnik ne obstaja",
   "not primary list": "Ni Glavni Seznam",
+  "not primary list tooltip": "Ta seznam ni potrjen s strani uporabnika. Uporabnik mora nastaviti seznam kot Glavni Seznam, s čimer potrdi, da je to njegov seznam.",
   "Block Back": "Blokiraj Nazaj",
   "block-mute": "Seznam blokirani/utišani",
   "settings": "Nastavitve seznama",
