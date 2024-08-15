@@ -48,6 +48,11 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   isLoading,
   showMoreOptions
 }) => {
+  const [cardTooltipOpen, setCardTooltipOpen] = useState(false)
+  const clickAwayCardTooltip = useClickAway<HTMLDivElement>(() => {
+    setCardTooltipOpen(false)
+  })
+
   const [moreOptionsDropdownOpen, setMoreOptionsDropdownOpen] = useState(false)
   const clickAwayMoreOptionsRef = useClickAway<HTMLDivElement>(() => {
     setMoreOptionsDropdownOpen(false)
@@ -200,11 +205,18 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
             {!!profileList && <p className='text-gray-500 text-sm sm:text-base'>#{profileList}</p>}
             {profileList
               ? profileList !== Number(profile.primary_list) && (
-                  <div className='relative group  cursor-help'>
-                    <p className='text-[11px] italic text-end rounded-full py-0.5 px-2 bg-gray-300'>
+                  <div ref={clickAwayCardTooltip} className='relative group  cursor-help'>
+                    <p
+                      onClick={() => setCardTooltipOpen(!cardTooltipOpen)}
+                      className='text-[11px] italic text-end rounded-full py-0.5 px-2 bg-gray-300'
+                    >
                       {t('not primary list')}
                     </p>
-                    <div className='hidden group-hover:block  -translate-y-4 group-hover:translate-y-0 transition-all text-sm w-68 p-2 glass-card border-gray-200 bg-white/90 border-2 mt-2 rounded-md absolute top-5 right-0'>
+                    <div
+                      className={`${
+                        cardTooltipOpen ? 'block' : 'hidden'
+                      } group-hover:block -translate-y-4 group-hover:translate-y-0 transition-all text-sm w-68 p-2 glass-card border-gray-200 bg-white/90 border-2 mt-2 rounded-md absolute top-5 right-0`}
+                    >
                       {t('not primary list tooltip')}
                     </div>
                   </div>

@@ -17,23 +17,23 @@ const theme: Record<
   { bg: string; text: string; border: string; imageSrc?: string }
 > = {
   Follow: {
-    bg: 'bg-kournikova-300',
+    bg: 'bg-kournikova-300 hover:bg-[#EEBE00]',
     text: 'text-zinc-800',
     border: 'border-0 '
   },
   'Pending Following': {
-    bg: 'bg-white',
+    bg: 'bg-white hover:bg-[#C6C6C6]',
     text: 'text-gray-900',
     border:
       'border-2 border-gray-200 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400'
   },
   Following: {
-    bg: 'bg-white',
+    bg: 'bg-white hover:bg-[#C6C6C6]',
     text: 'text-gray-900',
     border: 'border-2 border-gray-200'
   },
   Unfollow: {
-    bg: 'bg-deletion',
+    bg: 'bg-deletion hover:bg-[#CF4C4C]',
     text: 'text-gray-900',
     border:
       'border-0 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-1.5 after:-right-1.5 after:bg-green-400'
@@ -55,49 +55,49 @@ const theme: Record<
       'border-0 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-1.5 after:-right-1.5 after:bg-green-400'
   },
   Block: {
-    bg: 'bg-deletion',
+    bg: 'bg-deletion hover:bg-[#CF4C4C]',
     text: 'text-zinc-800',
     border: 'border-0 '
   },
   'Pending Block': {
-    bg: 'bg-white',
+    bg: 'bg-white hover:bg-[#FFC6C6]',
     text: 'text-red-500',
     border:
       'border-2 border-red-500 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400',
     imageSrc: MainnetRed
   },
   Blocked: {
-    bg: 'bg-white',
+    bg: 'bg-white hover:bg-[#FFC6C6]',
     text: 'text-red-500',
     border: 'border-2 border-red-500',
     imageSrc: MainnetRed
   },
   Unblock: {
-    bg: 'bg-deletion',
+    bg: 'bg-deletion hover:bg-[#CF4C4C]',
     text: 'text-zinc-800',
     border:
       'border-0 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-1.5 after:-right-1.5 after:bg-green-400'
   },
   Mute: {
-    bg: 'bg-kournikova-300',
+    bg: 'bg-kournikova-300 hover:bg-[#CF4C4C]',
     text: 'text-red-500',
     border: 'border-0 '
   },
   'Pending Mute': {
-    bg: 'bg-white',
+    bg: 'bg-white hover:bg-[#FFC6C6]',
     text: 'text-red-500',
     border:
       'border-2 border-red-500 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400',
     imageSrc: MainnetRed
   },
   Muted: {
-    bg: 'bg-white',
+    bg: 'bg-white hover:bg-[#FFC6C6]',
     text: 'text-red-500',
     border: 'border-2 border-red-500',
     imageSrc: MainnetRed
   },
   Unmute: {
-    bg: 'bg-deletion',
+    bg: 'bg-deletion hover:bg-[#CF4C4C]',
     text: 'text-zinc-800',
     border:
       'border-0 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-1.5 after:-right-1.5 after:bg-green-400'
@@ -136,7 +136,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
         theme[buttonState].bg,
         theme[buttonState].text,
         theme[buttonState].border,
-        'rounded-xl relative text-sm flex items-center hover:opacity-70 transition-opacity gap-1.5 justify-center font-bold',
+        'rounded-xl relative text-sm flex items-center transition-colors gap-1.5 justify-center font-bold',
         'h-[37px] px-2 py-1.5', // Fixed width for consistent layout
         className
       ])}
