@@ -38,11 +38,11 @@ const Summary = () => {
         limit={7}
         endpoint='discover'
         header={t('discover')}
-        className={`h-fit w-full p-2 ${
+        className={`h-fit w-full ${
           isFollowersEmpty || !address
             ? 'xl:w-2/3 xl:max-w-[900px]'
             : 'lg:h-[638px] lg:w-[49%] xl:min- xl:w-[36%] w-[470px] 2xl:min-w-[650px] 2xl:w-[45%]'
-        } py-4 sm:p-6 glass-card border-2 border-gray-200 rounded-2xl`}
+        } py-4 sm:p-4 glass-card border-2 border-gray-200 rounded-2xl`}
       />
     </div>
   )

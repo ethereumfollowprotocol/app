@@ -38,15 +38,15 @@ const Recommendations = ({
   const displayedProfiles = limit ? profilesToRecommend?.slice(0, limit) : profilesToRecommend
 
   return (
-    <div className={clsx('flex flex-col gap-8', className)}>
-      <div>
+    <div className={clsx('flex flex-col gap-6', className)}>
+      <div className='px-2 pt-2'>
         <h2 className='text-center lg:text-start text-2xl sm:text-3xl font-bold'>{header}</h2>
         <p className='text-center text-xs text-gray-400 italic font-medium'>{description}</p>
       </div>
       <FollowList
         isLoading={isLoading}
         loadingRows={limit}
-        listClassName='rounded-xl px-1 sm:px-0 gap-7'
+        listClassName='rounded-xl sm:px-0 gap-3'
         profiles={displayedProfiles?.map(account => ({
           address: account.address,
           tags: [] as string[],

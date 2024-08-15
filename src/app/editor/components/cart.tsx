@@ -94,8 +94,8 @@ const Cart = () => {
             <ImportModal onClose={() => setImportModalOpen(false)} platform={platform} />
           )}
           {clearCartModalOpen && <ClearCartModal closeModal={() => setClearCartModalOpen(false)} />}
-          <div className='flex flex-col glass-card gap-6 px-3 py-4 sm:p-6 h-fit rounded-2xl border-2 border-gray-200 xl:max-w-116 w-full xl:w-1/3'>
-            <div className='w-full flex justify-between items-center'>
+          <div className='flex flex-col glass-card gap-4 px-3 py-4 sm:p-4 h-fit rounded-2xl border-2 border-gray-200 xl:max-w-116 w-full xl:w-1/3'>
+            <div className='w-full flex justify-between items-center px-2 pt-2'>
               <h1 className='text-left text-xl sm:text-3xl font-semibold'>{t('editor title')}</h1>
               <div className='flex gap-1'>
                 <p className='text-lg font-semibold mr-1'>{t('import')}</p>
@@ -121,7 +121,7 @@ const Cart = () => {
                 />
               </div>
             </div>
-            <Search size='w-full z-50' isEditor={true} />
+            <Search size='w-full z-50 px-2 pt-2' isEditor={true} />
             <Recommendations header={t('recommendations')} endpoint='recommended' />
           </div>
           <div className='flex h-full flex-col glass-card rounded-2xl border-2 border-gray-200 gap-3 md:gap-4 md:py-6 pt-5 pb-2 px-1 sm:px-3 md:px-4 w-full xl:w-2/3'>
@@ -149,7 +149,7 @@ const Cart = () => {
               profiles={profiles}
               socialProfiles={socialProfiles}
               listClassName='rounded-xl gap-1 sm:gap-0'
-              listItemClassName='rounded-xl md:p-4 p-1.5 sm:p-2 hover:bg-white/80'
+              listItemClassName='rounded-xl md:p-4 p-1.5 sm:p-2'
               showTags={true}
               createListItem={!hasCreatedEfpList}
               canEditTags={roles?.isManager}

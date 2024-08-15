@@ -134,7 +134,7 @@ const LeaderboardTable = () => {
             fetchPrevious={() => fetchPreviousLeaderboard()}
           />
         </div>
-        <div className='glass-card border-gray-200 border-2 rounded-xl flex flex-col gap-4 p-3 sm:px-8 sm:py-6 lg:px-12 relative'>
+        <div className='glass-card border-gray-200 border-2 rounded-xl flex flex-col gap-4 p-1 sm:px-4 sm:py-6 lg:px-8 relative'>
           {leaderboard?.map((entry: LeaderboardItem, index) => (
             <TableRow
               key={entry.address}
