@@ -34,7 +34,7 @@ const Navigation = () => {
   return (
     <header className='w-full fixed z-50 glass-card bg-white/50 top-0 left-0 font-sans border-b-[1px] border-gray-200 p-4 lg:px-6 md:py-6 xl:px-8'>
       <nav className='my-auto flex w-full flex-row items-center justify-between'>
-        <div className='flex w-2/5 sm:w-full justify-start items-center gap-4 md:gap-6 xl:gap-8'>
+        <div className='flex w-2/5 sm:w-3/5 md:w-full justify-start items-center gap-4 md:gap-6 xl:gap-8'>
           <Link href='/' className='select-none' aria-label='Ethereum Follow Protocol Logo link'>
             <Image
               src={FullLogo}
@@ -49,7 +49,7 @@ const Navigation = () => {
               alt='Ethereum Follow Protocol Logo'
             />
           </Link>
-          <div className='sm:w-3/5 md:w-full'>
+          <div className='w-full'>
             <Search size='w-full max-w-[200px] lg:w-5/6 xl:w-full xxs:max-w-[350px]' />
           </div>
         </div>
@@ -61,15 +61,21 @@ const Navigation = () => {
             ) : (
               <div
                 ref={clickAwayLanguageRef}
-                className='w-8 z-50 sm:w-10 mr-2 lg:mr-4 cursor-pointer group relative'
+                className='z-40 lg:mr-4 cursor-pointer group relative'
               >
                 <div
                   onClick={() => setLanguageMenuOpen(!languageMenOpenu)}
                   className='flex gap-1 sm:gap-2 items-center w-full'
                 >
-                  <p className='group-hover:opacity-80 uppercase transition-opacity font-semibold'>
-                    {selectedLanguage?.key}
-                  </p>
+                  <div className='flex gap-2 hover:opacity-75 font-semibold text-darkGrey'>
+                    <Image
+                      src={selectedLanguage?.icon}
+                      alt='Language icon'
+                      width={26}
+                      height={10}
+                    />
+                    <p className='hidden lg:block'>{selectedLanguage?.language}</p>
+                  </div>
                   <Image
                     src={ArrowDown}
                     alt='Show languages'
@@ -101,7 +107,7 @@ const Navigation = () => {
                           />
                         )}
                         <div className='flex gap-2 pr-5'>
-                          <Image src={lang.icon} alt='Language icon' width={24} height={10} />
+                          <Image src={lang.icon} alt='Language icon' width={26} height={10} />
                           <p>{lang.language}</p>
                         </div>
                       </div>

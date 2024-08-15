@@ -1,8 +1,8 @@
 import type { FollowSortType } from '#/types/requests'
 import type { ProfileTableTitleType, ProfileTabType } from '#/types/common'
 
-import SloveniaFlag from 'public/assets/icons/flags/slovenia.png'
-import USAFlag from 'public/assets/icons/flags/united-states-of-america.png'
+import SloveniaFlag from 'public/assets/icons/flags/slovenia.svg'
+import USAFlag from 'public/assets/icons/flags/united-states.svg'
 
 export const APP_NAME = 'Ethereum Follow Protocol'
 export const APP_NAME_SHORT = 'EFP'

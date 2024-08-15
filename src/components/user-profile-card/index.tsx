@@ -186,7 +186,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   return (
     <div
       className={`flex glass-card ${
-        isResponsive ? 'xl:w-76 w-full 2xl:w-86' : 'w-76 3xs:w-86'
+        isResponsive ? 'xl:w-76 w-full 2xl:w-86' : 'w-76 3xs:w-86 h-[710px]'
       } border-2 justify-center flex-col ${borderColor || 'border-[#FFDBD9]'} rounded-xl relative`}
     >
       {isLoading ? (
@@ -207,7 +207,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
               : null}
           </div>
           <div
-            className={`flex w-full items-center flex-col pt-8 px-4 sm:p-6 sm:pt-9 ${
+            className={`flex w-full items-center flex-col pt-8 pb-4 px-4 sm:p-6 sm:pt-9 ${
               followerTag.text === '' && !isResponsive
                 ? 'gap-5 sm:gap-6 md:gap-[68px]'
                 : 'gap-5 sm:gap-6 md:gap-9'

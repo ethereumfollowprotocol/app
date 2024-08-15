@@ -40,7 +40,7 @@ const Recommendations = ({
   return (
     <div className={clsx('flex flex-col gap-8', className)}>
       <div>
-        <h2 className='text-center lg:text-start text-3xl font-bold'>{header}</h2>
+        <h2 className='text-center lg:text-start text-2xl sm:text-3xl font-bold'>{header}</h2>
         <p className='text-center text-xs text-gray-400 italic font-medium'>{description}</p>
       </div>
       <FollowList
@@ -50,13 +50,10 @@ const Recommendations = ({
         profiles={displayedProfiles?.map(account => ({
           address: account.address,
           tags: [] as string[],
-          ens:
-            endpoint === 'discover'
-              ? {
-                  name: (account as DiscoverItemType).name || undefined,
-                  avatar: (account as DiscoverItemType).avatar || undefined
-                }
-              : undefined,
+          ens: {
+            name: account.name || undefined,
+            avatar: account.avatar || undefined
+          },
           counts:
             endpoint === 'discover'
               ? {

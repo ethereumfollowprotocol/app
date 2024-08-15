@@ -151,7 +151,7 @@ export function UserProfilePageTable({
           isLoadingMore={isFetchingMore}
           loadingRows={FETCH_LIMIT_PARAM}
           listClassName='gap-2 rounded-xl w-full'
-          listItemClassName='rounded-xl w-full hover:bg-white/50 px-0 py-2 sm:p-2'
+          listItemClassName='rounded-xl w-full px-0 py-2 sm:p-2'
           profiles={profiles}
           showTags={showTags}
           showFollowsYouBadges={showFollowsYouBadges}

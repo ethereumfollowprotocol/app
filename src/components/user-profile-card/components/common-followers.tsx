@@ -30,7 +30,7 @@ const CommonFollowers: React.FC<CommonFollowersProps> = ({ address }) => {
   const resultLength = data?.length || 0
 
   return (
-    <div className='w-full flex items-center justify-center gap-2 p-4'>
+    <div className='w-full flex items-center justify-center gap-2 p-4 pt-0'>
       <div className='flex'>
         {isLoading ? (
           <>

@@ -45,7 +45,7 @@ const FollowListItem: React.FC<FollowListItemProps> = ({
   const profileAvatar = fetchedEnsProfile?.avatar
 
   return (
-    <div className={`flex items-center justify-between ${className}`}>
+    <div className={`flex items-center justify-between hover:bg-[#ebebeb88] ${className}`}>
       {/* Left section: Avatar, Name, and Tags */}
       <FollowListItemName
         address={address}

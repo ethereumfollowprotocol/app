@@ -13,9 +13,15 @@ export type DiscoverItemType = {
   following: number
 }
 
+export type RecommendedItemType = {
+  address: Address
+  name: string | null
+  avatar: string | null
+}
+
 export type DiscoverResponseType = {
   latestFollows: DiscoverItemType[]
-  recommended: Address[]
+  recommended: RecommendedItemType[]
 }
 
 export type FollowState = 'follows' | 'blocks' | 'mutes' | 'none'

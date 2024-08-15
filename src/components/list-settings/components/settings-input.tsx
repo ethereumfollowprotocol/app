@@ -66,7 +66,7 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
           className='p-3 font-medium truncate rounded-lg w-full bg-white/70 disabled:text-gray-400 disabled:cursor-not-allowed'
         />
       )}
-      {(value.includes('.') || resolvedProfile?.name) && (
+      {(isSettingsLoading || value.includes('.') || resolvedProfile?.name) && (
         <div
           className={`font-medium flex items-center gap-2 h-10 text-sm ${
             (value.includes('.') && resolvedAddress && resolvedAddress?.length > 0) ||
@@ -76,21 +76,27 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
           }`}
         >
           {/* <p className='text-gray-500 h-full'>{t('resolved')}</p> */}
-          <Avatar
-            name={resolvedProfile?.name || value}
-            size='h-8 w-8 rounded-full'
-            avatarUrl={resolvedProfile?.avatar}
-          />
-          {isLoading || isNameLoading ? (
-            <LoadingCell className='w-full h-5 rounded-md' gradient={LIGHT_LOADING_GRADIENT} />
+
+          {isSettingsLoading || isLoading || isNameLoading ? (
+            <>
+              <LoadingCell className='w-8 h-8 rounded-full' />
+              <LoadingCell className='w-full h-5 rounded-md' gradient={LIGHT_LOADING_GRADIENT} />
+            </>
           ) : (
-            <p className='font-semibold truncate'>
-              {value.includes('.')
-                ? resolvedAddress && resolvedAddress?.length > 0
-                  ? resolvedAddress
-                  : t('no resolution')
-                : resolvedProfile?.name}
-            </p>
+            <>
+              <Avatar
+                name={resolvedProfile?.name || value}
+                size='h-8 w-8 rounded-full'
+                avatarUrl={resolvedProfile?.avatar}
+              />
+              <p className='font-semibold truncate'>
+                {value.includes('.')
+                  ? resolvedAddress && resolvedAddress?.length > 0
+                    ? resolvedAddress
+                    : t('no resolution')
+                  : resolvedProfile?.name}
+              </p>
+            </>
           )}
         </div>
       )}

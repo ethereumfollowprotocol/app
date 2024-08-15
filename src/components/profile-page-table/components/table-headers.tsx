@@ -62,7 +62,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
       <div className='flex justify-between w-full'>
         <div className='flex gap-4 justify-between items-center w-full'>
           <div ref={clickAwaySearchRef} className='flex gap-3 items-center'>
-            <p className='capitalize text-lg lg:text-3xl font-bold'>{t(title)}</p>
+            <p className='capitalize text-lg sm:text-3xl font-bold'>{t(title)}</p>
             <div className='relative z-50'>
               <div
                 className='cursor-pointer max-w-40 flex items-center gap-2 hover:opacity-75'
@@ -130,10 +130,10 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 className={`transition-transform ${showSort ? 'rotate-180' : ''}`}
               />
               {showSort && (
-                <div className=' bg-white/80 w-40 glass-card px-3 py-2 gap-1 z-50 shadow-md border-2 rounded-md border-gray-200 absolute top-[120%] flex flex-col items-center right-0'>
+                <div className=' bg-white/80 w-44 glass-card p-1 gap-1 z-50 shadow-md border-2 rounded-md border-gray-200 absolute top-[120%] flex flex-col items-center right-0'>
                   {SORT_OPTIONS.map(option => (
                     <div
-                      className='font-bold capitalize transition-colors text-center text-gray-500 hover:text-darkGrey'
+                      className='font-bold capitalize w-full rounded-md hover:bg-slate-100 transition-colors p-3 text-center text-gray-500 hover:text-darkGrey'
                       key={option}
                       onClick={() => setSort(option)}
                     >
