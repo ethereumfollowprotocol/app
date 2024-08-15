@@ -26,7 +26,7 @@ export const useCoolMode = (
     if (ref.current && isMounted && resolvedImageUrl)
       return makeElementCool(ref.current, resolvedImageUrl, !!disabled, !!ignoreCoolModeDocsDemo)
     if (!(isLoading || isMounted)) setIsMounted(true)
-  }, [resolvedImageUrl, isMounted, isLoading])
+  }, [resolvedImageUrl, isMounted, isLoading, disabled, ignoreCoolModeDocsDemo])
 
   return ref
 }
@@ -92,7 +92,7 @@ function makeElementCool(
     const direction = Math.random() <= 0.5 ? -1 : 1
 
     const particle = document.createElement('div')
-    particle.innerHTML = `<img src="${imageUrl}" width="${size}" height="${size}" style="border-radius: 25%">`
+    particle.innerHTML = `<img src="${imageUrl}" width="${size}" height="${size}">`
     particle.setAttribute(
       'style',
       [

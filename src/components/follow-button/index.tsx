@@ -125,7 +125,12 @@ const FollowButton: React.FC<FollowButtonProps> = ({
     isBlockedBy
   })
 
-  const coolEfpLogo = useCoolMode('/assets/mainnet-black.svg', false, true, isLoading)
+  const coolEfpLogo = useCoolMode(
+    '/assets/mainnet-gradient.svg',
+    buttonState !== 'Follow',
+    true,
+    isLoading
+  )
 
   return isLoading ? (
     <div className={`rounded-xl ${isBlockedBy ? 'w-[132px]' : 'w-[107px]'} h-[37px]`}>
