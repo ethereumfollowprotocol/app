@@ -74,7 +74,7 @@ const useFollowState = ({
 
   const followState = useMemo((): FollowState => {
     const selectedStatus = type === 'following' ? followingStatus : followerStatus
-    if (!selectedStatus) return 'none'
+    if (!selectedStatus?.state) return 'none'
 
     if (selectedStatus.state.block) return 'blocks'
     if (selectedStatus.state.mute) return 'mutes'
