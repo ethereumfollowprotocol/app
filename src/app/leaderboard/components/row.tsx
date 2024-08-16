@@ -60,6 +60,7 @@ const TableRow: React.FC<TableRowProps> = ({
   //   queryFn: async () => await resolveEnsProfile(address)
   // })
 
+  // const pathname = usePathname()
   const { t } = useTranslation()
   const { followerTag } = useFollowState({
     address,
@@ -97,7 +98,7 @@ const TableRow: React.FC<TableRowProps> = ({
         </div>
       </div>
       <div className='items-center justify-between hidden sm:flex sm:w-1/4 md:w-[55%]'>
-        <div className=' flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 hidden lg:flex'>
+        <div className='flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 hidden lg:flex'>
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(mutuals || 0)}</p>
           <p className='font-semibold text-sm text-gray-500'>Mutuals</p>
         </div>

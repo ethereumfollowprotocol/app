@@ -72,7 +72,7 @@ function makeElementCool(
   instanceCounter++
 
   const sizes = [15, 20, 25, 35, 45]
-  const limit = 35
+  const limit = 5
 
   let particles: Particle[] = []
   let autoAddParticle = false
@@ -83,10 +83,10 @@ function makeElementCool(
 
   function createParticle() {
     const size = sizes[Math.floor(Math.random() * sizes.length)] || 1
-    const speedHorz = Math.random() * 10
-    const speedUp = Math.random() * 25
+    const speedHorz = Math.random() * 5
+    const speedUp = Math.random() * 15
     const spinVal = Math.random() * 360
-    const spinSpeed = Math.random() * 35 * (Math.random() <= 0.5 ? -1 : 1)
+    const spinSpeed = Math.random() * 20 * (Math.random() <= 0.5 ? -1 : 1)
     const top = mouseY - size / 2
     const left = mouseX - size / 2
     const direction = Math.random() <= 0.5 ? -1 : 1

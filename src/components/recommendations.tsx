@@ -32,7 +32,9 @@ const Recommendations = ({
       return discoverAccounts.filter(
         account => account.address.toLowerCase() !== userAddress?.toLowerCase()
       )
-    }
+    },
+    refetchInterval: 600000,
+    staleTime: 600000
   })
 
   const displayedProfiles = limit ? profilesToRecommend?.slice(0, limit) : profilesToRecommend
@@ -46,7 +48,7 @@ const Recommendations = ({
       <FollowList
         isLoading={isLoading}
         loadingRows={limit}
-        listClassName='rounded-xl sm:px-0 gap-3'
+        listClassName='rounded-xl px-2 sm:px-0 gap-3'
         profiles={displayedProfiles?.map(account => ({
           address: account.address,
           tags: [] as string[],

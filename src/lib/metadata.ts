@@ -28,8 +28,8 @@ export const sharedMetadataOpenGraph: Metadata['openGraph'] = {
 }
 export const sharedMetadataTwitter: Metadata['twitter'] = {
   card: 'summary_large_image',
-  site: '@ethfollowpr',
-  creator: '@ethfollowpr',
+  site: '@efp',
+  creator: '@efp',
   description: metadataDescription
   // images: 'https://testing.ethfollow.xyz/assets/banner.png'
 }

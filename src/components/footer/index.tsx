@@ -7,7 +7,7 @@ import Pages from './components/pages'
 const socials = [
   {
     text: 'X',
-    href: 'https://x.com/ethfollowpr',
+    href: 'https://x.com/efp',
     icon: X
   },
   {

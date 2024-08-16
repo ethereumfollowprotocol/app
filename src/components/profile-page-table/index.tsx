@@ -124,7 +124,7 @@ export function UserProfilePageTable({
 
   return (
     <div
-      className={`glass-card flex flex-col w-full gap-4 p-3 ${
+      className={`glass-card flex flex-col w-full gap-4 py-2 px-0 ${
         !(isLoading || isFetchingMore) && 'pb-0 sm:pb-0'
       } sm:p-4 border-2 rounded-2xl border-gray-200 ${customClass}`}
     >
@@ -143,14 +143,14 @@ export function UserProfilePageTable({
         isShowingBlocked={isShowingBlocked}
       />
       {!isLoading && results?.length === 0 && (
-        <div className='text-center font-semibold py-4'>{noResults}</div>
+        <div className='text-center font-semibold py-4 px-2'>{noResults}</div>
       )}
       <div className='flex flex-col pb-4'>
         <FollowList
           isLoading={isLoading}
           isLoadingMore={isFetchingMore}
           loadingRows={FETCH_LIMIT_PARAM}
-          listClassName='gap-2 rounded-xl w-full'
+          listClassName='gap-2 rounded-xl w-full px-3 sm:px-0'
           listItemClassName='rounded-xl w-full px-0 py-2 sm:p-2'
           profiles={profiles}
           showTags={showTags}
@@ -165,7 +165,7 @@ export function UserProfilePageTable({
           <Recommendations
             endpoint='recommended'
             description='Those are recommended profiles and not people you follow'
-            className='p-2'
+            className='py-2'
           />
         )}
       </div>

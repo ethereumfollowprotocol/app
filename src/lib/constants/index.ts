@@ -43,7 +43,7 @@ export const NAV_ITEMS = [
     private: false
   },
   {
-    href: (url?: string) => `/${url ?? ''}`,
+    href: (url?: string) => `/${url ?? 'profile'}`,
     emoji: '👤',
     name: 'profile',
     private: true

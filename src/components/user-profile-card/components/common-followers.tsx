@@ -15,7 +15,7 @@ const CommonFollowers: React.FC<CommonFollowersProps> = ({ address }) => {
   const { address: userAddress } = useAccount()
 
   const { data, isLoading } = useQuery({
-    queryKey: ['common-followers', address],
+    queryKey: ['common-followers', address, userAddress],
     queryFn: async () => {
       if (!userAddress) return noCommonFollowers
 
@@ -31,7 +31,7 @@ const CommonFollowers: React.FC<CommonFollowersProps> = ({ address }) => {
   const resultLength = data?.length || 0
 
   return (
-    <div className='w-full flex items-center justify-center gap-2 p-4 pt-0'>
+    <div className='w-full max-w-108 mx-auto flex items-center justify-center gap-2 p-4 pt-0'>
       <div className='flex'>
         {isLoading ? (
           <>
@@ -58,7 +58,12 @@ const CommonFollowers: React.FC<CommonFollowersProps> = ({ address }) => {
           style={{ maxWidth: 'calc(100% - 84px)' }}
         >
           {displayedNames
-            ?.map(profile => profile.name || truncateAddress(profile.address))
+            ?.map(
+              (profile, index) =>
+                `${profile.name || truncateAddress(profile.address)}${
+                  resultLength > 2 && index === 1 ? ',' : ''
+                }`
+            )
             .join(', ')}{' '}
           {resultLength > 2 &&
             `and ${resultLength - 2} ${resultLength === 3 ? 'other' : 'others'} you know`}{' '}

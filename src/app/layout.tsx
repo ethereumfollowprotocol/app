@@ -70,14 +70,14 @@ const HeadTag = () => {
       <meta name='apple-mobile-web-app-status-bar-style' content='#FFE067' />
       <meta name='msapplication-TileColor' content='#FFE067' />
       <meta name='author' content='Ethereum Follow Protocol Team' />
-      <meta name='twitter:creator' content='@ethfollowpr' />
-      <meta name='twitter:site' content='@ethfollowpr' />
+      <meta name='twitter:creator' content='@efp' />
+      <meta name='twitter:site' content='@efp' />
       <meta name='twitter:card' content='summary_large_image' />
       <meta name='twitter:title' content='EFP' />
       <meta name='twitter:description' content={APP_DESCRIPTION} />
       <meta property='og:title' content='EFP' />
       <meta property='og:description' content={APP_DESCRIPTION} />
-      <meta property='og:url' content='https://x.com/ethfollowpr' />
+      <meta property='og:url' content='https://x.com/efp' />
     </head>
   )
 }

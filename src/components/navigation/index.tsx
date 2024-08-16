@@ -34,7 +34,7 @@ const Navigation = () => {
   return (
     <header className='w-full fixed z-50 glass-card bg-white/50 top-0 left-0 font-sans border-b-[1px] border-gray-200 p-4 lg:px-6 md:py-6 xl:px-8'>
       <nav className='my-auto flex w-full flex-row items-center justify-between'>
-        <div className='flex w-2/5 sm:w-3/5 md:w-full justify-start items-center gap-4 md:gap-6 xl:gap-8'>
+        <div className='flex w-2/5 sm:w-3/5 2xl:w-full justify-start items-center gap-4 md:gap-6 xl:gap-8'>
           <Link href='/' className='select-none' aria-label='Ethereum Follow Protocol Logo link'>
             <Image
               src={FullLogo}
@@ -55,7 +55,7 @@ const Navigation = () => {
         </div>
         <div className='flex lg:gap-6 xl:gap-8 w-full justify-end items-center'>
           <NavItems />
-          <div className='flex items-center gap-2 md:gap-4 xl:gap-6'>
+          <div className='flex items-center gap-2 md:gap-4'>
             {userAddress ? (
               <CartButton cartItemsCount={totalCartItems} />
             ) : (

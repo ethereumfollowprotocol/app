@@ -191,7 +191,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   return (
     <div
       className={`flex glass-card ${
-        isResponsive ? 'xl:w-76 w-full 2xl:w-86' : 'w-76 3xs:w-86 h-[710px]'
+        isResponsive
+          ? 'xl:w-76 w-full 2xl:w-86'
+          : 'w-80 3xs:w-92 h-[560px] xxs:h-[550px] sm:h-[570px] md:h-[585px] xl:h-[670px]'
       } border-2 justify-center flex-col ${borderColor || 'border-[#FFDBD9]'} rounded-xl relative`}
     >
       {isLoading ? (

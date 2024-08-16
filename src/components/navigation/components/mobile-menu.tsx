@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 import type { Dispatch, SetStateAction } from 'react'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import { NAV_ITEMS } from '#/lib/constants'
 import { usePathname } from 'next/navigation'
@@ -18,13 +19,14 @@ interface MobileMenuProps {
 const MobileMenu: React.FC<MobileMenuProps> = ({ open, setOpen }) => {
   const pathname = usePathname()
   const { t } = useTranslation()
+  const { openConnectModal } = useConnectModal()
   const { address: userAddress } = useAccount()
   const { selectedList, lists } = useEFPProfile()
   const itemUrl =
     pathname?.toLowerCase() === `/${userAddress?.toLowerCase()}` &&
     selectedList === Number(lists?.primary_list)
-      ? userAddress
-      : selectedList?.toString() ?? userAddress
+      ? userAddress?.toLowerCase()
+      : selectedList?.toString() ?? userAddress?.toLowerCase()
 
   if (!open) return null
 
@@ -35,11 +37,20 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ open, setOpen }) => {
           <Link
             prefetch={true}
             href={item.href(itemUrl)}
-            onClick={() => setOpen(false)}
             className={clsx([
               'capitalize xl:text-xl lg:text-lg transition-colors',
-              pathname === item.href(itemUrl) ? 'text-darkGrey' : 'text-grey hover:text-gray-500'
+              item.name === 'profile' && !userAddress
+                ? 'text-grey hover:text-darkGrey'
+                : item.href(itemUrl) === pathname.toLowerCase()
+                  ? 'text-darkGrey'
+                  : 'text-grey hover:text-darkGrey'
             ])}
+            onClick={e => {
+              if (item.name === 'profile' && !userAddress && openConnectModal) {
+                e.preventDefault()
+                openConnectModal()
+              } else setOpen(false)
+            }}
           >
             <span className='block text-nowrap'>{t(`${item.name}`)}</span>
           </Link>

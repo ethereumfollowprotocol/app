@@ -88,7 +88,7 @@ const nextConfig = {
   redirects: async () => [
     {
       source: '/(twitter|x)',
-      destination: 'https://x.com/ethfollowpr',
+      destination: 'https://x.com/efp',
       permanent: true
     },
     {

@@ -94,8 +94,8 @@ const Cart = () => {
             <ImportModal onClose={() => setImportModalOpen(false)} platform={platform} />
           )}
           {clearCartModalOpen && <ClearCartModal closeModal={() => setClearCartModalOpen(false)} />}
-          <div className='flex flex-col glass-card gap-4 px-3 py-4 sm:p-4 h-fit rounded-2xl border-2 border-gray-200 xl:max-w-116 w-full xl:w-1/3'>
-            <div className='w-full flex justify-between items-center px-2 pt-2'>
+          <div className='flex flex-col glass-card gap-4 px-1 py-4 sm:p-4 h-fit rounded-2xl border-2 border-gray-200 xl:max-w-116 w-full xl:w-1/3'>
+            <div className='w-full flex justify-between items-center px-4 sm:px-2 pt-2'>
               <h1 className='text-left text-xl sm:text-3xl font-semibold'>{t('editor title')}</h1>
               <div className='flex gap-1'>
                 <p className='text-lg font-semibold mr-1'>{t('import')}</p>

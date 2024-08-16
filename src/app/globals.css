@@ -167,9 +167,8 @@ input {
 }
 
 .btn-grad {
-  background-image: linear-gradient(to bottom, #fff980 0%, #ffbce3  51%, #fff980  100%);
+  background-image: linear-gradient(to bottom, #FFE066 0%, #FFE066 65%, #ffafde  100%);
   text-align: center;
-  text-transform: uppercase;
   transition: 0.5s;
   background-size: auto 200%;
   border-radius: 10px;
