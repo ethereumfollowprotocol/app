@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
 import { useQuery } from '@tanstack/react-query'
 
@@ -28,18 +29,20 @@ const useFollowState = ({
   type: FollowStateType
 }) => {
   const { selectedList } = useEFPProfile()
+  const { address: userAddress } = useAccount()
 
   const {
     data: followerStatus,
     isLoading: isFollowerStatusLoading,
     isRefetching: isFollowerStateRefetching
   } = useQuery({
-    queryKey: ['follower state', address, selectedList],
+    queryKey: ['follower state', address, selectedList, userAddress],
     queryFn: async () => {
       if (!address) return null
 
       const fetchedStatus = await fetchFollowState({
         address: address,
+        userAddress,
         list: selectedList,
         type: 'follower'
       })
@@ -59,6 +62,7 @@ const useFollowState = ({
 
       const fetchedProfile = await fetchFollowState({
         address: address,
+        userAddress,
         list: selectedList,
         type: 'following'
       })

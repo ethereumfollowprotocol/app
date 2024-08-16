@@ -7,6 +7,7 @@ import { useQueryState } from 'next-usequerystate'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
+import { useAccount } from 'wagmi'
 import { resolveEnsAddress } from '#/utils/ens'
 import { searchENSNames } from '#/api/searchENSNames'
 import { useCart } from '#/contexts/cart-context.tsx'
@@ -31,6 +32,7 @@ const useSearch = (isEditor?: boolean) => {
   const router = useRouter()
   const pathname = usePathname()
   const { t } = useTranslation()
+  const { address: userAddress } = useAccount()
   const { roles, selectedList } = useEFPProfile()
   const { addCartItem, hasListOpAddRecord } = useCart()
 
@@ -82,6 +84,7 @@ const useSearch = (isEditor?: boolean) => {
   const getFollowingState = async (address: Address) => {
     const followingStatus = await fetchFollowState({
       address: address,
+      userAddress,
       list: selectedList,
       type: 'following'
     })

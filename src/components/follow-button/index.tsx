@@ -19,6 +19,7 @@ const theme: Record<
 > = {
   Follow: {
     bg: 'bg-kournikova-300 hover:bg-[#EEBE00]',
+    // bg: 'bg-kournikova-300 btn-grad',
     text: 'text-zinc-800',
     border: 'border-0 '
   },
@@ -143,7 +144,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
           theme[buttonState].bg,
           theme[buttonState].text,
           theme[buttonState].border,
-          'rounded-xl relative text-sm flex items-center transition-colors gap-1.5 justify-center font-bold',
+          'rounded-xl relative text-sm flex items-center transition-all gap-1.5 duration-200 justify-center font-bold',
           'h-[37px] px-2 py-1.5', // Fixed width for consistent layout
           className
         ])}

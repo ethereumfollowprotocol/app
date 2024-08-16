@@ -3,11 +3,17 @@ import type { FollowStatusResponse } from '#/types/requests'
 
 export const fetchFollowState = async ({
   address,
+  userAddress,
   list,
   type
-}: { address: Address; list?: string | number; type: 'following' | 'follower' }) => {
+}: {
+  address: Address
+  userAddress?: Address
+  list?: string | number
+  type: 'following' | 'follower'
+}) => {
   try {
-    if (!list)
+    if ((!list && type === 'following') || !(address || list))
       return {
         token_id: undefined,
         address,
@@ -18,9 +24,9 @@ export const fetchFollowState = async ({
         }
       }
 
-    const url = `${process.env.NEXT_PUBLIC_EFP_API_URL}/lists/${list}/${address}/${
-      type === 'following' ? 'buttonState' : 'followerState'
-    }`
+    const url = `${process.env.NEXT_PUBLIC_EFP_API_URL}/${list === undefined ? 'users' : 'lists'}/${
+      list ?? userAddress
+    }/${address}/${type === 'following' ? 'buttonState' : 'followerState'}`
 
     const response = await fetch(url, {
       cache: 'default',

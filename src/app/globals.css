@@ -166,6 +166,25 @@ input {
 
 }
 
+.btn-grad {
+  background-image: linear-gradient(to bottom, #fff980 0%, #ffbce3  51%, #fff980  100%);
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: auto 200%;
+  border-radius: 10px;
+  display: block;
+  background-position: center top;
+  transition: all .3s ease-in;
+}
+
+.btn-grad:hover {
+  background-position: center bottom; /* change the direction of the change here */
+  transition: all .3s ease-in;
+
+}
+
+
 /* Loaders */
 .loader {
   width: 40px;
