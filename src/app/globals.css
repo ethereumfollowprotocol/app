@@ -170,29 +170,23 @@ input {
   background: linear-gradient(to right, #FFE066 0%, #FFE066 30%, #fff981 75%, #ffafde  100%);
   text-align: center;
   background-size: 300% auto;
+  transition: all .3s;
   border-radius: 10px;
   display: block;
 }
 
 .btn-grad:hover {
-  background-position: right center; /* change the direction of the change here */
+  background-position: right center;
+  transition: all .3s;
+   /* change the direction of the change here */
 }
 
 .btn-following {
-  background: linear-gradient(to right, #fff 0%, #fff 33%, #fff981 75%, #ffafde  100%);
-  /* animation: followToFollowing 0.5s; */
-  transition: all 0.5s;
+  background: linear-gradient(to right, #fff981 0%, #ffafde 33%, #ffffff 66%, #ffffff  100%);
   background-size: 300% auto;
-  background-position: left center;
-}
-
-@keyframes followToFollowing {
-  0% {
-    background-position: right center;
-  }
-  100% {
-    background-position: left center;
-  }
+  transition: all 1s;
+  transition-delay: 200ms;
+  background-position: right center;
 }
 
 /* Loaders */

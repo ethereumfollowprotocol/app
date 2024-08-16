@@ -72,7 +72,7 @@ function makeElementCool(
   instanceCounter++
 
   const sizes = [25, 25, 35, 35, 45]
-  const limit = 10
+  const limit = 13
 
   let particles: Particle[] = []
   let autoAddParticle = false
