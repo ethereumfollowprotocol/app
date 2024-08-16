@@ -13,7 +13,7 @@ export const fetchFollowState = async ({
   type: 'following' | 'follower'
 }) => {
   try {
-    if ((!list && type === 'following') || !(address || list))
+    if ((!list && type === 'following') || !(userAddress || list))
       return {
         token_id: undefined,
         address,
