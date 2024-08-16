@@ -24,8 +24,6 @@ export const useLeaderboardSummary = () => {
     staleTime: 600000
   })
 
-  console.log(leaderboardSummaryData)
-
   return {
     page,
     setPage,

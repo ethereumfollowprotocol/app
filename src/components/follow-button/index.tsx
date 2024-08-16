@@ -25,7 +25,7 @@ const theme: Record<
     border: 'border-0 '
   },
   'Pending Following': {
-    bg: 'bg-white',
+    bg: 'bg-white btn-following',
     hover: 'hover:bg-[#D0D0D0]',
     text: 'text-gray-900',
     border:
@@ -153,15 +153,19 @@ const FollowButton: React.FC<FollowButtonProps> = ({
           theme[buttonState].bg,
           theme[buttonState].text,
           theme[buttonState].border,
-          disableHover ? 'bg-center' : theme[buttonState].hover,
-          'rounded-xl relative text-sm flex items-center transition-all gap-1.5 duration-200 justify-center font-bold',
+          disableHover
+            ? buttonState === 'Follow'
+              ? 'bg-right'
+              : 'bg-left delay-50'
+            : theme[buttonState].hover,
+          'rounded-xl relative text-sm flex items-center transition-all ease-in-out gap-1.5 duration-400 justify-center font-bold',
           'h-[37px] px-2 py-1.5', // Fixed width for consistent layout
           className
         ])}
         style={{
           width: isBlockedBy ? '132px' : '107px'
         }}
-        onMouseEnter={() => {
+        onMouseLeave={() => {
           setDisableHover(false)
         }}
         onClick={() => {

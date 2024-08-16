@@ -43,7 +43,7 @@ const LeaderboardSummary = () => {
                 {title} {displayedEmojies[index]}
               </h4>
               {isLeaderboardSummaryLoading ? (
-                <div className='animate-pulse flex'>
+                <div className='animate-pulse flex flex-col'>
                   <LoadingRow />
                   <LoadingRow />
                   <LoadingRow />
