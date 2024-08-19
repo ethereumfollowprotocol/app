@@ -12,7 +12,7 @@ export default function SocialGraph() {
 
   return (
     <div className='flex flex-col lg:flex-row-reverse gap-8 lg:gap-[90px] xl:gap-32 items-center relative'>
-      <div className='text-3xl flex lg:items-start items-center flex-col gap-1 lg:gap-3 md:text-4xl lg:text-5xl xl:text-6xl bg-white font-bold px-4 py-4 lg:px-5 lg:py-5 border-[3px] border-[#ffc18a] rounded-2xl'>
+      <div className='text-3xl flex lg:items-start items-center flex-col gap-1 lg:gap-3 md:text-4xl lg:text-5xl xl:text-6xl glass-card font-bold px-4 py-4 lg:px-5 lg:py-5 border-[3px] border-[#ffc18a] rounded-2xl'>
         <p>{t('social graph first')}</p>
         <p className='text-[#ffb4a1]'>{t('social graph second')}</p>
       </div>

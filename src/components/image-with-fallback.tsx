@@ -25,6 +25,7 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
     <Image
       alt={alt}
       onError={() => setError('invalid image')}
+      loader={fallback}
       src={error ? fallback : src}
       {...props}
     />

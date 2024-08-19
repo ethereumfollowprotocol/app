@@ -13,7 +13,7 @@ const FollowGhost = () => {
 
   return (
     <div className='flex flex-col lg:flex-row gap-[52px] lg:gap-16 xl:gap-40 items-center relative'>
-      <div className='text-3xl flex flex-col md:text-3xl bg-white lg:text-5xl lg:items-start items-center xl:text-6xl font-bold w-fit p-4 gap-2 lg:px-8 lg:py-[22px] border-[3px] border-[#ffa5b8] rounded-2xl'>
+      <div className='text-3xl flex flex-col md:text-3xl glass-card lg:text-5xl lg:items-start items-center xl:text-6xl font-bold w-fit p-4 gap-2 lg:px-8 lg:py-[22px] border-[3px] border-[#ffa5b8] rounded-2xl'>
         <p>{t('follow ghost first')}</p>
         <p className='text-[#ffa5b8]'>{t('follow ghost second')}</p>
       </div>

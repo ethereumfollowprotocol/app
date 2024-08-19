@@ -21,7 +21,7 @@ body {
   background-repeat: no-repeat;
   background-position: -34.1vw -38vw;
   background-size: 210vw 129vw;
-  /* background-attachment: fixed; */
+  background-attachment: fixed;
 }
 
 /* Disable zoom in iOS Safari when double tapping an element */
@@ -182,12 +182,19 @@ input {
    /* change the direction of the change here */
 }
 
-.btn-following {
-  background: linear-gradient(to right, #fff981 0%, #ffafde 33%, #ffffff 66%, #ffffff  100%);
-  background-size: 300% auto;
-  transition: all 1s;
-  transition-delay: 200ms;
-  background-position: right center;
+.btn-following-pending {
+  background:
+  linear-gradient(#fafafa, #fafafa) padding-box,
+  linear-gradient(135deg, #faf35f, #ffbce3) border-box;
+  border: 5px solid transparent;
+  border-radius: 40px;
+  transition: background 100ms ease-in-out;
+}
+
+.btn-following-pending:hover {
+  background:
+  linear-gradient(#D0D0D0, #D0D0D0) padding-box,
+  linear-gradient(135deg, #faf35f, #ffbce3) border-box;
 }
 
 /* Loaders */

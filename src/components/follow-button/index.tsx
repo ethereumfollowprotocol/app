@@ -22,20 +22,20 @@ const theme: Record<
     // bg: 'bg-kournikova-300 hover:bg-[#EEBE00]',
     bg: 'bg-kournikova-300 btn-grad',
     text: 'text-zinc-800',
-    border: 'border-0 '
+    border: 'border-0'
   },
   'Pending Following': {
-    bg: 'bg-white',
+    bg: 'btn-following-pending',
     hover: 'hover:bg-[#D0D0D0]',
     text: 'text-gray-900',
     border:
-      'border-2 border-gray-200 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400'
+      'border-2 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400'
   },
   Following: {
     bg: 'bg-white',
     hover: 'hover:bg-deletion hover:border-deletion hover:border-0',
     text: 'text-gray-900',
-    border: 'border-2 border-gray-200'
+    border: 'border-2'
   },
   Unfollow: {
     bg: 'bg-deletion',

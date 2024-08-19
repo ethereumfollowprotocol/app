@@ -10,7 +10,7 @@ export default function Phrase() {
 
   return (
     <div className='relative'>
-      <p className='text-[25px] z-50 sm:text-3xl md:text-4xl pt-0.5 lg:text-5xl xl:text-6xl font-bold'>
+      <p className='text-[25px] z-50 glass-card p-6 rounded-xl sm:text-3xl border-2 border-[#ffc056] md:text-4xl lg:text-5xl xl:text-6xl font-bold'>
         {t('phrase first')}
         <span className='text-[#ffc056]'>{t('phrase keyword')}</span>
         {t('phrase second')}
@@ -19,7 +19,7 @@ export default function Phrase() {
         src={LineDesktop}
         alt='line'
         width={79}
-        className='pointer-events-none absolute lg:block z-0 hidden top-[41px] w-[71px] xl:w-[79px] left-[314px] xl:top-[53px] xl:left-[394px]'
+        className='pointer-events-none absolute lg:block z-0 hidden top-[41px] w-[71px] xl:w-[79px] left-[314px] xl:top-[110px] xl:left-[423px]'
       />
       <Image
         src={LineMobile}
