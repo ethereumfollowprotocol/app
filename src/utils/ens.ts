@@ -6,23 +6,14 @@ import { rpcProviders } from '#/lib/constants/providers'
 
 export const resolveEnsProfile = async (address: `0x${string}`) => {
   const resolvedName = await resolveEnsName(address)
-  // const ensAddress = resolvedName ? await resolveEnsAddress(resolvedName) : null
+  const ensAddress = resolvedName ? await resolveEnsAddress(resolvedName) : null
 
-  const avatarUrl = `https://metadata.ens.domains/mainnet/avatar/${resolvedName}`
+  const name = address.toLowerCase() === ensAddress?.toLowerCase() ? resolvedName : null
+  const avatar = name ? `https://metadata.ens.domains/mainnet/avatar/${name}` : null
 
-  try {
-    const response = resolvedName ? await fetch(avatarUrl) : { ok: false }
-
-    return {
-      name: resolvedName,
-      // name: address.toLowerCase() === ensAddress?.toLowerCase() ? resolvedName : null,
-      avatar: response.ok ? avatarUrl : null
-    }
-  } catch (e: any) {
-    return {
-      name: resolvedName ?? null,
-      avatar: null
-    }
+  return {
+    name,
+    avatar
   }
 }
 

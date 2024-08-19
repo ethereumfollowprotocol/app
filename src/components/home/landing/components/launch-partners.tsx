@@ -45,7 +45,7 @@ const LaunchPartners = () => {
         alt='line'
         width={3}
         height={154}
-        className='absolute -bottom-[100px] lg:-bottom-[170px]'
+        className='absolute -bottom-[100px] lg:-bottom-[172px]'
       />
       <div className='glass-card w-full p-6 mx-auto border-2 border-[#FF79C9] text-dark-gray font-bold text-center text-sm rounded-3xl max-w-4xl'>
         <p className=' text-2xl sm:text-3xl font-bold pb-8'>{t('sponsors')}</p>

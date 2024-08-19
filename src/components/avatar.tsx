@@ -1,6 +1,7 @@
 import clsx from 'clsx'
-import Image from 'next/image'
 import type { GetEnsAvatarReturnType } from 'viem'
+
+import ImageWithFallback from './image-with-fallback'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 
 interface AvatarProps {
@@ -17,7 +18,7 @@ export const Avatar = ({
   size = 'h-[70px] w-[70px] md:h-[100px] md:w-[100px]'
 }: AvatarProps) => {
   return (
-    <Image
+    <ImageWithFallback
       alt={`${name}'s avatar`}
       className={clsx('auto rounded-full my-auto ', size)}
       height={50}
