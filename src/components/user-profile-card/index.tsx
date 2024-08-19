@@ -194,7 +194,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
         isResponsive
           ? 'xl:w-76 w-full 2xl:w-86'
           : 'w-80 3xs:w-92 h-[560px] xxs:h-[550px] sm:h-[570px] md:h-[585px] xl:h-[670px]'
-      } border-2 justify-center flex-col ${borderColor || 'border-[#FFDBD9]'} rounded-xl relative`}
+      } border-[3px] justify-center flex-col ${
+        borderColor || 'border-[#FFDBD9]'
+      } rounded-xl relative`}
     >
       {isLoading ? (
         <LoadingProfileCard
@@ -217,7 +219,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                     <div
                       className={`${
                         cardTooltipOpen ? 'block' : 'hidden'
-                      } group-hover:block transition-all text-sm w-68 p-2 glass-card border-gray-200 bg-white/90 border-2 mt-2 rounded-md absolute top-5 right-0`}
+                      } group-hover:block transition-all text-sm w-68 p-2 glass-card border-gray-200 bg-white/90 border-[3px] mt-2 rounded-md absolute top-5 right-0`}
                     >
                       {t('not primary list tooltip')}
                     </div>
@@ -283,7 +285,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                           <div className='h-1 w-1 bg-black rounded-full'></div>
                         </div>
                         {showMoreOptions && !isConnectedUserCard && moreOptionsDropdownOpen && (
-                          <div className='absolute top-10 flex-col flex gap-2 right-0 p-2 bg-white border-gray-200 border-2 rounded-xl z-50 drop-shadow-lg'>
+                          <div className='absolute top-10 flex-col flex gap-2 right-0 p-2 bg-white border-gray-200 border-[3px] rounded-xl z-50 drop-shadow-lg'>
                             <button
                               onClick={() => onClickOption('Block')}
                               className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] transition-colors relative text-sm flex items-center gap-1.5 justify-center font-bold w-[107px] h-[37px] px-2 py-1.5'

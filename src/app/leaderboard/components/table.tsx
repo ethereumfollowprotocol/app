@@ -7,11 +7,11 @@ import { useTranslation } from 'react-i18next'
 import TableRow from './row.tsx'
 import LoadingRow from './loading-row.tsx'
 import PageSelector from './page-selector.tsx'
-import { formatNumber } from '#/utils/formatNumber.ts'
 import LoadingCell from '#/components/loading-cell.tsx'
 import useLeaderboard from '../hooks/useLeaderboard.ts'
 import type { LeaderboardItem } from '#/types/requests.ts'
 import type { LeaderboardFilter } from '#/types/common.ts'
+import { formatNumberLeaderboard } from '#/utils/formatNumber.ts'
 import MagnifyingGlass from 'public/assets/icons/magnifying-glass-dark.svg'
 import { leaderboardFilters, leaderboardFiltersEmojies } from '#/lib/constants/index.ts'
 
@@ -27,12 +27,12 @@ const LeaderboardTable = () => {
     leaderboard,
     resetSearch,
     currentSearch,
-    leaderboardCount,
+    leaderboardStats,
     handleSearchEvent,
     isLeaderboardLoading,
     fetchNextLeaderboard,
     fetchPreviousLeaderboard,
-    isLeaderboardCountLoading,
+    isLeaderboardStatsLoading,
     isFetchingNextLeaderboard,
     isFetchingPreviousLeaderboard
   } = useLeaderboard()
@@ -60,14 +60,37 @@ const LeaderboardTable = () => {
 
   return (
     <>
-      <div className='mb-10'>
-        {isLeaderboardCountLoading ? (
-          <LoadingCell className='h-6 w-40 rounded-lg' />
-        ) : (
-          <p className='h-2 font-semibold text-sm sm:text-lg'>{`${formatNumber(
-            Number(leaderboardCount?.leaderboardCount)
-          )} ${t('accounts')}`}</p>
-        )}
+      <div className='mt-6 flex items-center justify-center flex-wrap gap-8'>
+        <div className='gradient-border flex flex-col rounded-2xl items-center justify-center h-[118px] w-64'>
+          {isLeaderboardStatsLoading ? (
+            <LoadingCell className='h-10 w-32 rounded-lg' />
+          ) : (
+            <p className='font-semibold text-3xl'>
+              {formatNumberLeaderboard(Number(leaderboardStats?.address_count))}
+            </p>
+          )}
+          <p className='font-semibold capitalize text-lg text-[#888]'>{t('addresses')}</p>
+        </div>
+        <div className='gradient-border flex flex-col rounded-2xl items-center justify-center h-[118px] w-64'>
+          {isLeaderboardStatsLoading ? (
+            <LoadingCell className='h-10 w-32 rounded-lg' />
+          ) : (
+            <p className='font-semibold text-3xl'>
+              {formatNumberLeaderboard(Number(leaderboardStats?.list_count))}
+            </p>
+          )}
+          <p className='font-semibold capitalize text-lg text-[#888]'>{t('lists')}</p>
+        </div>
+        <div className='gradient-border flex flex-col rounded-2xl items-center justify-center h-[118px] w-64'>
+          {isLeaderboardStatsLoading ? (
+            <LoadingCell className='h-10 w-32 rounded-lg' />
+          ) : (
+            <p className='font-semibold text-3xl'>
+              {formatNumberLeaderboard(Number(leaderboardStats?.list_op_count))}
+            </p>
+          )}
+          <p className='font-semibold capitalize text-lg text-[#888]'>{t('list ops')}</p>
+        </div>
       </div>
       <div className='flex w-full gap-1.5 justify-center lg:justify-end max-w-[1200px] text-sm mb-2 font-semibold text-[#aaaaaa] md:text-[#CDCDCD] italic'>
         {t('last updated')}
@@ -91,7 +114,7 @@ const LeaderboardTable = () => {
         </div>
         <div className='flex justify-between gap-4'>
           <div className='relative w-full sm:w-[260px] 2xl:w-[300px]'>
-            <div className='rounded-xl w-full group glass-card border-2 border-gray-200 hover:border-darkGrey focus-within:border-darkGrey transition-colors'>
+            <div className='rounded-xl w-full group glass-card border-[3px] border-gray-200 hover:border-darkGrey focus-within:border-darkGrey transition-colors'>
               <div
                 className='pointer-events-none absolute inset-y-0 right-0 flex items-center pl-3'
                 aria-hidden='true'
@@ -134,7 +157,7 @@ const LeaderboardTable = () => {
             fetchPrevious={() => fetchPreviousLeaderboard()}
           />
         </div>
-        <div className='glass-card border-gray-200 border-2 rounded-xl flex flex-col gap-4 p-1 sm:px-4 sm:py-6 lg:px-8 relative'>
+        <div className='glass-card border-gray-200 border-[3px] rounded-xl flex flex-col gap-4 p-1 sm:px-4 sm:py-6 lg:px-8 relative'>
           {leaderboard?.map((entry: LeaderboardItem, index) => (
             <TableRow
               key={entry.address}

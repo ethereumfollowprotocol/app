@@ -88,7 +88,7 @@ const Navigation = () => {
                     languageMenOpenu ? 'block' : 'hidden'
                   } group-hover:block pt-4`}
                 >
-                  <div className='flex flex-col glass-card bg-white/90 border-2 border-gray-200 p-1 rounded-lg shadow-md'>
+                  <div className='flex flex-col glass-card bg-white/90 border-[3px] border-gray-200 p-1 rounded-lg shadow-md'>
                     {LANGUAGES.map(lang => (
                       <div
                         className=' text-darkGrey p-3 pl-8 relative font-semibold rounded-md hover:bg-slate-100 transition-colors'
@@ -119,7 +119,7 @@ const Navigation = () => {
             <div ref={clickAwayRef} className='lg:hidden relative'>
               <div
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className='flex cursor-pointer hover:opacity-75 relative transition-opacity lg:hidden gap-[5px] flex-col p-[10px] glass-card border-2 rounded-md border-gray-200'
+                className='flex cursor-pointer hover:opacity-75 relative transition-opacity lg:hidden gap-[5px] flex-col p-[10px] glass-card border-[3px] rounded-md border-gray-200'
               >
                 <div className='w-5 h-[3px] bg-darkGrey rounded-full'></div>
                 <div className='w-5 h-[3px] bg-darkGrey rounded-full'></div>

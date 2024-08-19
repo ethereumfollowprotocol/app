@@ -94,7 +94,7 @@ const Cart = () => {
             <ImportModal onClose={() => setImportModalOpen(false)} platform={platform} />
           )}
           {clearCartModalOpen && <ClearCartModal closeModal={() => setClearCartModalOpen(false)} />}
-          <div className='flex flex-col glass-card gap-4 px-1 py-4 sm:p-4 h-fit rounded-2xl border-2 border-gray-200 xl:max-w-116 w-full xl:w-1/3'>
+          <div className='flex flex-col glass-card gap-4 px-1 py-4 sm:p-4 h-fit rounded-2xl border-[3px] border-gray-200 xl:max-w-116 w-full xl:w-1/3'>
             <div className='w-full flex justify-between items-center px-4 sm:px-2 pt-2'>
               <h1 className='text-left text-xl sm:text-3xl font-semibold'>{t('editor title')}</h1>
               <div className='flex gap-1'>
@@ -124,7 +124,7 @@ const Cart = () => {
             <Search size='w-full z-50 px-2 pt-2' isEditor={true} />
             <Recommendations header={t('recommendations')} endpoint='recommended' />
           </div>
-          <div className='flex h-full flex-col glass-card rounded-2xl border-2 border-gray-200 gap-3 md:gap-4 md:py-6 pt-5 pb-2 px-1 sm:px-3 md:px-4 w-full xl:w-2/3'>
+          <div className='flex h-full flex-col glass-card rounded-2xl border-[3px] border-gray-200 gap-3 md:gap-4 md:py-6 pt-5 pb-2 px-1 sm:px-3 md:px-4 w-full xl:w-2/3'>
             <div className='flex justify-between gap-2 flex-row items-center px-3 md:px-4'>
               <h3 className='font-bold text-left text-xl sm:text-3xl xxs:w-2/3'>
                 {t('cart unc-changes')}

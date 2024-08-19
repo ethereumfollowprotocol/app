@@ -7,7 +7,7 @@ import type { LeaderboardFilter } from '#/types/common'
 import type { LeaderboardItem } from '#/types/requests'
 import { fetchleaderboard } from '#/api/fetchLeaderboard'
 import { LEADERBOARD_FETCH_LIMIT_PARAM } from '#/lib/constants'
-import { fetchLeaderboardCount } from '#/api/fetchLeaderboardCount'
+import { fetchLeaderboardStats } from '#/api/fetchLeaderboardStats'
 
 const useLeaderboard = () => {
   const router = useRouter()
@@ -57,10 +57,10 @@ const useLeaderboard = () => {
 
   const [isRefetchingLeaderboard, setIsRefetchingLeaderboard] = useState(false)
 
-  const { data: leaderboardCount, isLoading: isLeaderboardCountLoading } = useQuery({
+  const { data: leaderboardStats, isLoading: isLeaderboardStatsLoading } = useQuery({
     queryKey: ['leaderboard', 'total'],
     queryFn: async () => {
-      const data = await fetchLeaderboardCount()
+      const data = await fetchLeaderboardStats()
       return data
     },
     refetchInterval: 600000
@@ -152,12 +152,12 @@ const useLeaderboard = () => {
     leaderboard,
     resetSearch,
     currentSearch,
-    leaderboardCount,
+    leaderboardStats,
     handleSearchEvent,
     refetchLeaderboard,
     fetchNextLeaderboard,
     fetchPreviousLeaderboard,
-    isLeaderboardCountLoading,
+    isLeaderboardStatsLoading,
     isFetchingNextLeaderboard,
     isFetchingPreviousLeaderboard,
     isLeaderboardLoading: isLeaderboardLoading || isRefetchingLeaderboard

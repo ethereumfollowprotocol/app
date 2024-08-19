@@ -27,7 +27,7 @@ const SocialFollowButton: React.FC<SocialFollowButtonProps> = ({ profiles }) => 
           removeCartItem(listOpAddListRecord(address))
         })
       }}
-      className='min-w-[107px] bg-white text-gray-900 border-2 border-gray-200 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400 rounded-xl relative text-sm flex items-center gap-1.5 justify-center font-bold h-[37px] px-2 py-1.5'
+      className='min-w-[107px] bg-white text-gray-900 border-[3px] border-gray-200 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400 rounded-xl relative text-sm flex items-center gap-1.5 justify-center font-bold h-[37px] px-2 py-1.5'
     >
       <Image alt='mainnet logo' src={MainnetBlack} width={16} />
       {t('following')}

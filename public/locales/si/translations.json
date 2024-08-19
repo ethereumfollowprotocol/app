@@ -7,6 +7,7 @@
   "phrase first": "Gre se za to ",
   "phrase keyword": "koga",
   "phrase second": " poznaš. 😜",
+  "phrase": "Gre se za to koga poznaš. 😜",
   "social graph first": "Socialno omrežje ",
   "social graph second": "za Ethereum.",
   "follow ghost first": "Sledi prijateljem.",
@@ -54,6 +55,8 @@
   "no resolution": "Ime ni pravilno",
 
   "leaderboard": "Lestvica",
+  "lists": "Seznami",
+  "addresses": "Naslovi",
   "last updated": "Nazadnje posodobljeno",
 
   "editor title": "Upravljalnik",

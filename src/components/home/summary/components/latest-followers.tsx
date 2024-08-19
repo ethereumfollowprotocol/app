@@ -10,7 +10,7 @@ const LatestFollowers: React.FC<LatestFollowersProps> = ({ profiles, isLoading }
   const { t } = useTranslation()
 
   return (
-    <div className='glass-card lg:max-h-[638px] w-full lg:w-[49%] xl:w-[450px] 2xl:w-108 px-2 py-4 sm:p-4 flex flex-col gap-4 rounded-2xl border-2 border-gray-200'>
+    <div className='glass-card lg:max-h-[638px] w-full lg:w-[49%] xl:w-[450px] 2xl:w-108 px-2 py-4 sm:p-4 flex flex-col gap-4 rounded-2xl border-[3px] border-gray-200'>
       <h2 className='text-2xl sm:text-3xl w-full text-center lg:text-left p-2 font-bold'>
         {t('latest followers')}
       </h2>

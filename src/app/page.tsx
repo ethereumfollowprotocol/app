@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 const HomePage = () => {
   return (
     <>
-      <main className='mx-auto bg-transparent flex min-h-screen w-full flex-col items-center font-sans'>
+      <main className='mx-auto home bg-transparent flex min-h-screen w-full flex-col items-center font-sans'>
         <Summary />
         <Landing />
       </main>

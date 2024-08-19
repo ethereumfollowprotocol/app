@@ -75,7 +75,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 </p>
               </div>
               {showSearch && (
-                <div className='absolute glass-card flex items-center border-2 bg-white/75 border-gray-200 -top-[65%] gap-1 lg:-left-1 -left-16 sm:-left-1 md:-left-16 w-64 h-10 rounded-lg shadow-md'>
+                <div className='absolute glass-card flex items-center border-[3px] bg-white/75 border-gray-200 -top-[65%] gap-1 lg:-left-1 -left-16 sm:-left-1 md:-left-16 w-64 h-10 rounded-lg shadow-md'>
                   <div
                     className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3'
                     aria-hidden='true'
@@ -131,7 +131,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 className={`transition-transform ${showSort ? 'rotate-180' : ''}`}
               />
               {showSort && (
-                <div className=' bg-white/80 glass-card p-1 gap-1 z-50 shadow-md border-2 rounded-md border-gray-200 absolute top-[120%] flex flex-col items-center right-0'>
+                <div className=' bg-white/80 glass-card p-1 gap-1 z-50 shadow-md border-[3px] rounded-md border-gray-200 absolute top-[120%] flex flex-col items-center right-0'>
                   {SORT_OPTIONS.map(option => (
                     <div
                       className='font-bold capitalize w-full text-nowrap relative rounded-md hover:bg-slate-100 transition-colors p-3 pl-8 text-gray-500 hover:text-darkGrey'

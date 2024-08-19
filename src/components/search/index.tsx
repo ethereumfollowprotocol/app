@@ -77,7 +77,7 @@ export function Search({
                       !!searchResult
                   )
                 }}
-                className='max-h-20 min-h-12 block text-wrap w-full py-3 pr-12 truncate outline-none font-medium rounded-xl border-2 hover:border-darkGrey focus:border-darkGrey transition-colors border-gray-200 pl-4 sm:text-sm bg-white/70'
+                className='max-h-20 min-h-12 block text-wrap w-full py-3 pr-12 truncate outline-none font-medium rounded-xl border-[3px] hover:border-darkGrey focus:border-darkGrey transition-colors border-gray-200 pl-4 sm:text-sm bg-white/70'
               />
             </>
           ) : (
@@ -108,7 +108,7 @@ export function Search({
                     !!searchResult
                 )
               }}
-              className='h-12 block pr-12 w-full truncate font-medium rounded-xl border-2 border-gray-200 pl-4 sm:text-sm bg-white/70 focus:border-darkGrey hover:border-darkGrey transition-colors'
+              className='h-12 block pr-12 w-full truncate font-medium rounded-xl border-[3px] border-gray-200 pl-4 sm:text-sm bg-white/70 focus:border-darkGrey hover:border-darkGrey transition-colors'
             />
           )}
           <div
@@ -138,7 +138,7 @@ export function Search({
         )}
       </div>
       <div
-        className={`absolute glass-card p-3 md:p-4 w-full shadow-md border-2 border-gray-200 bg-white/95 rounded-xl top-full mt-2 left-0 ${
+        className={`absolute glass-card p-3 md:p-4 w-full shadow-md border-[3px] border-gray-200 bg-white/95 rounded-xl top-full mt-2 left-0 ${
           dropdownMenuOpen ? (isEditor ? 'block' : 'hidden md:block') : 'hidden'
         }`}
       >
@@ -198,7 +198,7 @@ export function Search({
             <input
               name='search'
               ref={searchBarRef as LegacyRef<HTMLInputElement>}
-              className='h-11 rounded-xl border-2 w-full shadow-md border-gray-200 px-2'
+              className='h-11 rounded-xl border-[3px] w-full shadow-md border-gray-200 px-2'
               spellCheck={false}
               placeholder={t('search placeholder')}
               disabled={disabled}
@@ -222,7 +222,7 @@ export function Search({
             />
           </div>
           <div
-            className={`absolute glass-card w-full shadow-md border-2 p-3 rounded-xl bg-white/95 border-gray-200 top-full mt-2 left-0 ${
+            className={`absolute glass-card w-full shadow-md border-[3px] p-3 rounded-xl bg-white/95 border-gray-200 top-full mt-2 left-0 ${
               dropdownMenuOpen ? 'block' : 'hidden'
             }`}
           >

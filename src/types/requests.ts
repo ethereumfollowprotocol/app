@@ -113,6 +113,12 @@ export interface LeaderboardResponse {
   results: LeaderboardItem[]
 }
 
+export interface LeaderboardStatsResponse {
+  address_count: string
+  list_count: string
+  list_op_count: string
+}
+
 export interface StatsResponse {
   followers_count: number
   following_count: number

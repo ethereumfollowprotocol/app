@@ -24,7 +24,7 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
       {isStatic && (
         <div className='absolute w-full h-full left-0 rounded-[10px] flex items-center justify-center'>
           <button
-            className='connect-button cursor-pointer font-bold text-xl w-60 p-4 rounded-full border-2 shadow-lg'
+            className='connect-button cursor-pointer font-bold text-xl w-60 p-4 rounded-full border-[3px] shadow-lg'
             onClick={() => {
               if (openConnectModal) openConnectModal()
             }}

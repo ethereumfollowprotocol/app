@@ -126,7 +126,7 @@ export function UserProfilePageTable({
     <div
       className={`glass-card flex flex-col w-full gap-4 py-2 px-0 ${
         !(isLoading || isFetchingMore) && 'pb-0 sm:pb-0'
-      } sm:p-4 border-2 rounded-2xl border-gray-200 ${customClass}`}
+      } sm:p-4 border-[3px] rounded-2xl border-gray-200 ${customClass}`}
     >
       <TableHeader
         search={search}

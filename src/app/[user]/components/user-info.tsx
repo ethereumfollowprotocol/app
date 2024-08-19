@@ -302,7 +302,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
                 <button
                   key={option}
                   onClick={() => setActiveTab(option)}
-                  className={`w-1/2 capitalize text-lg py-2 font-semibold glass-card border-2 border-gray-200 rounded-t-lg ${
+                  className={`w-1/2 capitalize text-lg py-2 font-semibold glass-card border-[3px] border-gray-200 rounded-t-lg ${
                     activeTab === option ? '' : 'bg-black/5'
                   }`}
                 >

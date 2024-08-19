@@ -12,7 +12,7 @@ const CartButton = ({ cartItemsCount }: { cartItemsCount: number }) => {
   return (
     <Link href='/cart' passHref={true} legacyBehavior={true}>
       <div
-        className={`glass-card border-2 h-[48px] group justify-center items-center w-[48px] border-darkGrey transition-all cursor-pointer hover:border-opacity-100 relative flex rounded-full ${
+        className={`glass-card border-[3px] h-[48px] group justify-center items-center w-[48px] border-darkGrey transition-all cursor-pointer hover:border-opacity-100 relative flex rounded-full ${
           pathname === '/cart' ? 'border-opacity-100' : 'border-opacity-40'
         }`}
       >

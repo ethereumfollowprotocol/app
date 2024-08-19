@@ -11,6 +11,7 @@ interface PageSelectorProps {
   fetchPrevious?: () => void
   hasSkipToFirst?: boolean
   adjustUrl?: boolean
+  displayPageNumber?: boolean
 }
 
 const PageSelector: React.FC<PageSelectorProps> = ({
@@ -20,14 +21,9 @@ const PageSelector: React.FC<PageSelectorProps> = ({
   fetchNext,
   fetchPrevious,
   hasSkipToFirst = true,
-  adjustUrl = true
+  adjustUrl = true,
+  displayPageNumber = true
 }) => {
-  // const [pageValue, setPageValue] = useState(page.toString())
-
-  // useEffect(() => {
-  //   setPageValue(page.toString())
-  // }, [page])
-
   const router = useRouter()
   const searchParams = useSearchParams()
   const search = searchParams.get('query')
@@ -58,7 +54,7 @@ const PageSelector: React.FC<PageSelectorProps> = ({
         <button
           onClick={() => handlePageChange(1)}
           disabled={page === 1}
-          className='text-darkGrey glass-card flex items-center justify-center font-semibold group hover:border-opacity-100 h-9 w-9 border-2 border-darkGrey border-opacity-40 transition-opacity rounded-[10px] disabled:border-opacity-10'
+          className='text-darkGrey glass-card flex items-center justify-center font-semibold group hover:border-opacity-100 h-9 w-9 border-[3px] border-darkGrey border-opacity-40 transition-opacity rounded-[10px] disabled:border-opacity-10'
         >
           <Image
             src={ArrowLeft}
@@ -79,7 +75,7 @@ const PageSelector: React.FC<PageSelectorProps> = ({
       <button
         onClick={() => handlePageChange(page - 1)}
         disabled={page === 1}
-        className='text-darkGrey glass-card flex items-center justify-center font-semibold group hover:border-opacity-100 h-9 w-9 border-2 border-darkGrey border-opacity-40 transition-opacity rounded-[10px] disabled:border-opacity-10'
+        className='text-darkGrey glass-card flex items-center justify-center font-semibold group hover:border-opacity-100 h-9 w-9 border-[3px] border-darkGrey border-opacity-40 transition-opacity rounded-[10px] disabled:border-opacity-10'
       >
         <Image
           src={ArrowLeft}
@@ -89,30 +85,15 @@ const PageSelector: React.FC<PageSelectorProps> = ({
           className='group-hover:opacity-100 opacity-40 group-disabled:opacity-10'
         />
       </button>
-      <p className='text-darkGrey glass-card flex items-center justify-center font-semibold h-9 w-9 border-2 border-darkGrey transition-opacity rounded-[10px]'>
-        {page}
-      </p>
-      {/* <input
-        type='number'
-        placeholder='1'
-        value={pageValue}
-        onChange={e => {
-          const value = e.target.value
-          setPageValue(value)
-        }}
-        onKeyDown={e => {
-          if (e.key === 'Enter') {
-            handlePageChange(Number(Number(pageValue) > 0 ? Number(pageValue) : 1), true)
-          }
-        }}
-        className={`text-darkGrey flex items-center text-center bg-transparent justify-center font-semibold h-9 w-[${
-          36 + (pageValue.length - 1) * 10
-        }px] border-2 border-darkGrey transition-opacity rounded-md`}
-      /> */}
+      {displayPageNumber && (
+        <p className='text-darkGrey glass-card flex items-center justify-center font-semibold h-9 w-9 border-[3px] border-darkGrey transition-opacity rounded-[10px]'>
+          {page}
+        </p>
+      )}
       <button
         onClick={() => handlePageChange(page + 1)}
         disabled={!hasNextPage}
-        className='text-darkGrey glass-card flex items-center justify-center font-semibold group hover:border-opacity-100 h-9 w-9 border-2 border-darkGrey border-opacity-40 transition-opacity rounded-[10px] disabled:border-opacity-10'
+        className='text-darkGrey glass-card flex items-center justify-center font-semibold group hover:border-opacity-100 h-9 w-9 border-[3px] border-darkGrey border-opacity-40 transition-opacity rounded-[10px] disabled:border-opacity-10'
       >
         <Image
           src={ArrowLeft}

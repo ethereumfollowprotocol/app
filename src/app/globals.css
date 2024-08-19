@@ -141,6 +141,67 @@ input {
   text-wrap: balance;
 }
 
+.scroll-indicator {
+  position: absolute;
+  bottom: -130px;
+  left: calc(50% - 10px);
+  width: 30px;
+  height: 50px;
+  margin-left: -15px;
+  border: 2px solid #aaa8;
+  border-radius: 50px;
+  box-sizing: border-box;
+}
+
+.scroll-indicator::before {
+  position: absolute;
+  bottom: 35px;
+  left: calc(50% - 0px);
+  content: '';
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  background-color: #aaa8;
+  border-radius: 100%;
+  -webkit-animation: mouse-scroll 2s infinite;
+  animation: mouse-scroll 2s infinite;
+  box-sizing: border-box;
+}
+
+@-webkit-keyframes mouse-scroll {
+  0% {
+    -webkit-transform: translate(0, 0);
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  80% {
+    -webkit-transform: translate(0, 20px);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes mouse-scroll {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  80% {
+    transform: translate(0, 20px);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 .connect-button {
     background:
       linear-gradient(#fafafa, #fafafa) padding-box,
@@ -167,6 +228,13 @@ input {
 
 }
 
+.gradient-border {
+  background:
+  linear-gradient(#fafafa, #fafafa) padding-box,
+  linear-gradient(135deg, #faf35f, #ffbce3) border-box;
+  border: 3px solid transparent;
+}
+
 .btn-grad {
   background: linear-gradient(to right, #FFE066 0%, #FFE066 30%, #fff981 75%, #ffafde  100%);
   text-align: center;
@@ -188,13 +256,13 @@ input {
   linear-gradient(135deg, #faf35f, #ffbce3) border-box;
   border: 5px solid transparent;
   border-radius: 40px;
-  transition: background 100ms ease-in-out;
 }
 
 .btn-following-pending:hover {
-  background:
+  /* background:
   linear-gradient(#D0D0D0, #D0D0D0) padding-box,
-  linear-gradient(135deg, #faf35f, #ffbce3) border-box;
+  linear-gradient(135deg, #faf35f, #ffbce3) border-box; */
+  /* background: #D0D0D0; */
 }
 
 /* Loaders */

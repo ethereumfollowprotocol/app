@@ -26,16 +26,16 @@ const theme: Record<
   },
   'Pending Following': {
     bg: 'btn-following-pending',
-    hover: 'hover:bg-[#D0D0D0]',
+    hover: 'hover:bg-none hover:bg-[#D0D0D0]',
     text: 'text-gray-900',
     border:
-      'border-2 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400'
+      'border-[3px] after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400'
   },
   Following: {
     bg: 'bg-white',
     hover: 'hover:bg-deletion hover:border-deletion hover:border-0',
     text: 'text-gray-900',
-    border: 'border-2'
+    border: 'border-[3px]'
   },
   Unfollow: {
     bg: 'bg-deletion',
@@ -52,7 +52,7 @@ const theme: Record<
   Subscribed: {
     bg: 'bg-addition',
     text: 'text-zinc-800',
-    border: 'border-2 border-gray-200'
+    border: 'border-[3px] border-gray-200'
   },
   Unsubscribe: {
     bg: 'bg-deletion',
@@ -71,14 +71,14 @@ const theme: Record<
     hover: 'hover:bg-[#FFC6C6]',
     text: 'text-red-500',
     border:
-      'border-2 border-red-500 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400',
+      'border-[3px] border-red-500 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400',
     imageSrc: MainnetRed
   },
   Blocked: {
     bg: 'bg-white',
     hover: 'hover:bg-[#FFC6C6]',
     text: 'text-red-500',
-    border: 'border-2 border-red-500',
+    border: 'border-[3px] border-red-500',
     imageSrc: MainnetRed
   },
   Unblock: {
@@ -99,14 +99,14 @@ const theme: Record<
     hover: 'hover:bg-[#FFC6C6]',
     text: 'text-red-500',
     border:
-      'border-2 border-red-500 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400',
+      'border-[3px] border-red-500 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400',
     imageSrc: MainnetRed
   },
   Muted: {
     bg: 'bg-white',
     hover: 'hover:bg-[#FFC6C6]',
     text: 'text-red-500',
-    border: 'border-2 border-red-500',
+    border: 'border-[3px] border-red-500',
     imageSrc: MainnetRed
   },
   Unmute: {
@@ -155,7 +155,11 @@ const FollowButton: React.FC<FollowButtonProps> = ({
           theme[buttonState].border,
           'rounded-xl relative text-sm flex items-center gap-1.5 transition-all duration-200 justify-center font-bold',
           'h-[37px] px-2 py-1.5', // Fixed width for consistent layout
-          disableHover ? 'bg-right' : theme[buttonState].hover,
+          disableHover
+            ? buttonState === 'Pending Following'
+              ? ''
+              : 'bg-right'
+            : theme[buttonState].hover,
           className
         ])}
         style={{

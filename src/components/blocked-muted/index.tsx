@@ -129,9 +129,9 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
       >
         <div
           onClick={onClose}
-          className='absolute cursor-pointer hover:opacity-80 rounded-2xl bg-white/80 p-4 -top-[70px] right-6'
+          className='absolute cursor-pointer z-50 hover:opacity-90 rounded-2xl bg-white/90 p-3 -top-[18px] right-1'
         >
-          <Image src={Cross} alt='close blocked and muted list' className='h-6 w-6' />
+          <Image src={Cross} alt='close blocked and muted list' className='h-4 w-4' />
         </div>
         <div className='bg-white/80 h-fit rounded-2xl w-full hidden xl:block'>
           <UserProfilePageTable
@@ -178,7 +178,7 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
               <button
                 key={option}
                 onClick={() => setActiveTab(option as BlockedMutedTabType)}
-                className={`w-1/2 capitalize  text-lg py-2 font-semibold glass-card border-2 border-gray-200 rounded-t-lg ${
+                className={`w-1/2 capitalize  text-lg py-2 font-semibold glass-card border-[3px] border-gray-200 rounded-t-lg ${
                   activeTab === option ? 'bg-white/60' : 'bg-white/20 hover:bg-white/40'
                 }`}
               >
