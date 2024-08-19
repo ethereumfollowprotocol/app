@@ -94,6 +94,7 @@ const useLeaderboard = () => {
 
   useEffect(() => {
     const pageIndex = results?.pageParams.indexOf(page - 1)
+
     if (pageIndex === -1) {
       setIsRefetchingLeaderboard(true)
 

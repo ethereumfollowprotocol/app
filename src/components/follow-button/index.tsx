@@ -33,7 +33,7 @@ const theme: Record<
   },
   Following: {
     bg: 'bg-white',
-    hover: 'hover:bg-[#D0D0D0]',
+    hover: 'hover:bg-deletion hover:border-deletion hover:border-0',
     text: 'text-gray-900',
     border: 'border-2 border-gray-200'
   },

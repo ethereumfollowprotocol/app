@@ -21,6 +21,7 @@ body {
   background-repeat: no-repeat;
   background-position: -34.1vw -38vw;
   background-size: 210vw 129vw;
+  /* background-attachment: fixed; */
 }
 
 /* Disable zoom in iOS Safari when double tapping an element */

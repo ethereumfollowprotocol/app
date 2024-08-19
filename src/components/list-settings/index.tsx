@@ -6,7 +6,7 @@ import { useClickAway } from '@uidotdev/usehooks'
 
 import Modal from '../modal'
 import LoadingCell from '../loading-cell'
-import Cross from 'public/assets/icons/cross.svg'
+import CancelButton from '../cancel-button'
 import type { ChainWithDetails } from '#/lib/wagmi'
 import { ChainIcon } from '#/components/chain-icon'
 import SaveSettings from './components/save-settings'
@@ -16,7 +16,6 @@ import ArrowDown from 'public/assets/icons/arrow-down.svg'
 import { PrimaryButton } from '#/components/primary-button'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import CancelButton from '../cancel-button'
 
 interface ListSettingsProps {
   selectedList: number
@@ -93,7 +92,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
       isPrimaryList={isPrimaryList}
     />
   ) : (
-    <Modal onCancel={onClose}>
+    <Modal onCancel={onClose} className='items-start py-20'>
       <div className='gap-5 sm:gap-7 flex flex-col rounded-xl p-1 sm:p-3 max-w-full w-full sm:w-[554px]'>
         <div className='w-full flex items-center justify-between'>
           <div className='relative'>
@@ -103,12 +102,12 @@ const ListSettings: React.FC<ListSettingsProps> = ({
               </h3>
             </div>
           </div>
-          <Image
+          {/* <Image
             src={Cross}
             alt='Close list settings'
             className='w-6 cursor-pointer hover:opacity-60 transition-opacity'
             onClick={onClose}
-          />
+          /> */}
         </div>
         {/* <ProfileStats stats={profile.stats} /> */}
         <div className='flex items-center max-w-full justify-between gap-2'>
