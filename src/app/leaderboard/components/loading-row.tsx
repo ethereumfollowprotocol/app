@@ -1,7 +1,11 @@
 import LoadingCell from '#/components/loading-cell'
 import { usePathname } from 'next/navigation'
 
-const LoadingRow = () => {
+interface LoadingRowProps {
+  staticStats?: boolean
+}
+
+const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
   const pathname = usePathname()
   const isHome = pathname === '/'
 
@@ -28,11 +32,19 @@ const LoadingRow = () => {
       >
         <div className='flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 hidden lg:flex gap-1'>
           <LoadingCell className='w-10 h-6 rounded-lg' />
-          <p className='font-semibold text-sm text-gray-500'>Mutuals</p>
+          {staticStats ? (
+            <p className='font-semibold text-sm text-gray-500'>Mutuals</p>
+          ) : (
+            <LoadingCell className='h-4 w-20 rounded-md' />
+          )}
         </div>
         <div className='hidden sm:flex flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 gap-1'>
           <LoadingCell className='w-10 h-6 rounded-lg' />
-          <p className='font-semibold text-sm text-gray-500'>Followers</p>
+          {staticStats ? (
+            <p className='font-semibold text-sm text-gray-500'>Followers</p>
+          ) : (
+            <LoadingCell className='h-4 w-20 rounded-md' />
+          )}
         </div>
         <div
           className={`hidden md:flex ${
@@ -40,7 +52,11 @@ const LoadingRow = () => {
           } flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
         >
           <LoadingCell className='w-10 h-6 rounded-lg' />
-          <p className='font-semibold text-sm text-gray-500'>Following</p>
+          {staticStats ? (
+            <p className='font-semibold text-sm text-gray-500'>Following</p>
+          ) : (
+            <LoadingCell className='h-4 w-20 rounded-md' />
+          )}
         </div>
         <div
           className={`flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 hidden xl:flex  ${
@@ -48,7 +64,11 @@ const LoadingRow = () => {
           } `}
         >
           <LoadingCell className='w-10 h-6 rounded-lg' />
-          <p className='font-semibold text-sm text-gray-500'>Blocked</p>
+          {staticStats ? (
+            <p className='font-semibold text-sm text-gray-500'>Blocked</p>
+          ) : (
+            <LoadingCell className='h-4 w-20 rounded-md' />
+          )}{' '}
         </div>
       </div>
       <div

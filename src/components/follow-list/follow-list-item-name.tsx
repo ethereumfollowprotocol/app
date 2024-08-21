@@ -303,13 +303,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
         )}
       </div>
       {counts && (
-        <div
-          className={`items-center justify-end hidden xs:flex pr-6 ${
-            !followersIsLoading && userAddress && !isFollowersEmpty
-              ? 'gap-16 lg:gap-6 xl:gap-10'
-              : ' gap-16 lg:gap-32 xl:gap-20'
-          }`}
-        >
+        <div className='items-center justify-end hidden xs:flex pr-6 gap-16 lg:gap-6 xl:gap-10'>
           <div
             className={`flex-col items-center 2xl:flex ${
               userAddress && !isFollowersEmpty ? 'lg:hidden' : ''

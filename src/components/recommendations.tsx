@@ -27,7 +27,7 @@ const Recommendations = ({
   const { selectedList } = useEFPProfile()
   const { address: userAddress } = useAccount()
   const { data: profilesToRecommend, isLoading } = useQuery({
-    queryKey: [endpoint, userAddress],
+    queryKey: [endpoint, userAddress, selectedList],
     queryFn: async () => {
       const discoverAccounts = await fetchRecommendations(endpoint, userAddress, selectedList)
 

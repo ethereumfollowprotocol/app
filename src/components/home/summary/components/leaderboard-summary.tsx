@@ -45,9 +45,9 @@ const LeaderboardSummary = () => {
               </h4>
               {isLeaderboardSummaryLoading ? (
                 <div className='animate-pulse flex flex-col'>
-                  <LoadingRow />
-                  <LoadingRow />
-                  <LoadingRow />
+                  <LoadingRow staticStats={false} />
+                  <LoadingRow staticStats={false} />
+                  <LoadingRow staticStats={false} />
                 </div>
               ) : (
                 <div className='flex flex-col'>
@@ -58,10 +58,11 @@ const LeaderboardSummary = () => {
                       name={entry.name}
                       avatar={entry.avatar}
                       rank={Number(selectedRank(entry))}
+                      firstStat={title}
                       followers={Number(entry.followers) || 0}
                       following={Number(entry.following) || 0}
                       mutuals={Number(entry.mutuals) || 0}
-                      blockedMuted={Number(entry.blocks) || 0}
+                      blocked={Number(entry.blocks) || 0}
                     />
                   ))}
                 </div>

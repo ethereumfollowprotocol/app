@@ -3,11 +3,12 @@ import type { Address } from 'viem'
 import { useTranslation } from 'react-i18next'
 
 import { Avatar } from '#/components/avatar'
+import { usePathname } from 'next/navigation'
 import { truncateAddress } from '#/lib/utilities'
 import { formatNumber } from '#/utils/formatNumber'
 import FollowButton from '#/components/follow-button'
 import useFollowState from '#/hooks/use-follow-state'
-import { usePathname } from 'next/navigation'
+import type { LeaderboardFilter } from '#/types/common'
 
 interface TableRowProps {
   address: Address
@@ -17,7 +18,8 @@ interface TableRowProps {
   following?: number
   followers?: number
   mutuals?: number
-  blockedMuted?: number
+  blocked?: number
+  firstStat?: LeaderboardFilter
 }
 
 const TableRow: React.FC<TableRowProps> = ({
@@ -28,7 +30,8 @@ const TableRow: React.FC<TableRowProps> = ({
   following,
   followers,
   mutuals,
-  blockedMuted
+  blocked,
+  firstStat
 }) => {
   const rankedAs = rank <= 3 ? 'top-three' : rank <= 10 ? 'top-ten' : 'regular'
   const rankNumber = {
@@ -106,31 +109,54 @@ const TableRow: React.FC<TableRowProps> = ({
       </div>
       <div
         className={`items-center justify-between hidden sm:flex sm:w-1/4 md:w-[55%] ${
-          isHome ? 'sm:w-fit md:w-2/5 lg:w-3/5 xl:w-1/4' : ''
+          isHome ? 'sm:w-1/4 md:w-2/5 lg:w-3/5 xl:w-1/4' : ''
         }`}
       >
-        <div className='flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 hidden lg:flex'>
+        {firstStat && (
+          <div className='flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 hidden sm:flex lg:hidden xl:flex'>
+            <p className='font-bold text-sm sm:text-lg'>
+              {formatNumber(
+                {
+                  followers,
+                  following,
+                  mutuals,
+                  blocked
+                }[firstStat] || 0
+              )}
+            </p>
+            <p className='font-semibold text-sm capitalize text-gray-500'>{firstStat}</p>
+          </div>
+        )}
+        <div
+          className={`${
+            firstStat === 'mutuals' ? 'hidden lg:flex xl:hidden' : 'hidden md:flex'
+          } flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
+        >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(mutuals || 0)}</p>
           <p className='font-semibold text-sm text-gray-500'>Mutuals</p>
         </div>
-        <div className='hidden sm:flex flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4'>
+        <div
+          className={`${
+            firstStat !== 'mutuals' ? 'hidden lg:flex xl:hidden' : 'hidden md:flex'
+          } flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
+        >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(followers || 0)}</p>
           <p className='font-semibold text-sm text-gray-500'>Followers</p>
         </div>
         <div
-          className={`hidden md:flex ${
-            isHome ? 'xl:hidden' : ''
+          className={`${
+            firstStat ? 'lg:flex xl:hidden hidden' : `hidden md:flex ${isHome ? 'xl:hidden' : ''}`
           } flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(following || 0)}</p>
           <p className='font-semibold text-sm text-gray-500'>Following</p>
         </div>
         <div
-          className={`flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 hidden xl:flex  ${
+          className={`flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 hidden xl:flex ${
             isHome ? 'lg:flex xl:hidden' : ''
           } `}
         >
-          <p className='font-bold text-sm sm:text-lg'>{formatNumber(blockedMuted || 0)}</p>
+          <p className='font-bold text-sm sm:text-lg'>{formatNumber(blocked || 0)}</p>
           <p className='font-semibold text-sm text-gray-500'>Blocked</p>
         </div>
       </div>

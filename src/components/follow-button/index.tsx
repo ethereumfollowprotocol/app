@@ -159,7 +159,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
             ? buttonState === 'Pending Following'
               ? ''
               : 'bg-right'
-            : theme[buttonState].hover,
+            : `${theme[buttonState].hover} hover:scale-110`,
           className
         ])}
         style={{

@@ -168,7 +168,7 @@ const LeaderboardTable = () => {
               followers={Number(entry.followers) || 0}
               following={Number(entry.following) || 0}
               mutuals={Number(entry.mutuals) || 0}
-              blockedMuted={Number(entry.blocks) || 0}
+              blocked={Number(entry.blocks) || 0}
             />
           ))}
           {new Array(isLoading ? 100 : 0).fill(1).map((_, i) => (
