@@ -92,7 +92,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
       isPrimaryList={isPrimaryList}
     />
   ) : (
-    <Modal onCancel={onClose} className='items-start py-20'>
+    <Modal onCancel={onClose} className='items-start py-[5vh]'>
       <div className='gap-5 sm:gap-7 flex flex-col rounded-xl p-1 sm:p-3 max-w-full w-full sm:w-[554px]'>
         <div className='w-full flex items-center justify-between'>
           <div className='relative'>

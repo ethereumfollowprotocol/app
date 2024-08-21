@@ -60,32 +60,32 @@ const LeaderboardTable = () => {
 
   return (
     <>
-      <div className='mt-6 flex items-center justify-center flex-wrap gap-8'>
-        <div className='gradient-border flex flex-col rounded-2xl items-center justify-center h-[118px] w-64'>
+      <div className='mt-4 sm:mt-6 mb-4 sm:mb-6 lg:mb-0 flex items-center justify-center flex-wrap gap-4 xs:gap-8'>
+        <div className='gradient-border flex flex-col rounded-2xl items-center justify-center h-24 xs:h-[118px] w-full xs:w-64'>
           {isLeaderboardStatsLoading ? (
             <LoadingCell className='h-10 w-32 rounded-lg' />
           ) : (
-            <p className='font-semibold text-3xl'>
+            <p className='font-semibold text-2xl md:text-3xl'>
               {formatNumberLeaderboard(Number(leaderboardStats?.address_count))}
             </p>
           )}
           <p className='font-semibold capitalize text-lg text-[#888]'>{t('addresses')}</p>
         </div>
-        <div className='gradient-border flex flex-col rounded-2xl items-center justify-center h-[118px] w-64'>
+        <div className='gradient-border flex flex-col rounded-2xl items-center justify-center h-24 xs:h-[118px] w-full xs:w-64'>
           {isLeaderboardStatsLoading ? (
             <LoadingCell className='h-10 w-32 rounded-lg' />
           ) : (
-            <p className='font-semibold text-3xl'>
+            <p className='font-semibold text-2xl md:text-3xl'>
               {formatNumberLeaderboard(Number(leaderboardStats?.list_count))}
             </p>
           )}
           <p className='font-semibold capitalize text-lg text-[#888]'>{t('lists')}</p>
         </div>
-        <div className='gradient-border flex flex-col rounded-2xl items-center justify-center h-[118px] w-64'>
+        <div className='gradient-border flex flex-col rounded-2xl items-center justify-center h-24 xs:h-[118px] w-full xs:w-64'>
           {isLeaderboardStatsLoading ? (
             <LoadingCell className='h-10 w-32 rounded-lg' />
           ) : (
-            <p className='font-semibold text-3xl'>
+            <p className='font-semibold text-2xl md:text-3xl'>
               {formatNumberLeaderboard(Number(leaderboardStats?.list_op_count))}
             </p>
           )}

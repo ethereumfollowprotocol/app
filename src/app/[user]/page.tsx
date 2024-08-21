@@ -2,6 +2,8 @@ import { isAddress } from 'viem'
 import type { Metadata } from 'next'
 
 import UserInfo from './components/user-info'
+import { truncateAddress } from '#/lib/utilities'
+import type { AccountResponseType } from '#/types/common'
 
 interface Props {
   params: { user: string }
@@ -9,37 +11,31 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const user = params.user
-
-  if (Number.isInteger(Number(user)) && !isAddress(user))
-    return {
-      title: `List #${user} | EFP`,
-      openGraph: {
-        title: `List #${user} | EFP`,
-        siteName: `List #${user} - EFP profile`,
-        description: `List #${user} - EFP profile`,
-        url: `https://testing.ethfollow.xyz/${user}`,
-        images: [
-          {
-            url: `https://testing.ethfollow.xyz/og?user=${user}`
-          }
-        ]
-      },
-      twitter: {
-        images: `https://testing.ethfollow.xyz/og?user=${user}`
-      }
-    }
+  const isList = Number.isInteger(Number(user)) && !isAddress(user)
 
   try {
-    const response = await fetch(`https://api.ensdata.net/${user}`).then(res => res.json())
-    // const newImage = response.avatar_url
+    const response = (await fetch(
+      `${process.env.NEXT_PUBLIC_EFP_API_URL}/${isList ? 'lists' : 'users'}/${user}/account`
+    ).then(res => res.json())) as AccountResponseType
+
+    const fetchedUser =
+      isList && response.primary_list !== user
+        ? `List #${user}`
+        : response.address
+          ? response.ens.name || truncateAddress(response.address)
+          : isAddress(user)
+            ? truncateAddress(user)
+            : isList
+              ? `List #${user}`
+              : user
 
     return {
-      title: `${response.error ? user : response.ens_primary} | EFP`,
+      title: `${fetchedUser} | EFP`,
       openGraph: {
-        title: `${response.error ? user : response.ens_primary} | EFP`,
-        siteName: `${response.error ? user : response.ens_primary} - EFP profile`,
-        description: `${response.error ? user : response.ens_primary} - EFP profile`,
-        url: `https://testing.ethfollow.xyz/${response.error ? user : response.address}`,
+        title: `${fetchedUser} | EFP`,
+        siteName: `${fetchedUser} - EFP profile`,
+        description: `${fetchedUser} - EFP profile`,
+        url: `https://testing.ethfollow.xyz/${response.address ? response.address : user}`,
         images: [
           {
             url: `https://testing.ethfollow.xyz/og?user=${user}`

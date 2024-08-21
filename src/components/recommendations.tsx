@@ -5,8 +5,9 @@ import { useAccount } from 'wagmi'
 import { useQuery } from '@tanstack/react-query'
 
 import { FollowList } from '#/components/follow-list'
-import { fetchRecommendations } from '#/api/fetchRecommendations'
 import type { DiscoverItemType } from '#/types/common'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
+import { fetchRecommendations } from '#/api/fetchRecommendations'
 
 interface RecommendationsProps {
   header?: string
@@ -23,11 +24,12 @@ const Recommendations = ({
   limit,
   endpoint
 }: RecommendationsProps) => {
+  const { selectedList } = useEFPProfile()
   const { address: userAddress } = useAccount()
   const { data: profilesToRecommend, isLoading } = useQuery({
     queryKey: [endpoint, userAddress],
     queryFn: async () => {
-      const discoverAccounts = await fetchRecommendations(endpoint, userAddress)
+      const discoverAccounts = await fetchRecommendations(endpoint, userAddress, selectedList)
 
       return discoverAccounts.filter(
         account => account.address.toLowerCase() !== userAddress?.toLowerCase()

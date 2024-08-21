@@ -142,8 +142,8 @@ input {
 }
 
 .scroll-indicator {
-  position: absolute;
-  bottom: -130px;
+  position: fixed;
+  bottom: 20px;
   left: calc(50% - 10px);
   width: 30px;
   height: 50px;

@@ -2,18 +2,22 @@
 import { isAddress } from 'viem'
 import { ImageResponse } from 'next/og'
 import { truncateAddress } from '#/lib/utilities'
+import type { AccountResponseType } from '#/types/common'
 
 export async function GET(req) {
   const user = req.url.split('user=')[1]
-
   const isList = Number.isInteger(Number(user)) && !isAddress(user)
-  const response = await fetch(`https://api.ensdata.net/${user}`).then(res => res.json())
-  const fetchedUser = response.error
-    ? isAddress(user)
+
+  const response = (await fetch(
+    `${process.env.NEXT_PUBLIC_EFP_API_URL}/${isList ? 'lists' : 'users'}/${user}/account`
+  ).then(res => res.json())) as AccountResponseType
+
+  const fetchedUser = response.address
+    ? response.ens.name || truncateAddress(response.address)
+    : isAddress(user)
       ? truncateAddress(user)
       : user
-    : response.ens_primary
-  const fetchedAvatar = response.avatar_url
+  const fetchedAvatar = response.ens?.avatar
 
   return new ImageResponse(
     <div
@@ -34,7 +38,7 @@ export async function GET(req) {
       <div
         className='glass-card'
         style={{
-          display: isList ? 'none' : 'flex',
+          display: isList && response.primary_list !== user ? 'none' : 'flex',
           minWidth: 274,
           maxWidth: 340,
           flexDirection: 'column',
@@ -135,13 +139,13 @@ export async function GET(req) {
       </div>
       <p
         style={{
-          display: isList ? 'block' : 'none',
+          display: isList && response.primary_list !== user ? 'block' : 'none',
           fontSize: 48,
           paddingLeft: 48,
           textShadow: '1px 0 1px #333333'
         }}
       >
-        List #{fetchedUser}
+        List #{user}
       </p>
       <div
         style={{

@@ -1,9 +1,18 @@
-import type { leaderboardFilters } from '#/lib/constants'
 import type { Address } from 'viem'
+import type { leaderboardFilters } from '#/lib/constants'
 
 export type ProfileTabType = 'following' | 'followers'
 export type BlockedMutedTabType = 'Blocked/Muted' | 'Blocked/Muted By'
 export type ProfileTableTitleType = 'following' | 'followers' | 'Blocked/Muted By' | 'Blocked/Muted'
+
+export type AccountResponseType = {
+  address: Address
+  ens: {
+    name: string | null
+    avatar: string | null
+  }
+  primary_list: string | null
+}
 
 export type DiscoverItemType = {
   address: Address
