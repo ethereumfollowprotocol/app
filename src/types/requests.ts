@@ -55,6 +55,7 @@ export interface InfiniteProfileQueryProps {
   sort?: FollowSortType
   pageParam: number
   allResults?: boolean
+  search?: string
 }
 
 export type LeaderboardDirection = 'asc' | 'desc'

@@ -82,7 +82,7 @@ const TableRow: React.FC<TableRowProps> = ({
       </div>
       <div
         className={`flex gap-2 items-center w-[51%] 3xs:w-[54%] xxs:w-[56%] xs:w-2/3 sm:w-1/2 md:w-[40%] ${
-          isHome ? ' sm:w-full md:w-1/2 lg:w-[55%] xl:w-1/2' : 'xl:w-1/4 '
+          isHome ? ' sm:w-full md:w-1/2 lg:w-[55%] xl:w-1/2' : 'xl:w-1/3 '
         }`}
         data-name='name-column'
       >
@@ -108,8 +108,8 @@ const TableRow: React.FC<TableRowProps> = ({
         </div>
       </div>
       <div
-        className={`items-center justify-between hidden sm:flex sm:w-1/4 md:w-[55%] ${
-          isHome ? 'sm:w-1/4 md:w-2/5 lg:w-3/5 xl:w-1/4' : ''
+        className={`items-center justify-between hidden sm:flex sm:w-1/5 md:w-2/5 ${
+          isHome ? 'sm:w-1/4 md:w-1/3 lg:w-2/3 xl:w-1/4' : ''
         }`}
       >
         {firstStat && (
@@ -129,7 +129,11 @@ const TableRow: React.FC<TableRowProps> = ({
         )}
         <div
           className={`${
-            firstStat === 'mutuals' ? 'hidden lg:flex xl:hidden' : 'hidden md:flex'
+            firstStat === 'mutuals'
+              ? 'hidden lg:flex xl:hidden'
+              : isHome
+                ? 'hidden md:flex'
+                : 'hidden sm:flex'
           } flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(mutuals || 0)}</p>
@@ -137,7 +141,7 @@ const TableRow: React.FC<TableRowProps> = ({
         </div>
         <div
           className={`${
-            firstStat !== 'mutuals' ? 'hidden lg:flex xl:hidden' : 'hidden md:flex'
+            firstStat && firstStat !== 'mutuals' ? 'hidden lg:flex xl:hidden' : 'hidden md:flex'
           } flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(followers || 0)}</p>
@@ -145,7 +149,7 @@ const TableRow: React.FC<TableRowProps> = ({
         </div>
         <div
           className={`${
-            firstStat ? 'lg:flex xl:hidden hidden' : `hidden md:flex ${isHome ? 'xl:hidden' : ''}`
+            firstStat ? 'lg:flex xl:hidden hidden' : `hidden lg:flex ${isHome ? 'xl:hidden' : ''}`
           } flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(following || 0)}</p>
@@ -162,7 +166,7 @@ const TableRow: React.FC<TableRowProps> = ({
       </div>
       <div
         className={`w-fit ${
-          isHome ? 'lg:w-[25%] 2xl:w-[20%]' : 'lg:w-[15%] 2xl:w-[10%]'
+          isHome ? 'lg:w-[25%] 2xl:w-[20%]' : 'lg:w-[20%] 2xl:w-1/5'
         } flex justify-end`}
       >
         <FollowButton address={address} />

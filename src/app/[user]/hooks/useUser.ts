@@ -12,6 +12,8 @@ import { fetchFollowingTags, nullFollowingTags } from '#/api/fetchFollowingTags'
 import type { FollowerResponse, FollowingResponse, FollowSortType } from '#/types/requests'
 
 const useUser = (user: string) => {
+  const [followingSearch, setFollowingSearch] = useState<string>('')
+  const [followersSearch, setFollowersSearch] = useState<string>('')
   const [followingTagsFilter, setFollowingTagsFilter] = useState<string[]>([])
   const [followersTagsFilter, setFollowersTagsFilter] = useState<string[]>([])
   const [followingSort, setFollowingSort] = useState<FollowSortType>('latest first')
@@ -58,7 +60,7 @@ const useUser = (user: string) => {
     isFetchingNextPage: isFetchingMoreFollowers,
     isRefetching: isRefetchingFollowers
   } = useInfiniteQuery({
-    queryKey: ['followers', user, followersSort, followersTagsFilter],
+    queryKey: ['followers', user, followersSort, followersTagsFilter, followersSearch],
     queryFn: async ({ pageParam = 0 }) => {
       setIsEndOfFollowers(false)
 
@@ -109,7 +111,7 @@ const useUser = (user: string) => {
     isFetchingNextPage: isFetchingMoreFollowing,
     isRefetching: isRefetchingFollowing
   } = useInfiniteQuery({
-    queryKey: ['following', user, followingSort, followingTagsFilter],
+    queryKey: ['following', user, followingSort, followingTagsFilter, followingSearch],
     queryFn: async ({ pageParam = 0 }) => {
       setIsEndOfFollowing(false)
 
@@ -190,6 +192,8 @@ const useUser = (user: string) => {
     isFetchingMoreFollowing,
     followingTagsFilter,
     followersTagsFilter,
+    setFollowersSearch,
+    setFollowingSearch,
     followingSort,
     setFollowingSort,
     followersSort,

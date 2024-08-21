@@ -356,7 +356,7 @@ const useSaveListSettings = ({
         })
 
         const splitListOps: CartItem[][] = []
-        const splitSize = 100
+        const splitSize = 1000
 
         for (let i = 0; i < listOps.length; i += splitSize) {
           splitListOps.push(listOps.slice(i, i + splitSize))

@@ -8,6 +8,7 @@ export const fetchProfileFollowing = async ({
   sort,
   tags,
   pageParam,
+  search,
   allResults
 }: InfiniteProfileQueryProps) => {
   try {
@@ -15,6 +16,7 @@ export const fetchProfileFollowing = async ({
       limit,
       offset: pageParam * limit,
       tags,
+      term: search,
       sort: sort
         ? {
             'earliest first': 'earliest',
@@ -27,10 +29,18 @@ export const fetchProfileFollowing = async ({
     const url =
       list !== undefined
         ? `${process.env.NEXT_PUBLIC_EFP_API_URL}/lists/${list}/${
-            allResults ? 'allFollowing' : 'following'
+            allResults
+              ? 'allFollowing'
+              : search && search?.length >= 3
+                ? 'searchFollowing'
+                : 'following'
           }?${queryParams}`
         : `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/${
-            allResults ? 'allFollowing' : 'following'
+            allResults
+              ? 'allFollowing'
+              : search && search?.length >= 3
+                ? 'searchFollowing'
+                : 'following'
           }?${queryParams}`
 
     const response = await fetch(url, {

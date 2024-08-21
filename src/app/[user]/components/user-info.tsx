@@ -43,26 +43,28 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     roles,
     profile: profileProfile,
     selectedList,
-    profileIsLoading: profileProfileIsLoading,
     following: profileFollowing,
     followers: profileFollowers,
-    followingTags: profileFollowingTags,
-    followingTagsLoading: profileFollowingTagsLoading,
-    followingTagsFilter: profileFollowingTagsFilter,
-    followersTagsFilter: profileFollowersTagsFilter,
     toggleTag: profileToggleTag,
-    followersSort: profileFollowersSort,
+    followerTags: profileFollowerTags,
     followingSort: profileFollowingSort,
+    followersSort: profileFollowersSort,
+    followingTags: profileFollowingTags,
+    isEndOfFollowers: profileIsEndOfFollowers,
+    isEndOfFollowing: profileIsEndOfFollowing,
+    profileIsLoading: profileProfileIsLoading,
     setFollowersSort: profileSetFollowersSort,
     setFollowingSort: profileSetFollowingSort,
+    setFollowersSearch: profileSetFollowersSearch,
+    setFollowingSearch: profileSetFollowingSearch,
     followingIsLoading: profileFollowingIsLoading,
     followersIsLoading: profileFollowersIsLoading,
     fetchMoreFollowers: profileFetchMoreFollowers,
     fetchMoreFollowing: profileFetchMoreFollowing,
-    isEndOfFollowers: profileIsEndOfFollowers,
-    isEndOfFollowing: profileIsEndOfFollowing,
+    followingTagsFilter: profileFollowingTagsFilter,
+    followersTagsFilter: profileFollowersTagsFilter,
     followerTagsLoading: profileFollowerTagsLoading,
-    followerTags: profileFollowerTags,
+    followingTagsLoading: profileFollowingTagsLoading,
     setFollowingTagsFilter: profileSetFollowingTagsFilter,
     setFollowersTagsFilter: profileSetFollowersTagsFilter,
     isFetchingMoreFollowers: profileIsFetchingMoreFollowers,
@@ -87,6 +89,8 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     isEndOfFollowers: userIsEndOfFollowers,
     setFollowingSort: userSetFollowingSort,
     setFollowersSort: userSetFollowerSort,
+    setFollowersSearch: userSetFollowersSearch,
+    setFollowingSearch: userSetFollowingSearch,
     followersIsLoading: userFollowersIsLoading,
     followingIsLoading: userFollowingIsLoading,
     fetchMoreFollowers: userFetchMoreFollowers,
@@ -122,6 +126,8 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   const followingSort = isMyProfile ? profileFollowingSort : userFollowingSort
   const setFollowersSort = isMyProfile ? profileSetFollowersSort : userSetFollowerSort
   const setFollowingSort = isMyProfile ? profileSetFollowingSort : userSetFollowingSort
+  const setFollowingSearch = isMyProfile ? profileSetFollowingSearch : userSetFollowingSearch
+  const setFollowersSearch = isMyProfile ? profileSetFollowersSearch : userSetFollowersSearch
   const followingIsLoading =
     isLoadPage || (isMyProfile ? profileFollowingIsLoading : userFollowingIsLoading)
   const followersIsLoading =
@@ -159,6 +165,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
         sort={followingSort}
         setSort={setFollowingSort}
         isEndOfResults={isEndOfFollowing}
+        setSearchFilter={setFollowingSearch}
         isFetchingMore={isFetchingMoreFollowing}
         fetchMore={() => fetchMoreFollowing()}
         title='following'
@@ -179,6 +186,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
         toggleSelectedTags={toggleTag}
         sort={followersSort}
         setSort={setFollowersSort}
+        setSearchFilter={setFollowersSearch}
         isEndOfResults={isEndOfFollowers}
         isFetchingMore={isFetchingMoreFollowers}
         fetchMore={() => fetchMoreFollowers()}
@@ -273,6 +281,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
             isEndOfResults={isEndOfFollowing}
             isFetchingMore={isFetchingMoreFollowing}
             fetchMore={() => fetchMoreFollowing()}
+            setSearchFilter={setFollowingSearch}
             canEditTags={
               Number(userIsList ? listNum : profile?.primary_list) === selectedList &&
               roles?.isManager
@@ -293,6 +302,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
             isEndOfResults={isEndOfFollowers}
             isFetchingMore={isFetchingMoreFollowers}
             fetchMore={() => fetchMoreFollowers()}
+            setSearchFilter={setFollowersSearch}
             title='followers'
             customClass='hidden xl:flex xl:max-w-[520px] 2xl:max-w-[40%]'
           />

@@ -38,7 +38,8 @@ export function UserProfilePageTable({
   setSort,
   showTagsByDefault,
   isShowingBlocked,
-  setSelectedTags
+  setSelectedTags,
+  setSearchFilter
 }: {
   title: ProfileTableTitleType
   customClass?: string
@@ -57,9 +58,20 @@ export function UserProfilePageTable({
   showTagsByDefault?: boolean
   isShowingBlocked?: boolean
   setSelectedTags: (tags: string[]) => void
+  setSearchFilter: (search: string) => void
 }) {
   const [search, setSearch] = useState<string>('')
   const [showTags, setShowTags] = useState(!!showTagsByDefault)
+
+  let searchTimer: NodeJS.Timeout
+  const onChangeSearch = (input: string) => {
+    setSearch(input)
+    clearTimeout(searchTimer)
+
+    searchTimer = setTimeout(() => {
+      setSearchFilter(input)
+    }, 500)
+  }
 
   useEffect(() => {
     if (!showTags) setSelectedTags(isShowingBlocked ? ['All'] : [])
@@ -130,7 +142,7 @@ export function UserProfilePageTable({
     >
       <TableHeader
         search={search}
-        setSearch={(input: string) => setSearch(input)}
+        setSearch={(input: string) => onChangeSearch(input)}
         showTags={showTags}
         setShowTags={(option: boolean) => setShowTags(option)}
         title={title}

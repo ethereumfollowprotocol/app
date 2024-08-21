@@ -125,6 +125,8 @@ type EFPProfileContextType = {
   toggleTag: (tab: ProfileTableTitleType, tag: string) => void
   setFollowingSort: (option: FollowSortType) => void
   setFollowersSort: (option: FollowSortType) => void
+  setFollowingSearch: (value: string) => void
+  setFollowersSearch: (value: string) => void
   setFollowingTagsFilter: Dispatch<SetStateAction<string[]>>
   setFollowersTagsFilter: Dispatch<SetStateAction<string[]>>
   setIsRefetchingProfile: (state: boolean) => void
@@ -146,6 +148,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   const [selectedList, setSelectedList] = useState<number>()
   const [setNewListAsSelected, setSetNewListAsSelected] = useState(false)
 
+  const [followingSearch, setFollowingSearch] = useState<string>('')
+  const [followersSearch, setFollowersSearch] = useState<string>('')
   const [followingTagsFilter, setFollowingTagsFilter] = useState<string[]>([])
   const [followersTagsFilter, setFollowersTagsFilter] = useState<string[]>([])
   const [followingSort, setFollowingSort] = useState<FollowSortType>('latest first')
@@ -259,7 +263,14 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     isRefetching: isRefetchingFollowersQuery,
     isFetchingNextPage: isFetchingMoreFollowers
   } = useInfiniteQuery({
-    queryKey: ['followers', userAddress, selectedList, followersSort, followersTagsFilter],
+    queryKey: [
+      'followers',
+      userAddress,
+      selectedList,
+      followersSort,
+      followersTagsFilter,
+      followersSearch
+    ],
     queryFn: async ({ pageParam = 0 }) => {
       setIsEndOfFollowers(false)
 
@@ -276,6 +287,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         limit: FETCH_LIMIT_PARAM,
         sort: followersSort,
         tags: followersTagsFilter,
+        search: followersSearch,
         pageParam
       })
 
@@ -315,7 +327,14 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     refetch: refetchFollowing,
     isRefetching: isRefetchingFollowingQuery
   } = useInfiniteQuery({
-    queryKey: ['following', userAddress, selectedList, followingSort, followingTagsFilter],
+    queryKey: [
+      'following',
+      userAddress,
+      selectedList,
+      followingSort,
+      followingTagsFilter,
+      followingSearch
+    ],
     queryFn: async ({ pageParam = 0 }) => {
       setIsEndOfFollowing(false)
 
@@ -333,6 +352,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         limit: FETCH_LIMIT_PARAM,
         sort: followingSort,
         tags: followingTagsFilter,
+        search: followingSearch,
         pageParam
       })
 
@@ -475,6 +495,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         refetchFollowerTags,
         refetchFollowingTags,
         refetchAllFollowings,
+        setFollowingSearch,
+        setFollowersSearch,
         refetchRoles,
         recentTags,
         followingTagsFilter,
