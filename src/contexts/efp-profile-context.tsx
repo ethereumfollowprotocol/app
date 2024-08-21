@@ -269,7 +269,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       selectedList,
       followersSort,
       followersTagsFilter,
-      followersSearch
+      followersSearch.length > 2 ? followersSearch : undefined
     ],
     queryFn: async ({ pageParam = 0 }) => {
       setIsEndOfFollowers(false)
@@ -333,7 +333,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       selectedList,
       followingSort,
       followingTagsFilter,
-      followingSearch
+      followingSearch.length > 2 ? followingSearch : undefined
     ],
     queryFn: async ({ pageParam = 0 }) => {
       setIsEndOfFollowing(false)

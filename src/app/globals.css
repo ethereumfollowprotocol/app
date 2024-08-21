@@ -254,15 +254,22 @@ input {
   background:
   linear-gradient(#fafafa, #fafafa) padding-box,
   linear-gradient(135deg, #faf35f, #ffbce3) border-box;
-  border: 5px solid transparent;
+  border: 3px solid transparent;
   border-radius: 40px;
 }
 
-.btn-following-pending:hover {
-  /* background:
-  linear-gradient(#D0D0D0, #D0D0D0) padding-box,
-  linear-gradient(135deg, #faf35f, #ffbce3) border-box; */
-  /* background: #D0D0D0; */
+.btn-following {
+  background:
+  linear-gradient(#fafafa, #fafafa) padding-box,
+  linear-gradient(135deg, #faf35f, #ffbce3) border-box;
+  border: 3px solid transparent;
+  border-radius: 40px;
+  transition: all 200ms ease-in-out;
+}
+
+.btn-following:hover {
+  background: #ff7c7c;
+  border: 0px
 }
 
 /* Loaders */

@@ -60,7 +60,13 @@ const useUser = (user: string) => {
     isFetchingNextPage: isFetchingMoreFollowers,
     isRefetching: isRefetchingFollowers
   } = useInfiniteQuery({
-    queryKey: ['followers', user, followersSort, followersTagsFilter, followersSearch],
+    queryKey: [
+      'followers',
+      user,
+      followersSort,
+      followersTagsFilter,
+      followersSearch.length > 2 ? followersSearch : undefined
+    ],
     queryFn: async ({ pageParam = 0 }) => {
       setIsEndOfFollowers(false)
 
@@ -112,7 +118,13 @@ const useUser = (user: string) => {
     isFetchingNextPage: isFetchingMoreFollowing,
     isRefetching: isRefetchingFollowing
   } = useInfiniteQuery({
-    queryKey: ['following', user, followingSort, followingTagsFilter, followingSearch],
+    queryKey: [
+      'following',
+      user,
+      followingSort,
+      followingTagsFilter,
+      followingSearch.length > 2 ? followingSearch : undefined
+    ],
     queryFn: async ({ pageParam = 0 }) => {
       setIsEndOfFollowing(false)
 

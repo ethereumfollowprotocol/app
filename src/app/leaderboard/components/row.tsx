@@ -86,11 +86,13 @@ const TableRow: React.FC<TableRowProps> = ({
         }`}
         data-name='name-column'
       >
-        <Avatar
-          name={name || address}
-          avatarUrl={avatar}
-          size='h-[45px] w-[45px] md:h-[50px] md:w-[50px]'
-        />
+        <Link href={`/${name || address}`} className='w-fit'>
+          <Avatar
+            name={name || address}
+            avatarUrl={avatar}
+            size='h-[45px] w-[45px] md:h-[50px] md:w-[50px]'
+          />
+        </Link>
         <div
           className='flex flex-col items-start max-w-[calc(100% - 50px)] md:max-w-[calc(100% - 60px)] truncate justify-center text-left'
           style={{ maxWidth: 'calc(100% - 55px)' }}

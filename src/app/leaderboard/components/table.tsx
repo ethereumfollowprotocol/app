@@ -103,8 +103,8 @@ const LeaderboardTable = () => {
           {leaderboardFilters.map((item, i) => (
             <div
               key={item}
-              className={`p-2 font-semibold w-[132px] px-4 capitalize cursor-pointer rounded-full ${
-                filter === item ? 'bg-gray-100 shadow-inner' : 'bg-gray-300'
+              className={`p-2 font-semibold w-[132px] px-4 capitalize cursor-pointer transition-all rounded-full ${
+                filter === item ? 'bg-gray-100 shadow-inner' : 'bg-gray-300 hover:scale-110'
               }`}
               onClick={() => onSelectFilter(item)}
             >
@@ -140,8 +140,8 @@ const LeaderboardTable = () => {
             {leaderboardFilters.map((item, i) => (
               <div
                 key={item}
-                className={`p-2 font-semibold px-4 capitalize cursor-pointer rounded-full ${
-                  filter === item ? 'bg-gray-100 shadow-inner' : 'bg-gray-300'
+                className={`p-2 font-semibold px-4 capitalize cursor-pointer rounded-full transition-all ${
+                  filter === item ? 'bg-gray-100 shadow-inner' : 'bg-gray-300 hover:scale-110'
                 }`}
                 onClick={() => onSelectFilter(item)}
               >

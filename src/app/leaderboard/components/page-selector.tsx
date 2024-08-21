@@ -54,7 +54,7 @@ const PageSelector: React.FC<PageSelectorProps> = ({
         <button
           onClick={() => handlePageChange(1)}
           disabled={page === 1}
-          className='text-darkGrey glass-card flex items-center justify-center font-semibold group hover:border-opacity-100 h-9 w-9 border-[3px] border-darkGrey border-opacity-40 transition-opacity rounded-[10px] disabled:border-opacity-10'
+          className='text-darkGrey glass-card flex items-center hover:scale-110 disabled:hover:scale-100 justify-center font-semibold group hover:border-opacity-100 h-9 w-9 border-[3px] border-darkGrey border-opacity-40 transition-all rounded-[10px] disabled:border-opacity-10'
         >
           <Image
             src={ArrowLeft}
@@ -75,7 +75,7 @@ const PageSelector: React.FC<PageSelectorProps> = ({
       <button
         onClick={() => handlePageChange(page - 1)}
         disabled={page === 1}
-        className='text-darkGrey glass-card flex items-center justify-center font-semibold group hover:border-opacity-100 h-9 w-9 border-[3px] border-darkGrey border-opacity-40 transition-opacity rounded-[10px] disabled:border-opacity-10'
+        className='text-darkGrey glass-card flex items-center hover:scale-110 disabled:hover:scale-100 justify-center font-semibold group hover:border-opacity-100 h-9 w-9 border-[3px] border-darkGrey border-opacity-40 transition-all rounded-[10px] disabled:border-opacity-10'
       >
         <Image
           src={ArrowLeft}
@@ -93,7 +93,7 @@ const PageSelector: React.FC<PageSelectorProps> = ({
       <button
         onClick={() => handlePageChange(page + 1)}
         disabled={!hasNextPage}
-        className='text-darkGrey glass-card flex items-center justify-center font-semibold group hover:border-opacity-100 h-9 w-9 border-[3px] border-darkGrey border-opacity-40 transition-opacity rounded-[10px] disabled:border-opacity-10'
+        className='text-darkGrey glass-card flex items-center hover:scale-110 disabled:hover:scale-100 justify-center font-semibold group hover:border-opacity-100 h-9 w-9 border-[3px] border-darkGrey border-opacity-40 transition-all rounded-[10px] disabled:border-opacity-10'
       >
         <Image
           src={ArrowLeft}

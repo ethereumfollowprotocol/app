@@ -25,12 +25,12 @@ const NavItems = () => {
   return (
     <ul className='lg:flex hidden lg:gap-6 xl:gap-9 items-center'>
       {NAV_ITEMS.map(item => (
-        <li className='font-bold' key={`${item.name}`}>
+        <li className='font-bold hover:scale-110 transition-transform' key={`${item.name}`}>
           <Link
             prefetch={true}
             href={item.href(itemUrl)}
             className={clsx([
-              'capitalize xl:text-xl lg:text-lg transition-colors',
+              'capitalize xl:text-xl lg:text-lg transition-all',
               item.name === 'profile' && !userAddress
                 ? 'text-grey hover:text-darkGrey'
                 : item.href(itemUrl) === pathname.toLowerCase()

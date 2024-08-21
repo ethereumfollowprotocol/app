@@ -39,13 +39,13 @@ const Navigation = () => {
             <Image
               src={FullLogo}
               priority={true}
-              className='hidden sm:block sm:max-w-[130px] select-none'
+              className='hidden sm:block sm:max-w-[130px] select-none hover:scale-110 transition-transform'
               alt='Ethereum Follow Protocol Logo'
             />
             <Image
               src={Logo}
               priority={true}
-              className='w-[56px] sm:hidden select-none'
+              className='w-[56px] sm:hidden select-none hover:scale-110 transition-transform'
               alt='Ethereum Follow Protocol Logo'
             />
           </Link>
@@ -84,14 +84,14 @@ const Navigation = () => {
                   />
                 </div>
                 <div
-                  className={`absolute -left-4 top-4 ${
+                  className={`absolute -left-10 top-4 ${
                     languageMenOpenu ? 'block' : 'hidden'
                   } group-hover:block pt-4`}
                 >
                   <div className='flex flex-col glass-card bg-white/90 border-[3px] border-gray-200 p-1 rounded-lg shadow-md'>
                     {LANGUAGES.map(lang => (
                       <div
-                        className=' text-darkGrey p-3 pl-8 relative font-semibold rounded-md hover:bg-slate-100 transition-colors'
+                        className=' text-darkGrey p-3 pl-8 relative font-semibold rounded-md hover:bg-slate-100 transition-all'
                         key={lang.language}
                         onClick={() => {
                           changeLanguage(lang)

@@ -7,14 +7,14 @@ import { useEffect, useMemo, useState } from 'react'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import Checkout from './checkout'
+import ImportModal from './import-modal'
 import { Search } from '#/components/search'
+import ClearCartModal from './clear-cart-modal'
 import { useCart } from '#/contexts/cart-context'
 import Trash from 'public/assets/icons/trash.svg'
-import ImportModal from './import-modal'
 import LensIcon from 'public/assets/icons/lens.svg'
 import { formatNumber } from '#/utils/formatNumber'
 import { FollowList } from '#/components/follow-list'
-import ClearCartModal from './clear-cart-modal'
 import Recommendations from '#/components/recommendations'
 import { PrimaryButton } from '#/components/primary-button'
 import FarcasterIcon from 'public/assets/icons/farcaster.svg'
@@ -71,7 +71,7 @@ const Cart = () => {
 
   const transactionsCount = useMemo(() => {
     let count = 0
-    const splitSize = 100
+    const splitSize = 1000
 
     for (let i = 0; i < cartItems.length; i += splitSize) {
       count += 1
@@ -131,7 +131,7 @@ const Cart = () => {
               </h3>
               {totalCartItems > 0 && (
                 <button
-                  className='flex gap-2 cursor-pointer items-center hover:opacity-70'
+                  className='flex gap-2 cursor-pointer hover:scale-110 transition-transform items-center hover:opacity-80'
                   onClick={() => setClearCartModalOpen(true)}
                 >
                   <p className='font-semibold text-nowrap'>{t('clear cart')}</p>
