@@ -76,7 +76,8 @@ const useUser = (user: string) => {
         limit: FETCH_LIMIT_PARAM,
         pageParam,
         tags: followersTagsFilter,
-        sort: followersSort
+        sort: followersSort,
+        search: followersSearch
       })
 
       if (fetchedFollowers.followers.length === 0) setIsEndOfFollowers(true)
@@ -127,7 +128,8 @@ const useUser = (user: string) => {
         limit: FETCH_LIMIT_PARAM,
         pageParam,
         tags: followingTagsFilter,
-        sort: followingSort
+        sort: followingSort,
+        search: followingSearch
       })
 
       if (fetchedFollowing.following.length === 0) setIsEndOfFollowing(true)
