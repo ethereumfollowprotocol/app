@@ -17,6 +17,8 @@ export const EMPTY_COUNT_TAGS = [
 export const QUERY_BLOCK_TAGS = ['block', 'mute']
 
 const useBlockedMuted = (user: string, list?: string | number) => {
+  const [blockingSearch, setBlockingSearch] = useState<string>('')
+  const [blockedBySearch, setBlockedBySearch] = useState<string>('')
   const [blockingTagsFilter, setBlockingTagsFilter] = useState<string[]>(['All'])
   const [blockedByTagsFilter, setBlockedByTagsFilter] = useState<string[]>(['All'])
   const [blockingSort, setBlockingSort] = useState<FollowSortType>('latest first')
@@ -44,7 +46,7 @@ const useBlockedMuted = (user: string, list?: string | number) => {
     fetchNextPage: fetchMoreBlockedBy,
     isFetchingNextPage: isFetchingMoreBlockedBy
   } = useInfiniteQuery({
-    queryKey: ['followers', user, list, blockedBySort, blockedByTagsFilter],
+    queryKey: ['followers', user, list, blockedBySort, blockedByTagsFilter, blockedBySearch],
     queryFn: async ({ pageParam = 0 }) => {
       if (!user)
         return {
@@ -59,6 +61,7 @@ const useBlockedMuted = (user: string, list?: string | number) => {
         tags: blockedByTagsFilter.includes('All') ? QUERY_BLOCK_TAGS : blockedByTagsFilter,
         limit: FETCH_LIMIT_PARAM,
         pageParam,
+        search: blockedBySearch,
         allResults: true
       })
       return fetchedBlockedBy
@@ -90,7 +93,7 @@ const useBlockedMuted = (user: string, list?: string | number) => {
     fetchNextPage: fetchMoreBlocking,
     isFetchingNextPage: isFetchingMoreBlocking
   } = useInfiniteQuery({
-    queryKey: ['following', user, list, blockingSort, blockingTagsFilter],
+    queryKey: ['following', user, list, blockingSort, blockingTagsFilter, blockingSearch],
     queryFn: async ({ pageParam = 0 }) => {
       if (!user)
         return {
@@ -105,6 +108,7 @@ const useBlockedMuted = (user: string, list?: string | number) => {
         tags: blockingTagsFilter.includes('All') ? QUERY_BLOCK_TAGS : blockingTagsFilter,
         limit: FETCH_LIMIT_PARAM,
         pageParam,
+        search: blockingSearch,
         allResults: true
       })
       return fetchedBlockedBy
@@ -153,6 +157,8 @@ const useBlockedMuted = (user: string, list?: string | number) => {
     blockedBySort,
     setBlockedBySort,
     toggleTag,
+    setBlockingSearch,
+    setBlockedBySearch,
     setBlockingTagsFilter,
     setBlockedByTagsFilter
   }
