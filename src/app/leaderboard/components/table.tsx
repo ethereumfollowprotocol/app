@@ -152,7 +152,8 @@ const LeaderboardTable = () => {
           <PageSelector
             page={page}
             setPage={setPage}
-            hasNextPage={leaderboard?.length === 100}
+            hasNextPage={true}
+            isLoading={isFetchingNextLeaderboard || isFetchingPreviousLeaderboard}
             fetchNext={() => fetchNextLeaderboard()}
             fetchPrevious={() => fetchPreviousLeaderboard()}
           />
@@ -189,7 +190,8 @@ const LeaderboardTable = () => {
         <PageSelector
           page={page}
           setPage={setPage}
-          hasNextPage={leaderboard?.length === 100}
+          hasNextPage={true}
+          isLoading={isFetchingNextLeaderboard || isFetchingPreviousLeaderboard}
           fetchNext={() => fetchNextLeaderboard()}
           fetchPrevious={() => fetchPreviousLeaderboard()}
         />

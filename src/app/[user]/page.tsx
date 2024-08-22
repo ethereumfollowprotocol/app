@@ -1,54 +1,69 @@
-import { isAddress } from 'viem'
 import type { Metadata } from 'next'
-
 import UserInfo from './components/user-info'
-import { truncateAddress } from '#/lib/utilities'
-import type { AccountResponseType } from '#/types/common'
 
 interface Props {
   params: { user: string }
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export function generateMetadata({ params }: Props): Metadata {
   const user = params.user
-  const isList = Number.isInteger(Number(user)) && !isAddress(user)
 
-  try {
-    const response = (await fetch(
-      `${process.env.NEXT_PUBLIC_EFP_API_URL}/${isList ? 'lists' : 'users'}/${user}/account`
-    ).then(res => res.json())) as AccountResponseType
-
-    const fetchedUser =
-      isList && response.primary_list !== user
-        ? `List #${user}`
-        : response.address
-          ? response.ens.name || truncateAddress(response.address)
-          : isAddress(user)
-            ? truncateAddress(user)
-            : isList
-              ? `List #${user}`
-              : user
-
-    return {
-      title: `${fetchedUser} | EFP`,
-      openGraph: {
-        title: `${fetchedUser} | EFP`,
-        siteName: `${fetchedUser} - EFP profile`,
-        description: `${fetchedUser} - EFP profile`,
-        url: `https://testing.ethfollow.xyz/${response.address ? response.address : user}`,
-        images: [
-          {
-            url: `https://testing.ethfollow.xyz/og?user=${user}`
-          }
-        ]
-      },
-      twitter: {
-        images: `https://testing.ethfollow.xyz/og?user=${user}`
-      }
+  return {
+    title: `${user} | EFP`,
+    openGraph: {
+      title: `${user} | EFP`,
+      siteName: `${user} - EFP profile`,
+      description: `${user} - EFP profile`,
+      url: `https://testing.ethfollow.xyz/${user}`,
+      images: [
+        {
+          url: `https://testing.ethfollow.xyz/og?user=${user}`
+        }
+      ]
+    },
+    twitter: {
+      images: `https://testing.ethfollow.xyz/og?user=${user}`
     }
-  } catch (err: unknown) {
-    return { title: `${user} | EFP` }
   }
+
+  // const isList = Number.isInteger(Number(user)) && !isAddress(user)
+
+  // try {
+  //   const response = (await fetch(
+  //     `${process.env.NEXT_PUBLIC_EFP_API_URL}/${isList ? 'lists' : 'users'}/${user}/account`
+  //   ).then(res => res.json())) as AccountResponseType
+
+  //   const fetchedUser =
+  //     isList && response.primary_list !== user
+  //       ? `List #${user}`
+  //       : response.address
+  //         ? response.ens.name || truncateAddress(response.address)
+  //         : isAddress(user)
+  //           ? truncateAddress(user)
+  //           : isList
+  //             ? `List #${user}`
+  //             : user
+
+  //   return {
+  //     title: `${fetchedUser} | EFP`,
+  //     openGraph: {
+  //       title: `${fetchedUser} | EFP`,
+  //       siteName: `${fetchedUser} - EFP profile`,
+  //       description: `${fetchedUser} - EFP profile`,
+  //       url: `https://testing.ethfollow.xyz/${response.address ? response.address : user}`,
+  //       images: [
+  //         {
+  //           url: `https://testing.ethfollow.xyz/og?user=${user}`
+  //         }
+  //       ]
+  //     },
+  //     twitter: {
+  //       images: `https://testing.ethfollow.xyz/og?user=${user}`
+  //     }
+  //   }
+  // } catch (err: unknown) {
+  //   return { title: `${user} | EFP` }
+  // }
 }
 
 const UserPage = ({ params }: Props) => {

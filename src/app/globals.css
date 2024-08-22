@@ -217,7 +217,7 @@ input {
   linear-gradient(#fafafa, #fafafa) padding-box,
   linear-gradient(135deg, #faf35f, #ffbce3) border-box;
   border: 3px solid transparent;
-  border-radius: 40px;
+  transition: all 200ms ease-in-out;
 }
 
 .btn-following {
@@ -225,7 +225,6 @@ input {
   linear-gradient(#fafafa, #fafafa) padding-box,
   linear-gradient(135deg, #faf35f, #ffbce3) border-box;
   border: 3px solid transparent;
-  border-radius: 40px;
   transition: all 200ms ease-in-out;
 }
 

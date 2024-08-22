@@ -12,6 +12,7 @@ interface PageSelectorProps {
   hasSkipToFirst?: boolean
   adjustUrl?: boolean
   displayPageNumber?: boolean
+  isLoading?: boolean
 }
 
 const PageSelector: React.FC<PageSelectorProps> = ({
@@ -22,7 +23,8 @@ const PageSelector: React.FC<PageSelectorProps> = ({
   fetchPrevious,
   hasSkipToFirst = true,
   adjustUrl = true,
-  displayPageNumber = true
+  displayPageNumber = true,
+  isLoading
 }) => {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -32,7 +34,7 @@ const PageSelector: React.FC<PageSelectorProps> = ({
   const handlePageChange = (newPage: number, skipsToFirst?: boolean) => {
     window.scrollTo({ top: 0, behavior: 'instant' })
 
-    if (!skipsToFirst && fetchNext && fetchPrevious) {
+    if (!skipsToFirst && fetchNext && fetchPrevious && !isLoading) {
       if (newPage > page) fetchNext()
       else fetchPrevious()
     }

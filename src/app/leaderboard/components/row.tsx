@@ -79,7 +79,7 @@ const TableRow: React.FC<TableRowProps> = ({
   return (
     <div
       onClick={() => router.push(`/${address || name}`)}
-      className='flex items-center cursor-pointer w-full gap-4 p-2 sm:p-4 hover:bg-[#ebebeb88] rounded-xl sm:gap-6 md:gap-8 h-[75px]'
+      className='flex items-center cursor-pointer w-full gap-4 p-2 sm:p-4 hover:bg-white/90 rounded-xl sm:gap-6 md:gap-8 h-[75px]'
     >
       <div className='tabular-nums min-w-4 w-4 xxs:min-w-6 xxs:w-6 sm:w-10 flex justify-center text-right'>
         {rankNumber}

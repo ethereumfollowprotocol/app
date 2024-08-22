@@ -48,7 +48,7 @@ const FollowListItem: React.FC<FollowListItemProps> = ({
 
   return (
     <div
-      className={`flex items-center cursor-pointer justify-between hover:bg-[#ebebeb88] transition-all p-1.5 sm:p-2 rounded-xl ${className}`}
+      className={`flex items-center cursor-pointer justify-between hover:bg-white/90 transition-all p-1.5 sm:p-2 rounded-xl ${className}`}
       onClick={() => router.push(`/${address || profileName}`)}
     >
       {/* Left section: Avatar, Name, and Tags */}

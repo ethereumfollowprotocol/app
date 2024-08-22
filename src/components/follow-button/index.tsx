@@ -26,14 +26,14 @@ const theme: Record<
   },
   'Pending Following': {
     bg: 'btn-following-pending',
-    hover: 'hover:bg-none hover:bg-[#D0D0D0] hover:border-[#D0D0D0]',
+    hover: 'hover:bg-none hover:bg-[#D0D0D0] hover:py-1.5',
     text: 'text-gray-900',
     border:
       'border-[3px] py-1 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400'
   },
   Following: {
     bg: 'btn-following',
-    hover: 'hover:bg-none hover:bg-deletion hover:border-deletion',
+    hover: 'hover:bg-none hover:bg-deletion hover:py-1.5',
     text: 'text-gray-900',
     border: 'border-[3px] py-1'
   },
