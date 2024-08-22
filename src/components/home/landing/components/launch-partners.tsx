@@ -16,7 +16,7 @@ const LaunchPartners = () => {
         <p className='text-zinc-900 text-3xl font-bold pb-4 sm:pb-6'>{t('partners')}</p>
         <section className='w-full gap-y-8 z-10 gap-x-12 sm:gap-x-8 grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 grid-rows-2'>
           {LAUNCH_PARTNERS.map(partner => (
-            <div key={partner.name} className='w-full'>
+            <div key={partner.name} className='w-full hover:scale-110 transition-transform'>
               <Link
                 className='text-black text-xs rounded-full space-y-2'
                 target='_blank'
@@ -49,7 +49,7 @@ const LaunchPartners = () => {
       />
       <div className='glass-card w-full p-6 mx-auto border-[3px] border-[#FF79C9] text-dark-gray font-bold text-center text-sm rounded-3xl max-w-4xl'>
         <p className=' text-2xl sm:text-3xl font-bold pb-8'>{t('sponsors')}</p>
-        <div className='mx-auto w-fit'>
+        <div className='mx-auto w-fit hover:scale-110 transition-transform'>
           <Link target='_blank' rel='noopener noreferrer' href='https://ensdao.org/'>
             <Image
               src={EnsDao}

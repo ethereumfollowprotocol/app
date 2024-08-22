@@ -110,7 +110,7 @@ const TableRow: React.FC<TableRowProps> = ({
         </div>
       </div>
       <div
-        className={`items-center justify-between hidden sm:flex sm:w-1/5 md:w-2/5 ${
+        className={`items-center justify-between hidden sm:flex sm:w-1/5 md:w-[55%] ${
           isHome ? 'sm:w-1/4 md:w-1/3 lg:w-2/3 xl:w-1/4' : ''
         }`}
       >
@@ -168,7 +168,7 @@ const TableRow: React.FC<TableRowProps> = ({
       </div>
       <div
         className={`w-fit ${
-          isHome ? 'lg:w-[25%] 2xl:w-[20%]' : 'lg:w-[20%] 2xl:w-1/5'
+          isHome ? 'lg:w-[25%] 2xl:w-[20%]' : 'lg:w-[15%] 2xl:w-[10%]'
         } flex justify-end`}
       >
         <FollowButton address={address} />

@@ -14,7 +14,6 @@ import BlockedMuted from '#/components/blocked-muted'
 import { useIsEditView } from '#/hooks/use-is-edit-view'
 import SettingsIcon from 'public/assets/icons/settings.svg'
 import UserProfileCard from '#/components/user-profile-card'
-import { nullFollowingTags } from '#/api/fetchFollowingTags'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import { UserProfilePageTable } from '#/components/profile-page-table'
@@ -112,11 +111,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     isLoadPage || (isMyProfile ? profileProfileIsLoading : userProfileIsLoading)
   const following = selectedList !== undefined && isMyProfile ? profileFollowing : userFollowing
   const followers = isMyProfile ? profileFollowers : userFollowers
-  const followingTags = isMyProfile
-    ? selectedList
-      ? profileFollowingTags
-      : nullFollowingTags
-    : userFollowingTags
+  const followingTags = isMyProfile ? profileFollowingTags : userFollowingTags
   const followingTagsLoading =
     isLoadPage || (isMyProfile ? profileFollowingTagsLoading : userFollowingTagsLoading)
   const followingTagsFilter = isMyProfile ? profileFollowingTagsFilter : userFollowingTagsFilter

@@ -13,7 +13,6 @@ export const searchENSNames = async ({ search }: { search: string }) => {
       query: /*GraphQL*/ `
         query SearchQuery($search: String) {
           domains(
-            first: 4
             where: {and: [{name_starts_with: $search}]}
           ) {
             name

@@ -73,7 +73,7 @@ const ConnectButton = () => {
         type='button'
         className={`z-50 px-1 ${
           walletMenOpenu ? 'connect-button-open' : 'connect-button'
-        } transition-colors border-[3px] gap-[6px] cursor-pointer flex justify-between items-center h-[60px] glass-card rounded-full w-fit sm:w-56`}
+        } transition-all border-[3px] gap-[6px] hover:scale-110 cursor-pointer flex justify-between items-center h-[60px] glass-card rounded-full w-fit sm:w-56`}
         onClick={() =>
           userAddress
             ? setWalletMenuOpen(!walletMenOpenu)

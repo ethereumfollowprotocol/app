@@ -21,7 +21,10 @@ const Pages = () => {
   return (
     <>
       {footerPages.map((route, index) => (
-        <div className='inline font-bold' key={`route-${route.href}`}>
+        <div
+          className='font-bold hover:scale-110 w-fit transition-transform'
+          key={`route-${route.href}`}
+        >
           <a
             href={route.href}
             className={`text-lg text-pink-400`}

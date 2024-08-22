@@ -73,7 +73,7 @@ const useSearch = (isEditor?: boolean) => {
     refetchIntervalInBackground: false,
     enabled: Boolean(searchKey && searchKey.length > 0)
   })
-  const searchResult = searchResultStatus === 'success' ? data : []
+  const searchResult = searchResultStatus === 'success' ? data.slice(0, 5) : []
 
   const resetSearch = () => {
     setCurrentSearch('')

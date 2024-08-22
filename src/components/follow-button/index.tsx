@@ -33,7 +33,7 @@ const theme: Record<
   },
   Following: {
     bg: 'btn-following',
-    hover: 'hover:bg-deletion hover:border-deletion hover:border-0 hover:py-1.5',
+    hover: 'hover:bg-none hover:bg-deletion hover:border-deletion',
     text: 'text-gray-900',
     border: 'border-[3px] py-1'
   },

@@ -270,14 +270,14 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                       href={`/${profile.address}`}
                       className={showMoreOptions && !isConnectedUserCard ? 'w-[87.5%]' : 'w-full'}
                     >
-                      <p className='truncate hover:opacity-70'>
+                      <p className='truncate hover:opacity-70 hover:scale-105 transition-all'>
                         {profileName || truncateAddress(profile.address)}
                       </p>
                     </Link>
                     {showMoreOptions && !isConnectedUserCard && (
                       <div ref={clickAwayMoreOptionsRef}>
                         <div
-                          className='flex gap-[3px] px-1.5 py-2 rounded-md bg-gray-300 cursor-pointer items-center hover:opacity-50 transition-opacity'
+                          className='flex gap-[3px] px-1.5 py-2 rounded-md bg-gray-300 cursor-pointer items-center hover:opacity-50 transition-all hover:scale-110'
                           onClick={() => setMoreOptionsDropdownOpen(!moreOptionsDropdownOpen)}
                         >
                           <div className='h-1 w-1 bg-black rounded-full'></div>
@@ -288,7 +288,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                           <div className='absolute top-10 flex-col flex gap-2 right-0 p-2 bg-white border-gray-200 border-[3px] rounded-xl z-50 drop-shadow-lg'>
                             <button
                               onClick={() => onClickOption('Block')}
-                              className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] transition-colors relative text-sm flex items-center gap-1.5 justify-center font-bold w-[107px] h-[37px] px-2 py-1.5'
+                              className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[107px] h-[37px] px-2 py-1.5'
                             >
                               <Image
                                 alt='mainnet logo'
@@ -308,7 +308,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                             </button>
                             <button
                               onClick={() => onClickOption('Mute')}
-                              className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] transition-colors relative text-sm flex items-center gap-1.5 justify-center font-bold w-[107px] h-[37px] px-2 py-1.5'
+                              className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[107px] h-[37px] px-2 py-1.5'
                             >
                               <Image
                                 alt='mainnet logo'
@@ -340,7 +340,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                   </div>
                 )}
                 {!(hideFollowButton || isConnectedUserCard) && profile.address && (
-                  <FollowButton address={profile.address} />
+                  <div className='h-9'>
+                    <FollowButton address={profile.address} />
+                  </div>
                 )}
               </div>
             </div>
@@ -368,30 +370,36 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 <div className='text-lg font-bold text-[#888]'>{t('followers')}</div>
               </div>
               <div className='flex flex-col w-full items-center gap-3 xl:w-56'>
-                <div
-                  className={`${isResponsive ? 'sm:text-lg' : 'text-lg'} font-bold text-darkGrey`}
-                >
-                  {t('leaderboard')}
-                </div>
+                <Link href='/leaderboard'>
+                  <div
+                    className={`${
+                      isResponsive ? 'sm:text-lg' : 'text-lg'
+                    } font-bold text-darkGrey hover:scale-110 transition-all`}
+                  >
+                    {t('leaderboard')}
+                  </div>
+                </Link>
                 <div className='flex xl:flex-col xl:w-full justify-center flex-wrap gap-4 xxs:gap-8 gap-y-3 xxs:gap-y-3 xl:gap-3'>
                   {ranks.map((rank, i) => (
-                    <div
+                    <Link
+                      href={`/leaderboard?filter=${t(rankTitles[i] || '').toLowerCase()}`}
                       key={rankTitles[i]}
-                      className='flex xl:w-full gap-3 justify-between text-lg items-center font-semibold'
                     >
-                      <p className='font-bold text-[#888]'>{t(rankTitles[i] || '')}</p>
-                      <p
-                        className={
-                          {
-                            1: 'first-place text-xl',
-                            2: 'second-place text-xl',
-                            3: 'third-place text-xl'
-                          }[rank]
-                        }
-                      >
-                        #{rank || '-'}
-                      </p>
-                    </div>
+                      <div className='flex xl:w-full gap-3 justify-between text-lg items-center font-semibold hover:scale-110 transition-all'>
+                        <p className='font-bold text-[#888]'>{t(rankTitles[i] || '')}</p>
+                        <p
+                          className={
+                            {
+                              1: 'first-place text-xl',
+                              2: 'second-place text-xl',
+                              3: 'third-place text-xl'
+                            }[rank]
+                          }
+                        >
+                          #{rank || '-'}
+                        </p>
+                      </div>
+                    </Link>
                   ))}
                 </div>
               </div>

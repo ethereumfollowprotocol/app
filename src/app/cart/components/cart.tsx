@@ -103,7 +103,7 @@ const Cart = () => {
                   src={FarcasterIcon}
                   alt='Import from Farcaster'
                   width={30}
-                  className='cursor-pointer rounded-lg hover:opacity-75 transition-opacity'
+                  className='cursor-pointer rounded-lg hover:opacity-75 hover:scale-110 transition-transform'
                   onClick={() => {
                     setImportModalOpen(true)
                     setPlatform('farcaster')
@@ -113,7 +113,7 @@ const Cart = () => {
                   src={LensIcon}
                   alt='Import from Lens'
                   width={30}
-                  className='cursor-pointer rounded-lg hover:opacity-75 transition-opacity'
+                  className='cursor-pointer rounded-lg hover:opacity-75 transition-opacity hover:scale-110 transition-transform'
                   onClick={() => {
                     setImportModalOpen(true)
                     setPlatform('lens')

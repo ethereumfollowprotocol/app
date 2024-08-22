@@ -5,11 +5,7 @@ const ScrollIndicator = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setHideIndicator(true)
-      } else {
-        setHideIndicator(false)
-      }
+      if (window.scrollY > 0) setHideIndicator(true)
     }
 
     window.addEventListener('scroll', handleScroll)

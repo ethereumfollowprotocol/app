@@ -100,7 +100,7 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
       ref={clickAwayTagDropwdownRef}
     >
       <button
-        className='p-1.5 rounded-full hover:opacity-80 bg-gray-300'
+        className='p-1.5 rounded-full hover:opacity-80 hover:scale-110 transition-all bg-gray-300'
         onClick={() => setTagDropdownOpen(!tagDropdownOpen)}
       >
         <Image src={Plus} alt='Add Tag' width={12} />
@@ -125,17 +125,17 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
                 className='p-1 pl-2 rounded-md lowercase w-full'
               />
               <button
-                className='flex items-center rounded-full hover:opacity-80 bg-white justify-center h-[26px] w-[29px]'
+                className='flex items-center rounded-full hover:opacity-80 bg-white hover:scale-110 transition-all justify-center p-2'
                 onClick={() => addCustomTag()}
               >
-                <Image src={Plus} alt='Add Tag' height={12} width={12} />
+                <Image src={Plus} alt='Add Tag' height={16} width={16} />
               </button>
             </div>
             <div className='w-full flex max-w-full flex-wrap items-center gap-2'>
               {recentTags.map(tag => (
                 <button
                   key={tag}
-                  className='font-semibold py-2 truncate px-3 hover:opacity-80 bg-gray-300 rounded-full'
+                  className='font-semibold py-2 truncate px-3 hover:opacity-80 hover:scale-110 transition-all bg-gray-300 rounded-full'
                   onClick={() => addTag(tag)}
                 >
                   {tag}
@@ -153,7 +153,12 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
         const removingTag = hasListOpRemoveTag({ address, tag })
 
         return (
-          <div key={tag + i} className={`relative ${tagDropdownOpen ? 'z-40' : 'z-0'} max-w-full`}>
+          <div
+            key={tag + i}
+            className={`relative ${
+              tagDropdownOpen ? 'z-40' : 'z-0'
+            } max-w-full transition-transform hover:scale-110`}
+          >
             <button
               className={`font-semibold py-1 px-2 sm:py-1.5 max-w-full sm:px-3 truncate text-sm hover:opacity-80 rounded-full ${
                 removingTag ? 'bg-deletion' : 'bg-gray-300'

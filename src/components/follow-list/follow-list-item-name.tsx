@@ -47,9 +47,9 @@ export function Name({
   return (
     <Link href={`/${address || name}`} className='w-full'>
       <p
-        className={`font-bold sm:text-lg text-start  ${
+        className={`font-bold sm:text-lg text-start ${
           showTags ? 'w-full truncate' : 'w-fit max-w-full truncate'
-        } hover:opacity-75 transition-opacity`}
+        } hover:opacity-75`}
       >
         {name || truncateAddress(address)}
       </p>
@@ -219,7 +219,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
           >
             {canEditTags && !isRestriction && (
               <button
-                className='p-1.5 rounded-full hover:opacity-80 bg-gray-300'
+                className='p-1.5 rounded-full hover:opacity-80 hover:scale-110 bg-gray-300'
                 onClick={() => setTagDropdownOpen(!tagDropdownOpen)}
               >
                 <Image src={Plus} alt='Add Tag' width={12} />
@@ -245,7 +245,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
                       className='p-1 pl-2 rounded-md lowercase w-full'
                     />
                     <button
-                      className='flex items-center rounded-full hover:opacity-80 bg-white justify-center h-[26px] w-[29px]'
+                      className='flex items-center rounded-full hover:scale-110 transition-all hover:opacity-80 bg-white justify-center p-2'
                       onClick={() => addCustomTag()}
                     >
                       <Image src={Plus} alt='Add Tag' height={12} width={12} />
@@ -255,7 +255,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
                     {recentTags.map(tag => (
                       <button
                         key={tag}
-                        className='font-semibold py-2 truncate px-3 hover:opacity-80 bg-gray-300 rounded-full'
+                        className='font-semibold py-2 hover:scale-110 transition-all truncate px-3 hover:opacity-80 bg-gray-300 rounded-full'
                         onClick={() => addTag(tag)}
                       >
                         {tag}
@@ -272,7 +272,9 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
               return (
                 <div
                   key={tag + i}
-                  className={`relative ${tagDropdownOpen ? 'z-40' : 'z-10'} max-w-full`}
+                  className={`relative ${
+                    tagDropdownOpen ? 'z-40' : 'z-10'
+                  } max-w-full hover:scale-110 transition-all`}
                 >
                   <button
                     className={`

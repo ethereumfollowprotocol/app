@@ -77,7 +77,7 @@ export function Search({
                       !!searchResult
                   )
                 }}
-                className='max-h-20 min-h-12 block text-wrap w-full py-3 pr-12 truncate outline-none font-medium rounded-xl border-[3px] hover:border-darkGrey focus:border-darkGrey transition-colors border-gray-200 pl-4 sm:text-sm bg-white/70'
+                className='max-h-20 min-h-12 block text-wrap w-full py-3 pr-12 truncate outline-none font-medium rounded-xl border-[3px] hover:border-[#888] focus:border-[#888] transition-colors border-gray-200 pl-4 sm:text-sm bg-white/70'
               />
             </>
           ) : (
@@ -108,7 +108,7 @@ export function Search({
                     !!searchResult
                 )
               }}
-              className='h-12 block pr-12 w-full truncate font-medium rounded-xl border-[3px] border-gray-200 pl-4 sm:text-sm bg-white/70 focus:border-darkGrey hover:border-darkGrey transition-colors'
+              className='h-12 block pr-12 w-full truncate font-medium rounded-xl border-[3px] border-gray-200 pl-4 sm:text-sm bg-white/70 focus:border-[#666] hover:border-[#666] transition-colors'
             />
           )}
           <div
@@ -123,7 +123,7 @@ export function Search({
               <Image
                 src={MagnifyingGlass}
                 alt='Search'
-                className='h-5 w-5 opacity-30 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100'
+                className='h-5 w-5 opacity-30 transition-opacity group-hover:opacity-70 group-focus-within:opacity-70'
                 aria-hidden='true'
               />
             )}
@@ -169,7 +169,7 @@ export function Search({
 
                   resetSearch()
                 }}
-                className='max-w-full truncate text-md flex items-center hover:opacity-75 gap-1 cursor-pointer transition-opacity'
+                className='max-w-full hover:scale-105 truncate text-md flex items-center hover:opacity-75 gap-1 cursor-pointer transition-all'
               >
                 <p>{result.name}</p>
                 <p className='text-sm text-gray-400'>
