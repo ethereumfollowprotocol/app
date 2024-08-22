@@ -1,11 +1,9 @@
 'use client'
-
-import Link from 'next/link'
 import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useRef, useState } from 'react'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import type { Address, GetEnsAvatarReturnType } from 'viem'
 
 import LoadingCell from '../loading-cell'
@@ -45,15 +43,13 @@ export function Name({
   showTags
 }: { name?: string | null; address: Address; showTags?: boolean }) {
   return (
-    <Link href={`/${address || name}`} className='w-full'>
-      <p
-        className={`font-bold sm:text-lg text-start ${
-          showTags ? 'w-full truncate' : 'w-fit max-w-full truncate'
-        } hover:opacity-75`}
-      >
-        {name || truncateAddress(address)}
-      </p>
-    </Link>
+    <p
+      className={`font-bold sm:text-lg text-start ${
+        showTags ? 'w-full truncate' : 'w-fit max-w-full truncate'
+      } hover:opacity-75`}
+    >
+      {name || truncateAddress(address)}
+    </p>
   )
 }
 
@@ -79,7 +75,6 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
     setTagDropdownOpen(false)
   })
 
-  const router = useRouter()
   const pathname = usePathname()
   const { t } = useTranslation()
   const { address: userAddress } = useAccount()
@@ -172,7 +167,6 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
         <Avatar
           name={name || address}
           avatarUrl={avatarUrl}
-          onClick={() => router.push(`/${address || name}`)}
           size='h-[45px] w-[45px] md:h-[50px] cursor-pointer md:w-[50px]'
         />
       )}
@@ -197,7 +191,13 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
           {isEnsProfileLoading ? (
             <LoadingCell className='w-32 xl:w-32 h-7 rounded-lg' />
           ) : (
-            <Name name={name} address={address} showTags={showTags} />
+            <p
+              className={`font-bold sm:text-lg text-start ${
+                showTags ? 'w-full truncate' : 'w-fit max-w-full truncate'
+              } hover:opacity-75`}
+            >
+              {name || truncateAddress(address)}
+            </p>
           )}
           {showFollowsYouBadges && !isEnsProfileLoading && (
             <div
@@ -220,7 +220,10 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
             {canEditTags && !isRestriction && (
               <button
                 className='p-1.5 rounded-full hover:opacity-80 hover:scale-110 bg-gray-300'
-                onClick={() => setTagDropdownOpen(!tagDropdownOpen)}
+                onClick={e => {
+                  e.stopPropagation()
+                  setTagDropdownOpen(!tagDropdownOpen)
+                }}
               >
                 <Image src={Plus} alt='Add Tag' width={12} />
               </button>
@@ -246,7 +249,10 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
                     />
                     <button
                       className='flex items-center rounded-full hover:scale-110 transition-all hover:opacity-80 bg-white justify-center p-2'
-                      onClick={() => addCustomTag()}
+                      onClick={e => {
+                        e.stopPropagation()
+                        addCustomTag()
+                      }}
                     >
                       <Image src={Plus} alt='Add Tag' height={12} width={12} />
                     </button>
@@ -256,7 +262,10 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
                       <button
                         key={tag}
                         className='font-semibold py-2 hover:scale-110 transition-all truncate px-3 hover:opacity-80 bg-gray-300 rounded-full'
-                        onClick={() => addTag(tag)}
+                        onClick={e => {
+                          e.stopPropagation()
+                          addTag(tag)
+                        }}
                       >
                         {tag}
                       </button>
@@ -272,17 +281,20 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
               return (
                 <div
                   key={tag + i}
-                  className={`relative ${
-                    tagDropdownOpen ? 'z-40' : 'z-10'
-                  } max-w-full hover:scale-110 transition-all`}
+                  className={`relative ${tagDropdownOpen ? 'z-40' : 'z-10'} max-w-full ${
+                    canEditTags ? 'hover:scale-110 transition-all hover:opacity-80' : ''
+                  }`}
+                  onClick={e => e.stopPropagation()}
                 >
                   <button
                     className={`
-                      font-semibold py-1 px-2 sm:py-1.5 max-w-full w-fit sm:px-3 truncate text-sm hover:opacity-80 rounded-full ${
+                      font-semibold py-1 px-2 sm:py-1.5 max-w-full w-fit sm:px-3 truncate text-sm rounded-full ${
                         !isFollowers && removingTag ? 'bg-deletion' : 'bg-gray-300'
                       }
                     `}
-                    onClick={() => {
+                    onClick={e => {
+                      e.stopPropagation()
+
                       if (!canEditTags || isBlockedList) return
                       removeTag(tag)
                     }}
@@ -298,7 +310,10 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
             {canEditTags && tagDropdownOpen && (
               <div
                 className='fixed z-30 top-0 left-0 w-full h-full bg-transparent'
-                onClick={() => setTagDropdownOpen(false)}
+                onClick={e => {
+                  e.stopPropagation()
+                  setTagDropdownOpen(false)
+                }}
               ></div>
             )}
           </div>

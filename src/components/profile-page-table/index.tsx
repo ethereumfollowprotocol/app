@@ -163,7 +163,9 @@ export function UserProfilePageTable({
           isLoadingMore={isFetchingMore}
           loadingRows={FETCH_LIMIT_PARAM}
           listClassName='gap-2 rounded-xl w-full px-3 sm:px-0'
-          listItemClassName='rounded-xl w-full px-0 py-2 sm:p-2'
+          listItemClassName={`rounded-xl w-full px-0 py-2 sm:p-2 ${
+            title === 'Blocked/Muted' || title === 'Blocked/Muted By' ? 'hover:bg-[#f8f8f8]' : ''
+          }`}
           profiles={profiles}
           showTags={showTags}
           showFollowsYouBadges={showFollowsYouBadges}

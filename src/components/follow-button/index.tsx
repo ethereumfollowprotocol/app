@@ -26,7 +26,7 @@ const theme: Record<
   },
   'Pending Following': {
     bg: 'btn-following-pending',
-    hover: 'hover:bg-none hover:bg-[#D0D0D0]',
+    hover: 'hover:bg-none hover:bg-[#D0D0D0] hover:border-[#D0D0D0]',
     text: 'text-gray-900',
     border:
       'border-[3px] py-1 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400'
@@ -89,9 +89,9 @@ const theme: Record<
       'border-0 py-1.5 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-1.5 after:-right-1.5 after:bg-green-400'
   },
   Mute: {
-    bg: 'bg-kournikova-300',
+    bg: 'bg-deletion',
     hover: 'hover:bg-[#CF4C4C]',
-    text: 'text-red-500',
+    text: 'text-darkGrey',
     border: 'border-0 py-1.5'
   },
   'Pending Mute': {
@@ -118,6 +118,24 @@ const theme: Record<
   }
 }
 
+const coolEmoji: Record<FollowButtonState, string> = {
+  Follow: '/assets/logo.svg',
+  'Pending Following': '',
+  Following: '/assets/icons/unfollow-emoji.svg',
+  Unfollow: '',
+  Subscribe: '',
+  Subscribed: '',
+  Unsubscribe: '',
+  Block: '/assets/icons/block-emoji.svg',
+  'Pending Block': '',
+  Blocked: '',
+  Unblock: '',
+  Mute: '/assets/icons/mute-emoji.svg',
+  'Pending Mute': '',
+  Muted: '',
+  Unmute: ''
+}
+
 interface FollowButtonProps {
   address: Address
   className?: string
@@ -140,7 +158,12 @@ const FollowButton: React.FC<FollowButtonProps> = ({
     isBlockedBy
   })
 
-  const coolEfpLogo = useCoolMode('/assets/logo.svg', buttonState !== 'Follow', true, isLoading)
+  const coolEfpLogo = useCoolMode(
+    coolEmoji[buttonState],
+    coolEmoji[buttonState] === '',
+    true,
+    isLoading
+  )
 
   return isLoading ? (
     <div className={`rounded-xl ${isBlockedBy ? 'w-[132px]' : 'px-3'} py-1`}>
@@ -168,7 +191,9 @@ const FollowButton: React.FC<FollowButtonProps> = ({
         onMouseLeave={() => {
           setDisableHover(false)
         }}
-        onClick={() => {
+        onClick={e => {
+          e.stopPropagation()
+
           if (!userAddress && openConnectModal) {
             openConnectModal()
             return

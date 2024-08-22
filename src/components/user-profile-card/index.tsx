@@ -250,8 +250,8 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                   onClick={() => router.push(`/${profile.address}`)}
                   size={
                     isResponsive
-                      ? 'h-[70px] w-[70px] sm:h-[75px] sm:w-[75px] xl:h-[100px] xl:w-[100px] cursor-pointer'
-                      : 'h-[100px] w-[100px] cursor-pointer'
+                      ? 'h-[70px] w-[70px] sm:h-[75px] sm:w-[75px] xl:h-[100px] xl:w-[100px] cursor-pointer hover:scale-110 transition-transform'
+                      : 'h-[100px] w-[100px] cursor-pointer  hover:scale-110 transition-transform'
                   }
                 />
               )}
@@ -277,7 +277,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                     {showMoreOptions && !isConnectedUserCard && (
                       <div ref={clickAwayMoreOptionsRef}>
                         <div
-                          className='flex gap-[3px] px-1.5 py-2 rounded-md bg-gray-300 cursor-pointer items-center hover:opacity-50 transition-all hover:scale-110'
+                          className='flex gap-[3px] px-1.5 py-2 rounded-md bg-gray-300 cursor-pointer items-center hover:opacity-50 transition-all hover:scale-125'
                           onClick={() => setMoreOptionsDropdownOpen(!moreOptionsDropdownOpen)}
                         >
                           <div className='h-1 w-1 bg-black rounded-full'></div>

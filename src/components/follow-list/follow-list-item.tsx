@@ -1,6 +1,7 @@
 import type { Address } from 'viem'
 import { useQuery } from '@tanstack/react-query'
 
+import { useRouter } from 'next/navigation'
 import { resolveEnsProfile } from '#/utils/ens'
 import type { ENSProfile } from '#/types/requests'
 import FollowButton from '#/components/follow-button'
@@ -36,6 +37,7 @@ const FollowListItem: React.FC<FollowListItemProps> = ({
   isBlockedList,
   isBlockedBy
 }) => {
+  const router = useRouter()
   const { data: fetchedEnsProfile, isLoading: isEnsProfileLoading } = useQuery({
     queryKey: ['ens metadata', address],
     queryFn: async () => (ensProfile ? ensProfile : await resolveEnsProfile(address))
@@ -46,7 +48,8 @@ const FollowListItem: React.FC<FollowListItemProps> = ({
 
   return (
     <div
-      className={`flex items-center justify-between hover:bg-[#ebebeb88] p-1.5 sm:p-2 rounded-xl ${className}`}
+      className={`flex items-center cursor-pointer justify-between hover:bg-[#ebebeb88] transition-all p-1.5 sm:p-2 rounded-xl ${className}`}
+      onClick={() => router.push(`/${address || profileName}`)}
     >
       {/* Left section: Avatar, Name, and Tags */}
       <FollowListItemName

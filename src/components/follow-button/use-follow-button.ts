@@ -36,6 +36,7 @@ export type FollowButtonState =
 type FollowButtonText =
   | 'Block'
   | 'Block Back'
+  | 'Mute Back'
   | 'Blocked'
   | 'Follow'
   | 'Following'
@@ -57,6 +58,10 @@ export const useFollowButton = ({
   const { followState, isFollowStateLoading } = useFollowState({
     address,
     type: 'following'
+  })
+  const { followState: followerState } = useFollowState({
+    address,
+    type: 'follower'
   })
   const { t } = useTranslation()
   const {
@@ -84,7 +89,8 @@ export const useFollowButton = ({
     if (!userAddress) return 'Follow'
     if (pendingState) return pendingState
 
-    if ((followState === 'none' || followState === 'follows') && isBlockedBy) return 'Block'
+    if (followState === 'none' && followerState === 'blocks' && isBlockedBy) return 'Block'
+    if (followState === 'none' && followerState === 'mutes' && isBlockedBy) return 'Mute'
 
     switch (followState) {
       case 'follows':
@@ -106,7 +112,8 @@ export const useFollowButton = ({
     if (pendingState === 'Pending Following') return 'Following'
     if (pendingState) return pendingState
 
-    if ((followState === 'none' || followState === 'follows') && isBlockedBy) return 'Block Back'
+    if (followState === 'none' && followerState === 'blocks' && isBlockedBy) return 'Block Back'
+    if (followState === 'none' && followerState === 'mutes' && isBlockedBy) return 'Mute Back'
 
     switch (followState) {
       case 'follows':

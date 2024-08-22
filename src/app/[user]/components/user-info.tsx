@@ -247,14 +247,14 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
                     setIsBlockedMutedOpen(true)
                     router.push(`/${user}?modal=blockmutelists`)
                   }}
-                  className='font-semibold cursor-pointer hover:opacity-80 transition-opacity'
+                  className='font-semibold cursor-pointer hover:opacity-80 hover:scale-110 transition-all'
                 >
                   {t('block-mute')}
                 </p>
               )}
               {profile?.address && (profile?.primary_list || userIsList) && (
                 <div
-                  className='flex gap-1 cursor-pointer hover:opacity-80 transition-opacity'
+                  className='flex gap-1 cursor-pointer hover:opacity-80 hover:scale-110 transition-all'
                   onClick={() => setListSettingsOpen(true)}
                 >
                   <p className='font-semibold '>{t('settings')}</p>

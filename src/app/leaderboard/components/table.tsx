@@ -114,7 +114,7 @@ const LeaderboardTable = () => {
         </div>
         <div className='flex justify-between gap-4'>
           <div className='relative w-full sm:w-[260px] 2xl:w-[300px]'>
-            <div className='rounded-xl w-full group glass-card border-[3px] border-gray-200 hover:border-darkGrey focus-within:border-darkGrey transition-colors'>
+            <div className='rounded-xl w-full group glass-card border-[3px] border-gray-200 hover:border-[#666] focus-within:border-[#666] transition-colors'>
               <div
                 className='pointer-events-none absolute inset-y-0 right-0 flex items-center pl-3'
                 aria-hidden='true'
@@ -122,7 +122,7 @@ const LeaderboardTable = () => {
                 <Image
                   src={MagnifyingGlass}
                   alt='Search'
-                  className='mr-3 h-5 w-5 opacity-30 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity'
+                  className='mr-3 h-5 w-5 opacity-30 group-hover:opacity-60 group-focus-within:opacity-60 transition-opacity'
                   aria-hidden='true'
                 />
               </div>
