@@ -102,7 +102,7 @@ export const useFollowButton = ({
       default:
         return 'Follow'
     }
-  }, [pendingState, followState, userAddress])
+  }, [pendingState, followState, userAddress, followerState])
 
   const buttonText = useMemo<FollowButtonText>(() => {
     if (!userAddress) return 'Follow'
@@ -125,7 +125,7 @@ export const useFollowButton = ({
       default:
         return 'Follow'
     }
-  }, [pendingState, followState, userAddress])
+  }, [pendingState, followState, userAddress, followerState])
 
   const handleAction = () => {
     // cannot perform list operations if not list manager
