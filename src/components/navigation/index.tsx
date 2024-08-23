@@ -68,12 +68,7 @@ const Navigation = () => {
                   className='flex gap-1 sm:gap-2 items-center w-full'
                 >
                   <div className='flex gap-2 hover:opacity-75 font-semibold text-darkGrey'>
-                    <Image
-                      src={selectedLanguage?.icon}
-                      alt='Language icon'
-                      width={26}
-                      height={10}
-                    />
+                    <Image src={selectedLanguage?.icon} alt='Language icon' width={26} />
                     <p className='hidden lg:block'>{selectedLanguage?.language}</p>
                   </div>
                   <Image
@@ -107,7 +102,7 @@ const Navigation = () => {
                           />
                         )}
                         <div className='flex gap-2 pr-5'>
-                          <Image src={lang.icon} alt='Language icon' width={26} height={10} />
+                          <Image src={lang.icon} alt='Language icon' width={26} />
                           <p>{lang.language}</p>
                         </div>
                       </div>

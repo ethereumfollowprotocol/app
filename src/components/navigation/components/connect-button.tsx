@@ -214,12 +214,7 @@ const ConnectButton = () => {
             >
               <Image src={ArrowLeft} alt='Show languages' />
               <div className='flex gap-2'>
-                <Image
-                  src={selectedLanguage?.icon || ''}
-                  alt='Language icon'
-                  width={24}
-                  height={10}
-                />
+                <Image src={selectedLanguage?.icon || ''} alt='Language icon' width={24} />
                 <p className='font-semibold '>{selectedLanguage?.language}</p>
               </div>
             </div>
@@ -258,7 +253,7 @@ const ConnectButton = () => {
                       />
                     )}
                     <div className='flex gap-2 pr-3'>
-                      <Image src={lang.icon} alt='Language icon' width={24} height={10} />
+                      <Image src={lang.icon} alt='Language icon' width={24} />
                       <p>{lang.language}</p>
                     </div>
                   </div>

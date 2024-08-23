@@ -77,9 +77,9 @@
       },
       "nursery": {
         "all": true,
-        "noNodejsModules": "off",
         "useSortedClasses": "off",
         "noReactSpecificProps": "off",
+        "useImportExtensions": "off",
         "useImportRestrictions": "off",
         "noUndeclaredDependencies": "off"
       },
@@ -129,7 +129,7 @@
       "indentWidth": 2,
       "indentStyle": "space",
       "quoteStyle": "single",
-      "trailingComma": "none",
+      "trailingCommas": "none",
       "semicolons": "asNeeded",
       "jsxQuoteStyle": "single",
       "quoteProperties": "asNeeded",
