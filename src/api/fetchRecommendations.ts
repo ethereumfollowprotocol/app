@@ -4,16 +4,20 @@ import type { DiscoverItemType, DiscoverResponseType } from '#/types/common'
 export const fetchRecommendations = async (
   endpoint: 'discover' | 'recommended',
   addressOrName?: string | Address,
-  list?: number
+  list?: number,
+  limit = 10,
+  pageParam = 1
 ) => {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_EFP_API_URL}/${
         endpoint === 'recommended'
           ? addressOrName
-            ? `${list ? 'lists' : 'users'}/${list ?? addressOrName}/recommended`
-            : 'discover?include=counts'
-          : `${endpoint}?include=counts`
+            ? `${list ? 'lists' : 'users'}/${
+                list ?? addressOrName
+              }/recommended?limit=${limit}&offset=${pageParam * limit}`
+            : `discover?include=counts&limit=${limit}&offset=${pageParam * limit}`
+          : `${endpoint}?include=counts&limit=${limit}&offset=${pageParam * limit}`
       }`,
       {
         cache: 'default',

@@ -2,12 +2,14 @@
 
 import clsx from 'clsx'
 import { useAccount } from 'wagmi'
-import { useQuery } from '@tanstack/react-query'
+import { useMemo, useState } from 'react'
+import { useInfiniteQuery } from '@tanstack/react-query'
 
 import { FollowList } from '#/components/follow-list'
 import type { DiscoverItemType } from '#/types/common'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { fetchRecommendations } from '#/api/fetchRecommendations'
+import PageSelector from '#/app/leaderboard/components/page-selector'
 
 interface RecommendationsProps {
   header?: string
@@ -24,31 +26,74 @@ const Recommendations = ({
   limit,
   endpoint
 }: RecommendationsProps) => {
+  const [page, setPage] = useState(1)
   const { selectedList } = useEFPProfile()
   const { address: userAddress } = useAccount()
-  const { data: profilesToRecommend, isLoading } = useQuery({
-    queryKey: [endpoint, userAddress, selectedList],
-    queryFn: async () => {
-      const discoverAccounts = await fetchRecommendations(endpoint, userAddress, selectedList)
 
-      return discoverAccounts.filter(
-        account => account.address.toLowerCase() !== userAddress?.toLowerCase()
+  const {
+    isLoading,
+    fetchNextPage,
+    fetchPreviousPage,
+    isFetchingNextPage,
+    isFetchingPreviousPage,
+    data: profilesToRecommend
+  } = useInfiniteQuery({
+    queryKey: [endpoint, userAddress, selectedList, limit],
+    queryFn: async ({ pageParam = 0 }) => {
+      const discoverAccounts = await fetchRecommendations(
+        endpoint,
+        userAddress,
+        selectedList,
+        limit,
+        pageParam
       )
+
+      return {
+        results: discoverAccounts.filter(
+          account => account.address.toLowerCase() !== userAddress?.toLowerCase()
+        ),
+        nextPageParam: pageParam + 1,
+        previousPageParam: pageParam > 0 ? pageParam - 1 : 0
+      }
     },
     refetchInterval: 600000,
-    staleTime: 600000
+    staleTime: 600000,
+    initialPageParam: page - 1,
+    getNextPageParam: lastPage => lastPage.nextPageParam,
+    getPreviousPageParam: lastPage => lastPage.previousPageParam
   })
 
-  const displayedProfiles = limit ? profilesToRecommend?.slice(0, limit) : profilesToRecommend
+  const displayedProfiles = useMemo(() => {
+    const pageIndex = profilesToRecommend?.pageParams.indexOf(page - 1) || 0
+    return profilesToRecommend?.pages[pageIndex]?.results.slice(0, limit)
+  }, [profilesToRecommend, page])
 
   return (
-    <div className={clsx('flex flex-col gap-6', className)}>
+    <div className={clsx('flex flex-col gap-4', className)}>
       <div className='px-2 pt-2'>
-        <h2 className='text-center lg:text-start text-2xl sm:text-3xl font-bold'>{header}</h2>
+        <div className='w-full flex items-center justify-between'>
+          <h2
+            className={`text-center pl-2 sm:pl-0 lg:text-start text-2xl ${
+              endpoint === 'recommended' ? '' : 'sm:text-3xl'
+            } font-bold`}
+          >
+            {header}
+          </h2>
+          <PageSelector
+            page={page}
+            setPage={setPage}
+            hasNextPage={true}
+            hasSkipToFirst={false}
+            adjustUrl={false}
+            displayPageNumber={false}
+            fetchNext={fetchNextPage}
+            fetchPrevious={fetchPreviousPage}
+          />
+        </div>
         <p className='text-center text-xs text-gray-400 italic font-medium'>{description}</p>
       </div>
       <FollowList
-        isLoading={isLoading}
+        isLoading={isLoading || isFetchingNextPage || isFetchingPreviousPage}
         loadingRows={limit}
         listClassName='rounded-xl px-2 sm:px-0 gap-3'
         profiles={displayedProfiles?.map(account => ({
@@ -69,9 +114,24 @@ const Recommendations = ({
         showFollowsYouBadges={true}
         showTags={false}
       />
-      {!isLoading && displayedProfiles?.length === 0 && (
-        <div className='w-full h-28 mb-14 flex justify-center items-center font-semibold italic text-lg'>
-          No results
+      {!(isLoading || isFetchingNextPage || isFetchingPreviousPage) &&
+        displayedProfiles?.length === 0 && (
+          <div className='w-full h-28 mb-14 flex justify-center items-center font-semibold italic text-lg'>
+            No results
+          </div>
+        )}
+      {endpoint === 'recommended' && (
+        <div className='px-3 sm:px-2 pb-2'>
+          <PageSelector
+            page={page}
+            setPage={setPage}
+            hasNextPage={true}
+            hasSkipToFirst={false}
+            adjustUrl={false}
+            displayPageNumber={false}
+            fetchNext={fetchNextPage}
+            fetchPrevious={fetchPreviousPage}
+          />
         </div>
       )}
     </div>

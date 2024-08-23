@@ -8,7 +8,7 @@ if (!SENTRY_DSN) throw new Error(`SENTRY_DSN is not defined in ${filename}`)
 Sentry.init({
   enabled: process.env.SENTRY_DISABLED !== 'true' && process.env.NODE_ENV === 'production',
   dsn: SENTRY_DSN,
-  tunnel: '/monitoring',
+  // tunnel: '/monitoring',
   // Setting this option to true will print useful information to the console while you're setting up Sentry.
   debug: false,
   /**
