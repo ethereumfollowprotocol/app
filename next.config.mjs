@@ -75,19 +75,20 @@ const nextConfig = {
 		if (Array.isArray(config.externals)) {
 			config.externals.push("lokijs", "pino", "pino-pretty", "encoding");
 		}
-		if (config.plugins) {
-			config.plugins.push(
-				new context.webpack.IgnorePlugin({
-					resourceRegExp: /^(lokijs|pino|pino-pretty|encoding)$/,
-				}),
-				new context.webpack.NormalModuleReplacementPlugin(
-					/node:/,
-					(/** @type {{ request: string; }} */ resource) => {
-						resource.request = resource.request.replace(/^node:/, "");
-					},
-				),
-			);
-		}
+		// if (config.plugins) {
+		// 	config.plugins.push(
+		// 		new context.webpack.IgnorePlugin({
+		// 			resourceRegExp: /^(lokijs|pino|pino-pretty|encoding)$/,
+		// 		}),
+		// 		new context.webpack.NormalModuleReplacementPlugin(
+		// 			/node:/,
+		// 			(/** @type {{ request: string; }} */ resource) => {
+		// 				resource.request = resource.request.replace(/^node:/, "");
+		// 			},
+		// 		),
+		// 	);
+		// }
+
 		return config;
 	},
 	redirects: async () => [
