@@ -79,7 +79,6 @@
         "all": true,
         "useSortedClasses": "off",
         "noReactSpecificProps": "off",
-        "useImportExtensions": "off",
         "useImportRestrictions": "off",
         "noUndeclaredDependencies": "off"
       },
@@ -129,7 +128,7 @@
       "indentWidth": 2,
       "indentStyle": "space",
       "quoteStyle": "single",
-      "trailingCommas": "none",
+      "trailingComma": "none",
       "semicolons": "asNeeded",
       "jsxQuoteStyle": "single",
       "quoteProperties": "asNeeded",
