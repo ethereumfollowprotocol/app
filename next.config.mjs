@@ -2,21 +2,11 @@
  * @typedef {import('next').NextConfig} NextConfig
  * @typedef {Array<((config: NextConfig & any) => NextConfig)>} NextConfigPlugins
  * @typedef {import('webpack').Configuration} WebpackConfiguration
- * @typedef {import('@sentry/nextjs/types/config/types.ts').UserSentryOptions} SentryUserOptions
- * @typedef {import('@sentry/nextjs').SentryWebpackPluginOptions} SentryWebpackPluginOptions
  */
+
 import million from 'million/compiler'
 import childProcess from 'node:child_process'
 import { withSentryConfig } from '@sentry/nextjs'
-// import { withVercelToolbar } from '@vercel/toolbar/plugins/next'
-
-/** @type {NextConfigPlugins} */
-const plugins = []
-
-if (process.env['ANALYZE']) {
-  const { default: withBundleAnalyzer } = await import('@next/bundle-analyzer')
-  plugins.push(withBundleAnalyzer({ enabled: true }))
-}
 
 // curl https://api.github.com/repos/ethereumfollowprotocol/app/commits/develop | jq --raw-output '.sha'
 const APP_VERSION =
@@ -150,23 +140,7 @@ const nextConfig = {
         }
       ]
     }
-  ],
-  /**
-   * @link https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup
-   * @type {SentryUserOptions}
-   */
-  sentry: {
-    // Hides source maps from generated client bundles. Default is false
-    hideSourceMaps: true,
-    // Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
-    tunnelRoute: '/monitoring-tunnel',
-    // Automatically tree-shake Sentry logger statements to reduce bundle size
-    disableLogger: true,
-    // disableServerWebpackPlugin: true,
-    // disableClientWebpackPlugin: true,
-    // autoInstrumentMiddleware: true,
-    // autoInstrumentServerFunctions: true
-  }
+  ]
 }
 
 // https://github.com/getsentry/sentry-webpack-plugin#options
@@ -174,11 +148,8 @@ const nextConfigWithSentry = withSentryConfig(nextConfig, {
   authToken: process.env['SENTRY_AUTH_TOKEN'],
   org: 'efp',
   project: 'web',
-  silent: process.env['NODE_ENV'] !== 'development',
 })
 
-const nextConfigWithPlugins = () => plugins.reduce((_, plugin) => plugin(_), nextConfigWithSentry)
-
 export default process.env.NODE_ENV === 'development'
-  ? nextConfigWithPlugins()
-  : million.next(nextConfigWithPlugins, { auto: { rsc: true } })
+  ? nextConfigWithSentry
+  : million.next(nextConfigWithSentry, { auto: { rsc: true } })

@@ -17,7 +17,7 @@ export default function GlobalError({
 
   return (
     <html lang='en'>
-      <body>
+      <body className='pt-40'>
         {/* This is the default Next.js error component but it doesn't allow omitting the statusCode property yet. */}
         <NextError statusCode={undefined as any} />
         <button type='button' onClick={() => reset()}>
