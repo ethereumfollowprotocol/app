@@ -23,7 +23,7 @@ const Recommendations = ({
   header,
   description,
   className,
-  limit,
+  limit = 10,
   endpoint
 }: RecommendationsProps) => {
   const [page, setPage] = useState(1)
@@ -84,6 +84,7 @@ const Recommendations = ({
             setPage={setPage}
             hasNextPage={true}
             hasSkipToFirst={false}
+            scrollOnChange={false}
             adjustUrl={false}
             displayPageNumber={false}
             fetchNext={fetchNextPage}
@@ -128,6 +129,7 @@ const Recommendations = ({
             hasNextPage={true}
             hasSkipToFirst={false}
             adjustUrl={false}
+            scrollOnChange={false}
             displayPageNumber={false}
             fetchNext={fetchNextPage}
             fetchPrevious={fetchPreviousPage}

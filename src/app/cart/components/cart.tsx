@@ -103,7 +103,7 @@ const Cart = () => {
                   src={FarcasterIcon}
                   alt='Import from Farcaster'
                   width={30}
-                  className='cursor-pointer rounded-lg hover:opacity-75 hover:scale-110 transition-transform'
+                  className='cursor-pointer rounded-lg hover:opacity-75 hover:scale-110 transition-all'
                   onClick={() => {
                     setImportModalOpen(true)
                     setPlatform('farcaster')
@@ -113,7 +113,7 @@ const Cart = () => {
                   src={LensIcon}
                   alt='Import from Lens'
                   width={30}
-                  className='cursor-pointer rounded-lg hover:opacity-75 transition-opacity hover:scale-110 transition-transform'
+                  className='cursor-pointer rounded-lg hover:opacity-75 hover:scale-110 transition-all'
                   onClick={() => {
                     setImportModalOpen(true)
                     setPlatform('lens')
@@ -122,7 +122,7 @@ const Cart = () => {
               </div>
             </div>
             <Search size='w-full z-50 px-2 pt-2' isEditor={true} />
-            <Recommendations header={t('recommendations')} endpoint='recommended' />
+            <Recommendations header={t('recommendations')} endpoint='recommended' limit={10} />
           </div>
           <div className='flex h-full flex-col glass-card rounded-2xl border-[3px] border-gray-200 gap-3 md:gap-4 md:py-6 pt-5 pb-2 px-1 sm:px-3 md:px-4 w-full xl:w-2/3'>
             <div className='flex justify-between gap-2 flex-row items-center px-3 md:px-4'>

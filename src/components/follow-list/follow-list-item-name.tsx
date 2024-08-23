@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useRef, useState } from 'react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import type { Address, GetEnsAvatarReturnType } from 'viem'
 
 import LoadingCell from '../loading-cell'
@@ -18,6 +18,7 @@ import useFollowState from '#/hooks/use-follow-state'
 import Plus from 'public/assets/icons/plus-squared.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
+import Link from 'next/link'
 
 interface FollowListItemNameProps {
   address: Address
@@ -43,13 +44,15 @@ export function Name({
   showTags
 }: { name?: string | null; address: Address; showTags?: boolean }) {
   return (
-    <p
-      className={`font-bold sm:text-lg text-start ${
-        showTags ? 'w-full truncate' : 'w-fit max-w-full truncate'
-      } hover:opacity-75`}
-    >
-      {name || truncateAddress(address)}
-    </p>
+    <Link href={`/${address || name}`}>
+      <p
+        className={`font-bold sm:text-lg text-start ${
+          showTags ? 'w-full truncate' : 'w-fit max-w-full truncate'
+        } hover:opacity-75 transition-all`}
+      >
+        {name || truncateAddress(address)}
+      </p>
+    </Link>
   )
 }
 
@@ -75,6 +78,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
     setTagDropdownOpen(false)
   })
 
+  const router = useRouter()
   const pathname = usePathname()
   const { t } = useTranslation()
   const { address: userAddress } = useAccount()
@@ -167,7 +171,8 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
         <Avatar
           name={name || address}
           avatarUrl={avatarUrl}
-          size='h-[45px] w-[45px] md:h-[50px] cursor-pointer md:w-[50px]'
+          size='h-[45px] w-[45px] md:h-[50px] cursor-pointer md:w-[50px] hover:opacity-80 transition-all'
+          onClick={() => router.push(`/${address || name}`)}
         />
       )}
       <div
@@ -191,13 +196,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
           {isEnsProfileLoading ? (
             <LoadingCell className='w-32 xl:w-32 h-7 rounded-lg' />
           ) : (
-            <p
-              className={`font-bold sm:text-lg text-start ${
-                showTags ? 'w-full truncate' : 'w-fit max-w-full truncate'
-              } hover:opacity-75`}
-            >
-              {name || truncateAddress(address)}
-            </p>
+            <Name name={name} address={address} showTags={showTags} />
           )}
           {showFollowsYouBadges && !isEnsProfileLoading && (
             <div
@@ -282,13 +281,12 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
                 <div
                   key={tag + i}
                   className={`relative ${tagDropdownOpen ? 'z-40' : 'z-10'} max-w-full ${
-                    canEditTags ? 'hover:scale-110 transition-all hover:opacity-80' : ''
+                    canEditTags ? 'hover:scale-110 transition-all' : ''
                   }`}
-                  onClick={e => e.stopPropagation()}
                 >
                   <button
                     className={`
-                      font-semibold py-1 px-2 sm:py-1.5 max-w-full w-fit sm:px-3 truncate text-sm rounded-full ${
+                      font-semibold py-1 px-2 sm:py-1.5 max-w-full w-fit sm:px-3 truncate text-sm hover:opacity-80 rounded-full ${
                         !isFollowers && removingTag ? 'bg-deletion' : 'bg-gray-300'
                       }
                     `}

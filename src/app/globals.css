@@ -220,6 +220,28 @@ input {
   transition: all 200ms ease-in-out;
 }
 
+.loading-ellipsis:after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  -webkit-animation: ellipsis steps(4,end) 900ms infinite;
+  animation: ellipsis ease-in-out 2000ms infinite;
+  content: "\2026"; /* ascii code for the ellipsis character */
+  width: 0px;
+}
+
+@keyframes ellipsis {
+50% {
+    width: 1.25em;
+  }
+}
+
+@-webkit-keyframes ellipsis {
+  50% {
+    width: 1.25em;
+  }
+}
+
 .btn-following {
   background:
   linear-gradient(#fafafa, #fafafa) padding-box,

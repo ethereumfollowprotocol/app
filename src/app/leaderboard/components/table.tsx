@@ -153,6 +153,7 @@ const LeaderboardTable = () => {
             page={page}
             setPage={setPage}
             hasNextPage={true}
+            scrollOnChange={false}
             isLoading={isFetchingNextLeaderboard || isFetchingPreviousLeaderboard}
             fetchNext={() => fetchNextLeaderboard()}
             fetchPrevious={() => fetchPreviousLeaderboard()}
@@ -191,6 +192,7 @@ const LeaderboardTable = () => {
           page={page}
           setPage={setPage}
           hasNextPage={true}
+          scrollOnChange={false}
           isLoading={isFetchingNextLeaderboard || isFetchingPreviousLeaderboard}
           fetchNext={() => fetchNextLeaderboard()}
           fetchPrevious={() => fetchPreviousLeaderboard()}

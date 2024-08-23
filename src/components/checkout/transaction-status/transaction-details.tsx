@@ -50,7 +50,7 @@ const TransactionDetails = ({
   const getStatusColor = useCallback(() => {
     if (action.isPendingConfirmation) return 'text-salmon-500'
     if (action.isConfirmationError) return 'text-salmon-500'
-    if (isPending) return 'text-kournikova-600'
+    if (isPending) return 'text-kournikova-600 loading-ellipsis'
     if (isSuccess) return 'text-lime-600'
     // if (isLastAction && isLastActionSuccessful) return 'text-lime-600'
     // if (isLastAction && isSuccess) return 'text-kournikova-600'
@@ -72,17 +72,21 @@ const TransactionDetails = ({
   return shouldShowComponent ? (
     <div className='flex gap-2 sm:gap-2 flex-col'>
       <p className='text-xl sm:text-2xl font-bold'>{t('status title')}</p>
-      <p className={clsx(getStatusColor(), 'text-lg font-bold')}>{t(statusDescription || '')}</p>
-      {isLastAction && isSuccess && (
-        <p
-          className={clsx(
-            isLastActionSuccessful ? 'text-lime-600' : 'text-kournikova-600',
-            'font-bold'
-          )}
-        >
-          {isLastActionSuccessful ? t('finished') : t('finishing')}
+      <div className='flex flex-col gap-1'>
+        <p className={clsx(getStatusColor(), 'text-lg sm:text-xl font-bold')}>
+          {t(statusDescription || '')}
         </p>
-      )}
+        {isLastAction && isSuccess && (
+          <p
+            className={clsx(
+              isLastActionSuccessful ? 'text-lime-600' : 'text-kournikova-600 loading-ellipsis',
+              'font-bold text-lg sm:text-xl'
+            )}
+          >
+            {isLastActionSuccessful ? t('finished') : t('finishing')}
+          </p>
+        )}
+      </div>
       {action.isPendingConfirmation ? (
         <p className='text-lg text-gray-400 italic font-bold'>{t('check wallet')}</p>
       ) : (
