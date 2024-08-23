@@ -4,9 +4,9 @@
  * @typedef {import('webpack').Configuration} WebpackConfiguration
  */
 
+import million from "million/compiler";
 import childProcess from "node:child_process";
 import { withSentryConfig } from "@sentry/nextjs";
-import million from "million/compiler";
 
 // curl https://api.github.com/repos/ethereumfollowprotocol/app/commits/develop | jq --raw-output '.sha'
 const APP_VERSION =
@@ -64,31 +64,32 @@ const nextConfig = {
 			},
 		],
 	},
-	// /** @param {WebpackConfiguration} config */
-	// webpack: (config, context) => {
-	//   if (config.name === 'server' && config.optimization) {
-	//     config.optimization.concatenateModules = false
-	//   }
-	//   /* WalletConnect x wagmi needed configuration */
-	//   if (config.resolve) config.resolve.fallback = { fs: false, net: false, tls: false }
-	//   if (Array.isArray(config.externals)) {
-	//     config.externals.push('lokijs', 'pino', 'pino-pretty', 'encoding')
-	//   }
-	//   if (config.plugins) {
-	//     config.plugins.push(
-	//       new context.webpack.IgnorePlugin({
-	//         resourceRegExp: /^(lokijs|pino|pino-pretty|encoding)$/
-	//       }),
-	//       new context.webpack.NormalModuleReplacementPlugin(
-	//         /node:/,
-	//         (/** @type {{ request: string; }} */ resource) => {
-	//           resource.request = resource.request.replace(/^node:/, '')
-	//         }
-	//       )
-	//     )
-	//   }
-	//   return config
-	// },
+	/** @param {WebpackConfiguration} config */
+	webpack: (config, context) => {
+		if (config.name === "server" && config.optimization) {
+			config.optimization.concatenateModules = false;
+		}
+		/* WalletConnect x wagmi needed configuration */
+		if (config.resolve)
+			config.resolve.fallback = { fs: false, net: false, tls: false };
+		if (Array.isArray(config.externals)) {
+			config.externals.push("lokijs", "pino", "pino-pretty", "encoding");
+		}
+		if (config.plugins) {
+			config.plugins.push(
+				new context.webpack.IgnorePlugin({
+					resourceRegExp: /^(lokijs|pino|pino-pretty|encoding)$/,
+				}),
+				new context.webpack.NormalModuleReplacementPlugin(
+					/node:/,
+					(/** @type {{ request: string; }} */ resource) => {
+						resource.request = resource.request.replace(/^node:/, "");
+					},
+				),
+			);
+		}
+		return config;
+	},
 	redirects: async () => [
 		{
 			source: "/(twitter|x)",
@@ -162,7 +163,6 @@ const nextConfigWithSentry = withSentryConfig(nextConfig, {
 	authToken: process.env.SENTRY_AUTH_TOKEN,
 	org: "efp",
 	project: "web",
-	telemetry: process.env.NODE_ENV !== "development",
 });
 
 export default process.env.NODE_ENV === "development"
