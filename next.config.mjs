@@ -73,12 +73,12 @@ const nextConfig = {
 		if (config.resolve)
 			config.resolve.fallback = { fs: false, net: false, tls: false };
 		if (Array.isArray(config.externals)) {
-			config.externals.push("lokijs", "pino", "pino-pretty", "encoding");
+			config.externals.push("lokijs", "pino", "ws", "pino-pretty", "encoding");
 		}
 		if (config.plugins) {
 			config.plugins.push(
 				new context.webpack.IgnorePlugin({
-					resourceRegExp: /^(lokijs|pino|pino-pretty|encoding)$/,
+					resourceRegExp: /^(lokijs|pino|ws|pino-pretty|encoding)$/,
 				}),
 				new context.webpack.NormalModuleReplacementPlugin(
 					/node:/,
