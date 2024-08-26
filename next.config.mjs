@@ -72,33 +72,33 @@ const nextConfig = {
 			},
 		],
 	},
-	/** @param {WebpackConfiguration} config */
-	webpack: (config, context) => {
-		if (config.name === "server" && config.optimization) {
-			config.optimization.concatenateModules = false;
-		}
-		/* WalletConnect x wagmi needed configuration */
-		if (config.resolve)
-			config.resolve.fallback = { fs: false, net: false, tls: false };
-		if (Array.isArray(config.externals)) {
-			config.externals.push("lokijs", "pino", "pino-pretty", "encoding");
-		}
-		if (config.plugins) {
-			config.plugins.push(
-				new context.webpack.IgnorePlugin({
-					resourceRegExp: /^(lokijs|pino|pino-pretty|encoding)$/,
-				}),
-				new context.webpack.NormalModuleReplacementPlugin(
-					/node:/,
-					(/** @type {{ request: string; }} */ resource) => {
-						resource.request = resource.request.replace(/^node:/, "");
-					},
-				),
-			);
-		}
+	// /** @param {WebpackConfiguration} config */
+	// webpack: (config, context) => {
+	// 	if (config.name === "server" && config.optimization) {
+	// 		config.optimization.concatenateModules = false;
+	// 	}
+	// 	/* WalletConnect x wagmi needed configuration */
+	// 	if (config.resolve)
+	// 		config.resolve.fallback = { fs: false, net: false, tls: false };
+	// 	if (Array.isArray(config.externals)) {
+	// 		config.externals.push("lokijs", "pino", "pino-pretty", "encoding");
+	// 	}
+	// 	if (config.plugins) {
+	// 		config.plugins.push(
+	// 			new context.webpack.IgnorePlugin({
+	// 				resourceRegExp: /^(lokijs|pino|pino-pretty|encoding)$/,
+	// 			}),
+	// 			new context.webpack.NormalModuleReplacementPlugin(
+	// 				/node:/,
+	// 				(/** @type {{ request: string; }} */ resource) => {
+	// 					resource.request = resource.request.replace(/^node:/, "");
+	// 				},
+	// 			),
+	// 		);
+	// 	}
 
-		return config;
-	},
+	// 	return config;
+	// },
 	redirects: async () => [
 		{
 			source: "/(twitter|x)",
@@ -170,11 +170,14 @@ const nextConfig = {
 const nextConfigWithPlugins = () => plugins.reduce((_, plugin) => plugin(_), nextConfig)
 
 // https://github.com/getsentry/sentry-webpack-plugin#options
-const nextConfigWithSentry = withSentryConfig(nextConfigWithPlugins(), {
+const nextConfigWithSentry = withSentryConfig(nextConfigWithPlugins, {
 	authToken: process.env.SENTRY_AUTH_TOKEN,
 	org: "efp",
-	project: "web"
+	project: "web",
+  hideSourceMaps: true
 });
+
+// const nextConfigWithPlugins = () => plugins.reduce((_, plugin) => plugin(_), nextConfigWithSentry)
 
 export default process.env.NODE_ENV === "development"
 	? nextConfigWithSentry
