@@ -49,13 +49,11 @@ const Navigation = () => {
               alt='Ethereum Follow Protocol Logo'
             />
           </Link>
-          <div className='w-full'>
-            <Search size='w-full max-w-[200px] lg:w-5/6 xl:w-full xxs:max-w-[350px]' />
-          </div>
+          <Search size='w-fit max-w-[200px] lg:w-5/6 xl:w-full xxs:max-w-[350px]' />
         </div>
-        <div className='flex lg:gap-6 xl:gap-8 w-full justify-end items-center'>
+        <div className='flex lg:gap-6 xl:gap-8 w-3/5 justify-end items-center'>
           <NavItems />
-          <div className='flex items-center gap-2 md:gap-6'>
+          <div className='flex items-center gap-2 md:gap-5'>
             {userAddress ? (
               <CartButton cartItemsCount={totalCartItems} />
             ) : (
@@ -83,7 +81,7 @@ const Navigation = () => {
                     languageMenOpenu ? 'block' : 'hidden'
                   } group-hover:block pt-4`}
                 >
-                  <div className='flex flex-col glass-card bg-white/90 border-[3px] border-gray-200 p-1 rounded-lg shadow-md'>
+                  <div className='flex flex-col glass-card bg-white/90 border-[3px] border-gray-100 p-1 rounded-lg shadow-md'>
                     {LANGUAGES.map(lang => (
                       <div
                         className=' text-darkGrey p-3 pl-8 relative font-semibold rounded-md hover:bg-slate-100 transition-all'
@@ -114,11 +112,11 @@ const Navigation = () => {
             <div ref={clickAwayRef} className='lg:hidden relative'>
               <div
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className='flex cursor-pointer hover:opacity-75 relative transition-opacity lg:hidden gap-[5px] flex-col p-[10px] glass-card border-[3px] rounded-md border-gray-200'
+                className='flex hover:scale-110 cursor-pointer group relative transition-all items-center justify-center lg:hidden gap-[5px] flex-col h-12 w-12 glass-card border-[3px] rounded-full  hover:border-darkGrey border-gray-400'
               >
-                <div className='w-5 h-[3px] bg-darkGrey rounded-full'></div>
-                <div className='w-5 h-[3px] bg-darkGrey rounded-full'></div>
-                <div className='w-5 h-[3px] bg-darkGrey rounded-full'></div>
+                <div className='w-5 h-[3px] bg-gray-400 group-hover:bg-darkGrey rounded-full'></div>
+                <div className='w-5 h-[3px] bg-gray-400 group-hover:bg-darkGrey rounded-full'></div>
+                <div className='w-5 h-[3px] bg-gray-400 group-hover:bg-darkGrey rounded-full'></div>
               </div>
               <MobileMenu open={mobileMenuOpen} setOpen={setMobileMenuOpen} />
             </div>

@@ -229,7 +229,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
             )}
             {canEditTags && tagDropdownOpen && (
               <>
-                <div className='absolute z-50 flex flex-col w-60 gap-2 left-0 top-8 glass-card bg-white/50 p-2 border-[3px] border-gray-200 rounded-lg'>
+                <div className='absolute z-50 flex flex-col w-60 gap-2 left-0 top-8 glass-card bg-white/50 p-2 border-[3px] border-gray-100 rounded-lg'>
                   <div className='w-full flex items-center gap-1.5 justify-between bg-gray-300 rounded-lg font-bold p-1 text-left'>
                     <input
                       ref={tagInputRef}
@@ -318,11 +318,11 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
         )}
       </div>
       {counts && (
-        <div className='items-center justify-end hidden xs:flex pr-6 gap-16 lg:gap-6 xl:gap-10'>
+        <div className='items-center justify-end hidden xs:flex pr-6 sm:gap-8 gap-6 md:gap-16 lg:gap-16 xl:gap-10'>
           <div
             className={`flex-col items-center 2xl:flex ${
               userAddress && !isFollowersEmpty ? 'lg:hidden' : ''
-            } hidden xl:hidden sm:flex`}
+            } hidden sm:flex`}
           >
             <p className='font-semibold text-lg text-darkGrey'>{formatNumber(counts.following)}</p>
             <p className='font-semibold text-sm text-gray-500'>{t('following')}</p>

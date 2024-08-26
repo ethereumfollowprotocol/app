@@ -37,7 +37,7 @@ const Summary = () => {
             ens: follower.ens
           }))}
         />
-      ) : (
+      ) : userAddress ? null : (
         <LeaderboardSummary />
       )}
       <Recommendations
@@ -46,9 +46,9 @@ const Summary = () => {
         header={t('discover')}
         className={`h-fit w-full ${
           isFollowersEmpty || !userAddress
-            ? 'xl:w-[49%] xl:max-w-[900px]'
+            ? 'xl:w-[60%] xl:max-w-[1000px]'
             : 'lg:h-[638px] lg:w-[47.5%] xl:w-[38%] w-[470px] 2xl:min-w-[650px] 2xl:w-[45%]'
-        } py-4 sm:p-4 glass-card border-[3px] border-gray-200 rounded-2xl`}
+        } py-4 sm:p-4 glass-card border-[3px] border-gray-100 rounded-2xl`}
       />
       <ScrollIndicator />
     </div>

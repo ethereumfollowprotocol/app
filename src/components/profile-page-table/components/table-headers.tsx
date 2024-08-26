@@ -10,7 +10,7 @@ import ArrowDown from 'public/assets/icons/arrow-down.svg'
 import type { ProfileTableTitleType } from '#/types/common'
 import GreenCheck from 'public/assets/icons/check-green.svg'
 import SearchIcon from 'public/assets/icons/magnifying-glass-dark.svg'
-import { BLOCKED_MUTED_TAGS, SORT_OPTIONS } from '#/lib/constants'
+import { BLOCKED_MUTED_TABS, BLOCKED_MUTED_TAGS, SORT_OPTIONS } from '#/lib/constants'
 import type { FollowSortType, TagCountType } from '#/types/requests'
 import { QUERY_BLOCK_TAGS } from '#/components/blocked-muted/hooks/use-blocked-muted'
 
@@ -63,65 +63,67 @@ const TableHeader: React.FC<TableHeaderProps> = ({
     <div className='flex flex-col gap-4 px-4 sm:px-2 pt-2 w-full'>
       <div className='flex justify-between w-full'>
         <div className='flex gap-4 justify-between items-center w-full'>
-          <div ref={clickAwaySearchRef} className='flex gap-3 items-center'>
+          <div className='flex gap-3 items-center'>
             <p className='capitalize text-lg sm:text-3xl font-bold'>{t(title)}</p>
-            <div className='relative flex gap-3 z-50'>
-              <div
-                className='cursor-pointer max-w-40 flex items-center h-6 hover:scale-125 transition-all gap-2 hover:opacity-75'
-                onClick={() => setShowSearch(!showSearch)}
-              >
-                <Image
-                  src={SearchIcon}
-                  alt='Search'
-                  width={18}
-                  height={18}
-                  className='opacity-50 hover:opacity-100 transition-opacity'
-                />
-                <p className='font-medium text-sm truncate hidden sm:block md:hidden lg:block xl:hidden 2xl:block'>
-                  {search}
-                </p>
-              </div>
-              {search && (
-                <Image
-                  src={CrossIcon}
-                  alt='Search'
-                  width={14}
-                  height={14}
-                  onClick={() => {
-                    setSearch('')
-                    setShowSearch(false)
-                  }}
-                  className='opacity-50 hover:opacity-60 h-5 w-5 hover:scale-125 p-1 mt-0.5 bg-gray-300 cursor-pointer rounded-full transition-all'
-                />
-              )}
-              {showSearch && (
-                <div className='absolute glass-card flex items-center border-[3px] bg-white/75 border-[#666] -top-4 gap-1 lg:-left-1 -left-16 sm:-left-1 md:-left-16 w-64 h-fit rounded-xl shadow-md'>
-                  <input
-                    type='text'
-                    spellCheck={false}
-                    autoFocus={true}
-                    autoComplete='off'
-                    placeholder={t('search placeholder')}
-                    onChange={e => {
-                      setSearch(e.target.value.toLowerCase().trim())
-                    }}
-                    value={search}
-                    className='font-medium py-3 block w-full rounded-lg border-0 border-transparent pl-3 pr-10 sm:text-sm bg-white/50'
+            {!BLOCKED_MUTED_TABS.includes(title) && (
+              <div ref={clickAwaySearchRef} className='relative flex gap-3 z-50'>
+                <div
+                  className='cursor-pointer max-w-40 flex items-center h-6 hover:scale-125 transition-all gap-2 hover:opacity-75'
+                  onClick={() => setShowSearch(!showSearch)}
+                >
+                  <Image
+                    src={SearchIcon}
+                    alt='Search'
+                    width={18}
+                    height={18}
+                    className='opacity-50 hover:opacity-100 transition-opacity'
                   />
-                  <div
-                    className='pointer-events-none absolute inset-y-0 right-0 flex items-center pl-3'
-                    aria-hidden='true'
-                  >
-                    <Image
-                      src={SearchIcon}
-                      alt='Search'
-                      className='mr-3 h-5 w-5 text-gray-400'
-                      aria-hidden='true'
-                    />
-                  </div>
+                  <p className='font-medium text-sm truncate hidden sm:block md:hidden lg:block xl:hidden 2xl:block'>
+                    {search}
+                  </p>
                 </div>
-              )}
-            </div>
+                {search && (
+                  <Image
+                    src={CrossIcon}
+                    alt='Search'
+                    width={14}
+                    height={14}
+                    onClick={() => {
+                      setSearch('')
+                      setShowSearch(false)
+                    }}
+                    className='opacity-50 hover:opacity-60 h-5 w-5 hover:scale-125 p-1 mt-0.5 bg-gray-300 cursor-pointer rounded-full transition-all'
+                  />
+                )}
+                {showSearch && (
+                  <div className='absolute glass-card flex items-center border-[3px] bg-white/75 border-[#666] -top-4 gap-1 lg:-left-1 -left-16 sm:-left-1 md:-left-16 w-64 h-fit rounded-xl shadow-md'>
+                    <input
+                      type='text'
+                      spellCheck={false}
+                      autoFocus={true}
+                      autoComplete='off'
+                      placeholder={t('search placeholder')}
+                      onChange={e => {
+                        setSearch(e.target.value.toLowerCase().trim())
+                      }}
+                      value={search}
+                      className='font-medium py-3 block w-full rounded-lg border-0 border-transparent pl-3 pr-10 sm:text-sm bg-white/50'
+                    />
+                    <div
+                      className='pointer-events-none absolute inset-y-0 right-0 flex items-center pl-3'
+                      aria-hidden='true'
+                    >
+                      <Image
+                        src={SearchIcon}
+                        alt='Search'
+                        className='mr-3 h-5 w-5 text-gray-400'
+                        aria-hidden='true'
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
           <div className='flex gap-4'>
             <div
@@ -153,7 +155,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 />
               </div>
               {showSort && (
-                <div className=' bg-white/80 glass-card p-1 gap-1 z-50 shadow-md border-[3px] rounded-md border-gray-200 absolute top-[120%] flex flex-col items-center right-0'>
+                <div className=' bg-white/80 glass-card p-1 gap-1 z-50 shadow-md border-[3px] rounded-md border-gray-100 absolute top-[120%] flex flex-col items-center right-0'>
                   {SORT_OPTIONS.map(option => (
                     <div
                       className='font-bold capitalize w-full text-nowrap relative rounded-md hover:bg-slate-100 transition-colors p-3 pl-8 text-darkGrey hover:text-darkGrey'

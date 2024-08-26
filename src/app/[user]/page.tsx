@@ -1,3 +1,4 @@
+import { isAddress } from 'viem'
 import type { Metadata } from 'next'
 import UserInfo from './components/user-info'
 
@@ -7,13 +8,14 @@ interface Props {
 
 export function generateMetadata({ params }: Props): Metadata {
   const user = params.user
+  const isList = Number.isInteger(Number(user)) && !isAddress(user)
 
   return {
-    title: `${user} | EFP`,
+    title: `${isList ? `List #${user}` : user} | EFP`,
     openGraph: {
-      title: `${user} | EFP`,
-      siteName: `${user} - EFP profile`,
-      description: `${user} - EFP profile`,
+      title: `${isList ? `List #${user}` : user} | EFP`,
+      siteName: `${isList ? `List #${user}` : user} - EFP profile`,
+      description: `${isList ? `List #${user}` : user} - EFP profile`,
       url: `https://testing.ethfollow.xyz/${user}`,
       images: [
         {

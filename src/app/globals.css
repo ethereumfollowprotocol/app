@@ -484,3 +484,9 @@ input {
   }
 }
 
+@media screen and (max-width: 550px) {
+  body {
+    background-position: -34.1vw 20vh;
+    background-size: 210vw 129vw;
+  }
+}

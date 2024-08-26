@@ -73,7 +73,7 @@ const ConnectButton = () => {
         type='button'
         className={`z-50 px-1 ${
           walletMenOpenu ? 'connect-button-open' : 'connect-button'
-        } transition-all border-[3px] gap-[6px] hover:scale-105 cursor-pointer flex justify-between items-center h-[60px] glass-card rounded-full w-fit sm:w-56`}
+        } transition-all border-[3px] gap-[6px] hover:scale-105 cursor-pointer flex justify-between items-center h-[60px] glass-card rounded-full w-fit sm:w-48 md:w-56`}
         onClick={() =>
           userAddress
             ? setWalletMenuOpen(!walletMenOpenu)
@@ -105,7 +105,7 @@ const ConnectButton = () => {
           </>
         ) : (
           <div className='w-full sm:w-54 h-full flex items-center justify-center rounded-full'>
-            <p className='hidden xxs:block font-semibold text-lg text-nowrap px-1 text-black'>
+            <p className='hidden sm:block font-semibold text-lg text-nowrap px-1 text-black'>
               {t('connect')}
             </p>
             <Image
@@ -113,13 +113,13 @@ const ConnectButton = () => {
               alt='Connect Wallet'
               width={30}
               height={32}
-              className='bloxk xxs:hidden mx-2'
+              className='bloxk sm:hidden mx-2'
             />
           </div>
         )}
       </button>
       {walletMenOpenu && (
-        <div className='p-1 flex w-[190px] z-50 shadow-md border-[3px] rounded-lg bg-white/95 border-gray-200 absolute top-[120%] flex-col items-end right-0'>
+        <div className='p-1 flex w-[190px] z-50 shadow-md border-[3px] rounded-lg bg-white/95 border-gray-100 absolute top-[120%] flex-col items-end right-0'>
           {lists?.lists && lists.lists.length > 0 && (
             <div ref={clickAwayListRef} className='w-full cursor-pointer group relative'>
               <div
@@ -144,7 +144,7 @@ const ConnectButton = () => {
                     : 'hidden group-hover:hidden'
                 } pr-5`}
               >
-                <div className='flex flex-col gap-2 glass-card w-full min-w-[190px] max-h-[75vh] sm:max-h-[80vh] overflow-scroll border-[3px] rounded-lg bg-white/90 border-gray-200 p-1  shadow-md'>
+                <div className='flex flex-col gap-2 glass-card w-full min-w-[190px] max-h-[75vh] sm:max-h-[80vh] overflow-scroll border-[3px] rounded-lg bg-white/90 border-gray-100 p-1  shadow-md'>
                   <div
                     onClick={() => setListMenuOpen(false)}
                     className='flex sm:hidden justify-between items-center w-full group-hover:bg-slate-100 p-3 rounded-md transition-opacity cursor-pointer'
@@ -223,7 +223,7 @@ const ConnectButton = () => {
                 languageMenOpenu ? 'block' : 'hidden'
               } group-hover:block pr-5`}
             >
-              <div className='flex flex-col gap-2 min-w-[190px] glass-card bg-white/90 border-[3px] border-gray-200 p-1 rounded-lg shadow-md'>
+              <div className='flex flex-col gap-2 min-w-[190px] glass-card bg-white/90 border-[3px] border-gray-100 p-1 rounded-lg shadow-md'>
                 <div
                   onClick={() => setLanguageMenuOpen(false)}
                   className='flex sm:hidden justify-between items-center w-full group-hover:bg-slate-100 p-3 rounded-md transition-opacity cursor-pointer'
