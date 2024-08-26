@@ -10,7 +10,6 @@ import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experime
 import wagmiConfig from '#/lib/wagmi'
 import { DAY, MINUTE } from '#/lib/constants'
 import Navigation from '#/components/navigation'
-import { DEFAULT_CHAIN } from '#/lib/constants/chain'
 import { CartProvider } from '#/contexts/cart-context'
 import { ActionsProvider } from '#/contexts/actions-context'
 import { EFPProfileProvider } from '#/contexts/efp-profile-context'
@@ -36,7 +35,7 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
       <ReactQueryStreamedHydration>
         <WagmiProvider config={wagmiConfig} initialState={initialState}>
           {/* <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}> */}
-          <RainbowKitProvider coolMode={true} initialChain={DEFAULT_CHAIN.id}>
+          <RainbowKitProvider coolMode={true}>
             <CartProvider>
               <EFPProfileProvider>
                 <TransactionsProvider>

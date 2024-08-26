@@ -10,20 +10,17 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    fallbackLng: 'en',
     supportedLngs: ['en', 'si'],
+    fallbackLng: 'en',
     keySeparator: '.',
-    interpolation: {
-      escapeValue: false
-    },
     defaultNS: 'translations',
     ns: ['translations'],
     react: {
-      useSuspense: false
+      useSuspense: true
     }
   })
 
-// preload english
+// preload languages
 i18n.addResourceBundle('en', 'translations', translations)
 
 export default i18n

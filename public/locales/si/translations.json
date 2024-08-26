@@ -109,7 +109,7 @@
   "approved": "Transakcija potrjena",
   "pending": "Transakcija se izvaja",
   "successful": "Transakcija uspešna",
-  "finishing": "Posodabljanje seznama...",
+  "finishing": "Posodabljanje seznama",
   "finished": "Posodobitev končana",
   "error": "Transakcija neuspešna",
   "confirmation error": "Transakcija je bila zavrnjena",

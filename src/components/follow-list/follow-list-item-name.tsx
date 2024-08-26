@@ -322,7 +322,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
           <div
             className={`flex-col items-center 2xl:flex ${
               userAddress && !isFollowersEmpty ? 'lg:hidden' : ''
-            } hidden sm:flex`}
+            } hidden xl:hidden sm:flex`}
           >
             <p className='font-semibold text-lg text-darkGrey'>{formatNumber(counts.following)}</p>
             <p className='font-semibold text-sm text-gray-500'>{t('following')}</p>
