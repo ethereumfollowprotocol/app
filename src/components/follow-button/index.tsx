@@ -12,7 +12,7 @@ import { useCoolMode } from './useCoolMode'
 import MainnetRed from 'public/assets/mainnet-red.svg'
 import MainnetBlack from 'public/assets/mainnet-black.svg'
 import { type FollowButtonState, useFollowButton } from './use-follow-button'
-import { useState } from 'react'
+import { useState, type Ref } from 'react'
 
 const theme: Record<
   FollowButtonState,
@@ -170,7 +170,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
       <LoadingCell className='h-full w-full rounded-lg' />
     </div>
   ) : (
-    <div ref={coolEfpLogo}>
+    <div ref={coolEfpLogo as Ref<HTMLDivElement>}>
       <button
         className={clsx([
           theme[buttonState].bg,

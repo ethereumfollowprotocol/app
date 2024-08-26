@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useState, type Ref } from 'react'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
@@ -28,6 +28,7 @@ import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 import CommonFollowers from './components/common-followers'
+import { useCoolMode } from '../follow-button/useCoolMode'
 
 interface UserProfileCardProps {
   profileList?: number | null
@@ -188,6 +189,23 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const rankTitles = Object.keys(profile?.ranks || {})
   const ranks = Object.values(profile?.ranks || {})
 
+  const blockCoolMode = useCoolMode(
+    isPendingBlock || (followState === 'blocks' && !isPendingUnblock)
+      ? ''
+      : '/assets/icons/block-emoji.svg',
+    false,
+    true,
+    !moreOptionsDropdownOpen
+  )
+  const muteCoolMode = useCoolMode(
+    isPendingMute || (followState === 'mutes' && !isPendingUnmute)
+      ? ''
+      : '/assets/icons/mute-emoji.svg',
+    false,
+    true,
+    !moreOptionsDropdownOpen
+  )
+
   return (
     <div
       className={`flex glass-card ${
@@ -274,62 +292,69 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                         {profileName || truncateAddress(profile.address)}
                       </p>
                     </Link>
-                    {showMoreOptions && !isConnectedUserCard && (
-                      <div ref={clickAwayMoreOptionsRef}>
-                        <div
-                          className='flex gap-[3px] px-1.5 py-2 rounded-md bg-gray-300 cursor-pointer items-center hover:opacity-50 transition-all hover:scale-125'
-                          onClick={() => setMoreOptionsDropdownOpen(!moreOptionsDropdownOpen)}
-                        >
-                          <div className='h-1 w-1 bg-black rounded-full'></div>
-                          <div className='h-1 w-1 bg-black rounded-full'></div>
-                          <div className='h-1 w-1 bg-black rounded-full'></div>
-                        </div>
-                        {showMoreOptions && !isConnectedUserCard && moreOptionsDropdownOpen && (
-                          <div className='absolute top-10 flex-col flex gap-2 right-0 p-2 bg-white border-gray-200 border-[3px] rounded-xl z-50 drop-shadow-lg'>
-                            <button
-                              onClick={() => onClickOption('Block')}
-                              className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[107px] h-[37px] px-2 py-1.5'
-                            >
-                              <Image
-                                alt='mainnet logo'
-                                src='/assets/mainnet-black.svg'
-                                width={16}
-                                height={16}
-                              />
-                              <p>
-                                {followState === 'blocks'
-                                  ? isPendingUnblock
-                                    ? 'Block'
-                                    : 'Unblock'
-                                  : isPendingBlock
-                                    ? 'Unblock'
-                                    : 'Block'}
-                              </p>
-                            </button>
-                            <button
-                              onClick={() => onClickOption('Mute')}
-                              className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[107px] h-[37px] px-2 py-1.5'
-                            >
-                              <Image
-                                alt='mainnet logo'
-                                src='/assets/mainnet-black.svg'
-                                width={16}
-                                height={16}
-                              />
-                              <p>
-                                {followState === 'mutes'
-                                  ? isPendingUnmute
-                                    ? 'Mute'
-                                    : 'Unmute'
-                                  : isPendingMute
-                                    ? 'Unmute'
-                                    : 'Mute'}
-                              </p>
-                            </button>
-                          </div>
-                        )}
+                    <div
+                      className={showMoreOptions && !isConnectedUserCard ? 'block' : 'hidden'}
+                      ref={clickAwayMoreOptionsRef}
+                    >
+                      <div
+                        className='flex gap-[3px] px-1.5 py-2 rounded-md bg-gray-300 cursor-pointer items-center hover:opacity-50 transition-all hover:scale-125'
+                        onClick={() => setMoreOptionsDropdownOpen(!moreOptionsDropdownOpen)}
+                      >
+                        <div className='h-1 w-1 bg-black rounded-full'></div>
+                        <div className='h-1 w-1 bg-black rounded-full'></div>
+                        <div className='h-1 w-1 bg-black rounded-full'></div>
                       </div>
-                    )}
+                      <div
+                        className={`${
+                          showMoreOptions && !isConnectedUserCard && moreOptionsDropdownOpen
+                            ? 'flex'
+                            : 'hidden'
+                        } absolute top-10 flex-col gap-2 right-0 p-2 bg-white border-gray-200 border-[3px] rounded-xl z-50 drop-shadow-lg`}
+                      >
+                        <button
+                          ref={blockCoolMode as Ref<HTMLButtonElement>}
+                          onClick={() => onClickOption('Block')}
+                          className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[107px] h-[37px] px-2 py-1.5'
+                        >
+                          <Image
+                            alt='mainnet logo'
+                            src='/assets/mainnet-black.svg'
+                            width={16}
+                            height={16}
+                          />
+                          <p>
+                            {followState === 'blocks'
+                              ? isPendingUnblock
+                                ? 'Block'
+                                : 'Unblock'
+                              : isPendingBlock
+                                ? 'Unblock'
+                                : 'Block'}
+                          </p>
+                        </button>
+                        <button
+                          ref={muteCoolMode as Ref<HTMLButtonElement>}
+                          onClick={() => onClickOption('Mute')}
+                          className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[107px] h-[37px] px-2 py-1.5'
+                        >
+                          <Image
+                            alt='mainnet logo'
+                            src='/assets/mainnet-black.svg'
+                            width={16}
+                            height={16}
+                          />
+                          <p>
+                            {followState === 'mutes'
+                              ? isPendingUnmute
+                                ? 'Mute'
+                                : 'Unmute'
+                              : isPendingMute
+                                ? 'Unmute'
+                                : 'Mute'}
+                          </p>
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 )}
                 {followerTag && connectedAddress && !isConnectedUserCard && (

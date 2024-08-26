@@ -19,7 +19,7 @@ export const useCoolMode = (
   isLoading?: boolean
 ) => {
   const [isMounted, setIsMounted] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLDivElement | HTMLButtonElement>(null)
   const resolvedImageUrl = imageUrl
 
   useEffect(() => {
