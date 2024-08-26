@@ -164,6 +164,8 @@ const nextConfigWithSentry = withSentryConfig(nextConfig, {
 	authToken: process.env.SENTRY_AUTH_TOKEN,
 	org: "efp",
 	project: "web",
+  // @ts-ignore
+  hideSourceMaps: true,
 });
 
 export default process.env.NODE_ENV === "development"
