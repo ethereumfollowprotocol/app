@@ -8,13 +8,13 @@ import million from "million/compiler";
 import childProcess from "node:child_process";
 import { withSentryConfig } from "@sentry/nextjs";
 
-/** @type {NextConfigPlugins} */
-const plugins = []
+// /** @type {NextConfigPlugins} */
+// const plugins = []
 
-if (process.env['ANALYZE']) {
-  const { default: withBundleAnalyzer } = await import('@next/bundle-analyzer')
-  plugins.push(withBundleAnalyzer({ enabled: true }))
-}
+// if (process.env['ANALYZE']) {
+//   const { default: withBundleAnalyzer } = await import('@next/bundle-analyzer')
+//   plugins.push(withBundleAnalyzer({ enabled: true }))
+// }
 
 // curl https://api.github.com/repos/ethereumfollowprotocol/app/commits/develop | jq --raw-output '.sha'
 const APP_VERSION =
@@ -174,8 +174,8 @@ const nextConfigWithSentry = withSentryConfig(nextConfig, {
 	project: "web"
 });
 
-const nextConfigWithPlugins = () => plugins.reduce((_, plugin) => plugin(_), nextConfigWithSentry)
+// const nextConfigWithPlugins = () => plugins.reduce((_, plugin) => plugin(_), nextConfigWithSentry)
 
 export default process.env.NODE_ENV === "development"
-	? nextConfigWithPlugins()
-  : million.next(nextConfigWithPlugins, { auto: { rsc: true } })
+	? nextConfigWithSentry
+  : million.next(nextConfigWithSentry, { auto: { rsc: true } })
