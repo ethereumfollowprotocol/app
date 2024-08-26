@@ -171,9 +171,7 @@ const nextConfig = {
 const nextConfigWithSentry = withSentryConfig(nextConfig, {
 	authToken: process.env.SENTRY_AUTH_TOKEN,
 	org: "efp",
-	project: "web",
-  // @ts-ignore
-  hideSourceMaps: true,
+	project: "web"
 });
 
 const nextConfigWithPlugins = () => plugins.reduce((_, plugin) => plugin(_), nextConfigWithSentry)
