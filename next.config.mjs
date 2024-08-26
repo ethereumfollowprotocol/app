@@ -8,13 +8,13 @@ import million from "million/compiler";
 import childProcess from "node:child_process";
 import { withSentryConfig } from "@sentry/nextjs";
 
-// /** @type {NextConfigPlugins} */
-// const plugins = []
+/** @type {NextConfigPlugins} */
+const plugins = []
 
-// if (process.env['ANALYZE']) {
-//   const { default: withBundleAnalyzer } = await import('@next/bundle-analyzer')
-//   plugins.push(withBundleAnalyzer({ enabled: true }))
-// }
+if (process.env['ANALYZE']) {
+  const { default: withBundleAnalyzer } = await import('@next/bundle-analyzer')
+  plugins.push(withBundleAnalyzer({ enabled: true }))
+}
 
 // curl https://api.github.com/repos/ethereumfollowprotocol/app/commits/develop | jq --raw-output '.sha'
 const APP_VERSION =
@@ -167,14 +167,14 @@ const nextConfig = {
 	],
 };
 
+const nextConfigWithPlugins = () => plugins.reduce((_, plugin) => plugin(_), nextConfig)
+
 // https://github.com/getsentry/sentry-webpack-plugin#options
-const nextConfigWithSentry = withSentryConfig(nextConfig, {
+const nextConfigWithSentry = withSentryConfig(nextConfigWithPlugins(), {
 	authToken: process.env.SENTRY_AUTH_TOKEN,
 	org: "efp",
 	project: "web"
 });
-
-// const nextConfigWithPlugins = () => plugins.reduce((_, plugin) => plugin(_), nextConfigWithSentry)
 
 export default process.env.NODE_ENV === "development"
 	? nextConfigWithSentry
