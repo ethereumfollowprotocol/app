@@ -138,7 +138,7 @@ export function Search({
         )}
       </div>
       <div
-        className={`absolute glass-card p-3 md:p-4 w-full shadow-md border-[3px] border-gray-100 bg-white/95 rounded-xl top-full mt-2 left-0 ${
+        className={`absolute glass-card p-3 md:p-4 w-full shadow-md border-[3px] border-gray-100 dark:border-gray-500 bg-white/95 rounded-xl top-full mt-2 left-0 ${
           dropdownMenuOpen ? (isEditor ? 'block' : 'hidden md:block') : 'hidden'
         }`}
       >
@@ -222,7 +222,7 @@ export function Search({
             />
           </div>
           <div
-            className={`absolute glass-card w-full shadow-md border-[3px] p-3 rounded-xl bg-white/95 border-gray-100 top-full mt-2 left-0 ${
+            className={`absolute glass-card w-full shadow-md border-[3px] p-3 rounded-xl bg-white/95 border-gray-100 dark:border-gray-500 top-full mt-2 left-0 ${
               dropdownMenuOpen ? 'block' : 'hidden'
             }`}
           >

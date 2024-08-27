@@ -121,7 +121,7 @@ const ConnectButton = () => {
         )}
       </button>
       {walletMenOpenu && (
-        <div className='p-1 flex w-[190px] z-50 shadow-md border-[3px] rounded-lg bg-white/95 border-gray-100 absolute top-[120%] flex-col items-end right-0'>
+        <div className='p-1 flex w-[190px] z-50 shadow-md border-[3px] rounded-lg bg-white/95 border-gray-100 dark:border-gray-500 absolute top-[120%] flex-col items-end right-0'>
           {lists?.lists && lists.lists.length > 0 && (
             <div ref={clickAwayListRef} className='w-full cursor-pointer group relative'>
               <div
@@ -146,7 +146,7 @@ const ConnectButton = () => {
                     : 'hidden group-hover:hidden'
                 } pr-5`}
               >
-                <div className='flex flex-col gap-2 glass-card w-full min-w-[190px] max-h-[75vh] sm:max-h-[80vh] overflow-scroll border-[3px] rounded-lg bg-white/90 border-gray-100 p-1  shadow-md'>
+                <div className='flex flex-col gap-2 glass-card w-full min-w-[190px] max-h-[75vh] sm:max-h-[80vh] overflow-scroll border-[3px] rounded-lg bg-white/90 border-gray-100 dark:border-gray-500 p-1  shadow-md'>
                   <div
                     onClick={() => setListMenuOpen(false)}
                     className='flex sm:hidden justify-between items-center w-full group-hover:bg-slate-100 p-3 rounded-md transition-opacity cursor-pointer'
@@ -225,7 +225,7 @@ const ConnectButton = () => {
                 languageMenOpenu ? 'block' : 'hidden'
               } group-hover:block pr-5`}
             >
-              <div className='flex flex-col gap-2 min-w-[190px] glass-card bg-white/90 border-[3px] border-gray-100 p-1 rounded-lg shadow-md'>
+              <div className='flex flex-col gap-2 min-w-[190px] glass-card bg-white/90 border-[3px] border-gray-100 dark:border-gray-500 p-1 rounded-lg shadow-md'>
                 <div
                   onClick={() => setLanguageMenuOpen(false)}
                   className='flex sm:hidden justify-between items-center w-full group-hover:bg-slate-100 p-3 rounded-md transition-opacity cursor-pointer'

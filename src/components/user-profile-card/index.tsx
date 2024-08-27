@@ -237,7 +237,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                     <div
                       className={`${
                         cardTooltipOpen ? 'block' : 'hidden'
-                      } group-hover:block transition-all text-sm w-68 p-2 glass-card border-gray-100 bg-white/90 border-[3px] mt-2 rounded-md absolute top-5 right-0`}
+                      } group-hover:block transition-all text-sm w-68 p-2 glass-card border-gray-100 dark:border-gray-500 bg-white/90 border-[3px] mt-2 rounded-md absolute top-5 right-0`}
                     >
                       {t('not primary list tooltip')}
                     </div>

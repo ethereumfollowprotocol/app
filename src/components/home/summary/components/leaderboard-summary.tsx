@@ -17,7 +17,7 @@ const LeaderboardSummary = () => {
   const displayedEmojies = leaderboardFiltersEmojies.slice((page - 1) * 2, page * 2)
 
   return (
-    <div className='glass-card w-full xl:w-[47.5%] xl:max-w-[900px] rounded-xl flex flex-col gap-4 p-1 py-3 border-[3px] border-gray-100'>
+    <div className='glass-card w-full xl:w-[47.5%] xl:max-w-[900px] rounded-xl flex flex-col gap-4 p-1 py-3 border-[3px] border-gray-100 dark:border-gray-500'>
       <div className='w-full flex items-center justify-between p-2 sm:p-4'>
         <h3 className='text-2xl sm:text-3xl font-semibold'>{t('leaderboard')}</h3>
         <PageSelector

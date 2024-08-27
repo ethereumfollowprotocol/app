@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { useState } from 'react'
 import { useAccount } from 'wagmi'
+import { lazy, Suspense, useState } from 'react'
 import { useClickAway } from '@uidotdev/usehooks'
 
 import { Search } from '../search'
@@ -14,8 +14,11 @@ import MobileMenu from './components/mobile-menu.tsx'
 import { useCart } from '../../contexts/cart-context'
 import CartButton from './components/cart-button.tsx'
 import ArrowDown from 'public/assets/icons/arrow-down.svg'
+import FullLogoDark from 'public/assets/logo-full-dark.svg'
 import ConnectButton from './components/connect-button.tsx'
 import GreenCheck from 'public/assets/icons/check-green.svg'
+
+const ThemeSwitcher = lazy(() => import('../theme-switcher'))
 
 const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -32,14 +35,20 @@ const Navigation = () => {
   })
 
   return (
-    <header className='w-full fixed z-50 glass-card bg-white/50 top-0 left-0 font-sans border-b-[1px] border-gray-200 p-4 lg:px-6 md:py-6 xl:px-8'>
+    <header className='w-full fixed z-50 glass-card bg-white/50 dark:bg-black/75 top-0 left-0 font-sans border-b-[1px] border-gray-200 dark:border-gray-500 p-4 lg:px-6 md:py-6 xl:px-8'>
       <nav className='my-auto flex w-full flex-row items-center justify-between'>
         <div className='flex w-2/5 sm:w-3/5 2xl:w-full justify-start items-center gap-4 md:gap-6 xl:gap-8'>
           <Link href='/' className='select-none' aria-label='Ethereum Follow Protocol Logo link'>
             <Image
               src={FullLogo}
               priority={true}
-              className='hidden sm:block sm:max-w-[130px] select-none hover:scale-110 transition-transform'
+              className='hidden sm:block sm:max-w-[130px] dark:hidden select-none hover:scale-110 transition-transform'
+              alt='Ethereum Follow Protocol Logo'
+            />
+            <Image
+              src={FullLogoDark}
+              priority={true}
+              className='hidden dark:sm:block dark:sm:max-w-[130px] select-none hover:scale-110 transition-transform'
               alt='Ethereum Follow Protocol Logo'
             />
             <Image
@@ -82,7 +91,7 @@ const Navigation = () => {
                     languageMenOpenu ? 'block' : 'hidden'
                   } group-hover:block pt-4`}
                 >
-                  <div className='flex flex-col glass-card bg-white/90 border-[3px] border-gray-100 p-1 rounded-lg shadow-md'>
+                  <div className='flex flex-col glass-card bg-white/90 border-[3px] border-gray-100 dark:border-gray-500 p-1 rounded-lg shadow-md'>
                     {LANGUAGES.map(lang => (
                       <div
                         className=' text-darkGrey p-3 pl-8 relative font-semibold rounded-md hover:bg-slate-100 transition-all'
@@ -110,6 +119,9 @@ const Navigation = () => {
                 </div>
               </div>
             )}
+            <Suspense fallback={<div>Auto</div>}>
+              <ThemeSwitcher />
+            </Suspense>
             <div ref={clickAwayRef} className='lg:hidden relative'>
               <div
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

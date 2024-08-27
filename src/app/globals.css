@@ -12,9 +12,9 @@
 
 html, body {
   width: 100vw;
-  color: #333333;
   min-height: 100vh;
   overflow-x: hidden;
+  @apply text-darkGrey dark:text-[#eeeeee] bg-white dark:bg-darkGrey
 }
 
 body {
@@ -50,13 +50,8 @@ body::-webkit-scrollbar-thumb {
 }
 
 .glass-card {
-    background: linear-gradient(
-        to right bottom,
-        rgba(245, 245, 245, 0.45),
-        rgba(245, 245, 245, 0.25)
-    ) padding-box;
-    /* linear-gradient(135deg, #faf35f, #ffbce3) border-box; */
     backdrop-filter: blur(1rem);
+    @apply from-[#f5f5f573] dark:from-[#f5f5f54e] to-[#f5f5f540] dark:to-[#f5f5f520] bg-gradient-to-br;
 }
 
 :focus:not(:focus-visible) {

@@ -184,7 +184,7 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
               <button
                 key={option}
                 onClick={() => setActiveTab(option as BlockedMutedTabType)}
-                className={`w-1/2 capitalize  text-lg py-2 font-semibold glass-card border-[3px] border-gray-100 rounded-t-lg ${
+                className={`w-1/2 capitalize  text-lg py-2 font-semibold glass-card border-[3px] border-gray-100 dark:border-gray-500 rounded-t-lg ${
                   activeTab === option ? 'bg-white/60' : 'bg-white/20 hover:bg-white/40'
                 }`}
               >
