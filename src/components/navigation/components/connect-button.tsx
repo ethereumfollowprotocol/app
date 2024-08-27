@@ -100,7 +100,9 @@ const ConnectButton = () => {
             <Image
               src={ArrowDown}
               alt='Open button'
-              className={`${walletMenOpenu ? 'rotate-180' : ''} transition-transform w-4 mr-1`}
+              width={16}
+              height={16}
+              className={`${walletMenOpenu ? 'rotate-180' : ''} transition-transform mr-1`}
             />
           </>
         ) : (

@@ -135,7 +135,9 @@ const ListSettings: React.FC<ListSettingsProps> = ({
                 <Image
                   src={ArrowDown}
                   alt='Open list storage location chains'
-                  className={`w-5 ${chainDropdownOpen ? 'rotate-180' : ''} transition-transform`}
+                  width={16}
+                  height={16}
+                  className={`${chainDropdownOpen ? 'rotate-180' : ''} transition-transform`}
                 />
               ) : (
                 <div />

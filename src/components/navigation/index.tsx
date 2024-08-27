@@ -73,6 +73,7 @@ const Navigation = () => {
                     src={ArrowDown}
                     alt='Show languages'
                     width={12}
+                    height={12}
                     className='group-hover:opacity-80 transition-opacity'
                   />
                 </div>
