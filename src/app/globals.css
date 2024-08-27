@@ -462,6 +462,31 @@ input {
   }
 }
 
+@keyframes loadingAnimation {
+    0% {
+      background-position: '200% 0'
+    }
+    50% {
+      background-position: '0% 0'
+    }
+    100% {
+      background-position: '-200% 0'
+    }
+}
+
+/* Base styles for the element */
+[data-loaded="false"] {
+  background: linear-gradient(90deg, rgba(200, 200, 200, 0.7) 0%, rgba(172, 172, 172, 0.05) 50%, rgba(200, 200, 200, 0.7) 100%);
+  background-size: 400%;
+  animation: loading 5s ease-in-out infinite
+}
+
+/* Optional: Add styles for when data is loaded */
+[data-loaded="true"] {
+  background: none;
+  animation: none;
+}
+
 /* Background size changes */
 @media screen and (max-width: 1750px) {
   body {

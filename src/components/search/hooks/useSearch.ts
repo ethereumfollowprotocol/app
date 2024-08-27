@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useQueryState } from 'next-usequerystate'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { useAccount } from 'wagmi'
 import { resolveEnsAddress } from '#/utils/ens'
@@ -98,29 +98,26 @@ const useSearch = (isEditor?: boolean) => {
     return 'none'
   }
 
-  let searchTimeout: NodeJS.Timeout | null = null
+  const searchTimeout = useRef<NodeJS.Timeout | null>(null)
 
-  const handleSearchEvent = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const term = event?.target.value
-      if (!isEditor && term.includes(' ')) return
-      if (searchTimeout) clearTimeout(searchTimeout)
+  const handleSearchEvent = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const term = event?.target.value
+    if (!isEditor && term.includes(' ')) return
+    if (searchTimeout.current) clearTimeout(searchTimeout.current)
 
-      const hasMultipleNames =
-        isEditor && (term.includes(',') || term.includes(' ') || term.includes('\n'))
-      setDropdownMenuOpen(!hasMultipleNames && term.length > 0)
-      setCurrentSearch(term)
+    const hasMultipleNames =
+      isEditor && (term.includes(',') || term.includes(' ') || term.includes('\n'))
+    setDropdownMenuOpen(!hasMultipleNames && term.length > 0)
+    setCurrentSearch(term)
 
-      if (!isEditor) {
-        if (term) searchTimeout = setTimeout(() => setSearch(term), 500)
-        else {
-          setSearch('')
-          router.push(pathname.replace('query=', ''))
-        }
+    if (!isEditor) {
+      if (term) searchTimeout.current = setTimeout(() => setSearch(term), 500)
+      else {
+        setSearch('')
+        router.push(pathname.replace('query=', ''))
       }
-    },
-    [searchTimeout]
-  )
+    }
+  }
 
   const addToCart = async (user: string) => {
     if (!roles?.isManager) {

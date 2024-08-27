@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useEffect, useRef, useState } from 'react'
 import { useIntersectionObserver } from '@uidotdev/usehooks'
 
 import type {
@@ -62,15 +62,21 @@ export function UserProfilePageTable({
 }) {
   const [search, setSearch] = useState<string>('')
   const [showTags, setShowTags] = useState(!!showTagsByDefault)
+  const searchTimer = useRef<NodeJS.Timeout | null>(null)
 
-  let searchTimer: NodeJS.Timeout
   const onChangeSearch = (input: string) => {
+    if (searchTimer.current) {
+      clearTimeout(searchTimer.current)
+    }
     setSearch(input)
-    clearTimeout(searchTimer)
 
-    searchTimer = setTimeout(() => {
+    if (input.length === 0) {
       setSearchFilter(input)
-    }, 500)
+    } else {
+      searchTimer.current = setTimeout(() => {
+        setSearchFilter(input)
+      }, 500)
+    }
   }
 
   useEffect(() => {
@@ -104,32 +110,38 @@ export function UserProfilePageTable({
   }, [entry?.isIntersecting, results])
 
   const noResults = {
-    following: (
-      <div className='text-center min-h-12  font-semibold'>
-        {title === 'followers' && (
-          <p className='text-lg'>
-            {t(isProfile ? 'followers myprofile empty' : 'followers empty')}
-          </p>
-        )}
-        {title === 'following' && (
-          <div className='flex flex-col justify-center min-h-12 gap-4 items-center'>
-            <p className='text-xl text-darkGrey italic'>
-              {t(isProfile ? 'following myprofile empty first' : 'following empty first')}
+    following:
+      search.length > 2 ? (
+        <div className='justify-center min-h-12 flex items-center font-semibold'>{t('none')}</div>
+      ) : (
+        <div className='text-center min-h-12  font-semibold'>
+          {title === 'followers' && (
+            <p className='text-lg'>
+              {t(isProfile ? 'followers myprofile empty' : 'followers empty')}
             </p>
-            {isProfile && (
-              <p className='text-base text-darkGrey italic w-3/4 max-w-96'>
-                {t('following myprofile empty second')}
+          )}
+          {title === 'following' && (
+            <div className='flex flex-col justify-center min-h-12 gap-4 items-center'>
+              <p className='text-xl text-darkGrey italic'>
+                {t(isProfile ? 'following myprofile empty first' : 'following empty first')}
               </p>
-            )}
-          </div>
-        )}
-      </div>
-    ),
-    followers: (
-      <p className='text-xl text-darkGrey italic flex justify-center items-center min-h-12'>
-        {t(isProfile ? 'followers myprofile empty' : 'followers empty')}
-      </p>
-    ),
+              {isProfile && (
+                <p className='text-base text-darkGrey italic w-3/4 max-w-96'>
+                  {t('following myprofile empty second')}
+                </p>
+              )}
+            </div>
+          )}
+        </div>
+      ),
+    followers:
+      search.length > 2 ? (
+        <div className='justify-center min-h-12 flex items-center font-semibold'>{t('none')}</div>
+      ) : (
+        <p className='text-xl text-darkGrey italic flex justify-center items-center min-h-12'>
+          {t(isProfile ? 'followers myprofile empty' : 'followers empty')}
+        </p>
+      ),
     'Blocked/Muted By': <span className='text-lg'>{t('none')}</span>,
     'Blocked/Muted': <span className='text-lg'>{t('none')}</span>
   }[title]

@@ -34,10 +34,10 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
   const { address: connectedAddress } = useAccount()
 
   const { data: resolvedProfile, isLoading: isNameLoading } = useQuery({
-    queryKey: ['ens metadata', value],
+    queryKey: ['ens metadata', isAddress(value) ? value : resolvedAddress],
     queryFn: async () =>
       isAddress(value) || isAddress(resolvedAddress || '')
-        ? await resolveEnsProfile((resolvedAddress || value) as Address)
+        ? await resolveEnsProfile((isAddress(value) ? value : resolvedAddress) as Address)
         : {
             name: null,
             avatar: null

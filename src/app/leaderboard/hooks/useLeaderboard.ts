@@ -1,6 +1,6 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useQueryState } from 'next-usequerystate'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import type { LeaderboardFilter } from '#/types/common'
@@ -21,7 +21,7 @@ const useLeaderboard = () => {
   const initialPageParam = Number(searchParams.get('page'))
   const [page, setPage] = useState(initialPageParam || 1)
 
-  const initialSearch = searchParams.get('search')
+  const initialSearch = searchParams.get('query')
   const [currentSearch, setCurrentSearch] = useState(initialSearch ?? '')
   const [search, setSearch] = useQueryState('query', {
     history: 'push',
@@ -29,24 +29,21 @@ const useLeaderboard = () => {
     serialize: value => value.trim().toLowerCase()
   })
 
-  let searchTimeout: NodeJS.Timeout | null = null
+  const searchTimeout = useRef<NodeJS.Timeout | null>(null)
+  const handleSearchEvent = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const term = event?.target.value.toLowerCase().trim()
+    if (searchTimeout.current) clearTimeout(searchTimeout.current)
 
-  const handleSearchEvent = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const term = event?.target.value.toLowerCase().trim()
-      if (searchTimeout) clearTimeout(searchTimeout)
+    setCurrentSearch(term)
+    if (term.length > 2) setPage(1)
 
-      setCurrentSearch(term)
-      if (term.length > 2) setPage(1)
-
-      if (term) searchTimeout = setTimeout(() => setSearch(term), 500)
-      else {
-        setSearch('')
-        router.push(pathname.replace('query=', ''))
-      }
-    },
-    [searchTimeout]
-  )
+    if (term) {
+      searchTimeout.current = setTimeout(() => setSearch(term), 500)
+    } else {
+      setSearch('')
+      router.push(pathname.replace('query=', ''))
+    }
+  }
 
   const resetSearch = useCallback(() => {
     setPage(1)

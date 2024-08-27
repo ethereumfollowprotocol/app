@@ -55,7 +55,17 @@ const TableRow: React.FC<TableRowProps> = ({
       </p>
     ),
     regular: (
-      <p className='text xxs:text-xl sm:text-2xl font-bold w-min mx-auto'>{formatNumber(rank)}</p>
+      <p
+        className={`text ${
+          rank >= 10000
+            ? 'text-xs xxs:text-sm sm:text-lg'
+            : rank >= 1000
+              ? 'text-sm xxs:text-base sm:text-xl'
+              : 'xxs:text-xl sm:text-2xl'
+        } font-bold w-min mx-auto`}
+      >
+        {formatNumber(rank)}
+      </p>
     )
   }[rankedAs]
 

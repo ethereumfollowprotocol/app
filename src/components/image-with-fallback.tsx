@@ -24,7 +24,14 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   return (
     <Image
       alt={alt}
-      onError={() => setError('invalid image')}
+      data-loaded='false'
+      onLoad={event => {
+        event.currentTarget.setAttribute('data-loaded', 'true')
+      }}
+      onError={event => {
+        setError('invalid image')
+        event.currentTarget.setAttribute('data-loaded', 'true')
+      }}
       loader={fallback}
       src={error ? fallback : src}
       {...props}
