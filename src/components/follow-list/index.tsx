@@ -2,14 +2,14 @@ import type { Address } from 'viem'
 import { useTranslation } from 'react-i18next'
 import Image, { type StaticImageData } from 'next/image'
 
-import LoadingRow from './loading-row'
+import LoadingRow from './components/list-item/loading-list-item'
 import EFPLogo from 'public/assets/logo.svg'
-import FollowListItem from './follow-list-item'
+import FollowListItem from './components/list-item/follow-list-item'
 import type { ENSProfile } from '#/types/requests'
 import { formatNumber } from '#/utils/formatNumber'
 import type { ImportPlatformType } from '#/types/common'
-import SocialTagDropdown from './components/socialTagDropdown'
-import SocialFollowButton from './components/social-follow-button'
+import SocialTagDropdown from './components/socials/socialTagDropdown'
+import SocialFollowButton from './components/socials/social-follow-button'
 
 export interface FollowListProfile {
   address: Address

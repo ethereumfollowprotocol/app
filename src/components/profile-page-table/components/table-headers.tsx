@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
 
-import LoadingCell from '#/components/loading-cell'
+import LoadingCell from '#/components/loaders/loading-cell'
 import { formatNumber } from '#/utils/formatNumber'
 import CrossIcon from 'public/assets/icons/cross.svg'
 import ArrowDown from 'public/assets/icons/arrow-down.svg'

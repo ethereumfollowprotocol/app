@@ -1,4 +1,4 @@
-import LoadingCell from '#/components/loading-cell'
+import LoadingCell from '#/components/loaders/loading-cell'
 import { usePathname } from 'next/navigation'
 
 interface LoadingRowProps {

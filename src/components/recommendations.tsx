@@ -1,10 +1,10 @@
 'use client'
 
-import clsx from 'clsx'
 import { useAccount } from 'wagmi'
 import { useMemo, useState } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
 
+import { cn } from '#/lib/utilities'
 import { FollowList } from '#/components/follow-list'
 import type { DiscoverItemType } from '#/types/common'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
@@ -69,7 +69,7 @@ const Recommendations = ({
   }, [profilesToRecommend, page])
 
   return (
-    <div className={clsx('flex flex-col gap-4', className)}>
+    <div className={cn('flex flex-col gap-4', className)}>
       <div className='px-2 pt-2 w-full'>
         <div className='w-full flex items-center justify-between'>
           <h2

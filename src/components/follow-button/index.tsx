@@ -1,18 +1,18 @@
 'use client'
 
-import clsx from 'clsx'
 import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
+import { useState, type Ref } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
-import LoadingCell from '../loading-cell'
-import { useCoolMode } from './useCoolMode'
+import { cn } from '#/lib/utilities'
+import LoadingCell from '../loaders/loading-cell'
+import { useCoolMode } from './hooks/useCoolMode'
 import MainnetRed from 'public/assets/mainnet-red.svg'
 import MainnetBlack from 'public/assets/mainnet-black.svg'
-import { type FollowButtonState, useFollowButton } from './use-follow-button'
-import { useState, type Ref } from 'react'
+import { type FollowButtonState, useFollowButton } from './hooks/use-follow-button'
 
 const theme: Record<
   FollowButtonState,
@@ -172,7 +172,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
   ) : (
     <div ref={coolEfpLogo as Ref<HTMLDivElement>}>
       <button
-        className={clsx([
+        className={cn([
           theme[buttonState].bg,
           theme[buttonState].text,
           theme[buttonState].border,

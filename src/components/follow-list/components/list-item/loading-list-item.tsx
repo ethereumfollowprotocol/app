@@ -1,6 +1,6 @@
 import type React from 'react'
 import Image from 'next/image'
-import LoadingCell from '../loading-cell'
+import LoadingCell from '../../../loaders/loading-cell'
 import Plus from 'public/assets/icons/plus-squared.svg'
 
 interface LoadingRowProps {

@@ -16,7 +16,7 @@ import LensIcon from 'public/assets/icons/lens.svg'
 import { formatNumber } from '#/utils/formatNumber'
 import { FollowList } from '#/components/follow-list'
 import Recommendations from '#/components/recommendations'
-import { PrimaryButton } from '#/components/primary-button'
+import { PrimaryButton } from '#/components/buttons/primary-button'
 import FarcasterIcon from 'public/assets/icons/farcaster.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 

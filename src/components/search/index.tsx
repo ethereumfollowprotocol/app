@@ -5,11 +5,11 @@ import type { LegacyRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import useSearch from './hooks/useSearch.ts'
-import GraySpinner from '../gray-spinner.tsx'
-import LoadingSpinner from '../loading-spinner.tsx'
+import GraySpinner from '../loaders/gray-spinner.tsx'
+import LoadingSpinner from '../loaders/loading-spinner.tsx'
 import { truncateAddress } from '#/lib/utilities.ts'
 import MagnifyingGlass from 'public/assets/icons/magnifying-glass-dark.svg'
-import { PrimaryButton } from '../primary-button.tsx'
+import { PrimaryButton } from '../buttons/primary-button.tsx'
 
 export function Search({
   disabled,

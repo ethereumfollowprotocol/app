@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
-import LoadingCell from '../loading-cell'
+import LoadingCell from '../../loaders/loading-cell'
 
 interface LoadingProfileCardProps {
   isResponsive?: boolean

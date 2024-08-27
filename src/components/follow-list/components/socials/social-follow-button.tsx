@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
 
-import type { FollowListProfile } from '..'
+import type { FollowListProfile } from '../..'
 import { useCart } from '#/contexts/cart-context'
 import MainnetBlack from 'public/assets/mainnet-black.svg'
 import { listOpAddListRecord, listOpAddTag } from '#/utils/list-ops'

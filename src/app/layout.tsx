@@ -2,20 +2,20 @@ import './i18n'
 import './globals.css'
 import '@rainbow-me/rainbowkit/styles.css'
 
-import clsx from 'clsx'
 import { Toaster } from 'sonner'
+import type { Metadata } from 'next'
 import { headers } from 'next/headers'
-import Providers from './providers.tsx'
 import { cookieToInitialState } from 'wagmi'
 import { Analytics } from '@vercel/analytics/react'
 import { Inter, IBM_Plex_Mono } from 'next/font/google'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
+import { cn } from '#/lib/utilities.ts'
+import Providers from './providers.tsx'
 import wagmiConfig from '../lib/wagmi.ts'
 import { Production } from './production.tsx'
-import { APP_DESCRIPTION } from '../lib/constants/index.ts'
 import { sharedMetadata } from '#/lib/metadata.ts'
-import type { Metadata } from 'next'
+import { APP_DESCRIPTION } from '../lib/constants/index.ts'
 
 export const metadata: Metadata = sharedMetadata
 
@@ -35,7 +35,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   const initialState = cookieToInitialState(wagmiConfig, headers().get('cookie'))
 
   return (
-    <html lang='en' className={clsx([inteFont.variable, ibmPlexMonoFont.variable, 'light'])}>
+    <html lang='en' className={cn([inteFont.variable, ibmPlexMonoFont.variable, 'light'])}>
       <HeadTag />
       <body
         style={{

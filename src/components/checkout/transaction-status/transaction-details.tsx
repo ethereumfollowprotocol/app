@@ -1,7 +1,7 @@
-import clsx from 'clsx'
 import { useWaitForTransactionReceipt } from 'wagmi'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
+import { cn } from '#/lib/utilities'
 import useChain from '#/hooks/use-chain'
 import { useTranslation } from 'react-i18next'
 import type { Action } from '#/contexts/actions-context'
@@ -73,12 +73,12 @@ const TransactionDetails = ({
     <div className='flex gap-2 sm:gap-2 flex-col'>
       <p className='text-xl sm:text-2xl font-bold'>{t('status title')}</p>
       <div className='flex flex-col gap-1'>
-        <p className={clsx(getStatusColor(), 'text-lg sm:text-xl font-bold')}>
+        <p className={cn(getStatusColor(), 'text-lg sm:text-xl font-bold')}>
           {t(statusDescription || '')}
         </p>
         {isLastAction && isSuccess && (
           <p
-            className={clsx(
+            className={cn(
               isLastActionSuccessful ? 'text-lime-600' : 'text-kournikova-600 loading-ellipsis',
               'font-bold text-lg sm:text-xl'
             )}

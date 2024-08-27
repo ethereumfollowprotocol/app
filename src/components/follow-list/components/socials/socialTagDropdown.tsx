@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useEffect, useRef, useState } from 'react'
 
-import type { FollowListProfile } from '..'
+import type { FollowListProfile } from '../..'
 import { listOpAddTag } from '#/utils/list-ops'
 import { tagRegex } from '#/lib/constants/regex'
 import { useCart } from '#/contexts/cart-context'

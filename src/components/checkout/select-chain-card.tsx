@@ -5,9 +5,9 @@ import { useChainId, useSwitchChain, type Config, type UseChainsReturnType } fro
 
 import type { ChainWithDetails } from '#/lib/wagmi'
 import { ChainIcon } from '#/components/chain-icon'
-import CancelButton from '#/components/cancel-button'
+import CancelButton from '#/components/buttons/cancel-button'
 import { DEFAULT_CHAIN } from '#/lib/constants/chain'
-import { PrimaryButton } from '#/components/primary-button'
+import { PrimaryButton } from '#/components/buttons/primary-button'
 import GreenCheck from 'public/assets/icons/check-green.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 

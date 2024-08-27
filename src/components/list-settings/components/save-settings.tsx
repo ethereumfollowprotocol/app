@@ -1,7 +1,7 @@
 import type { Chain, Address } from 'viem'
 
 import { Step } from '#/components/checkout/types'
-import LoadingSpinner from '#/components/loading-spinner'
+import LoadingSpinner from '#/components/loaders/loading-spinner'
 import useSaveListSettings from '../hooks/use-save-list-settings'
 import TransactionStatus from '#/components/checkout/transaction-status'
 import InitiateActionsCard from '#/components/checkout/initiate-actions-card'

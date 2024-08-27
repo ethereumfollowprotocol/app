@@ -1,12 +1,12 @@
 'use client'
 
-import clsx from 'clsx'
 import Link from 'next/link'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 import type { Dispatch, SetStateAction } from 'react'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
+import { cn } from '#/lib/utilities'
 import { NAV_ITEMS } from '#/lib/constants'
 import { usePathname } from 'next/navigation'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
@@ -37,7 +37,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ open, setOpen }) => {
           <Link
             prefetch={true}
             href={item.href(itemUrl)}
-            className={clsx([
+            className={cn([
               'capitalize xl:text-xl lg:text-lg transition-colors',
               item.name === 'profile' && !userAddress
                 ? 'text-grey hover:text-darkGrey'

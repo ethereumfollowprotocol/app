@@ -1,5 +1,5 @@
-import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
+import { cn } from '#/lib/utilities'
 
 interface CancelbuttonProps {
   onClick?: () => void
@@ -15,7 +15,7 @@ const CancelButton: React.FC<CancelbuttonProps> = ({ onClick, label, disabled, c
     <button
       onClick={onClick}
       disabled={disabled}
-      className={clsx(
+      className={cn(
         'w-32 h-12 hover:opacity-90 bg-[#bbbbbb] hover:scale-110 disabled:hover:scale-100 rounded-full text-lg transition-all font-semibold disabled:opacity-70',
         className
       )}

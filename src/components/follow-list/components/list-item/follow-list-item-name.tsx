@@ -1,4 +1,5 @@
 'use client'
+import Link from 'next/link'
 import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
@@ -6,7 +7,6 @@ import { useEffect, useRef, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import type { Address, GetEnsAvatarReturnType } from 'viem'
 
-import LoadingCell from '../loading-cell'
 import { Avatar } from '#/components/avatar'
 import { tagRegex } from '#/lib/constants/regex'
 import { useClickAway } from '@uidotdev/usehooks'
@@ -15,10 +15,10 @@ import { truncateAddress } from '#/lib/utilities'
 import { formatNumber } from '#/utils/formatNumber'
 import { BLOCKED_MUTED_TAGS } from '#/lib/constants'
 import useFollowState from '#/hooks/use-follow-state'
+import LoadingCell from '../../../loaders/loading-cell'
 import Plus from 'public/assets/icons/plus-squared.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
-import Link from 'next/link'
 
 interface FollowListItemNameProps {
   address: Address

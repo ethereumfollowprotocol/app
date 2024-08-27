@@ -1,6 +1,6 @@
-import clsx from 'clsx'
 import type { GetEnsAvatarReturnType } from 'viem'
 
+import { cn } from '#/lib/utilities'
 import ImageWithFallback from './image-with-fallback'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 
@@ -20,7 +20,7 @@ export const Avatar = ({
   return (
     <ImageWithFallback
       alt={`${name}'s avatar`}
-      className={clsx('rounded-full my-auto ', size)}
+      className={cn('rounded-full my-auto ', size)}
       height={50}
       width={50}
       onClick={() => {

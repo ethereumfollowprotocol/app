@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+import { cn } from '#/lib/utilities'
 
 export const DEFAULT_LOADING_GRADIENT =
   'linear-gradient(90deg, rgba(200, 200, 200, 0.7) 0%, rgba(172, 172, 172, 0.05) 50%, rgba(200, 200, 200, 0.7) 100%)'
@@ -26,7 +26,7 @@ const LoadingCell: React.FC<LoadingCellProps> = ({
         animationFillMode: 'forwards',
         ...style
       }}
-      className={clsx('bg-repeat-x', className, isStatic ? 'animate-none ' : 'animate-loading ')}
+      className={cn('bg-repeat-x', className, isStatic ? 'animate-none ' : 'animate-loading ')}
     />
   )
 }

@@ -6,10 +6,10 @@ import { useWaitForTransactionReceipt } from 'wagmi'
 import { Step } from '../types'
 import useChain from '#/hooks/use-chain'
 import { useCart } from '#/contexts/cart-context'
-import CancelButton from '#/components/cancel-button'
+import CancelButton from '#/components/buttons/cancel-button'
 import TransactionDetails from './transaction-details'
 import { useActions } from '#/contexts/actions-context'
-import { PrimaryButton } from '#/components/primary-button'
+import { PrimaryButton } from '#/components/buttons/primary-button'
 
 interface TransactionStatusProps {
   onFinish: () => void

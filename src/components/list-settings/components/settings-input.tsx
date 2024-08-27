@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
 
 import { resolveEnsProfile } from '#/utils/ens'
-import LoadingCell, { LIGHT_LOADING_GRADIENT } from '#/components/loading-cell'
+import LoadingCell, { LIGHT_LOADING_GRADIENT } from '#/components/loaders/loading-cell'
 import { Avatar } from '#/components/avatar'
 
 interface SettingsInputProps {

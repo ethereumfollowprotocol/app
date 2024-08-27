@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Avatar } from '#/components/avatar'
 import { truncateAddress } from '#/lib/utilities'
 import { fetchCommonFollowers, noCommonFollowers } from '#/api/fetchCommonFollowers'
-import LoadingCell from '#/components/loading-cell'
+import LoadingCell from '#/components/loaders/loading-cell'
 
 interface CommonFollowersProps {
   address: Address

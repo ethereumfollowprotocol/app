@@ -16,19 +16,19 @@ import {
   listOpRemoveListRecord
 } from '#/utils/list-ops'
 import { Avatar } from '../avatar'
-import LoadingCell from '../loading-cell'
+import LoadingCell from '../loaders/loading-cell'
 import { resolveEnsProfile } from '#/utils/ens'
 import { useCart } from '#/contexts/cart-context'
 import { truncateAddress } from '#/lib/utilities'
 import { formatNumber } from '#/utils/formatNumber'
 import FollowButton from '#/components/follow-button'
 import useFollowState from '#/hooks/use-follow-state'
-import LoadingProfileCard from './loading-profile-card'
+import LoadingProfileCard from './components/loading-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 import CommonFollowers from './components/common-followers'
-import { useCoolMode } from '../follow-button/useCoolMode'
+import { useCoolMode } from '../follow-button/hooks/useCoolMode'
 
 interface UserProfileCardProps {
   profileList?: number | null

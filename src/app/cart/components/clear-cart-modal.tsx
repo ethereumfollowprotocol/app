@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 
 import Modal from '#/components/modal'
 import { useCart } from '#/contexts/cart-context'
-import CancelButton from '#/components/cancel-button'
+import CancelButton from '#/components/buttons/cancel-button'
 
 interface ClearCartModalProps {
   closeModal: () => void

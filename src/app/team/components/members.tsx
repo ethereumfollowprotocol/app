@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query'
 
-import LoadingCell from '#/components/loading-cell'
+import LoadingCell from '#/components/loaders/loading-cell'
 import UserProfileCard from '#/components/user-profile-card'
 import { fetchProfileDetails } from '#/api/fetchProfileDetails'
 
