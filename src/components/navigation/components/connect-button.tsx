@@ -73,7 +73,7 @@ const ConnectButton = () => {
         type='button'
         className={`z-50 px-1 ${
           walletMenOpenu ? 'connect-button-open' : 'connect-button'
-        } transition-all border-[3px] gap-[6px] hover:scale-105 cursor-pointer flex justify-between items-center h-[60px] glass-card rounded-full w-fit sm:w-48 md:w-56`}
+        } transition-all border-[3px] gap-[4px] hover:scale-105 cursor-pointer flex pr-2 justify-between items-center h-[60px] glass-card rounded-full w-fit sm:w-48 md:w-56 lg:w-48 xl:w-56`}
         onClick={() =>
           userAddress
             ? setWalletMenuOpen(!walletMenOpenu)
@@ -84,7 +84,7 @@ const ConnectButton = () => {
       >
         {userAddress ? (
           <>
-            <div className='flex items-center max-w-[85%] h-fit gap-[12px]'>
+            <div className='flex items-center max-w-[90%] h-fit gap-[8px]'>
               <Image
                 src={ensProfile?.avatar || DefaultAvatar}
                 alt='ENS Avatar'
@@ -102,7 +102,7 @@ const ConnectButton = () => {
               alt='Open button'
               width={16}
               height={16}
-              className={`${walletMenOpenu ? 'rotate-180' : ''} transition-transform mr-1`}
+              className={`${walletMenOpenu ? 'rotate-180' : ''} transition-transform`}
             />
           </>
         ) : (
