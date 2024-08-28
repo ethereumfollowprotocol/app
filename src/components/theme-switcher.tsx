@@ -46,7 +46,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ connected }) => {
       }
       const userMedia = window.matchMedia('(prefers-color-scheme: dark)')
       if (userMedia.matches) {
-        return 'dark'
+        return 'auto'
       }
     }
     return 'light'
@@ -132,7 +132,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ connected }) => {
       onClick={toggleTheme}
       className='text-3xl hover:scale-110 transition-transform rounded-full'
     >
-      {selectedTheme === 'dark' ? <MdDarkMode /> : <MdLightMode />}
+      {themesWithIcons.find(({ theme }) => theme === selectedTheme)?.icon}
     </button>
   )
 }

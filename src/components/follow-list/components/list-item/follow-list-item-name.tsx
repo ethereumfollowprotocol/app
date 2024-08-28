@@ -177,7 +177,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
       )}
       <div
         className={`flex flex-col md:flex-row ${
-          counts ? 'w-1/2 sm:w-[45%] md:w-1/2 xl:w-1/2' : 'w-full'
+          counts ? 'w-1/2 sm:w-[45%] md:w-1/2 xl:w-1/2' : 'w-[calc(100% - 55px)]'
         } md:gap-3 xl:gap-2 2xl:gap-3 gap-[2px]`}
       >
         <div
