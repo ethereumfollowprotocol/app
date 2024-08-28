@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { WagmiProvider, type State } from 'wagmi'
 import { darkTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
@@ -29,6 +29,21 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
         }
       })
   )
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const storedTheme = window.localStorage.getItem('theme')
+      if (storedTheme === 'dark') {
+        document.documentElement.classList.add('dark')
+        return
+      }
+
+      const userMedia = window.matchMedia('(prefers-color-scheme: dark)')
+      if (userMedia.matches) {
+        document.documentElement.classList.add('dark')
+      }
+    }
+  }, [])
 
   return (
     <QueryClientProvider client={queryClient}>
