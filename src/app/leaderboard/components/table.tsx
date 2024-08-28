@@ -121,7 +121,7 @@ const LeaderboardTable = () => {
         </div>
         <div className='flex justify-between gap-4'>
           <div className='relative w-full sm:w-[260px] 2xl:w-[300px]'>
-            <div className='rounded-xl w-full group glass-card overflow-hidden border-[3px] dark:border-white/50 border-zinc-200 sm:text-sm focus:border-[#666] hover:border-[#666] dark:focus:border-white/80 dark:hover:border-white/80 dark:focus-within:border-white/80 focus-within:border-darkGrey/80 transition-colors'>
+            <div className='rounded-xl w-full group glass-card overflow-hidden border-[3px] dark:border-white/50 border-zinc-300 sm:text-sm focus:border-[#666] hover:border-[#666] dark:focus:border-white/80 dark:hover:border-white/80 dark:focus-within:border-white/80 focus-within:border-darkGrey/80 transition-colors'>
               <div
                 className='pointer-events-none absolute inset-y-0 right-0 flex items-center pl-3'
                 aria-hidden='true'
@@ -166,7 +166,7 @@ const LeaderboardTable = () => {
             fetchPrevious={() => fetchPreviousLeaderboard()}
           />
         </div>
-        <div className='glass-card border-zinc-100 dark:border-zinc-500 border-[3px] rounded-xl flex flex-col gap-4 p-1 sm:px-4 sm:py-6 lg:px-8 relative'>
+        <div className='glass-card border-zinc-200 dark:border-zinc-500 border-[3px] rounded-xl flex flex-col gap-4 p-1 sm:px-4 sm:py-6 lg:px-8 relative'>
           {leaderboard?.map((entry: LeaderboardItem, index) => (
             <TableRow
               key={entry.address}

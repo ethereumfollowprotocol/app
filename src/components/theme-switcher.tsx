@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { FiArrowLeft } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
@@ -5,10 +6,14 @@ import { useClickAway } from '@uidotdev/usehooks'
 import { MdLightMode, MdDarkMode } from 'react-icons/md'
 import { HiOutlineDesktopComputer } from 'react-icons/hi'
 
+import { cn } from '#/lib/utilities'
 import GreenCheck from 'public/assets/icons/check-green.svg'
-import Image from 'next/image'
 
 const themesWithIcons = [
+  {
+    theme: 'auto',
+    icon: <HiOutlineDesktopComputer />
+  },
   {
     theme: 'light',
     icon: <MdLightMode />
@@ -16,21 +21,18 @@ const themesWithIcons = [
   {
     theme: 'dark',
     icon: <MdDarkMode />
-  },
-  {
-    theme: 'auto',
-    icon: <HiOutlineDesktopComputer />
   }
 ]
 
-const themes = ['light', 'dark', 'auto'] as const
+const themes = ['auto', 'light', 'dark'] as const
 type ThemeType = (typeof themes)[number]
 
 interface ThemeSwitcherProps {
   connected?: boolean
+  closeMenu?: () => void
 }
 
-const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ connected }) => {
+const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ connected, closeMenu }) => {
   const [themeMenuOpen, setThemeMenuOpen] = useState(false)
   const clickAwayThemeRef = useClickAway<HTMLDivElement>(() => {
     setThemeMenuOpen(false)
@@ -71,31 +73,31 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ connected }) => {
     localStorage.setItem('theme', selectedTheme)
   }, [selectedTheme])
 
-  const toggleTheme = () => {
-    setSelectedTheme({ light: 'dark', dark: 'auto', auto: 'light' }[selectedTheme] as ThemeType)
-    window.localStorage.setItem('theme', selectedTheme)
-  }
-
-  return connected ? (
+  return (
     <div ref={clickAwayThemeRef} className='w-full cursor-pointer group relative'>
       <div
         onClick={() => setThemeMenuOpen(!themeMenuOpen)}
-        className='flex justify-between items-center w-full group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer'
+        className={cn(
+          'flex justify-between items-center w-full p-3 rounded-md transition-opacity cursor-pointer',
+          connected && 'group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/20'
+        )}
       >
-        <FiArrowLeft className='text-xl' />
+        {connected && <FiArrowLeft className='text-xl' />}
         <div className='flex items-center justify-end gap-2'>
-          <p className='text-2xl'>
+          <p className={cn(connected ? 'text-2xl' : 'text-3xl')}>
             {themesWithIcons.find(({ theme }) => theme === selectedTheme)?.icon}
           </p>
-          <p className='capitalize font-semibold'>{t(selectedTheme)}</p>
+          {connected && <p className='capitalize font-semibold'>{t(selectedTheme)}</p>}
         </div>
       </div>
       <div
-        className={`absolute -right-[14.6%] sm:right-[97.2%] group-hover:block min-w-[190px] block z-50 -top-[6px] ${
+        className={cn(
+          'absolute group-hover:block min-w-[190px] block z-50',
+          connected ? '-right-[14.6%] sm:right-[97.2%] -top-[6px] pr-5' : 'top-[100%] -left-7',
           themeMenuOpen ? 'block' : 'hidden'
-        } pr-5`}
+        )}
       >
-        <div className='flex flex-col gap-2 w-full min-w-[190px] max-h-[75vh] sm:max-h-[80vh] overflow-scroll border-[3px] rounded-lg bg-white/90 dark:bg-darkGrey/90 border-zinc-100 dark:border-zinc-500 p-1  shadow-md'>
+        <div className='flex flex-col gap-2 w-full min-w-[190px] max-h-[75vh] sm:max-h-[80vh] overflow-scroll border-[3px] rounded-lg bg-white/90 dark:bg-darkGrey/90 border-zinc-200 dark:border-zinc-500 p-1  shadow-md'>
           <div
             onClick={() => setThemeMenuOpen(false)}
             className='flex sm:hidden  justify-between items-center w-full group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/20  dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer'
@@ -110,6 +112,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ connected }) => {
               onClick={() => {
                 setSelectedTheme(theme as ThemeType)
                 setThemeMenuOpen(false)
+                if (closeMenu) setTimeout(closeMenu, 50)
               }}
             >
               {selectedTheme === theme && (
@@ -120,20 +123,13 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ connected }) => {
                   className='absolute left-2 top-[17px]'
                 />
               )}
-              <p className='text-2xl'>{icon}</p>
+              <p className={connected ? 'text-2xl' : 'text-3xl'}>{icon}</p>
               <p className='text-nowrap capitalize font-semibold'>{t(theme)}</p>
             </div>
           ))}
         </div>
       </div>
     </div>
-  ) : (
-    <button
-      onClick={toggleTheme}
-      className='text-3xl hover:scale-110 transition-transform rounded-full'
-    >
-      {themesWithIcons.find(({ theme }) => theme === selectedTheme)?.icon}
-    </button>
   )
 }
 

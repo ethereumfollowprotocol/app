@@ -166,7 +166,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
   )
 
   return isLoading ? (
-    <div className={`rounded-xl ${isBlockedBy ? 'w-[132px]' : 'px-3'} py-1`}>
+    <div className={`rounded-xl ${isBlockedBy ? 'w-[132px]' : 'w-[107px]'} py-1`}>
       <LoadingCell className='h-full w-full rounded-lg' />
     </div>
   ) : (

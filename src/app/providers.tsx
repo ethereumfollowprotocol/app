@@ -38,9 +38,15 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
         return
       }
 
+      if (storedTheme === 'light') {
+        document.documentElement.classList.remove('dark')
+        return
+      }
+
       const userMedia = window.matchMedia('(prefers-color-scheme: dark)')
       if (userMedia.matches) {
         document.documentElement.classList.add('dark')
+        return
       }
     }
   }, [])

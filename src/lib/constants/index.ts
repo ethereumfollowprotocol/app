@@ -30,7 +30,7 @@ export const LANGUAGES = [
   { language: 'Slovenščina', key: 'si', icon: SloveniaFlag }
 ]
 
-export const DEFAULT_TAGS_TO_ADD = ['crypto', 'friend', 'family', 'irl', 'work']
+export const DEFAULT_TAGS_TO_ADD = ['irl', 'bff', 'based', 'degen', 'buidler']
 export const DEFAULT_TAGS = ['no tag']
 export const BLOCKED_MUTED_TAGS = ['block', 'mute']
 export const SORT_OPTIONS: FollowSortType[] = ['latest first', 'earliest first', 'follower count']

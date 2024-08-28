@@ -34,7 +34,7 @@ const Navigation = () => {
   })
 
   return (
-    <header className='w-full fixed z-50 glass-card bg-white/50 dark:bg-black/75 top-0 left-0 font-sans border-b-[1px] border-zinc-200 dark:border-zinc-500 p-4 lg:px-6 md:py-6 xl:px-8'>
+    <header className='w-full fixed z-50 glass-card bg-white/50 dark:bg-black/75 top-0 left-0 font-sans border-b-[1px] border-zinc-300 dark:border-zinc-500 p-4 lg:px-6 md:py-6 xl:px-8'>
       <nav className='my-auto flex w-full flex-row items-center justify-between'>
         <div className='flex w-2/5 sm:w-3/5 2xl:w-full justify-start items-center gap-4 md:gap-6 xl:gap-8'>
           <Link href='/' className='select-none' aria-label='Ethereum Follow Protocol Logo link'>
@@ -69,32 +69,26 @@ const Navigation = () => {
                 <Suspense fallback={<div>Auto</div>}>
                   <ThemeSwitcher />
                 </Suspense>
-                <div
-                  ref={clickAwayLanguageRef}
-                  className='z-40 lg:mr-6 cursor-pointer group relative'
-                >
+                <div ref={clickAwayLanguageRef} className='z-40 cursor-pointer group relative'>
                   <div
                     onClick={() => setLanguageMenuOpen(!languageMenOpenu)}
                     className='flex gap-1 sm:gap-2 items-center w-full'
                   >
-                    <div className='flex gap-2 hover:opacity-75 font-semibold'>
-                      <Image src={selectedLanguage?.icon} alt='Language icon' width={26} />
-                      <p className='hidden lg:block'>{selectedLanguage?.language}</p>
+                    <div className='flex gap-2 hover:opacity-75 h-8 w-8 font-semibold'>
+                      <Image
+                        src={selectedLanguage?.icon}
+                        alt='Language icon'
+                        width={30}
+                        height={30}
+                      />
                     </div>
-                    {/* <Image
-                      src={ArrowDown}
-                      alt='Show languages'
-                      width={12}
-                      height={12}
-                      className='group-hover:opacity-80 transition-opacity'
-                    /> */}
                   </div>
                   <div
-                    className={`absolute -left-10 top-4 ${
+                    className={`absolute -left-[39px] top-[86%] ${
                       languageMenOpenu ? 'block' : 'hidden'
                     } group-hover:block pt-4`}
                   >
-                    <div className='flex flex-col glass-card dark:bg-black/80 bg-white/90 border-[3px] border-zinc-100 dark:border-zinc-500 p-1 rounded-lg shadow-md'>
+                    <div className='flex flex-col glass-card dark:bg-black/80 bg-white/90 border-[3px] border-zinc-200 dark:border-zinc-500 p-1 rounded-lg shadow-md'>
                       {LANGUAGES.map(lang => (
                         <div
                           className=' p-3 pl-8 relative font-semibold rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-all'
@@ -112,8 +106,8 @@ const Navigation = () => {
                               className='absolute left-2 top-[17px]'
                             />
                           )}
-                          <div className='flex gap-2 pr-5'>
-                            <Image src={lang.icon} alt='Language icon' width={26} />
+                          <div className='flex items-center gap-2 pr-5'>
+                            <Image src={lang.icon} alt='Language icon' width={30} height={30} />
                             <p>{lang.language}</p>
                           </div>
                         </div>

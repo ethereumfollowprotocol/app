@@ -59,7 +59,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
             value={currHandle}
             placeholder={`${t('enter')} ${platform} ID`}
             onChange={e => setCurrHandle(e.target.value)}
-            className='h-12 block pr-12 w-full truncate font-medium rounded-xl border-[3px] border-zinc-200 dark:border-zinc-500 pl-4 sm:text-sm bg-white/70 dark:bg-darkGrey/50'
+            className='h-12 block pr-12 w-full truncate font-medium rounded-xl border-[3px] 3 dark:border-zinc-500 pl-4 sm:text-sm bg-white/70 dark:bg-darkGrey/50'
           />
           <div className='absolute w-8 rounded-lg right-2 top-2 h-8 flex justify-center items-center bg-zinc-300 dark:bg-zinc-500'>
             <FiSearch />

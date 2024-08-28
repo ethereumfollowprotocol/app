@@ -150,7 +150,7 @@ export function UserProfilePageTable({
   return (
     <div
       className={cn(
-        'flex flex-col w-full gap-4 py-2 px-0 sm:p-4 border-[3px] rounded-2xl border-zinc-100 dark:border-zinc-500',
+        'flex flex-col w-full gap-4 py-2 px-0 sm:p-4 border-[3px] rounded-2xl border-zinc-200 dark:border-zinc-500',
         !(isLoading || isFetchingMore) && 'pb-0 sm:pb-0',
         BLOCKED_MUTED_TABS.includes(title) ? 'bg-white/70 dark:bg-darkGrey/70' : 'glass-card',
         customClass
