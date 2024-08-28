@@ -160,13 +160,12 @@ input {
 }
 
 .connect-button {
-    background:
-      linear-gradient(#fafafa, #fafafa) padding-box,
-      linear-gradient(135deg, #faf35f, #ffbce3) border-box;
-      border: 5px solid transparent;
-      border-radius: 40px;
+  background:
+    linear-gradient(#fafafa, #fafafa) padding-box,
+    linear-gradient(135deg, #faf35f, #ffbce3) border-box;
+  border: 5px solid transparent;
+  border-radius: 40px;
   transition: background 100ms ease-in-out;
-
 }
 
 .connect-button:hover {
@@ -178,6 +177,31 @@ input {
 .connect-button-open {
   background:
   linear-gradient(135deg, #fffee2, #fdf2f9) padding-box,
+  linear-gradient(135deg, #faf35f, #ffbce3) border-box;
+  border: 5px solid transparent;
+  border-radius: 40px;
+  transition: background 100ms ease-in-out;
+
+}
+
+.connect-button-dark {
+  background:
+    linear-gradient(#333333, #333333) padding-box,
+    linear-gradient(135deg, #faf35f, #ffbce3) border-box;
+  border: 5px solid transparent;
+  border-radius: 40px;
+  transition: background 100ms ease-in-out;
+}
+
+.connect-button-dark:hover {
+  background:
+  linear-gradient(135deg, #333333cc, #333333cc) padding-box,
+  linear-gradient(135deg, #faf35f, #ffbce3) border-box;
+}
+
+.connect-button-open-dark {
+  background:
+  linear-gradient(135deg, #333333cc, #333333cc) padding-box,
   linear-gradient(135deg, #faf35f, #ffbce3) border-box;
   border: 5px solid transparent;
   border-radius: 40px;

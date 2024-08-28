@@ -140,7 +140,7 @@ const Cart = () => {
               )}
             </div>
             {isClient && totalCartItems === 0 && (
-              <div className='font-semibold h-28 xl:h-80 px-4 justify-center flex text-lg items-center italic text-darkGrey'>
+              <div className='font-semibold h-28 xl:h-80 px-4 justify-center flex text-lg items-center italic'>
                 {t('empty cart')}
               </div>
             )}

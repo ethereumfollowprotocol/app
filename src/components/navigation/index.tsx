@@ -13,7 +13,6 @@ import { LANGUAGES } from '#/lib/constants/index.ts'
 import MobileMenu from './components/mobile-menu.tsx'
 import { useCart } from '../../contexts/cart-context'
 import CartButton from './components/cart-button.tsx'
-import ArrowDown from 'public/assets/icons/arrow-down.svg'
 import FullLogoDark from 'public/assets/logo-full-dark.svg'
 import ConnectButton from './components/connect-button.tsx'
 import GreenCheck from 'public/assets/icons/check-green.svg'
@@ -74,27 +73,27 @@ const Navigation = () => {
                   onClick={() => setLanguageMenuOpen(!languageMenOpenu)}
                   className='flex gap-1 sm:gap-2 items-center w-full'
                 >
-                  <div className='flex gap-2 hover:opacity-75 font-semibold text-darkGrey'>
+                  <div className='flex gap-2 hover:opacity-75 font-semibold'>
                     <Image src={selectedLanguage?.icon} alt='Language icon' width={26} />
                     <p className='hidden lg:block'>{selectedLanguage?.language}</p>
                   </div>
-                  <Image
+                  {/* <Image
                     src={ArrowDown}
                     alt='Show languages'
                     width={12}
                     height={12}
                     className='group-hover:opacity-80 transition-opacity'
-                  />
+                  /> */}
                 </div>
                 <div
                   className={`absolute -left-10 top-4 ${
                     languageMenOpenu ? 'block' : 'hidden'
                   } group-hover:block pt-4`}
                 >
-                  <div className='flex flex-col glass-card bg-white/90 border-[3px] border-gray-100 dark:border-gray-500 p-1 rounded-lg shadow-md'>
+                  <div className='flex flex-col glass-card dark:bg-black/80 bg-white/90 border-[3px] border-gray-100 dark:border-gray-500 p-1 rounded-lg shadow-md'>
                     {LANGUAGES.map(lang => (
                       <div
-                        className=' text-darkGrey p-3 pl-8 relative font-semibold rounded-md hover:bg-slate-100 transition-all'
+                        className=' p-3 pl-8 relative font-semibold rounded-md hover:bg-slate-100 dark:hover:bg-gray-400/60 transition-all'
                         key={lang.language}
                         onClick={() => {
                           changeLanguage(lang)

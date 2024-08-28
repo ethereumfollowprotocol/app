@@ -32,10 +32,10 @@ const NavItems = () => {
             className={cn([
               'capitalize xl:text-xl lg:text-lg transition-all',
               item.name === 'profile' && !userAddress
-                ? 'text-grey hover:text-darkGrey'
+                ? 'text-grey hover:text-darkGrey dark:hover:text-white'
                 : item.href(itemUrl) === pathname.toLowerCase()
-                  ? 'text-darkGrey'
-                  : 'text-grey hover:text-darkGrey'
+                  ? 'text-darkGrey dark:text-white'
+                  : 'text-grey dark:hover:text-white hover:text-darkGrey'
             ])}
             onClick={e => {
               if (item.name === 'profile' && !userAddress && openConnectModal) {
