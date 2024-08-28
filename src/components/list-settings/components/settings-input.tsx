@@ -3,9 +3,10 @@ import { isAddress, type Address } from 'viem'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
 
+import { cn } from '#/lib/utilities'
+import { Avatar } from '#/components/avatar'
 import { resolveEnsProfile } from '#/utils/ens'
 import LoadingCell, { LIGHT_LOADING_GRADIENT } from '#/components/loaders/loading-cell'
-import { Avatar } from '#/components/avatar'
 
 interface SettingsInputProps {
   option: string
@@ -48,7 +49,7 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
     <div className='flex flex-col gap-1'>
       <p className='font-semibold text-lg'>{option}</p>
       {isSettingsLoading ? (
-        <div className='p-3 font-medium truncate rounded-lg w-full bg-white/70 disabled:text-gray-400 disabled:cursor-not-allowed'>
+        <div className='p-3 font-medium truncate rounded-lg w-full bg-white/70 disabled:text-zinc-400 disabled:cursor-not-allowed'>
           <LoadingCell className='w-full h-7 rounded-md' />
         </div>
       ) : (
@@ -63,20 +64,19 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
           disabled={
             !isEditingSettings || connectedAddress?.toLowerCase() !== disableValue?.toLowerCase()
           }
-          className='p-3 font-medium truncate rounded-lg w-full bg-white/70 disabled:text-gray-400 disabled:cursor-not-allowed'
+          className='p-3 font-medium truncate rounded-lg w-full dark:bg-darkGrey/70 bg-white/70 disabled:text-zinc-400 disabled:cursor-not-allowed'
         />
       )}
       {(isSettingsLoading || value.includes('.') || resolvedProfile?.name) && (
         <div
-          className={`font-medium flex items-center gap-2 h-10 text-sm ${
+          className={cn(
+            'font-medium flex items-center gap-2 h-10 text-sm',
             (value.includes('.') && resolvedAddress && resolvedAddress?.length > 0) ||
-            resolvedProfile?.name
-              ? 'text-gray-500'
+              resolvedProfile?.name
+              ? 'text-zinc-500 dark:text-zinc-200'
               : 'text-red-400'
-          }`}
+          )}
         >
-          {/* <p className='text-gray-500 h-full'>{t('resolved')}</p> */}
-
           {isSettingsLoading || isLoading || isNameLoading ? (
             <>
               <LoadingCell className='w-8 h-8 rounded-full' />

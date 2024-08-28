@@ -200,7 +200,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
           )}
           {showFollowsYouBadges && !isEnsProfileLoading && (
             <div
-              className={`rounded-full font-bold text-[10px] flex items-center justify-center bg-gray-300 h-5 w-20 ${followerTag.className}`}
+              className={`rounded-full font-bold text-[10px] flex items-center justify-center text-darkGrey bg-zinc-300 h-5 w-20 ${followerTag.className}`}
             >
               {t(followerTag.text)}
             </div>
@@ -218,7 +218,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
           >
             {canEditTags && !isRestriction && (
               <button
-                className='p-1.5 rounded-full hover:opacity-80 hover:scale-110 bg-gray-300'
+                className='p-1.5 rounded-full hover:opacity-80 hover:scale-110 bg-zinc-300'
                 onClick={e => {
                   e.stopPropagation()
                   setTagDropdownOpen(!tagDropdownOpen)
@@ -229,8 +229,8 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
             )}
             {canEditTags && tagDropdownOpen && (
               <>
-                <div className='absolute z-50 flex flex-col w-60 gap-2 left-0 top-8 glass-card bg-white/50 p-2 border-[3px] border-gray-100 dark:border-gray-500 rounded-lg'>
-                  <div className='w-full flex items-center gap-1.5 justify-between bg-gray-300 rounded-lg font-bold p-1 text-left'>
+                <div className='absolute z-50 flex flex-col w-60 gap-2 left-0 top-8 glass-card bg-white/50 dark:bg-darkGrey/80 p-2 border-[3px] border-zinc-100 dark:border-zinc-500 rounded-lg'>
+                  <div className='w-full flex items-center gap-1.5 justify-between bg-zinc-300 dark:bg-zinc-400 rounded-lg font-bold p-1 text-left'>
                     <input
                       ref={tagInputRef}
                       placeholder={t('custom tag')}
@@ -244,23 +244,23 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
                       onKeyDown={e => {
                         if (e.key === 'Enter') addCustomTag()
                       }}
-                      className='p-1 pl-2 rounded-md lowercase w-full'
+                      className='p-1 pl-2 rounded-md lowercase dark:bg-darkGrey/60 w-full'
                     />
                     <button
-                      className='flex items-center rounded-full hover:scale-110 transition-all hover:opacity-80 bg-white justify-center p-2'
+                      className='flex items-center rounded-full hover:scale-110 transition-all hover:opacity-80 bg-white dark:bg-zinc-300 justify-center p-1.5'
                       onClick={e => {
                         e.stopPropagation()
                         addCustomTag()
                       }}
                     >
-                      <Image src={Plus} alt='Add Tag' height={12} width={12} />
+                      <Image src={Plus} alt='Add Tag' height={16} width={16} />
                     </button>
                   </div>
                   <div className='w-full flex max-w-full flex-wrap items-center gap-2'>
                     {recentTags.map(tag => (
                       <button
                         key={tag}
-                        className='font-semibold py-2 hover:scale-110 transition-all truncate px-3 hover:opacity-80 bg-gray-300 rounded-full'
+                        className='font-semibold py-2 hover:scale-110 transition-all truncate px-3 hover:opacity-80 text-darkGrey bg-zinc-300 rounded-full'
                         onClick={e => {
                           e.stopPropagation()
                           addTag(tag)
@@ -286,8 +286,8 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
                 >
                   <button
                     className={`
-                      font-semibold py-1 px-2 sm:py-1.5 max-w-full w-fit sm:px-3 truncate text-sm hover:opacity-80 rounded-full ${
-                        !isFollowers && removingTag ? 'bg-deletion' : 'bg-gray-300'
+                      font-semibold py-1 px-2 sm:py-1.5 max-w-full w-fit sm:px-3 text-darkGrey truncate text-sm hover:opacity-80 rounded-full ${
+                        !isFollowers && removingTag ? 'bg-deletion' : 'bg-zinc-300'
                       }
                     `}
                     onClick={e => {
@@ -324,12 +324,12 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
               userAddress && !isFollowersEmpty ? 'lg:hidden' : ''
             } hidden sm:flex`}
           >
-            <p className='font-semibold text-lg text-darkGrey'>{formatNumber(counts.following)}</p>
-            <p className='font-semibold text-sm text-gray-500'>{t('following')}</p>
+            <p className='font-semibold text-lg'>{formatNumber(counts.following)}</p>
+            <p className='font-semibold text-sm text-[#888] dark:text-[#aaa]'>{t('following')}</p>
           </div>
           <div className='flex flex-col items-center'>
-            <p className='font-semibold text-lg text-darkGrey'>{formatNumber(counts.followers)}</p>
-            <p className='font-semibold text-sm text-gray-500'>{t('followers')}</p>
+            <p className='font-semibold text-lg'>{formatNumber(counts.followers)}</p>
+            <p className='font-semibold text-sm  text-[#888] dark:text-[#aaa]'>{t('followers')}</p>
           </div>
         </div>
       )}

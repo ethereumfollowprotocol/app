@@ -1,5 +1,6 @@
 import type React from 'react'
 import Image from 'next/image'
+import { FiSearch } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
 
 import Modal from '#/components/modal'
@@ -13,7 +14,6 @@ import CancelButton from '#/components/buttons/cancel-button'
 import type { ImportPlatformType } from '#/types/common'
 import { PrimaryButton } from '#/components/buttons/primary-button'
 import FarcasterIcon from 'public/assets/icons/farcaster.svg'
-import MagnifyingGlass from 'public/assets/icons/magnifying-glass-white.svg'
 
 interface ImportModalprops {
   onClose: () => void
@@ -59,10 +59,10 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
             value={currHandle}
             placeholder={`${t('enter')} ${platform} ID`}
             onChange={e => setCurrHandle(e.target.value)}
-            className='h-12 block pr-12 w-full truncate font-medium rounded-xl border-[3px] border-gray-200 pl-4 sm:text-sm bg-white/70'
+            className='h-12 block pr-12 w-full truncate font-medium rounded-xl border-[3px] border-zinc-200 dark:border-zinc-500 pl-4 sm:text-sm bg-white/70 dark:bg-darkGrey/50'
           />
-          <div className='absolute w-8 rounded-lg right-2 top-2 h-8 flex justify-center items-center bg-gray-300'>
-            <Image src={MagnifyingGlass} alt='Search Account' width={20} className='text-white' />
+          <div className='absolute w-8 rounded-lg right-2 top-2 h-8 flex justify-center items-center bg-zinc-300 dark:bg-zinc-500'>
+            <FiSearch />
           </div>
         </div>
         {socialProfile || (isSocialProfileLoading && currHandle.length > 0) ? (
@@ -87,42 +87,40 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
                       truncateAddress(socialProfile.userAssociatedAddresses?.[0])}
                   </p>
                 )}
-                <p className='font-medium text-gray-400 capitalize'>{platform} ID</p>
+                <p className='font-medium text-zinc-400 dark:text-zinc-300 capitalize'>
+                  {platform} ID
+                </p>
               </div>
             </div>
-            <div className='bg-white/95 rounded-lg flex flex-col gap-4 p-4'>
+            <div className='bg-white/95 dark:bg-darkGrey/80 rounded-lg text-zinc-400 dark:text-zinc-300 flex flex-col gap-4 p-4'>
               <div className='w-full flex justify-between items-center'>
-                <p className='text-gray-400 text-xs xxs:text-sm font-medium'>
+                <p className=' text-xs xxs:text-sm font-medium'>
                   {t('follow on')} <span className='capitalize'>{platform}</span>
                 </p>
                 {isFollowingsLoading || isSocialProfileLoading ? (
                   <LoadingCell className='h-5 w-24 rounded-md' />
                 ) : (
-                  <p className='text-gray-400 text-xs xxs:text-sm font-medium'>
+                  <p className='text-xs xxs:text-sm font-medium'>
                     {formatNumber(followings.length)} {t('accounts')}
                   </p>
                 )}
               </div>
               <div className='w-full flex justify-between items-center'>
-                <p className='text-gray-400 text-xs xxs:text-sm font-medium'>
-                  {t('follow on efp')}
-                </p>
+                <p className='text-xs xxs:text-sm font-medium'>{t('follow on efp')}</p>
                 {isFollowingsLoading || isSocialProfileLoading ? (
                   <LoadingCell className='h-5 w-24 rounded-md' />
                 ) : (
-                  <p className='text-gray-400 text-xs xxs:text-sm font-medium'>
+                  <p className='text-xs xxs:text-sm font-medium'>
                     -{formatNumber(alreadyFollow.length)} {t('accounts')}
                   </p>
                 )}
               </div>
-              <div className='w-full flex justify-between items-center'>
-                <p className='text-darkGrey text-sm xxs:text-base sm:text-lg font-semibold'>
-                  {t('to add')}
-                </p>
+              <div className='w-full flex justify-between items-center text-darkGrey dark:text-white/95'>
+                <p className='text-sm xxs:text-base sm:text-lg font-semibold'>{t('to add')}</p>
                 {isFollowingsLoading || isSocialProfileLoading ? (
                   <LoadingCell className='h-5 w-24 rounded-md' />
                 ) : (
-                  <p className='text-darkGrey text-sm xxs:text-base sm:text-lg font-bold'>
+                  <p className='text-sm xxs:text-base sm:text-lg font-bold'>
                     {formatNumber(followings.length - alreadyFollow.length)} {t('accounts')}
                   </p>
                 )}

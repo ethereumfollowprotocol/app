@@ -52,7 +52,7 @@ const theme: Record<
   Subscribed: {
     bg: 'bg-addition',
     text: 'text-zinc-800',
-    border: 'border-[3px] border-gray-200 py-1'
+    border: 'border-[3px] border-zinc-200 py-1'
   },
   Unsubscribe: {
     bg: 'bg-deletion',

@@ -1,8 +1,8 @@
-import Image from 'next/image'
 import { useState } from 'react'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
+import { IoIosArrowDown } from 'react-icons/io'
 
 import Modal from '../modal'
 import LoadingCell from '../loaders/loading-cell'
@@ -12,10 +12,9 @@ import { ChainIcon } from '#/components/chain-icon'
 import SaveSettings from './components/save-settings'
 import useListSettings from './hooks/use-list-settings'
 import SettingsInput from './components/settings-input'
-import ArrowDown from 'public/assets/icons/arrow-down.svg'
-import { PrimaryButton } from '#/components/buttons/primary-button'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
+import { PrimaryButton } from '#/components/buttons/primary-button'
 
 interface ListSettingsProps {
   selectedList: number
@@ -102,19 +101,12 @@ const ListSettings: React.FC<ListSettingsProps> = ({
               </h3>
             </div>
           </div>
-          {/* <Image
-            src={Cross}
-            alt='Close list settings'
-            className='w-6 cursor-pointer hover:opacity-60 transition-opacity'
-            onClick={onClose}
-          /> */}
         </div>
-        {/* <ProfileStats stats={profile.stats} /> */}
         <div className='flex items-center max-w-full justify-between gap-2'>
           <p className='font-semibold text-base sm:text-xl'>{t('location')}</p>
           <div className='relative' ref={chainDropdownRef}>
             <button
-              className='w-[170px] sm:w-[190px] gap-0.5 flex items-center justify-between px-2 sm:px-3 h-[42px] sm:h-12 bg-white/50 p-1 hover:bg-white/60 rounded-xl disabled:hover:bg-white/50 disabled:opacity-75 disabled:cursor-not-allowed'
+              className='w-[170px] sm:w-[190px] gap-0.5 flex items-center justify-between px-2 sm:px-3 h-[42px] sm:h-12 dark:bg-darkGrey/50 dark:hover:bg-darkGrey bg-white/50 p-1 hover:bg-white/60 rounded-xl disabled:hover:bg-white/50 disabled:opacity-75 disabled:cursor-not-allowed'
               onClick={() => setChainDropdownOpen(!chainDropdownOpen)}
               disabled={
                 !isEditingSettings ||
@@ -132,19 +124,17 @@ const ListSettings: React.FC<ListSettingsProps> = ({
                 </>
               )}
               {isEditingSettings ? (
-                <Image
-                  src={ArrowDown}
-                  alt='Open list storage location chains'
-                  width={16}
-                  height={16}
-                  className={`${chainDropdownOpen ? 'rotate-180' : ''} transition-transform`}
+                <IoIosArrowDown
+                  className={`${
+                    chainDropdownOpen ? 'rotate-180' : ''
+                  } h-5 w-5 transition-transform`}
                 />
               ) : (
                 <div />
               )}
             </button>
             {chainDropdownOpen && (
-              <div className='absolute top-12 sm:top-14 z-10 flex bg-white/90 flex-col rounded-xl w-full'>
+              <div className='absolute top-12 sm:top-14 z-10 flex bg-white/90 dark:bg-darkGrey/95 flex-col rounded-xl w-full'>
                 {chains.map(item => (
                   <div
                     key={item.id}
@@ -156,7 +146,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
                         chain: fetchedChain?.id !== item.id
                       })
                     }}
-                    className='w-full hover:bg-white cursor-pointer rounded-xl flex items-center gap-3 p-3'
+                    className='w-full hover:bg-white dark:hover:bg-zinc-500/20 cursor-pointer rounded-xl flex items-center gap-3 p-3'
                   >
                     <ChainIcon
                       chain={item as ChainWithDetails}
@@ -239,7 +229,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
         ) : (
           <button
             onClick={() => setIsEditingSettings(true)}
-            className='text-lg mt-4 px-6 mx-auto hover:scale-110 transition-all font-semibold hover:opacity-90 bg-[#bbbbbb] rounded-full h-12'
+            className='text-lg mt-4 px-6 mx-auto hover:scale-110 transition-all font-semibold hover:opacity-90 bg-[#bbbbbb] text-darkGrey rounded-full h-12'
           >
             Edit Settings
           </button>

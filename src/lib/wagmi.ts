@@ -62,7 +62,7 @@ export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
   // },
   // {
   //   ...mainnet,
-  //   iconBackground: 'bg-gray-300',
+  //   iconBackground: 'bg-zinc-300',
   //   iconUrl: '/assets/chains/ethereum.svg',
   //   custom: {
   //     chainDetail: '',
@@ -87,7 +87,7 @@ export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
   },
   {
     ...sepolia,
-    iconBackground: 'bg-gray-200',
+    iconBackground: 'bg-zinc-200',
     iconUrl: '/assets/chains/ethereum.svg',
     custom: {
       chainDetail: 'Testnet',

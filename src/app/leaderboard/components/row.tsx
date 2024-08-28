@@ -50,7 +50,7 @@ const TableRow: React.FC<TableRowProps> = ({
       </p>
     ),
     'top-ten': (
-      <p className='text-2xl xxs:text-3xl text-darkGrey sm:text-4xl md:text-5xl font-bold w-min mx-auto'>
+      <p className='text-2xl xxs:text-3xl sm:text-4xl md:text-5xl font-bold w-min mx-auto'>
         {rank}
       </p>
     ),
@@ -87,7 +87,7 @@ const TableRow: React.FC<TableRowProps> = ({
   // const avatarUrl = fetchedEnsProfile?.avatar
 
   return (
-    <div className='flex items-center w-full gap-4 p-2 sm:p-4 hover:bg-white/90 rounded-xl sm:gap-6 md:gap-8 h-[75px]'>
+    <div className='flex items-center w-full gap-4 p-2 sm:p-4 hover:bg-white/90 dark:hover:bg-darkGrey/40 rounded-xl sm:gap-6 md:gap-8 h-[75px]'>
       <div className='tabular-nums min-w-4 w-4 xxs:min-w-6 xxs:w-6 sm:w-10 flex justify-center text-right'>
         {rankNumber}
       </div>
@@ -115,7 +115,7 @@ const TableRow: React.FC<TableRowProps> = ({
             </p>
           </Link>
           <div
-            className={`rounded-full font-bold text-[10px] flex items-center justify-center bg-gray-300 h-5 w-20 ${followerTag.className}`}
+            className={`rounded-full font-bold text-[10px] flex items-center justify-center bg-zinc-300 h-5 w-20 ${followerTag.className}`}
           >
             {t(followerTag.text)}
           </div>
@@ -138,7 +138,9 @@ const TableRow: React.FC<TableRowProps> = ({
                 }[firstStat] || 0
               )}
             </p>
-            <p className='font-semibold text-sm capitalize text-gray-500'>{firstStat}</p>
+            <p className='font-semibold text-sm capitalize text-[#888] dark:text-[#aaa]'>
+              {firstStat}
+            </p>
           </div>
         )}
         <div
@@ -151,7 +153,7 @@ const TableRow: React.FC<TableRowProps> = ({
           } flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(mutuals || 0)}</p>
-          <p className='font-semibold text-sm text-gray-500'>Mutuals</p>
+          <p className='font-semibold text-sm  text-[#888] dark:text-[#aaa]'>Mutuals</p>
         </div>
         <div
           className={`${
@@ -159,7 +161,7 @@ const TableRow: React.FC<TableRowProps> = ({
           } flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(followers || 0)}</p>
-          <p className='font-semibold text-sm text-gray-500'>Followers</p>
+          <p className='font-semibold text-sm  text-[#888] dark:text-[#aaa]'>Followers</p>
         </div>
         <div
           className={`${
@@ -167,7 +169,7 @@ const TableRow: React.FC<TableRowProps> = ({
           } flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(following || 0)}</p>
-          <p className='font-semibold text-sm text-gray-500'>Following</p>
+          <p className='font-semibold text-sm  text-[#888] dark:text-[#aaa]'>Following</p>
         </div>
         <div
           className={`flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 hidden xl:flex ${
@@ -175,7 +177,7 @@ const TableRow: React.FC<TableRowProps> = ({
           } `}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(blocked || 0)}</p>
-          <p className='font-semibold text-sm text-gray-500'>Blocked</p>
+          <p className='font-semibold text-sm  text-[#888] dark:text-[#aaa]'>Blocked</p>
         </div>
       </div>
       <div

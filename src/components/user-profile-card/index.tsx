@@ -2,8 +2,8 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { useState, type Ref } from 'react'
 import { useAccount } from 'wagmi'
+import { useState, type Ref } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
@@ -16,26 +16,25 @@ import {
   listOpRemoveListRecord
 } from '#/utils/list-ops'
 import { Avatar } from '../avatar'
-import LoadingCell from '../loaders/loading-cell'
 import { resolveEnsProfile } from '#/utils/ens'
+import LoadingCell from '../loaders/loading-cell'
 import { useCart } from '#/contexts/cart-context'
-import { truncateAddress } from '#/lib/utilities'
 import { formatNumber } from '#/utils/formatNumber'
+import { cn, truncateAddress } from '#/lib/utilities'
 import FollowButton from '#/components/follow-button'
 import useFollowState from '#/hooks/use-follow-state'
-import LoadingProfileCard from './components/loading-profile-card'
+import CommonFollowers from './components/common-followers'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
-import CommonFollowers from './components/common-followers'
 import { useCoolMode } from '../follow-button/hooks/useCoolMode'
+import LoadingProfileCard from './components/loading-profile-card'
 
 interface UserProfileCardProps {
   profileList?: number | null
   isResponsive?: boolean
   hideFollowButton?: boolean
   profile?: ProfileDetailsResponse | null
-  borderColor?: string
   isLoading?: boolean
   showMoreOptions?: boolean
 }
@@ -45,7 +44,6 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   isResponsive = true,
   hideFollowButton,
   profile,
-  borderColor,
   isLoading,
   showMoreOptions
 }) => {
@@ -208,13 +206,12 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
 
   return (
     <div
-      className={`flex glass-card ${
+      className={cn(
+        'flex glass-card border-[3px] justify-center flex-col border-[#FFDBD9] dark:border-[#ffdbd9c5] rounded-xl relative',
         isResponsive
           ? 'xl:w-76 w-full 2xl:w-86'
           : 'w-80 3xs:w-92 h-[560px] xxs:h-[550px] sm:h-[570px] md:h-[585px] xl:h-[670px]'
-      } border-[3px] justify-center flex-col ${
-        borderColor || 'border-[#FFDBD9]'
-      } rounded-xl relative`}
+      )}
     >
       {isLoading ? (
         <LoadingProfileCard
@@ -224,20 +221,24 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
       ) : profile && isProfileValid ? (
         <>
           <div className='flex gap-2 items-center absolute justify-between px-2 w-full left-0 top-1 font-semibold'>
-            {!!profileList && <p className='text-gray-500 text-sm sm:text-base'>#{profileList}</p>}
+            {!!profileList && (
+              <p className='text-zinc-500 dark:text-zinc-300 text-sm sm:text-base'>
+                #{profileList}
+              </p>
+            )}
             {profileList
               ? profileList !== Number(profile.primary_list) && (
                   <div ref={clickAwayCardTooltip} className='relative group  cursor-help'>
                     <p
                       onClick={() => setCardTooltipOpen(!cardTooltipOpen)}
-                      className='text-[11px] italic text-end rounded-full py-0.5 px-2 bg-gray-300'
+                      className='text-[11px] italic text-end rounded-full py-0.5 px-2 bg-zinc-300'
                     >
                       {t('not primary list')}
                     </p>
                     <div
                       className={`${
                         cardTooltipOpen ? 'block' : 'hidden'
-                      } group-hover:block transition-all text-sm w-68 p-2 glass-card border-gray-100 dark:border-gray-500 bg-white/90 border-[3px] mt-2 rounded-md absolute top-5 right-0`}
+                      } group-hover:block transition-all text-sm w-68 p-2 glass-card border-zinc-100 dark:border-zinc-500 bg-white/90 border-[3px] mt-2 rounded-md absolute top-5 right-0`}
                     >
                       {t('not primary list tooltip')}
                     </div>
@@ -297,7 +298,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                       ref={clickAwayMoreOptionsRef}
                     >
                       <div
-                        className='flex gap-[3px] px-1.5 py-2 rounded-md bg-gray-300 cursor-pointer items-center hover:opacity-50 transition-all hover:scale-125'
+                        className='flex gap-[3px] px-1.5 py-2 rounded-md bg-zinc-300 cursor-pointer items-center hover:opacity-50 transition-all hover:scale-125'
                         onClick={() => setMoreOptionsDropdownOpen(!moreOptionsDropdownOpen)}
                       >
                         <div className='h-1 w-1 bg-black rounded-full'></div>
@@ -309,7 +310,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                           showMoreOptions && !isConnectedUserCard && moreOptionsDropdownOpen
                             ? 'flex'
                             : 'hidden'
-                        } absolute top-10 flex-col gap-2 right-0 p-2 bg-white border-gray-200 border-[3px] rounded-xl z-50 drop-shadow-lg`}
+                        } absolute top-10 flex-col gap-2 right-0 p-2 bg-white border-zinc-200 border-[3px] rounded-xl z-50 drop-shadow-lg`}
                       >
                         <button
                           ref={blockCoolMode as Ref<HTMLButtonElement>}
@@ -359,7 +360,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 )}
                 {followerTag && connectedAddress && !isConnectedUserCard && (
                   <div
-                    className={`rounded-full font-bold text-[10px] mb-1 flex items-center justify-center bg-gray-300 h-5 w-20 ${followerTag.className}`}
+                    className={`rounded-full font-bold text-[10px] mb-1 flex items-center justify-center bg-zinc-300 h-5 w-20 ${followerTag.className}`}
                   >
                     {t(followerTag.text)}
                   </div>
@@ -386,20 +387,24 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                     //     ? formatNumber(profile.stats.following_count)
                     //     : 0 */}
                 </div>
-                <div className='text-lg font-bold text-[#888]'>{t('following')}</div>
+                <div className='text-lg font-bold text-[#888] dark:text-[#aaa]'>
+                  {t('following')}
+                </div>
               </div>
               <div>
                 <div className='text-xl sm:text-2xl text-center font-bold'>
                   {profile.stats === undefined ? '-' : formatNumber(profile.stats.followers_count)}
                 </div>
-                <div className='text-lg font-bold text-[#888]'>{t('followers')}</div>
+                <div className='text-lg font-bold text-[#888] dark:text-[#aaa]'>
+                  {t('followers')}
+                </div>
               </div>
               <div className='flex flex-col w-full items-center gap-3 xl:w-56'>
                 <Link href='/leaderboard'>
                   <div
                     className={`${
                       isResponsive ? 'sm:text-lg' : 'text-lg'
-                    } font-bold text-darkGrey hover:scale-110 transition-all`}
+                    } font-bold hover:scale-110 transition-all`}
                   >
                     {t('leaderboard')}
                   </div>
@@ -411,7 +416,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                       key={rankTitles[i]}
                     >
                       <div className='flex xl:w-full gap-3 justify-between text-lg items-center font-semibold hover:scale-110 transition-all'>
-                        <p className='font-bold text-[#888]'>{t(rankTitles[i] || '')}</p>
+                        <p className='font-bold text-[#888] dark:text-[#aaa]'>
+                          {t(rankTitles[i] || '')}
+                        </p>
                         <p
                           className={
                             {

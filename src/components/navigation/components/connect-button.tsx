@@ -1,22 +1,24 @@
 'use client'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { FiArrowLeft } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
+import { IoIosArrowDown } from 'react-icons/io'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useAccount, useDisconnect, useWalletClient } from 'wagmi'
 
 import { LANGUAGES } from '#/lib/constants'
 import useLanguage from '../hooks/useLanguage'
 import { resolveEnsProfile } from '#/utils/ens'
-import { cn, truncateAddress } from '#/lib/utilities'
 import Wallet from 'public/assets/icons/wallet.svg'
-import ArrowLeft from 'public/assets/icons/arrow-left.svg'
-import ArrowDown from 'public/assets/icons/arrow-down.svg'
+import { cn, truncateAddress } from '#/lib/utilities'
 import GreenCheck from 'public/assets/icons/check-green.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
+
+const ThemeSwitcher = lazy(() => import('../../theme-switcher'))
 
 const nullEnsProfile = {
   name: null,
@@ -73,13 +75,7 @@ const ConnectButton = () => {
         type='button'
         className={cn(
           'z-50 px-1 transition-all border-[3px] gap-[6px] hover:scale-105 cursor-pointer flex justify-between items-center h-[60px] glass-card rounded-full w-fit sm:w-48 md:w-56',
-          walletMenOpenu
-            ? document.documentElement.classList.contains('dark')
-              ? 'connect-button-open-dark'
-              : 'connect-button-open '
-            : document.documentElement.classList.contains('dark')
-              ? 'connect-button-dark'
-              : 'connect-button'
+          walletMenOpenu ? 'connect-button-open ' : 'connect-button'
         )}
         onClick={() =>
           userAddress
@@ -104,12 +100,8 @@ const ConnectButton = () => {
                 {ensProfile?.name || truncateAddress(userAddress)}
               </p>
             </div>
-            <Image
-              src={ArrowDown}
-              alt='Open button'
-              width={16}
-              height={16}
-              className={`${walletMenOpenu ? 'rotate-180' : ''} transition-transform mr-1`}
+            <IoIosArrowDown
+              className={`${walletMenOpenu ? 'rotate-180' : ''} w-5 h-5 transition-transform mr-1`}
             />
           </>
         ) : (
@@ -126,18 +118,14 @@ const ConnectButton = () => {
         )}
       </button>
       {walletMenOpenu && (
-        <div className='p-1 flex w-[190px] z-50 shadow-md border-[3px] rounded-lg dark:bg-darkGrey/80 bg-white/95 border-gray-100 dark:border-gray-500 absolute top-[120%] flex-col items-end right-0'>
+        <div className='p-1 flex w-[190px] z-50 shadow-md border-[3px] rounded-lg dark:bg-darkGrey/80 bg-white/95 border-zinc-100 dark:border-zinc-500 absolute top-[120%] flex-col items-end right-0'>
           {lists?.lists && lists.lists.length > 0 && (
             <div ref={clickAwayListRef} className='w-full cursor-pointer group relative'>
               <div
                 onClick={() => setListMenuOpen(!listMenuOpen)}
-                className='flex justify-between items-center w-full group-hover:bg-slate-100 dark:group-hover:bg-gray-400/60 dark:hover:bg-gray-400/60 p-3 rounded-md transition-opacity cursor-pointer'
+                className='flex justify-between items-center w-full group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer'
               >
-                {lists?.lists && lists?.lists?.length > 0 ? (
-                  <Image src={ArrowLeft} alt='Show lists' />
-                ) : (
-                  <div></div>
-                )}
+                <FiArrowLeft className='text-xl' />
                 <p className=' font-semibold'>
                   {selectedList ? `${t('list')} #${selectedList}` : t('mint new list')}
                 </p>
@@ -151,21 +139,17 @@ const ConnectButton = () => {
                     : 'hidden group-hover:hidden'
                 } pr-5`}
               >
-                <div className='flex flex-col gap-2 w-full min-w-[190px] max-h-[75vh] sm:max-h-[80vh] overflow-scroll border-[3px] rounded-lg bg-white/90 dark:bg-darkGrey/90 border-gray-100 dark:border-gray-500 p-1  shadow-md'>
+                <div className='flex flex-col gap-2 w-full min-w-[190px] max-h-[75vh] sm:max-h-[80vh] overflow-scroll border-[3px] rounded-lg bg-white/90 dark:bg-darkGrey/90 border-zinc-100 dark:border-zinc-500 p-1  shadow-md'>
                   <div
                     onClick={() => setListMenuOpen(false)}
-                    className='flex sm:hidden justify-between items-center w-full group-hover:bg-slate-100 dark:group-hover:bg-gray-400/60  dark:hover:bg-gray-400/60 p-3 rounded-md transition-opacity cursor-pointer'
+                    className='flex sm:hidden justify-between items-center w-full group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/20  dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer'
                   >
-                    {lists?.lists && lists?.lists?.length > 0 ? (
-                      <Image src={ArrowLeft} alt='Show lists' />
-                    ) : (
-                      <div></div>
-                    )}
+                    <FiArrowLeft className='text-xl' />
                     <p className=' font-semibold'>Back</p>
                   </div>
                   {lists?.lists?.map(list => (
                     <div
-                      className='flex items-center relative p-3 pl-8 w-full gap-1 rounded-md hover:bg-slate-100 dark:hover:bg-gray-400/60'
+                      className='flex items-center relative p-3 pl-8 w-full gap-1 rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20'
                       key={list}
                       onClick={() => {
                         localStorage.setItem('selected-list', list)
@@ -184,7 +168,7 @@ const ConnectButton = () => {
                       )}
                       <p className='text-nowrap font-semibold'>{`${t('list')} #${list}`}</p>
                       {lists.primary_list === list && (
-                        <p className='mb-0.5 text-sm italic text-nowrap font-medium text-gray-400'>
+                        <p className='mb-0.5 text-sm italic text-nowrap font-medium text-zinc-400'>
                           - Primary
                         </p>
                       )}
@@ -192,7 +176,7 @@ const ConnectButton = () => {
                   ))}
                   <div
                     key={'new list'}
-                    className='flex gap-2 p-3 pl-8 relative hover:bg-slate-100 dark:hover:bg-gray-400/60 rounded-md'
+                    className='flex gap-2 p-3 pl-8 relative hover:bg-slate-100 dark:hover:bg-zinc-400/20 rounded-md'
                     onClick={() => {
                       localStorage.setItem('selected-list', 'new list')
                       setSelectedList(undefined)
@@ -217,9 +201,9 @@ const ConnectButton = () => {
           <div ref={clickAwayLanguageRef} className='w-full cursor-pointer group relative'>
             <div
               onClick={() => setLanguageMenuOpen(!languageMenOpenu)}
-              className='flex justify-between p-3 rounded-md group-hover:bg-slate-100 dark:group-hover:bg-gray-400/60 dark:hover:bg-gray-400/60 items-center w-full'
+              className='flex justify-between p-3 rounded-md group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/20 items-center w-full'
             >
-              <Image src={ArrowLeft} alt='Show languages' />
+              <FiArrowLeft className='text-xl' />
               <div className='flex gap-2'>
                 <Image src={selectedLanguage?.icon || ''} alt='Language icon' width={24} />
                 <p className='font-semibold '>{selectedLanguage?.language}</p>
@@ -230,21 +214,17 @@ const ConnectButton = () => {
                 languageMenOpenu ? 'block' : 'hidden'
               } group-hover:block pr-5`}
             >
-              <div className='flex flex-col gap-2 min-w-[190px] bg-white/90 dark:bg-darkGrey/90 border-[3px] border-gray-100 dark:border-gray-500 p-1 rounded-lg shadow-md'>
+              <div className='flex flex-col gap-2 min-w-[190px] bg-white/90 dark:bg-darkGrey/90 border-[3px] border-zinc-100 dark:border-zinc-500 p-1 rounded-lg shadow-md'>
                 <div
                   onClick={() => setLanguageMenuOpen(false)}
-                  className='flex sm:hidden justify-between items-center w-full group-hover:bg-slate-100 dark:group-hover:bg-gray-400/60 dark:hover:bg-gray-400/60 p-3 rounded-md transition-opacity cursor-pointer'
+                  className='flex sm:hidden justify-between items-center w-full group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/60 dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer'
                 >
-                  {lists?.lists && lists?.lists?.length > 0 ? (
-                    <Image src={ArrowLeft} alt='Show lists' />
-                  ) : (
-                    <div></div>
-                  )}
+                  <FiArrowLeft className='w-8 font-bold' />
                   <p className=' font-semibold'>Back</p>
                 </div>
                 {LANGUAGES.map(lang => (
                   <div
-                    className='p-3 pl-8 relative font-semibold rounded-md hover:bg-slate-100 dark:hover:bg-gray-400/60 transition-colors'
+                    className='p-3 pl-8 relative font-semibold rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-colors'
                     key={lang.language}
                     onClick={() => {
                       changeLanguage(lang)
@@ -268,8 +248,11 @@ const ConnectButton = () => {
               </div>
             </div>
           </div>
+          <Suspense fallback={<div>Auto</div>}>
+            <ThemeSwitcher connected={true} />
+          </Suspense>
           <p
-            className='text-red-500 p-3 text-right font-semibold w-full text-nowrap rounded-md hover:bg-slate-100 dark:hover:bg-gray-400/60 transition-opacity cursor-pointer'
+            className='text-red-500 p-3 text-right font-semibold w-full text-nowrap rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-opacity cursor-pointer'
             onClick={() => {
               disconnect()
               setWalletMenuOpen(false)

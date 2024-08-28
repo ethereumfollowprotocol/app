@@ -88,7 +88,7 @@ const TransactionDetails = ({
         )}
       </div>
       {action.isPendingConfirmation ? (
-        <p className='text-lg text-gray-400 italic font-bold'>{t('check wallet')}</p>
+        <p className='text-lg text-zinc-400 italic font-bold'>{t('check wallet')}</p>
       ) : (
         <a
           href={explorerUrl}

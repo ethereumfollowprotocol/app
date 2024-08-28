@@ -33,7 +33,7 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
           </button>
         </div>
       )}
-      <div className='pointer-events-none text-gray-500 absolute flex justify-start px-2 w-full left-0 top-1 font-semibold'>
+      <div className='pointer-events-none text-zinc-500 absolute flex justify-start px-2 w-full left-0 top-1 font-semibold'>
         <LoadingCell isStatic={isStatic} className='w-10 h-5 mt-1 rounded-lg' />
       </div>
       <div
@@ -57,21 +57,21 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
         <div className='flex w-full flex-wrap justify-center gap-10 gap-y-6 sm:gap-y-9 sm:gap-x-[60px] items-center mx-auto text-center'>
           <div className='flex flex-col items-center gap-2'>
             <LoadingCell isStatic={isStatic} className='w-12 h-6 rounded-lg' />
-            <div className='text-lg font-bold text-gray-500'>{t('following')}</div>
+            <div className='text-lg font-bold text-[#888] dark:text-[#aaa]'>{t('following')}</div>
           </div>
           <div className='flex flex-col items-center gap-2'>
             <LoadingCell isStatic={isStatic} className='w-12 h-6 rounded-lg' />
-            <div className='text-lg font-bold text-gray-500'>{t('followers')}</div>
+            <div className='text-lg font-bold text-[#888] dark:text-[#aaa]'>{t('followers')}</div>
           </div>
           <div className='flex flex-col w-full items-center gap-3 xl:w-56'>
-            <div className='text-lg font-bold text-darkGrey'>{t('leaderboard')}</div>
+            <div className='text-lg font-bold'>{t('leaderboard')}</div>
             <div className='flex xl:flex-col xl:w-full justify-center flex-wrap gap-3 xxs:gap-8 gap-y-3 xxs:gap-y-3 xl:gap-3'>
               {ranks.map((rank, i) => (
                 <div
                   key={i}
                   className='flex xl:w-full gap-3 justify-between items-center font-semibold'
                 >
-                  <p className='text-[#888]'>{t(rank)}</p>
+                  <p className='text-[#888] dark:text-[#aaa]'>{t(rank)}</p>
                   <LoadingCell className='h-5 w-10 rounded-md' isStatic={isStatic} />
                 </div>
               ))}

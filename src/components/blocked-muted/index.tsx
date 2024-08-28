@@ -1,9 +1,8 @@
-import Image from 'next/image'
 import { useState } from 'react'
+import { IoClose } from 'react-icons/io5'
 import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
 
-import Cross from 'public/assets/icons/cross.svg'
 import { BLOCKED_MUTED_TABS } from '#/lib/constants'
 import { useIsEditView } from '#/hooks/use-is-edit-view'
 import type { BlockedMutedTabType } from '#/types/common'
@@ -84,6 +83,7 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
   const mobileActiveEl = {
     'Blocked/Muted': (
       <UserProfilePageTable
+        key={'Blocked/Muted'}
         isLoading={blockingIsLoading}
         results={displayedBlocking}
         allTags={displayedBlockingTags}
@@ -105,6 +105,7 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
     ),
     'Blocked/Muted By': (
       <UserProfilePageTable
+        key={'Blocked/Muted By'}
         isLoading={blockedByIsLoading}
         results={blockedBy}
         allTags={displayedBlockedByTags}
@@ -133,11 +134,11 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
       >
         <div
           onClick={onClose}
-          className='absolute cursor-pointer z-50 hover:opacity-90 rounded-2xl bg-white/90 p-3 -top-[18px] right-1'
+          className='absolute cursor-pointer z-50 hover:opacity-90 rounded-2xl bg-white/90 dark:bg-[#444444]/90 p-3 -top-[18px] right-1'
         >
-          <Image src={Cross} alt='close blocked and muted list' className='h-4 w-4' />
+          <IoClose className='text-xl' />
         </div>
-        <div className='bg-white/80 h-fit rounded-2xl w-full hidden xl:block'>
+        <div className='bg-white/80 dark:bg-darkGrey/80 h-fit rounded-2xl w-full hidden xl:block'>
           <UserProfilePageTable
             isLoading={blockingIsLoading}
             results={displayedBlocking}
@@ -158,7 +159,7 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
             customClass='hidden xl:flex min-w-[600px] max-w-[47.5%]'
           />
         </div>
-        <div className='bg-white/80 h-fit w-full rounded-2xl hidden xl:block'>
+        <div className='bg-white/80 dark:bg-darkGrey/80 h-fit w-full rounded-2xl hidden xl:block'>
           <UserProfilePageTable
             isLoading={blockedByIsLoading}
             results={blockedBy}
@@ -178,14 +179,16 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
             customClass='hidden xl:flex min-w-[600px] max-w-[47.5%]'
           />
         </div>
-        <div className='w-full mt-12 relative bg-white/80 h-fit rounded-2xl xl:hidden'>
-          <div className='w-full absolute -top-12 left-0 '>
+        <div className='w-full mt-12 relative bg-white/80 dark:bg-darkGrey/80 h-fit rounded-2xl xl:hidden'>
+          <div className='w-full absolute -top-[50px] left-0 '>
             {BLOCKED_MUTED_TABS.map(option => (
               <button
                 key={option}
                 onClick={() => setActiveTab(option as BlockedMutedTabType)}
-                className={`w-1/2 capitalize  text-lg py-2 font-semibold glass-card border-[3px] border-gray-100 dark:border-gray-500 rounded-t-lg ${
-                  activeTab === option ? 'bg-white/60' : 'bg-white/20 hover:bg-white/40'
+                className={`w-1/2 capitalize text-lg py-2 font-semibold glass-card border-[3px] border-zinc-100 dark:border-zinc-500 rounded-t-lg ${
+                  activeTab === option
+                    ? 'bg-white/60 dark:bg-white/20'
+                    : 'bg-white/20 hover:bg-white/40 dark:bg-darkGrey/20 dark:hover:bg-white/10'
                 }`}
               >
                 {t(option)}

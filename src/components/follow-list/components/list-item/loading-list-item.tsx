@@ -19,7 +19,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ showTags, className }) => {
           </div>
           {showTags && (
             <div className='relative justify-start flex xl:w-[110px] w-[190px] flex-wrap gap-2 items-center sm:w-fit'>
-              <button className='h-5 w-5 flex items-center justify-center rounded-full hover:opacity-80 bg-gray-300'>
+              <button className='h-5 w-5 flex items-center justify-center rounded-full hover:opacity-80 bg-zinc-300'>
                 <Image src={Plus} alt='Add Tag' height={10} width={10} />
               </button>
               <LoadingCell className='h-6 xl:h-7 w-16 rounded-full' />

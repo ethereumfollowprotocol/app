@@ -54,7 +54,7 @@ const CommonFollowers: React.FC<CommonFollowersProps> = ({ address }) => {
         <LoadingCell className='h-10 rounded-xl' style={{ width: 'calc(100% - 80px)' }} />
       ) : (
         <p
-          className='text-left font-medium text-[#888] text-sm overflow-hidden'
+          className='text-left font-medium text-[#888] dark:text-[#aaa] text-sm overflow-hidden'
           style={{ maxWidth: 'calc(100% - 84px)' }}
         >
           {displayedNames

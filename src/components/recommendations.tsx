@@ -69,7 +69,7 @@ const Recommendations = ({
   }, [profilesToRecommend, page])
 
   return (
-    <div className={cn('flex flex-col gap-4', className)}>
+    <div className={cn('flex flex-col gap-6', className)}>
       <div className='px-2 pt-2 w-full'>
         <div className='w-full flex items-center justify-between'>
           <h2
@@ -91,7 +91,7 @@ const Recommendations = ({
             fetchPrevious={fetchPreviousPage}
           />
         </div>
-        <p className='text-center text-xs text-gray-400 italic font-medium'>{description}</p>
+        <p className='text-center text-xs text-zinc-400 italic font-medium'>{description}</p>
       </div>
       <FollowList
         isLoading={isLoading || isFetchingNextPage || isFetchingPreviousPage}

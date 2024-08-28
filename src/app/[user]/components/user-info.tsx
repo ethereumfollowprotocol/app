@@ -1,18 +1,18 @@
 'use client'
 
-import Image from 'next/image'
 import { useState } from 'react'
 import { useAccount } from 'wagmi'
+import { IoMdSettings } from 'react-icons/io'
 import { useTranslation } from 'react-i18next'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
+import { cn } from '#/lib/utilities'
 import useUser from '../hooks/useUser'
 import { PROFILE_TABS } from '#/lib/constants'
 import type { ProfileTabType } from '#/types/common'
 import ListSettings from '#/components/list-settings'
 import BlockedMuted from '#/components/blocked-muted'
 import { useIsEditView } from '#/hooks/use-is-edit-view'
-import SettingsIcon from 'public/assets/icons/settings.svg'
 import UserProfileCard from '#/components/user-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { ProfileDetailsResponse } from '#/types/requests'
@@ -150,6 +150,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   const mobileActiveEl = {
     following: (
       <UserProfilePageTable
+        key={'following'}
         isLoading={followingIsLoading}
         results={following}
         allTags={followingTags?.tagCounts}
@@ -172,6 +173,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     ),
     followers: (
       <UserProfilePageTable
+        key={'followers'}
         isLoading={followersIsLoading}
         results={followers}
         allTags={followerTags?.tagCounts}
@@ -254,11 +256,11 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
               )}
               {profile?.address && (profile?.primary_list || userIsList) && (
                 <div
-                  className='flex gap-1 cursor-pointer hover:opacity-80 hover:scale-110 transition-all'
+                  className='flex gap-1 cursor-pointer items-center hover:opacity-80 hover:scale-110 transition-all'
                   onClick={() => setListSettingsOpen(true)}
                 >
                   <p className='font-semibold '>{t('settings')}</p>
-                  <Image src={SettingsIcon} alt='List settings' width={18} height={18} />
+                  <IoMdSettings className='text-xl' />
                 </div>
               )}
             </div>
@@ -302,14 +304,15 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
             customClass='hidden xl:flex xl:max-w-[520px] 2xl:max-w-[40%]'
           />
           <div className='w-full mt-12 relative xl:hidden'>
-            <div className='w-full absolute -top-12 left-0'>
+            <div className='w-full absolute -top-[50px] left-0'>
               {PROFILE_TABS.map(option => (
                 <button
                   key={option}
                   onClick={() => setActiveTab(option)}
-                  className={`w-1/2 capitalize text-lg py-2 font-semibold glass-card border-[3px] border-gray-200 rounded-t-lg ${
-                    activeTab === option ? '' : 'bg-black/5'
-                  }`}
+                  className={cn(
+                    'w-1/2 capitalize text-lg py-2 font-semibold glass-card border-[3px] border-zinc-200 dark:border-zinc-500 rounded-t-lg',
+                    activeTab === option ? 'dark:bg-white/20' : 'bg-black/5 dark:hover:bg-white/10'
+                  )}
                 >
                   {t(option)}
                 </button>

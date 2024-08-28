@@ -100,15 +100,15 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
       ref={clickAwayTagDropwdownRef}
     >
       <button
-        className='p-1.5 rounded-full hover:opacity-80 hover:scale-110 transition-all bg-gray-300'
+        className='p-1.5 rounded-full hover:opacity-80 hover:scale-110 transition-all bg-zinc-300'
         onClick={() => setTagDropdownOpen(!tagDropdownOpen)}
       >
         <Image src={Plus} alt='Add Tag' width={12} />
       </button>
       {tagDropdownOpen && (
         <>
-          <div className='absolute z-50 flex flex-col w-60 gap-2 left-0 top-8 glass-card bg-white/50 p-2 border-[3px] border-gray-100 dark:border-gray-500 rounded-lg'>
-            <div className='w-full flex items-center gap-1.5 justify-between bg-gray-300 rounded-lg font-bold p-1 text-left'>
+          <div className='absolute z-50 flex flex-col w-60 gap-2 left-0 top-8 glass-card bg-white/50 p-2 border-[3px] border-zinc-100 dark:border-zinc-500 rounded-lg'>
+            <div className='w-full flex items-center gap-1.5 justify-between bg-zinc-300 rounded-lg font-bold p-1 text-left'>
               <input
                 ref={tagInputRef}
                 placeholder={t('custom tag')}
@@ -135,7 +135,7 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
               {recentTags.map(tag => (
                 <button
                   key={tag}
-                  className='font-semibold py-2 truncate px-3 hover:opacity-80 hover:scale-110 transition-all bg-gray-300 rounded-full'
+                  className='font-semibold py-2 truncate px-3 hover:opacity-80 hover:scale-110 transition-all bg-zinc-300 rounded-full'
                   onClick={() => addTag(tag)}
                 >
                   {tag}
@@ -161,7 +161,7 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
           >
             <button
               className={`font-semibold py-1 px-2 sm:py-1.5 max-w-full sm:px-3 truncate text-sm hover:opacity-80 rounded-full ${
-                removingTag ? 'bg-deletion' : 'bg-gray-300'
+                removingTag ? 'bg-deletion' : 'bg-zinc-300'
               }`}
               onClick={() => removeTag(tag)}
             >

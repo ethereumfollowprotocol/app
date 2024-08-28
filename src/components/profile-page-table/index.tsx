@@ -10,8 +10,9 @@ import type {
   FollowerResponse,
   FollowingResponse
 } from '#/types/requests'
+import { cn } from '#/lib/utilities'
 import Recommendations from '../recommendations'
-import { FETCH_LIMIT_PARAM } from '#/lib/constants'
+import { BLOCKED_MUTED_TABS, FETCH_LIMIT_PARAM } from '#/lib/constants'
 import TableHeader from './components/table-headers'
 import { FollowList } from '#/components/follow-list'
 import { useIsEditView } from '#/hooks/use-is-edit-view'
@@ -122,11 +123,11 @@ export function UserProfilePageTable({
           )}
           {title === 'following' && (
             <div className='flex flex-col justify-center min-h-12 gap-4 items-center'>
-              <p className='text-xl text-darkGrey italic'>
+              <p className='text-xl italic'>
                 {t(isProfile ? 'following myprofile empty first' : 'following empty first')}
               </p>
               {isProfile && (
-                <p className='text-base text-darkGrey italic w-3/4 max-w-96'>
+                <p className='text-base italic w-3/4 max-w-96'>
                   {t('following myprofile empty second')}
                 </p>
               )}
@@ -138,7 +139,7 @@ export function UserProfilePageTable({
       search.length > 2 ? (
         <div className='justify-center min-h-12 flex items-center font-semibold'>{t('none')}</div>
       ) : (
-        <p className='text-xl text-darkGrey italic flex justify-center items-center min-h-12'>
+        <p className='text-xl italic flex justify-center items-center min-h-12'>
           {t(isProfile ? 'followers myprofile empty' : 'followers empty')}
         </p>
       ),
@@ -148,9 +149,12 @@ export function UserProfilePageTable({
 
   return (
     <div
-      className={`glass-card flex flex-col w-full gap-4 py-2 px-0 ${
-        !(isLoading || isFetchingMore) && 'pb-0 sm:pb-0'
-      } sm:p-4 border-[3px] rounded-2xl border-gray-100 dark:border-gray-500 ${customClass}`}
+      className={cn(
+        'flex flex-col w-full gap-4 py-2 px-0 sm:p-4 border-[3px] rounded-2xl border-zinc-100 dark:border-zinc-500',
+        !(isLoading || isFetchingMore) && 'pb-0 sm:pb-0',
+        BLOCKED_MUTED_TABS.includes(title) ? 'bg-white/70 dark:bg-darkGrey/70' : 'glass-card',
+        customClass
+      )}
     >
       <TableHeader
         search={search}
