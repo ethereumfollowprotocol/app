@@ -14,7 +14,6 @@ html, body {
   width: 100vw;
   min-height: 100vh;
   overflow-x: hidden;
-  @apply text-darkGrey dark:text-[#eeeeee] bg-white dark:bg-darkGrey
 }
 
 body {
@@ -22,6 +21,8 @@ body {
   background-position: -34.1vw -31vh;
   background-size: 210vw 129vw;
   background-attachment: fixed;
+  @apply text-darkGrey dark:text-[#eeeeee] bg-white dark:bg-darkGrey
+
 }
 
 /* Disable zoom in iOS Safari when double tapping an element */

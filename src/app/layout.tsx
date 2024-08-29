@@ -42,26 +42,26 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       suppressHydrationWarning={true}
     >
       <HeadTag />
-      <ThemeProvider
-        attribute='class'
-        defaultTheme='system'
-        enableSystem={true}
-        disableTransitionOnChange={true}
+      <body
+        style={{
+          backgroundImage: `url(assets/art/waves-background.svg)`
+        }}
       >
-        <body
-          style={{
-            backgroundImage: `url(assets/art/waves-background.svg)`
-          }}
+        <ThemeProvider
+          attribute='class'
+          defaultTheme='system'
+          enableSystem={true}
+          disableTransitionOnChange={true}
         >
           <Toaster richColors={true} />
           <Providers initialState={initialState}>{children}</Providers>
           {/* <VercelToolbar /> */}
-          <Production>
-            <Analytics />
-            <SpeedInsights />
-          </Production>
-        </body>
-      </ThemeProvider>
+        </ThemeProvider>
+        <Production>
+          <Analytics />
+          <SpeedInsights />
+        </Production>
+      </body>
     </html>
   )
 }

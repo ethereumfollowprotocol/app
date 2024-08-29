@@ -106,8 +106,8 @@ const TableRow: React.FC<TableRowProps> = ({
           />
         </Link>
         <div
-          className='flex flex-col items-start max-w-[calc(100% - 50px)] md:max-w-[calc(100% - 60px)] truncate justify-center text-left'
-          style={{ maxWidth: 'calc(100% - 55px)' }}
+          className='flex flex-col items-start truncate justify-center text-left'
+          style={{ maxWidth: 'calc(100% - 60px)' }}
         >
           <Link href={`/${name || address}`} className='w-full'>
             <p className='font-bold text-base xxs:text-lg truncate max-w-full hover:opacity-60 transition-all'>
