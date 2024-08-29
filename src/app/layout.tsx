@@ -42,25 +42,28 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       suppressContentEditableWarning={true}
     >
       <HeadTag />
-      <body
-        style={{
-          backgroundImage: `url(assets/art/waves-background.svg)`
-        }}
-      >
+      <body>
         <ThemeProvider
           attribute='class'
           // defaultTheme='system'
           // enableSystem={true}
           // disableTransitionOnChange={true}
         >
-          <Toaster richColors={true} />
-          <Providers initialState={initialState}>{children}</Providers>
+          <div
+            className='text-darkGrey background dark:text-[#eeeeee] bg-white dark:bg-darkGrey'
+            style={{
+              backgroundImage: `url(assets/art/waves-background.svg)`
+            }}
+          >
+            <Toaster richColors={true} />
+            <Providers initialState={initialState}>{children}</Providers>
+          </div>
           {/* <VercelToolbar /> */}
-          <Production>
-            <Analytics />
-            <SpeedInsights />
-          </Production>
         </ThemeProvider>
+        <Production>
+          <Analytics />
+          <SpeedInsights />
+        </Production>
       </body>
     </html>
   )
