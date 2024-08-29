@@ -54,7 +54,7 @@ const theme: Record<
   Subscribed: {
     bg: 'bg-addition',
     text: 'text-zinc-800',
-    border: 'border-[3px] border-gray-200 py-1'
+    border: 'border-[3px] border-zinc-200 py-1'
   },
   Unsubscribe: {
     bg: 'bg-deletion',
@@ -168,7 +168,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
   )
 
   return isLoading ? (
-    <div className={`rounded-xl ${isBlockedBy ? 'w-[132px]' : 'px-3'} py-1`}>
+    <div className={`rounded-xl ${isBlockedBy ? 'w-[132px]' : 'w-[107px]'} py-1`}>
       <LoadingCell className='h-full w-full rounded-lg' />
     </div>
   ) : (

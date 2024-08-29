@@ -14,17 +14,17 @@ const ProfileStats: React.FC<ProfileStatsProps> = ({ stats }) => {
         <div className='text-xl text-center sm:text-2xl font-bold'>
           {stats === undefined ? '-' : stats.following_count}
         </div>
-        <div className='sm:text-lg font-bold text-gray-500'>{t('following')}</div>
+        <div className='sm:text-lg font-bold text-zinc-500'>{t('following')}</div>
       </div>
       <div>
         <div className='text-xl text-center sm:text-2xl font-bold'>
           {stats === undefined ? '-' : stats.followers_count}
         </div>
-        <div className='sm:text-lg text-gray-500 font-bold'>{t('followers')}</div>
+        <div className='sm:text-lg text-zinc-500 font-bold'>{t('followers')}</div>
       </div>
       <div>
         <div className='text-xl text-center sm:text-2xl font-bold'># -</div>
-        <div className='sm:text-lg font-bold text-gray-500'>{t('leaderboard')}</div>
+        <div className='sm:text-lg font-bold text-zinc-500'>{t('leaderboard')}</div>
       </div>
     </div>
   )

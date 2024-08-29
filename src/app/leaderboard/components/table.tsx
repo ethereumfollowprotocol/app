@@ -1,18 +1,17 @@
 'use client'
 
-import Image from 'next/image'
+import { FiSearch } from 'react-icons/fi'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 
 import TableRow from './row.tsx'
 import LoadingRow from './loading-row.tsx'
 import PageSelector from './page-selector.tsx'
-import LoadingCell from '#/components/loaders/loading-cell.tsx'
 import useLeaderboard from '../hooks/useLeaderboard.ts'
 import type { LeaderboardItem } from '#/types/requests.ts'
 import type { LeaderboardFilter } from '#/types/common.ts'
+import LoadingCell from '#/components/loaders/loading-cell.tsx'
 import { formatNumberLeaderboard } from '#/utils/formatNumber.ts'
-import MagnifyingGlass from 'public/assets/icons/magnifying-glass-dark.svg'
 import { leaderboardFilters, leaderboardFiltersEmojies } from '#/lib/constants/index.ts'
 
 const LeaderboardTable = () => {
@@ -69,7 +68,9 @@ const LeaderboardTable = () => {
               {formatNumberLeaderboard(Number(leaderboardStats?.address_count))}
             </p>
           )}
-          <p className='font-semibold capitalize text-lg text-[#888]'>{t('addresses')}</p>
+          <p className='font-semibold capitalize text-lg text-[#888] dark:text-[#aaa]'>
+            {t('addresses')}
+          </p>
         </div>
         <div className='gradient-border flex flex-col rounded-2xl items-center justify-center h-24 xs:h-[118px] w-full xs:w-64'>
           {isLeaderboardStatsLoading ? (
@@ -79,7 +80,9 @@ const LeaderboardTable = () => {
               {formatNumberLeaderboard(Number(leaderboardStats?.list_count))}
             </p>
           )}
-          <p className='font-semibold capitalize text-lg text-[#888]'>{t('lists')}</p>
+          <p className='font-semibold capitalize text-lg text-[#888] dark:text-[#aaa]'>
+            {t('lists')}
+          </p>
         </div>
         <div className='gradient-border flex flex-col rounded-2xl items-center justify-center h-24 xs:h-[118px] w-full xs:w-64'>
           {isLeaderboardStatsLoading ? (
@@ -89,10 +92,12 @@ const LeaderboardTable = () => {
               {formatNumberLeaderboard(Number(leaderboardStats?.list_op_count))}
             </p>
           )}
-          <p className='font-semibold capitalize text-lg text-[#888]'>{t('list ops')}</p>
+          <p className='font-semibold capitalize text-lg text-[#888] dark:text-[#aaa]'>
+            {t('list ops')}
+          </p>
         </div>
       </div>
-      <div className='flex w-full gap-1.5 justify-center lg:justify-end max-w-[1200px] text-sm mb-2 font-semibold text-[#aaaaaa] md:text-[#CDCDCD] italic'>
+      <div className='flex w-full gap-1.5 justify-center lg:justify-end max-w-[1200px] text-sm mt-4 font-semibold text-[#aaaaaa] md:text-[#CDCDCD] italic'>
         {t('last updated')}
         <span>
           {isLeaderboardLoading ? <LoadingCell className='h-5 w-16 rounded-md' /> : timeStamp}
@@ -104,7 +109,9 @@ const LeaderboardTable = () => {
             <div
               key={item}
               className={`p-2 font-semibold w-[132px] px-4 capitalize cursor-pointer transition-all rounded-full ${
-                filter === item ? 'bg-gray-100 shadow-inner' : 'bg-gray-300 hover:scale-110'
+                filter === item
+                  ? 'bg-zinc-100 dark:bg-zinc-400 shadow-inner'
+                  : 'bg-zinc-300 dark:bg-zinc-600 hover:scale-110'
               }`}
               onClick={() => onSelectFilter(item)}
             >
@@ -114,15 +121,13 @@ const LeaderboardTable = () => {
         </div>
         <div className='flex justify-between gap-4'>
           <div className='relative w-full sm:w-[260px] 2xl:w-[300px]'>
-            <div className='rounded-xl w-full group glass-card border-[3px] border-gray-200 hover:border-[#666] focus-within:border-[#666] transition-colors'>
+            <div className='rounded-xl w-full group glass-card overflow-hidden border-[3px] dark:border-white/50 border-zinc-300 sm:text-sm focus:border-[#666] hover:border-[#666] dark:focus:border-white/80 dark:hover:border-white/80 dark:focus-within:border-white/80 focus-within:border-darkGrey/80 transition-colors'>
               <div
                 className='pointer-events-none absolute inset-y-0 right-0 flex items-center pl-3'
                 aria-hidden='true'
               >
-                <Image
-                  src={MagnifyingGlass}
-                  alt='Search'
-                  className='mr-3 h-5 w-5 opacity-30 group-hover:opacity-60 group-focus-within:opacity-60 transition-opacity'
+                <FiSearch
+                  className='mr-3 text-xl opacity-30 dark:opacity-60 group-hover:opacity-80 dark:group-hover:opacity-100 group-focus-within:opacity-80 dark:group-focus-within:opacity-100 transition-opacity'
                   aria-hidden='true'
                 />
               </div>
@@ -132,7 +137,7 @@ const LeaderboardTable = () => {
                 placeholder={t('search placeholder')}
                 value={currentSearch}
                 onChange={handleSearchEvent}
-                className='h-[44px] block w-full rounded-xl border-0 font-medium border-transparent pl-4 pr-10 sm:text-sm'
+                className='h-[44px] block w-full border-0 font-medium border-transparent pl-4 pr-10 sm:text-sm bg-white/70 dark:bg-darkGrey/70'
               />
             </div>
           </div>
@@ -141,7 +146,9 @@ const LeaderboardTable = () => {
               <div
                 key={item}
                 className={`p-2 font-semibold px-4 capitalize cursor-pointer rounded-full transition-all ${
-                  filter === item ? 'bg-gray-100 shadow-inner' : 'bg-gray-300 hover:scale-110'
+                  filter === item
+                    ? 'bg-zinc-100 dark:bg-[#777] shadow-inner'
+                    : 'bg-zinc-300 dark:bg-[#555] hover:scale-110'
                 }`}
                 onClick={() => onSelectFilter(item)}
               >
@@ -159,8 +166,8 @@ const LeaderboardTable = () => {
             fetchPrevious={() => fetchPreviousLeaderboard()}
           />
         </div>
-        <div className='glass-card border-gray-100 border-[3px] rounded-xl flex flex-col gap-4 p-1 sm:px-4 sm:py-6 lg:px-8 relative'>
-          {leaderboard?.slice(0, 50).map((entry: LeaderboardItem, index) => (
+        <div className='glass-card border-zinc-200 dark:border-zinc-500 border-[3px] rounded-xl flex flex-col gap-4 p-1 sm:px-4 sm:py-6 lg:px-8 relative'>
+          {leaderboard?.map((entry: LeaderboardItem, index) => (
             <TableRow
               key={entry.address}
               address={entry.address}
@@ -180,7 +187,7 @@ const LeaderboardTable = () => {
             <div className='flex justify-center flex-col items-center h-40'>
               <p className='text-lg font-semibold'>No results found</p>
               <p
-                className='transition-colors italic hover:text-gray-700 text-gray-400 cursor-pointer font-semibold'
+                className='transition-colors italic hover:text-gray-700 text-zinc-400 cursor-pointer font-semibold'
                 onClick={() => resetSearch()}
               >
                 Clear Search

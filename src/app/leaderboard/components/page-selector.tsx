@@ -1,7 +1,9 @@
-import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
-
-import ArrowLeft from 'public/assets/icons/arrow-left-leaderboard.svg'
+import {
+  MdKeyboardArrowLeft,
+  MdKeyboardArrowRight,
+  MdKeyboardDoubleArrowLeft
+} from 'react-icons/md'
 
 interface PageSelectorProps {
   page: number
@@ -58,54 +60,29 @@ const PageSelector: React.FC<PageSelectorProps> = ({
         <button
           onClick={() => handlePageChange(1)}
           disabled={page === 1}
-          className='text-darkGrey glass-card flex items-center hover:scale-110 disabled:hover:scale-100 justify-center font-semibold group hover:border-opacity-100 h-9 w-9 border-[3px] border-darkGrey border-opacity-40 transition-all rounded-[10px] disabled:border-opacity-10'
+          className='glass-card text-darkGrey dark:text-white flex items-center hover:scale-110 disabled:hover:scale-100 justify-center font-semibold group hover:border-darkGrey h-9 w-9 border-[3px] dark:border-white/70 dark:hover:border-white/100 border-darkGrey/40 transition-all rounded-[10px] disabled:border-darkGrey/10 dark:disabled:border-white/20 dark:disabled:hover:border-white/20'
         >
-          <Image
-            src={ArrowLeft}
-            alt='Previous page'
-            width={9}
-            height={12}
-            className='group-hover:opacity-100 opacity-40 group-disabled:opacity-10'
-          />
-          <Image
-            src={ArrowLeft}
-            alt='Previous page'
-            width={9}
-            height={12}
-            className='group-hover:opacity-100 opacity-40 group-disabled:opacity-10'
-          />
+          <MdKeyboardDoubleArrowLeft className='w-6 h-6 group-hover:opacity-100 opacity-40 dark:opacity-80 group-disabled:opacity-20 transition-opacity' />
         </button>
       )}
       <button
         onClick={() => handlePageChange(page - 1)}
         disabled={page === 1}
-        className='text-darkGrey glass-card flex items-center hover:scale-110 disabled:hover:scale-100 justify-center font-semibold group hover:border-opacity-100 h-9 w-9 border-[3px] border-darkGrey border-opacity-40 transition-all rounded-[10px] disabled:border-opacity-10'
+        className='glass-card text-darkGrey dark:text-white flex items-center hover:scale-110 disabled:hover:scale-100 justify-center font-semibold group hover:border-darkGrey h-9 w-9 border-[3px] dark:border-white/70 dark:hover:border-white/100 border-darkGrey/40 transition-all rounded-[10px] disabled:border-darkGrey/10 dark:disabled:border-white/20 dark:disabled:hover:border-white/20'
       >
-        <Image
-          src={ArrowLeft}
-          alt='Previous page'
-          width={9}
-          height={12}
-          className='group-hover:opacity-100 opacity-40 group-disabled:opacity-10'
-        />
+        <MdKeyboardArrowLeft className='w-6 h-6 group-hover:opacity-100 opacity-40 dark:opacity-80 group-disabled:opacity-20 transition-opacity' />
       </button>
       {displayPageNumber && (
-        <p className='text-darkGrey glass-card flex items-center justify-center font-semibold h-9 w-9 border-[3px] border-darkGrey transition-opacity rounded-[10px]'>
+        <p className='glass-card flex items-center disabled:hover:scale-100 justify-center font-semibold group  h-9 w-9 border-[3px] dark:border-white border-darkGrey transition-all rounded-[10px]'>
           {page}
         </p>
       )}
       <button
         onClick={() => handlePageChange(page + 1)}
         disabled={!hasNextPage}
-        className='text-darkGrey glass-card flex items-center hover:scale-110 disabled:hover:scale-100 justify-center font-semibold group hover:border-opacity-100 h-9 w-9 border-[3px] border-darkGrey border-opacity-40 transition-all rounded-[10px] disabled:border-opacity-10'
+        className='glass-card text-darkGrey dark:text-white flex items-center hover:scale-110 disabled:hover:scale-100 justify-center font-semibold group hover:border-darkGrey h-9 w-9 border-[3px] dark:border-white/70 dark:hover:border-white/100 border-darkGrey/40 transition-all rounded-[10px] disabled:border-darkGrey/10 dark:disabled:border-white/20 dark:disabled:hover:border-white/20'
       >
-        <Image
-          src={ArrowLeft}
-          alt='Next page'
-          width={9}
-          height={12}
-          className='rotate-180 group-hover:opacity-100 opacity-40 group-disabled:opacity-10'
-        />
+        <MdKeyboardArrowRight className='w-6 h-6 group-hover:opacity-100 opacity-40 dark:opacity-80 group-disabled:opacity-20 transition-opacity' />
       </button>
     </div>
   )

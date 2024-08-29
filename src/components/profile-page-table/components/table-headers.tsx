@@ -1,18 +1,18 @@
 import Image from 'next/image'
 import { useState } from 'react'
+import { FiSearch } from 'react-icons/fi'
+import { IoClose } from 'react-icons/io5'
 import { useTranslation } from 'react-i18next'
+import { IoIosArrowDown } from 'react-icons/io'
 import { useClickAway } from '@uidotdev/usehooks'
 
 import LoadingCell from '#/components/loaders/loading-cell'
 import { formatNumber } from '#/utils/formatNumber'
-import CrossIcon from 'public/assets/icons/cross.svg'
-import ArrowDown from 'public/assets/icons/arrow-down.svg'
 import type { ProfileTableTitleType } from '#/types/common'
 import GreenCheck from 'public/assets/icons/check-green.svg'
-import SearchIcon from 'public/assets/icons/magnifying-glass-dark.svg'
-import { BLOCKED_MUTED_TABS, BLOCKED_MUTED_TAGS, SORT_OPTIONS } from '#/lib/constants'
 import type { FollowSortType, TagCountType } from '#/types/requests'
 import { QUERY_BLOCK_TAGS } from '#/components/blocked-muted/hooks/use-blocked-muted'
+import { BLOCKED_MUTED_TABS, BLOCKED_MUTED_TAGS, SORT_OPTIONS } from '#/lib/constants'
 
 interface TableHeaderProps {
   title: ProfileTableTitleType
@@ -71,32 +71,22 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                   className='cursor-pointer max-w-40 flex items-center h-6 hover:scale-125 transition-all gap-2 hover:opacity-75'
                   onClick={() => setShowSearch(!showSearch)}
                 >
-                  <Image
-                    src={SearchIcon}
-                    alt='Search'
-                    width={18}
-                    height={18}
-                    className='opacity-50 hover:opacity-100 transition-opacity'
-                  />
+                  <FiSearch className='opacity-50 text-2xl hover:opacity-100 transition-opacity' />
                   <p className='font-medium text-sm truncate hidden sm:block md:hidden lg:block xl:hidden 2xl:block'>
                     {search}
                   </p>
                 </div>
                 {search && (
-                  <Image
-                    src={CrossIcon}
-                    alt='Search'
-                    width={14}
-                    height={14}
+                  <IoClose
                     onClick={() => {
                       setSearch('')
                       setShowSearch(false)
                     }}
-                    className='opacity-50 hover:opacity-60 h-5 w-5 hover:scale-125 p-1 mt-0.5 bg-gray-300 cursor-pointer rounded-full transition-all'
+                    className='opacity-50 text-xl hover:opacity-60 hover:scale-125 p-0.5 mt-0.5 text-darkGrey bg-zinc-300 cursor-pointer rounded-full transition-all'
                   />
                 )}
                 {showSearch && (
-                  <div className='absolute glass-card flex items-center border-[3px] bg-white/75 border-[#666] -top-4 gap-1 lg:-left-1 -left-16 sm:-left-1 md:-left-16 w-64 h-fit rounded-xl shadow-md'>
+                  <div className='absolute glass-card flex items-center border-[3px] bg-white/75 dark:bg-darkGrey/90 border-zinc-300 dark:border-[#666] -top-4 gap-1 lg:-left-1 -left-16 sm:-left-1 md:-left-16 w-64 h-fit rounded-xl shadow-md'>
                     <input
                       type='text'
                       spellCheck={false}
@@ -107,16 +97,14 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                         setSearch(e.target.value.toLowerCase().trim())
                       }}
                       value={search}
-                      className='font-medium py-3 block w-full rounded-lg border-0 border-transparent pl-3 pr-10 sm:text-sm bg-white/50'
+                      className='font-medium py-3 block w-full rounded-lg border-0 border-transparent pl-3 pr-10 sm:text-sm dark:bg-darkGrey/50 bg-white/50'
                     />
                     <div
                       className='pointer-events-none absolute inset-y-0 right-0 flex items-center pl-3'
                       aria-hidden='true'
                     >
-                      <Image
-                        src={SearchIcon}
-                        alt='Search'
-                        className='mr-3 h-5 w-5 text-gray-400'
+                      <FiSearch
+                        className='mr-3 text-xl dark:text-white/90 text-zinc-400'
                         aria-hidden='true'
                       />
                     </div>
@@ -131,34 +119,24 @@ const TableHeader: React.FC<TableHeaderProps> = ({
               className='cursor-pointer flex items-center hover:scale-110 transition-transform gap-1'
             >
               <p className='text-sm font-bold'>{t('tags')}</p>
-              <Image
-                src={ArrowDown}
-                alt='open tags'
-                width={10}
-                height={10}
-                className={`transition-transform ${showTags ? 'rotate-180' : ''}`}
-              />
+              <IoIosArrowDown className={`transition-transform ${showTags ? 'rotate-180' : ''}`} />
             </div>
             <div
               ref={clickAwaySortRef}
               onClick={() => setShowSort(!showSort)}
               className='cursor-pointer flex relative items-center gap-1'
             >
-              <div className='flex gap-1 hover:scale-110 transition-transform'>
+              <div className='flex gap-1 hover:scale-110 items-center transition-transform'>
                 <p className='text-sm capitalize font-bold'>{t(sort)}</p>
-                <Image
-                  src={ArrowDown}
-                  alt='open sort'
-                  width={10}
-                  height={10}
+                <IoIosArrowDown
                   className={`transition-transform ${showSort ? 'rotate-180' : ''}`}
                 />
               </div>
               {showSort && (
-                <div className=' bg-white/80 glass-card p-1 gap-1 z-50 shadow-md border-[3px] rounded-md border-gray-100 absolute top-[120%] flex flex-col items-center right-0'>
+                <div className=' bg-white/80 dark:bg-darkGrey/80 glass-card p-1 gap-1 z-50 shadow-md border-[3px] rounded-md border-zinc-200 dark:border-zinc-500 absolute top-[120%] flex flex-col items-center right-0'>
                   {SORT_OPTIONS.map(option => (
                     <div
-                      className='font-bold capitalize w-full text-nowrap relative rounded-md hover:bg-slate-100 transition-colors p-3 pl-8 text-darkGrey hover:text-darkGrey'
+                      className='font-bold capitalize w-full text-nowrap relative rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-colors p-3 pl-8'
                       key={option}
                       onClick={() => setSort(option)}
                     >
@@ -188,21 +166,25 @@ const TableHeader: React.FC<TableHeaderProps> = ({
               <LoadingCell className='w-20 h-7 md:h-9 rounded-full' />
             </>
           ) : !displayedTags || displayedTags.length === 0 ? (
-            <p className='text-center w-full font-semibold text-gray-500 italic'>{t('no tags')}</p>
+            <p className='text-center w-full font-semibold text-zinc-500 dark:text-zinc-300 italic'>
+              {t('no tags')}
+            </p>
           ) : (
             displayedTags?.map((tag, i) => (
               <button
                 key={tag.tag + i}
                 className={`text-sm flex gap-1.5 px-4 py-2 font-semibold items-center hover:scale-110 transition-transform ${
                   selectedTags?.includes(tag.tag)
-                    ? 'text-darkGrey bg-gray-100 shadow-inner shadow-black/10'
-                    : 'text-gray-500 bg-gray-300/80'
+                    ? 'text-darkGrey bg-zinc-100 shadow-inner shadow-black/10'
+                    : 'text-zinc-500 bg-zinc-300/80'
                 } rounded-full`}
                 name={tag.tag.toLowerCase()}
                 onClick={() => toggleSelectedTags(title, tag.tag)}
               >
                 <p>{BLOCKED_MUTED_TAGS.includes(tag.tag) ? t(tag.tag) : tag.tag}</p>
-                <p className='text-xs text-gray-400'>{formatNumber(tag.count)}</p>
+                <p className='text-xs text-zinc-400 dark:text-zinc-500'>
+                  {formatNumber(tag.count)}
+                </p>
               </button>
             ))
           )}

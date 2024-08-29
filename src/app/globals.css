@@ -12,16 +12,17 @@
 
 html, body {
   width: 100vw;
-  color: #333333;
   min-height: 100vh;
   overflow-x: hidden;
 }
 
 body {
   background-repeat: no-repeat;
-  background-position: -34.1vw -38vw;
+  background-position: -34.1vw -31vh;
   background-size: 210vw 129vw;
   background-attachment: fixed;
+  @apply text-darkGrey dark:text-[#eeeeee] bg-white dark:bg-darkGrey
+
 }
 
 /* Disable zoom in iOS Safari when double tapping an element */
@@ -50,13 +51,8 @@ body::-webkit-scrollbar-thumb {
 }
 
 .glass-card {
-    background: linear-gradient(
-        to right bottom,
-        rgba(245, 245, 245, 0.45),
-        rgba(245, 245, 245, 0.25)
-    ) padding-box;
-    /* linear-gradient(135deg, #faf35f, #ffbce3) border-box; */
     backdrop-filter: blur(1rem);
+    @apply from-[#f5f5f573] dark:from-[#f5f5f526] to-[#f5f5f540] dark:to-[#f5f5f520] bg-gradient-to-br;
 }
 
 :focus:not(:focus-visible) {
@@ -165,18 +161,32 @@ input {
 }
 
 .connect-button {
-    background:
-      linear-gradient(#fafafa, #fafafa) padding-box,
-      linear-gradient(135deg, #faf35f, #ffbce3) border-box;
-      border: 5px solid transparent;
-      border-radius: 40px;
+  background:
+    linear-gradient(#fafafa, #fafafa) padding-box,
+    linear-gradient(135deg, #faf35f, #ffbce3) border-box;
+  border: 5px solid transparent;
+  border-radius: 40px;
   transition: background 100ms ease-in-out;
+}
 
+.dark .connect-button {
+  background:
+    linear-gradient(#333333, #333333) padding-box,
+    linear-gradient(135deg, #faf35f, #ffbce3) border-box;
+  border: 5px solid transparent;
+  border-radius: 40px;
+  transition: background 100ms ease-in-out;
 }
 
 .connect-button:hover {
   background:
   linear-gradient(135deg, #fffee2, #fdf2f9) padding-box,
+  linear-gradient(135deg, #faf35f, #ffbce3) border-box;
+}
+
+.dark .connect-button:hover {
+  background:
+  linear-gradient(135deg, #333333cc, #333333cc) padding-box,
   linear-gradient(135deg, #faf35f, #ffbce3) border-box;
 }
 
@@ -187,12 +197,27 @@ input {
   border: 5px solid transparent;
   border-radius: 40px;
   transition: background 100ms ease-in-out;
+}
 
+.dark .connect-button-open {
+  background:
+  linear-gradient(135deg, #333333cc, #333333cc) padding-box,
+  linear-gradient(135deg, #faf35f, #ffbce3) border-box;
+  border: 5px solid transparent;
+  border-radius: 40px;
+  transition: background 100ms ease-in-out;
 }
 
 .gradient-border {
   background:
   linear-gradient(#fafafa, #fafafa) padding-box,
+  linear-gradient(135deg, #faf35f, #ffbce3) border-box;
+  border: 3px solid transparent;
+}
+
+.dark .gradient-border {
+  background:
+  linear-gradient(#333333, #333333) padding-box,
   linear-gradient(135deg, #faf35f, #ffbce3) border-box;
   border: 3px solid transparent;
 }
@@ -490,7 +515,7 @@ input {
 /* Background size changes */
 @media screen and (max-width: 1750px) {
   body {
-    background-position: -34.1vw -30vw;
+    background-position: -34.1vw -34vw;
     background-size: 210vw 129vw;
   }
 }

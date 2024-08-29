@@ -42,7 +42,7 @@ export function SelectChainCard({
         <h1 className='text-2xl sm:text-3xl font-semibold'>
           {t(isCreatingNewList ? 'title create list' : 'title list op')}
         </h1>
-        {isCreatingNewList && <p className=' font-medium text-gray-400'>{t('comment')}</p>}
+        {isCreatingNewList && <p className=' font-medium text-zinc-400'>{t('comment')}</p>}
       </div>
       <div className='flex flex-col items-center gap-4 sm:gap-6'>
         <p className='text-xl sm:text-2xl font-bold'>{t('select')}</p>

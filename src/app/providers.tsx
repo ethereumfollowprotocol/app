@@ -1,13 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { WagmiProvider, type State } from 'wagmi'
-import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { darkTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental'
 
 import wagmiConfig from '#/lib/wagmi'
+import { useTheme } from 'next-themes'
 import { DAY, MINUTE } from '#/lib/constants'
 import Navigation from '#/components/navigation'
 import { CartProvider } from '#/contexts/cart-context'
@@ -30,12 +31,21 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
       })
   )
 
+  const { resolvedTheme } = useTheme()
+  const [isClient, setIsClient] = useState(false)
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryStreamedHydration>
         <WagmiProvider config={wagmiConfig} initialState={initialState}>
           {/* <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}> */}
-          <RainbowKitProvider coolMode={true}>
+          <RainbowKitProvider
+            coolMode={true}
+            theme={isClient && resolvedTheme === 'dark' ? darkTheme() : undefined}
+          >
             <CartProvider>
               <EFPProfileProvider>
                 <TransactionsProvider>

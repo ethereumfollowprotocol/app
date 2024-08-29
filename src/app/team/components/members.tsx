@@ -27,7 +27,7 @@ const Members = () => {
     <div className='flex-row flex-wrap flex mx-auto lg:flex-row gap-8 align-middle justify-center items-center'>
       {teamProfiles?.map((profile, i) => (
         <div key={profile?.address} className='flex flex-col items-center gap-2'>
-          {teamRoles && <p className='text-lg font-bold text-gray-500'>{teamRoles[i]}</p>}
+          {teamRoles && <p className='text-lg font-bold text-zinc-500'>{teamRoles[i]}</p>}
           <UserProfileCard
             isResponsive={false}
             profile={profile}

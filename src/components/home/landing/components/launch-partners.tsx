@@ -12,13 +12,13 @@ const LaunchPartners = () => {
 
   return (
     <div className='flex flex-col items-center gap-14 relative'>
-      <div className='glass-card z-10 sm:p-8 md:p-10 border-[3px] border-[#FF79C9] p-4 text-black font-bold text-center text-sm rounded-3xl mx-auto w-full max-w-4xl'>
-        <p className='text-zinc-900 text-3xl font-bold pb-4 sm:pb-6'>{t('partners')}</p>
+      <div className='glass-card z-10 sm:p-8 md:p-10 border-[3px] border-[#FF79C9] p-4 font-bold text-center text-sm rounded-3xl mx-auto w-full max-w-4xl'>
+        <p className='text-3xl font-bold pb-4 sm:pb-6'>{t('partners')}</p>
         <section className='w-full gap-y-8 z-10 gap-x-12 sm:gap-x-8 grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 grid-rows-2'>
           {LAUNCH_PARTNERS.map(partner => (
             <div key={partner.name} className='w-full hover:scale-110 transition-transform'>
               <Link
-                className='text-black text-xs rounded-full space-y-2'
+                className='text-xs rounded-full space-y-2'
                 target='_blank'
                 rel='noopener noreferrer'
                 href={partner.url}
