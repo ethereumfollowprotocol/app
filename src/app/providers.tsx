@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { ThemeProvider } from 'next-themes'
 import { WagmiProvider, type State } from 'wagmi'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { darkTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit'
@@ -32,32 +31,30 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
   )
 
   return (
-    <ThemeProvider attribute='class' defaultTheme='system' enableSystem={true}>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryStreamedHydration>
-          <WagmiProvider config={wagmiConfig} initialState={initialState}>
-            {/* <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}> */}
-            <RainbowKitProvider
-              coolMode={true}
-              theme={localStorage.getItem('theme') === 'dark' ? darkTheme() : undefined}
-            >
-              <CartProvider>
-                <EFPProfileProvider>
-                  <TransactionsProvider>
-                    <ActionsProvider>
-                      <Navigation />
-                      {children}
-                    </ActionsProvider>
-                  </TransactionsProvider>
-                </EFPProfileProvider>
-              </CartProvider>
-            </RainbowKitProvider>
-            {/* </PersistQueryClientProvider> */}
-          </WagmiProvider>
-        </ReactQueryStreamedHydration>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryStreamedHydration>
+        <WagmiProvider config={wagmiConfig} initialState={initialState}>
+          {/* <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}> */}
+          <RainbowKitProvider
+            coolMode={true}
+            theme={localStorage.getItem('theme') === 'dark' ? darkTheme() : undefined}
+          >
+            <CartProvider>
+              <EFPProfileProvider>
+                <TransactionsProvider>
+                  <ActionsProvider>
+                    <Navigation />
+                    {children}
+                  </ActionsProvider>
+                </TransactionsProvider>
+              </EFPProfileProvider>
+            </CartProvider>
+          </RainbowKitProvider>
+          {/* </PersistQueryClientProvider> */}
+        </WagmiProvider>
+      </ReactQueryStreamedHydration>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   )
 }
 

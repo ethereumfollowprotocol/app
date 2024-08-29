@@ -5,6 +5,7 @@ import '@rainbow-me/rainbowkit/styles.css'
 import { Toaster } from 'sonner'
 import type { Metadata } from 'next'
 import { headers } from 'next/headers'
+import { ThemeProvider } from 'next-themes'
 import { cookieToInitialState } from 'wagmi'
 import { Analytics } from '@vercel/analytics/react'
 import { Inter, IBM_Plex_Mono } from 'next/font/google'
@@ -37,7 +38,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html
       lang='en'
-      className={cn([inteFont.variable, ibmPlexMonoFont.variable, 'light'])}
+      className={cn([inteFont.variable, ibmPlexMonoFont.variable], 'dark')}
       suppressContentEditableWarning={true}
     >
       <HeadTag />
@@ -46,13 +47,20 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           backgroundImage: `url(assets/art/waves-background.svg)`
         }}
       >
-        <Toaster richColors={true} />
-        <Providers initialState={initialState}>{children}</Providers>
-        {/* <VercelToolbar /> */}
-        <Production>
-          <Analytics />
-          <SpeedInsights />
-        </Production>
+        <ThemeProvider
+          attribute='class'
+          defaultTheme='system'
+          enableSystem={true}
+          disableTransitionOnChange={true}
+        >
+          <Toaster richColors={true} />
+          <Providers initialState={initialState}>{children}</Providers>
+          {/* <VercelToolbar /> */}
+          <Production>
+            <Analytics />
+            <SpeedInsights />
+          </Production>
+        </ThemeProvider>
       </body>
     </html>
   )
@@ -65,6 +73,11 @@ const HeadTag = () => {
       <meta name='description' content={APP_DESCRIPTION} />
       <link rel='manifest' href='/site.webmanifest' crossOrigin='use-credentials' />
       <link rel='icon' href='/assets/favicon.ico' sizes='any' />
+      <link rel='preload' href='/assets/art/waves-background.svg' as='image' />
+      <link rel='preload' href='/assets/logo.svg' as='image' />
+      <link rel='preload' href='/assets/icons/block-emoji.svg' as='image' />
+      <link rel='preload' href='/assets/icons/mute-emoji.svg' as='image' />
+      <link rel='preload' href='/assets/icons/unfollow-emoji.svg' as='image' />
       <meta name='apple-mobile-web-app-capable' content='yes' />
       <meta name='apple-mobile-web-app-status-bar-style' content='default' />
       <meta name='apple-mobile-web-app-title' content='EFP' />
