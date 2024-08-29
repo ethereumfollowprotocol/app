@@ -35,7 +35,11 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   const initialState = cookieToInitialState(wagmiConfig, headers().get('cookie'))
 
   return (
-    <html lang='en' className={cn([inteFont.variable, ibmPlexMonoFont.variable, 'light'])}>
+    <html
+      lang='en'
+      className={cn([inteFont.variable, ibmPlexMonoFont.variable, 'light'])}
+      suppressContentEditableWarning={true}
+    >
       <HeadTag />
       <body
         style={{
@@ -57,7 +61,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 const HeadTag = () => {
   return (
     <head>
-      <meta charSet='utf-8' />
       <meta name='viewport' content='width=device-width, initial-scale=1' />
       <meta name='description' content={APP_DESCRIPTION} />
       <link rel='manifest' href='/site.webmanifest' crossOrigin='use-credentials' />

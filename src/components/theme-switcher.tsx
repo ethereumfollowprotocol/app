@@ -1,5 +1,6 @@
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { useTheme } from 'next-themes'
 import { FiArrowLeft } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
@@ -11,7 +12,7 @@ import GreenCheck from 'public/assets/icons/check-green.svg'
 
 const themesWithIcons = [
   {
-    theme: 'auto',
+    theme: 'system',
     icon: <HiOutlineDesktopComputer />
   },
   {
@@ -24,7 +25,7 @@ const themesWithIcons = [
   }
 ]
 
-const themes = ['auto', 'light', 'dark'] as const
+const themes = ['system', 'light', 'dark'] as const
 type ThemeType = (typeof themes)[number]
 
 interface ThemeSwitcherProps {
@@ -39,47 +40,15 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ connected, closeMenu }) =
   })
 
   const { t } = useTranslation()
-
-  const [selectedTheme, setSelectedTheme] = useState<ThemeType>(() => {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      const storedTheme = window.localStorage.getItem('theme')
-      if (storedTheme) {
-        return storedTheme as ThemeType
-      }
-      const userMedia = window.matchMedia('(prefers-color-scheme: dark)')
-      if (userMedia.matches) {
-        return 'auto'
-      }
-    }
-    return 'light'
-  })
-
-  useEffect(() => {
-    if (selectedTheme === 'auto') {
-      const userMedia = window.matchMedia('(prefers-color-scheme: dark)')
-
-      if (userMedia.matches) {
-        document.documentElement.classList.add('dark')
-        localStorage.removeItem('theme')
-        return
-      }
-    }
-
-    if (selectedTheme === 'dark') {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-    localStorage.setItem('theme', selectedTheme)
-  }, [selectedTheme])
+  const { setTheme, theme: selectedTheme } = useTheme()
 
   return (
     <div ref={clickAwayThemeRef} className='w-full cursor-pointer group relative'>
       <div
         onClick={() => setThemeMenuOpen(!themeMenuOpen)}
         className={cn(
-          'flex justify-between items-center w-full p-3 rounded-md transition-opacity cursor-pointer',
-          connected && 'group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/20'
+          'flex justify-between items-center w-full rounded-md transition-opacity cursor-pointer',
+          connected && 'group-hover:bg-slate-100 p-3 dark:group-hover:bg-zinc-400/20'
         )}
       >
         {connected && <FiArrowLeft className='text-xl' />}
@@ -87,13 +56,15 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ connected, closeMenu }) =
           <p className={cn(connected ? 'text-2xl' : 'text-3xl')}>
             {themesWithIcons.find(({ theme }) => theme === selectedTheme)?.icon}
           </p>
-          {connected && <p className='capitalize font-semibold'>{t(selectedTheme)}</p>}
+          {connected && <p className='capitalize font-semibold'>{t(selectedTheme || 'system')}</p>}
         </div>
       </div>
       <div
         className={cn(
           'absolute group-hover:block min-w-[190px] block z-50',
-          connected ? '-right-[14.6%] sm:right-[97.2%] -top-[6px] pr-5' : 'top-[100%] -left-7',
+          connected
+            ? '-right-[14.6%] sm:right-[97.2%] -top-[6px] pr-5'
+            : 'top-[100%] pt-3 -left-10',
           themeMenuOpen ? 'block' : 'hidden'
         )}
       >
@@ -110,9 +81,8 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ connected, closeMenu }) =
               className='flex items-center relative p-3 pl-8 w-full gap-2 rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20'
               key={theme}
               onClick={() => {
-                setSelectedTheme(theme as ThemeType)
+                setTheme(theme as ThemeType)
                 setThemeMenuOpen(false)
-                if (closeMenu) setTimeout(closeMenu, 50)
               }}
             >
               {selectedTheme === theme && (

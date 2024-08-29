@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { IoIosArrowDown } from 'react-icons/io'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
-import { lazy, Suspense, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useAccount, useDisconnect, useWalletClient } from 'wagmi'
 
@@ -14,12 +14,10 @@ import useLanguage from '../hooks/useLanguage'
 import { resolveEnsProfile } from '#/utils/ens'
 import Wallet from 'public/assets/icons/wallet.svg'
 import { cn, truncateAddress } from '#/lib/utilities'
-import { HiOutlineDesktopComputer } from 'react-icons/hi'
+import ThemeSwitcher from '#/components/theme-switcher'
 import GreenCheck from 'public/assets/icons/check-green.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
-
-const ThemeSwitcher = lazy(() => import('../../theme-switcher'))
 
 const nullEnsProfile = {
   name: null,
@@ -249,21 +247,7 @@ const ConnectButton = () => {
               </div>
             </div>
           </div>
-          <Suspense
-            fallback={
-              <div className='flex justify-between items-center w-full group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer'>
-                <FiArrowLeft className='text-xl' />
-                <div className='flex items-center justify-end gap-2'>
-                  <p className='text-2xl'>
-                    <HiOutlineDesktopComputer />
-                  </p>
-                  <p className='capitalize font-semibold'>{t('auto')}</p>
-                </div>
-              </div>
-            }
-          >
-            <ThemeSwitcher connected={true} closeMenu={() => setWalletMenuOpen(false)} />
-          </Suspense>
+          <ThemeSwitcher connected={true} closeMenu={() => setWalletMenuOpen(false)} />
           <p
             className='text-red-500 p-3 text-right font-semibold w-full text-nowrap rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-opacity cursor-pointer'
             onClick={() => {

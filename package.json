@@ -28,6 +28,7 @@
     "i18next-http-backend": "^2.5.2",
     "million": "^2.6.4",
     "next": "^14.1.4",
+    "next-themes": "^0.3.0",
     "next-usequerystate": "^1.15.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
