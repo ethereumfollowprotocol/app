@@ -49,9 +49,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       >
         <ThemeProvider
           attribute='class'
-          defaultTheme='system'
-          enableSystem={true}
-          disableTransitionOnChange={true}
+          // defaultTheme='system'
+          // enableSystem={true}
+          // disableTransitionOnChange={true}
         >
           <Toaster richColors={true} />
           <Providers initialState={initialState}>{children}</Providers>
