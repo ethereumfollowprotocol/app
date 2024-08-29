@@ -39,19 +39,19 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     <html
       lang='en'
       className={cn([inteFont.variable, ibmPlexMonoFont.variable])}
-      suppressContentEditableWarning={true}
+      suppressHydrationWarning={true}
     >
       <HeadTag />
-      <body
-        style={{
-          backgroundImage: `url(assets/art/waves-background.svg)`
-        }}
+      <ThemeProvider
+        attribute='class'
+        defaultTheme='system'
+        enableSystem={true}
+        disableTransitionOnChange={true}
       >
-        <ThemeProvider
-          attribute='class'
-          // defaultTheme='system'
-          // enableSystem={true}
-          // disableTransitionOnChange={true}
+        <body
+          style={{
+            backgroundImage: `url(assets/art/waves-background.svg)`
+          }}
         >
           <Toaster richColors={true} />
           <Providers initialState={initialState}>{children}</Providers>
@@ -60,8 +60,8 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             <Analytics />
             <SpeedInsights />
           </Production>
-        </ThemeProvider>
-      </body>
+        </body>
+      </ThemeProvider>
     </html>
   )
 }
