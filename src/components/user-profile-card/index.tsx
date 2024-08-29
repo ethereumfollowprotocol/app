@@ -29,6 +29,7 @@ import type { ProfileDetailsResponse } from '#/types/requests'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 import { useCoolMode } from '../follow-button/hooks/useCoolMode'
 import LoadingProfileCard from './components/loading-profile-card'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 interface UserProfileCardProps {
   profileList?: number | null
@@ -81,6 +82,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const { t } = useTranslation()
   const pathname = usePathname()
   const { selectedList } = useEFPProfile()
+  const { openConnectModal } = useConnectModal()
   const { address: connectedAddress } = useAccount()
 
   const isConnectedUserCard =
@@ -104,6 +106,10 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
 
   const onClickOption = (buttonText: 'Block' | 'Mute') => {
     if (!profile) return
+    if (!connectedAddress && openConnectModal) {
+      openConnectModal()
+      return
+    }
 
     setMoreOptionsDropdownOpen(false)
 
@@ -310,7 +316,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                           showMoreOptions && !isConnectedUserCard && moreOptionsDropdownOpen
                             ? 'flex'
                             : 'hidden'
-                        } absolute top-10 flex-col gap-2 right-0 p-2 bg-white border-zinc-200 border-[3px] rounded-xl z-50 drop-shadow-lg`}
+                        } absolute top-10 flex-col gap-2 right-0 p-2 dark:bg-darkGrey text-darkGrey dark:border-zinc-600 bg-white border-zinc-200 border-[3px] rounded-xl z-50 drop-shadow-lg`}
                       >
                         <button
                           ref={blockCoolMode as Ref<HTMLButtonElement>}

@@ -38,7 +38,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html
       lang='en'
-      className={cn([inteFont.variable, ibmPlexMonoFont.variable])}
+      className={cn([inteFont.variable, ibmPlexMonoFont.variable], 'dark')}
       suppressContentEditableWarning={true}
     >
       <HeadTag />
