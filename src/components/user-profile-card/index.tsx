@@ -434,7 +434,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                             }[rank]
                           }
                         >
-                          #{rank || '-'}
+                          #{formatNumber(rank) || '-'}
                         </p>
                       </div>
                     </Link>

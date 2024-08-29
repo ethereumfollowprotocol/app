@@ -86,7 +86,7 @@ const ConnectButton = () => {
       >
         {userAddress ? (
           <>
-            <div className='flex items-center max-w-[85%] h-fit gap-[12px]'>
+            <div className='flex items-center max-w-[90%] h-fit gap-[8px]'>
               <Image
                 src={ensProfile?.avatar || DefaultAvatar}
                 alt='ENS Avatar'

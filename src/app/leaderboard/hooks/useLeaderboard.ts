@@ -50,7 +50,7 @@ const useLeaderboard = () => {
     setSearch('')
     setCurrentSearch('')
     router.push(pathname.replace('query=', ''))
-  }, [setSearch])
+  }, [])
 
   const [isRefetchingLeaderboard, setIsRefetchingLeaderboard] = useState(false)
 
@@ -90,9 +90,11 @@ const useLeaderboard = () => {
   })
 
   useEffect(() => {
+    if (results?.pages.length === 0) return
+
     const pageIndex = results?.pageParams.indexOf(page - 1)
 
-    if (pageIndex === -1) {
+    if (pageIndex === -1 && !isRefetchingLeaderboard) {
       setIsRefetchingLeaderboard(true)
 
       const fetchNewPage = async () => {
@@ -126,7 +128,7 @@ const useLeaderboard = () => {
 
       fetchNewPage()
     }
-  }, [filter, results])
+  }, [filter, results, isRefetchingLeaderboard])
 
   const timeStamp = new Date(results?.pages[0]?.results.last_updated || 0).toLocaleString('en-US', {
     hour: 'numeric',

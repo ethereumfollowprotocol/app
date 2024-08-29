@@ -26,14 +26,16 @@ const theme: Record<
   },
   'Pending Following': {
     bg: 'btn-following-pending',
-    hover: 'hover:bg-none hover:bg-[#D0D0D0] hover:border-none  hover:py-1.5',
+    hover:
+      'hover:bg-none hover:bg-[#D0D0D0] hover:py-1.5 hover:border-transparent hover:rounded-[15px]',
     text: 'text-gray-900',
     border:
       'border-[3px] py-[3px] px-[5px] after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400'
   },
   Following: {
     bg: 'btn-following',
-    hover: 'hover:bg-none hover:bg-deletion hover:border-none hover:py-1.5',
+    hover:
+      'hover:bg-none hover:bg-deletion hover:py-1.5 hover:border-transparent hover:rounded-[15px]',
     text: 'text-gray-900',
     border: 'border-[3px] px-[5px] py-[3px]'
   },
@@ -71,7 +73,7 @@ const theme: Record<
     hover: 'hover:bg-[#FFC6C6]',
     text: 'text-red-500',
     border:
-      'border-[3px] py-1 border-red-500 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400',
+      'border-[3px] py-[3px] border-red-500 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400',
     imageSrc: MainnetRed
   },
   Blocked: {
@@ -99,7 +101,7 @@ const theme: Record<
     hover: 'hover:bg-[#FFC6C6]',
     text: 'text-red-500',
     border:
-      'border-[3px] py-1 border-red-500 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400',
+      'border-[3px] py-[3px] border-red-500 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400',
     imageSrc: MainnetRed
   },
   Muted: {
