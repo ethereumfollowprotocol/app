@@ -79,19 +79,17 @@ const Recommendations = ({
           >
             {header}
           </h2>
-          {endpoint === 'recommended' && (
-            <PageSelector
-              page={page}
-              setPage={setPage}
-              hasNextPage={true}
-              hasSkipToFirst={false}
-              scrollOnChange={false}
-              adjustUrl={false}
-              displayPageNumber={false}
-              fetchNext={fetchNextPage}
-              fetchPrevious={fetchPreviousPage}
-            />
-          )}
+          <PageSelector
+            page={page}
+            setPage={setPage}
+            hasNextPage={true}
+            hasSkipToFirst={false}
+            scrollOnChange={false}
+            adjustUrl={false}
+            displayPageNumber={false}
+            fetchNext={fetchNextPage}
+            fetchPrevious={fetchPreviousPage}
+          />
         </div>
         <p className='text-center text-xs text-zinc-400 italic font-medium'>{description}</p>
       </div>

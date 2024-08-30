@@ -213,7 +213,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   return (
     <div
       className={cn(
-        'flex glass-card border-[3px] justify-center flex-col border-[#FFDBD9] dark:border-[#ffdbd9c5] rounded-xl relative',
+        'flex glass-card border-[3px] justify-center flex-col border-[#FFDBD9] dark:border-[#a36d7d] rounded-xl relative',
         isResponsive
           ? 'xl:w-76 w-full 2xl:w-86'
           : 'w-80 3xs:w-92 h-[560px] xxs:h-[550px] sm:h-[570px] md:h-[585px] xl:h-[670px]'

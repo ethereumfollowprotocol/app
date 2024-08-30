@@ -34,7 +34,6 @@ import Fileverse from 'public/assets/partners/fileverse.jpeg'
 import EthAd from 'public/assets/partners/ethad.jpeg'
 import Mest from 'public/assets/partners/mest.jpeg'
 import ThreeCities from 'public/assets/partners/3cities.jpeg'
-import Siher from 'public/assets/partners/siher.jpeg'
 import GoDid from 'public/assets/partners/godid.jpeg'
 import Neuraname from 'public/assets/partners/neuraname.jpeg'
 import MaskNetwork from 'public/assets/partners/masknetwork.jpeg'
@@ -47,7 +46,6 @@ import Namespace from 'public/assets/partners/namespace.jpeg'
 import Icebreaker from 'public/assets/partners/icebreaker.png'
 import Stargazer from 'public/assets/partners/stargazer.jpeg'
 import OnceUpon from 'public/assets/partners/onceupon.jpeg'
-import BendDao from 'public/assets/partners/benddao.jpeg'
 import Integrous from 'public/assets/partners/integrous.jpeg'
 import Linkeh from 'public/assets/partners/linkeh.jpeg'
 import type { StaticImageData } from 'next/image'
@@ -234,11 +232,6 @@ export const LAUNCH_PARTNERS = [
     logo: ThreeCities
   },
   {
-    name: 'SI HER',
-    url: 'https://www.si3.space/',
-    logo: Siher
-  },
-  {
     name: 'GoDID',
     url: 'https://godid.io',
     logo: GoDid
@@ -299,11 +292,6 @@ export const LAUNCH_PARTNERS = [
     logo: OnceUpon
   },
   {
-    name: 'BendDAO',
-    url: 'https://www.benddao.xyz/en/',
-    logo: BendDao
-  },
-  {
     name: 'Integrous',
     url: 'https://integrous.xyz/',
     logo: Integrous
@@ -316,5 +304,5 @@ export const LAUNCH_PARTNERS = [
 ] satisfies {
   name: string
   url: string
-  logo: StaticImageData
+  logo: string | StaticImageData
 }[]

@@ -43,7 +43,10 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ connected, closeMenu }) =
   const { setTheme, theme: selectedTheme } = useTheme()
 
   return (
-    <div ref={clickAwayThemeRef} className='cursor-pointer group relative'>
+    <div
+      ref={clickAwayThemeRef}
+      className={cn('cursor-pointer group relative', connected && 'w-full')}
+    >
       <div
         onClick={() => setThemeMenuOpen(!themeMenuOpen)}
         className={cn(

@@ -18,11 +18,10 @@ html, body {
 
 body {
   background-repeat: no-repeat;
-  background-position: -34.1vw -31vh;
+  background-position: -34.1vw -34vw;
   background-size: 210vw 129vw;
   background-attachment: fixed;
   @apply text-darkGrey dark:text-[#eeeeee] bg-white dark:bg-darkGrey
-
 }
 
 /* Disable zoom in iOS Safari when double tapping an element */
@@ -515,14 +514,14 @@ input {
 /* Background size changes */
 @media screen and (max-width: 1750px) {
   body {
-    background-position: -34.1vw -34vw;
+    background-position: -34.1vw -32vw;
     background-size: 210vw 129vw;
   }
 }
 
 @media screen and (min-width: 2100px) {
   body {
-    background-position: -34.1vw -44vw;
+    background-position: -34.1vw -36vw;
     background-size: 210vw 129vw;
   }
 }
@@ -534,7 +533,7 @@ input {
   }
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 750px) {
   body {
     background-position: -34.1vw 20vh;
     background-size: 210vw 129vw;
