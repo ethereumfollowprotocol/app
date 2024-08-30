@@ -46,7 +46,7 @@ export function Name({
   return (
     <Link href={`/${address || name}`} className='w-full'>
       <p
-        className={`font-bold sm:text-lg text-start ${
+        className={`font-bold sm:text-lg text-start hover:scale-110 ${
           showTags ? 'w-full truncate' : 'w-fit max-w-full truncate'
         } hover:opacity-75 transition-all`}
       >
@@ -171,7 +171,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
         <Avatar
           name={name || address}
           avatarUrl={avatarUrl}
-          size='h-[45px] w-[45px] md:h-[50px] cursor-pointer md:w-[50px] hover:opacity-80 transition-all'
+          size='h-[45px] w-[45px] md:h-[50px] cursor-pointer md:w-[50px] hover:opacity-80 transition-all hover:scale-110'
           onClick={() => router.push(`/${address || name}`)}
         />
       )}

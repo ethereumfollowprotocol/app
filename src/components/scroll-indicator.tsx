@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { IoArrowDownOutline } from 'react-icons/io5'
 
 const ScrollIndicator = () => {
   const [hideIndicator, setHideIndicator] = useState(false)
@@ -19,11 +20,13 @@ const ScrollIndicator = () => {
 
   return (
     <div
-      className='scroll-indicator xl:block hidden transition-opacity duration-300'
+      className='scroll-indicator xl:block hidden transition-opacity'
       style={{
         opacity: hideIndicator ? 0 : 1
       }}
-    ></div>
+    >
+      <IoArrowDownOutline className='text-6xl text-darkGrey dark:text-[#aaa]' />
+    </div>
   )
 }
 

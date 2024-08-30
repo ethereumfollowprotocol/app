@@ -32,6 +32,7 @@ const Recommendations = ({
 
   const {
     isLoading,
+    hasNextPage,
     fetchNextPage,
     fetchPreviousPage,
     isFetchingNextPage,
@@ -82,7 +83,7 @@ const Recommendations = ({
           <PageSelector
             page={page}
             setPage={setPage}
-            hasNextPage={true}
+            hasNextPage={hasNextPage && !(isFetchingNextPage || isLoading) && page <= 10}
             hasSkipToFirst={false}
             scrollOnChange={false}
             adjustUrl={false}
@@ -95,9 +96,9 @@ const Recommendations = ({
       </div>
       <FollowList
         isLoading={isLoading || isFetchingNextPage || isFetchingPreviousPage}
-        loadingRows={limit}
+        loadingRows={endpoint === 'discover' ? 7 : limit}
         listClassName='rounded-xl px-2 sm:px-0 gap-3'
-        profiles={displayedProfiles?.map(account => ({
+        profiles={displayedProfiles?.slice(0, endpoint === 'discover' ? 7 : limit).map(account => ({
           address: account.address,
           tags: [] as string[],
           ens: {
@@ -126,7 +127,7 @@ const Recommendations = ({
           <PageSelector
             page={page}
             setPage={setPage}
-            hasNextPage={true}
+            hasNextPage={hasNextPage && !(isFetchingNextPage || isLoading) && page <= 10}
             hasSkipToFirst={false}
             adjustUrl={false}
             scrollOnChange={false}

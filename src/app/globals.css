@@ -52,7 +52,7 @@ body::-webkit-scrollbar-thumb {
 
 .glass-card {
     backdrop-filter: blur(1rem);
-    @apply from-[#f5f5f573] dark:from-[#f5f5f526] to-[#f5f5f540] dark:to-[#f5f5f520] bg-gradient-to-br;
+    @apply from-[#f5f5f526] to-[#f5f5f520] bg-gradient-to-br;
 }
 
 :focus:not(:focus-visible) {
@@ -137,21 +137,15 @@ input {
   text-wrap: balance;
 }
 
-.scroll-indicator::before {
-  animation: bounce 1.5s ease infinite;
+.scroll-indicator {
   bottom: 0;
   color: #888;
-  content: '╲╱';
-  font-size: 1.5rem;
-  height: 4rem;
   left: 50%;
-  letter-spacing: -1px;
-  line-height: 4rem;
   margin-left: -3rem;
-  opacity: 0.8;
   position: fixed;
   text-align: center;
   width: 5rem;
+  animation: bounce 1.5s ease infinite;
 }
 
 @keyframes bounce {

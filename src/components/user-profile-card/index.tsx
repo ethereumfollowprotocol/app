@@ -415,13 +415,13 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                     {t('leaderboard')}
                   </div>
                 </Link>
-                <div className='flex xl:flex-col xl:w-full justify-center flex-wrap gap-4 xxs:gap-8 gap-y-3 xxs:gap-y-3 xl:gap-3'>
+                <div className='flex xl:flex-col xl:w-full justify-center flex-wrap gap-4 xxs:gap-8 xl:gap-0'>
                   {ranks.map((rank, i) => (
                     <Link
                       href={`/leaderboard?filter=${t(rankTitles[i] || '').toLowerCase()}`}
                       key={rankTitles[i]}
                     >
-                      <div className='flex xl:w-full gap-3 justify-between text-lg items-center font-semibold hover:scale-110 transition-all'>
+                      <div className='flex xl:w-full gap-3 justify-between text-lg items-center font-semibold px-3 py-1 rounded-lg dark:hover:bg-darkGrey/40 hover:bg-white/90 transition-all'>
                         <p className='font-bold text-[#888] dark:text-[#aaa]'>
                           {t(rankTitles[i] || '')}
                         </p>

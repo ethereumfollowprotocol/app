@@ -40,7 +40,7 @@ const Summary = () => {
         <LeaderboardSummary />
       )}
       <Recommendations
-        limit={7}
+        limit={15}
         endpoint='discover'
         header={t('recent')}
         className={`h-fit w-full ${

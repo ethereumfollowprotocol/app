@@ -16,8 +16,8 @@ export const fetchRecommendations = async (
             ? `${list ? 'lists' : 'users'}/${
                 list ?? addressOrName
               }/recommended?limit=${limit}&offset=${pageParam * limit}`
-            : `discover?include=counts&limit=${limit}&offset=${pageParam * limit}`
-          : `${endpoint}?include=counts&limit=${limit}&offset=${pageParam * limit}`
+            : `discover?limit=${limit}&offset=${pageParam * limit}`
+          : `${endpoint}?limit=${limit}&offset=${pageParam * limit}`
       }`,
       {
         cache: 'default',
