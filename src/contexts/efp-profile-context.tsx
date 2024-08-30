@@ -152,8 +152,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   const [followersSearch, setFollowersSearch] = useState<string>('')
   const [followingTagsFilter, setFollowingTagsFilter] = useState<string[]>([])
   const [followersTagsFilter, setFollowersTagsFilter] = useState<string[]>([])
-  const [followingSort, setFollowingSort] = useState<FollowSortType>('latest first')
-  const [followersSort, setFollowersSort] = useState<FollowSortType>('latest first')
+  const [followingSort, setFollowingSort] = useState<FollowSortType>('follower count')
+  const [followersSort, setFollowersSort] = useState<FollowSortType>('follower count')
 
   const [recentTags, setRecentTags] = useState(DEFAULT_TAGS_TO_ADD)
 

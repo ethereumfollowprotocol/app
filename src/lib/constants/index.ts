@@ -33,7 +33,7 @@ export const LANGUAGES = [
 export const DEFAULT_TAGS_TO_ADD = ['irl', 'bff', 'based', 'degen', 'buidler']
 export const DEFAULT_TAGS = ['no tag']
 export const BLOCKED_MUTED_TAGS = ['block', 'mute']
-export const SORT_OPTIONS: FollowSortType[] = ['latest first', 'earliest first', 'follower count']
+export const SORT_OPTIONS: FollowSortType[] = ['follower count', 'latest first', 'earliest first']
 
 export const NAV_ITEMS = [
   {

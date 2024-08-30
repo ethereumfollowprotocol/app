@@ -1,5 +1,3 @@
-alert('theme.js loaded')
-
 const storedTheme = window.localStorage.getItem('theme')
 
 if (!storedTheme || storedTheme === 'system') {
@@ -7,12 +5,13 @@ if (!storedTheme || storedTheme === 'system') {
 
   if (userMedia.matches) {
     document.documentElement.classList.add('dark')
-    localStorage.removeItem('theme')
   }
 }
 
 if (storedTheme === 'dark') {
   document.documentElement.classList.add('dark')
-} else {
+}
+
+if (storedTheme === 'light') {
   document.documentElement.classList.remove('dark')
 }

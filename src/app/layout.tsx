@@ -23,7 +23,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   const initialState = cookieToInitialState(wagmiConfig, headers().get('cookie'))
 
   return (
-    <html lang='en' suppressHydrationWarning={true}>
+    <html lang='en' suppressHydrationWarning={true} className='dark'>
       <HeadTag />
       <body
         style={{
