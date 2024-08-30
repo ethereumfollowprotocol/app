@@ -178,7 +178,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
           theme[buttonState].bg,
           theme[buttonState].text,
           theme[buttonState].border,
-          'rounded-xl relative text-sm flex items-center gap-1.5 transition-all duration-200 justify-center font-bold',
+          'rounded-xl relative text-sm flex items-center w-[109px] gap-1.5 transition-all duration-200 justify-center font-bold',
           'px-2', // Fixed width for consistent layout
           disableHover
             ? buttonState === 'Pending Following'

@@ -20,7 +20,7 @@ import {
   extractAddressAndTag
 } from '#/utils/list-ops'
 import { Step } from '#/components/checkout/types'
-import { DEFAULT_CHAIN } from '#/lib/constants/chain'
+import { DEFAULT_CHAIN, LIST_OP_LIMITS } from '#/lib/constants/chain'
 import { rpcProviders } from '#/lib/constants/providers'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { useCart, type CartItem } from '#/contexts/cart-context'
@@ -356,7 +356,7 @@ const useSaveListSettings = ({
         })
 
         const splitListOps: CartItem[][] = []
-        const splitSize = 1000
+        const splitSize = LIST_OP_LIMITS[newChain.id] || 500
 
         for (let i = 0; i < listOps.length; i += splitSize) {
           splitListOps.push(listOps.slice(i, i + splitSize))

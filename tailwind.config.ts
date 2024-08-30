@@ -1,10 +1,10 @@
 import plugin from 'tailwindcss/plugin'
 import type { Config } from 'tailwindcss'
 import tailwindAnimate from 'tailwindcss-animate'
+import defaultTheme from 'tailwindcss/defaultTheme'
 import typographyPlugin from '@tailwindcss/typography'
 import aspectRatioPlugin from '@tailwindcss/aspect-ratio'
 import containerQueriesPlugin from '@tailwindcss/container-queries'
-import defaultTheme from 'tailwindcss/defaultTheme'
 
 const { colors, fontFamily, fontSize, keyframes, animation, spacing, screens } = {
   screens: {
@@ -63,8 +63,8 @@ const { colors, fontFamily, fontSize, keyframes, animation, spacing, screens } =
     deletion: '#FF7C7C'
   },
   fontFamily: {
-    sans: ['var(--font-inter)'],
-    mono: ['var(--font-ibm-plex-mono)']
+    sans: [...defaultTheme.fontFamily.sans]
+    // mono: ['var(--font-ibm-plex-mono)']
   },
   fontSize: {
     // 1rem = 16px

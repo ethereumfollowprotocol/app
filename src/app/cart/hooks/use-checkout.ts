@@ -15,7 +15,7 @@ import { useAccount, useChainId, useChains, useSwitchChain, useWalletClient } fr
 
 import { Step } from '#/components/checkout/types'
 import type { ChainWithDetails } from '#/lib/wagmi'
-import { DEFAULT_CHAIN } from '#/lib/constants/chain'
+import { DEFAULT_CHAIN, LIST_OP_LIMITS } from '#/lib/constants/chain'
 import { rpcProviders } from '#/lib/constants/providers'
 import type { FollowingResponse } from '#/types/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
@@ -163,7 +163,7 @@ const useCheckout = () => {
     if (!chainId) return
 
     const splitListOps: CartItem[][] = []
-    const splitSize = 1000
+    const splitSize = LIST_OP_LIMITS[chainId] || 500
 
     for (let i = 0; i < cartItems.length; i += splitSize) {
       splitListOps.push(cartItems.slice(i, i + splitSize))

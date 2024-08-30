@@ -8,10 +8,8 @@ import { headers } from 'next/headers'
 import { ThemeProvider } from 'next-themes'
 import { cookieToInitialState } from 'wagmi'
 import { Analytics } from '@vercel/analytics/react'
-import { Inter, IBM_Plex_Mono } from 'next/font/google'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
-import { cn } from '#/lib/utilities.ts'
 import Providers from './providers.tsx'
 import wagmiConfig from '../lib/wagmi.ts'
 import { Production } from './production.tsx'
@@ -20,33 +18,13 @@ import { APP_DESCRIPTION } from '../lib/constants/index.ts'
 
 export const metadata: Metadata = sharedMetadata
 
-const inteFont = Inter({
-  subsets: ['latin'],
-  weight: ['400', '500', '700', '900'],
-  variable: '--font-inter'
-})
-
-const ibmPlexMonoFont = IBM_Plex_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500', '700'],
-  variable: '--font-ibm-plex-mono'
-})
-
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   const initialState = cookieToInitialState(wagmiConfig, headers().get('cookie'))
 
   return (
-    <html
-      lang='en'
-      className={cn([inteFont.variable, ibmPlexMonoFont.variable])}
-      suppressHydrationWarning={true}
-    >
+    <html lang='en' suppressHydrationWarning={true}>
       <HeadTag />
-      <body
-        style={{
-          backgroundImage: `url(assets/art/waves-background.svg)`
-        }}
-      >
+      <body>
         <ThemeProvider
           attribute='class'
           defaultTheme='system'

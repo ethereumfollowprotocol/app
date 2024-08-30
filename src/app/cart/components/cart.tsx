@@ -16,9 +16,9 @@ import LensIcon from 'public/assets/icons/lens.svg'
 import { formatNumber } from '#/utils/formatNumber'
 import { FollowList } from '#/components/follow-list'
 import Recommendations from '#/components/recommendations'
-import { PrimaryButton } from '#/components/buttons/primary-button'
 import FarcasterIcon from 'public/assets/icons/farcaster.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
+import { PrimaryButton } from '#/components/buttons/primary-button'
 
 const Cart = () => {
   const [isClient, setIsClient] = useState(false)
@@ -71,7 +71,7 @@ const Cart = () => {
 
   const transactionsCount = useMemo(() => {
     let count = 0
-    const splitSize = 1000
+    const splitSize = 500
 
     for (let i = 0; i < cartItems.length; i += splitSize) {
       count += 1
