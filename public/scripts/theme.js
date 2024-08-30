@@ -1,3 +1,5 @@
+alert('theme.js loaded')
+
 const storedTheme = window.localStorage.getItem('theme')
 
 if (!storedTheme || storedTheme === 'system') {
