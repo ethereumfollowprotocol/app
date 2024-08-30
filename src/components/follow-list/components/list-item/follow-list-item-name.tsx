@@ -11,7 +11,7 @@ import { Avatar } from '#/components/avatar'
 import { tagRegex } from '#/lib/constants/regex'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useCart } from '#/contexts/cart-context'
-import { truncateAddress } from '#/lib/utilities'
+import { cn, truncateAddress } from '#/lib/utilities'
 import { formatNumber } from '#/utils/formatNumber'
 import { BLOCKED_MUTED_TAGS } from '#/lib/constants'
 import useFollowState from '#/hooks/use-follow-state'
@@ -44,7 +44,7 @@ export function Name({
   showTags
 }: { name?: string | null; address: Address; showTags?: boolean }) {
   return (
-    <Link href={`/${address || name}`}>
+    <Link href={`/${address || name}`} className='w-full'>
       <p
         className={`font-bold sm:text-lg text-start ${
           showTags ? 'w-full truncate' : 'w-fit max-w-full truncate'
@@ -177,21 +177,20 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
       )}
       <div
         className={`flex flex-col md:flex-row ${
-          counts ? 'w-1/2 sm:w-[45%] md:w-1/2 xl:w-1/2' : 'w-[calc(100% - 55px)]'
+          counts ? 'w-1/2 sm:w-[45%] md:w-1/2 xl:w-1/2' : 'w-2/3 xxs:w-[calc(100% - 55px)]'
         } md:gap-3 xl:gap-2 2xl:gap-3 gap-[2px]`}
       >
         <div
-          className={`flex flex-col justify-center ${
+          className={cn(
+            'flex flex-col justify-center items-start tabular-nums relative',
             isEditor
               ? 'md:w-52'
               : !isBlockedList && showTags
                 ? displayedTags.length > 0
-                  ? 'xl:max-w-[40%] 2xl:max-w-[45%]'
-                  : 'max-w-[70%] 3xs:max-w-[70%] xxs:max-w-[75%]'
-                : counts
-                  ? 'max-w-[80%] 3xs:max-w-[80%] xxs:max-w-[90%]'
-                  : 'max-w-[80%] 3xs:max-w-[90%] xxs:max-w-[95%]'
-          }  items-start tabular-nums relative`}
+                  ? 'xl:max-w-[50%] 2xl:max-w-[60%]'
+                  : 'max-w-[70%] 3xs:max-w-[70%] xxs:max-w-[90%]'
+                : 'max-w-full'
+          )}
         >
           {isEnsProfileLoading ? (
             <LoadingCell className='w-32 xl:w-32 h-7 rounded-lg' />
@@ -209,11 +208,12 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
 
         {showTags && (!isBeingRemoved || isRestriction) && (
           <div
-            className={`relative min-h-8 flex max-w-[70%] 3xs:max-w-[75%] xxs:max-w-[80%] md:max-w-[50%] ${
+            className={cn(
+              'relative min-h-8 flex max-w-full md:max-w-[50%] flex-wrap gap-2 items-center',
               isEditor
                 ? 'xl:max-w-[55%] 2xl:max-w-[65%] 3xl:max-w-[75%]'
                 : 'xl:max-w-[45%] 2xl:max-w-[42.5%] 3xl:max-w-[47.5%]'
-            } flex-wrap gap-2 items-center`}
+            )}
             ref={clickAwayTagDropwdownRef}
           >
             {canEditTags && !isRestriction && (

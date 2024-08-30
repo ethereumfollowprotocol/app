@@ -112,7 +112,7 @@ const nextConfig = {
 		},
 		{
 			source: "/(docs|documentation)",
-			destination: "https://docs.ethfollow.xyz",
+			destination: "https://docs.ethfollow.xyz/intro",
 			permanent: true,
 		},
 		{

@@ -30,7 +30,7 @@ export function Footer() {
   return (
     <footer className='w-full font-sans z-20 flex justify-center border-t-2 border-t-pink glass-card py-8 md:py-16 items-center'>
       <div className='flex flex-row items-center justify-center h-full w-full gap-6 sm:gap-28 md:gap-44'>
-        <section className='flex gap-5 align-middle'>
+        <section className='flex gap-4 align-middle'>
           <Image
             src='/assets/logo.png'
             width={180}

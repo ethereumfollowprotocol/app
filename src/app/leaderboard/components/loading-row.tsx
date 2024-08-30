@@ -1,4 +1,5 @@
 import LoadingCell from '#/components/loaders/loading-cell'
+import { cn } from '#/lib/utilities'
 import { usePathname } from 'next/navigation'
 
 interface LoadingRowProps {
@@ -15,9 +16,10 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
         <LoadingCell className='h-10 sm:h-12 w-6 xxs:w-8 sm:w-10 rounded-lg' />
       </div>
       <div
-        className={`flex gap-2 items-center w-[51%] 3xs:w-[54%] xxs:w-[56%] xs:w-2/3 sm:w-1/2 md:w-[40%] ${
-          isHome ? ' sm:w-full md:w-1/2 lg:w-[55%] xl:w-1/2' : 'xl:w-1/4 '
-        }`}
+        className={cn(
+          'flex gap-2 items-center w-[51%] 3xs:w-[54%] xxs:w-[56%] xs:w-2/3 sm:w-1/2 md:w-[40%]',
+          isHome ? 'sm:w-full md:w-1/2 lg:w-[55%] xl:w-1/2' : 'xl:w-1/3'
+        )}
         data-name='name-column'
       >
         <LoadingCell className='h-[45px] w-[45px] md:h-[50px] md:w-[50px] rounded-full' />
@@ -26,16 +28,15 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
         </div>
       </div>
       <div
-        className={`items-center justify-between hidden sm:flex sm:w-1/4 md:w-[55%] ${
-          isHome ? 'sm:w-fit md:w-2/5 lg:w-3/5 xl:w-1/4' : ''
-        }`}
+        className={cn(
+          'items-center justify-between hidden sm:flex sm:w-1/5 md:w-[55%]',
+          isHome && 'sm:w-fit md:w-2/5 lg:w-3/5 xl:w-1/4'
+        )}
       >
         <div className='flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 hidden lg:flex gap-1'>
           <LoadingCell className='w-10 h-6 rounded-lg' />
           {staticStats ? (
-            <p className='font-semibold text-sm text-zinc-500 text-[#888] dark:text-[#aaa]'>
-              Mutuals
-            </p>
+            <p className='font-semibold text-sm text-[#888] dark:text-[#aaa]'>Mutuals</p>
           ) : (
             <LoadingCell className='h-4 w-20 rounded-md' />
           )}
@@ -43,46 +44,43 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
         <div className='hidden sm:flex flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 gap-1'>
           <LoadingCell className='w-10 h-6 rounded-lg' />
           {staticStats ? (
-            <p className='font-semibold text-sm text-zinc-500 text-[#888] dark:text-[#aaa]'>
-              Followers
-            </p>
+            <p className='font-semibold text-sm text-[#888] dark:text-[#aaa]'>Followers</p>
           ) : (
             <LoadingCell className='h-4 w-20 rounded-md' />
           )}
         </div>
         <div
-          className={`hidden md:flex ${
-            isHome ? 'xl:hidden' : ''
-          } flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
+          className={cn(
+            'hidden md:flex flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 gap-1',
+            isHome && 'xl:hidden'
+          )}
         >
           <LoadingCell className='w-10 h-6 rounded-lg' />
           {staticStats ? (
-            <p className='font-semibold text-sm text-zinc-500 text-[#888] dark:text-[#aaa]'>
-              Following
-            </p>
+            <p className='font-semibold text-sm text-[#888] dark:text-[#aaa]'>Following</p>
           ) : (
             <LoadingCell className='h-4 w-20 rounded-md' />
           )}
         </div>
         <div
-          className={`flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 hidden xl:flex  ${
-            isHome ? 'lg:flex xl:hidden' : ''
-          } `}
+          className={cn(
+            'flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 gap-1 hidden xl:flex',
+            isHome && 'lg:flex xl:hidden'
+          )}
         >
           <LoadingCell className='w-10 h-6 rounded-lg' />
           {staticStats ? (
-            <p className='font-semibold text-sm text-zinc-500 text-[#888] dark:text-[#aaa]'>
-              Blocked
-            </p>
+            <p className='font-semibold text-sm text-[#888] dark:text-[#aaa]'>Blocked</p>
           ) : (
             <LoadingCell className='h-4 w-20 rounded-md' />
-          )}{' '}
+          )}
         </div>
       </div>
       <div
-        className={`w-fit ${
+        className={cn(
+          'w-fit flex justify-end',
           isHome ? 'lg:w-[25%] 2xl:w-[20%]' : 'lg:w-[15%] 2xl:w-[10%]'
-        } flex justify-end`}
+        )}
       >
         <LoadingCell className='h-9 w-[107px] rounded-lg' />
       </div>

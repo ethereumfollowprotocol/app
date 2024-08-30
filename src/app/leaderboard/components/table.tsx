@@ -110,8 +110,8 @@ const LeaderboardTable = () => {
               key={item}
               className={`p-2 font-semibold w-[132px] px-4 capitalize cursor-pointer transition-all rounded-full ${
                 filter === item
-                  ? 'bg-zinc-100 dark:bg-zinc-400 shadow-inner'
-                  : 'bg-zinc-300 dark:bg-zinc-600 hover:scale-110'
+                  ? 'bg-zinc-100 dark:bg-[#777] shadow-inner'
+                  : 'bg-zinc-300 dark:bg-[#555] hover:scale-110'
               }`}
               onClick={() => onSelectFilter(item)}
             >

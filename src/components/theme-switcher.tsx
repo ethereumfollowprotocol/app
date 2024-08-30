@@ -43,12 +43,12 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ connected, closeMenu }) =
   const { setTheme, theme: selectedTheme } = useTheme()
 
   return (
-    <div ref={clickAwayThemeRef} className='w-full cursor-pointer group relative'>
+    <div ref={clickAwayThemeRef} className='cursor-pointer group relative'>
       <div
         onClick={() => setThemeMenuOpen(!themeMenuOpen)}
         className={cn(
-          'flex justify-between items-center w-full rounded-md transition-opacity cursor-pointer',
-          connected && 'group-hover:bg-slate-100 p-3 dark:group-hover:bg-zinc-400/20'
+          'flex justify-between items-center rounded-md transition-opacity cursor-pointer',
+          connected && 'group-hover:bg-slate-100 p-3 dark:group-hover:bg-zinc-400/20 w-full'
         )}
       >
         {connected && <FiArrowLeft className='text-xl' />}

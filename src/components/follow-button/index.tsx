@@ -22,65 +22,65 @@ const theme: Record<
     // bg: 'bg-kournikova-300 hover:bg-[#EEBE00]',
     bg: 'bg-kournikova-300 btn-grad',
     text: 'text-zinc-800',
-    border: 'border-0 py-1.5'
+    border: 'border-0'
   },
   'Pending Following': {
     bg: 'btn-following-pending',
     hover:
-      'hover:bg-none hover:bg-[#D0D0D0] hover:py-1.5 hover:border-transparent hover:rounded-[15px]',
+      'hover:bg-none hover:bg-[#D0D0D0] hover:border-transparent hover:rounded-[15px] hover:py-1.5 hover:scale-[1.15]',
     text: 'text-gray-900',
     border:
-      'border-[3px] py-[3px] px-[5px] after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400'
+      'border-[3px] after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400'
   },
   Following: {
     bg: 'btn-following',
     hover:
-      'hover:bg-none hover:bg-deletion hover:py-1.5 hover:border-transparent hover:rounded-[15px]',
+      'hover:bg-none hover:bg-deletion hover:border-transparent hover:rounded-[15px] hover:py-1.5 hover:scale-[1.15]',
     text: 'text-gray-900',
-    border: 'border-[3px] px-[5px] py-[3px]'
+    border: 'border-[3px]'
   },
   Unfollow: {
     bg: 'bg-deletion',
     hover: 'hover:bg-[#CF4C4C]',
     text: 'text-gray-900',
     border:
-      'border-0 py-1.5 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-1.5 after:-right-1.5 after:bg-green-400'
+      'border-0 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-1.5 after:-right-1.5 after:bg-green-400'
   },
   Subscribe: {
     bg: 'bg-kournikova-300',
     text: 'text-zinc-800',
-    border: 'border-0 py-1.5'
+    border: 'border-0 '
   },
   Subscribed: {
     bg: 'bg-addition',
     text: 'text-zinc-800',
-    border: 'border-[3px] border-zinc-200 py-1'
+    border: 'border-[3px] border-zinc-200'
   },
   Unsubscribe: {
     bg: 'bg-deletion',
     text: 'text-gray-900',
     border:
-      'border-0 py-1.5 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-1.5 after:-right-1.5 after:bg-green-400'
+      'border-0 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-1.5 after:-right-1.5 after:bg-green-400'
   },
   Block: {
     bg: 'bg-deletion',
     hover: 'hover:bg-[#CF4C4C]',
     text: 'text-zinc-800',
-    border: 'border-0 py-1.5'
+    border: 'border-0'
   },
   'Pending Block': {
     bg: 'bg-white',
     hover: 'hover:bg-[#FFC6C6]',
     text: 'text-red-500',
     border:
-      'border-[3px] py-[3px] border-red-500 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400',
+      'border-[3px] border-red-500 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400',
     imageSrc: MainnetRed
   },
   Blocked: {
     bg: 'bg-white',
     hover: 'hover:bg-[#FFC6C6]',
     text: 'text-red-500',
-    border: 'border-[3px] py-[3px] border-red-500',
+    border: 'border-[3px] border-red-500',
     imageSrc: MainnetRed
   },
   Unblock: {
@@ -88,27 +88,27 @@ const theme: Record<
     hover: 'hover:bg-[#CF4C4C]',
     text: 'text-zinc-800',
     border:
-      'border-0 py-1.5 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-1.5 after:-right-1.5 after:bg-green-400'
+      'border-0 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-1.5 after:-right-1.5 after:bg-green-400'
   },
   Mute: {
     bg: 'bg-deletion',
     hover: 'hover:bg-[#CF4C4C]',
     text: 'text-darkGrey',
-    border: 'border-0 py-1.5'
+    border: 'border-0'
   },
   'Pending Mute': {
     bg: 'bg-white',
     hover: 'hover:bg-[#FFC6C6]',
     text: 'text-red-500',
     border:
-      'border-[3px] py-[3px] border-red-500 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400',
+      'border-[3px] border-red-500 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400',
     imageSrc: MainnetRed
   },
   Muted: {
     bg: 'bg-white',
     hover: 'hover:bg-[#FFC6C6]',
     text: 'text-red-500',
-    border: 'border-[3px] py-[3px] border-red-500',
+    border: 'border-[3px] border-red-500',
     imageSrc: MainnetRed
   },
   Unmute: {
@@ -116,7 +116,7 @@ const theme: Record<
     hover: 'hover:bg-[#CF4C4C]',
     text: 'text-zinc-800',
     border:
-      'border-0 py-1.5 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-1.5 after:-right-1.5 after:bg-green-400'
+      'border-0 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-1.5 after:-right-1.5 after:bg-green-400'
   }
 }
 
@@ -184,11 +184,12 @@ const FollowButton: React.FC<FollowButtonProps> = ({
             ? buttonState === 'Pending Following'
               ? ''
               : 'bg-right'
-            : `${theme[buttonState].hover} hover:scale-110`,
+            : `hover:scale-110 ${theme[buttonState].hover}`,
           className
         ])}
         style={{
-          minWidth: isBlockedBy ? '132px' : '107px'
+          minWidth: isBlockedBy ? '132px' : '107px',
+          minHeight: '37px'
         }}
         onMouseLeave={() => {
           setDisableHover(false)

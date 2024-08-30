@@ -1,18 +1,18 @@
 'use client'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 import { FiArrowLeft } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
 import { IoIosArrowDown } from 'react-icons/io'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
-import { useEffect, useState } from 'react'
+import { HiOutlineWallet } from 'react-icons/hi2'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useAccount, useDisconnect, useWalletClient } from 'wagmi'
 
 import { LANGUAGES } from '#/lib/constants'
 import useLanguage from '../hooks/useLanguage'
 import { resolveEnsProfile } from '#/utils/ens'
-import Wallet from 'public/assets/icons/wallet.svg'
 import { cn, truncateAddress } from '#/lib/utilities'
 import ThemeSwitcher from '#/components/theme-switcher'
 import GreenCheck from 'public/assets/icons/check-green.svg'
@@ -106,13 +106,7 @@ const ConnectButton = () => {
         ) : (
           <div className='w-full sm:w-54 h-full flex items-center justify-center rounded-full'>
             <p className='hidden sm:block font-semibold text-lg text-nowrap px-1'>{t('connect')}</p>
-            <Image
-              src={Wallet}
-              alt='Connect Wallet'
-              width={30}
-              height={32}
-              className='bloxk sm:hidden mx-2'
-            />
+            <HiOutlineWallet className='text-4xl w-[46px] block sm:hidden' />
           </div>
         )}
       </button>

@@ -10,7 +10,12 @@ const footerPages = [
   },
   {
     text: 'docs',
-    href: 'https://docs.ethfollow.xyz',
+    href: 'https://docs.ethfollow.xyz/intro',
+    target: '_blank'
+  },
+  {
+    text: 'Bug Bounty',
+    href: 'https://docs.ethfollow.xyz/bugbounty',
     target: '_blank'
   }
 ]
@@ -19,7 +24,7 @@ const Pages = () => {
   const { t } = useTranslation()
 
   return (
-    <>
+    <div className='flex flex-col gap-2'>
       {footerPages.map((route, index) => (
         <div
           className='font-bold hover:scale-110 w-fit transition-transform'
@@ -35,7 +40,7 @@ const Pages = () => {
           </a>
         </div>
       ))}
-    </>
+    </div>
   )
 }
 

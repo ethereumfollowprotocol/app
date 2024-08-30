@@ -418,14 +418,14 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   }
 
   useEffect(() => {
-    if (followingTags?.tagCounts && followingTags?.tagCounts.length > 0)
-      setRecentTags(
-        followingTags?.tagCounts
-          ?.sort((a, b) => b.count - a.count)
-          .map(tag => tag.tag)
-          .filter(tag => !BLOCKED_MUTED_TAGS.includes(tag))
-          .slice(0, 5)
-      )
+    if (followingTags?.tagCounts && followingTags?.tagCounts.length > 0) {
+      const appliedTags = followingTags?.tagCounts
+        ?.sort((a, b) => b.count - a.count)
+        .map(tag => tag.tag)
+        .filter(tag => !BLOCKED_MUTED_TAGS.includes(tag))
+
+      setRecentTags([...appliedTags, ...recentTags].slice(0, 5))
+    }
   }, [followingTags])
 
   const { data: roles, refetch: refetchRoles } = useQuery({
