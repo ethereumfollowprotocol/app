@@ -40,7 +40,7 @@ export function SelectChainCard({
     <>
       <div className='flex flex-col gap-2'>
         <h1 className='text-2xl sm:text-3xl font-semibold'>
-          {t(isCreatingNewList ? 'title create list' : 'title list op')}
+          {t(isCreatingNewList ? 'create list title' : 'title list op')}
         </h1>
         {isCreatingNewList && <p className=' font-medium text-zinc-400'>{t('comment')}</p>}
       </div>

@@ -38,8 +38,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
       <div className='w-full sm:w-[500px] sm:p-0 p-2 flex flex-col gap-6'>
         <div className='w-full gap-2 flex justify-between items-center'>
           <p className='text-xl font-semibold'>
-            <span className='hidden sm:inline'>{t('import title desktop')}</span>
-            <span className='inline sm:hidden'>{t('import title mobile')}</span>{' '}
+            {t('import title')}
             <span className='capitalize'>{platform}</span>
           </p>
           <Image

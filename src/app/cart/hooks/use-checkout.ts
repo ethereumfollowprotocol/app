@@ -172,7 +172,7 @@ const useCheckout = () => {
     const cartItemActions: Action[] = splitListOps.map((listOps, i) => ({
       id: `${EFPActionType.UpdateEFPList} ${i}`, // Unique identifier for the action
       type: EFPActionType.UpdateEFPList,
-      label: `${listOps.length} ${t('list ops')}`,
+      label: `${listOps.length} ${listOps.length === 1 ? t('list op') : t('list ops')}`,
       chainId,
       execute: async () => await listOpTx(listOps),
       isPendingConfirmation: false

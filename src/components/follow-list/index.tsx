@@ -108,8 +108,7 @@ export function FollowList({
                     <div className='flex flex-col items-start sm:items-center sm:flex-row gap-1 w-full sm:gap-3 md:gap-4'>
                       <div className='flex flex-col items-start min-w-52 max-w-52 gap-px'>
                         <p className='text-lg font-semibold'>
-                          {t('import title mobile')}{' '}
-                          <span className='capitalize'>{social.platform}</span>
+                          {t('import from')} <span className='capitalize'>{social.platform}</span>
                         </p>
                         <p className='font-medium text-sm text-zinc-500'>
                           {t('adding')}: {formatNumber(social.profiles.length)}
