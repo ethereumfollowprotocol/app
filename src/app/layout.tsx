@@ -15,6 +15,7 @@ import wagmiConfig from '../lib/wagmi.ts'
 import { Production } from './production.tsx'
 import { sharedMetadata } from '#/lib/metadata.ts'
 import { APP_DESCRIPTION } from '../lib/constants/index.ts'
+import Script from 'next/script'
 
 export const metadata: Metadata = sharedMetadata
 
@@ -51,6 +52,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 const HeadTag = () => {
   return (
     <head>
+      <Script src='/scripts/theme.js' strategy='beforeInteractive' />
       <meta name='viewport' content='width=device-width, initial-scale=1' />
       <meta name='description' content={APP_DESCRIPTION} />
       <link rel='manifest' href='/site.webmanifest' crossOrigin='use-credentials' />

@@ -234,17 +234,17 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
             )}
             {profileList
               ? profileList !== Number(profile.primary_list) && (
-                  <div ref={clickAwayCardTooltip} className='relative group  cursor-help'>
+                  <div ref={clickAwayCardTooltip} className='relative group z-50 cursor-help'>
                     <p
                       onClick={() => setCardTooltipOpen(!cardTooltipOpen)}
-                      className='text-[11px] italic text-end rounded-full py-0.5 px-2 bg-zinc-300'
+                      className='text-[11px] italic text-end rounded-full py-0.5 px-2 bg-zinc-300 dark:bg-zinc-500'
                     >
                       {t('not primary list')}
                     </p>
                     <div
                       className={`${
                         cardTooltipOpen ? 'block' : 'hidden'
-                      } group-hover:block transition-all text-sm w-68 p-2 glass-card border-zinc-200 dark:border-zinc-500 bg-white/90 border-[3px] mt-2 rounded-md absolute top-5 right-0`}
+                      } group-hover:block transition-all text-sm w-68 p-2 glass-card border-zinc-200 dark:border-zinc-500 bg-white/90 dark:bg-darkGrey/70 border-[3px] mt-2 rounded-md absolute top-5 right-0`}
                     >
                       {t('not primary list tooltip')}
                     </div>

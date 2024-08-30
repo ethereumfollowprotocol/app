@@ -46,7 +46,7 @@ const useUser = (user: string) => {
     queryFn: async () => {
       if (!user) return nullFollowerTags
 
-      const fetchedTags = await fetchFollowerTags(user)
+      const fetchedTags = await fetchFollowerTags(user, userIsList ? listNum : undefined)
       return fetchedTags
     },
     staleTime: 30000
