@@ -19,7 +19,7 @@ import Recommendations from '#/components/recommendations'
 import FarcasterIcon from 'public/assets/icons/farcaster.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { PrimaryButton } from '#/components/buttons/primary-button'
-import { LIST_OP_LIMITS } from '#/lib/constants/chain'
+import { DEFAULT_CHAIN, LIST_OP_LIMITS } from '#/lib/constants/chain'
 
 const Cart = () => {
   const [isClient, setIsClient] = useState(false)
@@ -72,7 +72,7 @@ const Cart = () => {
 
   const transactionsCount = useMemo(() => {
     let count = 0
-    const splitSize = LIST_OP_LIMITS[roles?.listChainId || 0] || 500
+    const splitSize = LIST_OP_LIMITS[roles?.listChainId || DEFAULT_CHAIN.id] || 1000
 
     for (let i = 0; i < cartItems.length; i += splitSize) {
       count += 1

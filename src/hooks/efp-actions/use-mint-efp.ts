@@ -14,6 +14,8 @@ export function useMintEFP() {
   const { address: accountAddress } = useAccount()
   const nonce = useMemo(() => generateListStorageLocationSlot(), [])
 
+  console.log(nonce)
+
   const mint = async ({
     selectedChainId,
     setNewListAsPrimary

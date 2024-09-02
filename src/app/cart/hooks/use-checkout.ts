@@ -86,8 +86,9 @@ const useCheckout = () => {
     selectedList ? Step.InitiateTransactions : Step.SelectChain
   )
 
-  const [setNewListAsPrimary, setSetNewListAsPrimary] = useState(!lists?.primary_list)
+  const [listOpsFinished, setListOpsFinished] = useState(false)
   const [selectedChainId, setSelectedChainId] = useState<number>(DEFAULT_CHAIN.id)
+  const [setNewListAsPrimary, setSetNewListAsPrimary] = useState(!lists?.primary_list)
   const selectedChain = chains.find(chain => chain.id === selectedChainId) as ChainWithDetails
 
   const listOpTx = useCallback(
@@ -143,6 +144,8 @@ const useCheckout = () => {
           : [nonce, [{ key: 'user', value: userAddress }], operations]
       })
 
+      setListOpsFinished(true)
+
       // return transaction hash to enable following transaction status in transaction details component
       return hash
     },
@@ -163,7 +166,7 @@ const useCheckout = () => {
     if (!chainId) return
 
     const splitListOps: CartItem[][] = []
-    const splitSize = LIST_OP_LIMITS[chainId] || 500
+    const splitSize = LIST_OP_LIMITS[chainId || DEFAULT_CHAIN.id] || 1000
 
     for (let i = 0; i < cartItems.length; i += splitSize) {
       splitListOps.push(cartItems.slice(i, i + splitSize))
@@ -188,10 +191,11 @@ const useCheckout = () => {
     }
 
     // add Create list action if user doesn't have the EFP list yet
-    const actionsToExecute =
-      selectedList || listHasBeenMinted
-        ? [...cartItemActions]
-        : [createEFPListAction, ...cartItemActions]
+    const actionsToExecute = selectedList
+      ? [...cartItemActions]
+      : listOpsFinished
+        ? [createEFPListAction]
+        : [...cartItemActions, createEFPListAction]
     addActions(actionsToExecute)
   }, [selectedChainId, setNewListAsPrimary, totalCartItems, listOpTx])
 
