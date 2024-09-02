@@ -2,12 +2,12 @@ import type { Address } from 'viem'
 import { useTranslation } from 'react-i18next'
 import Image, { type StaticImageData } from 'next/image'
 
-import LoadingRow from './components/list-item/loading-list-item'
 import EFPLogo from 'public/assets/logo.svg'
-import FollowListItem from './components/list-item/follow-list-item'
 import type { ENSProfile } from '#/types/requests'
 import { formatNumber } from '#/utils/formatNumber'
 import type { ImportPlatformType } from '#/types/common'
+import LoadingRow from './components/list-item/loading-list-item'
+import FollowListItem from './components/list-item/follow-list-item'
 import SocialTagDropdown from './components/socials/socialTagDropdown'
 import SocialFollowButton from './components/socials/social-follow-button'
 
@@ -110,7 +110,7 @@ export function FollowList({
                         <p className='text-lg font-semibold'>
                           {t('import from')} <span className='capitalize'>{social.platform}</span>
                         </p>
-                        <p className='font-medium text-sm text-zinc-500'>
+                        <p className='font-medium text-sm text-zinc-500 dark:text-zinc-300'>
                           {t('adding')}: {formatNumber(social.profiles.length)}
                         </p>
                       </div>

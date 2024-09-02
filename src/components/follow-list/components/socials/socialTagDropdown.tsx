@@ -4,13 +4,13 @@ import { useClickAway } from '@uidotdev/usehooks'
 import { useEffect, useRef, useState } from 'react'
 
 import type { FollowListProfile } from '../..'
-import { listOpAddTag } from '#/utils/list-ops'
 import { tagRegex } from '#/lib/constants/regex'
 import { useCart } from '#/contexts/cart-context'
 import { yieldToMain } from '#/utils/yieldToMain'
 import Plus from 'public/assets/icons/plus-squared.svg'
 import type { ImportPlatformType } from '#/types/common'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
+import { extractAddressAndTag, isTagListOp, listOpAddTag } from '#/utils/list-ops'
 
 interface SocialTagDropdownProps {
   profiles: FollowListProfile[]
@@ -26,13 +26,8 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
     setTagDropdownOpen(false)
   })
 
-  const {
-    addCartItem,
-    removeCartItem,
-    hasListOpAddTag,
-    hasListOpRemoveTag,
-    getTagsFromCartByAddress
-  } = useCart()
+  const { cartItems, setCartItems, hasListOpAddTag, hasListOpRemoveTag, getTagsFromCartByAddress } =
+    useCart()
   const { t } = useTranslation()
   const { recentTags, addRecentTag } = useEFPProfile()
 
@@ -51,16 +46,23 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
       setDisplayedTags(prevTags => [...prevTags, tag])
       await yieldToMain()
 
-      const chunkSize = 200 // Adjust the chunk size as needed
-      for (let i = 0; i < profiles.length; i += chunkSize) {
-        const chunk = profiles.slice(i, i + chunkSize)
-        await Promise.all(
-          chunk.map(({ address }) =>
-            addCartItem({ listOp: listOpAddTag(address, tag), import: platform })
-          )
-        )
-        await yieldToMain() // Yield to the main thread after processing each chunk
-      }
+      const newCartItems = profiles.map(({ address }) => ({
+        listOp: listOpAddTag(address, tag),
+        import: platform
+      }))
+
+      setCartItems([...cartItems, ...newCartItems])
+
+      // const chunkSize = 200 // Adjust the chunk size as needed
+      // for (let i = 0; i < profiles.length; i += chunkSize) {
+      //   const chunk = profiles.slice(i, i + chunkSize)
+      //   await Promise.all(
+      //     chunk.map(({ address }) =>
+      //       addCartItem({ listOp: listOpAddTag(address, tag), import: platform })
+      //     )
+      //   )
+      //   await yieldToMain() // Yield to the main thread after processing each chunk
+      // }
     }
   }
 
@@ -68,19 +70,34 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
     const address = profiles?.[0]?.address
     if (!address) return null
 
-    if (hasListOpAddTag({ address, tag })) {
-      setDisplayedTags(prevTags => prevTags.filter(prevTag => prevTag !== tag))
-      await yieldToMain()
+    const addresses = profiles.map(({ address }) => address.toLowerCase())
 
-      const chunkSize = 200 // Adjust the chunk size as needed
-      for (let i = 0; i < profiles.length; i += chunkSize) {
-        const chunk = profiles.slice(i, i + chunkSize)
-        await Promise.all(chunk.map(({ address }) => removeCartItem(listOpAddTag(address, tag))))
-        await yieldToMain() // Yield to the main thread after processing each chunk
-      }
+    setDisplayedTags(prevTags => prevTags.filter(prevTag => prevTag !== tag))
+    await yieldToMain()
 
-      return
-    }
+    const filteredCartItems = cartItems.filter(
+      item =>
+        !(isTagListOp(item.listOp)
+          ? addresses.includes(extractAddressAndTag(item.listOp).address.toLowerCase()) &&
+            extractAddressAndTag(item.listOp).tag === tag
+          : false)
+    )
+
+    setCartItems(filteredCartItems)
+
+    // if (hasListOpAddTag({ address, tag })) {
+    //   setDisplayedTags(prevTags => prevTags.filter(prevTag => prevTag !== tag))
+    //   await yieldToMain()
+
+    //   const chunkSize = 200 // Adjust the chunk size as needed
+    //   for (let i = 0; i < profiles.length; i += chunkSize) {
+    //     const chunk = profiles.slice(i, i + chunkSize)
+    //     await Promise.all(chunk.map(({ address }) => removeCartItem(listOpAddTag(address, tag))))
+    //     await yieldToMain() // Yield to the main thread after processing each chunk
+    //   }
+
+    //   return
+    // }
   }
 
   const addCustomTag = () => {
@@ -107,8 +124,8 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
       </button>
       {tagDropdownOpen && (
         <>
-          <div className='absolute z-50 flex flex-col w-60 gap-2 left-0 top-8 glass-card bg-white/50 p-2 border-[3px] border-zinc-200 dark:border-zinc-500 rounded-lg'>
-            <div className='w-full flex items-center gap-1.5 justify-between bg-zinc-300 rounded-lg font-bold p-1 text-left'>
+          <div className='absolute z-50 flex flex-col w-60 gap-2 left-0 top-8 glass-card bg-white/50 dark:bg-darkGrey/80 p-2 border-[3px] border-zinc-200 dark:border-zinc-500 rounded-lg'>
+            <div className='w-full flex items-center gap-1.5 justify-between bg-zinc-300 dark:bg-zinc-500 rounded-lg font-bold p-1 text-left'>
               <input
                 ref={tagInputRef}
                 placeholder={t('custom tag')}
@@ -122,7 +139,7 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
                 onKeyDown={e => {
                   if (e.key === 'Enter') addCustomTag()
                 }}
-                className='p-1 pl-2 rounded-md lowercase w-full'
+                className='p-1 pl-2 rounded-md lowercase w-full dark:bg-darkGrey/50'
               />
               <button
                 className='flex items-center rounded-full hover:opacity-80 bg-white hover:scale-110 transition-all justify-center p-2'
@@ -135,7 +152,7 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
               {recentTags.map(tag => (
                 <button
                   key={tag}
-                  className='font-semibold py-2 truncate px-3 hover:opacity-80 hover:scale-110 transition-all bg-zinc-300 rounded-full'
+                  className='font-semibold py-2 truncate px-3 hover:opacity-80 hover:scale-110 transition-all bg-zinc-300 text-darkGrey rounded-full'
                   onClick={() => addTag(tag)}
                 >
                   {tag}
@@ -160,7 +177,7 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
             } max-w-full transition-transform hover:scale-110`}
           >
             <button
-              className={`font-semibold py-1 px-2 sm:py-1.5 max-w-full sm:px-3 truncate text-sm hover:opacity-80 rounded-full ${
+              className={`font-semibold py-1 px-2 sm:py-1.5 max-w-full text-darkGrey sm:px-3 truncate text-sm hover:opacity-80 rounded-full ${
                 removingTag ? 'bg-deletion' : 'bg-zinc-300'
               }`}
               onClick={() => removeTag(tag)}

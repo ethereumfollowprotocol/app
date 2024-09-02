@@ -51,6 +51,7 @@ export const fetchProfileRoles = async ({
   return {
     isOwner: listOwner?.toLowerCase() === userAddress?.toLowerCase(),
     isManager: listManager?.toLowerCase() === userAddress?.toLowerCase(),
-    isUser: listUser?.toLowerCase() === userAddress?.toLowerCase()
+    isUser: listUser?.toLowerCase() === userAddress?.toLowerCase(),
+    listChainId: listStorageLocationChainId
   } as ProfileRoles
 }

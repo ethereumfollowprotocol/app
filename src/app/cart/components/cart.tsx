@@ -19,6 +19,7 @@ import Recommendations from '#/components/recommendations'
 import FarcasterIcon from 'public/assets/icons/farcaster.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { PrimaryButton } from '#/components/buttons/primary-button'
+import { LIST_OP_LIMITS } from '#/lib/constants/chain'
 
 const Cart = () => {
   const [isClient, setIsClient] = useState(false)
@@ -31,8 +32,8 @@ const Cart = () => {
   }, [])
   const [isCheckingOut, setIsCheckingOut] = useState(false)
 
-  const { isConnected } = useAccount()
   const { t } = useTranslation()
+  const { isConnected } = useAccount()
   const { openConnectModal } = useConnectModal()
   const { totalCartItems, cartAddresses, socialAddresses, cartItems } = useCart()
 
@@ -71,7 +72,7 @@ const Cart = () => {
 
   const transactionsCount = useMemo(() => {
     let count = 0
-    const splitSize = 500
+    const splitSize = LIST_OP_LIMITS[roles?.listChainId || 0] || 500
 
     for (let i = 0; i < cartItems.length; i += splitSize) {
       count += 1
@@ -122,7 +123,7 @@ const Cart = () => {
               </div>
             </div>
             <Search size='w-full z-50 px-2 pt-2' isEditor={true} />
-            <Recommendations header={t('recommendations')} endpoint='recommended' limit={20} />
+            <Recommendations header={t('recommendations')} endpoint='recommended' limit={30} />
           </div>
           <div className='flex h-full flex-col glass-card rounded-2xl border-[3px] border-zinc-200 dark:border-zinc-500 gap-3 md:gap-4 md:py-6 pt-5 pb-2 px-1 sm:px-3 md:px-4 w-full xl:w-2/3'>
             <div className='flex justify-between gap-2 flex-row items-center px-3 md:px-4'>

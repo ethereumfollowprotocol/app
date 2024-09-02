@@ -187,4 +187,5 @@ export type ProfileRoles = {
   isOwner: boolean
   isManager: boolean
   isUser: boolean
+  listChainId: number
 }

@@ -435,7 +435,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         return {
           isOwner: true,
           isManager: true,
-          isUser: true
+          isUser: true,
+          listChainId: 0
         }
 
       const fetchedRoles = await fetchProfileRoles({

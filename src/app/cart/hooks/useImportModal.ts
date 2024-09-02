@@ -15,7 +15,7 @@ const useImportModal = (platform: ImportPlatformType) => {
   const [followings, setFollowings] = useState<Address[]>([])
   const [isFollowingsLoading, setIsFollowingsLoading] = useState(false)
 
-  const { addCartItem } = useCart()
+  const { cartItems, setCartItems, getAddressesFromCart } = useCart()
   const { allFollowingAddresses } = useEFPProfile()
 
   useEffect(() => {
@@ -97,11 +97,20 @@ const useImportModal = (platform: ImportPlatformType) => {
   }, [fetchedFollowings])
 
   const onAddFollowings = () => {
-    followings
-      .filter(addr => !allFollowingAddresses?.includes(addr.toLowerCase()))
-      .map(followingAddress =>
-        addCartItem({ listOp: listOpAddListRecord(followingAddress as Address), import: platform })
+    const newCartItems = followings
+      .filter(
+        addr =>
+          !(
+            allFollowingAddresses?.includes(addr.toLowerCase()) ||
+            getAddressesFromCart().includes(addr.toLowerCase())
+          )
       )
+      .map(followingAddress => ({
+        listOp: listOpAddListRecord(followingAddress as Address),
+        import: platform
+      }))
+
+    setCartItems([...cartItems, ...newCartItems])
   }
 
   const alreadyFollow = followings.filter(addr =>

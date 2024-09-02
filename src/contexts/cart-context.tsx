@@ -41,6 +41,7 @@ type CartContextType = {
     lens: Address[]
   }
   cartItems: CartItem[]
+  setCartItems: (items: CartItem[]) => void
   getAddressesFromCart: () => string[]
   getTagsFromCartByAddress: (address: Address) => string[]
   handleTagClick: (params: ListOpTagOpParams) => void
@@ -308,6 +309,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
         cartAddresses,
         socialAddresses,
         cartItems,
+        setCartItems,
         getAddressesFromCart,
         getTagsFromCartByAddress,
         handleTagClick,
