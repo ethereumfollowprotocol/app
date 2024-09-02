@@ -42,3 +42,11 @@ export const resolveEnsAddress = async (name: string) => {
     return '' as Address
   }
 }
+
+export const isValidEnsName = (name: string) => {
+  try {
+    return !!normalize(name)
+  } catch {
+    return false
+  }
+}

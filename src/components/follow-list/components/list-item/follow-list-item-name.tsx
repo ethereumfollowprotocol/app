@@ -8,6 +8,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import type { Address, GetEnsAvatarReturnType } from 'viem'
 
 import { Avatar } from '#/components/avatar'
+import { isValidEnsName } from '#/utils/ens'
 import { tagRegex } from '#/lib/constants/regex'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useCart } from '#/contexts/cart-context'
@@ -44,13 +45,13 @@ export function Name({
   showTags
 }: { name?: string | null; address: Address; showTags?: boolean }) {
   return (
-    <Link href={`/${address || name}`} className='w-full'>
+    <Link href={`/${address}`} className='w-full'>
       <p
         className={`font-bold sm:text-lg text-start hover:scale-110 ${
           showTags ? 'w-full truncate' : 'w-fit max-w-full truncate'
         } hover:opacity-75 transition-all`}
       >
-        {name || truncateAddress(address)}
+        {name && isValidEnsName(name) ? name : truncateAddress(address)}
       </p>
     </Link>
   )

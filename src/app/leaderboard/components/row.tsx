@@ -1,9 +1,10 @@
 import Link from 'next/link'
 import type { Address } from 'viem'
+import { usePathname } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 
+import { isValidEnsName } from '#/utils/ens'
 import { Avatar } from '#/components/avatar'
-import { usePathname, useRouter } from 'next/navigation'
 import { truncateAddress } from '#/lib/utilities'
 import { formatNumber } from '#/utils/formatNumber'
 import FollowButton from '#/components/follow-button'
@@ -74,7 +75,6 @@ const TableRow: React.FC<TableRowProps> = ({
   //   queryFn: async () => await resolveEnsProfile(address)
   // })
 
-  const router = useRouter()
   const pathname = usePathname()
   const { t } = useTranslation()
   const { followerTag } = useFollowState({
@@ -97,21 +97,20 @@ const TableRow: React.FC<TableRowProps> = ({
         }`}
         data-name='name-column'
       >
-        <Link href={`/${name || address}`} className='w-fit'>
+        <Link href={`/${address}`} className='w-fit'>
           <Avatar
             name={name || address}
             avatarUrl={avatar}
             size='h-[45px] w-[45px] md:h-[50px] md:w-[50px] hover:opacity-80 transition-all'
-            onClick={() => router.push(`/${name || address}`)}
           />
         </Link>
         <div
           className='flex flex-col items-start truncate justify-center text-left'
           style={{ maxWidth: 'calc(100% - 60px)' }}
         >
-          <Link href={`/${name || address}`} className='w-full'>
+          <Link href={`/${address}`} className='w-full'>
             <p className='font-bold text-base xxs:text-lg truncate max-w-full hover:opacity-60 transition-all'>
-              {name || truncateAddress(address)}
+              {name && isValidEnsName(name) ? name : truncateAddress(address)}
             </p>
           </Link>
           <div

@@ -48,7 +48,7 @@ const TransactionDetails = ({
   ])
 
   const getStatusColor = useCallback(() => {
-    if (action.isPendingConfirmation) return 'text-salmon-500'
+    if (action.isPendingConfirmation) return 'text-blue-500'
     if (action.isConfirmationError) return 'text-salmon-500'
     if (isPending) return 'text-kournikova-600 loading-ellipsis'
     if (isSuccess) return 'text-lime-600'

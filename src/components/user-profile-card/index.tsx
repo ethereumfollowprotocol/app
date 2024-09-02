@@ -18,7 +18,6 @@ import {
   listOpRemoveListRecord
 } from '#/utils/list-ops'
 import { Avatar } from '../avatar'
-import { resolveEnsProfile } from '#/utils/ens'
 import LoadingCell from '../loaders/loading-cell'
 import { useCart } from '#/contexts/cart-context'
 import { formatNumber } from '#/utils/formatNumber'
@@ -28,6 +27,7 @@ import useFollowState from '#/hooks/use-follow-state'
 import CommonFollowers from './components/common-followers'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { ProfileDetailsResponse } from '#/types/requests'
+import { isValidEnsName, resolveEnsProfile } from '#/utils/ens'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 import { useCoolMode } from '../follow-button/hooks/useCoolMode'
 import LoadingProfileCard from './components/loading-profile-card'
@@ -233,7 +233,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           <div className='flex gap-2 items-center absolute justify-between px-2 w-full left-0 top-1 font-semibold'>
             {!!profileList && (
               <p className='text-zinc-500 dark:text-zinc-300 text-sm sm:text-base'>
-                #{formatNumber(profileList)}
+                {t('list')} #{formatNumber(profileList)}
               </p>
             )}
             {profileList && profileList !== Number(profile.primary_list) ? (
@@ -261,12 +261,22 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
               >
                 <Image
                   alt='edit profile'
-                  src='/assets/icons/ens.png'
-                  width={18}
-                  height={18}
-                  className='cursor-pointer hover:opacity-70 transition-all'
+                  src='/assets/icons/ens.svg'
+                  width={32}
+                  height={32}
+                  className={cn(
+                    'cursor-pointer hover:opacity-70 transition-all',
+                    profileList ? 'translate-x-2' : ' -translate-x-2'
+                  )}
                 />
-                <p className='text-zinc-500 dark:text-zinc-300 text-sm'>{t('edit profile')}</p>
+                <p
+                  className={cn(
+                    'text-zinc-500 dark:text-zinc-300 text-sm',
+                    !profileList && '-translate-x-4'
+                  )}
+                >
+                  {t('edit profile')}
+                </p>
               </a>
             ) : null}
           </div>
@@ -314,7 +324,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                       className={showMoreOptions && !isConnectedUserCard ? 'w-[87.5%]' : 'w-full'}
                     >
                       <p className='truncate hover:opacity-70 hover:scale-105 transition-all'>
-                        {profileName || truncateAddress(profile.address)}
+                        {profileName && isValidEnsName(profileName)
+                          ? profileName
+                          : truncateAddress(profile.address)}
                       </p>
                     </Link>
                     <div
@@ -334,12 +346,12 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                           showMoreOptions && !isConnectedUserCard && moreOptionsDropdownOpen
                             ? 'flex'
                             : 'hidden'
-                        } absolute top-10 flex-col gap-2 right-0 p-2 dark:border-zinc-600  dark:bg-darkGrey bg-white border-zinc-200 border-[3px] rounded-xl z-50 drop-shadow-lg`}
+                        } absolute top-10 flex-col items-center gap-2 right-0 w-36 p-2 dark:border-zinc-600  dark:bg-darkGrey bg-white border-zinc-200 border-[3px] rounded-xl z-50 drop-shadow-lg`}
                       >
                         <button
                           ref={blockCoolMode as Ref<HTMLButtonElement>}
                           onClick={() => onClickOption('Block')}
-                          className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] text-darkGrey transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[107px] h-[37px] px-2 py-1.5'
+                          className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] text-darkGrey transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[109px] h-[37px] px-2 py-1.5'
                         >
                           <Image
                             alt='mainnet logo'
@@ -360,7 +372,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                         <button
                           ref={muteCoolMode as Ref<HTMLButtonElement>}
                           onClick={() => onClickOption('Mute')}
-                          className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] text-darkGrey transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[107px] h-[37px] px-2 py-1.5'
+                          className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] text-darkGrey transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[109px] h-[37px] px-2 py-1.5'
                         >
                           <Image
                             alt='mainnet logo'
@@ -384,10 +396,12 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                             setCopyAddressPressed(true)
                             setTimeout(() => setCopyAddressPressed(false), 3000)
                           }}
-                          className='rounded-lg cursor-pointer hover:bg-white/10 transition-all hover:scale-110 relative text-xs flex items-center gap-1 justify-center font-bold w-[107px] h-[37px] px-2 py-1.5'
+                          className='rounded-lg cursor-pointer hover:bg-white/10 transition-all hover:scale-110 w-full relative text-xs flex items-center gap-1 justify-center font-bold h-[37px] p-1'
                         >
-                          {/* <MdOutlineContentCopy className='text-base' /> */}
-                          <p>{copyAddressPressed ? 'Copied' : 'Copy Address'}</p>
+                          <MdOutlineContentCopy className='text-base' />
+                          <p className='text-nowrap'>
+                            {t(copyAddressPressed ? 'copied' : 'copy address')}
+                          </p>
                         </button>
                         {profileName && (
                           <button
@@ -396,10 +410,10 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                               setCopyENSPressed(true)
                               setTimeout(() => setCopyENSPressed(false), 3000)
                             }}
-                            className='rounded-lg cursor-pointer hover:bg-white/10 transition-all hover:scale-110 relative text-xs flex items-center gap-1 justify-center font-bold w-[107px] h-[37px] px-2 py-1.5'
+                            className='rounded-lg cursor-pointer hover:bg-white/10 transition-all hover:scale-110 relative text-xs flex items-center gap-1 justify-center font-bold w-full h-[37px] p-1'
                           >
                             <MdOutlineContentCopy className='text-base' />
-                            <p>{copyENSPressed ? 'Copied' : 'Copy ENS'}</p>
+                            <p>{t(copyENSPressed ? 'copied' : 'copy ens')}</p>
                           </button>
                         )}
                       </div>
