@@ -42,7 +42,7 @@ const InitiateActionsCard: React.FC<InitiateActionsCardProps> = ({
       isPendingConfirmation: false
     }
 
-    return cartActions.length === 0 ? [...otherActions] : [...otherActions, totalCartAction]
+    return cartActions.length === 0 ? [...otherActions] : [totalCartAction, ...otherActions]
   }, [actions])
 
   return (
