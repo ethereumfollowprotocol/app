@@ -14,6 +14,11 @@ const footerPages = [
     target: '_blank'
   },
   {
+    text: 'support',
+    href: 'https://discord.com/channels/1172042210024366090/1279517322423566377',
+    target: '_blank'
+  },
+  {
     text: 'Bug Bounty',
     href: 'https://docs.ethfollow.xyz/bugbounty',
     target: '_blank'
@@ -24,7 +29,7 @@ const Pages = () => {
   const { t } = useTranslation()
 
   return (
-    <div className='flex flex-col gap-2'>
+    <div className='flex flex-wrap w-52 gap-x-8 gap-y-4'>
       {footerPages.map((route, index) => (
         <div
           className='font-bold hover:scale-110 w-fit transition-transform'

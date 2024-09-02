@@ -7,7 +7,9 @@ import { useState, type Ref } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
+import { MdOutlineContentCopy } from 'react-icons/md'
 import { usePathname, useRouter } from 'next/navigation'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import {
   listOpAddTag,
@@ -29,7 +31,6 @@ import type { ProfileDetailsResponse } from '#/types/requests'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 import { useCoolMode } from '../follow-button/hooks/useCoolMode'
 import LoadingProfileCard from './components/loading-profile-card'
-import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 interface UserProfileCardProps {
   profileList?: number | null
@@ -57,6 +58,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const clickAwayMoreOptionsRef = useClickAway<HTMLDivElement>(() => {
     setMoreOptionsDropdownOpen(false)
   })
+
+  const [copyAddressPressed, setCopyAddressPressed] = useState(false)
+  const [copyENSPressed, setCopyENSPressed] = useState(false)
 
   const { data: fetchedEnsProfile, isLoading: isProfileLoading } = useQuery({
     queryKey: ['ens metadata', profile],
@@ -229,28 +233,42 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           <div className='flex gap-2 items-center absolute justify-between px-2 w-full left-0 top-1 font-semibold'>
             {!!profileList && (
               <p className='text-zinc-500 dark:text-zinc-300 text-sm sm:text-base'>
-                #{profileList}
+                #{formatNumber(profileList)}
               </p>
             )}
-            {profileList
-              ? profileList !== Number(profile.primary_list) && (
-                  <div ref={clickAwayCardTooltip} className='relative group z-50 cursor-help'>
-                    <p
-                      onClick={() => setCardTooltipOpen(!cardTooltipOpen)}
-                      className='text-[11px] italic text-end rounded-full py-0.5 px-2 bg-zinc-300 dark:bg-zinc-500'
-                    >
-                      {t('not primary list')}
-                    </p>
-                    <div
-                      className={`${
-                        cardTooltipOpen ? 'block' : 'hidden'
-                      } group-hover:block transition-all text-sm w-68 p-2 glass-card border-zinc-200 dark:border-zinc-500 bg-white/90 dark:bg-darkGrey/70 border-[3px] mt-2 rounded-md absolute top-5 right-0`}
-                    >
-                      {t('not primary list tooltip')}
-                    </div>
-                  </div>
-                )
-              : null}
+            {profileList && profileList !== Number(profile.primary_list) ? (
+              <div ref={clickAwayCardTooltip} className='relative group z-50 cursor-help'>
+                <p
+                  onClick={() => setCardTooltipOpen(!cardTooltipOpen)}
+                  className='text-[11px] italic text-end rounded-full py-0.5 px-2 bg-zinc-300 dark:bg-zinc-500'
+                >
+                  {t('not primary list')}
+                </p>
+                <div
+                  className={`${
+                    cardTooltipOpen ? 'block' : 'hidden'
+                  } group-hover:block transition-all text-sm w-68 p-2 glass-card border-zinc-200 dark:border-zinc-500 bg-white/90 dark:bg-darkGrey/70 border-[3px] mt-2 rounded-md absolute top-5 right-0`}
+                >
+                  {t('not primary list tooltip')}
+                </div>
+              </div>
+            ) : isConnectedUserCard ? (
+              <a
+                href={`https://app.ens.domains/${profileName || ''}`}
+                target='_blank'
+                rel='noreferrer'
+                className='flex gap-1 items-center hover:scale-105 transition-all'
+              >
+                <Image
+                  alt='edit profile'
+                  src='/assets/icons/ens.png'
+                  width={18}
+                  height={18}
+                  className='cursor-pointer hover:opacity-70 transition-all'
+                />
+                <p className='text-zinc-500 dark:text-zinc-300 text-sm'>{t('edit profile')}</p>
+              </a>
+            ) : null}
           </div>
           <div
             className={`flex w-full items-center flex-col pt-8 pb-4 px-4 sm:p-6 sm:pt-9 ${
@@ -316,12 +334,12 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                           showMoreOptions && !isConnectedUserCard && moreOptionsDropdownOpen
                             ? 'flex'
                             : 'hidden'
-                        } absolute top-10 flex-col gap-2 right-0 p-2 dark:bg-darkGrey text-darkGrey dark:border-zinc-600 bg-white border-zinc-200 border-[3px] rounded-xl z-50 drop-shadow-lg`}
+                        } absolute top-10 flex-col gap-2 right-0 p-2 dark:border-zinc-600  dark:bg-darkGrey bg-white border-zinc-200 border-[3px] rounded-xl z-50 drop-shadow-lg`}
                       >
                         <button
                           ref={blockCoolMode as Ref<HTMLButtonElement>}
                           onClick={() => onClickOption('Block')}
-                          className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[107px] h-[37px] px-2 py-1.5'
+                          className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] text-darkGrey transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[107px] h-[37px] px-2 py-1.5'
                         >
                           <Image
                             alt='mainnet logo'
@@ -342,7 +360,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                         <button
                           ref={muteCoolMode as Ref<HTMLButtonElement>}
                           onClick={() => onClickOption('Mute')}
-                          className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[107px] h-[37px] px-2 py-1.5'
+                          className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] text-darkGrey transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[107px] h-[37px] px-2 py-1.5'
                         >
                           <Image
                             alt='mainnet logo'
@@ -360,6 +378,30 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                                 : 'Mute'}
                           </p>
                         </button>
+                        <button
+                          onClick={() => {
+                            navigator.clipboard.writeText(profile.address)
+                            setCopyAddressPressed(true)
+                            setTimeout(() => setCopyAddressPressed(false), 3000)
+                          }}
+                          className='rounded-lg cursor-pointer hover:bg-white/10 transition-all hover:scale-110 relative text-xs flex items-center gap-1 justify-center font-bold w-[107px] h-[37px] px-2 py-1.5'
+                        >
+                          {/* <MdOutlineContentCopy className='text-base' /> */}
+                          <p>{copyAddressPressed ? 'Copied' : 'Copy Address'}</p>
+                        </button>
+                        {profileName && (
+                          <button
+                            onClick={() => {
+                              navigator.clipboard.writeText(profileName)
+                              setCopyENSPressed(true)
+                              setTimeout(() => setCopyENSPressed(false), 3000)
+                            }}
+                            className='rounded-lg cursor-pointer hover:bg-white/10 transition-all hover:scale-110 relative text-xs flex items-center gap-1 justify-center font-bold w-[107px] h-[37px] px-2 py-1.5'
+                          >
+                            <MdOutlineContentCopy className='text-base' />
+                            <p>{copyENSPressed ? 'Copied' : 'Copy ENS'}</p>
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>

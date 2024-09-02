@@ -29,7 +29,7 @@ const socials = [
 export function Footer() {
   return (
     <footer className='w-full  z-20 flex justify-center border-t-2 border-t-pink glass-card py-8 md:py-16 items-center'>
-      <div className='flex flex-row items-center justify-center h-full w-full gap-6 sm:gap-28 md:gap-44'>
+      <div className='flex items-center justify-center h-full w-full gap-4 xxs:gap-6 sm:gap-28 md:gap-44'>
         <section className='flex gap-4 align-middle'>
           <Image
             src='/assets/logo.png'
@@ -40,9 +40,9 @@ export function Footer() {
           />
         </section>
         <section className='my-auto flex align-middle'>
-          <div className='my-auto flex flex-col justify-center gap-4 sm:gap-6'>
+          <div className='my-auto flex flex-col justify-center gap-6 sm:gap-6'>
             <Pages />
-            <div className='flex items-center gap-10'>
+            <div className='flex items-center justify-center w-52 sm:justify-start gap-10'>
               {socials.map(item => (
                 <a
                   target='_blank'

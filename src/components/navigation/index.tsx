@@ -121,11 +121,11 @@ const Navigation = () => {
             <div ref={clickAwayRef} className='lg:hidden relative'>
               <div
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className='flex hover:scale-110 cursor-pointer group relative transition-all items-center justify-center lg:hidden gap-[5px] flex-col h-12 w-12 glass-card border-[3px] rounded-full  hover:border-darkGrey border-zinc-400'
+                className='flex hover:scale-110 cursor-pointer group relative transition-all items-center justify-center lg:hidden gap-[5px] flex-col h-12 w-12 glass-card border-[3px] rounded-full  hover:border-darkGrey dark:hover:border-white border-zinc-400'
               >
-                <div className='w-5 h-[3px] bg-zinc-400 group-hover:bg-darkGrey rounded-full'></div>
-                <div className='w-5 h-[3px] bg-zinc-400 group-hover:bg-darkGrey rounded-full'></div>
-                <div className='w-5 h-[3px] bg-zinc-400 group-hover:bg-darkGrey rounded-full'></div>
+                <div className='w-5 h-[3px] bg-zinc-400 group-hover:bg-darkGrey dark:group-hover:bg-white rounded-full'></div>
+                <div className='w-5 h-[3px] bg-zinc-400 group-hover:bg-darkGrey dark:group-hover:bg-white rounded-full'></div>
+                <div className='w-5 h-[3px] bg-zinc-400 group-hover:bg-darkGrey dark:group-hover:bg-white rounded-full'></div>
               </div>
               <MobileMenu open={mobileMenuOpen} setOpen={setMobileMenuOpen} />
             </div>

@@ -13,11 +13,13 @@
   "follower list second": "you own.",
   "partners": "Launch Partners",
   "sponsors": "Supported by grants from:",
+  "support": "Support",
 
   "profile": "My Profile",
   "profile error": "User doesn't exist",
   "settings": "List Settings",
   "block-mute": "Block/Mute Lists",
+  "edit profile": "Edit profile",
   "tags": "Tags",
   "no tag": "No Tag",
   "no tags": "No Tags",

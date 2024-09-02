@@ -31,14 +31,14 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ open, setOpen }) => {
   if (!open) return null
 
   return (
-    <div className=' bg-white/90 dark:bg-darkGrey/70 glass-card px-3 py-2 gap-1 z-50 shadow-md border-[3px] rounded-md border-zinc-200 dark:border-zinc-500 absolute top-[120%] flex flex-col items-end right-0'>
+    <div className=' bg-white/90 dark:bg-darkGrey/80 glass-card p-1 gap-1 z-50 shadow-md border-[3px] rounded-md border-zinc-200 dark:border-zinc-500 absolute top-[120%] flex flex-col items-end left-0'>
       {NAV_ITEMS.map(item => (
-        <div className='font-bold' key={`${item.name}`}>
+        <div className='font-bold w-full' key={`${item.name}`}>
           <Link
             prefetch={true}
             href={item.href(itemUrl)}
             className={cn([
-              'capitalize xl:text-xl lg:text-lg transition-colors',
+              'capitalize xl:text-xl block lg:text-lg transition-colors p-3 w-full rounded-md hover:bg-zinc-100 dark:hover:bg-darkGrey/50',
               item.name === 'profile' && !userAddress
                 ? 'text-grey dark:text-zinc-300 hover:text-darkGrey dark:hover:text-white'
                 : item.href(itemUrl) === pathname.toLowerCase()
