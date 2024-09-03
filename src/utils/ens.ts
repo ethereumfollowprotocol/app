@@ -9,6 +9,13 @@ export const resolveEnsProfile = async (address: `0x${string}`) => {
   const ensAddress = resolvedName ? await resolveEnsAddress(resolvedName) : null
 
   const name = address.toLowerCase() === ensAddress?.toLowerCase() ? resolvedName : null
+
+  if (name && !isValidEnsName(name))
+    return {
+      name: null,
+      avatar: null
+    }
+
   const avatar = name ? `https://metadata.ens.domains/mainnet/avatar/${name}` : null
 
   return {
