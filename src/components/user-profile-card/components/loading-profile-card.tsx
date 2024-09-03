@@ -2,6 +2,8 @@ import { useTranslation } from 'react-i18next'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import LoadingCell from '../../loaders/loading-cell'
+import { profileCardSocials } from '#/lib/constants'
+import Image from 'next/image'
 
 interface LoadingProfileCardProps {
   isResponsive?: boolean
@@ -46,12 +48,25 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
           <div
             className={`flex items-center ${
               isResponsive ? 'w-3/4 xl:w-full' : 'w-full'
-            } flex-col gap-2 justify-center`}
+            } flex-col gap-4 justify-center`}
           >
-            <LoadingCell isStatic={isStatic} className='w-48 sm:w-68 xl:w-3/4 h-7 rounded-lg' />
-            {!hideFollowButton && (
-              <LoadingCell isStatic={isStatic} className='w-[107px] h-9 rounded-lg' />
-            )}
+            <div className='flex flex-col items-center justify-center gap-2 w-full'>
+              <LoadingCell isStatic={isStatic} className='w-48 sm:w-68 xl:w-3/4 h-7 rounded-lg' />
+              {!hideFollowButton && (
+                <LoadingCell isStatic={isStatic} className='w-[107px] h-9 rounded-lg' />
+              )}
+            </div>
+            <div className='flex gap-2 items-center opacity-20'>
+              {profileCardSocials.map(social => (
+                <Image
+                  key={social.name}
+                  src={social.icon}
+                  alt={social.name}
+                  width={37}
+                  height={37}
+                />
+              ))}
+            </div>
           </div>
         </div>
         <div className='flex w-full flex-wrap justify-center gap-10 gap-y-6 sm:gap-y-9 sm:gap-x-[60px] items-center mx-auto text-center'>

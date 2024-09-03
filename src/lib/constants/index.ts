@@ -3,6 +3,11 @@ import type { ProfileTableTitleType, ProfileTabType } from '#/types/common'
 
 import SloveniaFlag from 'public/assets/icons/flags/slovenia.svg'
 import USAFlag from 'public/assets/icons/flags/united-states.svg'
+import TwitterIcon from 'public/assets/icons/twitter.svg'
+import GithubIcon from 'public/assets/icons/github.svg'
+import DiscordIcon from 'public/assets/icons/discord.svg'
+import TelegramIcon from 'public/assets/icons/telegram.svg'
+import EtherscanIcon from 'public/assets/icons/etherscan.svg'
 
 export const APP_NAME = 'Ethereum Follow Protocol'
 export const APP_NAME_SHORT = 'EFP'
@@ -58,3 +63,31 @@ export const NAV_ITEMS = [
 
 export const leaderboardFilters = ['mutuals', 'followers', 'following', 'blocked'] as const
 export const leaderboardFiltersEmojies = ['🫂', '🤩', '👀', '☠️'] as const
+
+export const profileCardSocials = [
+  {
+    name: 'etherscan',
+    url: (address: string) => `https://etherscan.io/address/${address}`,
+    icon: EtherscanIcon
+  },
+  {
+    name: 'com.twitter',
+    url: (username: string) => `https://twitter.com/${username}`,
+    icon: TwitterIcon
+  },
+  {
+    name: 'com.github',
+    url: (username: string) => `https://github.com/${username}`,
+    icon: GithubIcon
+  },
+  {
+    name: 'com.telegram',
+    url: (username: string) => `https://t.me/${username}`,
+    icon: TelegramIcon
+  },
+  {
+    name: 'com.discord',
+    url: (username: string) => `https://discord.com/users/${username}`,
+    icon: DiscordIcon
+  }
+] as const

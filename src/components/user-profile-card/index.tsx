@@ -31,6 +31,7 @@ import { isValidEnsName, resolveEnsProfile } from '#/utils/ens'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 import { useCoolMode } from '../follow-button/hooks/useCoolMode'
 import LoadingProfileCard from './components/loading-profile-card'
+import { profileCardSocials } from '#/lib/constants'
 
 interface UserProfileCardProps {
   profileList?: number | null
@@ -300,130 +301,168 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                   }
                 />
               )}
-              <div className='flex w-full items-center flex-col gap-2 justify-center'>
-                {isProfileLoading ? (
-                  <LoadingCell className='w-48 sm:w-68 xl:w-3/4 h-7 rounded-lg' />
-                ) : (
-                  <div
-                    className={`${
-                      isResponsive
-                        ? 'max-w-[90%] xl:max-w-72 2xl:max-w-[325px] sm:text-2xl text-xl'
-                        : 'max-w-[332px] text-2xl'
-                    } font-bold flex gap-2 items-center relative text-center`}
-                  >
-                    <Link
-                      href={`/${profile.address}`}
-                      className={showMoreOptions && !isConnectedUserCard ? 'w-[87.5%]' : 'w-full'}
-                    >
-                      <p className='truncate hover:opacity-70 hover:scale-105 transition-all'>
-                        {profileName && isValidEnsName(profileName)
-                          ? profileName
-                          : truncateAddress(profile.address)}
-                      </p>
-                    </Link>
+              <div className='flex w-full items-center flex-col gap-4 justify-center'>
+                <div className='flex flex-col items-center justify-center gap-2 w-full'>
+                  {isProfileLoading ? (
+                    <LoadingCell className='w-48 sm:w-68 xl:w-3/4 h-7 rounded-lg' />
+                  ) : (
                     <div
-                      className={showMoreOptions && !isConnectedUserCard ? 'block' : 'hidden'}
-                      ref={clickAwayMoreOptionsRef}
+                      className={`${
+                        isResponsive
+                          ? 'max-w-[90%] xl:max-w-72 2xl:max-w-[325px] sm:text-2xl text-xl'
+                          : 'max-w-[332px] text-2xl'
+                      } font-bold flex gap-2 items-center relative text-center`}
                     >
-                      <div
-                        className='flex gap-[3px] px-1.5 py-2 rounded-md bg-zinc-300 cursor-pointer items-center hover:opacity-50 transition-all hover:scale-125'
-                        onClick={() => setMoreOptionsDropdownOpen(!moreOptionsDropdownOpen)}
+                      <Link
+                        href={`/${profile.address}`}
+                        className={showMoreOptions && !isConnectedUserCard ? 'w-[87.5%]' : 'w-full'}
                       >
-                        <div className='h-1 w-1 bg-black rounded-full'></div>
-                        <div className='h-1 w-1 bg-black rounded-full'></div>
-                        <div className='h-1 w-1 bg-black rounded-full'></div>
-                      </div>
+                        <p className='truncate hover:opacity-70 hover:scale-105 transition-all'>
+                          {profileName && isValidEnsName(profileName)
+                            ? profileName
+                            : truncateAddress(profile.address)}
+                        </p>
+                      </Link>
                       <div
-                        className={`${
-                          showMoreOptions && !isConnectedUserCard && moreOptionsDropdownOpen
-                            ? 'flex'
-                            : 'hidden'
-                        } absolute top-10 flex-col items-center gap-2 right-0 w-36 p-2 dark:border-zinc-600  dark:bg-darkGrey bg-white border-zinc-200 border-[3px] rounded-xl z-50 drop-shadow-lg`}
+                        className={showMoreOptions && !isConnectedUserCard ? 'block' : 'hidden'}
+                        ref={clickAwayMoreOptionsRef}
                       >
-                        <button
-                          ref={blockCoolMode as Ref<HTMLButtonElement>}
-                          onClick={() => onClickOption('Block')}
-                          className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] text-darkGrey transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[109px] h-[37px] px-2 py-1.5'
+                        <div
+                          className='flex gap-[3px] px-1.5 py-2 rounded-md bg-zinc-300 cursor-pointer items-center hover:opacity-50 transition-all hover:scale-125'
+                          onClick={() => setMoreOptionsDropdownOpen(!moreOptionsDropdownOpen)}
                         >
-                          <Image
-                            alt='mainnet logo'
-                            src='/assets/mainnet-black.svg'
-                            width={16}
-                            height={16}
-                          />
-                          <p>
-                            {followState === 'blocks'
-                              ? isPendingUnblock
-                                ? 'Block'
-                                : 'Unblock'
-                              : isPendingBlock
-                                ? 'Unblock'
-                                : 'Block'}
-                          </p>
-                        </button>
-                        <button
-                          ref={muteCoolMode as Ref<HTMLButtonElement>}
-                          onClick={() => onClickOption('Mute')}
-                          className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] text-darkGrey transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[109px] h-[37px] px-2 py-1.5'
+                          <div className='h-1 w-1 bg-black rounded-full'></div>
+                          <div className='h-1 w-1 bg-black rounded-full'></div>
+                          <div className='h-1 w-1 bg-black rounded-full'></div>
+                        </div>
+                        <div
+                          className={`${
+                            showMoreOptions && !isConnectedUserCard && moreOptionsDropdownOpen
+                              ? 'flex'
+                              : 'hidden'
+                          } absolute top-10 flex-col items-center gap-2 right-0 w-36 p-2 dark:border-zinc-600  dark:bg-darkGrey bg-white border-zinc-200 border-[3px] rounded-xl z-50 drop-shadow-lg`}
                         >
-                          <Image
-                            alt='mainnet logo'
-                            src='/assets/mainnet-black.svg'
-                            width={16}
-                            height={16}
-                          />
-                          <p>
-                            {followState === 'mutes'
-                              ? isPendingUnmute
-                                ? 'Mute'
-                                : 'Unmute'
-                              : isPendingMute
-                                ? 'Unmute'
-                                : 'Mute'}
-                          </p>
-                        </button>
-                        <button
-                          onClick={() => {
-                            navigator.clipboard.writeText(profile.address)
-                            setCopyAddressPressed(true)
-                            setTimeout(() => setCopyAddressPressed(false), 3000)
-                          }}
-                          className='rounded-lg cursor-pointer hover:bg-white/10 transition-all hover:scale-110 w-full relative text-xs flex items-center gap-1 justify-center font-bold h-[37px] p-1'
-                        >
-                          <MdOutlineContentCopy className='text-base' />
-                          <p className='text-nowrap'>
-                            {t(copyAddressPressed ? 'copied' : 'copy address')}
-                          </p>
-                        </button>
-                        {profileName && (
+                          <button
+                            ref={blockCoolMode as Ref<HTMLButtonElement>}
+                            onClick={() => onClickOption('Block')}
+                            className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] text-darkGrey transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[109px] h-[37px] px-2 py-1.5'
+                          >
+                            <Image
+                              alt='mainnet logo'
+                              src='/assets/mainnet-black.svg'
+                              width={16}
+                              height={16}
+                            />
+                            <p>
+                              {followState === 'blocks'
+                                ? isPendingUnblock
+                                  ? 'Block'
+                                  : 'Unblock'
+                                : isPendingBlock
+                                  ? 'Unblock'
+                                  : 'Block'}
+                            </p>
+                          </button>
+                          <button
+                            ref={muteCoolMode as Ref<HTMLButtonElement>}
+                            onClick={() => onClickOption('Mute')}
+                            className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] text-darkGrey transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[109px] h-[37px] px-2 py-1.5'
+                          >
+                            <Image
+                              alt='mainnet logo'
+                              src='/assets/mainnet-black.svg'
+                              width={16}
+                              height={16}
+                            />
+                            <p>
+                              {followState === 'mutes'
+                                ? isPendingUnmute
+                                  ? 'Mute'
+                                  : 'Unmute'
+                                : isPendingMute
+                                  ? 'Unmute'
+                                  : 'Mute'}
+                            </p>
+                          </button>
                           <button
                             onClick={() => {
-                              navigator.clipboard.writeText(profileName)
-                              setCopyENSPressed(true)
-                              setTimeout(() => setCopyENSPressed(false), 3000)
+                              navigator.clipboard.writeText(profile.address)
+                              setCopyAddressPressed(true)
+                              setTimeout(() => setCopyAddressPressed(false), 3000)
                             }}
-                            className='rounded-lg cursor-pointer hover:bg-white/10 transition-all hover:scale-110 relative text-xs flex items-center gap-1 justify-center font-bold w-full h-[37px] p-1'
+                            className='rounded-lg cursor-pointer hover:bg-white/10 transition-all hover:scale-110 w-full relative text-xs flex items-center gap-1 justify-center font-bold h-[37px] p-1'
                           >
                             <MdOutlineContentCopy className='text-base' />
-                            <p>{t(copyENSPressed ? 'copied' : 'copy ens')}</p>
+                            <p className='text-nowrap'>
+                              {t(copyAddressPressed ? 'copied' : 'copy address')}
+                            </p>
                           </button>
-                        )}
+                          {profileName && (
+                            <button
+                              onClick={() => {
+                                navigator.clipboard.writeText(profileName)
+                                setCopyENSPressed(true)
+                                setTimeout(() => setCopyENSPressed(false), 3000)
+                              }}
+                              className='rounded-lg cursor-pointer hover:bg-white/10 transition-all hover:scale-110 relative text-xs flex items-center gap-1 justify-center font-bold w-full h-[37px] p-1'
+                            >
+                              <MdOutlineContentCopy className='text-base' />
+                              <p>{t(copyENSPressed ? 'copied' : 'copy ens')}</p>
+                            </button>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )}
-                {followerTag && connectedAddress && !isConnectedUserCard && (
-                  <div
-                    className={`rounded-full font-bold text-[10px] mb-1 flex items-center justify-center text-darkGrey bg-zinc-300 h-5 w-20 ${followerTag.className}`}
-                  >
-                    {t(followerTag.text)}
-                  </div>
-                )}
-                {!(hideFollowButton || isConnectedUserCard) && profile.address && (
-                  <div className='h-9'>
+                  )}
+                  {followerTag && connectedAddress && !isConnectedUserCard && (
+                    <div
+                      className={`rounded-full font-bold text-[10px] mb-1 flex items-center justify-center text-darkGrey bg-zinc-300 h-5 w-20 ${followerTag.className}`}
+                    >
+                      {t(followerTag.text)}
+                    </div>
+                  )}
+                  {!(hideFollowButton || isConnectedUserCard) && profile.address && (
                     <FollowButton address={profile.address} />
-                  </div>
+                  )}
+                </div>
+                {profile.ens.records?.description && (
+                  <p className='text-[#888] dark:text-[#bbb] font-medium text-sm sm:text-sm text-center'>
+                    {profile.ens.records.description.split(' ').map(word =>
+                      word.includes('@') ? (
+                        <Link
+                          key={word}
+                          href={`/${word.replace('@', '')}`}
+                          className='dark:text-blue-400 dark:hover:text-blue-300 text-blue-600 hover:text-blue-500'
+                        >
+                          {word}{' '}
+                        </Link>
+                      ) : (
+                        `${word} `
+                      )
+                    )}
+                  </p>
                 )}
+                <div className='flex items-center gap-2'>
+                  {profileCardSocials.map(social => (
+                    <a
+                      key={social.name}
+                      href={social.url(
+                        social.name === 'etherscan'
+                          ? profile.address
+                          : profile.ens.records?.[social.name] || ''
+                      )}
+                      target='_blank'
+                      rel='noreferrer'
+                      className={
+                        profile.ens.records?.[social.name] || social.name === 'etherscan'
+                          ? 'opacity-100 hover:opacity-80 hover:scale-110 transition-all'
+                          : 'opacity-20 pointer-events-none'
+                      }
+                    >
+                      <Image src={social.icon} alt={social.name} width={37} height={37} />
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
             <div className='flex w-full flex-wrap justify-center gap-10 gap-y-6 sm:gap-y-9 sm:gap-x-[60px] items-center mx-auto text-center'>
