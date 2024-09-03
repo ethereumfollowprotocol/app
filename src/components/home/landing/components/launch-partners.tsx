@@ -2,13 +2,17 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { useTheme } from 'next-themes'
 import { useTranslation } from 'react-i18next'
-import { LAUNCH_PARTNERS } from '#/lib/constants/partners'
+
+import EnsDao from 'public/assets/sponsors/ensdao.svg'
 import Line from 'public/assets/lines/desktop/line-5.svg'
-import EnsDao from 'public/assets/sponsors/ensdao.png'
+import { LAUNCH_PARTNERS } from '#/lib/constants/partners'
+import EnsDaoDark from 'public/assets/sponsors/ensdao-dark.svg'
 
 const LaunchPartners = () => {
   const { t } = useTranslation()
+  const { resolvedTheme } = useTheme()
 
   return (
     <div className='flex flex-col items-center gap-12 relative'>
@@ -52,7 +56,7 @@ const LaunchPartners = () => {
         <div className='mx-auto w-fit hover:scale-110 transition-transform'>
           <Link target='_blank' rel='noopener noreferrer' href='https://ensdao.org/'>
             <Image
-              src={EnsDao}
+              src={resolvedTheme === 'dark' ? EnsDaoDark : EnsDao}
               width='180'
               alt='ens dao'
               className='mx-auto w-44 sm:w-60 rounded-[2rem] border-[3px] border-[#B879FF]'
