@@ -33,7 +33,7 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
           </button>
         </div>
       )}
-      <div className='pointer-events-none text-zinc-500 absolute flex justify-start px-2 w-full left-0 top-1 font-semibold'>
+      <div className='pointer-events-none text-zinc-500 absolute flex justify-start px-2 w-full left-0 top-1 font-bold'>
         <LoadingCell isStatic={isStatic} className='w-10 h-5 mt-1 rounded-lg' />
       </div>
       <div
@@ -69,7 +69,7 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
               {ranks.map((rank, i) => (
                 <div
                   key={i}
-                  className='flex xl:w-full gap-3 justify-between items-center font-semibold'
+                  className='flex xl:w-full gap-3 justify-between items-center font-bold'
                 >
                   <p className='text-[#888] dark:text-[#aaa]'>{t(rank)}</p>
                   <LoadingCell className='h-5 w-10 rounded-md' isStatic={isStatic} />

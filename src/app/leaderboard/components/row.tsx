@@ -137,9 +137,7 @@ const TableRow: React.FC<TableRowProps> = ({
                 }[firstStat] || 0
               )}
             </p>
-            <p className='font-semibold text-sm capitalize text-[#888] dark:text-[#aaa]'>
-              {firstStat}
-            </p>
+            <p className='font-bold text-sm capitalize text-[#888] dark:text-[#aaa]'>{firstStat}</p>
           </div>
         )}
         <div
@@ -152,7 +150,7 @@ const TableRow: React.FC<TableRowProps> = ({
           } flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(mutuals || 0)}</p>
-          <p className='font-semibold text-sm  text-[#888] dark:text-[#aaa]'>Mutuals</p>
+          <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>Mutuals</p>
         </div>
         <div
           className={`${
@@ -160,7 +158,7 @@ const TableRow: React.FC<TableRowProps> = ({
           } flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(followers || 0)}</p>
-          <p className='font-semibold text-sm  text-[#888] dark:text-[#aaa]'>Followers</p>
+          <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>Followers</p>
         </div>
         <div
           className={`${
@@ -168,7 +166,7 @@ const TableRow: React.FC<TableRowProps> = ({
           } flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(following || 0)}</p>
-          <p className='font-semibold text-sm  text-[#888] dark:text-[#aaa]'>Following</p>
+          <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>Following</p>
         </div>
         <div
           className={`flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 hidden xl:flex ${
@@ -176,7 +174,7 @@ const TableRow: React.FC<TableRowProps> = ({
           } `}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(blocked || 0)}</p>
-          <p className='font-semibold text-sm  text-[#888] dark:text-[#aaa]'>Blocked</p>
+          <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>Blocked</p>
         </div>
       </div>
       <div

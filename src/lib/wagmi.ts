@@ -73,7 +73,7 @@ export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
     ...baseSepolia,
     iconUrl: '/assets/chains/base.svg',
     custom: {
-      chainDetail: 'Testnet',
+      chainDetail: 'Ethereum L2 Testnet',
       gasFeeDetail: 'Super Low gas fees'
     }
   },
@@ -90,7 +90,7 @@ export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
     iconBackground: 'bg-zinc-200',
     iconUrl: '/assets/chains/ethereum.svg',
     custom: {
-      chainDetail: 'Testnet',
+      chainDetail: 'Ethereum Testnet',
       gasFeeDetail: 'Low gas fees'
     }
   }

@@ -95,7 +95,7 @@ const ConnectButton = () => {
                 className='rounded-full'
                 unoptimized={true}
               />
-              <p className='font-semibold hidden sm:block truncate text-lg'>
+              <p className='font-bold hidden sm:block truncate text-lg'>
                 {ensProfile?.name || truncateAddress(userAddress)}
               </p>
             </div>
@@ -105,7 +105,7 @@ const ConnectButton = () => {
           </>
         ) : (
           <div className='w-full sm:w-54 h-full flex items-center justify-center rounded-full'>
-            <p className='hidden sm:block font-semibold text-lg text-nowrap px-1'>{t('connect')}</p>
+            <p className='hidden sm:block font-bold text-lg text-nowrap px-1'>{t('connect')}</p>
             <HiOutlineWallet className='text-4xl w-[46px] block sm:hidden' />
           </div>
         )}
@@ -121,7 +121,7 @@ const ConnectButton = () => {
               <FiArrowLeft className='text-xl' />
               <div className='flex gap-2'>
                 <Image src={selectedLanguage?.icon || ''} alt='Language icon' width={24} />
-                <p className='font-semibold '>{selectedLanguage?.language}</p>
+                <p className='font-bold '>{selectedLanguage?.language}</p>
               </div>
             </div>
             <div
@@ -135,11 +135,11 @@ const ConnectButton = () => {
                   className='flex sm:hidden justify-between items-center w-full group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/60 dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer'
                 >
                   <FiArrowLeft className='w-8 font-bold' />
-                  <p className=' font-semibold'>Back</p>
+                  <p className=' font-bold'>Back</p>
                 </div>
                 {LANGUAGES.map(lang => (
                   <div
-                    className='p-3 pl-8 relative font-semibold rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-colors'
+                    className='p-3 pl-8 relative font-bold rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-colors'
                     key={lang.language}
                     onClick={() => {
                       changeLanguage(lang)
@@ -170,7 +170,7 @@ const ConnectButton = () => {
                 className='flex justify-between items-center w-full group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer'
               >
                 <FiArrowLeft className='text-xl' />
-                <p className=' font-semibold'>
+                <p className=' font-bold'>
                   {selectedList ? `${t('list')} #${selectedList}` : t('mint new list')}
                 </p>
               </div>
@@ -189,7 +189,7 @@ const ConnectButton = () => {
                     className='flex sm:hidden justify-between items-center w-full group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/20  dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer'
                   >
                     <FiArrowLeft className='text-xl' />
-                    <p className=' font-semibold'>Back</p>
+                    <p className=' font-bold'>Back</p>
                   </div>
                   {lists?.lists?.map(list => (
                     <div
@@ -210,7 +210,7 @@ const ConnectButton = () => {
                           className='absolute left-2 top-[17px]'
                         />
                       )}
-                      <p className='text-nowrap font-semibold'>{`${t('list')} #${list}`}</p>
+                      <p className='text-nowrap font-bold'>{`${t('list')} #${list}`}</p>
                       {lists.primary_list === list && (
                         <p className='mb-0.5 text-sm italic text-nowrap font-medium text-zinc-400'>
                           - Primary
@@ -236,14 +236,14 @@ const ConnectButton = () => {
                         className='absolute left-2 top-[17px]'
                       />
                     )}
-                    <p className='text-nowrap font-semibold'>{t('mint new list')}</p>
+                    <p className='text-nowrap font-bold'>{t('mint new list')}</p>
                   </div>
                 </div>
               </div>
             </div>
           )}
           <p
-            className='text-red-500 p-3 text-right font-semibold w-full text-nowrap rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-opacity cursor-pointer'
+            className='text-red-500 p-3 text-right font-bold w-full text-nowrap rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-opacity cursor-pointer'
             onClick={() => {
               disconnect()
               setWalletMenuOpen(false)

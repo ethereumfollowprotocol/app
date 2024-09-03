@@ -39,10 +39,10 @@ export function SelectChainCard({
   return (
     <>
       <div className='flex flex-col gap-2'>
-        <h1 className='text-2xl sm:text-3xl font-semibold'>
+        <h1 className='text-2xl sm:text-3xl font-bold'>
           {t(isCreatingNewList ? 'create list title' : 'title list op')}
         </h1>
-        {isCreatingNewList && <p className=' font-medium text-zinc-400'>{t('comment')}</p>}
+        {isCreatingNewList && <p className=' font-medium text-zinc-400'>{t('chain comment')}</p>}
       </div>
       <div className='flex flex-col items-center gap-4 sm:gap-6'>
         <p className='text-xl sm:text-2xl font-bold'>{t('select')}</p>
@@ -60,7 +60,7 @@ export function SelectChainCard({
         </div>
       )}
       <div className='w-full mt-8 flex justify-between items-center'>
-        <CancelButton onClick={onCancel} />
+        <CancelButton className='h-14' onClick={onCancel} />
         <PrimaryButton
           label={t('next')}
           onClick={() => {
@@ -68,7 +68,7 @@ export function SelectChainCard({
             if (currentChainId !== DEFAULT_CHAIN.id) switchChain({ chainId: DEFAULT_CHAIN.id })
             handleNextStep()
           }}
-          className='text-lg w-32 h-12'
+          className='text-lg w-32 h-14'
           disabled={!selectedChain}
         />
       </div>

@@ -22,7 +22,7 @@ const LatestFollowers: React.FC<LatestFollowersProps> = ({ profiles, isLoading }
         listClassName='gap-3'
       />
       {!isLoading && profiles?.length === 0 && (
-        <div className='w-full lg:h-[638px] flex justify-center items-center font-semibold italic text-lg'>
+        <div className='w-full lg:h-[638px] flex justify-center items-center font-bold italic text-lg'>
           {t('no followers')}
         </div>
       )}

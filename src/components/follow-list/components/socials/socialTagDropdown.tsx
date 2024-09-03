@@ -152,7 +152,7 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
               {recentTags.map(tag => (
                 <button
                   key={tag}
-                  className='font-semibold py-2 truncate px-3 hover:opacity-80 hover:scale-110 transition-all bg-zinc-300 text-darkGrey rounded-full'
+                  className='font-bold py-2 truncate px-3 hover:opacity-80 hover:scale-110 transition-all bg-zinc-300 text-darkGrey rounded-full'
                   onClick={() => addTag(tag)}
                 >
                   {tag}
@@ -177,7 +177,7 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
             } max-w-full transition-transform hover:scale-110`}
           >
             <button
-              className={`font-semibold py-1 px-2 sm:py-1.5 max-w-full text-darkGrey sm:px-3 truncate text-sm hover:opacity-80 rounded-full ${
+              className={`font-bold py-1 px-2 sm:py-1.5 max-w-full text-darkGrey sm:px-3 truncate text-sm hover:opacity-80 rounded-full ${
                 removingTag ? 'bg-deletion' : 'bg-zinc-300'
               }`}
               onClick={() => removeTag(tag)}

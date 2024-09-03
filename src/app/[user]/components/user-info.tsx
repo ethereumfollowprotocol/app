@@ -249,7 +249,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
                     setIsBlockedMutedOpen(true)
                     router.push(`/${user}?modal=blockmutelists`)
                   }}
-                  className='font-semibold cursor-pointer hover:opacity-80 hover:scale-110 transition-all'
+                  className='font-bold cursor-pointer hover:opacity-80 hover:scale-110 transition-all'
                 >
                   {t('block-mute')}
                 </p>
@@ -259,7 +259,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
                   className='flex gap-1 cursor-pointer items-center hover:opacity-80 hover:scale-110 transition-all'
                   onClick={() => setListSettingsOpen(true)}
                 >
-                  <p className='font-semibold '>{t('settings')}</p>
+                  <p className='font-bold '>{t('settings')}</p>
                   <IoMdSettings className='text-xl' />
                 </div>
               )}
@@ -310,7 +310,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
                   key={option}
                   onClick={() => setActiveTab(option)}
                   className={cn(
-                    'w-1/2 capitalize text-lg py-2 font-semibold glass-card border-[3px] border-zinc-300 dark:border-zinc-500 rounded-t-lg',
+                    'w-1/2 capitalize text-lg py-2 font-bold glass-card border-[3px] border-zinc-300 dark:border-zinc-500 rounded-t-lg',
                     activeTab === option ? 'dark:bg-white/20' : 'bg-black/5 dark:hover:bg-white/10'
                   )}
                 >

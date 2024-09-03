@@ -152,7 +152,7 @@ export function Search({
             </div>
           )}
           {!isLoading && searchResult.length === 0 ? (
-            <div className='w-full h-16 flex items-center justify-center italic font-semibold text-zinc-400'>
+            <div className='w-full h-16 flex items-center justify-center italic font-bold text-zinc-400'>
               {t('search no results')}
             </div>
           ) : (
@@ -235,7 +235,7 @@ export function Search({
                 </div>
               )}
               {!isLoading && searchResult.length === 0 ? (
-                <div className='w-full h-16 flex items-center pb-4 justify-center italic font-semibold text-zinc-400'>
+                <div className='w-full h-16 flex items-center pb-4 justify-center italic font-bold text-zinc-400'>
                   {t('search no results')}
                 </div>
               ) : (

@@ -166,14 +166,14 @@ const TableHeader: React.FC<TableHeaderProps> = ({
               <LoadingCell className='w-20 h-7 md:h-9 rounded-full' />
             </>
           ) : !displayedTags || displayedTags.length === 0 ? (
-            <p className='text-center w-full font-semibold text-zinc-500 dark:text-zinc-300 italic'>
+            <p className='text-center w-full font-bold text-zinc-500 dark:text-zinc-300 italic'>
               {t('no tags')}
             </p>
           ) : (
             displayedTags?.map((tag, i) => (
               <button
                 key={tag.tag + i}
-                className={`text-sm flex gap-1.5 px-4 py-2 font-semibold items-center hover:scale-110 transition-transform ${
+                className={`text-sm flex gap-1.5 px-4 py-2 font-bold items-center hover:scale-110 transition-transform ${
                   selectedTags?.includes(tag.tag)
                     ? 'text-darkGrey bg-zinc-100 shadow-inner shadow-black/10'
                     : 'text-zinc-500 bg-zinc-300/80'

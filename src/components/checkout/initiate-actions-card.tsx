@@ -48,7 +48,7 @@ const InitiateActionsCard: React.FC<InitiateActionsCardProps> = ({
   return (
     <>
       <div className='flex flex-col gap-2'>
-        <h1 className='text-2xl sm:text-3xl font-semibold'>{t('action title')}</h1>
+        <h1 className='text-2xl sm:text-3xl font-bold'>{t('action title')}</h1>
         <p className='text-lg'>{t('summary')}</p>
       </div>
       <div className='flex flex-col items-center gap-4 sm:gap-6'>

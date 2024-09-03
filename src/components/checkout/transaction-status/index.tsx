@@ -59,7 +59,7 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
   return (
     <>
       <div className='flex flex-col gap-2'>
-        <h1 className='text-2xl sm:text-3xl font-semibold'>{t('status title')}</h1>
+        <h1 className='text-2xl sm:text-3xl font-bold'>{t('status title')}</h1>
         <p className='text-lg font-bold'>
           {currentActionIndex + 1} {t('of')} {actions.length}
         </p>

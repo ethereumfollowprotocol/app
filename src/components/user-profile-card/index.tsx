@@ -230,7 +230,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
         />
       ) : profile && isProfileValid ? (
         <>
-          <div className='flex gap-2 items-center absolute justify-between px-2 w-full left-0 top-1 font-semibold'>
+          <div className='flex gap-2 items-center absolute justify-between px-1.5 w-full left-0 top-1 font-bold'>
             {!!profileList && (
               <p className='text-zinc-500 dark:text-zinc-300 text-sm sm:text-base'>
                 {t('list')} #{formatNumber(profileList)}
@@ -262,19 +262,11 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 <Image
                   alt='edit profile'
                   src='/assets/icons/ens.svg'
-                  width={32}
-                  height={32}
-                  className={cn(
-                    'cursor-pointer hover:opacity-70 transition-all',
-                    profileList ? 'translate-x-2' : ' -translate-x-2'
-                  )}
+                  width={22}
+                  height={22}
+                  className={cn('cursor-pointer hover:opacity-70 transition-all')}
                 />
-                <p
-                  className={cn(
-                    'text-zinc-500 dark:text-zinc-300 text-sm',
-                    !profileList && '-translate-x-4'
-                  )}
-                >
+                <p className={cn('text-zinc-500 dark:text-zinc-300 text-sm')}>
                   {t('edit profile')}
                 </p>
               </a>
@@ -477,7 +469,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                       href={`/leaderboard?filter=${t(rankTitles[i] || '').toLowerCase()}`}
                       key={rankTitles[i]}
                     >
-                      <div className='flex xl:w-full gap-3 justify-between text-lg items-center font-semibold px-3 py-1 rounded-lg dark:hover:bg-darkGrey/40 hover:bg-white/90 transition-all'>
+                      <div className='flex xl:w-full gap-3 justify-between text-lg items-center font-bold px-3 py-1 rounded-lg dark:hover:bg-darkGrey/40 hover:bg-white/90 transition-all'>
                         <p className='font-bold text-[#888] dark:text-[#aaa]'>
                           {t(rankTitles[i] || '')}
                         </p>
@@ -511,7 +503,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
         <div
           className={`w-full h-20 ${
             hideFollowButton ? 'xl:h-[360px]' : 'xl:h-[420px]'
-          } text-lg 2xl:text-xl flex items-center justify-center font-semibold italic`}
+          } text-lg 2xl:text-xl flex items-center justify-center font-bold italic`}
         >
           {t('profile error')}
         </div>

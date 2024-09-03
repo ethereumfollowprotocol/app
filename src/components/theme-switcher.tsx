@@ -59,7 +59,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ connected, closeMenu }) =
           <p className={cn(connected ? 'text-2xl' : 'text-3xl')}>
             {themesWithIcons.find(({ theme }) => theme === selectedTheme)?.icon}
           </p>
-          {connected && <p className='capitalize font-semibold'>{t(selectedTheme || 'system')}</p>}
+          {connected && <p className='capitalize font-bold'>{t(selectedTheme || 'system')}</p>}
         </div>
       </div>
       <div
@@ -80,7 +80,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ connected, closeMenu }) =
             )}
           >
             <FiArrowLeft className='text-xl' />
-            <p className='font-semibold'>Back</p>
+            <p className='font-bold'>Back</p>
           </div>
           {themesWithIcons.map(({ theme, icon }) => (
             <div
@@ -101,7 +101,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ connected, closeMenu }) =
                 />
               )}
               <p className={connected ? 'text-2xl' : 'text-3xl'}>{icon}</p>
-              <p className='text-nowrap capitalize font-semibold'>{t(theme)}</p>
+              <p className='text-nowrap capitalize font-bold'>{t(theme)}</p>
             </div>
           ))}
         </div>

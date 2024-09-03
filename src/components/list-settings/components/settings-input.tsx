@@ -47,7 +47,7 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
 
   return (
     <div className='flex flex-col gap-1'>
-      <p className='font-semibold text-lg'>{option}</p>
+      <p className='font-bold text-lg'>{option}</p>
       {isSettingsLoading ? (
         <div className='p-3 font-medium truncate rounded-lg w-full bg-white/70 disabled:text-zinc-400 disabled:cursor-not-allowed'>
           <LoadingCell className='w-full h-7 rounded-md' />
@@ -89,7 +89,7 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
                 size='h-8 w-8 rounded-full'
                 avatarUrl={resolvedProfile?.avatar}
               />
-              <p className='font-semibold truncate'>
+              <p className='font-bold truncate'>
                 {value.includes('.')
                   ? resolvedAddress && resolvedAddress?.length > 0
                     ? resolvedAddress

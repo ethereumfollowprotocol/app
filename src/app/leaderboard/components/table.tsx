@@ -64,11 +64,11 @@ const LeaderboardTable = () => {
           {isLeaderboardStatsLoading ? (
             <LoadingCell className='h-10 w-32 rounded-lg' />
           ) : (
-            <p className='font-semibold text-2xl md:text-3xl'>
+            <p className='font-bold text-2xl md:text-3xl'>
               {formatNumberLeaderboard(Number(leaderboardStats?.address_count))}
             </p>
           )}
-          <p className='font-semibold capitalize text-lg text-[#888] dark:text-[#aaa]'>
+          <p className='font-bold capitalize text-lg text-[#888] dark:text-[#aaa]'>
             {t('addresses')}
           </p>
         </div>
@@ -76,28 +76,26 @@ const LeaderboardTable = () => {
           {isLeaderboardStatsLoading ? (
             <LoadingCell className='h-10 w-32 rounded-lg' />
           ) : (
-            <p className='font-semibold text-2xl md:text-3xl'>
+            <p className='font-bold text-2xl md:text-3xl'>
               {formatNumberLeaderboard(Number(leaderboardStats?.list_count))}
             </p>
           )}
-          <p className='font-semibold capitalize text-lg text-[#888] dark:text-[#aaa]'>
-            {t('lists')}
-          </p>
+          <p className='font-bold capitalize text-lg text-[#888] dark:text-[#aaa]'>{t('lists')}</p>
         </div>
         <div className='gradient-border flex flex-col rounded-2xl items-center justify-center h-24 xs:h-[118px] w-full xs:w-64'>
           {isLeaderboardStatsLoading ? (
             <LoadingCell className='h-10 w-32 rounded-lg' />
           ) : (
-            <p className='font-semibold text-2xl md:text-3xl'>
+            <p className='font-bold text-2xl md:text-3xl'>
               {formatNumberLeaderboard(Number(leaderboardStats?.list_op_count))}
             </p>
           )}
-          <p className='font-semibold capitalize text-lg text-[#888] dark:text-[#aaa]'>
+          <p className='font-bold capitalize text-lg text-[#888] dark:text-[#aaa]'>
             {t('list ops')}
           </p>
         </div>
       </div>
-      <div className='flex w-full gap-1.5 justify-center lg:justify-end max-w-[1200px] text-sm mt-4 font-semibold text-[#aaaaaa] md:text-[#CDCDCD] italic'>
+      <div className='flex w-full gap-1.5 justify-center lg:justify-end max-w-[1200px] text-sm mt-4 font-bold text-[#aaaaaa] md:text-[#CDCDCD] italic'>
         {t('last updated')}
         <span>
           {isLeaderboardLoading ? <LoadingCell className='h-5 w-16 rounded-md' /> : timeStamp}
@@ -108,7 +106,7 @@ const LeaderboardTable = () => {
           {leaderboardFilters.map((item, i) => (
             <div
               key={item}
-              className={`p-2 font-semibold w-[132px] px-4 capitalize cursor-pointer transition-all rounded-full ${
+              className={`p-2 font-bold w-[132px] px-4 capitalize cursor-pointer transition-all rounded-full ${
                 filter === item
                   ? 'bg-zinc-100 dark:bg-[#777] shadow-inner'
                   : 'bg-zinc-300 dark:bg-[#555] hover:scale-110'
@@ -145,7 +143,7 @@ const LeaderboardTable = () => {
             {leaderboardFilters.map((item, i) => (
               <div
                 key={item}
-                className={`p-2 font-semibold px-4 capitalize cursor-pointer rounded-full transition-all ${
+                className={`p-2 font-bold px-4 capitalize cursor-pointer rounded-full transition-all ${
                   filter === item
                     ? 'bg-zinc-100 dark:bg-[#777] shadow-inner'
                     : 'bg-zinc-300 dark:bg-[#555] hover:scale-110'
@@ -185,9 +183,9 @@ const LeaderboardTable = () => {
           ))}
           {!isLoading && leaderboard?.length === 0 && (
             <div className='flex justify-center flex-col items-center h-40'>
-              <p className='text-lg font-semibold'>No results found</p>
+              <p className='text-lg font-bold'>No results found</p>
               <p
-                className='transition-colors italic hover:text-gray-700 text-zinc-400 cursor-pointer font-semibold'
+                className='transition-colors italic hover:text-gray-700 text-zinc-400 cursor-pointer font-bold'
                 onClick={() => resetSearch()}
               >
                 Clear Search

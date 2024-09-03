@@ -26,7 +26,7 @@ const ClearCartModal: React.FC<ClearCartModalProps> = ({ closeModal }) => {
               resetCart()
               closeModal()
             }}
-            className='rounded-full bg-red-500 hover:opacity-75 hover:scale-110 transition-all font-semibold text-white px-6 py-2 text-lg'
+            className='rounded-full bg-red-500 hover:opacity-75 hover:scale-110 transition-all font-bold text-white px-6 py-2 text-lg'
           >
             {t('clear cart')}
           </button>

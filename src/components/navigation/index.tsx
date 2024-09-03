@@ -74,7 +74,7 @@ const Navigation = () => {
                     onClick={() => setLanguageMenuOpen(!languageMenOpenu)}
                     className='flex gap-1 sm:gap-2 items-center w-full'
                   >
-                    <div className='flex gap-2 hover:opacity-75 h-8 w-8 font-semibold'>
+                    <div className='flex gap-2 hover:opacity-75 h-8 w-8 font-bold'>
                       <Image
                         src={selectedLanguage?.icon}
                         alt='Language icon'
@@ -91,7 +91,7 @@ const Navigation = () => {
                     <div className='flex flex-col glass-card dark:bg-black/80 bg-white/90 border-[3px] border-zinc-200 dark:border-zinc-500 p-1 rounded-lg shadow-md'>
                       {LANGUAGES.map(lang => (
                         <div
-                          className=' p-3 pl-8 relative font-semibold rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-all'
+                          className=' p-3 pl-8 relative font-bold rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-all'
                           key={lang.language}
                           onClick={() => {
                             changeLanguage(lang)

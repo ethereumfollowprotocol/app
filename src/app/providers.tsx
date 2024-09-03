@@ -1,5 +1,6 @@
 'use client'
 
+import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
 import { MdFeedback } from 'react-icons/md'
 import { WagmiProvider, type State } from 'wagmi'
@@ -9,7 +10,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental'
 
 import wagmiConfig from '#/lib/wagmi'
-import { useTheme } from 'next-themes'
 import { DAY, MINUTE } from '#/lib/constants'
 import Navigation from '#/components/navigation'
 import { CartProvider } from '#/contexts/cart-context'
@@ -52,7 +52,7 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
                 <TransactionsProvider>
                   <ActionsProvider>
                     <Navigation />
-                    <div className='fixed bottom-4 left-4 p-3 text-3xl rounded-full cursor-pointer z-50 bg-zinc-600 hover:scale-110 hover:bg-zinc-500 transition-all'>
+                    <div className='fixed bottom-4 left-4 p-3 text-3xl rounded-full cursor-pointer z-50 dark:bg-zinc-600 hover:scale-110 bg-zinc-300 hover:bg-zinc-400 dark:hover:bg-zinc-500 transition-all'>
                       <a
                         className='h-full w-full'
                         href='https://discord.com/invite/hDTFKmxwwV'

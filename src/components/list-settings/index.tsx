@@ -96,14 +96,14 @@ const ListSettings: React.FC<ListSettingsProps> = ({
         <div className='w-full flex items-center justify-between'>
           <div className='relative'>
             <div className='flex items-center gap-2 cursor-pointer'>
-              <h3 className='text-4xl sm:text-5xl font-semibold'>
+              <h3 className='text-4xl sm:text-5xl font-bold'>
                 {t('list')} #{selectedList}
               </h3>
             </div>
           </div>
         </div>
         <div className='flex items-center max-w-full justify-between gap-2'>
-          <p className='font-semibold text-base sm:text-xl'>{t('location')}</p>
+          <p className='font-bold text-base sm:text-xl'>{t('location')}</p>
           <div className='relative' ref={chainDropdownRef}>
             <button
               className='w-[170px] sm:w-[190px] gap-0.5 flex items-center justify-between px-2 sm:px-3 h-[42px] sm:h-12 dark:bg-darkGrey/50 dark:hover:bg-darkGrey bg-white/50 p-1 hover:bg-white/60 rounded-xl disabled:hover:bg-white/50 disabled:opacity-75 disabled:cursor-not-allowed'
@@ -120,7 +120,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
                   {chain && (
                     <ChainIcon chain={chain as ChainWithDetails} className={'h-6 w-6 rounded-lg'} />
                   )}
-                  <p className='sm:text-lg font-semibold truncate'>{chain?.name}</p>
+                  <p className='sm:text-lg font-bold truncate'>{chain?.name}</p>
                 </>
               )}
               {isEditingSettings ? (
@@ -152,7 +152,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
                       chain={item as ChainWithDetails}
                       className={'h-6 sm:h-7 w-6 sm:w-7'}
                     />
-                    <p className='sm:text-lg font-semibold truncate'>{item?.name}</p>
+                    <p className='sm:text-lg font-bold truncate'>{item?.name}</p>
                   </div>
                 ))}
               </div>
@@ -229,7 +229,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
         ) : (
           <button
             onClick={() => setIsEditingSettings(true)}
-            className='text-lg mt-4 px-6 mx-auto hover:scale-110 transition-all font-semibold hover:opacity-90 bg-[#bbbbbb] text-darkGrey rounded-full h-12'
+            className='text-lg mt-4 px-6 mx-auto hover:scale-110 transition-all font-bold hover:opacity-90 bg-[#bbbbbb] text-darkGrey rounded-full h-12'
           >
             Edit Settings
           </button>

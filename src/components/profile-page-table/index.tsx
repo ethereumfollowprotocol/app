@@ -113,9 +113,9 @@ export function UserProfilePageTable({
   const noResults = {
     following:
       search.length > 2 ? (
-        <div className='justify-center min-h-12 flex items-center font-semibold'>{t('none')}</div>
+        <div className='justify-center min-h-12 flex items-center font-bold'>{t('none')}</div>
       ) : (
-        <div className='text-center min-h-12  font-semibold'>
+        <div className='text-center min-h-12  font-bold'>
           {title === 'followers' && (
             <p className='text-lg'>
               {t(isProfile ? 'followers myprofile empty' : 'followers empty')}
@@ -137,7 +137,7 @@ export function UserProfilePageTable({
       ),
     followers:
       search.length > 2 ? (
-        <div className='justify-center min-h-12 flex items-center font-semibold'>{t('none')}</div>
+        <div className='justify-center min-h-12 flex items-center font-bold'>{t('none')}</div>
       ) : (
         <p className='text-xl italic flex justify-center items-center min-h-12'>
           {t(isProfile ? 'followers myprofile empty' : 'followers empty')}
@@ -171,7 +171,7 @@ export function UserProfilePageTable({
         isShowingBlocked={isShowingBlocked}
       />
       {!isLoading && results?.length === 0 && (
-        <div className='text-center font-semibold py-4 px-2'>{noResults}</div>
+        <div className='text-center font-bold py-4 px-2'>{noResults}</div>
       )}
       <div className='flex flex-col pb-4'>
         <FollowList

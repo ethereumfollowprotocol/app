@@ -80,8 +80,8 @@ export function FollowList({
                   className='rounded-full h-[45px] w-[45px] md:h-[50px] md:w-[50px]'
                 />
                 <div className='flex flex-col md:flex-row md:items-center'>
-                  <p className='text-lg font-semibold w-fit sm:w-56 text-left'>{t('mint name')}</p>
-                  <p className='font-semibold text-sm sm:text-base text-left italic text-grey'>
+                  <p className='text-lg font-bold w-fit sm:w-56 text-left'>{t('mint name')}</p>
+                  <p className='font-bold text-sm sm:text-base text-left italic text-grey'>
                     {t('mint description')}
                   </p>
                 </div>
@@ -107,7 +107,7 @@ export function FollowList({
                     />
                     <div className='flex flex-col items-start sm:items-center sm:flex-row gap-1 w-full sm:gap-3 md:gap-4'>
                       <div className='flex flex-col items-start min-w-52 max-w-52 gap-px'>
-                        <p className='text-lg font-semibold'>
+                        <p className='text-lg font-bold'>
                           {t('import from')} <span className='capitalize'>{social.platform}</span>
                         </p>
                         <p className='font-medium text-sm text-zinc-500 dark:text-zinc-300'>

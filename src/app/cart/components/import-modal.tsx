@@ -37,8 +37,8 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
     <Modal onCancel={onClose}>
       <div className='w-full sm:w-[500px] sm:p-0 p-2 flex flex-col gap-6'>
         <div className='w-full gap-2 flex justify-between items-center'>
-          <p className='text-xl font-semibold'>
-            {t('import title')}
+          <p className='text-xl font-bold'>
+            {t('import title')}&nbsp;
             <span className='capitalize'>{platform}</span>
           </p>
           <Image
@@ -80,7 +80,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
                 {isSocialProfileLoading ? (
                   <LoadingCell className='rounded-lg h-7 w-40' />
                 ) : (
-                  <p className='text-lg font-semibold'>
+                  <p className='text-lg font-bold'>
                     @
                     {socialProfile.profileName?.replace('lens/@', '') ||
                       truncateAddress(socialProfile.userAssociatedAddresses?.[0])}
@@ -115,7 +115,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
                 )}
               </div>
               <div className='w-full flex justify-between items-center text-darkGrey dark:text-white/95'>
-                <p className='text-sm xxs:text-base sm:text-lg font-semibold'>{t('to add')}</p>
+                <p className='text-sm xxs:text-base sm:text-lg font-bold'>{t('to add')}</p>
                 {isFollowingsLoading || isSocialProfileLoading ? (
                   <LoadingCell className='h-5 w-24 rounded-md' />
                 ) : (
@@ -127,7 +127,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
             </div>
           </div>
         ) : (
-          <div className='h-[208px] w-full justify-center flex items-center font-semibold'>
+          <div className='h-[208px] w-full justify-center flex items-center font-bold'>
             {t('no profile')}
           </div>
         )}

@@ -118,7 +118,7 @@ const Recommendations = ({
       />
       {!(isLoading || isFetchingNextPage || isFetchingPreviousPage) &&
         displayedProfiles?.length === 0 && (
-          <div className='w-full h-28 mb-14 flex justify-center items-center font-semibold italic text-lg'>
+          <div className='w-full h-28 mb-14 flex justify-center items-center font-bold italic text-lg'>
             No results
           </div>
         )}

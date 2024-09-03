@@ -19,7 +19,7 @@ const LeaderboardSummary = () => {
   return (
     <div className='glass-card w-full xl:w-[47.5%] xl:max-w-[900px] rounded-2xl flex flex-col gap-4 p-1 py-3 border-[3px] border-zinc-200 dark:border-zinc-500'>
       <div className='w-full flex items-center justify-between p-2 sm:p-4'>
-        <h3 className='text-2xl sm:text-3xl font-semibold'>{t('leaderboard')}</h3>
+        <h3 className='text-2xl sm:text-3xl font-bold'>{t('leaderboard')}</h3>
         <PageSelector
           page={page}
           setPage={setPage}
@@ -40,7 +40,7 @@ const LeaderboardSummary = () => {
 
           return (
             <div key={title} className='flex flex-col gap-1'>
-              <h4 className='text-xl sm:text-xl font-semibold capitalize px-2 sm:px-4'>
+              <h4 className='text-xl sm:text-xl font-bold capitalize px-2 sm:px-4'>
                 {title} {displayedEmojies[index]}
               </h4>
               {isLeaderboardSummaryLoading ? (

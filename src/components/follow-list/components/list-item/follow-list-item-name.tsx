@@ -261,7 +261,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
                     {recentTags.map(tag => (
                       <button
                         key={tag}
-                        className='font-semibold py-2 hover:scale-110 transition-all truncate px-3 hover:opacity-80 text-darkGrey bg-zinc-300 rounded-full'
+                        className='font-bold py-2 hover:scale-110 transition-all truncate px-3 hover:opacity-80 text-darkGrey bg-zinc-300 rounded-full'
                         onClick={e => {
                           e.stopPropagation()
                           addTag(tag)
@@ -287,7 +287,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
                 >
                   <button
                     className={`
-                      font-semibold py-1 px-2 sm:py-1.5 max-w-full w-fit sm:px-3 text-darkGrey truncate text-sm hover:opacity-80 rounded-full ${
+                      font-bold py-1 px-2 sm:py-1.5 max-w-full w-fit sm:px-3 text-darkGrey truncate text-sm hover:opacity-80 rounded-full ${
                         !isFollowers && removingTag ? 'bg-deletion' : 'bg-zinc-300'
                       }
                     `}
@@ -325,12 +325,12 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
               userAddress && !isFollowersEmpty ? 'lg:hidden' : ''
             } hidden sm:flex`}
           >
-            <p className='font-semibold text-lg'>{formatNumber(counts.following)}</p>
-            <p className='font-semibold text-sm text-[#888] dark:text-[#aaa]'>{t('following')}</p>
+            <p className='font-bold text-lg'>{formatNumber(counts.following)}</p>
+            <p className='font-bold text-sm text-[#888] dark:text-[#aaa]'>{t('following')}</p>
           </div>
           <div className='flex flex-col items-center'>
-            <p className='font-semibold text-lg'>{formatNumber(counts.followers)}</p>
-            <p className='font-semibold text-sm  text-[#888] dark:text-[#aaa]'>{t('followers')}</p>
+            <p className='font-bold text-lg'>{formatNumber(counts.followers)}</p>
+            <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>{t('followers')}</p>
           </div>
         </div>
       )}
