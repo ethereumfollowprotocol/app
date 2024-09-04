@@ -1,13 +1,15 @@
 import type { FollowSortType } from '#/types/requests'
 import type { ProfileTableTitleType, ProfileTabType } from '#/types/common'
 
-import SloveniaFlag from 'public/assets/icons/flags/slovenia.svg'
-import USAFlag from 'public/assets/icons/flags/united-states.svg'
 import TwitterIcon from 'public/assets/icons/twitter.svg'
 import GithubIcon from 'public/assets/icons/github.svg'
 import DiscordIcon from 'public/assets/icons/discord.svg'
 import TelegramIcon from 'public/assets/icons/telegram.svg'
 import EtherscanIcon from 'public/assets/icons/etherscan.svg'
+import SloveniaFlag from 'public/assets/icons/flags/slovenia.svg'
+import USAFlag from 'public/assets/icons/flags/united-states.svg'
+import GithubIconLight from 'public/assets/icons/github-white.svg'
+import EtherscanIconLight from 'public/assets/icons/etherscan-light.svg'
 
 export const APP_NAME = 'Ethereum Follow Protocol'
 export const APP_NAME_SHORT = 'EFP'
@@ -68,26 +70,26 @@ export const profileCardSocials = [
   {
     name: 'etherscan',
     url: (address: string) => `https://etherscan.io/address/${address}`,
-    icon: EtherscanIcon
+    icon: (theme: string) => (theme === 'dark' ? EtherscanIconLight : EtherscanIcon)
   },
   {
     name: 'com.twitter',
     url: (username: string) => `https://twitter.com/${username}`,
-    icon: TwitterIcon
+    icon: (theme: string) => (theme === 'dark' ? TwitterIcon : TwitterIcon)
   },
   {
     name: 'com.github',
     url: (username: string) => `https://github.com/${username}`,
-    icon: GithubIcon
+    icon: (theme: string) => (theme === 'dark' ? GithubIconLight : GithubIcon)
   },
   {
     name: 'com.telegram',
     url: (username: string) => `https://t.me/${username}`,
-    icon: TelegramIcon
+    icon: (theme: string) => (theme === 'dark' ? TelegramIcon : TelegramIcon)
   },
   {
     name: 'com.discord',
     url: (username: string) => `https://discord.com/users/${username}`,
-    icon: DiscordIcon
+    icon: (theme: string) => (theme === 'dark' ? DiscordIcon : DiscordIcon)
   }
 ] as const

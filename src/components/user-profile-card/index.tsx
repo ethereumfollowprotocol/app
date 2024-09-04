@@ -21,6 +21,7 @@ import { Avatar } from '../avatar'
 import LoadingCell from '../loaders/loading-cell'
 import { useCart } from '#/contexts/cart-context'
 import { formatNumber } from '#/utils/formatNumber'
+import { profileCardSocials } from '#/lib/constants'
 import { cn, truncateAddress } from '#/lib/utilities'
 import FollowButton from '#/components/follow-button'
 import useFollowState from '#/hooks/use-follow-state'
@@ -31,7 +32,7 @@ import { isValidEnsName, resolveEnsProfile } from '#/utils/ens'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 import { useCoolMode } from '../follow-button/hooks/useCoolMode'
 import LoadingProfileCard from './components/loading-profile-card'
-import { profileCardSocials } from '#/lib/constants'
+import { useTheme } from 'next-themes'
 
 interface UserProfileCardProps {
   profileList?: number | null
@@ -86,6 +87,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const router = useRouter()
   const { t } = useTranslation()
   const pathname = usePathname()
+  const { resolvedTheme } = useTheme()
   const { selectedList } = useEFPProfile()
   const { openConnectModal } = useConnectModal()
   const { address: connectedAddress } = useAccount()
@@ -460,7 +462,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                       }
                     >
                       <Image
-                        src={social.icon}
+                        src={social.icon(resolvedTheme || '')}
                         alt={social.name}
                         width={36}
                         height={36}
