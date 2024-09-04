@@ -459,7 +459,13 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                           : 'opacity-20 pointer-events-none'
                       }
                     >
-                      <Image src={social.icon} alt={social.name} width={37} height={37} />
+                      <Image
+                        src={social.icon}
+                        alt={social.name}
+                        width={36}
+                        height={36}
+                        className='rounded-full'
+                      />
                     </a>
                   ))}
                 </div>

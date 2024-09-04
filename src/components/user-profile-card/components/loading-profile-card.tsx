@@ -64,6 +64,7 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
                   alt={social.name}
                   width={37}
                   height={37}
+                  className='rounded-full'
                 />
               ))}
             </div>
