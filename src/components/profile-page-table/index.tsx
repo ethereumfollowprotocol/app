@@ -193,8 +193,9 @@ export function UserProfilePageTable({
         <div ref={loadMoreRef} className='h-px w-full' />
         {title === 'following' && isProfile && lists?.lists && lists.lists.length === 0 && (
           <Recommendations
+            limit={20}
             endpoint='recommended'
-            description='Those are recommended profiles and not people you follow'
+            header={t('recommendations')}
             className='py-2'
           />
         )}
