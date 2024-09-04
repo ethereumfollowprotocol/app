@@ -58,6 +58,7 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
                 <LoadingCell isStatic={isStatic} className='w-[107px] h-9 rounded-lg' />
               )}
             </div>
+            <LoadingCell isStatic={isStatic} className='w-4/5 h-5 rounded-lg' />
             <div className='flex gap-2 items-center opacity-20'>
               {profileCardSocials.map(social => (
                 <Image

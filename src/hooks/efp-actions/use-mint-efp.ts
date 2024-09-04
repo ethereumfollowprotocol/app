@@ -31,7 +31,7 @@ export function useMintEFP() {
         chain: DEFAULT_CHAIN,
         address: coreEfpContracts.EFPListMinter,
         abi: abi.efpListMinterAbi,
-        functionName: setNewListAsPrimary ? 'easyMint' : 'mintNoMeta',
+        functionName: setNewListAsPrimary ? 'mintPrimaryListNoMeta' : 'mintNoMeta',
         args: [
           encodePacked(
             ['uint8', 'uint8', 'uint256', 'address', 'uint'],

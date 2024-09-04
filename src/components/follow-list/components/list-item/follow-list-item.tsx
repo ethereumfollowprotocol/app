@@ -46,7 +46,7 @@ const FollowListItem: React.FC<FollowListItemProps> = ({
 
   return (
     <div
-      className={`flex items-center justify-between dark:hover:bg-darkGrey/40 hover:bg-white/90 transition-all p-1.5 sm:p-2 rounded-xl ${className}`}
+      className={`flex items-center justify-between dark:hover:bg-darkGrey/40 hover:bg-darkGrey/5 transition-all p-1.5 sm:p-2 rounded-xl ${className}`}
     >
       {/* Left section: Avatar, Name, and Tags */}
       <FollowListItemName

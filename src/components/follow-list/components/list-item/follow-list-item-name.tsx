@@ -42,13 +42,14 @@ interface FollowListItemNameProps {
 export function Name({
   name,
   address,
-  showTags
-}: { name?: string | null; address: Address; showTags?: boolean }) {
+  showTags,
+  isCart
+}: { name?: string | null; address: Address; showTags?: boolean; isCart?: boolean }) {
   return (
     <Link href={`/${address}`} className='w-full'>
       <p
         className={`font-bold sm:text-lg text-start hover:scale-110 ${
-          showTags ? 'w-full truncate' : 'w-fit max-w-full truncate'
+          showTags ? (isCart ? 'truncate w-fit' : 'truncate w-full') : 'w-fit max-w-full truncate'
         } hover:opacity-75 transition-all`}
       >
         {name && isValidEnsName(name) ? name : truncateAddress(address)}
@@ -196,7 +197,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
           {isEnsProfileLoading ? (
             <LoadingCell className='w-32 xl:w-32 h-7 rounded-lg' />
           ) : (
-            <Name name={name} address={address} showTags={showTags} />
+            <Name name={name} address={address} showTags={showTags} isCart={isEditor} />
           )}
           {showFollowsYouBadges && !isEnsProfileLoading && (
             <div

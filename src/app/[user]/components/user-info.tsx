@@ -17,6 +17,7 @@ import UserProfileCard from '#/components/user-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import { UserProfilePageTable } from '#/components/profile-page-table'
+import TopEight from '#/components/top-eight'
 
 interface UserInfoProps {
   user: string
@@ -264,6 +265,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
                 </div>
               )}
             </div>
+            <TopEight user={user} isConnectedUserProfile={isMyProfile} />
           </div>
           <UserProfilePageTable
             isLoading={followingIsLoading}

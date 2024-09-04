@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useAccount } from 'wagmi'
+import { useTheme } from 'next-themes'
 import { useState, type Ref } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
@@ -32,7 +33,6 @@ import { isValidEnsName, resolveEnsProfile } from '#/utils/ens'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 import { useCoolMode } from '../follow-button/hooks/useCoolMode'
 import LoadingProfileCard from './components/loading-profile-card'
-import { useTheme } from 'next-themes'
 
 interface UserProfileCardProps {
   profileList?: number | null
@@ -233,9 +233,14 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
         />
       ) : profile && isProfileValid ? (
         <>
-          <div className='flex gap-2 items-center absolute justify-between px-1.5 w-full left-0 top-1 font-bold'>
+          <div
+            className={cn(
+              'flex gap-2 items-center h-5 absolute px-2 w-full left-0 top-1.5 font-bold',
+              profileList ? 'justify-between' : 'justify-end'
+            )}
+          >
             {!!profileList && (
-              <p className='text-zinc-500 dark:text-zinc-300 text-sm sm:text-base'>
+              <p className='text-zinc-500 dark:text-zinc-300 text-sm sm:text-sm'>
                 {t('list')} #{formatNumber(profileList)}
               </p>
             )}
@@ -427,9 +432,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                     <FollowButton address={profile.address} />
                   )}
                 </div>
-                {profile.ens.records?.description && (
-                  <p className='text-[#888] dark:text-[#bbb] font-medium text-sm sm:text-sm text-center'>
-                    {profile.ens.records.description.split(' ').map(word =>
+                <p className='text-[#888] dark:text-[#bbb] font-medium text-sm sm:text-sm text-center'>
+                  {profile.ens.records?.description ? (
+                    profile.ens.records.description.split(' ').map(word =>
                       word.includes('@') ? (
                         <Link
                           key={word}
@@ -441,9 +446,11 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                       ) : (
                         `${word} `
                       )
-                    )}
-                  </p>
-                )}
+                    )
+                  ) : (
+                    <i>{t('no bio')}</i>
+                  )}
+                </p>
                 <div className='flex items-center gap-2'>
                   {profileCardSocials.map(social => (
                     <a
@@ -516,7 +523,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                       href={`/leaderboard?filter=${t(rankTitles[i] || '').toLowerCase()}`}
                       key={rankTitles[i]}
                     >
-                      <div className='flex xl:w-full gap-3 justify-between text-lg items-center font-bold px-3 py-1 rounded-lg dark:hover:bg-darkGrey/40 hover:bg-white/90 transition-all'>
+                      <div className='flex xl:w-full gap-3 justify-between text-lg items-center font-bold px-3 py-1 rounded-lg dark:hover:bg-darkGrey/40 hover:bg-darkGrey/5 transition-all'>
                         <p className='font-bold text-[#888] dark:text-[#aaa]'>
                           {t(rankTitles[i] || '')}
                         </p>

@@ -83,7 +83,7 @@ export const profileCardSocials = [
     icon: (theme: string) => (theme === 'dark' ? GithubIconLight : GithubIcon)
   },
   {
-    name: 'com.telegram',
+    name: 'org.telegram',
     url: (username: string) => `https://t.me/${username}`,
     icon: (theme: string) => (theme === 'dark' ? TelegramIcon : TelegramIcon)
   },

@@ -253,6 +253,13 @@ export const efpListMinterAbi = [
   {
     stateMutability: 'payable',
     type: 'function',
+    inputs: [{ name: 'listStorageLocation', internalType: 'bytes', type: 'bytes' }],
+    name: 'mintPrimaryListNoMeta',
+    outputs: []
+  },
+  {
+    stateMutability: 'payable',
+    type: 'function',
     inputs: [
       { name: 'to', internalType: 'address', type: 'address' },
       { name: 'listStorageLocation', internalType: 'bytes', type: 'bytes' }

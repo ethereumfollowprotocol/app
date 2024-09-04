@@ -101,7 +101,7 @@ const TableRow: React.FC<TableRowProps> = ({
           <Avatar
             name={name || address}
             avatarUrl={avatar}
-            size='h-[45px] w-[45px] md:h-[50px] md:w-[50px] hover:opacity-80 transition-all'
+            size='h-[45px] w-[45px] md:h-[50px] md:w-[50px] hover:opacity-80 transition-all hover:scale-110 transition-all'
           />
         </Link>
         <div
@@ -109,7 +109,7 @@ const TableRow: React.FC<TableRowProps> = ({
           style={{ maxWidth: 'calc(100% - 60px)' }}
         >
           <Link href={`/${address}`} className='w-full'>
-            <p className='font-bold text-base xxs:text-lg truncate max-w-full hover:opacity-60 transition-all'>
+            <p className='font-bold text-base xxs:text-lg truncate max-w-full hover:opacity-60 hover:scale-110 transition-all'>
               {name && isValidEnsName(name) ? name : truncateAddress(address)}
             </p>
           </Link>

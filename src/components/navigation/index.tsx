@@ -34,7 +34,7 @@ const Navigation = () => {
   })
 
   return (
-    <header className='w-full fixed z-50 glass-card bg-white/50 dark:bg-black/75 top-0 left-0  border-b-[1px] border-zinc-300 dark:border-zinc-500 p-4 lg:px-6 md:py-6 xl:px-8'>
+    <header className='w-full fixed z-50 glass-card bg-white/50 dark:bg-black/75 top-0 left-0 border-b-[3px] border-zinc-200 dark:border-zinc-500 p-4 lg:px-6 md:py-6 xl:px-8'>
       <nav className='my-auto flex w-full flex-row items-center justify-between'>
         <div className='flex w-2/5 justify-start items-center gap-4 md:gap-6 xl:gap-8'>
           <Link href='/' className='select-none' aria-label='Ethereum Follow Protocol Logo link'>

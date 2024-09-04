@@ -27,7 +27,7 @@ const theme: Record<
   'Pending Following': {
     bg: 'btn-following-pending',
     hover:
-      'hover:bg-none hover:bg-[#D0D0D0] hover:border-transparent hover:rounded-[15px] hover:py-1.5 hover:scale-[1.15]',
+      'hover:bg-none hover:bg-[#D0D0D0] hover:border-none hover:rounded-[15px] hover:rounded-[11px] hover:py-1.5 hover:scale-110',
     text: 'text-gray-900',
     border:
       'border-[3px] after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400'
@@ -35,7 +35,7 @@ const theme: Record<
   Following: {
     bg: 'btn-following',
     hover:
-      'hover:bg-none hover:bg-deletion hover:border-transparent hover:rounded-[15px] hover:py-1.5 hover:scale-[1.15]',
+      'hover:bg-none hover:bg-deletion hover:border-none hover:rounded-[15px] hover:rounded-[11px] hover:py-1.5 hover:scale-110',
     text: 'text-gray-900',
     border: 'border-[3px]'
   },
@@ -189,7 +189,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
         ])}
         style={{
           minWidth: isBlockedBy ? '132px' : '107px',
-          minHeight: '37px'
+          height: '37px'
         }}
         onMouseLeave={() => {
           setDisableHover(false)
