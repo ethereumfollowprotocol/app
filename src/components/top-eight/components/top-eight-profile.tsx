@@ -1,13 +1,14 @@
 import Link from 'next/link'
+import { IoClose } from 'react-icons/io5'
 import { useQuery } from '@tanstack/react-query'
 
 import { Avatar } from '#/components/avatar'
 import { resolveEnsProfile } from '#/utils/ens'
+import { useCart } from '#/contexts/cart-context'
 import { cn, truncateAddress } from '#/lib/utilities'
 import FollowButton from '#/components/follow-button'
 import type { FollowingResponse } from '#/types/requests'
 import LoadingCell from '#/components/loaders/loading-cell'
-import { useCart } from '#/contexts/cart-context'
 
 interface TopEightProfileProps {
   profile: FollowingResponse
@@ -21,8 +22,9 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
   })
 
   const { hasListOpRemoveTag, hasListOpAddTag } = useCart()
-  const isAddingToTopEight = hasListOpAddTag({ address: profile.data, tag: 'top8' })
-  const isRemovingFromTopEight = hasListOpRemoveTag({ address: profile.data, tag: 'top8' })
+  const isAddingToTopEight = isEditing && hasListOpAddTag({ address: profile.data, tag: 'top8' })
+  const isRemovingFromTopEight =
+    isEditing && hasListOpRemoveTag({ address: profile.data, tag: 'top8' })
 
   const profileName = fetchedEnsProfile?.name
   const profileAvatar = fetchedEnsProfile?.avatar
@@ -30,25 +32,41 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
   return (
     <div
       className={cn(
-        'flex flex-col w-36 py-4 rounded-xl items-center gap-2',
-        isEditing && 'cursor-pointer border-2 border-transparent hover:border-[#A2A2A277]',
+        'flex flex-col relative group w-[129px] 2xl:w-[149px] px-0.5 py-4 rounded-2xl items-center gap-2',
+        isEditing && 'cursor-pointer border-[3px] border-transparent hover:border-[#A2A2A277]',
         isAddingToTopEight && 'border-2 border-lime-500/50',
         isRemovingFromTopEight && 'border-2 border-red-500/50'
       )}
     >
+      {isEditing && (
+        <div className='absolute top-1 right-1 p-0.5 group-hover:block hidden rounded-full bg-[#A2A2A277]'>
+          <IoClose className='text-xl' />
+        </div>
+      )}
       {isEnsProfileLoading ? (
         <LoadingCell className='h-[60px] w-[60px] rounded-full' />
       ) : (
-        <Avatar
-          name={profileName || profile.data}
-          size='h-[60px] w-[60px]'
-          avatarUrl={profileAvatar}
-        />
+        <Link href={`/${profile.data}`}>
+          <Avatar
+            name={profileName || profile.data}
+            size={cn(
+              'h-[60px] w-[60px]',
+              !isEditing && 'hover:scale-110 hover:opacity-75 transition-all'
+            )}
+            avatarUrl={profileAvatar}
+          />
+        </Link>
       )}
       {isEnsProfileLoading ? (
         <LoadingCell className='h-7 w-24 rounded-lg' />
       ) : (
-        <Link href={`/${profile.data}`} className='text-lg font-bold max-w-full truncate'>
+        <Link
+          href={`/${profile.data}`}
+          className={cn(
+            'text-lg font-bold max-w-full truncate',
+            !isEditing && 'hover:scale-110 hover:opacity-75 transition-all'
+          )}
+        >
           {profileName || truncateAddress(profile.data)}
         </Link>
       )}

@@ -111,7 +111,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
   const inintialdisplayedTags = () => {
     return [
       ...new Set(
-        [...tags, ...(isFollowers ? [] : tagsFromCart)].filter(tag =>
+        [...tags, ...(isFollowers || !canEditTags ? [] : tagsFromCart)].filter(tag =>
           isBlockedList ? ['block', 'mute'].includes(tag) : true
         )
       )
@@ -301,7 +301,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
                   >
                     {BLOCKED_MUTED_TAGS.includes(tag) ? t(tag) : tag}
                   </button>
-                  {(removingTag || addingTag) && !isFollowers && (
+                  {(removingTag || addingTag) && canEditTags && !isFollowers && (
                     <div className='absolute h-4 w-4 rounded-full -top-1 -right-1 bg-green-400' />
                   )}
                 </div>

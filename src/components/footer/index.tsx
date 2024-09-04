@@ -21,7 +21,7 @@ const socials = [
    */
   {
     text: 'Discord',
-    href: 'https://discord.com/invite/hDTFKmxwwV',
+    href: 'https://discord.com/invite/ZUyG3mSXFD',
     icon: <FaDiscord />
   }
 ]

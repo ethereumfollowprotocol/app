@@ -8,12 +8,12 @@ import { Avatar } from '#/components/avatar'
 import { truncateAddress } from '#/lib/utilities'
 import { formatNumber } from '#/utils/formatNumber'
 import LensIcon from 'public/assets/icons/lens.svg'
-import LoadingCell from '#/components/loaders/loading-cell'
 import useImportModal from '../hooks/useImportModal'
-import CancelButton from '#/components/buttons/cancel-button'
 import type { ImportPlatformType } from '#/types/common'
-import { PrimaryButton } from '#/components/buttons/primary-button'
+import LoadingCell from '#/components/loaders/loading-cell'
 import FarcasterIcon from 'public/assets/icons/farcaster.svg'
+import CancelButton from '#/components/buttons/cancel-button'
+import { PrimaryButton } from '#/components/buttons/primary-button'
 
 interface ImportModalprops {
   onClose: () => void

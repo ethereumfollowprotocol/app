@@ -1,13 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { useAccount } from 'wagmi'
-import { IoMdSettings } from 'react-icons/io'
 import { useTranslation } from 'react-i18next'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import { cn } from '#/lib/utilities'
 import useUser from '../hooks/useUser'
+import TopEight from '#/components/top-eight'
 import { PROFILE_TABS } from '#/lib/constants'
 import type { ProfileTabType } from '#/types/common'
 import ListSettings from '#/components/list-settings'
@@ -17,7 +16,6 @@ import UserProfileCard from '#/components/user-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import { UserProfilePageTable } from '#/components/profile-page-table'
-import TopEight from '#/components/top-eight'
 
 interface UserInfoProps {
   user: string
@@ -35,7 +33,6 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   const router = useRouter()
   const pathname = usePathname()
   const { t } = useTranslation()
-  const { address: connectedUserAddress } = useAccount()
 
   const isLoadPage = pathname === '/loading'
 
@@ -228,7 +225,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       )}
       {!isSaving && (
         <>
-          <div className='flex flex-col w-full xl:w-fit items-center gap-4'>
+          <div className='flex flex-col w-full xl:w-fit items-center gap-6'>
             <UserProfileCard
               profileList={
                 userIsList
@@ -239,32 +236,13 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
               }
               profile={profile}
               isLoading={profileIsLoading}
-              showMoreOptions={
-                profile?.address?.toLowerCase() !== connectedUserAddress?.toLowerCase()
-              }
+              showMoreOptions={true}
+              openBlockModal={() => {
+                setIsBlockedMutedOpen(true)
+                router.push(`/${user}?modal=blockmutelists`)
+              }}
+              openListSettingsModal={() => setListSettingsOpen(true)}
             />
-            <div className='flex flex-col gap-1 items-center'>
-              {profile?.address && (
-                <p
-                  onClick={() => {
-                    setIsBlockedMutedOpen(true)
-                    router.push(`/${user}?modal=blockmutelists`)
-                  }}
-                  className='font-bold cursor-pointer hover:opacity-80 hover:scale-110 transition-all'
-                >
-                  {t('block-mute')}
-                </p>
-              )}
-              {profile?.address && (profile?.primary_list || userIsList) && (
-                <div
-                  className='flex gap-1 cursor-pointer items-center hover:opacity-80 hover:scale-110 transition-all'
-                  onClick={() => setListSettingsOpen(true)}
-                >
-                  <p className='font-bold '>{t('settings')}</p>
-                  <IoMdSettings className='text-xl' />
-                </div>
-              )}
-            </div>
             <TopEight user={user} isConnectedUserProfile={isMyProfile} />
           </div>
           <UserProfilePageTable

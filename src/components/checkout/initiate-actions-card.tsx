@@ -97,7 +97,7 @@ const InitiateActionsCard: React.FC<InitiateActionsCardProps> = ({
         <PrimaryButton
           label={t('initiate')}
           onClick={handleInitiateActions}
-          className='text-lg w-auto px-4 min-w-32 h-12'
+          className='text-lg w-auto px-4 min-w-32'
         />
       </div>
     </>

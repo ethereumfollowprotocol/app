@@ -222,14 +222,14 @@ const ListSettings: React.FC<ListSettingsProps> = ({
             <PrimaryButton
               label={t('save')}
               onClick={() => setIsSaving(true)}
-              className='text-lg w-32 h-12'
+              className='text-lg w-32'
               disabled={!Object.values(changedValues).includes(true)}
             />
           </div>
         ) : (
           <button
             onClick={() => setIsEditingSettings(true)}
-            className='text-lg mt-4 px-6 mx-auto hover:scale-110 transition-all font-bold hover:opacity-90 bg-[#bbbbbb] text-darkGrey rounded-full h-12'
+            className='text-lg mt-4 px-6 mx-auto hover:scale-110 transition-all font-bold hover:opacity-90 bg-[#bbbbbb] text-darkGrey rounded-full'
           >
             Edit Settings
           </button>

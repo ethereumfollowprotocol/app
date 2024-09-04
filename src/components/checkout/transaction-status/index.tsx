@@ -91,14 +91,14 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
           <PrimaryButton
             label={t('reinitiate')}
             onClick={handleReInitiateActions}
-            className='text-lg w-fit px-4 min-w-32 h-12'
+            className='text-lg w-fit px-4 min-w-32'
           />
         )}
         {showNextButton && (
           <PrimaryButton
             label={t('next')}
             onClick={handleNextAction}
-            className='text-lg w-32 h-12'
+            className='text-lg w-32'
             disabled={nextButtonIsDisabled}
           />
         )}
@@ -106,7 +106,7 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
           <PrimaryButton
             label={t('finish')}
             onClick={() => onFinish()}
-            className='text-lg w-32 h-12'
+            className='text-lg w-32'
             disabled={finishButtonIsDisabled}
           />
         )}

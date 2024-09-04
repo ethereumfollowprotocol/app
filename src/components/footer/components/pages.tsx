@@ -15,7 +15,7 @@ const footerPages = [
   },
   {
     text: 'support',
-    href: 'https://discord.com/channels/1172042210024366090/1279517322423566377',
+    href: 'https://discord.com/channels/1172042210024366090/1280308522613211237',
     target: '_blank'
   },
   {

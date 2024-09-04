@@ -33,6 +33,7 @@ import { isValidEnsName, resolveEnsProfile } from '#/utils/ens'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 import { useCoolMode } from '../follow-button/hooks/useCoolMode'
 import LoadingProfileCard from './components/loading-profile-card'
+import { IoMdSettings } from 'react-icons/io'
 
 interface UserProfileCardProps {
   profileList?: number | null
@@ -41,6 +42,8 @@ interface UserProfileCardProps {
   profile?: ProfileDetailsResponse | null
   isLoading?: boolean
   showMoreOptions?: boolean
+  openBlockModal?: () => void
+  openListSettingsModal?: () => void
 }
 
 const UserProfileCard: React.FC<UserProfileCardProps> = ({
@@ -49,7 +52,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   hideFollowButton,
   profile,
   isLoading,
-  showMoreOptions
+  showMoreOptions,
+  openBlockModal,
+  openListSettingsModal
 }) => {
   const [cardTooltipOpen, setCardTooltipOpen] = useState(false)
   const clickAwayCardTooltip = useClickAway<HTMLDivElement>(() => {
@@ -220,10 +225,10 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   return (
     <div
       className={cn(
-        'flex glass-card border-[3px] justify-center flex-col border-[#FFDBD9] dark:border-[#a36d7d] rounded-xl relative',
+        'flex glass-card border-[3px] flex-col border-[#FFDBD9] dark:border-[#a36d7d] rounded-xl relative',
         isResponsive
           ? 'xl:w-76 w-full 2xl:w-86'
-          : 'w-80 3xs:w-92 h-[560px] xxs:h-[550px] sm:h-[570px] md:h-[585px] xl:h-[670px]'
+          : 'w-80 3xs:w-92 h-[560px] xxs:h-[550px] justify-between sm:h-[570px] md:h-[585px] xl:h-[790px]'
       )}
     >
       {isLoading ? (
@@ -280,13 +285,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
               </a>
             ) : null}
           </div>
-          <div
-            className={`flex w-full items-center flex-col pt-8 pb-4 px-4 sm:p-6 sm:pt-9 ${
-              followerTag.text === '' && !isResponsive
-                ? 'gap-5 sm:gap-6 md:gap-[68px]'
-                : 'gap-5 sm:gap-6 md:gap-9'
-            }`}
-          >
+          <div className='flex w-full items-center flex-col pt-8 pb-4 px-4 sm:p-6 sm:pt-9 gap-5 sm:gap-6 md:gap-9'>
             <div className='flex w-full flex-col justify-center items-center gap-4'>
               {isProfileLoading ? (
                 <LoadingCell
@@ -322,7 +321,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                     >
                       <Link
                         href={`/${profile.address}`}
-                        className={showMoreOptions && !isConnectedUserCard ? 'w-[87.5%]' : 'w-full'}
+                        className={showMoreOptions ? 'w-[87.5%]' : 'w-full'}
                       >
                         <p className='truncate hover:opacity-70 hover:scale-105 transition-all'>
                           {profileName && isValidEnsName(profileName)
@@ -331,7 +330,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                         </p>
                       </Link>
                       <div
-                        className={showMoreOptions && !isConnectedUserCard ? 'block' : 'hidden'}
+                        className={showMoreOptions ? 'block' : 'hidden'}
                         ref={clickAwayMoreOptionsRef}
                       >
                         <div
@@ -344,60 +343,62 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                         </div>
                         <div
                           className={`${
-                            showMoreOptions && !isConnectedUserCard && moreOptionsDropdownOpen
-                              ? 'flex'
-                              : 'hidden'
-                          } absolute top-10 flex-col items-center gap-2 right-0 w-36 p-2 dark:border-zinc-600  dark:bg-darkGrey bg-white border-zinc-200 border-[3px] rounded-xl z-50 drop-shadow-lg`}
+                            showMoreOptions && moreOptionsDropdownOpen ? 'flex' : 'hidden'
+                          } absolute top-10 flex-col items-center gap-2 right-0 w-40 p-1 dark:border-zinc-600  dark:bg-darkGrey/85 bg-white/90 border-zinc-200 border-[3px] rounded-xl z-50 drop-shadow-lg`}
                         >
-                          <button
-                            ref={blockCoolMode as Ref<HTMLButtonElement>}
-                            onClick={() => onClickOption('Block')}
-                            className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] text-darkGrey transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[109px] h-[37px] px-2 py-1.5'
-                          >
-                            <Image
-                              alt='mainnet logo'
-                              src='/assets/mainnet-black.svg'
-                              width={16}
-                              height={16}
-                            />
-                            <p>
-                              {followState === 'blocks'
-                                ? isPendingUnblock
-                                  ? 'Block'
-                                  : 'Unblock'
-                                : isPendingBlock
-                                  ? 'Unblock'
-                                  : 'Block'}
-                            </p>
-                          </button>
-                          <button
-                            ref={muteCoolMode as Ref<HTMLButtonElement>}
-                            onClick={() => onClickOption('Mute')}
-                            className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] text-darkGrey transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[109px] h-[37px] px-2 py-1.5'
-                          >
-                            <Image
-                              alt='mainnet logo'
-                              src='/assets/mainnet-black.svg'
-                              width={16}
-                              height={16}
-                            />
-                            <p>
-                              {followState === 'mutes'
-                                ? isPendingUnmute
-                                  ? 'Mute'
-                                  : 'Unmute'
-                                : isPendingMute
-                                  ? 'Unmute'
-                                  : 'Mute'}
-                            </p>
-                          </button>
+                          {!isConnectedUserCard && (
+                            <>
+                              <button
+                                ref={blockCoolMode as Ref<HTMLButtonElement>}
+                                onClick={() => onClickOption('Block')}
+                                className='rounded-lg cursor-pointer bg-deletion mt-3 mb-2 hover:bg-[#CF4C4C] text-darkGrey transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[109px] h-[37px] px-2 py-1.5'
+                              >
+                                <Image
+                                  alt='mainnet logo'
+                                  src='/assets/mainnet-black.svg'
+                                  width={16}
+                                  height={16}
+                                />
+                                <p>
+                                  {followState === 'blocks'
+                                    ? isPendingUnblock
+                                      ? 'Block'
+                                      : 'Unblock'
+                                    : isPendingBlock
+                                      ? 'Unblock'
+                                      : 'Block'}
+                                </p>
+                              </button>
+                              <button
+                                ref={muteCoolMode as Ref<HTMLButtonElement>}
+                                onClick={() => onClickOption('Mute')}
+                                className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] text-darkGrey transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[109px] h-[37px] px-2 py-1.5'
+                              >
+                                <Image
+                                  alt='mainnet logo'
+                                  src='/assets/mainnet-black.svg'
+                                  width={16}
+                                  height={16}
+                                />
+                                <p>
+                                  {followState === 'mutes'
+                                    ? isPendingUnmute
+                                      ? 'Mute'
+                                      : 'Unmute'
+                                    : isPendingMute
+                                      ? 'Unmute'
+                                      : 'Mute'}
+                                </p>
+                              </button>
+                            </>
+                          )}
                           <button
                             onClick={() => {
                               navigator.clipboard.writeText(profile.address)
                               setCopyAddressPressed(true)
                               setTimeout(() => setCopyAddressPressed(false), 3000)
                             }}
-                            className='rounded-lg cursor-pointer hover:bg-white/10 transition-all hover:scale-110 w-full relative text-xs flex items-center gap-1 justify-center font-bold h-[37px] p-1'
+                            className='rounded-lg cursor-pointer hover:bg-white/10 transition-colors w-full relative text-xs flex items-center gap-1 justify-center font-bold p-3'
                           >
                             <MdOutlineContentCopy className='text-base' />
                             <p className='text-nowrap'>
@@ -411,10 +412,33 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                                 setCopyENSPressed(true)
                                 setTimeout(() => setCopyENSPressed(false), 3000)
                               }}
-                              className='rounded-lg cursor-pointer hover:bg-white/10 transition-all hover:scale-110 relative text-xs flex items-center gap-1 justify-center font-bold w-full h-[37px] p-1'
+                              className='rounded-lg cursor-pointer hover:bg-white/10 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3'
                             >
                               <MdOutlineContentCopy className='text-base' />
                               <p>{t(copyENSPressed ? 'copied' : 'copy ens')}</p>
+                            </button>
+                          )}
+                          {openBlockModal && (
+                            <button
+                              onClick={() => {
+                                openBlockModal()
+                                setMoreOptionsDropdownOpen(false)
+                              }}
+                              className='rounded-lg cursor-pointer hover:bg-white/10 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3'
+                            >
+                              <p>{t('block-mute')}</p>
+                            </button>
+                          )}
+                          {openListSettingsModal && (
+                            <button
+                              onClick={() => {
+                                openListSettingsModal()
+                                setMoreOptionsDropdownOpen(false)
+                              }}
+                              className='rounded-lg cursor-pointer hover:bg-white/10 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3'
+                            >
+                              <IoMdSettings className='text-lg' />
+                              <p>{t('settings')}</p>
                             </button>
                           )}
                         </div>
