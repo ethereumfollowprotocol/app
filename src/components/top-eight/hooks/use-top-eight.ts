@@ -2,14 +2,20 @@ import { useState } from 'react'
 import { isAddress, type Address } from 'viem'
 import { useQuery } from '@tanstack/react-query'
 
+import type { ENSProfile } from '#/types/requests'
 import { fetchProfileFollowing } from '#/api/fetchProfileFollowing'
+
+export type TopEightProfileType = {
+  address: Address
+  ens?: ENSProfile
+}
 
 export const useTopEight = (user: string | Address) => {
   const userIsList = !(isAddress(user) || (user.includes('.') && !Number.isNaN(Number(user))))
 
   const [editModalOpen, setEditModalOpen] = useState(false)
 
-  const { data: topEight, isLoading: topEightIsLoading } = useQuery({
+  const { data: topEightFetched, isLoading: topEightIsLoading } = useQuery({
     queryKey: ['top8', user],
     queryFn: async () => {
       if (!user) return []
@@ -27,6 +33,9 @@ export const useTopEight = (user: string | Address) => {
     },
     staleTime: 300000
   })
+
+  const topEight =
+    topEightFetched?.map(profile => ({ address: profile.data, ens: profile.ens })) || []
 
   return {
     topEight,

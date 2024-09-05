@@ -229,9 +229,9 @@ const ListSettings: React.FC<ListSettingsProps> = ({
         ) : (
           <button
             onClick={() => setIsEditingSettings(true)}
-            className='text-lg mt-4 px-6 mx-auto hover:scale-110 transition-all font-bold hover:opacity-90 bg-[#bbbbbb] text-darkGrey rounded-full'
+            className='text-lg mt-4 px-6 h-14 mx-auto hover:scale-110 transition-all font-bold hover:opacity-90 bg-[#bbbbbb] text-darkGrey rounded-full'
           >
-            Edit Settings
+            {t('edit settings')}
           </button>
         )}
       </div>

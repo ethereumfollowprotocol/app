@@ -4,11 +4,12 @@ import { isAddress, type Address } from 'viem'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useQueryState } from 'next-usequerystate'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import { useAccount } from 'wagmi'
 import { resolveEnsAddress } from '#/utils/ens'
+import { formatError } from '#/utils/formatError'
 import { searchENSNames } from '#/api/searchENSNames'
 import { useCart } from '#/contexts/cart-context.tsx'
 import { fetchFollowState } from '#/api/fetchFollowState'
@@ -136,9 +137,6 @@ const useSearch = (isEditor?: boolean) => {
     if (followState === 'follows') return { user, isFollowing: true }
     if (followState === 'none') addCartItem({ listOp: listOpAddListRecord(address) })
   }
-
-  const formatError = (names: (string | undefined)[]) =>
-    `${names.slice(0, 10).join(', ')}${names.length > 10 ? ', ...' : ''}`
 
   const onSubmit = async () => {
     if (isEditor) {

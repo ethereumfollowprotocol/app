@@ -11,13 +11,14 @@ import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useAccount, useDisconnect, useWalletClient } from 'wagmi'
 
 import { LANGUAGES } from '#/lib/constants'
+import { Avatar } from '#/components/avatar'
 import useLanguage from '../hooks/useLanguage'
 import { resolveEnsProfile } from '#/utils/ens'
 import { cn, truncateAddress } from '#/lib/utilities'
 import ThemeSwitcher from '#/components/theme-switcher'
+import LoadingCell from '#/components/loaders/loading-cell'
 import GreenCheck from 'public/assets/icons/check-green.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 
 const nullEnsProfile = {
   name: null,
@@ -58,7 +59,7 @@ const ConnectButton = () => {
     }
   }, [connector, walletClient, isLoadingWalletClient])
 
-  const { data: ensProfile } = useQuery({
+  const { data: ensProfile, isLoading: ensProfileIsLoading } = useQuery({
     queryKey: ['ens-data', userAddress],
     queryFn: async () => {
       if (!userAddress) return nullEnsProfile
@@ -87,14 +88,15 @@ const ConnectButton = () => {
         {userAddress ? (
           <>
             <div className='flex items-center max-w-[86%] h-fit gap-[8px]'>
-              <Image
-                src={ensProfile?.avatar || DefaultAvatar}
-                alt='ENS Avatar'
-                width={50}
-                height={50}
-                className='rounded-full'
-                unoptimized={true}
-              />
+              {ensProfileIsLoading ? (
+                <LoadingCell className='w-[50px] h-[50px] rounded-full' />
+              ) : (
+                <Avatar
+                  avatarUrl={ensProfile?.avatar}
+                  name={ensProfile?.name || userAddress}
+                  size='w-[50px] h-[50px]'
+                />
+              )}
               <p className='font-bold hidden sm:block truncate text-lg'>
                 {ensProfile?.name || truncateAddress(userAddress)}
               </p>
