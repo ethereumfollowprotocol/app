@@ -18,7 +18,7 @@ interface EditModalProps {
 const EditModal: React.FC<EditModalProps> = ({ profiles, onClose }) => {
   const router = useRouter()
   const { t } = useTranslation()
-  const { editedProfiles, addProfileSearch, setAddProfileSearch, onSubmit, isTopEightFull } =
+  const { editedProfiles, addProfileSearch, setAddProfileSearch, onSubmit, validTopEightsLength } =
     useEditTopEight(profiles)
 
   return (
@@ -50,7 +50,7 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose }) => {
           <PrimaryButton onClick={onSubmit} label={t('add')} className='h-12' />
         </div>
         <p className='dark:text-zinc-400 text-zinc-500 font-semibold'>
-          {t(isTopEightFull ? 'top eight limit' : 'top eight description')}
+          {t(validTopEightsLength >= 8 ? 'top eight limit' : 'top eight description')}
         </p>
         <div
           className={cn(
@@ -69,7 +69,7 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose }) => {
         <div className='w-full mt-4 flex justify-between items-center'>
           <CancelButton onClick={onClose} />
           <PrimaryButton
-            disabled={isTopEightFull}
+            disabled={validTopEightsLength > 8}
             onClick={() => {
               router.push('/cart')
               onClose()

@@ -238,7 +238,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
         <>
           <div
             className={cn(
-              'flex gap-2 items-center h-5 absolute px-3 w-full left-0 top-3 font-bold',
+              'flex gap-2 items-center h-5 absolute px-3 w-full left-0 top-2 font-bold',
               profileList ? 'justify-between' : 'justify-end'
             )}
           >
@@ -283,7 +283,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
               </a>
             ) : null}
           </div>
-          <div className='flex w-full items-center flex-col pt-8 pb-4 px-4 sm:p-6 sm:pt-10 gap-5 sm:gap-6 md:gap-9'>
+          <div className='flex w-full items-center flex-col pt-8 pb-4 px-4 sm:p-6 sm:pt-9 gap-5 sm:gap-6 md:gap-9'>
             <div className='flex w-full flex-col justify-center items-center gap-4'>
               {isProfileLoading ? (
                 <LoadingCell

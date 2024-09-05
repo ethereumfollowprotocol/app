@@ -35,13 +35,13 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
 
   const [editedProfiles, setEditedProfiles] = useState([...profiles, ...topEightInCart])
 
-  const isTopEightFull = useMemo(() => {
+  const validTopEightsLength = useMemo(() => {
     const topEightRemoved = cartItems.filter(
       ({ listOp }) =>
         listOp.opcode === 4 && isTagListOp(listOp) && extractAddressAndTag(listOp).tag === 'top8'
     )
 
-    return editedProfiles.length - topEightRemoved.length >= 8
+    return editedProfiles.length - topEightRemoved.length
   }, [editedProfiles])
 
   useEffect(() => {
@@ -84,7 +84,7 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
   }
 
   const onSubmit = async () => {
-    if (isTopEightFull) return toast.error(t('top eight limit'))
+    if (validTopEightsLength >= 8) return toast.error(t('top eight limit'))
     if (!roles?.isManager) return toast.error(t('not manager'))
     setAddProfileSearch('')
 
@@ -113,7 +113,7 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
 
   return {
     onSubmit,
-    isTopEightFull,
+    validTopEightsLength,
     editedProfiles,
     addProfileSearch,
     setAddProfileSearch
