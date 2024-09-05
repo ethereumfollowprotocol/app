@@ -13,7 +13,6 @@ import {
 import { resolveEnsAddress } from '#/utils/ens'
 import type { TagListOp } from '#/types/list-op'
 import { useCart } from '#/contexts/cart-context'
-import { formatError } from '#/utils/formatError'
 import { fetchFollowState } from '#/api/fetchFollowState'
 import type { TopEightProfileType } from './use-top-eight'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
@@ -88,24 +87,24 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
     if (!roles?.isManager) return toast.error(t('not manager'))
     setAddProfileSearch('')
 
-    const hasMultipleNames =
-      addProfileSearch.includes(',') ||
-      addProfileSearch.includes(' ') ||
-      addProfileSearch.includes('\n')
+    // const hasMultipleNames =
+    //   addProfileSearch.includes(',') ||
+    //   addProfileSearch.includes(' ') ||
+    //   addProfileSearch.includes('\n')
 
-    if (hasMultipleNames) {
-      const namesToAdd = addProfileSearch
-        .replaceAll(',', ' ')
-        .replaceAll('\n', ' ')
-        .split(' ')
-        .map(name => name.trim())
-        .filter(name => !!name)
+    // if (hasMultipleNames) {
+    //   const namesToAdd = addProfileSearch
+    //     .replaceAll(',', ' ')
+    //     .replaceAll('\n', ' ')
+    //     .split(' ')
+    //     .map(name => name.trim())
+    //     .filter(name => !!name)
 
-      const addedToCart = await Promise.all(namesToAdd.map(async name => await addToCart(name)))
+    //   const addedToCart = await Promise.all(namesToAdd.map(async name => await addToCart(name)))
 
-      const erroredNames = addedToCart.filter(item => !item?.user).map(item => item?.user)
-      if (erroredNames.length > 0) toast.error(`${t('unresolved')} ${formatError(erroredNames)}`)
-    }
+    //   const erroredNames = addedToCart.filter(item => item?.user).map(item => item?.user)
+    //   if (erroredNames.length > 0) toast.error(`${t('unresolved')} ${formatError(erroredNames)}`)
+    // }
 
     const addedToCart = await addToCart(addProfileSearch)
     if (addedToCart?.user) toast.error(`${t('unresolved')} ${addProfileSearch}`)

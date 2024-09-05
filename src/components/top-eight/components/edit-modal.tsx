@@ -41,7 +41,7 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose }) => {
               }
             }}
             placeholder={t('search placeholder')}
-            onChange={e => setAddProfileSearch(e.target.value)}
+            onChange={e => setAddProfileSearch(e.target.value.trim().toLowerCase())}
             className='h-12 block pr-12 w-full truncate font-medium rounded-xl border-[3px] 3 dark:border-zinc-500 pl-4 sm:text-sm bg-white/70 dark:bg-darkGrey/50'
           />
           <div className='absolute w-8 rounded-lg right-[126px] top-2 h-8 flex justify-center items-center bg-zinc-300 dark:bg-zinc-500'>

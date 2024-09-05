@@ -14,7 +14,8 @@ interface TopEightProps {
 
 const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile }) => {
   const { t } = useTranslation()
-  const { editModalOpen, setEditModalOpen, topEight, topEightIsLoading } = useTopEight(user)
+  const { editModalOpen, setEditModalOpen, topEight, topEightIsLoading, topEightIsRefetching } =
+    useTopEight(user)
 
   return (
     <>
@@ -34,16 +35,17 @@ const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile }) => 
         <div className='flex gap-2 font-bold justify-center items-center'>
           <h3 className='text-2xl'>{t('top eight title')}</h3>
         </div>
-        {topEight?.length === 0 && !topEightIsLoading && (
+        {topEight?.length === 0 && !(topEightIsLoading || topEightIsRefetching) && (
           <p className='font-medium italic text-lg my-6 text-center text-zinc-500 dark:text-zinc-300'>
             {t('no top eight')}
           </p>
         )}
         <div className='flex flex-wrap justify-evenly items-center xl:gap-0 sm:gap-2'>
-          {topEight?.slice(0, 8).map((profile, index) => (
-            <TopEightProfile profile={profile} key={index} />
-          ))}
-          {new Array(topEightIsLoading ? 8 : 0).fill(0).map((_, index) => (
+          {!(topEightIsLoading || topEightIsRefetching) &&
+            topEight
+              ?.slice(0, 8)
+              .map((profile, index) => <TopEightProfile profile={profile} key={index} />)}
+          {new Array(topEightIsLoading || topEightIsRefetching ? 8 : 0).fill(0).map((_, index) => (
             <div key={index} className='flex flex-col w-28 2xl:w-36 py-4 items-center gap-2'>
               <LoadingCell className='h-[60px] w-[60px] rounded-full' />
               <LoadingCell className='h-7 w-24 rounded-lg' />

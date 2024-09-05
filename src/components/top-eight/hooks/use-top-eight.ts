@@ -15,7 +15,11 @@ export const useTopEight = (user: string | Address) => {
 
   const [editModalOpen, setEditModalOpen] = useState(false)
 
-  const { data: topEightFetched, isLoading: topEightIsLoading } = useQuery({
+  const {
+    data: topEightFetched,
+    isLoading: topEightIsLoading,
+    isRefetching: topEightIsRefetching
+  } = useQuery({
     queryKey: ['top8', user],
     queryFn: async () => {
       if (!user) return []
@@ -39,8 +43,9 @@ export const useTopEight = (user: string | Address) => {
 
   return {
     topEight,
-    topEightIsLoading,
     editModalOpen,
-    setEditModalOpen
+    setEditModalOpen,
+    topEightIsLoading,
+    topEightIsRefetching
   }
 }

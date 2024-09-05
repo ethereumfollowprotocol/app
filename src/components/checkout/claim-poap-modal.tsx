@@ -4,6 +4,7 @@ import Modal from '../modal'
 import CancelButton from '../buttons/cancel-button'
 import { PrimaryButton } from '../buttons/primary-button'
 import BetaTesterPoap from 'public/assets/art/beta-tester-poap.svg'
+import { useTranslation } from 'react-i18next'
 
 const POAP_MMINT_URLS = [
   'https://poap.xyz/mint/olge4s',
@@ -23,14 +24,21 @@ interface ClaimPoapModalProps {
 }
 
 const ClaimPoapModal: React.FC<ClaimPoapModalProps> = ({ onClose }) => {
+  const { t } = useTranslation()
   return (
     <Modal onCancel={onClose}>
       <h2>You have got a chance to claim the Beta tester Poap</h2>
-      <Image src={BetaTesterPoap} alt='Beta tester Poap' width={400} height={400} />
+      <Image
+        src={BetaTesterPoap}
+        alt='Beta tester Poap'
+        width={400}
+        height={400}
+        className='animate-spin-slow'
+      />
       <div>
-        <CancelButton onClick={onClose} label='Close' />
-        <a href={POAP_MMINT_URLS[Math.floor(Math.random() * 10)]}>
-          <PrimaryButton onClick={onClose} label='Claim' />
+        <CancelButton onClick={onClose} label={t('no thanks')} />
+        <a href={POAP_MMINT_URLS[Math.floor(Math.random() * 10)]} target='_blank' rel='noreferrer'>
+          <PrimaryButton onClick={onClose} label={t('yes')} />
         </a>
       </div>
     </Modal>

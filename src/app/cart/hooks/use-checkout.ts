@@ -270,6 +270,7 @@ const useCheckout = () => {
   const onFinish = useCallback(() => {
     setIsRefetchingProfile(true)
     setIsRefetchingFollowing(true)
+    queryClient.invalidateQueries({ queryKey: ['top8'] })
     queryClient.invalidateQueries({ queryKey: ['follow state'] })
     queryClient.invalidateQueries({ queryKey: ['list state'] })
 
