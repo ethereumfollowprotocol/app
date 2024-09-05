@@ -16,6 +16,7 @@ interface TransactionStatusProps {
   setCurrentStep: (step: Step) => void
   handleReInitiateActions: () => void
   handleNextAction: () => void
+  openPoapModal?: () => void
 }
 
 /**
@@ -28,7 +29,8 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
   onFinish,
   setCurrentStep,
   handleReInitiateActions,
-  handleNextAction
+  handleNextAction,
+  openPoapModal
 }) => {
   const { actions, currentAction, currentActionIndex, allActionsSuccessful } = useActions()
   const chain = useChain(currentAction?.chainId)
@@ -42,8 +44,10 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
   // Add separate transaction finished state for custom delay to wait for backend to update after finishing the llast transaction
   const [transactionsAreFinished, setTransactionsAreFinished] = useState(false)
   useEffect(() => {
-    if (allActionsSuccessful)
+    if (allActionsSuccessful) {
+      openPoapModal?.()
       setTimeout(() => setTransactionsAreFinished(true), 5000 + (totalCartItems / 10) * 2)
+    }
   }, [allActionsSuccessful])
 
   const isLastAction = currentActionIndex + 1 === actions.length

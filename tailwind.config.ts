@@ -127,13 +127,22 @@ const { colors, fontFamily, fontSize, keyframes, animation, spacing, screens } =
       '100%': {
         'background-position': '-200% 0'
       }
+    },
+    spinY: {
+      '0%': {
+        transform: 'rotateY(0deg)'
+      },
+      '100%': {
+        transform: 'rotateY(360deg)'
+      }
     }
   },
   animation: {
     'accordion-down': 'accordion-down 0.2s ease-out',
     'accordion-up': 'accordion-up 0.2s ease-out',
     'spin-slow': 'spin 2s linear infinite',
-    loading: 'loading 5s ease-in-out infinite'
+    loading: 'loading 5s ease-in-out infinite',
+    'spin-y': 'spinY 5s ease-in-out infinite'
   },
   spacing: {
     '68': '17rem',

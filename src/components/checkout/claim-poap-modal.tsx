@@ -27,19 +27,26 @@ const ClaimPoapModal: React.FC<ClaimPoapModalProps> = ({ onClose }) => {
   const { t } = useTranslation()
   return (
     <Modal onCancel={onClose}>
-      <h2>You have got a chance to claim the Beta tester Poap</h2>
-      <Image
-        src={BetaTesterPoap}
-        alt='Beta tester Poap'
-        width={400}
-        height={400}
-        className='animate-spin-slow'
-      />
-      <div>
-        <CancelButton onClick={onClose} label={t('no thanks')} />
-        <a href={POAP_MMINT_URLS[Math.floor(Math.random() * 10)]} target='_blank' rel='noreferrer'>
-          <PrimaryButton onClick={onClose} label={t('yes')} />
-        </a>
+      <div className='flex flex-col gap-6 items-center'>
+        <h2 className='text-2xl font-bold'>You have got a chance to claim the Beta tester POAP</h2>
+        <Image
+          src={BetaTesterPoap}
+          alt='Beta tester Poap'
+          width={400}
+          height={400}
+          className='animate-spin-y'
+        />
+        <p className='text-xl font-semibold'>Do you wish to claim this special POAP?</p>
+        <div className='w-full flex items-center justify-between'>
+          <CancelButton onClick={onClose} label={t('no thanks')} />
+          <a
+            href={POAP_MMINT_URLS[Math.floor(Math.random() * 10)]}
+            target='_blank'
+            rel='noreferrer'
+          >
+            <PrimaryButton onClick={onClose} label={t('claim')} />
+          </a>
+        </div>
       </div>
     </Modal>
   )

@@ -49,7 +49,12 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose }) => {
           </div>
           <PrimaryButton onClick={onSubmit} label={t('add')} className='h-12' />
         </div>
-        <p className='dark:text-zinc-400 text-zinc-500 font-semibold'>
+        <p
+          className={cn(
+            'font-semibold',
+            validTopEightsLength >= 8 ? 'text-red-400' : 'dark:text-zinc-400 text-zinc-500'
+          )}
+        >
           {t(validTopEightsLength >= 8 ? 'top eight limit' : 'top eight description')}
         </p>
         <div

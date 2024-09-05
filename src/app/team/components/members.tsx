@@ -97,7 +97,7 @@ const Members = () => {
                 <LoadingCell className='rounded-lg h-7 w-52' />
                 <UserProfileCard
                   isResponsive={false}
-                  isLoading={teamIsLoading}
+                  isLoading={foundationIsLoading}
                   // x={records?.['com.twitter'] ?? ''}
                   // github={records?.['com.github'] ?? ''}
                 />

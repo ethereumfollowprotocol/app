@@ -87,7 +87,7 @@ const TableRow: React.FC<TableRowProps> = ({
   // const avatarUrl = fetchedEnsProfile?.avatar
 
   return (
-    <div className='flex items-center w-full gap-4 p-2 sm:p-4 hover:bg-white/90 dark:hover:bg-darkGrey/40 rounded-xl sm:gap-6 md:gap-8 h-[75px]'>
+    <div className='flex items-center w-full gap-4 p-2 sm:p-4 hover:bg-darkGrey/5 dark:hover:bg-darkGrey/40 rounded-xl sm:gap-6 md:gap-8 h-[75px]'>
       <div className='tabular-nums min-w-4 w-4 xxs:min-w-6 xxs:w-6 sm:w-10 flex justify-center text-right'>
         {rankNumber}
       </div>
@@ -105,7 +105,7 @@ const TableRow: React.FC<TableRowProps> = ({
           />
         </Link>
         <div
-          className='flex flex-col items-start truncate justify-center text-left'
+          className='flex flex-col items-start justify-center text-left'
           style={{ maxWidth: 'calc(100% - 60px)' }}
         >
           <Link href={`/${address}`} className='w-full'>

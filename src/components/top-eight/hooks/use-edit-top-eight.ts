@@ -23,14 +23,20 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
   const { roles, selectedList } = useEFPProfile()
 
   const { cartItems, addCartItem } = useCart()
-  const topEightInCart = cartItems
-    .filter(
-      ({ listOp }) =>
-        listOp.opcode === 3 && isTagListOp(listOp) && extractAddressAndTag(listOp).tag === 'top8'
-    )
-    .map(({ listOp }) => ({
-      address: extractAddressAndTag(listOp as TagListOp).address
-    }))
+  const topEightInCart = useMemo(
+    () =>
+      cartItems
+        .filter(
+          ({ listOp }) =>
+            listOp.opcode === 3 &&
+            isTagListOp(listOp) &&
+            extractAddressAndTag(listOp).tag === 'top8'
+        )
+        .map(({ listOp }) => ({
+          address: extractAddressAndTag(listOp as TagListOp).address
+        })),
+    [cartItems]
+  )
 
   const [editedProfiles, setEditedProfiles] = useState([...profiles, ...topEightInCart])
 
@@ -45,7 +51,7 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
 
   useEffect(() => {
     setEditedProfiles([...profiles, ...topEightInCart])
-  }, [profiles, topEightInCart])
+  }, [topEightInCart])
 
   const [addProfileSearch, setAddProfileSearch] = useState('')
 

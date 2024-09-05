@@ -3,8 +3,6 @@ import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import LoadingCell from '../../loaders/loading-cell'
 import { profileCardSocials } from '#/lib/constants'
-import Image from 'next/image'
-import { useTheme } from 'next-themes'
 
 interface LoadingProfileCardProps {
   isResponsive?: boolean
@@ -18,7 +16,7 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
   isStatic
 }) => {
   const { t } = useTranslation()
-  const { resolvedTheme } = useTheme()
+  // const { resolvedTheme } = useTheme()
   const { openConnectModal } = useConnectModal()
 
   const ranks = ['mutuals_rank', 'followers_rank', 'following_rank', 'blocks_rank']
@@ -59,16 +57,21 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
               )}
             </div>
             <LoadingCell isStatic={isStatic} className='w-4/5 h-5 rounded-lg' />
-            <div className='flex gap-2 items-center opacity-20'>
+            <div className='flex gap-2 items-center'>
               {profileCardSocials.map(social => (
-                <Image
+                <LoadingCell
                   key={social.name}
-                  src={social.icon(resolvedTheme || '')}
-                  alt={social.name}
-                  width={37}
-                  height={37}
-                  className='rounded-full'
+                  isStatic={isStatic}
+                  className='w-9 h-9 rounded-full'
                 />
+                // <Image
+                //   key={social.name}
+                //   src={social.icon(resolvedTheme || '')}
+                //   alt={social.name}
+                //   width={36}
+                //   height={36}
+                //   className='rounded-full'
+                // />
               ))}
             </div>
           </div>

@@ -12,7 +12,6 @@ export type TopEightProfileType = {
 
 export const useTopEight = (user: string | Address) => {
   const userIsList = !(isAddress(user) || (user.includes('.') && !Number.isNaN(Number(user))))
-
   const [editModalOpen, setEditModalOpen] = useState(false)
 
   const {

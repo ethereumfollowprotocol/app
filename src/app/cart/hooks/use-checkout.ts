@@ -15,7 +15,6 @@ import { useAccount, useChainId, useChains, useSwitchChain, useWalletClient } fr
 
 import { Step } from '#/components/checkout/types'
 import type { ChainWithDetails } from '#/lib/wagmi'
-import { DEFAULT_CHAIN, LIST_OP_LIMITS } from '#/lib/constants/chain'
 import { rpcProviders } from '#/lib/constants/providers'
 import type { FollowingResponse } from '#/types/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
@@ -23,6 +22,7 @@ import { useCart, type CartItem } from '#/contexts/cart-context'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { extractAddressAndTag, isTagListOp } from '#/utils/list-ops'
 import { useMintEFP } from '../../../hooks/efp-actions/use-mint-efp'
+import { DEFAULT_CHAIN, LIST_OP_LIMITS } from '#/lib/constants/chain'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
 
@@ -302,17 +302,27 @@ const useCheckout = () => {
     router.push(`/${selectedList ?? userAddress}`)
   }, [resetActions, resetCart, setNewListAsPrimary])
 
+  // Claim POAP logic temporary for beta testing period
+  const [claimPoapModalOpen, setClaimPoapModalOpen] = useState(false)
+  const openPoapModal = useCallback(
+    () => (listHasBeenMinted && lists?.lists?.length === 0 ? setClaimPoapModalOpen(true) : null),
+    [listHasBeenMinted]
+  )
+
   return {
     chains,
     actions,
     onFinish,
     currentStep,
+    openPoapModal,
     setCurrentStep,
     selectedChain,
     selectedChainId,
+    claimPoapModalOpen,
     setSelectedChainId,
     handleChainClick,
     handleNextStep,
+    setClaimPoapModalOpen,
     handleInitiateActions,
     handleNextAction,
     setNewListAsPrimary,

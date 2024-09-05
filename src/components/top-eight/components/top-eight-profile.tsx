@@ -19,9 +19,12 @@ interface TopEightProfileProps {
 
 const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing }) => {
   const { data: fetchedEnsProfile, isLoading: isEnsProfileLoading } = useQuery({
-    queryKey: ['ens metadata', profile],
+    queryKey: ['ens metadata', profile.address],
     queryFn: async () => (profile.ens ? profile.ens : await resolveEnsProfile(profile.address))
   })
+
+  const profileName = fetchedEnsProfile?.name
+  const profileAvatar = fetchedEnsProfile?.avatar
 
   const {
     addCartItem,
@@ -35,9 +38,6 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
     isEditing &&
     (hasListOpRemoveTag({ address: profile.address, tag: 'top8' }) ||
       hasListOpRemoveRecord(profile.address))
-
-  const profileName = fetchedEnsProfile?.name
-  const profileAvatar = fetchedEnsProfile?.avatar
 
   const onClick = () => {
     if (!isEditing) return
