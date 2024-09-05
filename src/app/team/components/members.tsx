@@ -42,7 +42,7 @@ const Members = () => {
 
   return (
     <div className='flex flex-col w-full gap-16'>
-      <div className='flex-row flex-wrap flex mx-auto lg:flex-row gap-8 align-middle justify-center items-center'>
+      <div className='flex-row flex-wrap flex mx-auto lg:flex-row gap-8 align-middle justify-center items-start'>
         {teamProfiles?.map((profile, i) => (
           <div key={profile?.address} className='flex flex-col items-center gap-2'>
             {teamRoles && (
@@ -73,7 +73,7 @@ const Members = () => {
       </div>
       <div className='flex flex-col gap-10'>
         <h2 className='text-4xl font-bold'>Follow Protocol Foundation</h2>
-        <div className='flex-row flex-wrap flex mx-auto lg:flex-row gap-8 align-middle justify-center items-center'>
+        <div className='flex-row flex-wrap flex mx-auto lg:flex-row gap-8 align-middle justify-center items-start'>
           {foundationProfiles?.map((profile, i) => (
             <div key={profile?.address} className='flex flex-col items-center gap-2'>
               {foundationRoles && (

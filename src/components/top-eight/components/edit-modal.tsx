@@ -23,7 +23,7 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose }) => {
 
   return (
     <Modal onCancel={onClose}>
-      <div className='max-w-[636px] p-2 flex items-center flex-col gap-6'>
+      <div className='w-[696px] p-2 flex items-center flex-col gap-6'>
         <h2 className='text-2xl font-bold'>{t('top eight title')}</h2>
         <div className='relative flex items-center gap-4 w-full'>
           <input
@@ -49,18 +49,22 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose }) => {
           </div>
           <PrimaryButton onClick={onSubmit} label={t('add')} className='h-12' />
         </div>
-        {isTopEightFull && (
-          <p className='text-zinc-400 italic font-semibold'>{t('top eight limit')}</p>
-        )}
+        <p className='dark:text-zinc-400 text-zinc-500 font-semibold'>
+          {t(isTopEightFull ? 'top eight limit' : 'top eight description')}
+        </p>
         <div
           className={cn(
-            'flex items-center flex-wrap w-full gap-2',
-            editedProfiles.length > 4 ? 'justify-start' : 'justify-center'
+            'flex items-start bg-white/75 min-h-[418px] dark:bg-darkGrey rounded-xl p-6 flex-wrap w-full gap-3'
           )}
         >
           {editedProfiles.map((profile, index) => (
             <TopEightProfile profile={profile} isEditing={true} key={index} />
           ))}
+          {editedProfiles.length === 0 && (
+            <p className='italic dark:text-zinc-400 text-zinc-500 font-semibold'>
+              {t('no top eight')}
+            </p>
+          )}
         </div>
         <div className='w-full mt-4 flex justify-between items-center'>
           <CancelButton onClick={onClose} />
@@ -70,7 +74,7 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose }) => {
               router.push('/cart')
               onClose()
             }}
-            label={t('apply')}
+            label={t('confirm')}
           />
         </div>
       </div>

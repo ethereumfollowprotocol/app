@@ -25,17 +25,17 @@ const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile }) => 
         {isConnectedUserProfile && (
           <div
             onClick={() => setEditModalOpen(true)}
-            className='absolute top-2 right-2 font-semibold text-sm flex gap-1 items-center dark:text-zinc-300 dark:hover:text-zinc-200 text-zinc-600 cursor-pointer hover:text-zinc-500 hover:scale-110 transition-all'
+            className='absolute top-2 right-2.5 font-semibold text-sm flex gap-1 items-center dark:text-zinc-300 dark:hover:text-zinc-200 text-zinc-600 cursor-pointer hover:text-zinc-500 hover:scale-110 transition-all'
           >
-            <p>{t('edit')}</p>
             <FaRegEdit />
+            <p>{t('edit')}</p>
           </div>
         )}
         <div className='flex gap-2 font-bold justify-center items-center'>
           <h3 className='text-2xl'>{t('top eight title')}</h3>
         </div>
         {topEight?.length === 0 && !topEightIsLoading && (
-          <p className='font-medium italic text-lg text-center text-zinc-500 dark:text-zinc-300'>
+          <p className='font-medium italic text-lg my-6 text-center text-zinc-500 dark:text-zinc-300'>
             {t('no top eight')}
           </p>
         )}
