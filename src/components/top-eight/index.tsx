@@ -22,11 +22,11 @@ const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile }) => 
       {isConnectedUserProfile && editModalOpen && (
         <EditModal profiles={topEight || []} onClose={() => setEditModalOpen(false)} />
       )}
-      <div className='glass-card relative xl:w-76 w-full 2xl:w-86 border-[3px] p-4 2xl:p-6 rounded-xl flex flex-col gap-4 xl:gap-6 border-[#FFDBD9] dark:border-[#a36d7d]'>
+      <div className='glass-card relative xl:w-76 items-center justify-center w-full 2xl:w-86 border-[3px] p-4 2xl:p-6 rounded-xl flex flex-col gap-4 xl:gap-6 border-[#FFDBD9] dark:border-[#a36d7d]'>
         {isConnectedUserProfile && (
           <div
             onClick={() => setEditModalOpen(true)}
-            className='absolute top-2 right-2.5 font-semibold text-sm flex gap-1 items-center dark:text-zinc-300 dark:hover:text-zinc-200 text-zinc-600 cursor-pointer hover:text-zinc-500 hover:scale-110 transition-all'
+            className='absolute top-2 right-2.5 font-semibold text-sm sm:text-base flex gap-1 items-center dark:text-zinc-300 dark:hover:text-zinc-200 text-zinc-600 cursor-pointer hover:text-zinc-500 hover:scale-110 transition-all'
           >
             <FaRegEdit />
             <p>{t('edit')}</p>
@@ -40,7 +40,7 @@ const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile }) => 
             {t('no top eight')}
           </p>
         )}
-        <div className='flex flex-wrap justify-evenly items-center xl:gap-0 sm:gap-2'>
+        <div className='flex flex-wrap justify-around sm:justify-evenly xl:justify-between items-start xl:gap-0 sm:gap-2'>
           {!(topEightIsLoading || topEightIsRefetching) &&
             topEight
               ?.slice(0, 8)

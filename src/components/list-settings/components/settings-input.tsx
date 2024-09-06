@@ -49,7 +49,7 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
     <div className='flex flex-col gap-1'>
       <p className='font-bold text-lg'>{option}</p>
       {isSettingsLoading ? (
-        <div className='p-3 font-medium truncate rounded-lg w-full bg-white/70 disabled:text-zinc-400 disabled:cursor-not-allowed'>
+        <div className='p-3 font-medium truncate rounded-lg w-full bg-white/70 dark:bg-darkGrey/70 disabled:text-zinc-400 disabled:cursor-not-allowed'>
           <LoadingCell className='w-full h-7 rounded-md' />
         </div>
       ) : (

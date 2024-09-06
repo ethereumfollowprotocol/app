@@ -118,9 +118,10 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
 
   return {
     onSubmit,
-    validTopEightsLength,
+    topEightInCart,
     editedProfiles,
     addProfileSearch,
-    setAddProfileSearch
+    setAddProfileSearch,
+    validTopEightsLength
   }
 }

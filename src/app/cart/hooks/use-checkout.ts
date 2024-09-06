@@ -303,23 +303,26 @@ const useCheckout = () => {
   }, [resetActions, resetCart, setNewListAsPrimary])
 
   // Claim POAP logic temporary for beta testing period
-  // const [claimPoapModalOpen, setClaimPoapModalOpen] = useState(false)
-  // const openPoapModal = useCallback(
-  //   () => (listHasBeenMinted && lists?.lists?.length === 0 ? setClaimPoapModalOpen(true) : null),
-  //   [listHasBeenMinted]
-  // )
+  const [claimPoapModalOpen, setClaimPoapModalOpen] = useState(false)
+  const openPoapModal = useCallback(
+    () => (listHasBeenMinted && lists?.lists?.length === 0 ? setClaimPoapModalOpen(true) : null),
+    [listHasBeenMinted]
+  )
 
   return {
     chains,
     actions,
     onFinish,
     currentStep,
+    openPoapModal,
     setCurrentStep,
     selectedChain,
     selectedChainId,
+    claimPoapModalOpen,
     setSelectedChainId,
     handleChainClick,
     handleNextStep,
+    setClaimPoapModalOpen,
     handleInitiateActions,
     handleNextAction,
     setNewListAsPrimary,

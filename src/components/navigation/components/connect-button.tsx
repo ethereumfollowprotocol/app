@@ -127,7 +127,7 @@ const ConnectButton = () => {
               </div>
             </div>
             <div
-              className={`absolute -right-[14.6%] sm:right-[95%] -top-[54px] sm:-top-[6px] ${
+              className={`absolute -right-[14.6%] sm:right-[95%] -top-[54px] z-50 sm:-top-[6px] ${
                 languageMenOpenu ? 'block' : 'hidden'
               } group-hover:block pr-5`}
             >

@@ -13,6 +13,7 @@ import GreenCheck from 'public/assets/icons/check-green.svg'
 import type { FollowSortType, TagCountType } from '#/types/requests'
 import { QUERY_BLOCK_TAGS } from '#/components/blocked-muted/hooks/use-blocked-muted'
 import { BLOCKED_MUTED_TABS, BLOCKED_MUTED_TAGS, SORT_OPTIONS } from '#/lib/constants'
+import { cn } from '#/lib/utilities'
 
 interface TableHeaderProps {
   title: ProfileTableTitleType
@@ -66,9 +67,12 @@ const TableHeader: React.FC<TableHeaderProps> = ({
           <div className='flex gap-3 items-center'>
             <p className='capitalize text-lg sm:text-3xl font-bold'>{t(title)}</p>
             {!BLOCKED_MUTED_TABS.includes(title) && (
-              <div ref={clickAwaySearchRef} className='relative flex gap-3 z-50'>
+              <div ref={clickAwaySearchRef} className='relative flex gap-1 sm:gap-3 z-50'>
                 <div
-                  className='cursor-pointer max-w-40 flex items-center h-6 hover:scale-125 transition-all gap-2 hover:opacity-75'
+                  className={cn(
+                    'cursor-pointer max-w-40 flex items-center h-6 transition-all gap-2 hover:opacity-75',
+                    search ? 'hover:scale-[1.15]' : 'hover:scale-125'
+                  )}
                   onClick={() => setShowSearch(!showSearch)}
                 >
                   <FiSearch className='opacity-50 text-2xl hover:opacity-100 transition-opacity' />
@@ -95,6 +99,12 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                       placeholder={t('search placeholder')}
                       onChange={e => {
                         setSearch(e.target.value.toLowerCase().trim())
+                      }}
+                      onKeyDown={e => {
+                        if (e.key === 'Enter' || e.key === 'Escape') {
+                          e.preventDefault()
+                          setShowSearch(false)
+                        }
                       }}
                       value={search}
                       className='font-medium py-3 block w-full rounded-lg border-0 border-transparent pl-3 pr-10 sm:text-sm dark:bg-darkGrey/50 bg-white/50'

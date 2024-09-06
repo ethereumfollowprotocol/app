@@ -3,6 +3,7 @@ import { Step } from '../../../components/checkout/types'
 import TransactionStatus from '../../../components/checkout/transaction-status'
 import { SelectChainCard } from '../../../components/checkout/select-chain-card'
 import InitiateActionsCard from '../../../components/checkout/initiate-actions-card'
+import ClaimPoapModal from '#/components/checkout/claim-poap-modal'
 
 interface CheckoutProps {
   setOpen: (open: boolean) => void
@@ -15,19 +16,22 @@ const Checkout: React.FC<CheckoutProps> = ({ setOpen, hasCreatedEfpList }) => {
     actions,
     onFinish,
     currentStep,
+    openPoapModal,
     selectedChain,
     handleNextStep,
     setCurrentStep,
     handleChainClick,
     handleNextAction,
+    claimPoapModalOpen,
     setNewListAsPrimary,
+    setClaimPoapModalOpen,
     handleInitiateActions,
     setSetNewListAsPrimary
   } = useCheckout()
 
   return (
     <div>
-      {/* {claimPoapModalOpen && <ClaimPoapModal onClose={() => setClaimPoapModalOpen(false)} />} */}
+      {claimPoapModalOpen && <ClaimPoapModal onClose={() => setClaimPoapModalOpen(false)} />}
       <div className='flex glass-card gap-6 dark:bg-darkGrey/40 flex-col w-full sm:w-[552px] items-center border-[3px] border-zinc-200 dark:border-zinc-500 text-center justify-between rounded-xl p-6 py-8 sm:p-16'>
         {currentStep === Step.SelectChain && (
           <SelectChainCard
@@ -52,7 +56,7 @@ const Checkout: React.FC<CheckoutProps> = ({ setOpen, hasCreatedEfpList }) => {
         {currentStep === Step.TransactionStatus && (
           <TransactionStatus
             onFinish={onFinish}
-            // openPoapModal={openPoapModal}
+            openPoapModal={openPoapModal}
             setCurrentStep={setCurrentStep}
             handleNextAction={handleNextAction}
             handleReInitiateActions={handleInitiateActions}

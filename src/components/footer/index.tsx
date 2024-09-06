@@ -40,9 +40,9 @@ export function Footer() {
           />
         </section>
         <section className='my-auto flex align-middle'>
-          <div className='my-auto flex flex-col justify-center gap-6 sm:gap-6'>
+          <div className='my-auto flex flex-col justify-center gap-4 sm:gap-6'>
             <Pages />
-            <div className='flex items-center justify-center w-52 sm:justify-start gap-10'>
+            <div className='flex items-center w-52 gap-8 sm:gap-10'>
               {socials.map(item => (
                 <a
                   target='_blank'
