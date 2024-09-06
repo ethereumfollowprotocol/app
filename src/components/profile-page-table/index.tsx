@@ -81,6 +81,10 @@ export function UserProfilePageTable({
   }
 
   useEffect(() => {
+    setSearchFilter(search)
+  }, [])
+
+  useEffect(() => {
     if (!showTags) setSelectedTags(isShowingBlocked ? ['All'] : [])
   }, [showTags])
 

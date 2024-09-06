@@ -28,14 +28,7 @@ const Summary = () => {
         />
       )}
       {!isFollowersEmpty && userAddress ? (
-        <LatestFollowers
-          isLoading={followersIsLoading}
-          profiles={followers?.slice(0, 7).map(follower => ({
-            tags: follower.tags,
-            address: follower.address,
-            ens: follower.ens
-          }))}
-        />
+        <LatestFollowers />
       ) : userAddress ? null : (
         <LeaderboardSummary />
       )}
