@@ -26,7 +26,6 @@ const ClaimPoapModal: React.FC<ClaimPoapModalProps> = ({ onClose, link }) => {
           height={300}
           className='animate-spin-y'
         />
-        <p className='text-xl font-semibold'>Do you wish to claim this special POAP?</p>
         <div className='w-full flex items-center justify-between'>
           <CancelButton onClick={onClose} label={t('No thanks')} />
           <a href={link} target='_blank' rel='noreferrer'>

@@ -308,8 +308,8 @@ const useCheckout = () => {
     if (
       listHasBeenMinted &&
       lists?.lists?.length === 0 &&
-      profile?.ens.name &&
-      profile.ens.avatar
+      !!profile?.ens.name &&
+      !!profile.ens.avatar
     ) {
       try {
         const res = await fetch(

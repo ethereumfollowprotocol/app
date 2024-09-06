@@ -136,15 +136,15 @@ const ConnectButton = () => {
                     ? 'h-[223px]'
                     : 'h-auto'
             )}
-            // style={{
-            //   height: languageMenOpenu
-            //     ? `${LANGUAGES.length * 56 + 56}px`
-            //     : listMenuOpen
-            //       ? `${(lists?.lists?.length || 0) * 56 + 111}px`
-            //       : themeMenuOpen
-            //         ? '223px'
-            //         : 'auto'
-            // }}
+            style={{
+              height: languageMenOpenu
+                ? `${LANGUAGES.length * 56 + 56}px`
+                : listMenuOpen
+                  ? `${(lists?.lists?.length || 0) * 56 + 111}px`
+                  : themeMenuOpen
+                    ? '223px'
+                    : 'auto'
+            }}
           >
             <ThemeSwitcher
               connected={true}
