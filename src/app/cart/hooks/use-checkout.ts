@@ -274,9 +274,6 @@ const useCheckout = () => {
     queryClient.invalidateQueries({ queryKey: ['follow state'] })
     queryClient.invalidateQueries({ queryKey: ['list state'] })
 
-    resetCart()
-    resetActions()
-
     if (listHasBeenMinted || selectedList === undefined) {
       refetchLists()
       setSetNewListAsSelected(true)
@@ -299,20 +296,48 @@ const useCheckout = () => {
     refetchFollowing()
     refetchFollowingTags()
 
+    resetCart()
+    resetActions()
     router.push(`/${selectedList ?? userAddress}`)
   }, [resetActions, resetCart, setNewListAsPrimary])
 
   // Claim POAP logic temporary for beta testing period
   const [claimPoapModalOpen, setClaimPoapModalOpen] = useState(false)
-  const openPoapModal = useCallback(
-    () => (listHasBeenMinted && lists?.lists?.length === 0 ? setClaimPoapModalOpen(true) : null),
-    [listHasBeenMinted]
-  )
+  const [poapLink, setPoapLink] = useState('')
+  const openPoapModal = useCallback(async () => {
+    if (
+      listHasBeenMinted &&
+      lists?.lists?.length === 0 &&
+      profile?.ens.name &&
+      profile.ens.avatar
+    ) {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${userAddress}/poap`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+        )
+
+        const data = await res.json()
+        if (data.link) {
+          setPoapLink(data.link)
+          setClaimPoapModalOpen(true)
+        }
+      } catch (err: unknown) {
+        return
+      }
+    }
+  }, [listHasBeenMinted])
 
   return {
     chains,
     actions,
     onFinish,
+    poapLink,
     currentStep,
     openPoapModal,
     setCurrentStep,

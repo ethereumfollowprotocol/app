@@ -31,12 +31,18 @@ type ThemeType = (typeof themes)[number]
 interface ThemeSwitcherProps {
   connected?: boolean
   closeMenu?: () => void
+  setExternalThemeMenuOpen?: (open: boolean) => void
 }
 
-const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ connected, closeMenu }) => {
+const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
+  connected,
+  closeMenu,
+  setExternalThemeMenuOpen
+}) => {
   const [themeMenuOpen, setThemeMenuOpen] = useState(false)
   const clickAwayThemeRef = useClickAway<HTMLDivElement>(() => {
     setThemeMenuOpen(false)
+    setExternalThemeMenuOpen?.(false)
   })
 
   const { t } = useTranslation()
@@ -48,7 +54,10 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ connected, closeMenu }) =
       className={cn('cursor-pointer group relative', connected && 'w-full')}
     >
       <div
-        onClick={() => setThemeMenuOpen(!themeMenuOpen)}
+        onClick={() => {
+          setThemeMenuOpen(!themeMenuOpen)
+          setExternalThemeMenuOpen?.(!themeMenuOpen)
+        }}
         className={cn(
           'flex justify-between items-center rounded-md transition-opacity cursor-pointer',
           connected && 'group-hover:bg-slate-100 p-3 dark:group-hover:bg-zinc-400/20 w-full'
@@ -66,14 +75,17 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ connected, closeMenu }) =
         className={cn(
           'absolute group-hover:block min-w-[190px] block z-50',
           connected
-            ? '-right-[14.6%] sm:right-[97.2%] -top-[6px] pr-5'
+            ? '-right-[198px] sm:right-[97.2%] -top-[4px] sm:-top-[6px] sm:pr-5'
             : 'top-[100%] pt-3 -left-10',
           themeMenuOpen ? 'block' : 'hidden'
         )}
       >
         <div className='flex flex-col gap-2 w-full min-w-[190px] max-h-[75vh] sm:max-h-[80vh] overflow-scroll border-[3px] rounded-lg bg-white/90 dark:bg-darkGrey/90 border-zinc-200 dark:border-zinc-500 p-1  shadow-md'>
           <div
-            onClick={() => setThemeMenuOpen(false)}
+            onClick={() => {
+              setThemeMenuOpen(false)
+              setExternalThemeMenuOpen?.(false)
+            }}
             className={cn(
               'flex sm:hidden justify-between items-center w-full group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/20  dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer',
               connected ? 'flex sm:hidden' : 'hidden'
@@ -89,6 +101,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ connected, closeMenu }) =
               onClick={() => {
                 setTheme(theme as ThemeType)
                 setThemeMenuOpen(false)
+                setExternalThemeMenuOpen?.(false)
                 closeMenu?.()
               }}
             >

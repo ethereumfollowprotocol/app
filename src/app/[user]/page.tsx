@@ -1,13 +1,14 @@
 import { isAddress } from 'viem'
 import type { Metadata } from 'next'
 import UserInfo from './components/user-info'
+import { truncateAddress } from '#/lib/utilities'
 
 interface Props {
   params: { user: string }
 }
 
 export function generateMetadata({ params }: Props): Metadata {
-  const user = params.user
+  const user = isAddress(params.user) ? (truncateAddress(params.user) as string) : params.user
   const isList = Number.isInteger(Number(user)) && !isAddress(user)
 
   return {
