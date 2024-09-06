@@ -305,12 +305,7 @@ const useCheckout = () => {
   const [claimPoapModalOpen, setClaimPoapModalOpen] = useState(false)
   const [poapLink, setPoapLink] = useState('')
   const openPoapModal = useCallback(async () => {
-    if (
-      listHasBeenMinted &&
-      lists?.lists?.length === 0 &&
-      !!profile?.ens.name &&
-      !!profile.ens.avatar
-    ) {
+    if (listHasBeenMinted && lists?.lists?.length === 0 && !!profile?.ens.name) {
       try {
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${userAddress}/poap`,
