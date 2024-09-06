@@ -43,7 +43,7 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose }) => {
               }}
               placeholder={t('search placeholder')}
               onChange={e => setAddProfileSearch(e.target.value.trim().toLowerCase())}
-              className='h-12 block pr-12 w-full truncate font-medium rounded-xl border-[3px] 3 dark:border-zinc-500 pl-4 sm:text-sm bg-white/70 dark:bg-darkGrey/50'
+              className='h-12 block pr-12 w-full truncate font-medium rounded-xl border-[3px] dark:border-zinc-500 pl-4 sm:text-sm bg-white/70 dark:bg-darkGrey/50'
             />
             <div className='absolute w-8 rounded-lg right-2 top-2 h-8 flex justify-center items-center bg-zinc-300 dark:bg-zinc-500'>
               <FiSearch />
@@ -61,7 +61,7 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose }) => {
         </p>
         <div
           className={cn(
-            'flex items-start justify-evenly md:justify-start bg-white/75 min-h-[418px] dark:bg-darkGrey rounded-xl p-6 flex-wrap w-full gap-3'
+            'flex items-start justify-evenly md:justify-start bg-white/75 min-h-[444px] dark:bg-darkGrey rounded-xl p-6 flex-wrap w-full gap-3'
           )}
         >
           {editedProfiles.map((profile, index) => (

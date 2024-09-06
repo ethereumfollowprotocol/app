@@ -12,7 +12,6 @@ import ImportModal from './import-modal'
 import { Search } from '#/components/search'
 import ClearCartModal from './clear-cart-modal'
 import { useCart } from '#/contexts/cart-context'
-import LensIcon from 'public/assets/icons/lens.svg'
 import { formatNumber } from '#/utils/formatNumber'
 import { FollowList } from '#/components/follow-list'
 import Recommendations from '#/components/recommendations'
@@ -25,7 +24,7 @@ const Cart = () => {
   const [isClient, setIsClient] = useState(false)
   const [importModalOpen, setImportModalOpen] = useState(false)
   const [clearCartModalOpen, setClearCartModalOpen] = useState(false)
-  const [platform, setPlatform] = useState<'farcaster' | 'lens'>('farcaster')
+  const [platform, setPlatform] = useState<'farcaster'>('farcaster')
 
   useEffect(() => {
     setIsClient(true)
@@ -59,15 +58,15 @@ const Cart = () => {
         tags: []
       })),
       icon: FarcasterIcon
-    },
-    {
-      platform: 'lens',
-      profiles: socialAddresses.lens.map(address => ({
-        address,
-        tags: []
-      })),
-      icon: LensIcon
     }
+    // {
+    //   platform: 'lens',
+    //   profiles: socialAddresses.lens.map(address => ({
+    //     address,
+    //     tags: []
+    //   })),
+    //   icon: LensIcon
+    // }
   ]
 
   const transactionsCount = useMemo(() => {
@@ -110,7 +109,7 @@ const Cart = () => {
                     setPlatform('farcaster')
                   }}
                 />
-                <Image
+                {/* <Image
                   src={LensIcon}
                   alt='Import from Lens'
                   width={30}
@@ -119,7 +118,7 @@ const Cart = () => {
                     setImportModalOpen(true)
                     setPlatform('lens')
                   }}
-                />
+                /> */}
               </div>
             </div>
             <Search size='w-full z-50 px-2 pt-2' isEditor={true} />

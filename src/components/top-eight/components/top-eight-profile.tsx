@@ -1,12 +1,14 @@
 import Link from 'next/link'
 import { HiPlus } from 'react-icons/hi'
 import { IoClose } from 'react-icons/io5'
+import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
 
 import { Avatar } from '#/components/avatar'
 import { resolveEnsProfile } from '#/utils/ens'
 import { useCart } from '#/contexts/cart-context'
 import { cn, truncateAddress } from '#/lib/utilities'
+import useFollowState from '#/hooks/use-follow-state'
 import FollowButton from '#/components/follow-button'
 import LoadingCell from '#/components/loaders/loading-cell'
 import { listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
@@ -26,6 +28,11 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
   const profileName = fetchedEnsProfile?.name
   const profileAvatar = fetchedEnsProfile?.avatar
 
+  const { followerTag } = useFollowState({
+    address: profile?.address,
+    type: 'follower'
+  })
+
   const {
     addCartItem,
     removeCartItem,
@@ -33,6 +40,7 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
     hasListOpRemoveTag,
     hasListOpRemoveRecord
   } = useCart()
+  const { t } = useTranslation()
   const isAddingToTopEight = isEditing && hasListOpAddTag({ address: profile.address, tag: 'top8' })
   const isRemovingFromTopEight =
     isEditing &&
@@ -50,10 +58,10 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
   return (
     <div
       className={cn(
-        'flex flex-col relative group w-[129px] 2xl:w-[149px] px-0.5 py-4 rounded-2xl items-center gap-2 hover:border-[#A2A2A277]',
+        'flex relative flex-col group w-[129px] 2xl:w-[149px] justify-between px-0.5 py-4 rounded-2xl items-center gap-2 hover:border-[#A2A2A277]',
         isEditing
-          ? 'cursor-pointer border-[3px] border-transparent w-[149px]'
-          : 'w-[129px] 2xl:w-[149px] hover:bg-darkGrey/5 dark:hover:bg-darkGrey/30',
+          ? 'cursor-pointer border-[3px] border-transparent w-[149px] h-[192px]'
+          : 'w-[129px] 2xl:w-[149px] hover:bg-darkGrey/5 dark:hover:bg-darkGrey/30 h-[187px]',
         isAddingToTopEight && 'border-[3px] border-lime-500/50',
         isRemovingFromTopEight && 'border-[3px] dark:border-red-500/70 border-red-400/70'
       )}
@@ -72,32 +80,45 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
           {isAddingToTopEight ? <HiPlus /> : <IoClose />}
         </div>
       )}
-      {isEnsProfileLoading ? (
-        <LoadingCell className='h-[60px] w-[60px] rounded-full' />
-      ) : (
-        <Link href={`/${profile.address}`} className={cn(isEditing && 'pointer-events-none')}>
-          <Avatar
-            name={profileName || profile.address}
-            size={cn(
-              'h-[60px] w-[60px]',
-              !isEditing && 'hover:scale-110 hover:opacity-75 transition-all'
+      <div className='flex flex-col w-full items-center gap-1'>
+        {isEnsProfileLoading ? (
+          <LoadingCell className='h-[60px] w-[60px] rounded-full' />
+        ) : (
+          <Link href={`/${profile.address}`} className={cn(isEditing && 'pointer-events-none')}>
+            <Avatar
+              name={profileName || profile.address}
+              size={cn(
+                'h-[60px] w-[60px]',
+                !isEditing && 'hover:scale-110 hover:opacity-75 transition-all'
+              )}
+              avatarUrl={profileAvatar}
+            />
+          </Link>
+        )}
+        {isEnsProfileLoading ? (
+          <LoadingCell className='h-7 w-24 rounded-lg' />
+        ) : (
+          <Link
+            href={`/${profile.address}`}
+            className={cn(
+              'text-lg font-bold max-w-full truncate',
+              isEditing ? 'pointer-events-none' : 'hover:scale-110 hover:opacity-75 transition-all'
             )}
-            avatarUrl={profileAvatar}
-          />
-        </Link>
-      )}
-      {isEnsProfileLoading ? (
-        <LoadingCell className='h-7 w-24 rounded-lg' />
-      ) : (
-        <Link
-          href={`/${profile.address}`}
+          >
+            {profileName || truncateAddress(profile.address)}
+          </Link>
+        )}
+      </div>
+      {followerTag && (
+        <div
           className={cn(
-            'text-lg font-bold max-w-full truncate',
-            isEditing ? 'pointer-events-none' : 'hover:scale-110 hover:opacity-75 transition-all'
+            'rounded-full absolute font-bold text-[10px] flex bottom-[59px] items-center justify-center bg-zinc-300 h-5 w-20',
+            followerTag.className,
+            'text-darkGrey'
           )}
         >
-          {profileName || truncateAddress(profile.address)}
-        </Link>
+          {t(followerTag.text)}
+        </div>
       )}
       <FollowButton address={profile.address} />
     </div>

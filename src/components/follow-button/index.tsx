@@ -168,8 +168,8 @@ const FollowButton: React.FC<FollowButtonProps> = ({
   )
 
   return isLoading ? (
-    <div className={`rounded-xl ${isBlockedBy ? 'w-[132px]' : 'w-[107px]'} py-1`}>
-      <LoadingCell className='h-full w-full rounded-lg' />
+    <div className={`rounded-xl ${isBlockedBy ? 'w-[132px]' : 'w-[109px]'} py-1`}>
+      <LoadingCell className='h-9 w-full rounded-lg' />
     </div>
   ) : (
     <div ref={coolEfpLogo as Ref<HTMLDivElement>}>

@@ -55,7 +55,7 @@ const useCheckout = () => {
   const initialCurrentChainId = useChainId()
   const { address: userAddress } = useAccount()
   const { data: walletClient } = useWalletClient()
-  const { totalCartItems, cartItems, resetCart } = useCart()
+  const { cartItems, resetCart, setCartItems } = useCart()
   const { mint, nonce: mintNonce, listHasBeenMinted } = useMintEFP()
 
   const [currentChainId, setCurrentChainId] = useState(initialCurrentChainId)
@@ -146,6 +146,12 @@ const useCheckout = () => {
 
       setListOpsFinished(true)
 
+      if (hash) {
+        setCartItems(cartItems.filter(item => !items.includes(item)))
+        queryClient.invalidateQueries({ queryKey: ['following'] })
+        queryClient.invalidateQueries({ queryKey: ['profile'] })
+      }
+
       // return transaction hash to enable following transaction status in transaction details component
       return hash
     },
@@ -197,7 +203,7 @@ const useCheckout = () => {
         ? [createEFPListAction]
         : [...cartItemActions, createEFPListAction]
     addActions(actionsToExecute)
-  }, [selectedChainId, setNewListAsPrimary, totalCartItems, listOpTx])
+  }, [selectedChainId, setNewListAsPrimary, listOpTx])
 
   useEffect(() => {
     setActions()

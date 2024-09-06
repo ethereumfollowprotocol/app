@@ -27,9 +27,7 @@ const useImportModal = (platform: ImportPlatformType) => {
   const profileQuery = `
     query ProfileQuery ($platform: SocialDappName) {
       Socials(
-        input: {filter: {dappName: {_eq: $platform}, profileName: {_eq: "${
-          platform === 'lens' ? 'lens/@' : ''
-        }${handle.replace('@', '')}"}}, blockchain: ethereum, limit: 1}
+        input: {filter: {dappName: {_eq: $platform}, profileName: {_eq: "${handle.replace('@', '')}"}}, blockchain: ethereum, limit: 1}
       ) {
         Social {
           profileImage

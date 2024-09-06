@@ -38,7 +38,6 @@ type CartContextType = {
   // socialAddresses: Record<string, Address[]>
   socialAddresses: {
     farcaster: Address[]
-    lens: Address[]
   }
   cartItems: CartItem[]
   setCartItems: (items: CartItem[]) => void
@@ -296,8 +295,8 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   const totalCartItems = cartItems.length
   const cartAddresses = getAddressesFromCart()
   const socialAddresses = {
-    farcaster: getAddressesFromCart('farcaster'),
-    lens: getAddressesFromCart('lens')
+    farcaster: getAddressesFromCart('farcaster')
+    // lens: getAddressesFromCart('lens')
   }
 
   return (

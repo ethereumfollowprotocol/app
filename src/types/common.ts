@@ -52,4 +52,4 @@ export type UserFollowerType = {
 
 export type LeaderboardFilter = (typeof leaderboardFilters)[number]
 
-export type ImportPlatformType = 'farcaster' | 'lens'
+export type ImportPlatformType = 'farcaster'

@@ -7,7 +7,6 @@ import Modal from '#/components/modal'
 import { Avatar } from '#/components/avatar'
 import { truncateAddress } from '#/lib/utilities'
 import { formatNumber } from '#/utils/formatNumber'
-import LensIcon from 'public/assets/icons/lens.svg'
 import useImportModal from '../hooks/useImportModal'
 import type { ImportPlatformType } from '#/types/common'
 import LoadingCell from '#/components/loaders/loading-cell'
@@ -42,7 +41,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
             <span className='capitalize'>{platform}</span>
           </p>
           <Image
-            src={platform === 'lens' ? LensIcon : FarcasterIcon}
+            src={FarcasterIcon}
             alt='Import from Farcaster'
             className='rounded-lg'
             width={30}
@@ -82,7 +81,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
                 ) : (
                   <p className='text-lg font-bold'>
                     @
-                    {socialProfile.profileName?.replace('lens/@', '') ||
+                    {socialProfile.profileName ||
                       truncateAddress(socialProfile.userAssociatedAddresses?.[0])}
                   </p>
                 )}
