@@ -18,14 +18,8 @@ interface EditModalProps {
 const EditModal: React.FC<EditModalProps> = ({ profiles, onClose }) => {
   const router = useRouter()
   const { t } = useTranslation()
-  const {
-    editedProfiles,
-    topEightInCart,
-    addProfileSearch,
-    setAddProfileSearch,
-    onSubmit,
-    validTopEightsLength
-  } = useEditTopEight(profiles)
+  const { editedProfiles, addProfileSearch, setAddProfileSearch, onSubmit, validTopEightsLength } =
+    useEditTopEight(profiles)
 
   return (
     <Modal onCancel={onClose}>
@@ -82,7 +76,7 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose }) => {
         <div className='w-full mt-4 flex justify-between items-center'>
           <CancelButton onClick={onClose} />
           <PrimaryButton
-            disabled={validTopEightsLength > 8 || topEightInCart.length === 0}
+            disabled={validTopEightsLength > 8}
             onClick={() => {
               router.push('/cart')
               onClose()
