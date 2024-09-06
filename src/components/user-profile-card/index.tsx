@@ -427,7 +427,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                               <p>{t('block-mute')}</p>
                             </button>
                           )}
-                          {openListSettingsModal && (
+                          {openListSettingsModal && profileList && (
                             <button
                               onClick={() => {
                                 openListSettingsModal()
