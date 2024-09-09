@@ -5,7 +5,8 @@ import {
   coinbaseWallet,
   injectedWallet,
   metaMaskWallet,
-  walletConnectWallet
+  walletConnectWallet,
+  rabbyWallet
 } from '@rainbow-me/rainbowkit/wallets'
 import { type Chain, connectorsForWallets } from '@rainbow-me/rainbowkit'
 import { http, fallback, createStorage, cookieStorage, createConfig } from 'wagmi'
@@ -19,7 +20,14 @@ const connectors = connectorsForWallets(
   [
     {
       groupName: 'Recommended',
-      wallets: [coinbaseWallet, rainbowWallet, metaMaskWallet, walletConnectWallet, injectedWallet]
+      wallets: [
+        coinbaseWallet,
+        rainbowWallet,
+        metaMaskWallet,
+        rabbyWallet,
+        walletConnectWallet,
+        injectedWallet
+      ]
     }
   ],
   {
