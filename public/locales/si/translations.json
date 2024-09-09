@@ -30,6 +30,7 @@
   "apply": "Potrdi",
   "copy address": "Kopiraj naslov",
   "copy ens": "Kopiraj ENS",
+  "copy profile": "Kopiraj link do profila",
   "profile error": "Uporabnik ne obstaja",
   "not primary list": "Ni Glavni Seznam",
   "not primary list tooltip": "Ta seznam ni potrjen s strani uporabnika. Uporabnik mora nastaviti seznam kot Glavni Seznam, s čimer potrdi, da je to njegov seznam.",

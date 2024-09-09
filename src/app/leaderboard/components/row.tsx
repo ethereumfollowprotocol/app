@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import type { Address } from 'viem'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 
 import { isValidEnsName } from '#/utils/ens'
@@ -75,6 +75,7 @@ const TableRow: React.FC<TableRowProps> = ({
   //   queryFn: async () => await resolveEnsProfile(address)
   // })
 
+  const router = useRouter()
   const pathname = usePathname()
   const { t } = useTranslation()
   const { followerTag } = useFollowState({
@@ -155,7 +156,8 @@ const TableRow: React.FC<TableRowProps> = ({
         <div
           className={`${
             firstStat && firstStat !== 'mutuals' ? 'hidden lg:flex xl:hidden' : 'hidden md:flex'
-          } flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
+          } transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
+          onClick={() => router.push(`/${address}?tab=followers`)}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(followers || 0)}</p>
           <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>Followers</p>
@@ -163,15 +165,17 @@ const TableRow: React.FC<TableRowProps> = ({
         <div
           className={`${
             firstStat ? 'lg:flex xl:hidden hidden' : `hidden lg:flex ${isHome ? 'xl:hidden' : ''}`
-          } flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
+          } transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
+          onClick={() => router.push(`/${address}?tab=following`)}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(following || 0)}</p>
           <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>Following</p>
         </div>
         <div
-          className={`flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 hidden xl:flex ${
+          className={` transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 hidden xl:flex ${
             isHome ? 'lg:flex xl:hidden' : ''
           } `}
+          onClick={() => router.push(`/${address}?modal=blockmutelists`)}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(blocked || 0)}</p>
           <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>Blocked</p>

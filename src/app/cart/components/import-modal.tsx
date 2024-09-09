@@ -55,7 +55,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
             spellCheck={false}
             autoComplete='off'
             value={currHandle}
-            placeholder={`${t('enter')} ${platform} ID`}
+            placeholder={`${t('enter')} ${platform} Name`}
             onChange={e => setCurrHandle(e.target.value)}
             className='h-12 block pr-12 w-full truncate font-medium rounded-xl border-[3px] 3 dark:border-zinc-500 pl-4 sm:text-sm bg-white/70 dark:bg-darkGrey/50'
           />
@@ -86,7 +86,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
                   </p>
                 )}
                 <p className='font-medium text-zinc-400 dark:text-zinc-300 capitalize'>
-                  {platform} ID
+                  {platform} Name
                 </p>
               </div>
             </div>

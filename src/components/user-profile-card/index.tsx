@@ -32,8 +32,10 @@ import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import { isValidEnsName, resolveEnsProfile } from '#/utils/ens'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
+import DefaultHeader from 'public/assets/art/default-header.svg'
 import { useCoolMode } from '../follow-button/hooks/useCoolMode'
 import LoadingProfileCard from './components/loading-profile-card'
+import ImageWithFallback from '../image-with-fallback'
 
 interface UserProfileCardProps {
   profileList?: number | null
@@ -225,7 +227,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   return (
     <div
       className={cn(
-        'flex glass-card border-[3px] flex-col border-[#FFDBD9] dark:border-[#a36d7d] rounded-xl relative',
+        'flex glass-card border-[3px] overflow-hidden flex-col border-[#FFDBD9] dark:border-[#a36d7d] rounded-xl relative',
         isResponsive ? 'xl:w-76 w-full 2xl:w-86' : 'w-80 3xs:w-92'
       )}
     >
@@ -238,12 +240,12 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
         <>
           <div
             className={cn(
-              'flex gap-2 items-center h-5 absolute px-3 w-full left-0 top-2 font-bold',
+              'flex gap-2 items-center h-5 absolute px-2 w-full left-0 top-3 font-bold',
               profileList ? 'justify-between' : 'justify-end'
             )}
           >
             {!!profileList && (
-              <p className='text-zinc-500 dark:text-zinc-300 text-sm sm:text-sm'>
+              <p className='text-sm sm:text-sm bg-white/80 dark:bg-darkGrey/80 py-[3px] px-2 rounded-full'>
                 {t('list')} #{formatNumber(profileList)}
               </p>
             )}
@@ -251,7 +253,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
               <div ref={clickAwayCardTooltip} className='relative group z-50 cursor-help'>
                 <p
                   onClick={() => setCardTooltipOpen(!cardTooltipOpen)}
-                  className='text-[11px] italic text-end rounded-full py-0.5 px-2 bg-zinc-300 dark:bg-zinc-500'
+                  className='text-[12px] italic text-end rounded-full py-0.5 px-2 bg-white/80 dark:bg-darkGrey/80'
                 >
                   {t('not primary list')}
                 </p>
@@ -268,7 +270,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 href={`https://app.ens.domains/${profileName || ''}`}
                 target='_blank'
                 rel='noreferrer'
-                className='flex gap-1 items-center hover:scale-110 transition-all'
+                className='flex gap-1 items-center hover:scale-110 transition-all bg-white/80 dark:bg-darkGrey/80 rounded-full py-[3px] px-2'
               >
                 <Image
                   alt='edit profile'
@@ -277,13 +279,24 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                   height={22}
                   className={cn('cursor-pointer hover:opacity-70 transition-all')}
                 />
-                <p className={cn('text-zinc-500 dark:text-zinc-300 text-sm')}>
-                  {t('edit profile')}
-                </p>
+                <p className={cn(' text-sm')}>{t('edit profile')}</p>
               </a>
             ) : null}
           </div>
-          <div className='flex w-full items-center flex-col pt-8 pb-4 px-4 sm:p-6 sm:pt-9 gap-5 sm:gap-6 md:gap-9'>
+          {isProfileLoading ? (
+            <LoadingCell className='w-full h-[120px] absolute top-0 left-0' />
+          ) : (
+            <ImageWithFallback
+              src={profile.ens.header || DefaultHeader}
+              fallback={DefaultHeader}
+              alt='profile header'
+              width={360}
+              height={120}
+              className={cn('w-full h-[120px] absolute object-cover top-0 left-0 -z-10')}
+              unoptimized={true}
+            />
+          )}
+          <div className='flex w-full items-center flex-col pt-10 pb-4 px-4 sm:p-6 sm:pt-9 gap-5 sm:gap-6 md:gap-9'>
             <div className='flex w-full flex-col justify-center items-center gap-4'>
               {isProfileLoading ? (
                 <LoadingCell
@@ -300,7 +313,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                   onClick={() => router.push(`/${profile.address}`)}
                   size={
                     isResponsive
-                      ? 'h-[70px] w-[70px] sm:h-[75px] sm:w-[75px] xl:h-[100px] xl:w-[100px] cursor-pointer hover:scale-110 transition-transform'
+                      ? 'h-[100px] w-[100px] cursor-pointer hover:scale-110 transition-transform'
                       : 'h-[100px] w-[100px] cursor-pointer  hover:scale-110 transition-transform'
                   }
                 />
@@ -313,7 +326,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                     <div
                       className={`${
                         isResponsive
-                          ? 'max-w-[90%] xl:max-w-72 2xl:max-w-[325px] sm:text-2xl text-xl'
+                          ? 'max-w-[90%] xl:max-w-72 relative 2xl:max-w-[325px] sm:text-2xl text-xl'
                           : 'max-w-[332px] text-2xl'
                       } font-bold flex gap-2 items-center relative text-center`}
                     >
@@ -342,7 +355,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                         <div
                           className={`${
                             showMoreOptions && moreOptionsDropdownOpen ? 'flex' : 'hidden'
-                          } absolute top-10 flex-col items-center gap-2 right-0 w-40 p-1 dark:border-zinc-600  dark:bg-darkGrey/85 bg-white/90 border-zinc-200 border-[3px] rounded-xl z-50 drop-shadow-lg`}
+                          } absolute top-9 right-0 flex-col items-center gap-2 w-fit p-1 dark:border-zinc-600  dark:bg-darkGrey/85 bg-white/90 border-zinc-200 border-[3px] rounded-xl z-50 drop-shadow-lg`}
                         >
                           {!isConnectedUserCard && (
                             <>
@@ -390,6 +403,19 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                               </button>
                             </>
                           )}
+                          {/* <button
+                            onClick={() => {
+                              navigator.clipboard.writeText(profile.address)
+                              setCopyAddressPressed(true)
+                              setTimeout(() => setCopyAddressPressed(false), 3000)
+                            }}
+                            className='rounded-lg cursor-pointer hover:bg-darkGrey/5 dark:hover:bg-white/10 transition-colors w-full relative text-xs flex items-center gap-1 justify-center font-bold p-3'
+                          >
+                            <MdOutlineContentCopy className='text-base' />
+                            <p className='text-nowrap'>
+                              {t(copyAddressPressed ? 'remove from top eight' : 'add to top eight')}
+                            </p>
+                          </button> */}
                           <button
                             onClick={() => {
                               navigator.clipboard.writeText(profile.address)
@@ -413,9 +439,32 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                               className='rounded-lg cursor-pointer hover:bg-darkGrey/5 dark:hover:bg-white/10 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3'
                             >
                               <MdOutlineContentCopy className='text-base' />
-                              <p>{t(copyENSPressed ? 'copied' : 'copy ens')}</p>
+                              <p className='text-nowrap'>
+                                {t(copyENSPressed ? 'copied' : 'copy ens')}
+                              </p>
                             </button>
                           )}
+                          <button
+                            onClick={() => {
+                              navigator.clipboard.writeText(
+                                `${process.env.NEXT_PUBLIC_SITE_URL}/${
+                                  profileList
+                                    ? profileList === Number(profile.primary_list)
+                                      ? profile.address
+                                      : profileList
+                                    : profile.address
+                                }`
+                              )
+                              setCopyENSPressed(true)
+                              setTimeout(() => setCopyENSPressed(false), 3000)
+                            }}
+                            className='rounded-lg cursor-pointer hover:bg-darkGrey/5 dark:hover:bg-white/10 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3'
+                          >
+                            <MdOutlineContentCopy className='text-base' />
+                            <p className='text-nowrap'>
+                              {t(copyENSPressed ? 'copied' : 'copy profile')}
+                            </p>
+                          </button>
                           {openBlockModal && (
                             <button
                               onClick={() => {
@@ -424,7 +473,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                               }}
                               className='rounded-lg cursor-pointer hover:bg-darkGrey/5 dark:hover:bg-white/10 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3'
                             >
-                              <p>{t('block-mute')}</p>
+                              <p className='text-nowrap'>{t('block-mute')}</p>
                             </button>
                           )}
                           {openListSettingsModal && profileList && (
@@ -436,7 +485,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                               className='rounded-lg cursor-pointer hover:bg-darkGrey/5 dark:hover:bg-white/10 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3'
                             >
                               <IoMdSettings className='text-lg' />
-                              <p>{t('settings')}</p>
+                              <p className='text-nowrap'>{t('settings')}</p>
                             </button>
                           )}
                         </div>

@@ -111,7 +111,7 @@ const ConnectButton = () => {
         ) : (
           <div className='w-full sm:w-54 h-full flex items-center justify-center rounded-full'>
             <p className='hidden sm:block font-bold text-lg text-nowrap px-1'>{t('connect')}</p>
-            <HiOutlineWallet className='text-4xl w-[46px] block sm:hidden' />
+            <HiOutlineWallet className='text-4xl w-[48px] translate-x-px block sm:hidden' />
           </div>
         )}
       </button>

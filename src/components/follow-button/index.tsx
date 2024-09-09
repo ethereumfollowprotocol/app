@@ -27,7 +27,7 @@ const theme: Record<
   'Pending Following': {
     bg: 'btn-following-pending',
     hover:
-      'hover:bg-none hover:bg-[#D0D0D0] hover:border-none hover:rounded-[15px] hover:rounded-[11px] hover:py-1.5 hover:scale-110',
+      'hover:bg-none hover:bg-[#D0D0D0] hover:border-none hover:rounded-[15px] hover:rounded-[11px] hover:py-1.5 hover:scale-110 transition-transform',
     text: 'text-gray-900',
     border:
       'border-[3px] after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400'
@@ -35,7 +35,7 @@ const theme: Record<
   Following: {
     bg: 'btn-following',
     hover:
-      'hover:bg-none hover:bg-deletion hover:border-none hover:rounded-[15px] hover:rounded-[11px] hover:py-1.5 hover:scale-110',
+      'hover:bg-none hover:bg-deletion hover:border-none hover:rounded-[15px] hover:rounded-[11px] hover:py-1.5 hover:scale-110 transition-transform',
     text: 'text-gray-900',
     border: 'border-[3px]'
   },
@@ -178,8 +178,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
           theme[buttonState].bg,
           theme[buttonState].text,
           theme[buttonState].border,
-          'rounded-xl relative text-sm flex items-center w-[109px] gap-1.5 transition-all duration-200 justify-center font-bold',
-          'px-2', // Fixed width for consistent layout
+          'rounded-xl relative text-sm flex items-center w-[109px] gap-1.5 transition-all px-2 duration-200 justify-center font-bold',
           disableHover
             ? buttonState === 'Pending Following'
               ? ''

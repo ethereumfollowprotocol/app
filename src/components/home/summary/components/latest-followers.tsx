@@ -25,14 +25,15 @@ const LatestFollowers = () => {
         <h2 className='text-2xl sm:text-3xl w-full p-2 font-bold'>{t('latest followers')}</h2>
         <PageSelector
           page={page}
-          adjustUrl={false}
-          displayPageNumber={false}
-          hasSkipToFirst={false}
           setPage={setPage}
-          hasNextPage={hasNextPage && (displayedProfiles?.length || 1) % 7 === 0}
+          adjustUrl={false}
+          scrollOnChange={false}
+          hasSkipToFirst={false}
+          displayPageNumber={false}
           fetchNext={fetchNextPage}
           fetchPrevious={fetchPreviousPage}
           isLoading={isLatestFollowersLoading}
+          hasNextPage={hasNextPage && (displayedProfiles?.length || 1) % 7 === 0}
         />
       </div>
       <FollowList

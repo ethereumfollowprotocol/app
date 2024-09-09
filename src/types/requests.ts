@@ -12,6 +12,7 @@ export interface ENSProfile {
   name?: string
   avatar?: string | GetEnsAvatarReturnType
   display?: string
+  header?: string
   records?: {
     avatar: string
     [key: string]: string
