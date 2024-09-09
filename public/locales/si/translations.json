@@ -128,9 +128,13 @@
   "check wallet": "Preverite svojo denarnico",
   "block explorer": "Poglej na Block Explorer-ju",
 
+  "system": "Sistem",
+  "light": "Svetlo",
+  "dark": "Temno",
   "connect": "Poveži denarnico",
   "disconnect": "Odpoveži denarnico",
   "list": "Seznam",
+  "primary": "Glavni",
   "mint new list": "Nov seznam",
   "search no results": "Ni rezultatov",
   "team": "Ekipa",

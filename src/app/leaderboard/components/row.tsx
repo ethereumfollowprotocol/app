@@ -151,7 +151,7 @@ const TableRow: React.FC<TableRowProps> = ({
           } flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(mutuals || 0)}</p>
-          <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>Mutuals</p>
+          <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>{t('mutuals')}</p>
         </div>
         <div
           className={`${
@@ -160,7 +160,7 @@ const TableRow: React.FC<TableRowProps> = ({
           onClick={() => router.push(`/${address}?tab=followers`)}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(followers || 0)}</p>
-          <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>Followers</p>
+          <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>{t('followers')}</p>
         </div>
         <div
           className={`${
@@ -169,7 +169,7 @@ const TableRow: React.FC<TableRowProps> = ({
           onClick={() => router.push(`/${address}?tab=following`)}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(following || 0)}</p>
-          <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>Following</p>
+          <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>{t('following')}</p>
         </div>
         <div
           className={` transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 hidden xl:flex ${
@@ -178,7 +178,7 @@ const TableRow: React.FC<TableRowProps> = ({
           onClick={() => router.push(`/${address}?modal=blockmutelists`)}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(blocked || 0)}</p>
-          <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>Blocked</p>
+          <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>{t('blocked')}</p>
         </div>
       </div>
       <div

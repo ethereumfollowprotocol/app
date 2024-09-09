@@ -5,6 +5,7 @@ import TwitterIcon from 'public/assets/icons/twitter.svg'
 import GithubIcon from 'public/assets/icons/github.svg'
 import DiscordIcon from 'public/assets/icons/discord.svg'
 import TelegramIcon from 'public/assets/icons/telegram.svg'
+import ChinaFlag from 'public/assets/icons/flags/china.svg'
 import EtherscanIcon from 'public/assets/icons/etherscan.svg'
 import SloveniaFlag from 'public/assets/icons/flags/slovenia.svg'
 import USAFlag from 'public/assets/icons/flags/united-states.svg'
@@ -34,7 +35,8 @@ export const BLOCKED_MUTED_TABS: ProfileTableTitleType[] = ['Blocked/Muted', 'Bl
 
 export const LANGUAGES = [
   { language: 'English', key: 'en', icon: USAFlag },
-  { language: 'Slovenščina', key: 'si', icon: SloveniaFlag }
+  { language: 'Slovenščina', key: 'si', icon: SloveniaFlag },
+  { language: '中国人', key: 'zh', icon: ChinaFlag }
 ]
 
 export const DEFAULT_TAGS_TO_ADD = ['irl', 'bff', 'based', 'degen', 'top8']

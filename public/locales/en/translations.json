@@ -141,9 +141,13 @@
   "following_rank": "Following",
   "last updated": "Last updated",
 
+  "system": "System",
+  "light": "Light",
+  "dark": "Dark",
   "disconnect": "Disconnect",
   "connect": "Connect Wallet",
   "list": "List",
+  "primary": "Primary",
   "mint new list": "Mint new list",
   "accounts": "accounts",
   "search no results": "No results",
@@ -163,9 +167,9 @@
   "Blocked": "Blocked",
   "Block": "Block",
   "block": "block",
-  "Unblock": "Unblock",
+  "unblock": "Unblock",
+  "mute": "Mute",
   "Mute": "Mute",
-  "mute": "mute",
   "Muted": "Muted",
   "Unmute": "Unmute"
 }
