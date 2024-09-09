@@ -36,6 +36,7 @@ import DefaultHeader from 'public/assets/art/default-header.svg'
 import { useCoolMode } from '../follow-button/hooks/useCoolMode'
 import LoadingProfileCard from './components/loading-profile-card'
 import ImageWithFallback from '../image-with-fallback'
+import { HiOutlineExternalLink } from 'react-icons/hi'
 
 interface UserProfileCardProps {
   profileList?: number | null
@@ -270,7 +271,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 href={`https://app.ens.domains/${profileName || ''}`}
                 target='_blank'
                 rel='noreferrer'
-                className='flex gap-1 items-center hover:scale-110 transition-all bg-white/80 dark:bg-darkGrey/80 rounded-full py-[3px] px-2'
+                className='flex gap-1 items-center hover:scale-110 transition-all bg-white/80 dark:bg-darkGrey/80 rounded-full py-[3px] px-2 pl-1'
               >
                 <Image
                   alt='edit profile'
@@ -429,21 +430,6 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                               {t(copyAddressPressed ? 'copied' : 'copy address')}
                             </p>
                           </button>
-                          {profileName && (
-                            <button
-                              onClick={() => {
-                                navigator.clipboard.writeText(profileName)
-                                setCopyENSPressed(true)
-                                setTimeout(() => setCopyENSPressed(false), 3000)
-                              }}
-                              className='rounded-lg cursor-pointer hover:bg-darkGrey/5 dark:hover:bg-white/10 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3'
-                            >
-                              <MdOutlineContentCopy className='text-base' />
-                              <p className='text-nowrap'>
-                                {t(copyENSPressed ? 'copied' : 'copy ens')}
-                              </p>
-                            </button>
-                          )}
                           <button
                             onClick={() => {
                               navigator.clipboard.writeText(
@@ -465,6 +451,28 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                               {t(copyENSPressed ? 'copied' : 'copy profile')}
                             </p>
                           </button>
+                          {profileName && (
+                            <button
+                              onClick={() => {
+                                navigator.clipboard.writeText(profileName)
+                                setCopyENSPressed(true)
+                                setTimeout(() => setCopyENSPressed(false), 3000)
+                              }}
+                              className='rounded-lg cursor-pointer hover:bg-darkGrey/5 dark:hover:bg-white/10 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3'
+                            >
+                              <MdOutlineContentCopy className='text-base' />
+                              <p className='text-nowrap'>
+                                {t(copyENSPressed ? 'copied' : 'copy ens')}
+                              </p>
+                            </button>
+                          )}
+                          <a
+                            href={`https://app.ens.domains${profileName ? `/${profileName}` : ''}`}
+                            className='rounded-lg cursor-pointer hover:bg-darkGrey/5 dark:hover:bg-white/10 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3'
+                          >
+                            <p className='text-nowrap'>ENS app</p>
+                            <HiOutlineExternalLink className='text-lg' />
+                          </a>
                           {openBlockModal && (
                             <button
                               onClick={() => {
