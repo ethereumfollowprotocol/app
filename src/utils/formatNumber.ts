@@ -1,4 +1,5 @@
-export const formatNumber = (number: number) => {
+export const formatNumber = (number?: number) => {
+  if (!number) return number
   const formattedNumber = number.toLocaleString(navigator.language, {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0
