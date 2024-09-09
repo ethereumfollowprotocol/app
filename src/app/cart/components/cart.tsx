@@ -19,6 +19,7 @@ import FarcasterIcon from 'public/assets/icons/farcaster.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { PrimaryButton } from '#/components/buttons/primary-button'
 import { DEFAULT_CHAIN, LIST_OP_LIMITS } from '#/lib/constants/chain'
+import { cn } from '#/lib/utilities'
 
 const Cart = () => {
   const [isClient, setIsClient] = useState(false)
@@ -155,35 +156,38 @@ const Cart = () => {
               canEditTags={roles?.isManager}
             />
           </div>
-          {isClient && totalCartItems > 0 && (
-            <div className='fixed md:w-fit w-full top-[85vh] sm:top-[85vh] lg:top-[82.5vh] right-0 px-4 lg:right-[5vw] flex justify-end'>
-              <div className='flex gap-6 w-full border-[3px] border-zinc-200 dark:border-zinc-500 lg:w-fit items-center p-4 bg-white/10 justify-between glass-card bg-opacity-50 shadow-xl rounded-xl'>
-                <div className='flex flex-col gap-1 items-start'>
-                  <div className='flex gap-2 items-center'>
-                    <p className='text-6xl font-bold'>{formatNumber(totalCartItems)}</p>
-                    <div className='flex flex-col w-28 font-bold text-lg text-left whitespace-break-spaces'>
-                      {t('unc-changes')}
-                    </div>
+          <div
+            className={cn(
+              'fixed md:w-fit w-full top-[85vh] sm:top-[85vh] lg:top-[82.5vh] right-0 px-4 lg:right-[5vw] justify-end',
+              isClient && totalCartItems > 0 ? 'flex' : 'hidden'
+            )}
+          >
+            <div className='flex gap-6 w-full border-[3px] border-zinc-200 dark:border-zinc-500 lg:w-fit items-center p-4 bg-white/10 justify-between glass-card bg-opacity-50 shadow-xl rounded-xl'>
+              <div className='flex flex-col gap-1 items-start'>
+                <div className='flex gap-2 items-center'>
+                  <p className='text-6xl font-bold'>{formatNumber(totalCartItems)}</p>
+                  <div className='flex flex-col w-28 font-bold text-lg text-left whitespace-break-spaces'>
+                    {t('unc-changes')}
                   </div>
-                  <p className='text-base pl-2 font-medium'>{`${formatNumber(transactionsCount)} ${
-                    transactionsCount === 1 ? t('transaction') : t('transactions')
-                  }`}</p>
                 </div>
-                <PrimaryButton
-                  className='py-[14px] px-4 text-xl rounded-full'
-                  onClick={() => {
-                    if (!isConnected) {
-                      if (openConnectModal) openConnectModal()
-                      return
-                    }
-
-                    setIsCheckingOut(true)
-                  }}
-                  label={t('confirm')}
-                />
+                <p className='text-base pl-2 font-medium'>{`${formatNumber(transactionsCount)} ${
+                  transactionsCount === 1 ? t('transaction') : t('transactions')
+                }`}</p>
               </div>
+              <PrimaryButton
+                className='py-[14px] px-4 text-xl rounded-full'
+                onClick={() => {
+                  if (!isConnected) {
+                    if (openConnectModal) openConnectModal()
+                    return
+                  }
+
+                  setIsCheckingOut(true)
+                }}
+                label={t('confirm')}
+              />
             </div>
-          )}
+          </div>
         </>
       )}
     </>

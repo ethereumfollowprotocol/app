@@ -22,7 +22,7 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose }) => {
     useEditTopEight(profiles)
 
   return (
-    <Modal onCancel={onClose}>
+    <Modal onCancel={onClose} className='items-start md:pt-[12.5vh]'>
       <div className='w-full md:w-[696px] p-2 flex items-center flex-col gap-6'>
         <h2 className='text-2xl font-bold'>{t('top eight title')}</h2>
         <div className='flex items-center flex-col sm:flex-row gap-4 w-full'>

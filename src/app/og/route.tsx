@@ -6,7 +6,7 @@ import type { AccountResponseType } from '#/types/common'
 
 export async function GET(req) {
   const user = req.url.split('user=')[1]
-  const isList = Number.isInteger(Number(user)) && !isAddress(user)
+  const isList = !(isAddress(user) || user.includes('.') || Number.isNaN(Number(user)))
 
   const response = (await fetch(
     `${process.env.NEXT_PUBLIC_EFP_API_URL}/${isList ? 'lists' : 'users'}/${user}/account`

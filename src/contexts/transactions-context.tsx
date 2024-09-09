@@ -1,7 +1,7 @@
 'use client'
 
 import { useAddRecentTransaction } from '@rainbow-me/rainbowkit'
-import { createContext, useCallback, useContext, useEffect, useState } from 'react'
+import { createContext, useCallback, useContext, useState } from 'react'
 
 type Transaction = {
   hash: `0x${string}`
@@ -14,7 +14,7 @@ type TransactionsContextType = {
   addTransaction: (transaction: Transaction) => void
 }
 
-const TransactionsLocalStorageKey = 'efp-transactions'
+// const TransactionsLocalStorageKey = 'efp-transactions'
 const MAX_TRANSACTIONS_STORED = 100
 
 const TransactionsContext = createContext<TransactionsContextType | undefined>(undefined)
@@ -29,14 +29,14 @@ export const TransactionsProvider = ({
   const [transactions, setTransactions] = useState<Transaction[]>([])
 
   // Populate transactions from localStorage when component mounts
-  useEffect(() => {
-    if (window === undefined) return
+  // useEffect(() => {
+  //   if (window === undefined) return
 
-    const storedTransactions = window.localStorage.getItem(TransactionsLocalStorageKey)
-    if (storedTransactions) {
-      setTransactions(JSON.parse(storedTransactions) as Transaction[])
-    }
-  }, [])
+  //   const storedTransactions = window.localStorage.getItem(TransactionsLocalStorageKey)
+  //   if (storedTransactions) {
+  //     setTransactions(JSON.parse(storedTransactions) as Transaction[])
+  //   }
+  // }, [])
 
   const addTransaction = useCallback(
     (transaction: Transaction) => {
@@ -63,11 +63,11 @@ export const TransactionsProvider = ({
 
   // Synchronize the transactions state with local storage on changes,
   // ensuring that only the most recent transactions are stored.
-  useEffect(() => {
-    if (window === undefined) return
-    const recentTransactions = transactions.slice(-MAX_TRANSACTIONS_STORED)
-    window.localStorage.setItem(TransactionsLocalStorageKey, JSON.stringify(recentTransactions))
-  }, [transactions])
+  // useEffect(() => {
+  //   if (window === undefined) return
+  //   const recentTransactions = transactions.slice(-MAX_TRANSACTIONS_STORED)
+  //   window.localStorage.setItem(TransactionsLocalStorageKey, JSON.stringify(recentTransactions))
+  // }, [transactions])
 
   return (
     <TransactionsContext.Provider value={{ transactions, addTransaction }}>

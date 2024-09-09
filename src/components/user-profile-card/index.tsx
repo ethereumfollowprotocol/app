@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import { useTheme } from 'next-themes'
 import { useState, type Ref } from 'react'
+import { IoMdSettings } from 'react-icons/io'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
@@ -33,7 +34,6 @@ import { isValidEnsName, resolveEnsProfile } from '#/utils/ens'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 import { useCoolMode } from '../follow-button/hooks/useCoolMode'
 import LoadingProfileCard from './components/loading-profile-card'
-import { IoMdSettings } from 'react-icons/io'
 
 interface UserProfileCardProps {
   profileList?: number | null
@@ -539,13 +539,13 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                     {t('leaderboard')}
                   </div>
                 </Link>
-                <div className='flex xl:flex-col xl:w-full justify-center flex-wrap gap-4 xxs:gap-8 xl:gap-0'>
+                <div className='flex xl:flex-col w-full justify-center flex-wrap gap-x-4 gap-y-0 xxs:gap-y-0 xxs:gap-x-8 xl:gap-0'>
                   {ranks.map((rank, i) => (
                     <Link
                       href={`/leaderboard?filter=${t(rankTitles[i] || '').toLowerCase()}`}
                       key={rankTitles[i]}
                     >
-                      <div className='flex xl:w-full gap-3 justify-between text-lg items-center font-bold px-3 py-1 rounded-lg dark:hover:bg-darkGrey/40 hover:bg-darkGrey/5 transition-all'>
+                      <div className='flex w-full 3xs:w-fit xl:w-full gap-3 justify-between text-lg items-center font-bold px-3 py-1 rounded-lg dark:hover:bg-darkGrey/40 hover:bg-darkGrey/5 transition-all'>
                         <p className='font-bold text-[#888] dark:text-[#aaa]'>
                           {t(rankTitles[i] || '')}
                         </p>
