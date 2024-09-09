@@ -12,12 +12,12 @@ import type {
 } from '#/types/requests'
 import { cn } from '#/lib/utilities'
 import Recommendations from '../recommendations'
-import { BLOCKED_MUTED_TABS, FETCH_LIMIT_PARAM } from '#/lib/constants'
 import TableHeader from './components/table-headers'
 import { FollowList } from '#/components/follow-list'
 import { useIsEditView } from '#/hooks/use-is-edit-view'
 import type { ProfileTableTitleType } from '#/types/common'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
+import { BLOCKED_MUTED_TABS, FETCH_LIMIT_PARAM } from '#/lib/constants'
 
 /**
  * TODO: paginate

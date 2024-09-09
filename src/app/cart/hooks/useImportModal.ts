@@ -13,6 +13,7 @@ const useImportModal = (platform: ImportPlatformType) => {
   const [handle, setHandle] = useState('')
   const [currHandle, setCurrHandle] = useState('')
   const [followings, setFollowings] = useState<Address[]>([])
+  // const [onlyImportWithEns, setOnlyImportWithEns] = useState(true)
   const [isFollowingsLoading, setIsFollowingsLoading] = useState(false)
 
   const { cartItems, setCartItems, getAddressesFromCart } = useCart()
@@ -64,6 +65,9 @@ const useImportModal = (platform: ImportPlatformType) => {
       Following {
         followingAddress {
           addresses
+          domains(input: {limit: 1}) {
+            name
+          }
         }
       }
     }
@@ -93,6 +97,11 @@ const useImportModal = (platform: ImportPlatformType) => {
     }
     if (!hasNextPage) setIsFollowingsLoading(false)
   }, [fetchedFollowings])
+
+  // filter out followings without a domain
+  /* filter(
+    (following: any) => onlyImportWithEns ? !!following.followingAddress.domains : true
+  )*/
 
   const onAddFollowings = () => {
     const newCartItems = followings

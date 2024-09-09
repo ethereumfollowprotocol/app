@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
@@ -24,10 +24,11 @@ interface UserInfoProps {
 const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   const searchParams = useSearchParams()
   const initialBlockedOpen = searchParams.get('modal') === 'blockmutelists'
+  const defaultParam = (searchParams.get('tab') as ProfileTabType) ?? 'following'
 
   const [isSaving, setIsSaving] = useState(false)
   const [listSettingsOpen, setListSettingsOpen] = useState(false)
-  const [activeTab, setActiveTab] = useState<ProfileTabType>('following')
+  const [activeTab, setActiveTab] = useState<ProfileTabType>(defaultParam)
   const [isBlockedMutedOpen, setIsBlockedMutedOpen] = useState(initialBlockedOpen)
 
   const router = useRouter()
@@ -191,6 +192,13 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     )
   }[activeTab]
 
+  const titleRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (titleRef.current && !!searchParams.get('tab')) {
+      titleRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }, [])
+
   return (
     <>
       {isBlockedMutedOpen && profile && (
@@ -283,8 +291,14 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
             title='followers'
             customClass='hidden xl:flex xl:max-w-[520px] 2xl:max-w-[40%]'
           />
-          <div className='w-full mt-12 relative xl:hidden'>
-            <div className='w-full absolute -top-[50px] left-0'>
+          <div
+            ref={titleRef}
+            className='w-full pt-14 relative xl:hidden'
+            style={{
+              scrollMarginTop: '120px'
+            }}
+          >
+            <div className='w-full absolute top-[6px] left-0'>
               {PROFILE_TABS.map(option => (
                 <button
                   key={option}

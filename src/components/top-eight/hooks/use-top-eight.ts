@@ -13,6 +13,7 @@ export type TopEightProfileType = {
 export const useTopEight = (user: string | Address) => {
   const userIsList = !(isAddress(user) || (user.includes('.') && !Number.isNaN(Number(user))))
   const [editModalOpen, setEditModalOpen] = useState(false)
+  const [displayLimit, setDisplayLimit] = useState(window.innerWidth > 1024 ? 8 : 2)
 
   const {
     data: topEightFetched,
@@ -42,7 +43,9 @@ export const useTopEight = (user: string | Address) => {
 
   return {
     topEight,
+    displayLimit,
     editModalOpen,
+    setDisplayLimit,
     setEditModalOpen,
     topEightIsLoading,
     topEightIsRefetching
