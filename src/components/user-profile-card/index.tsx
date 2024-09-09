@@ -372,13 +372,15 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                                   height={16}
                                 />
                                 <p>
-                                  {followState === 'blocks'
-                                    ? isPendingUnblock
-                                      ? 'Block'
-                                      : 'Unblock'
-                                    : isPendingBlock
-                                      ? 'Unblock'
-                                      : 'Block'}
+                                  {t(
+                                    followState === 'blocks'
+                                      ? isPendingUnblock
+                                        ? 'Block'
+                                        : 'Unblock'
+                                      : isPendingBlock
+                                        ? 'Unblock'
+                                        : 'Block'
+                                  )}
                                 </p>
                               </button>
                               <button
@@ -393,13 +395,15 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                                   height={16}
                                 />
                                 <p>
-                                  {followState === 'mutes'
-                                    ? isPendingUnmute
-                                      ? 'Mute'
-                                      : 'Unmute'
-                                    : isPendingMute
-                                      ? 'Unmute'
-                                      : 'Mute'}
+                                  {t(
+                                    followState === 'mutes'
+                                      ? isPendingUnmute
+                                        ? 'Mute'
+                                        : 'Unmute'
+                                      : isPendingMute
+                                        ? 'Unmute'
+                                        : 'Mute'
+                                  )}
                                 </p>
                               </button>
                             </>
