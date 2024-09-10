@@ -1,5 +1,6 @@
 'use client'
 import Image from 'next/image'
+import { FaDiscord } from 'react-icons/fa'
 import { useEffect, useState } from 'react'
 import { FiArrowLeft } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
@@ -19,8 +20,6 @@ import ThemeSwitcher from '#/components/theme-switcher'
 import LoadingCell from '#/components/loaders/loading-cell'
 import GreenCheck from 'public/assets/icons/check-green.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import { MdFeedback } from 'react-icons/md'
-import { FaDiscord } from 'react-icons/fa'
 
 const nullEnsProfile = {
   name: null,
@@ -79,7 +78,7 @@ const ConnectButton = () => {
       <button
         type='button'
         className={cn(
-          'z-50 px-1 pl-0.5 transition-all border-[3px] gap-[6px] hover:scale-105 cursor-pointer flex justify-between items-center h-[60px] glass-card rounded-full w-fit sm:w-48 md:w-56',
+          'z-50 px-1 pl-0 transition-all border-[3px] gap-[6px] hover:scale-105 cursor-pointer flex justify-between items-center h-[60px] glass-card rounded-full w-fit sm:w-48 md:w-56',
           walletMenOpenu ? 'connect-button-open ' : 'connect-button'
         )}
         onClick={() =>
@@ -94,12 +93,12 @@ const ConnectButton = () => {
           <>
             <div className='flex items-center max-w-[87%] h-fit gap-[8px]'>
               {ensProfileIsLoading ? (
-                <LoadingCell className='w-[50px] h-[50px] rounded-full' />
+                <LoadingCell className='w-[52px] h-[52px] rounded-full' />
               ) : (
                 <Avatar
                   avatarUrl={ensProfile?.avatar}
                   name={ensProfile?.name || userAddress}
-                  size='w-[50px] h-[50px]'
+                  size='w-[52px] h-[52px]'
                 />
               )}
               <p className='font-bold hidden sm:block truncate text-lg'>

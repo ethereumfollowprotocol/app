@@ -21,8 +21,8 @@ export const APP_URL =
 
 export const ENS_SUBGRAPH_URL = `https://gateway-arbitrum.network.thegraph.com/api/${process.env.NEXT_PUBLIC_ENS_SUBGRAPH_API_KEY}/subgraphs/id/5XqPmWe6gjyrJtFn9cLy237i4cWw2j9HcUJEXsP5qGtH`
 
-export const FETCH_LIMIT_PARAM = 15
-export const LEADERBOARD_FETCH_LIMIT_PARAM = 50
+export const FETCH_LIMIT_PARAM = 12
+export const LEADERBOARD_FETCH_LIMIT_PARAM = 40
 
 export const SECOND = 1_000
 export const MINUTE = 60 * SECOND

@@ -14,6 +14,7 @@
   "partners": "Launch Partners",
   "sponsors": "Supported by grants from:",
   "support": "Support",
+
   "profile": "My Profile",
   "profile error": "User doesn't exist",
   "settings": "List Settings",
@@ -29,6 +30,7 @@
   "no bio": "Bio not set",
   "copied": "Copied",
   "add to top eight": "Add to 🔥My Top 8🔥",
+  "remove from top eight": "Remove from 🔥My Top 8🔥",
   "copy address": "Copy Address",
   "copy ens": "Copy ENS",
   "copy profile": "Copy Profile Link",

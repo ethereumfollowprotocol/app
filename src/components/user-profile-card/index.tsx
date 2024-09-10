@@ -69,8 +69,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
     setMoreOptionsDropdownOpen(false)
   })
 
-  const [copyAddressPressed, setCopyAddressPressed] = useState(false)
   const [copyENSPressed, setCopyENSPressed] = useState(false)
+  const [copyAddressPressed, setCopyAddressPressed] = useState(false)
+  const [copyProfileLinkPressed, setCopyProfileLinkPressed] = useState(false)
 
   const { data: fetchedEnsProfile, isLoading: isProfileLoading } = useQuery({
     queryKey: ['ens metadata', profile],
@@ -96,7 +97,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const { t } = useTranslation()
   const pathname = usePathname()
   const { resolvedTheme } = useTheme()
-  const { selectedList } = useEFPProfile()
+  const { selectedList, topEight } = useEFPProfile()
   const { openConnectModal } = useConnectModal()
   const { address: connectedAddress } = useAccount()
 
@@ -118,6 +119,16 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const isPendingUnblock = profile && hasListOpRemoveTag({ address: profile.address, tag: 'block' })
   const isPendingMute = profile && hasListOpAddTag({ address: profile.address, tag: 'mute' })
   const isPendingUnmute = profile && hasListOpRemoveTag({ address: profile.address, tag: 'mute' })
+
+  const isInTopEight = topEight.find(
+    item => item.address.toLowerCase() === profile?.address.toLowerCase()
+  )
+  const isAddingToTopEight = profile?.address
+    ? hasListOpAddTag({ address: profile?.address, tag: 'top8' })
+    : false
+  const isRemovingFromTopEight = profile?.address
+    ? hasListOpRemoveTag({ address: profile?.address, tag: 'top8' })
+    : false
 
   const onClickOption = (buttonText: 'Block' | 'Mute') => {
     if (!profile) return
@@ -358,7 +369,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                         <div
                           className={`${
                             showMoreOptions && moreOptionsDropdownOpen ? 'flex' : 'hidden'
-                          } absolute top-9 right-0 flex-col items-center gap-2 w-fit p-1 dark:border-zinc-600  dark:bg-darkGrey/85 bg-white/90 border-zinc-200 border-[3px] rounded-xl z-50 drop-shadow-lg`}
+                          } absolute top-9 right-0 flex-col items-center gap-2 w-fit p-1 dark:border-zinc-600  dark:bg-darkGrey/95 bg-white/95 border-zinc-200 border-[3px] rounded-xl z-50 drop-shadow-lg`}
                         >
                           {!isConnectedUserCard && (
                             <>
@@ -410,19 +421,34 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                               </button>
                             </>
                           )}
-                          {/* <button
-                            onClick={() => {
-                              navigator.clipboard.writeText(profile.address)
-                              setCopyAddressPressed(true)
-                              setTimeout(() => setCopyAddressPressed(false), 3000)
-                            }}
-                            className='rounded-lg cursor-pointer hover:bg-darkGrey/5 dark:hover:bg-white/10 transition-colors w-full relative text-xs flex items-center gap-1 justify-center font-bold p-3'
-                          >
-                            <MdOutlineContentCopy className='text-base' />
-                            <p className='text-nowrap'>
-                              {t(copyAddressPressed ? 'remove from top eight' : 'add to top eight')}
-                            </p>
-                          </button> */}
+                          {!isConnectedUserCard && (
+                            <button
+                              onClick={() => {
+                                setMoreOptionsDropdownOpen(false)
+
+                                if (isAddingToTopEight)
+                                  return removeCartItem(listOpAddTag(profile?.address, 'top8'))
+                                if (isRemovingFromTopEight)
+                                  return removeCartItem(listOpRemoveTag(profile?.address, 'top8'))
+
+                                if (isInTopEight)
+                                  return addCartItem({
+                                    listOp: listOpRemoveTag(profile?.address, 'top8')
+                                  })
+
+                                if (followState === 'none')
+                                  addCartItem({ listOp: listOpAddListRecord(profile?.address) })
+                                addCartItem({ listOp: listOpAddTag(profile?.address, 'top8') })
+                              }}
+                              className='rounded-lg text-nowrap cursor-pointer hover:bg-darkGrey/5 dark:hover:bg-white/10 transition-colors w-full relative text-xs flex items-center gap-1 justify-center font-bold p-3'
+                            >
+                              {t(
+                                (isInTopEight || isAddingToTopEight) && !isRemovingFromTopEight
+                                  ? 'remove from top eight'
+                                  : 'add to top eight'
+                              )}
+                            </button>
+                          )}
                           <button
                             onClick={() => {
                               navigator.clipboard.writeText(profile.address)
@@ -447,14 +473,14 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                                     : profile.address
                                 }`
                               )
-                              setCopyENSPressed(true)
-                              setTimeout(() => setCopyENSPressed(false), 3000)
+                              setCopyProfileLinkPressed(true)
+                              setTimeout(() => setCopyProfileLinkPressed(false), 3000)
                             }}
                             className='rounded-lg cursor-pointer hover:bg-darkGrey/5 dark:hover:bg-white/10 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3'
                           >
                             <MdOutlineContentCopy className='text-base' />
                             <p className='text-nowrap'>
-                              {t(copyENSPressed ? 'copied' : 'copy profile')}
+                              {t(copyProfileLinkPressed ? 'copied' : 'copy profile')}
                             </p>
                           </button>
                           {profileName && (
