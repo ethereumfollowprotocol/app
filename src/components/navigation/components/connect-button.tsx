@@ -20,6 +20,7 @@ import LoadingCell from '#/components/loaders/loading-cell'
 import GreenCheck from 'public/assets/icons/check-green.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { MdFeedback } from 'react-icons/md'
+import { FaDiscord } from 'react-icons/fa'
 
 const nullEnsProfile = {
   name: null,
@@ -284,10 +285,10 @@ const ConnectButton = () => {
                 </div>
               </div>
             )}
-            <a href='https://discord.gg/vDNcMuWA' target='_blank' rel='noreferrer'>
+            <a href='https://discord.com/invite/ZUyG3mSXFD' target='_blank' rel='noreferrer'>
               <div className='flex justify-between items-center w-full group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/20  dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer font-semibold'>
-                <MdFeedback className='text-xl mirror-x' />
-                <p className='capitalize'>{t('feedback')}</p>
+                <FaDiscord className='text-2xl mirror-x' />
+                <p className='capitalize'>Discord</p>
               </div>
             </a>
             <p
