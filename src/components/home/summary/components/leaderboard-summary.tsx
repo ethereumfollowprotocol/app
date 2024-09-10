@@ -5,6 +5,7 @@ import { leaderboardFilters, leaderboardFiltersEmojies } from '#/lib/constants'
 import LoadingRow from '#/app/leaderboard/components/loading-row'
 import TableRow from '#/app/leaderboard/components/row'
 import type { LeaderboardItem } from '#/types/requests'
+import Image from 'next/image'
 
 const LeaderboardSummary = () => {
   const { t } = useTranslation()
@@ -40,8 +41,15 @@ const LeaderboardSummary = () => {
 
           return (
             <div key={title} className='flex flex-col gap-1'>
-              <h4 className='text-xl sm:text-xl font-bold capitalize px-2 sm:px-4'>
-                {title} {displayedEmojies[index]}
+              <h4 className='text-xl flex gap-2 sm:text-xl font-bold capitalize px-2 sm:px-4'>
+                <p>{title}</p>
+                <Image
+                  src={displayedEmojies[index]}
+                  alt={title}
+                  width={24}
+                  height={24}
+                  className='inline-block'
+                />
               </h4>
               {isLeaderboardSummaryLoading ? (
                 <div className='animate-pulse flex flex-col'>

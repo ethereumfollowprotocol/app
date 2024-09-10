@@ -78,7 +78,7 @@ const ConnectButton = () => {
       <button
         type='button'
         className={cn(
-          'z-50 px-1 pl-0 transition-all border-[3px] gap-[6px] hover:scale-105 cursor-pointer flex justify-between items-center h-[60px] glass-card rounded-full w-fit sm:w-48 md:w-56',
+          'z-50 px-1 pl-[3px] transition-all border-[3px] gap-[6px] hover:scale-105 cursor-pointer flex justify-between items-center h-[60px] glass-card rounded-full w-fit sm:w-48 md:w-56',
           walletMenOpenu ? 'connect-button-open ' : 'connect-button'
         )}
         onClick={() =>
@@ -93,12 +93,12 @@ const ConnectButton = () => {
           <>
             <div className='flex items-center max-w-[87%] h-fit gap-[8px]'>
               {ensProfileIsLoading ? (
-                <LoadingCell className='w-[52px] h-[52px] rounded-full' />
+                <LoadingCell className='w-[47px] h-[47px] rounded-full' />
               ) : (
                 <Avatar
                   avatarUrl={ensProfile?.avatar}
                   name={ensProfile?.name || userAddress}
-                  size='w-[52px] h-[52px]'
+                  size='w-[47px] h-[47px]'
                 />
               )}
               <p className='font-bold hidden sm:block truncate text-lg'>

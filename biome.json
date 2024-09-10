@@ -64,6 +64,7 @@
         "useNumberNamespace": "off",
         "useNamingConvention": "off",
         "useShorthandArrayType": "off",
+        "useSingleCaseStatement": "off",
         "useSelfClosingElements": "off",
         "noUnusedTemplateLiteral": "off"
       },

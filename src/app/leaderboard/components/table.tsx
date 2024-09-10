@@ -13,6 +13,7 @@ import type { LeaderboardFilter } from '#/types/common.ts'
 import LoadingCell from '#/components/loaders/loading-cell.tsx'
 import { formatNumberLeaderboard } from '#/utils/formatNumber.ts'
 import { leaderboardFilters, leaderboardFiltersEmojies } from '#/lib/constants/index.ts'
+import Image from 'next/image'
 
 const LeaderboardTable = () => {
   const router = useRouter()
@@ -107,14 +108,15 @@ const LeaderboardTable = () => {
           {leaderboardFilters.map((item, i) => (
             <div
               key={item}
-              className={`p-2 font-bold w-[132px] px-4 capitalize cursor-pointer transition-all rounded-full ${
+              className={`p-2 font-bold px-4 flex gap-1 justify-center capitalize cursor-pointer transition-all rounded-full ${
                 filter === item
                   ? 'bg-zinc-100 dark:bg-[#777] shadow-inner'
                   : 'bg-zinc-300 dark:bg-[#555] hover:scale-110'
               }`}
               onClick={() => onSelectFilter(item)}
             >
-              {`${t(item)} ${leaderboardFiltersEmojies[i]}`}
+              <p>{t(item)}</p>
+              <Image src={leaderboardFiltersEmojies[i]} alt={item} width={22} height={22} />
             </div>
           ))}
         </div>
@@ -144,14 +146,15 @@ const LeaderboardTable = () => {
             {leaderboardFilters.map((item, i) => (
               <div
                 key={item}
-                className={`p-2 font-bold px-4 capitalize cursor-pointer rounded-full transition-all ${
+                className={`p-2 font-bold px-4 flex gap-1 capitalize cursor-pointer rounded-full transition-all ${
                   filter === item
                     ? 'bg-zinc-100 dark:bg-[#777] shadow-inner'
                     : 'bg-zinc-300 dark:bg-[#555] hover:scale-110'
                 }`}
                 onClick={() => onSelectFilter(item)}
               >
-                {`${t(item)} ${leaderboardFiltersEmojies[i]}`}
+                <p>{t(item)}</p>
+                <Image src={leaderboardFiltersEmojies[i]} alt={item} width={22} height={22} />
               </div>
             ))}
           </div>

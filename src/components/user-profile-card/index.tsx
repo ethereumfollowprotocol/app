@@ -37,6 +37,7 @@ import { useCoolMode } from '../follow-button/hooks/useCoolMode'
 import LoadingProfileCard from './components/loading-profile-card'
 import ImageWithFallback from '../image-with-fallback'
 import { HiOutlineExternalLink } from 'react-icons/hi'
+import { FaLink } from 'react-icons/fa'
 
 interface UserProfileCardProps {
   profileList?: number | null
@@ -239,7 +240,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   return (
     <div
       className={cn(
-        'flex glass-card border-[3px] flex-col border-[#FFDBD9] dark:border-[#a36d7d] rounded-xl relative',
+        'flex glass-card border-[3px] z-10 flex-col border-[#FFDBD9] dark:border-[#a36d7d] rounded-xl relative',
         isResponsive ? 'xl:w-76 w-full 2xl:w-86' : 'w-80 3xs:w-92'
       )}
     >
@@ -369,7 +370,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                         <div
                           className={`${
                             showMoreOptions && moreOptionsDropdownOpen ? 'flex' : 'hidden'
-                          } absolute top-9 right-0 flex-col items-center gap-2 w-fit p-1 dark:border-zinc-600  dark:bg-darkGrey/95 bg-white/95 border-zinc-200 border-[3px] rounded-xl z-50 drop-shadow-lg`}
+                          } absolute top-9 right-0 flex-col items-center z-50 gap-2 w-fit p-1 dark:border-zinc-600  dark:bg-darkGrey/95 bg-white/95 border-zinc-200 border-[3px] rounded-xl drop-shadow-lg`}
                         >
                           {!isConnectedUserCard && (
                             <>
@@ -545,56 +546,107 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                     <FollowButton address={profile.address} />
                   )}
                 </div>
-                <p className='text-[#888] dark:text-[#bbb] font-medium text-sm sm:text-sm text-center'>
-                  {profile.ens.records?.description ? (
-                    profile.ens.records.description.split(' ').map(word =>
-                      word.includes('@') ? (
-                        <Link
-                          key={word}
-                          href={`/${word.replace('@', '')}`}
-                          className='dark:text-blue-400 dark:hover:text-blue-300 text-blue-600 hover:text-blue-500'
-                        >
-                          {word}{' '}
-                        </Link>
-                      ) : (
-                        `${word} `
+                <div className='flex flex-col gap-2 w-full items-center'>
+                  <p className='text-[#888] dark:text-[#bbb] w-full font-medium text-sm sm:text-sm text-center'>
+                    {profile.ens.records?.description ? (
+                      profile.ens.records.description.split(' ').map(word =>
+                        word.includes('@') ? (
+                          <Link
+                            key={word}
+                            href={`/${word.replace('@', '')}`}
+                            className='dark:text-blue-400 dark:hover:text-blue-300 text-blue-600 hover:text-blue-500'
+                          >
+                            {word}{' '}
+                          </Link>
+                        ) : (
+                          `${word} `
+                        )
                       )
-                    )
-                  ) : (
-                    <i>{t('no bio')}</i>
-                  )}
-                </p>
-                <div className='flex items-center gap-2'>
-                  {profileCardSocials.map(social => (
-                    <a
-                      key={social.name}
-                      href={social.url(
-                        social.name === 'etherscan'
-                          ? profile.address
-                          : profile.ens.records?.[social.name] || ''
-                      )}
-                      target='_blank'
-                      rel='noreferrer'
-                      className={
-                        profile.ens.records?.[social.name] || social.name === 'etherscan'
-                          ? 'opacity-100 hover:opacity-80 hover:scale-110 transition-all'
-                          : 'opacity-20 pointer-events-none'
-                      }
-                    >
-                      <Image
-                        src={social.icon(resolvedTheme || '')}
-                        alt={social.name}
-                        width={36}
-                        height={36}
-                        className='rounded-full'
-                      />
-                    </a>
-                  ))}
+                    ) : (
+                      <i>{t('no bio')}</i>
+                    )}
+                  </p>
+                  <div className='w-full flex justify-center gap-2 items-center mb-1'>
+                    {profile.ens.records?.url && (
+                      <a
+                        href={profile.ens.records.url}
+                        target='_blank'
+                        rel='noreferrer'
+                        className='flex items-center text-sm gap-1 bg-zinc-200 dark:bg-zinc-500 rounded-full py-0.5 px-2 hover:scale-110 transition-all'
+                      >
+                        <p className='dark:text-blue-400 text-blue-600 font-semibold'>
+                          {profile.ens.records?.url.slice(-1) === '/'
+                            ? profile.ens.records?.url.replace('https://', '').slice(0, -1)
+                            : profile.ens.records?.url.replace('https://', '')}
+                        </p>
+                        <FaLink />
+                      </a>
+                    )}
+                    {profile.ens.contenthash && (
+                      <a
+                        href={`https://${profile.ens.name}.limo`}
+                        target='_blank'
+                        rel='noreferrer'
+                        className='flex items-center text-sm gap-1 bg-zinc-200 dark:bg-zinc-500 rounded-full py-0.5 px-2 pr-0.5 hover:scale-110 transition-all'
+                      >
+                        <p className='dark:text-blue-400 text-blue-600 font-semibold'>dweb</p>
+                        <Image
+                          src='/assets/icons/dweb.svg'
+                          alt='dweb'
+                          width={20}
+                          height={20}
+                          className='rounded-full'
+                        />
+                      </a>
+                    )}
+                  </div>
+                  <div className='flex items-center gap-2'>
+                    {profileCardSocials.map(social => (
+                      <a
+                        key={social.name}
+                        href={social.url(
+                          social.name === 'etherscan'
+                            ? profile.address
+                            : profile.ens.records?.[social.name] || ''
+                        )}
+                        target='_blank'
+                        rel='noreferrer'
+                        className={
+                          profile.ens.records?.[social.name] || social.name === 'etherscan'
+                            ? 'opacity-100 hover:opacity-80 hover:scale-110 transition-all'
+                            : 'opacity-20 pointer-events-none'
+                        }
+                      >
+                        <Image
+                          src={social.icon(resolvedTheme || '')}
+                          alt={social.name}
+                          width={36}
+                          height={36}
+                          className='rounded-full'
+                        />
+                      </a>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
             <div className='flex w-full flex-wrap justify-center gap-10 gap-y-6 sm:gap-y-9 sm:gap-x-[60px] items-center mx-auto text-center'>
-              <div>
+              <div
+                className='cursor-pointer hover:scale-110 transition-all'
+                onClick={() =>
+                  router.push(
+                    `/${
+                      pathname.length > 1 && pathname !== '/team'
+                        ? pathname.slice(1)
+                        : isConnectedUserCard
+                          ? selectedList === Number(profile.primary_list)
+                            ? profile.address
+                            : selectedList
+                          : profile.address
+                    }?tab=following`
+                  )
+                }
+              >
                 <div className='text-2xl sm:text-2xl text-center font-bold'>
                   {profile.stats === undefined
                     ? '-'
@@ -612,7 +664,22 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                   {t('following')}
                 </div>
               </div>
-              <div>
+              <div
+                className='cursor-pointer hover:scale-110 transition-all'
+                onClick={() =>
+                  router.push(
+                    `/${
+                      pathname.length > 1 && pathname !== '/team'
+                        ? pathname.slice(1)
+                        : isConnectedUserCard
+                          ? selectedList === Number(profile.primary_list)
+                            ? profile.address
+                            : selectedList
+                          : profile.address
+                    }?tab=followers`
+                  )
+                }
+              >
                 <div className='text-xl sm:text-2xl text-center font-bold'>
                   {profile.stats === undefined ? '-' : formatNumber(profile.stats.followers_count)}
                 </div>

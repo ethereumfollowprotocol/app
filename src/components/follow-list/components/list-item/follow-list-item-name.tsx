@@ -326,14 +326,18 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
       {counts && (
         <div className='items-center justify-end hidden xs:flex pr-6 sm:gap-8 gap-6 md:gap-16 lg:gap-16 xl:gap-10'>
           <div
-            className={`flex-col items-center 2xl:flex ${
+            className={`flex-col items-center 2xl:flex hover:scale-110 cursor-pointer transition-transform ${
               userAddress && !isFollowersEmpty ? 'lg:hidden' : ''
             } hidden sm:flex`}
+            onClick={() => router.push(`/${address}?tab=following`)}
           >
             <p className='font-bold text-lg'>{formatNumber(counts.following)}</p>
             <p className='font-bold text-sm text-[#888] dark:text-[#aaa]'>{t('following')}</p>
           </div>
-          <div className='flex flex-col items-center'>
+          <div
+            className='flex flex-col items-center hover:scale-110 cursor-pointer transition-transform'
+            onClick={() => router.push(`/${address}?tab=followers`)}
+          >
             <p className='font-bold text-lg'>{formatNumber(counts.followers)}</p>
             <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>{t('followers')}</p>
           </div>
