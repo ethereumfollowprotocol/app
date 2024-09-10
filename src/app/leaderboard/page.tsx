@@ -22,7 +22,6 @@ export const metadata: Metadata = {
 const Leaderboard = () => {
   return (
     <main className=' mx-auto flex gap-2 h-full min-h-full w-full flex-col items-center overflow-scroll mb-12 px-4 pt-6 mt-24 sm:mt-28 lg:mt-32 xl:mt-28 text-center'>
-      <p className='text-3xl sm:text-4xl md:text-5xl font-bold'>Leaderboard</p>
       <LeaderboardTable />
     </main>
   )

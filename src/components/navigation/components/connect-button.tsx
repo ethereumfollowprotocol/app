@@ -253,7 +253,7 @@ const ConnectButton = () => {
                           <p className='text-nowrap font-bold'>{`${t('list')} #${list}`}</p>
                           {lists.primary_list === list && (
                             <p className='mb-0.5 text-sm italic text-nowrap font-medium text-zinc-400'>
-                              - Primary
+                              - {t('primary')}
                             </p>
                           )}
                         </div>

@@ -46,10 +46,14 @@ export function Name({
   isCart
 }: { name?: string | null; address: Address; showTags?: boolean; isCart?: boolean }) {
   return (
-    <Link href={`/${address}`} className='w-full'>
+    <Link href={`/${address}`} className={cn(!isCart && 'w-full')}>
       <p
         className={`font-bold sm:text-lg text-start hover:scale-110 ${
-          showTags ? (isCart ? 'truncate w-fit' : 'truncate w-full') : 'w-fit max-w-full truncate'
+          showTags
+            ? isCart
+              ? 'truncate max-w-52'
+              : 'truncate w-full'
+            : 'w-fit max-w-full truncate'
         } hover:opacity-75 transition-all`}
       >
         {name && isValidEnsName(name) ? name : truncateAddress(address)}
@@ -84,7 +88,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
   const pathname = usePathname()
   const { t } = useTranslation()
   const { address: userAddress } = useAccount()
-  const isEditor = pathname.includes('/cart')
+  const isCart = pathname.includes('/cart')
   const { followerTag } = useFollowState({
     address,
     type: 'follower'
@@ -185,11 +189,11 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
         <div
           className={cn(
             'flex flex-col justify-center items-start tabular-nums relative',
-            isEditor
+            isCart
               ? 'md:w-52'
               : !isBlockedList && showTags
                 ? displayedTags.length > 0
-                  ? 'xl:max-w-[50%] 2xl:max-w-[60%]'
+                  ? 'xl:max-w-[55%] 2xl:max-w-[60%]'
                   : 'max-w-[70%] 3xs:max-w-[70%] xxs:max-w-[90%]'
                 : 'max-w-full'
           )}
@@ -197,7 +201,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
           {isEnsProfileLoading ? (
             <LoadingCell className='w-32 xl:w-32 h-7 rounded-lg' />
           ) : (
-            <Name name={name} address={address} showTags={showTags} isCart={isEditor} />
+            <Name name={name} address={address} showTags={showTags} isCart={isCart} />
           )}
           {showFollowsYouBadges && !isEnsProfileLoading && (
             <div
@@ -212,7 +216,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
           <div
             className={cn(
               'relative min-h-8 flex max-w-full md:max-w-[50%] flex-wrap gap-2 items-center',
-              isEditor
+              isCart
                 ? 'xl:max-w-[55%] 2xl:max-w-[65%] 3xl:max-w-[75%]'
                 : 'xl:max-w-[45%] 2xl:max-w-[42.5%] 3xl:max-w-[47.5%]'
             )}
@@ -231,7 +235,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
             )}
             {canEditTags && tagDropdownOpen && (
               <>
-                <div className='absolute z-50 flex flex-col w-60 gap-2 left-0 top-8 glass-card bg-white/50 dark:bg-darkGrey/80 p-2 border-[3px] border-zinc-200 dark:border-zinc-500 rounded-lg'>
+                <div className='absolute z-[9999] flex flex-col w-60 gap-2 left-0 top-8 glass-card bg-white/50 dark:bg-darkGrey/80 p-2 border-[3px] border-zinc-200 dark:border-zinc-500 rounded-lg'>
                   <div className='w-full flex items-center gap-1.5 justify-between bg-zinc-300 dark:bg-zinc-400 rounded-lg font-bold p-1 text-left'>
                     <input
                       ref={tagInputRef}

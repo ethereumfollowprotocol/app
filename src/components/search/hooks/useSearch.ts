@@ -77,6 +77,7 @@ const useSearch = (isEditor?: boolean) => {
   const searchResult = searchResultStatus === 'success' ? data.slice(0, 5) : []
 
   const resetSearch = () => {
+    setSearch('')
     setCurrentSearch('')
     setDropdownMenuOpen(false)
     searchBarRef.current?.blur()

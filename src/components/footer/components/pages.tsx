@@ -19,7 +19,7 @@ const footerPages = [
     target: '_blank'
   },
   {
-    text: 'Bug Bounty',
+    text: 'bug bounty',
     href: 'https://docs.ethfollow.xyz/bugbounty',
     target: '_blank'
   }

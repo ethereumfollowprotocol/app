@@ -272,7 +272,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
               roles?.isManager
             }
             title='following'
-            customClass='hidden xl:flex xl:max-w-[520px] 2xl:max-w-[40%]'
+            customClass='hidden xl:flex xl:max-w-[520px] z-10 2xl:max-w-[40%]'
           />
           <UserProfilePageTable
             isLoading={followersIsLoading}

@@ -27,7 +27,9 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
     socialProfile,
     alreadyFollow,
     onAddFollowings,
+    onlyImportWithEns,
     isFollowingsLoading,
+    setOnlyImportWithEns,
     isSocialProfileLoading
   } = useImportModal(platform)
   const { t } = useTranslation()
@@ -122,6 +124,15 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
                     {formatNumber(followings.length - alreadyFollow.length)} {t('accounts')}
                   </p>
                 )}
+              </div>
+              <div className='flex items-center w-full justify-between gap-3 sm:gap-5'>
+                <p className='text-lg font-bold'>{t('only import ens')}</p>
+                <input
+                  className='toggle'
+                  type='checkbox'
+                  defaultChecked={onlyImportWithEns}
+                  onChange={e => setOnlyImportWithEns(e.target.checked)}
+                />
               </div>
             </div>
           </div>

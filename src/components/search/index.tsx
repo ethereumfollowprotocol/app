@@ -216,7 +216,7 @@ export function Search({
             />
           </div>
           <div
-            className={`absolute glass-card w-full shadow-md border-[3px] p-3 rounded-xl bg-white/95 border-zinc-200 dark:border-zinc-500 top-full mt-2 left-0 ${
+            className={`absolute glass-card w-full shadow-md border-[3px] p-3 rounded-xl border-zinc-200 dark:border-zinc-500 bg-white/95 dark:bg-darkGrey/95 top-full mt-2 left-0 ${
               dropdownMenuOpen ? 'block' : 'hidden'
             }`}
           >

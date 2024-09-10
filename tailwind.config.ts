@@ -63,7 +63,7 @@ const { colors, fontFamily, fontSize, keyframes, animation, spacing, screens } =
     deletion: '#FF7C7C'
   },
   fontFamily: {
-    sans: [...defaultTheme.fontFamily.sans]
+    sans: ['inter', ...defaultTheme.fontFamily.sans]
     // mono: ['var(--font-ibm-plex-mono)']
   },
   fontSize: {

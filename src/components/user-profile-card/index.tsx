@@ -228,7 +228,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   return (
     <div
       className={cn(
-        'flex glass-card border-[3px] overflow-hidden flex-col border-[#FFDBD9] dark:border-[#a36d7d] rounded-xl relative',
+        'flex glass-card border-[3px] flex-col border-[#FFDBD9] dark:border-[#a36d7d] rounded-xl relative',
         isResponsive ? 'xl:w-76 w-full 2xl:w-86' : 'w-80 3xs:w-92'
       )}
     >
@@ -293,7 +293,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
               alt='profile header'
               width={360}
               height={120}
-              className={cn('w-full h-[120px] absolute object-cover top-0 left-0 -z-10')}
+              className={cn(
+                'w-full h-[120px] absolute object-cover rounded-t-lg top-0 left-0 -z-10'
+              )}
               unoptimized={true}
             />
           )}
@@ -472,6 +474,8 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                           )}
                           <a
                             href={`https://app.ens.domains${profileName ? `/${profileName}` : ''}`}
+                            target='_blank'
+                            rel='noreferrer'
                             className='rounded-lg cursor-pointer hover:bg-darkGrey/5 dark:hover:bg-white/10 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3'
                           >
                             <p className='text-nowrap'>ENS app</p>
