@@ -123,7 +123,7 @@ const Cart = () => {
               </div>
             </div>
             <Search size='w-full z-50 px-2 pt-2' isEditor={true} />
-            <Recommendations header={t('recommendations')} endpoint='recommended' limit={40} />
+            <Recommendations header={t('recommendations')} endpoint='recommended' limit={30} />
           </div>
           <div className='flex h-full flex-col glass-card rounded-2xl border-[3px] border-zinc-200 dark:border-zinc-500 gap-3 md:gap-4 md:py-6 pt-5 pb-2 px-1 sm:px-3 md:px-4 w-full xl:w-2/3'>
             <div className='flex justify-between gap-2 flex-row items-center px-3 md:px-4'>
