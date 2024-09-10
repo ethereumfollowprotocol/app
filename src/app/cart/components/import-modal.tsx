@@ -126,7 +126,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
                 )}
               </div>
               <div className='flex items-center w-full justify-between gap-3 sm:gap-5'>
-                <p className='text-lg font-bold'>{t('only import ens')}</p>
+                <p className='text-lg font-bold'>{t('Only import accounts with an ENS name')}</p>
                 <input
                   className='toggle'
                   type='checkbox'

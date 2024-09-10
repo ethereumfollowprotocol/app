@@ -6,7 +6,6 @@ import { useCart } from '#/contexts/cart-context'
 import { listOpAddListRecord } from '#/utils/list-ops'
 import type { ImportPlatformType } from '#/types/common'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import { set } from 'valibot'
 
 init('0366bbe276e04996af5f92ebb7899f19', { env: 'dev', cache: true })
 
