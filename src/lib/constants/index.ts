@@ -1,6 +1,7 @@
 import type { FollowSortType } from '#/types/requests'
 import type { ProfileTableTitleType, ProfileTabType } from '#/types/common'
 
+import FireEmoji from 'public/assets/icons/fire.svg'
 import EyesEmoji from 'public/assets/icons/eyes.svg'
 import GithubIcon from 'public/assets/icons/github.svg'
 import DiscordIcon from 'public/assets/icons/discord.svg'
@@ -72,11 +73,12 @@ export const NAV_ITEMS = [
   }
 ]
 
-export const leaderboardFilters = ['mutuals', 'followers', 'following', 'blocked'] as const
+export const leaderboardFilters = ['mutuals', 'followers', 'following', 'top8', 'blocked'] as const
 export const leaderboardFiltersEmojies = [
   HuggingEmoji,
   StarEyesEmoji,
   EyesEmoji,
+  FireEmoji,
   PirateFlagEmoji
 ] as const
 

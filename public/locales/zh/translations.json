@@ -139,11 +139,13 @@
 
   "leaderboard": "排行榜",
   "lists": "列表",
+  "top8": "前 8 名",
   "addresses": "地址",
   "blocks_rank": "已屏蔽",
   "mutuals_rank": "互相关注",
   "followers_rank": "关注者",
   "following_rank": "正在关注",
+  "top8_rank": "前 8 名",
   "last updated": "上次更新",
 
   "system": "系统",
