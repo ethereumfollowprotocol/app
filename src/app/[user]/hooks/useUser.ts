@@ -34,7 +34,8 @@ const useUser = (user: string) => {
       const fetchedProfile = await fetchProfileDetails(user, listNum)
       return fetchedProfile
     },
-    staleTime: 30000
+    staleTime: 30000,
+    refetchOnWindowFocus: false
   })
 
   const {
@@ -49,7 +50,8 @@ const useUser = (user: string) => {
       const fetchedTags = await fetchFollowerTags(user, userIsList ? listNum : undefined)
       return fetchedTags
     },
-    staleTime: 30000
+    staleTime: 30000,
+    refetchOnWindowFocus: false
   })
 
   const [isEndOfFollowers, setIsEndOfFollowers] = useState(false)
@@ -92,7 +94,8 @@ const useUser = (user: string) => {
     },
     staleTime: 30000,
     initialPageParam: 0,
-    getNextPageParam: lastPage => lastPage.nextPageParam
+    getNextPageParam: lastPage => lastPage.nextPageParam,
+    refetchOnWindowFocus: false
   })
 
   const {
@@ -107,7 +110,8 @@ const useUser = (user: string) => {
       const fetchedTags = await fetchFollowingTags(user, listNum)
       return fetchedTags
     },
-    staleTime: 30000
+    staleTime: 30000,
+    refetchOnWindowFocus: false
   })
 
   const [isEndOfFollowing, setIsEndOfFollowing] = useState(false)
@@ -150,7 +154,8 @@ const useUser = (user: string) => {
     },
     staleTime: 30000,
     initialPageParam: 0,
-    getNextPageParam: lastPage => lastPage.nextPageParam
+    getNextPageParam: lastPage => lastPage.nextPageParam,
+    refetchOnWindowFocus: false
   })
 
   const followers = fetchedFollowers

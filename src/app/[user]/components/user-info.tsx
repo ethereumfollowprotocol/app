@@ -197,7 +197,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     if (titleRef.current && !!searchParams.get('tab')) {
       titleRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
-  }, [])
+  }, [searchParams])
 
   return (
     <>

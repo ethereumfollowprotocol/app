@@ -1,13 +1,14 @@
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useQueryState } from 'next-usequerystate'
+import { useIntersectionObserver } from '@uidotdev/usehooks'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import type { LeaderboardFilter } from '#/types/common'
 import type { LeaderboardItem } from '#/types/requests'
 import { fetchleaderboard } from '#/api/fetchLeaderboard'
-import { LEADERBOARD_FETCH_LIMIT_PARAM } from '#/lib/constants'
 import { fetchLeaderboardStats } from '#/api/fetchLeaderboardStats'
+import { LEADERBOARD_CHUNK_SIZE, LEADERBOARD_FETCH_LIMIT_PARAM } from '#/lib/constants'
 
 const useLeaderboard = () => {
   const router = useRouter()
@@ -20,6 +21,19 @@ const useLeaderboard = () => {
 
   const initialPageParam = Number(searchParams.get('page'))
   const [page, setPage] = useState(initialPageParam || 1)
+
+  const [chunk, setChunk] = useState(1)
+  const [loadChunkRef, entry] = useIntersectionObserver({
+    rootMargin: '200px 0px 0px 0px'
+  })
+
+  useEffect(() => {
+    if (
+      entry?.isIntersecting &&
+      (chunk * LEADERBOARD_CHUNK_SIZE) / LEADERBOARD_FETCH_LIMIT_PARAM < 1
+    )
+      setChunk(prev => prev + 1)
+  }, [entry])
 
   const initialSearch = searchParams.get('query')
   const [currentSearch, setCurrentSearch] = useState(initialSearch ?? '')
@@ -143,13 +157,16 @@ const useLeaderboard = () => {
 
   return {
     page,
+    chunk,
     search,
     filter,
     setPage,
+    setChunk,
     setFilter,
     timeStamp,
     leaderboard,
     resetSearch,
+    loadChunkRef,
     currentSearch,
     leaderboardStats,
     handleSearchEvent,

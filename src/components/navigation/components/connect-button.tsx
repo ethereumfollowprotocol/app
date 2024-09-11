@@ -1,5 +1,6 @@
 'use client'
 import Image from 'next/image'
+import { FaDiscord } from 'react-icons/fa'
 import { useEffect, useState } from 'react'
 import { FiArrowLeft } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
@@ -77,7 +78,7 @@ const ConnectButton = () => {
       <button
         type='button'
         className={cn(
-          'z-50 px-1 pl-0.5 transition-all border-[3px] gap-[6px] hover:scale-105 cursor-pointer flex justify-between items-center h-[60px] glass-card rounded-full w-fit sm:w-48 md:w-56',
+          'z-50 px-1 pl-[3px] transition-all border-[3px] gap-[6px] hover:scale-105 cursor-pointer flex justify-between items-center h-[60px] glass-card rounded-full w-fit sm:w-48 md:w-56',
           walletMenOpenu ? 'connect-button-open ' : 'connect-button'
         )}
         onClick={() =>
@@ -92,12 +93,12 @@ const ConnectButton = () => {
           <>
             <div className='flex items-center max-w-[87%] h-fit gap-[8px]'>
               {ensProfileIsLoading ? (
-                <LoadingCell className='w-[50px] h-[50px] rounded-full' />
+                <LoadingCell className='w-[47px] h-[47px] rounded-full' />
               ) : (
                 <Avatar
                   avatarUrl={ensProfile?.avatar}
                   name={ensProfile?.name || userAddress}
-                  size='w-[50px] h-[50px]'
+                  size='w-[47px] h-[47px]'
                 />
               )}
               <p className='font-bold hidden sm:block truncate text-lg'>
@@ -283,6 +284,12 @@ const ConnectButton = () => {
                 </div>
               </div>
             )}
+            <a href='https://discord.com/invite/ZUyG3mSXFD' target='_blank' rel='noreferrer'>
+              <div className='flex justify-between items-center w-full group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/20  dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer font-semibold'>
+                <FaDiscord className='text-2xl mirror-x' />
+                <p className='capitalize'>Discord</p>
+              </div>
+            </a>
             <p
               className='text-red-500 p-3 text-right font-bold w-full text-nowrap rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-opacity cursor-pointer'
               onClick={() => {

@@ -5,11 +5,11 @@ import { useTranslation } from 'react-i18next'
 
 import { isValidEnsName } from '#/utils/ens'
 import { Avatar } from '#/components/avatar'
-import { truncateAddress } from '#/lib/utilities'
 import { formatNumber } from '#/utils/formatNumber'
+import { cn, truncateAddress } from '#/lib/utilities'
 import FollowButton from '#/components/follow-button'
-import useFollowState from '#/hooks/use-follow-state'
 import type { LeaderboardFilter } from '#/types/common'
+import useFollowerState from '#/hooks/use-follower-state'
 
 interface TableRowProps {
   address: Address
@@ -78,10 +78,7 @@ const TableRow: React.FC<TableRowProps> = ({
   const router = useRouter()
   const pathname = usePathname()
   const { t } = useTranslation()
-  const { followerTag } = useFollowState({
-    address,
-    type: 'follower'
-  })
+  const { followerTag } = useFollowerState({ address })
 
   const isHome = pathname === '/'
   // const name = fetchedEnsProfile?.name
@@ -127,7 +124,29 @@ const TableRow: React.FC<TableRowProps> = ({
         }`}
       >
         {firstStat && (
-          <div className='flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 hidden sm:flex lg:hidden xl:flex'>
+          <div
+            className={cn(
+              'flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 hidden sm:flex lg:hidden xl:flex',
+              firstStat !== 'mutuals' && 'cursor-pointer hover:scale-110 transition-transform'
+            )}
+            onClick={() => {
+              switch (firstStat) {
+                case 'followers':
+                  router.push(`/${address}?tab=followers`)
+                  break
+                case 'following':
+                  router.push(`/${address}?tab=following`)
+                  break
+                case 'mutuals':
+                  break
+                case 'blocked':
+                  router.push(`/${address}?modal=blockmutelists`)
+                  break
+                default:
+                  break
+              }
+            }}
+          >
             <p className='font-bold text-sm sm:text-lg'>
               {formatNumber(
                 {

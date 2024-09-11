@@ -12,12 +12,12 @@ import { isValidEnsName } from '#/utils/ens'
 import { tagRegex } from '#/lib/constants/regex'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useCart } from '#/contexts/cart-context'
-import { cn, truncateAddress } from '#/lib/utilities'
 import { formatNumber } from '#/utils/formatNumber'
 import { BLOCKED_MUTED_TAGS } from '#/lib/constants'
-import useFollowState from '#/hooks/use-follow-state'
+import { cn, truncateAddress } from '#/lib/utilities'
 import LoadingCell from '../../../loaders/loading-cell'
 import Plus from 'public/assets/icons/plus-squared.svg'
+import useFollowerState from '#/hooks/use-follower-state'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
 
@@ -87,12 +87,9 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
   const router = useRouter()
   const pathname = usePathname()
   const { t } = useTranslation()
-  const { address: userAddress } = useAccount()
   const isCart = pathname.includes('/cart')
-  const { followerTag } = useFollowState({
-    address,
-    type: 'follower'
-  })
+  const { address: userAddress } = useAccount()
+  const { followerTag } = useFollowerState({ address })
 
   const {
     addCartItem,
@@ -326,14 +323,18 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
       {counts && (
         <div className='items-center justify-end hidden xs:flex pr-6 sm:gap-8 gap-6 md:gap-16 lg:gap-16 xl:gap-10'>
           <div
-            className={`flex-col items-center 2xl:flex ${
+            className={`flex-col items-center 2xl:flex hover:scale-110 cursor-pointer transition-transform ${
               userAddress && !isFollowersEmpty ? 'lg:hidden' : ''
             } hidden sm:flex`}
+            onClick={() => router.push(`/${address}?tab=following`)}
           >
             <p className='font-bold text-lg'>{formatNumber(counts.following)}</p>
             <p className='font-bold text-sm text-[#888] dark:text-[#aaa]'>{t('following')}</p>
           </div>
-          <div className='flex flex-col items-center'>
+          <div
+            className='flex flex-col items-center hover:scale-110 cursor-pointer transition-transform'
+            onClick={() => router.push(`/${address}?tab=followers`)}
+          >
             <p className='font-bold text-lg'>{formatNumber(counts.followers)}</p>
             <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>{t('followers')}</p>
           </div>

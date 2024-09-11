@@ -2,7 +2,6 @@
 
 import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
-import { MdFeedback } from 'react-icons/md'
 import { WagmiProvider, type State } from 'wagmi'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { darkTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit'
@@ -52,16 +51,6 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
                 <TransactionsProvider>
                   <ActionsProvider>
                     <Navigation />
-                    <div className='fixed bottom-4 left-4 p-3 text-3xl rounded-full cursor-pointer z-50 dark:bg-zinc-600 hover:scale-110 bg-zinc-300 hover:bg-zinc-400 dark:hover:bg-zinc-500 transition-all'>
-                      <a
-                        className='h-full w-full'
-                        href='https://discord.gg/vDNcMuWA'
-                        target='_blank'
-                        rel='noreferrer'
-                      >
-                        <MdFeedback />
-                      </a>
-                    </div>
                     {children}
                   </ActionsProvider>
                 </TransactionsProvider>

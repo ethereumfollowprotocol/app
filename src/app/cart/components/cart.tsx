@@ -123,14 +123,14 @@ const Cart = () => {
               </div>
             </div>
             <Search size='w-full z-50 px-2 pt-2' isEditor={true} />
-            <Recommendations header={t('recommendations')} endpoint='recommended' limit={40} />
+            <Recommendations header={t('recommendations')} endpoint='recommended' limit={30} />
           </div>
           <div className='flex h-full flex-col glass-card rounded-2xl border-[3px] border-zinc-200 dark:border-zinc-500 gap-3 md:gap-4 md:py-6 pt-5 pb-2 px-1 sm:px-3 md:px-4 w-full xl:w-2/3'>
             <div className='flex justify-between gap-2 flex-row items-center px-3 md:px-4'>
               <h3 className='font-bold text-left text-xl sm:text-3xl xxs:w-2/3'>
                 {t('cart unc-changes')}
               </h3>
-              {totalCartItems > 0 && (
+              {isClient && totalCartItems > 0 && (
                 <button
                   className='flex gap-2 cursor-pointer hover:scale-110 transition-transform items-center hover:opacity-80'
                   onClick={() => setClearCartModalOpen(true)}
@@ -156,38 +156,40 @@ const Cart = () => {
               canEditTags={roles?.isManager}
             />
           </div>
-          <div
-            className={cn(
-              'fixed md:w-fit w-full top-[85vh] sm:top-[85vh] lg:top-[82.5vh] right-0 px-4 lg:right-[5vw] justify-end',
-              isClient && totalCartItems > 0 ? 'flex' : 'hidden'
-            )}
-          >
-            <div className='flex gap-6 w-full border-[3px] border-zinc-200 dark:border-zinc-500 lg:w-fit items-center p-4 bg-white/10 justify-between glass-card bg-opacity-50 shadow-xl rounded-xl'>
-              <div className='flex flex-col gap-1 items-start'>
-                <div className='flex gap-2 items-center'>
-                  <p className='text-6xl font-bold'>{formatNumber(totalCartItems)}</p>
-                  <div className='flex flex-col w-28 font-bold text-lg text-left whitespace-break-spaces'>
-                    {t('unc-changes')}
+          {isClient && (
+            <div
+              className={cn(
+                'fixed md:w-fit w-full top-[85vh] sm:top-[85vh] lg:top-[82.5vh] right-0 px-4 lg:right-[5vw] justify-end',
+                isClient && totalCartItems > 0 ? 'flex' : 'hidden'
+              )}
+            >
+              <div className='flex gap-6 w-full border-[3px] border-zinc-200 dark:border-zinc-500 lg:w-fit items-center p-4 bg-white/10 justify-between glass-card bg-opacity-50 shadow-xl rounded-xl'>
+                <div className='flex flex-col gap-1 items-start'>
+                  <div className='flex gap-2 items-center'>
+                    <p className='text-6xl font-bold'>{formatNumber(totalCartItems)}</p>
+                    <div className='flex flex-col w-28 font-bold text-lg text-left whitespace-break-spaces'>
+                      {t('unc-changes')}
+                    </div>
                   </div>
+                  <p className='text-base pl-2 font-medium'>{`${formatNumber(transactionsCount)} ${
+                    transactionsCount === 1 ? t('transaction') : t('transactions')
+                  }`}</p>
                 </div>
-                <p className='text-base pl-2 font-medium'>{`${formatNumber(transactionsCount)} ${
-                  transactionsCount === 1 ? t('transaction') : t('transactions')
-                }`}</p>
-              </div>
-              <PrimaryButton
-                className='py-[14px] px-4 text-xl rounded-full'
-                onClick={() => {
-                  if (!isConnected) {
-                    if (openConnectModal) openConnectModal()
-                    return
-                  }
+                <PrimaryButton
+                  className='py-[14px] px-4 text-xl rounded-full'
+                  onClick={() => {
+                    if (!isConnected) {
+                      if (openConnectModal) openConnectModal()
+                      return
+                    }
 
-                  setIsCheckingOut(true)
-                }}
-                label={t('confirm')}
-              />
+                    setIsCheckingOut(true)
+                  }}
+                  label={t('confirm')}
+                />
+              </div>
             </div>
-          </div>
+          )}
         </>
       )}
     </>

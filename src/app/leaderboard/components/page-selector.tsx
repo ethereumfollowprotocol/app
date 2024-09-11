@@ -1,9 +1,9 @@
-import { useRouter, useSearchParams } from 'next/navigation'
 import {
   MdKeyboardArrowLeft,
   MdKeyboardArrowRight,
   MdKeyboardDoubleArrowLeft
 } from 'react-icons/md'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 interface PageSelectorProps {
   page: number
@@ -12,7 +12,6 @@ interface PageSelectorProps {
   fetchNext?: () => void
   fetchPrevious?: () => void
   hasSkipToFirst?: boolean
-  scrollOnChange?: boolean
   adjustUrl?: boolean
   displayPageNumber?: boolean
   isLoading?: boolean
@@ -25,7 +24,6 @@ const PageSelector: React.FC<PageSelectorProps> = ({
   fetchNext,
   fetchPrevious,
   hasSkipToFirst = true,
-  scrollOnChange = true,
   adjustUrl = true,
   displayPageNumber = true,
   isLoading
@@ -36,7 +34,7 @@ const PageSelector: React.FC<PageSelectorProps> = ({
   const filter = searchParams.get('filter')
 
   const handlePageChange = (newPage: number, skipsToFirst?: boolean) => {
-    if (scrollOnChange) window.scrollTo({ top: 0, behavior: 'instant' })
+    // if (scrollOnChange) window.scrollTo({ top: 200, behavior: 'instant' })
 
     if (!skipsToFirst && fetchNext && fetchPrevious && !isLoading) {
       if (newPage > page) fetchNext()

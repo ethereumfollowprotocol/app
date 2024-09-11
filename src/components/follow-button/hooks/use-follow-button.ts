@@ -6,14 +6,15 @@ import { useTranslation } from 'react-i18next'
 
 import {
   isTagListOp,
+  listOpAddTag,
   listOpRemoveTag,
   listOpAddListRecord,
   extractAddressAndTag,
-  listOpRemoveListRecord,
-  listOpAddTag
+  listOpRemoveListRecord
 } from '#/utils/list-ops'
 import { useCart } from '#/contexts/cart-context'
-import useFollowState from '#/hooks/use-follow-state'
+import useFollowerState from '#/hooks/use-follower-state'
+import useFollowingState from '#/hooks/use-following-state'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 export type FollowButtonState =
@@ -55,14 +56,8 @@ export const useFollowButton = ({
 }: { address: Address; isBlockedBy?: boolean }) => {
   const { roles } = useEFPProfile()
   const { address: userAddress } = useAccount()
-  const { followState, isFollowStateLoading } = useFollowState({
-    address,
-    type: 'following'
-  })
-  const { followState: followerState } = useFollowState({
-    address,
-    type: 'follower'
-  })
+  const { followingState: followState, isFollowingStateLoading } = useFollowingState({ address })
+  const { followState: followerState } = useFollowerState({ address })
   const { t } = useTranslation()
   const {
     hasListOpAddRecord,
@@ -195,5 +190,5 @@ export const useFollowButton = ({
     if (buttonText === 'Following') return addCartItem({ listOp: listOpRemoveListRecord(address) })
   }
 
-  return { buttonText, buttonState, handleAction, isLoading: isFollowStateLoading }
+  return { buttonText, buttonState, handleAction, isLoading: isFollowingStateLoading }
 }

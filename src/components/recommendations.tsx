@@ -78,7 +78,6 @@ const Recommendations = ({ header, className, limit = 10, endpoint }: Recommenda
             setPage={setPage}
             hasNextPage={hasNextPage && !(isFetchingNextPage || isLoading) && page <= 10}
             hasSkipToFirst={false}
-            scrollOnChange={false}
             adjustUrl={false}
             displayPageNumber={false}
             fetchNext={fetchNextPage}
@@ -122,7 +121,6 @@ const Recommendations = ({ header, className, limit = 10, endpoint }: Recommenda
             hasNextPage={hasNextPage && !(isFetchingNextPage || isLoading) && page <= 10}
             hasSkipToFirst={false}
             adjustUrl={false}
-            scrollOnChange={false}
             displayPageNumber={false}
             fetchNext={fetchNextPage}
             fetchPrevious={fetchPreviousPage}

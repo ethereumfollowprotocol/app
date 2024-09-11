@@ -137,6 +137,10 @@ input {
   text-wrap: balance;
 }
 
+.mirror-x {
+  transform: scaleX(-1);
+}
+
 .scroll-indicator {
   bottom: 0;
   color: #888;
