@@ -1,9 +1,15 @@
 'use client'
 
+import Image from 'next/image'
 import { FiSearch } from 'react-icons/fi'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 
+import {
+  leaderboardFilters,
+  LEADERBOARD_CHUNK_SIZE,
+  leaderboardFiltersEmojies
+} from '#/lib/constants/index.ts'
 import TableRow from './row.tsx'
 import LoadingRow from './loading-row.tsx'
 import PageSelector from './page-selector.tsx'
@@ -12,20 +18,21 @@ import type { LeaderboardItem } from '#/types/requests.ts'
 import type { LeaderboardFilter } from '#/types/common.ts'
 import LoadingCell from '#/components/loaders/loading-cell.tsx'
 import { formatNumberLeaderboard } from '#/utils/formatNumber.ts'
-import { leaderboardFilters, leaderboardFiltersEmojies } from '#/lib/constants/index.ts'
-import Image from 'next/image'
 
 const LeaderboardTable = () => {
   const router = useRouter()
   const {
     page,
+    chunk,
     filter,
     search,
     setPage,
+    setChunk,
     setFilter,
     timeStamp,
     leaderboard,
     resetSearch,
+    loadChunkRef,
     currentSearch,
     leaderboardStats,
     handleSearchEvent,
@@ -164,27 +171,36 @@ const LeaderboardTable = () => {
             hasNextPage={true}
             scrollOnChange={false}
             isLoading={isFetchingNextLeaderboard || isFetchingPreviousLeaderboard}
-            fetchNext={() => fetchNextLeaderboard()}
-            fetchPrevious={() => fetchPreviousLeaderboard()}
+            fetchNext={() => {
+              setChunk(1)
+              fetchNextLeaderboard()
+            }}
+            fetchPrevious={() => {
+              setChunk(1)
+              fetchPreviousLeaderboard()
+            }}
           />
         </div>
         <div className='glass-card border-zinc-200 dark:border-zinc-500 border-[3px] rounded-xl flex flex-col gap-4 p-1 sm:px-4 sm:py-6 lg:px-8 relative'>
-          {leaderboard?.map((entry: LeaderboardItem, index) => (
-            <TableRow
-              key={entry.address}
-              address={entry.address}
-              name={entry.name}
-              avatar={entry.avatar}
-              rank={Number(selectedRank(entry))}
-              followers={Number(entry.followers) || 0}
-              following={Number(entry.following) || 0}
-              mutuals={Number(entry.mutuals) || 0}
-              blocked={Number(entry.blocks) || 0}
-            />
-          ))}
-          {new Array(isLoading ? 100 : 0).fill(1).map((_, i) => (
+          {leaderboard
+            ?.slice(0, chunk * LEADERBOARD_CHUNK_SIZE)
+            .map((entry: LeaderboardItem, index) => (
+              <TableRow
+                key={entry.address}
+                address={entry.address}
+                name={entry.name}
+                avatar={entry.avatar}
+                rank={Number(selectedRank(entry))}
+                followers={Number(entry.followers) || 0}
+                following={Number(entry.following) || 0}
+                mutuals={Number(entry.mutuals) || 0}
+                blocked={Number(entry.blocks) || 0}
+              />
+            ))}
+          {new Array(isLoading ? LEADERBOARD_CHUNK_SIZE : 0).fill(1).map((_, i) => (
             <LoadingRow key={i} />
           ))}
+          <div ref={loadChunkRef} className='h-px w-full' />
           {!isLoading && leaderboard?.length === 0 && (
             <div className='flex justify-center flex-col items-center h-40'>
               <p className='text-lg font-bold'>No results found</p>
@@ -203,8 +219,14 @@ const LeaderboardTable = () => {
           hasNextPage={true}
           scrollOnChange={false}
           isLoading={isFetchingNextLeaderboard || isFetchingPreviousLeaderboard}
-          fetchNext={() => fetchNextLeaderboard()}
-          fetchPrevious={() => fetchPreviousLeaderboard()}
+          fetchNext={() => {
+            setChunk(1)
+            fetchNextLeaderboard()
+          }}
+          fetchPrevious={() => {
+            setChunk(1)
+            fetchPreviousLeaderboard()
+          }}
         />
       </div>
     </>

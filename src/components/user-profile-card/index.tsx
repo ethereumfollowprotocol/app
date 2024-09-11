@@ -4,12 +4,14 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import { useTheme } from 'next-themes'
+import { FaLink } from 'react-icons/fa'
 import { useState, type Ref } from 'react'
 import { IoMdSettings } from 'react-icons/io'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
 import { MdOutlineContentCopy } from 'react-icons/md'
+import { HiOutlineExternalLink } from 'react-icons/hi'
 import { usePathname, useRouter } from 'next/navigation'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
@@ -26,7 +28,7 @@ import { formatNumber } from '#/utils/formatNumber'
 import { profileCardSocials } from '#/lib/constants'
 import { cn, truncateAddress } from '#/lib/utilities'
 import FollowButton from '#/components/follow-button'
-import useFollowState from '#/hooks/use-follow-state'
+import ImageWithFallback from '../image-with-fallback'
 import CommonFollowers from './components/common-followers'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { ProfileDetailsResponse } from '#/types/requests'
@@ -35,9 +37,8 @@ import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 import DefaultHeader from 'public/assets/art/default-header.svg'
 import { useCoolMode } from '../follow-button/hooks/useCoolMode'
 import LoadingProfileCard from './components/loading-profile-card'
-import ImageWithFallback from '../image-with-fallback'
-import { HiOutlineExternalLink } from 'react-icons/hi'
-import { FaLink } from 'react-icons/fa'
+import useFollowingState from '#/hooks/use-following-state'
+import useFollowerState from '#/hooks/use-follower-state'
 
 interface UserProfileCardProps {
   profileList?: number | null
@@ -85,14 +86,8 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const profileName = fetchedEnsProfile?.name
   const profileAvatar = fetchedEnsProfile?.avatar
 
-  const { followState } = useFollowState({
-    address: profile?.address,
-    type: 'following'
-  })
-  const { followerTag } = useFollowState({
-    address: profile?.address,
-    type: 'follower'
-  })
+  const { followingState: followState } = useFollowingState({ address: profile?.address })
+  const { followerTag } = useFollowerState({ address: profile?.address })
 
   const router = useRouter()
   const { t } = useTranslation()
@@ -122,7 +117,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const isPendingUnmute = profile && hasListOpRemoveTag({ address: profile.address, tag: 'mute' })
 
   const isInTopEight = topEight.find(
-    item => item.address.toLowerCase() === profile?.address.toLowerCase()
+    item => item.address?.toLowerCase() === profile?.address?.toLowerCase()
   )
   const isAddingToTopEight = profile?.address
     ? hasListOpAddTag({ address: profile?.address, tag: 'top8' })
@@ -569,7 +564,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                   <div className='w-full flex justify-center gap-2 items-center mb-1'>
                     {profile.ens.records?.url && (
                       <a
-                        href={profile.ens.records.url}
+                        href={`https://${profile.ens.records.url
+                          .replace('https://', '')
+                          .replace('http://', '')}`}
                         target='_blank'
                         rel='noreferrer'
                         className='flex items-center text-sm gap-1 bg-zinc-200 dark:bg-zinc-500 rounded-full py-0.5 px-2 hover:scale-110 transition-all'

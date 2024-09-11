@@ -5,11 +5,11 @@ import { useTranslation } from 'react-i18next'
 
 import { isValidEnsName } from '#/utils/ens'
 import { Avatar } from '#/components/avatar'
-import { cn, truncateAddress } from '#/lib/utilities'
 import { formatNumber } from '#/utils/formatNumber'
+import { cn, truncateAddress } from '#/lib/utilities'
 import FollowButton from '#/components/follow-button'
-import useFollowState from '#/hooks/use-follow-state'
 import type { LeaderboardFilter } from '#/types/common'
+import useFollowerState from '#/hooks/use-follower-state'
 
 interface TableRowProps {
   address: Address
@@ -78,10 +78,7 @@ const TableRow: React.FC<TableRowProps> = ({
   const router = useRouter()
   const pathname = usePathname()
   const { t } = useTranslation()
-  const { followerTag } = useFollowState({
-    address,
-    type: 'follower'
-  })
+  const { followerTag } = useFollowerState({ address })
 
   const isHome = pathname === '/'
   // const name = fetchedEnsProfile?.name

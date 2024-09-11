@@ -12,12 +12,12 @@ import { isValidEnsName } from '#/utils/ens'
 import { tagRegex } from '#/lib/constants/regex'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useCart } from '#/contexts/cart-context'
-import { cn, truncateAddress } from '#/lib/utilities'
 import { formatNumber } from '#/utils/formatNumber'
 import { BLOCKED_MUTED_TAGS } from '#/lib/constants'
-import useFollowState from '#/hooks/use-follow-state'
+import { cn, truncateAddress } from '#/lib/utilities'
 import LoadingCell from '../../../loaders/loading-cell'
 import Plus from 'public/assets/icons/plus-squared.svg'
+import useFollowerState from '#/hooks/use-follower-state'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
 
@@ -87,12 +87,9 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
   const router = useRouter()
   const pathname = usePathname()
   const { t } = useTranslation()
-  const { address: userAddress } = useAccount()
   const isCart = pathname.includes('/cart')
-  const { followerTag } = useFollowState({
-    address,
-    type: 'follower'
-  })
+  const { address: userAddress } = useAccount()
+  const { followerTag } = useFollowerState({ address })
 
   const {
     addCartItem,
