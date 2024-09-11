@@ -9,6 +9,7 @@ import TwitterIcon from 'public/assets/icons/twitter.svg'
 import HuggingEmoji from 'public/assets/icons/hugging.svg'
 import TelegramIcon from 'public/assets/icons/telegram.svg'
 import ChinaFlag from 'public/assets/icons/flags/china.svg'
+import SpainFlag from 'public/assets/icons/flags/spain.svg'
 import StarEyesEmoji from 'public/assets/icons/star-eyes.svg'
 import EtherscanIcon from 'public/assets/icons/etherscan.svg'
 import FranceFLag from 'public/assets/icons/flags/france.svg'
@@ -44,7 +45,8 @@ export const LANGUAGES = [
   { language: 'English', key: 'en', icon: USAFlag },
   { language: 'Slovenščina', key: 'si', icon: SloveniaFlag },
   { language: '简体中文', key: 'zh', icon: ChinaFlag },
-  { language: 'Français', key: 'fr', icon: FranceFLag }
+  { language: 'Français', key: 'fr', icon: FranceFLag },
+  { language: 'Español', key: 'es', icon: SpainFlag }
 ]
 
 export const DEFAULT_TAGS_TO_ADD = ['irl', 'bff', 'based', 'degen', 'top8']

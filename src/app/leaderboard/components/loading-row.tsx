@@ -68,7 +68,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
           </div>
           <div
             className={cn(
-              'flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 gap-1 hidden xl:flex',
+              'flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 gap-1 hidden lg:flex',
               isHome && 'lg:flex xl:hidden'
             )}
           >
@@ -90,7 +90,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
         </div>
       </div>
       <div className={`items-center justify-evenly flex sm:hidden w-full`}>
-        <div className='flex-col flex items-center'>
+        <div className='flex-col flex items-center gap-0.5'>
           <LoadingCell className='w-10 h-6 rounded-lg' />
           {staticStats ? (
             <p className='font-bold text-sm text-[#888] dark:text-[#aaa]'>{t('mutuals')}</p>
@@ -98,7 +98,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
             <LoadingCell className='h-4 w-20 rounded-md' />
           )}
         </div>
-        <div className='transition-all hover:scale-110 cursor-pointer flex-col items-center'>
+        <div className='flex flex-col items-center gap-0.5'>
           <LoadingCell className='w-10 h-6 rounded-lg' />
           {staticStats ? (
             <p className='font-bold text-sm text-[#888] dark:text-[#aaa]'>{t('followers')}</p>
@@ -106,7 +106,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
             <LoadingCell className='h-4 w-20 rounded-md' />
           )}
         </div>
-        <div className='transition-all hover:scale-110 cursor-pointer flex-col items-center'>
+        <div className='flex flex-col items-center gap-0.5'>
           <LoadingCell className='w-10 h-6 rounded-lg' />
           {staticStats ? (
             <p className='font-bold text-sm text-[#888] dark:text-[#aaa]'>{t('following')}</p>
@@ -114,7 +114,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
             <LoadingCell className='h-4 w-20 rounded-md' />
           )}
         </div>
-        <div className='transition-all hover:scale-110 cursor-pointer flex-col items-center'>
+        <div className='flex flex-col items-center gap-0.5'>
           <LoadingCell className='w-10 h-6 rounded-lg' />
           {staticStats ? (
             <p className='font-bold text-sm text-[#888] dark:text-[#aaa]'>{t('top8')}</p>
