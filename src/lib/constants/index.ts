@@ -10,6 +10,7 @@ import TelegramIcon from 'public/assets/icons/telegram.svg'
 import ChinaFlag from 'public/assets/icons/flags/china.svg'
 import StarEyesEmoji from 'public/assets/icons/star-eyes.svg'
 import EtherscanIcon from 'public/assets/icons/etherscan.svg'
+import FranceFLag from 'public/assets/icons/flags/france.svg'
 import PirateFlagEmoji from 'public/assets/icons/pirate-flag.svg'
 import SloveniaFlag from 'public/assets/icons/flags/slovenia.svg'
 import USAFlag from 'public/assets/icons/flags/united-states.svg'
@@ -41,7 +42,8 @@ export const BLOCKED_MUTED_TABS: ProfileTableTitleType[] = ['Blocked/Muted', 'Bl
 export const LANGUAGES = [
   { language: 'English', key: 'en', icon: USAFlag },
   { language: 'Slovenščina', key: 'si', icon: SloveniaFlag },
-  { language: '简体中文', key: 'zh', icon: ChinaFlag }
+  { language: '简体中文', key: 'zh', icon: ChinaFlag },
+  { language: 'Français', key: 'fr', icon: FranceFLag }
 ]
 
 export const DEFAULT_TAGS_TO_ADD = ['irl', 'bff', 'based', 'degen', 'top8']
