@@ -8,7 +8,8 @@ import { useTranslation } from 'react-i18next'
 import {
   leaderboardFilters,
   LEADERBOARD_CHUNK_SIZE,
-  leaderboardFiltersEmojies
+  leaderboardFiltersEmojies,
+  LEADERBOARD_FETCH_LIMIT_PARAM
 } from '#/lib/constants/index.ts'
 import TableRow from './row.tsx'
 import LoadingRow from './loading-row.tsx'
@@ -199,7 +200,11 @@ const LeaderboardTable = () => {
           {new Array(isLoading ? LEADERBOARD_CHUNK_SIZE : 0).fill(1).map((_, i) => (
             <LoadingRow key={i} />
           ))}
-          <div ref={loadChunkRef} className='h-px w-full' />
+          {(chunk * LEADERBOARD_CHUNK_SIZE) / LEADERBOARD_FETCH_LIMIT_PARAM < 1 &&
+            !isLoading &&
+            !(isFetchingNextLeaderboard || isFetchingPreviousLeaderboard) && (
+              <div ref={loadChunkRef} className='h-px w-full' />
+            )}
           {!isLoading && leaderboard?.length === 0 && (
             <div className='flex justify-center flex-col items-center h-40'>
               <p className='text-lg font-bold'>No results found</p>

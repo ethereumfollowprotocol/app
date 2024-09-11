@@ -30,7 +30,7 @@ const useLeaderboard = () => {
   useEffect(() => {
     if (
       entry?.isIntersecting &&
-      (chunk * LEADERBOARD_CHUNK_SIZE) / LEADERBOARD_FETCH_LIMIT_PARAM > 0
+      (chunk * LEADERBOARD_CHUNK_SIZE) / LEADERBOARD_FETCH_LIMIT_PARAM < 1
     )
       setChunk(prev => prev + 1)
   }, [entry])
