@@ -41,7 +41,7 @@ export const BLOCKED_MUTED_TABS: ProfileTableTitleType[] = ['Blocked/Muted', 'Bl
 export const LANGUAGES = [
   { language: 'English', key: 'en', icon: USAFlag },
   { language: 'Slovenščina', key: 'si', icon: SloveniaFlag },
-  { language: '中国人', key: 'zh', icon: ChinaFlag }
+  { language: '简体中文', key: 'zh', icon: ChinaFlag }
 ]
 
 export const DEFAULT_TAGS_TO_ADD = ['irl', 'bff', 'based', 'degen', 'top8']
