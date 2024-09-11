@@ -10,12 +10,12 @@ import { cookieToInitialState } from 'wagmi'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
+import Script from 'next/script'
 import Providers from './providers.tsx'
 import wagmiConfig from '../lib/wagmi.ts'
 import { Production } from './production.tsx'
 import { sharedMetadata } from '#/lib/metadata.ts'
 import { APP_DESCRIPTION } from '../lib/constants/index.ts'
-import Script from 'next/script'
 
 export const metadata: Metadata = sharedMetadata
 
@@ -78,6 +78,12 @@ const HeadTag = () => {
       <meta property='og:title' content='EFP' />
       <meta property='og:description' content={APP_DESCRIPTION} />
       <meta property='og:url' content='https://x.com/efp' />
+      <link rel='preconnect' href='https://fonts.googleapis.com' />
+      <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin='anonymous' />
+      <link
+        href='https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap'
+        rel='stylesheet'
+      />
     </head>
   )
 }

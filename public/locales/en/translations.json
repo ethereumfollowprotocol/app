@@ -1,4 +1,6 @@
 {
+  "language name": "English",
+
   "home": "Home",
   "recent": "Recent Activity",
   "no followers": "No followers",
@@ -11,9 +13,11 @@
   "follow ghost second": "Ghost your enemies.",
   "follower list first": "A follower list",
   "follower list second": "you own.",
+  "integrations": "Integrations",
   "partners": "Launch Partners",
   "sponsors": "Supported by grants from:",
   "support": "Support",
+
   "profile": "My Profile",
   "profile error": "User doesn't exist",
   "settings": "List Settings",
@@ -29,6 +33,7 @@
   "no bio": "Bio not set",
   "copied": "Copied",
   "add to top eight": "Add to 🔥My Top 8🔥",
+  "remove from top eight": "Remove from 🔥My Top 8🔥",
   "copy address": "Copy Address",
   "copy ens": "Copy ENS",
   "copy profile": "Copy Profile Link",
@@ -141,14 +146,19 @@
   "following_rank": "Following",
   "last updated": "Last updated",
 
+  "system": "System",
+  "light": "Light",
+  "dark": "Dark",
   "disconnect": "Disconnect",
   "connect": "Connect Wallet",
   "list": "List",
+  "primary": "Primary",
   "mint new list": "Mint new list",
   "accounts": "accounts",
   "search no results": "No results",
   "team": "Team",
   "docs": "Docs",
+  "bug bounty": "Bug Bounty",
   "followers": "Followers",
   "following": "Following",
   "search placeholder": "Search ENS or Address",
@@ -163,9 +173,9 @@
   "Blocked": "Blocked",
   "Block": "Block",
   "block": "block",
-  "Unblock": "Unblock",
+  "unblock": "Unblock",
+  "mute": "Mute",
   "Mute": "Mute",
-  "mute": "mute",
   "Muted": "Muted",
   "Unmute": "Unmute"
 }

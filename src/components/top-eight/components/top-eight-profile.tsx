@@ -8,8 +8,8 @@ import { Avatar } from '#/components/avatar'
 import { resolveEnsProfile } from '#/utils/ens'
 import { useCart } from '#/contexts/cart-context'
 import { cn, truncateAddress } from '#/lib/utilities'
-import useFollowState from '#/hooks/use-follow-state'
 import FollowButton from '#/components/follow-button'
+import useFollowerState from '#/hooks/use-follower-state'
 import LoadingCell from '#/components/loaders/loading-cell'
 import { listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
 import type { TopEightProfileType } from '../hooks/use-top-eight'
@@ -28,10 +28,7 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
   const profileName = fetchedEnsProfile?.name
   const profileAvatar = fetchedEnsProfile?.avatar
 
-  const { followerTag } = useFollowState({
-    address: profile?.address,
-    type: 'follower'
-  })
+  const { followerTag } = useFollowerState({ address: profile?.address })
 
   const {
     addCartItem,

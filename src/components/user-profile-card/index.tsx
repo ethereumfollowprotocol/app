@@ -4,12 +4,14 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import { useTheme } from 'next-themes'
+import { FaLink } from 'react-icons/fa'
 import { useState, type Ref } from 'react'
 import { IoMdSettings } from 'react-icons/io'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
 import { MdOutlineContentCopy } from 'react-icons/md'
+import { HiOutlineExternalLink } from 'react-icons/hi'
 import { usePathname, useRouter } from 'next/navigation'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
@@ -26,7 +28,7 @@ import { formatNumber } from '#/utils/formatNumber'
 import { profileCardSocials } from '#/lib/constants'
 import { cn, truncateAddress } from '#/lib/utilities'
 import FollowButton from '#/components/follow-button'
-import useFollowState from '#/hooks/use-follow-state'
+import ImageWithFallback from '../image-with-fallback'
 import CommonFollowers from './components/common-followers'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { ProfileDetailsResponse } from '#/types/requests'
@@ -35,7 +37,8 @@ import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 import DefaultHeader from 'public/assets/art/default-header.svg'
 import { useCoolMode } from '../follow-button/hooks/useCoolMode'
 import LoadingProfileCard from './components/loading-profile-card'
-import ImageWithFallback from '../image-with-fallback'
+import useFollowingState from '#/hooks/use-following-state'
+import useFollowerState from '#/hooks/use-follower-state'
 
 interface UserProfileCardProps {
   profileList?: number | null
@@ -68,8 +71,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
     setMoreOptionsDropdownOpen(false)
   })
 
-  const [copyAddressPressed, setCopyAddressPressed] = useState(false)
   const [copyENSPressed, setCopyENSPressed] = useState(false)
+  const [copyAddressPressed, setCopyAddressPressed] = useState(false)
+  const [copyProfileLinkPressed, setCopyProfileLinkPressed] = useState(false)
 
   const { data: fetchedEnsProfile, isLoading: isProfileLoading } = useQuery({
     queryKey: ['ens metadata', profile],
@@ -82,20 +86,14 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const profileName = fetchedEnsProfile?.name
   const profileAvatar = fetchedEnsProfile?.avatar
 
-  const { followState } = useFollowState({
-    address: profile?.address,
-    type: 'following'
-  })
-  const { followerTag } = useFollowState({
-    address: profile?.address,
-    type: 'follower'
-  })
+  const { followingState: followState } = useFollowingState({ address: profile?.address })
+  const { followerTag } = useFollowerState({ address: profile?.address })
 
   const router = useRouter()
   const { t } = useTranslation()
   const pathname = usePathname()
   const { resolvedTheme } = useTheme()
-  const { selectedList } = useEFPProfile()
+  const { selectedList, topEight } = useEFPProfile()
   const { openConnectModal } = useConnectModal()
   const { address: connectedAddress } = useAccount()
 
@@ -117,6 +115,16 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const isPendingUnblock = profile && hasListOpRemoveTag({ address: profile.address, tag: 'block' })
   const isPendingMute = profile && hasListOpAddTag({ address: profile.address, tag: 'mute' })
   const isPendingUnmute = profile && hasListOpRemoveTag({ address: profile.address, tag: 'mute' })
+
+  const isInTopEight = topEight.find(
+    item => item.address?.toLowerCase() === profile?.address?.toLowerCase()
+  )
+  const isAddingToTopEight = profile?.address
+    ? hasListOpAddTag({ address: profile?.address, tag: 'top8' })
+    : false
+  const isRemovingFromTopEight = profile?.address
+    ? hasListOpRemoveTag({ address: profile?.address, tag: 'top8' })
+    : false
 
   const onClickOption = (buttonText: 'Block' | 'Mute') => {
     if (!profile) return
@@ -227,7 +235,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   return (
     <div
       className={cn(
-        'flex glass-card border-[3px] overflow-hidden flex-col border-[#FFDBD9] dark:border-[#a36d7d] rounded-xl relative',
+        'flex glass-card border-[3px] z-10 flex-col border-[#FFDBD9] dark:border-[#a36d7d] rounded-xl relative',
         isResponsive ? 'xl:w-76 w-full 2xl:w-86' : 'w-80 3xs:w-92'
       )}
     >
@@ -270,7 +278,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 href={`https://app.ens.domains/${profileName || ''}`}
                 target='_blank'
                 rel='noreferrer'
-                className='flex gap-1 items-center hover:scale-110 transition-all bg-white/80 dark:bg-darkGrey/80 rounded-full py-[3px] px-2'
+                className='flex gap-1 items-center hover:scale-110 transition-all bg-white/80 dark:bg-darkGrey/80 rounded-full py-[3px] px-2 pl-1'
               >
                 <Image
                   alt='edit profile'
@@ -292,7 +300,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
               alt='profile header'
               width={360}
               height={120}
-              className={cn('w-full h-[120px] absolute object-cover top-0 left-0 -z-10')}
+              className={cn(
+                'w-full h-[120px] absolute object-cover rounded-t-lg top-0 left-0 -z-10'
+              )}
               unoptimized={true}
             />
           )}
@@ -355,7 +365,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                         <div
                           className={`${
                             showMoreOptions && moreOptionsDropdownOpen ? 'flex' : 'hidden'
-                          } absolute top-9 right-0 flex-col items-center gap-2 w-fit p-1 dark:border-zinc-600  dark:bg-darkGrey/85 bg-white/90 border-zinc-200 border-[3px] rounded-xl z-50 drop-shadow-lg`}
+                          } absolute top-9 right-0 flex-col items-center z-50 gap-2 w-fit p-1 dark:border-zinc-600  dark:bg-darkGrey/95 bg-white/95 border-zinc-200 border-[3px] rounded-xl drop-shadow-lg`}
                         >
                           {!isConnectedUserCard && (
                             <>
@@ -371,13 +381,15 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                                   height={16}
                                 />
                                 <p>
-                                  {followState === 'blocks'
-                                    ? isPendingUnblock
-                                      ? 'Block'
-                                      : 'Unblock'
-                                    : isPendingBlock
-                                      ? 'Unblock'
-                                      : 'Block'}
+                                  {t(
+                                    followState === 'blocks'
+                                      ? isPendingUnblock
+                                        ? 'Block'
+                                        : 'Unblock'
+                                      : isPendingBlock
+                                        ? 'Unblock'
+                                        : 'Block'
+                                  )}
                                 </p>
                               </button>
                               <button
@@ -392,30 +404,47 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                                   height={16}
                                 />
                                 <p>
-                                  {followState === 'mutes'
-                                    ? isPendingUnmute
-                                      ? 'Mute'
-                                      : 'Unmute'
-                                    : isPendingMute
-                                      ? 'Unmute'
-                                      : 'Mute'}
+                                  {t(
+                                    followState === 'mutes'
+                                      ? isPendingUnmute
+                                        ? 'Mute'
+                                        : 'Unmute'
+                                      : isPendingMute
+                                        ? 'Unmute'
+                                        : 'Mute'
+                                  )}
                                 </p>
                               </button>
                             </>
                           )}
-                          {/* <button
-                            onClick={() => {
-                              navigator.clipboard.writeText(profile.address)
-                              setCopyAddressPressed(true)
-                              setTimeout(() => setCopyAddressPressed(false), 3000)
-                            }}
-                            className='rounded-lg cursor-pointer hover:bg-darkGrey/5 dark:hover:bg-white/10 transition-colors w-full relative text-xs flex items-center gap-1 justify-center font-bold p-3'
-                          >
-                            <MdOutlineContentCopy className='text-base' />
-                            <p className='text-nowrap'>
-                              {t(copyAddressPressed ? 'remove from top eight' : 'add to top eight')}
-                            </p>
-                          </button> */}
+                          {!isConnectedUserCard && (
+                            <button
+                              onClick={() => {
+                                setMoreOptionsDropdownOpen(false)
+
+                                if (isAddingToTopEight)
+                                  return removeCartItem(listOpAddTag(profile?.address, 'top8'))
+                                if (isRemovingFromTopEight)
+                                  return removeCartItem(listOpRemoveTag(profile?.address, 'top8'))
+
+                                if (isInTopEight)
+                                  return addCartItem({
+                                    listOp: listOpRemoveTag(profile?.address, 'top8')
+                                  })
+
+                                if (followState === 'none')
+                                  addCartItem({ listOp: listOpAddListRecord(profile?.address) })
+                                addCartItem({ listOp: listOpAddTag(profile?.address, 'top8') })
+                              }}
+                              className='rounded-lg text-nowrap cursor-pointer hover:bg-darkGrey/5 dark:hover:bg-white/10 transition-colors w-full relative text-xs flex items-center gap-1 justify-center font-bold p-3'
+                            >
+                              {t(
+                                (isInTopEight || isAddingToTopEight) && !isRemovingFromTopEight
+                                  ? 'remove from top eight'
+                                  : 'add to top eight'
+                              )}
+                            </button>
+                          )}
                           <button
                             onClick={() => {
                               navigator.clipboard.writeText(profile.address)
@@ -427,6 +456,27 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                             <MdOutlineContentCopy className='text-base' />
                             <p className='text-nowrap'>
                               {t(copyAddressPressed ? 'copied' : 'copy address')}
+                            </p>
+                          </button>
+                          <button
+                            onClick={() => {
+                              navigator.clipboard.writeText(
+                                `${process.env.NEXT_PUBLIC_SITE_URL}/${
+                                  profileList
+                                    ? profileList === Number(profile.primary_list)
+                                      ? profile.address
+                                      : profileList
+                                    : profile.address
+                                }`
+                              )
+                              setCopyProfileLinkPressed(true)
+                              setTimeout(() => setCopyProfileLinkPressed(false), 3000)
+                            }}
+                            className='rounded-lg cursor-pointer hover:bg-darkGrey/5 dark:hover:bg-white/10 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3'
+                          >
+                            <MdOutlineContentCopy className='text-base' />
+                            <p className='text-nowrap'>
+                              {t(copyProfileLinkPressed ? 'copied' : 'copy profile')}
                             </p>
                           </button>
                           {profileName && (
@@ -444,27 +494,15 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                               </p>
                             </button>
                           )}
-                          <button
-                            onClick={() => {
-                              navigator.clipboard.writeText(
-                                `${process.env.NEXT_PUBLIC_SITE_URL}/${
-                                  profileList
-                                    ? profileList === Number(profile.primary_list)
-                                      ? profile.address
-                                      : profileList
-                                    : profile.address
-                                }`
-                              )
-                              setCopyENSPressed(true)
-                              setTimeout(() => setCopyENSPressed(false), 3000)
-                            }}
+                          <a
+                            href={`https://app.ens.domains${profileName ? `/${profileName}` : ''}`}
+                            target='_blank'
+                            rel='noreferrer'
                             className='rounded-lg cursor-pointer hover:bg-darkGrey/5 dark:hover:bg-white/10 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3'
                           >
-                            <MdOutlineContentCopy className='text-base' />
-                            <p className='text-nowrap'>
-                              {t(copyENSPressed ? 'copied' : 'copy profile')}
-                            </p>
-                          </button>
+                            <p className='text-nowrap'>ENS app</p>
+                            <HiOutlineExternalLink className='text-lg' />
+                          </a>
                           {openBlockModal && (
                             <button
                               onClick={() => {
@@ -503,56 +541,109 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                     <FollowButton address={profile.address} />
                   )}
                 </div>
-                <p className='text-[#888] dark:text-[#bbb] font-medium text-sm sm:text-sm text-center'>
-                  {profile.ens.records?.description ? (
-                    profile.ens.records.description.split(' ').map(word =>
-                      word.includes('@') ? (
-                        <Link
-                          key={word}
-                          href={`/${word.replace('@', '')}`}
-                          className='dark:text-blue-400 dark:hover:text-blue-300 text-blue-600 hover:text-blue-500'
-                        >
-                          {word}{' '}
-                        </Link>
-                      ) : (
-                        `${word} `
+                <div className='flex flex-col gap-2 w-full items-center'>
+                  <p className='text-[#888] dark:text-[#bbb] w-full font-medium text-sm sm:text-sm text-center'>
+                    {profile.ens.records?.description ? (
+                      profile.ens.records.description.split(' ').map(word =>
+                        word.includes('@') ? (
+                          <Link
+                            key={word}
+                            href={`/${word.replace('@', '')}`}
+                            className='dark:text-blue-400 dark:hover:text-blue-300 text-blue-600 hover:text-blue-500'
+                          >
+                            {word}{' '}
+                          </Link>
+                        ) : (
+                          `${word} `
+                        )
                       )
-                    )
-                  ) : (
-                    <i>{t('no bio')}</i>
-                  )}
-                </p>
-                <div className='flex items-center gap-2'>
-                  {profileCardSocials.map(social => (
-                    <a
-                      key={social.name}
-                      href={social.url(
-                        social.name === 'etherscan'
-                          ? profile.address
-                          : profile.ens.records?.[social.name] || ''
-                      )}
-                      target='_blank'
-                      rel='noreferrer'
-                      className={
-                        profile.ens.records?.[social.name] || social.name === 'etherscan'
-                          ? 'opacity-100 hover:opacity-80 hover:scale-110 transition-all'
-                          : 'opacity-20 pointer-events-none'
-                      }
-                    >
-                      <Image
-                        src={social.icon(resolvedTheme || '')}
-                        alt={social.name}
-                        width={36}
-                        height={36}
-                        className='rounded-full'
-                      />
-                    </a>
-                  ))}
+                    ) : (
+                      <i>{t('no bio')}</i>
+                    )}
+                  </p>
+                  <div className='w-full flex justify-center gap-2 items-center mb-1'>
+                    {profile.ens.records?.url && (
+                      <a
+                        href={`https://${profile.ens.records.url
+                          .replace('https://', '')
+                          .replace('http://', '')}`}
+                        target='_blank'
+                        rel='noreferrer'
+                        className='flex items-center text-sm gap-1 bg-zinc-200 dark:bg-zinc-500 rounded-full py-0.5 px-2 hover:scale-110 transition-all'
+                      >
+                        <p className='dark:text-blue-400 text-blue-600 font-semibold'>
+                          {profile.ens.records?.url.slice(-1) === '/'
+                            ? profile.ens.records?.url.replace('https://', '').slice(0, -1)
+                            : profile.ens.records?.url.replace('https://', '')}
+                        </p>
+                        <FaLink />
+                      </a>
+                    )}
+                    {profile.ens.contenthash && (
+                      <a
+                        href={`https://${profile.ens.name}.limo`}
+                        target='_blank'
+                        rel='noreferrer'
+                        className='flex items-center text-sm gap-1 bg-zinc-200 dark:bg-zinc-500 rounded-full py-0.5 px-2 pr-0.5 hover:scale-110 transition-all'
+                      >
+                        <p className='dark:text-blue-400 text-blue-600 font-semibold'>dweb</p>
+                        <Image
+                          src='/assets/icons/dweb.svg'
+                          alt='dweb'
+                          width={20}
+                          height={20}
+                          className='rounded-full'
+                        />
+                      </a>
+                    )}
+                  </div>
+                  <div className='flex items-center gap-2'>
+                    {profileCardSocials.map(social => (
+                      <a
+                        key={social.name}
+                        href={social.url(
+                          social.name === 'etherscan'
+                            ? profile.address
+                            : profile.ens.records?.[social.name] || ''
+                        )}
+                        target='_blank'
+                        rel='noreferrer'
+                        className={
+                          profile.ens.records?.[social.name] || social.name === 'etherscan'
+                            ? 'opacity-100 hover:opacity-80 hover:scale-110 transition-all'
+                            : 'opacity-20 pointer-events-none'
+                        }
+                      >
+                        <Image
+                          src={social.icon(resolvedTheme || '')}
+                          alt={social.name}
+                          width={36}
+                          height={36}
+                          className='rounded-full'
+                        />
+                      </a>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
             <div className='flex w-full flex-wrap justify-center gap-10 gap-y-6 sm:gap-y-9 sm:gap-x-[60px] items-center mx-auto text-center'>
-              <div>
+              <div
+                className='cursor-pointer hover:scale-110 transition-all'
+                onClick={() =>
+                  router.push(
+                    `/${
+                      pathname.length > 1 && pathname !== '/team'
+                        ? pathname.slice(1)
+                        : isConnectedUserCard
+                          ? selectedList === Number(profile.primary_list)
+                            ? profile.address
+                            : selectedList
+                          : profile.address
+                    }?tab=following`
+                  )
+                }
+              >
                 <div className='text-2xl sm:text-2xl text-center font-bold'>
                   {profile.stats === undefined
                     ? '-'
@@ -570,7 +661,22 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                   {t('following')}
                 </div>
               </div>
-              <div>
+              <div
+                className='cursor-pointer hover:scale-110 transition-all'
+                onClick={() =>
+                  router.push(
+                    `/${
+                      pathname.length > 1 && pathname !== '/team'
+                        ? pathname.slice(1)
+                        : isConnectedUserCard
+                          ? selectedList === Number(profile.primary_list)
+                            ? profile.address
+                            : selectedList
+                          : profile.address
+                    }?tab=followers`
+                  )
+                }
+              >
                 <div className='text-xl sm:text-2xl text-center font-bold'>
                   {profile.stats === undefined ? '-' : formatNumber(profile.stats.followers_count)}
                 </div>

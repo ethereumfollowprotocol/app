@@ -1,9 +1,16 @@
 'use client'
 
+import Image from 'next/image'
 import { FiSearch } from 'react-icons/fi'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 
+import {
+  leaderboardFilters,
+  LEADERBOARD_CHUNK_SIZE,
+  leaderboardFiltersEmojies,
+  LEADERBOARD_FETCH_LIMIT_PARAM
+} from '#/lib/constants/index.ts'
 import TableRow from './row.tsx'
 import LoadingRow from './loading-row.tsx'
 import PageSelector from './page-selector.tsx'
@@ -12,19 +19,21 @@ import type { LeaderboardItem } from '#/types/requests.ts'
 import type { LeaderboardFilter } from '#/types/common.ts'
 import LoadingCell from '#/components/loaders/loading-cell.tsx'
 import { formatNumberLeaderboard } from '#/utils/formatNumber.ts'
-import { leaderboardFilters, leaderboardFiltersEmojies } from '#/lib/constants/index.ts'
 
 const LeaderboardTable = () => {
   const router = useRouter()
   const {
     page,
+    chunk,
     filter,
     search,
     setPage,
+    setChunk,
     setFilter,
     timeStamp,
     leaderboard,
     resetSearch,
+    loadChunkRef,
     currentSearch,
     leaderboardStats,
     handleSearchEvent,
@@ -59,6 +68,7 @@ const LeaderboardTable = () => {
 
   return (
     <>
+      <h1 className='text-3xl sm:text-4xl md:text-5xl font-bold'>{t('leaderboard')}</h1>
       <div className='mt-4 sm:mt-6 mb-4 sm:mb-6 lg:mb-0 flex items-center justify-center flex-wrap gap-4 xs:gap-8'>
         <div className='gradient-border flex flex-col rounded-2xl items-center justify-center h-24 xs:h-[118px] w-full xs:w-64'>
           {isLeaderboardStatsLoading ? (
@@ -106,14 +116,15 @@ const LeaderboardTable = () => {
           {leaderboardFilters.map((item, i) => (
             <div
               key={item}
-              className={`p-2 font-bold w-[132px] px-4 capitalize cursor-pointer transition-all rounded-full ${
+              className={`p-2 font-bold px-4 flex gap-1 justify-center capitalize cursor-pointer transition-all rounded-full ${
                 filter === item
                   ? 'bg-zinc-100 dark:bg-[#777] shadow-inner'
                   : 'bg-zinc-300 dark:bg-[#555] hover:scale-110'
               }`}
               onClick={() => onSelectFilter(item)}
             >
-              {`${t(item)} ${leaderboardFiltersEmojies[i]}`}
+              <p>{t(item)}</p>
+              <Image src={leaderboardFiltersEmojies[i]} alt={item} width={22} height={22} />
             </div>
           ))}
         </div>
@@ -143,14 +154,15 @@ const LeaderboardTable = () => {
             {leaderboardFilters.map((item, i) => (
               <div
                 key={item}
-                className={`p-2 font-bold px-4 capitalize cursor-pointer rounded-full transition-all ${
+                className={`p-2 font-bold px-4 flex gap-1 capitalize cursor-pointer rounded-full transition-all ${
                   filter === item
                     ? 'bg-zinc-100 dark:bg-[#777] shadow-inner'
                     : 'bg-zinc-300 dark:bg-[#555] hover:scale-110'
                 }`}
                 onClick={() => onSelectFilter(item)}
               >
-                {`${t(item)} ${leaderboardFiltersEmojies[i]}`}
+                <p>{t(item)}</p>
+                <Image src={leaderboardFiltersEmojies[i]} alt={item} width={22} height={22} />
               </div>
             ))}
           </div>
@@ -158,29 +170,41 @@ const LeaderboardTable = () => {
             page={page}
             setPage={setPage}
             hasNextPage={true}
-            scrollOnChange={false}
             isLoading={isFetchingNextLeaderboard || isFetchingPreviousLeaderboard}
-            fetchNext={() => fetchNextLeaderboard()}
-            fetchPrevious={() => fetchPreviousLeaderboard()}
+            fetchNext={() => {
+              setChunk(1)
+              fetchNextLeaderboard()
+            }}
+            fetchPrevious={() => {
+              setChunk(1)
+              fetchPreviousLeaderboard()
+            }}
           />
         </div>
         <div className='glass-card border-zinc-200 dark:border-zinc-500 border-[3px] rounded-xl flex flex-col gap-4 p-1 sm:px-4 sm:py-6 lg:px-8 relative'>
-          {leaderboard?.map((entry: LeaderboardItem, index) => (
-            <TableRow
-              key={entry.address}
-              address={entry.address}
-              name={entry.name}
-              avatar={entry.avatar}
-              rank={Number(selectedRank(entry))}
-              followers={Number(entry.followers) || 0}
-              following={Number(entry.following) || 0}
-              mutuals={Number(entry.mutuals) || 0}
-              blocked={Number(entry.blocks) || 0}
-            />
-          ))}
-          {new Array(isLoading ? 100 : 0).fill(1).map((_, i) => (
+          {leaderboard
+            ?.slice(0, chunk * LEADERBOARD_CHUNK_SIZE)
+            .map((entry: LeaderboardItem, index) => (
+              <TableRow
+                key={entry.address}
+                address={entry.address}
+                name={entry.name}
+                avatar={entry.avatar}
+                rank={Number(selectedRank(entry))}
+                followers={Number(entry.followers) || 0}
+                following={Number(entry.following) || 0}
+                mutuals={Number(entry.mutuals) || 0}
+                blocked={Number(entry.blocks) || 0}
+              />
+            ))}
+          {new Array(isLoading ? LEADERBOARD_CHUNK_SIZE : 0).fill(1).map((_, i) => (
             <LoadingRow key={i} />
           ))}
+          {(chunk * LEADERBOARD_CHUNK_SIZE) / LEADERBOARD_FETCH_LIMIT_PARAM < 1 &&
+            !isLoading &&
+            !(isFetchingNextLeaderboard || isFetchingPreviousLeaderboard) && (
+              <div ref={loadChunkRef} className='h-px w-full' />
+            )}
           {!isLoading && leaderboard?.length === 0 && (
             <div className='flex justify-center flex-col items-center h-40'>
               <p className='text-lg font-bold'>No results found</p>
@@ -197,10 +221,15 @@ const LeaderboardTable = () => {
           page={page}
           setPage={setPage}
           hasNextPage={true}
-          scrollOnChange={false}
           isLoading={isFetchingNextLeaderboard || isFetchingPreviousLeaderboard}
-          fetchNext={() => fetchNextLeaderboard()}
-          fetchPrevious={() => fetchPreviousLeaderboard()}
+          fetchNext={() => {
+            setChunk(1)
+            fetchNextLeaderboard()
+          }}
+          fetchPrevious={() => {
+            setChunk(1)
+            fetchPreviousLeaderboard()
+          }}
         />
       </div>
     </>

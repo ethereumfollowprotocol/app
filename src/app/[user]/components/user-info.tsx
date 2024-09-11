@@ -197,7 +197,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     if (titleRef.current && !!searchParams.get('tab')) {
       titleRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
-  }, [])
+  }, [searchParams])
 
   return (
     <>
@@ -272,7 +272,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
               roles?.isManager
             }
             title='following'
-            customClass='hidden xl:flex xl:max-w-[520px] 2xl:max-w-[40%]'
+            customClass='hidden xl:flex xl:max-w-[520px] z-10 2xl:max-w-[40%]'
           />
           <UserProfilePageTable
             isLoading={followersIsLoading}
@@ -295,7 +295,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
             ref={titleRef}
             className='w-full pt-14 relative xl:hidden'
             style={{
-              scrollMarginTop: '120px'
+              scrollMarginTop: '100px'
             }}
           >
             <div className='w-full absolute top-[6px] left-0'>

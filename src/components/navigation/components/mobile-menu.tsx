@@ -31,7 +31,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ open, setOpen }) => {
   if (!open) return null
 
   return (
-    <div className=' bg-white/90 dark:bg-darkGrey/80 glass-card p-1 gap-1 z-50 shadow-md border-[3px] rounded-md border-zinc-200 dark:border-zinc-500 absolute top-[120%] flex flex-col items-end left-0'>
+    <div className='bg-white/90 dark:bg-darkGrey/80 glass-card p-1 gap-1 z-50 shadow-md border-[3px] rounded-md border-zinc-200 dark:border-zinc-500 absolute top-[120%] flex flex-col items-end right-0'>
       {NAV_ITEMS.map(item => (
         <div className='font-bold w-full' key={`${item.name}`}>
           <Link

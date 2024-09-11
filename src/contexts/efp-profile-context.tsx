@@ -26,7 +26,8 @@ import type {
   FollowingResponse,
   ProfileListsResponse,
   ProfileDetailsResponse,
-  FollowingTagsResponse
+  FollowingTagsResponse,
+  ENSProfile
 } from '#/types/requests'
 import { useCart } from './cart-context'
 import { fetchProfileRoles } from '#/api/fetchProfileRoles'
@@ -52,6 +53,12 @@ type EFPProfileContextType = {
   following: FollowingResponse[]
   allFollowingAddresses?: Address[]
   roles?: ProfileRoles
+  topEight: {
+    address: `0x${string}`
+    ens: ENSProfile | undefined
+  }[]
+  topEightIsLoading: boolean
+  topEightIsRefetching: boolean
   listsIsLoading: boolean
   profileIsLoading: boolean
   followingTagsLoading: boolean
@@ -116,6 +123,9 @@ type EFPProfileContextType = {
   >
   refetchAllFollowings: (options?: RefetchOptions) => Promise<QueryObserverResult<Address[], Error>>
   refetchRoles: (options?: RefetchOptions) => Promise<QueryObserverResult<ProfileRoles, Error>>
+  refetchTopEight: (
+    options?: RefetchOptions
+  ) => Promise<QueryObserverResult<FollowingResponse[], Error>>
   recentTags: string[]
   followingTagsFilter: string[]
   followersTagsFilter: string[]
@@ -379,6 +389,33 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       )
     : []
 
+  const {
+    data: topEightFetched,
+    refetch: refetchTopEight,
+    isLoading: topEightIsLoading,
+    isRefetching: topEightIsRefetching
+  } = useQuery({
+    queryKey: ['top8', selectedList],
+    queryFn: async () => {
+      if (!userAddress) return []
+
+      const fetchedFollowing = await fetchProfileFollowing({
+        addressOrName: userAddress,
+        list: selectedList,
+        limit: 100,
+        pageParam: 0,
+        tags: ['top8'],
+        sort: 'latest first'
+      })
+
+      return fetchedFollowing.following
+    },
+    staleTime: 300000
+  })
+
+  const topEight =
+    topEightFetched?.map(profile => ({ address: profile.data, ens: profile.ens })) || []
+
   useEffect(() => {
     const cartList = localStorage.getItem('cart list')
     const cartAddress = localStorage.getItem('cart address')
@@ -472,6 +509,9 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         following,
         allFollowingAddresses,
         roles,
+        topEight,
+        topEightIsLoading,
+        topEightIsRefetching,
         listsIsLoading,
         followerTagsLoading: followerTagsLoading || isRefetchingFollowerTagsQuery,
         followingTagsLoading: followingTagsLoading || isRefetchingFollowingTagsQuery,
@@ -499,6 +539,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         setFollowingSearch,
         setFollowersSearch,
         refetchRoles,
+        refetchTopEight,
         recentTags,
         followingTagsFilter,
         followersTagsFilter,

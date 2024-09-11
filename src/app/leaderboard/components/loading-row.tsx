@@ -1,12 +1,15 @@
-import LoadingCell from '#/components/loaders/loading-cell'
-import { cn } from '#/lib/utilities'
 import { usePathname } from 'next/navigation'
+import { useTranslation } from 'react-i18next'
+
+import { cn } from '#/lib/utilities'
+import LoadingCell from '#/components/loaders/loading-cell'
 
 interface LoadingRowProps {
   staticStats?: boolean
 }
 
 const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
+  const { t } = useTranslation()
   const pathname = usePathname()
   const isHome = pathname === '/'
 
@@ -36,7 +39,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
         <div className='flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 hidden lg:flex gap-1'>
           <LoadingCell className='w-10 h-6 rounded-lg' />
           {staticStats ? (
-            <p className='font-bold text-sm text-[#888] dark:text-[#aaa]'>Mutuals</p>
+            <p className='font-bold text-sm text-[#888] dark:text-[#aaa]'>{t('mutuals')}</p>
           ) : (
             <LoadingCell className='h-4 w-20 rounded-md' />
           )}
@@ -44,7 +47,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
         <div className='hidden sm:flex flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 gap-1'>
           <LoadingCell className='w-10 h-6 rounded-lg' />
           {staticStats ? (
-            <p className='font-bold text-sm text-[#888] dark:text-[#aaa]'>Followers</p>
+            <p className='font-bold text-sm text-[#888] dark:text-[#aaa]'>{t('followers')}</p>
           ) : (
             <LoadingCell className='h-4 w-20 rounded-md' />
           )}
@@ -57,7 +60,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
         >
           <LoadingCell className='w-10 h-6 rounded-lg' />
           {staticStats ? (
-            <p className='font-bold text-sm text-[#888] dark:text-[#aaa]'>Following</p>
+            <p className='font-bold text-sm text-[#888] dark:text-[#aaa]'>{t('following')}</p>
           ) : (
             <LoadingCell className='h-4 w-20 rounded-md' />
           )}
@@ -70,7 +73,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
         >
           <LoadingCell className='w-10 h-6 rounded-lg' />
           {staticStats ? (
-            <p className='font-bold text-sm text-[#888] dark:text-[#aaa]'>Blocked</p>
+            <p className='font-bold text-sm text-[#888] dark:text-[#aaa]'>{t('blocked')}</p>
           ) : (
             <LoadingCell className='h-4 w-20 rounded-md' />
           )}

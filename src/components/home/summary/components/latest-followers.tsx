@@ -27,7 +27,6 @@ const LatestFollowers = () => {
           page={page}
           setPage={setPage}
           adjustUrl={false}
-          scrollOnChange={false}
           hasSkipToFirst={false}
           displayPageNumber={false}
           fetchNext={fetchNextPage}
