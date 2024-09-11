@@ -122,15 +122,16 @@ const TableRow: React.FC<TableRowProps> = ({
           </div>
         </div>
         <div
-          className={`items-center justify-around hidden sm:flex sm:w-1/5 md:w-[55%] ${
-            isHome ? 'sm:w-1/4 md:w-1/3 lg:w-2/3 xl:w-1/4' : ''
+          className={`items-center justify-between hidden sm:flex ${
+            isHome ? 'sm:w-1/4 md:w-1/3 lg:w-2/3 xl:w-1/4' : 'sm:w-1/5 md:w-[55%]'
           }`}
         >
           {firstStat && (
             <div
               className={cn(
-                'flex-col items-center flex',
-                firstStat !== 'mutuals' && 'cursor-pointer hover:scale-110 transition-transform'
+                'flex-col items-center flex w-1/2 lg:w-1/3',
+                firstStat !== 'mutuals' && 'cursor-pointer hover:scale-110 transition-transform',
+                isHome ? 'xl:w-full 2xl:w-1/4' : 'xl:w-1/4'
               )}
               onClick={() => {
                 switch (firstStat) {
@@ -161,51 +162,71 @@ const TableRow: React.FC<TableRowProps> = ({
                   }[firstStat] || 0
                 )}
               </p>
-              <p className='font-bold text-sm capitalize text-[#888] dark:text-[#aaa]'>
+              <p className='font-bold text-sm text-nowrap capitalize text-[#888] dark:text-[#aaa]'>
                 {t(firstStat)}
               </p>
             </div>
           )}
           <div
             className={`${
-              firstStat === 'mutuals' ? 'hidden' : 'hidden md:flex'
-            } flex-col items-center`}
+              firstStat === 'mutuals'
+                ? 'hidden'
+                : isHome
+                  ? 'hidden md:flex xl:hidden 2xl:flex'
+                  : 'hidden md:flex'
+            } flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
           >
             <p className='font-bold text-sm sm:text-lg'>{formatNumber(mutuals || 0)}</p>
-            <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>{t('mutuals')}</p>
+            <p className='font-bold text-sm  text-[#888] text-nowrap dark:text-[#aaa]'>
+              {t('mutuals')}
+            </p>
           </div>
           <div
             className={`${
               firstStat && firstStat === 'followers'
                 ? 'hidden'
                 : firstStat === 'mutuals'
-                  ? 'hidden: md:flex'
-                  : 'hidden lg:flex'
-            } transition-all hover:scale-110 cursor-pointer flex-col items-center`}
+                  ? isHome
+                    ? 'hidden md:flex xl:hidden 2xl:flex'
+                    : 'hidden md:flex'
+                  : isHome
+                    ? 'hidden lg:flex xl:hidden'
+                    : 'hidden lg:flex'
+            } transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
             onClick={() => router.push(`/${address}?tab=followers`)}
           >
             <p className='font-bold text-sm sm:text-lg'>{formatNumber(followers || 0)}</p>
-            <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>{t('followers')}</p>
+            <p className='font-bold text-sm  text-[#888] text-nowrap dark:text-[#aaa]'>
+              {t('followers')}
+            </p>
           </div>
           <div
             className={`${
-              firstStat && firstStat === 'following' ? 'hidden' : 'hidden lg:flex'
-            } transition-all hover:scale-110 cursor-pointer flex-col items-center`}
+              firstStat && firstStat === 'following'
+                ? 'hidden'
+                : isHome
+                  ? 'hidden lg:flex xl:hidden'
+                  : 'hidden lg:flex'
+            } transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
             onClick={() => router.push(`/${address}?tab=following`)}
           >
             <p className='font-bold text-sm sm:text-lg'>{formatNumber(following || 0)}</p>
-            <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>{t('following')}</p>
+            <p className='font-bold text-sm  text-[#888] text-nowrap dark:text-[#aaa]'>
+              {t('following')}
+            </p>
           </div>
           <div
             className={`${
               (firstStat && firstStat === 'top8') || firstStat === 'blocked'
                 ? 'hidden'
                 : `hidden lg:flex ${isHome ? 'xl:hidden' : ''}`
-            } transition-all hover:scale-110 cursor-pointer flex-col items-center`}
+            } transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
             onClick={() => router.push(`/${address}?tab=following`)}
           >
             <p className='font-bold text-sm sm:text-lg'>{formatNumber(top8 || 0)}</p>
-            <p className='font-bold text-sm text-[#888] dark:text-[#aaa]'>{t('top8')}</p>
+            <p className='font-bold text-sm text-[#888] text-nowrap dark:text-[#aaa]'>
+              {t('top8')}
+            </p>
           </div>
           {/* <div
             className={` transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 hidden xl:flex ${
