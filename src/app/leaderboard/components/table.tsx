@@ -169,7 +169,6 @@ const LeaderboardTable = () => {
             page={page}
             setPage={setPage}
             hasNextPage={true}
-            scrollOnChange={false}
             isLoading={isFetchingNextLeaderboard || isFetchingPreviousLeaderboard}
             fetchNext={() => {
               setChunk(1)
@@ -217,7 +216,6 @@ const LeaderboardTable = () => {
           page={page}
           setPage={setPage}
           hasNextPage={true}
-          scrollOnChange={false}
           isLoading={isFetchingNextLeaderboard || isFetchingPreviousLeaderboard}
           fetchNext={() => {
             setChunk(1)
