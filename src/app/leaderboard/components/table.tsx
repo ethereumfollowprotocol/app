@@ -63,6 +63,7 @@ const LeaderboardTable = () => {
     followers: (entry: LeaderboardItem) => entry.followers_rank,
     following: (entry: LeaderboardItem) => entry.following_rank,
     mutuals: (entry: LeaderboardItem) => entry.mutuals_rank,
+    top8: (entry: LeaderboardItem) => entry.top8_rank,
     blocked: (entry: LeaderboardItem) => entry.blocks_rank
   }[filter]
 
@@ -194,11 +195,13 @@ const LeaderboardTable = () => {
                 followers={Number(entry.followers) || 0}
                 following={Number(entry.following) || 0}
                 mutuals={Number(entry.mutuals) || 0}
+                top8={Number(entry.top8) || 0}
                 blocked={Number(entry.blocks) || 0}
+                firstStat={filter}
               />
             ))}
           {new Array(isLoading ? LEADERBOARD_CHUNK_SIZE : 0).fill(1).map((_, i) => (
-            <LoadingRow key={i} />
+            <LoadingRow key={i} staticStats={false} />
           ))}
           {(chunk * LEADERBOARD_CHUNK_SIZE) / LEADERBOARD_FETCH_LIMIT_PARAM < 1 &&
             !isLoading &&

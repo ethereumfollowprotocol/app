@@ -139,11 +139,13 @@
 
   "leaderboard": "Leaderboard",
   "lists": "Lists",
+  "top8": "Top 8",
   "addresses": "Addresses",
   "blocks_rank": "Blocked",
   "mutuals_rank": "Mutuals",
   "followers_rank": "Followers",
   "following_rank": "Following",
+  "top8_rank": "Top 8",
   "last updated": "Last updated",
 
   "system": "System",

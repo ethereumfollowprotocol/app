@@ -19,6 +19,7 @@ interface TableRowProps {
   following?: number
   followers?: number
   mutuals?: number
+  top8?: number
   blocked?: number
   firstStat?: LeaderboardFilter
 }
@@ -31,6 +32,7 @@ const TableRow: React.FC<TableRowProps> = ({
   following,
   followers,
   mutuals,
+  top8,
   blocked,
   firstStat
 }) => {
@@ -85,7 +87,7 @@ const TableRow: React.FC<TableRowProps> = ({
   // const avatarUrl = fetchedEnsProfile?.avatar
 
   return (
-    <div className='flex flex-col gap-0'>
+    <div className='flex flex-col'>
       <div className='flex items-center w-full gap-4 p-2 sm:p-4 hover:bg-darkGrey/5 dark:hover:bg-darkGrey/40 rounded-xl sm:gap-6 md:gap-8 h-[75px]'>
         <div className='tabular-nums min-w-4 w-4 xxs:min-w-6 xxs:w-6 sm:w-10 flex justify-center text-right'>
           {rankNumber}
@@ -120,14 +122,14 @@ const TableRow: React.FC<TableRowProps> = ({
           </div>
         </div>
         <div
-          className={`items-center justify-between hidden sm:flex sm:w-1/5 md:w-[55%] ${
+          className={`items-center justify-around hidden sm:flex sm:w-1/5 md:w-[55%] ${
             isHome ? 'sm:w-1/4 md:w-1/3 lg:w-2/3 xl:w-1/4' : ''
           }`}
         >
           {firstStat && (
             <div
               className={cn(
-                'flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 hidden sm:flex lg:hidden xl:flex',
+                'flex-col items-center flex',
                 firstStat !== 'mutuals' && 'cursor-pointer hover:scale-110 transition-transform'
               )}
               onClick={() => {
@@ -154,31 +156,32 @@ const TableRow: React.FC<TableRowProps> = ({
                     followers,
                     following,
                     mutuals,
+                    top8,
                     blocked
                   }[firstStat] || 0
                 )}
               </p>
               <p className='font-bold text-sm capitalize text-[#888] dark:text-[#aaa]'>
-                {firstStat}
+                {t(firstStat)}
               </p>
             </div>
           )}
           <div
             className={`${
-              firstStat === 'mutuals'
-                ? 'hidden lg:flex xl:hidden'
-                : isHome
-                  ? 'hidden md:flex'
-                  : 'hidden sm:flex'
-            } flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
+              firstStat === 'mutuals' ? 'hidden' : 'hidden md:flex'
+            } flex-col items-center`}
           >
             <p className='font-bold text-sm sm:text-lg'>{formatNumber(mutuals || 0)}</p>
             <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>{t('mutuals')}</p>
           </div>
           <div
             className={`${
-              firstStat && firstStat !== 'mutuals' ? 'hidden lg:flex xl:hidden' : 'hidden md:flex'
-            } transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
+              firstStat && firstStat === 'followers'
+                ? 'hidden'
+                : firstStat === 'mutuals'
+                  ? 'hidden: md:flex'
+                  : 'hidden lg:flex'
+            } transition-all hover:scale-110 cursor-pointer flex-col items-center`}
             onClick={() => router.push(`/${address}?tab=followers`)}
           >
             <p className='font-bold text-sm sm:text-lg'>{formatNumber(followers || 0)}</p>
@@ -186,14 +189,25 @@ const TableRow: React.FC<TableRowProps> = ({
           </div>
           <div
             className={`${
-              firstStat ? 'lg:flex xl:hidden hidden' : `hidden lg:flex ${isHome ? 'xl:hidden' : ''}`
-            } transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
+              firstStat && firstStat === 'following' ? 'hidden' : 'hidden lg:flex'
+            } transition-all hover:scale-110 cursor-pointer flex-col items-center`}
             onClick={() => router.push(`/${address}?tab=following`)}
           >
             <p className='font-bold text-sm sm:text-lg'>{formatNumber(following || 0)}</p>
             <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>{t('following')}</p>
           </div>
           <div
+            className={`${
+              (firstStat && firstStat === 'top8') || firstStat === 'blocked'
+                ? 'hidden'
+                : `hidden lg:flex ${isHome ? 'xl:hidden' : ''}`
+            } transition-all hover:scale-110 cursor-pointer flex-col items-center`}
+            onClick={() => router.push(`/${address}?tab=following`)}
+          >
+            <p className='font-bold text-sm sm:text-lg'>{formatNumber(top8 || 0)}</p>
+            <p className='font-bold text-sm text-[#888] dark:text-[#aaa]'>{t('top8')}</p>
+          </div>
+          {/* <div
             className={` transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 hidden xl:flex ${
               isHome ? 'lg:flex xl:hidden' : ''
             } `}
@@ -201,7 +215,7 @@ const TableRow: React.FC<TableRowProps> = ({
           >
             <p className='font-bold text-sm sm:text-lg'>{formatNumber(blocked || 0)}</p>
             <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>{t('blocked')}</p>
-          </div>
+          </div> */}
         </div>
         <div
           className={`w-fit ${
@@ -211,11 +225,11 @@ const TableRow: React.FC<TableRowProps> = ({
           <FollowButton address={address} />
         </div>
       </div>
-      <div className={`items-center justify-between flex sm:hidden w-full`}>
-        {/* {firstStat && (
+      <div className={`items-center justify-evenly flex sm:hidden w-full`}>
+        {firstStat && (
           <div
             className={cn(
-              'flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 hidden sm:flex lg:hidden xl:flex',
+              'flex-col items-center flex',
               firstStat !== 'mutuals' && 'cursor-pointer hover:scale-110 transition-transform'
             )}
             onClick={() => {
@@ -227,6 +241,9 @@ const TableRow: React.FC<TableRowProps> = ({
                   router.push(`/${address}?tab=following`)
                   break
                 case 'mutuals':
+                  break
+                case 'top8':
+                  router.push(`/${address}?tab=followers`)
                   break
                 case 'blocked':
                   router.push(`/${address}?modal=blockmutelists`)
@@ -242,37 +259,49 @@ const TableRow: React.FC<TableRowProps> = ({
                   followers,
                   following,
                   mutuals,
+                  top8,
                   blocked
                 }[firstStat] || 0
               )}
             </p>
             <p className='font-bold text-sm capitalize text-[#888] dark:text-[#aaa]'>{firstStat}</p>
           </div>
-        )} */}
-        <div className='flex-col flex items-center w-1/2 lg:w-1/3 xl:w-1/4'>
+        )}
+        <div
+          className={cn('flex-col flex items-center', firstStat === 'mutuals' ? 'hidden' : 'flex')}
+        >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(mutuals || 0)}</p>
           <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>{t('mutuals')}</p>
         </div>
         <div
-          className='transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4'
+          className={cn(
+            'transition-all hover:scale-110 cursor-pointer flex-col items-center',
+            firstStat === 'followers' ? 'hidden' : 'flex'
+          )}
           onClick={() => router.push(`/${address}?tab=followers`)}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(followers || 0)}</p>
           <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>{t('followers')}</p>
         </div>
         <div
-          className='transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4'
+          className={cn(
+            'transition-all hover:scale-110 cursor-pointer flex-col items-center',
+            firstStat === 'following' ? 'hidden' : 'flex'
+          )}
           onClick={() => router.push(`/${address}?tab=following`)}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(following || 0)}</p>
           <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>{t('following')}</p>
         </div>
         <div
-          className='transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 flex'
-          onClick={() => router.push(`/${address}?modal=blockmutelists`)}
+          className={cn(
+            firstStat === 'blocked' || firstStat === 'top8' ? 'hidden' : 'flex',
+            'transition-all hover:scale-110 cursor-pointer flex-col items-center'
+          )}
+          onClick={() => router.push(`/${address}`)}
         >
-          <p className='font-bold text-sm sm:text-lg'>{formatNumber(blocked || 0)}</p>
-          <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>{t('blocked')}</p>
+          <p className='font-bold text-sm sm:text-lg'>{formatNumber(top8 || 0)}</p>
+          <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>{t('top8')}</p>
         </div>
       </div>
     </div>
