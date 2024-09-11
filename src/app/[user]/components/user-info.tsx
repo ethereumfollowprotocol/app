@@ -295,7 +295,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
             ref={titleRef}
             className='w-full pt-14 relative xl:hidden'
             style={{
-              scrollMarginTop: '120px'
+              scrollMarginTop: '100px'
             }}
           >
             <div className='w-full absolute top-[6px] left-0'>
