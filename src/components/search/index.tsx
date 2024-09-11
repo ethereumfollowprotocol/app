@@ -161,7 +161,10 @@ export function Search({
                 key={result.name}
                 onClick={() => {
                   if (isEditor && result.resolvedAddress) addToCart(result.resolvedAddress.id)
-                  else router.push(`/${result.resolvedAddress?.id || result.name}`)
+                  else
+                    router.push(
+                      `/${result.resolvedAddress?.id || result.name}?search=${result.name}`
+                    )
 
                   resetSearch()
                 }}
@@ -244,7 +247,10 @@ export function Search({
                     key={result.name}
                     onClick={() => {
                       if (isEditor && result.resolvedAddress) addToCart(result.resolvedAddress.id)
-                      else router.push(`/${result.resolvedAddress?.id || result.name}`)
+                      else
+                        router.push(
+                          `/${result.resolvedAddress?.id || result.name}?search=${result.name}`
+                        )
 
                       resetSearch()
                     }}

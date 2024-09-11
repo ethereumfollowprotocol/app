@@ -12,8 +12,9 @@ import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
 import { MdOutlineContentCopy } from 'react-icons/md'
 import { HiOutlineExternalLink } from 'react-icons/hi'
-import { usePathname, useRouter } from 'next/navigation'
+import { PiArrowElbowRightUpBold } from 'react-icons/pi'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import {
   listOpAddTag,
@@ -29,7 +30,9 @@ import { profileCardSocials } from '#/lib/constants'
 import { cn, truncateAddress } from '#/lib/utilities'
 import FollowButton from '#/components/follow-button'
 import ImageWithFallback from '../image-with-fallback'
+import useFollowerState from '#/hooks/use-follower-state'
 import CommonFollowers from './components/common-followers'
+import useFollowingState from '#/hooks/use-following-state'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import { isValidEnsName, resolveEnsProfile } from '#/utils/ens'
@@ -37,8 +40,6 @@ import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 import DefaultHeader from 'public/assets/art/default-header.svg'
 import { useCoolMode } from '../follow-button/hooks/useCoolMode'
 import LoadingProfileCard from './components/loading-profile-card'
-import useFollowingState from '#/hooks/use-following-state'
-import useFollowerState from '#/hooks/use-follower-state'
 
 interface UserProfileCardProps {
   profileList?: number | null
@@ -93,9 +94,14 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const { t } = useTranslation()
   const pathname = usePathname()
   const { resolvedTheme } = useTheme()
-  const { selectedList, topEight } = useEFPProfile()
   const { openConnectModal } = useConnectModal()
+  const { selectedList, topEight } = useEFPProfile()
   const { address: connectedAddress } = useAccount()
+
+  const searchParams = useSearchParams()
+  const searchURLParam = searchParams.get('search')
+  const hasSearchedDifferentName =
+    searchURLParam && searchURLParam.length > 0 && searchURLParam !== profile?.ens.name
 
   const isConnectedUserCard =
     pathname === '/' ||
@@ -292,7 +298,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
             ) : null}
           </div>
           {isProfileLoading ? (
-            <LoadingCell className='w-full h-[120px] absolute top-0 left-0' />
+            <LoadingCell className='w-full h-[120px] absolute top-0 left-0 rounded-t-lg' />
           ) : (
             <ImageWithFallback
               src={profile.ens.header || DefaultHeader}
@@ -334,12 +340,22 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                     <LoadingCell className='w-48 sm:w-68 xl:w-3/4 h-7 rounded-lg' />
                   ) : (
                     <div
-                      className={`${
+                      className={cn(
+                        'font-bold flex gap-2 items-center relative text-center',
                         isResponsive
                           ? 'max-w-[90%] xl:max-w-72 relative 2xl:max-w-[325px] sm:text-2xl text-xl'
-                          : 'max-w-[332px] text-2xl'
-                      } font-bold flex gap-2 items-center relative text-center`}
+                          : 'max-w-[332px] text-2xl',
+                        hasSearchedDifferentName && 'mb-[22px]'
+                      )}
                     >
+                      {hasSearchedDifferentName && (
+                        <div className='absolute -bottom-[22px] w-full flex justify-center'>
+                          <div className=' flex items-center gap-1 rounded-full px-2 py-0.5 bg-darkGrey dark:bg-white text-white dark:text-darkGrey'>
+                            <p className='text-xs'>{searchURLParam}</p>
+                            <PiArrowElbowRightUpBold className='text-sm -translate-y-[2px]' />
+                          </div>
+                        </div>
+                      )}
                       <Link
                         href={`/${profile.address}`}
                         className={showMoreOptions ? 'w-[87.5%]' : 'w-full'}
@@ -561,7 +577,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                       <i>{t('no bio')}</i>
                     )}
                   </p>
-                  <div className='w-full flex justify-center gap-2 items-center mb-1'>
+                  <div className='w-full flex justify-center gap-2 items-center'>
                     {profile.ens.records?.url && (
                       <a
                         href={`https://${profile.ens.records.url
@@ -569,7 +585,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                           .replace('http://', '')}`}
                         target='_blank'
                         rel='noreferrer'
-                        className='flex items-center text-sm gap-1 bg-zinc-200 dark:bg-zinc-500 rounded-full py-0.5 px-2 hover:scale-110 transition-all'
+                        className='flex items-center text-sm gap-1 mb-1 bg-zinc-200 dark:bg-zinc-500 rounded-full py-0.5 px-2 hover:scale-110 transition-all'
                       >
                         <p className='dark:text-blue-400 text-blue-600 font-semibold'>
                           {profile.ens.records?.url.slice(-1) === '/'
@@ -584,7 +600,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                         href={`https://${profile.ens.name}.limo`}
                         target='_blank'
                         rel='noreferrer'
-                        className='flex items-center text-sm gap-1 bg-zinc-200 dark:bg-zinc-500 rounded-full py-0.5 px-2 pr-0.5 hover:scale-110 transition-all'
+                        className='flex items-center text-sm gap-1 mb-1 bg-zinc-200 dark:bg-zinc-500 rounded-full py-0.5 px-2 pr-0.5 hover:scale-110 transition-all'
                       >
                         <p className='dark:text-blue-400 text-blue-600 font-semibold'>dweb</p>
                         <Image

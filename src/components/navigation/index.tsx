@@ -91,7 +91,7 @@ const Navigation = () => {
                     <div className='flex flex-col glass-card dark:bg-black/80 bg-white/90 border-[3px] border-zinc-200 dark:border-zinc-500 p-1 rounded-lg shadow-md'>
                       {LANGUAGES.map(lang => (
                         <div
-                          className=' p-3 pl-8 relative font-bold rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-all'
+                          className='p-3 pl-8 relative font-bold rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-all'
                           key={lang.language}
                           onClick={() => {
                             changeLanguage(lang)
@@ -106,9 +106,9 @@ const Navigation = () => {
                               className='absolute left-2 top-[17px]'
                             />
                           )}
-                          <div className='flex items-center gap-2 pr-5'>
+                          <div className='flex items-center gap-2 w-[138px]'>
                             <Image src={lang.icon} alt='Language icon' width={30} height={30} />
-                            <p>{lang.language}</p>
+                            <p className='text-nowrap w-fit'>{lang.language}</p>
                           </div>
                         </div>
                       ))}

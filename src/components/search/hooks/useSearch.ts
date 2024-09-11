@@ -3,9 +3,8 @@ import { useTranslation } from 'react-i18next'
 import { isAddress, type Address } from 'viem'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
-import { useQueryState } from 'next-usequerystate'
+import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import { useAccount } from 'wagmi'
 import { resolveEnsAddress } from '#/utils/ens'
@@ -21,14 +20,10 @@ const useSearch = (isEditor?: boolean) => {
   const [dropdownMenuOpen, setDropdownMenuOpen] = useState(false)
   const [dialogOpen, setDialogOpen] = useState<undefined | boolean>(undefined)
 
-  const searchParams = useSearchParams()
-  const initialSearch = searchParams.get('search')
-  const [currentSearch, setCurrentSearch] = useState(initialSearch ?? '')
-  const [search, setSearch] = useQueryState('search', {
-    history: 'push',
-    parse: value => value?.trim().toLowerCase(),
-    serialize: value => value.trim().toLowerCase()
-  })
+  // const searchParams = useSearchParams()
+  // const initialSearch = searchParams.get('search')
+  const [currentSearch, setCurrentSearch] = useState('')
+  const [search, setSearch] = useState('')
 
   const router = useRouter()
   const pathname = usePathname()
@@ -43,14 +38,14 @@ const useSearch = (isEditor?: boolean) => {
   })
   const searchBarRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
 
-  useEffect(() => {
-    if (initialSearch && initialSearch?.length > 0 && searchBarRef) {
-      searchBarRef.current?.focus()
-      searchBarRef.current?.setSelectionRange(initialSearch?.length, initialSearch.length)
-      setDropdownMenuOpen(true)
-      setDialogOpen(true)
-    }
-  }, [searchBarRef])
+  // useEffect(() => {
+  //   if (initialSearch && initialSearch?.length > 0 && searchBarRef) {
+  //     searchBarRef.current?.focus()
+  //     searchBarRef.current?.setSelectionRange(initialSearch?.length, initialSearch.length)
+  //     setDropdownMenuOpen(true)
+  //     setDialogOpen(true)
+  //   }
+  // }, [searchBarRef])
 
   useEffect(() => {
     if (dialogOpen) searchBarRef.current?.focus()
@@ -77,7 +72,6 @@ const useSearch = (isEditor?: boolean) => {
   const searchResult = searchResultStatus === 'success' ? data.slice(0, 5) : []
 
   const resetSearch = () => {
-    setSearch('')
     setCurrentSearch('')
     setDropdownMenuOpen(false)
     searchBarRef.current?.blur()
@@ -191,12 +185,12 @@ const useSearch = (isEditor?: boolean) => {
       currentSearch.includes('.') ||
       !Number.isNaN(Number(currentSearch))
     ) {
-      resetSearch()
       const address = isAddress(currentSearch)
         ? currentSearch
         : await resolveEnsAddress(currentSearch)
 
-      router.push(`/${address || currentSearch}`)
+      router.push(`/${address || currentSearch}?search=${currentSearch}`)
+      resetSearch()
     }
   }
 

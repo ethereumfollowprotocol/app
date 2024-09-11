@@ -38,7 +38,7 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
       <div className='pointer-events-none text-zinc-500 absolute flex justify-start px-2 w-full left-0 top-1 font-bold'>
         <LoadingCell isStatic={isStatic} className='w-10 h-5 mt-1 rounded-lg' />
       </div>
-      <LoadingCell className='w-full h-[120px] absolute top-0 left-0 -z-10' />
+      <LoadingCell className='w-full h-[120px] absolute top-0 rounded-t-lg left-0 -z-10' />
 
       <div
         className={`pointer-events-none flex w-full xl:items-center flex-col pt-8 px-4 sm:p-6 sm:pt-9 pb-6 ${
