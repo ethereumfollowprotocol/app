@@ -125,7 +125,7 @@ const ConnectButton = () => {
         >
           <div
             className={cn(
-              'flex flex-col w-full transition-all overflow-visible max-h-[75vh] sm:h-auto',
+              'flex flex-col w-full transition-all overflow-x-visible max-h-[75vh] sm:h-auto',
               languageMenOpenu || listMenuOpen || themeMenuOpen
                 ? '-translate-x-[195px] sm:translate-x-0 sm:p-1'
                 : 'p-1',
@@ -159,16 +159,21 @@ const ConnectButton = () => {
               >
                 <FiArrowLeft className='text-xl' />
                 <div className='flex gap-2'>
-                  <Image src={selectedLanguage?.icon || ''} alt='Language icon' width={24} />
+                  <Image
+                    src={selectedLanguage?.icon || ''}
+                    alt='Language icon'
+                    width={24}
+                    className='rounded-md'
+                  />
                   <p className='font-bold '>{selectedLanguage?.language}</p>
                 </div>
               </div>
               <div
-                className={`absolute -right-[202px] sm:right-[95%] -top-[52px] z-50 sm:-top-[6px] ${
+                className={`absolute -right-[202px] sm:right-[95%] max-h-[76vh] -top-[52px] overflow-scroll z-50 sm:-top-[6px] ${
                   languageMenOpenu ? 'block' : 'hidden'
                 } group-hover:block sm:pr-6`}
               >
-                <div className='flex flex-col sm:grid grid-cols-2 gap-2 gap-x-px w-[200px] sm:w-[420px] bg-transparent sm:bg-white/90 sm:dark:bg-darkGrey/90 border-[3px] border-zinc-200 dark:border-zinc-500 p-1 rounded-lg shadow-md'>
+                <div className='flex overflow-auto flex-col sm:grid grid-cols-2 gap-2 gap-x-px w-[200px] sm:w-[450px] bg-transparent sm:bg-white/90 sm:dark:bg-darkGrey/90 border-[3px] border-zinc-200 dark:border-zinc-500 p-1 rounded-lg shadow-md'>
                   <div
                     onClick={() => setLanguageMenuOpen(false)}
                     className='flex sm:hidden justify-between items-center w-full group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/60 dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer'
@@ -194,7 +199,12 @@ const ConnectButton = () => {
                         />
                       )}
                       <div className='flex gap-2 pr-3'>
-                        <Image src={lang.icon} alt='Language icon' width={24} />
+                        <Image
+                          src={lang.icon}
+                          alt='Language icon'
+                          width={24}
+                          className='rounded-md'
+                        />
                         <p className='text-nowrap'>{lang.language}</p>
                       </div>
                     </div>

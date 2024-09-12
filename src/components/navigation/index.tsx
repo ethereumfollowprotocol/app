@@ -92,7 +92,7 @@ const Navigation = () => {
                   >
                     <div
                       className={cn(
-                        'grid w-[420px] grid-cols-2 gap-x-px glass-card dark:bg-black/80 bg-white/90 border-[3px] border-zinc-200 dark:border-zinc-500 p-1 rounded-lg shadow-md'
+                        'grid w-[450px] grid-cols-2 gap-x-px glass-card dark:bg-black/80 bg-white/90 border-[3px] border-zinc-200 dark:border-zinc-500 p-1 rounded-lg shadow-md'
                       )}
                     >
                       {LANGUAGES.map(lang => (
