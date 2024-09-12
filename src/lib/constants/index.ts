@@ -1,6 +1,7 @@
 import type { FollowSortType } from '#/types/requests'
 import type { ProfileTableTitleType, ProfileTabType } from '#/types/common'
 
+import FireEmoji from 'public/assets/icons/fire.svg'
 import EyesEmoji from 'public/assets/icons/eyes.svg'
 import GithubIcon from 'public/assets/icons/github.svg'
 import DiscordIcon from 'public/assets/icons/discord.svg'
@@ -8,9 +9,11 @@ import TwitterIcon from 'public/assets/icons/twitter.svg'
 import HuggingEmoji from 'public/assets/icons/hugging.svg'
 import TelegramIcon from 'public/assets/icons/telegram.svg'
 import ChinaFlag from 'public/assets/icons/flags/china.svg'
+import SpainFlag from 'public/assets/icons/flags/spain.svg'
 import StarEyesEmoji from 'public/assets/icons/star-eyes.svg'
 import EtherscanIcon from 'public/assets/icons/etherscan.svg'
 import FranceFLag from 'public/assets/icons/flags/france.svg'
+import GermanyFLag from 'public/assets/icons/flags/germany.svg'
 import PirateFlagEmoji from 'public/assets/icons/pirate-flag.svg'
 import SloveniaFlag from 'public/assets/icons/flags/slovenia.svg'
 import USAFlag from 'public/assets/icons/flags/united-states.svg'
@@ -43,7 +46,9 @@ export const LANGUAGES = [
   { language: 'English', key: 'en', icon: USAFlag },
   { language: 'Slovenščina', key: 'si', icon: SloveniaFlag },
   { language: '简体中文', key: 'zh', icon: ChinaFlag },
-  { language: 'Français', key: 'fr', icon: FranceFLag }
+  { language: 'Français', key: 'fr', icon: FranceFLag },
+  { language: 'Español', key: 'es', icon: SpainFlag },
+  { language: 'Deutsch', key: 'de', icon: GermanyFLag }
 ]
 
 export const DEFAULT_TAGS_TO_ADD = ['irl', 'bff', 'based', 'degen', 'top8']
@@ -72,11 +77,12 @@ export const NAV_ITEMS = [
   }
 ]
 
-export const leaderboardFilters = ['mutuals', 'followers', 'following', 'blocked'] as const
+export const leaderboardFilters = ['mutuals', 'followers', 'following', 'top8', 'blocked'] as const
 export const leaderboardFiltersEmojies = [
   HuggingEmoji,
   StarEyesEmoji,
   EyesEmoji,
+  FireEmoji,
   PirateFlagEmoji
 ] as const
 
