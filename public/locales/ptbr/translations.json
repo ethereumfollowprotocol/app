@@ -1,6 +1,6 @@
 {
   "language name": "Português (BR)",
-  
+
   "home": "Início",
   "recent": "Atividade Recente",
   "no followers": "sem seguidores",
@@ -17,6 +17,7 @@
   "partners": "Parceiros de Lançamento",
   "sponsors": "Patrocinado por:",
   "support": "Suporte",
+
   "profile": "Meu Perfil",
   "profile error": "Usuário não existe",
   "settings": "Configurações da Lista",
@@ -66,6 +67,7 @@
   "set as primary": "Configurar lista como Lista Principal",
   "resolved": "Resolvido:",
   "no resolution": "Sem resolução",
+
   "editor title": "Editor",
   "empty cart": "Seu carrinho está vazio. Siga pessoas e volte aqui para confirmar na cadeia de blocos.",
   "add": "Adicionar",
@@ -137,6 +139,8 @@
   "mutuals_rank": "Mutuais",
   "followers_rank": "Seguidores",
   "following_rank": "Seguindo",
+  "top8": "Top 8",
+  "top8_rank": "Top 8",
   "last updated": "Última atualização",
   "system": "Sistema",
   "light": "Claro",
@@ -165,7 +169,7 @@
   "Blocked": "Bloqueado",
   "Block": "Bloquear",
   "block": "bloquear",
-  "unblock": "Desbloquear",
+  "Unblock": "Desbloquear",
   "mute": "Silenciar",
   "Mute": "Silenciar",
   "Muted": "Silenciado",

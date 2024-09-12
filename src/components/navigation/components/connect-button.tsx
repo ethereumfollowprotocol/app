@@ -168,7 +168,7 @@ const ConnectButton = () => {
                   languageMenOpenu ? 'block' : 'hidden'
                 } group-hover:block sm:pr-6`}
               >
-                <div className='flex flex-col gap-2 min-w-[190px] bg-transparent sm:bg-white/90 sm:dark:bg-darkGrey/90 border-[3px] border-zinc-200 dark:border-zinc-500 p-1 rounded-lg shadow-md'>
+                <div className='flex flex-col sm:grid grid-cols-2 gap-2 gap-x-px w-[200px] sm:w-[420px] bg-transparent sm:bg-white/90 sm:dark:bg-darkGrey/90 border-[3px] border-zinc-200 dark:border-zinc-500 p-1 rounded-lg shadow-md'>
                   <div
                     onClick={() => setLanguageMenuOpen(false)}
                     className='flex sm:hidden justify-between items-center w-full group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/60 dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer'
@@ -195,7 +195,7 @@ const ConnectButton = () => {
                       )}
                       <div className='flex gap-2 pr-3'>
                         <Image src={lang.icon} alt='Language icon' width={24} />
-                        <p>{lang.language}</p>
+                        <p className='text-nowrap'>{lang.language}</p>
                       </div>
                     </div>
                   ))}
