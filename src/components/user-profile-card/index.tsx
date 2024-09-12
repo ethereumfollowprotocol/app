@@ -101,7 +101,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const searchParams = useSearchParams()
   const searchURLParam = searchParams.get('search')
   const hasSearchedDifferentName =
-    searchURLParam && searchURLParam.length > 0 && searchURLParam !== profile?.ens.name
+    searchURLParam && searchURLParam.length > 0 && searchURLParam !== profile?.ens?.name
 
   const isConnectedUserCard =
     pathname === '/' ||
