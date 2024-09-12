@@ -3,7 +3,7 @@ import Backend from 'i18next-http-backend'
 import { initReactI18next } from 'react-i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 
-import translations from '../../public/locales/en/translations.json'
+import translations from '../../public/locales/english/translations.json'
 
 i18n
   .use(Backend)
