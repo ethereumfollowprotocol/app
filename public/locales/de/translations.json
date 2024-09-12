@@ -144,6 +144,8 @@
   "mutuals_rank": "Gemeinsame Follower",
   "followers_rank": "Follower",
   "following_rank": "Folgt",
+  "top8": "Top 8",
+  "top8_rank": "Top 8",
   "last updated": "Zuletzt aktualisiert",
 
   "system": "System",
@@ -173,7 +175,7 @@
   "Blocked": "Blockiert",
   "Block": "Blockieren",
   "block": "blockieren",
-  "unblock": "Entblocken",
+  "Unblock": "Entblocken",
   "mute": "Stummschalten",
   "Mute": "Stummschalten",
   "Muted": "Stummgeschaltet",

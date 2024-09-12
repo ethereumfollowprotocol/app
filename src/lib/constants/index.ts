@@ -13,6 +13,7 @@ import SpainFlag from 'public/assets/icons/flags/spain.svg'
 import StarEyesEmoji from 'public/assets/icons/star-eyes.svg'
 import EtherscanIcon from 'public/assets/icons/etherscan.svg'
 import FranceFLag from 'public/assets/icons/flags/france.svg'
+import GermanyFLag from 'public/assets/icons/flags/germany.svg'
 import PirateFlagEmoji from 'public/assets/icons/pirate-flag.svg'
 import SloveniaFlag from 'public/assets/icons/flags/slovenia.svg'
 import USAFlag from 'public/assets/icons/flags/united-states.svg'
@@ -46,7 +47,8 @@ export const LANGUAGES = [
   { language: 'Slovenščina', key: 'si', icon: SloveniaFlag },
   { language: '简体中文', key: 'zh', icon: ChinaFlag },
   { language: 'Français', key: 'fr', icon: FranceFLag },
-  { language: 'Español', key: 'es', icon: SpainFlag }
+  { language: 'Español', key: 'es', icon: SpainFlag },
+  { language: 'Deutsch', key: 'de', icon: GermanyFLag }
 ]
 
 export const DEFAULT_TAGS_TO_ADD = ['irl', 'bff', 'based', 'degen', 'top8']
