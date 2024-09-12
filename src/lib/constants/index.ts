@@ -42,11 +42,11 @@ export const PROFILE_TABS: ProfileTabType[] = ['following', 'followers']
 export const BLOCKED_MUTED_TABS: ProfileTableTitleType[] = ['Blocked/Muted', 'Blocked/Muted By']
 
 export const LANGUAGES = [
-  { language: 'English', key: 'en', icon: USAFlag },
-  { language: 'Slovenščina', key: 'si', icon: SloveniaFlag },
-  { language: '简体中文', key: 'zh', icon: ChinaFlag },
-  { language: 'Français', key: 'fr', icon: FranceFLag },
-  { language: 'Español', key: 'es', icon: SpainFlag }
+  { language: 'English', key: 'english', icon: USAFlag },
+  { language: 'Slovenščina', key: 'slovenian', icon: SloveniaFlag },
+  { language: '简体中文', key: 'chinese', icon: ChinaFlag },
+  { language: 'Français', key: 'french', icon: FranceFLag },
+  { language: 'Español', key: 'spanish', icon: SpainFlag }
 ]
 
 export const DEFAULT_TAGS_TO_ADD = ['irl', 'bff', 'based', 'degen', 'top8']
