@@ -16,6 +16,7 @@ import CartButton from './components/cart-button.tsx'
 import FullLogoDark from 'public/assets/logo-full-dark.svg'
 import ConnectButton from './components/connect-button.tsx'
 import GreenCheck from 'public/assets/icons/check-green.svg'
+import { cn } from '#/lib/utilities.ts'
 
 const ThemeSwitcher = lazy(() => import('../theme-switcher'))
 
@@ -84,11 +85,16 @@ const Navigation = () => {
                     </div>
                   </div>
                   <div
-                    className={`absolute -left-[39px] top-[86%] ${
-                      languageMenOpenu ? 'block' : 'hidden'
-                    } group-hover:block pt-4`}
+                    className={cn(
+                      'group-hover:grid absolute -right-36 top-0 pt-[43px]',
+                      languageMenOpenu ? 'grid' : 'hidden'
+                    )}
                   >
-                    <div className='flex flex-col glass-card dark:bg-black/80 bg-white/90 border-[3px] border-zinc-200 dark:border-zinc-500 p-1 rounded-lg shadow-md'>
+                    <div
+                      className={cn(
+                        'grid w-[420px] grid-cols-2 gap-x-px glass-card dark:bg-black/80 bg-white/90 border-[3px] border-zinc-200 dark:border-zinc-500 p-1 rounded-lg shadow-md'
+                      )}
+                    >
                       {LANGUAGES.map(lang => (
                         <div
                           className='p-3 pl-8 relative font-bold rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-all'
@@ -103,10 +109,10 @@ const Navigation = () => {
                               src={GreenCheck}
                               alt='List selected'
                               width={16}
-                              className='absolute left-2 top-[17px]'
+                              className='absolute left-2 top-5'
                             />
                           )}
-                          <div className='flex items-center gap-2 w-[138px]'>
+                          <div className='flex items-center gap-2'>
                             <Image src={lang.icon} alt='Language icon' width={30} height={30} />
                             <p className='text-nowrap w-fit'>{lang.language}</p>
                           </div>
