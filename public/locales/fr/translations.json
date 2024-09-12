@@ -137,11 +137,13 @@
 
   "leaderboard": "Classement",
   "lists": "Listes",
+  "top8": "Top 8",
   "addresses": "Adresses",
   "blocks_rank": "Bloqué",
   "mutuals_rank": "Mutuels",
   "followers_rank": "Abonnés",
   "following_rank": "Suivi",
+  "top8_rank": "Top 8",
   "last updated": "Dernière mise à jour",
 
   "system": "Système",
