@@ -24,7 +24,7 @@ const LeaderboardSummary = () => {
         <PageSelector
           page={page}
           setPage={setPage}
-          hasNextPage={page !== 2}
+          hasNextPage={page !== 3}
           hasSkipToFirst={false}
           adjustUrl={false}
           displayPageNumber={false}
@@ -36,6 +36,7 @@ const LeaderboardSummary = () => {
             followers: (entry: LeaderboardItem) => entry.followers_rank,
             following: (entry: LeaderboardItem) => entry.following_rank,
             mutuals: (entry: LeaderboardItem) => entry.mutuals_rank,
+            top8: (entry: LeaderboardItem) => entry.top8_rank,
             blocked: (entry: LeaderboardItem) => entry.blocks_rank
           }[title]
 
@@ -70,6 +71,7 @@ const LeaderboardSummary = () => {
                       followers={Number(entry.followers) || 0}
                       following={Number(entry.following) || 0}
                       mutuals={Number(entry.mutuals) || 0}
+                      top8={Number(entry.top8) || 0}
                       blocked={Number(entry.blocks) || 0}
                     />
                   ))}
