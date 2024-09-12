@@ -73,9 +73,9 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
       </div>
       <div
         className={cn(
-          'absolute group-hover:block min-w-[190px] block z-50',
+          'absolute group-hover:block min-w-[200px] block z-50',
           connected
-            ? '-right-[198px] sm:right-[97.2%] -top-[4px] sm:-top-[6px] sm:pr-5'
+            ? '-right-[203px] sm:right-[97.2%] -top-[4px] sm:-top-[6px] sm:pr-5'
             : 'top-[100%] pt-3 -left-10',
           themeMenuOpen ? 'block' : 'hidden'
         )}

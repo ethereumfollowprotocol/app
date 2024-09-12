@@ -39,7 +39,7 @@ const Summary = () => {
         className={`h-fit w-full ${
           isFollowersEmpty || !userAddress
             ? 'xl:w-[50%] xl:max-w-[900px]'
-            : 'lg:h-[638px] w-full lg:w-[49%] xl:w-[38%] 2xl:min-w-[650px] 2xl:w-[45%]'
+            : 'lg:min-h-[638px] w-full lg:w-[49%] xl:w-[38%] 2xl:min-w-[650px] 2xl:w-[45%]'
         } py-4 sm:p-4 glass-card border-[3px] border-zinc-200 dark:border-zinc-500 rounded-2xl`}
       />
       <ScrollIndicator />

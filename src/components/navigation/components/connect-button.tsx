@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import { FaDiscord } from 'react-icons/fa'
 import { useEffect, useState } from 'react'
-import { FiArrowLeft } from 'react-icons/fi'
+import { FiArrowLeft, FiExternalLink } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
 import { IoIosArrowDown } from 'react-icons/io'
 import { useQuery } from '@tanstack/react-query'
@@ -78,7 +78,7 @@ const ConnectButton = () => {
       <button
         type='button'
         className={cn(
-          'z-50 px-1 pl-[3px] transition-all border-[3px] gap-[6px] hover:scale-105 cursor-pointer flex justify-between items-center h-[60px] glass-card rounded-full w-fit sm:w-48 md:w-56',
+          'z-50 px-1 pl-[3px] transition-all border-[3px] gap-[6px] hover:scale-105 cursor-pointer flex justify-between items-center h-[60px] glass-card rounded-full w-fit sm:w-48 md:w-60',
           walletMenOpenu ? 'connect-button-open ' : 'connect-button'
         )}
         onClick={() =>
@@ -110,8 +110,8 @@ const ConnectButton = () => {
             />
           </>
         ) : (
-          <div className='w-full sm:w-54 h-full flex items-center justify-center rounded-full'>
-            <p className='hidden sm:block font-bold text-lg text-nowrap px-1'>{t('connect')}</p>
+          <div className='w-full sm:w-60 h-full flex items-center justify-center rounded-full'>
+            <p className='hidden sm:block font-bold text-lg px-1'>{t('connect')}</p>
             <HiOutlineWallet className='text-4xl w-[48px] translate-x-px block sm:hidden' />
           </div>
         )}
@@ -119,7 +119,7 @@ const ConnectButton = () => {
       {walletMenOpenu && (
         <div
           className={cn(
-            'flex w-[190px] overflow-x-hidden sm:overflow-visible z-50 h-fit shadow-md border-[3px] rounded-lg dark:bg-darkGrey/95 bg-white/95 border-zinc-200 dark:border-zinc-500 absolute top-[120%] flex-col items-end right-0',
+            'flex w-[200px] overflow-x-hidden sm:overflow-visible z-50 h-fit shadow-md border-[3px] rounded-lg dark:bg-darkGrey/95 bg-white/95 border-zinc-200 dark:border-zinc-500 absolute top-[120%] flex-col items-end right-0',
             (languageMenOpenu || themeMenuOpen) && 'overflow-y-hidden'
           )}
         >
@@ -127,7 +127,7 @@ const ConnectButton = () => {
             className={cn(
               'flex flex-col w-full transition-all overflow-x-visible max-h-[75vh] sm:h-auto',
               languageMenOpenu || listMenuOpen || themeMenuOpen
-                ? '-translate-x-[195px] sm:translate-x-0 sm:p-1'
+                ? '-translate-x-[200px] sm:translate-x-0 sm:p-1'
                 : 'p-1',
               languageMenOpenu
                 ? `h-[${LANGUAGES.length * 56 + 56}px]`
@@ -178,7 +178,7 @@ const ConnectButton = () => {
                     onClick={() => setLanguageMenuOpen(false)}
                     className='flex sm:hidden justify-between items-center w-full group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/60 dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer'
                   >
-                    <FiArrowLeft className='w-8 font-bold' />
+                    <FiArrowLeft className='text-xl font-bold' />
                     <p className=' font-bold'>Back</p>
                   </div>
                   {LANGUAGES.map(lang => (
@@ -225,7 +225,7 @@ const ConnectButton = () => {
                 </div>
                 <div
                   className={cn(
-                    'absolute -right-[198px] w-full -top-[100px] h-full sm:pr-5 sm:right-[97.2%] group-hover:block min-w-[190px] sm:w-fit block z-50 sm:-top-[6px]',
+                    'absolute -right-[197px] w-full -top-[100px] h-full sm:pr-5 sm:right-[97.2%] group-hover:block min-w-[190px] sm:w-fit block z-50 sm:-top-[6px]',
                     lists?.lists && lists?.lists?.length > 0
                       ? listMenuOpen
                         ? 'block'
@@ -233,7 +233,7 @@ const ConnectButton = () => {
                       : 'hidden group-hover:hidden'
                   )}
                 >
-                  <div className='flex flex-col gap-2 w-full min-w-[190px] sm:max-h-[76vh] overflow-auto border-[3px] rounded-lg bg-transparent sm:bg-white/90 sm:dark:bg-darkGrey/90 border-zinc-200 dark:border-zinc-500 p-1 shadow-md'>
+                  <div className='flex flex-col gap-2 w-full min-w-[200px] sm:max-h-[76vh] overflow-auto border-[3px] rounded-lg bg-transparent sm:bg-white/90 sm:dark:bg-darkGrey/90 border-zinc-200 dark:border-zinc-500 p-1 shadow-md'>
                     <div
                       onClick={() => setListMenuOpen(false)}
                       className='flex sm:hidden justify-between items-center w-full group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/20  dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer'
@@ -296,8 +296,11 @@ const ConnectButton = () => {
             )}
             <a href='https://discord.com/invite/ZUyG3mSXFD' target='_blank' rel='noreferrer'>
               <div className='flex justify-between items-center w-full group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/20  dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer font-semibold'>
-                <FaDiscord className='text-2xl mirror-x' />
-                <p className='capitalize'>Discord</p>
+                <FiExternalLink className='text-xl mirror-x' />
+                <div className='flex gap-2'>
+                  <FaDiscord className='text-2xl mirror-x' />
+                  <p className='capitalize'>Discord</p>
+                </div>
               </div>
             </a>
             <p

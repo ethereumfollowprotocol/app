@@ -29,7 +29,13 @@ const Navigation = () => {
     setMobileMenuOpen(false)
   })
 
-  const { changeLanguage, languageMenOpenu, selectedLanguage, setLanguageMenuOpen } = useLanguage()
+  const {
+    changeLanguage,
+    languageMenOpenu,
+    selectedLanguage,
+    setLanguageMenuOpen,
+    setSelectedLanguage
+  } = useLanguage()
   const clickAwayLanguageRef = useClickAway<HTMLDivElement>(_ => {
     setLanguageMenuOpen(false)
   })
@@ -77,16 +83,18 @@ const Navigation = () => {
                   >
                     <div className='flex gap-2 hover:opacity-75 h-8 w-8 font-bold'>
                       <Image
+                        key={selectedLanguage?.key}
                         src={selectedLanguage?.icon}
                         alt='Language icon'
                         width={30}
                         height={30}
+                        className='rounded-md'
                       />
                     </div>
                   </div>
                   <div
                     className={cn(
-                      'group-hover:grid absolute -right-36 top-0 pt-[43px]',
+                      'group-hover:grid absolute -right-36 top-6 pt-[19px]',
                       languageMenOpenu ? 'grid' : 'hidden'
                     )}
                   >
@@ -101,6 +109,7 @@ const Navigation = () => {
                           key={lang.language}
                           onClick={() => {
                             changeLanguage(lang)
+                            setSelectedLanguage(lang)
                             setLanguageMenuOpen(false)
                           }}
                         >
@@ -113,7 +122,13 @@ const Navigation = () => {
                             />
                           )}
                           <div className='flex items-center gap-2'>
-                            <Image src={lang.icon} alt='Language icon' width={30} height={30} />
+                            <Image
+                              src={lang.icon}
+                              alt='Language icon'
+                              width={30}
+                              height={30}
+                              className='rounded-md'
+                            />
                             <p className='text-nowrap w-fit'>{lang.language}</p>
                           </div>
                         </div>

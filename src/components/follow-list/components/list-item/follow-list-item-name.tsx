@@ -202,7 +202,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
           )}
           {showFollowsYouBadges && !isEnsProfileLoading && (
             <div
-              className={`rounded-full font-bold text-[10px] flex items-center justify-center text-darkGrey bg-zinc-300 h-5 w-20 ${followerTag.className}`}
+              className={`rounded-full font-bold text-[10px] flex items-center text-nowrap justify-center text-darkGrey bg-zinc-300 h-5 px-2 w-fit ${followerTag.className}`}
             >
               {t(followerTag.text)}
             </div>
@@ -329,14 +329,18 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
             onClick={() => router.push(`/${address}?tab=following`)}
           >
             <p className='font-bold text-lg'>{formatNumber(counts.following)}</p>
-            <p className='font-bold text-sm text-[#888] dark:text-[#aaa]'>{t('following')}</p>
+            <p className='font-bold text-sm text-nowrap text-[#888] dark:text-[#aaa]'>
+              {t('following')}
+            </p>
           </div>
           <div
             className='flex flex-col items-center hover:scale-110 cursor-pointer transition-transform'
             onClick={() => router.push(`/${address}?tab=followers`)}
           >
             <p className='font-bold text-lg'>{formatNumber(counts.followers)}</p>
-            <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>{t('followers')}</p>
+            <p className='font-bold text-sm text-nowrap  text-[#888] dark:text-[#aaa]'>
+              {t('followers')}
+            </p>
           </div>
         </div>
       )}

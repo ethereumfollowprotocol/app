@@ -11,7 +11,7 @@ const FollowerList = () => {
 
   return (
     <div className='flex flex-col lg:flex-row-reverse gap-10 lg:gap-40 xl:gap-52 items-center relative'>
-      <div className='flex glass-card flex-col text-3xl md:text-4xl items-center lg:items-start lg:text-5xl xl:text-6xl font-bold gap-1 sm:gap-2 lg:gap-4 py-4 px-9 lg:px-8  lg:py-6 border-[3px] border-[#ee90bc] rounded-2xl'>
+      <div className='flex glass-card flex-col text-3xl z-20 md:text-4xl items-center lg:items-start lg:text-5xl xl:text-6xl font-bold gap-1 sm:gap-2 lg:gap-4 py-4 px-9 lg:px-8  lg:py-6 border-[3px] border-[#ee90bc] rounded-2xl'>
         <p>{t('follower list first')}</p>
         <p className='text-[#ee90bc]'>{t('follower list second')}</p>
       </div>
@@ -25,14 +25,9 @@ const FollowerList = () => {
         src={LineDesktop}
         alt='line'
         width={3}
-        className='absolute hidden lg:block top-[165px] xl:top-[190px] left-[760px] xl:left-[768px]'
+        className='absolute hidden lg:block -bottom-[153px] xl:-bottom-[153px] left-[760px] xl:left-[768px]'
       />
-      <Image
-        src={LineMobile}
-        alt='line'
-        width={4}
-        className='absolute lg:hidden top-[112px] sm:top-[118px] md:top-[126px] '
-      />
+      <Image src={LineMobile} alt='line' width={4} className='absolute lg:hidden -bottom-[46px] ' />
     </div>
   )
 }

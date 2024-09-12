@@ -548,7 +548,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                   )}
                   {followerTag && connectedAddress && !isConnectedUserCard && (
                     <div
-                      className={`rounded-full font-bold text-[10px] mb-1 flex items-center justify-center text-darkGrey bg-zinc-300 h-5 w-20 ${followerTag.className}`}
+                      className={`rounded-full font-bold text-[10px] mb-1 flex items-center justify-center text-darkGrey bg-zinc-300 h-5 px-2 w-fit ${followerTag.className}`}
                     >
                       {t(followerTag.text)}
                     </div>
