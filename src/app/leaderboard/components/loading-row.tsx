@@ -20,7 +20,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
           <LoadingCell className='h-10 sm:h-12 w-4 xxs:w-8 sm:w-10 rounded-lg' />
         </div>
         <div
-          className={`flex gap-2 items-center w-[51%] 3xs:w-[54%] xxs:w-[56%] xs:w-2/3 sm:w-1/2 md:w-[40%] ${
+          className={`flex gap-2 items-center w-[51%] 3xs:w-[54%] xxs:w-[56%] xs:w-2/3 sm:w-1/2 md:w-2/5 ${
             isHome ? ' sm:w-full md:w-1/2 lg:w-[55%] xl:w-1/2' : 'xl:w-1/3 '
           }`}
           data-name='name-column'
@@ -32,7 +32,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
         </div>
         <div
           className={cn(
-            'items-center justify-between hidden sm:flex sm:w-1/5 md:w-[55%]',
+            'items-center justify-between hidden sm:flex sm:w-1/5 md:w-3/5',
             isHome && 'sm:w-1/4 md:w-1/3 lg:w-2/3 xl:w-1/4'
           )}
         >
@@ -71,6 +71,19 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
             <LoadingCell className='w-10 h-6 rounded-lg' />
             {staticStats ? (
               <p className='font-bold text-sm text-[#888] dark:text-[#aaa]'>{t('following')}</p>
+            ) : (
+              <LoadingCell className='h-4 w-20 rounded-md' />
+            )}
+          </div>
+          <div
+            className={cn(
+              'flex-col items-center gap-1 hidden lg:flex w-1/2 lg:w-1/3 xl:w-1/4',
+              isHome && 'lg:flex xl:hidden'
+            )}
+          >
+            <LoadingCell className='w-10 h-6 rounded-lg' />
+            {staticStats ? (
+              <p className='font-bold text-sm text-[#888] dark:text-[#aaa]'>{t('blocked')}</p>
             ) : (
               <LoadingCell className='h-4 w-20 rounded-md' />
             )}

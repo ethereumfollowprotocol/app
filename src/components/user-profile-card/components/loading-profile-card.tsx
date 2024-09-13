@@ -19,7 +19,7 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
   // const { resolvedTheme } = useTheme()
   const { openConnectModal } = useConnectModal()
 
-  const ranks = ['mutuals_rank', 'followers_rank', 'following_rank', 'blocks_rank']
+  const ranks = ['mutuals_rank', 'followers_rank', 'following_rank', 'top8_rank', 'blocks_rank']
 
   return (
     <>

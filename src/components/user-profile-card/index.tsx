@@ -717,23 +717,22 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                         .replaceAll(' ', '')
                         .toLowerCase()}`}
                       key={rankTitles[i]}
+                      className='w-full mx-[7.5%] 3xs:mx-[10%] xxs:mx-[15%] xs:mx-0 xs:w-fit xl:w-full flex gap-3 justify-between text-lg items-center font-bold px-3 py-1 rounded-lg dark:hover:bg-darkGrey/40 hover:bg-darkGrey/5 transition-all'
                     >
-                      <div className='flex w-full 3xs:w-fit xl:w-full gap-3 justify-between text-lg items-center font-bold px-3 py-1 rounded-lg dark:hover:bg-darkGrey/40 hover:bg-darkGrey/5 transition-all'>
-                        <p className='font-bold text-[#888] dark:text-[#aaa]'>
-                          {t(rankTitles[i] || '')}
-                        </p>
-                        <p
-                          className={
-                            {
-                              1: 'first-place text-xl',
-                              2: 'second-place text-xl',
-                              3: 'third-place text-xl'
-                            }[rank]
-                          }
-                        >
-                          #{formatNumber(rank) || '-'}
-                        </p>
-                      </div>
+                      <p className='font-bold text-[#888] dark:text-[#aaa]'>
+                        {t(rankTitles[i] || '')}
+                      </p>
+                      <p
+                        className={
+                          {
+                            1: 'first-place text-xl',
+                            2: 'second-place text-xl',
+                            3: 'third-place text-xl'
+                          }[rank]
+                        }
+                      >
+                        #{formatNumber(rank) || '-'}
+                      </p>
                     </Link>
                   ))}
                 </div>
