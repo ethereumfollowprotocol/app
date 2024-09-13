@@ -713,9 +713,15 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 <div className='flex xl:flex-col w-full justify-center flex-wrap gap-x-4 gap-y-0 xxs:gap-y-0 xxs:gap-x-8 xl:gap-0'>
                   {ranks.map((rank, i) => (
                     <Link
-                      href={`/leaderboard?filter=${t(rankTitles[i] || '')
-                        .replaceAll(' ', '')
-                        .toLowerCase()}`}
+                      href={`/leaderboard?filter=${{
+                        mutuals_rank: 'mutuals',
+                        followers_rank: 'followers',
+                        following_rank: 'following',
+                        top8_rank: 'top8',
+                        blocked_rank: 'blocked'
+                      }[rankTitles[i] || '']
+                        ?.replaceAll(' ', '')
+                        ?.toLowerCase()}`}
                       key={rankTitles[i]}
                       className='w-full mx-[7.5%] 3xs:mx-[10%] xxs:mx-[15%] xs:mx-0 xs:w-fit xl:w-full flex gap-3 justify-between text-lg items-center font-bold px-3 py-1 rounded-lg dark:hover:bg-darkGrey/40 hover:bg-darkGrey/5 transition-all'
                     >
