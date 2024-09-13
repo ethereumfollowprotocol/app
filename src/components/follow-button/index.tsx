@@ -188,7 +188,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
         ])}
         style={{
           minWidth: isBlockedBy ? '132px' : '120px',
-          height: '37px'
+          height: '40px'
         }}
         onMouseLeave={() => {
           setDisableHover(false)

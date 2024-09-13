@@ -45,7 +45,7 @@ const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile }) => 
           <h3 className='text-2xl'>{t('top eight title')}</h3>
         </div>
         {topEight?.length === 0 && !(topEightIsLoading || topEightIsRefetching) && (
-          <p className='font-medium italic text-lg my-6 text-center text-zinc-500 dark:text-zinc-300'>
+          <p className='font-medium italic text-lg my-16 text-center text-zinc-500 dark:text-zinc-300'>
             {t('no top eight')}
           </p>
         )}

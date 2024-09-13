@@ -13,7 +13,6 @@ import { tagRegex } from '#/lib/constants/regex'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useCart } from '#/contexts/cart-context'
 import { formatNumber } from '#/utils/formatNumber'
-import { BLOCKED_MUTED_TAGS } from '#/lib/constants'
 import { cn, truncateAddress } from '#/lib/utilities'
 import LoadingCell from '../../../loaders/loading-cell'
 import Plus from 'public/assets/icons/plus-squared.svg'
@@ -300,7 +299,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
                       removeTag(tag)
                     }}
                   >
-                    {BLOCKED_MUTED_TAGS.includes(tag) ? t(tag) : tag}
+                    {tag}
                   </button>
                   {(removingTag || addingTag) && canEditTags && !isFollowers && (
                     <div className='absolute h-4 w-4 rounded-full -top-1 -right-1 bg-green-400' />
