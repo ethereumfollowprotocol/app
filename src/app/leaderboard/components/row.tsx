@@ -123,7 +123,7 @@ const TableRow: React.FC<TableRowProps> = ({
         </div>
         <div
           className={`items-center justify-between hidden sm:flex ${
-            isHome ? 'sm:w-1/4 md:w-1/3 lg:w-2/3 xl:w-1/4' : 'sm:w-1/5 md:w-[55%]'
+            isHome ? 'sm:w-1/4 md:w-1/3 lg:w-2/3 xl:w-1/4' : 'sm:w-1/5 md:w-3/5'
           }`}
         >
           {firstStat && (
@@ -131,7 +131,7 @@ const TableRow: React.FC<TableRowProps> = ({
               className={cn(
                 'flex-col items-center flex w-1/2 lg:w-1/3',
                 firstStat !== 'mutuals' && 'cursor-pointer hover:scale-110 transition-transform',
-                isHome ? 'xl:w-full 2xl:w-1/4' : 'xl:w-1/4'
+                isHome ? 'xl:w-full 2xl:w-1/4' : 'xl:w-1/4 xl:hidden'
               )}
               onClick={() => {
                 switch (firstStat) {
@@ -170,7 +170,9 @@ const TableRow: React.FC<TableRowProps> = ({
           <div
             className={`${
               firstStat === 'mutuals'
-                ? 'hidden'
+                ? isHome
+                  ? 'hidden'
+                  : 'hidden xl:flex'
                 : isHome
                   ? 'hidden md:flex xl:hidden 2xl:flex'
                   : 'hidden md:flex'
@@ -184,7 +186,9 @@ const TableRow: React.FC<TableRowProps> = ({
           <div
             className={`${
               firstStat && firstStat === 'followers'
-                ? 'hidden'
+                ? isHome
+                  ? 'hidden'
+                  : 'hidden xl:flex'
                 : firstStat === 'mutuals'
                   ? isHome
                     ? 'hidden md:flex xl:hidden 2xl:flex'
@@ -203,7 +207,9 @@ const TableRow: React.FC<TableRowProps> = ({
           <div
             className={`${
               firstStat && firstStat === 'following'
-                ? 'hidden'
+                ? isHome
+                  ? 'hidden'
+                  : 'hidden xl:flex'
                 : isHome
                   ? 'hidden lg:flex xl:hidden'
                   : 'hidden lg:flex'
@@ -218,7 +224,9 @@ const TableRow: React.FC<TableRowProps> = ({
           <div
             className={`${
               (firstStat && firstStat === 'top8') || firstStat === 'blocked'
-                ? 'hidden'
+                ? isHome
+                  ? 'hidden'
+                  : 'hidden xl:flex'
                 : `hidden lg:flex ${isHome ? 'xl:hidden' : ''}`
             } transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
             onClick={() => router.push(`/${address}?tab=following`)}
@@ -228,15 +236,15 @@ const TableRow: React.FC<TableRowProps> = ({
               {t('top8')}
             </p>
           </div>
-          {/* <div
-            className={` transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 hidden xl:flex ${
-              isHome ? 'lg:flex xl:hidden' : ''
+          <div
+            className={` transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 hidden ${
+              isHome ? 'hidden' : 'hidden xl:flex'
             } `}
             onClick={() => router.push(`/${address}?modal=blockmutelists`)}
           >
             <p className='font-bold text-sm sm:text-lg'>{formatNumber(blocked || 0)}</p>
             <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>{t('blocked')}</p>
-          </div> */}
+          </div>
         </div>
         <div
           className={`w-fit ${

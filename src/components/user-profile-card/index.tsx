@@ -713,7 +713,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 <div className='flex xl:flex-col w-full justify-center flex-wrap gap-x-4 gap-y-0 xxs:gap-y-0 xxs:gap-x-8 xl:gap-0'>
                   {ranks.map((rank, i) => (
                     <Link
-                      href={`/leaderboard?filter=${t(rankTitles[i] || '').toLowerCase()}`}
+                      href={`/leaderboard?filter=${t(rankTitles[i] || '')
+                        .replaceAll(' ', '')
+                        .toLowerCase()}`}
                       key={rankTitles[i]}
                     >
                       <div className='flex w-full 3xs:w-fit xl:w-full gap-3 justify-between text-lg items-center font-bold px-3 py-1 rounded-lg dark:hover:bg-darkGrey/40 hover:bg-darkGrey/5 transition-all'>

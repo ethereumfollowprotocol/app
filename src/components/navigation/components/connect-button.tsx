@@ -158,14 +158,14 @@ const ConnectButton = () => {
                 className='flex justify-between p-3 rounded-md group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/20 items-center w-full'
               >
                 <FiArrowLeft className='text-xl' />
-                <div className='flex gap-2'>
+                <div className='flex justify-end gap-2'>
                   <Image
                     src={selectedLanguage?.icon || ''}
                     alt='Language icon'
-                    width={24}
+                    width={26}
                     className='rounded-md'
                   />
-                  <p className='font-bold '>{selectedLanguage?.language}</p>
+                  <p className='font-bold w-fit'>{selectedLanguage?.language}</p>
                 </div>
               </div>
               <div
@@ -173,7 +173,7 @@ const ConnectButton = () => {
                   languageMenOpenu ? 'block' : 'hidden'
                 } group-hover:block sm:pr-6`}
               >
-                <div className='flex overflow-auto flex-col sm:grid grid-cols-2 gap-2 gap-x-px w-[200px] sm:w-[450px] bg-transparent sm:bg-white/90 sm:dark:bg-darkGrey/90 border-[3px] border-zinc-200 dark:border-zinc-500 p-1 rounded-lg shadow-md'>
+                <div className='flex overflow-auto flex-col sm:grid grid-cols-2 gap-2 gap-x-px w-[200px] sm:w-[450px] lg:grid-cols-3 lg:w-[675px] bg-transparent sm:bg-white/90 sm:dark:bg-darkGrey/90 border-[3px] border-zinc-200 dark:border-zinc-500 p-1 rounded-lg shadow-md'>
                   <div
                     onClick={() => setLanguageMenuOpen(false)}
                     className='flex sm:hidden justify-between items-center w-full group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/60 dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer'
@@ -183,7 +183,7 @@ const ConnectButton = () => {
                   </div>
                   {LANGUAGES.map(lang => (
                     <div
-                      className='p-3 pl-8 relative font-bold rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-colors'
+                      className='p-3 pl-8 relative flex items-center font-bold rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-colors'
                       key={lang.language}
                       onClick={() => {
                         changeLanguage(lang)
@@ -195,17 +195,17 @@ const ConnectButton = () => {
                           src={GreenCheck}
                           alt='List selected'
                           width={16}
-                          className='absolute left-2 top-[17px]'
+                          className='absolute left-2 top-[35%]'
                         />
                       )}
                       <div className='flex gap-2 pr-3'>
                         <Image
                           src={lang.icon}
                           alt='Language icon'
-                          width={24}
+                          width={26}
                           className='rounded-md'
                         />
-                        <p className='text-nowrap'>{lang.language}</p>
+                        <p>{lang.language}</p>
                       </div>
                     </div>
                   ))}

@@ -212,7 +212,14 @@ const FollowButton: React.FC<FollowButtonProps> = ({
           width={16}
           className='pointer-events-none'
         />
-        {t(buttonText)}
+        <p
+          className='text-wrap break-words max-w-[90px]'
+          style={{
+            lineHeight: '0.95rem'
+          }}
+        >
+          {t(buttonText)}
+        </p>
       </button>
     </div>
   )

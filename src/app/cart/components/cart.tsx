@@ -159,7 +159,7 @@ const Cart = () => {
           {isClient && (
             <div
               className={cn(
-                'fixed md:w-fit w-full top-[85vh] sm:top-[85vh] lg:top-[82.5vh] right-0 px-4 lg:right-[5vw] justify-end',
+                'fixed md:w-fit w-full bottom-4 sm:bottom-[5vh] right-0 px-4 lg:right-[5vw] justify-end',
                 isClient && totalCartItems > 0 ? 'flex' : 'hidden'
               )}
             >
