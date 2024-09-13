@@ -60,7 +60,7 @@ const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile }) => 
               <div key={index} className='flex flex-col w-28 2xl:w-36 py-4 items-center gap-2'>
                 <LoadingCell className='h-[60px] w-[60px] rounded-full' />
                 <LoadingCell className='h-7 w-24 rounded-lg' />
-                <LoadingCell className='h-9 w-[109px] rounded-lg' />
+                <LoadingCell className='h-9 w-[120px] rounded-lg' />
               </div>
             ))}
         </div>

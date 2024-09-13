@@ -94,13 +94,13 @@ const Navigation = () => {
                   </div>
                   <div
                     className={cn(
-                      'group-hover:grid absolute -right-36 top-6 pt-[19px]',
+                      'group-hover:grid absolute -right-36 rounded-lg top-6 pt-[19px]',
                       languageMenOpenu ? 'grid' : 'hidden'
                     )}
                   >
                     <div
                       className={cn(
-                        'grid w-[450px] grid-cols-2 gap-x-px glass-card dark:bg-black/80 bg-white/90 border-[3px] border-zinc-200 dark:border-zinc-500 p-1 rounded-lg shadow-md'
+                        'grid w-56 xs:w-[450px] grid-cols-1 xs:grid-cols-2 max-h-[75vh] overflow-scroll gap-x-px glass-card dark:bg-black/80 bg-white/90 border-[3px] border-zinc-200 dark:border-zinc-500 p-1 rounded-lg shadow-md'
                       )}
                     >
                       {LANGUAGES.map(lang => (

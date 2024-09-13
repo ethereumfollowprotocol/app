@@ -168,7 +168,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
   )
 
   return isLoading ? (
-    <div className={`rounded-xl ${isBlockedBy ? 'w-[132px]' : 'w-[109px]'} py-1`}>
+    <div className={`rounded-xl ${isBlockedBy ? 'w-[132px]' : 'w-[120px]'} py-1`}>
       <LoadingCell className='h-9 w-full rounded-lg' />
     </div>
   ) : (
@@ -178,7 +178,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
           theme[buttonState].bg,
           theme[buttonState].text,
           theme[buttonState].border,
-          'rounded-xl relative text-sm flex items-center w-[109px] gap-1.5 transition-all px-2 duration-200 justify-center font-bold',
+          'rounded-xl relative text-sm flex items-center w-[120px] gap-1.5 transition-all px-2 duration-200 justify-center font-bold',
           disableHover
             ? buttonState === 'Pending Following'
               ? ''
@@ -187,7 +187,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
           className
         ])}
         style={{
-          minWidth: isBlockedBy ? '132px' : '107px',
+          minWidth: isBlockedBy ? '132px' : '120px',
           height: '37px'
         }}
         onMouseLeave={() => {
