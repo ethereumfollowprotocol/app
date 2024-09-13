@@ -38,7 +38,10 @@ i18n
       'zhtw',
       'ru',
       'uk',
-      'ml'
+      'ml',
+      'pt',
+      'pirate',
+      'th'
     ],
     fallbackLng: 'en',
     keySeparator: '.',

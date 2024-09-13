@@ -23,13 +23,16 @@ import SwedenFlag from 'public/assets/icons/flags/sweden.svg'
 import NorwayFlag from 'public/assets/icons/flags/norway.svg'
 import TaiwanFlag from 'public/assets/icons/flags/taiwan.svg'
 import RussiaFlag from 'public/assets/icons/flags/russia.svg'
+import PirateFlag from 'public/assets/icons/flags/pirate.svg'
 import UkraineFlag from 'public/assets/icons/flags/ukraine.svg'
 import VietnamFlag from 'public/assets/icons/flags/vietnam.svg'
 import GermanyFLag from 'public/assets/icons/flags/germany.svg'
+import PortugalFlag from 'public/assets/icons/flags/portugal.svg'
 import PirateFlagEmoji from 'public/assets/icons/pirate-flag.svg'
 import BulgariaFlag from 'public/assets/icons/flags/bulgaria.svg'
 import TanzaniaFlag from 'public/assets/icons/flags/tanzania.svg'
 import SloveniaFlag from 'public/assets/icons/flags/slovenia.svg'
+import ThailandFlag from 'public/assets/icons/flags/thailand.svg'
 import USAFlag from 'public/assets/icons/flags/united-states.svg'
 import GithubIconLight from 'public/assets/icons/github-white.svg'
 import LithuaniaFlag from 'public/assets/icons/flags/lithuania.svg'
@@ -69,6 +72,7 @@ export const LANGUAGES = [
   { language: 'Français', key: 'fr', icon: FranceFLag },
   { language: 'Español', key: 'es', icon: SpainFlag },
   { language: 'Deutsch', key: 'de', icon: GermanyFLag },
+  { language: 'Português', key: 'pt', icon: PortugalFlag },
   { language: 'Português (BR)', key: 'ptbr', icon: BrazilFLag },
   { language: 'Nederlands', key: 'nl', icon: NetherlandsFlag },
   { language: 'Polski', key: 'pl', icon: PolandFlag },
@@ -79,6 +83,7 @@ export const LANGUAGES = [
   { language: 'ਪੰਜਾਬੀ (IN)', key: 'pain', icon: IndiaFlag },
   { language: 'Türkçe', key: 'tr', icon: TurkeyFlag },
   { language: 'Bahasa Indonesia', key: 'id', icon: IndonesiaFlag },
+  { language: 'ไทย', key: 'th', icon: ThailandFlag },
   { language: 'فارسی', key: 'fa', icon: IranFlag },
   { language: 'Latina', key: 'la', icon: VaticanCityFlag },
   { language: 'Kiswahili', key: 'sw', icon: TanzaniaFlag },
@@ -90,7 +95,8 @@ export const LANGUAGES = [
   { language: '繁體中文', key: 'zhtw', icon: TaiwanFlag },
   { language: 'Русский', key: 'ru', icon: RussiaFlag },
   { language: 'Українська', key: 'uk', icon: UkraineFlag },
-  { language: 'മലയാളം', key: 'ml', icon: IndiaFlag }
+  { language: 'മലയാളം', key: 'ml', icon: IndiaFlag },
+  { language: 'Pirate', key: 'pirate', icon: PirateFlag }
 ]
 
 export const DEFAULT_TAGS_TO_ADD = ['irl', 'bff', 'based', 'degen', 'top8']
