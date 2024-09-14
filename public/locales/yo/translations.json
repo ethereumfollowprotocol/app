@@ -5,8 +5,8 @@
     "recent": "isẹ́ tí ó sẹ̀sẹ̀ ré kọjá",
     "no followers": "kòsì ọmọlẹ́yin kankan",
     "latest followers": "àwọn ọmọlẹ́yin tuntun",
-  "connect wallet to view": "so pọ̀ mọ àpò owó kó o leri eléyií",
-    "phrase": "Ó dá lé lóri ẹni to o bá mọ̀😜",
+    "connect wallet to view": "so pọ̀ mọ àpò owó kó o leri eléyií",
+    "phrase": "Ó dá lé lóri ẹni to o bá mọ̀ 😜",
     "social graph first": "Gíràfù ìbádanídọ̀rẹ́",
     "social graph second": "fún Éthíríúmù.",
     "follow ghost first": "Máa Tẹ̀lé àwọn ọ̀rẹ́ rẹ ",
@@ -24,16 +24,16 @@
     "block-mute": "àkójọ àwọn tí ó ti dá lákẹ́",
     "edit settings": "se àtúnse ìsètò ",
     "edit profile": "se àtúnse ojú ewé",
-    "top eight title": "🔥 Àwọn mẹ́jọ mì tí wọ́n wà lókà ténté🔥",
-    "no top eight": "kò sí ètò kan kan ní ibí báyìí😳",
-    "top eight limit": "Àwọn mẹ́jọ àkọ́kọ́ rẹ ti kún! Kí o tó lé fi ẹlòmíì síbè, o nílò láti yọ ẹnìkan lákọ́kọ́😈",
+    "top eight title": "🔥 Àwọn mẹ́jọ mì tí wọ́n wà lókà ténté 🔥",
+    "no top eight": "kò sí ètò kan kan ní ibí báyìí 😳",
+    "top eight limit": "Àwọn mẹ́jọ àkọ́kọ́ rẹ ti kún! Kí o tó lé fi ẹlòmíì síbè, o nílò láti yọ ẹnìkan lákọ́kọ́ 😈",
     "top eight description": "Fi àwọn ọ̀rẹ́ rẹ kún mẹ́jọ tò wá lókè! O lè yọ àwọn ènìyàn tàbí kí o fi àwọn ènìyàn síbẹ̀ nígbà kúgbà tó bá wù ọ́.",
     "apply": "Fi orúkọ sílẹ̀",
     "edit": "se àtúnse",
     "no bio": "O tíì se àkosílẹ̀",
     "copied": "Otíì se àdàkọ",
-    "add to top eight": "🔥 Fi kún àwọn mẹ́jọ tí wọ́n wà lókè fúnmi🔥",
-    "remove from top eight": "yọ kúrò nínu🔥 àwọn mẹ́jọ tí wọ́n wà lókè fúnmi 🔥",
+    "add to top eight": "Fi kún 🔥àwọn mẹ́jọ tí wọ́n wà lókè🔥 fúnmi",
+    "remove from top eight": "yọ kúrò nínu 🔥àwọn mẹ́jọ tí wọ́n wà lókè🔥 fúnmi",
     "copy address": "Se àdàkọ ojú òpó",
     "copy ens": "Se àdàkọ ENS",
     "copy profile": "Se àdàkọ ojú ọnà àsopọ̀",
@@ -181,5 +181,3 @@
     "Muted": "Tí dá a lákẹ́",
     "Unmute": "Yọ́ ọ́ kúrò ní dídá lákẹ́"
   }
-  
-  
