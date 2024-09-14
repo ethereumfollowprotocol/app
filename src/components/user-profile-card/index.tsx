@@ -718,7 +718,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                         followers_rank: 'followers',
                         following_rank: 'following',
                         top8_rank: 'top8',
-                        blocked_rank: 'blocked'
+                        blocks_rank: 'blocked'
                       }[rankTitles[i] || '']
                         ?.replaceAll(' ', '')
                         ?.toLowerCase()}`}
