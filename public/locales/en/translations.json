@@ -1,5 +1,6 @@
 {
-  "language name": "English",
+  "language name in language": "English",
+  "language name in English": "English",
 
   "home": "Home",
   "recent": "Recent Activity",
