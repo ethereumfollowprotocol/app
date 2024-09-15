@@ -94,7 +94,7 @@ const TableRow: React.FC<TableRowProps> = ({
         </div>
         <div
           className={`flex gap-2 items-center w-[51%] 3xs:w-[54%] xxs:w-[56%] xs:w-2/3 sm:w-1/2 md:w-[40%] ${
-            isHome ? ' sm:w-full md:w-1/2 lg:w-[55%] xl:w-1/2' : 'xl:w-1/3 '
+            isHome ? 'w-full md:w-1/2 lg:w-[55%] xl:w-1/2' : 'xl:w-1/3 '
           }`}
           data-name='name-column'
         >
@@ -122,16 +122,16 @@ const TableRow: React.FC<TableRowProps> = ({
           </div>
         </div>
         <div
-          className={`items-center justify-between hidden sm:flex ${
-            isHome ? 'sm:w-1/4 md:w-1/3 lg:w-2/3 xl:w-1/4' : 'sm:w-1/5 md:w-[55%]'
+          className={`items-center justify-between hidden gap-1 sm:flex ${
+            isHome ? 'sm:w-1/4 md:w-1/3 lg:w-2/3 xl:w-1/4 2xl:w-1/3' : 'sm:w-1/4 md:w-3/5'
           }`}
         >
           {firstStat && (
             <div
               className={cn(
-                'flex-col items-center flex w-1/2 lg:w-1/3',
+                'flex-col items-center flex w-full md:w-1/2 lg:w-1/4',
                 firstStat !== 'mutuals' && 'cursor-pointer hover:scale-110 transition-transform',
-                isHome ? 'xl:w-full 2xl:w-1/4' : 'xl:w-1/4'
+                isHome ? 'xl:w-full 2xl:w-1/2' : 'xl:hidden'
               )}
               onClick={() => {
                 switch (firstStat) {
@@ -162,81 +162,97 @@ const TableRow: React.FC<TableRowProps> = ({
                   }[firstStat] || 0
                 )}
               </p>
-              <p className='font-bold text-sm text-nowrap capitalize text-[#888] dark:text-[#aaa]'>
+              <p className='font-bold text-sm capitalize text-[#888] dark:text-[#aaa] text-wrap text-center break-words w-full'>
                 {t(firstStat)}
               </p>
             </div>
           )}
           <div
-            className={`${
-              firstStat === 'mutuals'
-                ? 'hidden'
-                : isHome
-                  ? 'hidden md:flex xl:hidden 2xl:flex'
-                  : 'hidden md:flex'
-            } flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
+            className={cn(
+              `${
+                firstStat === 'mutuals'
+                  ? isHome
+                    ? 'hidden'
+                    : 'hidden xl:flex'
+                  : isHome
+                    ? 'hidden md:flex xl:hidden 2xl:flex'
+                    : 'hidden md:flex'
+              } flex-col items-center`,
+              isHome ? 'w-1/2 md:w-1/2 lg:w-1/4 2xl:w-1/2' : 'w-1/2 lg:w-1/4 xl:w-1/5 2xl:w-1/5`'
+            )}
           >
             <p className='font-bold text-sm sm:text-lg'>{formatNumber(mutuals || 0)}</p>
-            <p className='font-bold text-sm  text-[#888] text-nowrap dark:text-[#aaa]'>
+            <p className='font-bold text-sm  text-[#888] dark:text-[#aaa] text-wrap break-words text-center w-full'>
               {t('mutuals')}
             </p>
           </div>
           <div
-            className={`${
-              firstStat && firstStat === 'followers'
-                ? 'hidden'
-                : firstStat === 'mutuals'
+            className={cn(
+              `${
+                firstStat && firstStat === 'followers'
                   ? isHome
-                    ? 'hidden md:flex xl:hidden 2xl:flex'
-                    : 'hidden md:flex'
-                  : isHome
-                    ? 'hidden lg:flex xl:hidden'
-                    : 'hidden lg:flex'
-            } transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
+                    ? 'hidden'
+                    : 'hidden xl:flex'
+                  : firstStat === 'mutuals'
+                    ? isHome
+                      ? 'hidden md:flex xl:hidden 2xl:flex'
+                      : 'hidden md:flex'
+                    : isHome
+                      ? 'hidden lg:flex xl:hidden'
+                      : 'hidden lg:flex'
+              } transition-all hover:scale-110 cursor-pointer flex-col items-center`,
+              isHome ? 'w-1/2 md:w-1/2 lg:w-1/4 2xl:w-1/2' : 'w-1/2 lg:w-1/4 xl:w-1/5  2xl:w-1/5`'
+            )}
             onClick={() => router.push(`/${address}?tab=followers`)}
           >
             <p className='font-bold text-sm sm:text-lg'>{formatNumber(followers || 0)}</p>
-            <p className='font-bold text-sm  text-[#888] text-nowrap dark:text-[#aaa]'>
+            <p className='font-bold text-sm  text-[#888] dark:text-[#aaa] text-wrap break-words text-center w-full'>
               {t('followers')}
             </p>
           </div>
           <div
             className={`${
               firstStat && firstStat === 'following'
-                ? 'hidden'
+                ? isHome
+                  ? 'hidden'
+                  : 'hidden xl:flex'
                 : isHome
                   ? 'hidden lg:flex xl:hidden'
                   : 'hidden lg:flex'
-            } transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
+            } transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/4 xl:w-1/5`}
             onClick={() => router.push(`/${address}?tab=following`)}
           >
             <p className='font-bold text-sm sm:text-lg'>{formatNumber(following || 0)}</p>
-            <p className='font-bold text-sm  text-[#888] text-nowrap dark:text-[#aaa]'>
+            <p className='font-bold text-sm  text-[#888] dark:text-[#aaa] text-wrap break-words text-center w-full'>
               {t('following')}
             </p>
           </div>
           <div
             className={`${
               (firstStat && firstStat === 'top8') || firstStat === 'blocked'
-                ? 'hidden'
+                ? isHome
+                  ? 'hidden'
+                  : 'hidden xl:flex'
                 : `hidden lg:flex ${isHome ? 'xl:hidden' : ''}`
-            } transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4`}
+            } transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/4 xl:w-1/5`}
             onClick={() => router.push(`/${address}?tab=following`)}
           >
             <p className='font-bold text-sm sm:text-lg'>{formatNumber(top8 || 0)}</p>
-            <p className='font-bold text-sm text-[#888] text-nowrap dark:text-[#aaa]'>
+            <p className='font-bold text-sm text-[#888] dark:text-[#aaa] text-wrap break-words text-center w-full'>
               {t('top8')}
             </p>
           </div>
-          {/* <div
-            className={` transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/3 xl:w-1/4 hidden xl:flex ${
-              isHome ? 'lg:flex xl:hidden' : ''
+          <div
+            className={` transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/3 xl:w-1/5 ${
+              isHome ? 'hidden' : 'hidden xl:flex'
             } `}
             onClick={() => router.push(`/${address}?modal=blockmutelists`)}
           >
             <p className='font-bold text-sm sm:text-lg'>{formatNumber(blocked || 0)}</p>
-            <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>{t('blocked')}</p>
-          </div> */}
+            <p className='font-bold text-sm text-[#888] dark:text-[#aaa] text-wrap break-words text-center w-full'>
+              {t('blocked')}
+            </p>
+          </div>
         </div>
         <div
           className={`w-fit ${
@@ -250,7 +266,7 @@ const TableRow: React.FC<TableRowProps> = ({
         {firstStat && (
           <div
             className={cn(
-              'flex-col items-center flex',
+              'flex-col items-center flex w-1/4',
               firstStat !== 'mutuals' && 'cursor-pointer hover:scale-110 transition-transform'
             )}
             onClick={() => {
@@ -285,44 +301,57 @@ const TableRow: React.FC<TableRowProps> = ({
                 }[firstStat] || 0
               )}
             </p>
-            <p className='font-bold text-sm capitalize text-[#888] dark:text-[#aaa]'>{firstStat}</p>
+            <p className='font-bold text-sm capitalize text-[#888] dark:text-[#aaa] text-wrap text-center w-full break-words'>
+              {t(firstStat)}
+            </p>
           </div>
         )}
         <div
-          className={cn('flex-col flex items-center', firstStat === 'mutuals' ? 'hidden' : 'flex')}
+          className={cn(
+            'flex-col flex items-center w-1/4',
+            firstStat === 'mutuals' ? 'hidden' : 'flex'
+          )}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(mutuals || 0)}</p>
-          <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>{t('mutuals')}</p>
+          <p className='font-bold text-sm  text-[#888] dark:text-[#aaa] text-wrap w-full text-center break-words'>
+            {t('mutuals')}
+          </p>
         </div>
         <div
           className={cn(
-            'transition-all hover:scale-110 cursor-pointer flex-col items-center',
+            'transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/4',
             firstStat === 'followers' ? 'hidden' : 'flex'
           )}
           onClick={() => router.push(`/${address}?tab=followers`)}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(followers || 0)}</p>
-          <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>{t('followers')}</p>
+          <p className='font-bold text-sm  text-[#888] dark:text-[#aaa] text-wrap break-words text-center w-full'>
+            {t('followers')}
+          </p>
         </div>
         <div
           className={cn(
-            'transition-all hover:scale-110 cursor-pointer flex-col items-center',
+            'transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/4',
             firstStat === 'following' ? 'hidden' : 'flex'
           )}
           onClick={() => router.push(`/${address}?tab=following`)}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(following || 0)}</p>
-          <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>{t('following')}</p>
+          <p className='font-bold text-sm  text-[#888] dark:text-[#aaa] text-wrap break-words text-center w-full'>
+            {t('following')}
+          </p>
         </div>
         <div
           className={cn(
             firstStat === 'blocked' || firstStat === 'top8' ? 'hidden' : 'flex',
-            'transition-all hover:scale-110 cursor-pointer flex-col items-center'
+            'transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/4'
           )}
           onClick={() => router.push(`/${address}`)}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(top8 || 0)}</p>
-          <p className='font-bold text-sm  text-[#888] dark:text-[#aaa]'>{t('top8')}</p>
+          <p className='font-bold text-sm  text-[#888] dark:text-[#aaa] text-wrap break-words  text-center w-full'>
+            {t('top8')}
+          </p>
         </div>
       </div>
     </div>

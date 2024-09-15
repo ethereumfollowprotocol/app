@@ -43,7 +43,7 @@ const LeaderboardSummary = () => {
           return (
             <div key={title} className='flex flex-col gap-1'>
               <h4 className='text-xl flex gap-2 sm:text-xl font-bold capitalize px-2 sm:px-4'>
-                <p>{title}</p>
+                <p>{t(title)}</p>
                 <Image
                   src={displayedEmojies[index]}
                   alt={title}

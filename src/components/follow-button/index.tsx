@@ -188,7 +188,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
         ])}
         style={{
           minWidth: isBlockedBy ? '132px' : '120px',
-          height: '37px'
+          height: '40px'
         }}
         onMouseLeave={() => {
           setDisableHover(false)
@@ -212,7 +212,14 @@ const FollowButton: React.FC<FollowButtonProps> = ({
           width={16}
           className='pointer-events-none'
         />
-        {t(buttonText)}
+        <p
+          className='text-wrap break-words max-w-[90px]'
+          style={{
+            lineHeight: '0.95rem'
+          }}
+        >
+          {t(buttonText)}
+        </p>
       </button>
     </div>
   )

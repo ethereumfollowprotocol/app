@@ -388,7 +388,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                               <button
                                 ref={blockCoolMode as Ref<HTMLButtonElement>}
                                 onClick={() => onClickOption('Block')}
-                                className='rounded-lg cursor-pointer bg-deletion mt-3 mb-2 hover:bg-[#CF4C4C] text-darkGrey transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[109px] h-[37px] px-2 py-1.5'
+                                className='rounded-lg cursor-pointer bg-deletion mt-3 mb-2 hover:bg-[#CF4C4C] text-darkGrey transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[109px] h-[40px] px-2 py-1.5'
                               >
                                 <Image
                                   alt='mainnet logo'
@@ -411,7 +411,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                               <button
                                 ref={muteCoolMode as Ref<HTMLButtonElement>}
                                 onClick={() => onClickOption('Mute')}
-                                className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] text-darkGrey transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[109px] h-[37px] px-2 py-1.5'
+                                className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] text-darkGrey transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[109px] h-[40px] px-2 py-1.5'
                               >
                                 <Image
                                   alt='mainnet logo'
@@ -713,25 +713,32 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 <div className='flex xl:flex-col w-full justify-center flex-wrap gap-x-4 gap-y-0 xxs:gap-y-0 xxs:gap-x-8 xl:gap-0'>
                   {ranks.map((rank, i) => (
                     <Link
-                      href={`/leaderboard?filter=${t(rankTitles[i] || '').toLowerCase()}`}
+                      href={`/leaderboard?filter=${{
+                        mutuals_rank: 'mutuals',
+                        followers_rank: 'followers',
+                        following_rank: 'following',
+                        top8_rank: 'top8',
+                        blocks_rank: 'blocked'
+                      }[rankTitles[i] || '']
+                        ?.replaceAll(' ', '')
+                        ?.toLowerCase()}`}
                       key={rankTitles[i]}
+                      className='w-full mx-[7.5%] 3xs:mx-[10%] xxs:mx-[15%] xs:mx-0 xs:w-fit xl:w-full flex gap-3 justify-between text-lg items-center font-bold px-3 py-1 rounded-lg dark:hover:bg-darkGrey/40 hover:bg-darkGrey/5 transition-all'
                     >
-                      <div className='flex w-full 3xs:w-fit xl:w-full gap-3 justify-between text-lg items-center font-bold px-3 py-1 rounded-lg dark:hover:bg-darkGrey/40 hover:bg-darkGrey/5 transition-all'>
-                        <p className='font-bold text-[#888] dark:text-[#aaa]'>
-                          {t(rankTitles[i] || '')}
-                        </p>
-                        <p
-                          className={
-                            {
-                              1: 'first-place text-xl',
-                              2: 'second-place text-xl',
-                              3: 'third-place text-xl'
-                            }[rank]
-                          }
-                        >
-                          #{formatNumber(rank) || '-'}
-                        </p>
-                      </div>
+                      <p className='font-bold text-[#888] dark:text-[#aaa]'>
+                        {t(rankTitles[i] || '')}
+                      </p>
+                      <p
+                        className={
+                          {
+                            1: 'first-place text-xl',
+                            2: 'second-place text-xl',
+                            3: 'third-place text-xl'
+                          }[rank]
+                        }
+                      >
+                        #{formatNumber(rank) || '-'}
+                      </p>
                     </Link>
                   ))}
                 </div>

@@ -45,7 +45,7 @@ const SocialFollowButton: React.FC<SocialFollowButtonProps> = ({ profiles }) => 
   return (
     <button
       onClick={() => removeCarItems()}
-      className='btn-following-pending text-darkGrey hover:bg-none hover:bg-[#D0D0D0] transition-all hover:scale-[1.15] after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400 rounded-xl relative text-sm flex items-center gap-1.5 justify-center font-bold h-[37px] px-2'
+      className='btn-following-pending text-darkGrey hover:bg-none hover:bg-[#D0D0D0] transition-all hover:scale-[1.15] after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400 rounded-xl relative text-sm flex items-center gap-1.5 justify-center font-bold h-[40px] px-2'
     >
       <Image alt='mainnet logo' src={MainnetBlack} width={16} />
       {t('following')}
