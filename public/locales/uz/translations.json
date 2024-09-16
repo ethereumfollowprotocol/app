@@ -95,9 +95,9 @@
   "no profile": "Profil yo'q",
   "import": "Import qilish",
   "enter": "Kirish",
-  "follow on": "Siz quyidagi platformalarda kuzatasiz:"
+  "follow on": "Siz quyidagi platformalarda kuzatasiz:",
   "follow on efp": "Siz allaqachon EFPda kuzatasiz",
-   "to add": "Savatchaga qo'shish uchun jami",
+  "to add": "Savatchaga qo'shish uchun jami",
 
   "next": "Keyingisi",
   "finish": "Tugatish",
@@ -123,7 +123,6 @@
   "list op": "Ro'yxat operatsiyasi",
   "req transactions": "Talab qilingan tranzaktsiyalar",
   "chain": "Zanjir",
-
 
   "status title": "Holat",
   "of": "-",

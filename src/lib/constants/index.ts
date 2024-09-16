@@ -12,6 +12,7 @@ import TelegramIcon from 'public/assets/icons/telegram.svg'
 import IndiaFlag from 'public/assets/icons/flags/india.svg'
 import ChinaFlag from 'public/assets/icons/flags/china.svg'
 import SpainFlag from 'public/assets/icons/flags/spain.svg'
+import ItalyFlag from 'public/assets/icons/flags/italy.svg'
 import TurkeyFlag from 'public/assets/icons/flags/turkey.svg'
 import StarEyesEmoji from 'public/assets/icons/star-eyes.svg'
 import EtherscanIcon from 'public/assets/icons/etherscan.svg'
@@ -22,11 +23,17 @@ import LatviaFlag from 'public/assets/icons/flags/latvia.svg'
 import SwedenFlag from 'public/assets/icons/flags/sweden.svg'
 import NorwayFlag from 'public/assets/icons/flags/norway.svg'
 import TaiwanFlag from 'public/assets/icons/flags/taiwan.svg'
+import SerbiaFlag from 'public/assets/icons/flags/serbia.svg'
 import RussiaFlag from 'public/assets/icons/flags/russia.svg'
 import PirateFlag from 'public/assets/icons/flags/pirate.svg'
+import GeorgiaFlag from 'public/assets/icons/flags/georgia.svg'
+import ArmeniaFlag from 'public/assets/icons/flags/armenia.svg'
+import CroatiaFlag from 'public/assets/icons/flags/croatia.svg'
+import NigeriaFlag from 'public/assets/icons/flags/nigeria.svg'
 import UkraineFlag from 'public/assets/icons/flags/ukraine.svg'
 import VietnamFlag from 'public/assets/icons/flags/vietnam.svg'
 import GermanyFLag from 'public/assets/icons/flags/germany.svg'
+import EnglandFlag from 'public/assets/icons/flags/england.svg'
 import PortugalFlag from 'public/assets/icons/flags/portugal.svg'
 import PirateFlagEmoji from 'public/assets/icons/pirate-flag.svg'
 import BulgariaFlag from 'public/assets/icons/flags/bulgaria.svg'
@@ -35,8 +42,12 @@ import SloveniaFlag from 'public/assets/icons/flags/slovenia.svg'
 import ThailandFlag from 'public/assets/icons/flags/thailand.svg'
 import USAFlag from 'public/assets/icons/flags/united-states.svg'
 import GithubIconLight from 'public/assets/icons/github-white.svg'
+import GenAlphaFlag from 'public/assets/icons/flags/genalpha.svg'
+import CorporateFlag from 'public/assets/icons/flags/corporate.svg'
 import LithuaniaFlag from 'public/assets/icons/flags/lithuania.svg'
 import IndonesiaFlag from 'public/assets/icons/flags/indonesia.svg'
+import UzbekistanFlag from 'public/assets/icons/flags/uzbekistan.svg'
+import KazakhstanFlag from 'public/assets/icons/flags/kazakhstan.svg'
 import NetherlandsFlag from 'public/assets/icons/flags/netherlands.svg'
 import EtherscanIconLight from 'public/assets/icons/etherscan-light.svg'
 import SaudiArabiaFlag from 'public/assets/icons/flags/saudi-arabia.svg'
@@ -96,7 +107,19 @@ export const LANGUAGES = [
   { language: 'Русский', key: 'ru', icon: RussiaFlag },
   { language: 'Українська', key: 'uk', icon: UkraineFlag },
   { language: 'മലയാളം', key: 'ml', icon: IndiaFlag },
-  { language: 'Pirate', key: 'pirate', icon: PirateFlag }
+  { language: 'Pirate', key: 'pirate', icon: PirateFlag },
+  { language: 'Yorùbá', key: 'yo', icon: NigeriaFlag },
+  { language: 'Қазақ', key: 'kk', icon: KazakhstanFlag },
+  { language: 'ქართული', key: 'ka', icon: GeorgiaFlag },
+  { language: 'Nigerian Pidgin', key: 'pcm', icon: NigeriaFlag },
+  { language: 'Հայերեն', key: 'hy', icon: ArmeniaFlag },
+  { language: 'Srpski', key: 'sr', icon: SerbiaFlag },
+  { language: 'Hrvatski', key: 'hr', icon: CroatiaFlag },
+  { language: 'Italiano', key: 'it', icon: ItalyFlag },
+  { language: 'Shakespearean', key: 'shakespearean', icon: EnglandFlag },
+  { language: "O'zbekcha", key: 'uz', icon: UzbekistanFlag },
+  { language: 'Gen Alpha', key: 'genalpha', icon: GenAlphaFlag },
+  { language: 'Corporate', key: 'corp', icon: CorporateFlag }
 ]
 
 export const DEFAULT_TAGS_TO_ADD = ['irl', 'bff', 'based', 'degen', 'top8']
