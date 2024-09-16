@@ -1,4 +1,7 @@
 {
+  "language name in language": "Français",
+  "language name in English": "French",
+  
   "home": "Accueil",
   "recent": "Activité récente",
   "no followers": "Pas d'abonnés",
@@ -152,6 +155,7 @@
   "disconnect": "Déconnecter",
   "connect": "Connecter le portefeuille",
   "list": "Liste",
+  "primary": "Pincipale",
   "mint new list": "Créer une nouvelle liste",
   "accounts": "comptes",
   "search no results": "Aucun résultat",
