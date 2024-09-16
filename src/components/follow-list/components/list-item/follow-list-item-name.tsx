@@ -179,7 +179,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
       )}
       <div
         className={`flex flex-col md:flex-row ${
-          counts ? 'w-1/2 sm:w-[45%] md:w-1/2 xl:w-1/2' : 'w-2/3 xxs:w-[calc(100% - 55px)]'
+          counts ? 'w-2/5' : 'w-2/3 xxs:w-[calc(100% - 55px)]'
         } md:gap-3 xl:gap-2 2xl:gap-3 gap-[2px]`}
       >
         <div
@@ -320,7 +320,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
         )}
       </div>
       {counts && (
-        <div className='items-center justify-end hidden xs:flex pr-6 sm:gap-8 gap-6 md:gap-16 lg:gap-16 xl:gap-10'>
+        <div className='items-center max-w-1/3 justify-end hidden xs:flex pr-6 sm:gap-8 gap-6 md:gap-16 lg:gap-16 xl:gap-10'>
           <div
             className={`flex-col items-center 2xl:flex hover:scale-110 cursor-pointer transition-transform ${
               userAddress && !isFollowersEmpty ? 'lg:hidden' : ''
@@ -328,7 +328,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
             onClick={() => router.push(`/${address}?tab=following`)}
           >
             <p className='font-bold text-lg'>{formatNumber(counts.following)}</p>
-            <p className='font-bold text-sm text-nowrap text-[#888] dark:text-[#aaa]'>
+            <p className='font-bold text-sm text-center text-[#888] dark:text-[#aaa]'>
               {t('following')}
             </p>
           </div>
@@ -337,7 +337,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
             onClick={() => router.push(`/${address}?tab=followers`)}
           >
             <p className='font-bold text-lg'>{formatNumber(counts.followers)}</p>
-            <p className='font-bold text-sm text-nowrap  text-[#888] dark:text-[#aaa]'>
+            <p className='font-bold text-sm text-center text-[#888] dark:text-[#aaa]'>
               {t('followers')}
             </p>
           </div>
