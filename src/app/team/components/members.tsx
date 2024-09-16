@@ -6,6 +6,7 @@ import LoadingCell from '#/components/loaders/loading-cell'
 import UserProfileCard from '#/components/user-profile-card'
 import { fetchProfileDetails } from '#/api/fetchProfileDetails'
 import { useTranslation } from 'react-i18next'
+import { fetchProfileStats } from '#/api/fetchProfileStats'
 
 const Members = () => {
   const teamAddresses: string[] = process.env.NEXT_PUBLIC_TEAM_ADDRESSES?.split(' ') || []
@@ -17,6 +18,18 @@ const Members = () => {
       const data = await Promise.all(
         teamAddresses?.map(async address => await fetchProfileDetails(address))
       )
+      return data
+    }
+  })
+  const { data: teamStats, isLoading: teamStatsIsLoading } = useQuery({
+    queryKey: ['team', 'stats', teamAddresses],
+    queryFn: async () => {
+      if (!teamAddresses) return []
+
+      const data = await Promise.all(
+        teamAddresses?.map(async address => await fetchProfileStats(address))
+      )
+
       return data
     }
   })
@@ -34,6 +47,18 @@ const Members = () => {
       const data = await Promise.all(
         foundationAddresses?.map(async address => await fetchProfileDetails(address))
       )
+      return data
+    }
+  })
+  const { data: foundationStats, isLoading: foundationStatsIsLoading } = useQuery({
+    queryKey: ['follow protocol foundation', 'stats', teamAddresses],
+    queryFn: async () => {
+      if (!teamAddresses) return []
+
+      const data = await Promise.all(
+        teamAddresses?.map(async address => await fetchProfileStats(address))
+      )
+
       return data
     }
   })
@@ -56,6 +81,8 @@ const Members = () => {
               <UserProfileCard
                 isResponsive={false}
                 profile={profile}
+                stats={teamStats?.[i]}
+                isStatsLoading={teamStatsIsLoading}
                 profileList={profile?.primary_list ? Number(profile?.primary_list) : undefined}
                 showMoreOptions={true}
                 // x={records?.['com.twitter'] ?? ''}
@@ -89,6 +116,8 @@ const Members = () => {
                 <UserProfileCard
                   isResponsive={false}
                   profile={profile}
+                  stats={foundationStats?.[i]}
+                  isStatsLoading={foundationStatsIsLoading}
                   profileList={profile?.primary_list ? Number(profile?.primary_list) : undefined}
                   showMoreOptions={true}
                   // x={records?.['com.twitter'] ?? ''}

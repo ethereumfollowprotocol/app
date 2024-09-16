@@ -11,9 +11,17 @@ import ScrollIndicator from '#/components/scroll-indicator.tsx'
 import LeaderboardSummary from './components/leaderboard-summary.tsx'
 
 const Summary = () => {
+  const {
+    stats,
+    profile,
+    followers,
+    selectedList,
+    statsIsLoading,
+    profileIsLoading,
+    followersIsLoading
+  } = useEFPProfile()
   const { t } = useTranslation()
   const { address: userAddress } = useAccount()
-  const { profile, followers, selectedList, profileIsLoading, followersIsLoading } = useEFPProfile()
 
   const isFollowersEmpty = !followersIsLoading && followers.length === 0
 
@@ -23,7 +31,9 @@ const Summary = () => {
         <UserProfileCard
           profileList={selectedList || Number(profile?.primary_list)}
           hideFollowButton={true}
+          stats={stats}
           profile={profile}
+          isStatsLoading={statsIsLoading}
           isLoading={profileIsLoading}
         />
       )}

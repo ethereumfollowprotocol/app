@@ -34,7 +34,7 @@ import useFollowerState from '#/hooks/use-follower-state'
 import CommonFollowers from './components/common-followers'
 import useFollowingState from '#/hooks/use-following-state'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import type { ProfileDetailsResponse } from '#/types/requests'
+import type { ProfileDetailsResponse, StatsResponse } from '#/types/requests'
 import { isValidEnsName, resolveEnsProfile } from '#/utils/ens'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 import DefaultHeader from 'public/assets/art/default-header.svg'
@@ -47,6 +47,8 @@ interface UserProfileCardProps {
   hideFollowButton?: boolean
   profile?: ProfileDetailsResponse | null
   isLoading?: boolean
+  isStatsLoading?: boolean
+  stats?: StatsResponse | null
   showMoreOptions?: boolean
   openBlockModal?: () => void
   openListSettingsModal?: () => void
@@ -57,7 +59,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   isResponsive = true,
   hideFollowButton,
   profile,
+  stats,
   isLoading,
+  isStatsLoading,
   showMoreOptions,
   openBlockModal,
   openListSettingsModal
@@ -670,19 +674,17 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                   )
                 }
               >
-                <div className='text-xl sm:text-2xl text-center font-bold'>
-                  {profile.stats === undefined
-                    ? '-'
-                    : profileList
-                      ? formatNumber(profile.stats.following_count)
-                      : 0}
-                  {/* // ? '-'
-                    // : isConnectedUserCard && profileList === undefined
-                    //   ? 0
-                    //   : profileList
-                    //     ? formatNumber(profile.stats.following_count)
-                    //     : 0 */}
-                </div>
+                {isStatsLoading ? (
+                  <LoadingCell className='w-12 h-6 mb-1 rounded-lg mx-auto' />
+                ) : (
+                  <div className='text-xl sm:text-2xl text-center font-bold'>
+                    {stats
+                      ? profileList !== undefined
+                        ? formatNumber(stats?.following_count || 0)
+                        : 0
+                      : '-'}
+                  </div>
+                )}
                 <div className='text-lg font-bold text-[#888] dark:text-[#aaa]'>
                   {t('following')}
                 </div>
@@ -703,9 +705,13 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                   )
                 }
               >
-                <div className='text-xl sm:text-2xl text-center font-bold'>
-                  {profile.stats === undefined ? '-' : formatNumber(profile.stats.followers_count)}
-                </div>
+                {isStatsLoading ? (
+                  <LoadingCell className='w-12 h-6 mb-1 rounded-lg mx-auto' />
+                ) : (
+                  <div className='text-xl sm:text-2xl text-center font-bold'>
+                    {stats ? formatNumber(stats.followers_count) : '-'}
+                  </div>
+                )}
                 <div className='text-lg font-bold text-[#888] dark:text-[#aaa]'>
                   {t('followers')}
                 </div>

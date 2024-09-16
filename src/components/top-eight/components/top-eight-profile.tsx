@@ -109,7 +109,7 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
       {followerTag && (
         <div
           className={cn(
-            'rounded-full absolute font-bold text-[10px] flex bottom-[59px] items-center justify-center bg-zinc-300 h-5 w-20',
+            'rounded-full absolute font-bold text-[10px] flex bottom-[59px] items-center justify-center bg-zinc-300 h-5 w-fit px-1',
             followerTag.className,
             'text-darkGrey'
           )}

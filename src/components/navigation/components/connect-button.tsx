@@ -261,7 +261,7 @@ const ConnectButton = () => {
                           />
                         )}
                         <div className='flex flex-wrap sm:flex-nowrap items-end gap-1'>
-                          <p className='text-nowrap font-bold'>{`${t('list')} #${list}`}</p>
+                          <p className='font-bold text-wrap'>{`${t('list')} #${list}`}</p>
                           {lists.primary_list === list && (
                             <p className='mb-0.5 text-sm italic text-nowrap font-medium text-zinc-400'>
                               - {t('primary')}
@@ -288,7 +288,7 @@ const ConnectButton = () => {
                           className='absolute left-2 top-[17px]'
                         />
                       )}
-                      <p className='text-nowrap font-bold'>{t('mint new list')}</p>
+                      <p className=' font-bold'>{t('mint new list')}</p>
                     </div>
                   </div>
                 </div>

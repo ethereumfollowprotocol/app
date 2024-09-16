@@ -39,6 +39,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
 
   const {
     roles,
+    stats: profileStats,
     profile: profileProfile,
     selectedList,
     following: profileFollowing,
@@ -50,6 +51,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     followingTags: profileFollowingTags,
     isEndOfFollowers: profileIsEndOfFollowers,
     isEndOfFollowing: profileIsEndOfFollowing,
+    statsIsLoading: profileStatsIsLoading,
     profileIsLoading: profileProfileIsLoading,
     setFollowersSort: profileSetFollowersSort,
     setFollowingSort: profileSetFollowingSort,
@@ -73,6 +75,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
 
   const {
     listNum,
+    stats: userStats,
     profile: userProfile,
     followers: userFollowers,
     following: userFollowing,
@@ -89,6 +92,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     setFollowersSort: userSetFollowerSort,
     setFollowersSearch: userSetFollowersSearch,
     setFollowingSearch: userSetFollowingSearch,
+    statsIsLoading: userStatsIsLoading,
     followersIsLoading: userFollowersIsLoading,
     followingIsLoading: userFollowingIsLoading,
     fetchMoreFollowers: userFetchMoreFollowers,
@@ -103,6 +107,8 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     setFollowingTagsFilter: userSetFollowingTagsFilter
   } = useUser(user)
 
+  const stats = isMyProfile ? profileStats : userStats
+  const statsIsLoading = isLoadPage || (isMyProfile ? profileStatsIsLoading : userStatsIsLoading)
   const profile: ProfileDetailsResponse | null | undefined = isMyProfile
     ? profileProfile
     : userProfile
@@ -242,8 +248,10 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
                     ? Number(profile?.primary_list)
                     : undefined
               }
+              stats={stats}
               profile={profile}
               isLoading={profileIsLoading}
+              isStatsLoading={statsIsLoading}
               showMoreOptions={true}
               openBlockModal={() => {
                 setIsBlockedMutedOpen(true)

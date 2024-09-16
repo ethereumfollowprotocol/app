@@ -27,7 +27,8 @@ import type {
   ProfileListsResponse,
   ProfileDetailsResponse,
   FollowingTagsResponse,
-  ENSProfile
+  ENSProfile,
+  StatsResponse
 } from '#/types/requests'
 import { useCart } from './cart-context'
 import { fetchProfileRoles } from '#/api/fetchProfileRoles'
@@ -40,6 +41,7 @@ import { fetchProfileAllFollowings } from '#/api/fetchProfileAllFollowings'
 import { fetchFollowerTags, nullFollowerTags } from '#/api/fetchFollowerTags'
 import { fetchFollowingTags, nullFollowingTags } from '#/api/fetchFollowingTags'
 import { BLOCKED_MUTED_TAGS, DEFAULT_TAGS_TO_ADD, FETCH_LIMIT_PARAM } from '#/lib/constants'
+import { fetchProfileStats } from '#/api/fetchProfileStats'
 
 // Define the type for the profile context
 type EFPProfileContextType = {
@@ -47,6 +49,7 @@ type EFPProfileContextType = {
   setSelectedList: Dispatch<SetStateAction<number | undefined>>
   lists?: ProfileListsResponse | null
   profile?: ProfileDetailsResponse | null
+  stats?: StatsResponse | null
   followingTags?: FollowingTagsResponse
   followerTags?: FollowingTagsResponse
   followers: FollowerResponse[]
@@ -61,6 +64,7 @@ type EFPProfileContextType = {
   topEightIsRefetching: boolean
   listsIsLoading: boolean
   profileIsLoading: boolean
+  statsIsLoading: boolean
   followingTagsLoading: boolean
   followerTagsLoading: boolean
   followersIsLoading: boolean
@@ -99,6 +103,9 @@ type EFPProfileContextType = {
   refetchProfile: (
     options?: RefetchOptions
   ) => Promise<QueryObserverResult<ProfileDetailsResponse | null, Error>>
+  refetchStats: (
+    options?: RefetchOptions
+  ) => Promise<QueryObserverResult<StatsResponse | null, Error>>
   refetchFollowingTags: (
     options?: RefetchOptions
   ) => Promise<QueryObserverResult<FollowingTagsResponse | undefined, Error>>
@@ -139,6 +146,8 @@ type EFPProfileContextType = {
   setFollowersSearch: (value: string) => void
   setFollowingTagsFilter: Dispatch<SetStateAction<string[]>>
   setFollowersTagsFilter: Dispatch<SetStateAction<string[]>>
+  isRefetchingStats: boolean
+  setIsRefetchingStats: (state: boolean) => void
   setIsRefetchingProfile: (state: boolean) => void
   setIsRefetchingFollowing: (state: boolean) => void
   setSetNewListAsSelected: (state: boolean) => void
@@ -151,6 +160,7 @@ type Props = {
 const EFPProfileContext = createContext<EFPProfileContextType | undefined>(undefined)
 
 export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
+  const [isRefetchingStats, setIsRefetchingStats] = useState(false)
   const [isRefetchingProfile, setIsRefetchingProfile] = useState(false)
   const [isRefetchingFollowing, setIsRefetchingFollowing] = useState(false)
 
@@ -243,6 +253,25 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       setIsRefetchingProfile(false)
 
       return fetchedProfile
+    },
+    // refetchInterval: 60000
+    staleTime: Infinity,
+    refetchOnWindowFocus: false
+  })
+
+  const {
+    data: stats,
+    isLoading: statsIsLoading,
+    refetch: refetchStats,
+    isRefetching: isRefetchingStatsQuery
+  } = useQuery({
+    queryKey: ['stats', userAddress, selectedList, isRefetchingStats],
+    queryFn: async () => {
+      if (!userAddress) return null
+
+      const fetchedStats = await fetchProfileStats(userAddress, selectedList, isRefetchingStats)
+
+      return fetchedStats
     },
     // refetchInterval: 60000
     refetchOnWindowFocus: false
@@ -502,6 +531,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         selectedList,
         setSelectedList,
         lists,
+        stats,
         profile,
         followerTags,
         followingTags,
@@ -517,6 +547,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         followingTagsLoading: followingTagsLoading || isRefetchingFollowingTagsQuery,
         profileIsLoading:
           listsIsLoading || isRefetchingProfile || profileIsLoading || isRefetchingProfileQuery,
+        statsIsLoading: listsIsLoading || statsIsLoading || isRefetchingStatsQuery,
         followingIsLoading:
           listsIsLoading ||
           isRefetchingFollowing ||
@@ -530,6 +561,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         fetchMoreFollowers,
         fetchMoreFollowing,
         refetchLists,
+        refetchStats,
         refetchProfile,
         refetchFollowers,
         refetchFollowing,
@@ -555,6 +587,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         },
         setFollowingTagsFilter,
         setFollowersTagsFilter,
+        isRefetchingStats,
+        setIsRefetchingStats,
         setIsRefetchingProfile,
         setIsRefetchingFollowing,
         setSetNewListAsSelected

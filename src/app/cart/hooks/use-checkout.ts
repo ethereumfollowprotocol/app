@@ -40,9 +40,11 @@ const useCheckout = () => {
     profile,
     refetchLists,
     selectedList,
-    refetchProfile,
+    refetchStats,
     refetchFollowing,
+    isRefetchingStats,
     refetchFollowingTags,
+    setIsRefetchingStats,
     setIsRefetchingProfile,
     setSetNewListAsSelected,
     setIsRefetchingFollowing
@@ -274,15 +276,18 @@ const useCheckout = () => {
   }, [moveToNextAction, executeActionByIndex, getRequiredChain, currentChainId, currentActionIndex])
 
   const onFinish = useCallback(() => {
-    setIsRefetchingProfile(true)
+    if (isRefetchingStats) refetchStats()
+    else setIsRefetchingStats(true)
     setIsRefetchingFollowing(true)
     queryClient.invalidateQueries({ queryKey: ['top8'] })
     queryClient.invalidateQueries({ queryKey: ['follow state'] })
     queryClient.invalidateQueries({ queryKey: ['list state'] })
 
     if (listHasBeenMinted || selectedList === undefined) {
-      refetchLists()
+      setIsRefetchingProfile(true)
       setSetNewListAsSelected(true)
+
+      refetchLists()
       router.push('/loading')
       return
     }
@@ -298,7 +303,6 @@ const useCheckout = () => {
       })
     )
 
-    refetchProfile()
     refetchFollowing()
     refetchFollowingTags()
 
