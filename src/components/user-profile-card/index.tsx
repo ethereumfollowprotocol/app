@@ -105,7 +105,10 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const searchParams = useSearchParams()
   const searchURLParam = searchParams.get('search')
   const hasSearchedDifferentName =
-    searchURLParam && searchURLParam.length > 0 && searchURLParam !== profile?.ens?.name
+    searchURLParam &&
+    searchURLParam.length > 0 &&
+    searchURLParam !== profile?.ens?.name &&
+    !Number(searchURLParam)
 
   const isConnectedUserCard =
     pathname === '/' ||
@@ -305,7 +308,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
             <LoadingCell className='w-full h-[120px] absolute top-0 left-0 rounded-t-lg' />
           ) : (
             <ImageWithFallback
-              src={profile.ens.header || DefaultHeader}
+              src={profile.ens.records?.header || DefaultHeader}
               fallback={DefaultHeader}
               alt='profile header'
               width={360}
