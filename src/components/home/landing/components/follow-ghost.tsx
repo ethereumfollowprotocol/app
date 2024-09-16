@@ -39,7 +39,7 @@ const FollowGhost = () => {
         src={LineMobileFirst}
         alt='line'
         width={3}
-        className='pointer-events-none absolute lg:hidden left-[47%] bottom-[145px] 3xs:bottom-[147px]'
+        className='pointer-events-none absolute lg:hidden left-[47%] bottom-[41vw] 3xs:bottom-[158px]'
       />
       <Image
         src={LineMobileSecond}

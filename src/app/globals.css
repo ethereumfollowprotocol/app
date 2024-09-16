@@ -534,7 +534,14 @@ input {
 
 @media screen and (max-width: 750px) {
   body {
-    background-position: -34.1vw 20vh;
-    background-size: 210vw 129vw;
+    background-position: -200vw -40vh;
+    background-size: 750vw 350vw;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  body {
+    background-position: -250vw -55vh;
+    background-size: 900vw 450vw;
   }
 }

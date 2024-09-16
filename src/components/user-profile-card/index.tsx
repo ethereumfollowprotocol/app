@@ -388,7 +388,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                               <button
                                 ref={blockCoolMode as Ref<HTMLButtonElement>}
                                 onClick={() => onClickOption('Block')}
-                                className='rounded-lg cursor-pointer bg-deletion mt-3 mb-2 hover:bg-[#CF4C4C] text-darkGrey transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[109px] h-[40px] px-2 py-1.5'
+                                className='rounded-lg cursor-pointer bg-deletion mt-3 mb-2 hover:bg-[#CF4C4C] text-darkGrey transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[120px] h-[40px] px-2 py-1.5'
                               >
                                 <Image
                                   alt='mainnet logo'
@@ -396,7 +396,12 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                                   width={16}
                                   height={16}
                                 />
-                                <p>
+                                <p
+                                  className='max-w-20 break-words text-wrap'
+                                  style={{
+                                    lineHeight: '0.95rem'
+                                  }}
+                                >
                                   {t(
                                     followState === 'blocks'
                                       ? isPendingUnblock
@@ -411,7 +416,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                               <button
                                 ref={muteCoolMode as Ref<HTMLButtonElement>}
                                 onClick={() => onClickOption('Mute')}
-                                className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] text-darkGrey transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[109px] h-[40px] px-2 py-1.5'
+                                className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] text-darkGrey transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[120px] h-[40px] px-2 py-1.5'
                               >
                                 <Image
                                   alt='mainnet logo'
@@ -419,7 +424,12 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                                   width={16}
                                   height={16}
                                 />
-                                <p>
+                                <p
+                                  className='max-w-20 break-words text-wrap'
+                                  style={{
+                                    lineHeight: '0.95rem'
+                                  }}
+                                >
                                   {t(
                                     followState === 'mutes'
                                       ? isPendingUnmute
@@ -660,7 +670,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                   )
                 }
               >
-                <div className='text-2xl sm:text-2xl text-center font-bold'>
+                <div className='text-xl sm:text-2xl text-center font-bold'>
                   {profile.stats === undefined
                     ? '-'
                     : profileList

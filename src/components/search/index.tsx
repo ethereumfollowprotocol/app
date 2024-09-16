@@ -40,7 +40,9 @@ export function Search({
       <label htmlFor='search' className='sr-only'>
         Search
       </label>
-      <div className={`rounded-md  gap-2 ${isEditor ? 'flex' : 'hidden md:flex'}`}>
+      <div
+        className={`rounded-md gap-2 ${isEditor ? 'flex flex-col xs:flex-row' : 'hidden md:flex'}`}
+      >
         <div className='w-full relative group'>
           {isEditor ? (
             <>
@@ -128,7 +130,7 @@ export function Search({
         {isEditor && (
           <PrimaryButton
             label={t('add')}
-            className='w-32 h-12 text-lg'
+            className='mx-auto w-full xs:w-32 h-12 text-lg'
             onClick={() => onSubmit()}
           />
         )}

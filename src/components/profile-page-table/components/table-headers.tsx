@@ -65,7 +65,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
       <div className='flex justify-between w-full'>
         <div className='flex gap-4 justify-between items-center w-full'>
           <div className='flex gap-3 items-center'>
-            <h2 className='capitalize text-lg sm:text-3xl font-bold'>{t(title)}</h2>
+            <h2 className='capitalize text-lg sm:text-3xl hidden xl:block font-bold'>{t(title)}</h2>
             {!BLOCKED_MUTED_TABS.includes(title) && (
               <div ref={clickAwaySearchRef} className='relative flex gap-1 sm:gap-3 z-50'>
                 <div
@@ -90,7 +90,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                   />
                 )}
                 {showSearch && (
-                  <div className='absolute glass-card flex items-center border-[3px] bg-white/75 dark:bg-darkGrey/90 border-zinc-300 dark:border-[#666] -top-4 gap-1 lg:-left-1 -left-16 sm:-left-1 md:-left-16 w-64 h-fit rounded-xl shadow-md'>
+                  <div className='absolute glass-card flex items-center border-[3px] bg-white/75 dark:bg-darkGrey/90 border-zinc-300 dark:border-[#666] -top-4 gap-1 lg:-left-1 left-0 sm:-left-1 md:-left-16 w-64 h-fit rounded-xl shadow-md'>
                     <input
                       type='text'
                       spellCheck={false}
