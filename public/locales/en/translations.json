@@ -180,5 +180,9 @@
   "mute": "Mute",
   "Mute": "Mute",
   "Muted": "Muted",
-  "Unmute": "Unmute"
+  "Unmute": "Unmute",
+
+  "feed title": "Feed",
+  "feed description": "See what your EFP friends are doing onchain 👀",
+  "powered by": "Powered by"
 }

@@ -41,7 +41,12 @@ const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile }) => 
             <p>{t('edit')}</p>
           </div>
         )}
-        <div className='flex gap-2 font-bold justify-center items-center'>
+        <div
+          className={cn(
+            'flex gap-2 font-bold justify-center items-center',
+            isConnectedUserProfile ? 'mt-4' : 'mt-2'
+          )}
+        >
           <h3 className='text-2xl'>{t('top eight title')}</h3>
         </div>
         {topEight?.length === 0 && !(topEightIsLoading || topEightIsRefetching) && (

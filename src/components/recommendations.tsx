@@ -67,7 +67,7 @@ const Recommendations = ({ header, className, limit = 10, endpoint }: Recommenda
       <div className='px-2 pt-2 w-full'>
         <div className='w-full flex items-center justify-between'>
           <h2
-            className={`text-center pl-2 sm:pl-0 lg:text-start text-2xl ${
+            className={`pl-2 sm:pl-0 text-start text-2xl ${
               endpoint === 'recommended' ? '' : 'sm:text-3xl'
             } font-bold`}
           >

@@ -135,19 +135,21 @@ export const SORT_OPTIONS: FollowSortType[] = ['follower count', 'latest first',
 export const NAV_ITEMS = [
   {
     href: () => '/',
-    emoji: '🏠',
     name: 'home',
     private: false
   },
   {
     href: (url?: string) => `/${url ?? 'profile'}`,
-    emoji: '👤',
     name: 'profile',
     private: true
   },
   {
+    href: () => '/feed',
+    name: 'feed',
+    private: true
+  },
+  {
     href: () => '/leaderboard',
-    emoji: '🏆',
     name: 'leaderboard',
     private: false
   }

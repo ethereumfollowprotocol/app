@@ -41,7 +41,7 @@ export function Search({
         Search
       </label>
       <div
-        className={`rounded-md gap-2 ${isEditor ? 'flex flex-col xs:flex-row' : 'hidden md:flex'}`}
+        className={`rounded-md gap-2 ${isEditor ? 'flex flex-col xs:flex-row' : 'hidden 2xl:flex'}`}
       >
         <div className='w-full relative group'>
           {isEditor ? (
@@ -137,7 +137,7 @@ export function Search({
       </div>
       <div
         className={`absolute glass-card p-3 md:p-4 w-full shadow-md border-[3px] border-zinc-200 dark:border-zinc-500 bg-white/95 dark:bg-darkGrey/95 rounded-xl top-full mt-2 left-0 ${
-          dropdownMenuOpen ? (isEditor ? 'block' : 'hidden md:block') : 'hidden'
+          dropdownMenuOpen ? (isEditor ? 'block' : 'hidden 2xl:block') : 'hidden'
         }`}
       >
         <div
@@ -181,15 +181,15 @@ export function Search({
           )}
         </div>
       </div>
-      <div className={` relative z-50 ${isEditor ? 'hidden' : 'md:hidden block'}`}>
+      <div className={` relative z-50 ${isEditor ? 'hidden' : '2xl:hidden block'}`}>
         <FiSearch
           onClick={() => setDialogOpen(true)}
-          className='text-xl hover:scale-125 cursor-pointer transition-all hover:opacity-65'
+          className='text-3xl hover:scale-125 cursor-pointer transition-all hover:opacity-65'
           aria-hidden='true'
         />
         <div
           ref={clickAwayRef}
-          className={`p-0 md:hidden w-[40vw] min-w-68 absolute -top-3 left-0 mx-auto ${
+          className={`p-0 2xl:hidden w-[40vw] min-w-68 max-w-86 absolute -top-3 left-0 mx-auto ${
             dialogOpen ? 'block' : 'hidden'
           }`}
         >
@@ -197,7 +197,7 @@ export function Search({
             <input
               name='search'
               ref={searchBarRef as LegacyRef<HTMLInputElement>}
-              className='h-11 rounded-xl border-[3px] w-full shadow-md border-zinc-200 px-2'
+              className='h-12 block pr-12 w-full  truncate font-medium rounded-xl border-[3px] pl-4 sm:text-sm bg-white dark:bg-darkGrey focus:border- border-[#666] dark:border-white/80 transition-colors'
               spellCheck={false}
               placeholder={t('search placeholder')}
               disabled={disabled}
@@ -226,7 +226,7 @@ export function Search({
             }`}
           >
             <div
-              className='w-full mx-auto min-w-full text-lg py-0 md:hidden block '
+              className='w-full mx-auto min-w-full text-lg py-0 2xl:hidden block '
               ref={clickAwayRef}
               onFocusCapture={event => {
                 event.preventDefault()
