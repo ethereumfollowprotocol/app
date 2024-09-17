@@ -7,10 +7,10 @@ const LatestFollowers = () => {
   const { t } = useTranslation()
   const {
     displayedProfiles,
-    page,
+    subPage,
     setPage,
+    setSubPage,
     isLoading,
-    hasNextPage,
     fetchNextPage,
     fetchPreviousPage,
     isFetchingNextPage,
@@ -24,15 +24,23 @@ const LatestFollowers = () => {
       <div className='flex w-full items-center justify-between'>
         <h2 className='text-2xl sm:text-3xl w-full p-2 font-bold'>{t('latest followers')}</h2>
         <PageSelector
-          page={page}
-          setPage={setPage}
+          page={subPage}
+          setPage={(newPage: number) => {
+            if (newPage > subPage && (newPage - 1) % 5 === 0) {
+              setPage((newPage - 1) / 5 + 1)
+            }
+            if (newPage < subPage && newPage % 5 === 0) {
+              setPage(newPage / 5)
+            }
+            setSubPage(newPage)
+          }}
           adjustUrl={false}
           hasSkipToFirst={false}
           displayPageNumber={false}
-          fetchNext={fetchNextPage}
-          fetchPrevious={fetchPreviousPage}
+          fetchNext={() => (subPage % 5 === 0 ? fetchNextPage() : null)}
+          fetchPrevious={() => ((subPage - 1) % 5 === 0 ? fetchPreviousPage() : null)}
           isLoading={isLatestFollowersLoading}
-          hasNextPage={hasNextPage && (displayedProfiles?.length || 1) % 7 === 0}
+          hasNextPage={(displayedProfiles?.length || 1) % 7 === 0}
         />
       </div>
       <FollowList

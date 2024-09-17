@@ -4,11 +4,10 @@ import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import { useTheme } from 'next-themes'
 import { useTranslation } from 'react-i18next'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import { cn } from '#/lib/utilities'
-import InterfaceDark from 'public/assets/icons/interface-dark.svg'
-import InterfaceLight from 'public/assets/icons/interface-light.svg'
-import { useConnectModal } from '@rainbow-me/rainbowkit'
+import InterfaceLight from 'public/assets/icons/interface.png'
 
 export default function Feed() {
   const { t } = useTranslation()
@@ -30,7 +29,7 @@ export default function Feed() {
       </div>
       <div className='flex w-full max-w-[900px] pb-0 px-0 py-4 xs:px-4 sm:p-6 lg:p-10 lg:pt-6 glass-card rounded-2xl border-zinc-200 border-[3px] dark:border-zinc-500 items-center sm:items-end flex-col gap-4 sm:gap-6'>
         <div className='flex gap-3 items-center'>
-          <p className='text-xl font-semibold text-zinc-500 dark:text-zinc-300'>
+          <p className='text-lg font-semibold text-zinc-500 dark:text-zinc-300'>
             {t('powered by')}
           </p>
           <a
@@ -39,12 +38,7 @@ export default function Feed() {
             rel='noreferrer'
             className='hover:scale-110 transition-transform'
           >
-            <Image
-              src={resolvedTheme === 'dark' ? InterfaceDark : InterfaceLight}
-              alt='Interface'
-              width={180}
-              height={40}
-            />
+            <Image src={InterfaceLight} alt='Interface' width={180} height={40} />
           </a>
         </div>
         <div

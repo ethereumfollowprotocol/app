@@ -6,6 +6,8 @@ import { useAccount } from 'wagmi'
 
 export const useLatestFollowers = () => {
   const [page, setPage] = useState(1)
+  const [subPage, setSubPage] = useState(1)
+
   const { selectedList } = useEFPProfile()
   const { address: userAddress } = useAccount()
 
@@ -25,7 +27,7 @@ export const useLatestFollowers = () => {
       const discoverAccounts = await fetchProfileFollowers({
         addressOrName: userAddress,
         list: selectedList,
-        limit: 7,
+        limit: 35,
         pageParam,
         sort: 'latest first'
       })
@@ -45,13 +47,18 @@ export const useLatestFollowers = () => {
 
   const displayedProfiles = useMemo(() => {
     const pageIndex = profilesToRecommend?.pageParams.indexOf(page - 1) || 0
-    return profilesToRecommend?.pages[pageIndex]?.results.slice(0, 7)
-  }, [profilesToRecommend, page])
+    return profilesToRecommend?.pages[pageIndex]?.results.slice(
+      (subPage - 1 - (page - 1) * 5) * 7,
+      (subPage - (page - 1) * 5) * 7
+    )
+  }, [profilesToRecommend, page, subPage])
 
   return {
     displayedProfiles,
     page,
+    subPage,
     setPage,
+    setSubPage,
     isLoading,
     hasNextPage,
     fetchNextPage,
