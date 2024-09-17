@@ -9,6 +9,8 @@ import UserProfileCard from '#/components/user-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import ScrollIndicator from '#/components/scroll-indicator.tsx'
 import LeaderboardSummary from './components/leaderboard-summary.tsx'
+import FeedCard from '#/components/feed-card.tsx'
+import { cn } from '#/lib/utilities.ts'
 
 const Summary = () => {
   const {
@@ -37,21 +39,35 @@ const Summary = () => {
           isLoading={profileIsLoading}
         />
       )}
-      {!isFollowersEmpty && userAddress ? (
-        <LatestFollowers />
-      ) : userAddress ? null : (
+      {userAddress ? (
+        <FeedCard
+          cardSize='h-[90vh] md:h-[823px] w-full xl:min-w-[420px] xl:w-1/3 2xl:w-[700px] lg:w-[49%] px-0 pt-4 xs:p-4 md:p-6'
+          contentSize='h-full w-full'
+          title={t('feed')}
+          description={t('feed description')}
+        />
+      ) : (
         <LeaderboardSummary />
       )}
-      <Recommendations
-        limit={15}
-        endpoint='discover'
-        header={t('recent')}
-        className={`h-fit w-full ${
+      <div
+        className={cn(
+          'flex flex-col gap-4',
+
           isFollowersEmpty || !userAddress
-            ? 'xl:w-[50%] xl:max-w-[900px]'
-            : 'lg:min-h-[638px] w-full lg:w-[49%] xl:w-[38%] 2xl:min-w-[650px] 2xl:w-[45%]'
-        } py-4 sm:p-4 glass-card border-[3px] border-zinc-200 dark:border-zinc-500 rounded-2xl`}
-      />
+            ? 'w-full xl:w-1/2 xl:max-w-[900px] h-[638px]'
+            : 'lg:h-[400px] w-full lg:w-[49%] xl:w-[38%] 2xl:min-w-[600px] 2xl:w-[45%]'
+        )}
+      >
+        {!isFollowersEmpty && userAddress && <LatestFollowers />}
+        <Recommendations
+          limit={!isFollowersEmpty && userAddress ? 4 : 7}
+          endpoint='discover'
+          header={t('recent')}
+          className={cn(
+            'h-fit w-full py-4 sm:p-4 glass-card border-[3px] border-zinc-200 dark:border-zinc-500 rounded-2xl'
+          )}
+        />
+      </div>
       <ScrollIndicator />
     </div>
   )

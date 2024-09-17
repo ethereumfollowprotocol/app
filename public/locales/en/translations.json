@@ -182,8 +182,7 @@
   "Muted": "Muted",
   "Unmute": "Unmute",
 
-  "feed": "Feed",
-  "feed title": "Feed",
-  "feed description": "See what your EFP friends are doing onchain 👀",
+  "feed": "Onchain Feed",
+  "feed description": "What your EFP friends are doing onchain 👀",
   "powered by": "POWERED BY"
 }
