@@ -201,7 +201,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
           )}
           {showFollowsYouBadges && !isEnsProfileLoading && (
             <div
-              className={`rounded-full font-bold text-[10px] flex items-center text-nowrap justify-center text-darkGrey bg-zinc-300 h-5 px-2 w-fit ${followerTag.className}`}
+              className={`rounded-full font-bold text-[10px] text-darkGrey bg-zinc-300 py-[3px] text-center px-2 w-fit max-w-full ${followerTag.className}`}
             >
               {t(followerTag.text)}
             </div>

@@ -13,6 +13,7 @@ import IndiaFlag from 'public/assets/icons/flags/india.svg'
 import ChinaFlag from 'public/assets/icons/flags/china.svg'
 import SpainFlag from 'public/assets/icons/flags/spain.svg'
 import ItalyFlag from 'public/assets/icons/flags/italy.svg'
+import IsraelFlag from 'public/assets/icons/flags/israel.svg'
 import TurkeyFlag from 'public/assets/icons/flags/turkey.svg'
 import StarEyesEmoji from 'public/assets/icons/star-eyes.svg'
 import EtherscanIcon from 'public/assets/icons/etherscan.svg'
@@ -49,6 +50,7 @@ import IndonesiaFlag from 'public/assets/icons/flags/indonesia.svg'
 import UzbekistanFlag from 'public/assets/icons/flags/uzbekistan.svg'
 import KazakhstanFlag from 'public/assets/icons/flags/kazakhstan.svg'
 import NetherlandsFlag from 'public/assets/icons/flags/netherlands.svg'
+import PhilippinesFlag from 'public/assets/icons/flags/philippines.svg'
 import EtherscanIconLight from 'public/assets/icons/etherscan-light.svg'
 import SaudiArabiaFlag from 'public/assets/icons/flags/saudi-arabia.svg'
 import VaticanCityFlag from 'public/assets/icons/flags/vatican-city.svg'
@@ -119,7 +121,10 @@ export const LANGUAGES = [
   { language: 'Shakespearean', key: 'shakespearean', icon: EnglandFlag },
   { language: "O'zbekcha", key: 'uz', icon: UzbekistanFlag },
   { language: 'Gen Alpha', key: 'genalpha', icon: GenAlphaFlag },
-  { language: 'Corporate', key: 'corp', icon: CorporateFlag }
+  { language: 'Corporate', key: 'corp', icon: CorporateFlag },
+  { language: 'ગુજરાતી', key: 'gu', icon: IndiaFlag },
+  { language: 'עִברִית', key: 'he', icon: IsraelFlag },
+  { language: 'Tagalog', key: 'tl', icon: PhilippinesFlag }
 ]
 
 export const DEFAULT_TAGS_TO_ADD = ['irl', 'bff', 'based', 'degen', 'top8']

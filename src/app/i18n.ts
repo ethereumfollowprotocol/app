@@ -53,7 +53,10 @@ i18n
       'shakespearean',
       'uz',
       'genalpha',
-      'corp'
+      'corp',
+      'gu',
+      'he',
+      'tl'
     ],
     fallbackLng: 'en',
     keySeparator: '.',
