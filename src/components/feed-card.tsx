@@ -28,7 +28,7 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
   return (
     <div
       className={cn(
-        'flex glass-card rounded-2xl border-zinc-200 border-[3px] dark:border-zinc-500 items-center sm:items-end flex-col gap-4 sm:gap-2',
+        'flex glass-card border-zinc-200 border-[3px] dark:border-zinc-500 items-center sm:items-end flex-col gap-1',
         cardSize
       )}
     >
@@ -64,7 +64,7 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
       )}
       <div
         className={cn(
-          'w-full max-w-[900px] mt-4 flex justify-center rounded-2xl h-screen xs:h-[100000vh]',
+          'w-full max-w-[900px] mt-4 flex justify-center overflow-hidden h-screen xs:h-[100000vh]',
           contentSize
         )}
       >
@@ -73,7 +73,7 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
             key={`${userAddress} ${resolvedTheme}`}
             title='Feed'
             src={url}
-            className='w-full h-full bg-white dark:bg-black rounded-2xl'
+            className='w-full h-full bg-white dark:bg-black'
           />
         ) : (
           <button

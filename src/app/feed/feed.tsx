@@ -17,7 +17,10 @@ export default function Feed() {
           {t('feed description')}
         </p>
       </div>
-      <FeedCard cardSize='w-full max-w-[900px] pb-0 px-0 py-4 xs:px-4 sm:p-6 lg:p-10 lg:pt-6' />
+      <FeedCard
+        cardSize='w-full max-w-[900px] pb-0 px-0 pt-4 xs:px-4 sm:p-6 lg:p-10 lg:pt-6 rounded-t-2xl sm:rounded-2xl'
+        contentSize='rounded-t-2xl sm:rounded-2xl'
+      />
     </div>
   )
 }

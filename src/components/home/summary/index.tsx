@@ -41,8 +41,8 @@ const Summary = () => {
       )}
       {userAddress ? (
         <FeedCard
-          cardSize='h-[90vh] md:h-[823px] w-full xl:min-w-[420px] xl:w-1/3 2xl:w-[700px] lg:w-[49%] px-0 pt-4 xs:p-4 md:p-6'
-          contentSize='h-full w-full'
+          cardSize='h-[90vh] md:h-[823px] w-full xl:min-w-[420px] xl:w-1/3 2xl:w-[700px] lg:w-[49%] px-0 pt-4 xs:p-4 md:p-6 rounded-2xl'
+          contentSize='h-full w-full rounded-2xl'
           title={t('feed')}
           description={t('feed description')}
         />
