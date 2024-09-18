@@ -134,17 +134,17 @@ const ConnectButton = () => {
             className={cn(
               'flex flex-col w-full transition-all overflow-x-visible max-h-[75vh] sm:h-auto',
               languageMenOpenu || listMenuOpen || themeMenuOpen
-                ? '-translate-x-[220px] sm:translate-x-0 sm:p-1'
+                ? '-translate-x-[221px] sm:translate-x-0 sm:p-1'
                 : 'p-1',
               languageMenOpenu
                 ? `h-[${
-                    LANGUAGES.filter(lang =>
+                    (LANGUAGES.filter(lang =>
                       languageMenuSearch
                         ? lang.language.toLowerCase().includes(languageMenuSearch.toLowerCase())
                         : true
-                    ).length *
-                      56 +
-                    56
+                    ).length || 1) *
+                      57 +
+                    137
                   }px]`
                 : listMenuOpen
                   ? `h-[${(lists?.lists?.length || 0) * 56 + 111}px]`
@@ -154,7 +154,15 @@ const ConnectButton = () => {
             )}
             style={{
               height: languageMenOpenu
-                ? `${LANGUAGES.length * 56 + 56}px`
+                ? `${
+                    (LANGUAGES.filter(lang =>
+                      languageMenuSearch
+                        ? lang.language.toLowerCase().includes(languageMenuSearch.toLowerCase())
+                        : true
+                    ).length || 1) *
+                      58 +
+                    134
+                  }px`
                 : listMenuOpen
                   ? `${(lists?.lists?.length || 0) * 56 + 111}px`
                   : themeMenuOpen
@@ -184,14 +192,14 @@ const ConnectButton = () => {
                 </div>
               </div>
               <div
-                className={`absolute -right-[222px] sm:right-[95%] -top-[52px] z-50 sm:-top-[6px] ${
+                className={`absolute -right-[224px] sm:right-[95%] -top-[52px] z-50 sm:-top-[6px] ${
                   languageMenOpenu ? 'block' : 'hidden'
                 } group-hover:block sm:pr-6`}
               >
                 <div className='flex overflow-scroll flex-col sm:grid max-h-[76vh] grid-cols-2 gap-2 gap-x-px w-[220px] sm:w-[450px] xl:w-[900px] lg:grid-cols-3 xl:grid-cols-4 lg:w-[675px] bg-transparent sm:bg-white/95 sm:dark:bg-darkGrey/95 border-[3px] border-zinc-200 dark:border-zinc-500 p-1 rounded-lg shadow-md'>
                   <div
                     onClick={closeLanguageMenu}
-                    className='flex sm:hidden justify-between items-center w-full hover:bg-slate-100 dark:hover:bg-zinc-400/60 p-3 rounded-md transition-opacity cursor-pointer'
+                    className='flex sm:hidden justify-between items-center w-full hover:bg-slate-100 dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer'
                   >
                     <FiArrowLeft className='text-xl font-bold' />
                     <p className=' font-bold'>Back</p>
@@ -209,7 +217,7 @@ const ConnectButton = () => {
                         ? lang.language.toLowerCase().includes(languageMenuSearch.toLowerCase())
                         : true
                     ).length === 0 && (
-                      <div className='p-3 pl-8'>
+                      <div className='p-3'>
                         <p className='font-bold'>{t('search no results')}</p>
                       </div>
                     )}
@@ -220,7 +228,7 @@ const ConnectButton = () => {
                       : true
                   ).map(lang => (
                     <div
-                      className='p-3 pl-8 relative flex items-center font-bold rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-colors'
+                      className='py-3 pl-8 relative flex items-center font-bold rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-colors'
                       key={lang.language}
                       onClick={() => {
                         changeLanguage(lang)
@@ -263,7 +271,7 @@ const ConnectButton = () => {
                 </div>
                 <div
                   className={cn(
-                    'absolute -right-[222px] w-full -top-[100px] h-full sm:pr-5 sm:right-[97.2%] group-hover:block min-w-[220px] sm:w-fit block z-50 sm:-top-[6px]',
+                    'absolute -right-[224px] w-full -top-[100px] h-full sm:pr-5 sm:right-[97.2%] group-hover:block min-w-[220px] sm:w-fit block z-50 sm:-top-[6px]',
                     lists?.lists && lists?.lists?.length > 0
                       ? listMenuOpen
                         ? 'block'
