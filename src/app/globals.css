@@ -52,7 +52,12 @@ body::-webkit-scrollbar-thumb {
 
 .glass-card {
     backdrop-filter: blur(1rem);
-    @apply from-[#f5f5f526] to-[#f5f5f520] bg-gradient-to-br;
+    @apply from-[#f5f5f526] to-[#f5f5f520] bg-gradient-to-b;
+}
+
+.glass-selector {
+    backdrop-filter: blur(1rem);
+    @apply bg-[#f5f5f525];
 }
 
 :focus:not(:focus-visible) {

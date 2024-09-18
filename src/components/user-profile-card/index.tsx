@@ -102,6 +102,8 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const { selectedList, topEight } = useEFPProfile()
   const { address: connectedAddress } = useAccount()
 
+  const isHome = pathname === '/'
+
   const searchParams = useSearchParams()
   const searchURLParam = searchParams.get('search')
   const hasSearchedDifferentName =
@@ -249,7 +251,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
     <div
       className={cn(
         'flex glass-card border-[3px] z-10 flex-col border-[#FFDBD9] dark:border-[#a36d7d] rounded-xl relative',
-        isResponsive ? 'xl:w-76 w-full 2xl:w-86' : 'w-80 3xs:w-92'
+        isResponsive ? (isHome ? 'w-full xl:w-86' : 'xl:w-76 w-full 2xl:w-86') : 'w-80 3xs:w-92'
       )}
     >
       {isLoading ? (

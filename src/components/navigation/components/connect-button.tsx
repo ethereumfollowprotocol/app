@@ -394,7 +394,7 @@ const ConnectButton = () => {
               </div>
             )}
             <a href='https://discord.com/invite/ZUyG3mSXFD' target='_blank' rel='noreferrer'>
-              <div className='flex justify-between items-center w-full group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/20  dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer font-semibold'>
+              <div className='flex justify-between items-center w-full hover:bg-slate-100   dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer font-semibold'>
                 <FiExternalLink className='text-xl mirror-x' />
                 <div className='flex gap-2'>
                   <FaDiscord className='text-2xl mirror-x' />

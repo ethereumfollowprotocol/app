@@ -56,19 +56,22 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
         </a>
       </div>
       {description && (
-        <p className='w-full px-4 xs:px-0 text-sm text-center xs:text-start font-semibold text-zinc-500 dark:text-zinc-300'>
+        <p className='w-full px-4 xs:px-0 text-sm mt-3 text-center xs:text-start font-semibold text-zinc-500 dark:text-zinc-300'>
           {description}
         </p>
       )}
       <div
         className={cn(
-          'w-full max-w-[900px] mt-4 flex justify-center overflow-hidden h-screen xs:h-[100000vh]',
-          contentSize
+          'w-full max-w-[900px] mt-4 flex justify-center overflow-hidden',
+          contentSize,
+          !listsIsLoading && (lists?.lists?.length || 0) === 0
+            ? 'h-[60vh]'
+            : 'h-screen xs:h-[100000vh]'
         )}
       >
         {userAddress ? (
           listsIsLoading ? (
-            <div className='h-full w-full flex items-center justify-center max-h-[50vh]'>
+            <div className='h-full w-full flex items-center justify-center max-h-[60vh] bg-white dark:bg-black'>
               <LoadingSpinner />
             </div>
           ) : (lists?.lists?.length || 0) > 0 ? (
@@ -79,20 +82,22 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
               className='w-full h-full bg-white dark:bg-black'
             />
           ) : (
-            <div className='w-full h-full max-h-[50vh] flex items-center font-semibold flex-col justify-center text-center'>
-              <p className='text-lg'>{t('following myprofile empty first')}</p>
+            <div className='w-full h-full max-h-[60vh] flex items-center font-semibold flex-col justify-center text-center'>
+              <p className='text-lg font-bold'>{t('following myprofile empty first')}</p>
               <p className='text-base italic w-3/4 max-w-96'>
                 {t('following myprofile empty second')}
               </p>
             </div>
           )
         ) : (
-          <button
-            className='connect-button mx-auto mt-24 text-xl font-bold w-64 h-fit p-3'
-            onClick={() => openConnectModal?.()}
-          >
-            {t('connect')}
-          </button>
+          <div className='h-full w-full flex items-center justify-center'>
+            <button
+              className='connect-button text-xl font-bold w-64 h-fit p-3'
+              onClick={() => openConnectModal?.()}
+            >
+              {t('connect')}
+            </button>
+          </div>
         )}
       </div>
     </div>

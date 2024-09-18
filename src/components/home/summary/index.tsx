@@ -20,6 +20,7 @@ const Summary = () => {
     followers,
     selectedList,
     statsIsLoading,
+    listsIsLoading,
     profileIsLoading,
     followersIsLoading
   } = useEFPProfile()
@@ -44,9 +45,9 @@ const Summary = () => {
         <FeedCard
           cardSize={cn(
             'w-full xl:min-w-[420px] lg:w-[49%] px-0 pt-4 xs:p-4 md:p-6 rounded-2xl',
-            (lists?.lists?.length || 0) > 0
-              ? 'h-[90vh] md:h-[823px] xl:w-1/3 2xl:w-[700px]'
-              : 'h-[50vh] md:h-[640px] xl:w-1/3 2xl:w-[500px] '
+            (lists?.lists?.length || 0) === 0 && !listsIsLoading
+              ? 'h-[50vh] md:h-[640px] xl:w-1/3 2xl:w-[500px] '
+              : 'h-[90vh] md:h-[823px] xl:w-1/3 2xl:w-[600px]'
           )}
           contentSize='h-full w-full rounded-2xl'
           title={t('feed')}
@@ -60,7 +61,7 @@ const Summary = () => {
           'flex flex-col gap-4',
 
           userAddress
-            ? 'lg:h-[400px] w-full lg:w-[49%] xl:w-[38%] 2xl:min-w-[600px] 2xl:w-[45%]'
+            ? 'lg:h-[400px] w-full lg:w-[49%] xl:w-[35%] 2xl:min-w-[500px] 2xl:w-[38%] 2xl:max-w-[800px]'
             : 'w-full xl:w-1/2 xl:max-w-[900px] h-[638px]'
         )}
       >
