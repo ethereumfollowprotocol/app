@@ -38,7 +38,7 @@ const Recommendations = ({ header, className, limit = 10, endpoint }: Recommenda
         endpoint,
         userAddress,
         selectedList,
-        limit,
+        endpoint === 'discover' ? limit + 1 : limit,
         pageParam
       )
 
