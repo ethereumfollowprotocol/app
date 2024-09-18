@@ -114,7 +114,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     : userProfile
   const profileIsLoading =
     isLoadPage || (isMyProfile ? profileProfileIsLoading : userProfileIsLoading)
-  const following = selectedList !== undefined && isMyProfile ? profileFollowing : userFollowing
+  const following = isMyProfile ? profileFollowing : userFollowing
   const followers = isMyProfile ? profileFollowers : userFollowers
   const followingTags = isMyProfile ? profileFollowingTags : userFollowingTags
   const followingTagsLoading =
@@ -312,8 +312,8 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
                   key={option}
                   onClick={() => setActiveTab(option)}
                   className={cn(
-                    'w-1/2 capitalize text-lg py-2 font-bold glass-card border-[3px] border-zinc-300 dark:border-zinc-500 rounded-t-lg',
-                    activeTab === option ? 'dark:bg-white/20' : 'bg-black/5 dark:hover:bg-white/10'
+                    'w-1/2 capitalize text-lg py-2 font-bold glass-card border-[3px] border-zinc-300 dark:border-zinc-500 rounded-t-xl',
+                    activeTab === option ? 'dark:bg-white/30' : 'bg-black/5 dark:hover:bg-white/10'
                   )}
                 >
                   {t(option)}

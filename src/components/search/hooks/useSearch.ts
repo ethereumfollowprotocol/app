@@ -69,7 +69,17 @@ const useSearch = (isEditor?: boolean) => {
     refetchIntervalInBackground: false,
     enabled: Boolean(searchKey && searchKey.length > 0)
   })
-  const searchResult = searchResultStatus === 'success' ? data.slice(0, 5) : []
+  const searchResult =
+    searchResultStatus === 'success'
+      ? data.length === 0 && isAddress(searchKey)
+        ? [
+            {
+              name: searchKey,
+              resolvedAddress: { id: searchKey }
+            }
+          ]
+        : data.slice(0, 5)
+      : []
 
   const resetSearch = () => {
     setCurrentSearch('')
@@ -189,7 +199,9 @@ const useSearch = (isEditor?: boolean) => {
         ? currentSearch
         : await resolveEnsAddress(currentSearch)
 
-      router.push(`/${address || currentSearch}?search=${currentSearch}`)
+      router.push(
+        `/${address || currentSearch}${isAddress(currentSearch) ? '' : `?search=${currentSearch}`}`
+      )
       resetSearch()
     }
   }

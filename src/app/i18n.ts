@@ -56,7 +56,11 @@ i18n
       'corp',
       'gu',
       'he',
-      'tl'
+      'tl',
+      'ha',
+      'fi',
+      'ro',
+      'bs'
     ],
     fallbackLng: 'en',
     keySeparator: '.',

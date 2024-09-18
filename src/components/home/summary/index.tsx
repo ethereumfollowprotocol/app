@@ -15,6 +15,7 @@ import { cn } from '#/lib/utilities.ts'
 const Summary = () => {
   const {
     stats,
+    lists,
     profile,
     followers,
     selectedList,
@@ -41,7 +42,12 @@ const Summary = () => {
       )}
       {userAddress ? (
         <FeedCard
-          cardSize='h-[90vh] md:h-[823px] w-full xl:min-w-[420px] xl:w-1/3 2xl:w-[700px] lg:w-[49%] px-0 pt-4 xs:p-4 md:p-6 rounded-2xl'
+          cardSize={cn(
+            'w-full xl:min-w-[420px] lg:w-[49%] px-0 pt-4 xs:p-4 md:p-6 rounded-2xl',
+            (lists?.lists?.length || 0) > 0
+              ? 'h-[90vh] md:h-[823px] xl:w-1/3 2xl:w-[700px]'
+              : 'h-[50vh] md:h-[640px] xl:w-1/3 2xl:w-[500px] '
+          )}
           contentSize='h-full w-full rounded-2xl'
           title={t('feed')}
           description={t('feed description')}
@@ -53,9 +59,9 @@ const Summary = () => {
         className={cn(
           'flex flex-col gap-4',
 
-          isFollowersEmpty || !userAddress
-            ? 'w-full xl:w-1/2 xl:max-w-[900px] h-[638px]'
-            : 'lg:h-[400px] w-full lg:w-[49%] xl:w-[38%] 2xl:min-w-[600px] 2xl:w-[45%]'
+          userAddress
+            ? 'lg:h-[400px] w-full lg:w-[49%] xl:w-[38%] 2xl:min-w-[600px] 2xl:w-[45%]'
+            : 'w-full xl:w-1/2 xl:max-w-[900px] h-[638px]'
         )}
       >
         {!isFollowersEmpty && userAddress && <LatestFollowers />}

@@ -377,7 +377,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     queryFn: async ({ pageParam = 0 }) => {
       setIsEndOfFollowing(false)
 
-      if (!(userAddress && selectedList)) {
+      if (!userAddress) {
         setIsRefetchingFollowing(false)
         return {
           following: [],

@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import { useTheme } from 'next-themes'
@@ -7,8 +8,9 @@ import { useTranslation } from 'react-i18next'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import { cn } from '#/lib/utilities'
+import LoadingSpinner from './loaders/loading-spinner'
 import InterfaceLight from 'public/assets/icons/interface.png'
-import Link from 'next/link'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 interface FeedCardProps {
   cardSize?: string
@@ -22,6 +24,7 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
   const { resolvedTheme } = useTheme()
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
+  const { lists, listsIsLoading } = useEFPProfile()
 
   const url = `https://app.interface.social/elements/profile/${userAddress}/feed?source=efp&theme=${resolvedTheme}`
 
@@ -43,19 +46,14 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
             <h2 className='text-2xl sm:text-3xl font-bold'>{title}</h2>
           </Link>
         )}
-        <div className='flex gap-3 items-center'>
-          <p className='text-xs font-semibold text-nowrap text-zinc-500 dark:text-zinc-300'>
-            {t('powered by')}
-          </p>
-          <a
-            href='https://www.interface.social/'
-            target='_blank'
-            rel='noreferrer'
-            className='hover:scale-110 transition-transform'
-          >
-            <Image src={InterfaceLight} alt='Interface' width={120} height={30} />
-          </a>
-        </div>
+        <a
+          href='https://www.interface.social/'
+          target='_blank'
+          rel='noreferrer'
+          className='hover:scale-110 transition-transform'
+        >
+          <Image src={InterfaceLight} alt='Interface' width={150} height={35} />
+        </a>
       </div>
       {description && (
         <p className='w-full px-4 xs:px-0 text-sm text-center xs:text-start font-semibold text-zinc-500 dark:text-zinc-300'>
@@ -69,12 +67,25 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
         )}
       >
         {userAddress ? (
-          <iframe
-            key={`${userAddress} ${resolvedTheme}`}
-            title='Feed'
-            src={url}
-            className='w-full h-full bg-white dark:bg-black'
-          />
+          listsIsLoading ? (
+            <div className='h-full w-full flex items-center justify-center max-h-[50vh]'>
+              <LoadingSpinner />
+            </div>
+          ) : (lists?.lists?.length || 0) > 0 ? (
+            <iframe
+              key={`${userAddress} ${resolvedTheme}`}
+              title='Feed'
+              src={url}
+              className='w-full h-full bg-white dark:bg-black'
+            />
+          ) : (
+            <div className='w-full h-full max-h-[50vh] flex items-center font-semibold flex-col justify-center text-center'>
+              <p className='text-lg'>{t('following myprofile empty first')}</p>
+              <p className='text-base italic w-3/4 max-w-96'>
+                {t('following myprofile empty second')}
+              </p>
+            </div>
+          )
         ) : (
           <button
             className='connect-button mx-auto mt-24 text-xl font-bold w-64 h-fit p-3'

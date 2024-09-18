@@ -325,7 +325,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
         <div
           className={cn(
             'items-center max-w-1/3 justify-end pr-6 sm:gap-8 gap-6 md:gap-16 lg:gap-16 xl:gap-10',
-            userAddress ? 'hidden xs:flex lg:hidden 2xl:flex' : 'hidden xs:flex'
+            userAddress ? 'hidden xs:flex lg:hidden 3xl:flex' : 'hidden xs:flex'
           )}
         >
           <div

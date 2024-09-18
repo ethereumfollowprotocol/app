@@ -8,6 +8,7 @@ import { truncateAddress } from '#/lib/utilities.ts'
 import GraySpinner from '../loaders/gray-spinner.tsx'
 import LoadingSpinner from '../loaders/loading-spinner.tsx'
 import { PrimaryButton } from '../buttons/primary-button.tsx'
+import { isAddress } from 'viem'
 
 export function Search({
   disabled,
@@ -165,7 +166,9 @@ export function Search({
                   if (isEditor && result.resolvedAddress) addToCart(result.resolvedAddress.id)
                   else
                     router.push(
-                      `/${result.resolvedAddress?.id || result.name}?search=${result.name}`
+                      `/${result.resolvedAddress?.id || result.name}${
+                        isAddress(result.name) ? '' : `?search=${result.name}`
+                      }`
                     )
 
                   resetSearch()
@@ -251,7 +254,9 @@ export function Search({
                       if (isEditor && result.resolvedAddress) addToCart(result.resolvedAddress.id)
                       else
                         router.push(
-                          `/${result.resolvedAddress?.id || result.name}?search=${result.name}`
+                          `/${result.resolvedAddress?.id || result.name}${
+                            isAddress(result.name) ? '' : `?search=${result.name}`
+                          }`
                         )
 
                       resetSearch()
