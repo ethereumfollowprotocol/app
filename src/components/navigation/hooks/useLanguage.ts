@@ -13,6 +13,8 @@ const useLanguage = () => {
     language: string
     key: string
     icon: StaticImageData
+    englishLanguage: string
+    special?: boolean | undefined
   }) => {
     i18n.changeLanguage(lang.key)
     setSelectedLanguage(lang)
