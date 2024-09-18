@@ -306,7 +306,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
               scrollMarginTop: '100px'
             }}
           >
-            <div className='w-full absolute top-[6px] left-0 flex justify-between'>
+            <div className='w-full absolute top-[7px] left-0 flex justify-between'>
               {PROFILE_TABS.map(option => (
                 <button
                   key={option}
