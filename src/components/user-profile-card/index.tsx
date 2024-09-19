@@ -109,7 +109,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const hasSearchedDifferentName =
     searchURLParam &&
     searchURLParam.length > 0 &&
-    searchURLParam !== profile?.ens?.name &&
+    searchURLParam !== profileName &&
     !Number(searchURLParam)
 
   const isConnectedUserCard =

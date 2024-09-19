@@ -13,6 +13,8 @@ import IndiaFlag from 'public/assets/icons/flags/india.svg'
 import ChinaFlag from 'public/assets/icons/flags/china.svg'
 import SpainFlag from 'public/assets/icons/flags/spain.svg'
 import ItalyFlag from 'public/assets/icons/flags/italy.svg'
+import GhanaFlag from 'public/assets/icons/flags/ghana.svg'
+import frensFlag from 'public/assets/icons/flags/frens.svg'
 import IsraelFlag from 'public/assets/icons/flags/israel.svg'
 import TurkeyFlag from 'public/assets/icons/flags/turkey.svg'
 import StarEyesEmoji from 'public/assets/icons/star-eyes.svg'
@@ -28,6 +30,8 @@ import TaiwanFlag from 'public/assets/icons/flags/taiwan.svg'
 import SerbiaFlag from 'public/assets/icons/flags/serbia.svg'
 import RussiaFlag from 'public/assets/icons/flags/russia.svg'
 import PirateFlag from 'public/assets/icons/flags/pirate.svg'
+import HungaryFlag from 'public/assets/icons/flags/hungary.svg'
+import ErmahgershFlag from 'public/assets/icons/flags/ermahgersh.svg'
 import FinlandFlag from 'public/assets/icons/flags/finland.svg'
 import RomaniaFlag from 'public/assets/icons/flags/romania.svg'
 import GeorgiaFlag from 'public/assets/icons/flags/georgia.svg'
@@ -68,7 +72,7 @@ export const APP_URL =
 
 export const ENS_SUBGRAPH_URL = `https://gateway-arbitrum.network.thegraph.com/api/${process.env.NEXT_PUBLIC_ENS_SUBGRAPH_API_KEY}/subgraphs/id/5XqPmWe6gjyrJtFn9cLy237i4cWw2j9HcUJEXsP5qGtH`
 
-export const FETCH_LIMIT_PARAM = 15
+export const FETCH_LIMIT_PARAM = 12
 export const LEADERBOARD_FETCH_LIMIT_PARAM = 60
 export const LEADERBOARD_CHUNK_SIZE = 20
 
@@ -82,6 +86,7 @@ export const PROFILE_TABS: ProfileTabType[] = ['following', 'followers']
 export const BLOCKED_MUTED_TABS: ProfileTableTitleType[] = ['Blocked/Muted', 'Blocked/Muted By']
 
 export const LANGUAGES = [
+  // ----------- normal languages -----------
   { language: 'English', key: 'en', icon: USAFlag, englishLanguage: 'English' },
   { language: 'Slovenščina', key: 'si', icon: SloveniaFlag, englishLanguage: 'Slovenian' },
   { language: '简体中文', key: 'zh', icon: ChinaFlag, englishLanguage: 'Chinese' },
@@ -133,6 +138,10 @@ export const LANGUAGES = [
   { language: 'Suomi', key: 'fi', icon: FinlandFlag, englishLanguage: 'Finnish' },
   { language: 'Română', key: 'ro', icon: RomaniaFlag, englishLanguage: 'Romanian' },
   { language: 'Bosanski', key: 'bs', icon: BosniaFlag, englishLanguage: 'Bosnian' },
+  { language: 'Magyar', key: 'hu', icon: HungaryFlag, englishLanguage: 'Hungarian' },
+  { language: 'Eʋegbe', key: 'ee', icon: GhanaFlag, englishLanguage: 'Ewe' },
+  { language: 'Twi', key: 'tw', icon: GhanaFlag, englishLanguage: 'Twi' },
+  // ----------- special languages -----------
   { language: 'Pirate', key: 'pirate', icon: PirateFlag, englishLanguage: 'Pirate', special: true },
   {
     language: 'Corporate',
@@ -153,6 +162,20 @@ export const LANGUAGES = [
     key: 'shakespearean',
     icon: EnglandFlag,
     englishLanguage: 'Shakespearean',
+    special: true
+  },
+  {
+    language: 'frENS',
+    key: 'frens',
+    icon: frensFlag,
+    englishLanguage: 'frENS',
+    special: true
+  },
+  {
+    language: 'Ermahgersh',
+    key: 'ermahgersh',
+    icon: ErmahgershFlag,
+    englishLanguage: 'Ermahgersh',
     special: true
   }
 ]

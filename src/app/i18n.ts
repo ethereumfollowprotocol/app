@@ -11,6 +11,7 @@ i18n
   .use(initReactI18next)
   .init({
     supportedLngs: [
+      // --------- languages ---------
       'en',
       'si',
       'zh',
@@ -40,7 +41,6 @@ i18n
       'uk',
       'ml',
       'pt',
-      'pirate',
       'th',
       'yo',
       'kk',
@@ -50,9 +50,7 @@ i18n
       'sr',
       'hr',
       'it',
-      'shakespearean',
       'uz',
-      'genalpha',
       'corp',
       'gu',
       'he',
@@ -60,7 +58,16 @@ i18n
       'ha',
       'fi',
       'ro',
-      'bs'
+      'bs',
+      'hu',
+      'ee',
+      'tw',
+      // --------- special languages ---------
+      'pirate',
+      'genalpha',
+      'shakespearean',
+      'frens',
+      'ermahgersh'
     ],
     fallbackLng: 'en',
     keySeparator: '.',

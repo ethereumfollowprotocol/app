@@ -107,7 +107,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
             isHome ? 'lg:w-[25%] 2xl:w-[20%]' : 'lg:w-[15%] 2xl:w-[10%]'
           )}
         >
-          <LoadingCell className='h-10 w-[120px] rounded-lg' />
+          <LoadingCell className='h-10 w-[120px] rounded-xl' />
         </div>
       </div>
       <div className={`items-center justify-evenly flex sm:hidden w-full`}>

@@ -10,12 +10,12 @@ export const metadata: Metadata = {
     url: 'https://testing.ethfollow.xyz/feed',
     images: [
       {
-        url: 'https://testing.ethfollow.xyz/assets/banners/team.png'
+        url: 'https://testing.ethfollow.xyz/assets/banners/feed.png'
       }
     ]
   },
   twitter: {
-    images: 'https://testing.ethfollow.xyz/assets/banners/team.png'
+    images: 'https://testing.ethfollow.xyz/assets/banners/feed.png'
   }
 }
 

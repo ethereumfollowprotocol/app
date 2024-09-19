@@ -1,7 +1,6 @@
 {
-
-  "language name in language": "Magyar",
-  "language name in language": "Hungarian",
+  "language name": "Magyar",
+  "language name in english": "Hungarian",
 
   "home": "Főoldal",
   "recent": "Legutóbbi tevékenység",
@@ -49,7 +48,7 @@
   "earliest first": "Legkorábbi elöl",
   "not primary list": "Nem megerősítve a felhasználó által",
   "not primary list tooltip": "Ez a lista nem megerősített, hogy az adott felhasználó tulajdonában áll. A felhasználónak be kell állítania egy listát Elsődleges listaként, hogy megerősítse azt.",
-  "following myprofile empty first": "Még senkit sem követsz!"
+  "following myprofile empty first": "Még senkit sem követsz!",
   "following empty first": "Ez a felhasználó nem követ senkit.",
   "followers empty": "Ennek a felhasználónak nincsenek követői.",
   "none": "Nincs",
@@ -90,7 +89,7 @@
   "transaction": "Tranzakció",
   "unresolved": "A nevek nem oldódnak meg:",
   "clear cart": "Kosár törlése",
-  "clear cart message": "Biztosan törölni akarod a kosaradat?"
+  "clear cart message": "Biztosan törölni akarod a kosaradat?",
 
   "import title": "Importálja, akit követ",
   "import from": "Importálás innen",
@@ -147,7 +146,7 @@
   "mutuals_rank": "Kölcsönös",
   "followers_rank": "Követők",
   "top8_rank": "Top 8",
-  "last updated": "Utolsó frissítés"
+  "last updated": "Utolsó frissítés",
 
   "system": "Rendszer",
   "light": "Világos",
