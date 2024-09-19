@@ -61,7 +61,7 @@ export const useTopEight = (user: string | Address) => {
   const topEight = isConnectedUser
     ? topEightProfile
     : topEightFetched?.map(profile => ({
-        address: (profile as FollowingResponse).data,
+        address: (profile as FollowingResponse).address,
         ens: profile.ens
       })) || []
   const isLoading = isConnectedUser ? topEightProfileLoading : topEightIsLoading

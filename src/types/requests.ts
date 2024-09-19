@@ -82,7 +82,7 @@ export interface FollowerResponse {
 export interface FollowingResponse {
   version: 1
   record_type: 'address' & string
-  data: Address
+  address: Address
   tags: string[]
   ens?: ENSProfile
 }

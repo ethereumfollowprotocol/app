@@ -443,7 +443,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   })
 
   const topEight =
-    topEightFetched?.map(profile => ({ address: profile.data, ens: profile.ens })) || []
+    topEightFetched?.map(profile => ({ address: profile.address, ens: profile.ens })) || []
 
   useEffect(() => {
     const cartList = localStorage.getItem('cart list')

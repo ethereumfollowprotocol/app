@@ -97,8 +97,7 @@ export function UserProfilePageTable({
   const profiles =
     results?.map(res => ({
       tags: res.tags,
-      // @ts-ignore
-      address: title === 'following' || title === 'Blocked/Muted' ? res.data : res.address
+      address: res.address
     })) || []
 
   const [loadMoreRef, entry] = useIntersectionObserver()

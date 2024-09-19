@@ -97,7 +97,7 @@ export function FollowList({
                   <div
                     className='flex items-center gap-2 sm:gap-3'
                     style={{
-                      width: 'calc(100% - 114px)'
+                      width: 'calc(100% - 120px)'
                     }}
                   >
                     <Image

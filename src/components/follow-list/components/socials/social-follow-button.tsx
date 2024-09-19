@@ -27,25 +27,12 @@ const SocialFollowButton: React.FC<SocialFollowButtonProps> = ({ profiles }) => 
     )
 
     setCartItems(filteredCartItems)
-
-    // const chunkSize = 100 // Adjust the chunk size as needed
-    // for (let i = 0; i < profiles.length; i += chunkSize) {
-    //   const chunk = profiles.slice(i, i + chunkSize)
-    //   await Promise.all(
-    //     chunk.map(({ address }) => {
-    //       const tagsFromCart = getTagsFromCartByAddress(address)
-    //       removeCartItem(listOpAddListRecord(address))
-    //       tagsFromCart.map(tag => removeCartItem(listOpAddTag(address, tag)))
-    //     })
-    //   )
-    //   await yieldToMain() // Yield to the main thread after processing each chunk
-    // }
   }
 
   return (
     <button
       onClick={() => removeCarItems()}
-      className='btn-following-pending text-darkGrey hover:bg-none hover:bg-[#D0D0D0] transition-all hover:scale-[1.15] after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400 rounded-xl relative text-sm flex items-center gap-1.5 justify-center font-bold h-[40px] px-2'
+      className='btn-following-pending text-darkGrey hover:bg-none hover:bg-[#D0D0D0] transition-transform hover:scale-[1.15] hover:border-none after:absolute after:h-4 after:w-4 after:rounded-full after:-top-2 after:-right-2 after:bg-green-400 rounded-xl relative text-sm flex items-center gap-1.5 justify-center font-bold h-[40px] w-[120px] px-2'
     >
       <Image alt='mainnet logo' src={MainnetBlack} width={16} />
       {t('following')}

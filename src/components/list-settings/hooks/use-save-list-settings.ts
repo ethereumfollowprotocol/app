@@ -347,10 +347,10 @@ const useSaveListSettings = ({
       if (listState) {
         const listOps = listState.flatMap(item => {
           const operations: CartItem[] = []
-          operations.push({ listOp: listOpAddListRecord(item.data) })
+          operations.push({ listOp: listOpAddListRecord(item.address) })
           if (item.tags.length > 0)
             item.tags.map(tag => {
-              operations.push({ listOp: listOpAddTag(item.data, tag) })
+              operations.push({ listOp: listOpAddTag(item.address, tag) })
             })
           return operations
         })
