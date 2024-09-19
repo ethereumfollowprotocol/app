@@ -18,14 +18,18 @@ const ClaimPoapModal: React.FC<ClaimPoapModalProps> = ({ onClose, link }) => {
     <Modal onCancel={onClose}>
       <div className='flex flex-col gap-6 items-center'>
         <h2 className='text-2xl font-bold'>You are now officially an EFP OG</h2>
-        <p>Thanks for your help! 🙏 Here's a limited edition EFP Beta Tester POAP.</p>
-        <Image
-          src={BetaTesterPoap}
-          alt='Beta tester Poap'
-          width={300}
-          height={300}
-          className='animate-spin-y'
-        />
+        <p className='font-medium'>
+          Thanks for your help! 🙏 Here's a limited edition EFP Beta Tester POAP.
+        </p>
+        <div className='p-6 w-full bg-white/95 dark:bg-darkGrey/90 rounded-xl'>
+          <Image
+            src={BetaTesterPoap}
+            alt='Beta tester Poap'
+            width={300}
+            height={300}
+            className='animate-spin-y mx-auto'
+          />
+        </div>
         <div className='w-full flex items-center justify-between'>
           <CancelButton onClick={onClose} label={t('No thanks')} />
           <a href={link} target='_blank' rel='noreferrer'>

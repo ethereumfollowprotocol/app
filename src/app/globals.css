@@ -52,7 +52,12 @@ body::-webkit-scrollbar-thumb {
 
 .glass-card {
     backdrop-filter: blur(1rem);
-    @apply from-[#f5f5f526] to-[#f5f5f520] bg-gradient-to-br;
+    @apply from-[#f5f5f526] to-[#f5f5f520] bg-gradient-to-b;
+}
+
+.glass-selector {
+    backdrop-filter: blur(1rem);
+    @apply bg-[#f5f5f544];
 }
 
 :focus:not(:focus-visible) {
@@ -534,7 +539,14 @@ input {
 
 @media screen and (max-width: 750px) {
   body {
-    background-position: -34.1vw 20vh;
-    background-size: 210vw 129vw;
+    background-position: -200vw -40vh;
+    background-size: 750vw 350vw;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  body {
+    background-position: -250vw -55vh;
+    background-size: 900vw 450vw;
   }
 }

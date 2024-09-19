@@ -36,7 +36,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
 
   return (
     <Modal onCancel={onClose}>
-      <div className='w-full sm:w-[500px] sm:p-0 p-2 flex flex-col gap-6'>
+      <div className='w-full sm:w-[540px] sm:p-0 p-2 flex flex-col gap-6'>
         <div className='w-full gap-2 flex justify-between items-center'>
           <p className='text-xl font-bold'>
             {t('import title')}&nbsp;
@@ -57,7 +57,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
             spellCheck={false}
             autoComplete='off'
             value={currHandle}
-            placeholder={`${t('enter')} ${platform} Name`}
+            placeholder={`${t('enter')} ${platform[0]?.toUpperCase()}${platform.slice(1)} Name`}
             onChange={e => setCurrHandle(e.target.value)}
             className='h-12 block pr-12 w-full truncate font-medium rounded-xl border-[3px] 3 dark:border-zinc-500 pl-4 sm:text-sm bg-white/70 dark:bg-darkGrey/50'
           />
@@ -126,7 +126,9 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
                 )}
               </div>
               <div className='flex items-center w-full justify-between gap-3 sm:gap-5'>
-                <p className='text-lg font-bold'>{t('Only import accounts with an ENS name')}</p>
+                <p className='text-lg font-bold text-start max-w-[75%]'>
+                  {t('Only import accounts with an ENS name')}
+                </p>
                 <input
                   className='toggle'
                   type='checkbox'
@@ -137,7 +139,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
             </div>
           </div>
         ) : (
-          <div className='h-[208px] w-full justify-center flex items-center font-bold'>
+          <div className='h-[274px] sm:h-[256px] w-full justify-center flex items-center font-bold'>
             {t('no profile')}
           </div>
         )}

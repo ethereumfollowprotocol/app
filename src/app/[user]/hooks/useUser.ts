@@ -10,6 +10,7 @@ import { fetchProfileFollowing } from '#/api/fetchProfileFollowing'
 import { fetchFollowerTags, nullFollowerTags } from '#/api/fetchFollowerTags'
 import { fetchFollowingTags, nullFollowingTags } from '#/api/fetchFollowingTags'
 import type { FollowerResponse, FollowingResponse, FollowSortType } from '#/types/requests'
+import { fetchProfileStats } from '#/api/fetchProfileStats'
 
 const useUser = (user: string) => {
   const [followingSearch, setFollowingSearch] = useState<string>('')
@@ -35,6 +36,23 @@ const useUser = (user: string) => {
       return fetchedProfile
     },
     staleTime: 30000,
+    refetchOnWindowFocus: false
+  })
+
+  const {
+    data: stats,
+    isLoading: statsIsLoading,
+    isRefetching: isRefetchingStatsQuery
+  } = useQuery({
+    queryKey: ['stats', user],
+    queryFn: async () => {
+      if (!user) return null
+
+      const fetchedStats = await fetchProfileStats(user, listNum)
+
+      return fetchedStats
+    },
+    // refetchInterval: 60000
     refetchOnWindowFocus: false
   })
 
@@ -191,6 +209,7 @@ const useUser = (user: string) => {
   }
 
   return {
+    stats,
     profile,
     listNum,
     followers,
@@ -198,6 +217,7 @@ const useUser = (user: string) => {
     followerTags,
     followingTags,
     userIsList,
+    statsIsLoading: statsIsLoading || isRefetchingStatsQuery,
     profileIsLoading: profileIsLoading || isRefetchingProfile,
     followersIsLoading: followersIsLoading || isRefetchingFollowers,
     followingIsLoading: followingIsLoading || isRefetchingFollowing,

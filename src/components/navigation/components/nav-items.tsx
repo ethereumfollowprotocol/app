@@ -38,7 +38,11 @@ const NavItems = () => {
                   : 'text-grey dark:hover:text-white hover:text-darkGrey'
             ])}
             onClick={e => {
-              if (item.name === 'profile' && !userAddress && openConnectModal) {
+              if (
+                (item.name === 'profile' || item.name === 'feed') &&
+                !userAddress &&
+                openConnectModal
+              ) {
                 e.preventDefault()
                 openConnectModal()
               }

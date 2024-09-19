@@ -13,6 +13,8 @@ const useLanguage = () => {
     language: string
     key: string
     icon: StaticImageData
+    englishLanguage: string
+    special?: boolean | undefined
   }) => {
     i18n.changeLanguage(lang.key)
     setSelectedLanguage(lang)
@@ -21,7 +23,7 @@ const useLanguage = () => {
 
   useEffect(() => {
     setSelectedLanguage(LANGUAGES[LANGUAGES.map(lang => lang.key).indexOf(i18n.language || 'en')])
-  }, [])
+  }, [i18n.language])
 
   return {
     changeLanguage,

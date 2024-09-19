@@ -73,21 +73,21 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
       </div>
       <div
         className={cn(
-          'absolute group-hover:block min-w-[200px] block z-50',
+          'absolute group-hover:block block z-50',
           connected
-            ? '-right-[203px] sm:right-[97.2%] -top-[4px] sm:-top-[6px] sm:pr-5'
+            ? '-right-[223px] sm:right-[97.2%] min-w-[220px] -top-[4px] sm:-top-[6px] sm:pr-5'
             : 'top-[100%] pt-3 -left-10',
           themeMenuOpen ? 'block' : 'hidden'
         )}
       >
-        <div className='flex flex-col gap-2 w-full min-w-[190px] max-h-[75vh] sm:max-h-[80vh] overflow-scroll border-[3px] rounded-lg bg-white/90 dark:bg-darkGrey/90 border-zinc-200 dark:border-zinc-500 p-1  shadow-md'>
+        <div className='flex flex-col gap-2 w-full max-h-[75vh] sm:max-h-[80vh] overflow-scroll border-[3px] rounded-lg bg-white/90 dark:bg-darkGrey/90 border-zinc-200 dark:border-zinc-500 p-1  shadow-md'>
           <div
             onClick={() => {
               setThemeMenuOpen(false)
               setExternalThemeMenuOpen?.(false)
             }}
             className={cn(
-              'flex sm:hidden justify-between items-center w-full group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/20  dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer',
+              'flex sm:hidden justify-between items-center w-full hover:bg-slate-100 dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer',
               connected ? 'flex sm:hidden' : 'hidden'
             )}
           >

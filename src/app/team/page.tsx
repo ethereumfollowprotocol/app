@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     title: 'Team | EFP',
     siteName: 'Team - Ethereum Follow Protocol',
     description: 'Discover the team behind Ethereum Follow Protocol',
-    url: 'https://testing.ethfollow.xyz/leaderboard',
+    url: 'https://testing.ethfollow.xyz/team',
     images: [
       {
         url: 'https://testing.ethfollow.xyz/assets/banners/team.png'

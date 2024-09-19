@@ -76,6 +76,17 @@ const nextConfig = {
 				port: "",
 				pathname: "/*",
 			},
+			{
+				protocol: "https",
+				hostname: "rainbow.mypinata.cloud",
+				port: "",
+				pathname: "/*",
+
+			},
+      {
+        protocol: "https",
+        hostname: "**",
+      },
 		],
 	},
 	/** @param {WebpackConfiguration} config */

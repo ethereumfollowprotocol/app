@@ -30,7 +30,13 @@ const ConnectButton = () => {
   const [listMenuOpen, setListMenuOpen] = useState(false)
   const [themeMenuOpen, setThemeMenuOpen] = useState(false)
   const [walletMenOpenu, setWalletMenuOpen] = useState(false)
+  const [languageMenuSearch, setLanguageMenuSearch] = useState('')
   const { changeLanguage, languageMenOpenu, selectedLanguage, setLanguageMenuOpen } = useLanguage()
+
+  const closeLanguageMenu = () => {
+    setLanguageMenuOpen(false)
+    setLanguageMenuSearch('')
+  }
 
   const clickAwayWalletRef = useClickAway<HTMLDivElement>(_ => {
     setWalletMenuOpen(false)
@@ -42,6 +48,7 @@ const ConnectButton = () => {
   })
   const clickAwayLanguageRef = useClickAway<HTMLDivElement>(_ => {
     setLanguageMenuOpen(false)
+    setLanguageMenuSearch('')
   })
 
   const { t } = useTranslation()
@@ -72,6 +79,19 @@ const ConnectButton = () => {
       return data
     }
   })
+
+  const regularLanguages = LANGUAGES.filter(lang => !lang.special).filter(lang =>
+    languageMenuSearch
+      ? lang.language.toLowerCase().includes(languageMenuSearch.toLowerCase()) ||
+        lang.englishLanguage.toLowerCase().includes(languageMenuSearch.toLowerCase())
+      : true
+  )
+  const specialLanguages = LANGUAGES.filter(lang => !!lang.special).filter(lang =>
+    languageMenuSearch
+      ? lang.language.toLowerCase().includes(languageMenuSearch.toLowerCase()) ||
+        lang.englishLanguage.toLowerCase().includes(languageMenuSearch.toLowerCase())
+      : true
+  )
 
   return (
     <div ref={clickAwayWalletRef} className='relative'>
@@ -119,7 +139,7 @@ const ConnectButton = () => {
       {walletMenOpenu && (
         <div
           className={cn(
-            'flex w-[200px] overflow-x-hidden sm:overflow-visible z-50 h-fit shadow-md border-[3px] rounded-lg dark:bg-darkGrey/95 bg-white/95 border-zinc-200 dark:border-zinc-500 absolute top-[120%] flex-col items-end right-0',
+            'flex w-[220px] overflow-x-hidden sm:overflow-visible z-50 h-fit shadow-md border-[3px] rounded-lg dark:bg-darkGrey/95 bg-white/95 border-zinc-200 dark:border-zinc-500 absolute top-[120%] flex-col items-end right-0',
             (languageMenOpenu || themeMenuOpen) && 'overflow-y-hidden'
           )}
         >
@@ -127,10 +147,22 @@ const ConnectButton = () => {
             className={cn(
               'flex flex-col w-full transition-all overflow-x-visible max-h-[75vh] sm:h-auto',
               languageMenOpenu || listMenuOpen || themeMenuOpen
-                ? '-translate-x-[200px] sm:translate-x-0 sm:p-1'
+                ? '-translate-x-[221px] sm:translate-x-0 sm:p-1'
                 : 'p-1',
               languageMenOpenu
-                ? `h-[${LANGUAGES.length * 56 + 56}px]`
+                ? `h-[${
+                    (LANGUAGES.filter(lang =>
+                      languageMenuSearch
+                        ? lang.language.toLowerCase().includes(languageMenuSearch.toLowerCase()) ||
+                          lang.englishLanguage
+                            .toLowerCase()
+                            .includes(languageMenuSearch.toLowerCase())
+                        : true
+                    ).length || 1) *
+                      57 +
+                    137 +
+                    (specialLanguages.length > 0 ? 151 : 137)
+                  }px]`
                 : listMenuOpen
                   ? `h-[${(lists?.lists?.length || 0) * 56 + 111}px]`
                   : themeMenuOpen
@@ -139,7 +171,18 @@ const ConnectButton = () => {
             )}
             style={{
               height: languageMenOpenu
-                ? `${LANGUAGES.length * 56 + 56}px`
+                ? `${
+                    (LANGUAGES.filter(lang =>
+                      languageMenuSearch
+                        ? lang.language.toLowerCase().includes(languageMenuSearch.toLowerCase()) ||
+                          lang.englishLanguage
+                            .toLowerCase()
+                            .includes(languageMenuSearch.toLowerCase())
+                        : true
+                    ).length || 1) *
+                      58 +
+                    (specialLanguages.length > 0 && regularLanguages.length > 0 ? 151 : 134)
+                  }px`
                 : listMenuOpen
                   ? `${(lists?.lists?.length || 0) * 56 + 111}px`
                   : themeMenuOpen
@@ -169,24 +212,80 @@ const ConnectButton = () => {
                 </div>
               </div>
               <div
-                className={`absolute -right-[202px] sm:right-[95%] max-h-[76vh] -top-[52px] overflow-scroll z-50 sm:-top-[6px] ${
+                className={`absolute -right-[224px] sm:right-[95%] -top-[52px] z-50 sm:-top-[6px] ${
                   languageMenOpenu ? 'block' : 'hidden'
                 } group-hover:block sm:pr-6`}
               >
-                <div className='flex overflow-auto flex-col sm:grid grid-cols-2 gap-2 gap-x-px w-[200px] sm:w-[450px] lg:grid-cols-3 lg:w-[675px] bg-transparent sm:bg-white/90 sm:dark:bg-darkGrey/90 border-[3px] border-zinc-200 dark:border-zinc-500 p-1 rounded-lg shadow-md'>
+                <div className='flex overflow-scroll flex-col sm:grid max-h-[76vh] grid-cols-2 gap-2 gap-x-px w-[220px] sm:w-[450px] bg-transparent sm:bg-white/95 sm:dark:bg-darkGrey/95 border-[3px] border-zinc-200 dark:border-zinc-500 p-1 rounded-lg shadow-md'>
                   <div
-                    onClick={() => setLanguageMenuOpen(false)}
-                    className='flex sm:hidden justify-between items-center w-full group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/60 dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer'
+                    onClick={closeLanguageMenu}
+                    className='flex sm:hidden justify-between items-center w-full hover:bg-slate-100 dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer'
                   >
                     <FiArrowLeft className='text-xl font-bold' />
                     <p className=' font-bold'>Back</p>
                   </div>
-                  {LANGUAGES.map(lang => (
+                  <div className='sm:col-span-2 p-3 flex flex-col gap-3 items-center'>
+                    <input
+                      type='text'
+                      placeholder='Search'
+                      value={languageMenuSearch}
+                      onChange={e => setLanguageMenuSearch(e.target.value)}
+                      className='w-full px-4 py-2 border-[3px] border-zinc-200 transition-colors dark:border-zinc-500 dark:focus:border-zinc-300 rounded-md focus:border-darkGrey/80'
+                    />
+                    {LANGUAGES.filter(lang =>
+                      languageMenuSearch
+                        ? lang.language.toLowerCase().includes(languageMenuSearch.toLowerCase()) ||
+                          lang.englishLanguage
+                            .toLowerCase()
+                            .includes(languageMenuSearch.toLowerCase())
+                        : true
+                    ).length === 0 && (
+                      <div className='p-3'>
+                        <p className='font-bold'>{t('search no results')}</p>
+                      </div>
+                    )}
+                  </div>
+                  {regularLanguages.map(lang => (
                     <div
-                      className='p-3 pl-8 relative flex items-center font-bold rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-colors'
+                      className='py-3 pl-8 relative flex items-center font-bold rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-colors'
                       key={lang.language}
                       onClick={() => {
                         changeLanguage(lang)
+                        closeLanguageMenu()
+                        setWalletMenuOpen(false)
+                      }}
+                    >
+                      {selectedLanguage && selectedLanguage.key === lang.key && (
+                        <Image
+                          src={GreenCheck}
+                          alt='List selected'
+                          width={16}
+                          className='absolute left-2 top-[35%]'
+                        />
+                      )}
+                      <div className='flex gap-2 pr-3'>
+                        <Image
+                          src={lang.icon}
+                          alt='Language icon'
+                          width={26}
+                          className='rounded-md'
+                        />
+                        <p>{lang.language}</p>
+                      </div>
+                    </div>
+                  ))}
+                  {specialLanguages.length > 0 && regularLanguages.length > 0 && (
+                    <div className='sm:col-span-2 px-3 py-1 sm:py-3 flex flex-col gap-3 items-center'>
+                      <hr className='border-[1px] rounded-full border-zinc-300 dark:border-zinc-500 w-full' />
+                    </div>
+                  )}
+                  {specialLanguages.map(lang => (
+                    <div
+                      className='py-3 pl-8 relative flex items-center font-bold rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-colors'
+                      key={lang.language}
+                      onClick={() => {
+                        changeLanguage(lang)
+                        closeLanguageMenu()
                         setWalletMenuOpen(false)
                       }}
                     >
@@ -225,7 +324,7 @@ const ConnectButton = () => {
                 </div>
                 <div
                   className={cn(
-                    'absolute -right-[197px] w-full -top-[100px] h-full sm:pr-5 sm:right-[97.2%] group-hover:block min-w-[190px] sm:w-fit block z-50 sm:-top-[6px]',
+                    'absolute -right-[224px] w-full -top-[100px] h-full sm:pr-5 sm:right-[97.2%] group-hover:block min-w-[220px] sm:w-fit block z-50 sm:-top-[6px]',
                     lists?.lists && lists?.lists?.length > 0
                       ? listMenuOpen
                         ? 'block'
@@ -233,10 +332,10 @@ const ConnectButton = () => {
                       : 'hidden group-hover:hidden'
                   )}
                 >
-                  <div className='flex flex-col gap-2 w-full min-w-[200px] sm:max-h-[76vh] overflow-auto border-[3px] rounded-lg bg-transparent sm:bg-white/90 sm:dark:bg-darkGrey/90 border-zinc-200 dark:border-zinc-500 p-1 shadow-md'>
+                  <div className='flex flex-col gap-2 w-full min-w-[220px] sm:max-h-[76vh] overflow-auto border-[3px] rounded-lg bg-transparent sm:bg-white/90 sm:dark:bg-darkGrey/90 border-zinc-200 dark:border-zinc-500 p-1 shadow-md'>
                     <div
                       onClick={() => setListMenuOpen(false)}
-                      className='flex sm:hidden justify-between items-center w-full group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/20  dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer'
+                      className='flex sm:hidden justify-between items-center w-full group:bg-slate-100 dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer'
                     >
                       <FiArrowLeft className='text-xl' />
                       <p className=' font-bold'>Back</p>
@@ -261,7 +360,7 @@ const ConnectButton = () => {
                           />
                         )}
                         <div className='flex flex-wrap sm:flex-nowrap items-end gap-1'>
-                          <p className='text-nowrap font-bold'>{`${t('list')} #${list}`}</p>
+                          <p className='font-bold text-wrap'>{`${t('list')} #${list}`}</p>
                           {lists.primary_list === list && (
                             <p className='mb-0.5 text-sm italic text-nowrap font-medium text-zinc-400'>
                               - {t('primary')}
@@ -288,14 +387,14 @@ const ConnectButton = () => {
                           className='absolute left-2 top-[17px]'
                         />
                       )}
-                      <p className='text-nowrap font-bold'>{t('mint new list')}</p>
+                      <p className=' font-bold'>{t('mint new list')}</p>
                     </div>
                   </div>
                 </div>
               </div>
             )}
             <a href='https://discord.com/invite/ZUyG3mSXFD' target='_blank' rel='noreferrer'>
-              <div className='flex justify-between items-center w-full group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/20  dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer font-semibold'>
+              <div className='flex justify-between items-center w-full hover:bg-slate-100   dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer font-semibold'>
                 <FiExternalLink className='text-xl mirror-x' />
                 <div className='flex gap-2'>
                   <FaDiscord className='text-2xl mirror-x' />

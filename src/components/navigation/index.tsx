@@ -1,10 +1,12 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useAccount } from 'wagmi'
+import { useTranslation } from 'react-i18next'
 import { lazy, Suspense, useState } from 'react'
 import { useClickAway } from '@uidotdev/usehooks'
 
 import { Search } from '../search'
+import { cn } from '#/lib/utilities.ts'
 import Logo from 'public/assets/logo.svg'
 import useLanguage from './hooks/useLanguage.ts'
 import NavItems from './components/nav-items.tsx'
@@ -16,13 +18,14 @@ import CartButton from './components/cart-button.tsx'
 import FullLogoDark from 'public/assets/logo-full-dark.svg'
 import ConnectButton from './components/connect-button.tsx'
 import GreenCheck from 'public/assets/icons/check-green.svg'
-import { cn } from '#/lib/utilities.ts'
 
 const ThemeSwitcher = lazy(() => import('../theme-switcher'))
 
 const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [languageMenuSearch, setLanguageMenuSearch] = useState('')
 
+  const { t } = useTranslation()
   const { totalCartItems } = useCart()
   const { address: userAddress } = useAccount()
   const clickAwayRef = useClickAway<HTMLDivElement>(_ => {
@@ -38,7 +41,21 @@ const Navigation = () => {
   } = useLanguage()
   const clickAwayLanguageRef = useClickAway<HTMLDivElement>(_ => {
     setLanguageMenuOpen(false)
+    setLanguageMenuSearch('')
   })
+
+  const regularLanguages = LANGUAGES.filter(lang => !lang.special).filter(lang =>
+    languageMenuSearch
+      ? lang.language.toLowerCase().includes(languageMenuSearch.toLowerCase()) ||
+        lang.englishLanguage.toLowerCase().includes(languageMenuSearch.toLowerCase())
+      : true
+  )
+  const specialLanguages = LANGUAGES.filter(lang => !!lang.special).filter(lang =>
+    languageMenuSearch
+      ? lang.language.toLowerCase().includes(languageMenuSearch.toLowerCase()) ||
+        lang.englishLanguage.toLowerCase().includes(languageMenuSearch.toLowerCase())
+      : true
+  )
 
   return (
     <header className='w-full fixed z-50 glass-card bg-white/50 dark:bg-black/75 top-0 left-0 border-b-[3px] border-zinc-200 dark:border-zinc-500 p-4 lg:px-6 md:py-6 xl:px-8'>
@@ -100,16 +117,76 @@ const Navigation = () => {
                   >
                     <div
                       className={cn(
-                        'grid w-56 xs:w-[450px] grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 lg:w-[675px] max-h-[75vh] overflow-scroll gap-x-px glass-card dark:bg-black/80 bg-white/90 border-[3px] border-zinc-200 dark:border-zinc-500 p-1 rounded-lg shadow-md'
+                        'grid w-56 xs:w-[450px] grid-cols-1 xs:grid-cols-2 max-h-[75vh] overflow-scroll gap-x-px glass-card dark:bg-black/80 bg-white/90 border-[3px] border-zinc-200 dark:border-zinc-500 p-1 rounded-lg shadow-md'
                       )}
                     >
-                      {LANGUAGES.map(lang => (
+                      <div className='sm:col-span-2 p-3 flex flex-col gap-3 items-center'>
+                        <input
+                          type='text'
+                          placeholder='Search'
+                          value={languageMenuSearch}
+                          onChange={e => setLanguageMenuSearch(e.target.value)}
+                          className='w-full px-4 py-2 border-[3px] border-zinc-200 transition-colors dark:border-zinc-500 dark:focus:border-zinc-300 rounded-md focus:border-darkGrey/80'
+                        />
+                        {LANGUAGES.filter(lang =>
+                          languageMenuSearch
+                            ? lang.language
+                                .toLowerCase()
+                                .includes(languageMenuSearch.toLowerCase()) ||
+                              lang.englishLanguage
+                                .toLowerCase()
+                                .includes(languageMenuSearch.toLowerCase())
+                            : true
+                        ).length === 0 && (
+                          <div className='p-3'>
+                            <p className='font-bold'>{t('search no results')}</p>
+                          </div>
+                        )}
+                      </div>
+                      {regularLanguages.map(lang => (
                         <div
                           className='p-3 pl-8 relative font-bold rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-all'
                           key={lang.language}
                           onClick={() => {
                             changeLanguage(lang)
                             setSelectedLanguage(lang)
+                            setLanguageMenuSearch('')
+                            setLanguageMenuOpen(false)
+                          }}
+                        >
+                          {selectedLanguage && selectedLanguage.key === lang.key && (
+                            <Image
+                              src={GreenCheck}
+                              alt='List selected'
+                              width={16}
+                              className='absolute left-2 top-5'
+                            />
+                          )}
+                          <div className='flex items-center gap-2'>
+                            <Image
+                              src={lang.icon}
+                              alt='Language icon'
+                              width={30}
+                              height={30}
+                              className='rounded-md'
+                            />
+                            <p className='text-nowrap w-fit'>{lang.language}</p>
+                          </div>
+                        </div>
+                      ))}
+                      {specialLanguages.length > 0 && regularLanguages.length > 0 && (
+                        <div className='sm:col-span-2 p-3 flex flex-col gap-3 items-center'>
+                          <hr className='border-[1px] rounded-full border-zinc-300 dark:border-zinc-500 w-full' />
+                        </div>
+                      )}
+                      {specialLanguages.map(lang => (
+                        <div
+                          className='p-3 pl-8 relative font-bold rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-all'
+                          key={lang.language}
+                          onClick={() => {
+                            changeLanguage(lang)
+                            setSelectedLanguage(lang)
+                            setLanguageMenuSearch('')
                             setLanguageMenuOpen(false)
                           }}
                         >

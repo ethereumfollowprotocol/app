@@ -39,6 +39,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
 
   const {
     roles,
+    stats: profileStats,
     profile: profileProfile,
     selectedList,
     following: profileFollowing,
@@ -50,6 +51,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     followingTags: profileFollowingTags,
     isEndOfFollowers: profileIsEndOfFollowers,
     isEndOfFollowing: profileIsEndOfFollowing,
+    statsIsLoading: profileStatsIsLoading,
     profileIsLoading: profileProfileIsLoading,
     setFollowersSort: profileSetFollowersSort,
     setFollowingSort: profileSetFollowingSort,
@@ -73,6 +75,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
 
   const {
     listNum,
+    stats: userStats,
     profile: userProfile,
     followers: userFollowers,
     following: userFollowing,
@@ -89,6 +92,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     setFollowersSort: userSetFollowerSort,
     setFollowersSearch: userSetFollowersSearch,
     setFollowingSearch: userSetFollowingSearch,
+    statsIsLoading: userStatsIsLoading,
     followersIsLoading: userFollowersIsLoading,
     followingIsLoading: userFollowingIsLoading,
     fetchMoreFollowers: userFetchMoreFollowers,
@@ -103,12 +107,14 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     setFollowingTagsFilter: userSetFollowingTagsFilter
   } = useUser(user)
 
+  const stats = isMyProfile ? profileStats : userStats
+  const statsIsLoading = isLoadPage || (isMyProfile ? profileStatsIsLoading : userStatsIsLoading)
   const profile: ProfileDetailsResponse | null | undefined = isMyProfile
     ? profileProfile
     : userProfile
   const profileIsLoading =
     isLoadPage || (isMyProfile ? profileProfileIsLoading : userProfileIsLoading)
-  const following = selectedList !== undefined && isMyProfile ? profileFollowing : userFollowing
+  const following = isMyProfile ? profileFollowing : userFollowing
   const followers = isMyProfile ? profileFollowers : userFollowers
   const followingTags = isMyProfile ? profileFollowingTags : userFollowingTags
   const followingTagsLoading =
@@ -242,8 +248,10 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
                     ? Number(profile?.primary_list)
                     : undefined
               }
+              stats={stats}
               profile={profile}
               isLoading={profileIsLoading}
+              isStatsLoading={statsIsLoading}
               showMoreOptions={true}
               openBlockModal={() => {
                 setIsBlockedMutedOpen(true)
@@ -298,14 +306,16 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
               scrollMarginTop: '100px'
             }}
           >
-            <div className='w-full absolute top-[6px] left-0'>
+            <div className='w-full absolute top-[7px] left-0 flex justify-between'>
               {PROFILE_TABS.map(option => (
                 <button
                   key={option}
                   onClick={() => setActiveTab(option)}
                   className={cn(
-                    'w-1/2 capitalize text-lg py-2 font-bold glass-card border-[3px] border-zinc-300 dark:border-zinc-500 rounded-t-lg',
-                    activeTab === option ? 'dark:bg-white/20' : 'bg-black/5 dark:hover:bg-white/10'
+                    'w-1/2 capitalize text-lg py-2 font-bold glass-selector border-[3px] border-zinc-200 dark:border-zinc-500 rounded-t-xl',
+                    activeTab === option
+                      ? 'border-b-0'
+                      : 'dark:bg-zinc-600/80 bg-zinc-200/80 text-zinc-500/50 dark:text-zinc-400'
                   )}
                 >
                   {t(option)}

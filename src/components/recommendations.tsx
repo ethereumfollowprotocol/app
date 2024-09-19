@@ -1,7 +1,7 @@
 'use client'
 
 import { useAccount } from 'wagmi'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
 
 import { cn } from '#/lib/utilities'
@@ -38,7 +38,7 @@ const Recommendations = ({ header, className, limit = 10, endpoint }: Recommenda
         endpoint,
         userAddress,
         selectedList,
-        limit,
+        endpoint === 'discover' ? limit + 1 : limit,
         pageParam
       )
 
@@ -62,12 +62,16 @@ const Recommendations = ({ header, className, limit = 10, endpoint }: Recommenda
     return profilesToRecommend?.pages[pageIndex]?.results.slice(0, limit)
   }, [profilesToRecommend, page])
 
+  useEffect(() => {
+    setPage(1)
+  }, [userAddress, selectedList, limit])
+
   return (
     <div className={cn('flex flex-col gap-6', className)}>
       <div className='px-2 pt-2 w-full'>
         <div className='w-full flex items-center justify-between'>
           <h2
-            className={`text-center pl-2 sm:pl-0 lg:text-start text-2xl ${
+            className={`pl-2 sm:pl-0 text-start text-2xl ${
               endpoint === 'recommended' ? '' : 'sm:text-3xl'
             } font-bold`}
           >
@@ -87,9 +91,9 @@ const Recommendations = ({ header, className, limit = 10, endpoint }: Recommenda
       </div>
       <FollowList
         isLoading={isLoading || isFetchingNextPage || isFetchingPreviousPage}
-        loadingRows={endpoint === 'discover' ? 7 : limit}
+        loadingRows={limit}
         listClassName='rounded-xl px-2 sm:px-0 gap-3'
-        profiles={displayedProfiles?.slice(0, endpoint === 'discover' ? 7 : limit).map(account => ({
+        profiles={displayedProfiles?.slice(0, limit).map(account => ({
           address: account.address,
           tags: [] as string[],
           ens: {

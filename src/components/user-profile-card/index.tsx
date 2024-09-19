@@ -34,7 +34,7 @@ import useFollowerState from '#/hooks/use-follower-state'
 import CommonFollowers from './components/common-followers'
 import useFollowingState from '#/hooks/use-following-state'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import type { ProfileDetailsResponse } from '#/types/requests'
+import type { ProfileDetailsResponse, StatsResponse } from '#/types/requests'
 import { isValidEnsName, resolveEnsProfile } from '#/utils/ens'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 import DefaultHeader from 'public/assets/art/default-header.svg'
@@ -47,6 +47,8 @@ interface UserProfileCardProps {
   hideFollowButton?: boolean
   profile?: ProfileDetailsResponse | null
   isLoading?: boolean
+  isStatsLoading?: boolean
+  stats?: StatsResponse | null
   showMoreOptions?: boolean
   openBlockModal?: () => void
   openListSettingsModal?: () => void
@@ -57,7 +59,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   isResponsive = true,
   hideFollowButton,
   profile,
+  stats,
   isLoading,
+  isStatsLoading,
   showMoreOptions,
   openBlockModal,
   openListSettingsModal
@@ -98,10 +102,15 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const { selectedList, topEight } = useEFPProfile()
   const { address: connectedAddress } = useAccount()
 
+  const isHome = pathname === '/'
+
   const searchParams = useSearchParams()
   const searchURLParam = searchParams.get('search')
   const hasSearchedDifferentName =
-    searchURLParam && searchURLParam.length > 0 && searchURLParam !== profile?.ens?.name
+    searchURLParam &&
+    searchURLParam.length > 0 &&
+    searchURLParam !== profile?.ens?.name &&
+    !Number(searchURLParam)
 
   const isConnectedUserCard =
     pathname === '/' ||
@@ -242,7 +251,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
     <div
       className={cn(
         'flex glass-card border-[3px] z-10 flex-col border-[#FFDBD9] dark:border-[#a36d7d] rounded-xl relative',
-        isResponsive ? 'xl:w-76 w-full 2xl:w-86' : 'w-80 3xs:w-92'
+        isResponsive ? (isHome ? 'w-full xl:w-86' : 'xl:w-76 w-full 2xl:w-86') : 'w-80 3xs:w-92'
       )}
     >
       {isLoading ? (
@@ -301,7 +310,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
             <LoadingCell className='w-full h-[120px] absolute top-0 left-0 rounded-t-lg' />
           ) : (
             <ImageWithFallback
-              src={profile.ens.header || DefaultHeader}
+              src={profile.ens.records?.header || DefaultHeader}
               fallback={DefaultHeader}
               alt='profile header'
               width={360}
@@ -388,7 +397,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                               <button
                                 ref={blockCoolMode as Ref<HTMLButtonElement>}
                                 onClick={() => onClickOption('Block')}
-                                className='rounded-lg cursor-pointer bg-deletion mt-3 mb-2 hover:bg-[#CF4C4C] text-darkGrey transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[109px] h-[40px] px-2 py-1.5'
+                                className='rounded-lg cursor-pointer bg-deletion mt-3 mb-2 hover:bg-[#CF4C4C] text-darkGrey transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[120px] h-[40px] px-2 py-1.5'
                               >
                                 <Image
                                   alt='mainnet logo'
@@ -396,7 +405,12 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                                   width={16}
                                   height={16}
                                 />
-                                <p>
+                                <p
+                                  className='max-w-20 break-words text-wrap'
+                                  style={{
+                                    lineHeight: '0.95rem'
+                                  }}
+                                >
                                   {t(
                                     followState === 'blocks'
                                       ? isPendingUnblock
@@ -411,7 +425,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                               <button
                                 ref={muteCoolMode as Ref<HTMLButtonElement>}
                                 onClick={() => onClickOption('Mute')}
-                                className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] text-darkGrey transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[109px] h-[40px] px-2 py-1.5'
+                                className='rounded-lg cursor-pointer bg-deletion hover:bg-[#CF4C4C] text-darkGrey transition-all hover:scale-110 relative text-sm flex items-center gap-1.5 justify-center font-bold w-[120px] h-[40px] px-2 py-1.5'
                               >
                                 <Image
                                   alt='mainnet logo'
@@ -419,7 +433,12 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                                   width={16}
                                   height={16}
                                 />
-                                <p>
+                                <p
+                                  className='max-w-20 break-words text-wrap'
+                                  style={{
+                                    lineHeight: '0.95rem'
+                                  }}
+                                >
                                   {t(
                                     followState === 'mutes'
                                       ? isPendingUnmute
@@ -660,19 +679,17 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                   )
                 }
               >
-                <div className='text-2xl sm:text-2xl text-center font-bold'>
-                  {profile.stats === undefined
-                    ? '-'
-                    : profileList
-                      ? formatNumber(profile.stats.following_count)
-                      : 0}
-                  {/* // ? '-'
-                    // : isConnectedUserCard && profileList === undefined
-                    //   ? 0
-                    //   : profileList
-                    //     ? formatNumber(profile.stats.following_count)
-                    //     : 0 */}
-                </div>
+                {isStatsLoading ? (
+                  <LoadingCell className='w-12 h-6 mb-1 rounded-lg mx-auto' />
+                ) : (
+                  <div className='text-xl sm:text-2xl text-center font-bold'>
+                    {stats
+                      ? profileList !== undefined
+                        ? formatNumber(stats?.following_count || 0)
+                        : 0
+                      : '-'}
+                  </div>
+                )}
                 <div className='text-lg font-bold text-[#888] dark:text-[#aaa]'>
                   {t('following')}
                 </div>
@@ -693,9 +710,13 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                   )
                 }
               >
-                <div className='text-xl sm:text-2xl text-center font-bold'>
-                  {profile.stats === undefined ? '-' : formatNumber(profile.stats.followers_count)}
-                </div>
+                {isStatsLoading ? (
+                  <LoadingCell className='w-12 h-6 mb-1 rounded-lg mx-auto' />
+                ) : (
+                  <div className='text-xl sm:text-2xl text-center font-bold'>
+                    {stats ? formatNumber(stats.followers_count) : '-'}
+                  </div>
+                )}
                 <div className='text-lg font-bold text-[#888] dark:text-[#aaa]'>
                   {t('followers')}
                 </div>
@@ -725,7 +746,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                       key={rankTitles[i]}
                       className='w-full mx-[7.5%] 3xs:mx-[10%] xxs:mx-[15%] xs:mx-0 xs:w-fit xl:w-full flex gap-3 justify-between text-lg items-center font-bold px-3 py-1 rounded-lg dark:hover:bg-darkGrey/40 hover:bg-darkGrey/5 transition-all'
                     >
-                      <p className='font-bold text-[#888] dark:text-[#aaa]'>
+                      <p className='font-bold text-[#888] text-start dark:text-[#aaa]'>
                         {t(rankTitles[i] || '')}
                       </p>
                       <p

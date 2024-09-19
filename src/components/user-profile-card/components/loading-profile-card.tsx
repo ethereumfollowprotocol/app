@@ -55,7 +55,7 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
             <div className='flex flex-col items-center justify-center gap-2 w-full'>
               <LoadingCell isStatic={isStatic} className='w-48 sm:w-68 xl:w-3/4 h-7 rounded-lg' />
               {!hideFollowButton && (
-                <LoadingCell isStatic={isStatic} className='w-[107px] h-9 rounded-lg' />
+                <LoadingCell isStatic={isStatic} className='w-[120px] h-10 rounded-lg' />
               )}
             </div>
             <LoadingCell isStatic={isStatic} className='w-4/5 h-5 rounded-lg' />
