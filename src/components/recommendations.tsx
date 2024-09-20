@@ -43,9 +43,7 @@ const Recommendations = ({ header, className, limit = 10, endpoint }: Recommenda
       )
 
       return {
-        results: discoverAccounts.filter(
-          account => account.address.toLowerCase() !== userAddress?.toLowerCase()
-        ),
+        results: discoverAccounts,
         nextPageParam: pageParam + 1,
         previousPageParam: pageParam > 0 ? pageParam - 1 : 0
       }
@@ -61,6 +59,8 @@ const Recommendations = ({ header, className, limit = 10, endpoint }: Recommenda
     const pageIndex = profilesToRecommend?.pageParams.indexOf(page - 1) || 0
     return profilesToRecommend?.pages[pageIndex]?.results.slice(0, limit)
   }, [profilesToRecommend, page])
+
+  console.log(displayedProfiles)
 
   useEffect(() => {
     setPage(1)
@@ -112,7 +112,7 @@ const Recommendations = ({ header, className, limit = 10, endpoint }: Recommenda
         showTags={false}
       />
       {!(isLoading || isFetchingNextPage || isFetchingPreviousPage) &&
-        displayedProfiles?.length === 0 && (
+        (displayedProfiles?.length === 0 || !displayedProfiles) && (
           <div className='w-full h-28 mb-14 flex justify-center items-center font-bold italic text-lg'>
             No results
           </div>

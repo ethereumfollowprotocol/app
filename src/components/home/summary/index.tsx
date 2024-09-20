@@ -3,14 +3,14 @@
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 
+import { cn } from '#/lib/utilities.ts'
+import FeedCard from '#/components/feed-card.tsx'
 import Recommendations from '#/components/recommendations'
 import LatestFollowers from './components/latest-followers'
 import UserProfileCard from '#/components/user-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import ScrollIndicator from '#/components/scroll-indicator.tsx'
 import LeaderboardSummary from './components/leaderboard-summary.tsx'
-import FeedCard from '#/components/feed-card.tsx'
-import { cn } from '#/lib/utilities.ts'
 
 const Summary = () => {
   const {

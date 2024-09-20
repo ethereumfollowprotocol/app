@@ -62,6 +62,8 @@ i18n
       'hu',
       'ee',
       'tw',
+      'ig',
+      'idoma',
       // --------- special languages ---------
       'pirate',
       'genalpha',

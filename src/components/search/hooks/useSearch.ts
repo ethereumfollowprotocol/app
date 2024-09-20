@@ -69,6 +69,7 @@ const useSearch = (isEditor?: boolean) => {
     refetchIntervalInBackground: false,
     enabled: Boolean(searchKey && searchKey.length > 0)
   })
+
   const searchResult =
     searchResultStatus === 'success'
       ? data.length === 0 && isAddress(searchKey)

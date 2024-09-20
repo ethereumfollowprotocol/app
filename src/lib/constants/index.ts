@@ -141,6 +141,8 @@ export const LANGUAGES = [
   { language: 'Magyar', key: 'hu', icon: HungaryFlag, englishLanguage: 'Hungarian' },
   { language: 'Eʋegbe', key: 'ee', icon: GhanaFlag, englishLanguage: 'Ewe' },
   { language: 'Twi', key: 'tw', icon: GhanaFlag, englishLanguage: 'Twi' },
+  { language: 'Igbo', key: 'ig', icon: NigeriaFlag, englishLanguage: 'Igbo' },
+  { language: 'Idoma', key: 'idoma', icon: NigeriaFlag, englishLanguage: 'Idoma' },
   // ----------- special languages -----------
   { language: 'Pirate', key: 'pirate', icon: PirateFlag, englishLanguage: 'Pirate', special: true },
   {
