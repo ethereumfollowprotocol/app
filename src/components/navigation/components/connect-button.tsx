@@ -139,7 +139,7 @@ const ConnectButton = () => {
       {walletMenOpenu && (
         <div
           className={cn(
-            'flex w-[220px] overflow-x-hidden sm:overflow-visible z-50 h-fit shadow-md border-[3px] rounded-lg dark:bg-darkGrey/95 bg-white/95 border-zinc-200 dark:border-zinc-500 absolute top-[120%] flex-col items-end right-0',
+            'flex w-[220px] overflow-x-hidden sm:overflow-visible z-50 h-fit shadow-md border-[3px] rounded-lg dark:bg-darkGrey bg-white border-zinc-200 dark:border-zinc-500 absolute top-[120%] flex-col items-end right-0',
             (languageMenOpenu || themeMenuOpen) && 'overflow-y-hidden'
           )}
         >
@@ -216,7 +216,7 @@ const ConnectButton = () => {
                   languageMenOpenu ? 'block' : 'hidden'
                 } group-hover:block sm:pr-6`}
               >
-                <div className='flex overflow-scroll flex-col sm:grid max-h-[76vh] grid-cols-2 gap-2 gap-x-px w-[220px] sm:w-[450px] bg-transparent sm:bg-white/95 sm:dark:bg-darkGrey/95 border-[3px] border-zinc-200 dark:border-zinc-500 p-1 rounded-lg shadow-md'>
+                <div className='flex overflow-scroll flex-col sm:grid max-h-[76vh] grid-cols-2 gap-2 gap-x-px w-[220px] sm:w-[450px] bg-transparent sm:bg-white sm:dark:bg-darkGrey border-[3px] border-zinc-200 dark:border-zinc-500 p-1 rounded-lg shadow-md'>
                   <div
                     onClick={closeLanguageMenu}
                     className='flex sm:hidden justify-between items-center w-full hover:bg-slate-100 dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer'
@@ -332,7 +332,7 @@ const ConnectButton = () => {
                       : 'hidden group-hover:hidden'
                   )}
                 >
-                  <div className='flex flex-col gap-2 w-full min-w-[220px] sm:max-h-[76vh] overflow-auto border-[3px] rounded-lg bg-transparent sm:bg-white/90 sm:dark:bg-darkGrey/90 border-zinc-200 dark:border-zinc-500 p-1 shadow-md'>
+                  <div className='flex flex-col gap-2 w-full min-w-[220px] sm:max-h-[76vh] overflow-auto border-[3px] rounded-lg bg-transparent sm:bg-white sm:dark:bg-darkGrey border-zinc-200 dark:border-zinc-500 p-1 shadow-md'>
                     <div
                       onClick={() => setListMenuOpen(false)}
                       className='flex sm:hidden justify-between items-center w-full group:bg-slate-100 dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer'

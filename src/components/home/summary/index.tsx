@@ -30,7 +30,7 @@ const Summary = () => {
   const isFollowersEmpty = !followersIsLoading && followers.length === 0
 
   return (
-    <div className='mt-[108px] relative md:mt-32 w-full lg:mt-32 xl:mt-40 px-4 lg:px-6 xl:pl-4 xl:pr-0 2xl:px-8 flex items-start lg:justify-center lg:gap-4 xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4'>
+    <div className='mt-[108px] relative md:mt-32 w-full lg:mt-32 xl:mt-40 px-4 lg:px-6 xl:px-8 flex items-start lg:justify-center lg:gap-4 xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4'>
       {userAddress && (
         <UserProfileCard
           profileList={selectedList || Number(profile?.primary_list)}
@@ -61,7 +61,7 @@ const Summary = () => {
           'flex flex-col gap-4',
 
           userAddress
-            ? 'lg:h-[400px] w-full lg:w-[49%] xl:w-[35%] 2xl:min-w-[500px] 2xl:w-[38%] 2xl:max-w-[800px]'
+            ? 'lg:h-[400px] w-full lg:w-[49%] xl:w-[45%] 2xl:min-w-[500px] 2xl:w-1/2 2xl:max-w-[900px]'
             : 'w-full xl:w-1/2 xl:max-w-[900px] h-[638px]'
         )}
       >

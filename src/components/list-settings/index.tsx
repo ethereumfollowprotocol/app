@@ -134,7 +134,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
               )}
             </button>
             {chainDropdownOpen && (
-              <div className='absolute top-12 sm:top-14 z-10 flex bg-white/90 dark:bg-darkGrey/95 flex-col rounded-xl w-full'>
+              <div className='absolute top-12 sm:top-14 z-10 flex bg-white dark:bg-darkGrey flex-col rounded-xl w-full'>
                 {chains.map(item => (
                   <div
                     key={item.id}

@@ -21,7 +21,7 @@ const ClaimPoapModal: React.FC<ClaimPoapModalProps> = ({ onClose, link }) => {
         <p className='font-medium'>
           Thanks for your help! 🙏 Here's a limited edition EFP Beta Tester POAP.
         </p>
-        <div className='p-6 w-full bg-white/95 dark:bg-darkGrey/90 rounded-xl'>
+        <div className='p-6 w-full bg-white dark:bg-darkGrey rounded-xl'>
           <Image
             src={BetaTesterPoap}
             alt='Beta tester Poap'

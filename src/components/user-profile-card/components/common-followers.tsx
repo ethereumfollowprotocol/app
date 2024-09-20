@@ -30,6 +30,8 @@ const CommonFollowers: React.FC<CommonFollowersProps> = ({ address }) => {
   const displayedNames = data?.results.slice(0, 2)
   const resultLength = data?.length || 0
 
+  if (isLoading || data?.results.length === 0) return null
+
   return (
     <div className='w-full max-w-108 mx-auto flex items-center justify-center gap-2 p-4 pt-0'>
       <div className='flex'>

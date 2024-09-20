@@ -90,7 +90,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                   />
                 )}
                 {showSearch && (
-                  <div className='absolute glass-card flex items-center border-[3px] bg-white/75 dark:bg-darkGrey/90 border-zinc-300 dark:border-[#666] -top-4 gap-1 lg:-left-1 left-0 sm:-left-1 md:-left-16 w-64 h-fit rounded-xl shadow-md'>
+                  <div className='absolute glass-card flex items-center border-[3px] bg-white dark:bg-darkGrey border-zinc-300 dark:border-[#666] -top-4 gap-1 lg:-left-1 left-0 sm:-left-1 md:-left-16 w-64 h-fit rounded-xl shadow-md'>
                     <input
                       type='text'
                       spellCheck={false}
@@ -143,7 +143,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 />
               </div>
               {showSort && (
-                <div className=' bg-white/80 dark:bg-darkGrey/80 glass-card p-1 gap-1 z-50 shadow-md border-[3px] rounded-md border-zinc-200 dark:border-zinc-500 absolute top-[120%] flex flex-col items-center right-0'>
+                <div className=' bg-white dark:bg-darkGrey glass-card p-1 gap-1 z-50 shadow-md border-[3px] rounded-md border-zinc-200 dark:border-zinc-500 absolute top-[120%] flex flex-col items-center right-0'>
                   {SORT_OPTIONS.map(option => (
                     <div
                       className='font-bold capitalize w-full text-nowrap relative rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-colors p-3 pl-8'

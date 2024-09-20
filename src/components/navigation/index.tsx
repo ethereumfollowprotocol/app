@@ -117,7 +117,7 @@ const Navigation = () => {
                   >
                     <div
                       className={cn(
-                        'grid w-56 xs:w-[450px] grid-cols-1 xs:grid-cols-2 max-h-[75vh] overflow-scroll gap-x-px glass-card dark:bg-black/80 bg-white/90 border-[3px] border-zinc-200 dark:border-zinc-500 p-1 rounded-lg shadow-md'
+                        'grid w-56 xs:w-[450px] grid-cols-1 xs:grid-cols-2 max-h-[75vh] overflow-scroll gap-x-px dark:bg-darkGrey bg-white border-[3px] border-zinc-200 dark:border-zinc-500 p-1 rounded-lg shadow-md'
                       )}
                     >
                       <div className='sm:col-span-2 p-3 flex flex-col gap-3 items-center'>

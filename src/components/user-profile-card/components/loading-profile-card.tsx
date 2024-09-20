@@ -103,7 +103,7 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
           </div>
         </div>
       </div>
-      {!hideFollowButton && (
+      {/* {!hideFollowButton && (
         <div className='w-full flex items-center mx-auto max-w-108 justify-center gap-2 p-4 pt-0'>
           <div className='flex items-center'>
             <LoadingCell isStatic={isStatic} className='w-9 h-9 rounded-full z-0 ' />
@@ -116,7 +116,7 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
             style={{ width: 'calc(100% - 80px)' }}
           />
         </div>
-      )}
+      )} */}
     </>
   )
 }

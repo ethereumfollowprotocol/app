@@ -57,7 +57,7 @@ const Recommendations = ({ header, className, limit = 10, endpoint }: Recommenda
 
   const displayedProfiles = useMemo(() => {
     const pageIndex = profilesToRecommend?.pageParams.indexOf(page - 1) || 0
-    return profilesToRecommend?.pages[pageIndex]?.results.slice(0, limit)
+    return profilesToRecommend?.pages[pageIndex]?.results?.slice(0, limit)
   }, [profilesToRecommend, page])
 
   useEffect(() => {

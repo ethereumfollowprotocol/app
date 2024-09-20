@@ -251,7 +251,11 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
     <div
       className={cn(
         'flex glass-card border-[3px] z-10 flex-col border-[#FFDBD9] dark:border-[#a36d7d] rounded-xl relative',
-        isResponsive ? (isHome ? 'w-full xl:w-86' : 'xl:w-76 w-full 2xl:w-86') : 'w-80 3xs:w-92'
+        isResponsive
+          ? isHome
+            ? 'w-full xl:w-86 xl:min-w-86'
+            : 'xl:w-76 w-full 2xl:w-86'
+          : 'w-80 3xs:w-92'
       )}
     >
       {isLoading ? (
@@ -390,7 +394,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                         <div
                           className={`${
                             showMoreOptions && moreOptionsDropdownOpen ? 'flex' : 'hidden'
-                          } absolute top-9 right-0 flex-col items-center z-50 gap-2 w-fit p-1 dark:border-zinc-600  dark:bg-darkGrey/95 bg-white/95 border-zinc-200 border-[3px] rounded-xl drop-shadow-lg`}
+                          } absolute top-9 right-0 flex-col items-center z-50 gap-2 w-fit p-1 dark:border-zinc-600  dark:bg-darkGrey bg-white border-zinc-200 border-[3px] rounded-xl drop-shadow-lg`}
                         >
                           {!isConnectedUserCard && (
                             <>

@@ -80,7 +80,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
           themeMenuOpen ? 'block' : 'hidden'
         )}
       >
-        <div className='flex flex-col gap-2 w-full max-h-[75vh] sm:max-h-[80vh] overflow-scroll border-[3px] rounded-lg bg-white/90 dark:bg-darkGrey/90 border-zinc-200 dark:border-zinc-500 p-1  shadow-md'>
+        <div className='flex flex-col gap-2 w-full max-h-[75vh] sm:max-h-[80vh] overflow-scroll border-[3px] rounded-lg bg-white dark:bg-darkGrey border-zinc-200 dark:border-zinc-500 p-1  shadow-md'>
           <div
             onClick={() => {
               setThemeMenuOpen(false)

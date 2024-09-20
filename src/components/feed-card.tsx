@@ -71,7 +71,7 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
       >
         {userAddress ? (
           listsIsLoading ? (
-            <div className='h-full w-full flex items-center justify-center max-h-[60vh] bg-white dark:bg-black'>
+            <div className='h-full w-full flex items-center justify-center bg-white dark:bg-black'>
               <LoadingSpinner />
             </div>
           ) : (lists?.lists?.length || 0) > 0 ? (

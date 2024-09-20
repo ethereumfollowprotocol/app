@@ -20,20 +20,21 @@ import { useRouter } from 'next/navigation'
 import { useAccount, useChains } from 'wagmi'
 
 import type {
+  ENSProfile,
   ProfileRoles,
+  StatsResponse,
   FollowSortType,
   FollowerResponse,
   FollowingResponse,
   ProfileListsResponse,
   ProfileDetailsResponse,
-  FollowingTagsResponse,
-  ENSProfile,
-  StatsResponse
+  FollowingTagsResponse
 } from '#/types/requests'
 import { useCart } from './cart-context'
 import { fetchProfileRoles } from '#/api/fetchProfileRoles'
 import { fetchProfileLists } from '#/api/fetchProfileLists'
 import type { ProfileTableTitleType } from '#/types/common'
+import { fetchProfileStats } from '#/api/fetchProfileStats'
 import { fetchProfileDetails } from '#/api/fetchProfileDetails'
 import { fetchProfileFollowers } from '#/api/fetchProfileFollowers'
 import { fetchProfileFollowing } from '#/api/fetchProfileFollowing'
@@ -41,7 +42,6 @@ import { fetchProfileAllFollowings } from '#/api/fetchProfileAllFollowings'
 import { fetchFollowerTags, nullFollowerTags } from '#/api/fetchFollowerTags'
 import { fetchFollowingTags, nullFollowingTags } from '#/api/fetchFollowingTags'
 import { BLOCKED_MUTED_TAGS, DEFAULT_TAGS_TO_ADD, FETCH_LIMIT_PARAM } from '#/lib/constants'
-import { fetchProfileStats } from '#/api/fetchProfileStats'
 
 // Define the type for the profile context
 type EFPProfileContextType = {
