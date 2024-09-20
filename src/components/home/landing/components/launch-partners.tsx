@@ -90,13 +90,13 @@ const LaunchPartners = () => {
       />
       <div className='glass-card w-full p-6 mx-auto border-[3px] border-[#FF79C9] text-dark-gray font-bold text-center text-sm rounded-3xl max-w-4xl'>
         <p className=' text-2xl sm:text-3xl font-bold pb-8'>{t('sponsors')}</p>
-        <div className='items-center justify-center w-full flex gap-8'>
+        <div className='items-center justify-center flex-col sm:flex-row w-full flex gap-8'>
           <Link target='_blank' rel='noopener noreferrer' href='https://ensdao.org/'>
             <Image
               src={resolvedTheme === 'dark' ? EnsDaoDark : EnsDao}
               width='180'
               alt='ens dao'
-              className='mx-auto w-44 sm:w-60 rounded-[2rem] border-[3px] border-[#B879FF] hover:scale-110 transition-transform'
+              className='mx-auto w-52 sm:w-60 rounded-[2rem] border-[3px] border-[#B879FF] hover:scale-110 transition-transform'
             />
           </Link>
           <Link target='_blank' rel='noopener noreferrer' href='https://ensdao.org/'>
@@ -104,7 +104,7 @@ const LaunchPartners = () => {
               src={resolvedTheme === 'dark' ? MaskDark : Mask}
               width='180'
               alt='Mask Network'
-              className='mx-auto w-44 sm:w-60 hover:scale-110 transition-transform border-[3px] rounded-[2rem] border-[#1C68F3]'
+              className='mx-auto w-52 sm:w-60 hover:scale-110 transition-transform border-[3px] rounded-[2rem] border-[#1C68F3]'
             />
           </Link>
         </div>

@@ -60,8 +60,6 @@ const Recommendations = ({ header, className, limit = 10, endpoint }: Recommenda
     return profilesToRecommend?.pages[pageIndex]?.results.slice(0, limit)
   }, [profilesToRecommend, page])
 
-  console.log(displayedProfiles)
-
   useEffect(() => {
     setPage(1)
   }, [userAddress, selectedList, limit])
