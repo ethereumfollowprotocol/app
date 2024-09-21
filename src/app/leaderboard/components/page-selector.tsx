@@ -15,6 +15,7 @@ interface PageSelectorProps {
   adjustUrl?: boolean
   displayPageNumber?: boolean
   isLoading?: boolean
+  scrollUp?: boolean
 }
 
 const PageSelector: React.FC<PageSelectorProps> = ({
@@ -26,7 +27,8 @@ const PageSelector: React.FC<PageSelectorProps> = ({
   hasSkipToFirst = true,
   adjustUrl = true,
   displayPageNumber = true,
-  isLoading
+  isLoading,
+  scrollUp
 }) => {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -34,7 +36,7 @@ const PageSelector: React.FC<PageSelectorProps> = ({
   const filter = searchParams.get('filter')
 
   const handlePageChange = (newPage: number, skipsToFirst?: boolean) => {
-    // if (scrollOnChange) window.scrollTo({ top: 200, behavior: 'instant' })
+    if (scrollUp) window.scrollTo({ top: window.innerWidth > 786 ? 200 : 400, behavior: 'instant' })
 
     if (!skipsToFirst && fetchNext && fetchPrevious && !isLoading) {
       if (newPage > page) fetchNext()
@@ -46,7 +48,9 @@ const PageSelector: React.FC<PageSelectorProps> = ({
       if (filter) params.set('filter', filter)
       if (search) params.set('search', search)
       params.set('page', newPage.toString())
-      router.push(`/leaderboard?${params.toString()}`)
+      router.push(`/leaderboard?${params.toString()}`, {
+        scroll: false
+      })
     }
 
     setPage(newPage)

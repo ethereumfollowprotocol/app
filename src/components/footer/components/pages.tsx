@@ -14,7 +14,7 @@ const footerPages = [
     target: '_blank'
   },
   {
-    text: 'FAQ',
+    text: 'faq',
     href: 'https://docs.ethfollow.xyz/faq',
     target: '_blank'
   },

@@ -53,7 +53,9 @@ const LeaderboardTable = () => {
     const params = new URLSearchParams()
     params.set('filter', newFilter)
     if (search) params.set('query', search)
-    router.push(`/leaderboard?${params.toString()}`)
+    router.push(`/leaderboard?${params.toString()}`, {
+      scroll: false
+    })
   }
 
   const isLoading =
@@ -69,7 +71,7 @@ const LeaderboardTable = () => {
 
   return (
     <>
-      <h1 className='text-3xl sm:text-4xl md:text-5xl font-bold'>{t('leaderboard')}</h1>
+      <p className='text-3xl sm:text-4xl md:text-5xl font-bold'>{t('leaderboard')}</p>
       <div className='mt-4 sm:mt-6 mb-4 sm:mb-6 lg:mb-0 flex items-center justify-center flex-wrap gap-4 xs:gap-8'>
         <div className='gradient-border flex flex-col rounded-2xl items-center justify-center h-24 xs:h-[118px] w-full xs:w-64'>
           {isLeaderboardStatsLoading ? (
@@ -171,6 +173,7 @@ const LeaderboardTable = () => {
             page={page}
             setPage={setPage}
             hasNextPage={true}
+            scrollUp={true}
             isLoading={isFetchingNextLeaderboard || isFetchingPreviousLeaderboard}
             fetchNext={() => {
               setChunk(1)
@@ -222,6 +225,7 @@ const LeaderboardTable = () => {
         </div>
         <PageSelector
           page={page}
+          scrollUp={true}
           setPage={setPage}
           hasNextPage={true}
           isLoading={isFetchingNextLeaderboard || isFetchingPreviousLeaderboard}
