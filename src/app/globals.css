@@ -19,10 +19,23 @@ html, body {
 body {
   background-repeat: no-repeat;
   background-position: -34.1vw -34vw;
-  background-size: 210vw 129vw;
+  background-size: 250vw 149vw;
   background-attachment: fixed;
+  animation: wavesXXL 12s ease-in-out infinite;
   /* background-image: url("https://testing.ethfollow.xyz/assets/art/waves-background.svg"); */
   @apply text-darkGrey dark:text-[#eeeeee] bg-white dark:bg-darkGrey
+}
+
+@keyframes wavesXXL {
+  0% {
+    background-position: -34.1vw -40vw;
+  }
+  50% {
+    background-position: -39.1vw -37vw;
+  }
+  100% {
+    background-position: -34.1vw -40vw;
+  }
 }
 
 /* Disable zoom in iOS Safari when double tapping an element */
@@ -518,35 +531,86 @@ input {
 /* Background size changes */
 @media screen and (max-width: 1750px) {
   body {
-    background-position: -34.1vw -32vw;
-    background-size: 210vw 129vw;
+    background-position: -37.1vw -38vw;
+    animation: wavesXL 12s ease-in-out infinite;
+  }
+}
+
+@keyframes wavesXL {
+  0% {
+    background-position: -39.1vw -38vw;
+  }
+  50% {
+    background-position: -43.1vw -35vw;
+  }
+  100% {
+    background-position: -39.1vw -38vw;
   }
 }
 
 @media screen and (min-width: 2100px) {
   body {
     background-position: -34.1vw -36vw;
-    background-size: 210vw 129vw;
   }
 }
 
 @media screen and (max-width: 1350px) {
   body {
     background-position: -34.1vw -20vw;
-    background-size: 210vw 129vw;
+    animation: wavesLG 12s ease-in-out infinite;
   }
 }
+
+@keyframes wavesLG {
+  0% {
+    background-position: -43.1vw -34vw;
+  }
+  50% {
+    background-position: -47.1vw -31vw;
+  }
+  100% {
+    background-position: -43.1vw -34vw;
+  }
+}
+
 
 @media screen and (max-width: 750px) {
   body {
     background-position: -200vw -40vh;
     background-size: 750vw 350vw;
+    animation: wavesMD 12s ease-in-out infinite;
   }
 }
 
+@keyframes wavesMD {
+  0% {
+    background-position: -200vw -40vh;
+  }
+  50% {
+    background-position: -201vw -37vh;
+  }
+  100% {
+    background-position: -200vw -40vh
+  }
+}
+
+
 @media screen and (max-width: 420px) {
   body {
-    background-position: -250vw -55vh;
+    background-position: -250vw -70vh;
     background-size: 900vw 450vw;
+    animation: wavesSM 12s ease-in-out infinite;
+  }
+}
+
+@keyframes wavesSM {
+  0% {
+    background-position: -200vw -50vh;
+  }
+  50% {
+    background-position: -420vw -40vh;
+  }
+  100% {
+    background-position: -200vw -50vh
   }
 }
