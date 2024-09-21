@@ -427,7 +427,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     isLoading: topEightIsLoading,
     isRefetching: topEightIsRefetching
   } = useQuery({
-    queryKey: ['top8', listToFetch],
+    queryKey: ['top8', userAddress, listToFetch],
     queryFn: async () => {
       if (!userAddress) return []
 
