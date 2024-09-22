@@ -6,7 +6,7 @@ import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 
 interface AvatarProps {
   name: string // ENS name or address
-  avatarUrl?: string | GetEnsAvatarReturnType
+  avatarUrl?: GetEnsAvatarReturnType
   size?: string
   onClick?: () => void
 }
