@@ -37,7 +37,7 @@ body {
 .path {
   position: absolute;
   width: 3px;
-  background: linear-gradient(270deg, #FFF500, #FF79C9);
+  background: #ffb26e
 }
 
 .path1 { top: 54px; left: 223px; height: 67px; transform: rotate(26deg); }
@@ -67,7 +67,7 @@ body {
 }
 
 .circle:hover {
-  transform: scale(1.1);
+  transform: scale(1.25);
 }
 
 .circle1 { top: 205px; left: 208px; width: 100px; height: 100px; }

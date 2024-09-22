@@ -14,12 +14,14 @@ import ChinaFlag from 'public/assets/icons/flags/china.svg'
 import SpainFlag from 'public/assets/icons/flags/spain.svg'
 import ItalyFlag from 'public/assets/icons/flags/italy.svg'
 import GhanaFlag from 'public/assets/icons/flags/ghana.svg'
+import JapanFlag from 'public/assets/icons/flags/japan.svg'
 import frensFlag from 'public/assets/icons/flags/frens.svg'
 import IsraelFlag from 'public/assets/icons/flags/israel.svg'
 import TurkeyFlag from 'public/assets/icons/flags/turkey.svg'
 import StarEyesEmoji from 'public/assets/icons/star-eyes.svg'
 import EtherscanIcon from 'public/assets/icons/etherscan.svg'
 import FranceFLag from 'public/assets/icons/flags/france.svg'
+import GreeceFlag from 'public/assets/icons/flags/greece.svg'
 import BrazilFLag from 'public/assets/icons/flags/brazil.svg'
 import BosniaFlag from 'public/assets/icons/flags/bosnia.svg'
 import PolandFlag from 'public/assets/icons/flags/poland.svg'
@@ -31,7 +33,6 @@ import SerbiaFlag from 'public/assets/icons/flags/serbia.svg'
 import RussiaFlag from 'public/assets/icons/flags/russia.svg'
 import PirateFlag from 'public/assets/icons/flags/pirate.svg'
 import HungaryFlag from 'public/assets/icons/flags/hungary.svg'
-import ErmahgershFlag from 'public/assets/icons/flags/ermahgersh.svg'
 import FinlandFlag from 'public/assets/icons/flags/finland.svg'
 import RomaniaFlag from 'public/assets/icons/flags/romania.svg'
 import GeorgiaFlag from 'public/assets/icons/flags/georgia.svg'
@@ -42,6 +43,7 @@ import UkraineFlag from 'public/assets/icons/flags/ukraine.svg'
 import VietnamFlag from 'public/assets/icons/flags/vietnam.svg'
 import GermanyFLag from 'public/assets/icons/flags/germany.svg'
 import EnglandFlag from 'public/assets/icons/flags/england.svg'
+import MalaysiaFlag from 'public/assets/icons/flags/malaysia.svg'
 import PortugalFlag from 'public/assets/icons/flags/portugal.svg'
 import PirateFlagEmoji from 'public/assets/icons/pirate-flag.svg'
 import BulgariaFlag from 'public/assets/icons/flags/bulgaria.svg'
@@ -56,6 +58,7 @@ import LithuaniaFlag from 'public/assets/icons/flags/lithuania.svg'
 import IndonesiaFlag from 'public/assets/icons/flags/indonesia.svg'
 import UzbekistanFlag from 'public/assets/icons/flags/uzbekistan.svg'
 import KazakhstanFlag from 'public/assets/icons/flags/kazakhstan.svg'
+import ErmahgershFlag from 'public/assets/icons/flags/ermahgersh.svg'
 import NetherlandsFlag from 'public/assets/icons/flags/netherlands.svg'
 import PhilippinesFlag from 'public/assets/icons/flags/philippines.svg'
 import EtherscanIconLight from 'public/assets/icons/etherscan-light.svg'
@@ -139,10 +142,18 @@ export const LANGUAGES = [
   { language: 'Română', key: 'ro', icon: RomaniaFlag, englishLanguage: 'Romanian' },
   { language: 'Bosanski', key: 'bs', icon: BosniaFlag, englishLanguage: 'Bosnian' },
   { language: 'Magyar', key: 'hu', icon: HungaryFlag, englishLanguage: 'Hungarian' },
+  { language: '日本語', key: 'ja', icon: JapanFlag, englishLanguage: 'Japanese' },
+  { language: 'Ελληνικά', key: 'el', icon: GreeceFlag, englishLanguage: 'Greek' },
   { language: 'Eʋegbe', key: 'ee', icon: GhanaFlag, englishLanguage: 'Ewe' },
   { language: 'Twi', key: 'tw', icon: GhanaFlag, englishLanguage: 'Twi' },
   { language: 'Igbo', key: 'ig', icon: NigeriaFlag, englishLanguage: 'Igbo' },
   { language: 'Idoma', key: 'idoma', icon: NigeriaFlag, englishLanguage: 'Idoma' },
+  { language: 'Melayu', key: 'malay', icon: MalaysiaFlag, englishLanguage: 'Malay' },
+  { language: 'मराठी', key: 'mr', icon: IndiaFlag, englishLanguage: 'Marathi' },
+  { language: 'Igala', key: 'igala', icon: NigeriaFlag, englishLanguage: 'Igala' },
+  { language: 'Umeke', key: 'igede', icon: NigeriaFlag, englishLanguage: 'Igede' },
+  { language: 'Tiv', key: 'tiv', icon: NigeriaFlag, englishLanguage: 'Tiv' },
+  { language: 'Fante', key: 'fante', icon: GhanaFlag, englishLanguage: 'Fante' },
   // ----------- special languages -----------
   { language: 'Pirate', key: 'pirate', icon: PirateFlag, englishLanguage: 'Pirate', special: true },
   {

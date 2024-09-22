@@ -1,9 +1,8 @@
 {
-
   "language name in language": "Tiv",
   "language name in English": "Tiv",
 
-  "home": "Ya", 
+  "home": "Ya",
   "recent activity ": "Tom u hinger",
   "no followers": "Mba dondon ba ga",
   "latest followers": "Or dondon hinge",
@@ -80,7 +79,7 @@
   "recommendations": "Nam or Dedoo",
   "unc-changes": "wase ga",
   "cart unc-changes": "Cart: wase ga",
-  "custom tag": "Tag u wo"
+  "custom tag": "Tag u wo",
   "mint name": "Ngeren u Mint new EFP ",
   "mint description": "Kwagh ngeren u NFT representing gu shi kpa yo",
   "blocked": "Chei",
@@ -122,5 +121,4 @@
 
   "action": "Msen",
   "feed description": " onchain u hen u a wase activity u ba u dondon Sha EPP👀"
-
 }
