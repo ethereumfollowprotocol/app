@@ -36,8 +36,6 @@ export const HeroHighlight = ({
   const handleScroll = useCallback(() => {
     const { scrollY } = window
 
-    console.log(scrollY, previusScrollY)
-
     setPreviousScrollY(scrollY)
     mouseY.set(
       mouseY.get() + (scrollY - (previusScrollY || scrollY))
