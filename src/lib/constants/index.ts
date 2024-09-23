@@ -44,6 +44,8 @@ import UkraineFlag from 'public/assets/icons/flags/ukraine.svg'
 import VietnamFlag from 'public/assets/icons/flags/vietnam.svg'
 import GermanyFLag from 'public/assets/icons/flags/germany.svg'
 import EnglandFlag from 'public/assets/icons/flags/england.svg'
+import CambodiaFlag from 'public/assets/icons/flags/cambodia.svg'
+import EthiopiaFlag from 'public/assets/icons/flags/ethiopia.svg'
 import MalaysiaFlag from 'public/assets/icons/flags/malaysia.svg'
 import PortugalFlag from 'public/assets/icons/flags/portugal.svg'
 import PirateFlagEmoji from 'public/assets/icons/pirate-flag.svg'
@@ -62,6 +64,7 @@ import KazakhstanFlag from 'public/assets/icons/flags/kazakhstan.svg'
 import ErmahgershFlag from 'public/assets/icons/flags/ermahgersh.svg'
 import NetherlandsFlag from 'public/assets/icons/flags/netherlands.svg'
 import PhilippinesFlag from 'public/assets/icons/flags/philippines.svg'
+import SouthAfricaFlag from 'public/assets/icons/flags/south-africa.svg'
 import EtherscanIconLight from 'public/assets/icons/etherscan-light.svg'
 import SaudiArabiaFlag from 'public/assets/icons/flags/saudi-arabia.svg'
 import VaticanCityFlag from 'public/assets/icons/flags/vatican-city.svg'
@@ -160,6 +163,11 @@ export const LANGUAGES = [
   { language: 'Umeke', key: 'igede', icon: NigeriaFlag, englishLanguage: 'Igede' },
   { language: 'Tiv', key: 'tiv', icon: NigeriaFlag, englishLanguage: 'Tiv' },
   { language: 'Fante', key: 'fante', icon: GhanaFlag, englishLanguage: 'Fante' },
+  { language: 'বাংলা', key: 'bn', icon: IndiaFlag, englishLanguage: 'Bengali' },
+  { language: 'አማርኛ', key: 'am', icon: EthiopiaFlag, englishLanguage: 'Amharic' },
+  { language: 'Afrikaans', key: 'af', icon: SouthAfricaFlag, englishLanguage: 'Afrikaans' },
+  { language: 'ខ្មែរ', key: 'km', icon: CambodiaFlag, englishLanguage: 'Khmer' },
+  { language: 'Basa Jawa', key: 'jv', icon: IndonesiaFlag, englishLanguage: 'Javanese' },
   // ----------- special languages -----------
   { language: 'Pirate', key: 'pirate', icon: PirateFlag, englishLanguage: 'Pirate', special: true },
   {

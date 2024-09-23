@@ -48,6 +48,7 @@ import Stargazer from 'public/assets/partners/stargazer.jpeg'
 import OnceUpon from 'public/assets/partners/onceupon.jpeg'
 import Integrous from 'public/assets/partners/integrous.jpeg'
 import Linkeh from 'public/assets/partners/linkeh.jpeg'
+import Namefi from 'public/assets/partners/namefi.jpeg'
 import type { StaticImageData } from 'next/image'
 
 export const LAUNCH_PARTNERS = [
@@ -300,6 +301,11 @@ export const LAUNCH_PARTNERS = [
     name: 'Linkeh',
     url: 'https://www.linkeh.xyz/',
     logo: Linkeh
+  },
+  {
+    name: 'Namefi',
+    url: 'https://www.namefi.io/',
+    logo: Namefi
   }
 ] satisfies {
   name: string

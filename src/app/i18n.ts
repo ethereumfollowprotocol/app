@@ -77,6 +77,11 @@ i18n
       'ta',
       'kn',
       'te',
+      'bn',
+      'am',
+      'af',
+      'km',
+      'jv',
       // --------- special languages ---------
       'pirate',
       'genalpha',
