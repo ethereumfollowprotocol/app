@@ -16,6 +16,7 @@ import wagmiConfig from '../lib/wagmi.ts'
 import { Production } from './production.tsx'
 import { sharedMetadata } from '#/lib/metadata.ts'
 import { APP_DESCRIPTION } from '../lib/constants/index.ts'
+import BackgroundLights from '#/components/background-lights.tsx'
 
 export const metadata: Metadata = sharedMetadata
 
@@ -37,7 +38,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           disableTransitionOnChange={true}
         >
           <Toaster richColors={true} />
-          <Providers initialState={initialState}>{children}</Providers>
+          <BackgroundLights>
+            <Providers initialState={initialState}>{children}</Providers>
+          </BackgroundLights>
           {/* <VercelToolbar /> */}
         </ThemeProvider>
         <Production>
