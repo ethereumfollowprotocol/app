@@ -12,6 +12,7 @@ import wagmiConfig from '#/lib/wagmi'
 import { DAY, MINUTE } from '#/lib/constants'
 import Navigation from '#/components/navigation'
 import { CartProvider } from '#/contexts/cart-context'
+import { HeroHighlight } from '#/components/hero-highlight'
 import { ActionsProvider } from '#/contexts/actions-context'
 import { EFPProfileProvider } from '#/contexts/efp-profile-context'
 import { TransactionsProvider } from '#/contexts/transactions-context'
@@ -50,8 +51,10 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
               <EFPProfileProvider>
                 <TransactionsProvider>
                   <ActionsProvider>
+                    {/* <HeroHighlight> */}
                     <Navigation />
                     {children}
+                    {/* </HeroHighlight> */}
                   </ActionsProvider>
                 </TransactionsProvider>
               </EFPProfileProvider>
