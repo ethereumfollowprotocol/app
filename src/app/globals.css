@@ -8,7 +8,7 @@
   --transparent: transparent;
   --white-gradient: repeating-linear-gradient(100deg, var(--white) 0%, var(--white) 7%, var(--transparent) 10%, var(--transparent) 12%, var(--white) 16%);
   --dark-gradient: repeating-linear-gradient(100deg, var(--black) 0%, var(--black) 7%, var(--transparent) 10%, var(--transparent) 12%, var(--black) 16%);
-  --aurora: repeating-linear-gradient(100deg, #ffb26e 10%, #ffb26e 15%, #ffb26e 20%, #ffb26e 25%, #ffb26e 30%);
+  --aurora: repeating-linear-gradient(100deg, #ffb26e99 10%, #ffb26e99 15%, #ffb26e99 20%, #ffb26e99 25%, #ffb26e99 30%);
 }
 
 * {
