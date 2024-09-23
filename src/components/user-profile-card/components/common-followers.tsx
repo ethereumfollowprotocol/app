@@ -6,12 +6,14 @@ import { Avatar } from '#/components/avatar'
 import { truncateAddress } from '#/lib/utilities'
 import { fetchCommonFollowers, noCommonFollowers } from '#/api/fetchCommonFollowers'
 import LoadingCell from '#/components/loaders/loading-cell'
+import { useTranslation } from 'react-i18next'
 
 interface CommonFollowersProps {
   address: Address
 }
 
 const CommonFollowers: React.FC<CommonFollowersProps> = ({ address }) => {
+  const { t } = useTranslation()
   const { address: userAddress } = useAccount()
 
   const { data, isLoading } = useQuery({
@@ -31,6 +33,13 @@ const CommonFollowers: React.FC<CommonFollowersProps> = ({ address }) => {
   const resultLength = data?.length || 0
 
   if (isLoading || data?.results.length === 0) return null
+
+  const commonFollowersText = (count: number) => {
+    if (count === 1) return t('common followers one')
+    if (count === 2) return t('common followers two')
+    if (count === 3) return t('common followers three')
+    return t('common followers plural')
+  }
 
   return (
     <div className='w-full max-w-108 mx-auto flex items-center justify-center gap-2 p-4 pt-0'>
@@ -67,9 +76,9 @@ const CommonFollowers: React.FC<CommonFollowersProps> = ({ address }) => {
                 }`
             )
             .join(', ')}{' '}
-          {resultLength > 2 &&
-            `and ${resultLength - 2} ${resultLength === 3 ? 'other' : 'others'} you know`}{' '}
-          {resultLength === 1 ? 'follows' : 'follow'} them
+          {`${resultLength > 2 ? `${t('and')} ${resultLength - 2}` : ''} ${commonFollowersText(
+            resultLength
+          )}`}
         </p>
       )}
     </div>

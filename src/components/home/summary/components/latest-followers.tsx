@@ -6,13 +6,10 @@ import PageSelector from '#/app/leaderboard/components/page-selector'
 const LatestFollowers = () => {
   const { t } = useTranslation()
   const {
-    displayedProfiles,
     subPage,
-    setPage,
-    setSubPage,
     isLoading,
-    fetchNextPage,
-    fetchPreviousPage,
+    setSubPage,
+    displayedProfiles,
     isFetchingNextPage,
     isFetchingPreviousPage
   } = useLatestFollowers()
@@ -25,22 +22,24 @@ const LatestFollowers = () => {
         <h2 className='text-2xl sm:text-3xl w-full p-2 font-bold'>{t('latest followers')}</h2>
         <PageSelector
           page={subPage}
-          setPage={(newPage: number) => {
-            if (newPage > subPage && (newPage - 1) % 5 === 0) {
-              setPage((newPage - 1) / 5 + 1)
-            }
-            if (newPage < subPage && newPage % 5 === 0) {
-              setPage(newPage / 5)
-            }
-            setSubPage(newPage)
-          }}
+          // setPage={(newPage: number) => {
+          //   if (newPage > subPage && (newPage - 1) % 5 === 0) {
+          //     setPage((newPage - 1) / 5 + 1)
+          //   }
+          //   if (newPage < subPage && newPage % 5 === 0) {
+          //     setPage(newPage / 5)
+          //   }
+          //   setSubPage(newPage)
+          // }}
+          setPage={setSubPage}
           adjustUrl={false}
           hasSkipToFirst={false}
           displayPageNumber={false}
-          fetchNext={() => (subPage % 5 === 0 ? fetchNextPage() : null)}
-          fetchPrevious={() => ((subPage - 1) % 5 === 0 ? fetchPreviousPage() : null)}
+          // fetchNext={() => (subPage % 5 === 0 ? fetchNextPage() : null)}
+          // fetchPrevious={() => ((subPage - 1) % 5 === 0 ? fetchPreviousPage() : null)}
           isLoading={isLatestFollowersLoading}
-          hasNextPage={(displayedProfiles?.length || 1) % 4 === 0}
+          // hasNextPage={(displayedProfiles?.length || 1) % 4 === 0}
+          hasNextPage={subPage > 8}
         />
       </div>
       <FollowList

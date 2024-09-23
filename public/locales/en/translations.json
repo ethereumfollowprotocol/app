@@ -148,6 +148,11 @@
   "following_rank": "Following",
   "top8_rank": "Top 8",
   "last updated": "Last updated",
+  "and": "and",
+  "common followers three": "other you know follows them",
+  "common followers plural": "others you know follow them",
+  "common followers two": "follow them",
+  "common followers one": "follows them",
 
   "system": "System",
   "light": "Light",

@@ -81,9 +81,9 @@ const useImportModal = (platform: ImportPlatformType) => {
       Following {
         followingAddress {
           addresses
-          domains(input: {limit: 1}) {
-            name
-          }
+          primaryDomain {
+          name
+        }
         }
       }
     }
@@ -110,11 +110,11 @@ const useImportModal = (platform: ImportPlatformType) => {
       const newFollowingAddresses = fetchedFollowings?.SocialFollowings?.Following.map(
         (following: any) => ({
           address: following.followingAddress.addresses?.[0],
-          domains: following.followingAddress?.domains ? following.followingAddress.domains : null
+          primaryDomain: following.followingAddress?.primaryDomain?.name
         })
       )
       const filteredNewFollowingAddresses = newFollowingAddresses.filter((following: any) =>
-        onlyImportWithEns ? !!following.domains : true
+        onlyImportWithEns ? !!following.primaryDomain : true
       )
       setAllFollowings(currFollowings => [
         ...new Set([...currFollowings, ...newFollowingAddresses])
@@ -130,7 +130,7 @@ const useImportModal = (platform: ImportPlatformType) => {
     if (!allFollowings || allFollowings.length === 0) return
 
     const newFollowingAddresses = allFollowings.filter((following: any) =>
-      onlyImportWithEns ? !!following.domains : true
+      onlyImportWithEns ? !!following.primaryDomain : true
     )
     setFollowings(newFollowingAddresses)
   }, [onlyImportWithEns])
