@@ -32,22 +32,33 @@ export const HeroHighlight = ({
     mouseY.set(clientY - top)
   }
 
+  const handleScroll = () => {
+    const { scrollX, scrollY } = window
+
+    mouseX.set(mouseX.get() - scrollX)
+    mouseY.set(mouseY.get() - scrollY)
+  }
+
   const [isClient, setIsClient] = useState(false)
   useEffect(() => {
     setIsClient(true)
+    window.addEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
   }, [])
 
   return (
     <div
       className={cn(
-        'relative h-full bg-white dark:bg-darkGrey w-full group/background',
+        'relative h-full min-h-screen bg-white dark:bg-darkGrey w-full m-0 p-0 group/background',
         containerClassName
       )}
       onMouseMove={handleMouseMove}
     >
       <div
         className={cn(
-          'absolute inset-0 h-full w-full pointer-events-none',
+          'absolute inset-0 top-0 left-0 h-full w-full pointer-events-none',
           isClient ? 'opacity-100' : 'opacity-20'
         )}
         style={{
@@ -59,7 +70,7 @@ export const HeroHighlight = ({
         }}
       />
       <motion.div
-        className='pointer-events-none absolute h-full w-full inset-0 opacity-0 transition-all duration-300 group-hover/background:opacity-100'
+        className='pointer-events-none top-0 left-0 absolute h-full w-full inset-0 opacity-0 transition-all duration-500 group-hover/background:opacity-100'
         style={{
           WebkitMaskImage: useMotionTemplate`
             radial-gradient(
