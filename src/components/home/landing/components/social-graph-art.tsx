@@ -1,4 +1,4 @@
-import { fetchRecommendations } from '#/api/fetchRecommendations'
+import { fetchleaderboard } from '#/api/fetchLeaderboard'
 import { Avatar } from '#/components/avatar'
 import LoadingCell from '#/components/loaders/loading-cell'
 import { useQuery } from '@tanstack/react-query'
@@ -8,9 +8,13 @@ const SocialGraphArt = () => {
   const { isLoading, data: socialGraphProfiles } = useQuery({
     queryKey: ['social graph profiles'],
     queryFn: async () => {
-      const discoverAccounts = await fetchRecommendations('discover', undefined, undefined, 15, 0)
+      const fetchedAccounts = await fetchleaderboard({
+        limit: 16,
+        pageParam: 0,
+        filter: 'mutuals'
+      })
 
-      return discoverAccounts
+      return fetchedAccounts.results.results
     },
     refetchInterval: 600000,
     staleTime: 600000
@@ -53,7 +57,7 @@ const SocialGraphArt = () => {
         ) : (
           <Link href={`/${socialGraphProfiles?.[0]?.address}`}>
             <Avatar
-              avatarUrl={`https://metadata.ens.domains/mainnet/avatar/${socialGraphProfiles?.[0]?.name}`}
+              avatarUrl={socialGraphProfiles?.[0]?.avatar}
               name={socialGraphProfiles?.[0]?.name || socialGraphProfiles?.[0]?.address || ''}
               size='h-full w-full'
             />
@@ -66,7 +70,7 @@ const SocialGraphArt = () => {
         ) : (
           <Link href={`/${socialGraphProfiles?.[1]?.address}`}>
             <Avatar
-              avatarUrl={`https://metadata.ens.domains/mainnet/avatar/${socialGraphProfiles?.[1]?.name}`}
+              avatarUrl={socialGraphProfiles?.[1]?.avatar}
               name={socialGraphProfiles?.[1]?.name || socialGraphProfiles?.[1]?.address || ''}
               size='h-full w-full'
             />
@@ -79,7 +83,7 @@ const SocialGraphArt = () => {
         ) : (
           <Link href={`/${socialGraphProfiles?.[2]?.address}`}>
             <Avatar
-              avatarUrl={`https://metadata.ens.domains/mainnet/avatar/${socialGraphProfiles?.[2]?.name}`}
+              avatarUrl={socialGraphProfiles?.[2]?.avatar}
               name={socialGraphProfiles?.[2]?.name || socialGraphProfiles?.[2]?.address || ''}
               size='h-full w-full'
             />
@@ -92,7 +96,7 @@ const SocialGraphArt = () => {
         ) : (
           <Link href={`/${socialGraphProfiles?.[3]?.address}`}>
             <Avatar
-              avatarUrl={`https://metadata.ens.domains/mainnet/avatar/${socialGraphProfiles?.[3]?.name}`}
+              avatarUrl={socialGraphProfiles?.[3]?.avatar}
               name={socialGraphProfiles?.[3]?.name || socialGraphProfiles?.[3]?.address || ''}
               size='h-full w-full'
             />
@@ -105,7 +109,7 @@ const SocialGraphArt = () => {
         ) : (
           <Link href={`/${socialGraphProfiles?.[4]?.address}`}>
             <Avatar
-              avatarUrl={`https://metadata.ens.domains/mainnet/avatar/${socialGraphProfiles?.[4]?.name}`}
+              avatarUrl={socialGraphProfiles?.[4]?.avatar}
               name={socialGraphProfiles?.[4]?.name || socialGraphProfiles?.[4]?.address || ''}
               size='h-full w-full'
             />
@@ -118,7 +122,7 @@ const SocialGraphArt = () => {
         ) : (
           <Link href={`/${socialGraphProfiles?.[5]?.address}`}>
             <Avatar
-              avatarUrl={`https://metadata.ens.domains/mainnet/avatar/${socialGraphProfiles?.[5]?.name}`}
+              avatarUrl={socialGraphProfiles?.[5]?.avatar}
               name={socialGraphProfiles?.[5]?.name || socialGraphProfiles?.[5]?.address || ''}
               size='h-full w-full'
             />
@@ -131,7 +135,7 @@ const SocialGraphArt = () => {
         ) : (
           <Link href={`/${socialGraphProfiles?.[6]?.address}`}>
             <Avatar
-              avatarUrl={`https://metadata.ens.domains/mainnet/avatar/${socialGraphProfiles?.[6]?.address}`}
+              avatarUrl={socialGraphProfiles?.[6]?.avatar}
               name={socialGraphProfiles?.[6]?.name || socialGraphProfiles?.[6]?.address || ''}
               size='h-full w-full'
             />
@@ -144,7 +148,7 @@ const SocialGraphArt = () => {
         ) : (
           <Link href={`/${socialGraphProfiles?.[7]?.address}`}>
             <Avatar
-              avatarUrl={`https://metadata.ens.domains/mainnet/avatar/${socialGraphProfiles?.[7]?.name}`}
+              avatarUrl={socialGraphProfiles?.[7]?.avatar}
               name={socialGraphProfiles?.[7]?.name || socialGraphProfiles?.[7]?.address || ''}
               size='h-full w-full'
             />
@@ -157,7 +161,7 @@ const SocialGraphArt = () => {
         ) : (
           <Link href={`/${socialGraphProfiles?.[8]?.address}`}>
             <Avatar
-              avatarUrl={`https://metadata.ens.domains/mainnet/avatar/${socialGraphProfiles?.[8]?.name}`}
+              avatarUrl={socialGraphProfiles?.[8]?.avatar}
               name={socialGraphProfiles?.[8]?.name || socialGraphProfiles?.[8]?.address || ''}
               size='h-full w-full'
             />
@@ -170,7 +174,7 @@ const SocialGraphArt = () => {
         ) : (
           <Link href={`/${socialGraphProfiles?.[9]?.address}`}>
             <Avatar
-              avatarUrl={`https://metadata.ens.domains/mainnet/avatar/${socialGraphProfiles?.[9]?.name}`}
+              avatarUrl={socialGraphProfiles?.[9]?.avatar}
               name={socialGraphProfiles?.[9]?.name || socialGraphProfiles?.[9]?.address || ''}
               size='h-full w-full'
             />
@@ -183,7 +187,7 @@ const SocialGraphArt = () => {
         ) : (
           <Link href={`/${socialGraphProfiles?.[10]?.address}`}>
             <Avatar
-              avatarUrl={`https://metadata.ens.domains/mainnet/avatar/${socialGraphProfiles?.[10]?.name}`}
+              avatarUrl={socialGraphProfiles?.[10]?.avatar}
               name={socialGraphProfiles?.[10]?.name || socialGraphProfiles?.[10]?.address || ''}
               size='h-full w-full'
             />
@@ -196,7 +200,7 @@ const SocialGraphArt = () => {
         ) : (
           <Link href={`/${socialGraphProfiles?.[11]?.address}`}>
             <Avatar
-              avatarUrl={`https://metadata.ens.domains/mainnet/avatar/${socialGraphProfiles?.[11]?.name}`}
+              avatarUrl={socialGraphProfiles?.[11]?.avatar}
               name={socialGraphProfiles?.[11]?.name || socialGraphProfiles?.[11]?.address || ''}
               size='h-full w-full'
             />
@@ -209,7 +213,7 @@ const SocialGraphArt = () => {
         ) : (
           <Link href={`/${socialGraphProfiles?.[12]?.address}`}>
             <Avatar
-              avatarUrl={`https://metadata.ens.domains/mainnet/avatar/${socialGraphProfiles?.[12]?.name}`}
+              avatarUrl={socialGraphProfiles?.[12]?.avatar}
               name={socialGraphProfiles?.[12]?.name || socialGraphProfiles?.[12]?.address || ''}
               size='h-full w-full'
             />
@@ -222,7 +226,7 @@ const SocialGraphArt = () => {
         ) : (
           <Link href={`/${socialGraphProfiles?.[13]?.address}`}>
             <Avatar
-              avatarUrl={`https://metadata.ens.domains/mainnet/avatar/${socialGraphProfiles?.[13]?.name}`}
+              avatarUrl={socialGraphProfiles?.[13]?.avatar}
               name={socialGraphProfiles?.[13]?.name || socialGraphProfiles?.[13]?.address || ''}
               size='h-full w-full'
             />
@@ -235,7 +239,7 @@ const SocialGraphArt = () => {
         ) : (
           <Link href={`/${socialGraphProfiles?.[14]?.address}`}>
             <Avatar
-              avatarUrl={`https://metadata.ens.domains/mainnet/avatar/${socialGraphProfiles?.[14]?.name}`}
+              avatarUrl={socialGraphProfiles?.[14]?.avatar}
               name={socialGraphProfiles?.[14]?.name || socialGraphProfiles?.[14]?.address || ''}
               size='h-full w-full'
             />
@@ -248,7 +252,7 @@ const SocialGraphArt = () => {
         ) : (
           <Link href={`/${socialGraphProfiles?.[15]?.address}`}>
             <Avatar
-              avatarUrl={`https://metadata.ens.domains/mainnet/avatar/${socialGraphProfiles?.[15]?.name}`}
+              avatarUrl={socialGraphProfiles?.[15]?.avatar}
               name={socialGraphProfiles?.[15]?.name || socialGraphProfiles?.[15]?.address || ''}
               size='h-full w-full'
             />

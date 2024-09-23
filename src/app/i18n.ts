@@ -72,6 +72,11 @@ i18n
       'igede',
       'tiv',
       'fante',
+      'ko',
+      'bho',
+      'ta',
+      'kn',
+      'te',
       // --------- special languages ---------
       'pirate',
       'genalpha',

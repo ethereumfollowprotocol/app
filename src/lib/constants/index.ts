@@ -16,6 +16,7 @@ import ItalyFlag from 'public/assets/icons/flags/italy.svg'
 import GhanaFlag from 'public/assets/icons/flags/ghana.svg'
 import JapanFlag from 'public/assets/icons/flags/japan.svg'
 import frensFlag from 'public/assets/icons/flags/frens.svg'
+import KoreaFlag from 'public/assets/icons/flags/korea.svg'
 import IsraelFlag from 'public/assets/icons/flags/israel.svg'
 import TurkeyFlag from 'public/assets/icons/flags/turkey.svg'
 import StarEyesEmoji from 'public/assets/icons/star-eyes.svg'
@@ -144,12 +145,17 @@ export const LANGUAGES = [
   { language: 'Magyar', key: 'hu', icon: HungaryFlag, englishLanguage: 'Hungarian' },
   { language: '日本語', key: 'ja', icon: JapanFlag, englishLanguage: 'Japanese' },
   { language: 'Ελληνικά', key: 'el', icon: GreeceFlag, englishLanguage: 'Greek' },
+  { language: '한국어', key: 'ko', icon: KoreaFlag, englishLanguage: 'Korean' },
   { language: 'Eʋegbe', key: 'ee', icon: GhanaFlag, englishLanguage: 'Ewe' },
   { language: 'Twi', key: 'tw', icon: GhanaFlag, englishLanguage: 'Twi' },
   { language: 'Igbo', key: 'ig', icon: NigeriaFlag, englishLanguage: 'Igbo' },
   { language: 'Idoma', key: 'idoma', icon: NigeriaFlag, englishLanguage: 'Idoma' },
   { language: 'Melayu', key: 'malay', icon: MalaysiaFlag, englishLanguage: 'Malay' },
   { language: 'मराठी', key: 'mr', icon: IndiaFlag, englishLanguage: 'Marathi' },
+  { language: 'भोजपुरी', key: 'bho', icon: IndiaFlag, englishLanguage: 'Bhojpuri' },
+  { language: 'தமிழ்', key: 'ta', icon: IndiaFlag, englishLanguage: 'Tamil' },
+  { language: 'ಕನ್ನಡ', key: 'kn', icon: IndiaFlag, englishLanguage: 'Kannada' },
+  { language: 'తెలుగు', key: 'te', icon: IndiaFlag, englishLanguage: 'Telugu' },
   { language: 'Igala', key: 'igala', icon: NigeriaFlag, englishLanguage: 'Igala' },
   { language: 'Umeke', key: 'igede', icon: NigeriaFlag, englishLanguage: 'Igede' },
   { language: 'Tiv', key: 'tiv', icon: NigeriaFlag, englishLanguage: 'Tiv' },
