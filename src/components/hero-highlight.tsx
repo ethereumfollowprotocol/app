@@ -1,7 +1,7 @@
 'use client'
 
 import { useTheme } from 'next-themes'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useMotionValue, motion, useMotionTemplate } from 'framer-motion'
 
 import { cn } from '#/lib/utilities'
@@ -17,6 +17,7 @@ export const HeroHighlight = ({
 }) => {
   const { resolvedTheme } = useTheme()
 
+  const [previusScrollY, setPreviousScrollY] = useState(0)
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
 
@@ -32,12 +33,17 @@ export const HeroHighlight = ({
     mouseY.set(clientY - top)
   }
 
-  const handleScroll = () => {
-    const { scrollX, scrollY } = window
+  const handleScroll = useCallback(() => {
+    const { scrollY } = window
 
-    mouseX.set(mouseX.get() - scrollX)
-    mouseY.set(mouseY.get() - scrollY)
-  }
+    console.log(scrollY, previusScrollY)
+
+    setPreviousScrollY(scrollY)
+    mouseY.set(
+      mouseY.get() + (scrollY - (previusScrollY || scrollY))
+      // mouseY.get() + (scrollY > innerHeight ? scrollY - (innerHeight - mouseY.get()) : scrollY)
+    )
+  }, [previusScrollY])
 
   const [isClient, setIsClient] = useState(false)
   useEffect(() => {
@@ -46,20 +52,20 @@ export const HeroHighlight = ({
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [])
+  }, [handleScroll])
 
   return (
     <div
       className={cn(
-        'relative h-full min-h-screen bg-white dark:bg-darkGrey w-full m-0 p-0 group/background',
+        'relative h-full min-h-screen w-full m-0 p-0 group/background',
         containerClassName
       )}
       onMouseMove={handleMouseMove}
     >
       <div
         className={cn(
-          'absolute inset-0 top-0 left-0 h-full w-full pointer-events-none',
-          isClient ? 'opacity-100' : 'opacity-20'
+          'absolute inset-0 top-0 z-0 left-0 h-full w-full pointer-events-none',
+          isClient ? 'opacity-100' : 'opacity-10'
         )}
         style={{
           backgroundRepeat: 'repeat',
@@ -70,7 +76,8 @@ export const HeroHighlight = ({
         }}
       />
       <motion.div
-        className='pointer-events-none top-0 left-0 absolute h-full w-full inset-0 opacity-0 transition-all duration-500 group-hover/background:opacity-100'
+        transition={{ duration: 0.5 }}
+        className='pointer-events-none top-0 z-0 left-0 absolute h-full w-full inset-0 opacity-0 transition-all duration-500 group-hover/background:opacity-100'
         style={{
           WebkitMaskImage: useMotionTemplate`
             radial-gradient(
@@ -91,8 +98,13 @@ export const HeroHighlight = ({
           backgroundRepeat: 'repeat'
         }}
       />
-
-      <div className={cn('relative z-20', className)}>{children}</div>
+      {/* <div
+        className='fixed top-0 waves-bg w-screen h-screen left-0 z-40'
+        style={{
+          backgroundImage: `url(assets/art/waves-background.svg)`
+        }}
+      /> */}
+      <div className={cn('relative z-50', className)}>{children}</div>
     </div>
   )
 }

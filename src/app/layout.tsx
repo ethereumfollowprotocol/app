@@ -26,11 +26,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang='en' suppressHydrationWarning={true} className='dark'>
       <HeadTag />
-      <body
-      // style={{
-      //   backgroundImage: `url(assets/art/waves-background.svg)`
-      // }}
-      >
+      <body>
         <ThemeProvider
           attribute='class'
           defaultTheme='system'
