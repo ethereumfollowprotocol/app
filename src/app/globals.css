@@ -16,13 +16,29 @@ html, body {
   overflow-x: hidden;
 }
 
+html {
+  background: linear-gradient(to right, #FDF78140 0%,#FDBBE340 50%, #FDF78140 100%);
+  background-size: 10000px 100%;
+  animation: bg 10s linear infinite;
+}
+
+@keyframes bg{
+  0%{
+    background-position-x: 0;
+  }
+
+  100%{
+    background-position-x: 10000px;
+  }
+}
+
 body {
   background-repeat: no-repeat;
   background-position: -34.1vw -34vw;
   background-size: 210vw 129vw;
   background-attachment: fixed;
   /* background-image: url("https://testing.ethfollow.xyz/assets/art/waves-background.svg"); */
-  @apply text-darkGrey dark:text-[#eeeeee] bg-white dark:bg-darkGrey
+  /* @apply text-darkGrey dark:text-[#eeeeee] bg-white dark:bg-darkGrey */
 }
 
 /* Social graph art */
