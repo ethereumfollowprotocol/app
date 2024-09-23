@@ -27,7 +27,7 @@ export const useLatestFollowers = () => {
       const discoverAccounts = await fetchProfileFollowers({
         addressOrName: userAddress,
         list: selectedList,
-        limit: 20,
+        limit: 32,
         pageParam,
         sort: 'latest first'
       })

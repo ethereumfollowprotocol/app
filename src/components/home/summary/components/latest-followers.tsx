@@ -39,7 +39,7 @@ const LatestFollowers = () => {
           // fetchPrevious={() => ((subPage - 1) % 5 === 0 ? fetchPreviousPage() : null)}
           isLoading={isLatestFollowersLoading}
           // hasNextPage={(displayedProfiles?.length || 1) % 4 === 0}
-          hasNextPage={subPage > 8}
+          hasNextPage={subPage < 8}
         />
       </div>
       <FollowList
