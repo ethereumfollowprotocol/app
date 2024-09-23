@@ -1,5 +1,6 @@
  {
-     "language name in English": "Javanese",
+"language name in language": "Basa Jawa",
+"language name in English": "Javanese",
   
 "home" : "Ngarep",
 "recent" : "Kegiatan Anyar",
@@ -15,7 +16,7 @@
 "follower list second" : "Sampeyan duwe.",
 "integrations" : "Integrasi",
 "partners" : "Mitra Mitra",
-"sponsors" : "Didhukung dening hibah saka
+"sponsors" : "Didhukung dening hibah saka",
 "support" : "Dhukungan",
 
 "profile" : "Profil Kula",
@@ -55,7 +56,7 @@
 "Blocked/Muted By" : "Diblokir/Dimatikan Oleh", 
 "Block Back" : "Blokir Balik",
 "location" : "Lokasi Penyimpanan Daftar",
-"owner" :  "Pemilik"
+"owner" :  "Pemilik",
 "manager" :  "Manajer",
 "user" : "Pengguna",
 "save" :  "Simpan",
@@ -105,7 +106,7 @@
 "initiate" : "Miwiti",
 "reinitiate" : "Wiwiti maneh",
 "choose your" : "Pilih sampeyan",
-"create list title" : "Dhaptar Lokasi Panyimpenan"
+"create list title" : "Dhaptar Lokasi Panyimpenan",
 "chain comment" : "Iki sampeyan bakal ngirim transaksi nalika sampeyan ngetutake wong. Sampeyan butuh ETH ing rantai kasebut.",
 "select" : "Pilih siji",
 "High gas fees" : "Biaya gas dhuwur",
