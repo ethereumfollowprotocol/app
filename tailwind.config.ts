@@ -144,6 +144,12 @@ const { colors, fontFamily, fontSize, keyframes, animation, spacing, screens } =
     loading: 'loading 5s ease-in-out infinite',
     'spin-y': 'spinY 5s ease-in-out infinite'
   },
+  // backgroundImage: {
+  //   'dots-dark': 'url("assets/art/background-dot.svg")',
+  //   dots: 'url("assets/art/background-dot-light.svg")',
+  //   'dots-dark-color': 'url("assets/art/background-dot-color.svg")',
+  //   'dots-color': 'url("assets/art/background-dot-light-color.svg")'
+  // },
   spacing: {
     '68': '17rem',
     '76': '19rem',

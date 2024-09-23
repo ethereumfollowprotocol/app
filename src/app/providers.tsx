@@ -50,8 +50,10 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
               <EFPProfileProvider>
                 <TransactionsProvider>
                   <ActionsProvider>
+                    {/* <HeroHighlight> */}
                     <Navigation />
                     {children}
+                    {/* </HeroHighlight> */}
                   </ActionsProvider>
                 </TransactionsProvider>
               </EFPProfileProvider>

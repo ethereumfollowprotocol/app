@@ -16,6 +16,7 @@ import wagmiConfig from '../lib/wagmi.ts'
 import { Production } from './production.tsx'
 import { sharedMetadata } from '#/lib/metadata.ts'
 import { APP_DESCRIPTION } from '../lib/constants/index.ts'
+import { HeroHighlight } from '#/components/hero-highlight.tsx'
 
 export const metadata: Metadata = sharedMetadata
 
@@ -25,20 +26,18 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang='en' suppressHydrationWarning={true} className='dark'>
       <HeadTag />
-      <body
-        style={{
-          backgroundImage: `url(assets/art/waves-background.svg)`
-        }}
-      >
+      <body>
         <ThemeProvider
           attribute='class'
           defaultTheme='system'
           enableSystem={true}
           disableTransitionOnChange={true}
         >
-          <Toaster richColors={true} />
-          <Providers initialState={initialState}>{children}</Providers>
-          {/* <VercelToolbar /> */}
+          <HeroHighlight>
+            <Toaster richColors={true} />
+            <Providers initialState={initialState}>{children}</Providers>
+            {/* <VercelToolbar /> */}
+          </HeroHighlight>
         </ThemeProvider>
         <Production>
           <Analytics />
