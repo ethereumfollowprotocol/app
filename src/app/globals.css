@@ -303,8 +303,8 @@ input {
 .scroll-indicator {
   bottom: 0;
   color: #888;
-  left: 50%;
-  margin-left: -3rem;
+  left: calc(50% - 30px);
+
   position: fixed;
   text-align: center;
   width: 5rem;
