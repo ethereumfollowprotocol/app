@@ -46,7 +46,7 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
   useEffect(() => {
     if (allActionsSuccessful) {
       openPoapModal?.()
-      setTimeout(() => setTransactionsAreFinished(true), 5000 + (totalCartItems / 10) * 2)
+      setTimeout(() => setTransactionsAreFinished(true), 8000 + (totalCartItems / 10) * 2)
     }
   }, [allActionsSuccessful])
 
