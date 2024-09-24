@@ -20,15 +20,15 @@ export function generateMetadata({ params }: Props): Metadata {
       title: `${isList ? `List #${user}` : truncatedUser} | EFP`,
       siteName: `${isList ? `List #${user}` : truncatedUser} - EFP profile`,
       description: `${isList ? `List #${user}` : truncatedUser} - EFP profile`,
-      url: `https://testing.ethfollow.xyz/${user}`,
+      url: `https://ethfollow.xyz/${user}`,
       images: [
         {
-          url: `https://testing.ethfollow.xyz/og?user=${user}`
+          url: `https://ethfollow.xyz/og?user=${user}`
         }
       ]
     },
     twitter: {
-      images: `https://testing.ethfollow.xyz/og?user=${user}`
+      images: `https://ethfollow.xyz/og?user=${user}`
     }
   }
 
@@ -56,15 +56,15 @@ export function generateMetadata({ params }: Props): Metadata {
   //       title: `${fetchedUser} | EFP`,
   //       siteName: `${fetchedUser} - EFP profile`,
   //       description: `${fetchedUser} - EFP profile`,
-  //       url: `https://testing.ethfollow.xyz/${response.address ? response.address : user}`,
+  //       url: `https://ethfollow.xyz/${response.address ? response.address : user}`,
   //       images: [
   //         {
-  //           url: `https://testing.ethfollow.xyz/og?user=${user}`
+  //           url: `https://ethfollow.xyz/og?user=${user}`
   //         }
   //       ]
   //     },
   //     twitter: {
-  //       images: `https://testing.ethfollow.xyz/og?user=${user}`
+  //       images: `https://ethfollow.xyz/og?user=${user}`
   //     }
   //   }
   // } catch (err: unknown) {

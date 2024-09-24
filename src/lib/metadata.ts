@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-export const metadataBaseUrl = new URL('https://testing.ethfollow.xyz')
+export const metadataBaseUrl = new URL('https://ethfollow.xyz')
 
 // export const metadataTitle = 'Ethereum Follow Protocol'
 export const metadataSiteName = 'App - Ethereum Follow Protocol'
@@ -9,7 +9,7 @@ export const metadataDescription = "It's about who you know. The social graph fo
 export const sharedMetadataIcons: Metadata['icons'] = [
   {
     rel: 'icon',
-    url: 'https://testing.ethfollow.xyz/assets/favicon.ico'
+    url: 'https://ethfollow.xyz/assets/favicon.ico'
   }
 ]
 export const sharedMetadataOpenGraph: Metadata['openGraph'] = {
@@ -18,11 +18,11 @@ export const sharedMetadataOpenGraph: Metadata['openGraph'] = {
   description: metadataDescription,
   locale: 'en_US',
   // siteName: metadataSiteName,
-  // url: 'https://testing.ethfollow.xyz',
+  // url: 'https://ethfollow.xyz',
   emails: ['contact@ethfollow.xyz']
   // images: [
   //   {
-  //     url: 'https://testing.ethfollow.xyz/assets/banner.png'
+  //     url: 'https://ethfollow.xyz/assets/banner.png'
   //   }
   // ]
 }
@@ -31,7 +31,7 @@ export const sharedMetadataTwitter: Metadata['twitter'] = {
   site: '@efp',
   creator: '@efp',
   description: metadataDescription
-  // images: 'https://testing.ethfollow.xyz/assets/banner.png'
+  // images: 'https://ethfollow.xyz/assets/banner.png'
 }
 
 export const sharedMetadata: Metadata = {
@@ -43,7 +43,7 @@ export const sharedMetadata: Metadata = {
   openGraph: sharedMetadataOpenGraph,
   authors: {
     name: 'Ethereum Follow Protocol',
-    url: 'https://testing.ethfollow.xyz'
+    url: 'https://ethfollow.xyz'
   },
   robots: {
     index: true,
