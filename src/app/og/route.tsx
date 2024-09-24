@@ -54,7 +54,7 @@ export async function GET(req) {
           alt='avatar'
           width='100'
           height='100'
-          src={`${fetchedAvatar || 'https://ethfollow.xyz/assets/gradient-circle.svg'}`}
+          src={`${fetchedAvatar || 'https://testing.ethfollow.xyz/assets/gradient-circle.svg'}`}
           style={{
             borderRadius: 50,
             margin: 0
