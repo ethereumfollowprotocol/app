@@ -7,15 +7,15 @@ export const metadata: Metadata = {
     title: 'Leaderboard | EFP',
     siteName: 'Leaderboard - Ethereum Follow Protocol',
     description: 'Check the leaderboard of the most followed users on Ethereum',
-    url: 'https://testing.ethfollow.xyz/leaderboard',
+    url: 'https://ethfollow.xyz/leaderboard',
     images: [
       {
-        url: 'https://testing.ethfollow.xyz/assets/banners/leaderboard.png'
+        url: 'https://ethfollow.xyz/assets/banners/leaderboard.png'
       }
     ]
   },
   twitter: {
-    images: 'https://testing.ethfollow.xyz/assets/banners/leaderboard.png'
+    images: 'https://ethfollow.xyz/assets/banners/leaderboard.png'
   }
 }
 

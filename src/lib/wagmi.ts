@@ -1,16 +1,16 @@
 'use client'
 
 import {
+  rabbyWallet,
   rainbowWallet,
   coinbaseWallet,
   injectedWallet,
   metaMaskWallet,
-  walletConnectWallet,
-  rabbyWallet
+  walletConnectWallet
 } from '@rainbow-me/rainbowkit/wallets'
+import { mainnet, optimism, base } from 'wagmi/chains'
 import { type Chain, connectorsForWallets } from '@rainbow-me/rainbowkit'
 import { http, fallback, createStorage, cookieStorage, createConfig } from 'wagmi'
-import { mainnet, sepolia, optimism, optimismSepolia, baseSepolia, base } from 'wagmi/chains'
 
 import { APP_DESCRIPTION, APP_NAME, APP_URL } from '#/lib/constants'
 
@@ -52,56 +52,56 @@ export type ChainWithDetails = Chain & {
 // These are the current supported chains for this app
 // `chainDetail` and `gasFeeDetail` are custom fields to be used in the ChainList component
 export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
-  // {
-  //   ...base,
-  //   iconUrl: '/assets/chains/base.svg',
-  //   custom: {
-  //     chainDetail: '',
-  //     gasFeeDetail: 'Super Low gas fees'
-  //   }
-  // },
-  // {
-  //   ...optimism,
-  //   iconUrl: '/assets/chains/optimism.svg',
-  //   custom: {
-  //     chainDetail: 'Ethereum L2',
-  //     gasFeeDetail: 'Low gas fees'
-  //   }
-  // },
-  // {
-  //   ...mainnet,
-  //   iconBackground: 'bg-zinc-300',
-  //   iconUrl: '/assets/chains/ethereum.svg',
-  //   custom: {
-  //     chainDetail: '',
-  //     gasFeeDetail: 'High gas fees'
-  //   }
-  // },
   {
-    ...baseSepolia,
+    ...base,
     iconUrl: '/assets/chains/base.svg',
     custom: {
-      chainDetail: 'Ethereum L2 Testnet',
+      chainDetail: '',
       gasFeeDetail: 'Super Low gas fees'
     }
   },
   {
-    ...optimismSepolia,
+    ...optimism,
     iconUrl: '/assets/chains/optimism.svg',
     custom: {
-      chainDetail: 'Ethereum L2 Testnet',
+      chainDetail: 'Ethereum L2',
       gasFeeDetail: 'Low gas fees'
     }
   },
   {
-    ...sepolia,
-    iconBackground: 'bg-zinc-200',
+    ...mainnet,
+    iconBackground: 'bg-zinc-300',
     iconUrl: '/assets/chains/ethereum.svg',
     custom: {
-      chainDetail: 'Ethereum Testnet',
-      gasFeeDetail: 'Low gas fees'
+      chainDetail: '',
+      gasFeeDetail: 'High gas fees'
     }
   }
+  // {
+  //   ...baseSepolia,
+  //   iconUrl: '/assets/chains/base.svg',
+  //   custom: {
+  //     chainDetail: 'Ethereum L2 Testnet',
+  //     gasFeeDetail: 'Super Low gas fees'
+  //   }
+  // },
+  // {
+  //   ...optimismSepolia,
+  //   iconUrl: '/assets/chains/optimism.svg',
+  //   custom: {
+  //     chainDetail: 'Ethereum L2 Testnet',
+  //     gasFeeDetail: 'Low gas fees'
+  //   }
+  // },
+  // {
+  //   ...sepolia,
+  //   iconBackground: 'bg-zinc-200',
+  //   iconUrl: '/assets/chains/ethereum.svg',
+  //   custom: {
+  //     chainDetail: 'Ethereum Testnet',
+  //     gasFeeDetail: 'Low gas fees'
+  //   }
+  // }
 ]
 
 const config = createConfig({
@@ -126,6 +126,17 @@ const config = createConfig({
         batch: true
       })
     ]),
+    // [sepolia.id]: fallback([
+    //   http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_SEPOLIA_ALCHEMY_ID}`, {
+    //     batch: true
+    //   }),
+    //   http(
+    //     `https://smart-cosmological-telescope.ethereum-sepolia.quiknode.pro/${process.env.NEXT_PUBLIC_QUICKNODE_ID}`,
+    //     {
+    //       batch: true
+    //     }
+    //   )
+    // ]),
     [optimism.id]: fallback([
       http(`https://opt-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_OPTIMISM_ALCHEMY_ID}`, {
         batch: true
@@ -140,32 +151,21 @@ const config = createConfig({
         batch: true
       })
     ]),
-    [sepolia.id]: fallback([
-      http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_SEPOLIA_ALCHEMY_ID}`, {
-        batch: true
-      }),
-      http(
-        `https://smart-cosmological-telescope.ethereum-sepolia.quiknode.pro/${process.env.NEXT_PUBLIC_QUICKNODE_ID}`,
-        {
-          batch: true
-        }
-      )
-    ]),
-    [optimismSepolia.id]: fallback([
-      http(
-        `https://opt-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_OP_SEPOLIA_ALCHEMY_ID}`,
-        {
-          batch: true
-        }
-      ),
-      http(
-        `https://smart-cosmological-telescope.optimism-sepolia.quiknode.pro/${process.env.NEXT_PUBLIC_QUICKNODE_ID}`,
-        {
-          batch: true
-        }
-      ),
-      http('https://sepolia.optimism.io', { batch: true })
-    ]),
+    // [optimismSepolia.id]: fallback([
+    //   http(
+    //     `https://opt-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_OP_SEPOLIA_ALCHEMY_ID}`,
+    //     {
+    //       batch: true
+    //     }
+    //   ),
+    //   http(
+    //     `https://smart-cosmological-telescope.optimism-sepolia.quiknode.pro/${process.env.NEXT_PUBLIC_QUICKNODE_ID}`,
+    //     {
+    //       batch: true
+    //     }
+    //   ),
+    //   http('https://sepolia.optimism.io', { batch: true })
+    // ]),
     [base.id]: fallback([
       http(`https://base-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_BASE_ALCHEMY_ID}`, {
         batch: true
@@ -177,22 +177,22 @@ const config = createConfig({
         }
       ),
       http('https://mainnet.base.org/', { batch: true })
-    ]),
-    [baseSepolia.id]: fallback([
-      http(
-        `https://base-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_BASE_SEPOLIA_ALCHEMY_ID}`,
-        {
-          batch: true
-        }
-      ),
-      http(
-        `https://smart-cosmological-telescope.base-sepolia.quiknode.pro/${process.env.NEXT_PUBLIC_QUICKNODE_ID}`,
-        {
-          batch: true
-        }
-      ),
-      http('https://sepolia.base.org', { batch: true })
     ])
+    // [baseSepolia.id]: fallback([
+    //   http(
+    //     `https://base-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_BASE_SEPOLIA_ALCHEMY_ID}`,
+    //     {
+    //       batch: true
+    //     }
+    //   ),
+    //   http(
+    //     `https://smart-cosmological-telescope.base-sepolia.quiknode.pro/${process.env.NEXT_PUBLIC_QUICKNODE_ID}`,
+    //     {
+    //       batch: true
+    //     }
+    //   ),
+    //   http('https://sepolia.base.org', { batch: true })
+    // ])
   }
 })
 

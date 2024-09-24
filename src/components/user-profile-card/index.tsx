@@ -500,7 +500,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                           <button
                             onClick={() => {
                               navigator.clipboard.writeText(
-                                `${process.env.NEXT_PUBLIC_SITE_URL}/${
+                                `https://ethfollow.xyz/${
                                   profileList
                                     ? profileList === Number(profile.primary_list)
                                       ? profile.address

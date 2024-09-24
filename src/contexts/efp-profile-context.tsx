@@ -4,7 +4,8 @@ import {
   useContext,
   createContext,
   type Dispatch,
-  type SetStateAction
+  type SetStateAction,
+  useMemo
 } from 'react'
 import {
   useQuery,
@@ -236,7 +237,10 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   }, [lists])
 
   const isPrimaryList = selectedList === Number(lists?.primary_list)
-  const listToFetch = isPrimaryList ? undefined : selectedList
+  const listToFetch = useMemo(
+    () => (isPrimaryList && !isRefetchingProfile ? undefined : selectedList),
+    [isPrimaryList, selectedList]
+  )
 
   const {
     data: profile,

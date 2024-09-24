@@ -1,23 +1,20 @@
-import { fetchleaderboard } from '#/api/fetchLeaderboard'
+import Link from 'next/link'
+import { useQuery } from '@tanstack/react-query'
+
 import { Avatar } from '#/components/avatar'
 import LoadingCell from '#/components/loaders/loading-cell'
-import { useQuery } from '@tanstack/react-query'
-import Link from 'next/link'
+import { fetchRecommendations } from '#/api/fetchRecommendations'
+import { zeroAddress } from 'viem'
 
 const SocialGraphArt = () => {
   const { isLoading, data: socialGraphProfiles } = useQuery({
     queryKey: ['social graph profiles'],
     queryFn: async () => {
-      const fetchedAccounts = await fetchleaderboard({
-        limit: 16,
-        pageParam: 0,
-        filter: 'mutuals'
-      })
+      const fetchedAccounts = await fetchRecommendations('recommended', zeroAddress, undefined, 16)
 
-      return fetchedAccounts.results.results
+      return fetchedAccounts
     },
-    refetchInterval: 600000,
-    staleTime: 600000
+    staleTime: Infinity
   })
 
   return (

@@ -7,15 +7,15 @@ export const metadata: Metadata = {
     title: 'Feed | EFP',
     siteName: 'Feed - Ethereum Follow Protocol',
     description: 'See what your EFP friends are doing onchain 👀',
-    url: 'https://testing.ethfollow.xyz/feed',
+    url: 'https://ethfollow.xyz/feed',
     images: [
       {
-        url: 'https://testing.ethfollow.xyz/assets/banners/feed.png'
+        url: 'https://ethfollow.xyz/assets/banners/feed.png'
       }
     ]
   },
   twitter: {
-    images: 'https://testing.ethfollow.xyz/assets/banners/feed.png'
+    images: 'https://ethfollow.xyz/assets/banners/feed.png'
   }
 }
 

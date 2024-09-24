@@ -1,5 +1,5 @@
 import type { Address } from 'viem'
-import { baseSepolia, optimismSepolia, sepolia } from 'viem/chains'
+import { base, mainnet, optimism } from 'viem/chains'
 
 export const coreEfpContracts: {
   EFPAccountMetadata: Address
@@ -14,7 +14,10 @@ export const coreEfpContracts: {
 }
 
 export const ListRecordContracts: Record<number, Address> = {
-  [baseSepolia.id]: process.env['NEXT_PUBLIC_EFP_LIST_RECORDS'] as Address,
-  [optimismSepolia.id]: process.env['NEXT_PUBLIC_EFP_LIST_RECORDS_OP_SEPOLIA'] as Address,
-  [sepolia.id]: process.env['NEXT_PUBLIC_EFP_LIST_RECORDS_SEPOLIA'] as Address
+  [base.id]: process.env['NEXT_PUBLIC_EFP_LIST_RECORDS'] as Address,
+  [optimism.id]: process.env['NEXT_PUBLIC_EFP_LIST_RECORDS_OP'] as Address,
+  [mainnet.id]: process.env['NEXT_PUBLIC_EFP_LIST_RECORDS_MAINNET'] as Address
+  // [baseSepolia.id]: process.env['NEXT_PUBLIC_EFP_LIST_RECORDS'] as Address,
+  // [optimismSepolia.id]: process.env['NEXT_PUBLIC_EFP_LIST_RECORDS_OP_SEPOLIA'] as Address,
+  // [sepolia.id]: process.env['NEXT_PUBLIC_EFP_LIST_RECORDS_SEPOLIA'] as Address
 }

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import Modal from '../modal'
 import CancelButton from '../buttons/cancel-button'
 import { PrimaryButton } from '../buttons/primary-button'
-import BetaTesterPoap from 'public/assets/art/beta-tester-poap.svg'
+import EarlyUserPoap from 'public/assets/art/early-user-poap.svg'
 
 interface ClaimPoapModalProps {
   onClose: () => void
@@ -17,14 +17,12 @@ const ClaimPoapModal: React.FC<ClaimPoapModalProps> = ({ onClose, link }) => {
   return (
     <Modal onCancel={onClose}>
       <div className='flex flex-col gap-6 items-center'>
-        <h2 className='text-2xl font-bold'>You are now officially an EFP OG</h2>
-        <p className='font-medium'>
-          Thanks for your help! 🙏 Here's a limited edition EFP Beta Tester POAP.
-        </p>
+        <h2 className='text-2xl font-bold'>You are now officially Early to EFP</h2>
+        <p className='font-medium'>Congrats! 👏 Here's a limited edition "Early to EFP" POAP.</p>
         <div className='p-6 w-full bg-white dark:bg-darkGrey rounded-xl'>
           <Image
-            src={BetaTesterPoap}
-            alt='Beta tester Poap'
+            src={EarlyUserPoap}
+            alt='Early user Poap'
             width={300}
             height={300}
             className='animate-spin-y mx-auto'
