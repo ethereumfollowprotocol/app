@@ -44,6 +44,8 @@ import UkraineFlag from 'public/assets/icons/flags/ukraine.svg'
 import VietnamFlag from 'public/assets/icons/flags/vietnam.svg'
 import GermanyFLag from 'public/assets/icons/flags/germany.svg'
 import EnglandFlag from 'public/assets/icons/flags/england.svg'
+import EstoniaFlag from 'public/assets/icons/flags/estonia.svg'
+import IrelandFlag from 'public/assets/icons/flags/ireland.svg'
 import CambodiaFlag from 'public/assets/icons/flags/cambodia.svg'
 import EthiopiaFlag from 'public/assets/icons/flags/ethiopia.svg'
 import MalaysiaFlag from 'public/assets/icons/flags/malaysia.svg'
@@ -56,6 +58,7 @@ import ThailandFlag from 'public/assets/icons/flags/thailand.svg'
 import USAFlag from 'public/assets/icons/flags/united-states.svg'
 import GithubIconLight from 'public/assets/icons/github-white.svg'
 import GenAlphaFlag from 'public/assets/icons/flags/genalpha.svg'
+import CataloniaFlag from 'public/assets/icons/flags/catalonia.svg'
 import CorporateFlag from 'public/assets/icons/flags/corporate.svg'
 import LithuaniaFlag from 'public/assets/icons/flags/lithuania.svg'
 import IndonesiaFlag from 'public/assets/icons/flags/indonesia.svg'
@@ -150,6 +153,7 @@ export const LANGUAGES = [
   { language: 'Ελληνικά', key: 'el', icon: GreeceFlag, englishLanguage: 'Greek' },
   { language: '한국어', key: 'ko', icon: KoreaFlag, englishLanguage: 'Korean' },
   { language: 'Eʋegbe', key: 'ee', icon: GhanaFlag, englishLanguage: 'Ewe' },
+  { language: 'Zulu', key: 'zu', icon: SouthAfricaFlag, englishLanguage: 'Zulu' },
   { language: 'Twi', key: 'tw', icon: GhanaFlag, englishLanguage: 'Twi' },
   { language: 'Igbo', key: 'ig', icon: NigeriaFlag, englishLanguage: 'Igbo' },
   { language: 'Idoma', key: 'idoma', icon: NigeriaFlag, englishLanguage: 'Idoma' },
@@ -168,6 +172,10 @@ export const LANGUAGES = [
   { language: 'Afrikaans', key: 'af', icon: SouthAfricaFlag, englishLanguage: 'Afrikaans' },
   { language: 'ខ្មែរ', key: 'km', icon: CambodiaFlag, englishLanguage: 'Khmer' },
   { language: 'Basa Jawa', key: 'jv', icon: IndonesiaFlag, englishLanguage: 'Javanese' },
+  { language: 'Eesti keel', key: 'et', icon: EstoniaFlag, englishLanguage: 'Estonian' },
+  { language: 'Gaeilge', key: 'ga', icon: IrelandFlag, englishLanguage: 'Irish' },
+  { language: 'Xhosa', key: 'xh', icon: SouthAfricaFlag, englishLanguage: 'Xhosa' },
+  { language: 'Català', key: 'ca', icon: CataloniaFlag, englishLanguage: 'Catalan' },
   // ----------- special languages -----------
   { language: 'Pirate', key: 'pirate', icon: PirateFlag, englishLanguage: 'Pirate', special: true },
   {
