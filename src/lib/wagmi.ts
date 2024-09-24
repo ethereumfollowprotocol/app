@@ -48,6 +48,8 @@ export type ChainWithDetails = Chain & {
   }
 }
 
+// TESTNET BUILD
+
 // Define the chains for rainbow/wagmi and their respective icons
 // These are the current supported chains for this app
 // `chainDetail` and `gasFeeDetail` are custom fields to be used in the ChainList component
