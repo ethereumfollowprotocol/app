@@ -600,7 +600,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                       <i>{t('no bio')}</i>
                     )}
                   </p>
-                  <div className='w-full flex justify-center gap-2 items-center'>
+                  <div className='w-full flex justify-center gap-2 flex-wrap items-center'>
                     {profile.ens.records?.url && (
                       <a
                         href={`https://${profile.ens.records.url
@@ -608,9 +608,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                           .replace('http://', '')}`}
                         target='_blank'
                         rel='noreferrer'
-                        className='flex items-center text-sm gap-1 mb-1 bg-zinc-200 dark:bg-zinc-500 rounded-full py-0.5 px-2 hover:scale-110 transition-all'
+                        className='flex max-w-full items-center text-sm gap-1 mb-1 bg-zinc-200 dark:bg-zinc-500 rounded-full py-0.5 px-2 hover:scale-110 transition-all'
                       >
-                        <p className='dark:text-blue-400 text-blue-600 font-semibold'>
+                        <p className='dark:text-blue-400 text-blue-600 max-w-[90%] truncate font-semibold'>
                           {profile.ens.records?.url.slice(-1) === '/'
                             ? profile.ens.records?.url.replace('https://', '').slice(0, -1)
                             : profile.ens.records?.url.replace('https://', '')}
