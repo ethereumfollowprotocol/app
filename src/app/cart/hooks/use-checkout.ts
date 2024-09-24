@@ -284,6 +284,9 @@ const useCheckout = () => {
     queryClient.invalidateQueries({ queryKey: ['list state'] })
 
     if (listHasBeenMinted || selectedList === undefined) {
+      if (setNewListAsPrimary)
+        queryClient.invalidateQueries({ queryKey: ['profile', userAddress, undefined] })
+
       setIsRefetchingProfile(true)
       setSetNewListAsSelected(true)
 
