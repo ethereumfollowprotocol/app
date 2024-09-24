@@ -26,7 +26,10 @@ const LaunchPartners = () => {
             <p className='text-3xl font-bold pb-6 sm:pb-8'>{t('integrations')}</p>
             <section className='w-full gap-y-8 z-10 gap-x-10 sm:gap-x-14 flex flex-row justify-evenly flex-wrap'>
               {INTEGRATIONS.map(partner => (
-                <div key={partner.name} className='w-28 hover:scale-110 transition-transform'>
+                <div
+                  key={partner.name}
+                  className='w-28 hover:scale-110 flex items-center flex-col transition-transform'
+                >
                   <Link
                     className='text-xs rounded-full space-y-2'
                     target='_blank'
