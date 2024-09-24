@@ -3,7 +3,6 @@ import './globals.css'
 import '@rainbow-me/rainbowkit/styles.css'
 
 import type { Metadata } from 'next'
-import { ThemeProvider } from 'next-themes'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
@@ -23,29 +22,22 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           backgroundImage: `url(assets/art/waves-background.svg)`
         }}
       >
-        <ThemeProvider
-          attribute='class'
-          defaultTheme='system'
-          enableSystem={true}
-          disableTransitionOnChange={true}
-        >
-          <main className='h-screen w-full flex items-center justify-center px-4'>
-            <div className='glass-card w-full max-w-[500px] flex items-center flex-col gap-4 px-6 py-10 xs:p-12 rounded-xl border-[3px] border-gray-400'>
-              <h1 className='text-4xl font-bold'>Testing is over!</h1>
-              <p className='text-lg font-semibold text-center'>
-                Thanks for testing the Ethereum Follow Protocol. We are now in production and you
-                can visit the live site.
-              </p>
-              <a
-                href='https://ethfollow.xyz'
-                className='text-2xl font-bold connect-button border-[3px] hover:scale-110 mt-4 transition-transform px-8 py-4'
-              >
-                Go to Production
-              </a>
-            </div>
-          </main>
-          {/* <VercelToolbar /> */}
-        </ThemeProvider>
+        <main className='h-screen w-full flex items-center justify-center px-4'>
+          <div className='glass-card w-full max-w-[500px] flex items-center flex-col gap-4 px-6 py-10 xs:p-12 rounded-xl border-[3px] border-gray-400'>
+            <h1 className='text-4xl font-bold'>Testing is over!</h1>
+            <p className='text-lg font-semibold text-center'>
+              Thanks for testing the Ethereum Follow Protocol. We are now in production and you can
+              visit the live site.
+            </p>
+            <a
+              href='https://ethfollow.xyz'
+              className='text-2xl font-bold connect-button border-[3px] hover:scale-110 mt-4 transition-transform px-8 py-4'
+            >
+              Go to Production
+            </a>
+          </div>
+        </main>
+        {/* <VercelToolbar /> */}
         <Production>
           <Analytics />
           <SpeedInsights />
