@@ -1,4 +1,6 @@
 import type { StaticImageData } from 'next/image'
+
+import WebHash from 'public/assets/partners/webhash.jpeg'
 import Interface from 'public/assets/partners/interface.jpeg'
 import LikeButton from 'public/assets/partners/likebutton.jpg'
 
@@ -12,6 +14,11 @@ export const INTEGRATIONS = [
     name: 'LikeButton.eth',
     url: 'https://likebutton.eth.limo/',
     logo: LikeButton
+  },
+  {
+    name: 'Webhash',
+    url: 'https://webhash.com',
+    logo: WebHash
   }
 ] as {
   name: string

@@ -40,7 +40,7 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryStreamedHydration>
-        <WagmiProvider config={wagmiConfig} initialState={initialState}>
+        <WagmiProvider config={wagmiConfig} initialState={initialState} reconnectOnMount={false}>
           {/* <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}> */}
           <RainbowKitProvider
             coolMode={true}
