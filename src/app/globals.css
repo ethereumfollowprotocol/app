@@ -63,7 +63,7 @@ body {
   border-radius: 50%;
   cursor: pointer;
   transition: transform 0.2s ease;
-  @apply dark:bg-darkGrey bg-white
+  @apply dark:bg-[#484848] bg-[#eeeeee]
 }
 
 .circle:hover {

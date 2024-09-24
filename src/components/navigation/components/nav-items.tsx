@@ -23,7 +23,7 @@ const NavItems = () => {
       : selectedList?.toString() ?? userAddress?.toLowerCase()
 
   return (
-    <ul className='lg:flex hidden lg:gap-6 xl:gap-9 items-center'>
+    <ul className='lg:flex hidden lg:gap-4 xl:gap-9 items-center'>
       {NAV_ITEMS.map(item => (
         <li className='font-bold hover:scale-110 transition-transform' key={`${item.name}`}>
           <Link

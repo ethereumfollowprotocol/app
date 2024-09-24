@@ -255,7 +255,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           ? isHome
             ? 'w-full xl:w-86 xl:min-w-86'
             : 'xl:w-76 w-full 2xl:w-86'
-          : 'w-80 3xs:w-92'
+          : 'w-80 xxs:w-92'
       )}
     >
       {isLoading ? (
