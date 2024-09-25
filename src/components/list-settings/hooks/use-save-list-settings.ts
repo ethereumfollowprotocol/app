@@ -20,10 +20,10 @@ import {
   extractAddressAndTag
 } from '#/utils/list-ops'
 import { Step } from '#/components/checkout/types'
-import { DEFAULT_CHAIN, LIST_OP_LIMITS } from '#/lib/constants/chain'
 import { rpcProviders } from '#/lib/constants/providers'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { useCart, type CartItem } from '#/contexts/cart-context'
+import { DEFAULT_CHAIN, LIST_OP_LIMITS } from '#/lib/constants/chain'
 import { generateListStorageLocationSlot } from '#/utils/generateSlot'
 import type { FollowingResponse, ProfileDetailsResponse } from '#/types/requests'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
@@ -228,7 +228,7 @@ const useSaveListSettings = ({
   const setPrimaryListTx = useCallback(async () => {
     if (!userAddress) return
 
-    const listHex = toHex(isPrimaryList ? selectedList : '').replace('0x', '')
+    const listHex = toHex(selectedList).replace('0x', '')
 
     const hash = await walletClient?.writeContract({
       address: coreEfpContracts.EFPAccountMetadata,
