@@ -28,7 +28,7 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
   const profileName = fetchedEnsProfile?.name
   const profileAvatar = fetchedEnsProfile?.avatar
 
-  const { followerTag } = useFollowerState({ address: profile?.address })
+  const { followerTag } = useFollowerState({ address: profile?.address, showFollowerBadge: true })
 
   const {
     addCartItem,

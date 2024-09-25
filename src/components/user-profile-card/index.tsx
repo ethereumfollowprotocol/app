@@ -91,9 +91,6 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const profileName = fetchedEnsProfile?.name
   const profileAvatar = fetchedEnsProfile?.avatar
 
-  const { followingState: followState } = useFollowingState({ address: profile?.address })
-  const { followerTag } = useFollowerState({ address: profile?.address })
-
   const router = useRouter()
   const { t } = useTranslation()
   const pathname = usePathname()
@@ -119,6 +116,12 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
         ? selectedList === Number(profile?.primary_list)
         : true)) ||
     pathname === `/${selectedList?.toString() ?? connectedAddress}`
+
+  const { followingState: followState } = useFollowingState({ address: profile?.address })
+  const { followerTag } = useFollowerState({
+    address: profile?.address,
+    showFollowerBadge: !isConnectedUserCard
+  })
 
   const isProfileValid = !(
     Object.keys(profile || {}).includes('response') ||

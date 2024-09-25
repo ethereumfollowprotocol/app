@@ -80,7 +80,7 @@ const TableRow: React.FC<TableRowProps> = ({
   const router = useRouter()
   const pathname = usePathname()
   const { t } = useTranslation()
-  const { followerTag } = useFollowerState({ address })
+  const { followerTag } = useFollowerState({ address, showFollowerBadge: true })
 
   const isHome = pathname === '/'
   // const name = fetchedEnsProfile?.name

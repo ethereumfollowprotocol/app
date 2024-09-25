@@ -8,9 +8,11 @@ import { fetchFollowState } from '#/api/fetchFollowState'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 const useFollowerState = ({
-  address
+  address,
+  showFollowerBadge = true
 }: {
   address?: Address
+  showFollowerBadge?: boolean
 }) => {
   const { selectedList } = useEFPProfile()
   const { address: userAddress } = useAccount()
@@ -20,9 +22,9 @@ const useFollowerState = ({
     isLoading: isFollowerStatusLoading,
     isRefetching: isFollowerStateRefetching
   } = useQuery({
-    queryKey: ['follower state', address, selectedList, userAddress],
+    queryKey: ['follower state', address, selectedList, userAddress, showFollowerBadge],
     queryFn: async () => {
-      if (!address) return null
+      if (!(address && showFollowerBadge)) return null
 
       const fetchedStatus = await fetchFollowState({
         address: address,
@@ -32,7 +34,8 @@ const useFollowerState = ({
       })
 
       return fetchedStatus
-    }
+    },
+    staleTime: Infinity
   })
 
   const followState = useMemo((): FollowState => {

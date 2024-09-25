@@ -88,7 +88,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
   const { t } = useTranslation()
   const isCart = pathname.includes('/cart')
   const { address: userAddress } = useAccount()
-  const { followerTag } = useFollowerState({ address })
+  const { followerTag } = useFollowerState({ address, showFollowerBadge: showFollowsYouBadges })
 
   const {
     addCartItem,

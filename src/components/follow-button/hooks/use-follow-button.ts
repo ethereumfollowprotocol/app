@@ -57,7 +57,10 @@ export const useFollowButton = ({
   const { roles } = useEFPProfile()
   const { address: userAddress } = useAccount()
   const { followingState: followState, isFollowingStateLoading } = useFollowingState({ address })
-  const { followState: followerState } = useFollowerState({ address })
+  const { followState: followerState } = useFollowerState({
+    address,
+    showFollowerBadge: isBlockedBy
+  })
   const { t } = useTranslation()
   const {
     hasListOpAddRecord,
