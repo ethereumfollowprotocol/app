@@ -23,7 +23,10 @@ const useUser = (user: string) => {
   const userIsList = !(isAddress(user) || user.includes('.') || Number.isNaN(Number(user)))
   const listNum = userIsList ? Number(user) : undefined
 
-  const isValidUser = isAddress(user) || userIsList || user.includes('.')
+  const isValidUser =
+    isAddress(user) ||
+    (userIsList && listNum && listNum > 0 && listNum < 1000000000) ||
+    user.includes('.')
 
   const {
     data: profile,

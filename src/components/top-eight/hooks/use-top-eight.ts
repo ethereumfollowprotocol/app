@@ -29,7 +29,11 @@ export const useTopEight = (user: string | Address) => {
   } = useEFPProfile()
 
   const userIsList = !(isAddress(user) || user.includes('.') || Number.isNaN(Number(user)))
-  const isValidUser = isAddress(user) || userIsList || user.includes('.')
+  const listNum = userIsList ? Number(user) : undefined
+  const isValidUser =
+    isAddress(user) ||
+    (userIsList && listNum && listNum > 0 && listNum < 1000000000) ||
+    user.includes('.')
 
   const isConnectedUser = userIsList
     ? Number(user) === selectedList

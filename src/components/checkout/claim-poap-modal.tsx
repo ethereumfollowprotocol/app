@@ -9,9 +9,10 @@ import EarlyUserPoap from 'public/assets/art/early-user-poap.svg'
 interface ClaimPoapModalProps {
   onClose: () => void
   link: string
+  isLoading: boolean
 }
 
-const ClaimPoapModal: React.FC<ClaimPoapModalProps> = ({ onClose, link }) => {
+const ClaimPoapModal: React.FC<ClaimPoapModalProps> = ({ onClose, link, isLoading }) => {
   const { t } = useTranslation()
 
   return (
@@ -28,10 +29,11 @@ const ClaimPoapModal: React.FC<ClaimPoapModalProps> = ({ onClose, link }) => {
             className='animate-spin-y mx-auto'
           />
         </div>
+        {isLoading && <p className='font-semibold loading-ellipsis'>Loading your POAP link...</p>}
         <div className='w-full flex items-center justify-between'>
           <CancelButton onClick={onClose} label={t('No thanks')} />
           <a href={link} target='_blank' rel='noreferrer'>
-            <PrimaryButton onClick={onClose} label={t('Claim')} />
+            <PrimaryButton onClick={onClose} disabled={link.length === 0} label={t('Claim')} />
           </a>
         </div>
       </div>
