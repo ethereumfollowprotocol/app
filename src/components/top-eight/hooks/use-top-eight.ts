@@ -28,7 +28,9 @@ export const useTopEight = (user: string | Address) => {
     topEightIsRefetching: topEightProfileRefetching
   } = useEFPProfile()
 
-  const userIsList = !(isAddress(user) || (user.includes('.') && !Number.isNaN(Number(user))))
+  const userIsList = !(isAddress(user) || user.includes('.') || Number.isNaN(Number(user)))
+  const isValidUser = isAddress(user) || userIsList || user.includes('.')
+
   const isConnectedUser = userIsList
     ? Number(user) === selectedList
     : user.toLowerCase() === userAddress?.toLowerCase()
@@ -41,8 +43,7 @@ export const useTopEight = (user: string | Address) => {
     queryKey: ['top8', user],
     queryFn: async () => {
       if (isConnectedUser) return topEightProfile || []
-
-      if (!user) return []
+      if (!isValidUser) return []
 
       const fetchedFollowing = await fetchProfileFollowing({
         addressOrName: user,

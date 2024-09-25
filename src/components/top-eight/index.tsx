@@ -15,16 +15,16 @@ interface TopEightProps {
 }
 
 const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile }) => {
-  const { t } = useTranslation()
   const {
-    editModalOpen,
-    setEditModalOpen,
     topEight,
-    topEightIsLoading,
-    topEightIsRefetching,
     displayLimit,
-    setDisplayLimit
+    editModalOpen,
+    setDisplayLimit,
+    setEditModalOpen,
+    topEightIsLoading,
+    topEightIsRefetching
   } = useTopEight(user)
+  const { t } = useTranslation()
 
   return (
     <>

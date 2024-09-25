@@ -23,6 +23,8 @@ const useUser = (user: string) => {
   const userIsList = !(isAddress(user) || user.includes('.') || Number.isNaN(Number(user)))
   const listNum = userIsList ? Number(user) : undefined
 
+  const isValidUser = isAddress(user) || userIsList || user.includes('.')
+
   const {
     data: profile,
     isLoading: profileIsLoading,
@@ -30,7 +32,7 @@ const useUser = (user: string) => {
   } = useQuery({
     queryKey: ['profile', user],
     queryFn: async () => {
-      if (!user || user === 'loading') return null
+      if (!isValidUser) return null
 
       const fetchedProfile = await fetchProfileDetails(user, listNum)
       return fetchedProfile
@@ -46,7 +48,7 @@ const useUser = (user: string) => {
   } = useQuery({
     queryKey: ['stats', user],
     queryFn: async () => {
-      if (!user || user === 'loading') return null
+      if (!isValidUser) return null
 
       const fetchedStats = await fetchProfileStats(user, listNum)
 
@@ -63,7 +65,7 @@ const useUser = (user: string) => {
   } = useQuery({
     queryKey: ['follower tags', user],
     queryFn: async () => {
-      if (!user || user === 'loading') return nullFollowerTags
+      if (!isValidUser) return nullFollowerTags
 
       const fetchedTags = await fetchFollowerTags(user, userIsList ? listNum : undefined)
       return fetchedTags
@@ -90,7 +92,7 @@ const useUser = (user: string) => {
     queryFn: async ({ pageParam = 0 }) => {
       setIsEndOfFollowers(false)
 
-      if (!user || user === 'loading')
+      if (!isValidUser)
         return {
           followers: [],
           nextPageParam: pageParam
@@ -123,7 +125,7 @@ const useUser = (user: string) => {
   } = useQuery({
     queryKey: ['following tags', user],
     queryFn: async () => {
-      if (!user || user === 'loading') return nullFollowingTags
+      if (!isValidUser) return nullFollowingTags
 
       const fetchedTags = await fetchFollowingTags(user, listNum)
       return fetchedTags
@@ -150,7 +152,7 @@ const useUser = (user: string) => {
     queryFn: async ({ pageParam = 0 }) => {
       setIsEndOfFollowing(false)
 
-      if (!user || user === 'loading')
+      if (!isValidUser)
         return {
           following: [],
           nextPageParam: pageParam
