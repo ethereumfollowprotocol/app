@@ -608,7 +608,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                           .replace('http://', '')}`}
                         target='_blank'
                         rel='noreferrer'
-                        className='flex max-w-full items-center text-sm gap-1 mb-1 bg-zinc-200 dark:bg-zinc-500 rounded-full py-0.5 px-2 hover:scale-110 transition-all'
+                        className='flex max-w-48 items-center text-sm gap-1 mb-1 bg-zinc-200 dark:bg-zinc-500 rounded-full py-0.5 px-2 hover:scale-110 transition-all'
                       >
                         <p className='dark:text-blue-400 text-blue-600 max-w-[90%] truncate font-semibold'>
                           {profile.ens.records?.url.slice(-1) === '/'

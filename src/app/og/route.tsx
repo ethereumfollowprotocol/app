@@ -1,12 +1,18 @@
 // @ts-nocheck
-import { isAddress } from 'viem'
+import { isAddress, isHex } from 'viem'
 import { ImageResponse } from 'next/og'
+
 import { truncateAddress } from '#/lib/utilities'
 import type { AccountResponseType } from '#/types/common'
 
 export async function GET(req) {
   const user = req.url.split('user=')[1]
-  const isList = !(isAddress(user) || user.includes('.') || Number.isNaN(Number(user)))
+  const isList = !(
+    isAddress(user) ||
+    user.includes('.') ||
+    Number.isNaN(Number(user)) ||
+    isHex(user)
+  )
 
   const response = (await fetch(
     `${process.env.NEXT_PUBLIC_EFP_API_URL}/${isList ? 'lists' : 'users'}/${user}/account`
@@ -142,6 +148,10 @@ export async function GET(req) {
           display: isList && response.primary_list !== user ? 'block' : 'none',
           fontSize: 48,
           paddingLeft: 48,
+          maxWidth: 400,
+          textOverflow: 'ellipsis',
+          overflow: 'hidden',
+          whiteSpace: 'nowrap',
           textShadow: '1px 0 1px #333333'
         }}
       >

@@ -1,5 +1,6 @@
-import { isAddress } from 'viem'
 import type { Metadata } from 'next'
+import { isAddress, isHex } from 'viem'
+
 import UserInfo from './components/user-info'
 import { truncateAddress } from '#/lib/utilities'
 
@@ -12,7 +13,7 @@ export function generateMetadata({ params }: Props): Metadata {
   const truncatedUser = isAddress(params.user)
     ? (truncateAddress(params.user) as string)
     : params.user
-  const isList = Number.isInteger(Number(user)) && !isAddress(user)
+  const isList = Number.isInteger(Number(user)) && !(isAddress(user) || isHex(user))
 
   return {
     title: `${isList ? `List #${user}` : truncatedUser} | EFP`,
