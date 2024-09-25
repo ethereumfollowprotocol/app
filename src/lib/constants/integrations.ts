@@ -5,6 +5,7 @@ import Payflow from 'public/assets/partners/payflow.jpeg'
 import WebHash from 'public/assets/partners/webhash.jpeg'
 import EthDotCd from 'public/assets/partners/ethdotcd.jpeg'
 import Interface from 'public/assets/partners/interface.jpeg'
+import EFPUpdates from 'public/assets/partners/efpupdates.jpeg'
 import LikeButton from 'public/assets/partners/likebutton.jpeg'
 
 export const INTEGRATIONS = [
@@ -37,6 +38,11 @@ export const INTEGRATIONS = [
     name: 'EFP Bot',
     url: 'https://x.com/efpbots',
     logo: EFPBot
+  },
+  {
+    name: 'EFP Updates',
+    url: 'https://x.com/efp_updates',
+    logo: EFPUpdates
   }
 ] as {
   name: string

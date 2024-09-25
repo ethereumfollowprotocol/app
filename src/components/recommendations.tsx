@@ -32,7 +32,7 @@ const Recommendations = ({ header, className, limit = 10, endpoint }: Recommenda
     isFetchingPreviousPage,
     data: profilesToRecommend
   } = useInfiniteQuery({
-    queryKey: [endpoint, userAddress, selectedList, limit],
+    queryKey: [endpoint, userAddress, endpoint === 'recommended' ? selectedList : undefined, limit],
     queryFn: async ({ pageParam = 0 }) => {
       const discoverAccounts = await fetchRecommendations(
         endpoint,
