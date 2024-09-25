@@ -30,7 +30,7 @@ const useUser = (user: string) => {
   } = useQuery({
     queryKey: ['profile', user],
     queryFn: async () => {
-      if (!user) return null
+      if (!user || user === 'loading') return null
 
       const fetchedProfile = await fetchProfileDetails(user, listNum)
       return fetchedProfile
@@ -46,7 +46,7 @@ const useUser = (user: string) => {
   } = useQuery({
     queryKey: ['stats', user],
     queryFn: async () => {
-      if (!user) return null
+      if (!user || user === 'loading') return null
 
       const fetchedStats = await fetchProfileStats(user, listNum)
 
@@ -63,7 +63,7 @@ const useUser = (user: string) => {
   } = useQuery({
     queryKey: ['follower tags', user],
     queryFn: async () => {
-      if (!user) return nullFollowerTags
+      if (!user || user === 'loading') return nullFollowerTags
 
       const fetchedTags = await fetchFollowerTags(user, userIsList ? listNum : undefined)
       return fetchedTags
@@ -90,7 +90,7 @@ const useUser = (user: string) => {
     queryFn: async ({ pageParam = 0 }) => {
       setIsEndOfFollowers(false)
 
-      if (!user)
+      if (!user || user === 'loading')
         return {
           followers: [],
           nextPageParam: pageParam
@@ -123,7 +123,7 @@ const useUser = (user: string) => {
   } = useQuery({
     queryKey: ['following tags', user],
     queryFn: async () => {
-      if (!user) return nullFollowingTags
+      if (!user || user === 'loading') return nullFollowingTags
 
       const fetchedTags = await fetchFollowingTags(user, listNum)
       return fetchedTags
@@ -150,7 +150,7 @@ const useUser = (user: string) => {
     queryFn: async ({ pageParam = 0 }) => {
       setIsEndOfFollowing(false)
 
-      if (!user)
+      if (!user || user === 'loading')
         return {
           following: [],
           nextPageParam: pageParam
