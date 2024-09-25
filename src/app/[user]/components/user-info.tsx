@@ -202,6 +202,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   useEffect(() => {
     if (titleRef.current && !!searchParams.get('tab')) {
       titleRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      setActiveTab(searchParams.get('tab') as ProfileTabType)
     }
   }, [searchParams])
 
