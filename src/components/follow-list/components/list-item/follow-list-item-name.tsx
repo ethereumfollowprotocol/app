@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useRef, useState } from 'react'
+import { ens_beautify } from '@adraffy/ens-normalize'
 import { usePathname, useRouter } from 'next/navigation'
 import type { Address, GetEnsAvatarReturnType } from 'viem'
 
@@ -55,7 +56,7 @@ export function Name({
             : 'w-fit max-w-full truncate'
         } hover:opacity-75 transition-all`}
       >
-        {name && isValidEnsName(name) ? name : truncateAddress(address)}
+        {name && isValidEnsName(name) ? ens_beautify(name) : truncateAddress(address)}
       </p>
     </Link>
   )

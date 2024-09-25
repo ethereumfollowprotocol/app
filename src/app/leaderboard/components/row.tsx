@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import type { Address } from 'viem'
-import { usePathname, useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
+import { ens_beautify } from '@adraffy/ens-normalize'
+import { usePathname, useRouter } from 'next/navigation'
 
 import { isValidEnsName } from '#/utils/ens'
 import { Avatar } from '#/components/avatar'
@@ -111,7 +112,7 @@ const TableRow: React.FC<TableRowProps> = ({
           >
             <Link href={`/${address}`} className='w-full'>
               <p className='font-bold text-base xxs:text-lg truncate max-w-full hover:opacity-60 hover:scale-110 transition-all'>
-                {name && isValidEnsName(name) ? name : truncateAddress(address)}
+                {name && isValidEnsName(name) ? ens_beautify(name) : truncateAddress(address)}
               </p>
             </Link>
             <div

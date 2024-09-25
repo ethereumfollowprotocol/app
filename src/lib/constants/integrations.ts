@@ -2,6 +2,7 @@ import type { StaticImageData } from 'next/image'
 
 import Payflow from 'public/assets/partners/payflow.jpeg'
 import WebHash from 'public/assets/partners/webhash.jpeg'
+import EthDotCd from 'public/assets/partners/ethdotcd.jpeg'
 import Interface from 'public/assets/partners/interface.jpeg'
 import LikeButton from 'public/assets/partners/likebutton.jpeg'
 
@@ -25,6 +26,11 @@ export const INTEGRATIONS = [
     name: 'Payflow',
     url: 'https://payflow.me',
     logo: Payflow
+  },
+  {
+    name: 'eth.cd',
+    url: 'https://eth.cd',
+    logo: EthDotCd
   }
 ] as {
   name: string

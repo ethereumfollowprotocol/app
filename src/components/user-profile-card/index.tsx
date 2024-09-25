@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
 import { MdOutlineContentCopy } from 'react-icons/md'
+import { ens_beautify } from '@adraffy/ens-normalize'
 import { HiOutlineExternalLink } from 'react-icons/hi'
 import { PiArrowElbowRightUpBold } from 'react-icons/pi'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
@@ -34,12 +35,12 @@ import useFollowerState from '#/hooks/use-follower-state'
 import CommonFollowers from './components/common-followers'
 import useFollowingState from '#/hooks/use-following-state'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import type { ProfileDetailsResponse, StatsResponse } from '#/types/requests'
 import { isValidEnsName, resolveEnsProfile } from '#/utils/ens'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 import DefaultHeader from 'public/assets/art/default-header.svg'
 import { useCoolMode } from '../follow-button/hooks/useCoolMode'
 import LoadingProfileCard from './components/loading-profile-card'
+import type { ProfileDetailsResponse, StatsResponse } from '#/types/requests'
 
 interface UserProfileCardProps {
   profileList?: number | null
@@ -378,7 +379,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                       >
                         <p className='truncate hover:opacity-70 hover:scale-105 transition-all'>
                           {profileName && isValidEnsName(profileName)
-                            ? profileName
+                            ? ens_beautify(profileName)
                             : truncateAddress(profile.address)}
                         </p>
                       </Link>
