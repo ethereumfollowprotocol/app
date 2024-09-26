@@ -360,11 +360,11 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     refetch: refetchFollowingTags,
     isRefetching: isRefetchingFollowingTagsQuery
   } = useQuery({
-    queryKey: ['following tags', userAddress, listToFetch],
+    queryKey: ['following tags', userAddress, listToFetch, fetchFreshStats],
     queryFn: async () => {
       if (!userAddress) return nullFollowingTags
 
-      const fetchedProfile = await fetchFollowingTags(userAddress, listToFetch)
+      const fetchedProfile = await fetchFollowingTags(userAddress, listToFetch, fetchFreshStats)
       return fetchedProfile
     },
     refetchOnWindowFocus: false
@@ -387,7 +387,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       listToFetch,
       followingSort,
       followingTagsFilter,
-      followingSearch.length > 2 ? followingSearch : undefined
+      followingSearch.length > 2 ? followingSearch : undefined,
+      fetchFreshStats
     ],
     queryFn: async ({ pageParam = 0 }) => {
       setIsEndOfFollowing(false)
@@ -407,7 +408,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         sort: followingSort,
         tags: followingTagsFilter,
         search: followingSearch,
-        pageParam
+        pageParam,
+        fresh: fetchFreshStats
       })
 
       if (fetchedFollowing?.following?.length === 0) setIsEndOfFollowing(true)

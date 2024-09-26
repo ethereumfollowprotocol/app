@@ -9,7 +9,8 @@ export const fetchProfileFollowing = async ({
   tags,
   pageParam,
   search,
-  allResults
+  allResults,
+  fresh
 }: InfiniteProfileQueryProps) => {
   try {
     const queryParams = formatQueryParams({
@@ -23,7 +24,8 @@ export const fetchProfileFollowing = async ({
             'latest first': 'latest',
             'follower count': 'followers'
           }[sort]
-        : undefined
+        : undefined,
+      cache: fresh ? 'fresh' : undefined
     })
 
     const url =

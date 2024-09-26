@@ -12,15 +12,15 @@ const useFollowingState = ({
 }: {
   address?: Address
 }) => {
-  const { selectedList } = useEFPProfile()
   const { address: userAddress } = useAccount()
+  const { selectedList, fetchFreshStats } = useEFPProfile()
 
   const {
     data: followingStatus,
     isLoading: isFollowingStatusLoading,
     isRefetching: isFollowingStatusRefetching
   } = useQuery({
-    queryKey: ['follow state', address, selectedList],
+    queryKey: ['follow state', address, selectedList, fetchFreshStats],
     queryFn: async () => {
       if (!address) return null
 
@@ -28,7 +28,8 @@ const useFollowingState = ({
         address: address,
         userAddress,
         list: selectedList,
-        type: 'following'
+        type: 'following',
+        fresh: fetchFreshStats
       })
       return fetchedProfile
     },

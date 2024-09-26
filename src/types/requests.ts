@@ -58,6 +58,7 @@ export interface InfiniteProfileQueryProps {
   pageParam: number
   allResults?: boolean
   search?: string
+  fresh?: boolean
 }
 
 export type LeaderboardDirection = 'asc' | 'desc'

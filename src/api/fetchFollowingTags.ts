@@ -7,12 +7,18 @@ export const nullFollowingTags = {
   taggedAddresses: []
 }
 
-export const fetchFollowingTags = async (addressOrName: string, list?: number | string) => {
+export const fetchFollowingTags = async (
+  addressOrName: string,
+  list?: number | string,
+  fresh?: boolean
+) => {
   try {
     const url =
       list !== undefined
-        ? `${process.env.NEXT_PUBLIC_EFP_API_URL}/lists/${list}/tags`
-        : `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/tags`
+        ? `${process.env.NEXT_PUBLIC_EFP_API_URL}/lists/${list}/tags${fresh ? '?cache=fresh' : ''}`
+        : `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/tags${
+            fresh ? '?cache=fresh' : ''
+          }`
     const response = await fetch(url, {
       cache: 'default',
       headers: {

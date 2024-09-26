@@ -5,12 +5,14 @@ export const fetchFollowState = async ({
   address,
   userAddress,
   list,
-  type
+  type,
+  fresh
 }: {
   address: Address
   userAddress?: Address
   list?: string | number
   type: 'following' | 'follower'
+  fresh?: boolean
 }) => {
   try {
     if ((!list && type === 'following') || !(userAddress || list))
@@ -26,7 +28,9 @@ export const fetchFollowState = async ({
 
     const url = `${process.env.NEXT_PUBLIC_EFP_API_URL}/${list === undefined ? 'users' : 'lists'}/${
       list ?? userAddress
-    }/${address}/${type === 'following' ? 'buttonState' : 'followerState'}`
+    }/${address}/${type === 'following' ? 'buttonState' : 'followerState'}${
+      fresh ? '?cache=fresh' : ''
+    }`
 
     const response = await fetch(url, {
       cache: 'default',
