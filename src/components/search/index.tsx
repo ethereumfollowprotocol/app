@@ -176,9 +176,11 @@ export function Search({
                 className='max-w-full hover:scale-105 truncate text-md flex items-center hover:opacity-75 gap-1 cursor-pointer transition-all'
               >
                 <p>{result.name}</p>
-                <p className='text-sm text-zinc-400'>
-                  - {truncateAddress(result.resolvedAddress?.id)}
-                </p>
+                {result.resolvedAddress?.id && (
+                  <p className='text-sm text-zinc-400'>
+                    - {truncateAddress(result.resolvedAddress?.id)}
+                  </p>
+                )}
               </div>
             ))
           )}
@@ -264,9 +266,11 @@ export function Search({
                     className='max-w-full truncate text-md flex items-center hover:opacity-75 gap-1 cursor-pointer transition-opacity'
                   >
                     <p>{result.name}</p>
-                    <p className='text-sm text-zinc-400'>
-                      - {truncateAddress(result.resolvedAddress?.id)}
-                    </p>
+                    {result.resolvedAddress?.id && (
+                      <p className='text-sm text-zinc-400'>
+                        - {truncateAddress(result.resolvedAddress?.id)}
+                      </p>
+                    )}
                   </div>
                 ))
               )}

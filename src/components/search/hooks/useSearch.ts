@@ -71,14 +71,31 @@ const useSearch = (isEditor?: boolean) => {
   })
 
   const searchResult =
-    searchResultStatus === 'success'
-      ? data.length === 0 && isAddress(searchKey)
-        ? [
-            {
-              name: searchKey,
-              resolvedAddress: { id: searchKey }
-            }
-          ]
+    searchResultStatus !== 'pending'
+      ? !data || data.length === 0
+        ? !Number.isNaN(Number(searchKey)) ||
+          (searchKey[0] === '#' && !Number.isNaN(Number(searchKey.slice(1))))
+          ? [
+              {
+                name: `#${searchKey[0] === '#' ? searchKey.slice(1) : searchKey}`,
+                resolvedAddress: null
+              }
+            ]
+          : isAddress(searchKey)
+            ? [
+                {
+                  name: searchKey,
+                  resolvedAddress: { id: searchKey }
+                }
+              ]
+            : searchKey.includes('.')
+              ? [
+                  {
+                    name: searchKey,
+                    resolvedAddress: null
+                  }
+                ]
+              : []
         : data.slice(0, 5)
       : []
 
@@ -192,10 +209,14 @@ const useSearch = (isEditor?: boolean) => {
     }
 
     if (
-      isAddress(currentSearch) ||
-      currentSearch.includes('.') ||
-      !Number.isNaN(Number(currentSearch))
+      !Number.isNaN(Number(currentSearch)) ||
+      (currentSearch[0] === '#' && !Number.isNaN(Number(currentSearch.slice(1))))
     ) {
+      router.push(`/${currentSearch[0] === '#' ? currentSearch.slice(1) : currentSearch}`)
+      resetSearch()
+    }
+
+    if (isAddress(currentSearch) || currentSearch.includes('.')) {
       const address = isAddress(currentSearch)
         ? currentSearch
         : await resolveEnsAddress(currentSearch)
