@@ -230,11 +230,14 @@ const useSaveListSettings = ({
 
     const listHex = toHex(selectedList).replace('0x', '')
 
+    console.log(`0x${listHex.padStart(64, '0')}`)
+    console.log(listHex.toString())
+
     const hash = await walletClient?.writeContract({
       address: coreEfpContracts.EFPAccountMetadata,
       abi: efpAccountMetadataAbi,
       functionName: 'setValueForAddress',
-      args: [userAddress, 'primary-list', `0x${listHex.padStart(64 - listHex.length, '0')}`]
+      args: [userAddress, 'primary-list', `0x${listHex.padStart(64, '0')}`]
     })
 
     if (hash) {
