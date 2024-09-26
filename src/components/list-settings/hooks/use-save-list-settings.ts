@@ -100,7 +100,6 @@ const useSaveListSettings = ({
     refetchProfile,
     fetchFreshStats,
     fetchFreshLists,
-    setSelectedList,
     refetchFollowing,
     refetchFollowers,
     fetchFreshProfile,
@@ -457,7 +456,7 @@ const useSaveListSettings = ({
     else setFetchFreshLists(true)
 
     if (changedValues.user || changedValues.setPrimary) {
-      setSelectedList(selectedList)
+      localStorage.setItem('selected-list', selectedList.toString())
 
       if (fetchFreshProfile) refetchProfile()
       else setFetchFreshProfile(true)
