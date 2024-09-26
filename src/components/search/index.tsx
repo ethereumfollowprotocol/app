@@ -1,4 +1,6 @@
 'use client'
+
+import { isAddress } from 'viem'
 import type { LegacyRef } from 'react'
 import { FiSearch } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
@@ -8,7 +10,6 @@ import { truncateAddress } from '#/lib/utilities.ts'
 import GraySpinner from '../loaders/gray-spinner.tsx'
 import LoadingSpinner from '../loaders/loading-spinner.tsx'
 import { PrimaryButton } from '../buttons/primary-button.tsx'
-import { isAddress } from 'viem'
 
 export function Search({
   disabled,
@@ -166,8 +167,13 @@ export function Search({
                   if (isEditor && result.resolvedAddress) addToCart(result.resolvedAddress.id)
                   else
                     router.push(
-                      `/${result.resolvedAddress?.id || result.name}${
-                        isAddress(result.name) ? '' : `?search=${result.name}`
+                      `/${
+                        result.resolvedAddress?.id ||
+                        (result.name[0] === '#' ? result.name.slice(1) : result.name)
+                      }${
+                        isAddress(result.name) || result.name[0] === '#'
+                          ? ''
+                          : `?search=${result.name}`
                       }`
                     )
 
@@ -256,8 +262,13 @@ export function Search({
                       if (isEditor && result.resolvedAddress) addToCart(result.resolvedAddress.id)
                       else
                         router.push(
-                          `/${result.resolvedAddress?.id || result.name}${
-                            isAddress(result.name) ? '' : `?search=${result.name}`
+                          `/${
+                            result.resolvedAddress?.id ||
+                            (result.name[0] === '#' ? result.name.slice(1) : result.name)
+                          }${
+                            isAddress(result.name) || result.name[0] === '#'
+                              ? ''
+                              : `?search=${result.name}`
                           }`
                         )
 

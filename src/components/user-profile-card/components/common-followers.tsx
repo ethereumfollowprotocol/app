@@ -26,7 +26,7 @@ const CommonFollowers: React.FC<CommonFollowersProps> = ({ address }) => {
     }
   })
 
-  if (!userAddress || data?.results.length === 0) return null
+  if (!userAddress || (data?.results?.length || 0) === 0) return null
 
   const displayedAvatars = data?.results.slice(0, 3)
   const displayedNames = data?.results.slice(0, 2)
