@@ -8,6 +8,7 @@ import Interface from 'public/assets/partners/interface.jpeg'
 import EFPUpdates from 'public/assets/partners/efpupdates.jpeg'
 import LikeButton from 'public/assets/partners/likebutton.jpeg'
 import PWN from 'public/assets/partners/pwn.jpeg'
+import EnsVision from 'public/assets/partners/ensvision.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -49,6 +50,11 @@ export const INTEGRATIONS = [
     name: 'PWN',
     url: 'https://pwn.xyz/',
     logo: PWN
+  },
+  {
+    name: 'Vision',
+    url: 'https://vision.io/',
+    logo: EnsVision
   }
 ] as {
   name: string
