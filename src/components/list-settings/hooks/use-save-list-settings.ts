@@ -96,6 +96,7 @@ const useSaveListSettings = ({
   const {
     refetchLists,
     refetchRoles,
+    refetchStats,
     refetchProfile,
     fetchFreshStats,
     fetchFreshLists,
@@ -454,12 +455,10 @@ const useSaveListSettings = ({
     else setFetchFreshLists(true)
 
     if (changedValues.user || changedValues.setPrimary) {
-      if (fetchFreshProfile) refetchLists()
+      if (fetchFreshProfile) refetchProfile()
       else setFetchFreshProfile(true)
-    }
 
-    if (changedValues.user) {
-      if (fetchFreshStats) refetchLists()
+      if (fetchFreshStats) refetchStats()
       else setFetchFreshStats(true)
     }
 
