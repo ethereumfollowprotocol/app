@@ -100,6 +100,7 @@ const useSaveListSettings = ({
     refetchProfile,
     fetchFreshStats,
     fetchFreshLists,
+    setSelectedList,
     refetchFollowing,
     refetchFollowers,
     fetchFreshProfile,
@@ -110,6 +111,7 @@ const useSaveListSettings = ({
     refetchFollowingTags,
     setIsRefetchingProfile,
     setIsRefetchingFollowing
+    // selectedList: selectedProfileList
   } = useEFPProfile()
   const { t } = useTranslation()
   const { resetCart } = useCart()
@@ -455,6 +457,8 @@ const useSaveListSettings = ({
     else setFetchFreshLists(true)
 
     if (changedValues.user || changedValues.setPrimary) {
+      setSelectedList(selectedList)
+
       if (fetchFreshProfile) refetchProfile()
       else setFetchFreshProfile(true)
 

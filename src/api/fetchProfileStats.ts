@@ -8,7 +8,7 @@ export const fetchProfileStats = async (
   try {
     const url = `${process.env.NEXT_PUBLIC_EFP_API_URL}${
       list !== undefined ? `/lists/${list}` : `/users/${addressOrName}`
-    }/stats${isLive ? '?live=true&cache=fresh' : ''}`
+    }/stats${isLive ? '?live=true&cache=fresh' : '?live=true'}`
 
     const response = await fetch(url, {
       cache: 'default',
