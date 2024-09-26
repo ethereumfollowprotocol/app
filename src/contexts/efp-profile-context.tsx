@@ -149,8 +149,10 @@ type EFPProfileContextType = {
   setFollowersSearch: (value: string) => void
   setFollowingTagsFilter: Dispatch<SetStateAction<string[]>>
   setFollowersTagsFilter: Dispatch<SetStateAction<string[]>>
-  isRefetchingStats: boolean
-  setIsRefetchingStats: (state: boolean) => void
+  fetchFreshStats: boolean
+  fetchFreshProfile: boolean
+  setFetchFreshProfile: (state: boolean) => void
+  setFetchFreshStats: (state: boolean) => void
   setIsRefetchingProfile: (state: boolean) => void
   setIsRefetchingFollowing: (state: boolean) => void
   setSetNewListAsSelected: (state: boolean) => void
@@ -163,13 +165,15 @@ type Props = {
 const EFPProfileContext = createContext<EFPProfileContextType | undefined>(undefined)
 
 export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
-  const [isRefetchingStats, setIsRefetchingStats] = useState(false)
   const [isRefetchingProfile, setIsRefetchingProfile] = useState(false)
   const [isRefetchingFollowing, setIsRefetchingFollowing] = useState(false)
 
+  const [fetchFreshLists, setFetchFreshLists] = useState(false)
+  const [fetchFreshStats, setFetchFreshStats] = useState(false)
+  const [fetchFreshProfile, setFetchFreshProfile] = useState(false)
+
   // selectedList = undefined will mean that the connected user can create a new list
   const [selectedList, setSelectedList] = useState<number>()
-  const [fetchFreshLists, setFetchFreshLists] = useState(false)
   const [setNewListAsSelected, setSetNewListAsSelected] = useState(false)
 
   const [followingSearch, setFollowingSearch] = useState<string>('')
@@ -252,14 +256,14 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     refetch: refetchProfile,
     isRefetching: isRefetchingProfileQuery
   } = useQuery({
-    queryKey: ['profile', userAddress, listToFetch],
+    queryKey: ['profile', userAddress, listToFetch, fetchFreshProfile],
     queryFn: async () => {
       if (!userAddress) {
         setIsRefetchingProfile(false)
         return null
       }
 
-      const fetchedProfile = await fetchProfileDetails(userAddress, listToFetch)
+      const fetchedProfile = await fetchProfileDetails(userAddress, listToFetch, fetchFreshProfile)
 
       setIsRefetchingProfile(false)
 
@@ -276,11 +280,11 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     refetch: refetchStats,
     isRefetching: isRefetchingStatsQuery
   } = useQuery({
-    queryKey: ['stats', userAddress, listToFetch, isRefetchingStats],
+    queryKey: ['stats', userAddress, listToFetch, fetchFreshStats],
     queryFn: async () => {
       if (!userAddress) return null
 
-      const fetchedStats = await fetchProfileStats(userAddress, listToFetch, isRefetchingStats)
+      const fetchedStats = await fetchProfileStats(userAddress, listToFetch, fetchFreshStats)
 
       return fetchedStats
     },
@@ -600,8 +604,10 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         },
         setFollowingTagsFilter,
         setFollowersTagsFilter,
-        isRefetchingStats,
-        setIsRefetchingStats,
+        fetchFreshStats,
+        fetchFreshProfile,
+        setFetchFreshStats,
+        setFetchFreshProfile,
         setIsRefetchingProfile,
         setIsRefetchingFollowing,
         setSetNewListAsSelected

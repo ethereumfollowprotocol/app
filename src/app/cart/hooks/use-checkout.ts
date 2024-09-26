@@ -41,12 +41,15 @@ const useCheckout = () => {
     refetchLists,
     selectedList,
     refetchStats,
+    refetchProfile,
     fetchFreshLists,
+    fetchFreshStats,
     refetchFollowing,
-    isRefetchingStats,
+    fetchFreshProfile,
     setFetchFreshLists,
+    setFetchFreshStats,
     refetchFollowingTags,
-    setIsRefetchingStats,
+    setFetchFreshProfile,
     setIsRefetchingProfile,
     setSetNewListAsSelected,
     setIsRefetchingFollowing
@@ -278,8 +281,8 @@ const useCheckout = () => {
   }, [moveToNextAction, executeActionByIndex, getRequiredChain, currentChainId, currentActionIndex])
 
   const onFinish = useCallback(() => {
-    if (isRefetchingStats) refetchStats()
-    else setIsRefetchingStats(true)
+    if (fetchFreshStats) refetchStats()
+    else setFetchFreshStats(true)
 
     setIsRefetchingFollowing(true)
     queryClient.invalidateQueries({ queryKey: ['top8'] })
@@ -295,6 +298,9 @@ const useCheckout = () => {
 
       if (fetchFreshLists) refetchLists()
       else setFetchFreshLists(true)
+
+      if (fetchFreshProfile) refetchProfile()
+      else setFetchFreshProfile(true)
 
       router.push('/loading')
       return

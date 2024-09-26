@@ -97,9 +97,15 @@ const useSaveListSettings = ({
     refetchLists,
     refetchRoles,
     refetchProfile,
+    fetchFreshStats,
+    fetchFreshLists,
     refetchFollowing,
     refetchFollowers,
+    fetchFreshProfile,
+    setFetchFreshLists,
+    setFetchFreshStats,
     refetchFollowerTags,
+    setFetchFreshProfile,
     refetchFollowingTags,
     setIsRefetchingProfile,
     setIsRefetchingFollowing
@@ -229,9 +235,6 @@ const useSaveListSettings = ({
     if (!userAddress) return
 
     const listHex = toHex(selectedList).replace('0x', '')
-
-    console.log(`0x${listHex.padStart(64, '0')}`)
-    console.log(listHex.toString())
 
     const hash = await walletClient?.writeContract({
       address: coreEfpContracts.EFPAccountMetadata,
@@ -447,7 +450,19 @@ const useSaveListSettings = ({
     if (changedValuesState.manager) resetCart()
 
     // Refetch all related data
-    refetchLists()
+    if (fetchFreshLists) refetchLists()
+    else setFetchFreshLists(true)
+
+    if (changedValues.user || changedValues.setPrimary) {
+      if (fetchFreshProfile) refetchLists()
+      else setFetchFreshProfile(true)
+    }
+
+    if (changedValues.user) {
+      if (fetchFreshStats) refetchLists()
+      else setFetchFreshStats(true)
+    }
+
     refetchRoles()
     refetchProfile()
     refetchFollowing()
