@@ -9,6 +9,7 @@ import EFPUpdates from 'public/assets/partners/efpupdates.jpeg'
 import LikeButton from 'public/assets/partners/likebutton.jpeg'
 import PWN from 'public/assets/partners/pwn.jpeg'
 import EnsVision from 'public/assets/partners/ensvision.jpeg'
+import Namefi from 'public/assets/partners/namefi.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -55,6 +56,11 @@ export const INTEGRATIONS = [
     name: 'Vision',
     url: 'https://vision.io/',
     logo: EnsVision
+  },
+  {
+    name: 'Namefi',
+    url: 'https://www.namefi.io/',
+    logo: Namefi
   }
 ] as {
   name: string
