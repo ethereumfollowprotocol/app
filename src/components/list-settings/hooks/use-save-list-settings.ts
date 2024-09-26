@@ -234,7 +234,7 @@ const useSaveListSettings = ({
       address: coreEfpContracts.EFPAccountMetadata,
       abi: efpAccountMetadataAbi,
       functionName: 'setValueForAddress',
-      args: [userAddress, 'primary-list', `0x${listHex.padStart(65 - listHex.length, '0')}`]
+      args: [userAddress, 'primary-list', `0x${listHex.padStart(64 - listHex.length, '0')}`]
     })
 
     if (hash) {

@@ -41,8 +41,10 @@ const useCheckout = () => {
     refetchLists,
     selectedList,
     refetchStats,
+    fetchFreshLists,
     refetchFollowing,
     isRefetchingStats,
+    setFetchFreshLists,
     refetchFollowingTags,
     setIsRefetchingStats,
     setIsRefetchingProfile,
@@ -278,6 +280,7 @@ const useCheckout = () => {
   const onFinish = useCallback(() => {
     if (isRefetchingStats) refetchStats()
     else setIsRefetchingStats(true)
+
     setIsRefetchingFollowing(true)
     queryClient.invalidateQueries({ queryKey: ['top8'] })
     queryClient.invalidateQueries({ queryKey: ['follow state'] })
@@ -290,7 +293,9 @@ const useCheckout = () => {
       setIsRefetchingProfile(true)
       setSetNewListAsSelected(true)
 
-      refetchLists()
+      if (fetchFreshLists) refetchLists()
+      else setFetchFreshLists(true)
+
       router.push('/loading')
       return
     }

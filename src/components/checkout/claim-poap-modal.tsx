@@ -29,7 +29,7 @@ const ClaimPoapModal: React.FC<ClaimPoapModalProps> = ({ onClose, link, isLoadin
             className='animate-spin-y mx-auto'
           />
         </div>
-        {isLoading && <p className='font-semibold loading-ellipsis'>Loading your POAP link...</p>}
+        {isLoading && <p className='font-semibold loading-ellipsis'>Loading your POAP link</p>}
         <div className='w-full flex items-center justify-between'>
           <CancelButton onClick={onClose} label={t('No thanks')} />
           <a href={link} target='_blank' rel='noreferrer'>

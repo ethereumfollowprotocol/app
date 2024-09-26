@@ -48,6 +48,8 @@ import { BLOCKED_MUTED_TAGS, DEFAULT_TAGS_TO_ADD, FETCH_LIMIT_PARAM } from '#/li
 type EFPProfileContextType = {
   selectedList?: number
   setSelectedList: Dispatch<SetStateAction<number | undefined>>
+  fetchFreshLists: boolean
+  setFetchFreshLists: Dispatch<SetStateAction<boolean>>
   lists?: ProfileListsResponse | null
   profile?: ProfileDetailsResponse | null
   stats?: StatsResponse | null
@@ -167,6 +169,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
 
   // selectedList = undefined will mean that the connected user can create a new list
   const [selectedList, setSelectedList] = useState<number>()
+  const [fetchFreshLists, setFetchFreshLists] = useState(false)
   const [setNewListAsSelected, setSetNewListAsSelected] = useState(false)
 
   const [followingSearch, setFollowingSearch] = useState<string>('')
@@ -191,14 +194,15 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     isLoading: listsIsLoading,
     refetch: refetchLists
   } = useQuery({
-    queryKey: ['lists', userAddress],
+    queryKey: ['lists', userAddress, fetchFreshLists],
     queryFn: async () => {
       if (!userAddress) return null
 
-      const fetchedLists = await fetchProfileLists(userAddress)
+      const fetchedLists = await fetchProfileLists(userAddress, fetchFreshLists)
       return fetchedLists
     },
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
+    staleTime: Infinity
   })
 
   useEffect(() => {
@@ -537,6 +541,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       value={{
         selectedList,
         setSelectedList,
+        fetchFreshLists,
+        setFetchFreshLists,
         lists,
         stats,
         profile,
