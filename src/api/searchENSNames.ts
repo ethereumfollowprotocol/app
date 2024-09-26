@@ -14,6 +14,8 @@ export const searchENSNames = async ({ search }: { search: string }) => {
         query SearchQuery($search: String) {
           domains(
             where: {and: [{name_starts_with: $search}]}
+            orderBy: labelName
+            orderDirection: asc
           ) {
             name
             resolvedAddress { id }
