@@ -73,7 +73,7 @@ const useSearch = (isEditor?: boolean) => {
   const searchResult =
     searchResultStatus !== 'pending'
       ? !data || data.length === 0
-        ? !isEditor &&
+        ? !(isEditor || isAddress(searchKey)) &&
           (!Number.isNaN(Number(searchKey)) ||
             (searchKey[0] === '#' && !Number.isNaN(Number(searchKey.slice(1)))))
           ? [
