@@ -42,6 +42,7 @@ interface FollowListProps {
   isBlockedList?: boolean
   isBlockedBy?: boolean
   isFollowers?: boolean
+  loadingCartItems?: number
 }
 
 export function FollowList({
@@ -58,7 +59,8 @@ export function FollowList({
   canEditTags,
   isBlockedList,
   isBlockedBy,
-  isFollowers
+  isFollowers,
+  loadingCartItems
 }: FollowListProps) {
   const { t } = useTranslation()
 
@@ -146,6 +148,13 @@ export function FollowList({
               .map((_, i) => (
                 <LoadingRow key={i} className={listItemClassName} showTags={showTags} />
               ))}
+          {loadingCartItems
+            ? new Array(loadingCartItems)
+                .fill(1)
+                .map((_, i) => (
+                  <LoadingRow key={i} className={listItemClassName} showTags={showTags} />
+                ))
+            : null}
         </>
       )}
     </div>

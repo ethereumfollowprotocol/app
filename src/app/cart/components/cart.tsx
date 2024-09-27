@@ -35,7 +35,7 @@ const Cart = () => {
   const { t } = useTranslation()
   const { isConnected } = useAccount()
   const { openConnectModal } = useConnectModal()
-  const { totalCartItems, cartAddresses, socialAddresses, cartItems } = useCart()
+  const { totalCartItems, cartAddresses, socialAddresses, cartItems, loadingCartItems } = useCart()
 
   const { selectedList, roles } = useEFPProfile()
   const hasCreatedEfpList = !!selectedList
@@ -140,7 +140,7 @@ const Cart = () => {
                 </button>
               )}
             </div>
-            {isClient && totalCartItems === 0 && (
+            {isClient && totalCartItems === 0 && !loadingCartItems && (
               <div className='font-bold h-28 xl:h-80 px-4 justify-center flex text-lg items-center italic'>
                 {t('empty cart')}
               </div>
@@ -154,6 +154,7 @@ const Cart = () => {
               showTags={true}
               createListItem={!hasCreatedEfpList}
               canEditTags={roles?.isManager}
+              loadingCartItems={loadingCartItems}
             />
           </div>
           {isClient && (

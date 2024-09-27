@@ -1,9 +1,18 @@
 'use client'
 
+import {
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+  createContext,
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction
+} from 'react'
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
 import { hexlify } from '#/lib/utilities'
-import { createContext, useContext, useState, type ReactNode, useCallback, useEffect } from 'react'
 
 import {
   isTagListOp,
@@ -41,6 +50,8 @@ type CartContextType = {
   }
   cartItems: CartItem[]
   setCartItems: (items: CartItem[]) => void
+  loadingCartItems: number
+  setLoadingCartItems: Dispatch<SetStateAction<number>>
   getAddressesFromCart: () => string[]
   getTagsFromCartByAddress: (address: Address) => string[]
   handleTagClick: (params: ListOpTagOpParams) => void
@@ -65,6 +76,7 @@ type Props = {
 
 // Define the provider component
 export const CartProvider: React.FC<Props> = ({ children }: Props) => {
+  const [loadingCartItems, setLoadingCartItems] = useState<number>(0)
   const { address } = useAccount()
 
   const storedCartItems =
@@ -124,6 +136,8 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
       const exists = cartItems.some(
         cartItem => listOpAsHexstring(cartItem.listOp) === listOpAsHexstring(item.listOp)
       )
+
+      setLoadingCartItems(prevLoading => (prevLoading > 0 ? prevLoading - 1 : prevLoading))
 
       if (!exists) {
         setCartItems(prevItems => [...prevItems, item])
@@ -292,7 +306,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
     setCartItems([])
   }
 
-  const totalCartItems = cartItems.length
+  const totalCartItems = cartItems.length + loadingCartItems
   const cartAddresses = getAddressesFromCart()
   const socialAddresses = {
     farcaster: getAddressesFromCart('farcaster')
@@ -309,6 +323,8 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
         socialAddresses,
         cartItems,
         setCartItems,
+        loadingCartItems,
+        setLoadingCartItems,
         getAddressesFromCart,
         getTagsFromCartByAddress,
         handleTagClick,

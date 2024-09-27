@@ -22,7 +22,7 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
   const { address: userAddress } = useAccount()
   const { roles, selectedList } = useEFPProfile()
 
-  const { cartItems, addCartItem } = useCart()
+  const { cartItems, addCartItem, setLoadingCartItems } = useCart()
   const topEightInCart = useMemo(
     () =>
       cartItems
@@ -78,19 +78,29 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
       return
     }
 
+    setLoadingCartItems(prevLoading => prevLoading + 1)
+
     const address = isAddress(user) ? user : await resolveEnsAddress(user)
-    if (editedProfiles.find(profile => profile.address === address)) return
-    if (!address) return { user }
+    if (editedProfiles.find(profile => profile.address.toLowerCase() === address?.toLowerCase()))
+      return setLoadingCartItems(prevLoading => (prevLoading > 0 ? prevLoading - 1 : prevLoading))
+
+    if (!address) {
+      setLoadingCartItems(prevLoading => (prevLoading > 0 ? prevLoading - 1 : prevLoading))
+      return { user }
+    }
 
     const followState = await getFollowingState(address)
 
     if (followState === 'none') addCartItem({ listOp: listOpAddListRecord(address) })
     addCartItem({ listOp: listOpAddTag(address, 'top8') })
+
+    setLoadingCartItems(prevLoading => (prevLoading > 0 ? prevLoading - 1 : prevLoading))
   }
 
   const onSubmit = async () => {
     if (validTopEightsLength >= 8) return toast.error(t('top eight limit'))
     if (!roles?.isManager) return toast.error(t('not manager'))
+
     setAddProfileSearch('')
 
     // const hasMultipleNames =

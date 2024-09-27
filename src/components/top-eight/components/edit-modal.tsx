@@ -9,6 +9,8 @@ import CancelButton from '#/components/buttons/cancel-button'
 import { PrimaryButton } from '#/components/buttons/primary-button'
 import { useRouter } from 'next/navigation'
 import { FiSearch } from 'react-icons/fi'
+import { useCart } from '#/contexts/cart-context'
+import LoadingCell from '#/components/loaders/loading-cell'
 
 interface EditModalProps {
   profiles: TopEightProfileType[]
@@ -18,6 +20,7 @@ interface EditModalProps {
 const EditModal: React.FC<EditModalProps> = ({ profiles, onClose }) => {
   const router = useRouter()
   const { t } = useTranslation()
+  const { loadingCartItems } = useCart()
   const { editedProfiles, addProfileSearch, setAddProfileSearch, onSubmit, validTopEightsLength } =
     useEditTopEight(profiles)
 
@@ -66,6 +69,16 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose }) => {
         >
           {editedProfiles.map((profile, index) => (
             <TopEightProfile profile={profile} isEditing={true} key={index} />
+          ))}
+          {new Array(loadingCartItems).fill(1).map((_, i) => (
+            <div
+              key={`loading ${i}`}
+              className='flex flex-col w-28 2xl:w-36 py-4 items-center gap-2'
+            >
+              <LoadingCell className='h-[60px] w-[60px] rounded-full' />
+              <LoadingCell className='h-7 w-24 rounded-lg' />
+              <LoadingCell className='h-9 w-[120px] rounded-lg' />
+            </div>
           ))}
           {editedProfiles.length === 0 && (
             <p className='italic dark:text-zinc-400 text-zinc-500 font-semibold'>

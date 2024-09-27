@@ -30,7 +30,7 @@ const useSearch = (isEditor?: boolean) => {
   const { t } = useTranslation()
   const { address: userAddress } = useAccount()
   const { roles, selectedList } = useEFPProfile()
-  const { addCartItem, hasListOpAddRecord } = useCart()
+  const { addCartItem, hasListOpAddRecord, setLoadingCartItems } = useCart()
 
   const clickAwayRef = useClickAway<HTMLDivElement>(_ => {
     setDropdownMenuOpen(false)
@@ -152,13 +152,24 @@ const useSearch = (isEditor?: boolean) => {
 
     const address = isAddress(user) ? user : await resolveEnsAddress(user)
 
-    if (!address) return { user }
+    if (!address) {
+      setLoadingCartItems(prevLoading => (prevLoading > 0 ? prevLoading - 1 : prevLoading))
+      return { user }
+    }
 
     const followState = await getFollowingState(address)
     const isPendingFollow = hasListOpAddRecord(address)
 
-    if (isPendingFollow) return { user, isFollowing: false, inCart: true }
-    if (followState === 'follows') return { user, isFollowing: true }
+    if (isPendingFollow) {
+      setLoadingCartItems(prevLoading => (prevLoading > 0 ? prevLoading - 1 : prevLoading))
+      return { user, isFollowing: false, inCart: true }
+    }
+
+    if (followState === 'follows') {
+      setLoadingCartItems(prevLoading => (prevLoading > 0 ? prevLoading - 1 : prevLoading))
+      return { user, isFollowing: true }
+    }
+
     if (followState === 'none') addCartItem({ listOp: listOpAddListRecord(address) })
   }
 
@@ -183,6 +194,8 @@ const useSearch = (isEditor?: boolean) => {
           .map(name => name.trim())
           .filter(name => !!name)
 
+        setLoadingCartItems(namesToAdd.length)
+
         const addedToCart = await Promise.all(namesToAdd.map(async name => await addToCart(name)))
 
         const namesInCart = addedToCart.filter(item => item?.inCart).map(item => item?.user)
@@ -201,6 +214,7 @@ const useSearch = (isEditor?: boolean) => {
         return setIsAddingToCart(false)
       }
 
+      setLoadingCartItems(1)
       const erroredName = await addToCart(currentSearch)
       if (erroredName?.isFollowing) toast.error(`${t('already followed')} ${erroredName.user}`)
       else if (erroredName?.inCart) toast.error(`${t('in cart')} ${erroredName.user}`)
