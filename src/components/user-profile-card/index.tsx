@@ -329,8 +329,8 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
               unoptimized={true}
             />
           )}
-          <div className='flex w-full items-center flex-col pt-10 pb-4 px-4 sm:p-6 sm:pt-9 gap-5 sm:gap-6 md:gap-9'>
-            <div className='flex w-full flex-col justify-center items-center gap-4'>
+          <div className='flex w-full items-center flex-col pt-10 pb-4 px-4 sm:p-6 sm:pt-9 gap-5 sm:gap-6 md:gap-7'>
+            <div className='flex w-full flex-col justify-center items-center gap-3'>
               {isProfileLoading ? (
                 <LoadingCell
                   className={
@@ -351,8 +351,8 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                   }
                 />
               )}
-              <div className='flex w-full items-center flex-col gap-4 justify-center'>
-                <div className='flex flex-col items-center justify-center gap-2 w-full'>
+              <div className='flex w-full items-center flex-col gap-3 justify-center'>
+                <div className='flex flex-col items-center justify-center gap-1.5 w-full'>
                   {isProfileLoading ? (
                     <LoadingCell className='w-48 sm:w-68 xl:w-3/4 h-7 rounded-lg' />
                   ) : (
@@ -670,7 +670,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 </div>
               </div>
             </div>
-            <div className='flex w-full flex-wrap justify-center gap-10 gap-y-6 sm:gap-y-9 sm:gap-x-[60px] items-center mx-auto text-center'>
+            <div className='flex w-full flex-wrap justify-center gap-10 gap-y-6 sm:gap-y-6 sm:gap-x-[60px] items-center mx-auto text-center'>
               <div
                 className='cursor-pointer hover:scale-110 transition-all'
                 onClick={() =>
