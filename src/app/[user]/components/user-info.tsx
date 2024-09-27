@@ -208,10 +208,10 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
 
   return (
     <>
-      {isBlockedMutedOpen && profile && (
+      {isBlockedMutedOpen && (
         <BlockedMuted
-          profile={profile}
-          list={profile.primary_list ?? undefined}
+          user={user}
+          list={userIsList ? listNum : undefined}
           onClose={() => {
             setIsBlockedMutedOpen(false)
             router.push(`/${user}`)

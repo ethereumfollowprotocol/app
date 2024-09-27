@@ -8,17 +8,16 @@ import { useIsEditView } from '#/hooks/use-is-edit-view'
 import type { BlockedMutedTabType } from '#/types/common'
 import { UserProfilePageTable } from '../profile-page-table'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import type { ProfileDetailsResponse } from '#/types/requests'
 import useBlockedMuted, { EMPTY_COUNT_TAGS, TAGS } from './hooks/use-blocked-muted'
 
 interface BlockedMutedProps {
-  profile: ProfileDetailsResponse
+  user: string
   list?: string | number
   isManager?: boolean
   onClose: () => void
 }
 
-const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, onClose }) => {
+const BlockedMuted: React.FC<BlockedMutedProps> = ({ user, list, isManager, onClose }) => {
   const [activeTab, setActiveTab] = useState<BlockedMutedTabType>('Blocked/Muted')
 
   const blockedMutedRef = useClickAway<HTMLDivElement>(() => {
@@ -52,7 +51,7 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ profile, list, isManager, o
     setBlockedByTagsFilter,
     isFetchingMoreBlocking,
     isFetchingMoreBlockedBy
-  } = useBlockedMuted(profile.address, list)
+  } = useBlockedMuted(user, list)
   const { t } = useTranslation()
 
   const filteredBlockingTags = blockingTags?.tagCounts?.filter(tag => TAGS.includes(tag.tag)) || []

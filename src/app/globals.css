@@ -62,6 +62,7 @@ body {
   position: absolute;
   border-radius: 50%;
   cursor: pointer;
+  z-index: 0;
   transition: transform 0.2s ease;
   @apply dark:bg-[#484848] bg-[#eeeeee]
 }
@@ -71,22 +72,22 @@ body {
 }
 
 .circle1 { top: 205px; left: 208px; width: 100px; height: 100px; }
-.circle2 { top: 276px; left: 119.73px; width: 42.1585px; height: 42.1585px; }
-.circle3 { top: 180px; left: 344.014px; width: 42.1585px; height: 42.1585px; }
+.circle2 { top: 0px; left: 218px; width: 63.2378px; height: 63.2377px; }
+.circle3 { top: 75px; left: 381px; width: 63.2378px; height: 63.2377px; }
 .circle4 { top: 75px; left: 64px; width: 63.2378px; height: 63.2377px; }
-.circle5 { top: 340px; left: 276px; width: 42.1585px; height: 42.1585px; }
-.circle6 { top: 223px; left: 0px; width: 63.2378px; height: 63.2377px; }
-.circle7 { top: 360px; left: 64px; width: 63.2378px; height: 63.2377px; }
-.circle8 { top: 360px; left: 381px; width: 63.2378px; height: 63.2377px; }
-.circle9 { top: 423px; left: 218px; width: 63.2378px; height: 63.2377px; }
-.circle10 { top: 276px; left: 344px; width: 42.1585px; height: 42.1585px; }
-.circle11 { top: 180px; left: 120px; width: 42.1585px; height: 42.1585px; }
-.circle12 { top: 113px; left: 279px; width: 42.1585px; height: 42.1585px; }
-.circle13 { top: 113px; left: 180px; width: 42.1585px; height: 42.1585px; }
-.circle14 { top: 0px; left: 218px; width: 63.2378px; height: 63.2377px; }
-.circle15 { top: 75px; left: 381px; width: 63.2378px; height: 63.2377px; }
-.circle16 { top: 220px; left: 448px; width: 63.2378px; height: 63.2377px; }
-.circle17 { top: 340px; left: 186px; width: 43.2378px; height: 43.2377px; }
+.circle5 { top: 113px; left: 279px; width: 42.1585px; height: 42.1585px; }
+.circle6 { top: 113px; left: 180px; width: 42.1585px; height: 42.1585px; }
+.circle7 { top: 180px; left: 120px; width: 42.1585px; height: 42.1585px; }
+.circle8 { top: 180px; left: 344.014px; width: 42.1585px; height: 42.1585px; }
+.circle9 { top: 220px; left: 448px; width: 63.2378px; height: 63.2377px; }
+.circle10 { top: 223px; left: 0px; width: 63.2378px; height: 63.2377px; }
+.circle11 { top: 276px; left: 119.73px; width: 42.1585px; height: 42.1585px; }
+.circle12 { top: 276px; left: 344px; width: 42.1585px; height: 42.1585px; }
+.circle13 { top: 340px; left: 276px; width: 42.1585px; height: 42.1585px; }
+.circle14 { top: 340px; left: 186px; width: 43.2378px; height: 43.2377px; }
+.circle15 { top: 360px; left: 381px; width: 63.2378px; height: 63.2377px; }
+.circle16 { top: 360px; left: 64px; width: 63.2378px; height: 63.2377px; }
+.circle17 { top: 423px; left: 218px; width: 63.2378px; height: 63.2377px; }
 
 @media screen and (max-width: 1280px) {
   .svg-container {
@@ -100,11 +101,11 @@ body {
   .path4 { top: 142.465px; left: 176.7px; height: 58.725px; transform: rotate(-26deg);}
   .path5 { top: 113.305px; left: 306.3px; height: 74.52081px; transform: rotate(-150deg);}
   .path6 { top: 246.955px; left: 180.345px; height: 67.23px; transform: rotate(26deg); }
-  .path7 { top: 242.5px; left: 124.05px; height: 77.82075px; transform: rotate(-50deg);  }
+  .path11 { top: 242.5px; left: 124.05px; height: 77.82075px; transform: rotate(-50deg);  }
   .path8 { top: 313.78px; left: 181.7238px; height: 83.62116px; transform: rotate(-25deg);  }
   .path9 { top: 266.991px; left: 309.3312px; height: 80.1414px; transform: rotate(-26deg);  }
   .path10 { top: 267.205px; left: 87.6px; height: 60.75px; transform: rotate(33deg); }
-  .path11 { top: 284.93185px; left: 201.81px; height: 58.00815px; transform: rotate(-90deg); }
+  .path7 { top: 284.93185px; left: 201.81px; height: 58.00815px; transform: rotate(-90deg); }
   .path12 { top: 224.2768px; left: 251.22px; height: 48.60162px; transform: rotate(110deg);  }
   .path13 { top: 173.65px; left: 324.93px; height: 56.7px; transform: rotate(115deg); }
   .path14 { top: 172.84px; left: 263.37px; height: 55.485px; transform: rotate(60deg);  }
@@ -112,22 +113,22 @@ body {
   .path16 { top: 125.05px; left: 41.43px; height: 89.1px; transform: rotate(22deg);  }
 
   .circle1 { top: 186.61px; left: 164.55px; width: 81px; height: 81px; }
-  .circle2 { top: 244.90489px; left: 92.1513px; width: 34.148385px; height: 34.148385px; }
-  .circle3 { top: 167.72809px; left: 274.72134px; width: 34.148385px; height: 34.148385px; }
+  .circle2 { top: 25px; left: 172.95942px; width: 51.222618px; height: 51.222617px; }
+  .circle3 { top: 80.99167px; left: 304.77153px; width: 51.222618px; height: 51.222617px; }
   .circle4 { top: 80.99167px; left: 39.81px; width: 51.222618px; height: 51.222617px; }
-  .circle5 { top: 296.12453px; left: 222.06px; width: 34.148385px; height: 34.148385px; }
-  .circle6 { top: 201.19486px; left: -7.17px; width: 51.222618px; height: 51.222617px; }
-  .circle7 { top: 316.51793px; left: 39px; width: 51.222618px; height: 51.222617px; }
-  .circle8 { top: 316.51793px; left: 304.77153px; width: 51.222618px; height: 51.222617px; }
-  .circle9 { top: 373.25355px; left: 172.95942px; width: 51.222618px; height: 51.222617px; }
-  .circle10 { top: 244.90489px; left: 274.72134px; width: 34.148385px; height: 34.148385px; }
-  .circle11 { top: 167.72809px; left: 92.1513px; width: 34.148385px; height: 34.148385px; }
-  .circle12 { top: 112.40995px; left: 222.13209px; width: 34.148385px; height: 34.148385px; }
-  .circle13 { top: 112.40995px; left: 141.54195px; width: 34.148385px; height: 34.148385px; }
-  .circle14 { top: 25px; left: 172.95942px; width: 51.222618px; height: 51.222617px; }
-  .circle15 { top: 80.99167px; left: 304.77153px; width: 51.222618px; height: 51.222617px; }
-  .circle16 { top: 198.76px; left: 350.85px; width: 51.222618px; height: 51.222617px; }
-  .circle17 { top: 295.64167px; left: 146.73px; width: 35.022078px; height: 35.022078px; }
+  .circle5 { top: 112.40995px; left: 222.13209px; width: 34.148385px; height: 34.148385px; }
+  .circle6 { top: 112.40995px; left: 141.54195px; width: 34.148385px; height: 34.148385px; }
+  .circle7 { top: 167.72809px; left: 92.1513px; width: 34.148385px; height: 34.148385px; }
+  .circle8 { top: 167.72809px; left: 274.72134px; width: 34.148385px; height: 34.148385px; }
+  .circle9 { top: 198.76px; left: 350.85px; width: 51.222618px; height: 51.222617px; }
+  .circle10 { top: 201.19486px; left: -7.17px; width: 51.222618px; height: 51.222617px; }
+  .circle11 { top: 244.90489px; left: 92.1513px; width: 34.148385px; height: 34.148385px; }
+  .circle12 { top: 244.90489px; left: 274.72134px; width: 34.148385px; height: 34.148385px; }
+  .circle13 { top: 296.12453px; left: 222.06px; width: 34.148385px; height: 34.148385px; }
+  .circle14 { top: 295.64167px; left: 146.73px; width: 35.022078px; height: 35.022078px; }
+  .circle15 { top: 316.51793px; left: 304.77153px; width: 51.222618px; height: 51.222617px; }
+  .circle16 { top: 316.51793px; left: 39px; width: 51.222618px; height: 51.222617px; }
+  .circle17 { top: 373.25355px; left: 172.95942px; width: 51.222618px; height: 51.222617px; }
 }
 
 @media screen and (max-width: 1024px) {
@@ -161,22 +162,22 @@ body {
   .path16 { top: 109.39px; left: 34.35px; height: 73.84px; transform: rotate(22deg);  }
 
   .circle1 { top: 162.97px; left: 144.21px; width: 67.58px; height: 67.58px; }
-  .circle2 { top: 214.07px; left: 80.61px; width: 28.43px; height: 28.43px; }
-  .circle3 { top: 146.94px; left: 240.15px; width: 28.43px; height: 28.43px; }
+  .circle2 { top: 21.88px; left: 151.57px; width: 44.92px; height: 44.92px; }
+  .circle3 { top: 70.87px; left: 266.47px; width: 44.92px; height: 44.92px; }
   .circle4 { top: 70.87px; left: 32.82px; width: 44.92px; height: 44.92px; }
-  .circle5 { top: 259.22px; left: 194.57px; width: 28.43px; height: 28.43px; }
-  .circle6 { top: 176.92px; left: -9.95px; width: 44.92px; height: 44.92px; }
-  .circle7 { top: 277.45px; left: 32.18px; width: 44.92px; height: 44.92px; }
-  .circle8 { top: 277.45px; left: 266.47px; width: 44.92px; height: 44.92px; }
-  .circle9 { top: 326.57px; left: 151.57px; width: 44.92px; height: 44.92px; }
-  .circle10 { top: 214.07px; left: 240.15px; width: 28.43px; height: 28.43px; }
-  .circle11 { top: 146.94px; left: 80.61px; width: 28.43px; height: 28.43px; }
-  .circle12 { top: 98.77px; left: 194.92px; width: 28.43px; height: 28.43px; }
-  .circle13 { top: 98.77px; left: 123.79px; width: 28.43px; height: 28.43px; }
-  .circle14 { top: 21.88px; left: 151.57px; width: 44.92px; height: 44.92px; }
-  .circle15 { top: 70.87px; left: 266.47px; width: 44.92px; height: 44.92px; }
-  .circle16 { top: 173.03px; left: 290.76px; width: 44.92px; height: 44.92px; }
-  .circle17 { top: 259.22px; left: 128.47px; width: 30.27px; height: 30.27px; }
+  .circle5 { top: 98.77px; left: 194.92px; width: 28.43px; height: 28.43px; }
+  .circle6 { top: 98.77px; left: 123.79px; width: 28.43px; height: 28.43px; }
+  .circle7 { top: 146.94px; left: 80.61px; width: 28.43px; height: 28.43px; }
+  .circle8 { top: 146.94px; left: 240.15px; width: 28.43px; height: 28.43px; }
+  .circle9 { top: 173.03px; left: 290.76px; width: 44.92px; height: 44.92px; }
+  .circle10 { top: 176.92px; left: -9.95px; width: 44.92px; height: 44.92px; }
+  .circle11 { top: 214.07px; left: 80.61px; width: 28.43px; height: 28.43px; }
+  .circle12 { top: 214.07px; left: 240.15px; width: 28.43px; height: 28.43px; }
+  .circle13 { top: 259.22px; left: 194.57px; width: 28.43px; height: 28.43px; }
+  .circle14 { top: 259.22px; left: 128.47px; width: 30.27px; height: 30.27px; }
+  .circle15 { top: 277.45px; left: 266.47px; width: 44.92px; height: 44.92px; }
+  .circle16 { top: 277.45px; left: 32.18px; width: 44.92px; height: 44.92px; }
+  .circle17 { top: 326.57px; left: 151.57px; width: 44.92px; height: 44.92px; }
 }
 
 /* Disable zoom in iOS Safari when double tapping an element */
