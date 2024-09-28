@@ -10,6 +10,8 @@ import LikeButton from 'public/assets/partners/likebutton.jpeg'
 import PWN from 'public/assets/partners/pwn.jpeg'
 import EnsVision from 'public/assets/partners/ensvision.jpeg'
 import Namefi from 'public/assets/partners/namefi.jpeg'
+import ENSBook from 'public/assets/partners/ensbook.jpeg'
+import VibesScapes from 'public/assets/partners/vibesscapes.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -61,6 +63,16 @@ export const INTEGRATIONS = [
     name: 'Namefi',
     url: 'https://www.namefi.io/',
     logo: Namefi
+  },
+  {
+    name: 'ENSBook',
+    url: 'https://ensbook.xyz/',
+    logo: ENSBook
+  },
+  {
+    name: 'Vibes',
+    url: 'https://vibes.scapes.xyz/',
+    logo: VibesScapes
   }
 ] as {
   name: string
