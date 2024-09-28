@@ -102,7 +102,7 @@ const LaunchPartners = () => {
               className='mx-auto w-52 sm:w-60 rounded-[2rem] border-[3px] border-[#B879FF] hover:scale-110 transition-transform'
             />
           </Link>
-          <Link target='_blank' rel='noopener noreferrer' href='https://ensdao.org/'>
+          <Link target='_blank' rel='noopener noreferrer' href='https://mask.io/'>
             <Image
               src={resolvedTheme === 'dark' ? MaskDark : Mask}
               width='180'
