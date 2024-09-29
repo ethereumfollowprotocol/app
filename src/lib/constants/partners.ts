@@ -258,7 +258,7 @@ export const LAUNCH_PARTNERS = [
     logo: WebThreeLink
   },
   {
-    name: 'web3.bio',
+    name: 'Web3 Bio',
     url: 'https://web3.bio/',
     logo: WebThreeBio
   },
