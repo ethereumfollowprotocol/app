@@ -23,17 +23,22 @@ const SocialGraphArt = () => {
       {new Array(16).fill(0).map((_, i) => (
         <div key={i} className={`path path${i + 1}`} />
       ))}
-      <div className='circle circle1'>
+      <div className='circle circle1 group'>
         {isLoading ? (
           <LoadingCell className='h-full w-full rounded-full' />
         ) : (
-          <Link href='/0xE2Cded674643743ec1316858dFD4FD2116932E63'>
-            <Avatar
-              avatarUrl='https://metadata.ens.domains/mainnet/avatar/efp.eth'
-              name='efp.eth'
-              size='h-full w-full'
-            />
-          </Link>
+          <>
+            <Link href='/0xE2Cded674643743ec1316858dFD4FD2116932E63'>
+              <Avatar
+                avatarUrl='https://metadata.ens.domains/mainnet/avatar/efp.eth'
+                name='efp.eth'
+                size='h-full w-full'
+              />
+            </Link>
+            <div className='absolute hidden group-hover:block left-1/2 transform -translate-x-1/2 -top-8 py-0.5 px-2 text-sm border-2 border-zinc-300 dark:border-zinc-500 bg-zinc-50 dark:bg-zinc-700 rounded-lg font-semibold'>
+              efp.eth
+            </div>
+          </>
         )}
       </div>
       {new Array(16).fill(0).map((_, i) => {
@@ -44,17 +49,19 @@ const SocialGraphArt = () => {
             {isLoading ? (
               <LoadingCell className='h-full w-full rounded-full' />
             ) : (
-              <Link href={`/${profile?.address}`}>
-                <Avatar
-                  avatarUrl={profile?.avatar}
-                  name={profile?.name || profile?.address || ''}
-                  size='h-full w-full'
-                />
-              </Link>
+              <>
+                <Link href={`/${profile?.address}`}>
+                  <Avatar
+                    avatarUrl={profile?.avatar}
+                    name={profile?.name || profile?.address || ''}
+                    size='h-full w-full'
+                  />
+                </Link>
+                <div className='absolute hidden group-hover:block left-1/2 transform -translate-x-1/2 -top-8 py-0.5 px-2 text-sm border-2 border-zinc-300 dark:border-zinc-500 bg-zinc-50 dark:bg-zinc-700 rounded-lg font-semibold'>
+                  {profile?.name || truncateAddress(profile?.address)}
+                </div>
+              </>
             )}
-            <div className='absolute hidden group-hover:block left-1/2 transform -translate-x-1/2 -top-8 py-0.5 px-2 text-sm border-2 border-zinc-300 dark:border-zinc-500 bg-zinc-50 dark:bg-zinc-700 rounded-lg font-semibold'>
-              {profile?.name || truncateAddress(profile?.address)}
-            </div>
           </div>
         )
       })}

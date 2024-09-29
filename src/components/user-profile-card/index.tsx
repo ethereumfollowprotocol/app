@@ -507,9 +507,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                                 `https://ethfollow.xyz/${
                                   profileList
                                     ? profileList === Number(profile.primary_list)
-                                      ? profile.address
+                                      ? profileName || profile.address
                                       : profileList
-                                    : profile.address
+                                    : profileName || profile.address
                                 }`
                               )
                               setCopyProfileLinkPressed(true)

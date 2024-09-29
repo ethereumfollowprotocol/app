@@ -56,7 +56,7 @@ const LaunchPartners = () => {
           <Image src={ShortLine} alt='line' width={3} height={20} className='' />
         </>
       )}
-      <div className='glass-card z-10 sm:p-8 mb-12 md:p-10 border-[3px] border-[#FF79C9] p-4 font-bold text-center text-sm rounded-3xl mx-auto w-full max-w-4xl'>
+      <div className='glass-card z-10 sm:p-8 mb-[34px] md:mb-12 md:p-10 border-[3px] border-[#FF79C9] p-4 font-bold text-center text-sm rounded-3xl mx-auto w-full max-w-4xl'>
         <p className='text-3xl font-bold pb-6 sm:pb-8'>{t('partners')}</p>
         <section className='w-full gap-y-8 z-10 gap-x-10 sm:gap-x-14 flex flex-row justify-evenly flex-wrap'>
           {LAUNCH_PARTNERS.map(partner => (
@@ -91,9 +91,9 @@ const LaunchPartners = () => {
         height={154}
         className='absolute -bottom-[100px] lg:-bottom-[170px]'
       />
-      <div className='glass-card w-full p-6 mx-auto border-[3px] border-[#FF79C9] text-dark-gray font-bold text-center text-sm rounded-3xl max-w-4xl'>
-        <p className=' text-2xl sm:text-3xl font-bold pb-8'>{t('sponsors')}</p>
-        <div className='items-center justify-center flex-col sm:flex-row w-full flex gap-8'>
+      <div className='glass-card w-full flex flex-col gap-8 items-center py-6 mx-auto border-[3px] border-[#FF79C9] text-dark-gray font-bold text-center text-sm rounded-3xl max-w-4xl'>
+        <p className=' text-xl sm:text-2xl md:text-3xl font-bold'>{t('sponsors')}</p>
+        <div className='items-center justify-center px-6 flex-col sm:flex-row w-full flex gap-8'>
           <Link target='_blank' rel='noopener noreferrer' href='https://ensdao.org/'>
             <Image
               src={resolvedTheme === 'dark' ? EnsDaoDark : EnsDao}
