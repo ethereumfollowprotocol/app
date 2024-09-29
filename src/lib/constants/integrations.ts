@@ -12,6 +12,8 @@ import EnsVision from 'public/assets/partners/ensvision.jpeg'
 import Namefi from 'public/assets/partners/namefi.jpeg'
 import ENSBook from 'public/assets/partners/ensbook.jpeg'
 import VibesScapes from 'public/assets/partners/vibesscapes.jpeg'
+import WebThreeBio from 'public/assets/partners/web3bio.jpeg'
+
 
 export const INTEGRATIONS = [
   {
@@ -73,6 +75,11 @@ export const INTEGRATIONS = [
     name: 'Vibes',
     url: 'https://vibes.scapes.xyz/',
     logo: VibesScapes
+  },
+  {
+    name: 'Web3 Bio',
+    url: 'https://web3.bio/',
+    logo: WebThreeBio
   }
 ] as {
   name: string
