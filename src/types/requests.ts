@@ -123,6 +123,7 @@ export interface LeaderboardStatsResponse {
   address_count: string
   list_count: string
   list_op_count: string
+  user_count: string
 }
 
 export interface StatsResponse {

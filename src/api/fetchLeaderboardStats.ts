@@ -17,7 +17,8 @@ export const fetchLeaderboardStats = async () => {
     return {
       address_count: '0',
       list_count: '0',
-      list_op_count: '0'
+      list_op_count: '0',
+      user_count: '0'
     }
   }
 }

@@ -20,6 +20,8 @@ import type { LeaderboardFilter } from '#/types/common.ts'
 import LoadingCell from '#/components/loaders/loading-cell.tsx'
 import { formatNumberLeaderboard } from '#/utils/formatNumber.ts'
 
+const LeaderboardStatNames = ['addresses', 'lists', 'list ops', 'unique users']
+
 const LeaderboardTable = () => {
   const router = useRouter()
   const {
@@ -73,16 +75,33 @@ const LeaderboardTable = () => {
     <>
       <p className='text-3xl sm:text-4xl md:text-5xl font-bold'>{t('leaderboard')}</p>
       <div className='mt-4 sm:mt-6 mb-4 sm:mb-6 lg:mb-0 flex items-center justify-center flex-wrap gap-4 xs:gap-8'>
-        <div className='gradient-border flex flex-col rounded-2xl items-center justify-center h-24 xs:h-[118px] w-full xs:w-64'>
+        {new Array(4).fill(1).map((_, i) => (
+          <div
+            key={`stat ${i}`}
+            className='gradient-border flex flex-col rounded-2xl items-center justify-center h-24 xs:h-[118px] w-full xs:w-64'
+          >
+            {isLeaderboardStatsLoading || !leaderboardStats ? (
+              <LoadingCell className='h-10 w-32 rounded-lg' />
+            ) : (
+              <p className='font-bold text-2xl md:text-3xl'>
+                {formatNumberLeaderboard(Number(Object.values(leaderboardStats)[i]))}
+              </p>
+            )}
+            <p className='font-bold capitalize text-lg text-[#888] dark:text-[#aaa]'>
+              {t(LeaderboardStatNames[i] || '')}
+            </p>
+          </div>
+        ))}
+        {/* <div className='gradient-border flex flex-col rounded-2xl items-center justify-center h-24 xs:h-[118px] w-full xs:w-64'>
           {isLeaderboardStatsLoading ? (
             <LoadingCell className='h-10 w-32 rounded-lg' />
           ) : (
             <p className='font-bold text-2xl md:text-3xl'>
-              {formatNumberLeaderboard(Number(leaderboardStats?.address_count))}
+              {formatNumberLeaderboard(Number(leaderboardStats?.user_count))}
             </p>
           )}
           <p className='font-bold capitalize text-lg text-[#888] dark:text-[#aaa]'>
-            {t('addresses')}
+            {t('unique users')}
           </p>
         </div>
         <div className='gradient-border flex flex-col rounded-2xl items-center justify-center h-24 xs:h-[118px] w-full xs:w-64'>
@@ -106,7 +125,7 @@ const LeaderboardTable = () => {
           <p className='font-bold capitalize text-lg text-[#888] dark:text-[#aaa]'>
             {t('list ops')}
           </p>
-        </div>
+        </div> */}
       </div>
       <div className='flex w-full gap-1.5 justify-center lg:justify-end max-w-[1300px] text-sm mt-4 font-bold text-[#aaaaaa] md:text-[#CDCDCD] italic'>
         {t('last updated')}

@@ -89,12 +89,12 @@ const TableRow: React.FC<TableRowProps> = ({
 
   return (
     <div className='flex flex-col'>
-      <div className='flex items-center w-full gap-4 p-2 sm:p-4 hover:bg-darkGrey/5 dark:hover:bg-darkGrey/40 rounded-xl sm:gap-6 md:gap-8 h-[75px]'>
+      <div className='flex items-center w-full gap-3 p-2 pr-1.5 sm:p-4 hover:bg-darkGrey/5 dark:hover:bg-darkGrey/40 rounded-xl sm:gap-6 md:gap-8 h-[75px]'>
         <div className='tabular-nums min-w-4 w-4 xxs:min-w-6 xxs:w-6 sm:w-10 flex justify-center text-right'>
           {rankNumber}
         </div>
         <div
-          className={`flex gap-2 items-center w-[51%] 3xs:w-[54%] xxs:w-[56%] xs:w-2/3 sm:w-1/2 md:w-[40%] ${
+          className={`flex gap-2 items-center w-[50%] 3xs:w-[52%] xxs:w-[54%] xs:w-2/3 sm:w-1/2 md:w-[40%] ${
             isHome ? 'w-full md:w-1/2 lg:w-[55%] xl:w-1/2' : 'xl:w-1/3 '
           }`}
           data-name='name-column'
@@ -108,7 +108,7 @@ const TableRow: React.FC<TableRowProps> = ({
           </Link>
           <div
             className='flex flex-col items-start justify-center text-left'
-            style={{ maxWidth: 'calc(100% - 60px)' }}
+            style={{ maxWidth: 'calc(100% - 65px)' }}
           >
             <Link href={`/${address}`} className='w-full'>
               <p className='font-bold text-base xxs:text-lg truncate max-w-full hover:opacity-60 hover:scale-110 transition-all'>

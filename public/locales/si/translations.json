@@ -132,6 +132,10 @@
   "confirmation error": "Transakcija je bila zavrnjena",
   "check wallet": "Preverite svojo denarnico",
   "block explorer": "Poglej na Block Explorer-ju",
+  "common followers three": "drugi ki jih poznaš jim sledijo",
+  "common followers plural": "drugi ki jih poznaš jim sledijo",
+  "common followers two": "jim sledita",
+  "common followers one": "jim sledi",
 
   "system": "Sistem",
   "light": "Svetlo",
@@ -179,5 +183,8 @@
   "next": "Naprej",
   "network": "Zamenjaj omrežje",
   "reinitiate": "Izvedi ponovno",
-  "finish": "Zaključi"
+  "finish": "Zaključi",
+
+  "feed": "Novice",
+  "feed description": "Najnovejši dogodki ljudi ki jih slediš na EFP 👀"
 }
