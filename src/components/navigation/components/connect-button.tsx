@@ -139,7 +139,7 @@ const ConnectButton = () => {
       {walletMenOpenu && (
         <div
           className={cn(
-            'flex w-[220px] overflow-x-hidden sm:overflow-visible z-50 h-fit shadow-md border-[3px] rounded-lg dark:bg-darkGrey bg-white border-zinc-200 dark:border-zinc-500 absolute top-[120%] flex-col items-end right-0',
+            'flex w-[220px] overflow-x-hidden sm:overflow-visible z-50 h-fit shadow-md border-[3px] rounded-lg bg-neutral border-grey absolute top-[120%] flex-col items-end right-0',
             (languageMenOpenu || themeMenuOpen) && 'overflow-y-hidden'
           )}
         >
@@ -198,7 +198,7 @@ const ConnectButton = () => {
             <div ref={clickAwayLanguageRef} className='w-full cursor-pointer group relative'>
               <div
                 onClick={() => setLanguageMenuOpen(!languageMenOpenu)}
-                className='flex justify-between p-3 rounded-md group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/20 items-center w-full'
+                className='flex justify-between p-3 rounded-md group-hover:bg-navItem items-center w-full'
               >
                 <FiArrowLeft className='text-xl' />
                 <div className='flex justify-end gap-2'>
@@ -216,10 +216,10 @@ const ConnectButton = () => {
                   languageMenOpenu ? 'block' : 'hidden'
                 } group-hover:block sm:pr-6`}
               >
-                <div className='flex overflow-scroll flex-col sm:grid max-h-[76vh] grid-cols-2 gap-2 gap-x-px w-[220px] sm:w-[450px] bg-transparent sm:bg-white sm:dark:bg-darkGrey border-[3px] border-zinc-200 dark:border-zinc-500 p-1 rounded-lg shadow-md'>
+                <div className='flex overflow-scroll flex-col sm:grid max-h-[76vh] grid-cols-2 gap-2 gap-x-px w-[220px] sm:w-[450px] bg-transparent sm:bg-neutral border-[3px] border-grey p-1 rounded-lg shadow-md'>
                   <div
                     onClick={closeLanguageMenu}
-                    className='flex sm:hidden justify-between items-center w-full hover:bg-slate-100 dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer'
+                    className='flex sm:hidden justify-between items-center w-full hover:bg-navItem p-3 rounded-md transition-opacity cursor-pointer'
                   >
                     <FiArrowLeft className='text-xl font-bold' />
                     <p className=' font-bold'>Back</p>
@@ -230,7 +230,7 @@ const ConnectButton = () => {
                       placeholder='Search'
                       value={languageMenuSearch}
                       onChange={e => setLanguageMenuSearch(e.target.value)}
-                      className='w-full px-4 py-2 border-[3px] border-zinc-200 transition-colors dark:border-zinc-500 dark:focus:border-zinc-300 rounded-md focus:border-darkGrey/80'
+                      className='w-full px-4 py-2 border-[3px] border-grey transition-colors rounded-md bg-grey/30 focus:border-text/80'
                     />
                     {LANGUAGES.filter(lang =>
                       languageMenuSearch
@@ -247,7 +247,7 @@ const ConnectButton = () => {
                   </div>
                   {regularLanguages.map(lang => (
                     <div
-                      className='py-3 pl-8 relative flex items-center font-bold rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-colors'
+                      className='py-3 pl-8 relative flex items-center font-bold rounded-md hover:bg-navItem transition-colors'
                       key={lang.language}
                       onClick={() => {
                         changeLanguage(lang)
@@ -281,7 +281,7 @@ const ConnectButton = () => {
                   )}
                   {specialLanguages.map(lang => (
                     <div
-                      className='py-3 pl-8 relative flex items-center font-bold rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-colors'
+                      className='py-3 pl-8 relative flex items-center font-bold rounded-md hover:bg-navItem transition-colors'
                       key={lang.language}
                       onClick={() => {
                         changeLanguage(lang)
@@ -315,7 +315,7 @@ const ConnectButton = () => {
               <div ref={clickAwayListRef} className='w-full cursor-pointer group relative'>
                 <div
                   onClick={() => setListMenuOpen(!listMenuOpen)}
-                  className='flex justify-between items-center w-full group-hover:bg-slate-100 dark:group-hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer'
+                  className='flex justify-between items-center w-full group-hover:bg-navItem p-3 rounded-md transition-opacity cursor-pointer'
                 >
                   <FiArrowLeft className='text-xl' />
                   <p className=' font-bold'>
@@ -332,7 +332,7 @@ const ConnectButton = () => {
                       : 'hidden group-hover:hidden'
                   )}
                 >
-                  <div className='flex flex-col gap-2 w-full min-w-[220px] sm:max-h-[76vh] overflow-auto border-[3px] rounded-lg bg-transparent sm:bg-white sm:dark:bg-darkGrey border-zinc-200 dark:border-zinc-500 p-1 shadow-md'>
+                  <div className='flex flex-col gap-2 w-full min-w-[220px] sm:max-h-[76vh] overflow-auto border-[3px] rounded-lg bg-transparent sm:bg-neutral border-grey p-1 shadow-md'>
                     <div
                       onClick={() => setListMenuOpen(false)}
                       className='flex sm:hidden justify-between items-center w-full group:bg-slate-100 dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer'
@@ -342,7 +342,7 @@ const ConnectButton = () => {
                     </div>
                     {lists?.lists?.map(list => (
                       <div
-                        className='flex items-center relative p-3 pl-8 w-full gap-1 rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20'
+                        className='flex items-center relative p-3 pl-8 w-full gap-1 rounded-md hover:bg-navItem'
                         key={list}
                         onClick={() => {
                           localStorage.setItem('selected-list', list)
@@ -371,7 +371,7 @@ const ConnectButton = () => {
                     ))}
                     <div
                       key={'new list'}
-                      className='flex gap-2 p-3 pl-8 relative hover:bg-slate-100 dark:hover:bg-zinc-400/20 rounded-md'
+                      className='flex gap-2 p-3 pl-8 relative hover:bg-navItem rounded-md'
                       onClick={() => {
                         localStorage.setItem('selected-list', 'new list')
                         setSelectedList(undefined)
@@ -394,7 +394,7 @@ const ConnectButton = () => {
               </div>
             )}
             <a href='https://discord.com/invite/ZUyG3mSXFD' target='_blank' rel='noreferrer'>
-              <div className='flex justify-between items-center w-full hover:bg-slate-100   dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer font-semibold'>
+              <div className='flex justify-between items-center w-full hover:bg-navItem p-3 rounded-md transition-opacity cursor-pointer font-semibold'>
                 <FiExternalLink className='text-xl' />
                 <div className='flex gap-2'>
                   <FaDiscord className='text-2xl mirror-x' />
@@ -403,7 +403,7 @@ const ConnectButton = () => {
               </div>
             </a>
             <p
-              className='text-red-500 p-3 text-right font-bold w-full text-nowrap rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-opacity cursor-pointer'
+              className='text-red-500 p-3 text-right font-bold w-full text-nowrap rounded-md hover:bg-navItem transition-opacity cursor-pointer'
               onClick={() => {
                 disconnect()
                 setWalletMenuOpen(false)

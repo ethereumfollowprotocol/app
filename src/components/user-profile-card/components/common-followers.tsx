@@ -1,12 +1,12 @@
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
+import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
 
 import { Avatar } from '#/components/avatar'
 import { truncateAddress } from '#/lib/utilities'
-import { fetchCommonFollowers, noCommonFollowers } from '#/api/fetchCommonFollowers'
 import LoadingCell from '#/components/loaders/loading-cell'
-import { useTranslation } from 'react-i18next'
+import { fetchCommonFollowers, noCommonFollowers } from '#/api/fetchCommonFollowers'
 
 interface CommonFollowersProps {
   address: Address
@@ -65,7 +65,7 @@ const CommonFollowers: React.FC<CommonFollowersProps> = ({ address }) => {
         <LoadingCell className='h-10 rounded-xl' style={{ width: 'calc(100% - 80px)' }} />
       ) : (
         <p
-          className='text-left font-medium text-[#888] dark:text-[#aaa] text-sm overflow-hidden'
+          className='text-left font-medium text-text/40 text-sm overflow-hidden'
           style={{ maxWidth: 'calc(100% - 84px)' }}
         >
           {displayedNames

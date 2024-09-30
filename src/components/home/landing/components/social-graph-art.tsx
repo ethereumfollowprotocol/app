@@ -35,7 +35,7 @@ const SocialGraphArt = () => {
                 size='h-full w-full'
               />
             </Link>
-            <div className='absolute hidden group-hover:block left-1/2 transform -translate-x-1/2 -top-8 py-0.5 px-2 text-sm border-2 border-zinc-300 dark:border-zinc-500 bg-zinc-50 dark:bg-zinc-700 rounded-lg font-semibold'>
+            <div className='absolute hidden group-hover:block left-1/2 transform -translate-x-1/2 -top-8 py-0.5 px-2 text-sm border-2 border-grey bg-neutral/90 rounded-lg font-semibold'>
               efp.eth
             </div>
           </>
@@ -57,7 +57,7 @@ const SocialGraphArt = () => {
                     size='h-full w-full'
                   />
                 </Link>
-                <div className='absolute hidden group-hover:block left-1/2 transform -translate-x-1/2 -top-8 py-0.5 px-2 text-sm border-2 border-zinc-300 dark:border-zinc-500 bg-zinc-50 dark:bg-zinc-700 rounded-lg font-semibold'>
+                <div className='absolute hidden group-hover:block left-1/2 transform -translate-x-1/2 -top-8 py-0.5 px-2 text-sm border-2 border-grey bg-neutral/90 rounded-lg font-semibold'>
                   {profile?.name || truncateAddress(profile?.address)}
                 </div>
               </>

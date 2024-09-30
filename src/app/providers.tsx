@@ -21,6 +21,8 @@ type ProviderProps = {
   initialState?: State
 }
 
+const darkThemes = ['dark', 'halloween']
+
 const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
   const [queryClient] = useState(
     () =>
@@ -44,7 +46,9 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
           {/* <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}> */}
           <RainbowKitProvider
             coolMode={true}
-            theme={isClient && resolvedTheme === 'dark' ? darkTheme() : undefined}
+            theme={
+              isClient && darkThemes.includes(resolvedTheme || 'dark') ? darkTheme() : undefined
+            }
           >
             <CartProvider>
               <EFPProfileProvider>

@@ -12,9 +12,7 @@ const CartButton = ({ cartItemsCount }: { cartItemsCount: number }) => {
     <Link href='/cart' passHref={true} legacyBehavior={true}>
       <div
         className={`glass-card border-[3px] h-[48px] group justify-center items-center w-[48px] transition-all cursor-pointer hover:border-opacity-100 hover:scale-110 relative flex rounded-full ${
-          pathname === '/cart'
-            ? 'border-darkGrey dark:border-white hover:scale-100'
-            : 'border-darkGrey/40 dark:border-white/40 hover:border-darkGrey dark:hover:border-white'
+          pathname === '/cart' ? 'border-text hover:scale-100' : 'border-text/40 hover:border-text'
         }`}
       >
         <IoCartSharp

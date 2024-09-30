@@ -40,7 +40,7 @@ const Checkout: React.FC<CheckoutProps> = ({ setOpen, hasCreatedEfpList }) => {
           isLoading={poapLoading}
         />
       )}
-      <div className='flex glass-card gap-6 dark:bg-darkGrey/40 flex-col w-full sm:w-[552px] items-center border-[3px] border-zinc-200 dark:border-zinc-500 text-center justify-between rounded-xl p-6 py-8 sm:p-16'>
+      <div className='flex glass-card gap-6 dark:bg-neutral/40 flex-col w-full sm:w-[552px] items-center border-[3px] border-grey text-center justify-between rounded-xl p-6 py-8 sm:p-16'>
         {currentStep === Step.SelectChain && (
           <SelectChainCard
             chains={chains}

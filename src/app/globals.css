@@ -21,8 +21,8 @@ body {
   background-position: -34.1vw -34vw;
   background-size: 210vw 129vw;
   background-attachment: fixed;
-  /* background-image: url("https://ethfollow.xyz/assets/art/waves-background.svg"); */
-  @apply text-darkGrey dark:text-[#eeeeee] bg-white dark:bg-darkGrey
+  /* background: url('assets/art/waves-background.svg'); */
+  @apply text-text bg-neutral;
 }
 
 /* Social graph art */
@@ -212,7 +212,7 @@ body::-webkit-scrollbar-thumb {
 
 .glass-selector {
     backdrop-filter: blur(1rem);
-    @apply bg-[#f5f5f544];
+    @apply bg-[#f5f5f526];
 }
 
 :focus:not(:focus-visible) {
@@ -327,7 +327,7 @@ input {
   transition: background 100ms ease-in-out;
 }
 
-.dark .connect-button {
+.dark .connect-button, .halloween .connect-button {
   background:
     linear-gradient(#333333, #333333) padding-box,
     linear-gradient(135deg, #faf35f, #ffbce3) border-box;
@@ -342,7 +342,7 @@ input {
   linear-gradient(135deg, #faf35f, #ffbce3) border-box;
 }
 
-.dark .connect-button:hover {
+.dark .connect-button:hover, .halloween .connect-button:hover {
   background:
   linear-gradient(135deg, #333333cc, #333333cc) padding-box,
   linear-gradient(135deg, #faf35f, #ffbce3) border-box;
@@ -357,7 +357,7 @@ input {
   transition: background 100ms ease-in-out;
 }
 
-.dark .connect-button-open {
+.dark .connect-button-open, .halloween .connect-button-open {
   background:
   linear-gradient(135deg, #333333cc, #333333cc) padding-box,
   linear-gradient(135deg, #faf35f, #ffbce3) border-box;
@@ -373,7 +373,7 @@ input {
   border: 3px solid transparent;
 }
 
-.dark .gradient-border {
+.dark .gradient-border, .halloween .gradient-border {
   background:
   linear-gradient(#333333, #333333) padding-box,
   linear-gradient(135deg, #faf35f, #ffbce3) border-box;
@@ -382,6 +382,15 @@ input {
 
 .btn-grad {
   background: linear-gradient(to right, #FFE066 0%, #FFE066 30%, #fff981 75%, #ffafde  100%);
+  text-align: center;
+  background-size: 300% auto;
+  transition: all .3s;
+  border-radius: 10px;
+  display: block;
+}
+
+.halloween .btn-grad {
+  background: linear-gradient(to right, #FF7518 0%, #FF7518 30%, #fff981 75%, #ffafde  100%);
   text-align: center;
   background-size: 300% auto;
   transition: all .3s;
@@ -399,6 +408,7 @@ input {
   background:
   linear-gradient(#fafafa, #fafafa) padding-box,
   linear-gradient(135deg, #faf35f, #ffbce3) border-box;
+  color: #000;
   border: 3px solid transparent;
   transition: all 200ms ease-in-out;
 }
@@ -429,6 +439,7 @@ input {
   background:
   linear-gradient(#fafafa, #fafafa) padding-box,
   linear-gradient(135deg, #faf35f, #ffbce3) border-box;
+  color: #000;
   border: 3px solid transparent;
   transition: all 200ms ease-in-out;
 }

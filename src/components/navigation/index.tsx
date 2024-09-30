@@ -58,21 +58,27 @@ const Navigation = () => {
   )
 
   return (
-    <header className='w-full fixed z-50 glass-card bg-white/50 dark:bg-black/75 top-0 left-0 border-b-[3px] border-zinc-200 dark:border-zinc-500 p-4 lg:px-6 md:py-6 xl:px-8'>
+    <header className='w-full fixed z-50 glass-card bg-white/50 dark:bg-black/75 halloween:bg-black/85 top-0 left-0 border-b-[3px] border-grey p-4 lg:px-6 md:py-6 xl:px-8'>
       <nav className='my-auto flex w-full flex-row items-center justify-between'>
         <div className='flex w-fit lg:w-1/4 2xl:w-1/3 justify-start items-center gap-4 md:gap-6 xl:gap-8'>
           <Link href='/' className='select-none' aria-label='Ethereum Follow Protocol Logo link'>
             <Image
               src={FullLogo}
               priority={true}
-              className='hidden sm:block sm:max-w-[130px] dark:hidden select-none hover:scale-110 transition-transform'
-              alt='Ethereum Follow Protocol Logo'
+              className='hidden light:sm:block sm:max-w-[130px] select-none hover:scale-110 transition-transform'
+              alt={'Ethereum Follow Protocol Logo'}
             />
             <Image
               src={FullLogoDark}
               priority={true}
-              className='hidden dark:sm:block dark:sm:max-w-[130px] select-none hover:scale-110 transition-transform'
-              alt='Ethereum Follow Protocol Logo'
+              className='hidden dark:sm:block sm:max-w-[130px] select-none hover:scale-110 transition-transform'
+              alt={'Ethereum Follow Protocol Logo'}
+            />
+            <Image
+              src={FullLogoDark}
+              priority={true}
+              className='hidden halloween:sm:block sm:max-w-[130px] select-none hover:scale-110 transition-transform'
+              alt={'Ethereum Follow Protocol Logo'}
             />
             <Image
               src={Logo}
@@ -117,7 +123,7 @@ const Navigation = () => {
                   >
                     <div
                       className={cn(
-                        'grid w-56 xs:w-[450px] grid-cols-1 xs:grid-cols-2 max-h-[75vh] overflow-scroll gap-x-px dark:bg-darkGrey bg-white border-[3px] border-zinc-200 dark:border-zinc-500 p-1 rounded-lg shadow-md'
+                        'grid w-56 xs:w-[450px] grid-cols-1 xs:grid-cols-2 max-h-[75vh] overflow-scroll gap-x-px bg-neutral border-[3px] border-grey p-1 rounded-lg shadow-md'
                       )}
                     >
                       <div className='sm:col-span-2 p-3 flex flex-col gap-3 items-center'>
@@ -126,7 +132,7 @@ const Navigation = () => {
                           placeholder='Search'
                           value={languageMenuSearch}
                           onChange={e => setLanguageMenuSearch(e.target.value)}
-                          className='w-full px-4 py-2 border-[3px] border-zinc-200 transition-colors dark:border-zinc-500 dark:focus:border-zinc-300 rounded-md focus:border-darkGrey/80'
+                          className='w-full px-4 py-2 border-[3px] border-grey transition-colors bg-text-neutral/10 rounded-md focus:border-text/80'
                         />
                         {LANGUAGES.filter(lang =>
                           languageMenuSearch
@@ -145,7 +151,7 @@ const Navigation = () => {
                       </div>
                       {regularLanguages.map(lang => (
                         <div
-                          className='p-3 pl-8 relative font-bold rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-all'
+                          className='p-3 pl-8 relative font-bold rounded-md hover:bg-navItem transition-all'
                           key={lang.language}
                           onClick={() => {
                             changeLanguage(lang)
@@ -176,12 +182,12 @@ const Navigation = () => {
                       ))}
                       {specialLanguages.length > 0 && regularLanguages.length > 0 && (
                         <div className='sm:col-span-2 p-3 flex flex-col gap-3 items-center'>
-                          <hr className='border-[1px] rounded-full border-zinc-300 dark:border-zinc-500 w-full' />
+                          <hr className='border-[1px] rounded-full border-grey w-full' />
                         </div>
                       )}
                       {specialLanguages.map(lang => (
                         <div
-                          className='p-3 pl-8 relative font-bold rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-all'
+                          className='p-3 pl-8 relative font-bold rounded-md hover:bg-navItem transition-all'
                           key={lang.language}
                           onClick={() => {
                             changeLanguage(lang)
@@ -219,11 +225,11 @@ const Navigation = () => {
             <div ref={clickAwayRef} className='lg:hidden relative'>
               <div
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className='flex hover:scale-110 cursor-pointer group relative transition-all items-center justify-center lg:hidden gap-[5px] flex-col h-12 w-12 glass-card border-[3px] rounded-full  hover:border-darkGrey dark:hover:border-white border-zinc-400'
+                className='flex hover:scale-110 cursor-pointer group relative transition-all items-center justify-center lg:hidden gap-[5px] flex-col h-12 w-12 glass-card border-[3px] rounded-full  hover:border-text border-zinc-400'
               >
-                <div className='w-5 h-[3px] bg-zinc-400 group-hover:bg-darkGrey dark:group-hover:bg-white rounded-full'></div>
-                <div className='w-5 h-[3px] bg-zinc-400 group-hover:bg-darkGrey dark:group-hover:bg-white rounded-full'></div>
-                <div className='w-5 h-[3px] bg-zinc-400 group-hover:bg-darkGrey dark:group-hover:bg-white rounded-full'></div>
+                <div className='w-5 h-[3px] bg-zinc-400 group-hover:bg-text rounded-full'></div>
+                <div className='w-5 h-[3px] bg-zinc-400 group-hover:bg-text rounded-full'></div>
+                <div className='w-5 h-[3px] bg-zinc-400 group-hover:bg-text rounded-full'></div>
               </div>
               <MobileMenu open={mobileMenuOpen} setOpen={setMobileMenuOpen} />
             </div>

@@ -89,7 +89,7 @@ const TableRow: React.FC<TableRowProps> = ({
 
   return (
     <div className='flex flex-col'>
-      <div className='flex items-center w-full gap-3 p-2 pr-1.5 sm:p-4 hover:bg-darkGrey/5 dark:hover:bg-darkGrey/40 rounded-xl sm:gap-6 md:gap-8 h-[75px]'>
+      <div className='flex items-center w-full gap-3 p-2 pr-1.5 sm:p-4  hover:bg-text/5 rounded-xl sm:gap-6 md:gap-8 h-[75px]'>
         <div className='tabular-nums min-w-4 w-4 xxs:min-w-6 xxs:w-6 sm:w-10 flex justify-center text-right'>
           {rankNumber}
         </div>

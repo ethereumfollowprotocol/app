@@ -31,11 +31,11 @@ const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile }) => 
       {isConnectedUserProfile && editModalOpen && (
         <EditModal profiles={topEight || []} onClose={() => setEditModalOpen(false)} />
       )}
-      <div className='glass-card relative xl:w-76 items-center justify-center w-full 2xl:w-86 border-[3px] p-4 2xl:p-6 rounded-xl flex flex-col gap-4 xl:gap-6 border-[#FFDBD9] dark:border-[#a36d7d]'>
+      <div className='glass-card relative xl:w-76 items-center justify-center w-full 2xl:w-86 border-[3px] p-4 2xl:p-6 rounded-xl flex flex-col gap-4 xl:gap-6 border-[#FFDBD9] dark:border-[#a36d7d] halloween:border-[#a36d7d]'>
         {isConnectedUserProfile && (
           <div
             onClick={() => setEditModalOpen(true)}
-            className='absolute top-2 right-2.5 font-semibold text-sm flex gap-1 items-center dark:text-zinc-300 dark:hover:text-zinc-200 text-zinc-500 cursor-pointer hover:text-zinc-400 hover:scale-110 transition-all'
+            className='absolute top-2 right-2.5 font-semibold text-sm flex gap-1 items-center text-text-neutral hover:text-text/70 cursor-pointer hover:scale-110 transition-all'
           >
             <FaRegEdit />
             <p>{t('edit')}</p>

@@ -233,7 +233,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
               )}
               {canEditTags && tagDropdownOpen && (
                 <>
-                  <div className='absolute z-[9999] flex flex-col w-60 gap-2 left-0 top-8 glass-card bg-white dark:bg-darkGrey p-2 border-[3px] border-zinc-200 dark:border-zinc-500 rounded-lg'>
+                  <div className='absolute z-[9999] flex flex-col w-60 gap-2 left-0 top-8 glass-card bg-neutral/80 p-2 border-[3px] border-grey rounded-lg'>
                     <div className='w-full flex items-center gap-1.5 justify-between bg-zinc-300 dark:bg-zinc-400 rounded-lg font-bold p-1 text-left'>
                       <input
                         ref={tagInputRef}
@@ -248,7 +248,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
                         onKeyDown={e => {
                           if (e.key === 'Enter') addCustomTag()
                         }}
-                        className='p-1 pl-2 rounded-md lowercase dark:bg-darkGrey/60 w-full'
+                        className='p-1 pl-2 rounded-md lowercase bg-neutral/70 w-full'
                       />
                       <button
                         className='flex items-center rounded-full hover:scale-110 transition-all hover:opacity-80 bg-white dark:bg-zinc-300 justify-center p-1.5'

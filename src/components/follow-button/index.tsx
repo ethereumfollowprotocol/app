@@ -13,14 +13,14 @@ import { useCoolMode } from './hooks/useCoolMode'
 import MainnetRed from 'public/assets/mainnet-red.svg'
 import MainnetBlack from 'public/assets/mainnet-black.svg'
 import { type FollowButtonState, useFollowButton } from './hooks/use-follow-button'
+import { useTheme } from 'next-themes'
 
 const theme: Record<
   FollowButtonState,
   { bg: string; hover?: string; text: string; border: string; imageSrc?: string }
 > = {
   Follow: {
-    // bg: 'bg-kournikova-300 hover:bg-[#EEBE00]',
-    bg: 'bg-kournikova-300 btn-grad',
+    bg: 'btn-grad',
     text: 'text-zinc-800',
     border: 'border-0'
   },
@@ -120,23 +120,23 @@ const theme: Record<
   }
 }
 
-const coolEmoji: Record<FollowButtonState, string> = {
-  Follow: '/assets/logo.svg',
-  'Pending Following': '',
-  Following: '/assets/icons/unfollow-emoji.svg',
-  Unfollow: '',
-  Subscribe: '',
-  Subscribed: '',
-  Unsubscribe: '',
-  Block: '/assets/icons/block-emoji.svg',
-  'Pending Block': '',
-  Blocked: '',
-  Unblock: '',
-  Mute: '/assets/icons/mute-emoji.svg',
-  'Pending Mute': '',
-  Muted: '',
-  Unmute: ''
-}
+// const coolEmoji: Record<FollowButtonState, string> = {
+//   Follow: '/assets/logo.svg',
+//   'Pending Following': '',
+//   Following: '/assets/icons/unfollow-emoji.svg',
+//   Unfollow: '',
+//   Subscribe: '',
+//   Subscribed: '',
+//   Unsubscribe: '',
+//   Block: '/assets/icons/block-emoji.svg',
+//   'Pending Block': '',
+//   Blocked: '',
+//   Unblock: '',
+//   Mute: '/assets/icons/mute-emoji.svg',
+//   'Pending Mute': '',
+//   Muted: '',
+//   Unmute: ''
+// }
 
 interface FollowButtonProps {
   address: Address
@@ -152,13 +152,33 @@ const FollowButton: React.FC<FollowButtonProps> = ({
 }) => {
   const [disableHover, setDisableHover] = useState(false)
 
+  const { t } = useTranslation()
+  const { resolvedTheme } = useTheme()
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
-  const { t } = useTranslation()
   const { buttonText, buttonState, handleAction, isLoading } = useFollowButton({
     address,
     isBlockedBy
   })
+
+  const coolEmoji: Record<FollowButtonState, string> = {
+    Follow:
+      resolvedTheme === 'halloween' ? '/assets/icons/halloween-emoji.png' : '/assets/logo.svg',
+    'Pending Following': '',
+    Following: '/assets/icons/unfollow-emoji.svg',
+    Unfollow: '',
+    Subscribe: '',
+    Subscribed: '',
+    Unsubscribe: '',
+    Block: '/assets/icons/block-emoji.svg',
+    'Pending Block': '',
+    Blocked: '',
+    Unblock: '',
+    Mute: '/assets/icons/mute-emoji.svg',
+    'Pending Mute': '',
+    Muted: '',
+    Unmute: ''
+  }
 
   const coolEfpLogo = useCoolMode(
     coolEmoji[buttonState],

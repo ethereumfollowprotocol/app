@@ -124,7 +124,7 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
       </button>
       {tagDropdownOpen && (
         <>
-          <div className='absolute z-50 flex flex-col w-60 gap-2 left-0 top-8 glass-card bg-white/50 dark:bg-darkGrey/80 p-2 border-[3px] border-zinc-200 dark:border-zinc-500 rounded-lg'>
+          <div className='absolute z-50 flex flex-col w-60 gap-2 left-0 top-8 glass-card bg-white/50 dark:bg-darkGrey/80 p-2 border-[3px] border-grey rounded-lg'>
             <div className='w-full flex items-center gap-1.5 justify-between bg-zinc-300 dark:bg-zinc-500 rounded-lg font-bold p-1 text-left'>
               <input
                 ref={tagInputRef}

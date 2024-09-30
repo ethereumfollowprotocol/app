@@ -30,7 +30,12 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           backgroundImage: `url(assets/art/waves-background.svg)`
         }}
       >
-        <ThemeProvider attribute='class' defaultTheme='system' enableSystem={true}>
+        <ThemeProvider
+          attribute='class'
+          defaultTheme='system'
+          enableSystem={true}
+          themes={['light', 'dark', 'halloween']}
+        >
           <Toaster richColors={true} />
           <Providers initialState={initialState}>{children}</Providers>
           {/* <VercelToolbar /> */}

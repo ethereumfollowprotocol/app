@@ -153,9 +153,9 @@ export function UserProfilePageTable({
   return (
     <div
       className={cn(
-        'flex flex-col w-full gap-4 py-2 px-0 sm:p-4 border-[3px] rounded-2xl border-zinc-200 dark:border-zinc-500',
+        'flex flex-col w-full gap-4 py-2 px-0 sm:p-4 border-[3px] rounded-2xl border-grey',
         !(isLoading || isFetchingMore) && 'pb-0 sm:pb-0',
-        BLOCKED_MUTED_TABS.includes(title) ? 'bg-white/70 dark:bg-darkGrey/70' : 'glass-card',
+        BLOCKED_MUTED_TABS.includes(title) ? 'bg-neutral/70' : 'glass-card',
         customClass
       )}
     >
@@ -182,9 +182,7 @@ export function UserProfilePageTable({
           isLoadingMore={isFetchingMore}
           loadingRows={FETCH_LIMIT_PARAM}
           listClassName='gap-2 rounded-xl w-full px-3 sm:px-0'
-          listItemClassName={`rounded-xl w-full px-0 py-2 sm:p-2 ${
-            title === 'Blocked/Muted' || title === 'Blocked/Muted By' ? 'hover:bg-[#f8f8f8]' : ''
-          }`}
+          listItemClassName={`rounded-xl w-full px-0 py-2 sm:p-2`}
           profiles={profiles}
           showTags={showTags}
           showFollowsYouBadges={showFollowsYouBadges}

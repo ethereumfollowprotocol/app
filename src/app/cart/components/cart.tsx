@@ -8,6 +8,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import Checkout from './checkout'
+import { cn } from '#/lib/utilities'
 import ImportModal from './import-modal'
 import { Search } from '#/components/search'
 import ClearCartModal from './clear-cart-modal'
@@ -19,7 +20,6 @@ import FarcasterIcon from 'public/assets/icons/farcaster.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { PrimaryButton } from '#/components/buttons/primary-button'
 import { DEFAULT_CHAIN, LIST_OP_LIMITS } from '#/lib/constants/chain'
-import { cn } from '#/lib/utilities'
 
 const Cart = () => {
   const [isClient, setIsClient] = useState(false)
@@ -95,7 +95,7 @@ const Cart = () => {
             <ImportModal onClose={() => setImportModalOpen(false)} platform={platform} />
           )}
           {clearCartModalOpen && <ClearCartModal closeModal={() => setClearCartModalOpen(false)} />}
-          <div className='flex flex-col glass-card gap-4 px-1 py-4 sm:p-4 h-fit rounded-2xl border-[3px] border-zinc-200 dark:border-zinc-500 xl:max-w-116 w-full xl:w-1/3'>
+          <div className='flex flex-col glass-card gap-4 px-1 py-4 sm:p-4 h-fit rounded-2xl border-[3px] border-grey xl:max-w-116 w-full xl:w-1/3'>
             <div className='w-full flex justify-between items-center px-4 sm:px-2 pt-2'>
               <h1 className='text-left text-xl sm:text-3xl font-bold'>{t('editor title')}</h1>
               <div className='flex gap-1'>
@@ -125,7 +125,7 @@ const Cart = () => {
             <Search size='w-full z-50 px-2 pt-2' isEditor={true} />
             <Recommendations header={t('recommendations')} endpoint='recommended' limit={30} />
           </div>
-          <div className='flex h-full flex-col glass-card rounded-2xl border-[3px] border-zinc-200 dark:border-zinc-500 gap-3 md:gap-4 md:py-6 pt-5 pb-2 px-1 sm:px-3 md:px-4 w-full xl:w-2/3'>
+          <div className='flex h-full flex-col glass-card rounded-2xl border-[3px] border-grey gap-3 md:gap-4 md:py-6 pt-5 pb-2 px-1 sm:px-3 md:px-4 w-full xl:w-2/3'>
             <div className='flex justify-between gap-2 flex-row items-center px-3 md:px-4'>
               <h3 className='font-bold text-left text-xl sm:text-3xl xxs:w-2/3'>
                 {t('cart unc-changes')}
@@ -164,7 +164,7 @@ const Cart = () => {
                 isClient && totalCartItems > 0 ? 'flex' : 'hidden'
               )}
             >
-              <div className='flex gap-6 w-full border-[3px] border-zinc-200 dark:border-zinc-500 lg:w-fit items-center p-4 bg-white/10 justify-between glass-card bg-opacity-50 shadow-xl rounded-xl'>
+              <div className='flex gap-6 w-full border-[3px] border-grey lg:w-fit items-center p-4 bg-white/10 justify-between glass-card bg-opacity-50 shadow-xl rounded-xl'>
                 <div className='flex flex-col gap-1 items-start'>
                   <div className='flex gap-2 items-center'>
                     <p className='text-6xl font-bold'>{formatNumber(totalCartItems)}</p>

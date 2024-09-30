@@ -75,7 +75,7 @@ export function FollowList({
           {((profiles && profiles?.length > 0) ||
             socialProfiles?.map(profile => profile.profiles.length > 0).includes(true)) &&
             createListItem && (
-              <div className='flex w-[350px] sm:w-full items-center dark:hover:bg-darkGrey/40 hover:bg-[#ebebeb88] rounded-xl gap-2 md:p-4 p-1.5 sm:p-2 sm:gap-3'>
+              <div className='flex w-[350px] sm:w-full items-center hover:bg-list ounded-xl gap-2 md:p-4 p-1.5 sm:p-2 sm:gap-3'>
                 <Image
                   src={EFPLogo}
                   alt='EFP List'
@@ -94,7 +94,7 @@ export function FollowList({
               social.profiles.length > 0 && (
                 <div
                   key={social.platform}
-                  className='flex sm:w-full justify-between dark:hover:bg-darkGrey/40 hover:bg-[#ebebeb88] rounded-xl items-center md:p-4 p-1.5 sm:p-2'
+                  className='flex sm:w-full justify-between hover:bg-list rounded-xl items-center md:p-4 p-1.5 sm:p-2'
                 >
                   <div
                     className='flex items-center gap-2 sm:gap-3'
