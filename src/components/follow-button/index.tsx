@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
-import { useState, type Ref } from 'react'
+import { useMemo, useRef, useState, type Ref } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
@@ -187,12 +187,40 @@ const FollowButton: React.FC<FollowButtonProps> = ({
     isLoading
   )
 
+  const sound = useMemo(
+    () =>
+      ({
+        Follow: resolvedTheme === 'halloween' ? '/assets/sound-effects/follow-halloween.mp3' : '',
+        'Pending Following': '',
+        Following: '/assets/sound-effects/unfollow-halloween.mp3',
+        Unfollow: '',
+        Subscribe: '',
+        Subscribed: '',
+        Unsubscribe: '',
+        Block: '/assets/icons/block-emoji.svg',
+        'Pending Block': '',
+        Blocked: '',
+        Unblock: '',
+        Mute: '/assets/icons/mute-emoji.svg',
+        'Pending Mute': '',
+        Muted: '',
+        Unmute: ''
+      })[buttonState],
+    [buttonState, resolvedTheme]
+  )
+
+  const soundRef = useRef<HTMLAudioElement>(null)
+
   return isLoading ? (
     <div className={`rounded-xl ${isBlockedBy ? 'w-[132px]' : 'w-[120px]'} py-1`}>
       <LoadingCell className='h-10 w-full rounded-lg' />
     </div>
   ) : (
     <div ref={coolEfpLogo as Ref<HTMLDivElement>}>
+      <audio ref={soundRef} key={sound}>
+        <track kind='captions' />
+        {sound.length > 0 && <source src={sound} type='audio/mpeg' />}
+      </audio>
       <button
         className={cn([
           theme[buttonState].bg,
@@ -220,6 +248,9 @@ const FollowButton: React.FC<FollowButtonProps> = ({
             openConnectModal()
             return
           }
+
+          if (soundRef.current) soundRef.current.volume = 0.1
+          soundRef.current?.play()
 
           setDisableHover(true)
           handleAction()

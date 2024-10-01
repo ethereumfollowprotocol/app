@@ -15,6 +15,7 @@ import { CartProvider } from '#/contexts/cart-context'
 import { ActionsProvider } from '#/contexts/actions-context'
 import { EFPProfileProvider } from '#/contexts/efp-profile-context'
 import { TransactionsProvider } from '#/contexts/transactions-context'
+import VolumeSelector from '#/components/volume-selector'
 
 type ProviderProps = {
   children: React.ReactNode
@@ -56,6 +57,7 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
                   <ActionsProvider>
                     <Navigation />
                     {children}
+                    <VolumeSelector />
                   </ActionsProvider>
                 </TransactionsProvider>
               </EFPProfileProvider>

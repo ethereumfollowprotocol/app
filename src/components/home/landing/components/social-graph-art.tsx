@@ -1,11 +1,11 @@
 import Link from 'next/link'
+import { zeroAddress } from 'viem'
 import { useQuery } from '@tanstack/react-query'
 
 import { Avatar } from '#/components/avatar'
+import { truncateAddress } from '#/lib/utilities'
 import LoadingCell from '#/components/loaders/loading-cell'
 import { fetchRecommendations } from '#/api/fetchRecommendations'
-import { zeroAddress } from 'viem'
-import { truncateAddress } from '#/lib/utilities'
 
 const SocialGraphArt = () => {
   const { isLoading, data: socialGraphProfiles } = useQuery({

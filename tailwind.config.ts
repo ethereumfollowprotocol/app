@@ -209,7 +209,7 @@ export default {
           extend: {
             colors: {
               text: '#ffffff',
-              neutral: '#222222',
+              neutral: '#000000',
               grey: '#71717A',
               navItem: '#94a3b822'
             }

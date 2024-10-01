@@ -18,6 +18,8 @@ import CartButton from './components/cart-button.tsx'
 import FullLogoDark from 'public/assets/logo-full-dark.svg'
 import ConnectButton from './components/connect-button.tsx'
 import GreenCheck from 'public/assets/icons/check-green.svg'
+import LogoHalloween from 'public/assets/logo-halloween.svg'
+import FullLogoHalloween from 'public/assets/logo-full-halloween.svg'
 
 const ThemeSwitcher = lazy(() => import('../theme-switcher'))
 
@@ -75,7 +77,7 @@ const Navigation = () => {
               alt={'Ethereum Follow Protocol Logo'}
             />
             <Image
-              src={FullLogoDark}
+              src={FullLogoHalloween}
               priority={true}
               className='hidden halloween:sm:block sm:max-w-[130px] select-none hover:scale-110 transition-transform'
               alt={'Ethereum Follow Protocol Logo'}
@@ -83,7 +85,13 @@ const Navigation = () => {
             <Image
               src={Logo}
               priority={true}
-              className='w-[56px] sm:hidden select-none hover:scale-110 transition-transform'
+              className='w-[56px] halloween:hidden sm:hidden select-none hover:scale-110 transition-transform'
+              alt='Ethereum Follow Protocol Logo'
+            />
+            <Image
+              src={LogoHalloween}
+              priority={true}
+              className='w-[56px] hidden halloween:block halloween:sm:hidden select-none hover:scale-110 transition-transform'
               alt='Ethereum Follow Protocol Logo'
             />
           </Link>
