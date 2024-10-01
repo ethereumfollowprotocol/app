@@ -17,6 +17,7 @@ import useLanguage from '../hooks/useLanguage'
 import { resolveEnsProfile } from '#/utils/ens'
 import { cn, truncateAddress } from '#/lib/utilities'
 import ThemeSwitcher from '#/components/theme-switcher'
+import { useAutoConnect } from '#/hooks/useAutoConnect'
 import LoadingCell from '#/components/loaders/loading-cell'
 import GreenCheck from 'public/assets/icons/check-green.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
@@ -92,6 +93,8 @@ const ConnectButton = () => {
         lang.englishLanguage.toLowerCase().includes(languageMenuSearch.toLowerCase())
       : true
   )
+
+  useAutoConnect()
 
   return (
     <div ref={clickAwayWalletRef} className='relative'>

@@ -103,6 +103,7 @@
       },
       "complexity": {
         "all": true,
+        "noForEach": "off",
         "noBannedTypes": "off",
         "useLiteralKeys": "off",
         "noUselessFragments": "off",

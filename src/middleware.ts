@@ -31,7 +31,7 @@ export function middleware(request: NextRequest) {
     base-uri 'none';
     form-action 'self';
     frame-src 'self' https://verify.walletconnect.com/ https://verify.walletconnect.org/ https://vercel.live/ https://app.interface.social/;
-    frame-ancestors 'self';
+    frame-ancestors 'self' *.blockscout.com.;
     block-all-mixed-content;
     upgrade-insecure-requests;
   `
