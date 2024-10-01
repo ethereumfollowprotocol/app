@@ -8,27 +8,19 @@ import { useActions } from '#/contexts/actions-context'
 
 const VolumeSelector = () => {
   const [isMuted, setIsMuted] = useState(true)
-  const [isClient, setIsClient] = useState(false)
 
   const { resolvedTheme } = useTheme()
   const { actionsSoundsMuted, setActionsSoundsMuted } = useActions()
   const backgroundMusicRef = useRef<HTMLAudioElement>(null)
 
   useEffect(() => {
-    if (isClient) {
-      if (backgroundMusicRef.current) backgroundMusicRef.current.volume = 0.3
-    } else {
-      setIsClient(true)
-    }
-  }, [isClient, resolvedTheme, backgroundMusicRef])
-
-  useEffect(() => {
-    if (!isClient) return
+    if (window === undefined) return
 
     if (resolvedTheme === 'halloween') {
       setIsMuted(false)
       setActionsSoundsMuted(false)
       backgroundMusicRef.current?.play()
+      if (backgroundMusicRef.current) backgroundMusicRef.current.volume = 0.3
     } else {
       setIsMuted(true)
       setActionsSoundsMuted(true)
@@ -41,6 +33,8 @@ const VolumeSelector = () => {
       <audio ref={backgroundMusicRef} src='/assets/background-music/halloween.mp3' loop={true} />
       <button
         onClick={() => {
+          if (backgroundMusicRef.current) backgroundMusicRef.current.volume = 0.3
+
           if (actionsSoundsMuted) {
             setIsMuted(false)
             setActionsSoundsMuted(false)
