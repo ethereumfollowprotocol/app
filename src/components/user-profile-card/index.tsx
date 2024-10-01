@@ -237,7 +237,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const blockCoolMode = useCoolMode(
     isPendingBlock || (followState === 'blocks' && !isPendingUnblock)
       ? ''
-      : '/assets/icons/block-emoji.svg',
+      : resolvedTheme === 'halloween'
+        ? '/assets/icons/spider-web-emoji.png'
+        : '/assets/icons/block-emoji.svg',
     false,
     true,
     !moreOptionsDropdownOpen
@@ -245,7 +247,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const muteCoolMode = useCoolMode(
     isPendingMute || (followState === 'mutes' && !isPendingUnmute)
       ? ''
-      : '/assets/icons/mute-emoji.svg',
+      : resolvedTheme === 'halloween'
+        ? '/assets/icons/ghost-emoji.png'
+        : '/assets/icons/mute-emoji.svg',
     false,
     true,
     !moreOptionsDropdownOpen

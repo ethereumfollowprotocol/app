@@ -77,6 +77,9 @@ const HeadTag = () => {
       <link rel='preload' href='/assets/icons/block-emoji.svg' as='image' />
       <link rel='preload' href='/assets/icons/mute-emoji.svg' as='image' />
       <link rel='preload' href='/assets/icons/unfollow-emoji.svg' as='image' />
+      <link rel='preload' href='/assets/icons/halloween-emoji.png' as='image' />
+      <link rel='preload' href='/assets/icons/ghost-emoji.png' as='image' />
+      <link rel='preload' href='/assets/icons/spider-web-emoji.png' as='image' />
       <meta name='apple-mobile-web-app-capable' content='yes' />
       <meta name='apple-mobile-web-app-status-bar-style' content='default' />
       <meta name='apple-mobile-web-app-title' content='EFP' />

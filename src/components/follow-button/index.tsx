@@ -172,11 +172,17 @@ const FollowButton: React.FC<FollowButtonProps> = ({
     Subscribe: '',
     Subscribed: '',
     Unsubscribe: '',
-    Block: '/assets/icons/block-emoji.svg',
+    Block:
+      resolvedTheme === 'halloween'
+        ? '/assets/icons/spider-web-emoji.svg'
+        : '/assets/icons/block-emoji.svg',
     'Pending Block': '',
     Blocked: '',
     Unblock: '',
-    Mute: '/assets/icons/mute-emoji.svg',
+    Mute:
+      resolvedTheme === 'halloween'
+        ? '/assets/icons/ghost-emoji.svg'
+        : '/assets/icons/mute-emoji.svg',
     'Pending Mute': '',
     Muted: '',
     Unmute: ''

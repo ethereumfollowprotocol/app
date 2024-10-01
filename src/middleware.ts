@@ -25,13 +25,13 @@ export function middleware(request: NextRequest) {
   const cspHeader = `
     worker-src 'self' 'unsafe-inline' *.cloudflareinsights.com cdn.vercel-insights.com vercel.live va.vercel-scripts.com blob:;
     script-src 'self' 'unsafe-eval' 'unsafe-inline' *.cloudflareinsights.com cdn.vercel-insights.com vercel.live va.vercel-scripts.com;
-    media-src 'none';
+    media-src 'self';
     connect-src *;
     object-src 'none';
     base-uri 'none';
     form-action 'self';
     frame-src 'self' https://verify.walletconnect.com/ https://verify.walletconnect.org/ https://vercel.live/ https://app.interface.social/;
-    frame-ancestors 'self';
+    frame-ancestors 'self' https://verify.walletconnect.org/ https://verify.walletconnect.com/ https://app.interface.social/;
     upgrade-insecure-requests;
   `
 
