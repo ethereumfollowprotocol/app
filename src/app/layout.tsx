@@ -2,6 +2,7 @@ import './i18n'
 import './globals.css'
 import '@rainbow-me/rainbowkit/styles.css'
 
+import Image from 'next/image'
 import { Toaster } from 'sonner'
 import type { Metadata } from 'next'
 import { headers } from 'next/headers'
@@ -16,6 +17,8 @@ import wagmiConfig from '../lib/wagmi.ts'
 import { Production } from './production.tsx'
 import { sharedMetadata } from '#/lib/metadata.ts'
 import { APP_DESCRIPTION } from '../lib/constants/index.ts'
+import BackgroundImage from 'public/assets/art/waves-background.svg'
+import HalloweenBackground from 'public/assets/art/halloween-background.jpeg'
 
 export const metadata: Metadata = sharedMetadata
 
@@ -26,9 +29,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     <html lang='en' suppressHydrationWarning={true} className='dark'>
       <HeadTag />
       <body
-        style={{
-          backgroundImage: `url(assets/art/waves-background.svg)`
-        }}
+      // style={{
+      //   backgroundImage: `url(assets/art/waves-background.svg)`
+      // }}
       >
         <ThemeProvider
           attribute='class'
@@ -36,6 +39,17 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           enableSystem={true}
           themes={['light', 'dark', 'halloween']}
         >
+          <Image
+            src={BackgroundImage}
+            alt='background waves'
+            className='background -z-10 halloween:hidden'
+          />
+          <Image
+            src={HalloweenBackground}
+            alt='halloween background'
+            layout='fill'
+            className='hidden fixed top-0 -z-10 left-0 h-screen opacity-50 w-screen halloween:block'
+          />
           <Toaster richColors={true} />
           <Providers initialState={initialState}>{children}</Providers>
           {/* <VercelToolbar /> */}

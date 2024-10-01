@@ -210,7 +210,7 @@ export default {
             colors: {
               text: '#ffffff',
               neutral: '#000000',
-              grey: '#71717A',
+              grey: '#61616A',
               navItem: '#94a3b822'
             }
           }

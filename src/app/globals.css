@@ -17,12 +17,22 @@ html, body {
 }
 
 body {
-  background-repeat: no-repeat;
+  /* background-repeat: no-repeat;
   background-position: -34.1vw -34vw;
   background-size: 210vw 129vw;
-  background-attachment: fixed;
-  /* background: url('assets/art/waves-background.svg'); */
+  background-attachment: fixed; */
+  /* background-image: url("/assets/art/waves-background.svg"); */
   @apply text-text bg-neutral;
+}
+
+.background {
+  position: fixed;
+  top: -34vw;
+  right: -21vw;
+  width: 210vw;
+  height: 129vw;
+  overflow: visible;
+  object-fit: cover;
 }
 
 /* Social graph art */
@@ -683,36 +693,46 @@ input {
 
 /* Background size changes */
 @media screen and (max-width: 1750px) {
-  body {
-    background-position: -34.1vw -32vw;
-    background-size: 210vw 129vw;
+  .background {
+    top: -34vw;
+    right: -20vw;
+    height: 135vw;
+    width: 215vw;
   }
 }
 
 @media screen and (min-width: 2100px) {
-  body {
-    background-position: -34.1vw -36vw;
-    background-size: 210vw 129vw;
+  .background {
+    top: -36vw;
+    right: -22vw;
+    height: 129vw;
+    width: 210vw;
   }
 }
 
 @media screen and (max-width: 1350px) {
-  body {
-    background-position: -34.1vw -20vw;
-    background-size: 210vw 129vw;
+  .background {
+    right: -20vw;
+    top: -30vw;
+    height: 129vw;
+    width: 210vw;
   }
 }
 
 @media screen and (max-width: 750px) {
-  body {
-    background-position: -200vw -40vh;
-    background-size: 750vw 350vw;
+  .background {
+    right: -100vw;
+    top: -300vw;
+    height: 900vw;
+    width: 750vw;
   }
 }
 
 @media screen and (max-width: 420px) {
-  body {
-    background-position: -250vw -55vh;
-    background-size: 900vw 450vw;
+  .background {
+    right: -150vw;
+    top: -340vw;
+    height: 900vw;
+    width: 750vw;
   }
 }

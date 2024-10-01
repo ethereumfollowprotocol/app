@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
-import { useMemo, useRef, useState, type Ref } from 'react'
+import { useEffect, useMemo, useRef, useState, type Ref } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
@@ -14,6 +14,7 @@ import MainnetRed from 'public/assets/mainnet-red.svg'
 import MainnetBlack from 'public/assets/mainnet-black.svg'
 import { type FollowButtonState, useFollowButton } from './hooks/use-follow-button'
 import { useTheme } from 'next-themes'
+import { useActions } from '#/contexts/actions-context'
 
 const theme: Record<
   FollowButtonState,
@@ -154,6 +155,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
 
   const { t } = useTranslation()
   const { resolvedTheme } = useTheme()
+  const { actionsSoundsMuted } = useActions()
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
   const { buttonText, buttonState, handleAction, isLoading } = useFollowButton({
@@ -190,26 +192,37 @@ const FollowButton: React.FC<FollowButtonProps> = ({
   const sound = useMemo(
     () =>
       ({
-        Follow: resolvedTheme === 'halloween' ? '/assets/sound-effects/follow-halloween.mp3' : '',
-        'Pending Following': '',
-        Following: '/assets/sound-effects/unfollow-halloween.mp3',
-        Unfollow: '',
-        Subscribe: '',
-        Subscribed: '',
-        Unsubscribe: '',
-        Block: '/assets/icons/block-emoji.svg',
-        'Pending Block': '',
-        Blocked: '',
-        Unblock: '',
-        Mute: '/assets/icons/mute-emoji.svg',
-        'Pending Mute': '',
-        Muted: '',
-        Unmute: ''
+        Follow:
+          resolvedTheme === 'halloween' ? '/assets/sound-effects/follow-halloween.mp3' : undefined,
+        'Pending Following': undefined,
+        Following:
+          resolvedTheme === 'halloween'
+            ? '/assets/sound-effects/unfollow-halloween.mp3'
+            : undefined,
+        Unfollow: undefined,
+        Subscribe: undefined,
+        Subscribed: undefined,
+        Unsubscribe: undefined,
+        Block: undefined,
+        'Pending Block': undefined,
+        Blocked: undefined,
+        Unblock: undefined,
+        Mute: undefined,
+        'Pending Mute': undefined,
+        Muted: undefined,
+        Unmute: undefined
       })[buttonState],
     [buttonState, resolvedTheme]
   )
 
   const soundRef = useRef<HTMLAudioElement>(null)
+
+  useEffect(() => {
+    if (soundRef.current) {
+      if (actionsSoundsMuted) soundRef.current.volume = 0
+      else soundRef.current.volume = 0.2
+    }
+  }, [sound, actionsSoundsMuted])
 
   return isLoading ? (
     <div className={`rounded-xl ${isBlockedBy ? 'w-[132px]' : 'w-[120px]'} py-1`}>
@@ -217,10 +230,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
     </div>
   ) : (
     <div ref={coolEfpLogo as Ref<HTMLDivElement>}>
-      <audio ref={soundRef} key={sound}>
-        <track kind='captions' />
-        {sound.length > 0 && <source src={sound} type='audio/mpeg' />}
-      </audio>
+      <audio ref={soundRef} src={sound} key={resolvedTheme} />
       <button
         className={cn([
           theme[buttonState].bg,
@@ -249,7 +259,6 @@ const FollowButton: React.FC<FollowButtonProps> = ({
             return
           }
 
-          if (soundRef.current) soundRef.current.volume = 0.1
           soundRef.current?.play()
 
           setDisableHover(true)
