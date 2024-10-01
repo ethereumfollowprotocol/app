@@ -16,11 +16,11 @@ const VolumeSelector = () => {
 
   useEffect(() => {
     if (isClient) {
-      if (backgroundMusicRef.current) backgroundMusicRef.current.volume = 0.1
+      if (backgroundMusicRef.current) backgroundMusicRef.current.volume = 0.3
     } else {
       setIsClient(true)
     }
-  }, [isClient])
+  }, [isClient, resolvedTheme, backgroundMusicRef])
 
   useEffect(() => {
     if (!isClient) return
@@ -38,12 +38,7 @@ const VolumeSelector = () => {
 
   return (
     <div className='border-text hidden halloween:block bg-neutral z-50 border-[3px] fixed -bottom-[3px] -left-[3px] p-2 pb-1 text-xl rounded-tr-xl'>
-      <audio
-        ref={backgroundMusicRef}
-        src='/assets/background-music/halloween.mp3'
-        loop={true}
-        autoPlay={true}
-      />
+      <audio ref={backgroundMusicRef} src='/assets/background-music/halloween.mp3' loop={true} />
       <button
         onClick={() => {
           if (actionsSoundsMuted) {

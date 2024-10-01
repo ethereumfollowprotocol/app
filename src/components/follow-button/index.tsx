@@ -226,7 +226,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
   useEffect(() => {
     if (soundRef.current) {
       if (actionsSoundsMuted) soundRef.current.volume = 0
-      else soundRef.current.volume = 0.2
+      else soundRef.current.volume = 0.4
     }
   }, [sound, actionsSoundsMuted])
 
