@@ -50,7 +50,7 @@ const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile }) => 
           <h3 className='text-2xl'>{t('top eight title')}</h3>
         </div>
         {topEight?.length === 0 && !(topEightIsLoading || topEightIsRefetching) && (
-          <p className='font-medium italic text-lg my-16 text-center text-zinc-500 dark:text-zinc-300'>
+          <p className='font-medium italic text-lg my-16 text-center text-text'>
             {t('no top eight')}
           </p>
         )}
@@ -71,10 +71,9 @@ const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile }) => 
         </div>
         {topEight.length > displayLimit && (
           <div
-            className='text-2xl rounded-xl w-full p-2 justify-center border-[3px] text-[#A1A1AA] border-[#A1A1AA] dark:border-white/95 dark:text-white gap-2 flex lg:hidden font-semibold items-center'
+            className='text-2xl rounded-xl w-full p-2 justify-center cursor-pointer border-[3px] text-text/80 gap-2 flex lg:hidden font-semibold items-center'
             onClick={() => setDisplayLimit(displayLimit >= 8 ? 2 : 8)}
           >
-            {/* <p>{displayLimit >= 8 ? t('view less') : t('view more')}</p> */}
             <IoIosArrowDown
               className={cn('transition-transform', displayLimit >= 8 && 'rotate-180')}
             />

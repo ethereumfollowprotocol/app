@@ -112,7 +112,7 @@ export function FollowList({
                         <p className='text-lg font-bold'>
                           {t('import from')} <span className='capitalize'>{social.platform}</span>
                         </p>
-                        <p className='font-medium text-sm text-zinc-500 dark:text-zinc-300'>
+                        <p className='font-medium text-sm text-text/80'>
                           {t('adding')}: {formatNumber(social.profiles.length)}
                         </p>
                       </div>

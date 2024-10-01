@@ -106,7 +106,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
           <p className='font-bold text-base sm:text-xl'>{t('location')}</p>
           <div className='relative' ref={chainDropdownRef}>
             <button
-              className='w-[170px] sm:w-[190px] gap-0.5 flex items-center justify-between px-2 sm:px-3 h-[42px] sm:h-12 dark:bg-darkGrey/50 dark:hover:bg-darkGrey bg-white/50 p-1 hover:bg-white/60 rounded-xl disabled:hover:bg-white/50 disabled:opacity-75 disabled:cursor-not-allowed'
+              className='w-[170px] sm:w-[190px] gap-0.5 flex items-center justify-between px-2 sm:px-3 h-[42px] sm:h-12 bg-neutral/50 p-1 hover:bg-neutral/70 rounded-xl disabled:opacity-75 disabled:cursor-not-allowed'
               onClick={() => setChainDropdownOpen(!chainDropdownOpen)}
               disabled={
                 !isEditingSettings ||
@@ -134,7 +134,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
               )}
             </button>
             {chainDropdownOpen && (
-              <div className='absolute top-12 sm:top-14 z-10 flex bg-white dark:bg-darkGrey flex-col rounded-xl w-full'>
+              <div className='absolute top-12 sm:top-14 z-10 flex bg-neutral flex-col rounded-xl w-full'>
                 {chains.map(item => (
                   <div
                     key={item.id}
@@ -146,7 +146,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
                         chain: fetchedChain?.id !== item.id
                       })
                     }}
-                    className='w-full hover:bg-white dark:hover:bg-zinc-500/20 cursor-pointer rounded-xl flex items-center gap-3 p-3'
+                    className='w-full hover:bg-grey/40 cursor-pointer rounded-xl flex items-center gap-3 p-3'
                   >
                     <ChainIcon
                       chain={item as ChainWithDetails}

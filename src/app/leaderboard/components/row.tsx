@@ -163,7 +163,7 @@ const TableRow: React.FC<TableRowProps> = ({
                   }[firstStat] || 0
                 )}
               </p>
-              <p className='font-bold text-sm capitalize text-[#888] dark:text-[#aaa] text-wrap text-center break-words w-full'>
+              <p className='font-bold text-sm capitalize text-text/60 text-wrap text-center break-words w-full'>
                 {t(firstStat)}
               </p>
             </div>
@@ -183,7 +183,7 @@ const TableRow: React.FC<TableRowProps> = ({
             )}
           >
             <p className='font-bold text-sm sm:text-lg'>{formatNumber(mutuals || 0)}</p>
-            <p className='font-bold text-sm  text-[#888] dark:text-[#aaa] text-wrap break-words text-center w-full'>
+            <p className='font-bold text-sm  text-text/60 text-wrap break-words text-center w-full'>
               {t('mutuals')}
             </p>
           </div>
@@ -207,7 +207,7 @@ const TableRow: React.FC<TableRowProps> = ({
             onClick={() => router.push(`/${address}?tab=followers`)}
           >
             <p className='font-bold text-sm sm:text-lg'>{formatNumber(followers || 0)}</p>
-            <p className='font-bold text-sm  text-[#888] dark:text-[#aaa] text-wrap break-words text-center w-full'>
+            <p className='font-bold text-sm  text-text/60 text-wrap break-words text-center w-full'>
               {t('followers')}
             </p>
           </div>
@@ -224,7 +224,7 @@ const TableRow: React.FC<TableRowProps> = ({
             onClick={() => router.push(`/${address}?tab=following`)}
           >
             <p className='font-bold text-sm sm:text-lg'>{formatNumber(following || 0)}</p>
-            <p className='font-bold text-sm  text-[#888] dark:text-[#aaa] text-wrap break-words text-center w-full'>
+            <p className='font-bold text-sm  text-text/60 text-wrap break-words text-center w-full'>
               {t('following')}
             </p>
           </div>
@@ -239,7 +239,7 @@ const TableRow: React.FC<TableRowProps> = ({
             onClick={() => router.push(`/${address}?tab=following`)}
           >
             <p className='font-bold text-sm sm:text-lg'>{formatNumber(top8 || 0)}</p>
-            <p className='font-bold text-sm text-[#888] dark:text-[#aaa] text-wrap break-words text-center w-full'>
+            <p className='font-bold text-sm text-text/60 text-wrap break-words text-center w-full'>
               {t('top8')}
             </p>
           </div>
@@ -250,7 +250,7 @@ const TableRow: React.FC<TableRowProps> = ({
             onClick={() => router.push(`/${address}?modal=blockmutelists`)}
           >
             <p className='font-bold text-sm sm:text-lg'>{formatNumber(blocked || 0)}</p>
-            <p className='font-bold text-sm text-[#888] dark:text-[#aaa] text-wrap break-words text-center w-full'>
+            <p className='font-bold text-sm text-text/60 text-wrap break-words text-center w-full'>
               {t('blocked')}
             </p>
           </div>
@@ -302,7 +302,7 @@ const TableRow: React.FC<TableRowProps> = ({
                 }[firstStat] || 0
               )}
             </p>
-            <p className='font-bold text-sm capitalize text-[#888] dark:text-[#aaa] text-wrap text-center w-full break-words'>
+            <p className='font-bold text-sm capitalize text-text/60 text-wrap text-center w-full break-words'>
               {t(firstStat)}
             </p>
           </div>
@@ -314,7 +314,7 @@ const TableRow: React.FC<TableRowProps> = ({
           )}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(mutuals || 0)}</p>
-          <p className='font-bold text-sm  text-[#888] dark:text-[#aaa] text-wrap w-full text-center break-words'>
+          <p className='font-bold text-sm  text-text/60 text-wrap w-full text-center break-words'>
             {t('mutuals')}
           </p>
         </div>
@@ -326,7 +326,7 @@ const TableRow: React.FC<TableRowProps> = ({
           onClick={() => router.push(`/${address}?tab=followers`)}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(followers || 0)}</p>
-          <p className='font-bold text-sm  text-[#888] dark:text-[#aaa] text-wrap break-words text-center w-full'>
+          <p className='font-bold text-sm  text-text/60 text-wrap break-words text-center w-full'>
             {t('followers')}
           </p>
         </div>
@@ -338,7 +338,7 @@ const TableRow: React.FC<TableRowProps> = ({
           onClick={() => router.push(`/${address}?tab=following`)}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(following || 0)}</p>
-          <p className='font-bold text-sm  text-[#888] dark:text-[#aaa] text-wrap break-words text-center w-full'>
+          <p className='font-bold text-sm  text-text/60 text-wrap break-words text-center w-full'>
             {t('following')}
           </p>
         </div>
@@ -350,7 +350,7 @@ const TableRow: React.FC<TableRowProps> = ({
           onClick={() => router.push(`/${address}`)}
         >
           <p className='font-bold text-sm sm:text-lg'>{formatNumber(top8 || 0)}</p>
-          <p className='font-bold text-sm  text-[#888] dark:text-[#aaa] text-wrap break-words  text-center w-full'>
+          <p className='font-bold text-sm  text-text/60 text-wrap break-words  text-center w-full'>
             {t('top8')}
           </p>
         </div>
