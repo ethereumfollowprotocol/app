@@ -40,7 +40,7 @@
     "update-browserslist-db": "^1.1.0",
     "valibot": "^0.27.0",
     "viem": "^2.9.15",
-    "wagmi": "^2.5.19"
+    "wagmi": "^2.12.16"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.7.3",
