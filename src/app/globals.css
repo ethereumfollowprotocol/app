@@ -212,7 +212,7 @@ body::-webkit-scrollbar-thumb {
 
 .glass-selector {
     backdrop-filter: blur(1rem);
-    @apply bg-[#f5f5f544];
+    @apply bg-[#f5f5f526];
 }
 
 :focus:not(:focus-visible) {

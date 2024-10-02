@@ -239,8 +239,8 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
         />
       )}
       {!isSaving && (
-        <>
-          <div className='flex flex-col w-full xl:w-fit items-center gap-6'>
+        <div className='flex relative min-h-[1050px] h-screen pt-40 overflow-y-auto justify-center gap-4 w-full'>
+          <div className='sticky top-0'>
             <UserProfileCard
               profileList={
                 userIsList
@@ -260,54 +260,15 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
               }}
               openListSettingsModal={() => setListSettingsOpen(true)}
             />
-            <TopEight user={user} isConnectedUserProfile={isMyProfile} />
           </div>
-          <UserProfilePageTable
-            isLoading={followingIsLoading}
-            results={following}
-            allTags={followingTags?.tagCounts}
-            tagsLoading={followingTagsLoading}
-            selectedTags={followingTagsFilter}
-            toggleSelectedTags={toggleTag}
-            setSelectedTags={setFollowingTagsFilter}
-            sort={followingSort}
-            setSort={setFollowingSort}
-            isEndOfResults={isEndOfFollowing}
-            isFetchingMore={isFetchingMoreFollowing}
-            fetchMore={() => fetchMoreFollowing()}
-            setSearchFilter={setFollowingSearch}
-            canEditTags={
-              Number(userIsList ? listNum : profile?.primary_list) === selectedList &&
-              roles?.isManager
-            }
-            title='following'
-            customClass='hidden xl:flex xl:max-w-[520px] z-10 2xl:max-w-[40%]'
-          />
-          <UserProfilePageTable
-            isLoading={followersIsLoading}
-            results={followers}
-            allTags={followerTags?.tagCounts}
-            tagsLoading={followerTagsLoading}
-            selectedTags={followersTagsFilter}
-            toggleSelectedTags={toggleTag}
-            setSelectedTags={setFollowersTagsFilter}
-            sort={followersSort}
-            setSort={setFollowersSort}
-            isEndOfResults={isEndOfFollowers}
-            isFetchingMore={isFetchingMoreFollowers}
-            fetchMore={() => fetchMoreFollowers()}
-            setSearchFilter={setFollowersSearch}
-            title='followers'
-            customClass='hidden xl:flex xl:max-w-[520px] 2xl:max-w-[40%]'
-          />
           <div
             ref={titleRef}
-            className='w-full pt-14 relative xl:hidden'
+            className='w-full xl:max-w-[800px] relative h-fit flex-grow'
             style={{
               scrollMarginTop: '100px'
             }}
           >
-            <div className='w-full absolute top-[7px] left-0 flex justify-between'>
+            <div className='w-full top-0 sticky left-0 flex z-40 justify-between'>
               {PROFILE_TABS.map(option => (
                 <button
                   key={option}
@@ -323,9 +284,13 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
                 </button>
               ))}
             </div>
-            {mobileActiveEl}
+            <div className='sticky -translate-y-56 top-12 z-30 h-56 w-full bg-white dark:bg-darkGrey'></div>
+            <div className='-translate-y-56'>{mobileActiveEl}</div>
           </div>
-        </>
+          <div className='sticky top-0'>
+            <TopEight user={user} isConnectedUserProfile={isMyProfile} />
+          </div>
+        </div>
       )}
     </>
   )
