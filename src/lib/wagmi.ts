@@ -57,7 +57,7 @@ export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
     ...base,
     iconUrl: '/assets/chains/base.svg',
     custom: {
-      chainDetail: '',
+      chainDetail: 'Ethereum L2',
       gasFeeDetail: 'Super Low gas fees'
     }
   },
