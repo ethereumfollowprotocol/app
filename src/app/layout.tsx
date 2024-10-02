@@ -73,11 +73,10 @@ const HeadTag = () => {
       <link rel='icon' href='/assets/favicon.ico' sizes='any' />
       <link rel='preload' href='/assets/art/waves-background.svg' as='image' />
       <link rel='preload' href='/assets/logo.svg' as='image' />
-      <link rel='preload' href='/assets/icons/halloween-emoji.png' as='image' />
       <link rel='preload' href='/assets/icons/block-emoji.svg' as='image' />
       <link rel='preload' href='/assets/icons/mute-emoji.svg' as='image' />
       <link rel='preload' href='/assets/icons/unfollow-emoji.svg' as='image' />
-      <link rel='preload' href='/assets/icons/halloween-emoji.png' as='image' />
+      <link rel='preload' href='/assets/icons/halloween-emoji.svg' as='image' />
       <link rel='preload' href='/assets/icons/ghost-emoji.png' as='image' />
       <link rel='preload' href='/assets/icons/spider-web-emoji.png' as='image' />
       <meta name='apple-mobile-web-app-capable' content='yes' />

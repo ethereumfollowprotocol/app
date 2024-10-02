@@ -165,7 +165,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
 
   const coolEmoji: Record<FollowButtonState, string> = {
     Follow:
-      resolvedTheme === 'halloween' ? '/assets/icons/halloween-emoji.png' : '/assets/logo.svg',
+      resolvedTheme === 'halloween' ? '/assets/icons/halloween-emoji.svg' : '/assets/logo.svg',
     'Pending Following': '',
     Following: '/assets/icons/unfollow-emoji.svg',
     Unfollow: '',
