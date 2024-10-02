@@ -237,7 +237,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const blockCoolMode = useCoolMode(
     isPendingBlock || (followState === 'blocks' && !isPendingUnblock)
       ? ''
-      : '/assets/icons/block-emoji.svg',
+      : resolvedTheme === 'halloween'
+        ? '/assets/icons/spider-web-emoji.png'
+        : '/assets/icons/block-emoji.svg',
     false,
     true,
     !moreOptionsDropdownOpen
@@ -245,7 +247,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const muteCoolMode = useCoolMode(
     isPendingMute || (followState === 'mutes' && !isPendingUnmute)
       ? ''
-      : '/assets/icons/mute-emoji.svg',
+      : resolvedTheme === 'halloween'
+        ? '/assets/icons/ghost-emoji.png'
+        : '/assets/icons/mute-emoji.svg',
     false,
     true,
     !moreOptionsDropdownOpen
@@ -254,7 +258,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   return (
     <div
       className={cn(
-        'flex glass-card border-[3px] z-10 flex-col border-[#FFDBD9] dark:border-[#a36d7d] rounded-xl relative',
+        'flex glass-card border-[3px] z-10 flex-col border-[#FFDBD9] dark:border-[#a36d7d] halloween:border-[#a36d7d]  rounded-xl relative',
         isResponsive
           ? isHome
             ? 'w-full xl:w-86 xl:min-w-86'
@@ -276,7 +280,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
             )}
           >
             {!!profileList && (
-              <p className='text-sm sm:text-sm bg-white/80 dark:bg-darkGrey/80 py-[3px] px-2 rounded-full'>
+              <p className='text-sm sm:text-sm bg-neutral/80 py-[3px] px-2 rounded-full'>
                 {t('list')} #{formatNumber(profileList)}
               </p>
             )}
@@ -284,14 +288,14 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
               <div ref={clickAwayCardTooltip} className='relative group z-50 cursor-help'>
                 <p
                   onClick={() => setCardTooltipOpen(!cardTooltipOpen)}
-                  className='text-[12px] italic text-end rounded-full py-0.5 px-2 bg-white/80 dark:bg-darkGrey/80'
+                  className='text-[12px] italic text-end rounded-full py-0.5 px-2 bg-neutral/80'
                 >
                   {t('not primary list')}
                 </p>
                 <div
                   className={`${
                     cardTooltipOpen ? 'block' : 'hidden'
-                  } group-hover:block transition-all text-sm w-68 p-2 glass-card border-zinc-200 dark:border-zinc-500 bg-white/90 dark:bg-darkGrey/70 border-[3px] mt-2 rounded-md absolute top-5 right-0`}
+                  } group-hover:block transition-all text-sm w-68 p-2 glass-card border-grey bg-neutral/90 border-[3px] mt-2 rounded-md absolute top-5 right-0`}
                 >
                   {t('not primary list tooltip')}
                 </div>
@@ -301,7 +305,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 href={`https://app.ens.domains/${profileName || ''}`}
                 target='_blank'
                 rel='noreferrer'
-                className='flex gap-1 items-center hover:scale-110 transition-all bg-white/80 dark:bg-darkGrey/80 rounded-full py-[3px] px-2 pl-1'
+                className='flex gap-1 items-center hover:scale-110 transition-all bg-neutral/80 rounded-full py-[3px] px-2 pl-1'
               >
                 <Image
                   alt='edit profile'
@@ -367,7 +371,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                     >
                       {hasSearchedDifferentName && (
                         <div className='absolute -bottom-[22px] w-full flex justify-center'>
-                          <div className=' flex items-center gap-1 rounded-full px-2 py-0.5 bg-darkGrey dark:bg-white text-white dark:text-darkGrey'>
+                          <div className=' flex items-center gap-1 rounded-full px-2 py-0.5 bg-text text-neutral'>
                             <p className='text-xs'>{searchURLParam}</p>
                             <PiArrowElbowRightUpBold className='text-sm -translate-y-[2px]' />
                           </div>
@@ -398,7 +402,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                         <div
                           className={`${
                             showMoreOptions && moreOptionsDropdownOpen ? 'flex' : 'hidden'
-                          } absolute top-9 right-0 flex-col items-center z-50 gap-2 w-fit p-1 dark:border-zinc-600  dark:bg-darkGrey bg-white border-zinc-200 border-[3px] rounded-xl drop-shadow-lg`}
+                          } absolute top-9 right-0 flex-col items-center z-50 gap-2 w-fit p-1  bg-neutral border-grey border-[3px] rounded-xl drop-shadow-lg`}
                         >
                           {!isConnectedUserCard && (
                             <>
@@ -479,7 +483,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                                   addCartItem({ listOp: listOpAddListRecord(profile?.address) })
                                 addCartItem({ listOp: listOpAddTag(profile?.address, 'top8') })
                               }}
-                              className='rounded-lg text-nowrap cursor-pointer hover:bg-darkGrey/5 dark:hover:bg-white/10 transition-colors w-full relative text-xs flex items-center gap-1 justify-center font-bold p-3'
+                              className='rounded-lg text-nowrap cursor-pointer hover:bg-text/5 transition-colors w-full relative text-xs flex items-center gap-1 justify-center font-bold p-3'
                             >
                               {t(
                                 (isInTopEight || isAddingToTopEight) && !isRemovingFromTopEight
@@ -494,7 +498,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                               setCopyAddressPressed(true)
                               setTimeout(() => setCopyAddressPressed(false), 3000)
                             }}
-                            className='rounded-lg cursor-pointer hover:bg-darkGrey/5 dark:hover:bg-white/10 transition-colors w-full relative text-xs flex items-center gap-1 justify-center font-bold p-3'
+                            className='rounded-lg cursor-pointer hover:bg-text/5 transition-colors w-full relative text-xs flex items-center gap-1 justify-center font-bold p-3'
                           >
                             <MdOutlineContentCopy className='text-base' />
                             <p className='text-nowrap'>
@@ -515,7 +519,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                               setCopyProfileLinkPressed(true)
                               setTimeout(() => setCopyProfileLinkPressed(false), 3000)
                             }}
-                            className='rounded-lg cursor-pointer hover:bg-darkGrey/5 dark:hover:bg-white/10 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3'
+                            className='rounded-lg cursor-pointer hover:bg-text/5 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3'
                           >
                             <MdOutlineContentCopy className='text-base' />
                             <p className='text-nowrap'>
@@ -529,7 +533,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                                 setCopyENSPressed(true)
                                 setTimeout(() => setCopyENSPressed(false), 3000)
                               }}
-                              className='rounded-lg cursor-pointer hover:bg-darkGrey/5 dark:hover:bg-white/10 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3'
+                              className='rounded-lg cursor-pointer hover:bg-text/5 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3'
                             >
                               <MdOutlineContentCopy className='text-base' />
                               <p className='text-nowrap'>
@@ -541,7 +545,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                             href={`https://app.ens.domains${profileName ? `/${profileName}` : ''}`}
                             target='_blank'
                             rel='noreferrer'
-                            className='rounded-lg cursor-pointer hover:bg-darkGrey/5 dark:hover:bg-white/10 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3'
+                            className='rounded-lg cursor-pointer hover:bg-text/5 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3'
                           >
                             <p className='text-nowrap'>ENS app</p>
                             <HiOutlineExternalLink className='text-lg' />
@@ -552,7 +556,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                                 openBlockModal()
                                 setMoreOptionsDropdownOpen(false)
                               }}
-                              className='rounded-lg cursor-pointer hover:bg-darkGrey/5 dark:hover:bg-white/10 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3'
+                              className='rounded-lg cursor-pointer hover:bg-text/5 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3'
                             >
                               <p className='text-nowrap'>{t('block-mute')}</p>
                             </button>
@@ -563,7 +567,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                                 openListSettingsModal()
                                 setMoreOptionsDropdownOpen(false)
                               }}
-                              className='rounded-lg cursor-pointer hover:bg-darkGrey/5 dark:hover:bg-white/10 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3'
+                              className='rounded-lg cursor-pointer hover:bg-text/5 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3'
                             >
                               <IoMdSettings className='text-lg' />
                               <p className='text-nowrap'>{t('settings')}</p>
@@ -585,14 +589,14 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                   )}
                 </div>
                 <div className='flex flex-col gap-2 w-full items-center'>
-                  <p className='text-[#888] dark:text-[#bbb] w-full font-medium text-sm sm:text-sm text-center'>
+                  <p className='text-text/80 w-full font-medium text-sm sm:text-sm text-center'>
                     {profile.ens.records?.description ? (
                       profile.ens.records.description.split(' ').map(word =>
                         word.includes('@') ? (
                           <Link
                             key={word}
                             href={`/${word.replace('@', '')}`}
-                            className='dark:text-blue-400 dark:hover:text-blue-300 text-blue-600 hover:text-blue-500'
+                            className='dark:text-blue-400 dark:hover:text-blue-300 halloween:text-blue-400 halloween:hover:text-blue-300 text-blue-600 hover:text-blue-500'
                           >
                             {word}{' '}
                           </Link>
@@ -612,9 +616,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                           .replace('http://', '')}`}
                         target='_blank'
                         rel='noreferrer'
-                        className='flex max-w-48 items-center text-sm gap-1 mb-1 bg-zinc-200 dark:bg-zinc-500 rounded-full py-0.5 px-2 hover:scale-110 transition-all'
+                        className='flex max-w-48 items-center text-sm gap-1 mb-1 bg-grey rounded-full py-0.5 px-2 hover:scale-110 transition-all'
                       >
-                        <p className='dark:text-blue-400 text-blue-600 max-w-[90%] truncate font-semibold'>
+                        <p className='dark:text-blue-400 halloween:text-blue-400 text-blue-600 max-w-[90%] truncate font-semibold'>
                           {profile.ens.records?.url.slice(-1) === '/'
                             ? profile.ens.records?.url.replace('https://', '').slice(0, -1)
                             : profile.ens.records?.url.replace('https://', '')}
@@ -627,9 +631,11 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                         href={`https://${profile.ens.name}.limo`}
                         target='_blank'
                         rel='noreferrer'
-                        className='flex items-center text-sm gap-1 mb-1 bg-zinc-200 dark:bg-zinc-500 rounded-full py-0.5 px-2 pr-0.5 hover:scale-110 transition-all'
+                        className='flex items-center text-sm gap-1 mb-1 bg-grey rounded-full py-0.5 px-2 pr-0.5 hover:scale-110 transition-all'
                       >
-                        <p className='dark:text-blue-400 text-blue-600 font-semibold'>dweb</p>
+                        <p className='dark:text-blue-400 halloween:text-blue-400 text-blue-600 font-semibold'>
+                          dweb
+                        </p>
                         <Image
                           src='/assets/icons/dweb.svg'
                           alt='dweb'
@@ -698,9 +704,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                       : '-'}
                   </div>
                 )}
-                <div className='text-lg font-bold text-[#888] dark:text-[#aaa]'>
-                  {t('following')}
-                </div>
+                <div className='text-lg font-bold text-text/40'>{t('following')}</div>
               </div>
               <div
                 className='cursor-pointer hover:scale-110 transition-all'
@@ -725,9 +729,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                     {stats ? formatNumber(stats.followers_count) : '-'}
                   </div>
                 )}
-                <div className='text-lg font-bold text-[#888] dark:text-[#aaa]'>
-                  {t('followers')}
-                </div>
+                <div className='text-lg font-bold text-text/40'>{t('followers')}</div>
               </div>
               <div className='flex flex-col w-full items-center gap-3 xl:w-56'>
                 <Link href='/leaderboard'>
@@ -752,11 +754,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                         ?.replaceAll(' ', '')
                         ?.toLowerCase()}`}
                       key={rankTitles[i]}
-                      className='w-full mx-[7.5%] 3xs:mx-[10%] xxs:mx-[15%] xs:mx-0 xs:w-fit xl:w-full flex gap-3 justify-between text-lg items-center font-bold px-3 py-1 rounded-lg dark:hover:bg-darkGrey/40 hover:bg-darkGrey/5 transition-all'
+                      className='w-full mx-[7.5%] 3xs:mx-[10%] xxs:mx-[15%] xs:mx-0 xs:w-fit xl:w-full flex gap-3 justify-between text-lg items-center font-bold px-3 py-1 rounded-lg halloween:hover:bg-darkGrey/40 dark:hover:bg-darkGrey/40 hover:bg-darkGrey/5 transition-all'
                     >
-                      <p className='font-bold text-[#888] text-start dark:text-[#aaa]'>
-                        {t(rankTitles[i] || '')}
-                      </p>
+                      <p className='font-bold text-text/40 text-start'>{t(rankTitles[i] || '')}</p>
                       <p
                         className={
                           {

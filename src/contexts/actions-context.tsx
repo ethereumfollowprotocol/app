@@ -2,7 +2,16 @@
 
 import type { WriteContractReturnType } from 'viem'
 import { useWaitForTransactionReceipt } from 'wagmi'
-import { createContext, useContext, useState, type ReactNode, useCallback, useMemo } from 'react'
+import {
+  createContext,
+  useContext,
+  useState,
+  type ReactNode,
+  useCallback,
+  useMemo,
+  type Dispatch,
+  type SetStateAction
+} from 'react'
 
 export enum EFPActionType {
   CreateEFPList = 'CreateEFPList',
@@ -40,6 +49,8 @@ type ActionsContextType = {
   executeActionByIndex: (index: number) => void
   moveToNextAction: () => number
   resetActions: () => void
+  actionsSoundsMuted: boolean
+  setActionsSoundsMuted: Dispatch<SetStateAction<boolean>>
 }
 
 const ActionsContext = createContext<ActionsContextType | undefined>(undefined)
@@ -48,6 +59,7 @@ const ActionsContext = createContext<ActionsContextType | undefined>(undefined)
  * @description Provider for handling bundled actions in the app such as creating and/or updating EFP lists
  */
 export const ActionsProvider = ({ children }: { children: ReactNode }) => {
+  const [actionsSoundsMuted, setActionsSoundsMuted] = useState(false)
   const [actions, setActions] = useState<Action[]>([])
   const [currentActionIndex, setCurrentActionIndex] = useState(-1)
   const currentAction = actions[currentActionIndex]
@@ -153,7 +165,9 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
     currentActionIndex,
     executeActionByIndex,
     moveToNextAction,
-    resetActions
+    resetActions,
+    actionsSoundsMuted,
+    setActionsSoundsMuted
   }
 
   return <ActionsContext.Provider value={value}>{children}</ActionsContext.Provider>

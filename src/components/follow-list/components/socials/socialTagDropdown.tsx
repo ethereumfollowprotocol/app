@@ -124,8 +124,8 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
       </button>
       {tagDropdownOpen && (
         <>
-          <div className='absolute z-50 flex flex-col w-60 gap-2 left-0 top-8 glass-card bg-white/50 dark:bg-darkGrey/80 p-2 border-[3px] border-zinc-200 dark:border-zinc-500 rounded-lg'>
-            <div className='w-full flex items-center gap-1.5 justify-between bg-zinc-300 dark:bg-zinc-500 rounded-lg font-bold p-1 text-left'>
+          <div className='absolute z-50 flex flex-col w-60 gap-2 left-0 top-8 glass-card bg-neutral/90 p-2 border-[3px] border-grey rounded-lg'>
+            <div className='w-full flex items-center gap-1.5 justify-between bg-zinc-300 rounded-lg font-bold p-1 text-left'>
               <input
                 ref={tagInputRef}
                 placeholder={t('custom tag')}
@@ -139,7 +139,7 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
                 onKeyDown={e => {
                   if (e.key === 'Enter') addCustomTag()
                 }}
-                className='p-1 pl-2 rounded-md lowercase w-full dark:bg-darkGrey/50'
+                className='p-1 pl-2 rounded-md lowercase w-full bg-neutral/70'
               />
               <button
                 className='flex items-center rounded-full hover:opacity-80 bg-white hover:scale-110 transition-all justify-center p-2'

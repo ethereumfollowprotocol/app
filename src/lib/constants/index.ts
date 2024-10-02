@@ -252,30 +252,32 @@ export const leaderboardFiltersEmojies = [
   PirateFlagEmoji
 ] as const
 
+const DARK_ICON_THEME = ['dark', 'halloween'] as const
+
 export const profileCardSocials = [
   {
     name: 'etherscan',
     url: (address: string) => `https://etherscan.io/address/${address}`,
-    icon: (theme: string) => (theme === 'dark' ? EtherscanIconLight : EtherscanIcon)
+    icon: (theme: string) => (DARK_ICON_THEME.includes(theme) ? EtherscanIconLight : EtherscanIcon)
   },
   {
     name: 'com.twitter',
     url: (username: string) => `https://twitter.com/${username}`,
-    icon: (theme: string) => (theme === 'dark' ? TwitterIcon : TwitterIcon)
+    icon: (theme: string) => (DARK_ICON_THEME.includes(theme) ? TwitterIcon : TwitterIcon)
   },
   {
     name: 'com.github',
     url: (username: string) => `https://github.com/${username}`,
-    icon: (theme: string) => (theme === 'dark' ? GithubIconLight : GithubIcon)
+    icon: (theme: string) => (DARK_ICON_THEME.includes(theme) ? GithubIconLight : GithubIcon)
   },
   {
     name: 'org.telegram',
     url: (username: string) => `https://t.me/${username}`,
-    icon: (theme: string) => (theme === 'dark' ? TelegramIcon : TelegramIcon)
+    icon: (theme: string) => (DARK_ICON_THEME.includes(theme) ? TelegramIcon : TelegramIcon)
   },
   {
     name: 'com.discord',
     url: (username: string) => `https://discord.com/users/${username}`,
-    icon: (theme: string) => (theme === 'dark' ? DiscordIcon : DiscordIcon)
+    icon: (theme: string) => (DARK_ICON_THEME.includes(theme) ? DiscordIcon : DiscordIcon)
   }
 ] as const

@@ -70,9 +70,7 @@ const Summary = () => {
           limit={!isFollowersEmpty && userAddress ? 4 : 7}
           endpoint='discover'
           header={t('recent')}
-          className={cn(
-            'h-fit w-full py-4 sm:p-4 glass-card border-[3px] border-zinc-200 dark:border-zinc-500 rounded-2xl'
-          )}
+          className={cn('h-fit w-full py-4 sm:p-4 glass-card border-[3px] border-grey rounded-2xl')}
         />
       </div>
       <ScrollIndicator />

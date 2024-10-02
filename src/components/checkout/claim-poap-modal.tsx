@@ -20,7 +20,7 @@ const ClaimPoapModal: React.FC<ClaimPoapModalProps> = ({ onClose, link, isLoadin
       <div className='flex flex-col gap-6 items-center'>
         <h2 className='text-2xl font-bold'>You are now officially Early to EFP</h2>
         <p className='font-medium'>Congrats! 👏 Here's a limited edition "Early to EFP" POAP.</p>
-        <div className='p-6 w-full bg-white dark:bg-darkGrey rounded-xl'>
+        <div className='p-6 w-full bg-neutral rounded-xl'>
           <Image
             src={EarlyUserPoap}
             alt='Early user Poap'

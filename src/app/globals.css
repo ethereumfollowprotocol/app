@@ -17,12 +17,23 @@ html, body {
 }
 
 body {
-  background-repeat: no-repeat;
+  /* background-repeat: no-repeat;
   background-position: -34.1vw -34vw;
   background-size: 210vw 129vw;
-  background-attachment: fixed;
-  /* background-image: url("https://ethfollow.xyz/assets/art/waves-background.svg"); */
-  @apply text-darkGrey dark:text-[#eeeeee] bg-white dark:bg-darkGrey
+  background-attachment: fixed; */
+  /* background-image: url("/assets/art/waves-background.svg"); */
+  @apply text-text bg-neutral;
+}
+
+.background {
+  position: fixed;
+  top: -34vw;
+  left: -34vw;
+  min-width: 210vw;
+  height: 129vw;
+  overflow: visible;
+  object-fit: cover;
+  pointer-events: none;
 }
 
 /* Social graph art */
@@ -64,7 +75,7 @@ body {
   cursor: pointer;
   z-index: 0;
   transition: transform 0.2s ease;
-  @apply dark:bg-[#484848] bg-[#eeeeee]
+  @apply bg-neutral
 }
 
 .circle:hover {
@@ -212,7 +223,7 @@ body::-webkit-scrollbar-thumb {
 
 .glass-selector {
     backdrop-filter: blur(1rem);
-    @apply bg-[#f5f5f544];
+    @apply bg-[#f5f5f526];
 }
 
 :focus:not(:focus-visible) {
@@ -327,7 +338,7 @@ input {
   transition: background 100ms ease-in-out;
 }
 
-.dark .connect-button {
+.dark .connect-button, .halloween .connect-button {
   background:
     linear-gradient(#333333, #333333) padding-box,
     linear-gradient(135deg, #faf35f, #ffbce3) border-box;
@@ -342,7 +353,7 @@ input {
   linear-gradient(135deg, #faf35f, #ffbce3) border-box;
 }
 
-.dark .connect-button:hover {
+.dark .connect-button:hover, .halloween .connect-button:hover {
   background:
   linear-gradient(135deg, #333333cc, #333333cc) padding-box,
   linear-gradient(135deg, #faf35f, #ffbce3) border-box;
@@ -357,7 +368,7 @@ input {
   transition: background 100ms ease-in-out;
 }
 
-.dark .connect-button-open {
+.dark .connect-button-open, .halloween .connect-button-open {
   background:
   linear-gradient(135deg, #333333cc, #333333cc) padding-box,
   linear-gradient(135deg, #faf35f, #ffbce3) border-box;
@@ -373,7 +384,7 @@ input {
   border: 3px solid transparent;
 }
 
-.dark .gradient-border {
+.dark .gradient-border, .halloween .gradient-border {
   background:
   linear-gradient(#333333, #333333) padding-box,
   linear-gradient(135deg, #faf35f, #ffbce3) border-box;
@@ -382,6 +393,15 @@ input {
 
 .btn-grad {
   background: linear-gradient(to right, #FFE066 0%, #FFE066 30%, #fff981 75%, #ffafde  100%);
+  text-align: center;
+  background-size: 300% auto;
+  transition: all .3s;
+  border-radius: 10px;
+  display: block;
+}
+
+.halloween .btn-grad {
+  background: linear-gradient(to right, #FF7518 0%, #FF7518 30%, #fff981 75%, #ffafde  100%);
   text-align: center;
   background-size: 300% auto;
   transition: all .3s;
@@ -399,6 +419,7 @@ input {
   background:
   linear-gradient(#fafafa, #fafafa) padding-box,
   linear-gradient(135deg, #faf35f, #ffbce3) border-box;
+  color: #000;
   border: 3px solid transparent;
   transition: all 200ms ease-in-out;
 }
@@ -429,6 +450,7 @@ input {
   background:
   linear-gradient(#fafafa, #fafafa) padding-box,
   linear-gradient(135deg, #faf35f, #ffbce3) border-box;
+  color: #000;
   border: 3px solid transparent;
   transition: all 200ms ease-in-out;
 }
@@ -672,36 +694,46 @@ input {
 
 /* Background size changes */
 @media screen and (max-width: 1750px) {
-  body {
-    background-position: -34.1vw -32vw;
-    background-size: 210vw 129vw;
+  .background {
+    top: -34vw;
+    right: -20vw;
+    height: 135vw;
+    width: 215vw;
   }
 }
 
 @media screen and (min-width: 2100px) {
-  body {
-    background-position: -34.1vw -36vw;
-    background-size: 210vw 129vw;
+  .background {
+    top: -36vw;
+    right: -22vw;
+    height: 129vw;
+    width: 210vw;
   }
 }
 
 @media screen and (max-width: 1350px) {
-  body {
-    background-position: -34.1vw -20vw;
-    background-size: 210vw 129vw;
+  .background {
+    right: -20vw;
+    top: -30vw;
+    height: 129vw;
+    width: 210vw;
   }
 }
 
 @media screen and (max-width: 750px) {
-  body {
-    background-position: -200vw -40vh;
-    background-size: 750vw 350vw;
+  .background {
+    right: -100vw;
+    top: -300vw;
+    height: 900vw;
+    width: 750vw;
   }
 }
 
 @media screen and (max-width: 420px) {
-  body {
-    background-position: -250vw -55vh;
-    background-size: 900vw 450vw;
+  .background {
+    right: -150vw;
+    top: -340vw;
+    height: 900vw;
+    width: 750vw;
   }
 }

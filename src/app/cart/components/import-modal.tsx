@@ -59,9 +59,9 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
             value={currHandle}
             placeholder={`${t('enter')} ${platform[0]?.toUpperCase()}${platform.slice(1)} Name`}
             onChange={e => setCurrHandle(e.target.value)}
-            className='h-12 block pr-12 w-full truncate font-medium rounded-xl border-[3px] 3 dark:border-zinc-500 pl-4 sm:text-sm bg-white/70 dark:bg-darkGrey/50'
+            className='h-12 block pr-12 w-full truncate font-medium rounded-xl border-[3px] border-grey pl-4 sm:text-sm bg-neutral/60'
           />
-          <div className='absolute w-8 rounded-lg right-2 top-2 h-8 flex justify-center items-center bg-zinc-300 dark:bg-zinc-500'>
+          <div className='absolute w-8 rounded-lg right-2 top-2 h-8 flex justify-center items-center bg-grey'>
             <FiSearch />
           </div>
         </div>
@@ -87,12 +87,10 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
                       truncateAddress(socialProfile.userAssociatedAddresses?.[0])}
                   </p>
                 )}
-                <p className='font-medium text-zinc-400 dark:text-zinc-300 capitalize'>
-                  {platform} Name
-                </p>
+                <p className='font-medium text-text/70 capitalize'>{platform} Name</p>
               </div>
             </div>
-            <div className='bg-white/95 dark:bg-darkGrey/80 rounded-lg text-zinc-400 dark:text-zinc-300 flex flex-col gap-4 p-4'>
+            <div className='bg-neutral/90 rounded-lg text-text/70 flex flex-col gap-4 p-4'>
               <div className='w-full flex justify-between items-center'>
                 <p className=' text-xs xxs:text-sm font-medium'>
                   {t('follow on')} <span className='capitalize'>{platform}</span>
@@ -115,7 +113,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
                   </p>
                 )}
               </div>
-              <div className='w-full flex justify-between items-center text-darkGrey dark:text-white/95'>
+              <div className='w-full flex justify-between items-center text-text/90'>
                 <p className='text-sm xxs:text-base sm:text-lg font-bold'>{t('to add')}</p>
                 {isFollowingsLoading || isSocialProfileLoading ? (
                   <LoadingCell className='h-5 w-24 rounded-md' />

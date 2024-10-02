@@ -79,7 +79,7 @@ export function Search({
                       !!searchResult
                   )
                 }}
-                className='max-h-20 min-h-12 block text-wrap w-full py-3 pr-12 truncate outline-none font-medium rounded-xl border-[3px] hover:border-[#888] focus:border-[#888] dark:focus:border-white/80 dark:border-white/50 dark:hover:border-white/80  transition-colors border-zinc-200 pl-4 sm:text-sm bg-white/70 dark:bg-darkGrey/70'
+                className='max-h-20 min-h-12 block text-wrap w-full py-3 pr-12 truncate outline-none font-medium rounded-xl border-[3px] focus:border-text/80 hover:border-text/80 transition-colors border-grey pl-4 sm:text-sm bg-neutral/70'
               />
             </>
           ) : (
@@ -110,7 +110,7 @@ export function Search({
                     !!searchResult
                 )
               }}
-              className='h-12 block pr-12 w-full truncate font-medium rounded-xl border-[3px] dark:border-white/50 border-zinc-200 pl-4 sm:text-sm bg-white/70 dark:bg-darkGrey/70 focus:border-[#666] hover:border-[#666] dark:focus:border-white/80 dark:hover:border-white/80 transition-colors'
+              className='h-12 block pr-12 w-full truncate font-medium rounded-xl border-[3px] border-grey pl-4 sm:text-sm bg-neutral/70 focus:border-text/80 hover:border-text/80 transition-colors'
             />
           )}
           <div
@@ -138,7 +138,7 @@ export function Search({
         )}
       </div>
       <div
-        className={`absolute glass-card p-3 md:p-4 w-full shadow-md border-[3px] border-zinc-200 dark:border-zinc-500 bg-white dark:bg-darkGrey rounded-xl top-full mt-2 left-0 ${
+        className={`absolute glass-card p-3 md:p-4 w-full shadow-md border-[3px] border-grey bg-neutral rounded-xl top-full mt-2 left-0 ${
           dropdownMenuOpen ? (isEditor ? 'block' : 'hidden 2xl:block') : 'hidden'
         }`}
       >
@@ -156,7 +156,7 @@ export function Search({
             </div>
           )}
           {!isLoading && searchResult.length === 0 ? (
-            <div className='w-full h-16 flex items-center justify-center italic font-bold text-zinc-400'>
+            <div className='w-full h-16 flex items-center justify-center italic font-bold text-text/50'>
               {t('search no results')}
             </div>
           ) : (
@@ -183,7 +183,7 @@ export function Search({
               >
                 <p>{result.name}</p>
                 {result.resolvedAddress?.id && (
-                  <p className='text-sm text-zinc-400'>
+                  <p className='text-sm text-text/50'>
                     - {truncateAddress(result.resolvedAddress?.id)}
                   </p>
                 )}
@@ -208,7 +208,7 @@ export function Search({
             <input
               name='search'
               ref={searchBarRef as LegacyRef<HTMLInputElement>}
-              className='h-12 block pr-12 w-full  truncate font-medium rounded-xl border-[3px] pl-4 sm:text-sm bg-white dark:bg-darkGrey focus:border- border-[#666] dark:border-white/80 transition-colors'
+              className='h-12 block pr-12 w-full  truncate font-medium rounded-xl border-[3px] pl-4 sm:text-sm bg-neutral focus:border-text border-grey transition-colors'
               spellCheck={false}
               placeholder={t('search placeholder')}
               disabled={disabled}
@@ -232,7 +232,7 @@ export function Search({
             />
           </div>
           <div
-            className={`absolute glass-card w-full shadow-md border-[3px] p-3 rounded-xl border-zinc-200 dark:border-zinc-500 bg-white dark:bg-darkGrey top-full mt-2 left-0 ${
+            className={`absolute glass-card w-full shadow-md border-[3px] p-3 rounded-xl border-grey bg-neutral top-full mt-2 left-0 ${
               dropdownMenuOpen ? 'block' : 'hidden'
             }`}
           >

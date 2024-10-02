@@ -31,11 +31,9 @@ const NavItems = () => {
             href={item.href(itemUrl)}
             className={cn([
               'capitalize xl:text-xl lg:text-lg transition-all',
-              item.name === 'profile' && !userAddress
-                ? 'text-grey hover:text-darkGrey dark:hover:text-white'
-                : item.href(itemUrl) === pathname.toLowerCase()
-                  ? 'text-darkGrey dark:text-white'
-                  : 'text-grey dark:hover:text-white hover:text-darkGrey'
+              item.href(itemUrl) === pathname.toLowerCase()
+                ? 'text-text hover:text-text'
+                : 'text-text-neutral hover:text-text'
             ])}
             onClick={e => {
               if (

@@ -15,11 +15,14 @@ import { CartProvider } from '#/contexts/cart-context'
 import { ActionsProvider } from '#/contexts/actions-context'
 import { EFPProfileProvider } from '#/contexts/efp-profile-context'
 import { TransactionsProvider } from '#/contexts/transactions-context'
+import VolumeSelector from '#/components/volume-selector'
 
 type ProviderProps = {
   children: React.ReactNode
   initialState?: State
 }
+
+const darkThemes = ['dark', 'halloween']
 
 const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
   const [queryClient] = useState(
@@ -44,7 +47,9 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
           {/* <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}> */}
           <RainbowKitProvider
             coolMode={true}
-            theme={isClient && resolvedTheme === 'dark' ? darkTheme() : undefined}
+            theme={
+              isClient && darkThemes.includes(resolvedTheme || 'dark') ? darkTheme() : undefined
+            }
           >
             <CartProvider>
               <EFPProfileProvider>
@@ -52,6 +57,7 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
                   <ActionsProvider>
                     <Navigation />
                     {children}
+                    <VolumeSelector />
                   </ActionsProvider>
                 </TransactionsProvider>
               </EFPProfileProvider>

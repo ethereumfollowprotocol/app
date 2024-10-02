@@ -1,5 +1,6 @@
 import plugin from 'tailwindcss/plugin'
 import type { Config } from 'tailwindcss'
+import TailwindThemer from 'tailwindcss-themer'
 import tailwindAnimate from 'tailwindcss-animate'
 import defaultTheme from 'tailwindcss/defaultTheme'
 import typographyPlugin from '@tailwindcss/typography'
@@ -56,11 +57,10 @@ const { colors, fontFamily, fontSize, keyframes, animation, spacing, screens } =
     },
     yellow: '#FFF500',
     pink: '#FF79C9',
-    neutral: '#CDCDCD',
-    grey: '#999999',
     darkGrey: '#333333',
     addition: '#A1F783',
-    deletion: '#FF7C7C'
+    deletion: '#FF7C7C',
+    'text-neutral': '#999999'
   },
   fontFamily: {
     sans: ['inter', ...defaultTheme.fontFamily.sans]
@@ -180,6 +180,43 @@ export default {
     }
   },
   plugins: [
+    TailwindThemer({
+      themes: [
+        {
+          name: 'light',
+          extend: {
+            colors: {
+              text: '#000000',
+              neutral: '#ffffff',
+              grey: '#E4E4E7',
+              navItem: '#b4b4b4'
+            }
+          }
+        },
+        {
+          name: 'dark',
+          extend: {
+            colors: {
+              text: '#ffffff',
+              neutral: '#333333',
+              grey: '#71717A',
+              navItem: '#94a3b822'
+            }
+          }
+        },
+        {
+          name: 'halloween',
+          extend: {
+            colors: {
+              text: '#ffffff',
+              neutral: '#000000',
+              grey: '#61616A',
+              navItem: '#94a3b822'
+            }
+          }
+        }
+      ]
+    }),
     tailwindAnimate,
     typographyPlugin,
     aspectRatioPlugin,

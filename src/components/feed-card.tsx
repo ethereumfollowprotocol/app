@@ -26,12 +26,14 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
   const { openConnectModal } = useConnectModal()
   const { lists, listsIsLoading } = useEFPProfile()
 
-  const url = `https://app.interface.social/elements/profile/${userAddress}/feed?source=efp&theme=${resolvedTheme}`
+  const url = `https://app.interface.social/elements/profile/${userAddress}/feed?source=efp&theme=${
+    resolvedTheme === 'light' ? 'light' : 'dark'
+  }`
 
   return (
     <div
       className={cn(
-        'flex glass-card border-zinc-200 border-[3px] dark:border-zinc-500 items-center sm:items-end flex-col gap-1',
+        'flex glass-card border-grey border-[3px] items-center sm:items-end flex-col gap-1',
         cardSize
       )}
     >
@@ -56,7 +58,7 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
         </a>
       </div>
       {description && (
-        <p className='w-full px-4 xs:px-0 text-sm mt-3 text-center xs:text-start font-semibold text-zinc-500 dark:text-zinc-300'>
+        <p className='w-full px-4 xs:px-0 text-sm mt-3 text-center xs:text-start font-semibold text-text/80'>
           {description}
         </p>
       )}
@@ -71,7 +73,7 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
       >
         {userAddress ? (
           listsIsLoading ? (
-            <div className='h-full w-full flex items-center justify-center bg-white dark:bg-black'>
+            <div className='h-full w-full flex items-center justify-center bg-neutral'>
               <LoadingSpinner />
             </div>
           ) : (lists?.lists?.length || 0) > 0 ? (
@@ -79,7 +81,7 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
               key={`${userAddress} ${resolvedTheme}`}
               title='Feed'
               src={url}
-              className='w-full h-full bg-white dark:bg-black'
+              className='w-full h-full bg-neutral'
             />
           ) : (
             <div className='w-full h-full max-h-[60vh] flex items-center font-semibold flex-col justify-center text-center'>

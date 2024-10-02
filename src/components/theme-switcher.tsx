@@ -23,9 +23,13 @@ const themesWithIcons = [
     theme: 'dark',
     icon: <MdDarkMode />
   }
+  // {
+  //   theme: 'halloween',
+  //   icon: <GiPumpkinLantern />
+  // }
 ]
 
-const themes = ['system', 'light', 'dark'] as const
+const themes = ['system', 'light', 'dark', 'halloween'] as const
 type ThemeType = (typeof themes)[number]
 
 interface ThemeSwitcherProps {
@@ -47,7 +51,6 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
 
   const { t } = useTranslation()
   const { setTheme, theme: selectedTheme } = useTheme()
-
   return (
     <div
       ref={clickAwayThemeRef}
@@ -60,7 +63,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
         }}
         className={cn(
           'flex justify-between items-center rounded-md transition-opacity cursor-pointer',
-          connected && 'group-hover:bg-slate-100 p-3 dark:group-hover:bg-zinc-400/20 w-full'
+          connected && 'group-hover:bg-navItem p-3 w-full'
         )}
       >
         {connected && <FiArrowLeft className='text-xl' />}
@@ -80,14 +83,14 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
           themeMenuOpen ? 'block' : 'hidden'
         )}
       >
-        <div className='flex flex-col gap-2 w-full max-h-[75vh] sm:max-h-[80vh] overflow-scroll border-[3px] rounded-lg bg-white dark:bg-darkGrey border-zinc-200 dark:border-zinc-500 p-1  shadow-md'>
+        <div className='flex flex-col p-1 gap-2 w-full max-h-[75vh] sm:max-h-[80vh] overflow-scroll border-[3px] rounded-lg bg-neutral border-grey shadow-md'>
           <div
             onClick={() => {
               setThemeMenuOpen(false)
               setExternalThemeMenuOpen?.(false)
             }}
             className={cn(
-              'flex sm:hidden justify-between items-center w-full hover:bg-slate-100 dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer',
+              'flex sm:hidden justify-between items-center w-full hover:bg-navItem p-3 rounded-md transition-opacity cursor-pointer',
               connected ? 'flex sm:hidden' : 'hidden'
             )}
           >
@@ -96,7 +99,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
           </div>
           {themesWithIcons.map(({ theme, icon }) => (
             <div
-              className='flex items-center relative p-3 pl-8 w-full gap-2 rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20'
+              className='flex items-center relative p-3 pl-8 w-full gap-2 rounded-md hover:bg-navItem'
               key={theme}
               onClick={() => {
                 setTheme(theme as ThemeType)
@@ -110,7 +113,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
                   src={GreenCheck}
                   alt='List selected'
                   width={16}
-                  className='absolute left-2 top-[17px]'
+                  className='absolute left-2 top-[19px]'
                 />
               )}
               <p className={connected ? 'text-2xl' : 'text-3xl'}>{icon}</p>
