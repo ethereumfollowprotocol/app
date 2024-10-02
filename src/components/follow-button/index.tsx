@@ -167,7 +167,10 @@ const FollowButton: React.FC<FollowButtonProps> = ({
     Follow:
       resolvedTheme === 'halloween' ? '/assets/icons/halloween-emoji.svg' : '/assets/logo.svg',
     'Pending Following': '',
-    Following: '/assets/icons/unfollow-emoji.svg',
+    Following:
+      resolvedTheme === 'halloween'
+        ? '/assets/icons/unfollow-halloween-emoji.png'
+        : '/assets/icons/unfollow-emoji.svg',
     Unfollow: '',
     Subscribe: '',
     Subscribed: '',
@@ -236,7 +239,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
     </div>
   ) : (
     <div ref={coolEfpLogo as Ref<HTMLDivElement>}>
-      <audio ref={soundRef} src={sound} key={resolvedTheme} />
+      <audio ref={soundRef} src={sound} key={resolvedTheme} preload='auto' />
       <button
         className={cn([
           theme[buttonState].bg,

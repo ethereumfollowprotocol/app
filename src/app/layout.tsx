@@ -47,8 +47,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           <Image
             src={HalloweenBackground}
             alt='halloween background'
-            layout='fill'
-            className='hidden fixed top-0 -z-10 left-0 h-screen opacity-50 w-screen halloween:block'
+            className='hidden fixed top-0 -z-10 left-0 h-screen opacity-50 w-screen halloween:block object-cover'
           />
           <Toaster richColors={true} />
           <Providers initialState={initialState}>{children}</Providers>

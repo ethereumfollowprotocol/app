@@ -8,13 +8,14 @@ import { useActions } from '#/contexts/actions-context'
 
 const VolumeSelector = () => {
   const [isMuted, setIsMuted] = useState(true)
+  const [isClient, setIsClient] = useState(false)
 
   const { resolvedTheme } = useTheme()
   const { actionsSoundsMuted, setActionsSoundsMuted } = useActions()
   const backgroundMusicRef = useRef<HTMLAudioElement>(null)
 
   useEffect(() => {
-    if (window === undefined) return
+    if (!isClient) return setIsClient(true)
 
     if (resolvedTheme === 'halloween') {
       setIsMuted(false)
