@@ -28,11 +28,12 @@ body {
 .background {
   position: fixed;
   top: -34vw;
-  right: -21vw;
-  width: 210vw;
+  left: -34vw;
+  min-width: 210vw;
   height: 129vw;
   overflow: visible;
   object-fit: cover;
+  pointer-events: none;
 }
 
 /* Social graph art */
