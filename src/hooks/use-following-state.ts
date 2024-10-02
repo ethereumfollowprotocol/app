@@ -13,16 +13,16 @@ const useFollowingState = ({
   address?: Address
 }) => {
   const { address: userAddress } = useAccount()
-  const { selectedList, fetchFreshStats } = useEFPProfile()
+  const { selectedList, fetchFreshStats, listsIsLoading } = useEFPProfile()
 
   const {
     data: followingStatus,
     isLoading: isFollowingStatusLoading,
     isRefetching: isFollowingStatusRefetching
   } = useQuery({
-    queryKey: ['follow state', address, selectedList, fetchFreshStats],
+    queryKey: ['follow state', address, selectedList, fetchFreshStats, listsIsLoading],
     queryFn: async () => {
-      if (!address) return null
+      if (!address || listsIsLoading) return null
 
       const fetchedProfile = await fetchFollowState({
         address: address,
@@ -47,7 +47,8 @@ const useFollowingState = ({
     return 'none'
   }, [followingStatus])
 
-  const isFollowingStateLoading = isFollowingStatusLoading || isFollowingStatusRefetching
+  const isFollowingStateLoading =
+    isFollowingStatusLoading || isFollowingStatusRefetching || listsIsLoading
 
   const followerTag = {
     blocks: {

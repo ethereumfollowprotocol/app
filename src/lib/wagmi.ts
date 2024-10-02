@@ -8,6 +8,7 @@ import {
   metaMaskWallet,
   walletConnectWallet
 } from '@rainbow-me/rainbowkit/wallets'
+import { safe } from 'wagmi/connectors'
 import { mainnet, optimism, base } from 'wagmi/chains'
 import { type Chain, connectorsForWallets } from '@rainbow-me/rainbowkit'
 import { http, fallback, createStorage, cookieStorage, createConfig } from 'wagmi'
@@ -56,7 +57,7 @@ export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
     ...base,
     iconUrl: '/assets/chains/base.svg',
     custom: {
-      chainDetail: '',
+      chainDetail: 'Ethereum L2',
       gasFeeDetail: 'Super Low gas fees'
     }
   },
@@ -106,7 +107,13 @@ export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
 
 const config = createConfig({
   ssr: true,
-  connectors,
+  connectors: [
+    safe({
+      allowedDomains: [/^app\.safe\.global\*.blockscout.com\$/],
+      debug: false
+    }),
+    ...connectors
+  ],
   chains,
   storage: createStorage({
     storage: cookieStorage
