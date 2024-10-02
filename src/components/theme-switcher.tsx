@@ -4,7 +4,6 @@ import { useTheme } from 'next-themes'
 import { FiArrowLeft } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
-import { GiPumpkinLantern } from 'react-icons/gi'
 import { MdLightMode, MdDarkMode } from 'react-icons/md'
 import { HiOutlineDesktopComputer } from 'react-icons/hi'
 
@@ -23,11 +22,11 @@ const themesWithIcons = [
   {
     theme: 'dark',
     icon: <MdDarkMode />
-  },
-  {
-    theme: 'halloween',
-    icon: <GiPumpkinLantern />
   }
+  // {
+  //   theme: 'halloween',
+  //   icon: <GiPumpkinLantern />
+  // }
 ]
 
 const themes = ['system', 'light', 'dark', 'halloween'] as const
