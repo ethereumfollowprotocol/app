@@ -60,7 +60,7 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen }: LanguageSelectorProps
         </div>
       </div>
       <div
-        className={`absolute -right-[223px] sm:right-[95%] -top-[295px] z-50 sm:-top-[6px] ${languageMenOpenu ? 'block' : 'hidden'
+        className={`absolute -right-[223px] sm:right-[95%] -top-[246px] z-50 sm:-top-[6px] ${languageMenOpenu ? 'block' : 'hidden'
           } group-hover:block sm:pr-6`}
       >
         <div className='flex overflow-scroll flex-col lg:grid max-h-[75vh] sm:max-h-[60vh] lg:grid-cols-2 gap-2 gap-x-px w-[220px] lg:w-[450px] bg-neutral border-[3px] border-grey p-1 rounded-lg shadow-md'

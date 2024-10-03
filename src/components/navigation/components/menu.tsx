@@ -42,7 +42,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
     )}>
       <div
         className={cn(
-          'flex flex-col w-full transition-all overflow-x-visible max-h-[74vh] h-fit sm:h-auto p-1',
+          'flex flex-col w-full transition-all overflow-x-visible max-h-[74vh] sm:h-auto p-1',
           languageMenOpenu || themeMenuOpen
             ? '-translate-x-[216px] sm:translate-x-0'
             : '',
