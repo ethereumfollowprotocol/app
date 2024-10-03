@@ -79,7 +79,7 @@ const Navigation = () => {
                 <div className={cn('w-5 h-[3px] rounded-full transition-all', mobileMenuOpen ? 'rotate-[-45deg] bg-text' : 'bg-zinc-400 group-hover:bg-text')}></div>
                 <div className={cn('w-5 h-[3px] rounded-full transition-all', mobileMenuOpen ? 'opacity-0 bg-text' : 'bg-zinc-400 group-hover:bg-text')}></div>
               </div>
-              <MobileMenu open={mobileMenuOpen} setOpen={setMobileMenuOpen} />
+              {mobileMenuOpen && <MobileMenu open={mobileMenuOpen} setOpen={setMobileMenuOpen} />}
             </div>
             {userAddress ? (
               <CartButton cartItemsCount={totalCartItems} />

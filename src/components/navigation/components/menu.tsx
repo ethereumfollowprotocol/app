@@ -3,17 +3,17 @@
 import Link from 'next/link'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
-import { useState, type Dispatch, type SetStateAction } from 'react'
+import { FiExternalLink } from 'react-icons/fi'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
+import { useState, type Dispatch, type SetStateAction } from 'react'
 
 import { cn } from '#/lib/utilities'
-import { EXTERNAL_LINKS, LANGUAGES, NAV_ITEMS } from '#/lib/constants'
+import { socials } from '#/components/footer'
 import { usePathname } from 'next/navigation'
 import LanguageSelector from './language-selector'
-import ThemeSwitcher from '#/components/theme-switcher'
+import ThemeSwitcher, { themesWithIcons } from '#/components/theme-switcher'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import { FiExternalLink } from 'react-icons/fi'
-import { socials } from '#/components/footer'
+import { EXTERNAL_LINKS, LANGUAGES, NAV_ITEMS } from '#/lib/constants'
 
 interface MenuProps {
   open: boolean
@@ -42,21 +42,21 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
     )}>
       <div
         className={cn(
-          'flex flex-col w-full transition-all overflow-x-visible max-h-[75vh] sm:h-auto p-1',
+          'flex flex-col w-full transition-all overflow-x-visible max-h-[74vh] h-fit sm:h-auto p-1',
           languageMenOpenu || themeMenuOpen
             ? '-translate-x-[216px] sm:translate-x-0'
             : '',
           languageMenOpenu
-            ? `h-[${(LANGUAGES.length || 0) * 56 + 111}px]`
+            ? `h-[${(LANGUAGES.length || 0) * 56 + 100}px]`
             : themeMenuOpen
-              ? 'h-[223px]'
+              ? `h-[${(themesWithIcons.length || 0) * 56 + 56}px]`
               : 'h-auto'
         )}
         style={{
           height: languageMenOpenu
-            ? `${(lists?.lists?.length || 0) * 56 + 111}px`
+            ? `${(LANGUAGES.length || 0) * 56 + 100}px`
             : themeMenuOpen
-              ? '223px'
+              ? `${(themesWithIcons.length || 0) * 56 + 56}px`
               : 'auto'
         }}
       >
@@ -120,7 +120,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
               rel='noreferrer'
               key={item.text}
               href={item.href}
-              className='hover:scale-110 text-3xl transition-transform'
+              className='hover:scale-125 text-3xl transition-transform'
             >
               {item.icon}
             </a>
