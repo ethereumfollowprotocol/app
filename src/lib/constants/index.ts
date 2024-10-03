@@ -1,3 +1,7 @@
+import { FaGithub } from 'react-icons/fa'
+import { FaDiscord } from 'react-icons/fa'
+import { FaXTwitter } from 'react-icons/fa6'
+
 import type { FollowSortType } from '#/types/requests'
 import type { ProfileTableTitleType, ProfileTabType } from '#/types/common'
 
@@ -224,22 +228,41 @@ export const NAV_ITEMS = [
   {
     href: () => '/',
     name: 'home',
-    private: false
   },
   {
     href: (url?: string) => `/${url ?? 'profile'}`,
     name: 'profile',
-    private: true
   },
-  {
-    href: () => '/feed',
-    name: 'feed',
-    private: true
-  },
+  // {
+  //   href: () => '/feed',
+  //   name: 'feed',
+  // },
   {
     href: () => '/leaderboard',
     name: 'leaderboard',
-    private: false
+  }
+]
+
+export const EXTERNAL_LINKS = [
+  {
+    text: 'docs',
+    href: 'https://docs.ethfollow.xyz/intro',
+    target: '_blank'
+  },
+  {
+    text: 'faq',
+    href: 'https://docs.ethfollow.xyz/faq',
+    target: '_blank'
+  },
+  {
+    text: 'support',
+    href: 'https://discord.com/channels/1172042210024366090/1280308522613211237',
+    target: '_blank'
+  },
+  {
+    text: 'bug bounty',
+    href: 'https://docs.ethfollow.xyz/bugbounty',
+    target: '_blank'
   }
 ]
 
