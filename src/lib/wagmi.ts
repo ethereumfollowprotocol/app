@@ -6,7 +6,8 @@ import {
   coinbaseWallet,
   injectedWallet,
   metaMaskWallet,
-  walletConnectWallet
+  walletConnectWallet,
+  safeWallet
 } from '@rainbow-me/rainbowkit/wallets'
 import { safe } from 'wagmi/connectors'
 import { mainnet, optimism, base } from 'wagmi/chains'
@@ -26,8 +27,9 @@ const connectors = connectorsForWallets(
         rainbowWallet,
         metaMaskWallet,
         rabbyWallet,
+        safeWallet,
         walletConnectWallet,
-        injectedWallet
+        injectedWallet,
       ]
     }
   ],
@@ -107,13 +109,14 @@ export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
 
 const config = createConfig({
   ssr: true,
-  connectors: [
-    safe({
-      allowedDomains: [/^app\.safe\.global\*.blockscout.com\$/],
-      debug: false
-    }),
-    ...connectors
-  ],
+  // connectors: [
+  //   safe({
+  //     allowedDomains: [/^app\.safe\.global\*.blockscout.com\$/],
+  //     debug: false
+  //   }),
+  //   ...connectors
+  // ],
+  connectors,
   chains,
   storage: createStorage({
     storage: cookieStorage
