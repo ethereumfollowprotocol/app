@@ -1,7 +1,3 @@
-import { FaGithub } from 'react-icons/fa'
-import { FaDiscord } from 'react-icons/fa'
-import { FaXTwitter } from 'react-icons/fa6'
-
 import type { FollowSortType } from '#/types/requests'
 import type { ProfileTableTitleType, ProfileTabType } from '#/types/common'
 
@@ -76,6 +72,9 @@ import EtherscanIconLight from 'public/assets/icons/etherscan-light.svg'
 import SaudiArabiaFlag from 'public/assets/icons/flags/saudi-arabia.svg'
 import VaticanCityFlag from 'public/assets/icons/flags/vatican-city.svg'
 import CzechRepublicFlag from 'public/assets/icons/flags/czech-republic.svg'
+
+import { FaHome, FaTrophy, FaUser } from 'react-icons/fa'
+import { RiTeamFill } from 'react-icons/ri'
 
 export const APP_NAME = 'Ethereum Follow Protocol'
 export const APP_NAME_SHORT = 'EFP'
@@ -228,10 +227,14 @@ export const NAV_ITEMS = [
   {
     href: () => '/',
     name: 'home',
+    icon: FaHome,
+    hiddenOnDesktop: true
   },
   {
     href: (url?: string) => `/${url ?? 'profile'}`,
     name: 'profile',
+    icon: FaUser,
+    hiddenOnDesktop: true
   },
   // {
   //   href: () => '/feed',
@@ -240,7 +243,21 @@ export const NAV_ITEMS = [
   {
     href: () => '/leaderboard',
     name: 'leaderboard',
-  }
+    icon: FaTrophy,
+    hiddenOnDesktop: true
+  },
+  {
+    href: () => '/team',
+    name: 'team',
+    icon: RiTeamFill,
+    hiddenOnDesktop: false
+  },
+  // {
+  //   href: () => '/about',
+  //   name: 'about',
+  //   icon: FaInfo
+  //   hiddenOnDesktop: false
+  // },
 ]
 
 export const EXTERNAL_LINKS = [

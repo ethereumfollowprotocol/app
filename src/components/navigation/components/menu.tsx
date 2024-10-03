@@ -47,25 +47,25 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
             ? '-translate-x-[216px] sm:translate-x-0'
             : '',
           languageMenOpenu
-            ? `h-[${(LANGUAGES.length || 0) * 56 + 100}px]`
+            ? `h-[${(LANGUAGES.length || 0) * 56 + 111}px]`
             : themeMenuOpen
               ? `h-[${(themesWithIcons.length || 0) * 56 + 56}px]`
               : 'h-auto'
         )}
         style={{
           height: languageMenOpenu
-            ? `${(LANGUAGES.length || 0) * 56 + 100}px`
+            ? `${(LANGUAGES.length || 0) * 56 + 111}px`
             : themeMenuOpen
               ? `${(themesWithIcons.length || 0) * 56 + 56}px`
               : 'auto'
         }}
       >
         {NAV_ITEMS.map(item => (
-          <div className='font-bold w-full lg:hidden' key={`${item.name}`}>
+          <div className={cn('font-bold w-full ', item.hiddenOnDesktop ? 'lg:hidden' : '')} key={`${item.name}`}>
             <Link
               prefetch={true}
               href={item.href(itemUrl)}
-              className='capitalize block lg:text-lg transition-colors p-3 w-full rounded-md hover:bg-navItem text-text'
+              className='capitalize lg:text-lg transition-colors p-3 w-full flex items-center justify-between rounded-md hover:bg-navItem text-text'
               onClick={e => {
                 if (item.name === 'profile' && !userAddress && openConnectModal) {
                   e.preventDefault()
@@ -73,28 +73,11 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
                 } else setOpen(false)
               }}
             >
+              <item.icon className='text-2xl' />
               <span className='block text-nowrap text-end'>{t(`${item.name}`)}</span>
             </Link>
           </div>
         ))}
-        <div className='font-bold w-full' key='team'>
-          <Link
-            prefetch={true}
-            href={'/team'}
-            className='capitalize block lg:text-lg transition-colors p-3 w-full rounded-md hover:bg-navItem text-text'
-          >
-            <span className='block text-nowrap text-end'>{t('team')}</span>
-          </Link>
-        </div>
-        <div className='font-bold w-full' key='about'>
-          <Link
-            prefetch={true}
-            href={'/about'}
-            className='capitalize  block lg:text-lg transition-colors p-3 w-full rounded-md hover:bg-navItem text-text'
-          >
-            <span className='block text-nowrap text-end'>{t('about')}</span>
-          </Link>
-        </div>
         <ThemeSwitcher connected={true} setExternalThemeMenuOpen={setThemeMenuOpen} closeMenu={() => {
           setOpen(false)
           setThemeMenuOpen(false)

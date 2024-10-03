@@ -76,14 +76,14 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
       </div>
       <div
         className={cn(
-          'absolute group-hover:block block h-[230px] z-50',
+          'absolute group-hover:block block h-[230px] sm:h-[174px] z-50',
           connected
             ? '-right-[223px] sm:right-[97.2%] min-w-[220px] -top-[247px] sm:-top-[6px] sm:pr-5'
             : 'top-[100%] pt-3 -left-10',
           themeMenuOpen ? 'block' : 'hidden'
         )}
       >
-        <div className='flex flex-col p-1 gap-2 w-full h-[230px] max-h-[75vh] sm:max-h-[80vh] overflow-scroll border-[3px] rounded-lg bg-neutral border-grey shadow-md'>
+        <div className='flex flex-col p-1 gap-2 w-full h-[230px] sm:h-[174px] max-h-[75vh] sm:max-h-[80vh] overflow-scroll border-[3px] rounded-lg bg-neutral border-grey shadow-md'>
           <div
             onClick={() => {
               setThemeMenuOpen(false)
