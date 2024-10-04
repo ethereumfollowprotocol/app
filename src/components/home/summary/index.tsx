@@ -70,6 +70,17 @@ const Summary = () => {
           />
         </div>
       )}
+      <div
+        className='flex flex-col gap-4 h-auto w-full xl:sticky'
+      >
+        {!isFollowersEmpty && userAddress && <LatestFollowers />}
+        <Recommendations
+          limit={7}
+          endpoint='discover'
+          header={t('recent')}
+          className={cn('h-fit w-full py-4 sm:p-4 glass-card border-[3px] border-grey rounded-2xl')}
+        />
+      </div>
       {userAddress ? (
         <FeedCard
           cardSize={cn(
