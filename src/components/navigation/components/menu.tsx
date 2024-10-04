@@ -12,7 +12,7 @@ import { usePathname } from 'next/navigation'
 import LanguageSelector from './language-selector'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { EXTERNAL_LINKS, LANGUAGES, NAV_ITEMS } from '#/lib/constants'
-import ThemeSwitcher, { themesWithIcons } from '#/components/theme-switcher'
+import ThemeSwitcher, { themesWithIcons } from '#/components/navigation/components/theme-switcher'
 
 interface MenuProps {
   open: boolean

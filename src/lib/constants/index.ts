@@ -239,16 +239,15 @@ export const NAV_ITEMS = [
     href: () => '/leaderboard',
     name: 'leaderboard',
     hiddenOnDesktop: true
-  },
-  // {
-  //   href: () => '/about',
-  //   name: 'about',
-  //   icon: FaInfo
-  //   hiddenOnDesktop: false
-  // },
+  }
 ]
 
 export const EXTERNAL_LINKS = [
+  {
+    text: 'about',
+    href: '/about',
+    target: ''
+  },
   {
     text: 'docs',
     href: 'https://docs.ethfollow.xyz/intro',
