@@ -1,5 +1,6 @@
 'use client'
 
+import { useRef } from 'react'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 
@@ -10,7 +11,6 @@ import LatestFollowers from './components/latest-followers'
 import UserProfileCard from '#/components/user-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import LeaderboardSummary from './components/leaderboard-summary.tsx'
-import { useRef } from 'react'
 
 const Summary = () => {
   const {
