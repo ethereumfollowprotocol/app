@@ -9,7 +9,6 @@ import {
   walletConnectWallet,
   safeWallet
 } from '@rainbow-me/rainbowkit/wallets'
-import { safe } from 'wagmi/connectors'
 import { mainnet, optimism, base } from 'wagmi/chains'
 import { type Chain, connectorsForWallets } from '@rainbow-me/rainbowkit'
 import { http, fallback, createStorage, cookieStorage, createConfig } from 'wagmi'
