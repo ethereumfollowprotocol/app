@@ -46,12 +46,11 @@ const Summary = () => {
       const sidebarTop = sidebar?.getBoundingClientRect().top || 0
       const viewportHeight = window.innerHeight
 
-      console.log(sidebar.style.top, sidebarTop)
       if (scrollTop > e.currentTarget.scrollTop) {
         if (sidebarTop >= 130) sidebar.style.top = '0px'
         else sidebar.style.top = `${Number(sidebar.style.top.replace('px', '')) + (scrollTop - e.currentTarget.scrollTop)}px`
       } else {
-        if (sidebarTop < (viewportHeight - sidebarHeight + 65)) sidebar.style.top = `${viewportHeight - 108 - sidebarHeight}px`
+        if (sidebarTop < (viewportHeight - sidebarHeight + 80)) sidebar.style.top = `${viewportHeight - 108 - sidebarHeight}px`
         else sidebar.style.top = `${Number(sidebar.style.top.replace('px', '')) - (e.currentTarget.scrollTop - scrollTop)}px`
       }
 
@@ -75,7 +74,7 @@ const Summary = () => {
       >
         {!isFollowersEmpty && userAddress && <LatestFollowers />}
         <Recommendations
-          limit={7}
+          limit={10}
           endpoint='discover'
           header={t('recent')}
           className={cn('h-fit w-full py-4 sm:p-4 glass-card border-[3px] border-grey rounded-2xl')}
@@ -105,12 +104,12 @@ const Summary = () => {
             : 'w-full xl:w-1/2 xl:max-w-[900px] h-[638px]'
         )}
         style={{
-          top: userAddress ? 'calc(100vh - 108px - 1360px)' : '0',
+          top: userAddress ? 'calc(100vh - 108px - 1860px)' : '0',
         }}
       >
         {!isFollowersEmpty && userAddress && <LatestFollowers />}
         <Recommendations
-          limit={7}
+          limit={10}
           endpoint='discover'
           header={t('recent')}
           className={cn('h-fit w-full py-4 sm:p-4 glass-card border-[3px] border-grey rounded-2xl')}
