@@ -30,7 +30,7 @@ const Summary = () => {
   const isFollowersEmpty = !followersIsLoading && followers.length === 0
 
   return (
-    <div className='mt-[108px] relative md:mt-32 w-full lg:mt-32 xl:mt-40 px-4 lg:px-6 xl:px-8 flex items-start lg:justify-center lg:gap-4 xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4'>
+    <div className='mt-[108px] relative md:mt-32 w-full lg:mt-32 xl:mt-40 px-4 mb-10 lg:px-6 xl:px-8 flex items-start lg:justify-center lg:gap-4 xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4'>
       {userAddress && (
         <UserProfileCard
           profileList={selectedList || Number(profile?.primary_list)}

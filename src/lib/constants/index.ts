@@ -240,12 +240,11 @@ export const NAV_ITEMS = [
     name: 'leaderboard',
     hiddenOnDesktop: true
   },
-  // {
-  //   href: () => '/about',
-  //   name: 'about',
-  //   icon: FaInfo
-  //   hiddenOnDesktop: false
-  // },
+  {
+    href: () => '/about',
+    name: 'about',
+    hiddenOnDesktop: false
+  },
 ]
 
 export const EXTERNAL_LINKS = [

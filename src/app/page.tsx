@@ -1,7 +1,5 @@
-import { Footer } from '#/components/footer'
-import Summary from '#/components/home/summary'
-import Landing from '#/components/home/landing'
 import type { Metadata } from 'next'
+import Summary from '#/components/home/summary'
 
 export const metadata: Metadata = {
   title: 'Home | EFP',
@@ -23,13 +21,9 @@ export const metadata: Metadata = {
 
 const HomePage = () => {
   return (
-    <>
-      <main className='mx-auto home bg-transparent flex min-h-screen w-full flex-col items-center '>
-        <Summary />
-        <Landing />
-      </main>
-      <Footer />
-    </>
+    <main className='mx-auto home bg-transparent flex min-h-screen w-full flex-col items-center '>
+      <Summary />
+    </main>
   )
 }
 
