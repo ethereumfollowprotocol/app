@@ -5,7 +5,7 @@ import { FaXTwitter } from 'react-icons/fa6'
 
 import Pages from './components/pages'
 
-const socials = [
+export const socials = [
   {
     text: 'X',
     href: 'https://x.com/efp',
