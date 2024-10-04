@@ -37,6 +37,10 @@ const Summary = () => {
     onScroll={(e) => {
       const sidebar = SidebarRef.current
       if (!sidebar) return
+      if (window.innerWidth < 1024) {
+        sidebar.style.top = '0px'
+        return
+      }
 
       const sidebarHeight = sidebar.scrollHeight + 65
       const sidebarTop = sidebar?.getBoundingClientRect().top || 0
@@ -45,17 +49,17 @@ const Summary = () => {
       console.log(sidebar.style.top, sidebarTop)
       if (scrollTop > e.currentTarget.scrollTop) {
         if (sidebarTop >= 135) sidebar.style.top = '0px'
-        else sidebar.style.top = Number(sidebar.style.top.replace('px', '')) + (scrollTop - e.currentTarget.scrollTop) + 'px'
+        else sidebar.style.top = `${Number(sidebar.style.top.replace('px', '')) + (scrollTop - e.currentTarget.scrollTop)}px`
       } else {
-        if (sidebarTop < (viewportHeight - sidebarHeight + 65)) sidebar.style.top = viewportHeight - 108 - sidebarHeight + 'px'
-        else sidebar.style.top = Number(sidebar.style.top.replace('px', '')) - (e.currentTarget.scrollTop - scrollTop) + 'px'
+        if (sidebarTop < (viewportHeight - sidebarHeight + 65)) sidebar.style.top = `${viewportHeight - 108 - sidebarHeight}px`
+        else sidebar.style.top = `${Number(sidebar.style.top.replace('px', '')) - (e.currentTarget.scrollTop - scrollTop)}px`
       }
 
       scrollTop = e.currentTarget.scrollTop
     }}
     >
       {userAddress && (
-        <div className='sticky top-0'>
+        <div className='xl:sticky top-0'>
           <UserProfileCard
             profileList={selectedList || Number(profile?.primary_list)}
             hideFollowButton={true}
@@ -84,14 +88,13 @@ const Summary = () => {
       <div
         ref={SidebarRef}
         className={cn(
-          'flex flex-col gap-4 h-[85vh]',
+          'flex flex-col gap-4 h-[85vh] xl:sticky',
           userAddress
             ? ' w-full lg:w-[49%] xl:w-[45%] 2xl:min-w-[500px] 2xl:w-1/2 2xl:max-w-[900px]'
             : 'w-full xl:w-1/2 xl:max-w-[900px] h-[638px]'
         )}
         style={{
           top: userAddress ? 'calc(100vh - 108px - 1360px)' : '0',
-          position: 'sticky'
         }}
 
       >
