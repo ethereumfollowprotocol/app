@@ -42,8 +42,6 @@ const Summary = () => {
       const sidebarTop = sidebar?.getBoundingClientRect().top || 0
       const viewportHeight = window.innerHeight
 
-      console.log(viewportHeight - sidebarHeight + 65);
-
       console.log(sidebar.style.top, sidebarTop)
       if (scrollTop > e.currentTarget.scrollTop) {
         if (sidebarTop >= 135) sidebar.style.top = '0px'
