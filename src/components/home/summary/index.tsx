@@ -37,7 +37,7 @@ const Summary = () => {
     onScroll={(e) => {
       const sidebar = SidebarRef.current
       if (!sidebar) return
-      if (window.innerWidth < 1024) {
+      if (window.innerWidth < 1280) {
         sidebar.style.top = '0px'
         return
       }
@@ -48,7 +48,7 @@ const Summary = () => {
 
       console.log(sidebar.style.top, sidebarTop)
       if (scrollTop > e.currentTarget.scrollTop) {
-        if (sidebarTop >= 135) sidebar.style.top = '0px'
+        if (sidebarTop >= 130) sidebar.style.top = '0px'
         else sidebar.style.top = `${Number(sidebar.style.top.replace('px', '')) + (scrollTop - e.currentTarget.scrollTop)}px`
       } else {
         if (sidebarTop < (viewportHeight - sidebarHeight + 65)) sidebar.style.top = `${viewportHeight - 108 - sidebarHeight}px`
@@ -71,7 +71,7 @@ const Summary = () => {
         </div>
       )}
       <div
-        className='flex flex-col gap-4 h-auto w-full xl:sticky'
+        className='flex flex-col gap-4 h-auto w-full lg:hidden xl:sticky'
       >
         {!isFollowersEmpty && userAddress && <LatestFollowers />}
         <Recommendations
@@ -99,7 +99,7 @@ const Summary = () => {
       <div
         ref={SidebarRef}
         className={cn(
-          'flex flex-col gap-4 h-[85vh] xl:sticky',
+          'hidden flex-col gap-4 h-[85vh] lg:flex xl:sticky',
           userAddress
             ? ' w-full lg:w-[49%] xl:w-[45%] 2xl:min-w-[500px] 2xl:w-1/2 2xl:max-w-[900px]'
             : 'w-full xl:w-1/2 xl:max-w-[900px] h-[638px]'
@@ -107,7 +107,6 @@ const Summary = () => {
         style={{
           top: userAddress ? 'calc(100vh - 108px - 1360px)' : '0',
         }}
-
       >
         {!isFollowersEmpty && userAddress && <LatestFollowers />}
         <Recommendations
