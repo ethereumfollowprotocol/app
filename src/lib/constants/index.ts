@@ -73,9 +73,6 @@ import SaudiArabiaFlag from 'public/assets/icons/flags/saudi-arabia.svg'
 import VaticanCityFlag from 'public/assets/icons/flags/vatican-city.svg'
 import CzechRepublicFlag from 'public/assets/icons/flags/czech-republic.svg'
 
-import { FaHome, FaTrophy, FaUser } from 'react-icons/fa'
-import { RiTeamFill } from 'react-icons/ri'
-
 export const APP_NAME = 'Ethereum Follow Protocol'
 export const APP_NAME_SHORT = 'EFP'
 export const APP_DESCRIPTION =
