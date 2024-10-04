@@ -151,7 +151,7 @@ const ConnectButton = () => {
                       : 'hidden group-hover:hidden'
                   )}
                 >
-                  <div className='flex flex-col gap-2 w-full min-w-[220px] sm:max-h-[76vh] overflow-auto border-[3px] rounded-lg bg-transparent sm:bg-neutral border-grey p-1 shadow-md'>
+                  <div className='flex flex-col gap-2 w-full min-w-[220px] sm:max-h-[80vh] overflow-auto border-[3px] rounded-lg bg-transparent sm:bg-neutral border-grey p-1 shadow-md'>
                     <div
                       onClick={() => setListMenuOpen(false)}
                       className='flex sm:hidden justify-between items-center w-full group:bg-slate-100 dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer'
