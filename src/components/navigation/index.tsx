@@ -68,6 +68,9 @@ const Navigation = () => {
         <div className='flex lg:gap-4 xl:gap-6 w-3/4 sm:w-full lg:w-3/4 justify-end items-center'>
           <NavItems />
           <div className='flex items-center gap-3 md:gap-5'>
+            {userAddress ? (
+              <CartButton cartItemsCount={totalCartItems} />
+            ) : null}
             <div ref={clickAwayRef} className='relative'>
               <div
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -75,15 +78,12 @@ const Navigation = () => {
                   mobileMenuOpen ? 'border-text' : 'border-zinc-400 group-hover:border-text'
                 )}
               >
-                <div className={cn('w-5 h-[3px] rounded-full transition-all', mobileMenuOpen ? 'rotate-45 translate-y-[8px] bg-text' : 'bg-zinc-400 group-hover:bg-text')}></div>
-                <div className={cn('w-5 h-[3px] rounded-full transition-all', mobileMenuOpen ? 'rotate-[-45deg] bg-text' : 'bg-zinc-400 group-hover:bg-text')}></div>
-                <div className={cn('w-5 h-[3px] rounded-full transition-all', mobileMenuOpen ? 'opacity-0 bg-text' : 'bg-zinc-400 group-hover:bg-text')}></div>
+                <div className={cn('w-5 h-[3px] rounded-full transition-all', mobileMenuOpen ? 'bg-text' : 'bg-zinc-400 group-hover:bg-text')}></div>
+                <div className={cn('w-5 h-[3px] rounded-full transition-all', mobileMenuOpen ? 'bg-text' : 'bg-zinc-400 group-hover:bg-text')}></div>
+                <div className={cn('w-5 h-[3px] rounded-full transition-all', mobileMenuOpen ? 'bg-text' : 'bg-zinc-400 group-hover:bg-text')}></div>
               </div>
-              {mobileMenuOpen && <MobileMenu open={mobileMenuOpen} setOpen={setMobileMenuOpen} />}
+              <MobileMenu open={mobileMenuOpen} setOpen={setMobileMenuOpen} />
             </div>
-            {userAddress ? (
-              <CartButton cartItemsCount={totalCartItems} />
-            ) : null}
 
             <ConnectButton />
           </div>

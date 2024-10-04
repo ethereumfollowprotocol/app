@@ -227,13 +227,11 @@ export const NAV_ITEMS = [
   {
     href: () => '/',
     name: 'home',
-    icon: FaHome,
     hiddenOnDesktop: true
   },
   {
     href: (url?: string) => `/${url ?? 'profile'}`,
     name: 'profile',
-    icon: FaUser,
     hiddenOnDesktop: true
   },
   // {
@@ -243,14 +241,7 @@ export const NAV_ITEMS = [
   {
     href: () => '/leaderboard',
     name: 'leaderboard',
-    icon: FaTrophy,
     hiddenOnDesktop: true
-  },
-  {
-    href: () => '/team',
-    name: 'team',
-    icon: RiTeamFill,
-    hiddenOnDesktop: false
   },
   // {
   //   href: () => '/about',
@@ -272,14 +263,14 @@ export const EXTERNAL_LINKS = [
     target: '_blank'
   },
   {
-    text: 'support',
-    href: 'https://discord.com/channels/1172042210024366090/1280308522613211237',
-    target: '_blank'
-  },
-  {
     text: 'bug bounty',
     href: 'https://docs.ethfollow.xyz/bugbounty',
     target: '_blank'
+  },
+  {
+    text: 'team',
+    href: '/team',
+    target: ''
   }
 ]
 

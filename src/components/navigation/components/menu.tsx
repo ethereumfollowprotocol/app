@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
-import { FiExternalLink } from 'react-icons/fi'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useState, type Dispatch, type SetStateAction } from 'react'
 
@@ -11,9 +10,9 @@ import { cn } from '#/lib/utilities'
 import { socials } from '#/components/footer'
 import { usePathname } from 'next/navigation'
 import LanguageSelector from './language-selector'
-import ThemeSwitcher, { themesWithIcons } from '#/components/theme-switcher'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { EXTERNAL_LINKS, LANGUAGES, NAV_ITEMS } from '#/lib/constants'
+import ThemeSwitcher, { themesWithIcons } from '#/components/theme-switcher'
 
 interface MenuProps {
   open: boolean
@@ -38,7 +37,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
   if (!open) return null
 
   return (
-    <div className={cn('bg-neutral w-fit min-w-[220px] z-50 overflow-x-hidden sm:overflow-visible shadow-md border-[3px] transition-transform rounded-md border-grey absolute top-[120%] flex flex-col items-end -left-[90px]',
+    <div className={cn('bg-neutral w-[220px] z-50 overflow-x-hidden sm:overflow-visible shadow-md border-[3px] transition-transform rounded-md border-grey absolute top-[120%] flex flex-col items-end -left-[90px]',
     )}>
       <div
         className={cn(
@@ -65,7 +64,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
             <Link
               prefetch={true}
               href={item.href(itemUrl)}
-              className='capitalize lg:text-lg transition-colors p-3 w-full flex items-center justify-between rounded-md hover:bg-navItem text-text'
+              className='capitalize lg:text-lg text-end block transition-colors p-3 w-full rounded-md hover:bg-navItem text-text'
               onClick={e => {
                 if (item.name === 'profile' && !userAddress && openConnectModal) {
                   e.preventDefault()
@@ -73,27 +72,26 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
                 } else setOpen(false)
               }}
             >
-              <item.icon className='text-2xl' />
-              <span className='block text-nowrap text-end'>{t(`${item.name}`)}</span>
+              {t(`${item.name}`)}
             </Link>
           </div>
         ))}
         <ThemeSwitcher connected={true} setExternalThemeMenuOpen={setThemeMenuOpen} closeMenu={() => {
           setOpen(false)
           setThemeMenuOpen(false)
+          setOpen(false)
         }}
         />
-        <LanguageSelector setExternalLanguageMenuOpen={setLanguageMenuOpen} />
+        <LanguageSelector setExternalLanguageMenuOpen={setLanguageMenuOpen} setParentOpen={setOpen} />
         {EXTERNAL_LINKS.map(link => (
           <Link
             key={link.href}
             href={link.href}
             target={link.target}
+            onClick={() => setOpen(false)}
             className='capitalize block transition-colors p-3 w-full rounded-md hover:bg-navItem text-text font-bold'
           >
-            <div className='w-full flex items-center justify-between'>
-              <FiExternalLink className='text-xl' />
-              <p className='block text-nowrap text-end'>{link.text}</p></div>
+            <p className='text-end'>{t(link.text)}</p>
           </Link>
         ))}
         <div className='flex items-center w-full justify-between p-3'>
