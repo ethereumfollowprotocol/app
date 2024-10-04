@@ -16,7 +16,7 @@ const ClaimPoapModal: React.FC<ClaimPoapModalProps> = ({ onClose, link, isLoadin
   const { t } = useTranslation()
 
   return (
-    <Modal onCancel={onClose}>
+    <Modal onCancel={onClose} disableBackgroundClose={true}>
       <div className='flex flex-col gap-6 items-center'>
         <h2 className='text-2xl font-bold'>You are now officially Early to EFP</h2>
         <p className='font-medium'>Congrats! 👏 Here's a limited edition "Early to EFP" POAP.</p>
