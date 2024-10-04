@@ -17,7 +17,7 @@ const LatestFollowers = () => {
   const isLatestFollowersLoading = isLoading || isFetchingNextPage || isFetchingPreviousPage
 
   return (
-    <div className='glass-card w-full max-h-[370px] sm:max-h-[400px] px-2 py-4 sm:p-4 flex flex-col gap-4 rounded-2xl border-[3px] border-grey'>
+    <div className='glass-card w-full max-h-[370px] sm:max-h-[648px] px-2 py-4 sm:p-4 flex flex-col gap-4 rounded-2xl border-[3px] border-grey'>
       <div className='flex w-full items-center justify-between'>
         <h2 className='text-2xl sm:text-3xl w-full p-2 font-bold'>{t('latest followers')}</h2>
         <PageSelector
@@ -43,7 +43,7 @@ const LatestFollowers = () => {
         />
       </div>
       <FollowList
-        loadingRows={4}
+        loadingRows={7}
         listClassName='gap-3'
         showFollowsYouBadges={false}
         profiles={displayedProfiles}
