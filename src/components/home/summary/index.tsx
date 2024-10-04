@@ -84,7 +84,7 @@ const Summary = () => {
       {userAddress ? (
         <FeedCard
           cardSize={cn(
-            'w-full xl:min-w-[420px] lg:w-[49%] px-0 pt-4 xs:p-4 md:p-6 rounded-2xl',
+            'w-full xl:min-w-[430px] lg:w-[49%] px-0 pt-4 xs:p-4 md:p-6 rounded-2xl',
             (lists?.lists?.length || 0) === 0 && !listsIsLoading
               ? 'h-[50vh] md:h-[640px] xl:w-1/3 2xl:w-[500px] '
               : 'h-[1000000vh] xl:w-1/3 2xl:w-[600px]'
@@ -101,7 +101,7 @@ const Summary = () => {
         className={cn(
           'hidden flex-col gap-4 h-[85vh] lg:flex xl:sticky',
           userAddress
-            ? ' w-full lg:w-[49%] xl:w-[45%] 2xl:min-w-[500px] 2xl:w-1/2 2xl:max-w-[900px]'
+            ? ' w-full lg:w-[49%] xl:w-[40%] 2xl:min-w-[450px] 2xl:w-2/5 2xl:max-w-[900px]'
             : 'w-full xl:w-1/2 xl:max-w-[900px] h-[638px]'
         )}
         style={{
