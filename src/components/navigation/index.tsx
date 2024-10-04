@@ -5,6 +5,7 @@ import { useAccount } from 'wagmi'
 import { useClickAway } from '@uidotdev/usehooks'
 
 import { Search } from '../search'
+import { cn } from '#/lib/utilities.ts'
 import Logo from 'public/assets/logo.svg'
 import NavItems from './components/nav-items.tsx'
 import FullLogo from 'public/assets/logo-full.svg'
@@ -15,7 +16,6 @@ import FullLogoDark from 'public/assets/logo-full-dark.svg'
 import ConnectButton from './components/connect-button.tsx'
 import LogoHalloween from 'public/assets/logo-halloween.svg'
 import FullLogoHalloween from 'public/assets/logo-full-halloween.svg'
-import { cn } from '#/lib/utilities.ts'
 
 const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)

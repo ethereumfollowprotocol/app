@@ -1,8 +1,8 @@
 import Image from 'next/image'
-import { useState, type Dispatch, type SetStateAction } from 'react'
 import { FiArrowLeft } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
+import { useState, type Dispatch, type SetStateAction } from 'react'
 
 import { LANGUAGES } from '#/lib/constants'
 import useLanguage from '../hooks/useLanguage'
