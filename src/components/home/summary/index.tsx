@@ -9,7 +9,6 @@ import Recommendations from '#/components/recommendations'
 import LatestFollowers from './components/latest-followers'
 import UserProfileCard from '#/components/user-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import ScrollIndicator from '#/components/scroll-indicator.tsx'
 import LeaderboardSummary from './components/leaderboard-summary.tsx'
 
 const Summary = () => {
@@ -73,7 +72,7 @@ const Summary = () => {
           className={cn('h-fit w-full py-4 sm:p-4 glass-card border-[3px] border-grey rounded-2xl')}
         />
       </div>
-      <ScrollIndicator />
+      {/* <ScrollIndicator /> */}
     </div>
   )
 }
