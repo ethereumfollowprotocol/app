@@ -568,8 +568,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
           listsIsLoading || isRefetchingProfile || profileIsLoading || isRefetchingProfileQuery,
         statsIsLoading: listsIsLoading || statsIsLoading || isRefetchingStatsQuery,
         followingIsLoading:
+        isRefetchingFollowing ||
           listsIsLoading ||
-          isRefetchingFollowing ||
           followingIsLoading ||
           isRefetchingFollowingQuery,
         followersIsLoading: listsIsLoading || followersIsLoading || isRefetchingFollowersQuery,

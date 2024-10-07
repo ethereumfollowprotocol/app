@@ -10,6 +10,7 @@ import {
   createPublicClient
 } from 'viem'
 import { useTranslation } from 'react-i18next'
+import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useAccount, useChainId, useSwitchChain, useWalletClient } from 'wagmi'
 
@@ -52,6 +53,7 @@ type SaveListSettingsParams = {
     manager: boolean
     user: boolean
     setPrimary: boolean
+    resetSlot: boolean
   }
   onClose: () => void
   onCancel: () => void
@@ -82,7 +84,9 @@ const useSaveListSettings = ({
     manager: false,
     owner: false,
     chain: false,
-    setPrimary: false
+    setPrimary: false,
+    resetSlot: false,
+    claimSlot: false
   })
 
   const {
@@ -114,6 +118,7 @@ const useSaveListSettings = ({
   } = useEFPProfile()
   const { t } = useTranslation()
   const { resetCart } = useCart()
+  const queryClient = useQueryClient()
   const { switchChain } = useSwitchChain()
   const initialCurrentChainId = useChainId()
   const { address: userAddress } = useAccount()
@@ -256,6 +261,53 @@ const useSaveListSettings = ({
     return hash
   }, [selectedList, isPrimaryList, walletClient])
 
+  const resetSlotTx = useCallback(async () => {
+    if (!(userAddress && chain)) return
+
+    const hash = await walletClient?.writeContract({
+      address: (ListRecordContracts[chain?.id] as Address),
+      abi: efpListRecordsAbi,
+      functionName: 'setMetadataValuesAndApplyListOps',
+      // @ts-ignore - diff data type handled
+      args: [newSlot, [{ key: 'user', value: userAddress }], []]
+    })
+
+    if (hash) {
+      setCompleteTransactions(prev => ({
+        ...prev,
+        resetSlot: true
+      }))
+    }
+
+    return hash
+  }, [selectedList, isPrimaryList, walletClient])
+
+  const claimNewSlotTx = useCallback(async () => {
+    if (!(userAddress && chain)) return
+
+    const hash = await walletClient?.writeContract({
+      address: coreEfpContracts.EFPListRegistry,
+      abi: efpListRegistryAbi,
+      functionName: 'setListStorageLocation',
+      args: [
+        BigInt(selectedList),
+        encodePacked(
+          ['uint8', 'uint8', 'uint256', 'address', 'uint'],
+          [1, 1, BigInt(chain.id), (ListRecordContracts[chain?.id] as Address), newSlot]
+        )
+      ]
+    })
+
+    if (hash) {
+      setCompleteTransactions(prev => ({
+        ...prev,
+        claimSlot: true
+      }))
+    }
+
+    return hash
+  }, [])
+
   const setManagerTx = useCallback(async () => {
     if (!(listRecordsContractAddress && slot && isAddress(manager || ''))) return
 
@@ -304,6 +356,22 @@ const useSaveListSettings = ({
     if (!chain) return
 
     // Prepare and set actions when selectedChain is updated and not null
+    const resetSlotAction: Action = {
+      id: EFPActionType.ResetSlot, // Unique identifier for the action
+      type: EFPActionType.ResetSlot,
+      label: t('reset slot'),
+      chainId: chain.id,
+      execute: resetSlotTx,
+      isPendingConfirmation: false
+    }
+    const claimNewSlotAction: Action = {
+      id: EFPActionType.SetEFPListStorageLocation, // Unique identifier for the action
+      type: EFPActionType.SetEFPListStorageLocation,
+      label: t('claim slot'),
+      chainId: DEFAULT_CHAIN.id,
+      execute: claimNewSlotTx,
+      isPendingConfirmation: false
+    }
     const setListStorageLocation: Action = {
       id: EFPActionType.SetEFPListStorageLocation, // Unique identifier for the action
       type: EFPActionType.SetEFPListStorageLocation,
@@ -346,11 +414,16 @@ const useSaveListSettings = ({
     }
 
     const actionsToExecute: Action[] = []
+    if (!completeTransactions.resetSlot && changedValuesState.resetSlot) actionsToExecute.push(resetSlotAction)
+    if (!completeTransactions.claimSlot && changedValuesState.resetSlot) actionsToExecute.push(claimNewSlotAction)
+
     if (!completeTransactions.user && changedValuesState.user) actionsToExecute.push(setListUser)
     if (!completeTransactions.manager && changedValuesState.manager)
       actionsToExecute.push(setListManager)
+
     if (!completeTransactions.setPrimary && changedValuesState.setPrimary)
       actionsToExecute.push(setPrimaryList)
+
     if (changedValuesState.chain && newChain) {
       if (listState) {
         const listOps = listState.flatMap(item => {
@@ -385,6 +458,7 @@ const useSaveListSettings = ({
         actionsToExecute.push(setListStorageLocation)
       }
     }
+
     if (!completeTransactions.owner && changedValuesState.owner) actionsToExecute.push(setListOwner)
 
     addActions(actionsToExecute)
@@ -455,7 +529,7 @@ const useSaveListSettings = ({
     if (fetchFreshLists) refetchLists()
     else setFetchFreshLists(true)
 
-    if (changedValues.user || changedValues.setPrimary) {
+    if (changedValues.user || changedValues.setPrimary || changedValues.resetSlot) {
       localStorage.setItem('selected-list', selectedList.toString())
 
       if (fetchFreshProfile) refetchProfile()
@@ -463,6 +537,12 @@ const useSaveListSettings = ({
 
       if (fetchFreshStats) refetchStats()
       else setFetchFreshStats(true)
+    }
+
+    if(changedValues.resetSlot) {
+      queryClient.invalidateQueries({ queryKey: ['top8'] })
+      queryClient.invalidateQueries({ queryKey: ['follow state'] })
+      queryClient.invalidateQueries({ queryKey: ['list state'] })
     }
 
     refetchRoles()

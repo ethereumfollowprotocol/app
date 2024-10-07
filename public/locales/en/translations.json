@@ -68,6 +68,9 @@
   "set as primary": "Set List as Primary List",
   "resolved": "Resolved:",
   "no resolution": "Doesn't resolve",
+  "reset slot": "Reset Slot",
+  "claim slot": "Claim Slot",
+  "reset slot message": "Are you sure you want to reset the slot? This will clear your list and set all the roles back to your wallet address. This action cannot be undone.",
 
   "editor title": "Editor",
   "empty cart": "Your cart is empty. Follow people then come back here to confirm it onchain.",
