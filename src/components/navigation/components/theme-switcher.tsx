@@ -10,7 +10,7 @@ import { HiOutlineDesktopComputer } from 'react-icons/hi'
 import { cn } from '#/lib/utilities'
 import GreenCheck from 'public/assets/icons/check-green.svg'
 
-const themesWithIcons = [
+export const themesWithIcons = [
   {
     theme: 'system',
     icon: <HiOutlineDesktopComputer />
@@ -22,7 +22,7 @@ const themesWithIcons = [
   {
     theme: 'dark',
     icon: <MdDarkMode />
-  }
+  },
   // {
   //   theme: 'halloween',
   //   icon: <GiPumpkinLantern />
@@ -44,6 +44,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
   setExternalThemeMenuOpen
 }) => {
   const [themeMenuOpen, setThemeMenuOpen] = useState(false)
+
   const clickAwayThemeRef = useClickAway<HTMLDivElement>(() => {
     setThemeMenuOpen(false)
     setExternalThemeMenuOpen?.(false)
@@ -51,6 +52,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
 
   const { t } = useTranslation()
   const { setTheme, theme: selectedTheme } = useTheme()
+
   return (
     <div
       ref={clickAwayThemeRef}
@@ -76,14 +78,14 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
       </div>
       <div
         className={cn(
-          'absolute group-hover:block block z-50',
+          'absolute group-hover:block block h-[230px] sm:h-[174px] z-50',
           connected
-            ? '-right-[223px] sm:right-[97.2%] min-w-[220px] -top-[4px] sm:-top-[6px] sm:pr-5'
+            ? '-right-[223px] sm:right-[97.2%] min-w-[220px] -top-[151px] sm:-top-[6px] sm:pr-5'
             : 'top-[100%] pt-3 -left-10',
           themeMenuOpen ? 'block' : 'hidden'
         )}
       >
-        <div className='flex flex-col p-1 gap-2 w-full max-h-[75vh] sm:max-h-[80vh] overflow-scroll border-[3px] rounded-lg bg-neutral border-grey shadow-md'>
+        <div className='flex flex-col p-1 gap-2 w-full h-[230px] sm:h-[174px] max-h-[75vh] sm:max-h-[90vh] overflow-scroll border-[3px] rounded-lg bg-neutral border-grey shadow-md'>
           <div
             onClick={() => {
               setThemeMenuOpen(false)

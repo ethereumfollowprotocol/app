@@ -224,22 +224,49 @@ export const NAV_ITEMS = [
   {
     href: () => '/',
     name: 'home',
-    private: false
+    hiddenOnDesktop: true
   },
   {
     href: (url?: string) => `/${url ?? 'profile'}`,
     name: 'profile',
-    private: true
+    hiddenOnDesktop: true
   },
-  {
-    href: () => '/feed',
-    name: 'feed',
-    private: true
-  },
+  // {
+  //   href: () => '/feed',
+  //   name: 'feed',
+  // },
   {
     href: () => '/leaderboard',
     name: 'leaderboard',
-    private: false
+    hiddenOnDesktop: true
+  }
+]
+
+export const EXTERNAL_LINKS = [
+  {
+    text: 'about',
+    href: '/about',
+    target: ''
+  },
+  {
+    text: 'docs',
+    href: 'https://docs.ethfollow.xyz/intro',
+    target: '_blank'
+  },
+  {
+    text: 'faq',
+    href: 'https://docs.ethfollow.xyz/faq',
+    target: '_blank'
+  },
+  {
+    text: 'bug bounty',
+    href: 'https://docs.ethfollow.xyz/bugbounty',
+    target: '_blank'
+  },
+  {
+    text: 'team',
+    href: '/team',
+    target: ''
   }
 ]
 

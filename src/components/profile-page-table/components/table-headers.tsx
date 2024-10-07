@@ -143,7 +143,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 />
               </div>
               {showSort && (
-                <div className=' bg-neutral glass-card p-1 gap-1 z-50 shadow-md border-[3px] rounded-md border-grey absolute top-[120%] flex flex-col items-center right-0'>
+                <div className='bg-neutral glass-card p-1 gap-1 z-50 shadow-md border-[3px] rounded-md border-grey absolute top-[120%] flex flex-col items-center -right-2'>
                   {SORT_OPTIONS.map(option => (
                     <div
                       className='font-bold capitalize w-full text-nowrap relative rounded-md hover:bg-navItem transition-colors p-3 pl-8'
