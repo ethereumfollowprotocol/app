@@ -23,6 +23,7 @@ export interface SaveSettingsProps {
     manager: boolean
     user: boolean
     setPrimary: boolean
+    resetSlot: boolean
   }
   onClose: () => void
   onCancel: () => void
