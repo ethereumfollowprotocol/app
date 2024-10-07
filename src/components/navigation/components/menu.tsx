@@ -10,8 +10,9 @@ import { cn } from '#/lib/utilities'
 import { socials } from '#/components/footer'
 import { usePathname } from 'next/navigation'
 import LanguageSelector from './language-selector'
+import { LANGUAGES } from '#/lib/constants/languages'
+import { EXTERNAL_LINKS, NAV_ITEMS } from '#/lib/constants'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import { EXTERNAL_LINKS, LANGUAGES, NAV_ITEMS } from '#/lib/constants'
 import ThemeSwitcher, { themesWithIcons } from '#/components/navigation/components/theme-switcher'
 
 interface MenuProps {

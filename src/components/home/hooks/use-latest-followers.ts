@@ -27,7 +27,7 @@ export const useLatestFollowers = () => {
       const discoverAccounts = await fetchProfileFollowers({
         addressOrName: userAddress,
         list: selectedList,
-        limit: 50,
+        limit: 55,
         pageParam,
         sort: 'latest first'
       })
@@ -48,8 +48,8 @@ export const useLatestFollowers = () => {
   const displayedProfiles = useMemo(() => {
     const pageIndex = profilesToRecommend?.pageParams.indexOf(page - 1) || 0
     return profilesToRecommend?.pages[pageIndex]?.results.slice(
-      (subPage - 1 - (page - 1) * 5) * 10,
-      (subPage - (page - 1) * 5) * 10
+      (subPage - 1 - (page - 1) * 5) * 11,
+      (subPage - (page - 1) * 5) * 11
     )
   }, [profilesToRecommend, page, subPage])
 
