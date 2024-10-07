@@ -5,7 +5,7 @@ import { FaXTwitter } from 'react-icons/fa6'
 
 import Pages from './components/pages'
 
-const socials = [
+export const socials = [
   {
     text: 'X',
     href: 'https://x.com/efp',
@@ -26,7 +26,7 @@ const socials = [
   }
 ]
 
-export function Footer() {
+const Footer = () => {
   return (
     <footer className='w-full  z-20 flex justify-center border-t-2 border-t-pink glass-card py-8 md:py-16 items-center'>
       <div className='flex items-center justify-center h-full w-full gap-4 xxs:gap-6 sm:gap-28 md:gap-44'>
@@ -61,3 +61,5 @@ export function Footer() {
     </footer>
   )
 }
+
+export default Footer
