@@ -1,9 +1,11 @@
+import { useEffect, useState } from 'react'
+import type { StaticImageData } from 'next/image'
+
 import i18n from '#/app/i18n'
 import { LANGUAGES } from '#/lib/constants'
-import type { StaticImageData } from 'next/image'
-import { useEffect, useState } from 'react'
 
 const useLanguage = () => {
+  
   const [languageMenOpenu, setLanguageMenuOpen] = useState(false)
   const [selectedLanguage, setSelectedLanguage] = useState(
     LANGUAGES[LANGUAGES.map(lang => lang.key).indexOf(i18n.language || 'en')]

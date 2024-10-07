@@ -13,6 +13,7 @@ import Namefi from 'public/assets/partners/namefi.jpeg'
 import ENSBook from 'public/assets/partners/ensbook.jpeg'
 import VibesScapes from 'public/assets/partners/vibesscapes.jpeg'
 import WebThreeBio from 'public/assets/partners/web3bio.jpeg'
+import Blockscout from 'public/assets/partners/blockscout.jpeg'
 
 
 export const INTEGRATIONS = [
@@ -80,6 +81,11 @@ export const INTEGRATIONS = [
     name: 'Web3 Bio',
     url: 'https://web3.bio/',
     logo: WebThreeBio
+  },
+  {
+    name: 'Blockscout',
+    url: 'https://www.blockscout.com/',
+    logo: Blockscout
   }
 ] as {
   name: string

@@ -18,14 +18,14 @@ const NavItems = () => {
   const { selectedList, lists } = useEFPProfile()
   const itemUrl =
     pathname?.toLowerCase() === `/${userAddress?.toLowerCase()}` &&
-    selectedList === Number(lists?.primary_list)
+      selectedList === Number(lists?.primary_list)
       ? userAddress?.toLowerCase()
       : selectedList?.toString() ?? userAddress?.toLowerCase()
 
   return (
     <ul className='lg:flex hidden lg:gap-4 xl:gap-9 items-center'>
       {NAV_ITEMS.map(item => (
-        <li className='font-bold hover:scale-110 transition-transform' key={`${item.name}`}>
+        <li className={cn('font-bold hover:scale-110 transition-transform', item.hiddenOnDesktop ? '' : 'hidden')} key={`${item.name}`}>
           <Link
             prefetch={true}
             href={item.href(itemUrl)}
