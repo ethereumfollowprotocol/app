@@ -60,6 +60,16 @@ export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
     custom: {
       chainDetail: 'Ethereum L2',
       gasFeeDetail: 'Super Low gas fees'
+    },
+    blockExplorers: {
+      default: {
+        name: 'Blockscout',
+        url: 'https://explorer.base.org'
+      },
+      blockscout: {
+        name: 'Blockscout',
+        url: 'https://base.blockscout.com/'
+      }
     }
   },
   {
@@ -68,6 +78,16 @@ export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
     custom: {
       chainDetail: 'Ethereum L2',
       gasFeeDetail: 'Low gas fees'
+    },
+    blockExplorers: {
+      default: {
+        name: 'Blockscout',
+        url: 'https://explorer.optimism.io'
+      },
+      blockscout: {
+        name: 'Blockscout',
+        url: 'https://optimistic.blockscout.com/'
+      }
     }
   },
   {
@@ -77,8 +97,18 @@ export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
     custom: {
       chainDetail: '',
       gasFeeDetail: 'High gas fees'
+    },
+    blockExplorers: {
+      default: {
+        name: 'Blockscout',
+        url: 'https://explorer.base.org'
+      },
+      blockscout: {
+        name: 'Blockscout',
+        url: 'https://eth.blockscout.com/'
+      }
     }
-  }
+  },
   // {
   //   ...baseSepolia,
   //   iconUrl: '/assets/chains/base.svg',

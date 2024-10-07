@@ -67,7 +67,7 @@ const TransactionDetails = ({
 
   const shouldShowComponent = isPending || isSuccess || isError || action.isPendingConfirmation
 
-  const explorerUrl = `${chain?.blockExplorers?.default.url}/tx/${action.txHash}`
+  const explorerUrl = `${chain?.blockExplorers?.blockscout?.url || chain?.blockExplorers?.default?.url}/tx/${action.txHash}`
 
   return shouldShowComponent ? (
     <div className='flex gap-2 sm:gap-2 flex-col'>
