@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import { useTheme } from 'next-themes'
@@ -44,9 +43,9 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
         )}
       >
         {title && (
-          <Link href={'/feed'} className='hover:scale-110 transition-transform'>
+          // <Link href={'/feed'} className='hover:scale-110 transition-transform'>
             <h2 className='text-2xl sm:text-3xl font-bold'>{title}</h2>
-          </Link>
+          // </Link>
         )}
         <a
           href='https://www.interface.social/'
@@ -68,7 +67,7 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
           contentSize,
           !listsIsLoading && (lists?.lists?.length || 0) === 0
             ? 'h-[60vh]'
-            : 'h-screen xs:h-[100000vh]'
+            : 'h-[100000vh]'
         )}
       >
         {userAddress ? (
