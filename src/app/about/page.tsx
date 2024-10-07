@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 import Footer from '#/components/footer'
-import Landing from '#/components/home/landing'
+import Landing from '#/app/about/components/landing'
 
 export const metadata: Metadata = {
   title: 'About | EFP',

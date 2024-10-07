@@ -11,7 +11,7 @@ export const useLeaderboardSummary = () => {
     queryFn: async () => {
       const data = leaderboardFilters.map(async filter => {
         const results = await fetchleaderboard({
-          limit: 3,
+          limit: 5,
           pageParam: 0,
           filter
         })

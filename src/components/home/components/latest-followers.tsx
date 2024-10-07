@@ -43,7 +43,7 @@ const LatestFollowers = () => {
         />
       </div>
       <FollowList
-        loadingRows={10}
+        loadingRows={11}
         listClassName='gap-3'
         showFollowsYouBadges={false}
         profiles={displayedProfiles}

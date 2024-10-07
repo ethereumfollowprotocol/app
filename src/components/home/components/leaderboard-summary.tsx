@@ -18,7 +18,7 @@ const LeaderboardSummary = () => {
   const displayedEmojies = leaderboardFiltersEmojies.slice((page - 1) * 2, page * 2)
 
   return (
-    <div className='glass-card w-full xl:w-1/2 xl:max-w-[900px] rounded-2xl flex flex-col gap-4 p-1 py-3 border-[3px] border-grey'>
+    <div className='glass-card mb-3 w-full xl:w-1/2 xl:max-w-[900px] rounded-2xl flex flex-col gap-4 p-1 py-3 border-[3px] border-grey'>
       <div className='w-full flex items-center justify-between p-2 sm:p-4'>
         <h3 className='text-2xl sm:text-3xl font-bold'>{t('leaderboard')}</h3>
         <PageSelector
@@ -41,8 +41,8 @@ const LeaderboardSummary = () => {
           }[title]
 
           return (
-            <div key={title} className='flex flex-col gap-1'>
-              <h4 className='text-xl flex gap-2 sm:text-xl font-bold capitalize px-2 sm:px-4'>
+            <div key={title} className='flex flex-col gap-1.5'>
+              <h4 className='text-xl flex gap-2 sm:text-2xl font-bold capitalize px-2 sm:px-4'>
                 <p>{t(title)}</p>
                 <Image
                   src={displayedEmojies[index]}
@@ -54,9 +54,9 @@ const LeaderboardSummary = () => {
               </h4>
               {isLeaderboardSummaryLoading ? (
                 <div className='animate-pulse flex flex-col'>
-                  <LoadingRow staticStats={false} />
-                  <LoadingRow staticStats={false} />
-                  <LoadingRow staticStats={false} />
+                  {new Array(5).fill(null).map((_, index) => (
+                    <LoadingRow key={index} />
+                  ))}
                 </div>
               ) : (
                 <div className='flex flex-col'>

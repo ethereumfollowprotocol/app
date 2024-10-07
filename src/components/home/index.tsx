@@ -12,7 +12,7 @@ import UserProfileCard from '#/components/user-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import LeaderboardSummary from './components/leaderboard-summary.tsx'
 
-const Summary = () => {
+const Home = () => {
   const {
     stats,
     lists,
@@ -30,35 +30,69 @@ const Summary = () => {
   const isFollowersEmpty = !followersIsLoading && followers.length === 0
 
   const SidebarRef = useRef<HTMLDivElement>(null)
-  let scrollTop = 0
+  const ProfileCardRef = useRef<HTMLDivElement>(null)
+
+  let scrollTopSidebar = 0
+  const onScrollSidebar = (e: React.UIEvent<HTMLDivElement>) => {
+    const sidebar = SidebarRef.current
+    if (!sidebar) return
+    if (window.innerWidth < 1280) {
+      sidebar.style.top = '0px'
+      return
+    }
+
+    const sidebarHeight = sidebar.scrollHeight + 65
+    const sidebarTop = sidebar.getBoundingClientRect().top || 0
+    const viewportHeight = window.innerHeight
+
+    if ((sidebarHeight + 108) < viewportHeight) return sidebar.style.top = '0px'
+
+    if (scrollTopSidebar > e.currentTarget.scrollTop) {
+      if (sidebarTop >= 120) sidebar.style.top = '0px'
+      else sidebar.style.top = `${Number(sidebar.style.top.replace('px', '')) + (scrollTopSidebar - e.currentTarget.scrollTop)}px`
+    } else {
+      if (sidebarTop < (viewportHeight - sidebarHeight + 100)) sidebar.style.top = `${viewportHeight - 108 - sidebarHeight}px`
+      else sidebar.style.top = `${Number(sidebar.style.top.replace('px', '')) - (e.currentTarget.scrollTop - scrollTopSidebar)}px`
+    }
+
+    scrollTopSidebar = e.currentTarget.scrollTop
+  }
+
+  let scrollTopProfileCard = 0
+  const onScrollProfileCard = (e: React.UIEvent<HTMLDivElement>) => {
+    const profileCard = ProfileCardRef.current
+    if (!profileCard) return
+    if (window.innerWidth < 1280) {
+      profileCard.style.top = '0px'
+      return
+    }
+
+    const profileCardHeight = profileCard.scrollHeight + 65
+    const profileCardTop = profileCard?.getBoundingClientRect().top || 0
+    const viewportHeight = window.innerHeight
+
+    if ((profileCardHeight + 108) < viewportHeight) return profileCard.style.top = '0px'
+
+    if (scrollTopProfileCard > e.currentTarget.scrollTop) {
+      if (profileCardTop >= 120) profileCard.style.top = '0px'
+      else profileCard.style.top = `${Number(profileCard.style.top.replace('px', '')) + (scrollTopProfileCard - e.currentTarget.scrollTop)}px`
+    } else {
+      if (profileCardTop < (viewportHeight - profileCardHeight + 100)) profileCard.style.top = `${viewportHeight - 108 - profileCardHeight}px`
+      else profileCard.style.top = `${Number(profileCard.style.top.replace('px', '')) - (e.currentTarget.scrollTop - scrollTopProfileCard)}px`
+    }
+
+    scrollTopProfileCard = e.currentTarget.scrollTop
+  }
 
   return (
     <div className='pt-[108px] relative md:pt-32 w-full lg:pt-32 xl:pt-40 h-screen px-4 overflow-y-scroll lg:px-6 xl:px-8 flex items-start lg:justify-center lg:gap-4 xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4'
-    onScroll={(e) => {
-      const sidebar = SidebarRef.current
-      if (!sidebar) return
-      if (window.innerWidth < 1280) {
-        sidebar.style.top = '0px'
-        return
-      }
-
-      const sidebarHeight = sidebar.scrollHeight + 65
-      const sidebarTop = sidebar?.getBoundingClientRect().top || 0
-      const viewportHeight = window.innerHeight
-
-      if (scrollTop > e.currentTarget.scrollTop) {
-        if (sidebarTop >= 130) sidebar.style.top = '0px'
-        else sidebar.style.top = `${Number(sidebar.style.top.replace('px', '')) + (scrollTop - e.currentTarget.scrollTop)}px`
-      } else {
-        if (sidebarTop < (viewportHeight - sidebarHeight + 80)) sidebar.style.top = `${viewportHeight - 108 - sidebarHeight}px`
-        else sidebar.style.top = `${Number(sidebar.style.top.replace('px', '')) - (e.currentTarget.scrollTop - scrollTop)}px`
-      }
-
-      scrollTop = e.currentTarget.scrollTop
-    }}
+      onScroll={(e) => {
+        onScrollSidebar(e)
+        onScrollProfileCard(e)
+      }}
     >
       {userAddress && (
-        <div className='xl:sticky w-full xl:w-fit top-0'>
+        <div className='xl:sticky w-full xl:w-fit ' ref={ProfileCardRef}>
           <UserProfileCard
             profileList={selectedList || Number(profile?.primary_list)}
             hideFollowButton={true}
@@ -104,12 +138,12 @@ const Summary = () => {
             : 'w-full xl:w-1/2 xl:max-w-[900px] h-[638px]'
         )}
         style={{
-          top: userAddress ? 'calc(100vh - 108px - 1860px)' : '0',
+          top: userAddress ? 'calc(100vh - 108px - 2000px)' : '0',
         }}
       >
         {!isFollowersEmpty && userAddress && <LatestFollowers />}
         <Recommendations
-          limit={10}
+          limit={11}
           endpoint='discover'
           header={t('recent')}
           className={cn('h-fit w-full py-4 sm:p-4 glass-card border-[3px] border-grey rounded-2xl')}
@@ -120,4 +154,4 @@ const Summary = () => {
   )
 }
 
-export default Summary
+export default Home

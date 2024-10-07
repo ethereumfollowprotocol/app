@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import Summary from '#/components/home/summary'
+import Home from '#/components/home'
 
 export const metadata: Metadata = {
   title: 'Home | EFP',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 const HomePage = () => {
   return (
     <main className='mx-auto bg-transparent overflow-hidden flex min-h-screen w-full flex-col items-center '>
-      <Summary />
+      <Home />
     </main>
   )
 }
