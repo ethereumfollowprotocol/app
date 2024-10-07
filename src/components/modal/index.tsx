@@ -5,16 +5,17 @@ interface ModalProps {
   onCancel: () => void
   children: React.ReactNode
   className?: string
+  disableBackgroundClose?: boolean
 }
 
-const Modal: React.FC<ModalProps> = ({ onCancel, children, className }) => {
+const Modal: React.FC<ModalProps> = ({ onCancel, children, className, disableBackgroundClose }) => {
   return (
     <div
       className={cn(
         'fixed z-50 top-0 flex px-4 left-0 justify-center w-screen h-screen bg-black/40 py-12 overflow-scroll',
         className ?? 'items-center'
       )}
-      onClick={onCancel}
+      onClick={() => disableBackgroundClose ? null : onCancel()}
     >
       <div className={`flex w-full sm:w-fit gap-2 flex-col items-end`}>
         <div
