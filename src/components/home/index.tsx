@@ -45,7 +45,10 @@ const Home = () => {
     const sidebarTop = sidebar.getBoundingClientRect().top || 0
     const viewportHeight = window.innerHeight
 
-    if ((sidebarHeight + 108) < viewportHeight) return sidebar.style.top = '0px'
+    if ((sidebarHeight + 108) < viewportHeight) {
+      sidebar.style.top = '0px'
+      return
+    }
 
     if (scrollTopSidebar > e.currentTarget.scrollTop) {
       if (sidebarTop >= 120) sidebar.style.top = '0px'
@@ -71,7 +74,10 @@ const Home = () => {
     const profileCardTop = profileCard?.getBoundingClientRect().top || 0
     const viewportHeight = window.innerHeight
 
-    if ((profileCardHeight + 108) < viewportHeight) return profileCard.style.top = '0px'
+    if ((profileCardHeight + 108) < viewportHeight) {
+      profileCard.style.top = '0px'
+      return
+    }
 
     if (scrollTopProfileCard > e.currentTarget.scrollTop) {
       if (profileCardTop >= 120) profileCard.style.top = '0px'
