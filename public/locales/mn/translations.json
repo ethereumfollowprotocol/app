@@ -50,7 +50,7 @@
 "following myprofile empty first" : "Чи хараахан хэнийг ч дагаагүй байна!",
 "following myprofile empty second" : "Эхлэхийн тулд зүгээр л хайгаад дагаж эхлээрэй. Та тэдгээрийг onchain дээр баталгаажуулсны дараа тэд харагдах болно",
 "followers myprofile empty" : "Дагагчид байхгүй",
-"following empty first" : "Энэ хэрэглэгч хэнийг ч дагадаггүй."
+"following empty first" : "Энэ хэрэглэгч хэнийг ч дагадаггүй.",
 "followers empty" :  "Энэ хэрэглэгч ямар ч дагагчгүй",
 "none" :  "Байхгүй",
 "Blocked/Muted" : "Блоклох/дууг хаах",
@@ -76,7 +76,7 @@
 "adding" :  "Нэмэх",
 "in cart" :"Аль хэдийн сагсанд байна",
 "already followed" : "Аль хэдийн дагаж байна",
-"not manager" :  "Та жагсаалтын менежер биш."
+"not manager" :  "Та жагсаалтын менежер биш.",
 "recommendations" : "Санал болгож байна",
 "unc-changes" :"Баталгаагүй өөрчлөлтүүд",
 "cart unc-changes" : "Сагс: Батлагдаагүй өөрчлөлтүүд",
@@ -125,7 +125,7 @@
 "list ops" : "үйл ажиллагааны жагсаалт",
 "list op" : "жагсаалтын ажиллагаа",
 "req transactions" : "Шаардлагатай гүйлгээ",
-"chain" : "Гинж",  
+"chain" : "Гинж",
 
 "status title" : "Статус",
 "of" : "нь",
