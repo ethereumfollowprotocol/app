@@ -26,8 +26,6 @@ jobs:
       - name: 🔑 Checkout
         uses: actions/checkout@v4
 
-      - uses: oven-sh/setup-bun@v2
-
       - name: 'Install Dependencies'
         uses: ethereumfollowprotocol/actions/.github/actions/setup@main
         with:
