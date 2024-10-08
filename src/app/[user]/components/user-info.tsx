@@ -1,41 +1,37 @@
-'use client'
+"use client";
 
-import { useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useEffect, useRef, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-import { cn } from '#/lib/utilities'
-import useUser from '../hooks/useUser'
-import TopEight from '#/components/top-eight'
-import { PROFILE_TABS } from '#/lib/constants'
-import type { ProfileTabType } from '#/types/common'
-import ListSettings from '#/components/list-settings'
-import BlockedMuted from '#/components/blocked-muted'
-import { useIsEditView } from '#/hooks/use-is-edit-view'
-import UserProfileCard from '#/components/user-profile-card'
-import { useEFPProfile } from '#/contexts/efp-profile-context'
-import type { ProfileDetailsResponse } from '#/types/requests'
-import { UserProfilePageTable } from '#/components/profile-page-table'
+import useUser from "../hooks/useUser";
+import TopEight from "#/components/top-eight";
+import type { ProfileTabType } from "#/types/common";
+import ListSettings from "#/components/list-settings";
+import BlockedMuted from "#/components/blocked-muted";
+import { useIsEditView } from "#/hooks/use-is-edit-view";
+import UserProfileCard from "#/components/user-profile-card";
+import { useEFPProfile } from "#/contexts/efp-profile-context";
+import type { ProfileDetailsResponse } from "#/types/requests";
+import UserProfilePageTable from "#/components/profile-page-table";
 
 interface UserInfoProps {
-  user: string
+  user: string;
 }
 
 const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
-  const searchParams = useSearchParams()
-  const initialBlockedOpen = searchParams.get('modal') === 'blockmutelists'
-  const defaultParam = (searchParams.get('tab') as ProfileTabType) ?? 'following'
+  const searchParams = useSearchParams();
+  const initialBlockedOpen = searchParams.get("modal") === "blockmutelists";
+  const defaultParam = (searchParams.get("tab") as ProfileTabType) ?? "following";
 
-  const [isSaving, setIsSaving] = useState(false)
-  const [listSettingsOpen, setListSettingsOpen] = useState(false)
-  const [activeTab, setActiveTab] = useState<ProfileTabType>(defaultParam)
-  const [isBlockedMutedOpen, setIsBlockedMutedOpen] = useState(initialBlockedOpen)
+  const [isSaving, setIsSaving] = useState(false);
+  const [listSettingsOpen, setListSettingsOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<ProfileTabType>(defaultParam);
+  const [isBlockedMutedOpen, setIsBlockedMutedOpen] = useState(initialBlockedOpen);
 
-  const router = useRouter()
-  const pathname = usePathname()
-  const { t } = useTranslation()
+  const router = useRouter();
+  const pathname = usePathname();
 
-  const isLoadPage = pathname === '/loading'
+  const isLoadPage = pathname === "/loading";
 
   const {
     roles,
@@ -68,10 +64,10 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     setFollowingTagsFilter: profileSetFollowingTagsFilter,
     setFollowersTagsFilter: profileSetFollowersTagsFilter,
     isFetchingMoreFollowers: profileIsFetchingMoreFollowers,
-    isFetchingMoreFollowing: profileIsFetchingMoreFollowing
-  } = useEFPProfile()
+    isFetchingMoreFollowing: profileIsFetchingMoreFollowing,
+  } = useEFPProfile();
 
-  const isMyProfile = useIsEditView()
+  const isMyProfile = useIsEditView();
 
   const {
     listNum,
@@ -104,58 +100,119 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     isFetchingMoreFollowers: userIsFetchingMoreFollowers,
     isFetchingMoreFollowing: userIsFetchingMoreFollowing,
     setFollowersTagsFilter: userSetFollowersTagsFilter,
-    setFollowingTagsFilter: userSetFollowingTagsFilter
-  } = useUser(user)
+    setFollowingTagsFilter: userSetFollowingTagsFilter,
+  } = useUser(user);
 
-  const stats = isMyProfile ? profileStats : userStats
-  const statsIsLoading = isLoadPage || (isMyProfile ? profileStatsIsLoading : userStatsIsLoading)
+  const stats = isMyProfile ? profileStats : userStats;
+  const statsIsLoading = isLoadPage || (isMyProfile ? profileStatsIsLoading : userStatsIsLoading);
   const profile: ProfileDetailsResponse | null | undefined = isMyProfile
     ? profileProfile
-    : userProfile
+    : userProfile;
   const profileIsLoading =
-    isLoadPage || (isMyProfile ? profileProfileIsLoading : userProfileIsLoading)
-  const following = isMyProfile ? profileFollowing : userFollowing
-  const followers = isMyProfile ? profileFollowers : userFollowers
-  const followingTags = isMyProfile ? profileFollowingTags : userFollowingTags
+    isLoadPage || (isMyProfile ? profileProfileIsLoading : userProfileIsLoading);
+  const following = isMyProfile ? profileFollowing : userFollowing;
+  const followers = isMyProfile ? profileFollowers : userFollowers;
+  const followingTags = isMyProfile ? profileFollowingTags : userFollowingTags;
   const followingTagsLoading =
-    isLoadPage || (isMyProfile ? profileFollowingTagsLoading : userFollowingTagsLoading)
-  const followingTagsFilter = isMyProfile ? profileFollowingTagsFilter : userFollowingTagsFilter
-  const followersTagsFilter = isMyProfile ? profileFollowersTagsFilter : userFollowersTagsFilter
-  const toggleTag = isMyProfile ? profileToggleTag : userToggleTag
-  const followersSort = isMyProfile ? profileFollowersSort : userFollowerSort
-  const followingSort = isMyProfile ? profileFollowingSort : userFollowingSort
-  const setFollowersSort = isMyProfile ? profileSetFollowersSort : userSetFollowerSort
-  const setFollowingSort = isMyProfile ? profileSetFollowingSort : userSetFollowingSort
-  const setFollowingSearch = isMyProfile ? profileSetFollowingSearch : userSetFollowingSearch
-  const setFollowersSearch = isMyProfile ? profileSetFollowersSearch : userSetFollowersSearch
+    isLoadPage || (isMyProfile ? profileFollowingTagsLoading : userFollowingTagsLoading);
+  const followingTagsFilter = isMyProfile ? profileFollowingTagsFilter : userFollowingTagsFilter;
+  const followersTagsFilter = isMyProfile ? profileFollowersTagsFilter : userFollowersTagsFilter;
+  const toggleTag = isMyProfile ? profileToggleTag : userToggleTag;
+  const followersSort = isMyProfile ? profileFollowersSort : userFollowerSort;
+  const followingSort = isMyProfile ? profileFollowingSort : userFollowingSort;
+  const setFollowersSort = isMyProfile ? profileSetFollowersSort : userSetFollowerSort;
+  const setFollowingSort = isMyProfile ? profileSetFollowingSort : userSetFollowingSort;
+  const setFollowingSearch = isMyProfile ? profileSetFollowingSearch : userSetFollowingSearch;
+  const setFollowersSearch = isMyProfile ? profileSetFollowersSearch : userSetFollowersSearch;
   const followingIsLoading =
-    isLoadPage || (isMyProfile ? profileFollowingIsLoading : userFollowingIsLoading)
+    isLoadPage || (isMyProfile ? profileFollowingIsLoading : userFollowingIsLoading);
   const followersIsLoading =
-    isLoadPage || (isMyProfile ? profileFollowersIsLoading : userFollowersIsLoading)
-  const fetchMoreFollowers = isMyProfile ? profileFetchMoreFollowers : userFetchMoreFollowers
-  const fetchMoreFollowing = isMyProfile ? profileFetchMoreFollowing : userFetchMoreFollowing
-  const isEndOfFollowers = isMyProfile ? profileIsEndOfFollowers : userIsEndOfFollowers
-  const isEndOfFollowing = isMyProfile ? profileIsEndOfFollowing : userIsEndOfFollowing
+    isLoadPage || (isMyProfile ? profileFollowersIsLoading : userFollowersIsLoading);
+  const fetchMoreFollowers = isMyProfile ? profileFetchMoreFollowers : userFetchMoreFollowers;
+  const fetchMoreFollowing = isMyProfile ? profileFetchMoreFollowing : userFetchMoreFollowing;
+  const isEndOfFollowers = isMyProfile ? profileIsEndOfFollowers : userIsEndOfFollowers;
+  const isEndOfFollowing = isMyProfile ? profileIsEndOfFollowing : userIsEndOfFollowing;
   const followerTagsLoading =
-    isLoadPage || (isMyProfile ? profileFollowerTagsLoading : userFollowerTagsLoading)
-  const followerTags = isMyProfile ? profileFollowerTags : userFollowerTags
+    isLoadPage || (isMyProfile ? profileFollowerTagsLoading : userFollowerTagsLoading);
+  const followerTags = isMyProfile ? profileFollowerTags : userFollowerTags;
   const setFollowingTagsFilter = isMyProfile
     ? profileSetFollowingTagsFilter
-    : userSetFollowingTagsFilter
+    : userSetFollowingTagsFilter;
   const setFollowersTagsFilter = isMyProfile
     ? profileSetFollowersTagsFilter
-    : userSetFollowersTagsFilter
+    : userSetFollowersTagsFilter;
   const isFetchingMoreFollowers = isMyProfile
     ? profileIsFetchingMoreFollowers
-    : userIsFetchingMoreFollowers
+    : userIsFetchingMoreFollowers;
   const isFetchingMoreFollowing = isMyProfile
     ? profileIsFetchingMoreFollowing
-    : userIsFetchingMoreFollowing
+    : userIsFetchingMoreFollowing;
+
+  const titleRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (titleRef.current && !!searchParams.get("tab")) {
+      titleRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      setActiveTab(searchParams.get("tab") as ProfileTabType);
+    }
+  }, [searchParams]);
+
+  const tableRef = useRef<HTMLDivElement>(null);
+  const TopEightRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const ProfileCardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleWheel = (event: WheelEvent) => {
+      if (tableRef.current) {
+        // Adjust the scroll position of the div
+        tableRef.current.scrollTop += event.deltaY;
+        tableRef.current.scrollLeft += event.deltaX;
+      }
+
+      if (containerRef.current) {
+        // Adjust the scroll position of the div
+        containerRef.current.scrollTop += event.deltaY;
+        containerRef.current.scrollLeft += event.deltaX;
+      }
+
+      if (TopEightRef.current) {
+        const topEightHeight = TopEightRef.current.scrollHeight;
+        const topEightOverflow = window.innerHeight - topEightHeight - 160;
+        TopEightRef.current.style.top = `${topEightOverflow >= 0 ? 0 : topEightOverflow}px`;
+      }
+
+      if (ProfileCardRef.current) {
+        const profileCardHeight = ProfileCardRef.current.scrollHeight + 65;
+        const profileCardOverflow = window.innerHeight - profileCardHeight - 100;
+        ProfileCardRef.current.style.top = `${
+          profileCardOverflow >= 0 ? 0 : profileCardOverflow
+        }px`;
+      }
+    };
+
+    // Attach the wheel event listener to the window
+    window.addEventListener(
+      "wheel",
+      (e) => {
+        handleWheel(e);
+      },
+      { passive: false }
+    );
+
+    // Cleanup function to remove the event listener
+    return () => {
+      window.removeEventListener("wheel", (e) => {
+        handleWheel(e);
+      });
+    };
+  }, []);
 
   const mobileActiveEl = {
     following: (
       <UserProfilePageTable
-        key={'following'}
+        setActiveTab={(tab) => setActiveTab(tab as ProfileTabType)}
+        ref={tableRef}
+        key={"following"}
         isLoading={followingIsLoading}
         results={following}
         allTags={followingTags?.tagCounts}
@@ -169,16 +226,18 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
         setSearchFilter={setFollowingSearch}
         isFetchingMore={isFetchingMoreFollowing}
         fetchMore={() => fetchMoreFollowing()}
-        title='following'
+        title="following"
         canEditTags={
           Number(userIsList ? listNum : profile?.primary_list) === selectedList && roles?.isManager
         }
-        customClass='border-t-0 rounded-t-none'
+        // customClass="border-t-0 rounded-t-none"
       />
     ),
     followers: (
       <UserProfilePageTable
-        key={'followers'}
+        setActiveTab={(tab) => setActiveTab(tab as ProfileTabType)}
+        ref={tableRef}
+        key={"followers"}
         isLoading={followersIsLoading}
         results={followers}
         allTags={followerTags?.tagCounts}
@@ -192,19 +251,11 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
         isEndOfResults={isEndOfFollowers}
         isFetchingMore={isFetchingMoreFollowers}
         fetchMore={() => fetchMoreFollowers()}
-        title='followers'
-        customClass='border-t-0 rounded-t-none'
+        title="followers"
+        // customClass="border-t-0 rounded-t-none"
       />
-    )
-  }[activeTab]
-
-  const titleRef = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    if (titleRef.current && !!searchParams.get('tab')) {
-      titleRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      setActiveTab(searchParams.get('tab') as ProfileTabType)
-    }
-  }, [searchParams])
+    ),
+  }[activeTab];
 
   return (
     <>
@@ -213,8 +264,8 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
           user={user}
           list={userIsList ? listNum : undefined}
           onClose={() => {
-            setIsBlockedMutedOpen(false)
-            router.push(`/${user}`)
+            setIsBlockedMutedOpen(false);
+            router.push(`/${user}`);
           }}
           isManager={
             Number(userIsList ? listNum : profile?.primary_list) === selectedList &&
@@ -229,8 +280,8 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
             userIsList
               ? (listNum as number)
               : profile?.primary_list
-                ? Number(profile?.primary_list)
-                : undefined
+              ? Number(profile?.primary_list)
+              : undefined
           }
           isSaving={isSaving}
           profile={profile}
@@ -239,15 +290,29 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
         />
       )}
       {!isSaving && (
-        <div className='flex relative min-h-[1050px] h-screen pt-40 overflow-y-auto justify-center gap-4 w-full'>
-          <div className='sticky top-0'>
+        <div
+          className="flex relative h-screen pt-40 overflow-y-auto justify-center gap-4 w-full"
+          ref={containerRef}
+          // onScroll={(e) => {
+          //   onScrollTopEight(e.currentTarget.scrollTop);
+          //   onScrollProfileCard(e);
+          //   console.log(e.currentTarget.scrollTop);
+          // }}
+        >
+          <div
+            ref={ProfileCardRef}
+            className="sticky h-fit pb-4"
+            style={{
+              top: "0px",
+            }}
+          >
             <UserProfileCard
               profileList={
                 userIsList
                   ? listNum
                   : profile?.primary_list
-                    ? Number(profile?.primary_list)
-                    : undefined
+                  ? Number(profile?.primary_list)
+                  : undefined
               }
               stats={stats}
               profile={profile}
@@ -255,43 +320,48 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
               isStatsLoading={statsIsLoading}
               showMoreOptions={true}
               openBlockModal={() => {
-                setIsBlockedMutedOpen(true)
-                router.push(`/${user}?modal=blockmutelists`)
+                setIsBlockedMutedOpen(true);
+                router.push(`/${user}?modal=blockmutelists`);
               }}
               openListSettingsModal={() => setListSettingsOpen(true)}
             />
           </div>
           <div
             ref={titleRef}
-            className='w-full xl:max-w-[800px] relative h-fit flex-grow'
+            className="w-full xl:max-w-[800px] sticky top-0 h-fit"
             style={{
-              scrollMarginTop: '100px'
+              scrollMarginTop: "100px",
             }}
           >
-            <div className='w-full top-0 sticky left-0 flex z-40 justify-between'>
-              {PROFILE_TABS.map(option => (
+            {/* <div className="w-full top-0 xl:hidden sticky left-0 flex z-40 justify-between">
+              {PROFILE_TABS.map((option) => (
                 <button
                   key={option}
                   onClick={() => setActiveTab(option)}
                   className={cn(
-                    'w-1/2 capitalize text-lg py-2 font-bold glass-selector border-[3px] border-grey rounded-t-xl',
-                    activeTab === option ? 'border-b-0' : 'bg-grey/80 text-text/50'
+                    "w-1/2 capitalize text-lg py-2 font-bold glass-selector border-[3px] border-grey rounded-t-xl",
+                    activeTab === option ? "border-b-0" : "bg-grey/80 text-text/50"
                   )}
                 >
                   {t(option)}
                 </button>
               ))}
-            </div>
-            <div className='sticky -translate-y-56 top-12 z-30 h-56 w-full bg-white dark:bg-darkGrey'></div>
-            <div className='-translate-y-56'>{mobileActiveEl}</div>
+            </div> */}
+            {mobileActiveEl}
           </div>
-          <div className='sticky top-0'>
+          <div
+            ref={TopEightRef}
+            className="sticky pb-4 h-fit"
+            style={{
+              top: "0px",
+            }}
+          >
             <TopEight user={user} isConnectedUserProfile={isMyProfile} />
           </div>
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default UserInfo
+export default UserInfo;
