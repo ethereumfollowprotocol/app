@@ -1,0 +1,49 @@
+import React from "react";
+import { t } from "i18next";
+import Link from "next/link";
+import { useBalance } from "wagmi";
+import { formatEther } from "viem";
+import type { Address, Chain } from "viem";
+import { FiExternalLink } from "react-icons/fi";
+
+import { ChainIcon } from "#/components/chain-icon";
+import type { ChainWithDetails } from "#/lib/wagmi";
+
+interface EthBalanceProps {
+  address: Address;
+  chain: Chain;
+}
+
+const EthBalance: React.FC<EthBalanceProps> = ({ address, chain }) => {
+  const { data: balance } = useBalance({
+    address: address,
+    chainId: chain.id,
+  });
+
+  console.log(balance);
+
+  return (
+    <>
+      <div className="flex justify-between items-center w-full group-hover:bg-navItem p-3 rounded-md transition-opacity">
+        <ChainIcon chain={chain as ChainWithDetails} className="h-6 w-6" />
+        {balance?.value
+          ? Number(formatEther(balance.value)).toLocaleString(navigator.language, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 5,
+            })
+          : 0}{" "}
+        ETH
+      </div>
+      <Link
+        href={"https://bridge.base.org/deposit"}
+        target="_blank"
+        className="capitalize flex justify-between items-center transition-colors p-3 w-full rounded-md hover:bg-navItem text-text font-bold"
+      >
+        <FiExternalLink className="text-2xl" />
+        <p className="text-end">{t("bridge")}</p>
+      </Link>
+    </>
+  );
+};
+
+export default EthBalance;
