@@ -49,7 +49,7 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
     <div className='flex flex-col gap-1'>
       <p className='font-bold text-lg'>{option}</p>
       {isSettingsLoading ? (
-        <div className='p-3 font-medium truncate rounded-lg w-full bg-white/70 dark:bg-darkGrey/70 disabled:text-zinc-400 disabled:cursor-not-allowed'>
+        <div className='p-3 font-medium truncate rounded-lg w-full bg-neutral/70 disabled:text-zinc-400 disabled:cursor-not-allowed'>
           <LoadingCell className='w-full h-7 rounded-md' />
         </div>
       ) : (
@@ -64,7 +64,7 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
           disabled={
             !isEditingSettings || connectedAddress?.toLowerCase() !== disableValue?.toLowerCase()
           }
-          className='p-3 font-medium truncate rounded-lg w-full dark:bg-darkGrey/70 bg-white/70 disabled:text-zinc-400 disabled:cursor-not-allowed'
+          className='p-3 font-medium truncate rounded-lg w-full bg-neutral/70 disabled:text-zinc-400 disabled:cursor-not-allowed'
         />
       )}
       {(isSettingsLoading || value.includes('.') || resolvedProfile?.name) && (
@@ -73,7 +73,7 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
             'font-medium flex items-center gap-2 h-10 text-sm',
             (value.includes('.') && resolvedAddress && resolvedAddress?.length > 0) ||
               resolvedProfile?.name
-              ? 'text-zinc-500 dark:text-zinc-200'
+              ? 'text-text/80'
               : 'text-red-400'
           )}
         >

@@ -22,6 +22,7 @@
     "@tanstack/react-query": "^5.17.19",
     "@tanstack/react-query-next-experimental": "^5.17.19",
     "@uidotdev/usehooks": "^2.4.1",
+    "caniuse-lite": "^1.0.30001667",
     "clsx": "^2.1.0",
     "i18next": "^23.11.5",
     "i18next-browser-languagedetector": "^8.0.0",
@@ -40,7 +41,7 @@
     "update-browserslist-db": "^1.1.0",
     "valibot": "^0.27.0",
     "viem": "^2.9.15",
-    "wagmi": "^2.5.19"
+    "wagmi": "^2.12.16"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.7.3",
@@ -67,6 +68,7 @@
     "sharp": "^0.33.2",
     "tailwindcss": "^3.4.1",
     "tailwindcss-animate": "^1.0.7",
+    "tailwindcss-themer": "^4.0.0",
     "tsx": "^4.7.0",
     "typed-query-selector": "^2.11.0",
     "typescript": "^5.3.3",

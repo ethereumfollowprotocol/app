@@ -47,7 +47,8 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
     owner: false,
     manager: false,
     user: false,
-    setPrimary: false
+    setPrimary: false,
+    resetSlot: false
   })
 
   const { address: connectedAddress } = useAccount()
@@ -271,7 +272,8 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
       owner: false,
       manager: false,
       user: false,
-      setPrimary: false
+      setPrimary: false,
+      resetSlot: false
     })
   }, [profile, list])
 

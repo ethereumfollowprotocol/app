@@ -90,7 +90,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                   />
                 )}
                 {showSearch && (
-                  <div className='absolute glass-card flex items-center border-[3px] bg-white dark:bg-darkGrey border-zinc-300 dark:border-[#666] -top-4 gap-1 lg:-left-1 left-0 sm:-left-1 md:-left-16 w-64 h-fit rounded-xl shadow-md'>
+                  <div className='absolute glass-card flex items-center border-[3px] bg-neutral border-grey -top-4 gap-1 lg:-left-1 left-0 sm:-left-1 md:-left-1 w-64 h-fit rounded-xl shadow-md'>
                     <input
                       type='text'
                       spellCheck={false}
@@ -107,7 +107,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                         }
                       }}
                       value={search}
-                      className='font-medium py-3 block w-full rounded-lg border-0 border-transparent pl-3 pr-10 sm:text-sm dark:bg-darkGrey/50 bg-white/50'
+                      className='font-medium py-3 block w-full rounded-lg border-0 border-transparent pl-3 pr-10 sm:text-sm bg-neutral/50'
                     />
                     <div
                       className='pointer-events-none absolute inset-y-0 right-0 flex items-center pl-3'
@@ -143,10 +143,10 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 />
               </div>
               {showSort && (
-                <div className=' bg-white dark:bg-darkGrey glass-card p-1 gap-1 z-50 shadow-md border-[3px] rounded-md border-zinc-200 dark:border-zinc-500 absolute top-[120%] flex flex-col items-center right-0'>
+                <div className='bg-neutral glass-card p-1 gap-1 z-50 shadow-md border-[3px] rounded-md border-grey absolute top-[120%] flex flex-col items-center -right-2'>
                   {SORT_OPTIONS.map(option => (
                     <div
-                      className='font-bold capitalize w-full text-nowrap relative rounded-md hover:bg-slate-100 dark:hover:bg-zinc-400/20 transition-colors p-3 pl-8'
+                      className='font-bold capitalize w-full text-nowrap relative rounded-md hover:bg-navItem transition-colors p-3 pl-8'
                       key={option}
                       onClick={() => setSort(option)}
                     >
@@ -176,9 +176,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
               <LoadingCell className='w-20 h-7 md:h-9 rounded-full' />
             </>
           ) : !displayedTags || displayedTags.length === 0 ? (
-            <p className='text-center w-full font-bold text-zinc-500 dark:text-zinc-300 italic'>
-              {t('no tags')}
-            </p>
+            <p className='text-center w-full font-bold text-text/40 italic'>{t('no tags')}</p>
           ) : (
             displayedTags?.map((tag, i) => (
               <button
@@ -194,9 +192,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 <p className='max-w-[95%] truncate'>
                   {BLOCKED_MUTED_TAGS.includes(tag.tag) ? t(tag.tag) : tag.tag}
                 </p>
-                <p className='text-xs text-zinc-400 dark:text-zinc-500'>
-                  {formatNumber(tag.count)}
-                </p>
+                <p className='text-darkGrey/50'>{formatNumber(tag.count)}</p>
               </button>
             ))
           )}

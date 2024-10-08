@@ -5,6 +5,7 @@ import { resolveEnsProfile } from '#/utils/ens'
 import type { ENSProfile } from '#/types/requests'
 import FollowButton from '#/components/follow-button'
 import FollowListItemName from './follow-list-item-name'
+import { cn } from '#/lib/utilities'
 
 export interface FollowListItemProps {
   className?: string
@@ -46,7 +47,10 @@ const FollowListItem: React.FC<FollowListItemProps> = ({
 
   return (
     <div
-      className={`flex items-center justify-between dark:hover:bg-darkGrey/40 hover:bg-darkGrey/5 transition-all p-1.5 sm:p-2 rounded-xl ${className}`}
+      className={cn(
+        'flex items-center justify-between hover:bg-text/5 transition-all p-1.5 sm:p-2 rounded-xl',
+        className
+      )}
     >
       {/* Left section: Avatar, Name, and Tags */}
       <FollowListItemName

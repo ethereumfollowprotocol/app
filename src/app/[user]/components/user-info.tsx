@@ -274,10 +274,8 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
                   key={option}
                   onClick={() => setActiveTab(option)}
                   className={cn(
-                    'w-1/2 capitalize text-lg py-2 font-bold glass-selector border-[3px] border-zinc-200 dark:border-zinc-500 rounded-t-xl',
-                    activeTab === option
-                      ? 'border-b-0'
-                      : 'dark:bg-zinc-600/80 bg-zinc-200/80 text-zinc-500/50 dark:text-zinc-400'
+                    'w-1/2 capitalize text-lg py-2 font-bold glass-selector border-[3px] border-grey rounded-t-xl',
+                    activeTab === option ? 'border-b-0' : 'bg-grey/80 text-text/50'
                   )}
                 >
                   {t(option)}

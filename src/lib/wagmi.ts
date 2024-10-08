@@ -6,9 +6,9 @@ import {
   coinbaseWallet,
   injectedWallet,
   metaMaskWallet,
-  walletConnectWallet
+  walletConnectWallet,
+  safeWallet
 } from '@rainbow-me/rainbowkit/wallets'
-import { safe } from 'wagmi/connectors'
 import { mainnet, optimism, base } from 'wagmi/chains'
 import { type Chain, connectorsForWallets } from '@rainbow-me/rainbowkit'
 import { http, fallback, createStorage, cookieStorage, createConfig } from 'wagmi'
@@ -26,8 +26,9 @@ const connectors = connectorsForWallets(
         rainbowWallet,
         metaMaskWallet,
         rabbyWallet,
+        safeWallet,
         walletConnectWallet,
-        injectedWallet
+        injectedWallet,
       ]
     }
   ],
@@ -57,8 +58,18 @@ export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
     ...base,
     iconUrl: '/assets/chains/base.svg',
     custom: {
-      chainDetail: '',
+      chainDetail: 'Ethereum L2',
       gasFeeDetail: 'Super Low gas fees'
+    },
+    blockExplorers: {
+      default: {
+        name: 'Blockscout',
+        url: 'https://explorer.base.org'
+      },
+      blockscout: {
+        name: 'Blockscout',
+        url: 'https://base.blockscout.com/'
+      }
     }
   },
   {
@@ -67,6 +78,16 @@ export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
     custom: {
       chainDetail: 'Ethereum L2',
       gasFeeDetail: 'Low gas fees'
+    },
+    blockExplorers: {
+      default: {
+        name: 'Blockscout',
+        url: 'https://explorer.optimism.io'
+      },
+      blockscout: {
+        name: 'Blockscout',
+        url: 'https://optimistic.blockscout.com/'
+      }
     }
   },
   {
@@ -76,8 +97,18 @@ export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
     custom: {
       chainDetail: '',
       gasFeeDetail: 'High gas fees'
+    },
+    blockExplorers: {
+      default: {
+        name: 'Blockscout',
+        url: 'https://explorer.base.org'
+      },
+      blockscout: {
+        name: 'Blockscout',
+        url: 'https://eth.blockscout.com/'
+      }
     }
-  }
+  },
   // {
   //   ...baseSepolia,
   //   iconUrl: '/assets/chains/base.svg',
@@ -107,13 +138,14 @@ export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
 
 const config = createConfig({
   ssr: true,
-  connectors: [
-    safe({
-      allowedDomains: [/^app\.safe\.global\*.blockscout.com\$/],
-      debug: false
-    }),
-    ...connectors
-  ],
+  // connectors: [
+  //   safe({
+  //     allowedDomains: [/^app\.safe\.global\*.blockscout.com\$/],
+  //     debug: false
+  //   }),
+  //   ...connectors
+  // ],
+  connectors,
   chains,
   storage: createStorage({
     storage: cookieStorage

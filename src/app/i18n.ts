@@ -87,6 +87,12 @@ i18n
       'xh',
       'jv',
       'ca',
+      'mn',
+      'cy',
+      'lo',
+      'esmx',
+      'ug',
+      'az',
       // --------- special languages ---------
       'pirate',
       'genalpha',
