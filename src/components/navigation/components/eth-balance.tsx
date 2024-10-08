@@ -7,8 +7,8 @@ import type { Address, Chain } from "viem";
 import { FiExternalLink } from "react-icons/fi";
 import { base, mainnet, optimism } from "viem/chains";
 
-import { ChainIcon } from "#/components/chain-icon";
 import type { ChainWithDetails } from "#/lib/wagmi";
+import { ChainIcon } from "#/components/chain-icon";
 
 interface EthBalanceProps {
   address: Address;
@@ -27,6 +27,12 @@ const EthBalance: React.FC<EthBalanceProps> = ({ address, chain }) => {
     [mainnet.id]: "https://www.alchemy.com/list-of/web3-bridges-on-ethereum",
   };
 
+  const currencies = {
+    [base.id]: "Base ETH",
+    [optimism.id]: "OP ETH",
+    [mainnet.id]: "ETH",
+  };
+
   return (
     <>
       <div className="flex justify-between items-center w-full group-hover:bg-navItem p-3 rounded-md transition-opacity">
@@ -37,7 +43,7 @@ const EthBalance: React.FC<EthBalanceProps> = ({ address, chain }) => {
               maximumFractionDigits: 5,
             })
           : 0}{" "}
-        ETH
+        {currencies[chain.id as keyof typeof currencies]}
       </div>
       <Link
         href={bridges[chain.id as keyof typeof bridges]}
@@ -45,7 +51,9 @@ const EthBalance: React.FC<EthBalanceProps> = ({ address, chain }) => {
         className="capitalize flex justify-between items-center transition-colors p-3 w-full rounded-md hover:bg-navItem text-text font-bold"
       >
         <FiExternalLink className="text-2xl" />
-        <p className="text-end">{t("bridge")}</p>
+        <p className="text-end">{`${currencies[chain.id as keyof typeof currencies]} ${t(
+          "bridge"
+        )}`}</p>
       </Link>
     </>
   );
