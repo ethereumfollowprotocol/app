@@ -92,6 +92,7 @@ i18n
       'lo',
       'esmx',
       'ug',
+      'az',
       // --------- special languages ---------
       'pirate',
       'genalpha',

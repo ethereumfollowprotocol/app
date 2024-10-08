@@ -52,6 +52,7 @@ import CataloniaFlag from 'public/assets/icons/flags/catalonia.svg'
 import CorporateFlag from 'public/assets/icons/flags/corporate.svg'
 import LithuaniaFlag from 'public/assets/icons/flags/lithuania.svg'
 import IndonesiaFlag from 'public/assets/icons/flags/indonesia.svg'
+import AzerbaijanFlag from 'public/assets/icons/flags/azerbaijan.svg'
 import UzbekistanFlag from 'public/assets/icons/flags/uzbekistan.svg'
 import KazakhstanFlag from 'public/assets/icons/flags/kazakhstan.svg'
 import ErmahgershFlag from 'public/assets/icons/flags/ermahgersh.svg'
@@ -114,6 +115,7 @@ export const LANGUAGES = [
   { language: 'Bosanski', key: 'bs', icon: BosniaFlag, englishLanguage: 'Bosnian' },
   { language: 'Magyar', key: 'hu', icon: HungaryFlag, englishLanguage: 'Hungarian' },
   { language: 'Ελληνικά', key: 'el', icon: GreeceFlag, englishLanguage: 'Greek' },
+  { language: 'Azərbaycan dili', key: 'az', icon: AzerbaijanFlag, englishLanguage: 'Azerbaijani' },
   { language: 'Eʋegbe', key: 'ee', icon: GhanaFlag, englishLanguage: 'Ewe' },
   { language: 'Zulu', key: 'zu', icon: SouthAfricaFlag, englishLanguage: 'Zulu' },
   { language: 'Twi', key: 'tw', icon: GhanaFlag, englishLanguage: 'Twi' },
