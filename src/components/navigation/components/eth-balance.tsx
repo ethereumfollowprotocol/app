@@ -5,6 +5,7 @@ import { useBalance } from "wagmi";
 import { formatEther } from "viem";
 import type { Address, Chain } from "viem";
 import { FiExternalLink } from "react-icons/fi";
+import { base, mainnet, optimism } from "viem/chains";
 
 import { ChainIcon } from "#/components/chain-icon";
 import type { ChainWithDetails } from "#/lib/wagmi";
@@ -20,7 +21,11 @@ const EthBalance: React.FC<EthBalanceProps> = ({ address, chain }) => {
     chainId: chain.id,
   });
 
-  console.log(balance);
+  const bridges = {
+    [base.id]: "https://bridge.base.org/deposit",
+    [optimism.id]: "https://gateway.optimism.io/bridge/eth",
+    [mainnet.id]: "https://www.alchemy.com/list-of/web3-bridges-on-ethereum",
+  };
 
   return (
     <>
@@ -35,7 +40,7 @@ const EthBalance: React.FC<EthBalanceProps> = ({ address, chain }) => {
         ETH
       </div>
       <Link
-        href={"https://bridge.base.org/deposit"}
+        href={bridges[chain.id as keyof typeof bridges]}
         target="_blank"
         className="capitalize flex justify-between items-center transition-colors p-3 w-full rounded-md hover:bg-navItem text-text font-bold"
       >
