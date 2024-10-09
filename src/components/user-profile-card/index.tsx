@@ -729,7 +729,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 )}
                 <div className="text-lg font-bold text-text/40">{t("followers")}</div>
               </div>
-              <div className="flex flex-col w-full items-center gap-3 xl:w-56">
+              <div className="flex flex-col w-full items-center gap-3">
                 <Link href="/leaderboard">
                   <div
                     className={`${
@@ -739,7 +739,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                     {t("leaderboard")}
                   </div>
                 </Link>
-                <div className="flex xl:flex-col w-full justify-center flex-wrap gap-x-4 gap-y-0 xxs:gap-y-0 xxs:gap-x-8 xl:gap-0">
+                <div className="flex w-full justify-center flex-wrap gap-x-4 gap-y-0 xxs:gap-y-0 xxs:gap-x-8 xl:gap-x-2">
                   {ranks.map((rank, i) => (
                     <Link
                       href={`/leaderboard?filter=${{
@@ -752,7 +752,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                         ?.replaceAll(" ", "")
                         ?.toLowerCase()}`}
                       key={rankTitles[i]}
-                      className="w-full mx-[7.5%] 3xs:mx-[10%] xxs:mx-[15%] xs:mx-0 xs:w-fit xl:w-full flex gap-3 justify-between text-lg items-center font-bold px-3 py-1 rounded-lg halloween:hover:bg-darkGrey/40 dark:hover:bg-darkGrey/40 hover:bg-darkGrey/5 transition-all"
+                      className="w-full mx-[7.5%] 3xs:mx-[10%] xxs:mx-[15%] xs:mx-0 xs:w-fit flex gap-3 justify-between items-center font-bold px-3 py-1 rounded-lg halloween:hover:bg-darkGrey/40 dark:hover:bg-darkGrey/40 hover:bg-darkGrey/5 transition-all"
                     >
                       <p className="font-bold text-text/40 text-start">{t(rankTitles[i] || "")}</p>
                       <p
