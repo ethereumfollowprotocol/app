@@ -14,6 +14,7 @@ import ENSBook from 'public/assets/partners/ensbook.jpeg'
 import VibesScapes from 'public/assets/partners/vibesscapes.jpeg'
 import WebThreeBio from 'public/assets/partners/web3bio.jpeg'
 import Blockscout from 'public/assets/partners/blockscout.jpeg'
+import Rocbox from 'public/assets/partners/rocbox.jpeg'
 
 
 export const INTEGRATIONS = [
@@ -86,6 +87,11 @@ export const INTEGRATIONS = [
     name: 'Blockscout',
     url: 'https://www.blockscout.com/',
     logo: Blockscout
+  },
+  {
+    name: 'Roc Box',
+    url: 'https://roc.box/',
+    logo: Rocbox
   }
 ] as {
   name: string
