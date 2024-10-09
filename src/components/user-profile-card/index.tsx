@@ -752,7 +752,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                         ?.replaceAll(" ", "")
                         ?.toLowerCase()}`}
                       key={rankTitles[i]}
-                      className=" w-fit flex gap-3 justify-between items-center font-bold px-3 py-1 rounded-lg halloween:hover:bg-darkGrey/40 dark:hover:bg-darkGrey/40 hover:bg-darkGrey/5 transition-all"
+                      className=" w-fit flex gap-3 justify-between items-center font-bold px-3 py-1 rounded-lg hover:bg-text/5 transition-all"
                     >
                       <p className="font-bold text-text/40 text-start">{t(rankTitles[i] || "")}</p>
                       <p
