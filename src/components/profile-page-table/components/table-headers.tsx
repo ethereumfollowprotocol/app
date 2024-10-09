@@ -63,25 +63,25 @@ const TableHeader: React.FC<TableHeaderProps> = ({
   );
 
   return (
-    <div className="flex flex-col gap-4 px-4 z-40  sm:px-2 pt-2 w-full">
+    <div className="flex flex-col gap-4 px-4 z-40 sm:px-2 pt-2 w-full">
       <div className="flex justify-between w-full">
-        <div className="flex gap-4 justify-between items-center w-full">
-          <div className="flex gap-3 items-center">
+        <div className="flex gap-3 flex-wrap justify-between sm:justify-start sm:flex-nowrap items-center w-full">
+          <div className="flex gap-3 w-full sm:w-fit items-center">
             {BLOCKED_MUTED_TABS.includes(title) ? (
-              <h2 className="capitalize text-lg sm:text-3xl hidden xl:block font-bold">
+              <h2 className="capitalize text-lg sm:text-3xl hidden xl:block font-bold text-nowrap">
                 {t(title)}
               </h2>
             ) : (
-              <div className="flex items-center bg-grey/80 relative rounded-xl">
+              <div className="flex items-center bg-grey/80 w-full sm:w-fit relative rounded-xl">
                 <div
                   className={cn(
-                    "w-32 h-full absolute transition-all bg-neutral rounded-xl",
+                    "w-1/2 sm:w-32 h-full absolute transition-all bg-neutral rounded-xl",
                     title === "following" ? "left-0" : "right-0"
                   )}
                 />
                 <p
                   className={cn(
-                    "w-32 font-bold py-2 text-xl text-center text-text z-10 cursor-pointer",
+                    "w-1/2 sm:w-32 font-bold py-2 text-lg text-center text-text z-10 cursor-pointer",
                     title === "following" ? "text-text" : "text-text/60"
                   )}
                   onClick={() => setActiveTab?.("following")}
@@ -90,7 +90,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 </p>
                 <p
                   className={cn(
-                    "w-32 font-bold py-2 text-xl text-center text-text z-10 cursor-pointer",
+                    "w-1/2 sm:w-32 font-bold py-2 text-lg text-center text-text z-10 cursor-pointer",
                     title === "followers" ? "text-text" : "text-text/60"
                   )}
                   onClick={() => setActiveTab?.("followers")}
@@ -99,64 +99,66 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 </p>
               </div>
             )}
-            {!BLOCKED_MUTED_TABS.includes(title) && (
-              <div ref={clickAwaySearchRef} className="relative flex gap-1 sm:gap-3 z-50">
-                <div
-                  className={cn(
-                    "cursor-pointer max-w-40 flex items-center h-6 transition-all gap-2 hover:opacity-75",
-                    search ? "hover:scale-[1.15]" : "hover:scale-125"
-                  )}
-                  onClick={() => setShowSearch(!showSearch)}
-                >
-                  <FiSearch className="opacity-50 text-2xl hover:opacity-100 transition-opacity" />
-                  <p className="font-medium text-sm truncate hidden sm:block md:hidden lg:block xl:hidden 2xl:block">
-                    {search}
-                  </p>
-                </div>
-                {search && (
-                  <IoClose
-                    onClick={() => {
-                      setSearch("");
-                      setShowSearch(false);
-                    }}
-                    className="opacity-50 text-xl hover:opacity-60 hover:scale-125 p-0.5 mt-0.5 text-darkGrey bg-zinc-300 cursor-pointer rounded-full transition-all"
-                  />
-                )}
-                {showSearch && (
-                  <div className="absolute glass-card flex items-center border-[3px] bg-neutral border-grey -top-4 gap-1 lg:-left-1 left-0 sm:-left-1 md:-left-1 w-64 h-fit rounded-xl shadow-md">
-                    <input
-                      type="text"
-                      spellCheck={false}
-                      autoFocus={true}
-                      autoComplete="off"
-                      placeholder={t("search placeholder")}
-                      onChange={(e) => {
-                        setSearch(e.target.value.toLowerCase().trim());
-                      }}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === "Escape") {
-                          e.preventDefault();
-                          setShowSearch(false);
-                        }
-                      }}
-                      value={search}
-                      className="font-medium py-3 block w-full rounded-lg border-0 border-transparent pl-3 pr-10 sm:text-sm bg-neutral/50"
-                    />
-                    <div
-                      className="pointer-events-none absolute inset-y-0 right-0 flex items-center pl-3"
-                      aria-hidden="true"
-                    >
-                      <FiSearch
-                        className="mr-3 text-xl dark:text-white/90 text-zinc-400"
-                        aria-hidden="true"
-                      />
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
           </div>
-          <div className="flex gap-4">
+          {!BLOCKED_MUTED_TABS.includes(title) ? (
+            <div ref={clickAwaySearchRef} className="relative flex gap-1 sm:gap-3 z-50">
+              <div
+                className={cn(
+                  "cursor-pointer max-w-40 flex items-center h-6 transition-all gap-2 hover:opacity-75",
+                  search ? "hover:scale-[1.15]" : "hover:scale-125"
+                )}
+                onClick={() => setShowSearch(!showSearch)}
+              >
+                <FiSearch className="opacity-50 text-2xl hover:opacity-100 transition-opacity" />
+                <p className="font-medium text-sm truncate hidden sm:block md:hidden lg:block xl:hidden 2xl:block">
+                  {search}
+                </p>
+              </div>
+              {search && (
+                <IoClose
+                  onClick={() => {
+                    setSearch("");
+                    setShowSearch(false);
+                  }}
+                  className="opacity-50 text-xl hover:opacity-60 hover:scale-125 p-0.5 mt-0.5 text-darkGrey bg-zinc-300 cursor-pointer rounded-full transition-all"
+                />
+              )}
+              {showSearch && (
+                <div className="absolute glass-card flex items-center border-[3px] bg-neutral border-grey -top-4 gap-1 lg:-left-1 left-0 sm:-left-1 md:-left-1 w-64 h-fit rounded-xl shadow-md">
+                  <input
+                    type="text"
+                    spellCheck={false}
+                    autoFocus={true}
+                    autoComplete="off"
+                    placeholder={t("search placeholder")}
+                    onChange={(e) => {
+                      setSearch(e.target.value.toLowerCase().trim());
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === "Escape") {
+                        e.preventDefault();
+                        setShowSearch(false);
+                      }
+                    }}
+                    value={search}
+                    className="font-medium py-3 block w-full rounded-lg border-0 border-transparent pl-3 pr-10 sm:text-sm bg-neutral/50"
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-y-0 right-0 flex items-center pl-3"
+                    aria-hidden="true"
+                  >
+                    <FiSearch
+                      className="mr-3 text-xl dark:text-white/90 text-zinc-400"
+                      aria-hidden="true"
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="h-1 w-1"></div>
+          )}
+          <div className="flex sm:w-full justify-end gap-4">
             <div
               onClick={() => setShowTags(!showTags)}
               className="cursor-pointer flex items-center hover:scale-110 transition-transform gap-1"

@@ -186,15 +186,16 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
           ref={ref}
           className={cn(
             "flex flex-col",
-            BLOCKED_MUTED_TABS.includes(title) ? "" : "xl:overflow-y-scroll"
+            BLOCKED_MUTED_TABS.includes(title) ? "" : "xl:overflow-y-scroll",
+            showTags ? "profile-page-table-tags" : "profile-page-table"
           )}
-          style={{
-            maxHeight: BLOCKED_MUTED_TABS.includes(title)
-              ? "auto"
-              : showTags
-              ? "calc(100vh - 322px)"
-              : "calc(100vh - 270px)",
-          }}
+          // style={{
+          //   maxHeight: BLOCKED_MUTED_TABS.includes(title)
+          //     ? "auto"
+          //     : showTags
+          //     ? "calc(100vh - 322px)"
+          //     : "calc(100vh - 270px)",
+          // }}
         >
           <FollowList
             isLoading={isLoading}

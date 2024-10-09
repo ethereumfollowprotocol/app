@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import useUser from "../hooks/useUser";
@@ -161,8 +161,10 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const ProfileCardRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleWheel = (event: WheelEvent) => {
+  const handleWheel = useCallback(
+    (event: WheelEvent) => {
+      if (listSettingsOpen || isBlockedMutedOpen) return;
+
       if (tableRef.current) {
         // Adjust the scroll position of the div
         tableRef.current.scrollTop += event.deltaY;
@@ -178,34 +180,33 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       if (TopEightRef.current) {
         const topEightHeight = TopEightRef.current.scrollHeight;
         const topEightOverflow = window.innerHeight - topEightHeight - 160;
-        TopEightRef.current.style.top = `${topEightOverflow >= 0 ? 0 : topEightOverflow}px`;
+        if (window.innerWidth >= 1280)
+          TopEightRef.current.style.top = `${topEightOverflow >= 0 ? 0 : topEightOverflow}px`;
+        else TopEightRef.current.style.top = "0px";
       }
 
       if (ProfileCardRef.current) {
         const profileCardHeight = ProfileCardRef.current.scrollHeight + 65;
         const profileCardOverflow = window.innerHeight - profileCardHeight - 100;
-        ProfileCardRef.current.style.top = `${
-          profileCardOverflow >= 0 ? 0 : profileCardOverflow
-        }px`;
+        if (window.innerWidth >= 1280)
+          ProfileCardRef.current.style.top = `${
+            profileCardOverflow >= 0 ? 0 : profileCardOverflow
+          }px`;
+        else ProfileCardRef.current.style.top = "0px";
       }
-    };
+    },
+    [listSettingsOpen, isBlockedMutedOpen]
+  );
 
+  useEffect(() => {
     // Attach the wheel event listener to the window
-    window.addEventListener(
-      "wheel",
-      (e) => {
-        handleWheel(e);
-      },
-      { passive: false }
-    );
+    window.addEventListener("wheel", handleWheel, { passive: false });
 
     // Cleanup function to remove the event listener
     return () => {
-      window.removeEventListener("wheel", (e) => {
-        handleWheel(e);
-      });
+      window.removeEventListener("wheel", handleWheel);
     };
-  }, []);
+  }, [handleWheel]);
 
   const mobileActiveEl = {
     following: (
@@ -291,7 +292,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       )}
       {!isSaving && (
         <div
-          className="flex relative h-screen pt-40 overflow-y-auto justify-center gap-4 w-full"
+          className="flex relative xl:h-screen flex-col xl:flex-row pt-[108px] sm:pt-28 md:pt-32 pb-8 xl:pb-0 xl:pt-40 overflow-y-auto xl:justify-center gap-4 w-full"
           ref={containerRef}
           // onScroll={(e) => {
           //   onScrollTopEight(e.currentTarget.scrollTop);
@@ -301,7 +302,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
         >
           <div
             ref={ProfileCardRef}
-            className="sticky h-fit pb-4"
+            className="xl:sticky xl:h-fit xl:pb-4 overflow-visible"
             style={{
               top: "0px",
             }}
@@ -326,9 +327,12 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
               openListSettingsModal={() => setListSettingsOpen(true)}
             />
           </div>
+          <div className="xl:hidden">
+            <TopEight user={user} isConnectedUserProfile={isMyProfile} />
+          </div>
           <div
             ref={titleRef}
-            className="w-full xl:max-w-[800px] sticky top-0 h-fit"
+            className="w-full xl:max-w-[800px] xl:sticky top-0 h-fit"
             style={{
               scrollMarginTop: "100px",
             }}
@@ -351,7 +355,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
           </div>
           <div
             ref={TopEightRef}
-            className="sticky pb-4 h-fit"
+            className="sticky pb-4 h-fit hidden xl:block"
             style={{
               top: "0px",
             }}

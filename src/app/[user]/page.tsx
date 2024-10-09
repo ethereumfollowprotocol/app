@@ -75,7 +75,7 @@ export function generateMetadata({ params }: Props): Metadata {
 
 const UserPage = ({ params }: Props) => {
   return (
-    <main className="flex overflow-hidden h-screen w-full justify-between xl:justify-center gap-y-4 flex-col md:flex-row flex-wrap xl:flex-nowrap items-start xl:gap-6 mt-[108px] sm:mt-28 md:mt-32 xl:mt-0 px-4 lg:px-8">
+    <main className="flex xl:overflow-hidden h-screen w-full justify-between xl:justify-center gap-y-4 flex-col md:flex-row flex-wrap xl:flex-nowrap items-start xl:gap-6 px-4 lg:px-8">
       <UserInfo user={params.user} />
     </main>
   );
