@@ -166,6 +166,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       if (listSettingsOpen || isBlockedMutedOpen) return;
 
       if (tableRef.current) {
+        event.preventDefault();
         // Adjust the scroll position of the div
         tableRef.current.scrollTop += event.deltaY;
         tableRef.current.scrollLeft += event.deltaX;
@@ -208,55 +209,40 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     };
   }, [handleWheel]);
 
-  const mobileActiveEl = {
-    following: (
-      <UserProfilePageTable
-        setActiveTab={(tab) => setActiveTab(tab as ProfileTabType)}
-        ref={tableRef}
-        key={"following"}
-        isLoading={followingIsLoading}
-        results={following}
-        allTags={followingTags?.tagCounts}
-        tagsLoading={followingTagsLoading}
-        selectedTags={followingTagsFilter}
-        toggleSelectedTags={toggleTag}
-        setSelectedTags={setFollowingTagsFilter}
-        sort={followingSort}
-        setSort={setFollowingSort}
-        isEndOfResults={isEndOfFollowing}
-        setSearchFilter={setFollowingSearch}
-        isFetchingMore={isFetchingMoreFollowing}
-        fetchMore={() => fetchMoreFollowing()}
-        title="following"
-        canEditTags={
-          Number(userIsList ? listNum : profile?.primary_list) === selectedList && roles?.isManager
+  const tableProps =
+    activeTab === "followers"
+      ? {
+          isLoading: followersIsLoading,
+          results: followers,
+          allTags: followerTags?.tagCounts,
+          tagsLoading: followerTagsLoading,
+          selectedTags: followersTagsFilter,
+          toggleSelectedTags: toggleTag,
+          setSelectedTags: setFollowersTagsFilter,
+          sort: followersSort,
+          setSort: setFollowersSort,
+          isEndOfResults: isEndOfFollowers,
+          setSearchFilter: setFollowersSearch,
+          isFetchingMore: isFetchingMoreFollowers,
+          fetchMore: () => fetchMoreFollowers(),
+          title: "followers" as ProfileTabType,
         }
-        // customClass="border-t-0 rounded-t-none"
-      />
-    ),
-    followers: (
-      <UserProfilePageTable
-        setActiveTab={(tab) => setActiveTab(tab as ProfileTabType)}
-        ref={tableRef}
-        key={"followers"}
-        isLoading={followersIsLoading}
-        results={followers}
-        allTags={followerTags?.tagCounts}
-        tagsLoading={followerTagsLoading}
-        selectedTags={followersTagsFilter}
-        setSelectedTags={setFollowersTagsFilter}
-        toggleSelectedTags={toggleTag}
-        sort={followersSort}
-        setSort={setFollowersSort}
-        setSearchFilter={setFollowersSearch}
-        isEndOfResults={isEndOfFollowers}
-        isFetchingMore={isFetchingMoreFollowers}
-        fetchMore={() => fetchMoreFollowers()}
-        title="followers"
-        // customClass="border-t-0 rounded-t-none"
-      />
-    ),
-  }[activeTab];
+      : {
+          isLoading: followingIsLoading,
+          results: following,
+          allTags: followingTags?.tagCounts,
+          tagsLoading: followingTagsLoading,
+          selectedTags: followingTagsFilter,
+          toggleSelectedTags: toggleTag,
+          setSelectedTags: setFollowingTagsFilter,
+          sort: followingSort,
+          setSort: setFollowingSort,
+          isEndOfResults: isEndOfFollowing,
+          setSearchFilter: setFollowingSearch,
+          isFetchingMore: isFetchingMoreFollowing,
+          fetchMore: () => fetchMoreFollowing(),
+          title: "following" as ProfileTabType,
+        };
 
   return (
     <>
@@ -292,7 +278,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       )}
       {!isSaving && (
         <div
-          className="flex relative xl:h-screen flex-col xl:flex-row pt-[108px] sm:pt-28 md:pt-32 pb-8 xl:pb-0 xl:pt-40 overflow-y-auto xl:justify-center gap-4 w-full"
+          className="flex relative xl:h-screen flex-col xl:flex-row pt-[108px] sm:pt-28 md:pt-32 pb-8 xl:pb-0 xl:pt-32 overflow-y-auto xl:justify-center gap-4 w-full"
           ref={containerRef}
           // onScroll={(e) => {
           //   onScrollTopEight(e.currentTarget.scrollTop);
@@ -332,26 +318,23 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
           </div>
           <div
             ref={titleRef}
-            className="w-full xl:max-w-[800px] xl:sticky top-0 h-fit"
+            className="w-full xl:max-w-[800px] xl:sticky relative xl:top-0 h-fit"
             style={{
               scrollMarginTop: "100px",
             }}
           >
-            {/* <div className="w-full top-0 xl:hidden sticky left-0 flex z-40 justify-between">
-              {PROFILE_TABS.map((option) => (
-                <button
-                  key={option}
-                  onClick={() => setActiveTab(option)}
-                  className={cn(
-                    "w-1/2 capitalize text-lg py-2 font-bold glass-selector border-[3px] border-grey rounded-t-xl",
-                    activeTab === option ? "border-b-0" : "bg-grey/80 text-text/50"
-                  )}
-                >
-                  {t(option)}
-                </button>
-              ))}
-            </div> */}
-            {mobileActiveEl}
+            <div className="xl:absolute xl:top-0 xl:left-0 w-full h-fit">
+              <UserProfilePageTable
+                setActiveTab={(tab) => setActiveTab(tab as ProfileTabType)}
+                ref={tableRef}
+                {...tableProps}
+                canEditTags={
+                  Number(userIsList ? listNum : profile?.primary_list) === selectedList &&
+                  roles?.isManager
+                }
+                // customClass="border-t-0 rounded-t-none"
+              />
+            </div>
           </div>
           <div
             ref={TopEightRef}

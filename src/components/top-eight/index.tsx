@@ -54,7 +54,7 @@ const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile }) => 
             {t("no top eight")}
           </p>
         )}
-        <div className="flex w-full flex-wrap justify-around transition-none sm:justify-evenly xl:justify-between items-start xl:gap-0 sm:gap-2">
+        <div className="flex w-full flex-wrap justify-around transition-none sm:justify-evenly xl:justify-between 3xl:justify-start items-start xl:gap-0 sm:gap-2">
           {!(topEightIsLoading || topEightIsRefetching) &&
             topEight
               ?.slice(0, displayLimit)

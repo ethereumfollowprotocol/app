@@ -63,7 +63,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
   );
 
   return (
-    <div className="flex flex-col gap-4 px-4 z-40 sm:px-2 pt-2 w-full">
+    <div className="flex flex-col gap-4 px-4 z-40 sm:px-2 w-full">
       <div className="flex justify-between w-full">
         <div className="flex gap-3 flex-wrap justify-between sm:justify-start sm:flex-nowrap items-center w-full">
           <div className="flex gap-3 w-full sm:w-fit items-center">
@@ -72,16 +72,16 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 {t(title)}
               </h2>
             ) : (
-              <div className="flex items-center bg-grey/80 w-full sm:w-fit relative rounded-xl">
+              <div className="flex items-center bg-grey w-full sm:w-fit relative rounded-xl">
                 <div
                   className={cn(
-                    "w-1/2 sm:w-32 h-full absolute transition-all bg-neutral rounded-xl",
-                    title === "following" ? "left-0" : "right-0"
+                    "w-1/2 sm:w-32 h-full absolute transition-all duration-200 border-[3px] border-grey bg-neutral rounded-xl",
+                    title === "following" ? "left-0" : "left-32"
                   )}
                 />
                 <p
                   className={cn(
-                    "w-1/2 sm:w-32 font-bold py-2 text-lg text-center text-text z-10 cursor-pointer",
+                    "w-1/2 sm:w-32 font-bold py-2 text-lg text-center text-text z-10 cursor-pointer hover:scale-110 transition-transform",
                     title === "following" ? "text-text" : "text-text/60"
                   )}
                   onClick={() => setActiveTab?.("following")}
@@ -90,7 +90,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 </p>
                 <p
                   className={cn(
-                    "w-1/2 sm:w-32 font-bold py-2 text-lg text-center text-text z-10 cursor-pointer",
+                    "w-1/2 sm:w-32 font-bold py-2 text-lg text-center text-text z-10 cursor-pointer hover:scale-110 transition-transform",
                     title === "followers" ? "text-text" : "text-text/60"
                   )}
                   onClick={() => setActiveTab?.("followers")}

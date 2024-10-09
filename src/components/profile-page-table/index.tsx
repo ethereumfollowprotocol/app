@@ -202,7 +202,7 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
             isLoadingMore={isFetchingMore}
             loadingRows={FETCH_LIMIT_PARAM}
             listClassName="gap-2 rounded-xl w-full px-3 sm:px-0"
-            listItemClassName={`rounded-xl w-full px-0 py-2 sm:p-2`}
+            listItemClassName={`rounded-xl w-full px-0 py-2 sm:p-2 sm:pb-0`}
             profiles={profiles}
             showTags={showTags}
             showFollowsYouBadges={showFollowsYouBadges}
@@ -211,7 +211,7 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
             isBlockedList={isShowingBlocked}
             isBlockedBy={title === "Blocked/Muted By" && isProfile}
           />
-          <div ref={loadMoreRef} className="h-px w-full" />
+          <div ref={loadMoreRef} className="h-px w-full mb-4" />
           {title === "following" && isProfile && lists?.lists && lists.lists.length === 0 && (
             <Recommendations
               limit={40}
