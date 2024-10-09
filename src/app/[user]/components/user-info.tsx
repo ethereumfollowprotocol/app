@@ -166,7 +166,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       if (listSettingsOpen || isBlockedMutedOpen) return;
 
       if (tableRef.current) {
-        event.preventDefault();
+        if (window.innerWidth >= 1280) event.preventDefault();
         // Adjust the scroll position of the div
         tableRef.current.scrollTop += event.deltaY;
         tableRef.current.scrollLeft += event.deltaX;
@@ -280,11 +280,6 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
         <div
           className="flex relative xl:h-screen flex-col xl:flex-row pt-[108px] sm:pt-28 md:pt-32 pb-8 xl:pb-0 xl:pt-32 overflow-y-auto xl:justify-center gap-4 w-full"
           ref={containerRef}
-          // onScroll={(e) => {
-          //   onScrollTopEight(e.currentTarget.scrollTop);
-          //   onScrollProfileCard(e);
-          //   console.log(e.currentTarget.scrollTop);
-          // }}
         >
           <div
             ref={ProfileCardRef}
