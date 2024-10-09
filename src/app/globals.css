@@ -508,6 +508,23 @@ input {
   }
 }
 
+.profile-page-table {
+  max-height: calc(100vh - 200px);
+}
+
+.profile-page-table-tags {
+  max-height: calc(100vh - 250px);
+}
+
+@media screen and (max-width: 1280px) {
+  .profile-page-table {
+    max-height: none;
+  }
+  .profile-page-table-tags {
+    max-height: none;
+  }
+}
+
 /* Primary list toggle */
 .toggle {
   -webkit-appearance: none;
