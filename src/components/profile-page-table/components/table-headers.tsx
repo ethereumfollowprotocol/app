@@ -76,7 +76,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 <div
                   className={cn(
                     "w-1/2 sm:w-32 h-full absolute transition-all duration-200 border-[3px] border-grey bg-neutral rounded-xl",
-                    title === "following" ? "left-0" : "left-32"
+                    title === "following" ? "left-0" : "left-1/2 sm:left-32"
                   )}
                 />
                 <p
