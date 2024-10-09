@@ -87,7 +87,7 @@ export const INTEGRATIONS = [
     name: 'Blockscout',
     url: 'https://www.blockscout.com/',
     logo: Blockscout
-  }
+  },
   {
     name: 'Roc Box',
     url: 'https://roc.box/',
