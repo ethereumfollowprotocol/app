@@ -1,8 +1,8 @@
 "use client";
 
 import { useTranslation } from "react-i18next";
-import { useEffect, useRef, useState, forwardRef } from "react";
 import { useIntersectionObserver } from "@uidotdev/usehooks";
+import { useEffect, useRef, useState, forwardRef } from "react";
 
 import type {
   TagCountType,
@@ -189,13 +189,6 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
             BLOCKED_MUTED_TABS.includes(title) ? "" : "xl:overflow-y-scroll",
             showTags ? "profile-page-table-tags" : "profile-page-table"
           )}
-          // style={{
-          //   maxHeight: BLOCKED_MUTED_TABS.includes(title)
-          //     ? "auto"
-          //     : showTags
-          //     ? "calc(100vh - 322px)"
-          //     : "calc(100vh - 270px)",
-          // }}
         >
           <FollowList
             isLoading={isLoading}

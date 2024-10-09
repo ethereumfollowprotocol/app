@@ -6,14 +6,14 @@ import { useTranslation } from "react-i18next";
 import { IoIosArrowDown } from "react-icons/io";
 import { useClickAway } from "@uidotdev/usehooks";
 
-import LoadingCell from "#/components/loaders/loading-cell";
+import { cn } from "#/lib/utilities";
 import { formatNumber } from "#/utils/formatNumber";
+import LoadingCell from "#/components/loaders/loading-cell";
 import type { ProfileTableTitleType } from "#/types/common";
 import GreenCheck from "public/assets/icons/check-green.svg";
 import type { FollowSortType, TagCountType } from "#/types/requests";
 import { QUERY_BLOCK_TAGS } from "#/components/blocked-muted/hooks/use-blocked-muted";
 import { BLOCKED_MUTED_TABS, BLOCKED_MUTED_TAGS, SORT_OPTIONS } from "#/lib/constants";
-import { cn } from "#/lib/utilities";
 
 interface TableHeaderProps {
   title: ProfileTableTitleType;

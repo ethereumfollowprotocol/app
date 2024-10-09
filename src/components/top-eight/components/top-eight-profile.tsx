@@ -6,12 +6,12 @@ import { useQuery } from "@tanstack/react-query";
 import { ens_beautify } from "@adraffy/ens-normalize";
 
 import { Avatar } from "#/components/avatar";
-import { isValidEnsName, resolveEnsProfile } from "#/utils/ens";
 import { useCart } from "#/contexts/cart-context";
 import { cn, truncateAddress } from "#/lib/utilities";
 import FollowButton from "#/components/follow-button";
 import useFollowerState from "#/hooks/use-follower-state";
 import LoadingCell from "#/components/loaders/loading-cell";
+import { isValidEnsName, resolveEnsProfile } from "#/utils/ens";
 import { listOpAddTag, listOpRemoveTag } from "#/utils/list-ops";
 import type { TopEightProfileType } from "../hooks/use-top-eight";
 
