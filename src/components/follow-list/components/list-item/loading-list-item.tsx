@@ -30,7 +30,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ showTags, className }) => {
           )}
         </div>
       </div>
-      <LoadingCell className="h-10 w-[120px] rounded-xl" />
+      <LoadingCell className="h-9 2xl:h-10 w-[110px] 2xl:w-[120px] rounded-lg" />
     </div>
   );
 };
