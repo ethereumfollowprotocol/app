@@ -624,7 +624,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                         <FaLink />
                       </a>
                     )}
-                    {profile.ens.contenthash && (
+                    {(profile.ens.contenthash || profile.ens.records?.contenthash) && (
                       <a
                         href={`https://${profile.ens.name}.limo`}
                         target="_blank"
