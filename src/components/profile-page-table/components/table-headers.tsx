@@ -124,7 +124,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 />
               )}
               {showSearch && (
-                <div className="absolute glass-card flex items-center border-[3px] bg-neutral border-grey -top-4 gap-1 lg:-left-1 left-0 sm:-left-1 md:-left-1 w-64 h-fit rounded-xl shadow-md">
+                <div className="absolute glass-card flex items-center border-[3px] bg-neutral border-grey -top-4 gap-1 left-0 xl:-left-10 w-64 h-fit rounded-xl shadow-md">
                   <input
                     type="text"
                     spellCheck={false}

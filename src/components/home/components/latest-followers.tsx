@@ -1,25 +1,25 @@
-import { useTranslation } from 'react-i18next'
-import { FollowList } from '#/components/follow-list'
-import { useLatestFollowers } from '../hooks/use-latest-followers'
-import PageSelector from '#/app/leaderboard/components/page-selector'
+import { useTranslation } from "react-i18next";
+import { FollowList } from "#/components/follow-list";
+import { useLatestFollowers } from "../hooks/use-latest-followers";
+import PageSelector from "#/app/leaderboard/components/page-selector";
 
 const LatestFollowers = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const {
     subPage,
     isLoading,
     setSubPage,
     displayedProfiles,
     isFetchingNextPage,
-    isFetchingPreviousPage
-  } = useLatestFollowers()
+    isFetchingPreviousPage,
+  } = useLatestFollowers();
 
-  const isLatestFollowersLoading = isLoading || isFetchingNextPage || isFetchingPreviousPage
+  const isLatestFollowersLoading = isLoading || isFetchingNextPage || isFetchingPreviousPage;
 
   return (
-    <div className='glass-card w-full px-2 py-4 sm:p-4 flex flex-col gap-4 rounded-2xl border-[3px] border-grey'>
-      <div className='flex w-full items-center justify-between'>
-        <h2 className='text-2xl sm:text-3xl w-full p-2 font-bold'>{t('latest followers')}</h2>
+    <div className="glass-card w-full px-2 py-4 sm:p-4 xl:p-3 flex flex-col gap-3 2xl:gap-4 rounded-2xl border-[3px] border-grey">
+      <div className="flex w-full items-center justify-between">
+        <h2 className="text-2xl 2xl:text-3xl w-full p-2 font-bold">{t("latest followers")}</h2>
         <PageSelector
           page={subPage}
           // setPage={(newPage: number) => {
@@ -44,18 +44,18 @@ const LatestFollowers = () => {
       </div>
       <FollowList
         loadingRows={11}
-        listClassName='gap-3'
+        listClassName="gap-2 2xl:gap-3"
         showFollowsYouBadges={false}
         profiles={displayedProfiles}
         isLoading={isLatestFollowersLoading}
       />
       {!isLoading && displayedProfiles?.length === 0 && (
-        <div className='w-full lg:h-[638px] flex justify-center items-center font-bold italic text-lg'>
-          {t('no followers')}
+        <div className="w-full lg:h-[638px] flex justify-center items-center font-bold italic text-lg">
+          {t("no followers")}
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default LatestFollowers
+export default LatestFollowers;

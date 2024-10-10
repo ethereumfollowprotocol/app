@@ -1,31 +1,31 @@
-import type { Address } from 'viem'
-import { useQuery } from '@tanstack/react-query'
+import type { Address } from "viem";
+import { useQuery } from "@tanstack/react-query";
 
-import { resolveEnsProfile } from '#/utils/ens'
-import type { ENSProfile } from '#/types/requests'
-import FollowButton from '#/components/follow-button'
-import FollowListItemName from './follow-list-item-name'
-import { cn } from '#/lib/utilities'
+import { resolveEnsProfile } from "#/utils/ens";
+import type { ENSProfile } from "#/types/requests";
+import FollowButton from "#/components/follow-button";
+import FollowListItemName from "./follow-list-item-name";
+import { cn } from "#/lib/utilities";
 
 export interface FollowListItemProps {
-  className?: string
-  address: Address
-  ensProfile?: ENSProfile
-  showFollowsYouBadges?: boolean
-  showTags?: boolean
-  tags: string[]
+  className?: string;
+  address: Address;
+  ensProfile?: ENSProfile;
+  showFollowsYouBadges?: boolean;
+  showTags?: boolean;
+  tags: string[];
   counts?: {
-    followers: number
-    following: number
-  }
-  isFollowers?: boolean
-  canEditTags?: boolean
-  isBlockedList?: boolean
-  isBlockedBy?: boolean
+    followers: number;
+    following: number;
+  };
+  isFollowers?: boolean;
+  canEditTags?: boolean;
+  isBlockedList?: boolean;
+  isBlockedBy?: boolean;
 }
 
 const FollowListItem: React.FC<FollowListItemProps> = ({
-  className = '',
+  className = "",
   address,
   ensProfile,
   showFollowsYouBadges,
@@ -35,20 +35,20 @@ const FollowListItem: React.FC<FollowListItemProps> = ({
   isFollowers,
   canEditTags,
   isBlockedList,
-  isBlockedBy
+  isBlockedBy,
 }) => {
   const { data: fetchedEnsProfile, isLoading: isEnsProfileLoading } = useQuery({
-    queryKey: ['ens metadata', address],
-    queryFn: async () => (ensProfile ? ensProfile : await resolveEnsProfile(address))
-  })
+    queryKey: ["ens metadata", address],
+    queryFn: async () => (ensProfile ? ensProfile : await resolveEnsProfile(address)),
+  });
 
-  const profileName = fetchedEnsProfile?.name
-  const profileAvatar = fetchedEnsProfile?.avatar
+  const profileName = fetchedEnsProfile?.name;
+  const profileAvatar = fetchedEnsProfile?.avatar;
 
   return (
     <div
       className={cn(
-        'flex items-center justify-between hover:bg-text/5 transition-all p-1.5 sm:p-2 rounded-xl',
+        "flex items-center justify-between hover:bg-text/5 transition-all p-1.5 2xl:p-2 rounded-xl",
         className
       )}
     >
@@ -69,7 +69,7 @@ const FollowListItem: React.FC<FollowListItemProps> = ({
       {/* Right section: Follow Button with consistent width */}
       <FollowButton isBlockedBy={isBlockedBy} address={address} />
     </div>
-  )
-}
+  );
+};
 
-export default FollowListItem
+export default FollowListItem;
