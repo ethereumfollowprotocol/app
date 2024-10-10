@@ -234,8 +234,8 @@ const FollowButton: React.FC<FollowButtonProps> = ({
   }, [sound, actionsSoundsMuted]);
 
   return isLoading ? (
-    <div className={`rounded-xl ${isBlockedBy ? "w-[132px]" : "w-[120px]"}`}>
-      <LoadingCell className="h-10 w-full rounded-lg" />
+    <div className={`rounded-xl ${isBlockedBy ? "w-[132px]" : "w-[110px] 2xl:w-[120px]"}`}>
+      <LoadingCell className="h-9 2xl:h-10 w-full rounded-lg" />
     </div>
   ) : (
     <div ref={coolEfpLogo as Ref<HTMLDivElement>}>
@@ -245,7 +245,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
           theme[buttonState].bg,
           theme[buttonState].text,
           theme[buttonState].border,
-          "rounded-xl relative text-sm flex items-center w-[120px] gap-1.5 transition-all px-2 duration-200 justify-center font-bold",
+          "rounded-[11px] 2xl:rounded-xl relative text-[13px] 2xl:text-sm flex h-9 2xl:h-10 items-center w-[110px] 2xl:w-[120px] gap-1.5 transition-all px-2 duration-200 justify-center font-bold",
           disableHover
             ? buttonState === "Pending Following"
               ? ""
@@ -253,10 +253,9 @@ const FollowButton: React.FC<FollowButtonProps> = ({
             : `hover:scale-110 ${theme[buttonState].hover}`,
           className,
         ])}
-        style={{
-          minWidth: isBlockedBy ? "132px" : "120px",
-          height: "40px",
-        }}
+        // style={{
+        //   minWidth: isBlockedBy ? "132px" : "120px",
+        // }}
         onMouseLeave={() => {
           setDisableHover(false);
         }}
@@ -279,7 +278,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
           alt="mainnet logo"
           src={theme[buttonState].imageSrc || MainnetBlack}
           width={16}
-          className="pointer-events-none"
+          className="pointer-events-none w-3.5 2xl:w-4"
         />
         <p
           className="text-wrap break-words max-w-[90px]"
