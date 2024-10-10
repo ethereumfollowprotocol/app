@@ -100,8 +100,6 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const { selectedList, topEight } = useEFPProfile();
   const { address: connectedAddress } = useAccount();
 
-  const isHome = pathname === "/";
-
   const searchParams = useSearchParams();
   const searchURLParam = searchParams.get("search");
   const hasSearchedDifferentName =
