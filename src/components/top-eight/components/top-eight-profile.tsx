@@ -57,10 +57,10 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
   return (
     <div
       className={cn(
-        "flex relative flex-col group w-[129px] 2xl:w-[149px] justify-between px-0.5 py-4 rounded-2xl items-center gap-2 hover:border-[#A2A2A277]",
+        "flex relative flex-col group w-[129px] 2xl:w-[144px] justify-between px-0.5 py-4 rounded-2xl items-center gap-2 hover:border-[#A2A2A277]",
         isEditing
-          ? "cursor-pointer border-[3px] border-transparent w-[149px] h-[192px]"
-          : "w-[129px] 2xl:w-[149px] hover:bg-text/5 h-[187px]",
+          ? "cursor-pointer border-[3px] border-transparent w-[144px] h-[192px]"
+          : "w-[129px] 2xl:w-[144px] hover:bg-text/5 h-[177px]",
         isAddingToTopEight && "border-[3px] border-lime-500/50",
         isRemovingFromTopEight && "border-[3px] dark:border-red-500/70 border-red-400/70"
       )}
@@ -81,13 +81,13 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
       )}
       <div className="flex flex-col w-full items-center gap-1">
         {isEnsProfileLoading ? (
-          <LoadingCell className="h-[60px] w-[60px] rounded-full" />
+          <LoadingCell className="h-[50px] w-[50px] rounded-full" />
         ) : (
           <Link href={`/${profile.address}`} className={cn(isEditing && "pointer-events-none")}>
             <Avatar
               name={profileName || profile.address}
               size={cn(
-                "h-[60px] w-[60px]",
+                "h-[50px] w-[50px]",
                 !isEditing && "hover:scale-110 hover:opacity-75 transition-all"
               )}
               avatarUrl={profileAvatar}

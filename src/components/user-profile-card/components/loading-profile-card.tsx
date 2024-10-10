@@ -66,14 +66,6 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
                   isStatic={isStatic}
                   className="w-8 h-8 2xl:w-9 2xl:h-9 rounded-full"
                 />
-                // <Image
-                //   key={social.name}
-                //   src={social.icon(resolvedTheme || '')}
-                //   alt={social.name}
-                //   width={36}
-                //   height={36}
-                //   className='rounded-full'
-                // />
               ))}
             </div>
           </div>

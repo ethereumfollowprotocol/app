@@ -260,7 +260,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
       className={cn(
         "flex glass-card border-[3px] z-10 flex-col border-[#FFDBD9] dark:border-[#a36d7d] halloween:border-[#a36d7d] rounded-xl relative",
         isResponsive
-          ? "w-full xl:w-[324px] xl:min-w-[324px] 2xl:w-86 2xl:min-w-86"
+          ? "w-full xl:w-[324px] xl:min-w-[324px] 3xl:w-86 3xl:min-w-86"
           : "w-80 xxs:w-92"
       )}
     >
@@ -331,8 +331,8 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
               unoptimized={true}
             />
           )}
-          <div className="flex w-full items-center flex-col pt-10 pb-4 px-4 sm:p-6 sm:pt-9 gap-5 sm:gap-6 2xl:gap-7">
-            <div className="flex w-full flex-col justify-center items-center gap-2.5 2xl:gap-3">
+          <div className="flex w-full items-center flex-col pt-10 pb-4 px-4 sm:p-6 sm:pt-9 gap-5 sm:gap-6 3xl:gap-7">
+            <div className="flex w-full flex-col justify-center items-center gap-2.5 3xl:gap-3">
               {isProfileLoading ? (
                 <LoadingCell
                   className={
@@ -362,7 +362,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                       className={cn(
                         "font-bold flex gap-2 items-center relative text-center",
                         isResponsive
-                          ? "max-w-[90%] xl:max-w-72 relative 2xl:max-w-[325px] sm:text-2xl text-xl"
+                          ? "max-w-[90%] xl:max-w-72 relative 3xl:max-w-[325px] sm:text-2xl text-xl"
                           : "max-w-[332px] text-2xl",
                         hasSearchedDifferentName && "mb-[22px]"
                       )}
@@ -371,7 +371,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                         href={`/${profile.address}`}
                         className={showMoreOptions ? "w-[87.5%]" : "w-full"}
                       >
-                        <p className="truncate hover:opacity-70 hover:scale-105 text-[22px] 2xl:text-2xl transition-all">
+                        <p className="truncate hover:opacity-70 hover:scale-105 text-[22px] 3xl:text-2xl transition-all">
                           {profileName && isValidEnsName(profileName)
                             ? ens_beautify(profileName)
                             : truncateAddress(profile.address)}
@@ -666,7 +666,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                           alt={social.name}
                           width={36}
                           height={36}
-                          className="rounded-full w-8 h-8 2xl:w-9 2xl:h-9"
+                          className="rounded-full w-8 h-8 3xl:w-9 3xl:h-9"
                         />
                       </a>
                     ))}
@@ -674,7 +674,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 </div>
               </div>
             </div>
-            <div className="flex w-full flex-wrap justify-center gap-10 gap-y-6 sm:gap-y-5 2xl:gap-y-6 sm:gap-x-[50px] 2xl:gap-x-[60px] items-center mx-auto text-center">
+            <div className="flex w-full flex-wrap justify-center gap-10 gap-y-6 sm:gap-y-5 3xl:gap-y-6 sm:gap-x-[50px] 3xl:gap-x-[60px] items-center mx-auto text-center">
               <div
                 className="cursor-pointer hover:scale-110 transition-all"
                 onClick={() =>
@@ -694,7 +694,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 {isStatsLoading ? (
                   <LoadingCell className="w-12 h-6 mb-1 rounded-lg mx-auto" />
                 ) : (
-                  <div className="text-[21px] 2xl:text-2xl text-center font-bold">
+                  <div className="text-[21px] 3xl:text-2xl text-center font-bold">
                     {stats
                       ? profileList !== undefined
                         ? formatNumber(stats?.following_count || 0)
@@ -702,7 +702,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                       : "-"}
                   </div>
                 )}
-                <div className="text-[16px] 2xl:text-lg font-bold text-text/40">
+                <div className="text-[16px] 3xl:text-lg font-bold text-text/40">
                   {t("following")}
                 </div>
               </div>
@@ -725,11 +725,11 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 {isStatsLoading ? (
                   <LoadingCell className="w-12 h-6 mb-1 rounded-lg mx-auto" />
                 ) : (
-                  <div className="text-[21px] 2xl:text-2xl text-center font-bold">
+                  <div className="text-[21px] 3xl:text-2xl text-center font-bold">
                     {stats ? formatNumber(stats.followers_count) : "-"}
                   </div>
                 )}
-                <div className="text-[16px] 2xl:text-lg font-bold text-text/40">
+                <div className="text-[16px] 3xl:text-lg font-bold text-text/40">
                   {t("followers")}
                 </div>
               </div>
@@ -743,7 +743,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                     {t("leaderboard")}
                   </div>
                 </Link>
-                <div className="flex flex-row w-full justify-center flex-wrap gap-x-4 gap-y-0 xxs:gap-x-8 xl:gap-x-1 2xl:gap-x-2">
+                <div className="flex flex-row w-full justify-center flex-wrap gap-x-4 gap-y-0 xxs:gap-x-8 xl:gap-x-1 3xl:gap-x-2">
                   {ranks.map((rank, i) => (
                     <Link
                       href={`/leaderboard?filter=${{
@@ -756,7 +756,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                         ?.replaceAll(" ", "")
                         ?.toLowerCase()}`}
                       key={rankTitles[i]}
-                      className=" w-fit flex gap-2 2xl:gap-3 justify-between items-center font-bold px-2 py-1 rounded-lg hover:bg-text/5 transition-all"
+                      className=" w-fit flex gap-2 3xl:gap-3 justify-between items-center font-bold px-2 py-1 rounded-lg hover:bg-text/5 transition-all"
                     >
                       <p className="font-bold text-text/40 text-start">{t(rankTitles[i] || "")}</p>
                       <p
@@ -788,7 +788,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
         <div
           className={`w-full h-20 ${
             hideFollowButton ? "xl:h-[360px]" : "xl:h-[420px]"
-          } text-lg 2xl:text-xl flex items-center justify-center font-bold italic`}
+          } text-lg 3xl:text-xl flex items-center justify-center font-bold italic`}
         >
           {t("profile error")}
         </div>

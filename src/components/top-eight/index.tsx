@@ -31,7 +31,7 @@ const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile }) => 
       {isConnectedUserProfile && editModalOpen && (
         <EditModal profiles={topEight || []} onClose={() => setEditModalOpen(false)} />
       )}
-      <div className="glass-card relative xl:w-86 3xl:w-[652px] items-center justify-center w-full border-[3px] p-4 xl:p-6 rounded-xl flex flex-col gap-4 xl:gap-6 border-[#FFDBD9] dark:border-[#a36d7d]">
+      <div className="glass-card relative xl:w-80 2xl:w-[602px] items-center justify-center w-full border-[3px] px-5 2xl:px-2 py-4 rounded-xl flex flex-col gap-4 xl:gap-4 border-[#FFDBD9] dark:border-[#a36d7d]">
         {isConnectedUserProfile && (
           <div
             onClick={() => setEditModalOpen(true)}
@@ -54,7 +54,7 @@ const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile }) => 
             {t("no top eight")}
           </p>
         )}
-        <div className="flex w-full flex-wrap justify-around transition-none sm:justify-evenly xl:justify-between 3xl:justify-start items-start xl:gap-0 sm:gap-2">
+        <div className="flex w-full flex-wrap justify-around transition-none sm:justify-between 3xl:justify-start items-start xl:gap-0 sm:gap-1">
           {!(topEightIsLoading || topEightIsRefetching) &&
             topEight
               ?.slice(0, displayLimit)
