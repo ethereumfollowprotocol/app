@@ -260,8 +260,10 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   return (
     <div
       className={cn(
-        "flex glass-card border-[3px] z-10 flex-col border-[#FFDBD9] dark:border-[#a36d7d] halloween:border-[#a36d7d]  rounded-xl relative",
-        isResponsive ? (isHome ? "w-full xl:w-86 xl:min-w-86" : "w-full xl:w-86") : "w-80 xxs:w-92"
+        "flex glass-card border-[3px] z-10 flex-col border-[#FFDBD9] dark:border-[#a36d7d] halloween:border-[#a36d7d] rounded-xl relative",
+        isResponsive
+          ? "w-full xl:w-[336px] xl:min-w-[336px] 2xl:w-86 2xl:min-w-86"
+          : "w-80 xxs:w-92"
       )}
     >
       {isLoading ? (
@@ -729,7 +731,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 )}
                 <div className="text-lg font-bold text-text/40">{t("followers")}</div>
               </div>
-              <div className="flex flex-col w-full items-center gap-3">
+              <div className="flex flex-col w-full items-center gap-2">
                 <Link href="/leaderboard">
                   <div
                     className={`${
@@ -739,7 +741,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                     {t("leaderboard")}
                   </div>
                 </Link>
-                <div className="flex flex-row w-full justify-center flex-wrap gap-x-4 gap-y-0 xxs:gap-y-0 xxs:gap-x-8 xl:gap-x-2">
+                <div className="flex flex-row w-full justify-center flex-wrap gap-x-4 gap-y-0 xxs:gap-x-8 xl:gap-x-2">
                   {ranks.map((rank, i) => (
                     <Link
                       href={`/leaderboard?filter=${{

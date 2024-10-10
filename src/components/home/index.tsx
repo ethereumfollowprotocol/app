@@ -140,10 +140,10 @@ const Home = () => {
       {userAddress ? (
         <FeedCard
           cardSize={cn(
-            "w-full xl:min-w-[430px] lg:w-[49%] px-0 pt-4 xs:p-4 md:p-6 rounded-2xl",
+            "w-full xl:min-w-[430px] lg:w-[49%] px-0 pt-4 xs:p-4 xl:p-[18px] 2xl:p-6 rounded-2xl",
             (lists?.lists?.length || 0) === 0 && !listsIsLoading
               ? "h-[50vh] md:h-[640px] xl:w-2/5 2xl:w-[550px] "
-              : "h-[1000000vh] xl:w-2/5 2xl:w-[650px]"
+              : "h-[1000000vh] xl:w-1/2 2xl:w-[650px]"
           )}
           contentSize="h-full w-full rounded-2xl"
           title={t("feed")}
@@ -169,7 +169,9 @@ const Home = () => {
           limit={11}
           endpoint="discover"
           header={t("recent")}
-          className={cn("h-fit w-full py-4 sm:p-4 glass-card border-[3px] border-grey rounded-2xl")}
+          className={cn(
+            "h-fit w-full py-4 p-3 2xl:p-4 glass-card border-[3px] border-grey rounded-2xl"
+          )}
         />
       </div>
       {/* <ScrollIndicator /> */}
