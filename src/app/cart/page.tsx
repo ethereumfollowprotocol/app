@@ -23,7 +23,7 @@ export default function EditorPage() {
   return (
     <main
       suppressHydrationWarning={true}
-      className="flex flex-col-reverse xl:flex-row gap-4 min-h-full h-full w-full items-center xl:items-start justify-center text-center xl:gap-6 pt-4 pb-40 mt-[108px] sm:mt-28 px-2 lg:px-8"
+      className="flex flex-col-reverse xl:flex-row gap-4 min-h-full xl:h-screen xl:overflow-hidden w-full items-center xl:items-start xl:justify-center text-center"
     >
       <Cart />
     </main>

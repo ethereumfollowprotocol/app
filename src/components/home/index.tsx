@@ -11,6 +11,7 @@ import LatestFollowers from "./components/latest-followers";
 import UserProfileCard from "#/components/user-profile-card";
 import { useEFPProfile } from "#/contexts/efp-profile-context";
 import LeaderboardSummary from "./components/leaderboard-summary.tsx";
+import useStickyScroll from "./hooks/use-sticky-scroll.ts";
 
 const Home = () => {
   const {
@@ -29,84 +30,8 @@ const Home = () => {
 
   const isFollowersEmpty = !followersIsLoading && followers.length === 0;
 
-  const SidebarRef = useRef<HTMLDivElement>(null);
-  const ProfileCardRef = useRef<HTMLDivElement>(null);
-
-  let scrollTopSidebar = 0;
-  const onScrollSidebar = (e: React.UIEvent<HTMLDivElement>) => {
-    const sidebar = SidebarRef.current;
-    if (!sidebar) return;
-    if (window.innerWidth < 1280) {
-      sidebar.style.top = "0px";
-      return;
-    }
-
-    const sidebarHeight = sidebar.scrollHeight + 65;
-    const sidebarTop = sidebar.getBoundingClientRect().top || 0;
-    const viewportHeight = window.innerHeight;
-
-    if (sidebarHeight + 108 < viewportHeight) {
-      sidebar.style.top = "0px";
-      return;
-    }
-
-    if (scrollTopSidebar > e.currentTarget.scrollTop) {
-      if (sidebarTop >= 70) sidebar.style.top = "0px";
-      else
-        sidebar.style.top = `${
-          Number(sidebar.style.top.replace("px", "")) +
-          (scrollTopSidebar - e.currentTarget.scrollTop)
-        }px`;
-    } else {
-      if (sidebarTop < viewportHeight - sidebarHeight + 120)
-        sidebar.style.top = `${viewportHeight - 60 - sidebarHeight}px`;
-      else
-        sidebar.style.top = `${
-          Number(sidebar.style.top.replace("px", "")) -
-          (e.currentTarget.scrollTop - scrollTopSidebar)
-        }px`;
-    }
-
-    scrollTopSidebar = e.currentTarget.scrollTop;
-  };
-
-  let scrollTopProfileCard = 0;
-  const onScrollProfileCard = (e: React.UIEvent<HTMLDivElement>) => {
-    const profileCard = ProfileCardRef.current;
-    if (!profileCard) return;
-    if (window.innerWidth < 1280) {
-      profileCard.style.top = "0px";
-      return;
-    }
-
-    const profileCardHeight = profileCard.scrollHeight + 65;
-    const profileCardTop = profileCard?.getBoundingClientRect().top || 0;
-    const viewportHeight = window.innerHeight;
-
-    if (profileCardHeight + 108 < viewportHeight) {
-      profileCard.style.top = "0px";
-      return;
-    }
-
-    if (scrollTopProfileCard > e.currentTarget.scrollTop) {
-      if (profileCardTop >= 70) profileCard.style.top = "0px";
-      else
-        profileCard.style.top = `${
-          Number(profileCard.style.top.replace("px", "")) +
-          (scrollTopProfileCard - e.currentTarget.scrollTop)
-        }px`;
-    } else {
-      if (profileCardTop < viewportHeight - profileCardHeight + 100)
-        profileCard.style.top = `${viewportHeight - 60 - profileCardHeight}px`;
-      else
-        profileCard.style.top = `${
-          Number(profileCard.style.top.replace("px", "")) -
-          (e.currentTarget.scrollTop - scrollTopProfileCard)
-        }px`;
-    }
-
-    scrollTopProfileCard = e.currentTarget.scrollTop;
-  };
+  const { StickyScrollRef: SidebarRef, onScroll: onScrollSidebar } = useStickyScroll(60);
+  const { StickyScrollRef: ProfileCardRef, onScroll: onScrollProfileCard } = useStickyScroll(60);
 
   return (
     <div
