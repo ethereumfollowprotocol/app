@@ -77,7 +77,7 @@ const ConnectButton = () => {
       <button
         type="button"
         className={cn(
-          "z-50 px-1 pl-[3px] transition-all border-[3px] gap-[6px] hover:scale-105 cursor-pointer flex justify-between items-center h-[60px] glass-card rounded-full w-fit sm:w-48 md:w-60",
+          "z-50 px-1 pl-[3px] transition-all border-[3px] gap-[5px] hover:scale-105 cursor-pointer flex justify-between items-center h-[54px] glass-card rounded-full w-fit sm:w-48 md:w-56",
           walletMenOpenu ? "connect-button-open " : "connect-button"
         )}
         onClick={() =>
@@ -97,7 +97,7 @@ const ConnectButton = () => {
                 <Avatar
                   avatarUrl={ensProfile?.avatar}
                   name={ensProfile?.name || userAddress}
-                  size="w-[47px] h-[47px]"
+                  size="w-[44px] h-[44px]"
                 />
               )}
               <p className="font-bold hidden sm:block truncate text-lg">
