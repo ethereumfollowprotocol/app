@@ -118,7 +118,7 @@ const ConnectButton = () => {
       {walletMenOpenu && (
         <div
           className={cn(
-            "flex w-60 overflow-x-hidden sm:overflow-visible z-50 h-fit shadow-md border-[3px] rounded-lg bg-neutral border-grey absolute top-[120%] flex-col items-end right-0"
+            "flex w-56 overflow-x-hidden sm:overflow-visible z-50 h-fit shadow-md border-[3px] rounded-lg bg-neutral border-grey absolute top-[120%] flex-col items-end right-0"
           )}
         >
           <div
