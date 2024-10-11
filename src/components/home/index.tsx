@@ -59,7 +59,7 @@ const Home = () => {
         }px`;
     } else {
       if (sidebarTop < viewportHeight - sidebarHeight + 120)
-        sidebar.style.top = `${viewportHeight - 80 - sidebarHeight}px`;
+        sidebar.style.top = `${viewportHeight - 60 - sidebarHeight}px`;
       else
         sidebar.style.top = `${
           Number(sidebar.style.top.replace("px", "")) -
@@ -97,7 +97,7 @@ const Home = () => {
         }px`;
     } else {
       if (profileCardTop < viewportHeight - profileCardHeight + 100)
-        profileCard.style.top = `${viewportHeight - 80 - profileCardHeight}px`;
+        profileCard.style.top = `${viewportHeight - 60 - profileCardHeight}px`;
       else
         profileCard.style.top = `${
           Number(profileCard.style.top.replace("px", "")) -
@@ -110,7 +110,7 @@ const Home = () => {
 
   return (
     <div
-      className="pt-[108px] relative md:pt-32 w-full lg:pt-32 h-screen px-4 overflow-y-scroll lg:px-6 xl:px-8 flex items-start lg:justify-center lg:gap-4 xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4"
+      className="pt-[108px] relative md:pt-28 w-full h-screen px-4 overflow-y-scroll lg:px-6 xl:px-8 flex items-start lg:justify-center lg:gap-4 xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4"
       onScroll={(e) => {
         onScrollSidebar(e);
         onScrollProfileCard(e);

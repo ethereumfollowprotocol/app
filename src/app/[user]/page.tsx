@@ -32,50 +32,11 @@ export function generateMetadata({ params }: Props): Metadata {
       images: `https://ethfollow.xyz/og?user=${user}`,
     },
   };
-
-  // const isList = Number.isInteger(Number(user)) && !isAddress(user)
-
-  // try {
-  //   const response = (await fetch(
-  //     `${process.env.NEXT_PUBLIC_EFP_API_URL}/${isList ? 'lists' : 'users'}/${user}/account`
-  //   ).then(res => res.json())) as AccountResponseType
-
-  //   const fetchedUser =
-  //     isList && response.primary_list !== user
-  //       ? `List #${user}`
-  //       : response.address
-  //         ? response.ens.name || truncateAddress(response.address)
-  //         : isAddress(user)
-  //           ? truncateAddress(user)
-  //           : isList
-  //             ? `List #${user}`
-  //             : user
-
-  //   return {
-  //     title: `${fetchedUser} | EFP`,
-  //     openGraph: {
-  //       title: `${fetchedUser} | EFP`,
-  //       siteName: `${fetchedUser} - EFP profile`,
-  //       description: `${fetchedUser} - EFP profile`,
-  //       url: `https://ethfollow.xyz/${response.address ? response.address : user}`,
-  //       images: [
-  //         {
-  //           url: `https://ethfollow.xyz/og?user=${user}`
-  //         }
-  //       ]
-  //     },
-  //     twitter: {
-  //       images: `https://ethfollow.xyz/og?user=${user}`
-  //     }
-  //   }
-  // } catch (err: unknown) {
-  //   return { title: `${user} | EFP` }
-  // }
 }
 
 const UserPage = ({ params }: Props) => {
   return (
-    <main className="flex xl:overflow-hidden h-screen w-full justify-between xl:justify-center gap-y-4 flex-col md:flex-row flex-wrap xl:flex-nowrap items-start xl:gap-6 px-4 lg:px-8">
+    <main className="xl:overflow-hidden h-screen w-full">
       <UserInfo user={params.user} />
     </main>
   );

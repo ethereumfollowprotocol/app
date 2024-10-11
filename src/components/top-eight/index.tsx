@@ -62,10 +62,13 @@ const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile }) => 
           {new Array(topEightIsLoading || topEightIsRefetching ? displayLimit : 0)
             .fill(0)
             .map((_, index) => (
-              <div key={index} className="flex flex-col w-28 xl:w-36 py-4 items-center gap-2">
-                <LoadingCell className="h-[60px] w-[60px] rounded-full" />
+              <div
+                key={index}
+                className="flex flex-col w-28 xl:w-[128px] 2xl:w-36 py-4 px-0 items-center gap-2"
+              >
+                <LoadingCell className="h-[50px] w-[50px] rounded-full" />
                 <LoadingCell className="h-7 w-24 rounded-lg" />
-                <LoadingCell className="h-9 w-[120px] rounded-lg" />
+                <LoadingCell className="h-9 w-[110px] 2xl:w-[120px] 2xl:h-10 rounded-lg" />
               </div>
             ))}
         </div>
