@@ -239,7 +239,7 @@ const TableRow: React.FC<TableRowProps> = ({
                   : "hidden xl:flex"
                 : `hidden lg:flex ${isHome ? "xl:hidden" : ""}`
             } transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/4 xl:w-1/5`}
-            onClick={() => router.push(`/${address}?tab=following`)}
+            onClick={() => router.push(`/${address}?tab=followers&tags=top8`)}
           >
             <p className="font-bold text-sm sm:text-lg">{formatNumber(top8 || 0)}</p>
             <p className="font-bold text-sm text-text/60 text-wrap break-words text-center w-full">

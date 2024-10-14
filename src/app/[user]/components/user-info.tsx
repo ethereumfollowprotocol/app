@@ -153,6 +153,9 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     if (titleRef.current && !!searchParams.get("tab")) {
       titleRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
       setActiveTab(searchParams.get("tab") as ProfileTabType);
+      if (searchParams.get("tags") === "top8") {
+        setFollowersTagsFilter(["top8"]);
+      }
     }
   }, [searchParams]);
 
