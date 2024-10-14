@@ -7,9 +7,9 @@ import {
   type Address,
   createPublicClient
 } from 'viem'
-import { track } from '@vercel/analytics'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
+import { track } from '@vercel/analytics/react'
 import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useState } from 'react'
 import { useAccount, useChainId, useChains, useSwitchChain, useWalletClient } from 'wagmi'

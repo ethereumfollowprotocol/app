@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useAccount } from "wagmi";
-import { track } from "@vercel/analytics";
 import { useEffect, useState } from "react";
+import { track } from "@vercel/analytics/react";
 import { useClickAway } from "@uidotdev/usehooks";
 
 import i18n from "#/app/i18n";
