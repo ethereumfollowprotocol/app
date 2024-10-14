@@ -15,6 +15,7 @@ import VibesScapes from 'public/assets/partners/vibesscapes.jpeg'
 import WebThreeBio from 'public/assets/partners/web3bio.jpeg'
 import Blockscout from 'public/assets/partners/blockscout.jpeg'
 import Rocbox from 'public/assets/partners/rocbox.jpeg'
+import HarvestArt from 'public/assets/partners/harvestart.jpeg'
 
 
 export const INTEGRATIONS = [
@@ -92,6 +93,11 @@ export const INTEGRATIONS = [
     name: 'Roc Box',
     url: 'https://roc.box/',
     logo: Rocbox
+  },
+  {
+    name: 'Harvest.art',
+    url: 'https://harvest.art/',
+    logo: HarvestArt
   }
 ] as {
   name: string
