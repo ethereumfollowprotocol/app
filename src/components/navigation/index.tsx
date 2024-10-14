@@ -20,8 +20,8 @@ import FullLogoHalloween from "public/assets/logo-full-halloween.svg";
 const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const { address: userAddress } = useAccount();
   const { totalCartItems } = useCart();
+  const { address: userAddress } = useAccount();
 
   const clickAwayRef = useClickAway<HTMLDivElement>((_) => {
     setMobileMenuOpen(false);
