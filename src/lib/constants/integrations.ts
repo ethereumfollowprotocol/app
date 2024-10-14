@@ -16,6 +16,7 @@ import Blockscout from 'public/assets/partners/blockscout.jpeg'
 import LikeButton from 'public/assets/partners/likebutton.jpeg'
 import HarvestArt from 'public/assets/partners/harvestart.jpeg'
 import VibesScapes from 'public/assets/partners/vibesscapes.jpeg'
+import EngagementVision from 'public/assets/partners/engagementvision.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -97,6 +98,11 @@ export const INTEGRATIONS = [
     name: 'Harvest.art',
     url: 'https://harvest.art/',
     logo: HarvestArt
+  },
+  {
+    name: 'Engagement Vision',
+    url: 'https://engagement.vision/',
+    logo: EngagementVision
   }
 ] as {
   name: string
