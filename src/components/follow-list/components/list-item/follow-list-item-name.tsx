@@ -238,7 +238,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
               )}
               {canEditTags && tagDropdownOpen && (
                 <>
-                  <div className="absolute z-[9999] flex flex-col w-60 gap-2 left-0 top-8 glass-card bg-neutral/80 p-2 border-[3px] border-grey rounded-lg">
+                  <div className="absolute z-[9999] flex flex-col w-60 gap-2 left-0 top-8 glass-card bg-neutral p-2 border-[3px] border-grey rounded-lg">
                     <div className="w-full flex items-center gap-1.5 justify-between bg-zinc-300 dark:bg-zinc-400 rounded-lg font-bold p-1 text-left">
                       <input
                         ref={tagInputRef}
@@ -269,7 +269,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
                       {recentTags.map((tag) => (
                         <button
                           key={`${address} ${tag}`}
-                          className="font-bold py-2 hover:scale-110 transition-all truncate px-3 hover:opacity-80 text-darkGrey bg-zinc-300 rounded-full"
+                          className="font-bold py-1.5 hover:scale-110 transition-all text-sm truncate px-3 hover:opacity-80 text-darkGrey bg-zinc-300 rounded-full"
                           onClick={(e) => {
                             e.stopPropagation();
                             addTag(tag);
