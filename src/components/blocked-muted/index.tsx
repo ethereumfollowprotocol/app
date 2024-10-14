@@ -134,7 +134,7 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ user, list, isManager, onCl
     <div className="fixed z-50 top-0 flex overflow-scroll justify-center left-0 w-full h-full bg-black/50">
       <div
         ref={blockedMutedRef}
-        className="gap-6 2xl:gap-8 relative flex h-fit rounded-xl mt-[85px] md:mt-24 mb-24 w-full xl:w-fit px-4 md:px-6 lg:mt-32 "
+        className="gap-6 2xl:gap-8 relative flex h-fit rounded-xl mt-[85px] md:mt-24 mb-24 w-full xl:w-fit px-4 md:px-6 lg:mt-28"
       >
         <div
           onClick={onClose}
