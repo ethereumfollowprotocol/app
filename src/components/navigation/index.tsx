@@ -1,9 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
 import { useAccount } from "wagmi";
+import { track } from "@vercel/analytics";
+import { useEffect, useState } from "react";
 import { useClickAway } from "@uidotdev/usehooks";
 
+import i18n from "#/app/i18n";
 import { Search } from "../search";
 import { cn } from "#/lib/utilities.ts";
 import Logo from "public/assets/logo.svg";
@@ -26,6 +28,10 @@ const Navigation = () => {
   const clickAwayRef = useClickAway<HTMLDivElement>((_) => {
     setMobileMenuOpen(false);
   });
+
+  useEffect(() => {
+    track(`Loaded with language ${i18n.language}`);
+  }, []);
 
   return (
     <header className="w-full fixed z-50 glass-card bg-white/50 dark:bg-black/75 halloween:bg-black/85 top-0 left-0 border-b-[3px] border-grey p-4 lg:px-6 md:py-5 xl:px-8">
