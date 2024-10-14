@@ -153,6 +153,9 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     if (titleRef.current && !!searchParams.get("tab")) {
       titleRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
       setActiveTab(searchParams.get("tab") as ProfileTabType);
+      if (searchParams.get("tags") === "top8") {
+        setFollowersTagsFilter(["top8"]);
+      }
     }
   }, [searchParams]);
 
@@ -273,7 +276,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       )}
       {!isSaving && (
         <div
-          className="flex relative xl:h-screen flex-col xl:flex-row pt-[108px] sm:pt-28 md:pt-32 pb-8 xl:pb-0 xl:pt-32 overflow-y-auto xl:justify-center gap-4 w-full"
+          className="flex relative xl:h-screen flex-col xl:flex-row pt-[108px] sm:pt-28 md:pt-28 pb-8 xl:pb-0 overflow-y-auto xl:justify-center gap-4 px-4 lg:px-6 xl:px-8 w-full"
           ref={containerRef}
         >
           <div

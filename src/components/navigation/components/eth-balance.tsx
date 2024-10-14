@@ -40,7 +40,7 @@ const EthBalance: React.FC<EthBalanceProps> = ({ address, chain }) => {
         {balance?.value
           ? Number(formatEther(balance.value)).toLocaleString(navigator.language, {
               minimumFractionDigits: 2,
-              maximumFractionDigits: 5,
+              maximumFractionDigits: 4,
             })
           : 0}{" "}
         {currencies[chain.id as keyof typeof currencies]}

@@ -92,7 +92,7 @@ const TableRow: React.FC<TableRowProps> = ({
 
   return (
     <div className="flex flex-col">
-      <div className="flex items-center w-full gap-3 p-2 pr-1.5 sm:p-4  hover:bg-text/5 rounded-xl sm:gap-6 md:gap-8 h-[75px]">
+      <div className="flex items-center w-full gap-3 p-2 pr-1.5 sm:p-4 xl:py-2 2xl:py-4  hover:bg-text/5 rounded-xl sm:gap-6 md:gap-8 h-[66px] 2xl:h-[76px]">
         <div className="tabular-nums min-w-4 w-4 xxs:min-w-6 xxs:w-6 sm:w-10 flex justify-center text-right">
           {rankNumber}
         </div>
@@ -106,7 +106,7 @@ const TableRow: React.FC<TableRowProps> = ({
             <Avatar
               name={name || address}
               avatarUrl={avatar}
-              size="h-[45px] w-[45px] md:h-[50px] md:w-[50px] hover:opacity-80 transition-all hover:scale-110 transition-all"
+              size="h-[45px] w-[45px] 2xl:h-[50px] 2xl:w-[50px] hover:opacity-80 transition-all hover:scale-110 transition-all"
             />
           </Link>
           <div
@@ -239,7 +239,7 @@ const TableRow: React.FC<TableRowProps> = ({
                   : "hidden xl:flex"
                 : `hidden lg:flex ${isHome ? "xl:hidden" : ""}`
             } transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/4 xl:w-1/5`}
-            onClick={() => router.push(`/${address}?tab=following`)}
+            onClick={() => router.push(`/${address}?tab=followers&tags=top8`)}
           >
             <p className="font-bold text-sm sm:text-lg">{formatNumber(top8 || 0)}</p>
             <p className="font-bold text-sm text-text/60 text-wrap break-words text-center w-full">

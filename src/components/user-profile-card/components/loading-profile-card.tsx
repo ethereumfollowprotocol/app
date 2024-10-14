@@ -42,7 +42,7 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
 
       <div
         className={`pointer-events-none flex w-full xl:items-center flex-col pt-8 px-4 sm:p-6 sm:pt-9 pb-6 ${
-          isResponsive ? "gap-5 sm:gap-6 md:gap-10" : "gap-[68px]"
+          isResponsive ? "gap-5 sm:gap-6 md:gap-9 2xl:gap-10" : "gap-[68px]"
         }`}
       >
         <div className="flex w-full flex-col justify-center items-center gap-5">
@@ -64,34 +64,33 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
                 <LoadingCell
                   key={social.name}
                   isStatic={isStatic}
-                  className="w-9 h-9 rounded-full"
+                  className="w-8 h-8 2xl:w-9 2xl:h-9 rounded-full"
                 />
-                // <Image
-                //   key={social.name}
-                //   src={social.icon(resolvedTheme || '')}
-                //   alt={social.name}
-                //   width={36}
-                //   height={36}
-                //   className='rounded-full'
-                // />
               ))}
             </div>
           </div>
         </div>
-        <div className="flex w-full flex-wrap justify-center gap-10 gap-y-6 sm:gap-y-9 sm:gap-x-[60px] items-center mx-auto text-center">
+        <div className="flex w-full flex-wrap justify-center gap-10 gap-y-6 sm:gap-y-5 2xl:gap-y-6 sm:gap-x-[50px] 2xl:gap-x-[60px] items-center mx-auto text-center">
           <div className="flex flex-col items-center gap-2">
             <LoadingCell isStatic={isStatic} className="w-12 h-6 rounded-lg" />
-            <div className="text-lg font-bold text-[#888] dark:text-[#aaa]">{t("following")}</div>
+            <div className="text-[16px] 2xl:text-lg font-bold text-[#888] dark:text-[#aaa]">
+              {t("following")}
+            </div>
           </div>
           <div className="flex flex-col items-center gap-2">
             <LoadingCell isStatic={isStatic} className="w-12 h-6 rounded-lg" />
-            <div className="text-lg font-bold text-[#888] dark:text-[#aaa]">{t("followers")}</div>
+            <div className="text-[16px] 2xl:text-lg font-bold text-[#888] dark:text-[#aaa]">
+              {t("followers")}
+            </div>
           </div>
           <div className="flex flex-col w-full items-center gap-3">
             <div className="text-lg font-bold">{t("leaderboard")}</div>
             <div className="flex justify-center flex-wrap gap-3 xxs:gap-8 gap-y-3 xxs:gap-y-3 xl:gap-3">
               {ranks.map((rank, i) => (
-                <div key={i} className="flex gap-3 justify-between items-center font-bold">
+                <div
+                  key={i}
+                  className="flex gap-2 2xl:gap-3 justify-between items-center font-bold"
+                >
                   <p className="text-[#888] dark:text-[#aaa]">{t(rank)}</p>
                   <LoadingCell className="h-5 w-10 rounded-md" isStatic={isStatic} />
                 </div>
