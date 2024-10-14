@@ -1,9 +1,9 @@
+import { track } from '@vercel/analytics'
 import { useEffect, useState } from 'react'
 import type { StaticImageData } from 'next/image'
 
 import i18n from '#/app/i18n'
 import { LANGUAGES } from '#/lib/constants/languages'
-import { track } from '@vercel/analytics/react'
 
 const useLanguage = () => {
 

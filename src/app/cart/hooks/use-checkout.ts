@@ -7,6 +7,7 @@ import {
   type Address,
   createPublicClient
 } from 'viem'
+import { track } from '@vercel/analytics'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { useQueryClient } from '@tanstack/react-query'
@@ -25,7 +26,6 @@ import { useMintEFP } from '../../../hooks/efp-actions/use-mint-efp'
 import { DEFAULT_CHAIN, LIST_OP_LIMITS } from '#/lib/constants/chain'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
-import { track } from '@vercel/analytics/react'
 
 const useCheckout = () => {
   const {
