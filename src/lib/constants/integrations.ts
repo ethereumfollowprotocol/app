@@ -9,16 +9,13 @@ import WebHash from 'public/assets/partners/webhash.jpeg'
 import ENSBook from 'public/assets/partners/ensbook.jpeg'
 import EthDotCd from 'public/assets/partners/ethdotcd.jpeg'
 import Interface from 'public/assets/partners/interface.jpeg'
-import WebThreeBio from 'public/assets/partners/web3bio.jpeg'
 import EnsVision from 'public/assets/partners/ensvision.jpeg'
+import WebThreeBio from 'public/assets/partners/web3bio.jpeg'
 import EFPUpdates from 'public/assets/partners/efpupdates.jpeg'
 import Blockscout from 'public/assets/partners/blockscout.jpeg'
 import LikeButton from 'public/assets/partners/likebutton.jpeg'
-import VibesScapes from 'public/assets/partners/vibesscapes.jpeg'
-import WebThreeBio from 'public/assets/partners/web3bio.jpeg'
-import Blockscout from 'public/assets/partners/blockscout.jpeg'
-import Rocbox from 'public/assets/partners/rocbox.jpeg'
 import HarvestArt from 'public/assets/partners/harvestart.jpeg'
+import VibesScapes from 'public/assets/partners/vibesscapes.jpeg'
 
 export const INTEGRATIONS = [
   {
