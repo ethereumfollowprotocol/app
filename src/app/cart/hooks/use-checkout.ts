@@ -25,6 +25,7 @@ import { useMintEFP } from '../../../hooks/efp-actions/use-mint-efp'
 import { DEFAULT_CHAIN, LIST_OP_LIMITS } from '#/lib/constants/chain'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
+import { track } from '@vercel/analytics/react'
 
 const useCheckout = () => {
   const {
@@ -281,6 +282,10 @@ const useCheckout = () => {
   }, [moveToNextAction, executeActionByIndex, getRequiredChain, currentChainId, currentActionIndex])
 
   const onFinish = useCallback(() => {
+    const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+    if (regex.test(navigator.userAgent)) track(`${listHasBeenMinted ? 'Mint' : 'Checkout'} - Mobile`)
+    else track(`${listHasBeenMinted ? 'Mint' : 'Checkout'} - Desktop`)
+
     if (fetchFreshStats) refetchStats()
     else setFetchFreshStats(true)
 
