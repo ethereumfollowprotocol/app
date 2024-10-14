@@ -37,8 +37,11 @@ const TableRow: React.FC<TableRowProps> = ({
   blocked,
   firstStat,
 }) => {
-  const rankedAs = rank <= 3 ? "top-three" : rank <= 10 ? "top-ten" : "regular";
+  const rankedAs =
+    rank === 0 ? "no-rank" : rank <= 3 ? "top-three" : rank <= 10 ? "top-ten" : "regular";
+
   const rankNumber = {
+    "no-rank": <p className="text-2xl sm:text-3xl font-bold w-min mx-auto">-</p>,
     "top-three": (
       <p
         className={`text-2xl xxs:text-3xl sm:text-4xl md:text-5xl ${
