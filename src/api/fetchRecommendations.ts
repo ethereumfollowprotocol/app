@@ -1,5 +1,5 @@
 import type { Address } from 'viem'
-import type { DiscoverItemType, DiscoverResponseType } from '#/types/common'
+import type { DiscoverItemType, DiscoverResponseType } from '#/types/requests'
 
 export const fetchRecommendations = async (
   endpoint: 'discover' | 'recommended',
