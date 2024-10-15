@@ -681,17 +681,19 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
               <div
                 className="cursor-pointer hover:scale-110 transition-all"
                 onClick={() =>
-                  router.push(
-                    `/${
-                      pathname.length > 1 && pathname !== "/team"
-                        ? pathname.slice(1)
-                        : isConnectedUserCard
-                        ? selectedList === Number(profile.primary_list)
-                          ? profile.address
-                          : selectedList
-                        : profile.address
-                    }?tab=following`
-                  )
+                  pathname === "/recommended"
+                    ? null
+                    : router.push(
+                        `/${
+                          pathname.length > 1 && pathname !== "/team"
+                            ? pathname.slice(1)
+                            : isConnectedUserCard
+                            ? selectedList === Number(profile.primary_list)
+                              ? profile.address
+                              : selectedList
+                            : profile.address
+                        }?tab=following`
+                      )
                 }
               >
                 {isStatsLoading ? (
@@ -712,17 +714,19 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
               <div
                 className="cursor-pointer hover:scale-110 transition-all"
                 onClick={() =>
-                  router.push(
-                    `/${
-                      pathname.length > 1 && pathname !== "/team"
-                        ? pathname.slice(1)
-                        : isConnectedUserCard
-                        ? selectedList === Number(profile.primary_list)
-                          ? profile.address
-                          : selectedList
-                        : profile.address
-                    }?tab=followers`
-                  )
+                  pathname === "/recommended"
+                    ? null
+                    : router.push(
+                        `/${
+                          pathname.length > 1 && pathname !== "/team"
+                            ? pathname.slice(1)
+                            : isConnectedUserCard
+                            ? selectedList === Number(profile.primary_list)
+                              ? profile.address
+                              : selectedList
+                            : profile.address
+                        }?tab=followers`
+                      )
                 }
               >
                 {isStatsLoading ? (

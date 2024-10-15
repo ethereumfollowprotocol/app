@@ -7,6 +7,7 @@ import { useSprings, animated, to as interpolate } from "@react-spring/web";
 import { useCart } from "#/contexts/cart-context";
 import { listOpAddListRecord } from "#/utils/list-ops";
 import UserProfileCard from "#/components/user-profile-card";
+import { PrimaryButton } from "#/components/buttons/primary-button";
 import { useRecommendedProfiles } from "#/contexts/recommended-profiles-context";
 
 // These two are just helpers, they curate spring data, values that are later being interpolated into css
@@ -49,7 +50,7 @@ const RecommendedCards = () => {
     if (!down && trigger) {
       gone.add(index);
 
-      if (index % 5 === 0) setTimeout(() => fetchNextPage(), 250);
+      if (index % 7 === 0) setTimeout(() => fetchNextPage(), 250);
 
       if (dir === 1) {
         setTimeout(() => {
@@ -134,18 +135,72 @@ const RecommendedCards = () => {
           );
         })}
       </div>
-      {/* <div className="flex w-full max-w-92 items-center ml-8 justify-between">
+      <div className="flex w-full max-w-92 items-center ml-8 justify-between">
         <PrimaryButton
           label="Skip"
+          disabled={
+            recommendedProfiles.length === 0 ||
+            isLoading ||
+            (isFetchingNextPage && gone.size === recommendedProfiles.length)
+          }
           onClick={() => {
-            gone.add(gone.size);
+            if (recommendedProfiles.length === 0) return;
+
             api.start((i) => {
-              if (i === gone.size) return to(i);
+              if (i === gone.size) {
+                if (i % 7 === 0) setTimeout(() => fetchNextPage(), 250);
+                const x = (200 + window.innerWidth) * -1; // When a card is gone it flys out left or right, otherwise goes back to zero
+                const rot = -50; // How much the card tilts, flicking it harder makes it rotate faster
+                const scale = 1; // Active cards lift up a bit
+                return {
+                  x,
+                  rot,
+                  scale,
+                  delay: undefined,
+                  config: { friction: 60, tension: 200 },
+                };
+              }
             });
+            gone.add(gone.size);
           }}
         />
-        <PrimaryButton label="Follow" onClick={() => {}} />
-      </div> */}
+        <PrimaryButton
+          label="Follow"
+          disabled={
+            recommendedProfiles.length === 0 ||
+            isLoading ||
+            (isFetchingNextPage && gone.size === recommendedProfiles.length)
+          }
+          onClick={() => {
+            if (recommendedProfiles.length === 0) return;
+
+            api.start((i) => {
+              if (i === gone.size) {
+                if (i % 7 === 0) setTimeout(() => fetchNextPage(), 250);
+                setTimeout(() => {
+                  if (recommendedProfiles[i]?.address) {
+                    addCartItem({
+                      // @ts-ignore
+                      listOp: listOpAddListRecord(recommendedProfiles[i].address),
+                    });
+                  }
+                }, 250);
+                const x = (200 + window.innerWidth) * 1; // When a card is gone it flys out left or right, otherwise goes back to zero
+                const rot = 50; // How much the card tilts, flicking it harder makes it rotate faster
+                const scale = 1; // Active cards lift up a bit
+                return {
+                  x,
+                  rot,
+                  scale,
+                  delay: undefined,
+                  config: { friction: 60, tension: 200 },
+                };
+              }
+            });
+            gone.add(gone.size);
+          }}
+        />
+      </div>
     </div>
   );
 };
