@@ -104,7 +104,7 @@ export const RecommendedProfilesProvider: React.FC<Props> = ({ children }) => {
 export const useRecommendedProfiles = (): RecommendedProfilesContextType => {
   const context = useContext(RecommendedProfilesContext);
   if (context === undefined) {
-    throw new Error("useEFPProfile must be used within an EFPProfileProvider");
+    throw new Error("useRecommendedProfiles must be used within an RecommendedProfilesProvider");
   }
   return context;
 };
