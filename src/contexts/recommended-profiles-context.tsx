@@ -1,13 +1,6 @@
 import { useAccount } from "wagmi";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import {
-  useContext,
-  createContext,
-  useState,
-  type Dispatch,
-  type SetStateAction,
-  useMemo,
-} from "react";
+import { useContext, createContext, useState, type Dispatch, type SetStateAction } from "react";
 
 import { useEFPProfile } from "./efp-profile-context";
 import { RECOMMENDED_PROFILES_LIMIT } from "#/lib/constants";
