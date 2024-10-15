@@ -17,18 +17,17 @@ const to = (i: number) => ({
 });
 const from = (i: number) => ({ x: 0, rot: 0, scale: 1, y: 0 });
 // This is being used down there in the view, it interpolates rotation and scale into a css transform
-const trans = (r: number, s: number) =>
-  `perspective(2000px) rotateX(30deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`;
+const trans = (r: number, s: number) => ` rotateX(30deg) scale(${s})`;
 
 const RecommendedCards = () => {
   const {
     // page,
-    setPage,
+    // setPage,
     // currentProfile,
     // setCurrentProfile,
     recommendedProfiles,
-    // isLoading,
-    // isFetchingNextPage,
+    isLoading,
+    isFetchingNextPage,
     // hasNextPage,
     fetchNextPage,
   } = useRecommendedProfiles();
@@ -39,19 +38,15 @@ const RecommendedCards = () => {
     from: from(i),
   }));
 
-  console.log(props, gone);
-
   const bind = useDrag(({ args: [index], down, movement: [mx], direction: [xDir], velocity }) => {
     const trigger = velocity[0] > 0.2; // If you flick hard enough it should trigger the card to fly out
     const dir = xDir < 0 ? -1 : 1; // Direction should either point left or right
+
     if (!down && trigger) {
       gone.add(index);
-      if (index === 9) fetchNextPage();
-      if (index === 1) {
-        setPage((prevPage) => prevPage + 1);
-        setGone(() => new Set());
-        gone.clear();
-      }
+
+      if (index % 5 === 0) fetchNextPage();
+
       if (dir === 1) {
         console.log("added to cart");
       }
@@ -81,32 +76,45 @@ const RecommendedCards = () => {
   });
 
   return (
-    <div className="flex h-screen w-full items-center overflow-hidden justify-start pt-36 flex-col">
-      {props.map(({ x, y, scale }, i) => (
-        <animated.div
-          className="h-fit w-86 absolute will-change-transform touch-none"
-          key={recommendedProfiles[i]?.address}
-          style={{ x, y }}
-        >
-          {/* This is the card itself, we're binding our gesture to it (and inject its index so we know which is which) */}
+    <div className="flex w-full items-center overflow-hidden justify-start flex-col">
+      {(isLoading || isFetchingNextPage) &&
+        new Array(5).fill(1).map((_, i) => (
+          <div className={cn("h-fit w-full max-w-86 absolute z-0", `top-[${i * 20}px]`)} key={i}>
+            <UserProfileCard
+              isLoading={true}
+              isResponsive={false}
+              hideFollowButton={true}
+              solidBackground={true}
+            />
+          </div>
+        ))}
+      {props.reverse().map(({ x, y, scale }, i) => {
+        return (
           <animated.div
-            {...bind(i)}
-            style={{
-              transform: interpolate([scale], trans),
-            }}
+            className={cn("h-fit w-full max-w-86 absolute will-change-transform touch-none z-10")}
+            key={recommendedProfiles[i]?.address}
+            style={{ x, y }}
           >
-            <div className={cn("cursor-pointer touch-none")}>
-              <UserProfileCard
-                profile={recommendedProfiles[i]}
-                isResponsive={false}
-                stats={recommendedProfiles[i]?.stats}
-                hideFollowButton={true}
-                solidBackground={true}
-              />
-            </div>
+            {/* This is the card itself, we're binding our gesture to it (and inject its index so we know which is which) */}
+            <animated.div
+              {...bind(recommendedProfiles.length - 1 - i)}
+              style={{
+                transform: interpolate([scale], trans),
+              }}
+            >
+              <div className={cn("cursor-pointer")}>
+                <UserProfileCard
+                  profile={recommendedProfiles[i]}
+                  isResponsive={false}
+                  stats={recommendedProfiles[i]?.stats}
+                  hideFollowButton={true}
+                  solidBackground={true}
+                />
+              </div>
+            </animated.div>
           </animated.div>
-        </animated.div>
-      ))}
+        );
+      })}
     </div>
   );
 };

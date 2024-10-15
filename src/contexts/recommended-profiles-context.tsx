@@ -67,20 +67,20 @@ export const RecommendedProfilesProvider: React.FC<Props> = ({ children }) => {
     refetchOnReconnect: false,
   });
 
-  // const recommendedProfiles =
-  //   recommendedProfilesFetched?.pages
-  //     ?.reduce((acc, el) => [...acc, ...el.recommended], [] as ProfileDetailsResponse[])
-  //     .reverse() || [];
+  const recommendedProfiles =
+    recommendedProfilesFetched?.pages
+      ?.reduce((acc, el) => [...acc, ...el.recommended], [] as ProfileDetailsResponse[])
+      .reverse() || [];
 
-  const recommendedProfiles = useMemo(() => {
-    const pageIndex = recommendedProfilesFetched?.pageParams.indexOf(page) || 0;
-    return [
-      ...(recommendedProfilesFetched?.pages[pageIndex]?.recommended || []),
-      ...(pageIndex === 0
-        ? []
-        : recommendedProfilesFetched?.pages[pageIndex - 1]?.recommended.slice(0, 1) || []),
-    ];
-  }, [page, recommendedProfilesFetched]);
+  // const recommendedProfiles = useMemo(() => {
+  //   const pageIndex = recommendedProfilesFetched?.pageParams.indexOf(page) || 0;
+  //   return [
+  //     ...(recommendedProfilesFetched?.pages[pageIndex]?.recommended || []),
+  //     ...(pageIndex === 0
+  //       ? []
+  //       : recommendedProfilesFetched?.pages[pageIndex - 1]?.recommended.slice(0, 1) || []),
+  //   ];
+  // }, [page, recommendedProfilesFetched]);
 
   return (
     <RecommendedProfilesContext.Provider

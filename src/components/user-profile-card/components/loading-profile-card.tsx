@@ -42,7 +42,7 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
 
       <div
         className={`pointer-events-none flex w-full xl:items-center flex-col pt-8 px-4 sm:p-6 sm:pt-9 pb-6 ${
-          isResponsive ? "gap-5 sm:gap-6 md:gap-9 2xl:gap-10" : "gap-[68px]"
+          isResponsive ? "gap-5 sm:gap-6 md:gap-9 2xl:gap-10" : "gap-5"
         }`}
       >
         <div className="flex w-full flex-col justify-center items-center gap-5">

@@ -264,7 +264,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
         solidBackground ? "bg-neutral" : "glass-card",
         isResponsive
           ? "w-full xl:w-[324px] xl:min-w-[324px] 3xl:w-86 3xl:min-w-86"
-          : "w-80 xxs:w-92"
+          : "w-full xxs:w-92"
       )}
     >
       {isLoading ? (
