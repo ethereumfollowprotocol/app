@@ -6,7 +6,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 
 import { cn } from "#/lib/utilities";
 import { FollowList } from "#/components/follow-list";
-import type { DiscoverItemType } from "#/types/common";
+import type { DiscoverItemType } from "#/types/requests";
 import { useEFPProfile } from "#/contexts/efp-profile-context";
 import { fetchRecommendations } from "#/api/fetchRecommendations";
 import PageSelector from "#/app/leaderboard/components/page-selector";
