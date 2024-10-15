@@ -9,11 +9,12 @@ import i18n from "#/app/i18n";
 import { Search } from "../search";
 import { cn } from "#/lib/utilities.ts";
 import Logo from "public/assets/logo.svg";
+import MobileMenu from "./components/menu.tsx";
 import NavItems from "./components/nav-items.tsx";
 import FullLogo from "public/assets/logo-full.svg";
-import MobileMenu from "./components/menu.tsx";
 import CartButton from "./components/cart-button.tsx";
 import { useCart } from "#/contexts/cart-context.tsx";
+import { LANGUAGES } from "#/lib/constants/languages.ts";
 import FullLogoDark from "public/assets/logo-full-dark.svg";
 import ConnectButton from "./components/connect-button.tsx";
 import LogoHalloween from "public/assets/logo-halloween.svg";
@@ -30,7 +31,11 @@ const Navigation = () => {
   });
 
   useEffect(() => {
-    track(`Loaded with language ${i18n.language}`);
+    track(
+      `Loaded with language ${
+        LANGUAGES.find((lang) => lang.key === i18n.language)?.englishLanguage
+      }`
+    );
   }, []);
 
   return (
