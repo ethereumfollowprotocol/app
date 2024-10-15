@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { useRecommendedProfiles } from "#/contexts/recommended-profiles-context";
-import UserProfileCard from "#/components/user-profile-card";
-import { useSprings, animated, to as interpolate } from "@react-spring/web";
 import { useDrag } from "@use-gesture/react";
+import { useSprings, animated, to as interpolate } from "@react-spring/web";
+
 import { useCart } from "#/contexts/cart-context";
 import { listOpAddListRecord } from "#/utils/list-ops";
+import UserProfileCard from "#/components/user-profile-card";
+import { useRecommendedProfiles } from "#/contexts/recommended-profiles-context";
 
 // These two are just helpers, they curate spring data, values that are later being interpolated into css
 const to = (i: number) => ({
@@ -30,7 +31,6 @@ const RecommendedCards = () => {
     recommendedProfiles,
     isLoading,
     isFetchingNextPage,
-    hasNextPage,
     fetchNextPage,
   } = useRecommendedProfiles();
 
@@ -55,6 +55,7 @@ const RecommendedCards = () => {
         setTimeout(() => {
           if (recommendedProfiles[index]?.address) {
             addCartItem({
+              // @ts-ignore
               listOp: listOpAddListRecord(recommendedProfiles[index].address),
             });
           }
