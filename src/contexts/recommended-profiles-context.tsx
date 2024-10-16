@@ -1,7 +1,8 @@
 import { useAccount } from "wagmi";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useContext, createContext, useState, type Dispatch, type SetStateAction } from "react";
+import { useContext, createContext, useState } from "react";
 
+import { useCart } from "./cart-context";
 import { useEFPProfile } from "./efp-profile-context";
 import { RECOMMENDED_PROFILES_LIMIT } from "#/lib/constants";
 import type { ProfileDetailsResponse } from "#/types/requests";
@@ -9,14 +10,12 @@ import { fetchRecommendedProfiles } from "#/api/fetchRecommendedProfiles";
 
 // Define the type for the profile context
 type RecommendedProfilesContextType = {
-  page: number;
-  setPage: Dispatch<SetStateAction<number>>;
-  currentProfile: number;
-  setCurrentProfile: Dispatch<SetStateAction<number>>;
+  gone: Set<any>;
   recommendedProfiles: ProfileDetailsResponse[];
   isLoading: boolean;
   isFetchingNextPage: boolean;
   hasNextPage: boolean;
+  onSwipeRight: (index: number) => void;
   fetchNextPage: () => void;
 };
 
@@ -29,9 +28,9 @@ const RecommendedProfilesContext = createContext<RecommendedProfilesContextType 
 );
 
 export const RecommendedProfilesProvider: React.FC<Props> = ({ children }) => {
-  const [currentProfile, setCurrentProfile] = useState(0);
-  const [page, setPage] = useState(0);
+  const [gone] = useState(() => new Set()); // The set flags all the cards that are flicked out
 
+  const { addCartItem } = useCart();
   const { selectedList } = useEFPProfile();
   const { address: userAddress } = useAccount();
 
@@ -65,28 +64,25 @@ export const RecommendedProfilesProvider: React.FC<Props> = ({ children }) => {
       ?.reduce((acc, el) => [...acc, ...el.recommended], [] as ProfileDetailsResponse[])
       .reverse() || [];
 
-  // const recommendedProfiles = useMemo(() => {
-  //   const pageIndex = recommendedProfilesFetched?.pageParams.indexOf(page) || 0;
-  //   return [
-  //     ...(recommendedProfilesFetched?.pages[pageIndex]?.recommended || []),
-  //     ...(pageIndex === 0
-  //       ? []
-  //       : recommendedProfilesFetched?.pages[pageIndex - 1]?.recommended.slice(0, 1) || []),
-  //   ];
-  // }, [page, recommendedProfilesFetched]);
+  const onSwipeRight = (index: number) => {
+    if (recommendedProfiles[index]?.address) {
+      addCartItem({
+        // @ts-ignore
+        listOp: listOpAddListRecord(recommendedProfiles[index].address),
+      });
+    }
+  };
 
   return (
     <RecommendedProfilesContext.Provider
       value={{
-        page,
-        setPage,
-        currentProfile,
-        setCurrentProfile,
-        recommendedProfiles,
+        gone,
         isLoading,
-        isFetchingNextPage,
         hasNextPage,
+        onSwipeRight,
         fetchNextPage,
+        isFetchingNextPage,
+        recommendedProfiles,
       }}
     >
       {children}

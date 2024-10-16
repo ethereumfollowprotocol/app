@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect } from "react";
 import { useDrag } from "@use-gesture/react";
+import { TiArrowBack } from "react-icons/ti";
 import { useSprings, animated, to as interpolate } from "@react-spring/web";
 
 import { useCart } from "#/contexts/cart-context";
@@ -10,7 +11,6 @@ import UserProfileCard from "#/components/user-profile-card";
 import { PrimaryButton } from "#/components/buttons/primary-button";
 import { useRecommendedProfiles } from "#/contexts/recommended-profiles-context";
 
-// These two are just helpers, they curate spring data, values that are later being interpolated into css
 const to = (i: number) => ({
   x: 0,
   y: 0,
@@ -19,25 +19,16 @@ const to = (i: number) => ({
   delay: i * 100,
 });
 const from = (i: number) => ({ x: 0, rot: 0, scale: 1, y: 0 });
-// This is being used down there in the view, it interpolates rotation and scale into a css transform
+
 const trans = (r: number, s: number) =>
   `perspective(1500px) rotateX(0deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`;
 
 const RecommendedCards = () => {
-  const {
-    // page,
-    // setPage,
-    // currentProfile,
-    // setCurrentProfile,
-    recommendedProfiles,
-    isLoading,
-    isFetchingNextPage,
-    fetchNextPage,
-  } = useRecommendedProfiles();
+  const { gone, recommendedProfiles, isLoading, isFetchingNextPage, fetchNextPage } =
+    useRecommendedProfiles();
 
   const { addCartItem } = useCart();
 
-  const [gone] = useState(() => new Set()); // The set flags all the cards that are flicked out
   const [props, api] = useSprings(recommendedProfiles.length, (i) => ({
     ...to(i),
     from: from(i),
@@ -45,7 +36,7 @@ const RecommendedCards = () => {
 
   const bind = useDrag(({ args: [index], down, movement: [mx], direction: [xDir], velocity }) => {
     const trigger = velocity[0] > 0.2; // If you flick hard enough it should trigger the card to fly out
-    const dir = xDir < 0 ? -1 : 1; // Direction should either point left or right
+    const dir = xDir < 0 ? -1 : 1; // -1 for left, 1 for right
 
     if (!down && trigger) {
       gone.add(index);
@@ -65,7 +56,7 @@ const RecommendedCards = () => {
     }
 
     api.start((i) => {
-      if (index !== i) return; // We're only interested in changing spring-data for the current spring
+      if (index !== i) return;
       const isGone = gone.has(index);
       const x = isGone ? (200 + window.innerWidth) * dir : down ? mx : 0; // When a card is gone it flys out left or right, otherwise goes back to zero
       const rot = mx / 100 + (isGone ? dir * 8 * velocity[0] : 0); // How much the card tilts, flicking it harder makes it rotate faster
@@ -78,19 +69,26 @@ const RecommendedCards = () => {
         config: { friction: 60, tension: down ? 800 : isGone ? 200 : 800 },
       };
     });
-
-    // if (!down && gone.size === recommendedProfiles.length - 1)
-    //   setTimeout(() => {
-    //     setGone(() => new Set());
-    //     // setPage((prevPage) => prevPage + 1);
-    //     // api.start((i) => to(i));
-    //   }, 600);
   });
+
+  useEffect(() => {
+    api.start((i) => {
+      if (gone.has(i)) {
+        return {
+          x: (200 + window.innerWidth) * -1,
+          rot: -50,
+          scale: 1,
+          delay: undefined,
+          config: { friction: 30, tension: 800 },
+        };
+      }
+    });
+  }, []);
 
   return (
     <div className="flex w-full items-center justify-start flex-col">
       <div className="flex flex-col w-full items-center justify-start h-fit min-h-[680px] relative">
-        {(isLoading || isFetchingNextPage) &&
+        {(isLoading || isFetchingNextPage || recommendedProfiles.length === 0) &&
           new Array(5).fill(1).map((_, i) => (
             <div
               className="h-fit w-full max-w-86 absolute z-10"
@@ -111,7 +109,7 @@ const RecommendedCards = () => {
           return (
             <animated.div
               className="h-fit w-full max-w-86 absolute will-change-transform touch-none z-20"
-              key={recommendedProfiles[i]?.address}
+              key={`${recommendedProfiles[i]?.address}-${i}`}
               style={{ x, y }}
             >
               {/* This is the card itself, we're binding our gesture to it (and inject its index so we know which is which) */}
@@ -144,26 +142,45 @@ const RecommendedCards = () => {
             (isFetchingNextPage && gone.size === recommendedProfiles.length)
           }
           onClick={() => {
-            if (recommendedProfiles.length === 0) return;
+            if (
+              recommendedProfiles.length === 0 ||
+              isLoading ||
+              gone.size === recommendedProfiles.length
+            )
+              return;
 
             api.start((i) => {
               if (i === gone.size) {
                 if (i % 7 === 0) setTimeout(() => fetchNextPage(), 250);
-                const x = (200 + window.innerWidth) * -1; // When a card is gone it flys out left or right, otherwise goes back to zero
-                const rot = -50; // How much the card tilts, flicking it harder makes it rotate faster
-                const scale = 1; // Active cards lift up a bit
+                const x = (200 + window.innerWidth) * -1;
+                const rot = -50;
+                const scale = 1;
                 return {
                   x,
                   rot,
                   scale,
                   delay: undefined,
-                  config: { friction: 60, tension: 200 },
+                  config: { friction: 50, tension: 300 },
                 };
               }
             });
             gone.add(gone.size);
           }}
         />
+        <button
+          className="cursor-pointer rounded-full bg-text/20 hover:bg-text/40 transition-all hover:scale-110 p-2 text-4xl disabled:opacity-0 disabled:cursor-not-allowed"
+          disabled={gone.size === 0}
+          onClick={() => {
+            gone.delete(gone.size - 1);
+            api.start((i) => {
+              if (i === gone.size) {
+                return to(i);
+              }
+            });
+          }}
+        >
+          <TiArrowBack />
+        </button>
         <PrimaryButton
           label="Follow"
           disabled={
@@ -172,7 +189,12 @@ const RecommendedCards = () => {
             (isFetchingNextPage && gone.size === recommendedProfiles.length)
           }
           onClick={() => {
-            if (recommendedProfiles.length === 0) return;
+            if (
+              recommendedProfiles.length === 0 ||
+              isLoading ||
+              gone.size === recommendedProfiles.length
+            )
+              return;
 
             api.start((i) => {
               if (i === gone.size) {
@@ -185,15 +207,13 @@ const RecommendedCards = () => {
                     });
                   }
                 }, 250);
-                const x = (200 + window.innerWidth) * 1; // When a card is gone it flys out left or right, otherwise goes back to zero
-                const rot = 50; // How much the card tilts, flicking it harder makes it rotate faster
-                const scale = 1; // Active cards lift up a bit
+                const x = (200 + window.innerWidth) * 1;
                 return {
                   x,
-                  rot,
-                  scale,
+                  rot: 50,
+                  scale: 1,
                   delay: undefined,
-                  config: { friction: 60, tension: 200 },
+                  config: { friction: 50, tension: 300 },
                 };
               }
             });
