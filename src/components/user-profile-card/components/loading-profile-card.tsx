@@ -3,17 +3,20 @@ import { useConnectModal } from "@rainbow-me/rainbowkit";
 
 import LoadingCell from "../../loaders/loading-cell";
 import { profileCardSocials } from "#/lib/constants";
+import { cn } from "#/lib/utilities";
 
 interface LoadingProfileCardProps {
   isResponsive?: boolean;
   hideFollowButton?: boolean;
   isStatic?: boolean;
+  isRecommended?: boolean;
 }
 
 const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
   isResponsive,
   hideFollowButton,
   isStatic,
+  isRecommended,
 }) => {
   const { t } = useTranslation();
   // const { resolvedTheme } = useTheme()
@@ -83,7 +86,12 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
               {t("followers")}
             </div>
           </div>
-          <div className="flex flex-col w-full items-center gap-3">
+          <div
+            className={cn(
+              "flex flex-col w-full items-center gap-3",
+              isRecommended && "hidden sm:flex"
+            )}
+          >
             <div className="text-lg font-bold">{t("leaderboard")}</div>
             <div className="flex justify-center flex-wrap gap-3 xxs:gap-8 gap-y-3 xxs:gap-y-3 xl:gap-3">
               {ranks.map((rank, i) => (

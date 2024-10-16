@@ -92,12 +92,12 @@ const ConnectButton = () => {
           <>
             <div className="flex items-center max-w-[87%] h-fit gap-[8px]">
               {ensProfileIsLoading ? (
-                <LoadingCell className="w-[47px] h-[47px] rounded-full" />
+                <LoadingCell className="w-[43px] h-[43px] rounded-full" />
               ) : (
                 <Avatar
                   avatarUrl={ensProfile?.avatar}
                   name={ensProfile?.name || userAddress}
-                  size="w-[44px] h-[44px]"
+                  size="w-[43px] h-[43px]"
                 />
               )}
               <p className="font-bold hidden sm:block truncate text-lg">

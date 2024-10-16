@@ -53,7 +53,7 @@ interface UserProfileCardProps {
   showMoreOptions?: boolean;
   openBlockModal?: () => void;
   openListSettingsModal?: () => void;
-  solidBackground?: boolean;
+  isRecommended?: boolean;
 }
 
 const UserProfileCard: React.FC<UserProfileCardProps> = ({
@@ -67,7 +67,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   showMoreOptions,
   openBlockModal,
   openListSettingsModal,
-  solidBackground,
+  isRecommended,
 }) => {
   const [cardTooltipOpen, setCardTooltipOpen] = useState(false);
   const clickAwayCardTooltip = useClickAway<HTMLDivElement>(() => {
@@ -261,7 +261,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
     <div
       className={cn(
         "flex border-[3px] z-10 flex-col border-[#FFDBD9] dark:border-[#a36d7d] halloween:border-[#a36d7d] rounded-xl relative",
-        solidBackground ? "bg-neutral" : "glass-card",
+        isRecommended ? "bg-neutral" : "glass-card",
         isResponsive
           ? "w-full xl:w-[324px] xl:min-w-[324px] 3xl:w-86 3xl:min-w-86"
           : "w-full xxs:w-92"
@@ -271,6 +271,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
         <LoadingProfileCard
           isResponsive={isResponsive}
           hideFollowButton={hideFollowButton || isConnectedUserCard}
+          isRecommended={isRecommended}
         />
       ) : profile && isProfileValid ? (
         <>
@@ -740,7 +741,12 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                   {t("followers")}
                 </div>
               </div>
-              <div className="flex flex-col w-full items-center gap-2">
+              <div
+                className={cn(
+                  "flex flex-col w-full items-center gap-2",
+                  isRecommended && "hidden sm:flex"
+                )}
+              >
                 <Link href="/leaderboard">
                   <div
                     className={`${

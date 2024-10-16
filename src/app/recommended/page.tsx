@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 const RecommendedPage = () => {
   return (
-    <main className="w-full pt-28 sm:pt-32 mb-4 px-4 text-center">
+    <main className="w-full pt-28 sm:pt-32 mb-4 px-2 text-center">
       <RecommendedCards />
     </main>
   );
