@@ -23,11 +23,11 @@ const RecommendedCards = () => {
 
   return (
     <div className="flex w-full items-center justify-start flex-col">
-      <div className="flex flex-col w-full items-center justify-start h-fit min-h-[500px] sm:min-h-[680px] relative xxs:mr-8">
+      <div className="flex flex-col w-full items-center justify-start h-fit min-h-[500px] sm:min-h-[680px] relative">
         {(isLoading || isFetchingNextPage || recommendedProfiles.length === 0) &&
           new Array(5).fill(1).map((_, i) => (
             <div
-              className="h-fit w-full max-w-86 absolute z-10"
+              className="h-fit w-full max-w-86 absolute z-10 mr-8"
               key={i}
               style={{
                 marginTop: `${50 - i * 10}px`,
@@ -44,7 +44,7 @@ const RecommendedCards = () => {
         {props.reverse().map(({ x, y, rot, scale }, i) => {
           return (
             <animated.div
-              className="h-fit w-full max-w-86 absolute top-0 will-change-transform touch-none z-20"
+              className="h-fit w-full max-w-86 absolute top-0 will-change-transform touch-none z-20 xxs:mr-12"
               key={`${recommendedProfiles[i]?.address}-${i}`}
               style={{ x, y }}
             >
@@ -70,7 +70,7 @@ const RecommendedCards = () => {
         })}
         {/* <div className="absolute z-30 xxs:ml-8 top-40 sm:top-60 w-full max-w-128 flex justify-between items-center"> */}
         <button
-          className="absolute -left-1 sm:mr-[430px] z-30 sm:z-10 top-56 sm:top-60 rounded-xl w-14 text-lg font-semibold h-14 flex items-center justify-center glass-card border-[3px] border-text/70 transition-all hover:scale-110"
+          className="absolute -left-1 sm:left-auto sm:mr-[475px] z-30 sm:z-10 top-56 sm:top-60 rounded-xl w-14 text-lg font-semibold h-14 flex items-center justify-center glass-card border-[3px] border-text/70 transition-all hover:scale-110"
           disabled={
             recommendedProfiles.length === 0 ||
             isLoading ||
@@ -81,7 +81,7 @@ const RecommendedCards = () => {
           Meh
         </button>
         <button
-          className="absolute -right-1 sm:ml-[490px] z-30 sm:z-10 top-56 sm:top-60 rounded-xl w-14 h-14 flex items-center justify-center pl-1.5 pt-1 text-black btn-grad transition-all hover:scale-110"
+          className="absolute -right-1 sm:right-auto sm:ml-[445px] z-30 sm:z-10 top-56 sm:top-60 rounded-xl w-14 h-14 flex items-center justify-center pl-1.5 pt-1 text-black btn-grad transition-all hover:scale-110"
           disabled={
             recommendedProfiles.length === 0 ||
             isLoading ||
