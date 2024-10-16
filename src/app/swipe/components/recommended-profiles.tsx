@@ -1,9 +1,10 @@
 "use client";
 
-import { TiArrowBack } from "react-icons/ti";
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import Image from "next/image";
 import { animated, to as interpolate } from "@react-spring/web";
 
+import { HiArrowUturnDown } from "react-icons/hi2";
+import MainnetBlack from "public/assets/mainnet-black.svg";
 import UserProfileCard from "#/components/user-profile-card";
 import { trans, useRecommendedProfilesCards } from "./useRescommendedProfilesCards";
 
@@ -67,37 +68,36 @@ const RecommendedCards = () => {
             </animated.div>
           );
         })}
-        <div className="absolute z-50 xxs:ml-8 top-40 sm:top-60 w-full max-w-128 flex justify-between items-center">
-          <button
-            className="rounded-full p-2 text-4xl bg-text/20 hover:bg-text/40 transition-all hover:scale-110"
-            disabled={
-              recommendedProfiles.length === 0 ||
-              isLoading ||
-              (isFetchingNextPage && gone.size === recommendedProfiles.length)
-            }
-            onClick={onSwipeLeft}
-          >
-            <MdKeyboardArrowLeft />
-          </button>
-          <button
-            className="rounded-full p-2 text-4xl bg-text/20 hover:bg-text/40 transition-all hover:scale-110"
-            disabled={
-              recommendedProfiles.length === 0 ||
-              isLoading ||
-              (isFetchingNextPage && gone.size === recommendedProfiles.length)
-            }
-            onClick={onSwipeRight}
-          >
-            <MdKeyboardArrowRight />
-          </button>
-        </div>
+        {/* <div className="absolute z-30 xxs:ml-8 top-40 sm:top-60 w-full max-w-128 flex justify-between items-center"> */}
+        <button
+          className="absolute -left-1 sm:mr-[430px] z-30 sm:z-10 top-56 sm:top-60 rounded-xl w-14 text-lg font-semibold h-14 flex items-center justify-center glass-card border-[3px] border-text/70 transition-all hover:scale-110"
+          disabled={
+            recommendedProfiles.length === 0 ||
+            isLoading ||
+            (isFetchingNextPage && gone.size === recommendedProfiles.length)
+          }
+          onClick={onSwipeLeft}
+        >
+          Meh
+        </button>
+        <button
+          className="absolute -right-1 sm:ml-[490px] z-30 sm:z-10 top-56 sm:top-60 rounded-xl w-14 h-14 flex items-center justify-center pl-1.5 pt-1 text-black btn-grad transition-all hover:scale-110"
+          disabled={
+            recommendedProfiles.length === 0 ||
+            isLoading ||
+            (isFetchingNextPage && gone.size === recommendedProfiles.length)
+          }
+          onClick={onSwipeRight}
+        >
+          <Image src={MainnetBlack} alt="mainnet" width={24} height={24} />
+        </button>
+        {/* </div> */}
       </div>
       <button
-        className="cursor-pointer rounded-full fixed bottom-20 bg-text/20 hover:bg-text/40 transition-all hover:scale-110 p-2 text-4xl disabled:opacity-0 disabled:cursor-not-allowed"
-        disabled={gone.size === 0}
+        className="cursor-pointer z-40 rounded-full fixed bottom-4 sm:bottom-10 lg:bottom-20 bg-text/20 flex flex-row-reverse items-center gap-2 hover:bg-text/40 transition-all hover:scale-110 px-3 py-2 text-xl"
         onClick={onSwipeBack}
       >
-        <TiArrowBack />
+        <p className="font-semibold text-lg">Undo</p> <HiArrowUturnDown />
       </button>
     </div>
   );

@@ -1,8 +1,7 @@
 import { useAccount } from "wagmi";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useContext, createContext, useState } from "react";
+import { useContext, createContext, useState, useEffect } from "react";
 
-import { useCart } from "./cart-context";
 import { useEFPProfile } from "./efp-profile-context";
 import { RECOMMENDED_PROFILES_LIMIT } from "#/lib/constants";
 import type { ProfileDetailsResponse } from "#/types/requests";
@@ -15,7 +14,6 @@ type RecommendedProfilesContextType = {
   isLoading: boolean;
   isFetchingNextPage: boolean;
   hasNextPage: boolean;
-  onSwipeRight: (index: number) => void;
   fetchNextPage: () => void;
 };
 
@@ -30,9 +28,12 @@ const RecommendedProfilesContext = createContext<RecommendedProfilesContextType 
 export const RecommendedProfilesProvider: React.FC<Props> = ({ children }) => {
   const [gone] = useState(() => new Set()); // The set flags all the cards that are flicked out
 
-  const { addCartItem } = useCart();
   const { selectedList } = useEFPProfile();
   const { address: userAddress } = useAccount();
+
+  useEffect(() => {
+    gone.clear();
+  }, [selectedList]);
 
   const {
     data: recommendedProfilesFetched,
@@ -43,7 +44,7 @@ export const RecommendedProfilesProvider: React.FC<Props> = ({ children }) => {
   } = useInfiniteQuery({
     queryKey: ["recommended profiles", userAddress, selectedList],
     queryFn: ({ pageParam = 0 }) => {
-      if (!(userAddress && selectedList)) return { recommended: [], nextPageParam: 0 };
+      if (!userAddress) return { recommended: [], nextPageParam: 0 };
 
       return fetchRecommendedProfiles(
         userAddress,
@@ -64,22 +65,12 @@ export const RecommendedProfilesProvider: React.FC<Props> = ({ children }) => {
       ?.reduce((acc, el) => [...acc, ...el.recommended], [] as ProfileDetailsResponse[])
       .reverse() || [];
 
-  const onSwipeRight = (index: number) => {
-    if (recommendedProfiles[index]?.address) {
-      addCartItem({
-        // @ts-ignore
-        listOp: listOpAddListRecord(recommendedProfiles[index].address),
-      });
-    }
-  };
-
   return (
     <RecommendedProfilesContext.Provider
       value={{
         gone,
         isLoading,
         hasNextPage,
-        onSwipeRight,
         fetchNextPage,
         isFetchingNextPage,
         recommendedProfiles,

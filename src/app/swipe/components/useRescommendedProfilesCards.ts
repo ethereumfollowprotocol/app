@@ -1,11 +1,11 @@
-import { useCallback, useEffect } from 'react'
 import { useDrag } from '@use-gesture/react'
+import { useCallback, useEffect } from 'react'
 import { useSprings } from '@react-spring/web'
 
 import { useCart } from '#/contexts/cart-context'
 import { listOpAddListRecord } from '#/utils/list-ops'
-import { useRecommendedProfiles } from '#/contexts/recommended-profiles-context'
 import { RECOMMENDED_PROFILES_LIMIT } from '#/lib/constants'
+import { useRecommendedProfiles } from '#/contexts/recommended-profiles-context'
 
 const to = (i: number) => ({
   x: 0,
@@ -20,7 +20,7 @@ export const trans = (r: number, s: number) =>
   `perspective(1500px) rotateX(0deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`
 
 export const useRecommendedProfilesCards = () => {
-  const { addCartItem } = useCart()
+  const { addCartItem, removeCartItem, cartAddresses } = useCart()
   const { gone, recommendedProfiles, isLoading, isFetchingNextPage, fetchNextPage } =
     useRecommendedProfiles()
 
@@ -39,6 +39,7 @@ export const useRecommendedProfilesCards = () => {
   )
 
   const bind = useDrag(({ args: [index], down, movement: [mx], direction: [xDir], velocity }) => {
+    if (index !== gone.size) return
     const trigger = velocity[0] > 0.15 // If you flick hard enough it should trigger the card to fly out
     const dir = xDir < 0 ? -1 : 1 // -1 for left, 1 for right
 
@@ -49,10 +50,12 @@ export const useRecommendedProfilesCards = () => {
 
       if (dir === 1) {
         setTimeout(() => {
-          if (recommendedProfiles[index]?.address) {
+          if (recommendedProfiles[recommendedProfiles.length - 1 - index]?.address) {
             addCartItem({
-              // @ts-ignore
-              listOp: listOpAddListRecord(recommendedProfiles[index].address)
+              listOp: listOpAddListRecord(
+                // @ts-ignore
+                recommendedProfiles[recommendedProfiles.length - 1 - index].address
+              )
             })
           }
         }, 250)
@@ -107,10 +110,12 @@ export const useRecommendedProfilesCards = () => {
         if (canFetchMoreProfiles(i)) fetchNextPage()
 
         setTimeout(() => {
-          if (recommendedProfiles[i]?.address) {
+          if (recommendedProfiles[recommendedProfiles.length - 1 - i]?.address) {
             addCartItem({
-              // @ts-ignore
-              listOp: listOpAddListRecord(recommendedProfiles[i].address)
+              listOp: listOpAddListRecord(
+                // @ts-ignore
+                recommendedProfiles[recommendedProfiles.length - 1 - i].address
+              )
             })
           }
         }, 250)
@@ -134,10 +139,26 @@ export const useRecommendedProfilesCards = () => {
     gone.delete(gone.size - 1)
     api.start(i => {
       if (i === gone.size) {
+        if (
+          cartAddresses.includes(
+            recommendedProfiles[recommendedProfiles.length - i - 1]?.address || ''
+          )
+        ) {
+          setTimeout(
+            () =>
+              removeCartItem(
+                listOpAddListRecord(
+                  // @ts-ignore
+                  recommendedProfiles[recommendedProfiles.length - i - 1].address
+                )
+              ),
+            300
+          )
+        }
         return to(i)
       }
     })
-  }, [gone, api])
+  }, [gone, api, cartAddresses, recommendedProfiles, removeCartItem])
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
@@ -145,7 +166,7 @@ export const useRecommendedProfilesCards = () => {
         onSwipeLeft()
       } else if (event.key === 'ArrowRight') {
         onSwipeRight()
-      } else if (event.key === 'Backspace') {
+      } else if (event.key === 'Backspace' || event.key === 'Delete' || event.key === 'ArrowDown') {
         onSwipeBack()
       }
     },

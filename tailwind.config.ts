@@ -57,6 +57,7 @@ const { colors, fontFamily, fontSize, keyframes, animation, spacing, screens } =
     },
     yellow: '#FFF500',
     pink: '#FF79C9',
+    followButton: '#FFE066',
     darkGrey: '#333333',
     addition: '#A1F783',
     deletion: '#FF7C7C',

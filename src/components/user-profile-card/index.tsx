@@ -701,11 +701,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                   <LoadingCell className="w-12 h-6 mb-1 rounded-lg mx-auto" />
                 ) : (
                   <div className="text-[21px] 3xl:text-2xl text-center font-bold">
-                    {stats
-                      ? profileList !== undefined
-                        ? formatNumber(stats?.following_count || 0)
-                        : 0
-                      : "-"}
+                    {stats ? formatNumber(stats.following_count) : "-"}
                   </div>
                 )}
                 <div className="text-[16px] 3xl:text-lg font-bold text-text/40">
