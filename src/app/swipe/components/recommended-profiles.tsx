@@ -27,7 +27,7 @@ const RecommendedCards = () => {
         {(isLoading || isFetchingNextPage || recommendedProfiles.length === 0) &&
           new Array(5).fill(1).map((_, i) => (
             <div
-              className="h-fit w-full max-w-86 absolute z-10 mr-8"
+              className="h-fit w-full max-w-86 absolute z-10 mr-12"
               key={i}
               style={{
                 marginTop: `${50 - i * 10}px`,

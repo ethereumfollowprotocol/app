@@ -134,7 +134,10 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   const addCartItem = useCallback(
     (item: CartItem) => {
       setLoadingCartItems((prevLoading) => (prevLoading > 0 ? prevLoading - 1 : prevLoading));
-      const exists = cartItems.find((cartItem) => cartItem.listOp.data === item.listOp.data);
+
+      const exists = cartItems.some(
+        (cartItem) => listOpAsHexstring(cartItem.listOp) === listOpAsHexstring(item.listOp)
+      );
 
       if (!exists) {
         setCartItems((prevItems) => [...prevItems, item]);
