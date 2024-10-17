@@ -1,5 +1,5 @@
 import { useDrag } from '@use-gesture/react'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useSprings } from '@react-spring/web'
 
 import { useCart } from '#/contexts/cart-context'
