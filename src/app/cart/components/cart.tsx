@@ -95,7 +95,7 @@ const Cart = () => {
         </div>
       ) : (
         <div
-          className="flex flex-col xl:flex-row overflow-y-scroll justify-center gap-4 w-full h-full xl:gap-6 pt-28 px-2 lg:px-8 pb-10"
+          className="flex flex-col-reverse xl:flex-row overflow-y-scroll justify-center gap-4 w-full h-full xl:gap-6 pt-28 px-2 lg:px-8 pb-10"
           onScroll={(e) => {
             onScrollCartItems(e);
             onScrollSidebar(e);
