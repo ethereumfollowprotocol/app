@@ -31,7 +31,7 @@ export const useRecommendedProfilesCards = () => {
   //   }, 1300)
   // }
 
-  const { addCartItem, removeCartItem, cartAddresses } = useCart()
+  const { addCartItem } = useCart()
   const { gone, recommendedProfiles, isLoading, isFetchingNextPage, fetchNextPage } =
     useRecommendedProfiles()
 
@@ -93,6 +93,9 @@ export const useRecommendedProfilesCards = () => {
     if (recommendedProfiles.length === 0 || isLoading || gone.size === recommendedProfiles.length)
       return
 
+    const lastCardX = Math.ceil(Math.abs(props[gone.size - 1]?.x.get() || 0))
+    if (gone.size > 0 && lastCardX < 250) return
+
     api.start(i => {
       if (i === gone.size) {
         if (canFetchMoreProfiles(i)) fetchNextPage()
@@ -117,7 +120,7 @@ export const useRecommendedProfilesCards = () => {
       return
 
     const lastCardX = Math.ceil(Math.abs(props[gone.size - 1]?.x.get() || 0))
-    if (gone.size > 0 && lastCardX < 250 + window.innerWidth / 1.5) return
+    if (gone.size > 0 && lastCardX < 250) return
 
     api.start(i => {
       if (i === gone.size) {
@@ -126,20 +129,12 @@ export const useRecommendedProfilesCards = () => {
         if (recommendedProfiles[i]?.address) {
           // animateFollow()
           setTimeout(() => {
-            const addToCart = () => {
-              addCartItem({
-                listOp: listOpAddListRecord(
-                  // @ts-ignore
-                  recommendedProfiles[i].address
-                )
-              })
-            }
-
-            if (window.requestIdleCallback) {
-              window.requestIdleCallback(addToCart)
-            } else {
-              setTimeout(addToCart, 300) // Adjust delay as needed
-            }
+            addCartItem({
+              listOp: listOpAddListRecord(
+                // @ts-ignore
+                recommendedProfiles[i].address
+              )
+            })
           }, 400)
         }
 
@@ -158,31 +153,34 @@ export const useRecommendedProfilesCards = () => {
     gone.add(gone.size)
   }, [gone, fetchNextPage, api, isLoading, recommendedProfiles])
 
-  const onSwipeBack = useCallback(() => {
-    gone.delete(gone.size - 1)
-    api.start(i => {
-      if (i === gone.size) {
-        if (cartAddresses.includes(recommendedProfiles[i]?.address || '')) {
-          setTimeout(() => {
-            const removeFromCart = () => {
-              removeCartItem(
-                listOpAddListRecord(
-                  // @ts-ignore
-                  recommendedProfiles[i].address
-                )
-              )
-            }
-            if (window.requestIdleCallback) {
-              window.requestIdleCallback(removeFromCart)
-            } else {
-              setTimeout(removeFromCart, 500) // Adjust delay as needed
-            }
-          }, 500)
-        }
-        return to(i)
-      }
-    })
-  }, [gone, api, cartAddresses, recommendedProfiles, removeCartItem])
+  // const onSwipeBack = useCallback(() => {
+  //   const lastCardX = Math.ceil(Math.abs(props[gone.size]?.x.get() || 0))
+  //   if (gone.size > 0 && lastCardX > window.innerWidth - 200) return
+
+  //   gone.delete(gone.size - 1)
+  //   api.start(i => {
+  //     if (i === gone.size) {
+  //       if (cartAddresses.includes(recommendedProfiles[i]?.address || '')) {
+  //         setTimeout(() => {
+  //           const removeFromCart = () => {
+  //             removeCartItem(
+  //               listOpAddListRecord(
+  //                 // @ts-ignore
+  //                 recommendedProfiles[i].address
+  //               )
+  //             )
+  //           }
+  //           if (window.requestIdleCallback) {
+  //             window.requestIdleCallback(removeFromCart)
+  //           } else {
+  //             setTimeout(removeFromCart, 500) // Adjust delay as needed
+  //           }
+  //         }, 500)
+  //       }
+  //       return to(i)
+  //     }
+  //   })
+  // }, [gone, api, cartAddresses, recommendedProfiles, removeCartItem])
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
@@ -190,11 +188,12 @@ export const useRecommendedProfilesCards = () => {
         onSwipeLeft()
       } else if (event.key === 'ArrowRight') {
         onSwipeRight()
-      } else if (event.key === 'Backspace' || event.key === 'Delete' || event.key === 'ArrowDown') {
-        onSwipeBack()
       }
+      // else if (event.key === 'Backspace' || event.key === 'Delete' || event.key === 'ArrowDown') {
+      //   onSwipeBack()
+      // }
     },
-    [onSwipeLeft, onSwipeRight, onSwipeBack]
+    [onSwipeLeft, onSwipeRight]
   )
 
   useEffect(() => {
@@ -209,11 +208,11 @@ export const useRecommendedProfilesCards = () => {
     api.start(i => {
       if (gone.has(i)) {
         return {
-          x: (200 + window.innerWidth) * -1,
+          x: (250 + window.innerWidth / 1.5) * -1,
           rot: -50,
           scale: 1,
           delay: undefined,
-          config: { friction: 1, tension: 10000 }
+          config: { friction: 0, tension: 0 }
         }
       }
     })
@@ -225,7 +224,7 @@ export const useRecommendedProfilesCards = () => {
     gone,
     isLoading,
     onSwipeLeft,
-    onSwipeBack,
+    // onSwipeBack,
     onSwipeRight,
     isFetchingNextPage,
     recommendedProfiles

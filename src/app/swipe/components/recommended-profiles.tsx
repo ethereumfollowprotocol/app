@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { HiArrowUturnDown } from "react-icons/hi2";
 import { animated, to as interpolate } from "@react-spring/web";
 
 import MainnetBlack from "public/assets/mainnet-black.svg";
@@ -14,7 +13,7 @@ const RecommendedCards = () => {
     gone,
     props,
     isLoading,
-    onSwipeBack,
+    // onSwipeBack,
     onSwipeLeft,
     onSwipeRight,
     isFetchingNextPage,
@@ -43,7 +42,7 @@ const RecommendedCards = () => {
           ))}
         {props
           .map(({ x, y, rot, scale }, i) => {
-            if (gone.has(i) && i < gone.size - 3) {
+            if (i < gone.size - 1) {
               return null;
             }
             return (
@@ -98,12 +97,12 @@ const RecommendedCards = () => {
         </button>
         {/* </div> */}
       </div>
-      <button
+      {/* <button
         className="cursor-pointer z-40 rounded-full fixed bottom-4 sm:bottom-10 lg:bottom-20 bg-text/20 flex flex-row-reverse items-center gap-2 hover:bg-text/40 transition-all hover:scale-110 px-3 py-2 text-xl"
         onClick={onSwipeBack}
       >
         <p className="font-semibold text-lg">Undo</p> <HiArrowUturnDown />
-      </button>
+      </button> */}
       {/* <div className={cn("falling-elements-container")}>
         {Array.from({ length: 70 }).map((_, index) => {
           const randomLeft = Math.random() * 100;
