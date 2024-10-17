@@ -20,16 +20,16 @@ export const trans = (r: number, s: number) =>
   `perspective(1500px) rotateX(0deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`
 
 export const useRecommendedProfilesCards = () => {
-  const [isAnimatingFollow, setIsAnimatingFollow] = useState(false)
+  // const [isAnimatingFollow, setIsAnimatingFollow] = useState(false)
 
-  const animateFollow = () => {
-    if (isAnimatingFollow) return
+  // const animateFollow = () => {
+  //   if (isAnimatingFollow) return
 
-    setIsAnimatingFollow(true)
-    setTimeout(() => {
-      setIsAnimatingFollow(false)
-    }, 1300)
-  }
+  //   setIsAnimatingFollow(true)
+  //   setTimeout(() => {
+  //     setIsAnimatingFollow(false)
+  //   }, 1300)
+  // }
 
   const { addCartItem, removeCartItem, cartAddresses } = useCart()
   const { gone, recommendedProfiles, isLoading, isFetchingNextPage, fetchNextPage } =
@@ -60,7 +60,7 @@ export const useRecommendedProfilesCards = () => {
       if (canFetchMoreProfiles(index)) fetchNextPage()
 
       if (dir === 1) {
-        animateFollow()
+        // animateFollow()
         if (recommendedProfiles[recommendedProfiles.length - 1 - index]?.address) {
           setTimeout(() => {
             const addToCart = () => {
@@ -130,7 +130,7 @@ export const useRecommendedProfilesCards = () => {
         if (canFetchMoreProfiles(i)) fetchNextPage()
 
         if (recommendedProfiles[recommendedProfiles.length - 1 - i]?.address) {
-          animateFollow()
+          // animateFollow()
           setTimeout(() => {
             const addToCart = () => {
               addCartItem({
@@ -237,7 +237,6 @@ export const useRecommendedProfilesCards = () => {
     onSwipeLeft,
     onSwipeBack,
     onSwipeRight,
-    isAnimatingFollow,
     isFetchingNextPage,
     recommendedProfiles
   }

@@ -703,20 +703,13 @@ input {
   overflow: hidden;
   top: 0;
   left: 0;
-}
-
-.falling-element {
-  position: absolute;
-  top: -50px; /* Start above the viewport */
-  font-size: 24px; /* Adjust the size of the element */
-  animation-name: fall;
-  animation-timing-function: linear;
-  /* animation-duration and animation-delay are set inline via style prop */
+  transform: translateY(-100%);
+  animation: fall 1.5s linear infinite;
 }
 
 @keyframes fall {
   to {
-    transform: translateY(110vh) rotate(360deg); /* Move beyond the bottom of the viewport */
+    transform: translateY(110vh); /* Move beyond the bottom of the viewport */
   }
 }
 

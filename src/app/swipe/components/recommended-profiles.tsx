@@ -4,8 +4,6 @@ import Image from "next/image";
 import { HiArrowUturnDown } from "react-icons/hi2";
 import { animated, to as interpolate } from "@react-spring/web";
 
-import { cn } from "#/lib/utilities";
-import Logo from "public/assets/logo.svg";
 import MainnetBlack from "public/assets/mainnet-black.svg";
 import UserProfileCard from "#/components/user-profile-card";
 import { trans, useRecommendedProfilesCards } from "./useRescommendedProfilesCards";
@@ -19,7 +17,6 @@ const RecommendedCards = () => {
     onSwipeBack,
     onSwipeLeft,
     onSwipeRight,
-    isAnimatingFollow,
     isFetchingNextPage,
     recommendedProfiles,
   } = useRecommendedProfilesCards();
@@ -102,29 +99,32 @@ const RecommendedCards = () => {
       >
         <p className="font-semibold text-lg">Undo</p> <HiArrowUturnDown />
       </button>
-      <div className={cn("falling-elements-container", isAnimatingFollow ? "z-40" : "z-0")}>
+      {/* <div className={cn("falling-elements-container")}>
         {Array.from({ length: 70 }).map((_, index) => {
           const randomLeft = Math.random() * 100;
-          const randomDelay = Math.random() * 600;
-          const randomDuration = 400 + Math.random() * 300;
-
-          const style = {
-            left: `${randomLeft}%`,
-            animationDelay: `${randomDelay}ms`,
-            animationDuration: `${randomDuration}ms`,
-          };
+          const randomTop = Math.random() * 100;
 
           return (
             <div
               key={index}
-              className={isAnimatingFollow ? "falling-element" : "hidden"}
-              style={style}
+              style={{
+                position: "absolute",
+                left: `${randomLeft}%`,
+                top: `${randomTop}%`,
+                // animationDelay: `${randomDuration}ms`,
+              }}
             >
-              <Image src={Logo} alt="mainnet" width={32} height={32} />
+              <Image
+                src={Logo}
+                // className="animate-spin repeat-infinite"
+                alt="mainnet"
+                width={32}
+                height={32}
+              />
             </div>
           );
         })}
-      </div>
+      </div> */}
     </div>
   );
 };
