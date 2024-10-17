@@ -696,6 +696,23 @@ input {
     }
 }
 
+.falling-elements-container {
+  position: fixed;
+  width: 100%;
+  height: 100vh; /* Full viewport height */
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  transform: translateY(-100%);
+  animation: fall 1.5s linear infinite;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh); /* Move beyond the bottom of the viewport */
+  }
+}
+
 /* Base styles for the element */
 [data-loaded="false"] {
   background: linear-gradient(90deg, rgba(200, 200, 200, 0.7) 0%, rgba(172, 172, 172, 0.05) 50%, rgba(200, 200, 200, 0.7) 100%);
