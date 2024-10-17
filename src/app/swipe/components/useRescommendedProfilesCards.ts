@@ -51,7 +51,7 @@ export const useRecommendedProfilesCards = () => {
 
   const bind = useDrag(({ args: [index], down, movement: [mx], direction: [xDir], velocity }) => {
     if (index !== gone.size) return
-    const trigger = (mx > 100 && xDir === 1) || (mx < -100 && xDir === -1) // If you flick hard enough it should trigger the card to fly out
+    const trigger = (mx > 50 && xDir === 1) || (mx < -50 && xDir === -1) // If you flick hard enough it should trigger the card to fly out
 
     if (!down && trigger) {
       gone.add(index)
