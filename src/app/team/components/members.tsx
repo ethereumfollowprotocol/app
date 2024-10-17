@@ -56,7 +56,7 @@ const Members = () => {
       if (!teamAddresses) return [];
 
       const data = await Promise.all(
-        teamAddresses?.map(async (address) => await fetchProfileStats(address))
+        foundationAddresses?.map(async (address) => await fetchProfileStats(address))
       );
 
       return data;
