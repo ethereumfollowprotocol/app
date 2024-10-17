@@ -61,9 +61,10 @@ export const RecommendedProfilesProvider: React.FC<Props> = ({ children }) => {
   });
 
   const recommendedProfiles =
-    recommendedProfilesFetched?.pages
-      ?.reduce((acc, el) => [...acc, ...el.recommended], [] as ProfileDetailsResponse[])
-      .reverse() || [];
+    recommendedProfilesFetched?.pages?.reduce(
+      (acc, el) => [...acc, ...el.recommended],
+      [] as ProfileDetailsResponse[]
+    ) || [];
 
   return (
     <RecommendedProfilesContext.Provider

@@ -51,33 +51,24 @@ export const useRecommendedProfilesCards = () => {
 
   const bind = useDrag(({ args: [index], down, movement: [mx], direction: [xDir], velocity }) => {
     if (index !== gone.size) return
-    const trigger = velocity[0] > 0.15 // If you flick hard enough it should trigger the card to fly out
-    const dir = xDir < 0 ? -1 : 1 // -1 for left, 1 for right
+    const trigger = (mx > 100 && xDir === 1) || (mx < -100 && xDir === -1) // If you flick hard enough it should trigger the card to fly out
 
     if (!down && trigger) {
       gone.add(index)
 
       if (canFetchMoreProfiles(index)) fetchNextPage()
 
-      if (dir === 1) {
+      if (xDir === 1) {
         // animateFollow()
-        if (recommendedProfiles[recommendedProfiles.length - 1 - index]?.address) {
+        if (recommendedProfiles[index]?.address) {
           setTimeout(() => {
-            const addToCart = () => {
-              addCartItem({
-                listOp: listOpAddListRecord(
-                  // @ts-ignore
-                  recommendedProfiles[recommendedProfiles.length - 1 - index].address
-                )
-              })
-            }
-
-            if (window.requestIdleCallback) {
-              window.requestIdleCallback(addToCart)
-            } else {
-              setTimeout(addToCart, 300) // Adjust delay as needed
-            }
-          }, 300)
+            addCartItem({
+              listOp: listOpAddListRecord(
+                // @ts-ignore
+                recommendedProfiles[index].address
+              )
+            })
+          }, 450)
         }
       }
     }
@@ -85,8 +76,8 @@ export const useRecommendedProfilesCards = () => {
     api.start(i => {
       if (index !== i) return
       const isGone = gone.has(index)
-      const x = isGone ? (200 + window.innerWidth) * dir : down ? mx : 0 // When a card is gone it flys out left or right, otherwise goes back to zero
-      const rot = mx / 100 + (isGone ? dir * 8 * velocity[0] : 0) // How much the card tilts, flicking it harder makes it rotate faster
+      const x = isGone ? (250 + window.innerWidth / 1.5) * xDir : down ? mx : 0 // When a card is gone it flys out left or right, otherwise goes back to zero
+      const rot = mx / 100 + (isGone ? xDir * 8 * velocity[0] : 0) // How much the card tilts, flicking it harder makes it rotate faster
       const scale = down ? 1.075 : 1 // Active cards lift up a bit
       return {
         x,
@@ -106,7 +97,7 @@ export const useRecommendedProfilesCards = () => {
       if (i === gone.size) {
         if (canFetchMoreProfiles(i)) fetchNextPage()
 
-        const x = (200 + window.innerWidth) * -1
+        const x = (250 + window.innerWidth / 1.5) * -1
         const rot = -50
         const scale = 1
         return {
@@ -114,7 +105,7 @@ export const useRecommendedProfilesCards = () => {
           rot,
           scale,
           delay: undefined,
-          config: { friction: 50, tension: 200 }
+          config: { friction: 50, tension: 300 }
         }
       }
     })
@@ -125,18 +116,21 @@ export const useRecommendedProfilesCards = () => {
     if (recommendedProfiles.length === 0 || isLoading || gone.size === recommendedProfiles.length)
       return
 
+    const lastCardX = Math.ceil(Math.abs(props[gone.size - 1]?.x.get() || 0))
+    if (gone.size > 0 && lastCardX < 250 + window.innerWidth / 1.5) return
+
     api.start(i => {
       if (i === gone.size) {
         if (canFetchMoreProfiles(i)) fetchNextPage()
 
-        if (recommendedProfiles[recommendedProfiles.length - 1 - i]?.address) {
+        if (recommendedProfiles[i]?.address) {
           // animateFollow()
           setTimeout(() => {
             const addToCart = () => {
               addCartItem({
                 listOp: listOpAddListRecord(
                   // @ts-ignore
-                  recommendedProfiles[recommendedProfiles.length - 1 - i].address
+                  recommendedProfiles[i].address
                 )
               })
             }
@@ -146,10 +140,10 @@ export const useRecommendedProfilesCards = () => {
             } else {
               setTimeout(addToCart, 300) // Adjust delay as needed
             }
-          }, 300)
+          }, 400)
         }
 
-        const x = (200 + window.innerWidth) * 1
+        const x = (250 + window.innerWidth / 1.5) * 1
         const rot = 50
         const scale = 1
         return {
@@ -157,7 +151,7 @@ export const useRecommendedProfilesCards = () => {
           rot,
           scale,
           delay: undefined,
-          config: { friction: 50, tension: 200 }
+          config: { friction: 50, tension: 300 }
         }
       }
     })
@@ -168,17 +162,13 @@ export const useRecommendedProfilesCards = () => {
     gone.delete(gone.size - 1)
     api.start(i => {
       if (i === gone.size) {
-        if (
-          cartAddresses.includes(
-            recommendedProfiles[recommendedProfiles.length - i - 1]?.address || ''
-          )
-        ) {
+        if (cartAddresses.includes(recommendedProfiles[i]?.address || '')) {
           setTimeout(() => {
             const removeFromCart = () => {
               removeCartItem(
                 listOpAddListRecord(
                   // @ts-ignore
-                  recommendedProfiles[recommendedProfiles.length - i - 1].address
+                  recommendedProfiles[i].address
                 )
               )
             }
@@ -223,7 +213,7 @@ export const useRecommendedProfilesCards = () => {
           rot: -50,
           scale: 1,
           delay: undefined,
-          config: { friction: 30, tension: 800 }
+          config: { friction: 1, tension: 10000 }
         }
       }
     })

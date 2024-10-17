@@ -41,33 +41,38 @@ const RecommendedCards = () => {
               />
             </div>
           ))}
-        {props.reverse().map(({ x, y, rot, scale }, i) => {
-          return (
-            <animated.div
-              className="h-fit w-full max-w-86 absolute top-0 will-change-transform touch-none z-20 xxs:mr-12"
-              key={`${recommendedProfiles[i]?.address}-${i}`}
-              style={{ x, y }}
-            >
-              {/* This is the card itself, we're binding our gesture to it (and inject its index so we know which is which) */}
+        {props
+          .map(({ x, y, rot, scale }, i) => {
+            if (gone.has(i) && i < gone.size - 3) {
+              return null;
+            }
+            return (
               <animated.div
-                {...bind(recommendedProfiles.length - 1 - i)}
-                style={{
-                  transform: interpolate([rot, scale], trans),
-                }}
+                className="h-fit w-full max-w-86 absolute top-0 will-change-transform touch-none z-20 xxs:mr-12"
+                key={`${recommendedProfiles[i]?.address}-${i}`}
+                style={{ x, y }}
               >
-                <div className="cursor-pointer">
-                  <UserProfileCard
-                    profile={recommendedProfiles[i]}
-                    isResponsive={false}
-                    stats={recommendedProfiles[i]?.stats}
-                    hideFollowButton={true}
-                    isRecommended={true}
-                  />
-                </div>
+                {/* This is the card itself, we're binding our gesture to it (and inject its index so we know which is which) */}
+                <animated.div
+                  {...bind(i)}
+                  style={{
+                    transform: interpolate([rot, scale], trans),
+                  }}
+                >
+                  <div className="cursor-pointer">
+                    <UserProfileCard
+                      profile={recommendedProfiles[i]}
+                      isResponsive={false}
+                      stats={recommendedProfiles[i]?.stats}
+                      hideFollowButton={true}
+                      isRecommended={true}
+                    />
+                  </div>
+                </animated.div>
               </animated.div>
-            </animated.div>
-          );
-        })}
+            );
+          })
+          .reverse()}
         {/* <div className="absolute z-30 xxs:ml-8 top-40 sm:top-60 w-full max-w-128 flex justify-between items-center"> */}
         <button
           className="absolute -left-1 sm:left-auto sm:mr-[475px] z-30 sm:z-10 top-56 sm:top-60 rounded-xl w-14 text-lg font-semibold h-14 flex items-center justify-center glass-card border-[3px] border-text/70 transition-all hover:scale-110"
