@@ -93,7 +93,7 @@ export const useRecommendedProfilesCards = () => {
         rot,
         scale,
         delay: undefined,
-        config: { friction: 60, tension: down ? 800 : isGone ? 250 : 800 }
+        config: { friction: 80, tension: down ? 800 : isGone ? 250 : 800 }
       }
     })
   })
@@ -114,7 +114,7 @@ export const useRecommendedProfilesCards = () => {
           rot,
           scale,
           delay: undefined,
-          config: { friction: 30, tension: 250 }
+          config: { friction: 50, tension: 200 }
         }
       }
     })
@@ -157,7 +157,7 @@ export const useRecommendedProfilesCards = () => {
           rot,
           scale,
           delay: undefined,
-          config: { friction: 50, tension: 250 }
+          config: { friction: 50, tension: 200 }
         }
       }
     })

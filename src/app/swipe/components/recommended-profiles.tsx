@@ -102,7 +102,7 @@ const RecommendedCards = () => {
       >
         <p className="font-semibold text-lg">Undo</p> <HiArrowUturnDown />
       </button>
-      <div className={cn("falling-elements-container", isAnimatingFollow ? "block" : "hidden")}>
+      <div className={cn("falling-elements-container", isAnimatingFollow ? "z-40" : "z-0")}>
         {Array.from({ length: 70 }).map((_, index) => {
           const randomLeft = Math.random() * 100;
           const randomDelay = Math.random() * 600;
