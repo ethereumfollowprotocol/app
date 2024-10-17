@@ -696,6 +696,31 @@ input {
     }
 }
 
+.falling-elements-container {
+  position: fixed;
+  width: 100%;
+  height: 100vh; /* Full viewport height */
+  overflow: hidden;
+  z-index: 40;
+  top: 0;
+  left: 0;
+}
+
+.falling-element {
+  position: absolute;
+  top: -50px; /* Start above the viewport */
+  font-size: 24px; /* Adjust the size of the element */
+  animation-name: fall;
+  animation-timing-function: linear;
+  /* animation-duration and animation-delay are set inline via style prop */
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(360deg); /* Move beyond the bottom of the viewport */
+  }
+}
+
 /* Base styles for the element */
 [data-loaded="false"] {
   background: linear-gradient(90deg, rgba(200, 200, 200, 0.7) 0%, rgba(172, 172, 172, 0.05) 50%, rgba(200, 200, 200, 0.7) 100%);

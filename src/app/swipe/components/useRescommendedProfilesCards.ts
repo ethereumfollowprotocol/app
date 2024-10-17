@@ -1,5 +1,5 @@
 import { useDrag } from '@use-gesture/react'
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useSprings } from '@react-spring/web'
 
 import { useCart } from '#/contexts/cart-context'
@@ -20,6 +20,17 @@ export const trans = (r: number, s: number) =>
   `perspective(1500px) rotateX(0deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`
 
 export const useRecommendedProfilesCards = () => {
+  const [isAnimatingFollow, setIsAnimatingFollow] = useState(false)
+
+  const animateFollow = () => {
+    if (isAnimatingFollow) return
+
+    setIsAnimatingFollow(true)
+    setTimeout(() => {
+      setIsAnimatingFollow(false)
+    }, 1300)
+  }
+
   const { addCartItem, removeCartItem, cartAddresses } = useCart()
   const { gone, recommendedProfiles, isLoading, isFetchingNextPage, fetchNextPage } =
     useRecommendedProfiles()
@@ -49,16 +60,25 @@ export const useRecommendedProfilesCards = () => {
       if (canFetchMoreProfiles(index)) fetchNextPage()
 
       if (dir === 1) {
-        setTimeout(() => {
-          if (recommendedProfiles[recommendedProfiles.length - 1 - index]?.address) {
-            addCartItem({
-              listOp: listOpAddListRecord(
-                // @ts-ignore
-                recommendedProfiles[recommendedProfiles.length - 1 - index].address
-              )
-            })
-          }
-        }, 250)
+        animateFollow()
+        if (recommendedProfiles[recommendedProfiles.length - 1 - index]?.address) {
+          setTimeout(() => {
+            const addToCart = () => {
+              addCartItem({
+                listOp: listOpAddListRecord(
+                  // @ts-ignore
+                  recommendedProfiles[recommendedProfiles.length - 1 - index].address
+                )
+              })
+            }
+
+            if (window.requestIdleCallback) {
+              window.requestIdleCallback(addToCart)
+            } else {
+              setTimeout(addToCart, 300) // Adjust delay as needed
+            }
+          }, 300)
+        }
       }
     }
 
@@ -109,16 +129,25 @@ export const useRecommendedProfilesCards = () => {
       if (i === gone.size) {
         if (canFetchMoreProfiles(i)) fetchNextPage()
 
-        setTimeout(() => {
-          if (recommendedProfiles[recommendedProfiles.length - 1 - i]?.address) {
-            addCartItem({
-              listOp: listOpAddListRecord(
-                // @ts-ignore
-                recommendedProfiles[recommendedProfiles.length - 1 - i].address
-              )
-            })
-          }
-        }, 250)
+        if (recommendedProfiles[recommendedProfiles.length - 1 - i]?.address) {
+          animateFollow()
+          setTimeout(() => {
+            const addToCart = () => {
+              addCartItem({
+                listOp: listOpAddListRecord(
+                  // @ts-ignore
+                  recommendedProfiles[recommendedProfiles.length - 1 - i].address
+                )
+              })
+            }
+
+            if (window.requestIdleCallback) {
+              window.requestIdleCallback(addToCart)
+            } else {
+              setTimeout(addToCart, 300) // Adjust delay as needed
+            }
+          }, 300)
+        }
 
         const x = (200 + window.innerWidth) * 1
         const rot = 50
@@ -144,16 +173,21 @@ export const useRecommendedProfilesCards = () => {
             recommendedProfiles[recommendedProfiles.length - i - 1]?.address || ''
           )
         ) {
-          setTimeout(
-            () =>
+          setTimeout(() => {
+            const removeFromCart = () => {
               removeCartItem(
                 listOpAddListRecord(
                   // @ts-ignore
                   recommendedProfiles[recommendedProfiles.length - i - 1].address
                 )
-              ),
-            300
-          )
+              )
+            }
+            if (window.requestIdleCallback) {
+              window.requestIdleCallback(removeFromCart)
+            } else {
+              setTimeout(removeFromCart, 500) // Adjust delay as needed
+            }
+          }, 500)
         }
         return to(i)
       }
@@ -200,10 +234,11 @@ export const useRecommendedProfilesCards = () => {
     props,
     gone,
     isLoading,
-    recommendedProfiles,
     onSwipeLeft,
-    onSwipeRight,
     onSwipeBack,
-    isFetchingNextPage
+    onSwipeRight,
+    isAnimatingFollow,
+    isFetchingNextPage,
+    recommendedProfiles
   }
 }

@@ -1,9 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import { HiArrowUturnDown } from "react-icons/hi2";
 import { animated, to as interpolate } from "@react-spring/web";
 
-import { HiArrowUturnDown } from "react-icons/hi2";
+import { cn } from "#/lib/utilities";
+import Logo from "public/assets/logo.svg";
 import MainnetBlack from "public/assets/mainnet-black.svg";
 import UserProfileCard from "#/components/user-profile-card";
 import { trans, useRecommendedProfilesCards } from "./useRescommendedProfilesCards";
@@ -17,6 +19,7 @@ const RecommendedCards = () => {
     onSwipeBack,
     onSwipeLeft,
     onSwipeRight,
+    isAnimatingFollow,
     isFetchingNextPage,
     recommendedProfiles,
   } = useRecommendedProfilesCards();
@@ -27,7 +30,7 @@ const RecommendedCards = () => {
         {(isLoading || isFetchingNextPage || recommendedProfiles.length === 0) &&
           new Array(5).fill(1).map((_, i) => (
             <div
-              className="h-fit w-full max-w-86 absolute z-10 mr-12"
+              className="h-fit w-full max-w-86 absolute z-10 xxs:mr-12"
               key={i}
               style={{
                 marginTop: `${50 - i * 10}px`,
@@ -99,6 +102,29 @@ const RecommendedCards = () => {
       >
         <p className="font-semibold text-lg">Undo</p> <HiArrowUturnDown />
       </button>
+      <div className={cn("falling-elements-container", isAnimatingFollow ? "block" : "hidden")}>
+        {Array.from({ length: 70 }).map((_, index) => {
+          const randomLeft = Math.random() * 100;
+          const randomDelay = Math.random() * 600;
+          const randomDuration = 400 + Math.random() * 300;
+
+          const style = {
+            left: `${randomLeft}%`,
+            animationDelay: `${randomDelay}ms`,
+            animationDuration: `${randomDuration}ms`,
+          };
+
+          return (
+            <div
+              key={index}
+              className={isAnimatingFollow ? "falling-element" : "hidden"}
+              style={style}
+            >
+              <Image src={Logo} alt="mainnet" width={32} height={32} />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

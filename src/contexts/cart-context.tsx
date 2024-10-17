@@ -23,6 +23,7 @@ import {
 } from "#/utils/list-ops";
 import type { ImportPlatformType } from "#/types/common";
 import type { ListOp, ListOpTagOpParams } from "#/types/list-op";
+import debounce from "lodash.debounce";
 
 // Define the type for each cart item
 export type CartItem = {
@@ -79,57 +80,86 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   const [loadingCartItems, setLoadingCartItems] = useState<number>(0);
   const { address } = useAccount();
 
-  const storedCartItems =
-    typeof window !== "undefined" && localStorage.getItem("cart")
-      ? (JSON.parse(localStorage.getItem("cart") || "") as StoredCartItem[])
-      : [];
-  const transformedStoredCartItems =
-    storedCartItems.length > 0
-      ? storedCartItems.map((item) => ({
-          listOp: {
-            opcode: item.opcode,
-            version: item.version,
-            data: item.tag
-              ? Buffer.concat([
-                  // @ts-ignore
-                  Buffer.from(item.address.slice(2), "hex"),
-                  // @ts-ignore
-                  Buffer.from(item.tag, "utf8"),
-                ])
-              : Buffer.from(item.address.slice(2), "hex"),
-          },
-          import: item.import,
-        }))
-      : [];
-
-  const [cartItems, setCartItems] = useState<CartItem[]>(transformedStoredCartItems);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   useEffect(() => {
-    if (!address) return;
+    if (typeof window === "undefined") return;
 
-    const transformedCartItems = cartItems.map(({ listOp, import: platform }) => {
-      if (isTagListOp(listOp)) {
-        const { address, tag } = extractAddressAndTag(listOp);
-        return {
-          opcode: listOp.opcode,
-          version: listOp.version,
-          address,
-          tag,
-          import: platform,
-        };
+    const storedCartItemsJson = localStorage.getItem("cart");
+    if (storedCartItemsJson) {
+      try {
+        const storedCartItems = JSON.parse(storedCartItemsJson) as StoredCartItem[];
+        const transformedCartItems = storedCartItems.map((item) => {
+          const addressBuffer = Buffer.from(item.address.slice(2), "hex");
+          const dataBuffer = item.tag
+            ? Buffer.concat([addressBuffer, Buffer.from(item.tag, "utf8")])
+            : addressBuffer;
+
+          return {
+            listOp: {
+              opcode: item.opcode,
+              version: item.version,
+              data: dataBuffer,
+            },
+            import: item.import,
+          };
+        });
+
+        setCartItems(transformedCartItems);
+      } catch (error) {
+        localStorage.removeItem("cart");
       }
+    }
+  }, []);
+
+  const serializedCartItems = cartItems.map(
+    ({ listOp, import: platform }) => {
+      const addressHex = listOp.data.toString("hex");
+      const address = `0x${addressHex.slice(0, 40)}` as Address; // Adjust based on address length
+      const tag = listOp.data.length > 20 ? listOp.data.slice(20).toString("utf8") : undefined;
 
       return {
         opcode: listOp.opcode,
         version: listOp.version,
-        address: hexlify(listOp.data),
+        address,
+        tag,
         import: platform,
       };
-    });
+    },
+    [cartItems]
+  );
 
-    localStorage.setItem("cart", JSON.stringify(transformedCartItems));
-    localStorage.setItem("cart address", address);
-  }, [cartItems]);
+  // useEffect(() => {
+  //   if (!address) return;
+  //   if (typeof window === "undefined") return;
+
+  //   const saveToLocalStorage = () => {
+  //     localStorage.setItem("cart", JSON.stringify(serializedCartItems));
+  //     localStorage.setItem("cart address", address);
+  //   };
+
+  //   if (window.requestIdleCallback) {
+  //     window.requestIdleCallback(saveToLocalStorage);
+  //   } else {
+  //     // Fallback for browsers that don't support requestIdleCallback
+  //     setTimeout(saveToLocalStorage, 300);
+  //   }
+  // }, [serializedCartItems, address]);
+
+  const saveCartToLocalStorage = useCallback(
+    debounce((items: StoredCartItem[], addr: Address) => {
+      if (typeof window !== "undefined") {
+        localStorage.setItem("cart", JSON.stringify(items));
+        localStorage.setItem("cart address", addr);
+      }
+    }, 300),
+    []
+  );
+
+  useEffect(() => {
+    if (!address) return;
+    saveCartToLocalStorage(serializedCartItems, address);
+  }, [serializedCartItems, address, saveCartToLocalStorage]);
 
   const addCartItem = useCallback(
     (item: CartItem) => {
