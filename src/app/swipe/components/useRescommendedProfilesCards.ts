@@ -1,5 +1,5 @@
 import { useDrag } from '@use-gesture/react'
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useSprings } from '@react-spring/web'
 
 import { useCart } from '#/contexts/cart-context'
@@ -31,10 +31,11 @@ export const useRecommendedProfilesCards = () => {
   //   }, 1300)
   // }
 
-  const { addCartItem } = useCart()
+  const { addCartItem, removeCartItem, cartAddresses } = useCart()
   const { gone, recommendedProfiles, isLoading, isFetchingNextPage, fetchNextPage } =
     useRecommendedProfiles()
 
+  const [didSwipeBack, setDidSwipeBack] = useState(false)
   const [props, api] = useSprings(recommendedProfiles.length, i => ({
     ...to(i),
     from: from()
@@ -54,22 +55,21 @@ export const useRecommendedProfilesCards = () => {
     const trigger = (mx > 50 && xDir === 1) || (mx < -50 && xDir === -1) // If you flick hard enough it should trigger the card to fly out
 
     if (!down && trigger) {
+      setDidSwipeBack(false)
       gone.add(index)
 
       if (canFetchMoreProfiles(index)) fetchNextPage()
 
       if (xDir === 1) {
         // animateFollow()
-        if (recommendedProfiles[index]?.address) {
-          setTimeout(() => {
-            addCartItem({
-              listOp: listOpAddListRecord(
-                // @ts-ignore
-                recommendedProfiles[index].address
-              )
-            })
-          }, 450)
-        }
+        setTimeout(() => {
+          addCartItem({
+            listOp: listOpAddListRecord(
+              // @ts-ignore
+              recommendedProfiles[index].address
+            )
+          })
+        }, 450)
       }
     }
 
@@ -112,6 +112,7 @@ export const useRecommendedProfilesCards = () => {
         }
       }
     })
+    setDidSwipeBack(false)
     gone.add(gone.size)
   }, [gone, fetchNextPage, api, isLoading, recommendedProfiles])
 
@@ -125,18 +126,15 @@ export const useRecommendedProfilesCards = () => {
     api.start(i => {
       if (i === gone.size) {
         if (canFetchMoreProfiles(i)) fetchNextPage()
-
-        if (recommendedProfiles[i]?.address) {
-          // animateFollow()
-          setTimeout(() => {
-            addCartItem({
-              listOp: listOpAddListRecord(
-                // @ts-ignore
-                recommendedProfiles[i].address
-              )
-            })
-          }, 400)
-        }
+        // animateFollow()
+        setTimeout(() => {
+          addCartItem({
+            listOp: listOpAddListRecord(
+              // @ts-ignore
+              recommendedProfiles[i].address
+            )
+          })
+        }, 400)
 
         const x = (250 + window.innerWidth / 1.5) * 1
         const rot = 50
@@ -150,37 +148,30 @@ export const useRecommendedProfilesCards = () => {
         }
       }
     })
+    setDidSwipeBack(false)
     gone.add(gone.size)
   }, [gone, fetchNextPage, api, isLoading, recommendedProfiles])
 
-  // const onSwipeBack = useCallback(() => {
-  //   const lastCardX = Math.ceil(Math.abs(props[gone.size]?.x.get() || 0))
-  //   if (gone.size > 0 && lastCardX > window.innerWidth - 200) return
+  const onSwipeBack = useCallback(() => {
+    if (didSwipeBack) return
 
-  //   gone.delete(gone.size - 1)
-  //   api.start(i => {
-  //     if (i === gone.size) {
-  //       if (cartAddresses.includes(recommendedProfiles[i]?.address || '')) {
-  //         setTimeout(() => {
-  //           const removeFromCart = () => {
-  //             removeCartItem(
-  //               listOpAddListRecord(
-  //                 // @ts-ignore
-  //                 recommendedProfiles[i].address
-  //               )
-  //             )
-  //           }
-  //           if (window.requestIdleCallback) {
-  //             window.requestIdleCallback(removeFromCart)
-  //           } else {
-  //             setTimeout(removeFromCart, 500) // Adjust delay as needed
-  //           }
-  //         }, 500)
-  //       }
-  //       return to(i)
-  //     }
-  //   })
-  // }, [gone, api, cartAddresses, recommendedProfiles, removeCartItem])
+    gone.delete(gone.size - 1)
+    api.start(i => {
+      if (i === gone.size) {
+        setDidSwipeBack(true)
+        setTimeout(() => {
+          removeCartItem(
+            listOpAddListRecord(
+              // @ts-ignore
+              recommendedProfiles[i].address
+            )
+          )
+        }, 500)
+
+        return to(i)
+      }
+    })
+  }, [gone, api, cartAddresses, recommendedProfiles, removeCartItem])
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
@@ -188,10 +179,9 @@ export const useRecommendedProfilesCards = () => {
         onSwipeLeft()
       } else if (event.key === 'ArrowRight') {
         onSwipeRight()
+      } else if (event.key === 'Backspace' || event.key === 'Delete' || event.key === 'ArrowDown') {
+        onSwipeBack()
       }
-      // else if (event.key === 'Backspace' || event.key === 'Delete' || event.key === 'ArrowDown') {
-      //   onSwipeBack()
-      // }
     },
     [onSwipeLeft, onSwipeRight]
   )
@@ -224,7 +214,7 @@ export const useRecommendedProfilesCards = () => {
     gone,
     isLoading,
     onSwipeLeft,
-    // onSwipeBack,
+    onSwipeBack,
     onSwipeRight,
     isFetchingNextPage,
     recommendedProfiles
