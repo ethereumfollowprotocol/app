@@ -154,6 +154,7 @@ export const useRecommendedProfilesCards = () => {
     if (didSwipeBack) return
 
     gone.delete(gone.size - 1)
+    lastSwiped.pop()
     api.start(i => {
       if (i === gone.size) {
         setDidSwipeBack(true)
