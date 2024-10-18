@@ -20,7 +20,6 @@ const RecommendedCards = () => {
     onSwipeRight,
     didSwipeBack,
     animatedElements,
-    handleAnimationEnd,
     isFetchingNextPage,
     recommendedProfiles,
   } = useRecommendedProfilesCards();
