@@ -46,7 +46,7 @@ const RecommendedCards = () => {
           ))}
         {props
           .map(({ x, y, rot, scale }, i) => {
-            if (gone.has(i + 2)) {
+            if (gone.has(i + 3)) {
               return null;
             }
             return (
@@ -75,9 +75,9 @@ const RecommendedCards = () => {
                     Array.from({ length: 10 }).map((_, index) => {
                       // const randomLeft = Math.random() * 100; // Random horizontal position (percentage)
                       const randomRight = Math.random() * 60; // Random horizontal position (percentage)
-                      const randomTop = Math.random() * 100 - 20; // Random vertical position (percentage)
+                      const randomTop = Math.random() * 60 - 10; // Random vertical position (percentage)
                       const randomDelay =
-                        (window.innerWidth > 768 ? 100 : 50) + Math.random() * 150; // Random delay between 0 and 5 seconds
+                        (window.innerWidth > 768 ? 130 : 50) + Math.random() * 150; // Random delay between 0 and 5 seconds
                       // const randomDuration = 400 + Math.random() * 300; // Random duration between 5 and 10 seconds
 
                       const style = {
