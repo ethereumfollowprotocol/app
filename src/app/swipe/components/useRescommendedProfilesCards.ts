@@ -36,6 +36,8 @@ export const useRecommendedProfilesCards = () => {
     useRecommendedProfiles()
 
   const [didSwipeBack, setDidSwipeBack] = useState(false)
+  const [lastSwiped, setLastSwiped] = useState<number[]>([])
+
   const [props, api] = useSprings(recommendedProfiles.length, i => ({
     ...to(i),
     from: from()
@@ -61,6 +63,7 @@ export const useRecommendedProfilesCards = () => {
       if (canFetchMoreProfiles(index)) fetchNextPage()
 
       if (xDir === 1) {
+        setLastSwiped(prev => [...prev, index])
         // animateFollow()
         setTimeout(() => {
           addCartItem({
@@ -77,7 +80,7 @@ export const useRecommendedProfilesCards = () => {
       if (index !== i) return
       const isGone = gone.has(index)
       const x = isGone ? (250 + window.innerWidth / 1.5) * xDir : down ? mx : 0 // When a card is gone it flys out left or right, otherwise goes back to zero
-      const rot = mx / 100 + (isGone ? xDir * 8 * velocity[0] : 0) // How much the card tilts, flicking it harder makes it rotate faster
+      const rot = mx / 100 + (isGone ? xDir * 10 : 0) // How much the card tilts, flicking it harder makes it rotate faster
       const scale = down ? 1.075 : 1 // Active cards lift up a bit
       return {
         x,
@@ -100,13 +103,10 @@ export const useRecommendedProfilesCards = () => {
       if (i === gone.size) {
         if (canFetchMoreProfiles(i)) fetchNextPage()
 
-        const x = (250 + window.innerWidth / 1.5) * -1
-        const rot = -50
-        const scale = 1
         return {
-          x,
-          rot,
-          scale,
+          x: (250 + window.innerWidth / 1.5) * -1,
+          rot: -15,
+          scale: 1,
           delay: undefined,
           config: { friction: 50, tension: 300 }
         }
@@ -125,6 +125,7 @@ export const useRecommendedProfilesCards = () => {
 
     api.start(i => {
       if (i === gone.size) {
+        setLastSwiped(prev => [...prev, i])
         if (canFetchMoreProfiles(i)) fetchNextPage()
         // animateFollow()
         setTimeout(() => {
@@ -136,13 +137,10 @@ export const useRecommendedProfilesCards = () => {
           })
         }, 400)
 
-        const x = (250 + window.innerWidth / 1.5) * 1
-        const rot = 50
-        const scale = 1
         return {
-          x,
-          rot,
-          scale,
+          x: (250 + window.innerWidth / 1.5) * 1,
+          rot: 15,
+          scale: 1,
           delay: undefined,
           config: { friction: 50, tension: 300 }
         }
@@ -213,6 +211,7 @@ export const useRecommendedProfilesCards = () => {
     props,
     gone,
     isLoading,
+    lastSwiped,
     onSwipeLeft,
     onSwipeBack,
     onSwipeRight,

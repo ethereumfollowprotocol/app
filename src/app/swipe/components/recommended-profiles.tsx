@@ -4,6 +4,7 @@ import Image from "next/image";
 import { HiArrowUturnDown } from "react-icons/hi2";
 import { animated, to as interpolate } from "@react-spring/web";
 
+import Logo from "public/assets/logo.svg";
 import MainnetBlack from "public/assets/mainnet-black.svg";
 import UserProfileCard from "#/components/user-profile-card";
 import { trans, useRecommendedProfilesCards } from "./useRescommendedProfilesCards";
@@ -14,6 +15,7 @@ const RecommendedCards = () => {
     gone,
     props,
     isLoading,
+    lastSwiped,
     onSwipeBack,
     onSwipeLeft,
     onSwipeRight,
@@ -69,6 +71,34 @@ const RecommendedCards = () => {
                       isRecommended={true}
                     />
                   </div>
+                  {lastSwiped.includes(i) &&
+                    Array.from({ length: 10 }).map((_, index) => {
+                      // const randomLeft = Math.random() * 100; // Random horizontal position (percentage)
+                      const randomRight = Math.random() * 60; // Random horizontal position (percentage)
+                      const randomTop = Math.random() * 100 - 20; // Random vertical position (percentage)
+                      const randomDelay =
+                        (window.innerWidth > 768 ? 100 : 50) + Math.random() * 150; // Random delay between 0 and 5 seconds
+                      // const randomDuration = 400 + Math.random() * 300; // Random duration between 5 and 10 seconds
+
+                      const style = {
+                        top: `${randomTop}%`,
+                        right: `-${randomRight}%`,
+                        animationDelay: `${randomDelay}ms`,
+                        // animationDuration: `${randomDuration}ms`,
+                      };
+
+                      return (
+                        <div key={index} className="falling-element fixed z-50" style={style}>
+                          <Image
+                            src={Logo}
+                            className="animate-spin repeat-infinite"
+                            alt="mainnet"
+                            width={32}
+                            height={32}
+                          />
+                        </div>
+                      );
+                    })}
                 </animated.div>
               </animated.div>
             );
@@ -112,23 +142,7 @@ const RecommendedCards = () => {
           const randomTop = Math.random() * 100;
 
           return (
-            <div
-              key={index}
-              style={{
-                position: "absolute",
-                left: `${randomLeft}%`,
-                top: `${randomTop}%`,
-                // animationDelay: `${randomDuration}ms`,
-              }}
-            >
-              <Image
-                src={Logo}
-                // className="animate-spin repeat-infinite"
-                alt="mainnet"
-                width={32}
-                height={32}
-              />
-            </div>
+
           );
         })}
       </div> */}
