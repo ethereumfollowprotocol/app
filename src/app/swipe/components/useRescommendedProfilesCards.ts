@@ -19,24 +19,54 @@ const from = () => ({ x: 0, rot: 0, scale: 1, y: 0 })
 export const trans = (r: number, s: number) =>
   `perspective(1500px) rotateX(0deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`
 
+type AnimatedElement = {
+  key: string
+  style: {
+    top: string
+    right: string
+    animationDelay: string
+  }
+}
+
 export const useRecommendedProfilesCards = () => {
-  // const [isAnimatingFollow, setIsAnimatingFollow] = useState(false)
-
-  // const animateFollow = () => {
-  //   if (isAnimatingFollow) return
-
-  //   setIsAnimatingFollow(true)
-  //   setTimeout(() => {
-  //     setIsAnimatingFollow(false)
-  //   }, 1300)
-  // }
-
   const { addCartItem, removeCartItem, cartAddresses } = useCart()
   const { gone, recommendedProfiles, isLoading, isFetchingNextPage, fetchNextPage } =
     useRecommendedProfiles()
 
   const [didSwipeBack, setDidSwipeBack] = useState(false)
-  const [lastSwiped, setLastSwiped] = useState<number[]>([])
+  const [animatedElements, setAnimatedElements] = useState<AnimatedElement[]>([])
+
+  // Function to add new animated elements when a card is swiped right
+  const addAnimatedElements = (cardIndex: number) => {
+    const newElements = Array.from({ length: 10 }).map((_, index) => {
+      const randomRight = Math.random() * 80
+      const randomTop = 10 + Math.random() * 30
+      const randomDelay = (window.innerWidth > 768 ? 130 : 50) + Math.random() * 150
+
+      const style = {
+        top: `${randomTop}%`,
+        right: `-${randomRight}%`,
+        animationDelay: `${randomDelay}ms`
+      }
+
+      const key = `${cardIndex}-${index}-${Date.now()}-${Math.random()}`
+
+      return {
+        key,
+        style
+      }
+    })
+
+    setAnimatedElements((prevElements: AnimatedElement[]) =>
+      [...prevElements, ...newElements].slice(-30)
+    )
+  }
+
+  const handleAnimationEnd = (key: string) => {
+    setAnimatedElements((prevElements: AnimatedElement[]) =>
+      prevElements.filter(element => element.key !== key)
+    )
+  }
 
   const [props, api] = useSprings(recommendedProfiles.length, i => ({
     ...to(i),
@@ -63,7 +93,7 @@ export const useRecommendedProfilesCards = () => {
       if (canFetchMoreProfiles(index)) fetchNextPage()
 
       if (xDir === 1) {
-        setLastSwiped(prev => [...prev, index])
+        addAnimatedElements(index)
         // animateFollow()
         setTimeout(() => {
           addCartItem({
@@ -125,7 +155,7 @@ export const useRecommendedProfilesCards = () => {
 
     api.start(i => {
       if (i === gone.size) {
-        setLastSwiped(prev => [...prev, i])
+        addAnimatedElements(i)
         if (canFetchMoreProfiles(i)) fetchNextPage()
         // animateFollow()
         setTimeout(() => {
@@ -154,7 +184,7 @@ export const useRecommendedProfilesCards = () => {
     if (didSwipeBack) return
 
     gone.delete(gone.size - 1)
-    lastSwiped.pop()
+    animatedElements.slice(0, -10)
     api.start(i => {
       if (i === gone.size) {
         setDidSwipeBack(true)
@@ -212,11 +242,12 @@ export const useRecommendedProfilesCards = () => {
     props,
     gone,
     isLoading,
-    lastSwiped,
     onSwipeLeft,
     onSwipeBack,
     onSwipeRight,
     didSwipeBack,
+    animatedElements,
+    handleAnimationEnd,
     isFetchingNextPage,
     recommendedProfiles
   }

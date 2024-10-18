@@ -15,17 +15,34 @@ const RecommendedCards = () => {
     gone,
     props,
     isLoading,
-    lastSwiped,
     onSwipeBack,
     onSwipeLeft,
     onSwipeRight,
     didSwipeBack,
+    animatedElements,
+    handleAnimationEnd,
     isFetchingNextPage,
     recommendedProfiles,
   } = useRecommendedProfilesCards();
 
   return (
     <div className="flex w-full items-center justify-start flex-col">
+      {animatedElements.map(({ key, style }) => (
+        <div
+          key={key}
+          className="falling-element fixed z-50"
+          style={style}
+          onAnimationEnd={() => handleAnimationEnd(key)}
+        >
+          <Image
+            src={Logo}
+            className="animate-spin repeat-infinite"
+            alt="mainnet"
+            width={32}
+            height={32}
+          />
+        </div>
+      ))}
       <div className="flex flex-col w-full items-center justify-start h-fit min-h-[500px] sm:min-h-[680px] relative">
         {(isLoading || isFetchingNextPage || recommendedProfiles.length === 0) &&
           new Array(5).fill(1).map((_, i) => (
@@ -55,7 +72,6 @@ const RecommendedCards = () => {
                 key={`${recommendedProfiles[i]?.address}-${i}`}
                 style={{ x, y }}
               >
-                {/* This is the card itself, we're binding our gesture to it (and inject its index so we know which is which) */}
                 <animated.div
                   {...bind(i)}
                   style={{
@@ -71,34 +87,6 @@ const RecommendedCards = () => {
                       isRecommended={true}
                     />
                   </div>
-                  {lastSwiped.includes(i) &&
-                    Array.from({ length: 10 }).map((_, index) => {
-                      // const randomLeft = Math.random() * 100; // Random horizontal position (percentage)
-                      const randomRight = Math.random() * 60; // Random horizontal position (percentage)
-                      const randomTop = Math.random() * 60 - 10; // Random vertical position (percentage)
-                      const randomDelay =
-                        (window.innerWidth > 768 ? 130 : 50) + Math.random() * 150; // Random delay between 0 and 5 seconds
-                      // const randomDuration = 400 + Math.random() * 300; // Random duration between 5 and 10 seconds
-
-                      const style = {
-                        top: `${randomTop}%`,
-                        right: `-${randomRight}%`,
-                        animationDelay: `${randomDelay}ms`,
-                        // animationDuration: `${randomDuration}ms`,
-                      };
-
-                      return (
-                        <div key={index} className="falling-element fixed z-50" style={style}>
-                          <Image
-                            src={Logo}
-                            className="animate-spin repeat-infinite"
-                            alt="mainnet"
-                            width={32}
-                            height={32}
-                          />
-                        </div>
-                      );
-                    })}
                 </animated.div>
               </animated.div>
             );
