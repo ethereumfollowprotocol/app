@@ -72,7 +72,7 @@ export const useRecommendedProfilesCards = () => {
               recommendedProfiles[index].address
             )
           })
-        }, 450)
+        }, 150)
       }
     }
 
@@ -135,7 +135,7 @@ export const useRecommendedProfilesCards = () => {
               recommendedProfiles[i].address
             )
           })
-        }, 400)
+        }, 150)
 
         return {
           x: (250 + window.innerWidth / 1.5) * 1,
