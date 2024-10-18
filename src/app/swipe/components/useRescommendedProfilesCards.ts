@@ -20,6 +20,7 @@ export const trans = (r: number, s: number) =>
   `perspective(1500px) rotateX(0deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`
 
 type AnimatedElement = {
+  cardIndex: number
   key: string
   style: {
     top: string
@@ -49,9 +50,10 @@ export const useRecommendedProfilesCards = () => {
         animationDelay: `${randomDelay}ms`
       }
 
-      const key = `${cardIndex}-${index}-${Date.now()}-${Math.random()}`
+      const key = `${cardIndex}-${index}`
 
       return {
+        cardIndex,
         key,
         style
       }
@@ -62,9 +64,9 @@ export const useRecommendedProfilesCards = () => {
     )
   }
 
-  const handleAnimationEnd = (key: string) => {
+  const handleAnimationEnd = (cardIndex: number) => {
     setAnimatedElements((prevElements: AnimatedElement[]) =>
-      prevElements.filter(element => element.key !== key)
+      prevElements.filter(element => element.cardIndex !== cardIndex)
     )
   }
 

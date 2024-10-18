@@ -27,12 +27,12 @@ const RecommendedCards = () => {
 
   return (
     <div className="flex w-full items-center justify-start flex-col">
-      {animatedElements.map(({ key, style }) => (
+      {animatedElements.map(({ key, style, cardIndex }) => (
         <div
           key={key}
           className="falling-element fixed z-50"
           style={style}
-          onAnimationEnd={() => handleAnimationEnd(key)}
+          onAnimationEnd={() => handleAnimationEnd(cardIndex)}
         >
           <Image
             src={Logo}
