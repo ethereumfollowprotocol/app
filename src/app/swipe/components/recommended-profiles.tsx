@@ -32,7 +32,10 @@ const RecommendedCards = () => {
           key={key}
           className="falling-element fixed z-50"
           style={style}
-          onAnimationEnd={() => handleAnimationEnd(cardIndex)}
+          // onAnimationEnd={(e) => {
+          //   e.stopPropagation();
+          //   handleAnimationEnd(cardIndex);
+          // }}
         >
           <Image
             src={Logo}
