@@ -1,12 +1,12 @@
 "use client";
 
 import Image from "next/image";
+import { HiArrowUturnDown } from "react-icons/hi2";
 import { animated, to as interpolate } from "@react-spring/web";
 
 import MainnetBlack from "public/assets/mainnet-black.svg";
 import UserProfileCard from "#/components/user-profile-card";
 import { trans, useRecommendedProfilesCards } from "./useRescommendedProfilesCards";
-import { HiArrowUturnDown } from "react-icons/hi2";
 
 const RecommendedCards = () => {
   const {
@@ -17,6 +17,7 @@ const RecommendedCards = () => {
     onSwipeBack,
     onSwipeLeft,
     onSwipeRight,
+    didSwipeBack,
     isFetchingNextPage,
     recommendedProfiles,
   } = useRecommendedProfilesCards();
@@ -43,7 +44,7 @@ const RecommendedCards = () => {
           ))}
         {props
           .map(({ x, y, rot, scale }, i) => {
-            if (i < gone.size - 1) {
+            if (gone.has(i + 2)) {
               return null;
             }
             return (
@@ -99,8 +100,9 @@ const RecommendedCards = () => {
         {/* </div> */}
       </div>
       <button
-        className="cursor-pointer z-40 rounded-full fixed bottom-4 sm:bottom-10 lg:bottom-20 bg-text/20 flex flex-row-reverse items-center gap-2 hover:bg-text/40 transition-all hover:scale-110 px-3 py-2 text-xl"
+        className="cursor-pointer z-40 rounded-full fixed bottom-4 sm:bottom-10 lg:bottom-20 bg-text/20 flex flex-row-reverse items-center gap-2 hover:bg-text/40 transition-all hover:scale-110 px-3 py-2 text-xl disabled:hidden"
         onClick={onSwipeBack}
+        disabled={didSwipeBack || gone.size === 0}
       >
         <p className="font-semibold text-lg">Undo</p> <HiArrowUturnDown />
       </button>

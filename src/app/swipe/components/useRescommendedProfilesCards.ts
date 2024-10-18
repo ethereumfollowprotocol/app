@@ -1,6 +1,6 @@
 import { useDrag } from '@use-gesture/react'
-import { useCallback, useEffect, useState } from 'react'
 import { useSprings } from '@react-spring/web'
+import { useCallback, useEffect, useState } from 'react'
 
 import { useCart } from '#/contexts/cart-context'
 import { listOpAddListRecord } from '#/utils/list-ops'
@@ -171,7 +171,7 @@ export const useRecommendedProfilesCards = () => {
         return to(i)
       }
     })
-  }, [gone, api, cartAddresses, recommendedProfiles, removeCartItem])
+  }, [gone, api, cartAddresses, recommendedProfiles, removeCartItem, didSwipeBack])
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
@@ -183,7 +183,7 @@ export const useRecommendedProfilesCards = () => {
         onSwipeBack()
       }
     },
-    [onSwipeLeft, onSwipeRight]
+    [onSwipeLeft, onSwipeRight, onSwipeBack]
   )
 
   useEffect(() => {
@@ -216,6 +216,7 @@ export const useRecommendedProfilesCards = () => {
     onSwipeLeft,
     onSwipeBack,
     onSwipeRight,
+    didSwipeBack,
     isFetchingNextPage,
     recommendedProfiles
   }
