@@ -19,15 +19,15 @@ const from = () => ({ x: 0, rot: 0, scale: 1, y: 0 })
 export const trans = (r: number, s: number) =>
   `perspective(1500px) rotateX(0deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`
 
-// export type AnimatedElementType = {
-//   cardIndex: number
-//   key: string
-//   style: {
-//     top: string
-//     right: string
-//     animationDelay: string
-//   }
-// }
+export type AnimatedElementType = {
+  cardIndex: number
+  key: string
+  style: {
+    top: string
+    right: string
+    animationDelay: string
+  }
+}
 
 export const useRecommendedProfilesCards = () => {
   const { addCartItem, removeCartItem, cartAddresses } = useCart()
@@ -35,52 +35,49 @@ export const useRecommendedProfilesCards = () => {
     useRecommendedProfiles()
 
   const [didSwipeBack, setDidSwipeBack] = useState(false)
-  // const [animatedElements, setAnimatedElements] = useState<AnimatedElementType[]>([])
-  const [isAnimationPlaying, setIsAnimationPlaying] = useState(false)
-  const [isSecondaryAnimationPlaying, setIsSecondaryAnimationPlaying] = useState(false)
-
-  const triggerAnimation = () => {
-    if (!isAnimationPlaying) setIsAnimationPlaying(true)
-    else if (!isSecondaryAnimationPlaying) setIsSecondaryAnimationPlaying(true)
-  }
+  const [animatedElements, setAnimatedElements] = useState<AnimatedElementType[]>([])
+  // const [isAnimationPlaying, setIsAnimationPlaying] = useState(false)
 
   // // Function to add new animated elements when a card is swiped right
-  // const addAnimatedElements = (cardIndex: number) => {
-  //   const newElements = Array.from({ length: 10 }).map((_, index) => {
-  //     const randomRight = Math.random() * 80
-  //     const randomTop = 10 + Math.random() * 30
-  //     const randomDelay = (window.innerWidth > 768 ? 130 : 50) + Math.random() * 150
+  const addAnimatedElements = (cardIndex: number) => {
+    if (animatedElements.length >= 10) return
+    const newElements = Array.from({ length: 10 }).map((_, index) => {
+      const randomRight = Math.random() * 80
+      const randomTop = 10 + Math.random() * 30
+      const randomDelay = (window.innerWidth > 768 ? 130 : 50) + Math.random() * 150
 
-  //     const style = {
-  //       top: `${randomTop}%`,
-  //       right: `-${randomRight}%`,
-  //       animationDelay: `${randomDelay}ms`
-  //     }
+      const style = {
+        top: `${randomTop}%`,
+        right: `-${randomRight}%`,
+        animationDelay: `${randomDelay}ms`
+      }
 
-  //     const key = `${cardIndex}-${index}`
+      const key = `${cardIndex}-${index}`
 
-  //     return {
-  //       cardIndex,
-  //       key,
-  //       style
-  //     }
-  //   })
+      return {
+        cardIndex,
+        key,
+        style
+      }
+    })
 
-  //   setAnimatedElements((prevElements: AnimatedElementType[]) =>
-  //     [...prevElements, ...newElements].slice(-40)
-  //   )
-  // }
-
-  // const handleAnimationEnd = (cardIndex: number) => {
-  //   setAnimatedElements((prevElements: AnimatedElementType[]) =>
-  //     prevElements.filter(element => element.cardIndex !== cardIndex)
-  //   )
-  // }
-
-  const handleAnimationEnd = (animation: 'primary' | 'secondary') => {
-    if (animation === 'primary') setIsAnimationPlaying(false)
-    else setIsSecondaryAnimationPlaying(false)
+    setAnimatedElements((prevElements: AnimatedElementType[]) =>
+      prevElements.length >= 10
+        ? prevElements
+        : [...prevElements.slice(1), ...newElements].slice(-10)
+    )
   }
+
+  const handleAnimationEnd = (cardIndex: number) => {
+    setAnimatedElements((prevElements: AnimatedElementType[]) =>
+      prevElements.filter(element => element.cardIndex !== cardIndex)
+    )
+  }
+
+  // const handleAnimationEnd = (animation: 'primary' | 'secondary') => {
+  //   if (animation === 'primary') setIsAnimationPlaying(false)
+  //   // else setIsSecondaryAnimationPlaying(false)
+  // }
 
   const [props, api] = useSprings(recommendedProfiles.length, i => ({
     ...to(i),
@@ -107,7 +104,9 @@ export const useRecommendedProfilesCards = () => {
       if (canFetchMoreProfiles(index)) fetchNextPage()
 
       if (xDir === 1) {
-        triggerAnimation()
+        addAnimatedElements(index)
+        // if (!isAnimationPlaying) setIsAnimationPlaying(true)
+        // else if (!isSecondaryAnimationPlaying) setIsSecondaryAnimationPlaying(true)
         // animateFollow()
         setTimeout(() => {
           addCartItem({
@@ -169,7 +168,9 @@ export const useRecommendedProfilesCards = () => {
 
     api.start(i => {
       if (i === gone.size) {
-        triggerAnimation()
+        addAnimatedElements(i)
+        // if (!isAnimationPlaying) setIsAnimationPlaying(true)
+        // else if (!isSecondaryAnimationPlaying) setIsSecondaryAnimationPlaying(true)
 
         if (canFetchMoreProfiles(i)) fetchNextPage()
         // animateFollow()
@@ -193,7 +194,7 @@ export const useRecommendedProfilesCards = () => {
     })
     setDidSwipeBack(false)
     gone.add(gone.size)
-  }, [gone, fetchNextPage, api, isLoading, recommendedProfiles])
+  }, [gone, fetchNextPage, api, isLoading, recommendedProfiles, animatedElements])
 
   const onSwipeBack = useCallback(() => {
     if (didSwipeBack) return
@@ -260,9 +261,9 @@ export const useRecommendedProfilesCards = () => {
     onSwipeBack,
     onSwipeRight,
     didSwipeBack,
-    isAnimationPlaying,
-    isSecondaryAnimationPlaying,
-    // animatedElements,
+    // isAnimationPlaying,
+    // isSecondaryAnimationPlaying,
+    animatedElements,
     handleAnimationEnd,
     isFetchingNextPage,
     recommendedProfiles
