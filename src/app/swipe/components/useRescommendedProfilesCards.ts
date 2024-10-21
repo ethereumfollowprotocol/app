@@ -37,6 +37,7 @@ export const useRecommendedProfilesCards = () => {
   const [didSwipeBack, setDidSwipeBack] = useState(false)
   // const [animatedElements, setAnimatedElements] = useState<AnimatedElementType[]>([])
   const [isAnimationPlaying, setIsAnimationPlaying] = useState(false)
+  const [isSecondaryAnimationPlaying, setIsSecondaryAnimationPlaying] = useState(false)
 
   // // Function to add new animated elements when a card is swiped right
   // const addAnimatedElements = (cardIndex: number) => {
@@ -71,8 +72,9 @@ export const useRecommendedProfilesCards = () => {
   //   )
   // }
 
-  const handleAnimationEnd = () => {
-    setIsAnimationPlaying(false)
+  const handleAnimationEnd = (animation: 'primary' | 'secondary') => {
+    if (animation === 'primary') setIsAnimationPlaying(false)
+    else setIsSecondaryAnimationPlaying(false)
   }
 
   const [props, api] = useSprings(recommendedProfiles.length, i => ({
@@ -101,6 +103,7 @@ export const useRecommendedProfilesCards = () => {
 
       if (xDir === 1) {
         if (!isAnimationPlaying) setIsAnimationPlaying(true)
+        else if (!isSecondaryAnimationPlaying) setIsSecondaryAnimationPlaying(true)
         // animateFollow()
         setTimeout(() => {
           addCartItem({
@@ -163,6 +166,8 @@ export const useRecommendedProfilesCards = () => {
     api.start(i => {
       if (i === gone.size) {
         if (!isAnimationPlaying) setIsAnimationPlaying(true)
+        else if (!isSecondaryAnimationPlaying) setIsSecondaryAnimationPlaying(true)
+
         if (canFetchMoreProfiles(i)) fetchNextPage()
         // animateFollow()
         setTimeout(() => {
@@ -185,7 +190,15 @@ export const useRecommendedProfilesCards = () => {
     })
     setDidSwipeBack(false)
     gone.add(gone.size)
-  }, [gone, fetchNextPage, api, isLoading, recommendedProfiles, isAnimationPlaying])
+  }, [
+    gone,
+    fetchNextPage,
+    api,
+    isLoading,
+    recommendedProfiles,
+    isAnimationPlaying,
+    isSecondaryAnimationPlaying
+  ])
 
   const onSwipeBack = useCallback(() => {
     if (didSwipeBack) return
@@ -253,7 +266,7 @@ export const useRecommendedProfilesCards = () => {
     onSwipeRight,
     didSwipeBack,
     isAnimationPlaying,
-    setIsAnimationPlaying,
+    isSecondaryAnimationPlaying,
     // animatedElements,
     handleAnimationEnd,
     isFetchingNextPage,

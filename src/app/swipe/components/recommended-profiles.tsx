@@ -20,6 +20,7 @@ const RecommendedCards = () => {
     onSwipeRight,
     didSwipeBack,
     isAnimationPlaying,
+    isSecondaryAnimationPlaying,
     // animatedElements,
     handleAnimationEnd,
     isFetchingNextPage,
@@ -48,17 +49,27 @@ const RecommendedCards = () => {
         </div>
       ))} */}
       {isAnimationPlaying &&
-        Array.from({ length: 20 }).map((_, index) => (
-          <AnimatedElement key={index} handleAnimationEnd={handleAnimationEnd} />
+        Array.from({ length: 10 }).map((_, index) => (
+          <AnimatedElement
+            key={`primary-${index}`}
+            handleAnimationEnd={() => handleAnimationEnd("primary")}
+          />
+        ))}
+      {isSecondaryAnimationPlaying &&
+        Array.from({ length: 10 }).map((_, index) => (
+          <AnimatedElement
+            key={`secondary-${index}`}
+            handleAnimationEnd={() => handleAnimationEnd("secondary")}
+          />
         ))}
       <div className="flex flex-col w-full items-center justify-start h-fit min-h-[500px] sm:min-h-[680px] relative">
         {(isLoading || isFetchingNextPage || recommendedProfiles.length === 0) &&
-          new Array(5).fill(1).map((_, i) => (
+          new Array(4).fill(1).map((_, i) => (
             <div
               className="h-fit w-full max-w-86 absolute z-10 xxs:mr-12"
               key={i}
               style={{
-                marginTop: `${50 - i * 10}px`,
+                marginTop: `${40 - i * 10}px`,
               }}
             >
               <UserProfileCard
