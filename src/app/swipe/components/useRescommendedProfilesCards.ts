@@ -35,21 +35,31 @@ export const useRecommendedProfilesCards = () => {
     useRecommendedProfiles()
 
   const [didSwipeBack, setDidSwipeBack] = useState(false)
-  // const [animatedElements, setAnimatedElements] = useState<AnimatedElementType[]>([])
-  const [isAnimating, setIsAnimating] = useState(false)
+  const [animatedElements, setAnimatedElements] = useState<AnimatedElementType[]>([])
 
   // // Function to add new animated elements when a card is swiped right
-  const addAnimatedElements = useCallback(() => {
-    if (!isAnimating) setIsAnimating(true)
+  const addAnimatedElements = useCallback(
+    (cardIndex: number) => {
+      if (animatedElements.length > 0) return
 
-    // setAnimatedElements((prevElements: AnimatedElementType[]) =>
-    //   prevElements.length > 0 ? prevElements : newElements
-    // )
-  }, [isAnimating])
+      const newElements = Array.from({ length: 10 }).map((_, index) => {
+        const key = `${cardIndex}-${index}`
 
-  const handleAnimationEnd = () => {
-    // setAnimatedElements([])
-    setIsAnimating(false)
+        return {
+          cardIndex,
+          key
+        }
+      })
+
+      setAnimatedElements((prevElements: AnimatedElementType[]) =>
+        prevElements.length > 0 ? prevElements : newElements
+      )
+    },
+    [animatedElements]
+  )
+
+  const handleAnimationEnd = (cardIndex: number) => {
+    setAnimatedElements([])
   }
 
   const [props, api] = useSprings(recommendedProfiles.length, i => ({
@@ -77,7 +87,6 @@ export const useRecommendedProfilesCards = () => {
       if (canFetchMoreProfiles(index)) fetchNextPage()
 
       if (xDir === 1) {
-        addAnimatedElements()
         // if (!isAnimationPlaying) setIsAnimationPlaying(true)
         // else if (!isSecondaryAnimationPlaying) setIsSecondaryAnimationPlaying(true)
         // animateFollow()
@@ -88,6 +97,7 @@ export const useRecommendedProfilesCards = () => {
               recommendedProfiles[index].address
             )
           })
+          addAnimatedElements(index)
         }, 150)
       }
     }
@@ -142,7 +152,6 @@ export const useRecommendedProfilesCards = () => {
     api.start(i => {
       if (i === gone.size) {
         if (canFetchMoreProfiles(i)) fetchNextPage()
-        addAnimatedElements()
 
         setTimeout(() => {
           addCartItem({
@@ -151,6 +160,7 @@ export const useRecommendedProfilesCards = () => {
               recommendedProfiles[i].address
             )
           })
+          addAnimatedElements(i)
         }, 150)
 
         return {
@@ -231,7 +241,9 @@ export const useRecommendedProfilesCards = () => {
     onSwipeBack,
     onSwipeRight,
     didSwipeBack,
-    isAnimating,
+    // isAnimationPlaying,
+    // isSecondaryAnimationPlaying,
+    animatedElements,
     handleAnimationEnd,
     isFetchingNextPage,
     recommendedProfiles

@@ -20,10 +20,9 @@ const RecommendedCards = () => {
     onSwipeLeft,
     onSwipeRight,
     didSwipeBack,
-    isAnimating,
     // isAnimationPlaying,
     // isSecondaryAnimationPlaying,
-    // animatedElements,
+    animatedElements,
     handleAnimationEnd,
     isFetchingNextPage,
     recommendedProfiles,
@@ -31,10 +30,42 @@ const RecommendedCards = () => {
 
   return (
     <div className="flex w-full items-center justify-start flex-col">
-      {/* {animatedElements.map(({ key, cardIndex }) => (
+      {animatedElements.map(({ key, cardIndex }) => (
         <AnimatedElement key={key} handleAnimationEnd={() => handleAnimationEnd(cardIndex)} />
+      ))}
+      {/* {animatedElements.map(({ key, style, cardIndex }) => (
+        <div
+          key={key}
+          className="falling-element fixed z-50"
+          style={style}
+          onAnimationEnd={(e) => {
+            e.stopPropagation();
+            handleAnimationEnd(cardIndex);
+          }}
+        >
+          <Image
+            src={Logo}
+            className="animate-spin repeat-infinite"
+            alt="mainnet"
+            width={32}
+            height={32}
+          />
+        </div>
       ))} */}
-      {isAnimating && <AnimatedElement handleAnimationEnd={() => handleAnimationEnd()} />}
+      {/* {isAnimationPlaying &&
+        Array.from({ length: 10 }).map((_, index) => (
+          <AnimatedElement
+            key={`primary-${index}`}
+            handleAnimationEnd={() => handleAnimationEnd("primary")}
+          />
+        ))} */}
+      {/* {isSecondaryAnimationPlaying &&
+        Array.from({ length: 10 }).map((_, index) => (
+          <AnimatedElement
+            key={`secondary-${index}`}
+            handleAnimationEnd={() => handleAnimationEnd("secondary")}
+          />
+        ))} */}
       <div className="flex flex-col w-full items-center justify-start h-fit min-h-[500px] sm:min-h-[680px] relative">
         {(isLoading || isFetchingNextPage || recommendedProfiles.length === 0) &&
           new Array(4).fill(1).map((_, i) => (
