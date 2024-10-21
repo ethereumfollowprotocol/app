@@ -66,7 +66,6 @@ export const useRecommendedProfilesCards = () => {
     setAnimatedElements(prevElements => {
       const falseIndex = prevElements.findIndex(value => value === false)
       if (falseIndex === -1) return prevElements
-      console.log('start', falseIndex)
       const newElements = [...prevElements]
       newElements[falseIndex] = true
       return newElements
@@ -77,7 +76,6 @@ export const useRecommendedProfilesCards = () => {
     // setAnimatedElements((prevElements: AnimatedElement[]) =>
     //   prevElements.filter(element => element.cardIndex !== cardIndex)
     // )
-    console.log('end', index)
     setAnimatedElements(prevElements => {
       const newElements = [...prevElements]
       newElements[index] = false
