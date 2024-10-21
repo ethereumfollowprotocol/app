@@ -4,8 +4,7 @@ import Image from "next/image";
 import { HiArrowUturnDown } from "react-icons/hi2";
 import { animated, to as interpolate } from "@react-spring/web";
 
-import Logo from "public/assets/logo.svg";
-// import AnimatedElement from "./animatedElement";
+import AnimatedElement from "./animatedElement";
 import MainnetBlack from "public/assets/mainnet-black.svg";
 import UserProfileCard from "#/components/user-profile-card";
 import { trans, useRecommendedProfilesCards } from "./useRescommendedProfilesCards";
@@ -20,9 +19,9 @@ const RecommendedCards = () => {
     onSwipeLeft,
     onSwipeRight,
     didSwipeBack,
-    // isAnimationPlaying,
-    // isSecondaryAnimationPlaying,
-    animatedElements,
+    isAnimationPlaying,
+    isSecondaryAnimationPlaying,
+    // animatedElements,
     handleAnimationEnd,
     isFetchingNextPage,
     recommendedProfiles,
@@ -30,7 +29,7 @@ const RecommendedCards = () => {
 
   return (
     <div className="flex w-full items-center justify-start flex-col">
-      {animatedElements.map(({ key, style, cardIndex }) => (
+      {/* {animatedElements.map(({ key, style, cardIndex }) => (
         <div
           key={key}
           className="falling-element fixed z-50"
@@ -48,21 +47,21 @@ const RecommendedCards = () => {
             height={32}
           />
         </div>
-      ))}
-      {/* {isAnimationPlaying &&
+      ))} */}
+      {isAnimationPlaying &&
         Array.from({ length: 10 }).map((_, index) => (
           <AnimatedElement
             key={`primary-${index}`}
             handleAnimationEnd={() => handleAnimationEnd("primary")}
           />
-        ))} */}
-      {/* {isSecondaryAnimationPlaying &&
+        ))}
+      {isSecondaryAnimationPlaying &&
         Array.from({ length: 10 }).map((_, index) => (
           <AnimatedElement
             key={`secondary-${index}`}
             handleAnimationEnd={() => handleAnimationEnd("secondary")}
           />
-        ))} */}
+        ))}
       <div className="flex flex-col w-full items-center justify-start h-fit min-h-[500px] sm:min-h-[680px] relative">
         {(isLoading || isFetchingNextPage || recommendedProfiles.length === 0) &&
           new Array(4).fill(1).map((_, i) => (
