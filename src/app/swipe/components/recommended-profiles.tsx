@@ -4,8 +4,8 @@ import Image from "next/image";
 import { HiArrowUturnDown } from "react-icons/hi2";
 import { animated, to as interpolate } from "@react-spring/web";
 
-// import Logo from "public/assets/logo.svg";
-import AnimatedElement from "./animatedElement";
+import Logo from "public/assets/logo.svg";
+// import AnimatedElement from "./animatedElement";
 import MainnetBlack from "public/assets/mainnet-black.svg";
 import UserProfileCard from "#/components/user-profile-card";
 import { trans, useRecommendedProfilesCards } from "./useRescommendedProfilesCards";
@@ -22,7 +22,7 @@ const RecommendedCards = () => {
     didSwipeBack,
     // isAnimationPlaying,
     // isSecondaryAnimationPlaying,
-    animatedElements,
+    animatedRef,
     handleAnimationEnd,
     isFetchingNextPage,
     recommendedProfiles,
@@ -30,9 +30,41 @@ const RecommendedCards = () => {
 
   return (
     <div className="flex w-full items-center justify-start flex-col">
-      {animatedElements.map(({ key, cardIndex }) => (
-        <AnimatedElement key={key} handleAnimationEnd={() => handleAnimationEnd(cardIndex)} />
-      ))}
+      <div
+        ref={animatedRef}
+        className="pointer-events-none h-screen w-screen fixed -right-[101vw] top-0 z-50 delay-150"
+        onAnimationEnd={(e) => {
+          e.stopPropagation();
+          handleAnimationEnd();
+        }}
+      >
+        {new Array(10).fill(1).map((_, index) => {
+          const randomLeft = Math.random() * 80;
+          const randomTop = 10 + Math.random() * 30;
+
+          return (
+            <Image
+              key={index}
+              src={Logo}
+              style={{
+                top: `${randomTop}%`,
+                left: `${randomLeft}%`,
+              }}
+              className="animate-spin absolute repeat-infinite"
+              alt="mainnet"
+              width={32}
+              height={32}
+            />
+          );
+        })}
+        <Image
+          src={Logo}
+          className="animate-spin repeat-infinite"
+          alt="mainnet"
+          width={32}
+          height={32}
+        />
+      </div>
       {/* {animatedElements.map(({ key, style, cardIndex }) => (
         <div
           key={key}

@@ -1,6 +1,6 @@
 import { useDrag } from '@use-gesture/react'
 import { useSprings } from '@react-spring/web'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { useCart } from '#/contexts/cart-context'
 import { listOpAddListRecord } from '#/utils/list-ops'
@@ -35,31 +35,32 @@ export const useRecommendedProfilesCards = () => {
     useRecommendedProfiles()
 
   const [didSwipeBack, setDidSwipeBack] = useState(false)
-  const [animatedElements, setAnimatedElements] = useState<AnimatedElementType[]>([])
+  // const [animatedElements, setAnimatedElements] = useState<AnimatedElementType[]>([])
+
+  const animatedRef = useRef<HTMLDivElement>(null)
 
   // // Function to add new animated elements when a card is swiped right
-  const addAnimatedElements = useCallback(
-    (cardIndex: number) => {
-      if (animatedElements.length > 0) return
+  const addAnimatedElements = () => {
+    // if (animatedElements.length > 0) return
 
-      const newElements = Array.from({ length: 10 }).map((_, index) => {
-        const key = `${cardIndex}-${index}`
+    // const newElements = Array.from({ length: 10 }).map((_, index) => {
+    //   const key = `${cardIndex}-${index}`
 
-        return {
-          cardIndex,
-          key
-        }
-      })
+    //   return {
+    //     cardIndex,
+    //     key
+    //   }
+    // })
 
-      setAnimatedElements((prevElements: AnimatedElementType[]) =>
-        prevElements.length > 0 ? prevElements : newElements
-      )
-    },
-    [animatedElements]
-  )
+    // setAnimatedElements((prevElements: AnimatedElementType[]) =>
+    //   prevElements.length > 0 ? prevElements : newElements
+    // )
+    animatedRef.current?.classList.add('falling-element')
+  }
 
-  const handleAnimationEnd = (cardIndex: number) => {
-    setAnimatedElements([])
+  const handleAnimationEnd = () => {
+    // setAnimatedElements([])
+    animatedRef.current?.classList.remove('falling-element')
   }
 
   const [props, api] = useSprings(recommendedProfiles.length, i => ({
@@ -97,7 +98,7 @@ export const useRecommendedProfilesCards = () => {
               recommendedProfiles[index].address
             )
           })
-          addAnimatedElements(index)
+          addAnimatedElements()
         }, 150)
       }
     }
@@ -160,7 +161,7 @@ export const useRecommendedProfilesCards = () => {
               recommendedProfiles[i].address
             )
           })
-          addAnimatedElements(i)
+          addAnimatedElements()
         }, 150)
 
         return {
@@ -243,7 +244,7 @@ export const useRecommendedProfilesCards = () => {
     didSwipeBack,
     // isAnimationPlaying,
     // isSecondaryAnimationPlaying,
-    animatedElements,
+    animatedRef,
     handleAnimationEnd,
     isFetchingNextPage,
     recommendedProfiles
