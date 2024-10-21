@@ -10,7 +10,7 @@ interface AnimatedElementProps {
 const AnimatedElement: React.FC<AnimatedElementProps> = React.memo(({ handleAnimationEnd }) => {
   const randomRight = Math.random() * 80;
   const randomTop = 10 + Math.random() * 30;
-  const randomDelay = (window.innerWidth > 768 ? 130 : 50) + Math.random() * 150;
+  const randomDelay = 130 + Math.random() * 150;
 
   const style = {
     top: `${randomTop}%`,
