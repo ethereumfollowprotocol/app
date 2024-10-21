@@ -55,6 +55,7 @@ interface UserProfileCardProps {
   openBlockModal?: () => void;
   openListSettingsModal?: () => void;
   isRecommended?: boolean;
+  refetchProfile?: () => void;
 }
 
 const UserProfileCard: React.FC<UserProfileCardProps> = ({
@@ -69,6 +70,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   openBlockModal,
   openListSettingsModal,
   isRecommended,
+  refetchProfile,
 }) => {
   const [cardTooltipOpen, setCardTooltipOpen] = useState(false);
   const clickAwayCardTooltip = useClickAway<HTMLDivElement>(() => {
@@ -101,8 +103,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const { resolvedTheme } = useTheme();
   const { openConnectModal } = useConnectModal();
   const { address: connectedAddress } = useAccount();
-  const { selectedList, topEight, refetchProfile, setFetchFreshProfile, fetchFreshProfile } =
-    useEFPProfile();
+  const { selectedList, topEight } = useEFPProfile();
 
   const searchParams = useSearchParams();
   const searchURLParam = searchParams.get("search");
@@ -533,18 +534,6 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                           {profileName && (
                             <button
                               onClick={() => {
-                                if (fetchFreshProfile) refetchProfile();
-                                else setFetchFreshProfile(true);
-                              }}
-                              className="rounded-lg cursor-pointer hover:bg-text/5 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3"
-                            >
-                              <IoRefresh className="text-base" />
-                              <p className="text-nowrap">{t("refresh ens")}</p>
-                            </button>
-                          )}
-                          {profileName && (
-                            <button
-                              onClick={() => {
                                 navigator.clipboard.writeText(profileName);
                                 setCopyENSPressed(true);
                                 setTimeout(() => setCopyENSPressed(false), 3000);
@@ -555,6 +544,15 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                               <p className="text-nowrap">
                                 {t(copyENSPressed ? "copied" : "copy ens")}
                               </p>
+                            </button>
+                          )}
+                          {profileName && refetchProfile && (
+                            <button
+                              onClick={refetchProfile}
+                              className="rounded-lg cursor-pointer hover:bg-text/5 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3"
+                            >
+                              <IoRefresh className="text-base" />
+                              <p className="text-nowrap">{t("refresh ens")}</p>
                             </button>
                           )}
                           <a
