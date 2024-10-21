@@ -19,15 +19,15 @@ const from = () => ({ x: 0, rot: 0, scale: 1, y: 0 })
 export const trans = (r: number, s: number) =>
   `perspective(1500px) rotateX(0deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`
 
-export type AnimatedElementType = {
-  cardIndex: number
-  key: string
-  style: {
-    top: string
-    right: string
-    animationDelay: string
-  }
-}
+// export type AnimatedElementType = {
+//   cardIndex: number
+//   key: string
+//   style: {
+//     top: string
+//     right: string
+//     animationDelay: string
+//   }
+// }
 
 export const useRecommendedProfilesCards = () => {
   const { addCartItem, removeCartItem, cartAddresses } = useCart()
@@ -35,39 +35,44 @@ export const useRecommendedProfilesCards = () => {
     useRecommendedProfiles()
 
   const [didSwipeBack, setDidSwipeBack] = useState(false)
-  const [animatedElements, setAnimatedElements] = useState<AnimatedElementType[]>([])
+  // const [animatedElements, setAnimatedElements] = useState<AnimatedElementType[]>([])
+  const [isAnimationPlaying, setIsAnimationPlaying] = useState(false)
 
-  // Function to add new animated elements when a card is swiped right
-  const addAnimatedElements = (cardIndex: number) => {
-    const newElements = Array.from({ length: 10 }).map((_, index) => {
-      const randomRight = Math.random() * 80
-      const randomTop = 10 + Math.random() * 30
-      const randomDelay = (window.innerWidth > 768 ? 130 : 50) + Math.random() * 150
+  // // Function to add new animated elements when a card is swiped right
+  // const addAnimatedElements = (cardIndex: number) => {
+  //   const newElements = Array.from({ length: 10 }).map((_, index) => {
+  //     const randomRight = Math.random() * 80
+  //     const randomTop = 10 + Math.random() * 30
+  //     const randomDelay = (window.innerWidth > 768 ? 130 : 50) + Math.random() * 150
 
-      const style = {
-        top: `${randomTop}%`,
-        right: `-${randomRight}%`,
-        animationDelay: `${randomDelay}ms`
-      }
+  //     const style = {
+  //       top: `${randomTop}%`,
+  //       right: `-${randomRight}%`,
+  //       animationDelay: `${randomDelay}ms`
+  //     }
 
-      const key = `${cardIndex}-${index}`
+  //     const key = `${cardIndex}-${index}`
 
-      return {
-        cardIndex,
-        key,
-        style
-      }
-    })
+  //     return {
+  //       cardIndex,
+  //       key,
+  //       style
+  //     }
+  //   })
 
-    setAnimatedElements((prevElements: AnimatedElementType[]) =>
-      [...prevElements, ...newElements].slice(-40)
-    )
-  }
+  //   setAnimatedElements((prevElements: AnimatedElementType[]) =>
+  //     [...prevElements, ...newElements].slice(-40)
+  //   )
+  // }
 
-  const handleAnimationEnd = (cardIndex: number) => {
-    setAnimatedElements((prevElements: AnimatedElementType[]) =>
-      prevElements.filter(element => element.cardIndex !== cardIndex)
-    )
+  // const handleAnimationEnd = (cardIndex: number) => {
+  //   setAnimatedElements((prevElements: AnimatedElementType[]) =>
+  //     prevElements.filter(element => element.cardIndex !== cardIndex)
+  //   )
+  // }
+
+  const handleAnimationEnd = () => {
+    setIsAnimationPlaying(false)
   }
 
   const [props, api] = useSprings(recommendedProfiles.length, i => ({
@@ -95,7 +100,7 @@ export const useRecommendedProfilesCards = () => {
       if (canFetchMoreProfiles(index)) fetchNextPage()
 
       if (xDir === 1) {
-        addAnimatedElements(index)
+        if (!isAnimationPlaying) setIsAnimationPlaying(true)
         // animateFollow()
         setTimeout(() => {
           addCartItem({
@@ -157,7 +162,7 @@ export const useRecommendedProfilesCards = () => {
 
     api.start(i => {
       if (i === gone.size) {
-        addAnimatedElements(i)
+        if (!isAnimationPlaying) setIsAnimationPlaying(true)
         if (canFetchMoreProfiles(i)) fetchNextPage()
         // animateFollow()
         setTimeout(() => {
@@ -180,13 +185,12 @@ export const useRecommendedProfilesCards = () => {
     })
     setDidSwipeBack(false)
     gone.add(gone.size)
-  }, [gone, fetchNextPage, api, isLoading, recommendedProfiles])
+  }, [gone, fetchNextPage, api, isLoading, recommendedProfiles, isAnimationPlaying])
 
   const onSwipeBack = useCallback(() => {
     if (didSwipeBack) return
 
     gone.delete(gone.size - 1)
-    animatedElements.slice(0, -10)
     api.start(i => {
       if (i === gone.size) {
         setDidSwipeBack(true)
@@ -248,7 +252,9 @@ export const useRecommendedProfilesCards = () => {
     onSwipeBack,
     onSwipeRight,
     didSwipeBack,
-    animatedElements,
+    isAnimationPlaying,
+    setIsAnimationPlaying,
+    // animatedElements,
     handleAnimationEnd,
     isFetchingNextPage,
     recommendedProfiles

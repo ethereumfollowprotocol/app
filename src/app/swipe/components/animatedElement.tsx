@@ -2,21 +2,28 @@ import React from "react";
 import Image from "next/image";
 
 import Logo from "public/assets/logo.svg";
-import type { AnimatedElementType } from "./useRescommendedProfilesCards";
 
 interface AnimatedElementProps {
-  element: AnimatedElementType;
-  handleAnimationEnd: (index: number) => void;
+  handleAnimationEnd: () => void;
 }
 
-const AnimatedElement: React.FC<AnimatedElementProps> = React.memo(
-  ({ element, handleAnimationEnd }) => (
+const AnimatedElement: React.FC<AnimatedElementProps> = React.memo(({ handleAnimationEnd }) => {
+  const randomRight = Math.random() * 80;
+  const randomTop = 10 + Math.random() * 30;
+  const randomDelay = (window.innerWidth > 768 ? 130 : 50) + Math.random() * 150;
+
+  const style = {
+    top: `${randomTop}%`,
+    right: `-${randomRight}%`,
+    animationDelay: `${randomDelay}ms`,
+  };
+  return (
     <div
       className="falling-element fixed z-50"
-      style={element.style}
+      style={style}
       onAnimationEnd={(e) => {
         e.stopPropagation();
-        handleAnimationEnd(element.cardIndex);
+        handleAnimationEnd();
       }}
     >
       <Image
@@ -27,7 +34,7 @@ const AnimatedElement: React.FC<AnimatedElementProps> = React.memo(
         height={32}
       />
     </div>
-  )
-);
+  );
+});
 
 export default AnimatedElement;

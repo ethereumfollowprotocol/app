@@ -19,7 +19,8 @@ const RecommendedCards = () => {
     onSwipeLeft,
     onSwipeRight,
     didSwipeBack,
-    animatedElements,
+    isAnimationPlaying,
+    // animatedElements,
     handleAnimationEnd,
     isFetchingNextPage,
     recommendedProfiles,
@@ -46,13 +47,10 @@ const RecommendedCards = () => {
           />
         </div>
       ))} */}
-      {animatedElements.map((element) => (
-        <AnimatedElement
-          key={element.key}
-          element={element}
-          handleAnimationEnd={handleAnimationEnd}
-        />
-      ))}
+      {isAnimationPlaying &&
+        Array.from({ length: 20 }).map((_, index) => (
+          <AnimatedElement key={index} handleAnimationEnd={handleAnimationEnd} />
+        ))}
       <div className="flex flex-col w-full items-center justify-start h-fit min-h-[500px] sm:min-h-[680px] relative">
         {(isLoading || isFetchingNextPage || recommendedProfiles.length === 0) &&
           new Array(5).fill(1).map((_, i) => (
@@ -102,7 +100,6 @@ const RecommendedCards = () => {
             );
           })
           .reverse()}
-        {/* <div className="absolute z-30 xxs:ml-8 top-40 sm:top-60 w-full max-w-128 flex justify-between items-center"> */}
         <button
           className="absolute -left-1 sm:left-auto sm:mr-[475px] z-30 sm:z-10 top-56 sm:top-60 rounded-xl w-14 text-lg font-semibold h-14 flex items-center justify-center glass-card border-[3px] border-text/70 transition-all hover:scale-110"
           disabled={
@@ -134,16 +131,6 @@ const RecommendedCards = () => {
       >
         <p className="font-semibold text-lg">Undo</p> <HiArrowUturnDown />
       </button>
-      {/* <div className={cn("falling-elements-container")}>
-        {Array.from({ length: 70 }).map((_, index) => {
-          const randomLeft = Math.random() * 100;
-          const randomTop = Math.random() * 100;
-
-          return (
-
-          );
-        })}
-      </div> */}
     </div>
   );
 };
