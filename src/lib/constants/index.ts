@@ -64,6 +64,11 @@ export const NAV_ITEMS = [
 
 export const EXTERNAL_LINKS = [
   {
+    text: 'swipe',
+    href: '/swipe',
+    target: ''
+  },
+  {
     text: 'about',
     href: '/about',
     target: ''
