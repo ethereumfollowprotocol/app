@@ -48,6 +48,7 @@ import SloveniaFlag from 'public/assets/icons/flags/slovenia.svg'
 import ThailandFlag from 'public/assets/icons/flags/thailand.svg'
 import USAFlag from 'public/assets/icons/flags/united-states.svg'
 import GenAlphaFlag from 'public/assets/icons/flags/genalpha.svg'
+import PakistanFlag from 'public/assets/icons/flags/pakistan.svg'
 import CataloniaFlag from 'public/assets/icons/flags/catalonia.svg'
 import CorporateFlag from 'public/assets/icons/flags/corporate.svg'
 import LithuaniaFlag from 'public/assets/icons/flags/lithuania.svg'
@@ -70,14 +71,29 @@ export const LANGUAGES = [
   { language: '简体中文', key: 'zh', icon: ChinaFlag, englishLanguage: 'Chinese' },
   { language: 'Français', key: 'fr', icon: FranceFLag, englishLanguage: 'French' },
   { language: 'Español', key: 'es', icon: SpainFlag, englishLanguage: 'Spanish' },
-  { language: 'Español (MX)', key: 'es-MX', icon: MexicoFlag, englishLanguage: 'Spanish (Mexican)' },
+  {
+    language: 'Español (MX)',
+    key: 'es-MX',
+    icon: MexicoFlag,
+    englishLanguage: 'Spanish (Mexican)'
+  },
   { language: '日本語', key: 'ja', icon: JapanFlag, englishLanguage: 'Japanese' },
   { language: '한국어', key: 'ko', icon: KoreaFlag, englishLanguage: 'Korean' },
   { language: 'Deutsch', key: 'de', icon: GermanyFLag, englishLanguage: 'German' },
   { language: 'हिन्दी', key: 'hi', icon: IndiaFlag, englishLanguage: 'Hindi' },
   { language: 'Português', key: 'pt', icon: PortugalFlag, englishLanguage: 'Portuguese' },
-  { language: 'Português (BR)', key: 'pt-BR', icon: BrazilFLag, englishLanguage: 'Portuguese (Brazilian)' },
-  { language: 'Nigerian Pidgin', key: 'pcm', icon: NigeriaFlag, englishLanguage: 'Nigerian Pidgin' },
+  {
+    language: 'Português (BR)',
+    key: 'pt-BR',
+    icon: BrazilFLag,
+    englishLanguage: 'Portuguese (Brazilian)'
+  },
+  {
+    language: 'Nigerian Pidgin',
+    key: 'pcm',
+    icon: NigeriaFlag,
+    englishLanguage: 'Nigerian Pidgin'
+  },
   { language: '繁體中文', key: 'zh-TW', icon: TaiwanFlag, englishLanguage: 'Traditional Chinese' },
   { language: 'Nederlands', key: 'nl', icon: NetherlandsFlag, englishLanguage: 'Dutch' },
   { language: 'Polski', key: 'pl', icon: PolandFlag, englishLanguage: 'Polish' },
@@ -145,6 +161,9 @@ export const LANGUAGES = [
   { language: 'ລອຍ', key: 'lo', icon: LaosFlag, englishLanguage: 'Lao' },
   { language: 'ئۇيغۇر تىلى', key: 'ug', icon: ChinaFlag, englishLanguage: 'Uyghur' },
   { language: 'Latina', key: 'la', icon: VaticanCityFlag, englishLanguage: 'Latin' },
+  { language: 'اردو', key: 'ur', icon: PakistanFlag, englishLanguage: 'Urdu' },
+  { language: 'ଓଡିଆ', key: 'or', icon: IndiaFlag, englishLanguage: 'Odia' },
+  { language: '廣東話', key: 'yue', icon: ChinaFlag, englishLanguage: 'Cantonese' },
   // ----------- special languages -----------
   { language: 'Pirate', key: 'pirate', icon: PirateFlag, englishLanguage: 'Pirate', special: true },
   {

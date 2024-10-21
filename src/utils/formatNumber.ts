@@ -5,16 +5,17 @@ export const formatNumber = (number: number) => {
 }
 
 export const formatNumberLeaderboard = (num: number) => {
-  if (num >= 1e9)
-    return `${(num / 1e9).toLocaleString(navigator.language, {
+  const number = Math.floor(num * 10) / 10
+  if (number >= 1e9)
+    return `${(number / 1e9).toLocaleString(navigator.language, {
       maximumFractionDigits: 1
     })}B`
-  if (num >= 1e6)
-    return `${(num / 1e6).toLocaleString(navigator.language, {
+  if (number >= 1e6)
+    return `${(number / 1e6).toLocaleString(navigator.language, {
       maximumFractionDigits: 1
     })}M`
-  if (num >= 1e3)
-    return `${(num / 1e3).toLocaleString(navigator.language, {
+  if (number >= 1e3)
+    return `${(number / 1e3).toLocaleString(navigator.language, {
       maximumFractionDigits: 1
     })}k`
   return num.toString()
