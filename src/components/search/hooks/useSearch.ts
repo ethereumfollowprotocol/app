@@ -126,7 +126,7 @@ const useSearch = (isEditor?: boolean) => {
   const searchTimeout = useRef<NodeJS.Timeout | null>(null)
 
   const handleSearchEvent = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const term = event?.target.value.toLowerCase().trim()
+    const term = event?.target.value.toLowerCase()
     if (!isEditor && term.includes(' ')) return
     if (searchTimeout.current) clearTimeout(searchTimeout.current)
 
