@@ -104,7 +104,6 @@ export const useRecommendedProfilesCards = () => {
       if (canFetchMoreProfiles(index)) fetchNextPage()
 
       if (xDir === 1) {
-        addAnimatedElements(index)
         // if (!isAnimationPlaying) setIsAnimationPlaying(true)
         // else if (!isSecondaryAnimationPlaying) setIsSecondaryAnimationPlaying(true)
         // animateFollow()
@@ -115,6 +114,7 @@ export const useRecommendedProfilesCards = () => {
               recommendedProfiles[index].address
             )
           })
+          addAnimatedElements(index)
         }, 150)
       }
     }
@@ -168,7 +168,6 @@ export const useRecommendedProfilesCards = () => {
 
     api.start(i => {
       if (i === gone.size) {
-        addAnimatedElements(i)
         // if (!isAnimationPlaying) setIsAnimationPlaying(true)
         // else if (!isSecondaryAnimationPlaying) setIsSecondaryAnimationPlaying(true)
 
@@ -181,7 +180,8 @@ export const useRecommendedProfilesCards = () => {
               recommendedProfiles[i].address
             )
           })
-        }, 120)
+          addAnimatedElements(i)
+        }, 150)
 
         return {
           x: (250 + window.innerWidth / 1.5) * 1,

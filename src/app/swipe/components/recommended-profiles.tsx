@@ -70,7 +70,7 @@ const RecommendedCards = () => {
         {(isLoading || isFetchingNextPage || recommendedProfiles.length === 0) &&
           new Array(4).fill(1).map((_, i) => (
             <div
-              className="h-fit w-full max-w-86 absolute z-10 xxs:mr-12"
+              className="h-fit w-full sm:max-w-92 absolute z-10 xxs:mr-4"
               key={i}
               style={{
                 marginTop: `${40 - i * 10}px`,
@@ -91,7 +91,7 @@ const RecommendedCards = () => {
             }
             return (
               <animated.div
-                className="h-fit w-full max-w-86 absolute top-0 will-change-transform touch-none z-20 xxs:mr-12"
+                className="h-fit w-full max-w-92 absolute top-0 will-change-transform touch-none z-20 xxs:mr-4"
                 key={`${recommendedProfiles[i]?.address}-${i}`}
                 style={{ x, y }}
               >

@@ -10,17 +10,16 @@ interface AnimatedElementProps {
 const AnimatedElement: React.FC<AnimatedElementProps> = React.memo(({ handleAnimationEnd }) => {
   const randomRight = Math.random() * 80;
   const randomTop = 10 + Math.random() * 30;
-  const randomDelay = 130 + Math.random() * 150;
+  const randomDelay = Math.random() * 150;
 
-  const style = {
-    top: `${randomTop}%`,
-    right: `-${randomRight}%`,
-    animationDelay: `${randomDelay}ms`,
-  };
   return (
     <div
       className="falling-element fixed z-50"
-      style={style}
+      style={{
+        top: `${randomTop}%`,
+        right: `-${randomRight}%`,
+        animationDelay: `${randomDelay}ms`,
+      }}
       onAnimationEnd={(e) => {
         e.stopPropagation();
         handleAnimationEnd();
