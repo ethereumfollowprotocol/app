@@ -7,7 +7,7 @@ import { listOpAddListRecord } from '#/utils/list-ops'
 import { RECOMMENDED_PROFILES_LIMIT } from '#/lib/constants'
 import { useRecommendedProfiles } from '#/contexts/recommended-profiles-context'
 
-const to = (i: number) => ({
+const to = () => ({
   x: 0,
   y: 0,
   scale: 1,
@@ -31,7 +31,7 @@ export const useRecommendedProfilesCards = () => {
   const handleAnimationEnd = () => animatedRef.current?.classList.remove('falling-element')
 
   const [props, api] = useSprings(recommendedProfiles.length, i => ({
-    ...to(i),
+    ...to(),
     from: from()
   }))
 
@@ -156,7 +156,7 @@ export const useRecommendedProfilesCards = () => {
           )
         }, 500)
 
-        return to(i)
+        return to()
       }
     })
   }, [gone, api, cartAddresses, recommendedProfiles, removeCartItem, didSwipeBack])
