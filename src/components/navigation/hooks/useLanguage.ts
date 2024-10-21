@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { track } from '@vercel/analytics/react'
 import type { StaticImageData } from 'next/image'
 
 import i18n from '#/app/i18n'
@@ -25,6 +26,7 @@ const useLanguage = () => {
 
   useEffect(() => {
     setSelectedLanguage(LANGUAGES[LANGUAGES.map(lang => lang.key).indexOf(i18n.language || 'en')])
+    track(`Changed language to ${LANGUAGES.find(lang => lang.key === i18n.language)?.englishLanguage}`)
   }, [i18n.language])
 
   return {

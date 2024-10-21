@@ -1,31 +1,31 @@
-import { useState } from 'react'
-import { IoClose } from 'react-icons/io5'
-import { useTranslation } from 'react-i18next'
-import { useClickAway } from '@uidotdev/usehooks'
+import { useRef, useState } from "react";
+import { IoClose } from "react-icons/io5";
+import { useTranslation } from "react-i18next";
+import { useClickAway } from "@uidotdev/usehooks";
 
-import { BLOCKED_MUTED_TABS } from '#/lib/constants'
-import { useIsEditView } from '#/hooks/use-is-edit-view'
-import type { BlockedMutedTabType } from '#/types/common'
-import { UserProfilePageTable } from '../profile-page-table'
-import { useEFPProfile } from '#/contexts/efp-profile-context'
-import useBlockedMuted, { EMPTY_COUNT_TAGS, TAGS } from './hooks/use-blocked-muted'
+import { BLOCKED_MUTED_TABS } from "#/lib/constants";
+import { useIsEditView } from "#/hooks/use-is-edit-view";
+import type { BlockedMutedTabType } from "#/types/common";
+import UserProfilePageTable from "../profile-page-table";
+import { useEFPProfile } from "#/contexts/efp-profile-context";
+import useBlockedMuted, { EMPTY_COUNT_TAGS, TAGS } from "./hooks/use-blocked-muted";
 
 interface BlockedMutedProps {
-  user: string
-  list?: string | number
-  isManager?: boolean
-  onClose: () => void
+  user: string;
+  list?: string | number;
+  isManager?: boolean;
+  onClose: () => void;
 }
 
 const BlockedMuted: React.FC<BlockedMutedProps> = ({ user, list, isManager, onClose }) => {
-  const [activeTab, setActiveTab] = useState<BlockedMutedTabType>('Blocked/Muted')
+  const [activeTab, setActiveTab] = useState<BlockedMutedTabType>("Blocked/Muted");
 
   const blockedMutedRef = useClickAway<HTMLDivElement>(() => {
-    onClose()
-  })
+    onClose();
+  });
 
-  const isMyProfile = useIsEditView()
-  const { selectedList } = useEFPProfile()
+  const isMyProfile = useIsEditView();
+  const { selectedList } = useEFPProfile();
 
   const {
     blocking,
@@ -50,39 +50,43 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ user, list, isManager, onCl
     setBlockingTagsFilter,
     setBlockedByTagsFilter,
     isFetchingMoreBlocking,
-    isFetchingMoreBlockedBy
-  } = useBlockedMuted(user, list)
-  const { t } = useTranslation()
+    isFetchingMoreBlockedBy,
+  } = useBlockedMuted(user, list);
+  const { t } = useTranslation();
 
-  const filteredBlockingTags = blockingTags?.tagCounts?.filter(tag => TAGS.includes(tag.tag)) || []
+  const filteredBlockingTags =
+    blockingTags?.tagCounts?.filter((tag) => TAGS.includes(tag.tag)) || [];
   const displayedBlockingTags = [
     {
-      tag: 'All',
+      tag: "All",
       count:
         isMyProfile && !selectedList
           ? 0
-          : filteredBlockingTags?.reduce((acc, tag) => acc + tag.count, 0)
+          : filteredBlockingTags?.reduce((acc, tag) => acc + tag.count, 0),
     },
     ...(filteredBlockingTags.length > 0
       ? isMyProfile && !selectedList
         ? EMPTY_COUNT_TAGS
         : filteredBlockingTags
-      : EMPTY_COUNT_TAGS)
-  ]
+      : EMPTY_COUNT_TAGS),
+  ];
 
   const filteredBlockedByTags =
-    blockedByTags?.tagCounts?.filter(tag => TAGS.includes(tag.tag)) || []
+    blockedByTags?.tagCounts?.filter((tag) => TAGS.includes(tag.tag)) || [];
   const displayedBlockedByTags = [
-    { tag: 'All', count: filteredBlockedByTags?.reduce((acc, tag) => acc + tag.count, 0) },
-    ...(filteredBlockedByTags.length > 0 ? filteredBlockedByTags : EMPTY_COUNT_TAGS)
-  ]
+    { tag: "All", count: filteredBlockedByTags?.reduce((acc, tag) => acc + tag.count, 0) },
+    ...(filteredBlockedByTags.length > 0 ? filteredBlockedByTags : EMPTY_COUNT_TAGS),
+  ];
 
-  const displayedBlocking = isMyProfile && !selectedList ? [] : blocking
+  const displayedBlocking = isMyProfile && !selectedList ? [] : blocking;
+
+  const tableRef = useRef<HTMLDivElement>(null);
 
   const mobileActiveEl = {
-    'Blocked/Muted': (
+    "Blocked/Muted": (
       <UserProfilePageTable
-        key={'Blocked/Muted'}
+        ref={tableRef}
+        key={"Blocked/Muted"}
         isLoading={blockingIsLoading}
         results={displayedBlocking}
         allTags={displayedBlockingTags}
@@ -98,13 +102,14 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ user, list, isManager, onCl
         canEditTags={isManager}
         showTagsByDefault={true}
         isShowingBlocked={true}
-        title='Blocked/Muted'
-        customClass='border-t-0 rounded-t-none'
+        title="Blocked/Muted"
+        customClass="border-t-0 rounded-t-none"
       />
     ),
-    'Blocked/Muted By': (
+    "Blocked/Muted By": (
       <UserProfilePageTable
-        key={'Blocked/Muted By'}
+        ref={tableRef}
+        key={"Blocked/Muted By"}
         isLoading={blockedByIsLoading}
         results={blockedBy}
         allTags={displayedBlockedByTags}
@@ -119,26 +124,28 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ user, list, isManager, onCl
         fetchMore={() => fetchMoreBlockedBy()}
         showTagsByDefault={true}
         isShowingBlocked={true}
-        title='Blocked/Muted By'
-        customClass='border-t-0 rounded-t-none'
+        title="Blocked/Muted By"
+        customClass="border-t-0 rounded-t-none"
       />
-    )
-  }[activeTab]
+    ),
+  }[activeTab];
 
   return (
-    <div className='fixed z-50 top-0 flex overflow-scroll justify-center left-0 w-full h-full bg-black/50'>
+    <div className="fixed z-50 top-0 flex overflow-scroll justify-center left-0 w-full h-full bg-black/50">
       <div
         ref={blockedMutedRef}
-        className='gap-6 2xl:gap-8 relative flex h-fit rounded-xl mt-[85px] md:mt-24 mb-24 w-full xl:w-fit px-4 md:px-6 lg:mt-32 '
+        className="gap-6 2xl:gap-8 relative flex h-fit rounded-xl mt-[85px] md:mt-24 mb-24 w-full xl:w-fit px-4 md:px-6 lg:mt-28"
       >
         <div
           onClick={onClose}
-          className='absolute cursor-pointer z-50 hover:opacity-90 rounded-2xl bg-neutral/90 hover:scale-110 transition-all p-2 -top-[18px] right-1'
+          className="absolute cursor-pointer z-50 hover:opacity-90 rounded-2xl bg-neutral/90 hover:scale-110 transition-all p-2 -top-[18px] right-1"
         >
-          <IoClose className='text-2xl' />
+          <IoClose className="text-2xl" />
         </div>
-        <div className='bg-neutral/80 h-fit rounded-2xl w-full hidden xl:block'>
+        <div className="bg-neutral/80 h-fit rounded-2xl w-full hidden xl:block">
           <UserProfilePageTable
+            ref={tableRef}
+            key={"Blocked/Muted"}
             isLoading={blockingIsLoading}
             results={displayedBlocking}
             allTags={displayedBlockingTags}
@@ -154,12 +161,14 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ user, list, isManager, onCl
             canEditTags={isManager}
             showTagsByDefault={true}
             isShowingBlocked={true}
-            title='Blocked/Muted'
-            customClass='hidden xl:flex min-w-[600px] max-w-[47.5%]'
+            title="Blocked/Muted"
+            customClass="hidden xl:flex min-w-[600px] max-w-[47.5%]"
           />
         </div>
-        <div className='bg-neutral/80 h-fit w-full rounded-2xl hidden xl:block'>
+        <div className="bg-neutral/80 h-fit w-full rounded-2xl hidden xl:block">
           <UserProfilePageTable
+            ref={tableRef}
+            key={"Blocked/Muted By"}
             isLoading={blockedByIsLoading}
             results={blockedBy}
             allTags={displayedBlockedByTags}
@@ -174,18 +183,18 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ user, list, isManager, onCl
             fetchMore={() => fetchMoreBlockedBy()}
             showTagsByDefault={true}
             isShowingBlocked={true}
-            title='Blocked/Muted By'
-            customClass='hidden xl:flex min-w-[600px] max-w-[47.5%]'
+            title="Blocked/Muted By"
+            customClass="hidden xl:flex min-w-[600px] max-w-[47.5%]"
           />
         </div>
-        <div className='w-full mt-12 relative bg-neutral/80 h-fit rounded-2xl xl:hidden'>
-          <div className='w-full absolute -top-[46px] left-0 '>
-            {BLOCKED_MUTED_TABS.map(option => (
+        <div className="w-full mt-12 relative bg-neutral/80 h-fit rounded-2xl xl:hidden">
+          <div className="w-full absolute -top-[46px] left-0 ">
+            {BLOCKED_MUTED_TABS.map((option) => (
               <button
                 key={option}
                 onClick={() => setActiveTab(option as BlockedMutedTabType)}
                 className={`w-1/2 capitalize text-lg py-2 font-bold glass-selector border-[3px]  border-grey rounded-t-lg ${
-                  activeTab === option ? 'bg-neutral/80 border-b-0' : 'bg-grey/70 hover:bg-grey/80 '
+                  activeTab === option ? "bg-neutral/80 border-b-0" : "bg-grey/70 hover:bg-grey/80 "
                 }`}
               >
                 {t(option)}
@@ -196,7 +205,7 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ user, list, isManager, onCl
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default BlockedMuted
+export default BlockedMuted;

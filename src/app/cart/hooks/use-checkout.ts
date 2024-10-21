@@ -9,6 +9,7 @@ import {
 } from 'viem'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
+import { track } from '@vercel/analytics/react'
 import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useState } from 'react'
 import { useAccount, useChainId, useChains, useSwitchChain, useWalletClient } from 'wagmi'
@@ -281,6 +282,10 @@ const useCheckout = () => {
   }, [moveToNextAction, executeActionByIndex, getRequiredChain, currentChainId, currentActionIndex])
 
   const onFinish = useCallback(() => {
+    const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+    if (regex.test(navigator.userAgent)) track(`${listHasBeenMinted ? 'Mint' : 'Checkout'} - Mobile`)
+    else track(`${listHasBeenMinted ? 'Mint' : 'Checkout'} - Desktop`)
+
     if (fetchFreshStats) refetchStats()
     else setFetchFreshStats(true)
 
