@@ -20,31 +20,48 @@ const RecommendedCards = () => {
     onSwipeRight,
     didSwipeBack,
     animatedElements,
+    handleAnimationEnd,
     isFetchingNextPage,
     recommendedProfiles,
   } = useRecommendedProfilesCards();
 
   return (
     <div className="flex w-full items-center justify-start flex-col">
-      {animatedElements.map(({ key, style, cardIndex }) => (
-        <div
-          key={key}
-          className="falling-element fixed z-50"
-          style={style}
-          // onAnimationEnd={(e) => {
-          //   e.stopPropagation();
-          //   handleAnimationEnd(cardIndex);
-          // }}
-        >
-          <Image
-            src={Logo}
-            className="animate-spin repeat-infinite"
-            alt="mainnet"
-            width={32}
-            height={32}
-          />
-        </div>
-      ))}
+      {animatedElements.map(
+        (state, i) =>
+          state &&
+          Array.from({ length: 10 }).map((_, j) => {
+            const randomRight = Math.random() * 80;
+            const randomTop = 10 + Math.random() * 30;
+            const randomDelay = (window.innerWidth > 768 ? 130 : 50) + Math.random() * 150;
+
+            const style = {
+              top: `${randomTop}%`,
+              right: `-${randomRight}%`,
+              animationDelay: `${randomDelay}ms`,
+            };
+
+            return (
+              <div
+                key={`${i}-${j}`}
+                className="falling-element fixed z-50"
+                style={style}
+                onAnimationEnd={(e) => {
+                  e.stopPropagation();
+                  handleAnimationEnd(i);
+                }}
+              >
+                <Image
+                  src={Logo}
+                  className="animate-spin repeat-infinite"
+                  alt="mainnet"
+                  width={32}
+                  height={32}
+                />
+              </div>
+            );
+          })
+      )}
       <div className="flex flex-col w-full items-center justify-start h-fit min-h-[500px] sm:min-h-[680px] relative">
         {(isLoading || isFetchingNextPage || recommendedProfiles.length === 0) &&
           new Array(5).fill(1).map((_, i) => (
