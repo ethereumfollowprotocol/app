@@ -4,8 +4,7 @@ import Image from "next/image";
 import { HiArrowUturnDown } from "react-icons/hi2";
 import { animated, to as interpolate } from "@react-spring/web";
 
-import Logo from "public/assets/logo.svg";
-// import AnimatedElement from "./animatedElement";
+import AnimatedElement from "./animatedElement";
 import MainnetBlack from "public/assets/mainnet-black.svg";
 import UserProfileCard from "#/components/user-profile-card";
 import { trans, useRecommendedProfilesCards } from "./useRescommendedProfilesCards";
@@ -20,8 +19,6 @@ const RecommendedCards = () => {
     onSwipeLeft,
     onSwipeRight,
     didSwipeBack,
-    // isAnimationPlaying,
-    // isSecondaryAnimationPlaying,
     animatedRef,
     handleAnimationEnd,
     isFetchingNextPage,
@@ -30,74 +27,7 @@ const RecommendedCards = () => {
 
   return (
     <div className="flex w-full items-center justify-start flex-col">
-      <div
-        ref={animatedRef}
-        className="pointer-events-none h-screen w-screen fixed -right-[101vw] top-0 z-50 delay-150"
-        onAnimationEnd={(e) => {
-          e.stopPropagation();
-          handleAnimationEnd();
-        }}
-      >
-        {new Array(10).fill(1).map((_, index) => {
-          const randomLeft = Math.random() * 80;
-          const randomTop = 10 + Math.random() * 30;
-
-          return (
-            <Image
-              key={index}
-              src={Logo}
-              style={{
-                top: `${randomTop}%`,
-                left: `${randomLeft}%`,
-              }}
-              className="animate-spin absolute repeat-infinite"
-              alt="mainnet"
-              width={32}
-              height={32}
-            />
-          );
-        })}
-        <Image
-          src={Logo}
-          className="animate-spin repeat-infinite"
-          alt="mainnet"
-          width={32}
-          height={32}
-        />
-      </div>
-      {/* {animatedElements.map(({ key, style, cardIndex }) => (
-        <div
-          key={key}
-          className="falling-element fixed z-50"
-          style={style}
-          onAnimationEnd={(e) => {
-            e.stopPropagation();
-            handleAnimationEnd(cardIndex);
-          }}
-        >
-          <Image
-            src={Logo}
-            className="animate-spin repeat-infinite"
-            alt="mainnet"
-            width={32}
-            height={32}
-          />
-        </div>
-      ))} */}
-      {/* {isAnimationPlaying &&
-        Array.from({ length: 10 }).map((_, index) => (
-          <AnimatedElement
-            key={`primary-${index}`}
-            handleAnimationEnd={() => handleAnimationEnd("primary")}
-          />
-        ))} */}
-      {/* {isSecondaryAnimationPlaying &&
-        Array.from({ length: 10 }).map((_, index) => (
-          <AnimatedElement
-            key={`secondary-${index}`}
-            handleAnimationEnd={() => handleAnimationEnd("secondary")}
-          />
-        ))} */}
+      <AnimatedElement ref={animatedRef} handleAnimationEnd={handleAnimationEnd} />
       <div className="flex flex-col w-full items-center justify-start h-fit min-h-[500px] sm:min-h-[680px] relative">
         {(isLoading || isFetchingNextPage || recommendedProfiles.length === 0) &&
           new Array(4).fill(1).map((_, i) => (

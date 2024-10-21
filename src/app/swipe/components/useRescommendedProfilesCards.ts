@@ -19,49 +19,16 @@ const from = () => ({ x: 0, rot: 0, scale: 1, y: 0 })
 export const trans = (r: number, s: number) =>
   `perspective(1500px) rotateX(0deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`
 
-export type AnimatedElementType = {
-  cardIndex: number
-  key: string
-  // style: {
-  //   top: string
-  //   right: string
-  //   animationDelay: string
-  // }
-}
-
 export const useRecommendedProfilesCards = () => {
   const { addCartItem, removeCartItem, cartAddresses } = useCart()
   const { gone, recommendedProfiles, isLoading, isFetchingNextPage, fetchNextPage } =
     useRecommendedProfiles()
 
   const [didSwipeBack, setDidSwipeBack] = useState(false)
-  // const [animatedElements, setAnimatedElements] = useState<AnimatedElementType[]>([])
 
   const animatedRef = useRef<HTMLDivElement>(null)
-
-  // // Function to add new animated elements when a card is swiped right
-  const addAnimatedElements = () => {
-    // if (animatedElements.length > 0) return
-
-    // const newElements = Array.from({ length: 10 }).map((_, index) => {
-    //   const key = `${cardIndex}-${index}`
-
-    //   return {
-    //     cardIndex,
-    //     key
-    //   }
-    // })
-
-    // setAnimatedElements((prevElements: AnimatedElementType[]) =>
-    //   prevElements.length > 0 ? prevElements : newElements
-    // )
-    animatedRef.current?.classList.add('falling-element')
-  }
-
-  const handleAnimationEnd = () => {
-    // setAnimatedElements([])
-    animatedRef.current?.classList.remove('falling-element')
-  }
+  const addAnimatedElements = () => animatedRef.current?.classList.add('falling-element')
+  const handleAnimationEnd = () => animatedRef.current?.classList.remove('falling-element')
 
   const [props, api] = useSprings(recommendedProfiles.length, i => ({
     ...to(i),
@@ -86,11 +53,7 @@ export const useRecommendedProfilesCards = () => {
       gone.add(index)
 
       if (canFetchMoreProfiles(index)) fetchNextPage()
-
       if (xDir === 1) {
-        // if (!isAnimationPlaying) setIsAnimationPlaying(true)
-        // else if (!isSecondaryAnimationPlaying) setIsSecondaryAnimationPlaying(true)
-        // animateFollow()
         setTimeout(() => {
           addCartItem({
             listOp: listOpAddListRecord(
@@ -242,8 +205,6 @@ export const useRecommendedProfilesCards = () => {
     onSwipeBack,
     onSwipeRight,
     didSwipeBack,
-    // isAnimationPlaying,
-    // isSecondaryAnimationPlaying,
     animatedRef,
     handleAnimationEnd,
     isFetchingNextPage,
