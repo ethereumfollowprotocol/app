@@ -93,6 +93,9 @@ i18n
       'es-MX',
       'ug',
       'az',
+      'ur',
+      'or',
+      'yue',
       // --------- special languages ---------
       'pirate',
       'genalpha',
