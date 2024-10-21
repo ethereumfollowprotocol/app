@@ -95,7 +95,7 @@ const Cart = () => {
         </div>
       ) : (
         <div
-          className="flex flex-col xl:flex-row overflow-y-scroll justify-center gap-4 w-full h-full xl:gap-6 pt-28 px-2 lg:px-8 pb-10"
+          className="flex flex-col-reverse xl:flex-row overflow-y-scroll justify-center gap-4 w-full h-full xl:gap-6 pt-28 px-2 lg:px-8 pb-10"
           onScroll={(e) => {
             onScrollCartItems(e);
             onScrollSidebar(e);
@@ -139,7 +139,7 @@ const Cart = () => {
             <Recommendations header={t("recommendations")} endpoint="recommended" limit={30} />
           </div>
           <div
-            className="flex flex-col h-fit xl:sticky glass-card rounded-2xl border-[3px] border-grey gap-3 md:gap-4 mb-[13vh] md:py-6 pt-5 pb-2 px-1 sm:px-3 md:px-4 w-full xl:w-2/3"
+            className="flex flex-col h-fit xl:sticky glass-card rounded-2xl border-[3px] border-grey gap-3 md:gap-4 xl:mb-[13vh] md:py-6 pt-5 pb-2 px-1 sm:px-3 md:px-4 w-full xl:w-2/3"
             ref={CartItemsRef}
           >
             <div className="flex justify-between gap-2 flex-row items-center px-3 md:px-4">
@@ -165,8 +165,8 @@ const Cart = () => {
               isLoading={false}
               profiles={profiles}
               socialProfiles={socialProfiles}
-              listClassName="rounded-xl gap-1 sm:gap-0"
-              listItemClassName="rounded-xl md:p-4 p-1.5 sm:p-2"
+              listClassName="rounded-xl gap-1 2xl:gap-0"
+              listItemClassName="rounded-xl 2xl:p-4 p-1.5 sm:p-2"
               showTags={true}
               createListItem={!hasCreatedEfpList}
               canEditTags={roles?.isManager}
@@ -176,15 +176,17 @@ const Cart = () => {
           {isClient && (
             <div
               className={cn(
-                "fixed md:w-fit w-full bottom-4 sm:bottom-[3vh] right-0 px-4 lg:right-[3vw] justify-end",
+                "fixed md:w-fit w-full bottom-4 sm:bottom-[3vh] right-0 px-2 sm:px-4 lg:right-[3vw] justify-end",
                 isClient && totalCartItems > 0 ? "flex" : "hidden"
               )}
             >
-              <div className="flex gap-6 w-full border-[3px] border-grey lg:w-fit items-center p-4 bg-white/10 justify-between glass-card bg-opacity-50 shadow-xl rounded-xl">
+              <div className="flex gap-1 xxs:gap-2 md:gap-6 w-full border-[3px] border-grey lg:w-fit items-center px-3 py-4 sm:p-4 bg-white/10 justify-between glass-card bg-opacity-50 shadow-xl rounded-xl">
                 <div className="flex flex-col gap-1 items-start">
                   <div className="flex gap-2 items-center">
-                    <p className="text-6xl font-bold">{formatNumber(totalCartItems)}</p>
-                    <div className="flex flex-col w-28 font-bold text-lg text-left whitespace-break-spaces">
+                    <p className="text-4xl 3xs:text-5xl sm:text-6xl font-bold">
+                      {formatNumber(totalCartItems)}
+                    </p>
+                    <div className="flex gap-0 flex-col w-24 sm:w-28 font-bold text-sm 3xs:text-base sm:text-lg text-left whitespace-break-spaces">
                       {t("unc-changes")}
                     </div>
                   </div>
