@@ -41,6 +41,7 @@ import DefaultHeader from "public/assets/art/default-header.svg";
 import { useCoolMode } from "../follow-button/hooks/useCoolMode";
 import LoadingProfileCard from "./components/loading-profile-card";
 import type { ProfileDetailsResponse, StatsResponse } from "#/types/requests";
+import { IoRefresh } from "react-icons/io5";
 
 interface UserProfileCardProps {
   profileList?: number | null;
@@ -97,8 +98,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const pathname = usePathname();
   const { resolvedTheme } = useTheme();
   const { openConnectModal } = useConnectModal();
-  const { selectedList, topEight } = useEFPProfile();
   const { address: connectedAddress } = useAccount();
+  const { selectedList, topEight, refetchProfile, setFetchFreshProfile, fetchFreshProfile } =
+    useEFPProfile();
 
   const searchParams = useSearchParams();
   const searchURLParam = searchParams.get("search");
@@ -524,6 +526,18 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                               {t(copyProfileLinkPressed ? "copied" : "copy profile")}
                             </p>
                           </button>
+                          {profileName && (
+                            <button
+                              onClick={() => {
+                                if (fetchFreshProfile) refetchProfile();
+                                else setFetchFreshProfile(true);
+                              }}
+                              className="rounded-lg cursor-pointer hover:bg-text/5 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3"
+                            >
+                              <IoRefresh className="text-base" />
+                              <p className="text-nowrap">{t("refresh ens")}</p>
+                            </button>
+                          )}
                           {profileName && (
                             <button
                               onClick={() => {

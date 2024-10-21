@@ -53,13 +53,13 @@ const Home = () => {
         </div>
       )}
       <div className="flex flex-col gap-4 h-auto w-full lg:hidden xl:sticky">
-        {!isFollowersEmpty && userAddress && <LatestFollowers />}
         <Recommendations
           limit={10}
           endpoint="discover"
           header={t("recent")}
           className={cn("h-fit w-full py-4 sm:p-4 glass-card border-[3px] border-grey rounded-2xl")}
         />
+        {!isFollowersEmpty && userAddress && <LatestFollowers />}
       </div>
       {userAddress ? (
         <FeedCard
@@ -88,7 +88,6 @@ const Home = () => {
           top: userAddress ? "calc(100vh - 108px - 2000px)" : "0",
         }}
       >
-        {!isFollowersEmpty && userAddress && <LatestFollowers />}
         <Recommendations
           limit={11}
           endpoint="discover"
@@ -97,6 +96,7 @@ const Home = () => {
             "h-fit w-full py-4 p-3 2xl:p-4 glass-card border-[3px] border-grey rounded-2xl"
           )}
         />
+        {!isFollowersEmpty && userAddress && <LatestFollowers />}
       </div>
       {/* <ScrollIndicator /> */}
     </div>
