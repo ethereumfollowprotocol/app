@@ -38,6 +38,9 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     stats: profileStats,
     profile: profileProfile,
     selectedList,
+    refetchProfile: profileRefetchProfile,
+    fetchFreshProfile: profileFetchFreshProfile,
+    setFetchFreshProfile: profileSetFetchFreshProfile,
     following: profileFollowing,
     followers: profileFollowers,
     toggleTag: profileToggleTag,
@@ -81,14 +84,16 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     followersSort: userFollowerSort,
     followingSort: userFollowingSort,
     followingTags: userFollowingTags,
+    refetchProfile: userRefetchProfile,
+    statsIsLoading: userStatsIsLoading,
     profileIsLoading: userProfileIsLoading,
     isEndOfFollowing: userIsEndOfFollowing,
     isEndOfFollowers: userIsEndOfFollowers,
     setFollowingSort: userSetFollowingSort,
     setFollowersSort: userSetFollowerSort,
+    fetchFreshProfile: userFetchFreshProfile,
     setFollowersSearch: userSetFollowersSearch,
     setFollowingSearch: userSetFollowingSearch,
-    statsIsLoading: userStatsIsLoading,
     followersIsLoading: userFollowersIsLoading,
     followingIsLoading: userFollowingIsLoading,
     fetchMoreFollowers: userFetchMoreFollowers,
@@ -96,6 +101,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     followingTagsFilter: userFollowingTagsFilter,
     followersTagsFilter: userFollowersTagsFilter,
     followerTagsLoading: userFollowerTagsLoading,
+    setFetchFreshProfile: userSetFetchFreshProfile,
     followingTagsLoading: userFollowingTagsLoading,
     isFetchingMoreFollowers: userIsFetchingMoreFollowers,
     isFetchingMoreFollowing: userIsFetchingMoreFollowing,
@@ -296,6 +302,13 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
               }
               stats={stats}
               profile={profile}
+              refetchProfile={() => {
+                if (isMyProfile)
+                  if (profileFetchFreshProfile) profileRefetchProfile();
+                  else profileSetFetchFreshProfile(true);
+                else if (userFetchFreshProfile) userRefetchProfile();
+                else userSetFetchFreshProfile(true);
+              }}
               isLoading={profileIsLoading}
               isStatsLoading={statsIsLoading}
               showMoreOptions={true}

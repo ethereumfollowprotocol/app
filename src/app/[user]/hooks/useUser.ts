@@ -13,6 +13,7 @@ import type { FollowerResponse, FollowingResponse, FollowSortType } from '#/type
 import { fetchProfileStats } from '#/api/fetchProfileStats'
 
 const useUser = (user: string) => {
+  const [fetchFreshProfile, setFetchFreshProfile] = useState(false)
   const [followingSearch, setFollowingSearch] = useState<string>('')
   const [followersSearch, setFollowersSearch] = useState<string>('')
   const [followingTagsFilter, setFollowingTagsFilter] = useState<string[]>([])
@@ -31,13 +32,14 @@ const useUser = (user: string) => {
   const {
     data: profile,
     isLoading: profileIsLoading,
-    isRefetching: isRefetchingProfile
+    isRefetching: isRefetchingProfile,
+    refetch: refetchProfile
   } = useQuery({
     queryKey: ['profile', user],
     queryFn: async () => {
       if (!isValidUser) return null
 
-      const fetchedProfile = await fetchProfileDetails(user, listNum)
+      const fetchedProfile = await fetchProfileDetails(user, listNum, fetchFreshProfile)
       return fetchedProfile
     },
     staleTime: 30000,
@@ -244,7 +246,10 @@ const useUser = (user: string) => {
     toggleTag,
     setFollowersSort,
     setFollowersTagsFilter,
-    setFollowingTagsFilter
+    setFollowingTagsFilter,
+    refetchProfile,
+    fetchFreshProfile,
+    setFetchFreshProfile
   }
 }
 
