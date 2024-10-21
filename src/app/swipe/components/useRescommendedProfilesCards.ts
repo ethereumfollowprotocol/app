@@ -39,38 +39,39 @@ export const useRecommendedProfilesCards = () => {
   // const [isAnimationPlaying, setIsAnimationPlaying] = useState(false)
 
   // // Function to add new animated elements when a card is swiped right
-  const addAnimatedElements = (cardIndex: number) => {
-    if (animatedElements.length > 0) return
-    // console.log('adding animated elements')
+  const addAnimatedElements = useCallback(
+    (cardIndex: number) => {
+      if (animatedElements.length > 0) return
+      // console.log('adding animated elements')
 
-    const newElements = Array.from({ length: 10 }).map((_, index) => {
-      // const randomRight = Math.random() * 80
-      // const randomTop = 10 + Math.random() * 30
-      // const randomDelay = (window.innerWidth > 768 ? 130 : 50) + Math.random() * 150
+      const newElements = Array.from({ length: 10 }).map((_, index) => {
+        // const randomRight = Math.random() * 80
+        // const randomTop = 10 + Math.random() * 30
+        // const randomDelay = (window.innerWidth > 768 ? 130 : 50) + Math.random() * 150
 
-      // const style = {
-      //   top: `${randomTop}%`,
-      //   right: `-${randomRight}%`,
-      //   animationDelay: `${randomDelay}ms`
-      // }
+        // const style = {
+        //   top: `${randomTop}%`,
+        //   right: `-${randomRight}%`,
+        //   animationDelay: `${randomDelay}ms`
+        // }
 
-      const key = `${cardIndex}-${index}`
+        const key = `${cardIndex}-${index}`
 
-      return {
-        cardIndex,
-        key
-      }
-    })
+        return {
+          cardIndex,
+          key
+        }
+      })
 
-    setAnimatedElements((prevElements: AnimatedElementType[]) =>
-      prevElements.length > 0 ? prevElements : newElements
-    )
-  }
+      setAnimatedElements((prevElements: AnimatedElementType[]) =>
+        prevElements.length > 0 ? prevElements : newElements
+      )
+    },
+    [animatedElements]
+  )
 
   const handleAnimationEnd = (cardIndex: number) => {
-    setAnimatedElements((prevElements: AnimatedElementType[]) =>
-      prevElements.filter(element => element.cardIndex !== cardIndex)
-    )
+    setAnimatedElements([])
   }
 
   // const handleAnimationEnd = (animation: 'primary' | 'secondary') => {
@@ -193,7 +194,7 @@ export const useRecommendedProfilesCards = () => {
     })
     setDidSwipeBack(false)
     gone.add(gone.size)
-  }, [gone, fetchNextPage, api, isLoading, recommendedProfiles, animatedElements])
+  }, [gone, fetchNextPage, api, isLoading, recommendedProfiles, addAnimatedElements])
 
   const onSwipeBack = useCallback(() => {
     if (didSwipeBack) return
