@@ -697,7 +697,6 @@ input {
 }
 
 .falling-element {
-  opacity: 0;
   animation: fall 0.6s linear forwards;
 }
 
