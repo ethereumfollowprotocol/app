@@ -14,7 +14,7 @@ const AnimatedElement: React.FC<AnimatedElementProps> = React.memo(({ handleAnim
 
   return (
     <div
-      className="falling-element fixed z-50"
+      className="falling-element pointer-events-none fixed z-50"
       style={{
         top: `${randomTop}%`,
         right: `-${randomRight}%`,

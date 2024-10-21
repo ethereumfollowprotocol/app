@@ -36,25 +36,13 @@ export const useRecommendedProfilesCards = () => {
 
   const [didSwipeBack, setDidSwipeBack] = useState(false)
   const [animatedElements, setAnimatedElements] = useState<AnimatedElementType[]>([])
-  // const [isAnimationPlaying, setIsAnimationPlaying] = useState(false)
 
   // // Function to add new animated elements when a card is swiped right
   const addAnimatedElements = useCallback(
     (cardIndex: number) => {
       if (animatedElements.length > 0) return
-      // console.log('adding animated elements')
 
       const newElements = Array.from({ length: 10 }).map((_, index) => {
-        // const randomRight = Math.random() * 80
-        // const randomTop = 10 + Math.random() * 30
-        // const randomDelay = (window.innerWidth > 768 ? 130 : 50) + Math.random() * 150
-
-        // const style = {
-        //   top: `${randomTop}%`,
-        //   right: `-${randomRight}%`,
-        //   animationDelay: `${randomDelay}ms`
-        // }
-
         const key = `${cardIndex}-${index}`
 
         return {
@@ -73,11 +61,6 @@ export const useRecommendedProfilesCards = () => {
   const handleAnimationEnd = (cardIndex: number) => {
     setAnimatedElements([])
   }
-
-  // const handleAnimationEnd = (animation: 'primary' | 'secondary') => {
-  //   if (animation === 'primary') setIsAnimationPlaying(false)
-  //   // else setIsSecondaryAnimationPlaying(false)
-  // }
 
   const [props, api] = useSprings(recommendedProfiles.length, i => ({
     ...to(i),
@@ -168,11 +151,8 @@ export const useRecommendedProfilesCards = () => {
 
     api.start(i => {
       if (i === gone.size) {
-        // if (!isAnimationPlaying) setIsAnimationPlaying(true)
-        // else if (!isSecondaryAnimationPlaying) setIsSecondaryAnimationPlaying(true)
-
         if (canFetchMoreProfiles(i)) fetchNextPage()
-        // animateFollow()
+
         setTimeout(() => {
           addCartItem({
             listOp: listOpAddListRecord(
