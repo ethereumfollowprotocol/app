@@ -22,11 +22,11 @@ export const trans = (r: number, s: number) =>
 export type AnimatedElementType = {
   cardIndex: number
   key: string
-  style: {
-    top: string
-    right: string
-    animationDelay: string
-  }
+  // style: {
+  //   top: string
+  //   right: string
+  //   animationDelay: string
+  // }
 }
 
 export const useRecommendedProfilesCards = () => {
@@ -40,31 +40,30 @@ export const useRecommendedProfilesCards = () => {
 
   // // Function to add new animated elements when a card is swiped right
   const addAnimatedElements = (cardIndex: number) => {
-    if (animatedElements.length >= 10) return
-    const newElements = Array.from({ length: 10 }).map((_, index) => {
-      const randomRight = Math.random() * 80
-      const randomTop = 10 + Math.random() * 30
-      const randomDelay = (window.innerWidth > 768 ? 130 : 50) + Math.random() * 150
+    if (animatedElements.length > 0) return
+    // console.log('adding animated elements')
 
-      const style = {
-        top: `${randomTop}%`,
-        right: `-${randomRight}%`,
-        animationDelay: `${randomDelay}ms`
-      }
+    const newElements = Array.from({ length: 10 }).map((_, index) => {
+      // const randomRight = Math.random() * 80
+      // const randomTop = 10 + Math.random() * 30
+      // const randomDelay = (window.innerWidth > 768 ? 130 : 50) + Math.random() * 150
+
+      // const style = {
+      //   top: `${randomTop}%`,
+      //   right: `-${randomRight}%`,
+      //   animationDelay: `${randomDelay}ms`
+      // }
 
       const key = `${cardIndex}-${index}`
 
       return {
         cardIndex,
-        key,
-        style
+        key
       }
     })
 
     setAnimatedElements((prevElements: AnimatedElementType[]) =>
-      prevElements.length >= 10
-        ? prevElements
-        : [...prevElements.slice(1), ...newElements].slice(-10)
+      prevElements.length > 0 ? prevElements : newElements
     )
   }
 
@@ -181,7 +180,7 @@ export const useRecommendedProfilesCards = () => {
               recommendedProfiles[i].address
             )
           })
-        }, 150)
+        }, 120)
 
         return {
           x: (250 + window.innerWidth / 1.5) * 1,

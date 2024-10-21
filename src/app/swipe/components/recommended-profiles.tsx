@@ -4,8 +4,8 @@ import Image from "next/image";
 import { HiArrowUturnDown } from "react-icons/hi2";
 import { animated, to as interpolate } from "@react-spring/web";
 
-import Logo from "public/assets/logo.svg";
-// import AnimatedElement from "./animatedElement";
+// import Logo from "public/assets/logo.svg";
+import AnimatedElement from "./animatedElement";
 import MainnetBlack from "public/assets/mainnet-black.svg";
 import UserProfileCard from "#/components/user-profile-card";
 import { trans, useRecommendedProfilesCards } from "./useRescommendedProfilesCards";
@@ -30,7 +30,10 @@ const RecommendedCards = () => {
 
   return (
     <div className="flex w-full items-center justify-start flex-col">
-      {animatedElements.map(({ key, style, cardIndex }) => (
+      {animatedElements.map(({ key, cardIndex }) => (
+        <AnimatedElement key={key} handleAnimationEnd={() => handleAnimationEnd(cardIndex)} />
+      ))}
+      {/* {animatedElements.map(({ key, style, cardIndex }) => (
         <div
           key={key}
           className="falling-element fixed z-50"
@@ -48,7 +51,7 @@ const RecommendedCards = () => {
             height={32}
           />
         </div>
-      ))}
+      ))} */}
       {/* {isAnimationPlaying &&
         Array.from({ length: 10 }).map((_, index) => (
           <AnimatedElement
