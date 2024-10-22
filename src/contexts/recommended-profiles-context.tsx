@@ -28,12 +28,12 @@ const RecommendedProfilesContext = createContext<RecommendedProfilesContextType 
 export const RecommendedProfilesProvider: React.FC<Props> = ({ children }) => {
   const [gone] = useState(() => new Set()); // The set flags all the cards that are flicked out
 
-  const { selectedList } = useEFPProfile();
+  const { listToFetch } = useEFPProfile();
   const { address: userAddress } = useAccount();
 
   useEffect(() => {
     gone.clear();
-  }, [selectedList]);
+  }, [listToFetch]);
 
   const {
     data: recommendedProfilesFetched,
@@ -42,13 +42,13 @@ export const RecommendedProfilesProvider: React.FC<Props> = ({ children }) => {
     hasNextPage,
     fetchNextPage,
   } = useInfiniteQuery({
-    queryKey: ["recommended profiles", userAddress, selectedList],
+    queryKey: ["recommended profiles", userAddress, listToFetch],
     queryFn: ({ pageParam = 0 }) => {
       if (!userAddress) return { recommended: [], nextPageParam: 0 };
 
       return fetchRecommendedProfiles(
         userAddress,
-        selectedList,
+        listToFetch,
         RECOMMENDED_PROFILES_LIMIT,
         pageParam
       );

@@ -1,12 +1,17 @@
 "use client";
 
 import Image from "next/image";
+import { useMemo } from "react";
+import { useAccount } from "wagmi";
+import { useTheme } from "next-themes";
 import { HiArrowUturnDown } from "react-icons/hi2";
 import { animated, to as interpolate } from "@react-spring/web";
 
 import Logo from "public/assets/logo.svg";
-import MainnetBlack from "public/assets/mainnet-black.svg";
+import SwipeButtons from "./swipeButtons";
 import UserProfileCard from "#/components/user-profile-card";
+import HalloweenEmoji from "public/assets/icons/halloween-emoji.svg";
+import LoadingRecommendedCards from "./loading-recommended-cards";
 import { trans, useRecommendedProfilesCards } from "./useRescommendedProfilesCards";
 
 const RecommendedCards = () => {
@@ -25,6 +30,18 @@ const RecommendedCards = () => {
     recommendedProfiles,
   } = useRecommendedProfilesCards();
 
+  const { resolvedTheme } = useTheme();
+  const { address: userAddress } = useAccount();
+
+  const ArrayOfTen = useMemo(
+    () =>
+      new Array(10).fill(1).map(() => ({
+        randomLeft: Math.random() * 80,
+        randomTop: 10 + Math.random() * 30,
+      })),
+    []
+  );
+
   return (
     <div className="flex w-full items-center justify-start flex-col">
       <div
@@ -35,59 +52,36 @@ const RecommendedCards = () => {
           handleAnimationEnd();
         }}
       >
-        {new Array(10).fill(1).map((_, index) => {
-          const randomLeft = Math.random() * 80;
-          const randomTop = 10 + Math.random() * 30;
-
-          return (
-            <Image
-              key={index}
-              src={Logo}
-              style={{
-                top: `${randomTop}%`,
-                left: `${randomLeft}%`,
-              }}
-              className="animate-spin absolute repeat-infinite"
-              alt="mainnet"
-              width={32}
-              height={32}
-            />
-          );
-        })}
-        <Image
-          src={Logo}
-          className="animate-spin repeat-infinite"
-          alt="mainnet"
-          width={32}
-          height={32}
-        />
+        {ArrayOfTen.map(({ randomLeft, randomTop }, index) => (
+          <Image
+            key={index}
+            src={resolvedTheme === "halloween" ? HalloweenEmoji : Logo}
+            style={{
+              top: `${randomTop}%`,
+              left: `${randomLeft}%`,
+            }}
+            className="animate-spin absolute repeat-infinite"
+            alt="mainnet"
+            width={32}
+            height={32}
+          />
+        ))}
       </div>
       <div className="flex flex-col w-full items-center justify-start h-fit min-h-[500px] sm:min-h-[680px] relative">
-        {(isLoading || isFetchingNextPage || recommendedProfiles.length === 0) &&
-          new Array(4).fill(1).map((_, i) => (
-            <div
-              className="h-fit w-full sm:max-w-92 absolute z-10 xxs:mr-4"
-              key={i}
-              style={{
-                marginTop: `${40 - i * 10}px`,
-              }}
-            >
-              <UserProfileCard
-                isLoading={true}
-                isResponsive={false}
-                hideFollowButton={true}
-                isRecommended={true}
-              />
-            </div>
-          ))}
+        <LoadingRecommendedCards
+          userAddress={userAddress}
+          isLoading={isLoading}
+          isFetchingNextPage={isFetchingNextPage}
+          recommendedProfiles={recommendedProfiles}
+          gone={gone}
+        />
         {props
           .map(({ x, y, rot, scale }, i) => {
-            if (gone.has(i + 3)) {
-              return null;
-            }
+            if (gone.has(i + 3)) return null;
+
             return (
               <animated.div
-                className="h-fit w-full max-w-92 absolute top-0 will-change-transform touch-none z-20 xxs:mr-4"
+                className="h-fit w-full max-w-92 absolute top-0 will-change-transform z-20 sm:mr-[14px]"
                 key={`${recommendedProfiles[i]?.address}-${i}`}
                 style={{ x, y }}
               >
@@ -95,6 +89,7 @@ const RecommendedCards = () => {
                   {...bind(i)}
                   style={{
                     transform: interpolate([rot, scale], trans),
+                    touchAction: "none",
                   }}
                 >
                   <div className="cursor-pointer">
@@ -111,29 +106,15 @@ const RecommendedCards = () => {
             );
           })
           .reverse()}
-        <button
-          className="absolute -left-1 sm:left-auto sm:mr-[475px] z-30 sm:z-10 top-56 sm:top-60 rounded-xl w-14 text-lg font-semibold h-14 flex items-center justify-center glass-card border-[3px] border-text/70 transition-all hover:scale-110"
-          disabled={
-            recommendedProfiles.length === 0 ||
-            isLoading ||
-            (isFetchingNextPage && gone.size === recommendedProfiles.length)
-          }
-          onClick={onSwipeLeft}
-        >
-          Meh
-        </button>
-        <button
-          className="absolute -right-1 sm:right-auto sm:ml-[445px] z-30 sm:z-10 top-56 sm:top-60 rounded-xl w-14 h-14 flex items-center justify-center pl-1.5 pt-1 text-black btn-grad transition-all hover:scale-110"
-          disabled={
-            recommendedProfiles.length === 0 ||
-            isLoading ||
-            (isFetchingNextPage && gone.size === recommendedProfiles.length)
-          }
-          onClick={onSwipeRight}
-        >
-          <Image src={MainnetBlack} alt="mainnet" width={24} height={24} />
-        </button>
-        {/* </div> */}
+        <SwipeButtons
+          userAddress={userAddress}
+          recommendedProfiles={props}
+          isLoading={isLoading}
+          isFetchingNextPage={isFetchingNextPage}
+          gone={gone}
+          onSwipeLeft={onSwipeLeft}
+          onSwipeRight={onSwipeRight}
+        />
       </div>
       <button
         className="cursor-pointer z-40 rounded-full fixed bottom-4 sm:bottom-10 lg:bottom-20 bg-text/20 flex flex-row-reverse items-center gap-2 hover:bg-text/40 transition-all hover:scale-110 px-3 py-2 text-xl disabled:hidden"

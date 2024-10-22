@@ -6,6 +6,7 @@ import { useAccount } from "wagmi";
 import { useTheme } from "next-themes";
 import { FaLink } from "react-icons/fa";
 import { useState, type Ref } from "react";
+import { IoRefresh } from "react-icons/io5";
 import { IoMdSettings } from "react-icons/io";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
@@ -41,7 +42,7 @@ import DefaultHeader from "public/assets/art/default-header.svg";
 import { useCoolMode } from "../follow-button/hooks/useCoolMode";
 import LoadingProfileCard from "./components/loading-profile-card";
 import type { ProfileDetailsResponse, StatsResponse } from "#/types/requests";
-import { IoRefresh } from "react-icons/io5";
+import ConnectButton from "../navigation/components/connect-button";
 
 interface UserProfileCardProps {
   profileList?: number | null;
@@ -805,6 +806,11 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           hideFollowButton={true}
           isStatic={!isLoading}
         />
+      ) : isRecommended ? (
+        <div className="flex items-center flex-col gap-4 justify-center w-full h-[536px]">
+          <p className="text-xl px-8 font-bold">{t("connect to see more")}</p>
+          <ConnectButton />
+        </div>
       ) : (
         <div
           className={`w-full h-20 ${

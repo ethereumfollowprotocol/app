@@ -47,6 +47,7 @@ import { BLOCKED_MUTED_TAGS, DEFAULT_TAGS_TO_ADD, FETCH_LIMIT_PARAM } from "#/li
 // Define the type for the profile context
 type EFPProfileContextType = {
   selectedList?: number;
+  listToFetch?: number;
   setSelectedList: Dispatch<SetStateAction<number | undefined>>;
   fetchFreshLists: boolean;
   setFetchFreshLists: Dispatch<SetStateAction<boolean>>;
@@ -549,6 +550,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     <EFPProfileContext.Provider
       value={{
         selectedList,
+        listToFetch,
         setSelectedList,
         fetchFreshLists,
         setFetchFreshLists,
