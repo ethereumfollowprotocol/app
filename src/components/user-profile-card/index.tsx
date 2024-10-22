@@ -6,6 +6,7 @@ import { useAccount } from "wagmi";
 import { useTheme } from "next-themes";
 import { FaLink } from "react-icons/fa";
 import { useState, type Ref } from "react";
+import { IoRefresh } from "react-icons/io5";
 import { IoMdSettings } from "react-icons/io";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
@@ -41,7 +42,7 @@ import DefaultHeader from "public/assets/art/default-header.svg";
 import { useCoolMode } from "../follow-button/hooks/useCoolMode";
 import LoadingProfileCard from "./components/loading-profile-card";
 import type { ProfileDetailsResponse, StatsResponse } from "#/types/requests";
-import { IoRefresh } from "react-icons/io5";
+import ConnectButton from "../navigation/components/connect-button";
 
 interface UserProfileCardProps {
   profileList?: number | null;
@@ -54,6 +55,7 @@ interface UserProfileCardProps {
   showMoreOptions?: boolean;
   openBlockModal?: () => void;
   openListSettingsModal?: () => void;
+  isRecommended?: boolean;
   refetchProfile?: () => void;
 }
 
@@ -68,6 +70,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   showMoreOptions,
   openBlockModal,
   openListSettingsModal,
+  isRecommended,
   refetchProfile,
 }) => {
   const [cardTooltipOpen, setCardTooltipOpen] = useState(false);
@@ -261,16 +264,18 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   return (
     <div
       className={cn(
-        "flex glass-card border-[3px] z-10 flex-col border-[#FFDBD9] dark:border-[#a36d7d] halloween:border-[#a36d7d] rounded-xl relative",
+        "flex border-[3px] z-10 flex-col border-[#FFDBD9] dark:border-[#a36d7d] halloween:border-[#a36d7d] rounded-xl relative",
+        isRecommended ? "bg-neutral" : "glass-card",
         isResponsive
           ? "w-full xl:w-[324px] xl:min-w-[324px] 3xl:w-86 3xl:min-w-86"
-          : "w-80 xxs:w-92"
+          : "w-full xxs:w-92"
       )}
     >
       {isLoading ? (
         <LoadingProfileCard
           isResponsive={isResponsive}
           hideFollowButton={hideFollowButton || isConnectedUserCard}
+          isRecommended={isRecommended}
         />
       ) : profile && isProfileValid ? (
         <>
@@ -690,28 +695,26 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
               <div
                 className="cursor-pointer hover:scale-110 transition-all"
                 onClick={() =>
-                  router.push(
-                    `/${
-                      pathname.length > 1 && pathname !== "/team"
-                        ? pathname.slice(1)
-                        : isConnectedUserCard
-                        ? selectedList === Number(profile.primary_list)
-                          ? profile.address
-                          : selectedList
-                        : profile.address
-                    }?tab=following`
-                  )
+                  pathname === "/recommended"
+                    ? null
+                    : router.push(
+                        `/${
+                          pathname.length > 1 && pathname !== "/team"
+                            ? pathname.slice(1)
+                            : isConnectedUserCard
+                            ? selectedList === Number(profile.primary_list)
+                              ? profile.address
+                              : selectedList
+                            : profile.address
+                        }?tab=following`
+                      )
                 }
               >
                 {isStatsLoading ? (
                   <LoadingCell className="w-12 h-6 mb-1 rounded-lg mx-auto" />
                 ) : (
                   <div className="text-[21px] 3xl:text-2xl text-center font-bold">
-                    {stats
-                      ? profileList !== undefined
-                        ? formatNumber(stats?.following_count || 0)
-                        : 0
-                      : "-"}
+                    {stats ? formatNumber(stats.following_count) : "-"}
                   </div>
                 )}
                 <div className="text-[16px] 3xl:text-lg font-bold text-text/40">
@@ -721,17 +724,19 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
               <div
                 className="cursor-pointer hover:scale-110 transition-all"
                 onClick={() =>
-                  router.push(
-                    `/${
-                      pathname.length > 1 && pathname !== "/team"
-                        ? pathname.slice(1)
-                        : isConnectedUserCard
-                        ? selectedList === Number(profile.primary_list)
-                          ? profile.address
-                          : selectedList
-                        : profile.address
-                    }?tab=followers`
-                  )
+                  pathname === "/recommended"
+                    ? null
+                    : router.push(
+                        `/${
+                          pathname.length > 1 && pathname !== "/team"
+                            ? pathname.slice(1)
+                            : isConnectedUserCard
+                            ? selectedList === Number(profile.primary_list)
+                              ? profile.address
+                              : selectedList
+                            : profile.address
+                        }?tab=followers`
+                      )
                 }
               >
                 {isStatsLoading ? (
@@ -745,7 +750,12 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                   {t("followers")}
                 </div>
               </div>
-              <div className="flex flex-col w-full items-center gap-2">
+              <div
+                className={cn(
+                  "flex flex-col w-full items-center gap-2",
+                  isRecommended && "hidden sm:flex"
+                )}
+              >
                 <Link href="/leaderboard">
                   <div
                     className={`${
@@ -796,6 +806,11 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           hideFollowButton={true}
           isStatic={!isLoading}
         />
+      ) : isRecommended ? (
+        <div className="flex items-center flex-col gap-4 justify-center w-full h-[536px]">
+          <p className="text-xl px-8 font-bold">{t("connect to see more")}</p>
+          <ConnectButton isResponsive={false} />
+        </div>
       ) : (
         <div
           className={`w-full h-20 ${

@@ -696,6 +696,58 @@ input {
     }
 }
 
+.falling-element {
+  opacity: 0;
+  animation: fall 0.6s linear forwards;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateX(0vw) translateY(0vh);
+    opacity: 0;
+  }
+  10% {
+    transform: translateX(-20.9vw) translateY(1.4vh);
+    opacity: 1;
+  }
+  20% {
+    transform: translateX(-39.6vw) translateY(5.6vh);
+    opacity: 1;
+  }
+  30% {
+    transform: translateX(-56.1vw) translateY(12.6vh);
+    opacity: 1;
+  }
+  40% {
+    transform: translateX(-70.4vw) translateY(22.4vh);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(-82.5vw) translateY(35vh);
+    opacity: 1;
+  }
+  60% {
+    transform: translateX(-92.4vw) translateY(50.4vh);
+    opacity: 1;
+  }
+  70% {
+    transform: translateX(-100.1vw) translateY(68.6vh);
+    opacity: 1;
+  }
+  80% {
+    transform: translateX(-105.6vw) translateY(89.6vh);
+    opacity: 1;
+  }
+  90% {
+    transform: translateX(-108.9vw) translateY(113.4vh);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-110vw) translateY(140vh);
+    opacity: 1;
+  }
+}
+
 /* Base styles for the element */
 [data-loaded="false"] {
   background: linear-gradient(90deg, rgba(200, 200, 200, 0.7) 0%, rgba(172, 172, 172, 0.05) 50%, rgba(200, 200, 200, 0.7) 100%);
@@ -743,6 +795,53 @@ input {
     top: -300vw;
     height: 900vw;
     width: 750vw;
+  }
+
+  @keyframes fall {
+    0% {
+      transform: translateX(0vw) translateY(0vh);
+      opacity: 0;
+    }
+    10% {
+      transform: translateX(-38vw) translateY(1.4vh);
+      opacity: 1;
+    }
+    20% {
+      transform: translateX(-72vw) translateY(5.6vh);
+      opacity: 1;
+    }
+    30% {
+      transform: translateX(-102vw) translateY(12.6vh);
+      opacity: 1;
+    }
+    40% {
+      transform: translateX(-128vw) translateY(22.4vh);
+      opacity: 1;
+    }
+    50% {
+      transform: translateX(-150vw) translateY(35vh);
+      opacity: 1;
+    }
+    60% {
+      transform: translateX(-168vw) translateY(50.4vh);
+      opacity: 1;
+    }
+    70% {
+      transform: translateX(-182vw) translateY(68.6vh);
+      opacity: 1;
+    }
+    80% {
+      transform: translateX(-192vw) translateY(89.6vh);
+      opacity: 1;
+    }
+    90% {
+      transform: translateX(-198vw) translateY(113.4vh);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(-200vw) translateY(140vh);
+      opacity: 1;
+    }
   }
 }
 

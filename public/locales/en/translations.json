@@ -21,6 +21,8 @@
 
   "profile": "My Profile",
   "profile error": "User doesn't exist",
+  "connect to see more": "Connect your wallet to start swiping!",
+  "no more profiles": "Looks like you have swiped through all the profiles! Come back later for more.",
   "settings": "List Settings",
   "block-mute": "Block/Mute Lists",
   "edit settings": "Edit Settings",
@@ -171,6 +173,7 @@
   "accounts": "accounts",
   "search no results": "No results",
   "team": "Team",
+  "about": "About",
   "docs": "Docs",
   "faq": "FAQ",
   "bug bounty": "Bug Bounty",
@@ -195,5 +198,9 @@
   "Unmute": "Unmute",
 
   "feed": "Onchain Feed",
-  "feed description": "The latest onchain activity of who you follow on EFP 👀"
+  "feed description": "The latest onchain activity of who you follow on EFP 👀",
+
+  "swipe": "Swipe!",
+  "meh": "Meh",
+  "undo": "Undo"
 }

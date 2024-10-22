@@ -18,15 +18,14 @@ export const APP_NAME = 'Ethereum Follow Protocol'
 export const APP_NAME_SHORT = 'EFP'
 export const APP_DESCRIPTION =
   'A native Ethereum protocol for following and tagging Ethereum accounts.'
-export const APP_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:4321'
+export const APP_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:4321'
 
 export const ENS_SUBGRAPH_URL = `https://gateway-arbitrum.network.thegraph.com/api/${process.env.NEXT_PUBLIC_ENS_SUBGRAPH_API_KEY}/subgraphs/id/5XqPmWe6gjyrJtFn9cLy237i4cWw2j9HcUJEXsP5qGtH`
 
 export const FETCH_LIMIT_PARAM = 12
 export const LEADERBOARD_FETCH_LIMIT_PARAM = 60
 export const LEADERBOARD_CHUNK_SIZE = 20
-
+export const RECOMMENDED_PROFILES_LIMIT = 10
 export const SECOND = 1_000
 export const MINUTE = 60 * SECOND
 export const HOUR = 60 * MINUTE
@@ -57,6 +56,11 @@ export const NAV_ITEMS = [
   //   name: 'feed',
   // },
   {
+    href: () => '/swipe',
+    name: 'swipe',
+    hiddenOnDesktop: true
+  },
+  {
     href: () => '/leaderboard',
     name: 'leaderboard',
     hiddenOnDesktop: true
@@ -64,6 +68,11 @@ export const NAV_ITEMS = [
 ]
 
 export const EXTERNAL_LINKS = [
+  // <  {
+  //     text: 'swipe',
+  //     href: '/swipe',
+  //     target: ''
+  //   },
   {
     text: 'about',
     href: '/about',

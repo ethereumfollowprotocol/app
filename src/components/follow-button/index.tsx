@@ -3,18 +3,18 @@
 import Image from "next/image";
 import { useAccount } from "wagmi";
 import type { Address } from "viem";
-import { useEffect, useMemo, useRef, useState, type Ref } from "react";
+import { useTheme } from "next-themes";
 import { useTranslation } from "react-i18next";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
+import { useEffect, useMemo, useRef, useState, type Ref } from "react";
 
 import { cn } from "#/lib/utilities";
 import LoadingCell from "../loaders/loading-cell";
 import { useCoolMode } from "./hooks/useCoolMode";
 import MainnetRed from "public/assets/mainnet-red.svg";
+import { useActions } from "#/contexts/actions-context";
 import MainnetBlack from "public/assets/mainnet-black.svg";
 import { type FollowButtonState, useFollowButton } from "./hooks/use-follow-button";
-import { useTheme } from "next-themes";
-import { useActions } from "#/contexts/actions-context";
 
 const theme: Record<
   FollowButtonState,

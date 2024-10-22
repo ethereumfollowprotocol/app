@@ -157,6 +157,10 @@ export interface ProfileDetailsResponse {
   stats?: StatsResponse | undefined
 }
 
+export interface ProfileDetailsWithStats extends ProfileDetailsResponse {
+  stats: StatsResponse
+}
+
 export type TagCountType = {
   tag: string
   count: number
@@ -194,4 +198,36 @@ export type ProfileRoles = {
   isManager: boolean
   isUser: boolean
   listChainId: number
+}
+
+export type AccountResponseType = {
+  address: Address
+  ens: {
+    name: string | null
+    avatar: string | null
+  }
+  primary_list: string | null
+}
+
+export type DiscoverItemType = {
+  address: Address
+  name: string | null
+  avatar: string | null
+  followers: number
+  following: number
+}
+
+export type RecommendedItemType = {
+  address: Address
+  name: string | null
+  avatar: string | null
+}
+
+export type DiscoverResponseType = {
+  latestFollows: DiscoverItemType[]
+  recommended: RecommendedItemType[]
+}
+
+export type RecommendedProfilesResponseType = {
+  recommended: ProfileDetailsResponse[]
 }
