@@ -3,19 +3,19 @@ import UserProfileCard from "#/components/user-profile-card";
 import type { ProfileDetailsResponse } from "#/types/requests";
 
 interface LoadingRecommendedCardsProps {
-  userAddress?: string;
+  gone: Set<number>;
   isLoading: boolean;
+  userAddress?: string;
   isFetchingNextPage: boolean;
   recommendedProfiles: ProfileDetailsResponse[];
-  gone: Set<number>;
 }
 
 const LoadingRecommendedCards = ({
-  userAddress,
+  gone,
   isLoading,
+  userAddress,
   isFetchingNextPage,
   recommendedProfiles,
-  gone,
 }: LoadingRecommendedCardsProps) => {
   const { t } = useTranslation();
 

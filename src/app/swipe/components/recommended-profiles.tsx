@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo } from "react";
 import { useAccount } from "wagmi";
 import { useTheme } from "next-themes";
 import { HiArrowUturnDown } from "react-icons/hi2";
@@ -30,17 +29,8 @@ const RecommendedCards = () => {
     recommendedProfiles,
   } = useRecommendedProfilesCards();
 
-  const { resolvedTheme } = useTheme();
+  const { theme } = useTheme();
   const { address: userAddress } = useAccount();
-
-  const ArrayOfTen = useMemo(
-    () =>
-      new Array(10).fill(1).map(() => ({
-        randomLeft: Math.random() * 80,
-        randomTop: 10 + Math.random() * 30,
-      })),
-    []
-  );
 
   return (
     <div className="flex w-full items-center justify-start flex-col">
@@ -52,20 +42,26 @@ const RecommendedCards = () => {
           handleAnimationEnd();
         }}
       >
-        {ArrayOfTen.map(({ randomLeft, randomTop }, index) => (
-          <Image
-            key={index}
-            src={resolvedTheme === "halloween" ? HalloweenEmoji : Logo}
-            style={{
-              top: `${randomTop}%`,
-              left: `${randomLeft}%`,
-            }}
-            className="animate-spin absolute repeat-infinite"
-            alt="mainnet"
-            width={32}
-            height={32}
-          />
-        ))}
+        {new Array(10).fill(1).map((index) => {
+          const randomLeft = Math.random() * 80;
+          const randomTop = 10 + Math.random() * 30;
+          const icon = theme === "halloween" ? HalloweenEmoji : Logo;
+
+          return (
+            <Image
+              key={`icons-${index}-${randomLeft}-${randomTop}`}
+              src={icon}
+              style={{
+                top: `${randomTop}%`,
+                left: `${randomLeft}%`,
+              }}
+              className="animate-spin absolute repeat-infinite"
+              alt="follow icon"
+              width={32}
+              height={32}
+            />
+          );
+        })}
       </div>
       <div className="flex flex-col w-full items-center justify-start h-fit min-h-[500px] sm:min-h-[680px] relative">
         <LoadingRecommendedCards
@@ -75,37 +71,38 @@ const RecommendedCards = () => {
           recommendedProfiles={recommendedProfiles}
           gone={gone}
         />
-        {props
-          .map(({ x, y, rot, scale }, i) => {
-            if (gone.has(i + 3)) return null;
+        {!isLoading &&
+          props
+            .map(({ x, y, rot, scale }, i) => {
+              if (gone.has(i + 3)) return null;
 
-            return (
-              <animated.div
-                className="h-fit w-full max-w-92 absolute top-0 will-change-transform z-20 sm:mr-[14px]"
-                key={`${recommendedProfiles[i]?.address}-${i}`}
-                style={{ x, y }}
-              >
+              return (
                 <animated.div
-                  {...bind(i)}
-                  style={{
-                    transform: interpolate([rot, scale], trans),
-                    touchAction: "none",
-                  }}
+                  className="h-fit w-full max-w-92 absolute top-0 will-change-transform z-20 sm:mr-[14px]"
+                  key={`${recommendedProfiles[i]?.address}-${i}`}
+                  style={{ x, y }}
                 >
-                  <div className="cursor-pointer">
-                    <UserProfileCard
-                      profile={recommendedProfiles[i]}
-                      isResponsive={false}
-                      stats={recommendedProfiles[i]?.stats}
-                      hideFollowButton={true}
-                      isRecommended={true}
-                    />
-                  </div>
+                  <animated.div
+                    {...bind(i)}
+                    style={{
+                      transform: interpolate([rot, scale], trans),
+                      touchAction: "none",
+                    }}
+                  >
+                    <div className="cursor-pointer">
+                      <UserProfileCard
+                        profile={recommendedProfiles[i]}
+                        isResponsive={false}
+                        stats={recommendedProfiles[i]?.stats}
+                        hideFollowButton={true}
+                        isRecommended={true}
+                      />
+                    </div>
+                  </animated.div>
                 </animated.div>
-              </animated.div>
-            );
-          })
-          .reverse()}
+              );
+            })
+            .reverse()}
         <SwipeButtons
           userAddress={userAddress}
           recommendedProfiles={props}

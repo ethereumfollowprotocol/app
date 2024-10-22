@@ -25,7 +25,11 @@ const nullEnsProfile = {
   avatar: null,
 };
 
-const ConnectButton = () => {
+interface ConnectButtonProps {
+  isResponsive?: boolean;
+}
+
+const ConnectButton: React.FC<ConnectButtonProps> = ({ isResponsive = true }) => {
   const [listMenuOpen, setListMenuOpen] = useState(false);
   const [walletMenOpenu, setWalletMenuOpen] = useState(false);
 
@@ -77,8 +81,9 @@ const ConnectButton = () => {
       <button
         type="button"
         className={cn(
-          "z-50 px-1 pl-[3px] transition-all border-[3px] gap-[5px] hover:scale-105 cursor-pointer flex justify-between items-center h-[54px] glass-card rounded-full w-fit sm:w-48 md:w-56",
-          walletMenOpenu ? "connect-button-open " : "connect-button"
+          "z-50 px-1 pl-[3px] transition-all border-[3px] gap-[5px] hover:scale-105 cursor-pointer flex justify-between items-center h-[54px] glass-card rounded-full",
+          walletMenOpenu ? "connect-button-open " : "connect-button",
+          isResponsive ? "w-fit sm:w-48 md:w-56" : "w-56"
         )}
         onClick={() =>
           userAddress
@@ -110,8 +115,12 @@ const ConnectButton = () => {
           </>
         ) : (
           <div className="w-full sm:w-60 h-full flex items-center justify-center rounded-full">
-            <p className="hidden sm:block font-bold text-lg px-1">{t("connect")}</p>
-            <HiOutlineWallet className="text-4xl w-[41px] block sm:hidden" />
+            <p className={cn("font-bold text-lg px-1", isResponsive ? "hidden sm:block" : "block")}>
+              {t("connect")}
+            </p>
+            <HiOutlineWallet
+              className={cn("text-4xl w-[41px]", isResponsive ? "block sm:hidden" : "hidden")}
+            />
           </div>
         )}
       </button>

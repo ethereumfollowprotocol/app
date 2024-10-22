@@ -809,7 +809,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
       ) : isRecommended ? (
         <div className="flex items-center flex-col gap-4 justify-center w-full h-[536px]">
           <p className="text-xl px-8 font-bold">{t("connect to see more")}</p>
-          <ConnectButton />
+          <ConnectButton isResponsive={false} />
         </div>
       ) : (
         <div

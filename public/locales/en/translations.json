@@ -174,7 +174,6 @@
   "search no results": "No results",
   "team": "Team",
   "about": "About",
-  "swipe": "Swipe",
   "docs": "Docs",
   "faq": "FAQ",
   "bug bounty": "Bug Bounty",
@@ -201,6 +200,7 @@
   "feed": "Onchain Feed",
   "feed description": "The latest onchain activity of who you follow on EFP 👀",
 
+  "swipe": "Swipe!",
   "meh": "Meh",
   "undo": "Undo"
 }

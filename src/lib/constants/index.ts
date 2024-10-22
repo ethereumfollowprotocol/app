@@ -56,6 +56,11 @@ export const NAV_ITEMS = [
   //   name: 'feed',
   // },
   {
+    href: () => '/swipe',
+    name: 'swipe',
+    hiddenOnDesktop: true
+  },
+  {
     href: () => '/leaderboard',
     name: 'leaderboard',
     hiddenOnDesktop: true
@@ -63,11 +68,11 @@ export const NAV_ITEMS = [
 ]
 
 export const EXTERNAL_LINKS = [
-  {
-    text: 'swipe',
-    href: '/swipe',
-    target: ''
-  },
+  // <  {
+  //     text: 'swipe',
+  //     href: '/swipe',
+  //     target: ''
+  //   },
   {
     text: 'about',
     href: '/about',
