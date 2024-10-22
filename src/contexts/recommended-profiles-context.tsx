@@ -1,6 +1,6 @@
 import { useAccount } from "wagmi";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useContext, createContext, useState, useEffect } from "react";
+import { useContext, createContext, useState, useEffect, useMemo } from "react";
 
 import { useEFPProfile } from "./efp-profile-context";
 import { RECOMMENDED_PROFILES_LIMIT } from "#/lib/constants";
@@ -35,6 +35,8 @@ export const RecommendedProfilesProvider: React.FC<Props> = ({ children }) => {
     gone.clear();
   }, [listToFetch]);
 
+  const randomNumber = useMemo(() => Math.random(), [listToFetch]);
+
   const {
     data: recommendedProfilesFetched,
     isLoading,
@@ -42,7 +44,7 @@ export const RecommendedProfilesProvider: React.FC<Props> = ({ children }) => {
     hasNextPage,
     fetchNextPage,
   } = useInfiniteQuery({
-    queryKey: ["recommended profiles", userAddress, listToFetch],
+    queryKey: ["recommended profiles", userAddress, listToFetch, randomNumber],
     queryFn: ({ pageParam = 0 }) => {
       if (!userAddress) return { recommended: [], nextPageParam: 0 };
 

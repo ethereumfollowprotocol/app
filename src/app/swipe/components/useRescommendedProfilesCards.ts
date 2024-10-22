@@ -24,12 +24,11 @@ export const useRecommendedProfilesCards = () => {
   const { gone, recommendedProfiles, isLoading, isFetchingNextPage, fetchNextPage } =
     useRecommendedProfiles()
 
-  const [didSwipeBack, setDidSwipeBack] = useState(false)
-
   const animatedRef = useRef<HTMLDivElement>(null)
   const addAnimatedElements = () => animatedRef.current?.classList.add('falling-element')
   const handleAnimationEnd = () => animatedRef.current?.classList.remove('falling-element')
 
+  const [didSwipeBack, setDidSwipeBack] = useState(false)
   const [props, api] = useSprings(recommendedProfiles.length, i => ({
     ...to(),
     from: from()
