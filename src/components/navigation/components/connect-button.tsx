@@ -133,7 +133,7 @@ const ConnectButton: React.FC<ConnectButtonProps> = ({ isResponsive = true }) =>
           <div
             className={cn(
               "flex flex-col w-full transition-all overflow-x-visible max-h-[75vh] sm:h-auto",
-              listMenuOpen ? "-translate-x-[241px] sm:translate-x-0 sm:p-1" : "p-1"
+              listMenuOpen ? "-translate-x-[221px] sm:translate-x-0 sm:p-1" : "p-1"
             )}
             style={{
               height: listMenuOpen ? `${(lists?.lists?.length || 0) * 56 + 111}px` : "auto",
@@ -152,7 +152,7 @@ const ConnectButton: React.FC<ConnectButtonProps> = ({ isResponsive = true }) =>
                 </div>
                 <div
                   className={cn(
-                    "absolute -right-[244px] w-full -top-[3px] h-full sm:pr-5 sm:right-[97.2%] group-hover:block min-w-[240px] sm:w-fit block z-50 sm:-top-[6px]",
+                    "absolute -right-[224px]  -top-[3px] h-full sm:pr-5 sm:right-[97.2%] group-hover:block w-[224px] sm:w-fit block z-50 sm:-top-[6px]",
                     lists?.lists && lists?.lists?.length > 0
                       ? listMenuOpen
                         ? "block"
@@ -160,7 +160,7 @@ const ConnectButton: React.FC<ConnectButtonProps> = ({ isResponsive = true }) =>
                       : "hidden group-hover:hidden"
                   )}
                 >
-                  <div className="flex flex-col gap-2 w-full min-w-[240px] sm:max-h-[80vh] overflow-auto border-[3px] rounded-lg bg-transparent sm:bg-neutral border-grey p-1 shadow-md">
+                  <div className="flex flex-col gap-2 w-full min-w-[224px] sm:max-h-[80vh] overflow-auto border-[3px] rounded-lg bg-transparent sm:bg-neutral border-grey p-1 shadow-md">
                     <div
                       onClick={() => setListMenuOpen(false)}
                       className="flex sm:hidden justify-between items-center w-full group:bg-slate-100 dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer"
