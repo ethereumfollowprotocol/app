@@ -81,7 +81,7 @@ const Home = () => {
         className={cn(
           "hidden flex-col gap-4 h-[85vh] lg:flex xl:sticky",
           userAddress
-            ? " w-full lg:w-[49%] xl:w-[40%] 2xl:min-w-[450px] 2xl:w-2/5 2xl:max-w-[900px]"
+            ? " w-full lg:w-[49.2%] xl:w-[40%] 2xl:min-w-[450px] 2xl:w-2/5 2xl:max-w-[900px]"
             : "w-full xl:w-1/2 xl:max-w-[900px] h-[638px]"
         )}
         style={{

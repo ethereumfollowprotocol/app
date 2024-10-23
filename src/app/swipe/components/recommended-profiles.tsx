@@ -12,12 +12,14 @@ import UserProfileCard from "#/components/user-profile-card";
 import HalloweenEmoji from "public/assets/icons/halloween-emoji.svg";
 import LoadingRecommendedCards from "./loading-recommended-cards";
 import { trans, useRecommendedProfilesCards } from "./useRescommendedProfilesCards";
+import { useEffect, useState } from "react";
 
 const RecommendedCards = () => {
   const {
     bind,
     gone,
     props,
+    soundRef,
     isLoading,
     onSwipeBack,
     onSwipeLeft,
@@ -32,8 +34,26 @@ const RecommendedCards = () => {
   const { theme } = useTheme();
   const { address: userAddress } = useAccount();
 
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
     <div className="flex w-full items-center justify-start flex-col">
+      {isClient && (
+        <audio
+          ref={soundRef}
+          src={
+            theme === "halloween"
+              ? "/assets/sound-effects/follow-halloween.mp3"
+              : "/assets/sound-effects/follow.mp3"
+          }
+          key={theme}
+          preload="auto"
+        />
+      )}
       <div
         ref={animatedRef}
         className="pointer-events-none h-screen w-screen fixed -right-[101vw] top-0 z-50 delay-150"

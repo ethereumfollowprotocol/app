@@ -202,7 +202,9 @@ const FollowButton: React.FC<FollowButtonProps> = ({
     () =>
       ({
         Follow:
-          resolvedTheme === "halloween" ? "/assets/sound-effects/follow-halloween.mp3" : undefined,
+          resolvedTheme === "halloween"
+            ? "/assets/sound-effects/follow-halloween.mp3"
+            : "/assets/sound-effects/follow.mp3",
         "Pending Following": undefined,
         Following:
           resolvedTheme === "halloween"
@@ -229,7 +231,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
   useEffect(() => {
     if (soundRef.current) {
       if (actionsSoundsMuted) soundRef.current.volume = 0;
-      else soundRef.current.volume = 0.4;
+      else soundRef.current.volume = 0.3;
     }
   }, [sound, actionsSoundsMuted]);
 
@@ -260,14 +262,14 @@ const FollowButton: React.FC<FollowButtonProps> = ({
           setDisableHover(false);
         }}
         onClick={(e) => {
-          e.stopPropagation();
+          // e.stopPropagation();
 
           if (!userAddress && openConnectModal) {
             openConnectModal();
             return;
           }
 
-          soundRef.current?.play();
+          if (sound) soundRef.current?.play();
 
           setDisableHover(true);
           handleAction();

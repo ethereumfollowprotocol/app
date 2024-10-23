@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { useCart } from '#/contexts/cart-context'
 import { listOpAddListRecord } from '#/utils/list-ops'
+import { useActions } from '#/contexts/actions-context'
 import { RECOMMENDED_PROFILES_LIMIT } from '#/lib/constants'
 import { useRecommendedProfiles } from '#/contexts/recommended-profiles-context'
 
@@ -20,13 +21,25 @@ export const trans = (r: number, s: number) =>
   `perspective(1500px) rotateX(0deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`
 
 export const useRecommendedProfilesCards = () => {
+  const { actionsSoundsMuted } = useActions()
   const { addCartItem, removeCartItem, cartAddresses } = useCart()
   const { gone, recommendedProfiles, isLoading, isFetchingNextPage, fetchNextPage } =
     useRecommendedProfiles()
 
+  const soundRef = useRef<HTMLAudioElement>(null)
   const animatedRef = useRef<HTMLDivElement>(null)
-  const addAnimatedElements = () => animatedRef.current?.classList.add('falling-element')
+  const addAnimatedElements = () => {
+    soundRef.current?.play()
+    animatedRef.current?.classList.add('falling-element')
+  }
   const handleAnimationEnd = () => animatedRef.current?.classList.remove('falling-element')
+
+  useEffect(() => {
+    if (soundRef.current) {
+      if (actionsSoundsMuted) soundRef.current.volume = 0
+      else soundRef.current.volume = 0.3
+    }
+  }, [actionsSoundsMuted])
 
   const [didSwipeBack, setDidSwipeBack] = useState(false)
   const [props, api] = useSprings(recommendedProfiles.length, i => ({
@@ -197,14 +210,15 @@ export const useRecommendedProfilesCards = () => {
 
   return {
     bind,
-    props,
     gone,
+    props,
+    soundRef,
     isLoading,
+    animatedRef,
     onSwipeLeft,
     onSwipeBack,
     onSwipeRight,
     didSwipeBack,
-    animatedRef,
     handleAnimationEnd,
     isFetchingNextPage,
     recommendedProfiles
