@@ -262,7 +262,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
           setDisableHover(false);
         }}
         onClick={(e) => {
-          // e.stopPropagation();
+          e.stopPropagation();
 
           if (!userAddress && openConnectModal) {
             openConnectModal();
@@ -270,7 +270,6 @@ const FollowButton: React.FC<FollowButtonProps> = ({
           }
 
           if (sound) soundRef.current?.play();
-
           setDisableHover(true);
           handleAction();
         }}
