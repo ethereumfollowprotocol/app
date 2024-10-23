@@ -193,8 +193,6 @@ const nextConfigWithSentry = withSentryConfig(nextConfig, {
   // silent: process.env['NODE_ENV'] !== 'development'
 });
 
-// const nextConfigWithPlugins = () => plugins.reduce((_, plugin) => plugin(_), nextConfigWithSentry)
-
 export default process.env.NODE_ENV === "development"
 	? nextConfigWithSentry
 	: million.next(nextConfigWithSentry, { auto: { rsc: true } });

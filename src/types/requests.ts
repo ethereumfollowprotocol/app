@@ -80,6 +80,12 @@ export interface FollowerResponse {
   is_following: boolean
 }
 
+export interface LatestFollowersResponse {
+  address: Address
+  efp_list_nft_token_id: string
+  updated_at: string
+}
+
 export interface FollowingResponse {
   version: 1
   record_type: 'address' & string

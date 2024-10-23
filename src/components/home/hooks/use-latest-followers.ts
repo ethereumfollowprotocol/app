@@ -1,14 +1,15 @@
-import { fetchProfileFollowers } from '#/api/fetchProfileFollowers'
-import { useEFPProfile } from '#/contexts/efp-profile-context'
-import { useInfiniteQuery } from '@tanstack/react-query'
-import { useMemo, useState } from 'react'
 import { useAccount } from 'wagmi'
+import { useMemo, useState } from 'react'
+import { useInfiniteQuery } from '@tanstack/react-query'
+
+import { useEFPProfile } from '#/contexts/efp-profile-context'
+import { fetchLatestFollowers } from '#/api/fetchLatestFollowers'
 
 export const useLatestFollowers = () => {
   const [page, setPage] = useState(1)
   const [subPage, setSubPage] = useState(1)
 
-  const { selectedList } = useEFPProfile()
+  const { listToFetch } = useEFPProfile()
   const { address: userAddress } = useAccount()
 
   const {
@@ -20,20 +21,19 @@ export const useLatestFollowers = () => {
     isFetchingPreviousPage,
     data: profilesToRecommend
   } = useInfiniteQuery({
-    queryKey: ['latest followers', userAddress, selectedList],
+    queryKey: ['latest followers', userAddress, listToFetch],
     queryFn: async ({ pageParam = 0 }) => {
       if (!userAddress) return { results: [], nextPageParam: 0, previousPageParam: 0 }
 
-      const discoverAccounts = await fetchProfileFollowers({
+      const latestFollowers = await fetchLatestFollowers({
         addressOrName: userAddress,
-        list: selectedList,
+        list: listToFetch,
         limit: 55,
-        pageParam,
-        sort: 'latest first'
+        pageParam
       })
 
       return {
-        results: discoverAccounts.followers,
+        results: latestFollowers.followers,
         nextPageParam: pageParam + 1,
         previousPageParam: pageParam > 0 ? pageParam - 1 : 0
       }
