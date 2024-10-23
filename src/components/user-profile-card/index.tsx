@@ -264,7 +264,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   return (
     <div
       className={cn(
-        "flex border-[3px] z-10 flex-col border-[#FFDBD9] dark:border-[#a36d7d] halloween:border-[#a36d7d] rounded-xl relative",
+        "flex border-[3px] z-10 flex-col border-grey rounded-xl relative",
         isRecommended ? "bg-neutral" : "glass-card",
         isResponsive
           ? "w-full xl:w-[324px] xl:min-w-[324px] 3xl:w-86 3xl:min-w-86"

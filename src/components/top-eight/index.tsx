@@ -31,7 +31,7 @@ const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile }) => 
       {isConnectedUserProfile && editModalOpen && (
         <EditModal profiles={topEight || []} onClose={() => setEditModalOpen(false)} />
       )}
-      <div className="glass-card relative xl:w-80 2xl:w-[602px] items-center justify-center w-full border-[3px] px-5 2xl:px-2 py-4 rounded-xl flex flex-col gap-4 xl:gap-4 border-[#FFDBD9] dark:border-[#a36d7d]">
+      <div className="glass-card relative xl:w-80 2xl:w-[602px] items-center justify-center w-full border-[3px] px-5 2xl:px-2 py-4 rounded-xl flex flex-col gap-4 xl:gap-4 border-grey">
         {isConnectedUserProfile && (
           <div
             onClick={() => setEditModalOpen(true)}
