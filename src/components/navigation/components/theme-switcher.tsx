@@ -33,16 +33,11 @@ const themes = ["system", "light", "dark", "halloween"] as const;
 type ThemeType = (typeof themes)[number];
 
 interface ThemeSwitcherProps {
-  connected?: boolean;
   closeMenu?: () => void;
   setExternalThemeMenuOpen?: (open: boolean) => void;
 }
 
-const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
-  connected,
-  closeMenu,
-  setExternalThemeMenuOpen,
-}) => {
+const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThemeMenuOpen }) => {
   const [themeMenuOpen, setThemeMenuOpen] = useState(false);
 
   const clickAwayThemeRef = useClickAway<HTMLDivElement>(() => {
@@ -54,34 +49,25 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
   const { setTheme, theme: selectedTheme } = useTheme();
 
   return (
-    <div
-      ref={clickAwayThemeRef}
-      className={cn("cursor-pointer group relative", connected && "w-full")}
-    >
+    <div ref={clickAwayThemeRef} className="cursor-pointer group relative w-full">
       <div
         onClick={() => {
           setThemeMenuOpen(!themeMenuOpen);
           setExternalThemeMenuOpen?.(!themeMenuOpen);
         }}
-        className={cn(
-          "flex justify-between items-center rounded-md transition-opacity cursor-pointer",
-          connected && "group-hover:bg-navItem p-3 w-full"
-        )}
+        className="flex justify-between items-center rounded-md transition-opacity cursor-pointer group-hover:bg-navItem p-3 w-full"
       >
-        {connected && <FiArrowLeft className="text-xl" />}
+        <FiArrowLeft className="text-xl" />
         <div className="flex items-center justify-end gap-2">
-          <p className={cn(connected ? "text-2xl" : "text-3xl")}>
+          <p className="text-2xl">
             {themesWithIcons.find(({ theme }) => theme === selectedTheme)?.icon}
           </p>
-          {connected && <p className="capitalize font-bold">{t(selectedTheme || "system")}</p>}
+          <p className="capitalize font-bold">{t(selectedTheme || "system")}</p>
         </div>
       </div>
       <div
         className={cn(
-          "absolute group-hover:block block h-[230px] sm:h-[174px] z-50",
-          connected
-            ? "-right-[223px] sm:right-[97.2%] min-w-[220px] -top-[7px] sm:pr-5"
-            : "top-[100%] pt-3 -left-10",
+          "absolute group-hover:block block h-[230px] sm:h-[174px] z-50 -right-[223px] sm:right-[97.2%] min-w-[220px] -top-[7px] sm:pr-5",
           themeMenuOpen ? "block" : "hidden"
         )}
       >
@@ -91,10 +77,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
               setThemeMenuOpen(false);
               setExternalThemeMenuOpen?.(false);
             }}
-            className={cn(
-              "flex sm:hidden justify-between items-center w-full hover:bg-navItem p-3 rounded-md transition-opacity cursor-pointer",
-              connected ? "flex sm:hidden" : "hidden"
-            )}
+            className="flex sm:hidden justify-between items-center w-full hover:bg-navItem p-3 rounded-md transition-opacity cursor-pointer"
           >
             <FiArrowLeft className="text-xl" />
             <p className="font-bold">Back</p>
@@ -118,7 +101,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
                   className="absolute left-2 top-[19px]"
                 />
               )}
-              <p className={connected ? "text-2xl" : "text-3xl"}>{icon}</p>
+              <p className="text-2xl">{icon}</p>
               <p className="text-nowrap capitalize font-bold">{t(theme)}</p>
             </div>
           ))}

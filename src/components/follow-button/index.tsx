@@ -12,7 +12,7 @@ import { cn } from "#/lib/utilities";
 import LoadingCell from "../loaders/loading-cell";
 import { useCoolMode } from "./hooks/useCoolMode";
 import MainnetRed from "public/assets/mainnet-red.svg";
-import { useActions } from "#/contexts/actions-context";
+import { useSounds } from "#/contexts/sounds-context";
 import MainnetBlack from "public/assets/mainnet-black.svg";
 import { type FollowButtonState, useFollowButton } from "./hooks/use-follow-button";
 
@@ -155,7 +155,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
 
   const { t } = useTranslation();
   const { resolvedTheme } = useTheme();
-  const { actionsSoundsMuted } = useActions();
+  const { actionsSoundsMuted } = useSounds();
   const { address: userAddress } = useAccount();
   const { openConnectModal } = useConnectModal();
   const { buttonText, buttonState, handleAction, isLoading } = useFollowButton({

@@ -3,8 +3,8 @@ import { useSprings } from '@react-spring/web'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { useCart } from '#/contexts/cart-context'
+import { useSounds } from '#/contexts/sounds-context'
 import { listOpAddListRecord } from '#/utils/list-ops'
-import { useActions } from '#/contexts/actions-context'
 import { RECOMMENDED_PROFILES_LIMIT } from '#/lib/constants'
 import { useRecommendedProfiles } from '#/contexts/recommended-profiles-context'
 
@@ -21,7 +21,7 @@ export const trans = (r: number, s: number) =>
   `perspective(1500px) rotateX(0deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`
 
 export const useRecommendedProfilesCards = () => {
-  const { actionsSoundsMuted } = useActions()
+  const { actionsSoundsMuted } = useSounds()
   const { addCartItem, removeCartItem, cartAddresses } = useCart()
   const { gone, recommendedProfiles, isLoading, isFetchingNextPage, fetchNextPage } =
     useRecommendedProfiles()
