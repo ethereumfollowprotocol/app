@@ -1,70 +1,67 @@
 "use client";
 
+import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 
+import {
+  TEAM_ROLES,
+  TEAM_ADDRESSES,
+  FOUNDATION_ROLES,
+  FOUNDATION_ADDRESSES,
+} from "#/lib/constants/team";
 import LoadingCell from "#/components/loaders/loading-cell";
+import { fetchProfileStats } from "#/api/fetchProfileStats";
 import UserProfileCard from "#/components/user-profile-card";
 import { fetchProfileDetails } from "#/api/fetchProfileDetails";
-import { useTranslation } from "react-i18next";
-import { fetchProfileStats } from "#/api/fetchProfileStats";
 
 const Members = () => {
-  const teamAddresses: string[] = process.env.NEXT_PUBLIC_TEAM_ADDRESSES?.split(" ") || [];
   const { data: teamProfiles, isLoading: teamIsLoading } = useQuery({
-    queryKey: ["team", teamAddresses],
+    queryKey: ["team", TEAM_ADDRESSES],
     queryFn: async () => {
-      if (!teamAddresses) return [];
+      if (!TEAM_ADDRESSES) return [];
 
       const data = await Promise.all(
-        teamAddresses?.map(async (address) => await fetchProfileDetails(address))
+        TEAM_ADDRESSES.map(async (address) => await fetchProfileDetails(address))
       );
       return data;
     },
   });
   const { data: teamStats, isLoading: teamStatsIsLoading } = useQuery({
-    queryKey: ["team", "stats", teamAddresses],
+    queryKey: ["team", "stats", TEAM_ADDRESSES],
     queryFn: async () => {
-      if (!teamAddresses) return [];
+      if (!TEAM_ADDRESSES) return [];
 
       const data = await Promise.all(
-        teamAddresses?.map(async (address) => await fetchProfileStats(address))
+        TEAM_ADDRESSES.map(async (address) => await fetchProfileStats(address))
       );
 
       return data;
     },
   });
-  const teamRoles = process.env.NEXT_PUBLIC_TEAM_ROLES?.split(";").map((role) =>
-    role.replace(";", "")
-  );
 
-  const foundationAddresses: string[] =
-    process.env.NEXT_PUBLIC_FOUNDATION_ADDRESSES?.split(" ") || [];
   const { data: foundationProfiles, isLoading: foundationIsLoading } = useQuery({
-    queryKey: ["follow protocol foundation", foundationAddresses],
+    queryKey: ["follow protocol foundation", FOUNDATION_ADDRESSES],
     queryFn: async () => {
-      if (!foundationAddresses) return [];
+      if (!FOUNDATION_ADDRESSES) return [];
 
       const data = await Promise.all(
-        foundationAddresses?.map(async (address) => await fetchProfileDetails(address))
+        FOUNDATION_ADDRESSES.map(async (address) => await fetchProfileDetails(address))
       );
       return data;
     },
   });
   const { data: foundationStats, isLoading: foundationStatsIsLoading } = useQuery({
-    queryKey: ["follow protocol foundation", "stats", teamAddresses],
+    queryKey: ["follow protocol foundation", "stats", FOUNDATION_ADDRESSES],
     queryFn: async () => {
-      if (!teamAddresses) return [];
+      if (!FOUNDATION_ADDRESSES) return [];
 
       const data = await Promise.all(
-        foundationAddresses?.map(async (address) => await fetchProfileStats(address))
+        FOUNDATION_ADDRESSES.map(async (address) => await fetchProfileStats(address))
       );
 
       return data;
     },
   });
-  const foundationRoles = process.env.NEXT_PUBLIC_FOUNDATION_ROLES?.split(";").map((role) =>
-    role.replace(";", "")
-  );
 
   const { t } = useTranslation();
 
@@ -75,9 +72,7 @@ const Members = () => {
         <div className="flex-row flex-wrap flex mx-auto lg:flex-row gap-8 align-middle justify-center items-start">
           {teamProfiles?.map((profile, i) => (
             <div key={profile?.address} className="flex flex-col items-center gap-2">
-              {teamRoles && (
-                <p className="text-lg font-bold text-zinc-500 dark:text-zinc-200">{teamRoles[i]}</p>
-              )}
+              <p className="text-lg font-bold text-zinc-500 dark:text-zinc-200">{TEAM_ROLES[i]}</p>
               <UserProfileCard
                 isResponsive={false}
                 profile={profile}
@@ -91,7 +86,7 @@ const Members = () => {
             </div>
           ))}
           {teamIsLoading &&
-            teamAddresses.map((address) => (
+            TEAM_ADDRESSES.map((address) => (
               <div key={address} className="flex flex-col items-center gap-2">
                 <LoadingCell className="rounded-lg h-7 w-52" />
                 <UserProfileCard
@@ -108,11 +103,9 @@ const Members = () => {
           <div className="flex-row flex-wrap flex mx-auto lg:flex-row gap-8 align-middle justify-center items-start">
             {foundationProfiles?.map((profile, i) => (
               <div key={profile?.address} className="flex flex-col items-center gap-2">
-                {foundationRoles && (
-                  <p className="text-lg font-bold text-zinc-500 dark:text-zinc-200">
-                    {foundationRoles[i]}
-                  </p>
-                )}
+                <p className="text-lg font-bold text-zinc-500 dark:text-zinc-200">
+                  {FOUNDATION_ROLES[i]}
+                </p>
                 <UserProfileCard
                   isResponsive={false}
                   profile={profile}
@@ -126,7 +119,7 @@ const Members = () => {
               </div>
             ))}
             {foundationIsLoading &&
-              foundationAddresses.map((address) => (
+              FOUNDATION_ADDRESSES.map((address) => (
                 <div key={address} className="flex flex-col items-center gap-2">
                   <LoadingCell className="rounded-lg h-7 w-52" />
                   <UserProfileCard
