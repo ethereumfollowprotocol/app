@@ -29,7 +29,10 @@ export const useRecommendedProfilesCards = () => {
   const soundRef = useRef<HTMLAudioElement>(null)
   const animatedRef = useRef<HTMLDivElement>(null)
   const addAnimatedElements = () => {
-    soundRef.current?.play()
+    if (soundRef.current) {
+      soundRef.current.volume = 0.3
+      soundRef.current?.play()
+    }
     animatedRef.current?.classList.add('falling-element')
   }
   const handleAnimationEnd = () => animatedRef.current?.classList.remove('falling-element')

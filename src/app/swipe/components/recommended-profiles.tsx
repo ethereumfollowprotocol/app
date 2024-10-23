@@ -35,7 +35,6 @@ const RecommendedCards = () => {
   const { address: userAddress } = useAccount();
 
   const [isClient, setIsClient] = useState(false);
-
   useEffect(() => {
     setIsClient(true);
   }, []);
