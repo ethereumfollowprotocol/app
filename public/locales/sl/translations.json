@@ -140,6 +140,10 @@
   "system": "Sistem",
   "light": "Svetlo",
   "dark": "Temno",
+  "halloween": "Noč Čarovnic",
+  "sfx & music": "Efekti & glasba",
+  "sfx only": "Samo efekti",
+  "no sound": "Brez zvoka",
   "connect": "Poveži denarnico",
   "disconnect": "Odpoveži denarnico",
   "list": "Seznam",
@@ -186,5 +190,7 @@
   "finish": "Zaključi",
 
   "feed": "Novice",
-  "feed description": "Najnovejši dogodki ljudi ki jih slediš na EFP 👀"
+  "feed description": "Najnovejši dogodki ljudi ki jih slediš na EFP 👀",
+
+  "undo": "Nazaj"
 }

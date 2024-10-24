@@ -3,49 +3,70 @@
 import Image from "next/image";
 import { useAccount } from "wagmi";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { HiArrowUturnDown } from "react-icons/hi2";
 import { animated, to as interpolate } from "@react-spring/web";
 
 import Logo from "public/assets/logo.svg";
 import SwipeButtons from "./swipeButtons";
 import UserProfileCard from "#/components/user-profile-card";
-import HalloweenEmoji from "public/assets/icons/halloween-emoji.svg";
 import LoadingRecommendedCards from "./loading-recommended-cards";
+import HalloweenEmoji from "public/assets/icons/halloween-emoji.svg";
 import { trans, useRecommendedProfilesCards } from "./useRescommendedProfilesCards";
 
 const RecommendedCards = () => {
   const {
-    bind,
     gone,
-    props,
+    cards,
+    soundRef,
     isLoading,
+    animatedRef,
     onSwipeBack,
     onSwipeLeft,
     onSwipeRight,
     didSwipeBack,
-    animatedRef,
-    handleAnimationEnd,
+    bindDragToCards,
     isFetchingNextPage,
     recommendedProfiles,
+    handleStopAnimationAndSound,
   } = useRecommendedProfilesCards();
 
-  const { theme } = useTheme();
+  const { t } = useTranslation();
+  const { resolvedTheme } = useTheme();
   const { address: userAddress } = useAccount();
+
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   return (
     <div className="flex w-full items-center justify-start flex-col">
+      {isClient && (
+        <audio
+          ref={soundRef}
+          src={
+            resolvedTheme === "halloween"
+              ? "/assets/sound-effects/follow-halloween.mp3"
+              : "/assets/sound-effects/follow.mp3"
+          }
+          key={resolvedTheme}
+          preload="auto"
+        />
+      )}
       <div
         ref={animatedRef}
         className="pointer-events-none h-screen w-screen fixed -right-[101vw] top-0 z-50 delay-150"
         onAnimationEnd={(e) => {
           e.stopPropagation();
-          handleAnimationEnd();
+          handleStopAnimationAndSound();
         }}
       >
         {new Array(10).fill(1).map((index) => {
           const randomLeft = Math.random() * 80;
           const randomTop = 10 + Math.random() * 30;
-          const icon = theme === "halloween" ? HalloweenEmoji : Logo;
+          const icon = resolvedTheme === "halloween" ? HalloweenEmoji : Logo;
 
           return (
             <Image
@@ -72,7 +93,7 @@ const RecommendedCards = () => {
           gone={gone}
         />
         {!isLoading &&
-          props
+          cards
             .map(({ x, y, rot, scale }, i) => {
               if (gone.has(i + 3)) return null;
 
@@ -83,7 +104,7 @@ const RecommendedCards = () => {
                   style={{ x, y }}
                 >
                   <animated.div
-                    {...bind(i)}
+                    {...bindDragToCards(i)}
                     style={{
                       transform: interpolate([rot, scale], trans),
                       touchAction: "none",
@@ -105,7 +126,7 @@ const RecommendedCards = () => {
             .reverse()}
         <SwipeButtons
           userAddress={userAddress}
-          recommendedProfiles={props}
+          recommendedProfiles={cards}
           isLoading={isLoading}
           isFetchingNextPage={isFetchingNextPage}
           gone={gone}
@@ -118,7 +139,7 @@ const RecommendedCards = () => {
         onClick={onSwipeBack}
         disabled={didSwipeBack || gone.size === 0}
       >
-        <p className="font-semibold text-lg">Undo</p> <HiArrowUturnDown />
+        <p className="font-semibold text-lg">{t("undo")}</p> <HiArrowUturnDown />
       </button>
     </div>
   );
