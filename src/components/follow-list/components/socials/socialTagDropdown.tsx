@@ -26,8 +26,14 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
     setTagDropdownOpen(false);
   });
 
-  const { cartItems, setCartItems, hasListOpAddTag, hasListOpRemoveTag, getTagsFromCartByAddress } =
-    useCart();
+  const {
+    cartItems,
+    addCartItem,
+    removeCartItem,
+    hasListOpAddTag,
+    hasListOpRemoveTag,
+    getTagsFromCartByAddress,
+  } = useCart();
   const { t } = useTranslation();
   const { recentTags, addRecentTag } = useEFPProfile();
 
@@ -51,7 +57,7 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
         import: platform,
       }));
 
-      setCartItems([...cartItems, ...newCartItems]);
+      newCartItems.forEach((item) => addCartItem(item));
     }
   };
 
@@ -64,7 +70,7 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
     setDisplayedTags((prevTags) => prevTags.filter((prevTag) => prevTag !== tag));
     await yieldToMain();
 
-    const filteredCartItems = cartItems.filter(
+    const filteredCartItems = Array.from(cartItems.values()).filter(
       (item) =>
         !(isTagListOp(item.listOp)
           ? addresses.includes(extractAddressAndTag(item.listOp).address.toLowerCase()) &&
@@ -72,7 +78,7 @@ const SocialTagDropdown: React.FC<SocialTagDropdownProps> = ({ profiles, platfor
           : false)
     );
 
-    setCartItems(filteredCartItems);
+    filteredCartItems.forEach((item) => removeCartItem(item.listOp));
   };
 
   const addCustomTag = () => {

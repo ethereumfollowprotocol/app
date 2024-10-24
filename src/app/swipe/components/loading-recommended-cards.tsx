@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+
 import UserProfileCard from "#/components/user-profile-card";
 import type { ProfileDetailsResponse } from "#/types/requests";
 

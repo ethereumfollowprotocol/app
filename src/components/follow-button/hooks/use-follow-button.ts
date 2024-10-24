@@ -155,13 +155,13 @@ export const useFollowButton = ({
 
     // remove address and tags for this address from cart if it's a pending follow
     if (buttonState === 'Pending Following') {
-      const addressTags = cartItems.filter(item =>
+      const addressTags = Array.from(cartItems.values()).filter(item =>
         item.listOp.opcode > 2 && isTagListOp(item.listOp)
           ? extractAddressAndTag(item.listOp).address === address
           : false
       )
       removeCartItem(listOpAddListRecord(address))
-      addressTags.flatMap(item => removeCartItem(item.listOp))
+      addressTags.forEach(item => removeCartItem(item.listOp))
       return
     }
     // remove from cart if it's a pending unfollow
