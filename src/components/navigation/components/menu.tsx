@@ -9,6 +9,7 @@ import { useState, type Dispatch, type SetStateAction } from "react";
 import { cn } from "#/lib/utilities";
 import { socials } from "#/components/footer";
 import { usePathname } from "next/navigation";
+import VolumeSwitcher, { volumeOptions } from "./volume-switcher";
 import LanguageSelector from "./language-selector";
 import { LANGUAGES } from "#/lib/constants/languages";
 import { EXTERNAL_LINKS, NAV_ITEMS } from "#/lib/constants";
@@ -22,6 +23,7 @@ interface MenuProps {
 
 const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
   const [themeMenuOpen, setThemeMenuOpen] = useState(false);
+  const [volumeMenuOpen, setVolumeMenuOpen] = useState(false);
   const [languageMenOpenu, setLanguageMenuOpen] = useState(false);
 
   const pathname = usePathname();
@@ -46,23 +48,21 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
       <div
         className={cn(
           "flex flex-col w-full transition-all overflow-x-visible max-h-[74vh] sm:h-auto p-1",
-          languageMenOpenu || themeMenuOpen ? "-translate-x-[216px] sm:translate-x-0" : "",
-          languageMenOpenu
-            ? `h-[${(LANGUAGES.length || 0) * 56 + 111}px]`
-            : themeMenuOpen
-            ? `h-[${(themesWithIcons.length || 0) * 56 + 56}px]`
-            : "h-auto"
+          languageMenOpenu || themeMenuOpen || volumeMenuOpen
+            ? "-translate-x-[216px] sm:translate-x-0"
+            : ""
         )}
         style={{
           height: languageMenOpenu
             ? `${(LANGUAGES.length || 0) * 56 + 111}px`
             : themeMenuOpen
             ? `${(themesWithIcons.length || 0) * 56 + 56}px`
-            : "auto",
+            : volumeMenuOpen
+            ? `${(volumeOptions.length || 0) * 56 + 56}px`
+            : "h-auto",
         }}
       >
         <ThemeSwitcher
-          connected={true}
           setExternalThemeMenuOpen={setThemeMenuOpen}
           closeMenu={() => {
             setOpen(false);
@@ -73,6 +73,13 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
         <LanguageSelector
           setExternalLanguageMenuOpen={setLanguageMenuOpen}
           setParentOpen={setOpen}
+        />
+        <VolumeSwitcher
+          setExternalVolumeMenuOpen={setVolumeMenuOpen}
+          closeMenu={() => {
+            setOpen(false);
+            setVolumeMenuOpen(false);
+          }}
         />
         {NAV_ITEMS.map((item) => (
           <div

@@ -12,7 +12,7 @@ import { cn } from "#/lib/utilities";
 import LoadingCell from "../loaders/loading-cell";
 import { useCoolMode } from "./hooks/useCoolMode";
 import MainnetRed from "public/assets/mainnet-red.svg";
-import { useActions } from "#/contexts/actions-context";
+import { useSounds } from "#/contexts/sounds-context";
 import MainnetBlack from "public/assets/mainnet-black.svg";
 import { type FollowButtonState, useFollowButton } from "./hooks/use-follow-button";
 
@@ -155,7 +155,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
 
   const { t } = useTranslation();
   const { resolvedTheme } = useTheme();
-  const { actionsSoundsMuted } = useActions();
+  const { actionsSoundsMuted } = useSounds();
   const { address: userAddress } = useAccount();
   const { openConnectModal } = useConnectModal();
   const { buttonText, buttonState, handleAction, isLoading } = useFollowButton({
@@ -202,12 +202,14 @@ const FollowButton: React.FC<FollowButtonProps> = ({
     () =>
       ({
         Follow:
-          resolvedTheme === "halloween" ? "/assets/sound-effects/follow-halloween.mp3" : undefined,
+          resolvedTheme === "halloween"
+            ? "/assets/sound-effects/follow-halloween.mp3"
+            : "/assets/sound-effects/follow.mp3",
         "Pending Following": undefined,
         Following:
           resolvedTheme === "halloween"
             ? "/assets/sound-effects/unfollow-halloween.mp3"
-            : undefined,
+            : "/assets/sound-effects/unfollow.mp3",
         Unfollow: undefined,
         Subscribe: undefined,
         Subscribed: undefined,
@@ -229,7 +231,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
   useEffect(() => {
     if (soundRef.current) {
       if (actionsSoundsMuted) soundRef.current.volume = 0;
-      else soundRef.current.volume = 0.4;
+      else soundRef.current.volume = 0.3;
     }
   }, [sound, actionsSoundsMuted]);
 
@@ -267,8 +269,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
             return;
           }
 
-          soundRef.current?.play();
-
+          if (sound) soundRef.current?.play();
           setDisableHover(true);
           handleAction();
         }}

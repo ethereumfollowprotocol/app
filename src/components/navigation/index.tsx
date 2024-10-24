@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useAccount } from "wagmi";
+import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { track } from "@vercel/analytics/react";
 import { useClickAway } from "@uidotdev/usehooks";
@@ -15,6 +16,7 @@ import FullLogo from "public/assets/logo-full.svg";
 import CartButton from "./components/cart-button.tsx";
 import { useCart } from "#/contexts/cart-context.tsx";
 import { LANGUAGES } from "#/lib/constants/languages.ts";
+import { useSounds } from "#/contexts/sounds-context.tsx";
 import FullLogoDark from "public/assets/logo-full-dark.svg";
 import ConnectButton from "./components/connect-button.tsx";
 import LogoHalloween from "public/assets/logo-halloween.svg";
@@ -23,8 +25,10 @@ import FullLogoHalloween from "public/assets/logo-full-halloween.svg";
 const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  const { resolvedTheme } = useTheme();
   const { totalCartItems } = useCart();
   const { address: userAddress } = useAccount();
+  const { backgroundMusicRef, backgroundSoundsMuted } = useSounds();
 
   const clickAwayRef = useClickAway<HTMLDivElement>((_) => {
     setMobileMenuOpen(false);
@@ -40,6 +44,14 @@ const Navigation = () => {
 
   return (
     <header className="w-full fixed z-50 glass-card bg-white/50 dark:bg-black/75 halloween:bg-black/85 top-0 left-0 border-b-[3px] border-grey p-4 lg:px-6 md:py-5 xl:px-8">
+      {!backgroundSoundsMuted && (
+        <audio
+          ref={backgroundMusicRef}
+          src={resolvedTheme === "halloween" ? "/assets/background-music/halloween.mp3" : ""}
+          autoPlay={true}
+          loop={true}
+        />
+      )}
       <nav className="my-auto flex w-full flex-row items-center justify-between">
         <div className="flex w-fit lg:w-2/5 2xl:w-1/3 justify-start items-center gap-4 md:gap-6 xl:gap-6">
           <Link href="/" className="select-none" aria-label="Ethereum Follow Protocol Logo link">
