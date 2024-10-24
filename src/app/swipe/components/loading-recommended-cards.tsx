@@ -21,7 +21,7 @@ const LoadingRecommendedCards = ({
 
   return userAddress ? (
     gone.size === recommendedProfiles.length && !(isFetchingNextPage || isLoading) ? (
-      <div className="flex border-[3px] items-center border-[#FFDBD9] dark:border-[#a36d7d] halloween:border-[#a36d7d] rounded-xl bg-neutral h-[536px] w-full xxs:max-w-92">
+      <div className="flex border-[3px] items-center border-[#FFDBD9] dark:border-[#a36d7d] halloween:border-[#a36d7d] sm:mr-[14px] rounded-xl bg-neutral h-[536px] w-full xxs:max-w-92">
         <p className="text-center w-full text-lg font-semibold px-6">{t("no more profiles")}</p>
       </div>
     ) : (
