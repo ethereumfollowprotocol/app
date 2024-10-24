@@ -1,16 +1,17 @@
+import { HiPlus } from "react-icons/hi";
+import { FiSearch } from "react-icons/fi";
+import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 
+import { cn } from "#/lib/utilities";
 import Modal from "#/components/modal";
 import TopEightProfile from "./top-eight-profile";
-import { useEditTopEight } from "../hooks/use-edit-top-eight";
-import type { TopEightProfileType } from "../hooks/use-top-eight";
-import { cn } from "#/lib/utilities";
-import CancelButton from "#/components/buttons/cancel-button";
-import { PrimaryButton } from "#/components/buttons/primary-button";
-import { useRouter } from "next/navigation";
-import { FiSearch } from "react-icons/fi";
 import { useCart } from "#/contexts/cart-context";
 import LoadingCell from "#/components/loaders/loading-cell";
+import CancelButton from "#/components/buttons/cancel-button";
+import { useEditTopEight } from "../hooks/use-edit-top-eight";
+import type { TopEightProfileType } from "../hooks/use-top-eight";
+import { PrimaryButton } from "#/components/buttons/primary-button";
 
 interface EditModalProps {
   profiles: TopEightProfileType[];
@@ -73,11 +74,14 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose }) => {
           {new Array(loadingCartItems).fill(1).map((_, i) => (
             <div
               key={`loading ${i}`}
-              className="flex flex-col w-28 2xl:w-36 py-4 items-center gap-2"
+              className="flex flex-col p-4 items-center gap-2 relative border-grey rounded-xl w-[144px] h-[192px] border-[3px] border-lime-500/50"
             >
-              <LoadingCell className="h-[60px] w-[60px] rounded-full" />
+              <LoadingCell className="h-[50px] w-[50px] rounded-full" />
               <LoadingCell className="h-7 w-24 rounded-lg" />
-              <LoadingCell className="h-9 w-[120px] rounded-lg" />
+              <LoadingCell className="h-9 w-[120px] mt-5 rounded-lg" />
+              <div className="absolute top-1 right-1 p-1 rounded-full text-white bg-lime-500/50">
+                <HiPlus />
+              </div>
             </div>
           ))}
           {editedProfiles.length === 0 && (
