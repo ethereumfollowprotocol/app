@@ -151,7 +151,7 @@ const useImportModal = (platform: ImportPlatformType) => {
             import: platform
           }) as CartItem
       )
-      .concat(cartItems.values().toArray())
+      .concat(Array.from(cartItems.values()))
 
     const newMapCartItems = new Map(
       newCartItems.map(item => [item.listOp.data.toString('hex'), item])
