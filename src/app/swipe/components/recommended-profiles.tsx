@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useAccount } from "wagmi";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { HiArrowUturnDown } from "react-icons/hi2";
 import { animated, to as interpolate } from "@react-spring/web";
 
@@ -12,7 +14,6 @@ import UserProfileCard from "#/components/user-profile-card";
 import HalloweenEmoji from "public/assets/icons/halloween-emoji.svg";
 import LoadingRecommendedCards from "./loading-recommended-cards";
 import { trans, useRecommendedProfilesCards } from "./useRescommendedProfilesCards";
-import { useEffect, useState } from "react";
 
 const RecommendedCards = () => {
   const {
@@ -32,6 +33,7 @@ const RecommendedCards = () => {
   } = useRecommendedProfilesCards();
 
   const { theme } = useTheme();
+  const { t } = useTranslation();
   const { address: userAddress } = useAccount();
 
   const [isClient, setIsClient] = useState(false);
@@ -137,7 +139,7 @@ const RecommendedCards = () => {
         onClick={onSwipeBack}
         disabled={didSwipeBack || gone.size === 0}
       >
-        <p className="font-semibold text-lg">Undo</p> <HiArrowUturnDown />
+        <p className="font-semibold text-lg">{t("undo")}</p> <HiArrowUturnDown />
       </button>
     </div>
   );

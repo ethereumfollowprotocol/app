@@ -29,20 +29,13 @@ export const useRecommendedProfilesCards = () => {
   const soundRef = useRef<HTMLAudioElement>(null)
   const animatedRef = useRef<HTMLDivElement>(null)
   const addAnimatedElements = () => {
-    if (soundRef.current) {
+    if (soundRef.current && !actionsSoundsMuted) {
       soundRef.current.volume = 0.3
       soundRef.current?.play()
     }
     animatedRef.current?.classList.add('falling-element')
   }
   const handleAnimationEnd = () => animatedRef.current?.classList.remove('falling-element')
-
-  useEffect(() => {
-    if (soundRef.current) {
-      if (actionsSoundsMuted) soundRef.current.volume = 0
-      else soundRef.current.volume = 0.3
-    }
-  }, [actionsSoundsMuted])
 
   const [didSwipeBack, setDidSwipeBack] = useState(false)
   const [props, api] = useSprings(recommendedProfiles.length, i => ({
