@@ -209,7 +209,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
         Following:
           resolvedTheme === "halloween"
             ? "/assets/sound-effects/unfollow-halloween.mp3"
-            : undefined,
+            : "/assets/sound-effects/unfollow.mp3",
         Unfollow: undefined,
         Subscribe: undefined,
         Subscribed: undefined,
