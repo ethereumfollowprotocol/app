@@ -63,7 +63,7 @@ const useCheckout = () => {
   const initialCurrentChainId = useChainId()
   const { address: userAddress } = useAccount()
   const { data: walletClient } = useWalletClient()
-  const { cartItems, resetCart, setCartItems } = useCart()
+  const { cartItems, resetCart, removeCartItem } = useCart()
   const { mint, nonce: mintNonce, listHasBeenMinted } = useMintEFP()
 
   const [currentChainId, setCurrentChainId] = useState(initialCurrentChainId)
@@ -155,7 +155,7 @@ const useCheckout = () => {
       setListOpsFinished(true)
 
       if (hash) {
-        setCartItems(cartItems.filter(item => !items.includes(item)))
+        items.forEach(item => removeCartItem(item.listOp))
         queryClient.invalidateQueries({ queryKey: ['following'] })
         queryClient.invalidateQueries({ queryKey: ['profile'] })
       }
@@ -182,8 +182,8 @@ const useCheckout = () => {
     const splitListOps: CartItem[][] = []
     const splitSize = LIST_OP_LIMITS[chainId || DEFAULT_CHAIN.id] || 1000
 
-    for (let i = 0; i < cartItems.length; i += splitSize) {
-      splitListOps.push(cartItems.slice(i, i + splitSize))
+    for (let i = 0; i < cartItems.size; i += splitSize) {
+      splitListOps.push(Array.from(cartItems.values()).slice(i, i + splitSize))
     }
 
     const cartItemActions: Action[] = splitListOps.map((listOps, i) => ({
@@ -282,8 +282,9 @@ const useCheckout = () => {
   }, [moveToNextAction, executeActionByIndex, getRequiredChain, currentChainId, currentActionIndex])
 
   const onFinish = useCallback(() => {
-    const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
-    if (regex.test(navigator.userAgent)) track(`${listHasBeenMinted ? 'Mint' : 'Checkout'} - Mobile`)
+    const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
+    if (regex.test(navigator.userAgent))
+      track(`${listHasBeenMinted ? 'Mint' : 'Checkout'} - Mobile`)
     else track(`${listHasBeenMinted ? 'Mint' : 'Checkout'} - Desktop`)
 
     if (fetchFreshStats) refetchStats()

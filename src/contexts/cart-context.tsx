@@ -49,8 +49,8 @@ type CartContextType = {
   socialAddresses: {
     farcaster: Address[];
   };
-  cartItems: CartItem[];
-  setCartItems: (items: CartItem[]) => void;
+  cartItems: Map<string, CartItem>;
+  setCartItems: (items: Map<string, CartItem>) => void;
   loadingCartItems: number;
   setLoadingCartItems: Dispatch<SetStateAction<number>>;
   getAddressesFromCart: () => string[];
@@ -80,7 +80,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   const [loadingCartItems, setLoadingCartItems] = useState<number>(0);
   const { address } = useAccount();
 
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartItems, setCartItems] = useState<Map<string, CartItem>>(new Map());
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -89,21 +89,25 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
     if (storedCartItemsJson) {
       try {
         const storedCartItems = JSON.parse(storedCartItemsJson) as StoredCartItem[];
-        const transformedCartItems = storedCartItems.map((item) => {
-          const addressBuffer = Buffer.from(item.address.slice(2), "hex");
-          const dataBuffer = item.tag
-            ? Buffer.concat([addressBuffer, Buffer.from(item.tag, "utf8")])
-            : addressBuffer;
+        const transformedCartItems = new Map(
+          storedCartItems.map((item) => {
+            const addressBuffer = Buffer.from(item.address.slice(2), "hex");
+            const dataBuffer = item.tag
+              ? // @ts-ignore
+                Buffer.concat([addressBuffer, Buffer.from(item.tag, "utf8")])
+              : addressBuffer;
 
-          return {
-            listOp: {
-              opcode: item.opcode,
-              version: item.version,
-              data: dataBuffer,
-            },
-            import: item.import,
-          };
-        });
+            const cartItem: CartItem = {
+              listOp: {
+                opcode: item.opcode,
+                version: item.version,
+                data: dataBuffer,
+              },
+              import: item.import,
+            };
+            return [listOpAsHexstring(cartItem.listOp), cartItem];
+          })
+        );
 
         setCartItems(transformedCartItems);
       } catch (error) {
@@ -112,22 +116,19 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
     }
   }, []);
 
-  const serializedCartItems = cartItems.map(
-    ({ listOp, import: platform }) => {
-      const addressHex = listOp.data.toString("hex");
-      const address = `0x${addressHex.slice(0, 40)}` as Address; // Adjust based on address length
-      const tag = listOp.data.length > 20 ? listOp.data.slice(20).toString("utf8") : undefined;
+  const serializedCartItems = Array.from(cartItems.values()).map(({ listOp, import: platform }) => {
+    const addressHex = listOp.data.toString("hex");
+    const address = `0x${addressHex.slice(0, 40)}` as Address; // Adjust based on address length
+    const tag = listOp.data.length > 20 ? listOp.data.slice(20).toString("utf8") : undefined;
 
-      return {
-        opcode: listOp.opcode,
-        version: listOp.version,
-        address,
-        tag,
-        import: platform,
-      };
-    },
-    [cartItems]
-  );
+    return {
+      opcode: listOp.opcode,
+      version: listOp.version,
+      address,
+      tag,
+      import: platform,
+    };
+  });
 
   // useEffect(() => {
   //   if (!address) return;
@@ -152,7 +153,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
         localStorage.setItem("cart", JSON.stringify(items));
         localStorage.setItem("cart address", addr);
       }
-    }, 300),
+    }, 500),
     []
   );
 
@@ -161,30 +162,35 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
     saveCartToLocalStorage(serializedCartItems, address);
   }, [serializedCartItems, address, saveCartToLocalStorage]);
 
-  const addCartItem = useCallback(
-    (item: CartItem) => {
-      setLoadingCartItems((prevLoading) => (prevLoading > 0 ? prevLoading - 1 : prevLoading));
+  const addCartItem = useCallback((item: CartItem) => {
+    setLoadingCartItems((prevLoading) => (prevLoading > 0 ? prevLoading - 1 : prevLoading));
 
-      const exists = cartItems.some(
-        (cartItem) => listOpAsHexstring(cartItem.listOp) === listOpAsHexstring(item.listOp)
-      );
-
-      if (!exists) {
-        setCartItems((prevItems) => [...prevItems, item]);
+    const key = item.listOp.data.toString("hex");
+    setCartItems((prevItems) => {
+      if (!prevItems.has(key)) {
+        const newItems = new Map(prevItems);
+        newItems.set(key, item);
+        return newItems;
       }
-    },
-    [cartItems]
-  );
+      return prevItems; // No change if the item already exists
+    });
+  }, []);
 
-  const removeCartItem = (listOp: ListOp) => {
-    setCartItems((prevItems) =>
-      prevItems.filter((item) => listOpAsHexstring(item.listOp) !== listOpAsHexstring(listOp))
-    );
-  };
+  const removeCartItem = useCallback((listOp: ListOp) => {
+    const key = listOp.data.toString("hex");
+    setCartItems((prevItems) => {
+      if (prevItems.has(key)) {
+        const newItems = new Map(prevItems);
+        newItems.delete(key);
+        return newItems;
+      }
+      return prevItems; // No change if the item doesn't exist
+    });
+  }, []);
 
   const hasListOpAddRecord = useCallback(
     (address: Address): boolean =>
-      cartItems.some(
+      Array.from(cartItems.values()).some(
         (cartItem) =>
           cartItem.listOp.version === 1 &&
           cartItem.listOp.opcode === 1 &&
@@ -195,7 +201,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
 
   const hasListOpRemoveRecord = useCallback(
     (address: Address): boolean =>
-      cartItems.some(
+      Array.from(cartItems.values()).some(
         (cartItem) =>
           cartItem.listOp.version === 1 &&
           cartItem.listOp.opcode === 2 &&
@@ -206,7 +212,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
 
   const hasListOpAddTag = useCallback(
     ({ address, tag }: { address: Address; tag: string }): boolean =>
-      cartItems.some(
+      Array.from(cartItems.values()).some(
         (cartItem) =>
           isTagListOp(cartItem.listOp) &&
           cartItem.listOp.opcode === 3 &&
@@ -218,7 +224,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
 
   const hasListOpRemoveTag = useCallback(
     ({ address, tag }: { address: Address; tag: string }): boolean =>
-      cartItems.some(
+      Array.from(cartItems.values()).some(
         (cartItem) =>
           isTagListOp(cartItem.listOp) &&
           cartItem.listOp.opcode === 4 &&
@@ -304,7 +310,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   // Retrieves all tags associated with a specific address from the cart items.
   const getTagsFromCartByAddress = useCallback(
     (address: Address): string[] => {
-      return cartItems.reduce((tags, { listOp }) => {
+      return Array.from(cartItems.values()).reduce((tags, { listOp }) => {
         if (isTagListOp(listOp)) {
           const { address: opAddress, tag } = extractAddressAndTag(listOp);
           if (opAddress.toLowerCase() === address.toLowerCase()) {
@@ -320,7 +326,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   // Retrieves all unique addresses involved in the cart items.
   const getAddressesFromCart = useCallback(
     (platform?: ImportPlatformType): Address[] => {
-      const addresses = cartItems
+      const addresses = Array.from(cartItems.values())
         .filter((item) => item.import === platform)
         .map(({ listOp }) =>
           isTagListOp(listOp) ? extractAddressAndTag(listOp).address : hexlify(listOp.data)
@@ -333,10 +339,10 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
 
   // Resets the cart items
   const resetCart = () => {
-    setCartItems([]);
+    setCartItems(new Map());
   };
 
-  const totalCartItems = cartItems.length + loadingCartItems;
+  const totalCartItems = Array.from(cartItems.values()).length + loadingCartItems;
   const cartAddresses = getAddressesFromCart();
   const socialAddresses = {
     farcaster: getAddressesFromCart("farcaster"),

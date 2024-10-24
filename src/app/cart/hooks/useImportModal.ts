@@ -2,10 +2,10 @@ import type { Address } from 'viem'
 import { useEffect, useMemo, useState } from 'react'
 import { init, useQuery, useQueryWithPagination } from '@airstack/airstack-react'
 
-import { useCart } from '#/contexts/cart-context'
 import { listOpAddListRecord } from '#/utils/list-ops'
 import type { ImportPlatformType } from '#/types/common'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
+import { useCart, type CartItem } from '#/contexts/cart-context'
 
 init('0366bbe276e04996af5f92ebb7899f19', { env: 'dev', cache: true })
 
@@ -28,7 +28,7 @@ const useImportModal = (platform: ImportPlatformType) => {
   const [onlyImportWithEns, setOnlyImportWithEns] = useState(true)
   const [isFollowingsLoading, setIsFollowingsLoading] = useState(false)
 
-  const { cartItems, setCartItems, getAddressesFromCart } = useCart()
+  const { cartItems, getAddressesFromCart, setCartItems } = useCart()
   const { allFollowingAddresses } = useEFPProfile()
 
   useEffect(() => {
@@ -144,12 +144,19 @@ const useImportModal = (platform: ImportPlatformType) => {
             getAddressesFromCart().includes(addr.toLowerCase())
           )
       )
-      .map(followingAddress => ({
-        listOp: listOpAddListRecord(followingAddress.address as Address),
-        import: platform
-      }))
+      .map(
+        followingAddress =>
+          ({
+            listOp: listOpAddListRecord(followingAddress.address as Address),
+            import: platform
+          }) as CartItem
+      )
+      .concat(Array.from(cartItems.values()))
 
-    setCartItems([...cartItems, ...newCartItems])
+    const newMapCartItems = new Map(
+      newCartItems.map(item => [item.listOp.data.toString('hex'), item])
+    )
+    setCartItems(newMapCartItems)
   }
 
   const alreadyFollow = followings.filter(({ address: addr }) =>

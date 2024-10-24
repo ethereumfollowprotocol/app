@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { FiSearch } from "react-icons/fi";
 import { useCart } from "#/contexts/cart-context";
 import LoadingCell from "#/components/loaders/loading-cell";
+import { HiPlus } from "react-icons/hi";
 
 interface EditModalProps {
   profiles: TopEightProfileType[];
@@ -73,11 +74,14 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose }) => {
           {new Array(loadingCartItems).fill(1).map((_, i) => (
             <div
               key={`loading ${i}`}
-              className="flex flex-col w-28 2xl:w-36 py-4 items-center gap-2"
+              className="flex flex-col p-4 items-center gap-2 relative border-grey rounded-xl w-[144px] h-[192px] border-[3px] border-lime-500/50"
             >
-              <LoadingCell className="h-[60px] w-[60px] rounded-full" />
+              <LoadingCell className="h-[50px] w-[50px] rounded-full" />
               <LoadingCell className="h-7 w-24 rounded-lg" />
-              <LoadingCell className="h-9 w-[120px] rounded-lg" />
+              <LoadingCell className="h-9 w-[120px] mt-5 rounded-lg" />
+              <div className="absolute top-1 right-1 p-1 rounded-full text-white bg-lime-500/50">
+                <HiPlus />
+              </div>
             </div>
           ))}
           {editedProfiles.length === 0 && (

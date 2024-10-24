@@ -25,7 +25,7 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
   const { cartItems, addCartItem, setLoadingCartItems } = useCart()
   const topEightInCart = useMemo(
     () =>
-      cartItems
+      Array.from(cartItems.values())
         .filter(
           ({ listOp }) =>
             listOp.opcode === 3 &&
@@ -41,7 +41,7 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
   const [editedProfiles, setEditedProfiles] = useState([...profiles, ...topEightInCart])
 
   const validTopEightsLength = useMemo(() => {
-    const topEightRemoved = cartItems.filter(
+    const topEightRemoved = Array.from(cartItems.values()).filter(
       ({ listOp }) =>
         listOp.opcode === 4 && isTagListOp(listOp) && extractAddressAndTag(listOp).tag === 'top8'
     )
@@ -102,26 +102,6 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
     if (!roles?.isManager) return toast.error(t('not manager'))
 
     setAddProfileSearch('')
-
-    // const hasMultipleNames =
-    //   addProfileSearch.includes(',') ||
-    //   addProfileSearch.includes(' ') ||
-    //   addProfileSearch.includes('\n')
-
-    // if (hasMultipleNames) {
-    //   const namesToAdd = addProfileSearch
-    //     .replaceAll(',', ' ')
-    //     .replaceAll('\n', ' ')
-    //     .split(' ')
-    //     .map(name => name.trim())
-    //     .filter(name => !!name)
-
-    //   const addedToCart = await Promise.all(namesToAdd.map(async name => await addToCart(name)))
-
-    //   const erroredNames = addedToCart.filter(item => item?.user).map(item => item?.user)
-    //   if (erroredNames.length > 0) toast.error(`${t('unresolved')} ${formatError(erroredNames)}`)
-    // }
-
     const addedToCart = await addToCart(addProfileSearch)
     if (addedToCart?.user) toast.error(`${t('unresolved')} ${addProfileSearch}`)
   }
