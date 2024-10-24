@@ -13,7 +13,7 @@
     "lint": "biome check --apply . --diagnostic-level=warn",
     "start": "next start",
     "typecheck": "tsc --project tsconfig.json --noEmit",
-    "update-dependencies": "bun ./scripts/update-dependencies.ts"
+    "preinstall": "npm_config_yes=true npm exec --no-package-lock=true only-allow@latest bun"
   },
   "dependencies": {
     "@airstack/airstack-react": "^0.6.4",

@@ -73,3 +73,6 @@ public/*.js
 
 # Sentry Config File
 .sentryclirc
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
