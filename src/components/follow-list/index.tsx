@@ -1,4 +1,5 @@
 import type { Address } from "viem";
+import { List } from "react-virtualized";
 import { useTranslation } from "react-i18next";
 import Image, { type StaticImageData } from "next/image";
 
@@ -126,7 +127,7 @@ export function FollowList({
                 </div>
               )
           )}
-          {profiles?.map(({ address, tags, ens, counts }) => (
+          {/* {profiles?.map(({ address, tags, ens, counts }) => (
             <FollowListItem
               className={listItemClassName}
               key={address}
@@ -141,7 +142,37 @@ export function FollowList({
               isBlockedBy={isBlockedBy}
               isFollowers={isFollowers}
             />
-          ))}
+          ))} */}
+          <List
+            autoHeight={true}
+            autoWidth={true}
+            height={100000}
+            width={2000}
+            rowCount={profiles?.length || 0}
+            rowHeight={64}
+            className="gap-1"
+            rowRenderer={({ key, index }) => {
+              const profile = profiles?.[index];
+              if (!profile) return null;
+
+              return (
+                <FollowListItem
+                  className={listItemClassName}
+                  key={profile.address}
+                  address={profile.address}
+                  ensProfile={profile.ens}
+                  showFollowsYouBadges={showFollowsYouBadges}
+                  showTags={showTags}
+                  tags={profile.tags}
+                  counts={profile.counts}
+                  canEditTags={canEditTags}
+                  isBlockedList={isBlockedList}
+                  isBlockedBy={isBlockedBy}
+                  isFollowers={isFollowers}
+                />
+              );
+            }}
+          />
           {isLoadingMore &&
             new Array(loadingRows)
               .fill(1)

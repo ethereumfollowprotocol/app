@@ -24,9 +24,9 @@ type SoundsContextType = {
 const SoundsContext = createContext<SoundsContextType | undefined>(undefined);
 
 export const SoundsProvider = ({ children }: { children: React.ReactNode }) => {
+  const [selectedVolume, setSelectedVolume] = useState("sfx only");
   const [actionsSoundsMuted, setActionsSoundsMuted] = useState(false);
   const [backgroundSoundsMuted, setBackgroundSoundsMuted] = useState(true);
-  const [selectedVolume, setSelectedVolume] = useState("sfx only");
 
   const backgroundMusicRef = useRef<HTMLAudioElement>(null);
   useEffect(() => {
