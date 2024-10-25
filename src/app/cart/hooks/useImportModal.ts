@@ -1,5 +1,4 @@
 import type { Address } from 'viem'
-import { Map as ImmutableMap } from 'immutable'
 import { useEffect, useMemo, useState } from 'react'
 import { init, useQuery, useQueryWithPagination } from '@airstack/airstack-react'
 
