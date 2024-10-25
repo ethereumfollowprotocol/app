@@ -8,6 +8,7 @@ import { GiPumpkinLantern } from "react-icons/gi";
 import { MdLightMode, MdDarkMode } from "react-icons/md";
 import { HiOutlineDesktopComputer } from "react-icons/hi";
 
+import i18n from "#/app/i18n";
 import { cn } from "#/lib/utilities";
 import GreenCheck from "public/assets/icons/check-green.svg";
 
@@ -27,6 +28,7 @@ export const themesWithIcons = [
   {
     theme: "halloween",
     icon: <GiPumpkinLantern />,
+    language: "halloween",
   },
 ];
 
@@ -83,7 +85,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
             <FiArrowLeft className="text-xl" />
             <p className="font-bold">Back</p>
           </div>
-          {themesWithIcons.map(({ theme, icon }) => (
+          {themesWithIcons.map(({ theme, icon, language }) => (
             <div
               className="flex items-center relative p-3 pl-8 w-full gap-2 rounded-md hover:bg-navItem"
               key={theme}
@@ -91,6 +93,9 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
                 setTheme(theme as ThemeType);
                 setThemeMenuOpen(false);
                 setExternalThemeMenuOpen?.(false);
+                if (language) {
+                  i18n.changeLanguage(language);
+                }
                 closeMenu?.();
               }}
             >
