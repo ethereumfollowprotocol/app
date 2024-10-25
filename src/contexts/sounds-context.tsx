@@ -39,6 +39,8 @@ export const SoundsProvider = ({ children }: { children: React.ReactNode }) => {
 
   const { resolvedTheme } = useTheme();
   useEffect(() => {
+    if (typeof window === "undefined" || !navigator.userActivation.isActive) return;
+
     setActionsSoundsMuted(false);
     if (resolvedTheme === "halloween") {
       setBackgroundSoundsMuted(false);
