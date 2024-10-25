@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { FiArrowLeft } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
@@ -50,6 +50,12 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
 
   const { t } = useTranslation();
   const { setTheme, theme: selectedTheme } = useTheme();
+
+  useEffect(() => {
+    if (selectedTheme === "halloween") {
+      i18n.changeLanguage("halloween");
+    }
+  }, [selectedTheme]);
 
   return (
     <div ref={clickAwayThemeRef} className="cursor-pointer group relative w-full">
