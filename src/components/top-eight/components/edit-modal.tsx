@@ -1,17 +1,17 @@
+import { HiPlus } from "react-icons/hi";
+import { FiSearch } from "react-icons/fi";
+import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 
+import { cn } from "#/lib/utilities";
 import Modal from "#/components/modal";
 import TopEightProfile from "./top-eight-profile";
-import { useEditTopEight } from "../hooks/use-edit-top-eight";
-import type { TopEightProfileType } from "../hooks/use-top-eight";
-import { cn } from "#/lib/utilities";
-import CancelButton from "#/components/buttons/cancel-button";
-import { PrimaryButton } from "#/components/buttons/primary-button";
-import { useRouter } from "next/navigation";
-import { FiSearch } from "react-icons/fi";
 import { useCart } from "#/contexts/cart-context";
 import LoadingCell from "#/components/loaders/loading-cell";
-import { HiPlus } from "react-icons/hi";
+import CancelButton from "#/components/buttons/cancel-button";
+import { useEditTopEight } from "../hooks/use-edit-top-eight";
+import type { TopEightProfileType } from "../hooks/use-top-eight";
+import { PrimaryButton } from "#/components/buttons/primary-button";
 
 interface EditModalProps {
   profiles: TopEightProfileType[];
