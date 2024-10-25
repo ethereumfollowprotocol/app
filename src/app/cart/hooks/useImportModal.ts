@@ -1,4 +1,5 @@
 import type { Address } from 'viem'
+import { Map as ImmutableMap } from 'immutable'
 import { useEffect, useMemo, useState } from 'react'
 import { init, useQuery, useQueryWithPagination } from '@airstack/airstack-react'
 
@@ -153,7 +154,7 @@ const useImportModal = (platform: ImportPlatformType) => {
       )
       .concat(Array.from(cartItems.values()))
 
-    const newMapCartItems = new Map(
+    const newMapCartItems = ImmutableMap(
       newCartItems.map(item => [item.listOp.data.toString('hex'), item])
     )
     setCartItems(newMapCartItems)

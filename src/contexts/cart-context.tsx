@@ -12,18 +12,13 @@ import {
 } from "react";
 import { useAccount } from "wagmi";
 import type { Address } from "viem";
+import debounce from "lodash.debounce";
 import { hexlify } from "#/lib/utilities";
+import { Map as ImmutableMap } from "immutable";
 
-import {
-  isTagListOp,
-  listOpAddTag,
-  listOpRemoveTag,
-  listOpAsHexstring,
-  extractAddressAndTag,
-} from "#/utils/list-ops";
 import type { ImportPlatformType } from "#/types/common";
 import type { ListOp, ListOpTagOpParams } from "#/types/list-op";
-import debounce from "lodash.debounce";
+import { isTagListOp, listOpAddTag, listOpRemoveTag, extractAddressAndTag } from "#/utils/list-ops";
 
 // Define the type for each cart item
 export type CartItem = {
@@ -49,8 +44,8 @@ type CartContextType = {
   socialAddresses: {
     farcaster: Address[];
   };
-  cartItems: Map<string, CartItem>;
-  setCartItems: (items: Map<string, CartItem>) => void;
+  cartItems: ImmutableMap<string, CartItem>;
+  setCartItems: Dispatch<SetStateAction<ImmutableMap<string, CartItem>>>;
   loadingCartItems: number;
   setLoadingCartItems: Dispatch<SetStateAction<number>>;
   getAddressesFromCart: () => string[];
@@ -80,7 +75,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   const [loadingCartItems, setLoadingCartItems] = useState<number>(0);
   const { address } = useAccount();
 
-  const [cartItems, setCartItems] = useState<Map<string, CartItem>>(new Map());
+  const [cartItems, setCartItems] = useState<ImmutableMap<string, CartItem>>(ImmutableMap());
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -89,7 +84,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
     if (storedCartItemsJson) {
       try {
         const storedCartItems = JSON.parse(storedCartItemsJson) as StoredCartItem[];
-        const transformedCartItems = new Map(
+        const transformedCartItems = ImmutableMap(
           storedCartItems.map((item) => {
             const addressBuffer = Buffer.from(item.address.slice(2), "hex");
             const dataBuffer = item.tag
@@ -105,7 +100,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
               },
               import: item.import,
             };
-            return [listOpAsHexstring(cartItem.listOp), cartItem];
+            return [cartItem.listOp.data.toString("hex"), cartItem];
           })
         );
 
@@ -167,25 +162,14 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
 
     const key = item.listOp.data.toString("hex");
     setCartItems((prevItems) => {
-      if (!prevItems.has(key)) {
-        const newItems = new Map(prevItems);
-        newItems.set(key, item);
-        return newItems;
-      }
-      return prevItems; // No change if the item already exists
+      if (!prevItems.has(key)) return prevItems.set(key, item);
+      return prevItems;
     });
   }, []);
 
   const removeCartItem = useCallback((listOp: ListOp) => {
     const key = listOp.data.toString("hex");
-    setCartItems((prevItems) => {
-      if (prevItems.has(key)) {
-        const newItems = new Map(prevItems);
-        newItems.delete(key);
-        return newItems;
-      }
-      return prevItems; // No change if the item doesn't exist
-    });
+    setCartItems((prevItems) => prevItems.delete(key));
   }, []);
 
   const hasListOpAddRecord = useCallback(
@@ -339,7 +323,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
 
   // Resets the cart items
   const resetCart = () => {
-    setCartItems(new Map());
+    setCartItems((prevMap) => prevMap.clear());
   };
 
   const totalCartItems = Array.from(cartItems.values()).length + loadingCartItems;
