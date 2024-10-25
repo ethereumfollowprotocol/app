@@ -20,7 +20,7 @@ const SocialFollowButton: React.FC<SocialFollowButtonProps> = ({ profiles }) => 
 
     const addresses = profiles.map(({ address }) => address.toLowerCase());
 
-    const filteredCartItems = Array.from(cartItems.values()).filter((item) =>
+    const filteredCartItems = cartItems.filter((item) =>
       isTagListOp(item.listOp)
         ? !addresses.includes(extractAddressAndTag(item.listOp).address.toLowerCase())
         : !addresses.includes(`0x${item.listOp.data.toString("hex")}`.toLowerCase())

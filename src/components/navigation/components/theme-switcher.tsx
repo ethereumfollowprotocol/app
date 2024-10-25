@@ -1,12 +1,14 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { FiArrowLeft } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import { useClickAway } from "@uidotdev/usehooks";
+import { GiPumpkinLantern } from "react-icons/gi";
 import { MdLightMode, MdDarkMode } from "react-icons/md";
 import { HiOutlineDesktopComputer } from "react-icons/hi";
 
+import i18n from "#/app/i18n";
 import { cn } from "#/lib/utilities";
 import GreenCheck from "public/assets/icons/check-green.svg";
 
@@ -23,10 +25,11 @@ export const themesWithIcons = [
     theme: "dark",
     icon: <MdDarkMode />,
   },
-  // {
-  //   theme: 'halloween',
-  //   icon: <GiPumpkinLantern />
-  // }
+  {
+    theme: "halloween",
+    icon: <GiPumpkinLantern />,
+    language: "halloween",
+  },
 ];
 
 const themes = ["system", "light", "dark", "halloween"] as const;
@@ -47,6 +50,12 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
 
   const { t } = useTranslation();
   const { setTheme, theme: selectedTheme } = useTheme();
+
+  useEffect(() => {
+    if (selectedTheme === "halloween") {
+      i18n.changeLanguage("halloween");
+    }
+  }, [selectedTheme]);
 
   return (
     <div ref={clickAwayThemeRef} className="cursor-pointer group relative w-full">
@@ -71,7 +80,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
           themeMenuOpen ? "block" : "hidden"
         )}
       >
-        <div className="flex flex-col p-1 gap-2 w-full h-[230px] sm:h-[174px] max-h-[75vh] sm:max-h-[90vh] overflow-scroll border-[3px] rounded-lg bg-neutral border-grey shadow-md">
+        <div className="flex flex-col p-1 gap-2 w-full max-h-[75vh] sm:max-h-[90vh] border-[3px] rounded-lg bg-neutral border-grey shadow-md">
           <div
             onClick={() => {
               setThemeMenuOpen(false);
@@ -82,7 +91,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
             <FiArrowLeft className="text-xl" />
             <p className="font-bold">Back</p>
           </div>
-          {themesWithIcons.map(({ theme, icon }) => (
+          {themesWithIcons.map(({ theme, icon, language }) => (
             <div
               className="flex items-center relative p-3 pl-8 w-full gap-2 rounded-md hover:bg-navItem"
               key={theme}
@@ -90,6 +99,9 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
                 setTheme(theme as ThemeType);
                 setThemeMenuOpen(false);
                 setExternalThemeMenuOpen?.(false);
+                if (language) {
+                  i18n.changeLanguage(language);
+                }
                 closeMenu?.();
               }}
             >

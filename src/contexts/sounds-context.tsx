@@ -1,5 +1,6 @@
 "use client";
 
+import { useTheme } from "next-themes";
 import {
   createContext,
   useContext,
@@ -36,20 +37,22 @@ export const SoundsProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [backgroundSoundsMuted]);
 
-  // const { resolvedTheme } = useTheme();
-  // useEffect(() => {
-  //   setActionsSoundsMuted(false);
-  //   if (resolvedTheme === "halloween") {
-  //     setBackgroundSoundsMuted(false);
-  //     setSelectedVolume("sfx & music");
-  //     backgroundMusicRef.current?.play();
-  //     if (backgroundMusicRef.current) backgroundMusicRef.current.volume = 0.3;
-  //   } else {
-  //     setBackgroundSoundsMuted(true);
-  //     setSelectedVolume("sfx only");
-  //     backgroundMusicRef.current?.pause();
-  //   }
-  // }, [resolvedTheme]);
+  const { resolvedTheme } = useTheme();
+  useEffect(() => {
+    if (typeof window === "undefined" || !navigator.userActivation.isActive) return;
+
+    setActionsSoundsMuted(false);
+    if (resolvedTheme === "halloween") {
+      setBackgroundSoundsMuted(false);
+      setSelectedVolume("sfx & music");
+      backgroundMusicRef.current?.play();
+      if (backgroundMusicRef.current) backgroundMusicRef.current.volume = 0.3;
+    } else {
+      setBackgroundSoundsMuted(true);
+      setSelectedVolume("sfx only");
+      backgroundMusicRef.current?.pause();
+    }
+  }, [resolvedTheme]);
 
   return (
     <SoundsContext.Provider

@@ -17,12 +17,34 @@ import LikeButton from 'public/assets/partners/likebutton.jpeg'
 import HarvestArt from 'public/assets/partners/harvestart.jpeg'
 import VibesScapes from 'public/assets/partners/vibesscapes.jpeg'
 import EngagementVision from 'public/assets/partners/engagementvision.jpeg'
+import POAP from 'public/assets/partners/poap.jpeg'
+
 
 export const INTEGRATIONS = [
   {
     name: 'Interface',
     url: 'https://interface.social',
     logo: Interface
+  },
+  {
+    name: 'POAP',
+    url: 'https://poap.xyz',
+    logo: POAP
+  },
+  {
+    name: 'Vision',
+    url: 'https://vision.io/',
+    logo: EnsVision
+  },
+  {
+    name: 'Blockscout',
+    url: 'https://www.blockscout.com/',
+    logo: Blockscout
+  },
+  {
+    name: 'Vibes',
+    url: 'https://vibes.scapes.xyz/',
+    logo: VibesScapes
   },
   {
     name: 'LikeButton.eth',
@@ -60,11 +82,6 @@ export const INTEGRATIONS = [
     logo: PWN
   },
   {
-    name: 'Vision',
-    url: 'https://vision.io/',
-    logo: EnsVision
-  },
-  {
     name: 'Namefi',
     url: 'https://www.namefi.io/',
     logo: Namefi
@@ -75,19 +92,9 @@ export const INTEGRATIONS = [
     logo: ENSBook
   },
   {
-    name: 'Vibes',
-    url: 'https://vibes.scapes.xyz/',
-    logo: VibesScapes
-  },
-  {
     name: 'Web3 Bio',
     url: 'https://web3.bio/',
     logo: WebThreeBio
-  },
-  {
-    name: 'Blockscout',
-    url: 'https://www.blockscout.com/',
-    logo: Blockscout
   },
   {
     name: 'Roc Box',
