@@ -154,10 +154,7 @@ const useImportModal = (platform: ImportPlatformType) => {
       )
       .concat(Array.from(cartItems.values()))
 
-    const newMapCartItems = ImmutableMap(
-      newCartItems.map(item => [item.listOp.data.toString('hex'), item])
-    )
-    setCartItems(newMapCartItems)
+    setCartItems(newCartItems)
   }
 
   const alreadyFollow = followings.filter(({ address: addr }) =>

@@ -78,7 +78,7 @@ const Cart = () => {
     let count = 0;
     const splitSize = LIST_OP_LIMITS[roles?.listChainId || DEFAULT_CHAIN.id] || 1000;
 
-    for (let i = 0; i < cartItems.size; i += splitSize) {
+    for (let i = 0; i < cartItems.length; i += splitSize) {
       count += 1;
     }
 

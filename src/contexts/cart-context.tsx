@@ -14,8 +14,8 @@ import { useAccount } from "wagmi";
 import type { Address } from "viem";
 import debounce from "lodash.debounce";
 import { hexlify } from "#/lib/utilities";
-import { Map as ImmutableMap } from "immutable";
 
+import { useCartMap } from "#/hooks/use-cart-map";
 import type { ImportPlatformType } from "#/types/common";
 import type { ListOp, ListOpTagOpParams } from "#/types/list-op";
 import { isTagListOp, listOpAddTag, listOpRemoveTag, extractAddressAndTag } from "#/utils/list-ops";
@@ -44,8 +44,8 @@ type CartContextType = {
   socialAddresses: {
     farcaster: Address[];
   };
-  cartItems: ImmutableMap<string, CartItem>;
-  setCartItems: Dispatch<SetStateAction<ImmutableMap<string, CartItem>>>;
+  cartItems: CartItem[];
+  setCartItems: (items: CartItem[]) => void;
   loadingCartItems: number;
   setLoadingCartItems: Dispatch<SetStateAction<number>>;
   getAddressesFromCart: () => string[];
@@ -75,7 +75,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   const [loadingCartItems, setLoadingCartItems] = useState<number>(0);
   const { address } = useAccount();
 
-  const [cartItems, setCartItems] = useState<ImmutableMap<string, CartItem>>(ImmutableMap());
+  const { set, has, delete: deleteKey, entries, forceUpdate, setBulk, values } = useCartMap();
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -84,138 +84,121 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
     if (storedCartItemsJson) {
       try {
         const storedCartItems = JSON.parse(storedCartItemsJson) as StoredCartItem[];
-        const transformedCartItems = ImmutableMap(
-          storedCartItems.map((item) => {
-            const addressBuffer = Buffer.from(item.address.slice(2), "hex");
-            const dataBuffer = item.tag
-              ? // @ts-ignore
-                Buffer.concat([addressBuffer, Buffer.from(item.tag, "utf8")])
-              : addressBuffer;
+        const transformedCartItems = storedCartItems.map((item) => {
+          const addressBuffer = Buffer.from(item.address.slice(2), "hex");
+          const dataBuffer = item.tag
+            ? // @ts-ignore
+              Buffer.concat([addressBuffer, Buffer.from(item.tag, "utf8")])
+            : addressBuffer;
 
-            const cartItem: CartItem = {
-              listOp: {
-                opcode: item.opcode,
-                version: item.version,
-                data: dataBuffer,
-              },
-              import: item.import,
-            };
-            return [cartItem.listOp.data.toString("hex"), cartItem];
-          })
-        );
+          const cartItem: CartItem = {
+            listOp: {
+              opcode: item.opcode,
+              version: item.version,
+              data: dataBuffer,
+            },
+            import: item.import,
+          };
 
-        setCartItems(transformedCartItems);
+          return cartItem;
+        });
+
+        setBulk(transformedCartItems);
       } catch (error) {
         localStorage.removeItem("cart");
       }
     }
   }, []);
 
-  const serializedCartItems = Array.from(cartItems.values()).map(({ listOp, import: platform }) => {
-    const addressHex = listOp.data.toString("hex");
-    const address = `0x${addressHex.slice(0, 40)}` as Address; // Adjust based on address length
-    const tag = listOp.data.length > 20 ? listOp.data.slice(20).toString("utf8") : undefined;
-
-    return {
-      opcode: listOp.opcode,
-      version: listOp.version,
-      address,
-      tag,
-      import: platform,
-    };
-  });
-
-  // useEffect(() => {
-  //   if (!address) return;
-  //   if (typeof window === "undefined") return;
-
-  //   const saveToLocalStorage = () => {
-  //     localStorage.setItem("cart", JSON.stringify(serializedCartItems));
-  //     localStorage.setItem("cart address", address);
-  //   };
-
-  //   if (window.requestIdleCallback) {
-  //     window.requestIdleCallback(saveToLocalStorage);
-  //   } else {
-  //     // Fallback for browsers that don't support requestIdleCallback
-  //     setTimeout(saveToLocalStorage, 300);
-  //   }
-  // }, [serializedCartItems, address]);
-
   const saveCartToLocalStorage = useCallback(
-    debounce((items: StoredCartItem[], addr: Address) => {
+    debounce((addr: Address) => {
+      const serializedCartItems = values().map(({ listOp, import: platform }) => {
+        const addressHex = listOp.data.toString("hex");
+        const address = `0x${addressHex.slice(0, 40)}` as Address; // Adjust based on address length
+        const tag = listOp.data.length > 20 ? listOp.data.slice(20).toString("utf8") : undefined;
+
+        return {
+          opcode: listOp.opcode,
+          version: listOp.version,
+          address,
+          tag,
+          import: platform,
+        };
+      });
+
       if (typeof window !== "undefined") {
-        localStorage.setItem("cart", JSON.stringify(items));
+        localStorage.setItem("cart", JSON.stringify(serializedCartItems));
         localStorage.setItem("cart address", addr);
       }
-    }, 500),
+    }, 600),
     []
   );
 
   useEffect(() => {
     if (!address) return;
-    saveCartToLocalStorage(serializedCartItems, address);
-  }, [serializedCartItems, address, saveCartToLocalStorage]);
+    saveCartToLocalStorage(address);
+  }, [address, saveCartToLocalStorage]);
 
   const addCartItem = useCallback((item: CartItem) => {
     setLoadingCartItems((prevLoading) => (prevLoading > 0 ? prevLoading - 1 : prevLoading));
 
     const key = item.listOp.data.toString("hex");
-    setCartItems((prevItems) => {
-      if (!prevItems.has(key)) return prevItems.set(key, item);
-      return prevItems;
-    });
+    if (has(key)) return;
+    set(key, item);
+    forceUpdate();
   }, []);
 
   const removeCartItem = useCallback((listOp: ListOp) => {
     const key = listOp.data.toString("hex");
-    setCartItems((prevItems) => prevItems.delete(key));
+    if (!has(key)) return;
+    deleteKey(key);
+    forceUpdate();
   }, []);
 
   const hasListOpAddRecord = useCallback(
     (address: Address): boolean =>
-      Array.from(cartItems.values()).some(
+      values().some(
         (cartItem) =>
           cartItem.listOp.version === 1 &&
           cartItem.listOp.opcode === 1 &&
           `0x${cartItem.listOp.data.toString("hex")}`.toLowerCase() === address?.toLowerCase()
       ),
-    [cartItems]
+    [entries]
   );
 
   const hasListOpRemoveRecord = useCallback(
     (address: Address): boolean =>
-      Array.from(cartItems.values()).some(
+      values().some(
         (cartItem) =>
           cartItem.listOp.version === 1 &&
           cartItem.listOp.opcode === 2 &&
           `0x${cartItem.listOp.data.toString("hex")}`.toLowerCase() === address?.toLowerCase()
       ),
-    [cartItems]
+    [entries]
   );
 
   const hasListOpAddTag = useCallback(
     ({ address, tag }: { address: Address; tag: string }): boolean =>
-      Array.from(cartItems.values()).some(
+      values().some(
         (cartItem) =>
           isTagListOp(cartItem.listOp) &&
           cartItem.listOp.opcode === 3 &&
           extractAddressAndTag(cartItem.listOp).address.toLowerCase() === address?.toLowerCase() &&
           extractAddressAndTag(cartItem.listOp).tag === tag
       ),
-    [cartItems]
+    [entries]
   );
 
   const hasListOpRemoveTag = useCallback(
     ({ address, tag }: { address: Address; tag: string }): boolean =>
-      Array.from(cartItems.values()).some(
+      values().some(
         (cartItem) =>
           isTagListOp(cartItem.listOp) &&
           cartItem.listOp.opcode === 4 &&
           extractAddressAndTag(cartItem.listOp).address.toLowerCase() === address?.toLowerCase() &&
           extractAddressAndTag(cartItem.listOp).tag === tag
       ),
-    [cartItems]
+    [entries]
   );
 
   const removeAddTagFromCart = useCallback(
@@ -294,7 +277,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   // Retrieves all tags associated with a specific address from the cart items.
   const getTagsFromCartByAddress = useCallback(
     (address: Address): string[] => {
-      return Array.from(cartItems.values()).reduce((tags, { listOp }) => {
+      return values().reduce((tags, { listOp }) => {
         if (isTagListOp(listOp)) {
           const { address: opAddress, tag } = extractAddressAndTag(listOp);
           if (opAddress.toLowerCase() === address.toLowerCase()) {
@@ -304,13 +287,13 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
         return tags;
       }, [] as string[]);
     },
-    [cartItems]
+    [values]
   );
 
   // Retrieves all unique addresses involved in the cart items.
   const getAddressesFromCart = useCallback(
     (platform?: ImportPlatformType): Address[] => {
-      const addresses = Array.from(cartItems.values())
+      const addresses = values()
         .filter((item) => item.import === platform)
         .map(({ listOp }) =>
           isTagListOp(listOp) ? extractAddressAndTag(listOp).address : hexlify(listOp.data)
@@ -318,15 +301,15 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
 
       return [...new Set(addresses)];
     },
-    [cartItems]
+    [values]
   );
 
   // Resets the cart items
   const resetCart = () => {
-    setCartItems((prevMap) => prevMap.clear());
+    setBulk([]);
   };
 
-  const totalCartItems = Array.from(cartItems.values()).length + loadingCartItems;
+  const totalCartItems = values().length + loadingCartItems;
   const cartAddresses = getAddressesFromCart();
   const socialAddresses = {
     farcaster: getAddressesFromCart("farcaster"),
@@ -341,8 +324,8 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
         addRemoveTagToCart,
         cartAddresses,
         socialAddresses,
-        cartItems,
-        setCartItems,
+        cartItems: values(),
+        setCartItems: setBulk,
         loadingCartItems,
         setLoadingCartItems,
         getAddressesFromCart,

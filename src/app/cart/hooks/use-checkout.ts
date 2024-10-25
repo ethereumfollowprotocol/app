@@ -182,7 +182,7 @@ const useCheckout = () => {
     const splitListOps: CartItem[][] = []
     const splitSize = LIST_OP_LIMITS[chainId || DEFAULT_CHAIN.id] || 1000
 
-    for (let i = 0; i < cartItems.size; i += splitSize) {
+    for (let i = 0; i < cartItems.length; i += splitSize) {
       splitListOps.push(Array.from(cartItems.values()).slice(i, i + splitSize))
     }
 
