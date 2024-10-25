@@ -35,7 +35,7 @@ const useUser = (user: string) => {
     isRefetching: isRefetchingProfile,
     refetch: refetchProfile
   } = useQuery({
-    queryKey: ['profile', user],
+    queryKey: ['profile', user, fetchFreshProfile],
     queryFn: async () => {
       if (!isValidUser) return null
 
