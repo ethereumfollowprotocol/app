@@ -4,6 +4,7 @@ import { useTheme } from "next-themes";
 import { FiArrowLeft } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import { useClickAway } from "@uidotdev/usehooks";
+import { GiPumpkinLantern } from "react-icons/gi";
 import { MdLightMode, MdDarkMode } from "react-icons/md";
 import { HiOutlineDesktopComputer } from "react-icons/hi";
 
@@ -23,10 +24,10 @@ export const themesWithIcons = [
     theme: "dark",
     icon: <MdDarkMode />,
   },
-  // {
-  //   theme: 'halloween',
-  //   icon: <GiPumpkinLantern />
-  // }
+  {
+    theme: "halloween",
+    icon: <GiPumpkinLantern />,
+  },
 ];
 
 const themes = ["system", "light", "dark", "halloween"] as const;
@@ -71,7 +72,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
           themeMenuOpen ? "block" : "hidden"
         )}
       >
-        <div className="flex flex-col p-1 gap-2 w-full h-[230px] sm:h-[174px] max-h-[75vh] sm:max-h-[90vh] overflow-scroll border-[3px] rounded-lg bg-neutral border-grey shadow-md">
+        <div className="flex flex-col p-1 gap-2 w-full max-h-[75vh] sm:max-h-[90vh] border-[3px] rounded-lg bg-neutral border-grey shadow-md">
           <div
             onClick={() => {
               setThemeMenuOpen(false);
