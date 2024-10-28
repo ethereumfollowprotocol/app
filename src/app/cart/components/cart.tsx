@@ -2,10 +2,9 @@
 
 import Image from "next/image";
 import { useAccount } from "wagmi";
-import { FiTrash2 } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
-import { useEffect, useMemo, useState } from "react";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 
 import Checkout from "./checkout";
 import { cn } from "#/lib/utilities";
@@ -14,13 +13,14 @@ import { Search } from "#/components/search";
 import ClearCartModal from "./clear-cart-modal";
 import { useCart } from "#/contexts/cart-context";
 import { formatNumber } from "#/utils/formatNumber";
-import { FollowList } from "#/components/follow-list";
 import Recommendations from "#/components/recommendations";
 import FarcasterIcon from "public/assets/icons/farcaster.svg";
 import { useEFPProfile } from "#/contexts/efp-profile-context";
 import { PrimaryButton } from "#/components/buttons/primary-button";
 import { DEFAULT_CHAIN, LIST_OP_LIMITS } from "#/lib/constants/chain";
 import useStickyScroll from "#/components/home/hooks/use-sticky-scroll";
+
+const CartItems = lazy(() => import("./cart-items"));
 
 const Cart = () => {
   const [isClient, setIsClient] = useState(false);
@@ -37,42 +37,12 @@ const Cart = () => {
   const { isConnected } = useAccount();
   const { openConnectModal } = useConnectModal();
   const { selectedList, roles } = useEFPProfile();
-  const { totalCartItems, cartAddresses, socialAddresses, cartItems, loadingCartItems } = useCart();
+  const { totalCartItems, cartItems } = useCart();
 
   const { StickyScrollRef: SidebarRef, onScroll: onScrollSidebar } = useStickyScroll(70);
   const { StickyScrollRef: CartItemsRef, onScroll: onScrollCartItems } = useStickyScroll(260);
 
   const hasCreatedEfpList = !!selectedList;
-
-  const profiles = useMemo(
-    () =>
-      isConnected
-        ? cartAddresses.map((address) => ({
-            address,
-            tags: [],
-          }))
-        : [],
-    [cartAddresses]
-  );
-
-  const socialProfiles = [
-    {
-      platform: "farcaster",
-      profiles: socialAddresses.farcaster.map((address) => ({
-        address,
-        tags: [],
-      })),
-      icon: FarcasterIcon,
-    },
-    // {
-    //   platform: 'lens',
-    //   profiles: socialAddresses.lens.map(address => ({
-    //     address,
-    //     tags: []
-    //   })),
-    //   icon: LensIcon
-    // }
-  ];
 
   const transactionsCount = useMemo(() => {
     let count = 0;
@@ -142,36 +112,17 @@ const Cart = () => {
             className="flex flex-col h-fit xl:sticky glass-card rounded-2xl border-[3px] border-grey gap-3 md:gap-4 xl:mb-[13vh] md:py-6 pt-5 pb-2 px-1 sm:px-3 md:px-4 w-full xl:w-2/3"
             ref={CartItemsRef}
           >
-            <div className="flex justify-between gap-2 flex-row items-center px-3 md:px-4">
-              <h3 className="font-bold text-left text-xl sm:text-3xl xxs:w-2/3">
-                {t("cart unc-changes")}
-              </h3>
-              {isClient && totalCartItems > 0 && (
-                <button
-                  className="flex gap-2 cursor-pointer hover:scale-110 transition-transform items-center hover:opacity-80"
-                  onClick={() => setClearCartModalOpen(true)}
-                >
-                  <p className="font-bold text-nowrap">{t("clear cart")}</p>
-                  <FiTrash2 className="text-xl" />
-                </button>
-              )}
-            </div>
-            {isClient && totalCartItems === 0 && !loadingCartItems && (
-              <div className="font-bold h-28 xl:h-80 px-4 justify-center flex text-lg items-center italic">
-                {t("empty cart")}
-              </div>
-            )}
-            <FollowList
-              isLoading={false}
-              profiles={profiles}
-              socialProfiles={socialProfiles}
-              listClassName="rounded-xl gap-1 2xl:gap-0"
-              listItemClassName="rounded-xl 2xl:p-4 p-1.5 sm:p-2"
-              showTags={true}
-              createListItem={!hasCreatedEfpList}
-              canEditTags={roles?.isManager}
-              loadingCartItems={loadingCartItems}
-            />
+            <Suspense
+              fallback={
+                <div className="flex justify-between gap-2 flex-row items-center px-3 md:px-4">
+                  <h3 className="font-bold text-left text-xl sm:text-3xl xxs:w-2/3">
+                    {t("cart unc-changes")}
+                  </h3>
+                </div>
+              }
+            >
+              <CartItems setClearCartModalOpen={setClearCartModalOpen} />
+            </Suspense>
           </div>
           {isClient && (
             <div
