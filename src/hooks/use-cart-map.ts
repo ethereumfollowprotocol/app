@@ -35,6 +35,10 @@ export const useCartMap = (initialData = []) => {
     return Array.from(mapRef.current.values())
   }, [])
 
+  const clear = useCallback(() => {
+    mapRef.current.clear()
+  }, [])
+
   const forceUpdate = useCallback(() => {
     setTick(tick => tick + 1)
   }, [])
@@ -47,6 +51,7 @@ export const useCartMap = (initialData = []) => {
     entries,
     forceUpdate,
     setBulk,
-    values
+    values,
+    clear,
   }
 }

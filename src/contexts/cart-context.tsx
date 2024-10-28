@@ -75,7 +75,16 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   const [loadingCartItems, setLoadingCartItems] = useState<number>(0);
   const { address } = useAccount();
 
-  const { set, has, delete: deleteKey, entries, forceUpdate, setBulk, values } = useCartMap();
+  const {
+    set,
+    has,
+    delete: deleteKey,
+    entries,
+    forceUpdate,
+    setBulk,
+    values,
+    clear,
+  } = useCartMap();
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -306,7 +315,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
 
   // Resets the cart items
   const resetCart = () => {
-    setBulk([]);
+    clear();
   };
 
   const totalCartItems = values().length + loadingCartItems;
