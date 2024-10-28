@@ -1,19 +1,11 @@
-import type { Address } from 'viem'
+import { fromHex, toHex, type Address } from 'viem'
 import type { ListOp, TagListOp } from '#/types/list-op'
-
-export const listOpAsHexstring = (listOp: ListOp): `0x${string}` => {
-  const versionHex = listOp.version.toString(16).padStart(2, '0')
-  const opcodeHex = listOp.opcode.toString(16).padStart(2, '0')
-  const dataHex = listOp.data.toString('hex')
-
-  return `0x${versionHex}${opcodeHex}${dataHex}`
-}
 
 export const listOpAddListRecord = (address: Address): ListOp => {
   return {
     version: 1,
     opcode: 1,
-    data: Buffer.from(address.slice(2), 'hex')
+    data: address
   }
 }
 
@@ -21,7 +13,7 @@ export const listOpRemoveListRecord = (address: Address): ListOp => {
   return {
     version: 1,
     opcode: 2,
-    data: Buffer.from(address.slice(2), 'hex')
+    data: address
   }
 }
 
@@ -29,7 +21,7 @@ export const listOpAddTag = (address: Address, tag: string): ListOp => {
   return {
     version: 1,
     opcode: 3,
-    data: Buffer.concat([Buffer.from(address.slice(2), 'hex'), Buffer.from(tag, 'utf8')])
+    data: `${address}${toHex(tag).slice(2)}`
   }
 }
 
@@ -37,17 +29,14 @@ export const listOpRemoveTag = (address: Address, tag: string): ListOp => {
   return {
     version: 1,
     opcode: 4,
-    data: Buffer.concat([Buffer.from(address.slice(2), 'hex'), Buffer.from(tag, 'utf8')])
+    data: `${address}${toHex(tag).slice(2)}`
   }
 }
 
 // Extract address and tag from a ListOp add/remove tag data buffer
 export const extractAddressAndTag = (listOp: TagListOp): { address: Address; tag: string } => {
-  const addressBytes = new Uint8Array(listOp.data.buffer, listOp.data.byteOffset, 20)
-  const tagBytes = new Uint8Array(listOp.data.buffer, listOp.data.byteOffset + 20)
-
-  const address = `0x${Buffer.from(addressBytes).toString('hex')}` as Address
-  const tag = Buffer.from(tagBytes).toString('utf8')
+  const address = listOp.data.slice(0, 42) as Address
+  const tag = fromHex(`0x${listOp.data.slice(42)}`, 'string')
 
   return { address, tag }
 }

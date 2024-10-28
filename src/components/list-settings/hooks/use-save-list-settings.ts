@@ -15,10 +15,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useAccount, useChainId, useSwitchChain, useWalletClient } from 'wagmi'
 
 import {
-  isTagListOp,
   listOpAddTag,
   listOpAddListRecord,
-  extractAddressAndTag
 } from '#/utils/list-ops'
 import { Step } from '#/components/checkout/types'
 import { rpcProviders } from '#/lib/constants/providers'
@@ -185,18 +183,8 @@ const useSaveListSettings = ({
       // format list operations
       const operations = items.map(item => {
         // append mandatory types and data
-        const types = ['uint8', 'uint8', 'uint8', 'uint8', 'address']
-        const data: (string | number)[] = [item.listOp.version, item.listOp.opcode, 1, 1]
-
-        if (item.listOp.opcode > 2 && isTagListOp(item.listOp)) {
-          // add 'bytes' type for the tag and address and tag to data
-          const addrrAndTag = extractAddressAndTag(item.listOp)
-          types.push('bytes')
-          data.push(...[addrrAndTag.address, toHex(addrrAndTag.tag)])
-        } else {
-          // add address to data
-          data.push(`0x${item.listOp.data.toString('hex')}`)
-        }
+        const types = ['uint8', 'uint8', 'uint8', 'uint8', 'bytes']
+        const data: (string | number)[] = [item.listOp.version, item.listOp.opcode, 1, 1, item.listOp.data]
 
         // return encoded data into a single HEX string
         return encodePacked(types, data)

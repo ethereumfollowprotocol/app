@@ -63,15 +63,15 @@ export const useFollowButton = ({
   })
   const { t } = useTranslation()
   const {
-    hasListOpAddRecord,
-    hasListOpRemoveRecord,
-    hasListOpAddTag,
-    hasListOpRemoveTag,
+    cartItems,
     addCartItem,
     removeCartItem,
+    hasListOpAddTag,
+    hasListOpAddRecord,
+    hasListOpRemoveTag,
     removeAddTagFromCart,
+    hasListOpRemoveRecord,
     removeRemoveTagFromCart,
-    cartItems
   } = useCart()
 
   const pendingState = useMemo(() => {

@@ -8,34 +8,19 @@ import {
   createContext,
   type Dispatch,
   type ReactNode,
-  type SetStateAction,
   useDeferredValue,
+  type SetStateAction,
 } from "react";
 import { useAccount } from "wagmi";
 import type { Address } from "viem";
-import { hexlify } from "#/lib/utilities";
 
-import {
-  isTagListOp,
-  listOpAddTag,
-  listOpRemoveTag,
-  listOpAsHexstring,
-  extractAddressAndTag,
-} from "#/utils/list-ops";
 import type { ImportPlatformType } from "#/types/common";
 import type { ListOp, ListOpTagOpParams } from "#/types/list-op";
+import { isTagListOp, listOpAddTag, listOpRemoveTag, extractAddressAndTag } from "#/utils/list-ops";
 
 // Define the type for each cart item
 export type CartItem = {
   listOp: ListOp;
-  import?: ImportPlatformType;
-};
-
-type StoredCartItem = {
-  opcode: number;
-  version: number;
-  address: Address;
-  tag?: string;
   import?: ImportPlatformType;
 };
 
@@ -45,7 +30,6 @@ type CartContextType = {
   addCartItem: (item: CartItem) => void;
   addRemoveTagToCart: (params: ListOpTagOpParams) => void;
   cartAddresses: Address[];
-  // socialAddresses: Record<string, Address[]>
   socialAddresses: {
     farcaster: Address[];
   };
@@ -55,7 +39,7 @@ type CartContextType = {
   setLoadingCartItems: Dispatch<SetStateAction<number>>;
   getAddressesFromCart: () => string[];
   getTagsFromCartByAddress: (address: Address) => string[];
-  handleTagClick: (params: ListOpTagOpParams) => void;
+  // handleTagClick: (params: ListOpTagOpParams) => void;
   hasListOpAddRecord(address: Address): boolean;
   hasListOpAddTag(params: ListOpTagOpParams): boolean;
   hasListOpRemoveRecord(address: Address): boolean;
@@ -77,10 +61,10 @@ type Props = {
 
 // Define the provider component
 export const CartProvider: React.FC<Props> = ({ children }: Props) => {
-  const [loadingCartItems, setLoadingCartItems] = useState<number>(0);
-  const { address } = useAccount();
-
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [loadingCartItems, setLoadingCartItems] = useState<number>(0);
+
+  const { address } = useAccount();
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -88,96 +72,56 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
     const storedCartItemsJson = localStorage.getItem("cart");
     if (storedCartItemsJson) {
       try {
-        const storedCartItems = JSON.parse(storedCartItemsJson) as StoredCartItem[];
-        const transformedCartItems = storedCartItems.map((item) => {
-          const addressBuffer = Buffer.from(item.address.slice(2), "hex");
-          const dataBuffer = item.tag
-            ? Buffer.concat([addressBuffer, Buffer.from(item.tag, "utf8")])
-            : addressBuffer;
-
-          return {
-            listOp: {
-              opcode: item.opcode,
-              version: item.version,
-              data: dataBuffer,
-            },
-            import: item.import,
-          };
-        });
-
-        setCartItems(transformedCartItems);
+        const storedCartItems = JSON.parse(storedCartItemsJson) as CartItem[];
+        setCartItems(storedCartItems);
       } catch (error) {
         localStorage.removeItem("cart");
       }
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (!address) return;
-  //   if (typeof window === "undefined") return;
-
-  //   const saveToLocalStorage = () => {
-  //     localStorage.setItem("cart", JSON.stringify(serializedCartItems));
-  //     localStorage.setItem("cart address", address);
-  //   };
-
-  //   if (window.requestIdleCallback) {
-  //     window.requestIdleCallback(saveToLocalStorage);
-  //   } else {
-  //     // Fallback for browsers that don't support requestIdleCallback
-  //     setTimeout(saveToLocalStorage, 300);
-  //   }
-  // }, [serializedCartItems, address]);
-
   const defferedCartItems = useDeferredValue(cartItems);
-
-  const saveCartToLocalStorage = (addr: Address) => {
-    if (typeof window !== "undefined") {
-      const serializedCartItems = defferedCartItems.map(
-        ({ listOp, import: platform }) => {
-          const addressHex = listOp.data.toString("hex");
-          const address = `0x${addressHex.slice(0, 40)}` as Address; // Adjust based on address length
-          const tag = listOp.data.length > 20 ? listOp.data.slice(20).toString("utf8") : undefined;
-
-          return {
-            opcode: listOp.opcode,
-            version: listOp.version,
-            address,
-            tag,
-            import: platform,
-          };
-        },
-        [cartItems]
-      );
-
-      localStorage.setItem("cart", JSON.stringify(serializedCartItems));
-      localStorage.setItem("cart address", addr);
-    }
-  };
 
   useEffect(() => {
     if (!address) return;
+    if (typeof window === "undefined") return;
 
-    saveCartToLocalStorage(address);
-  }, [address, defferedCartItems]);
+    const saveToLocalStorage = () => {
+      localStorage.setItem("cart", JSON.stringify(defferedCartItems));
+      localStorage.setItem("cart address", address);
+    };
+
+    if (window.requestIdleCallback) {
+      window.requestIdleCallback(saveToLocalStorage);
+    } else {
+      // Fallback for browsers that don't support requestIdleCallback
+      setTimeout(saveToLocalStorage, 500);
+    }
+  }, [defferedCartItems, address]);
+
+  // const saveCartToLocalStorage = (addr: Address) => {
+  //   if (typeof window !== "undefined") {
+  //     localStorage.setItem("cart", JSON.stringify(defferedCartItems));
+  //     localStorage.setItem("cart address", addr);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (!address) return;
+  //   saveCartToLocalStorage(address);
+  // }, [address, defferedCartItems]);
 
   const addCartItem = useCallback(
     (item: CartItem) => {
-      setLoadingCartItems((prevLoading) => (prevLoading > 0 ? prevLoading - 1 : prevLoading));
-
-      const exists = cartItems.some(
-        (cartItem) => listOpAsHexstring(cartItem.listOp) === listOpAsHexstring(item.listOp)
-      );
-
+      const exists = cartItems.some((cartItem) => cartItem.listOp.data === item.listOp.data);
       if (!exists) setCartItems((prevItems) => [...prevItems, item]);
+      setLoadingCartItems((prevLoading) => (prevLoading > 0 ? prevLoading - 1 : prevLoading));
     },
     [cartItems]
   );
 
   const removeCartItem = (listOp: ListOp) => {
-    setCartItems((prevItems) =>
-      prevItems.filter((item) => listOpAsHexstring(item.listOp) !== listOpAsHexstring(listOp))
-    );
+    setCartItems((prevItems) => prevItems.filter((item) => item.listOp.data !== listOp.data));
   };
 
   const hasListOpAddRecord = useCallback(
@@ -186,7 +130,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
         (cartItem) =>
           cartItem.listOp.version === 1 &&
           cartItem.listOp.opcode === 1 &&
-          `0x${cartItem.listOp.data.toString("hex")}`.toLowerCase() === address?.toLowerCase()
+          cartItem.listOp.data.toLowerCase() === address?.toLowerCase()
       ),
     [cartItems]
   );
@@ -197,32 +141,38 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
         (cartItem) =>
           cartItem.listOp.version === 1 &&
           cartItem.listOp.opcode === 2 &&
-          `0x${cartItem.listOp.data.toString("hex")}`.toLowerCase() === address?.toLowerCase()
+          cartItem.listOp.data.toLowerCase() === address?.toLowerCase()
       ),
     [cartItems]
   );
 
   const hasListOpAddTag = useCallback(
     ({ address, tag }: { address: Address; tag: string }): boolean =>
-      cartItems.some(
-        (cartItem) =>
-          isTagListOp(cartItem.listOp) &&
+      cartItems.some((cartItem) => {
+        if (!isTagListOp(cartItem.listOp)) return false;
+
+        const { address: opAddress, tag: opTag } = extractAddressAndTag(cartItem.listOp);
+        return (
           cartItem.listOp.opcode === 3 &&
-          extractAddressAndTag(cartItem.listOp).address.toLowerCase() === address?.toLowerCase() &&
-          extractAddressAndTag(cartItem.listOp).tag === tag
-      ),
+          opAddress.toLowerCase() === address?.toLowerCase() &&
+          opTag === tag
+        );
+      }),
     [cartItems]
   );
 
   const hasListOpRemoveTag = useCallback(
     ({ address, tag }: { address: Address; tag: string }): boolean =>
-      cartItems.some(
-        (cartItem) =>
-          isTagListOp(cartItem.listOp) &&
+      cartItems.some((cartItem) => {
+        if (!isTagListOp(cartItem.listOp)) return false;
+
+        const { address: opAddress, tag: opTag } = extractAddressAndTag(cartItem.listOp);
+        return (
           cartItem.listOp.opcode === 4 &&
-          extractAddressAndTag(cartItem.listOp).address.toLowerCase() === address?.toLowerCase() &&
-          extractAddressAndTag(cartItem.listOp).tag === tag
-      ),
+          opAddress.toLowerCase() === address?.toLowerCase() &&
+          opTag === tag
+        );
+      }),
     [cartItems]
   );
 
@@ -262,42 +212,42 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
     [hasListOpRemoveTag, addCartItem]
   );
 
-  const handleTagClick = useCallback(
-    ({ address, tag }: ListOpTagOpParams) => {
-      // Do nothing if not in edit view
-      // if (!isEditView) return
+  // const handleTagClick = useCallback(
+  //   ({ address, tag }: ListOpTagOpParams) => {
+  //     // Do nothing if not in edit view
+  //     // if (!isEditView) return
 
-      // If cart has "add tag" remove it from the cart
-      if (hasListOpAddTag({ address, tag })) {
-        return removeAddTagFromCart({ address, tag });
-      }
+  //     // If cart has "add tag" remove it from the cart
+  //     if (hasListOpAddTag({ address, tag })) {
+  //       return removeAddTagFromCart({ address, tag });
+  //     }
 
-      // If cart has "remove tag" remove it from the cart
-      if (hasListOpRemoveTag({ address, tag })) {
-        return removeRemoveTagFromCart({ address, tag });
-      }
+  //     // If cart has "remove tag" remove it from the cart
+  //     if (hasListOpRemoveTag({ address, tag })) {
+  //       return removeRemoveTagFromCart({ address, tag });
+  //     }
 
-      // Add "add tag" to cart if it not in cart
-      if (!hasListOpAddRecord(address)) {
-        return addAddTagToCart({ address, tag });
-      }
+  //     // Add "add tag" to cart if it not in cart
+  //     if (!hasListOpAddRecord(address)) {
+  //       return addAddTagToCart({ address, tag });
+  //     }
 
-      // Add "remove tag" to cart if not in cart
-      if (!hasListOpRemoveRecord(address)) {
-        return addRemoveTagToCart({ address, tag });
-      }
-    },
-    [
-      addAddTagToCart,
-      addRemoveTagToCart,
-      hasListOpAddRecord,
-      hasListOpAddTag,
-      hasListOpRemoveRecord,
-      hasListOpRemoveTag,
-      removeAddTagFromCart,
-      removeRemoveTagFromCart,
-    ]
-  );
+  //     // Add "remove tag" to cart if not in cart
+  //     if (!hasListOpRemoveRecord(address)) {
+  //       return addRemoveTagToCart({ address, tag });
+  //     }
+  //   },
+  //   [
+  //     addAddTagToCart,
+  //     addRemoveTagToCart,
+  //     hasListOpAddRecord,
+  //     hasListOpAddTag,
+  //     hasListOpRemoveRecord,
+  //     hasListOpRemoveTag,
+  //     removeAddTagFromCart,
+  //     removeRemoveTagFromCart,
+  //   ]
+  // );
 
   // Retrieves all tags associated with a specific address from the cart items.
   const getTagsFromCartByAddress = useCallback(
@@ -320,9 +270,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
     (platform?: ImportPlatformType): Address[] => {
       const addresses = cartItems
         .filter((item) => item.import === platform)
-        .map(({ listOp }) =>
-          isTagListOp(listOp) ? extractAddressAndTag(listOp).address : hexlify(listOp.data)
-        );
+        .map(({ listOp }) => listOp.data.slice(0, 42) as Address);
 
       return [...new Set(addresses)];
     },
@@ -355,7 +303,6 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
         setLoadingCartItems,
         getAddressesFromCart,
         getTagsFromCartByAddress,
-        handleTagClick,
         hasListOpAddRecord,
         hasListOpAddTag,
         hasListOpRemoveRecord,

@@ -1,6 +1,5 @@
 import {
   http,
-  toHex,
   fromHex,
   getContract,
   encodePacked,
@@ -21,7 +20,6 @@ import type { FollowingResponse } from '#/types/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { useCart, type CartItem } from '#/contexts/cart-context'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
-import { extractAddressAndTag, isTagListOp } from '#/utils/list-ops'
 import { useMintEFP } from '../../../hooks/efp-actions/use-mint-efp'
 import { DEFAULT_CHAIN, LIST_OP_LIMITS } from '#/lib/constants/chain'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
@@ -123,21 +121,9 @@ const useCheckout = () => {
 
       // format list operations
       const operations = items.map(item => {
-        // append mandatory types and data
-        const types = ['uint8', 'uint8', 'uint8', 'uint8', 'address']
-        const data: (string | number)[] = [item.listOp.version, item.listOp.opcode, 1, 1]
+        const types = ['uint8', 'uint8', 'uint8', 'uint8', 'bytes']
+        const data: (string | number)[] = [item.listOp.version, item.listOp.opcode, 1, 1, item.listOp.data]
 
-        if (item.listOp.opcode > 2 && isTagListOp(item.listOp)) {
-          // add 'bytes' type for the tag and address and tag to data
-          const addrrAndTag = extractAddressAndTag(item.listOp)
-          types.push('bytes')
-          data.push(...[addrrAndTag.address, toHex(addrrAndTag.tag)])
-        } else {
-          // add address to data
-          data.push(`0x${item.listOp.data.toString('hex')}`)
-        }
-
-        // return encoded data into a single HEX string
         return encodePacked(types, data)
       })
 
