@@ -270,7 +270,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
     (platform?: ImportPlatformType): Address[] => {
       const addresses = cartItems
         .filter((item) => item.import === platform)
-        .map(({ listOp }) => listOp.data.slice(0, 42) as Address);
+        .map(({ listOp }) => listOp.data.slice(0, 42).toLowerCase() as Address);
 
       return [...new Set(addresses)];
     },

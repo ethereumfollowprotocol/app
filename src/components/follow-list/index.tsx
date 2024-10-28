@@ -137,7 +137,7 @@ export function FollowList({
               overscanRowCount={10}
               rowCount={profiles?.length || 0}
               rowHeight={window.innerWidth > 1536 ? 82 : 64}
-              rowRenderer={({ key, index, style }) => {
+              rowRenderer={({ index, style }) => {
                 const profile = profiles?.[index];
                 if (!profile) return null;
 
