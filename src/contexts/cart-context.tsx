@@ -9,10 +9,10 @@ import {
   type Dispatch,
   type ReactNode,
   type SetStateAction,
+  useDeferredValue,
 } from "react";
 import { useAccount } from "wagmi";
 import type { Address } from "viem";
-import debounce from "lodash.debounce";
 import { hexlify } from "#/lib/utilities";
 
 import {
@@ -129,39 +129,37 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   //   }
   // }, [serializedCartItems, address]);
 
-  const saveCartToLocalStorage = useCallback(
-    debounce((addr: Address) => {
-      if (typeof window !== "undefined") {
-        const serializedCartItems = cartItems.map(
-          ({ listOp, import: platform }) => {
-            const addressHex = listOp.data.toString("hex");
-            const address = `0x${addressHex.slice(0, 40)}` as Address; // Adjust based on address length
-            const tag =
-              listOp.data.length > 20 ? listOp.data.slice(20).toString("utf8") : undefined;
+  const defferedCartItems = useDeferredValue(cartItems);
 
-            return {
-              opcode: listOp.opcode,
-              version: listOp.version,
-              address,
-              tag,
-              import: platform,
-            };
-          },
-          [cartItems]
-        );
+  const saveCartToLocalStorage = (addr: Address) => {
+    if (typeof window !== "undefined") {
+      const serializedCartItems = defferedCartItems.map(
+        ({ listOp, import: platform }) => {
+          const addressHex = listOp.data.toString("hex");
+          const address = `0x${addressHex.slice(0, 40)}` as Address; // Adjust based on address length
+          const tag = listOp.data.length > 20 ? listOp.data.slice(20).toString("utf8") : undefined;
 
-        localStorage.setItem("cart", JSON.stringify(serializedCartItems));
-        localStorage.setItem("cart address", addr);
-      }
-    }, 500),
-    [cartItems]
-  );
+          return {
+            opcode: listOp.opcode,
+            version: listOp.version,
+            address,
+            tag,
+            import: platform,
+          };
+        },
+        [cartItems]
+      );
+
+      localStorage.setItem("cart", JSON.stringify(serializedCartItems));
+      localStorage.setItem("cart address", addr);
+    }
+  };
 
   useEffect(() => {
     if (!address) return;
 
     saveCartToLocalStorage(address);
-  }, [address, saveCartToLocalStorage]);
+  }, [address, defferedCartItems]);
 
   const addCartItem = useCallback(
     (item: CartItem) => {
