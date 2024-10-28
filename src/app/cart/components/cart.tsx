@@ -82,7 +82,7 @@ const Cart = () => {
             <div className="w-full flex justify-between items-center px-4 sm:px-2 pt-2">
               <h1 className="text-left text-xl sm:text-3xl font-bold">{t("editor title")}</h1>
               <div className="flex gap-1">
-                <p className="text-lg font-bold mr-1">{t("import")}</p>
+                <p className="text-lg font-bold text-right mr-1">{t("import")}</p>
                 <Image
                   src={FarcasterIcon}
                   alt="Import from Farcaster"
@@ -146,7 +146,7 @@ const Cart = () => {
                   }`}</p>
                 </div>
                 <PrimaryButton
-                  className="py-[14px] px-4 text-xl rounded-full"
+                  className=" px-4 text-xl rounded-full"
                   onClick={() => {
                     if (!isConnected) {
                       if (openConnectModal) openConnectModal();

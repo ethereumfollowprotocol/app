@@ -101,7 +101,8 @@ i18n
       'genalpha',
       'shakespearean',
       'frens',
-      'ermahgersh'
+      'ermahgersh',
+      'halloween'
     ],
     fallbackLng: 'en',
     keySeparator: '.',

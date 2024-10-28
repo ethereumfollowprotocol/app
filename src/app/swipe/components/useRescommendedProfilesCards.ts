@@ -37,7 +37,7 @@ export const useRecommendedProfilesCards = () => {
   }
   const handleStopAnimationAndSound = () => {
     animatedRef.current?.classList.remove('falling-element')
-    if (soundRef.current && !actionsSoundsMuted) soundRef.current.pause()
+    // if (soundRef.current && !actionsSoundsMuted) soundRef.current.pause()
   }
 
   const [didSwipeBack, setDidSwipeBack] = useState(false)

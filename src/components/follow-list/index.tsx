@@ -83,7 +83,7 @@ export function FollowList({
                 />
                 <div className="flex flex-col md:flex-row md:items-center">
                   <p className="text-lg font-bold w-fit sm:w-56 text-left">{t("mint name")}</p>
-                  <p className="font-bold text-sm sm:text-base text-left italic text-grey">
+                  <p className="font-bold text-sm sm:text-base text-left italic text-text/80">
                     {t("mint description")}
                   </p>
                 </div>
