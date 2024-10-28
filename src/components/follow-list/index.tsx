@@ -1,5 +1,6 @@
 import type { Address } from "viem";
 import { useTranslation } from "react-i18next";
+import List from "react-virtualized/dist/commonjs/List";
 import Image, { type StaticImageData } from "next/image";
 
 import EFPLogo from "public/assets/logo.svg";
@@ -43,6 +44,7 @@ interface FollowListProps {
   isBlockedBy?: boolean;
   isFollowers?: boolean;
   loadingCartItems?: number;
+  virtualList?: boolean;
 }
 
 export function FollowList({
@@ -61,6 +63,7 @@ export function FollowList({
   isBlockedBy,
   isFollowers,
   loadingCartItems,
+  virtualList,
 }: FollowListProps) {
   const { t } = useTranslation();
 
@@ -126,22 +129,56 @@ export function FollowList({
                 </div>
               )
           )}
-          {profiles?.map(({ address, tags, ens, counts }) => (
-            <FollowListItem
-              className={listItemClassName}
-              key={address}
-              address={address}
-              ensProfile={ens}
-              showFollowsYouBadges={showFollowsYouBadges}
-              showTags={showTags}
-              tags={tags}
-              counts={counts}
-              canEditTags={canEditTags}
-              isBlockedList={isBlockedList}
-              isBlockedBy={isBlockedBy}
-              isFollowers={isFollowers}
+          {virtualList && profiles?.length && profiles?.length > 0 ? (
+            <List
+              autoWidth={true}
+              height={window.innerHeight - 240}
+              width={window.innerWidth}
+              overscanRowCount={10}
+              rowCount={profiles?.length || 0}
+              rowHeight={window.innerWidth > 1536 ? 82 : 64}
+              rowRenderer={({ key, index, style }) => {
+                const profile = profiles?.[index];
+                if (!profile) return null;
+
+                return (
+                  <div className="w-full" style={style}>
+                    <FollowListItem
+                      key={profile.address}
+                      className={listItemClassName}
+                      address={profile.address}
+                      ensProfile={profile.ens}
+                      showFollowsYouBadges={showFollowsYouBadges}
+                      showTags={showTags}
+                      tags={profile.tags}
+                      counts={profile.counts}
+                      canEditTags={canEditTags}
+                      isBlockedList={isBlockedList}
+                      isBlockedBy={isBlockedBy}
+                      isFollowers={isFollowers}
+                    />
+                  </div>
+                );
+              }}
             />
-          ))}
+          ) : (
+            profiles?.map(({ address, tags, ens, counts }) => (
+              <FollowListItem
+                className={listItemClassName}
+                key={address}
+                address={address}
+                ensProfile={ens}
+                showFollowsYouBadges={showFollowsYouBadges}
+                showTags={showTags}
+                tags={tags}
+                counts={counts}
+                canEditTags={canEditTags}
+                isBlockedList={isBlockedList}
+                isBlockedBy={isBlockedBy}
+                isFollowers={isFollowers}
+              />
+            ))
+          )}
           {isLoadingMore &&
             new Array(loadingRows)
               .fill(1)

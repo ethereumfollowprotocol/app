@@ -74,6 +74,7 @@ const CartItems = ({ setClearCartModalOpen }: CartItemsProps) => {
         createListItem={!hasCreatedEfpList}
         canEditTags={roles?.isManager}
         loadingCartItems={loadingCartItems}
+        virtualList={true}
       />
     </>
   );
