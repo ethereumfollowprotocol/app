@@ -53,6 +53,7 @@ import CataloniaFlag from 'public/assets/icons/flags/catalonia.svg'
 import CorporateFlag from 'public/assets/icons/flags/corporate.svg'
 import LithuaniaFlag from 'public/assets/icons/flags/lithuania.svg'
 import IndonesiaFlag from 'public/assets/icons/flags/indonesia.svg'
+import MillennialFlag from 'public/assets/icons/flags/millennial.svg'
 import AzerbaijanFlag from 'public/assets/icons/flags/azerbaijan.svg'
 import UzbekistanFlag from 'public/assets/icons/flags/uzbekistan.svg'
 import KazakhstanFlag from 'public/assets/icons/flags/kazakhstan.svg'
@@ -200,6 +201,13 @@ export const LANGUAGES = [
     key: 'ermahgersh',
     icon: ErmahgershFlag,
     englishLanguage: 'Ermahgersh',
+    special: true
+  },
+  {
+    language: 'Millennial',
+    key: 'millennial',
+    icon: MillennialFlag,
+    englishLanguage: 'Millennial',
     special: true
   },
   {
