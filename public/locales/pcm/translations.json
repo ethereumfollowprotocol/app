@@ -182,6 +182,26 @@
   "Unmute": "on am",
 
   "feed": "Feed wey de onchain",
-  "feed description": "The latest matter wey sup onchain based on who you dey follow for EFP 👀"
+  "feed description": "The latest wey de sup onchain with people wey you de follow for EFP 👀",
+
+  "connect to see more": "Connect your wallet make you start swipe!",
+  "no more profiles": "E be like you don browse all the profile! Come back later come check.",
+  "refresh ens": "Refresh de ENS",
+  "and": "and",
+  "common followers three": "People wey you know de follow dem",
+  "common followers plural": "People wey you know de follow dem",
+  "common followers two": "follow dem",
+  "common followers one": "dey follow dem",
+  "halloween": " Na Halloween",
+  "sfx & music": "SFX & Music",
+  "sfx only": "Only SFX",
+  "no sound": "Sound no dey",
+  "bridge": "Bridge",
+  "about": "About",
+  "faq": "FAQ",
+
+  "swipe": "Swipe!",
+  "meh": "Omoh",
+  "undo": "Undo"
 
 }
