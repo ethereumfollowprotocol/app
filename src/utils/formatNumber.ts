@@ -5,22 +5,14 @@ export const formatNumber = (number: number) => {
 }
 
 export const formatNumberLeaderboard = (number: number) => {
-  if (number >= 1e9)
-    return `${(number / 1e9).toLocaleString(navigator.language, {
-      maximumFractionDigits: 1,
-      roundingMode: 'floor'
-    })}B`
-  if (number >= 1e6)
-    return `${(number / 1e6).toLocaleString(navigator.language, {
-      maximumFractionDigits: 1,
-      roundingMode: 'floor'
-    })}M`
-  if (number >= 1e3)
-    return `${(number / 1e3).toLocaleString(navigator.language, {
-      maximumFractionDigits: 1,
-      roundingMode: 'floor'
-    })}k`
+  const formatter = new Intl.NumberFormat(navigator.language ?? 'en-US', {
+    maximumFractionDigits: 1,
+  })
+
+  const floorLastDigit = (num: number) => Math.floor(num * 10) / 10
+  if (number >= 1e9) return `${formatter.format(floorLastDigit(number / 1e9))}B`
+  if (number >= 1e6) return `${formatter.format(floorLastDigit(number / 1e6))}M`
+  if (number >= 1e3) return `${formatter.format(floorLastDigit(number / 1e3))}k`
 
   return number.toString()
 }
-
