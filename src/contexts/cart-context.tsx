@@ -8,7 +8,6 @@ import {
   createContext,
   type Dispatch,
   type ReactNode,
-  useDeferredValue,
   type SetStateAction,
 } from "react";
 import { useAccount } from "wagmi";
@@ -80,24 +79,17 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
     }
   }, []);
 
-  const defferedCartItems = useDeferredValue(cartItems);
-
   useEffect(() => {
     if (!address) return;
     if (typeof window === "undefined") return;
 
-    const saveToLocalStorage = () => {
-      localStorage.setItem("cart", JSON.stringify(defferedCartItems));
+    const updateLocalStorageTimeout = setTimeout(() => {
+      localStorage.setItem("cart", JSON.stringify(cartItems));
       localStorage.setItem("cart address", address);
-    };
+    }, 500);
 
-    if (window.requestIdleCallback) {
-      window.requestIdleCallback(saveToLocalStorage);
-    } else {
-      // Fallback for browsers that don't support requestIdleCallback
-      setTimeout(saveToLocalStorage, 500);
-    }
-  }, [defferedCartItems, address]);
+    return () => clearTimeout(updateLocalStorageTimeout);
+  }, [cartItems, address]);
 
   // const saveCartToLocalStorage = (addr: Address) => {
   //   if (typeof window !== "undefined") {
