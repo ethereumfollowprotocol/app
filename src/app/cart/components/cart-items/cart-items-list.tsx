@@ -1,7 +1,7 @@
-import { useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import type { Address } from "viem";
 import { useTranslation } from "react-i18next";
+import { useEffect, useCallback, useRef } from "react";
 import List from "react-virtualized/dist/commonjs/List";
 
 import EFPLogo from "public/assets/logo.svg";
@@ -62,7 +62,7 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
       const maxScrollTop =
         listRef.current.props.rowCount * Number(listRef.current.props.rowHeight) -
         listRef.current.props.height;
-      console.log(listRef.current.props.height, scrollTop, maxScrollTop);
+
       if (scrollTop < maxScrollTop || event.deltaY < 0) {
         listRef.current.scrollToPosition(scrollTop + event.deltaY);
         if (scrollTop + event.deltaY >= -10) scrollTop += event.deltaY;
