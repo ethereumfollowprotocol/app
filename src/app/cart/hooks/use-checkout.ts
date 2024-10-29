@@ -1,11 +1,4 @@
-import {
-  http,
-  fromHex,
-  getContract,
-  encodePacked,
-  type Address,
-  createPublicClient
-} from 'viem'
+import { http, fromHex, getContract, encodePacked, type Address, createPublicClient } from 'viem'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { track } from '@vercel/analytics/react'
@@ -122,12 +115,19 @@ const useCheckout = () => {
       // format list operations
       const operations = items.map(item => {
         const types = ['uint8', 'uint8', 'uint8', 'uint8', 'bytes']
-        const data: (string | number)[] = [item.listOp.version, item.listOp.opcode, 1, 1, item.listOp.data]
+        const data: (string | number)[] = [
+          item.listOp.version,
+          item.listOp.opcode,
+          1,
+          1,
+          item.listOp.data
+        ]
 
         return encodePacked(types, data)
       })
 
-      // initiate  'applyListOps' transaction
+      // initiate "setMetadataValuesAndApplyListOps" transaction when creating a new EFP list
+      // initiate "applyListOps" transaction when updating an existing EFP list
       const hash = await walletClient?.writeContract({
         address: ListRecordsContract,
         abi: efpListRecordsAbi,
@@ -268,8 +268,9 @@ const useCheckout = () => {
   }, [moveToNextAction, executeActionByIndex, getRequiredChain, currentChainId, currentActionIndex])
 
   const onFinish = useCallback(() => {
-    const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
-    if (regex.test(navigator.userAgent)) track(`${listHasBeenMinted ? 'Mint' : 'Checkout'} - Mobile`)
+    const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
+    if (regex.test(navigator.userAgent))
+      track(`${listHasBeenMinted ? 'Mint' : 'Checkout'} - Mobile`)
     else track(`${listHasBeenMinted ? 'Mint' : 'Checkout'} - Desktop`)
 
     if (fetchFreshStats) refetchStats()

@@ -40,8 +40,8 @@ const Cart = () => {
   const { totalCartItems, cartItems } = useCart();
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const { StickyScrollRef: SidebarRef, onScroll: onScrollSidebar } = useStickyScroll(70);
-  const { StickyScrollRef: CartItemsRef, onScroll: onScrollCartItems } = useStickyScroll(260);
+  const { StickyScrollRef: SidebarRef, onScroll: onScrollSidebar } = useStickyScroll(140);
+  // const { StickyScrollRef: CartItemsRef, onScroll: onScrollCartItems } = useStickyScroll(260);
 
   const hasCreatedEfpList = !!selectedList;
 
@@ -67,9 +67,9 @@ const Cart = () => {
       ) : (
         <div
           ref={containerRef}
-          className="flex flex-col-reverse xl:flex-row overflow-y-scroll justify-center gap-4 w-full h-full xl:gap-6 pt-[6.75rem] px-2 lg:px-8 pb-10"
+          className="flex flex-col-reverse xl:flex-row overflow-y-auto justify-center gap-4 w-full h-full xl:gap-6 pt-[6.75rem] px-2 lg:px-8 pb-6 xl:pb-0"
           onScroll={(e) => {
-            onScrollCartItems(e);
+            // onScrollCartItems(e);
             onScrollSidebar(e);
           }}
         >
@@ -78,7 +78,7 @@ const Cart = () => {
           )}
           {clearCartModalOpen && <ClearCartModal closeModal={() => setClearCartModalOpen(false)} />}
           <div
-            className="flex flex-col xl:sticky glass-card gap-4 px-1 py-4 sm:p-4 h-fit rounded-2xl border-[3px] border-grey xl:max-w-[600px] w-full xl:w-1/3"
+            className="flex flex-col mb-6 xl:sticky glass-card gap-4 px-1 py-4 sm:p-4 h-fit rounded-2xl border-[3px] border-grey xl:max-w-[600px] w-full xl:w-1/3"
             ref={SidebarRef}
           >
             <div className="w-full flex justify-between items-center px-4 sm:px-2 pt-2">
@@ -111,8 +111,8 @@ const Cart = () => {
             <Recommendations header={t("recommendations")} endpoint="recommended" limit={30} />
           </div>
           <div
-            className="flex flex-col h-fit xl:sticky glass-card rounded-2xl border-[3px] border-grey gap-3 md:gap-4 xl:mb-[13vh] md:py-6 pt-5 pb-2 px-1 sm:px-3 md:px-4 w-full xl:w-2/3"
-            ref={CartItemsRef}
+            className="flex flex-col h-fit xl:sticky relative top-0  w-full xl:w-2/3"
+            // ref={CartItemsRef}
           >
             <Suspense
               fallback={
@@ -123,10 +123,12 @@ const Cart = () => {
                 </div>
               }
             >
-              <CartItems
-                containerRef={containerRef}
-                setClearCartModalOpen={setClearCartModalOpen}
-              />
+              <div className="xl:absolute xl:top-0 xl:left-0 w-full h-fit flex flex-col gap-3 md:gap-4 md:pt-6 pt-5 pb-2 px-1 sm:px-3 md:px-4 glass-card rounded-2xl border-[3px] border-grey">
+                <CartItems
+                  containerRef={containerRef}
+                  setClearCartModalOpen={setClearCartModalOpen}
+                />
+              </div>
             </Suspense>
           </div>
           {isClient && (

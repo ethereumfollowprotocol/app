@@ -64,7 +64,7 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
 
       if (scrollTop < maxScrollTop || event.deltaY < 0) {
         listRef.current.scrollToPosition(scrollTop + event.deltaY);
-        if (scrollTop + event.deltaY >= -10) scrollTop += event.deltaY;
+        if (scrollTop + event.deltaY >= -20) scrollTop += event.deltaY;
       }
     }
   }, []);
@@ -109,17 +109,23 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
             <List
               ref={listRef}
               autoWidth={true}
-              height={window.innerHeight - 240}
+              height={window.innerHeight - 186}
               width={window.innerWidth}
               overscanRowCount={10}
               className="overflow-y-visible"
-              rowCount={(profiles?.length || 0) + (loadingCartItems || 0)}
+              rowCount={
+                (profiles?.length || 0) +
+                (loadingCartItems || 0) +
+                (window.innerWidth > 1536 ? 2 : window.innerWidth > 1280 ? 3 : 0)
+              }
               rowHeight={window.innerWidth > 1536 ? 82 : 64}
               rowRenderer={({ index, style }) => {
                 const profile = profiles?.[index];
                 if (!profile)
                   return (
-                    <LoadingRow key={index} className={listItemClassName} showTags={showTags} />
+                    <div style={style} className="opacity-0">
+                      <LoadingRow key={index} className={listItemClassName} showTags={showTags} />
+                    </div>
                   );
 
                 return (
