@@ -1,12 +1,12 @@
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
 
-import type { FollowListProfile } from "../..";
+import type { ProfileListProfile } from "../..";
 import { useCart } from "#/contexts/cart-context";
 import MainnetBlack from "public/assets/mainnet-black.svg";
 
 interface SocialFollowButtonProps {
-  profiles: FollowListProfile[];
+  profiles: ProfileListProfile[];
 }
 
 const SocialFollowButton: React.FC<SocialFollowButtonProps> = ({ profiles }) => {

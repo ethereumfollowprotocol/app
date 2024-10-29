@@ -16,7 +16,7 @@ import Providers from "./providers.tsx";
 import wagmiConfig from "../lib/wagmi.ts";
 import { Production } from "./production.tsx";
 import { sharedMetadata } from "#/lib/metadata.ts";
-import { APP_DESCRIPTION } from "../lib/constants/index.ts";
+import { APP_DESCRIPTION, THEMES } from "../lib/constants/index.ts";
 import BackgroundImage from "public/assets/art/waves-background.svg";
 import HalloweenBackground from "public/assets/art/halloween-background.jpeg";
 
@@ -37,7 +37,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           attribute="class"
           defaultTheme="halloween"
           enableSystem={true}
-          themes={["light", "dark", "halloween"]}
+          themes={THEMES}
         >
           <Image
             src={BackgroundImage}

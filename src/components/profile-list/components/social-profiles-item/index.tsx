@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 import { useTranslation } from "react-i18next";
 import Image, { type StaticImageData } from "next/image";
 
@@ -6,18 +6,18 @@ import { formatNumber } from "#/utils/formatNumber";
 import SocialTagDropdown from "./socialTagDropdown";
 import SocialFollowButton from "./social-follow-button";
 import type { ImportPlatformType } from "#/types/common";
-import type { FollowListProfile } from "#/app/cart/components/cart-items/cart-items-list";
+import type { ProfileListProfile } from "#/app/cart/components/cart-items/cart-items-list";
 
-export interface SocialFollowListProfile {
+export interface SocialProfileListProfile {
   platform: string;
-  profiles: FollowListProfile[];
+  profiles: ProfileListProfile[];
   icon: StaticImageData;
 }
 
-const SocialProfilesItem: React.FC<SocialFollowListProfile> = ({ platform, profiles, icon }) => {
+const SocialProfilesItem: React.FC<SocialProfileListProfile> = ({ platform, profiles, icon }) => {
   const { t } = useTranslation();
 
-  if (!profiles || !profiles.length) return null;
+  if (profiles.length === 0) return null;
 
   return (
     <div

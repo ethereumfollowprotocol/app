@@ -6,26 +6,25 @@ import List from "react-virtualized/dist/commonjs/List";
 
 import EFPLogo from "public/assets/logo.svg";
 import type { ENSProfile } from "#/types/requests";
-import type { SocialFollowListProfile } from "#/components/follow-list";
-import LoadingRow from "#/components/follow-list/components/list-item/loading-list-item";
-import SocialProfilesItem from "#/components/follow-list/components/social-profiles-item";
-import FollowListItem from "#/components/follow-list/components/list-item/follow-list-item";
+import type { ProfileStatsType } from "#/types/common";
+import SocialProfilesItem, {
+  type SocialProfileListProfile,
+} from "#/components/profile-list/components/social-profiles-item";
+import LoadingRow from "#/components/profile-list/components/list-item/loading-list-item";
+import ProfileListItem from "#/components/profile-list/components/list-item/profile-list-item";
 
-export interface FollowListProfile {
+export interface ProfileListProfile {
   address: Address;
   ens?: ENSProfile;
   tags: string[];
-  counts?: {
-    followers: number;
-    following: number;
-  };
+  counts?: ProfileStatsType;
 }
 
 interface CartItemsListProps {
   listClassName?: string;
   listItemClassName?: string;
-  profiles?: FollowListProfile[];
-  socialProfiles?: SocialFollowListProfile[];
+  profiles?: ProfileListProfile[];
+  socialProfiles?: SocialProfileListProfile[];
   showTags?: boolean;
   createListItem?: boolean;
   loadingRows?: number;
@@ -106,7 +105,7 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
           {socialProfiles?.map((social) => (
             <SocialProfilesItem key={social.platform} {...social} />
           ))}
-          {profiles?.length && profiles?.length > 0 && (
+          {(profiles?.length || 0) > 0 && (
             <List
               ref={listRef}
               autoWidth={true}
@@ -114,7 +113,7 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
               width={window.innerWidth}
               overscanRowCount={10}
               className="overflow-y-visible"
-              rowCount={profiles?.length || 0 + (loadingCartItems || 0)}
+              rowCount={(profiles?.length || 0) + (loadingCartItems || 0)}
               rowHeight={window.innerWidth > 1536 ? 82 : 64}
               rowRenderer={({ index, style }) => {
                 const profile = profiles?.[index];
@@ -125,7 +124,7 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
 
                 return (
                   <div className="w-full" style={style}>
-                    <FollowListItem
+                    <ProfileListItem
                       key={profile.address}
                       className={listItemClassName}
                       address={profile.address}

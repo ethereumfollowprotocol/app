@@ -82,6 +82,7 @@
         "useSortedClasses": "off",
         "noReactSpecificProps": "off",
         "useImportRestrictions": "off",
+        "useExplicitLengthCheck": "off",
         "noUndeclaredDependencies": "off"
       },
       "performance": {

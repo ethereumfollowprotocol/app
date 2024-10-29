@@ -15,20 +15,18 @@ import { useClickAway } from "@uidotdev/usehooks";
 import { useCart } from "#/contexts/cart-context";
 import { formatNumber } from "#/utils/formatNumber";
 import { cn, truncateAddress } from "#/lib/utilities";
+import type { ProfileStatsType } from "#/types/common";
 import LoadingCell from "../../../loaders/loading-cell";
 import Plus from "public/assets/icons/plus-squared.svg";
 import useFollowerState from "#/hooks/use-follower-state";
 import { useEFPProfile } from "#/contexts/efp-profile-context";
 import { listOpAddTag, listOpRemoveTag } from "#/utils/list-ops";
 
-interface FollowListItemNameProps {
+interface ProfileListItemNameProps {
   address: Address;
   avatarUrl?: string | GetEnsAvatarReturnType;
   className?: string;
-  counts?: {
-    followers: number;
-    following: number;
-  };
+  counts?: ProfileStatsType;
   name?: string | null;
   showFollowsYouBadges?: boolean;
   showTags?: boolean;
@@ -67,7 +65,7 @@ export function Name({
   );
 }
 
-const FollowListItemName: React.FC<FollowListItemNameProps> = ({
+const ProfileListItemName: React.FC<ProfileListItemNameProps> = ({
   name,
   tags,
   counts,
@@ -266,9 +264,9 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
                       </button>
                     </div>
                     <div className="w-full flex max-w-full flex-wrap items-center gap-2">
-                      {recentTags.map((tag) => (
+                      {recentTags.map((tag, i) => (
                         <button
-                          key={`${address} ${tag}`}
+                          key={`${address} ${tag} ${i}`}
                           className="font-bold py-1.5 hover:scale-110 transition-all text-sm truncate px-3 hover:opacity-80 text-darkGrey bg-zinc-300 rounded-full"
                           onClick={(e) => {
                             e.stopPropagation();
@@ -296,7 +294,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
                     <button
                       className={`
                         font-bold py-1 px-2 sm:py-1.5 max-w-full w-fit sm:px-3 text-darkGrey truncate text-sm hover:opacity-80 rounded-full ${
-                          !isFollowers && removingTag ? "bg-deletion" : "bg-zinc-300"
+                          canEditTags && removingTag ? "bg-deletion" : "bg-zinc-300"
                         }
                       `}
                       onClick={(e) => {
@@ -308,7 +306,7 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
                     >
                       {tag}
                     </button>
-                    {(removingTag || addingTag) && canEditTags && !isFollowers && (
+                    {(removingTag || addingTag) && canEditTags && (
                       <div className="absolute h-4 w-4 rounded-full -top-1 -right-1 bg-green-400" />
                     )}
                   </div>
@@ -356,4 +354,4 @@ const FollowListItemName: React.FC<FollowListItemNameProps> = ({
   );
 };
 
-export default FollowListItemName;
+export default ProfileListItemName;

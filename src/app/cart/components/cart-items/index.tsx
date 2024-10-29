@@ -1,4 +1,5 @@
-import React, { useMemo } from "react";
+import type React from "react";
+import { useMemo } from "react";
 import { FiTrash2 } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 

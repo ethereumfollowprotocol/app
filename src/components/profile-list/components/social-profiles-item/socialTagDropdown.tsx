@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useClickAway } from "@uidotdev/usehooks";
 import { useEffect, useRef, useState } from "react";
 
-import type { FollowListProfile } from "../..";
+import type { ProfileListProfile } from "../..";
 import { tagRegex } from "#/lib/constants/regex";
 import { useCart } from "#/contexts/cart-context";
 import { yieldToMain } from "#/utils/yieldToMain";
@@ -13,7 +13,7 @@ import { useEFPProfile } from "#/contexts/efp-profile-context";
 import { extractAddressAndTag, isTagListOp, listOpAddTag } from "#/utils/list-ops";
 
 interface SocialTagDropdownProps {
-  profiles: FollowListProfile[];
+  profiles: ProfileListProfile[];
   platform: ImportPlatformType;
 }
 

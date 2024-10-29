@@ -6,26 +6,24 @@ import { cn } from "#/lib/utilities";
 import { resolveEnsProfile } from "#/utils/ens";
 import type { ENSProfile } from "#/types/requests";
 import FollowButton from "#/components/follow-button";
-import FollowListItemName from "./follow-list-item-name";
+import type { ProfileStatsType } from "#/types/common";
+import ProfileListItemName from "./profile-list-item-name";
 
-export interface FollowListItemProps {
+export interface ProfileListItemProps {
   className?: string;
   address: Address;
   ensProfile?: ENSProfile;
   showFollowsYouBadges?: boolean;
   showTags?: boolean;
   tags: string[];
-  counts?: {
-    followers: number;
-    following: number;
-  };
+  counts?: ProfileStatsType;
   isFollowers?: boolean;
   canEditTags?: boolean;
   isBlockedList?: boolean;
   isBlockedBy?: boolean;
 }
 
-const FollowListItem: React.FC<FollowListItemProps> = React.memo(
+const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
   ({
     className = "",
     address,
@@ -55,7 +53,7 @@ const FollowListItem: React.FC<FollowListItemProps> = React.memo(
         )}
       >
         {/* Left section: Avatar, Name, and Tags */}
-        <FollowListItemName
+        <ProfileListItemName
           address={address}
           avatarUrl={profileAvatar}
           name={profileName}
@@ -75,4 +73,4 @@ const FollowListItem: React.FC<FollowListItemProps> = React.memo(
   }
 );
 
-export default FollowListItem;
+export default ProfileListItem;

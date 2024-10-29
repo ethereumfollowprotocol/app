@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 interface Particle {
   direction: number
@@ -12,27 +12,20 @@ interface Particle {
   top: number
 }
 
-export const useCoolMode = (
-  imageUrl: string,
-  disabled?: boolean,
-  ignoreCoolModeDocsDemo?: boolean,
-  isLoading?: boolean
-) => {
-  const [isMounted, setIsMounted] = useState(false)
+export const useCoolMode = (imageUrl: string, disabled?: boolean, isLoading?: boolean) => {
   const ref = useRef<HTMLDivElement | HTMLButtonElement>(null)
   const resolvedImageUrl = imageUrl
 
   useEffect(() => {
-    if (ref.current && isMounted && resolvedImageUrl)
-      return makeElementCool(ref.current, resolvedImageUrl, !!disabled, !!ignoreCoolModeDocsDemo)
-    if (!(isLoading || isMounted)) setIsMounted(true)
-  }, [resolvedImageUrl, isMounted, isLoading, disabled, ignoreCoolModeDocsDemo])
+    if (ref.current && !isLoading && resolvedImageUrl)
+      return makeElementCool(ref.current, resolvedImageUrl, !!disabled)
+  }, [resolvedImageUrl, isLoading, disabled])
 
   return ref
 }
 
 const getContainer = () => {
-  const id = '_rk_site_coolMode'
+  const id = 'efp_coolMode'
   const existingContainer = document.getElementById(id)
 
   if (existingContainer) {
@@ -63,12 +56,7 @@ const getContainer = () => {
 
 let instanceCounter = 0
 
-function makeElementCool(
-  element: HTMLElement,
-  imageUrl: string,
-  disabled: boolean,
-  ignoreCoolModeDocsDemo: boolean
-): () => void {
+function makeElementCool(element: HTMLElement, imageUrl: string, disabled: boolean): () => void {
   instanceCounter++
 
   const sizes = [25, 25, 35, 35, 45]
@@ -147,9 +135,7 @@ function makeElementCool(
   let animationFrame: number | undefined
 
   function loop() {
-    if (autoAddParticle && particles.length < limit) {
-      createParticle()
-    }
+    if (autoAddParticle && particles.length < limit) createParticle()
 
     updateParticles()
     animationFrame = requestAnimationFrame(loop)
@@ -178,15 +164,6 @@ function makeElementCool(
 
   const tapHandler = (e: MouseEvent | TouchEvent) => {
     if (disabled) return
-
-    // HACK: sorry, bit short on time here to find a more elegant solution
-    // but if this option is true, we don't wanna show particles if users
-    // are tapping on the buttons in #cool-mode-demo which is an `id`
-    // added to the CoolMode.tsx Component - otherwise we get double emoji showers!
-    if (ignoreCoolModeDocsDemo) {
-      const element = document.getElementById('cool-mode-demo')
-      if (element?.contains(e.target as any)) return
-    }
 
     updateMousePosition(e)
     autoAddParticle = true
