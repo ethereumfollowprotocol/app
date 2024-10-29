@@ -35,6 +35,9 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
         "flex glass-card border-grey border-[3px] items-center sm:items-end flex-col gap-1",
         cardSize
       )}
+      style={{
+        backdropFilter: "blur(1rem)",
+      }}
     >
       <div
         className={cn(
