@@ -6,7 +6,7 @@ import type { Address } from "viem";
 import { useTheme } from "next-themes";
 import { useTranslation } from "react-i18next";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
-import { useEffect, useMemo, useRef, useState, type Ref } from "react";
+import { useMemo, useRef, useState, type Ref } from "react";
 
 import {
   FollowButtonSound,
@@ -62,12 +62,12 @@ const FollowButton: React.FC<FollowButtonProps> = ({
   const soundRef = useRef<HTMLAudioElement>(null);
   const clickSound = useMemo(() => FollowButtonSound[buttonState][theme], [buttonState, theme]);
 
-  useEffect(() => {
-    if (!soundRef.current) return;
+  // useEffect(() => {
+  //   if (!soundRef.current) return;
 
-    if (actionsSoundsMuted) soundRef.current.volume = 0;
-    else soundRef.current.volume = 0.3;
-  }, [clickSound, actionsSoundsMuted]);
+  //   if (actionsSoundsMuted) soundRef.current.volume = 0;
+  //   else soundRef.current.volume = 0.3;
+  // }, [clickSound, actionsSoundsMuted]);
 
   return isLoading ? (
     <div className={`rounded-xl ${isBlockedBy ? "w-[132px]" : "w-[110px] 2xl:w-[120px]"}`}>
@@ -92,7 +92,10 @@ const FollowButton: React.FC<FollowButtonProps> = ({
 
           if (!userAddress && openConnectModal) return openConnectModal();
 
-          if (clickSound) soundRef.current?.play();
+          if (clickSound && !actionsSoundsMuted && soundRef.current) {
+            soundRef.current.volume = 0.3;
+            soundRef.current.play();
+          }
           setDisableHover(true);
           handleAction();
         }}
