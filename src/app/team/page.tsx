@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 const TeamPage = () => {
   return (
-    <main className="mx-auto flex min-h-full w-full max-w-[1400px] flex-col pt-28 sm:pt-32 gap-8 items-center overflow-scroll mb-12 px-4 text-center">
+    <main className="mx-auto flex min-h-full w-full max-w-[1400px] flex-col pt-[6.75rem] sm:pt-[7.75rem] gap-8 items-center overflow-scroll mb-12 px-4 text-center">
       <Members />
     </main>
   );

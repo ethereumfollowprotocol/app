@@ -55,7 +55,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
 
   const coolModeRef = useCoolMode(
     FollowButtonCoolEmoji[buttonState][theme] || "",
-    !!FollowButtonCoolEmoji[buttonState][theme],
+    !FollowButtonCoolEmoji[buttonState][theme],
     isLoading
   );
 
@@ -75,7 +75,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
     </div>
   ) : (
     <div ref={coolModeRef as Ref<HTMLDivElement>}>
-      <audio ref={soundRef} src={clickSound} key={theme} preload="auto" />
+      <audio ref={soundRef} src={clickSound} key={theme} preload="metadata" />
       <button
         className={cn([
           buttonStyle.bg,
