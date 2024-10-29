@@ -9,8 +9,8 @@ import { formatNumber } from "#/utils/formatNumber";
 import type { ImportPlatformType } from "#/types/common";
 import LoadingRow from "./components/list-item/loading-list-item";
 import FollowListItem from "./components/list-item/follow-list-item";
-import SocialTagDropdown from "./components/socials/socialTagDropdown";
-import SocialFollowButton from "./components/socials/social-follow-button";
+import SocialTagDropdown from "./components/social-profiles-item/socialTagDropdown";
+import SocialFollowButton from "./components/social-profiles-item/social-follow-button";
 
 export interface FollowListProfile {
   address: Address;

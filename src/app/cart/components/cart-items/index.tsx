@@ -2,18 +2,19 @@ import React, { useMemo } from "react";
 import { FiTrash2 } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 
+import CartItemsList from "./cart-items-list";
 import { useCart } from "#/contexts/cart-context";
-import { FollowList } from "#/components/follow-list";
 import FarcasterIcon from "public/assets/icons/farcaster.svg";
 import { useEFPProfile } from "#/contexts/efp-profile-context";
 
 interface CartItemsProps {
   setClearCartModalOpen: (open: boolean) => void;
+  containerRef: React.RefObject<HTMLDivElement>;
 }
 
-const CartItems = ({ setClearCartModalOpen }: CartItemsProps) => {
+const CartItems = ({ setClearCartModalOpen, containerRef }: CartItemsProps) => {
   const { t } = useTranslation();
-  const { selectedList, roles } = useEFPProfile();
+  const { selectedList } = useEFPProfile();
   const { totalCartItems, loadingCartItems, cartAddresses, socialAddresses } = useCart();
   const hasCreatedEfpList = !!selectedList;
 
@@ -64,17 +65,15 @@ const CartItems = ({ setClearCartModalOpen }: CartItemsProps) => {
           {t("empty cart")}
         </div>
       )}
-      <FollowList
+      <CartItemsList
+        containerRef={containerRef}
         isLoading={false}
         profiles={profiles}
         socialProfiles={socialProfiles}
         listClassName="rounded-xl gap-1 2xl:gap-0"
         listItemClassName="rounded-xl 2xl:p-4 p-1.5 sm:p-2"
-        showTags={true}
         createListItem={!hasCreatedEfpList}
-        canEditTags={roles?.isManager}
         loadingCartItems={loadingCartItems}
-        virtualList={true}
       />
     </>
   );

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useAccount } from "wagmi";
 import { useTranslation } from "react-i18next";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
-import { lazy, Suspense, useEffect, useMemo, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 
 import Checkout from "./checkout";
 import { cn } from "#/lib/utilities";
@@ -39,6 +39,7 @@ const Cart = () => {
   const { selectedList, roles } = useEFPProfile();
   const { totalCartItems, cartItems } = useCart();
 
+  const containerRef = useRef<HTMLDivElement>(null);
   const { StickyScrollRef: SidebarRef, onScroll: onScrollSidebar } = useStickyScroll(70);
   const { StickyScrollRef: CartItemsRef, onScroll: onScrollCartItems } = useStickyScroll(260);
 
@@ -65,6 +66,7 @@ const Cart = () => {
         </div>
       ) : (
         <div
+          ref={containerRef}
           className="flex flex-col-reverse xl:flex-row overflow-y-scroll justify-center gap-4 w-full h-full xl:gap-6 pt-28 px-2 lg:px-8 pb-10"
           onScroll={(e) => {
             onScrollCartItems(e);
@@ -121,7 +123,10 @@ const Cart = () => {
                 </div>
               }
             >
-              <CartItems setClearCartModalOpen={setClearCartModalOpen} />
+              <CartItems
+                containerRef={containerRef}
+                setClearCartModalOpen={setClearCartModalOpen}
+              />
             </Suspense>
           </div>
           {isClient && (
