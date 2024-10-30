@@ -62,7 +62,7 @@ const CartItems = ({ setClearCartModalOpen, containerRef }: CartItemsProps) => {
         )}
       </div>
       {totalCartItems === 0 && !loadingCartItems && (
-        <div className="font-bold h-28 xl:h-80 px-4 justify-center flex text-lg items-center italic">
+        <div className="font-bold h-28 xl:h-[86vh] px-4 justify-center flex text-lg items-center italic">
           {t("empty cart")}
         </div>
       )}
