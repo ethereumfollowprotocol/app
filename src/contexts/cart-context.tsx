@@ -68,13 +68,13 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const storedCartItemsJson = localStorage.getItem("cart");
+    const storedCartItemsJson = localStorage.getItem("cart items");
     if (storedCartItemsJson) {
       try {
         const storedCartItems = JSON.parse(storedCartItemsJson) as CartItem[];
         setCartItems(storedCartItems);
       } catch (error) {
-        localStorage.removeItem("cart");
+        localStorage.removeItem("cart items");
       }
     }
   }, []);
@@ -84,7 +84,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
     if (typeof window === "undefined") return;
 
     const updateLocalStorageTimeout = setTimeout(() => {
-      localStorage.setItem("cart", JSON.stringify(cartItems));
+      localStorage.setItem("cart items", JSON.stringify(cartItems));
       localStorage.setItem("cart address", address);
     }, 500);
 
