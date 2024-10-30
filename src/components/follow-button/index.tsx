@@ -75,7 +75,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
     </div>
   ) : (
     <div ref={coolModeRef as Ref<HTMLDivElement>}>
-      <audio ref={soundRef} src={clickSound} key={theme} preload="metadata" />
+      <audio ref={soundRef} src={clickSound} key={theme} preload="auto" />
       <button
         className={cn([
           buttonStyle.bg,
@@ -92,10 +92,8 @@ const FollowButton: React.FC<FollowButtonProps> = ({
 
           if (!userAddress && openConnectModal) return openConnectModal();
 
-          if (clickSound && !actionsSoundsMuted && soundRef.current) {
-            soundRef.current.volume = 0.3;
-            soundRef.current.play();
-          }
+          if (clickSound) soundRef.current?.play();
+
           setDisableHover(true);
           handleAction();
         }}
