@@ -213,40 +213,43 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     };
   }, [handleWheel]);
 
-  const tableProps =
-    activeTab === "followers"
-      ? {
-          isLoading: followersIsLoading,
-          results: followers,
-          allTags: followerTags?.tagCounts,
-          tagsLoading: followerTagsLoading,
-          selectedTags: followersTagsFilter,
-          toggleSelectedTags: toggleTag,
-          setSelectedTags: setFollowersTagsFilter,
-          sort: followersSort,
-          setSort: setFollowersSort,
-          isEndOfResults: isEndOfFollowers,
-          setSearchFilter: setFollowersSearch,
-          isFetchingMore: isFetchingMoreFollowers,
-          fetchMore: () => fetchMoreFollowers(),
-          title: "followers" as ProfileTabType,
-        }
-      : {
-          isLoading: followingIsLoading,
-          results: following,
-          allTags: followingTags?.tagCounts,
-          tagsLoading: followingTagsLoading,
-          selectedTags: followingTagsFilter,
-          toggleSelectedTags: toggleTag,
-          setSelectedTags: setFollowingTagsFilter,
-          sort: followingSort,
-          setSort: setFollowingSort,
-          isEndOfResults: isEndOfFollowing,
-          setSearchFilter: setFollowingSearch,
-          isFetchingMore: isFetchingMoreFollowing,
-          fetchMore: () => fetchMoreFollowing(),
-          title: "following" as ProfileTabType,
-        };
+  const tableProps = {
+    followers: {
+      isLoading: followersIsLoading,
+      results: followers,
+      allTags: followerTags?.tagCounts,
+      tagsLoading: followerTagsLoading,
+      selectedTags: followersTagsFilter,
+      toggleSelectedTags: toggleTag,
+      setSelectedTags: setFollowersTagsFilter,
+      sort: followersSort,
+      setSort: setFollowersSort,
+      isEndOfResults: isEndOfFollowers,
+      setSearchFilter: setFollowersSearch,
+      isFetchingMore: isFetchingMoreFollowers,
+      fetchMore: () => fetchMoreFollowers(),
+      title: "followers" as ProfileTabType,
+      canEditTags: false,
+    },
+    following: {
+      isLoading: followingIsLoading,
+      results: following,
+      allTags: followingTags?.tagCounts,
+      tagsLoading: followingTagsLoading,
+      selectedTags: followingTagsFilter,
+      toggleSelectedTags: toggleTag,
+      setSelectedTags: setFollowingTagsFilter,
+      sort: followingSort,
+      setSort: setFollowingSort,
+      isEndOfResults: isEndOfFollowing,
+      setSearchFilter: setFollowingSearch,
+      isFetchingMore: isFetchingMoreFollowing,
+      fetchMore: () => fetchMoreFollowing(),
+      title: "following" as ProfileTabType,
+      canEditTags:
+        Number(userIsList ? listNum : profile?.primary_list) === selectedList && roles?.isManager,
+    },
+  }[activeTab];
 
   return (
     <>
@@ -282,7 +285,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       )}
       {!isSaving && (
         <div
-          className="flex relative xl:h-screen flex-col xl:flex-row pt-[108px] sm:pt-28 md:pt-28 pb-8 xl:pb-0 overflow-y-auto xl:justify-center gap-4 px-4 lg:px-6 xl:px-8 w-full"
+          className="flex relative xl:h-screen flex-col xl:flex-row pt-[108px] sm:pt-[6.75rem] pb-8 xl:pb-0 overflow-y-auto xl:justify-center gap-4 px-4 lg:px-6 xl:px-8 w-full"
           ref={containerRef}
         >
           <div
@@ -334,10 +337,6 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
                 setActiveTab={(tab) => setActiveTab(tab as ProfileTabType)}
                 ref={tableRef}
                 {...tableProps}
-                canEditTags={
-                  Number(userIsList ? listNum : profile?.primary_list) === selectedList &&
-                  roles?.isManager
-                }
                 // customClass="border-t-0 rounded-t-none"
               />
             </div>

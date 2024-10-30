@@ -216,6 +216,5 @@ export const LANGUAGES = [
     icon: HalloweenFlag,
     englishLanguage: 'Halloween',
     special: true
-  },
-
+  }
 ]

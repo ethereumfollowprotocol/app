@@ -27,12 +27,12 @@ export type FollowButtonState =
   | 'Pending Following'
   | 'Pending Block'
   | 'Pending Mute'
-  | 'Subscribe'
-  | 'Subscribed'
+  // | 'Subscribe'
+  // | 'Subscribed'
   | 'Unblock'
   | 'Unfollow'
   | 'Unmute'
-  | 'Unsubscribe'
+// | 'Unsubscribe'
 
 type FollowButtonText =
   | 'Block'
@@ -43,12 +43,12 @@ type FollowButtonText =
   | 'Following'
   | 'Mute'
   | 'Muted'
-  | 'Subscribe'
-  | 'Subscribed'
+  // | 'Subscribe'
+  // | 'Subscribed'
   | 'Unblock'
   | 'Unfollow'
   | 'Unmute'
-  | 'Unsubscribe'
+// | 'Unsubscribe'
 
 export const useFollowButton = ({
   address,
@@ -63,15 +63,15 @@ export const useFollowButton = ({
   })
   const { t } = useTranslation()
   const {
-    hasListOpAddRecord,
-    hasListOpRemoveRecord,
-    hasListOpAddTag,
-    hasListOpRemoveTag,
+    cartItems,
     addCartItem,
     removeCartItem,
+    hasListOpAddTag,
+    hasListOpAddRecord,
+    hasListOpRemoveTag,
     removeAddTagFromCart,
-    removeRemoveTagFromCart,
-    cartItems
+    hasListOpRemoveRecord,
+    removeRemoveTagFromCart
   } = useCart()
 
   const pendingState = useMemo(() => {

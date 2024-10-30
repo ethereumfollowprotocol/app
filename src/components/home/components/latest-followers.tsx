@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { FollowList } from "#/components/follow-list";
+import ProfileList from "#/components/profile-list";
 import { useLatestFollowers } from "../hooks/use-latest-followers";
 import PageSelector from "#/app/leaderboard/components/page-selector";
 
@@ -42,7 +42,7 @@ const LatestFollowers = () => {
           hasNextPage={subPage < 5}
         />
       </div>
-      <FollowList
+      <ProfileList
         loadingRows={11}
         listClassName="gap-2 2xl:gap-3"
         showFollowsYouBadges={false}

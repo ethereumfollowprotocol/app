@@ -34,7 +34,7 @@ const Home = () => {
 
   return (
     <div
-      className="pt-[108px] relative md:pt-28 w-full h-screen px-4 overflow-y-scroll lg:px-6 xl:px-8 flex items-start lg:justify-center lg:gap-4 xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4"
+      className="pt-[108px] relative md:pt-[6.75rem] w-full h-screen px-4 overflow-y-scroll lg:px-6 xl:px-8 flex items-start lg:justify-center lg:gap-4 xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4"
       onScroll={(e) => {
         onScrollSidebar(e);
         onScrollProfileCard(e);

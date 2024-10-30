@@ -3,7 +3,7 @@ import type { Address } from 'viem'
 export type ListOp = {
   version: number
   opcode: number
-  data: Buffer
+  data: `0x${string}`
 }
 
 // Specific type for tag operations

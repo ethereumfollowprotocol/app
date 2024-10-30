@@ -1,12 +1,4 @@
-import {
-  http,
-  toHex,
-  fromHex,
-  getContract,
-  encodePacked,
-  type Address,
-  createPublicClient
-} from 'viem'
+import { http, fromHex, getContract, encodePacked, type Address, createPublicClient } from 'viem'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { track } from '@vercel/analytics/react'
@@ -21,7 +13,6 @@ import type { FollowingResponse } from '#/types/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { useCart, type CartItem } from '#/contexts/cart-context'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
-import { extractAddressAndTag, isTagListOp } from '#/utils/list-ops'
 import { useMintEFP } from '../../../hooks/efp-actions/use-mint-efp'
 import { DEFAULT_CHAIN, LIST_OP_LIMITS } from '#/lib/constants/chain'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
@@ -123,25 +114,20 @@ const useCheckout = () => {
 
       // format list operations
       const operations = items.map(item => {
-        // append mandatory types and data
-        const types = ['uint8', 'uint8', 'uint8', 'uint8', 'address']
-        const data: (string | number)[] = [item.listOp.version, item.listOp.opcode, 1, 1]
+        const types = ['uint8', 'uint8', 'uint8', 'uint8', 'bytes']
+        const data: (string | number)[] = [
+          item.listOp.version,
+          item.listOp.opcode,
+          1,
+          1,
+          item.listOp.data
+        ]
 
-        if (item.listOp.opcode > 2 && isTagListOp(item.listOp)) {
-          // add 'bytes' type for the tag and address and tag to data
-          const addrrAndTag = extractAddressAndTag(item.listOp)
-          types.push('bytes')
-          data.push(...[addrrAndTag.address, toHex(addrrAndTag.tag)])
-        } else {
-          // add address to data
-          data.push(`0x${item.listOp.data.toString('hex')}`)
-        }
-
-        // return encoded data into a single HEX string
         return encodePacked(types, data)
       })
 
-      // initiate  'applyListOps' transaction
+      // initiate "setMetadataValuesAndApplyListOps" transaction when creating a new EFP list
+      // initiate "applyListOps" transaction when updating an existing EFP list
       const hash = await walletClient?.writeContract({
         address: ListRecordsContract,
         abi: efpListRecordsAbi,
@@ -282,8 +268,9 @@ const useCheckout = () => {
   }, [moveToNextAction, executeActionByIndex, getRequiredChain, currentChainId, currentActionIndex])
 
   const onFinish = useCallback(() => {
-    const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
-    if (regex.test(navigator.userAgent)) track(`${listHasBeenMinted ? 'Mint' : 'Checkout'} - Mobile`)
+    const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
+    if (regex.test(navigator.userAgent))
+      track(`${listHasBeenMinted ? 'Mint' : 'Checkout'} - Mobile`)
     else track(`${listHasBeenMinted ? 'Mint' : 'Checkout'} - Desktop`)
 
     if (fetchFreshStats) refetchStats()

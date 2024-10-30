@@ -1,6 +1,6 @@
 import { formatQueryParams } from '#/utils/formatQueryParams'
+import type { ProfileListProfile } from '#/components/profile-list'
 import type { InfiniteProfileQueryProps, LatestFollowersResponse } from '#/types/requests'
-import type { FollowListProfile } from '#/components/follow-list'
 
 export const fetchLatestFollowers = async ({
   addressOrName,
@@ -30,7 +30,7 @@ export const fetchLatestFollowers = async ({
     const transformedData = data.map(follower => ({
       ...follower,
       tags: []
-    })) as FollowListProfile[]
+    })) as ProfileListProfile[]
 
     return {
       followers: transformedData ?? [],

@@ -9,22 +9,17 @@ import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 init('0366bbe276e04996af5f92ebb7899f19', { env: 'dev', cache: true })
 
+export type importFollowingType = {
+  address: Address
+  domains: { name: string }[]
+}
+
 const useImportModal = (platform: ImportPlatformType) => {
   const [handle, setHandle] = useState('')
   const [currHandle, setCurrHandle] = useState('')
 
-  const [followings, setFollowings] = useState<
-    {
-      address: Address
-      domains: { name: string }[]
-    }[]
-  >([])
-  const [allFollowings, setAllFollowings] = useState<
-    {
-      address: Address
-      domains: { name: string }[]
-    }[]
-  >([])
+  const [followings, setFollowings] = useState<importFollowingType[]>([])
+  const [allFollowings, setAllFollowings] = useState<importFollowingType[]>([])
   const [onlyImportWithEns, setOnlyImportWithEns] = useState(true)
   const [isFollowingsLoading, setIsFollowingsLoading] = useState(false)
 

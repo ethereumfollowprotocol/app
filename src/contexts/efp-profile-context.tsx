@@ -193,9 +193,6 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   const { resetCart } = useCart();
   const { address: userAddress } = useAccount();
 
-  // Need new endpoint /userAddress/lists which returns a primary list and the array of lists
-  // this is gonna be userLists and we need an useEffect and then set the appropriate list as selectedList (either primary list or list with the lowest number (tokenId))
-
   const {
     data: lists,
     isLoading: listsIsLoading,
@@ -272,7 +269,6 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
 
       return fetchedProfile;
     },
-    // refetchInterval: 60000
     staleTime: Infinity,
     refetchOnWindowFocus: false,
   });
@@ -291,7 +287,6 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
 
       return fetchedStats;
     },
-    // refetchInterval: 60000
     refetchOnWindowFocus: false,
   });
 
@@ -354,7 +349,6 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.nextPageParam,
-    // refetchInterval: 60000
   });
 
   const {
@@ -371,7 +365,6 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       return fetchedProfile;
     },
     refetchOnWindowFocus: false,
-    // refetchInterval: 60000
   });
 
   const [isEndOfFollowing, setIsEndOfFollowing] = useState(false);
@@ -542,7 +535,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       if (!(selectedList && userAddress)) return [];
 
       const fetchedFollowings = await fetchProfileAllFollowings(selectedList);
-      return fetchedFollowings;
+      return fetchedFollowings.map((address) => address.toLowerCase() as Address);
     },
   });
 

@@ -109,6 +109,7 @@ export const leaderboardFiltersEmojies = [
   PirateFlagEmoji
 ] as const
 
+export const THEMES = ['light', 'dark', 'halloween']
 const DARK_ICON_THEME = ['dark', 'halloween'] as const
 
 export const profileCardSocials = [

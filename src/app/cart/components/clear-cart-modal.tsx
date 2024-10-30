@@ -18,7 +18,7 @@ const ClearCartModal: React.FC<ClearCartModalProps> = ({ closeModal }) => {
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-bold">{t("clear cart")}</h2>
         </div>
-        <p className="text-lg font-medium px-4">{t("clear cart message")}</p>
+        <p className="text-lg font-medium px-0 sm:px-4">{t("clear cart message")}</p>
         <div className="flex pt-1 justify-between">
           <CancelButton onClick={closeModal} />
           <button

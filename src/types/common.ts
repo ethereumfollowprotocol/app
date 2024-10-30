@@ -22,6 +22,11 @@ export type UserFollowerType = {
   }
 }
 
+export type ProfileStatsType = {
+  followers: number
+  following: number
+}
+
 export type LeaderboardFilter = (typeof leaderboardFilters)[number]
 
 export type ImportPlatformType = 'farcaster'

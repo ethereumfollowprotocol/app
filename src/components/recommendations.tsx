@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 import { cn } from "#/lib/utilities";
-import { FollowList } from "#/components/follow-list";
+import ProfileList from "#/components/profile-list";
 import type { DiscoverItemType } from "#/types/requests";
 import { useEFPProfile } from "#/contexts/efp-profile-context";
 import { fetchRecommendations } from "#/api/fetchRecommendations";
@@ -87,7 +87,7 @@ const Recommendations = ({ header, className, limit = 10, endpoint }: Recommenda
           />
         </div>
       </div>
-      <FollowList
+      <ProfileList
         isLoading={isLoading || isFetchingNextPage || isFetchingPreviousPage}
         loadingRows={limit}
         listClassName="rounded-xl px-2 sm:px-0 gap-2 2xl:gap-3"

@@ -1,13 +1,12 @@
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
 
-import type { FollowListProfile } from "../..";
+import type { ProfileListProfile } from "../..";
 import { useCart } from "#/contexts/cart-context";
 import MainnetBlack from "public/assets/mainnet-black.svg";
-import { extractAddressAndTag, isTagListOp } from "#/utils/list-ops";
 
 interface SocialFollowButtonProps {
-  profiles: FollowListProfile[];
+  profiles: ProfileListProfile[];
 }
 
 const SocialFollowButton: React.FC<SocialFollowButtonProps> = ({ profiles }) => {
@@ -20,10 +19,8 @@ const SocialFollowButton: React.FC<SocialFollowButtonProps> = ({ profiles }) => 
 
     const addresses = profiles.map(({ address }) => address.toLowerCase());
 
-    const filteredCartItems = cartItems.filter((item) =>
-      isTagListOp(item.listOp)
-        ? !addresses.includes(extractAddressAndTag(item.listOp).address.toLowerCase())
-        : !addresses.includes(`0x${item.listOp.data.toString("hex")}`.toLowerCase())
+    const filteredCartItems = cartItems.filter(
+      (item) => !addresses.includes(item.listOp.data.slice(0, 42).toLowerCase())
     );
 
     setCartItems(filteredCartItems);

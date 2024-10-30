@@ -25,6 +25,7 @@ import {
   listOpRemoveListRecord,
 } from "#/utils/list-ops";
 import { Avatar } from "../avatar";
+import { useCoolMode } from "#/hooks/useCoolMode";
 import LoadingCell from "../loaders/loading-cell";
 import { useCart } from "#/contexts/cart-context";
 import { formatNumber } from "#/utils/formatNumber";
@@ -39,10 +40,10 @@ import { useEFPProfile } from "#/contexts/efp-profile-context";
 import { isValidEnsName, resolveEnsProfile } from "#/utils/ens";
 import DefaultAvatar from "public/assets/art/default-avatar.svg";
 import DefaultHeader from "public/assets/art/default-header.svg";
-import { useCoolMode } from "../follow-button/hooks/useCoolMode";
 import LoadingProfileCard from "./components/loading-profile-card";
 import type { ProfileDetailsResponse, StatsResponse } from "#/types/requests";
 import ConnectButton from "../navigation/components/connect-button";
+import { FollowButtonCoolEmoji } from "#/lib/constants/follow-button";
 
 interface UserProfileCardProps {
   profileList?: number | null;
@@ -240,26 +241,21 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const rankTitles = Object.keys(profile?.ranks || {});
   const ranks = Object.values(profile?.ranks || {});
 
+  const blockCoolEmoji =
+    FollowButtonCoolEmoji[followState === "blocks" || isPendingBlock ? "Unblock" : "Block"][
+      resolvedTheme || "light"
+    ];
   const blockCoolMode = useCoolMode(
-    isPendingBlock || (followState === "blocks" && !isPendingUnblock)
-      ? ""
-      : resolvedTheme === "halloween"
-      ? "/assets/icons/spider-web-emoji.png"
-      : "/assets/icons/block-emoji.svg",
-    false,
-    true,
+    blockCoolEmoji || "",
+    !blockCoolEmoji,
     !moreOptionsDropdownOpen
   );
-  const muteCoolMode = useCoolMode(
-    isPendingMute || (followState === "mutes" && !isPendingUnmute)
-      ? ""
-      : resolvedTheme === "halloween"
-      ? "/assets/icons/ghost-emoji.png"
-      : "/assets/icons/mute-emoji.svg",
-    false,
-    true,
-    !moreOptionsDropdownOpen
-  );
+
+  const muteCoolEmoji =
+    FollowButtonCoolEmoji[followState === "mutes" || isPendingMute ? "Unmute" : "Mute"][
+      resolvedTheme || "light"
+    ];
+  const muteCoolMode = useCoolMode(muteCoolEmoji || "", !muteCoolEmoji, !moreOptionsDropdownOpen);
 
   return (
     <div

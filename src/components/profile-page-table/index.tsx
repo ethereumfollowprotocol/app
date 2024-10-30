@@ -1,8 +1,8 @@
 "use client";
 
 import { useTranslation } from "react-i18next";
+import { useEffect, useState, forwardRef } from "react";
 import { useIntersectionObserver } from "@uidotdev/usehooks";
-import { useEffect, useRef, useState, forwardRef } from "react";
 
 import type {
   TagCountType,
@@ -12,8 +12,8 @@ import type {
 } from "#/types/requests";
 import { cn } from "#/lib/utilities";
 import Recommendations from "../recommendations";
+import ProfileList from "#/components/profile-list";
 import TableHeader from "./components/table-headers";
-import { FollowList } from "#/components/follow-list";
 import { useIsEditView } from "#/hooks/use-is-edit-view";
 import type { ProfileTableTitleType } from "#/types/common";
 import { useEFPProfile } from "#/contexts/efp-profile-context";
@@ -66,29 +66,22 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
     },
     ref
   ) => {
-    const [search, setSearch] = useState<string>("");
     const [showTags, setShowTags] = useState(!!showTagsByDefault);
-    const searchTimer = useRef<NodeJS.Timeout | null>(null);
+    const [search, setSearch] = useState<string>("");
 
-    const onChangeSearch = (input: string) => {
-      if (searchTimer.current) {
-        clearTimeout(searchTimer.current);
-      }
-      setSearch(input);
-
-      if (input.length === 0) {
-        setSearchFilter(input);
-      } else {
-        searchTimer.current = setTimeout(() => {
-          setSearchFilter(input);
-        }, 500);
-      }
-    };
-
+    // Debounce search to prevent unnecessary re-fetches
     useEffect(() => {
-      setSearchFilter(search);
-    }, []);
+      const searchTimeout = setTimeout(() => setSearchFilter(search), 500);
+      return () => clearTimeout(searchTimeout);
+    }, [search]);
 
+    // Reset search when switching tabs
+    useEffect(() => {
+      setSearch("");
+      setSearchFilter("");
+    }, [title]);
+
+    // Display all tags by default if the user is showing the blocked/muted tab
     useEffect(() => {
       if (!showTags) setSelectedTags(isShowingBlocked ? ["All"] : []);
     }, [showTags]);
@@ -106,16 +99,11 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
       })) || [];
 
     const [loadMoreRef, entry] = useIntersectionObserver();
-
     useEffect(() => {
       if (!entry?.isIntersecting || isEndOfResults) return;
+      if (isLoading || isFetchingMore) return;
 
-      if (
-        !(isLoading || isFetchingMore) &&
-        results.length > 0 &&
-        results.length % FETCH_LIMIT_PARAM === 0
-      )
-        fetchMore();
+      if (results.length > 0 && results.length % FETCH_LIMIT_PARAM === 0) fetchMore();
     }, [entry?.isIntersecting, results]);
 
     const noResults = {
@@ -124,11 +112,6 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
           <div className="justify-center min-h-12 flex items-center font-bold">{t("none")}</div>
         ) : (
           <div className="text-center min-h-12  font-bold">
-            {title === "followers" && (
-              <p className="text-lg">
-                {t(isProfile ? "followers myprofile empty" : "followers empty")}
-              </p>
-            )}
             {title === "following" && (
               <div className="flex flex-col justify-center min-h-12 gap-4 items-center">
                 <p className="text-xl italic">
@@ -167,7 +150,7 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
         <TableHeader
           setActiveTab={setActiveTab}
           search={search}
-          setSearch={(input: string) => onChangeSearch(input)}
+          setSearch={setSearch}
           showTags={showTags}
           setShowTags={(option: boolean) => setShowTags(option)}
           title={title}
@@ -194,7 +177,7 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
               : "profile-page-table"
           )}
         >
-          <FollowList
+          <ProfileList
             isLoading={isLoading}
             isLoadingMore={isFetchingMore}
             loadingRows={FETCH_LIMIT_PARAM}
