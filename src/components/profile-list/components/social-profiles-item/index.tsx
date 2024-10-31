@@ -2,8 +2,8 @@ import type React from "react";
 import { useTranslation } from "react-i18next";
 import Image, { type StaticImageData } from "next/image";
 
+import Tags from "../tags";
 import { formatNumber } from "#/utils/formatNumber";
-import SocialTagDropdown from "./socialTagDropdown";
 import SocialFollowButton from "./social-follow-button";
 import type { ImportPlatformType } from "#/types/common";
 import type { ProfileListProfile } from "#/app/cart/components/cart-items/cart-items-list";
@@ -44,7 +44,12 @@ const SocialProfilesItem: React.FC<SocialProfileListProfile> = ({ platform, prof
               {t("adding")}: {formatNumber(profiles.length)}
             </p>
           </div>
-          <SocialTagDropdown profiles={profiles} platform={platform as ImportPlatformType} />
+          <Tags
+            profiles={profiles}
+            platform={platform as ImportPlatformType}
+            canEditTags={true}
+            isBlockedList={false}
+          />
         </div>
       </div>
       <SocialFollowButton profiles={profiles} />

@@ -5,15 +5,12 @@ import Plus from "public/assets/icons/plus-squared.svg";
 
 interface LoadingRowProps {
   showTags?: boolean;
-  className?: string;
 }
 
-const LoadingRow: React.FC<LoadingRowProps> = ({ showTags, className }) => {
+const LoadingRow: React.FC<LoadingRowProps> = ({ showTags }) => {
   return (
-    <div
-      className={`flex items-center p-1.5 2xl:p-2 justify-between ${className} pointer-events-none`}
-    >
-      <div className={`flex gap-2 sm:gap-3 items-center`}>
+    <div className="flex items-center p-1.5 2xl:p-2 justify-between pointer-events-none">
+      <div className="flex gap-2 sm:gap-3 items-center">
         <LoadingCell className="h-[45px] w-[45px] 2xl:h-[50px] 2xl:w-[50px] rounded-full" />
         <div className="flex flex-col md:flex-row gap-[2px] w-3/4 sm:w-fit md:gap-3">
           <div className={`flex flex-col justify-center w-fit items-start tabular-nums relative`}>

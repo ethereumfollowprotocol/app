@@ -13,8 +13,6 @@ export interface ProfileListProfile {
 }
 
 interface ProfileListProps {
-  listClassName?: string;
-  listItemClassName?: string;
   profiles?: ProfileListProfile[];
   showFollowsYouBadges?: boolean; // Handle showing "Follows you" badges in the ProfileList
   showTags?: boolean;
@@ -24,12 +22,9 @@ interface ProfileListProps {
   canEditTags?: boolean;
   isBlockedList?: boolean; // If the list is displaying blocked and blocked by profiles
   isBlockedBy?: boolean; // Used to handle the "Block Back" on FollowButton
-  isFollowers?: boolean; // If the list is displaying followers
 }
 
 const ProfileList: React.FC<ProfileListProps> = ({
-  listClassName = "",
-  listItemClassName = "",
   profiles,
   showFollowsYouBadges,
   showTags,
@@ -39,15 +34,13 @@ const ProfileList: React.FC<ProfileListProps> = ({
   canEditTags,
   isBlockedList,
   isBlockedBy,
-  isFollowers,
 }) => {
   const displayLoadingRows = isLoadingMore || isLoading;
 
   return (
-    <div className={`flex flex-col w-full ${listClassName}`}>
+    <div className="flex flex-col w-full gap-2 2xl:gap-3">
       {profiles?.map(({ address, tags, ens, counts }) => (
         <ProfileListItem
-          className={listItemClassName}
           key={address + tags.join(",")}
           address={address}
           ensProfile={ens}
@@ -58,13 +51,10 @@ const ProfileList: React.FC<ProfileListProps> = ({
           canEditTags={canEditTags}
           isBlockedList={isBlockedList}
           isBlockedBy={isBlockedBy}
-          isFollowers={isFollowers}
         />
       ))}
       {displayLoadingRows &&
-        new Array(loadingRows)
-          .fill(1)
-          .map((_, i) => <LoadingRow key={i} className={listItemClassName} showTags={showTags} />)}
+        new Array(loadingRows).fill(1).map((_, i) => <LoadingRow key={i} showTags={showTags} />)}
     </div>
   );
 };

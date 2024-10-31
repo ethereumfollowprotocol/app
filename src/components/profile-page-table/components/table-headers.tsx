@@ -100,7 +100,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
               </div>
             )}
           </div>
-          {!BLOCKED_MUTED_TABS.includes(title) ? (
+          {!BLOCKED_MUTED_TABS.includes(title) && (
             <div ref={clickAwaySearchRef} className="relative flex gap-1 sm:gap-3 z-50">
               <div
                 className={cn(
@@ -155,8 +155,6 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 </div>
               )}
             </div>
-          ) : (
-            <div className="h-1 w-1"></div>
           )}
           <div className="flex sm:w-full justify-end gap-4">
             <div

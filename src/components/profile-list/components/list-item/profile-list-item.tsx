@@ -2,22 +2,19 @@ import React from "react";
 import type { Address } from "viem";
 import { useQuery } from "@tanstack/react-query";
 
-import { cn } from "#/lib/utilities";
 import { resolveEnsProfile } from "#/utils/ens";
 import type { ENSProfile } from "#/types/requests";
 import FollowButton from "#/components/follow-button";
 import type { ProfileStatsType } from "#/types/common";
-import ProfileListItemName from "./profile-list-item-name";
+import ProfileListItemDetails from "./details";
 
 export interface ProfileListItemProps {
-  className?: string;
   address: Address;
   ensProfile?: ENSProfile;
   showFollowsYouBadges?: boolean;
   showTags?: boolean;
   tags: string[];
   counts?: ProfileStatsType;
-  isFollowers?: boolean;
   canEditTags?: boolean;
   isBlockedList?: boolean;
   isBlockedBy?: boolean;
@@ -25,14 +22,12 @@ export interface ProfileListItemProps {
 
 const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
   ({
-    className = "",
     address,
     ensProfile,
     showFollowsYouBadges,
     showTags,
     tags,
     counts,
-    isFollowers,
     canEditTags,
     isBlockedList,
     isBlockedBy,
@@ -46,14 +41,9 @@ const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
     const profileAvatar = fetchedEnsProfile?.avatar;
 
     return (
-      <div
-        className={cn(
-          "flex items-center justify-between hover:bg-text/5 transition-all p-1.5 2xl:p-2 rounded-xl",
-          className
-        )}
-      >
+      <div className="flex items-center justify-between hover:bg-text/5 transition-all p-1.5 2xl:p-2 rounded-xl">
         {/* Left section: Avatar, Name, and Tags */}
-        <ProfileListItemName
+        <ProfileListItemDetails
           address={address}
           avatarUrl={profileAvatar}
           name={profileName}
@@ -61,12 +51,11 @@ const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
           showFollowsYouBadges={showFollowsYouBadges}
           showTags={showTags}
           tags={tags}
-          isFollowers={isFollowers}
           canEditTags={canEditTags}
           isEnsProfileLoading={isEnsProfileLoading}
           isBlockedList={isBlockedList}
         />
-        {/* Right section: Follow Button with consistent width */}
+        {/* Right section: Follow Button */}
         <FollowButton isBlockedBy={isBlockedBy} address={address} />
       </div>
     );

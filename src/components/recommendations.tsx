@@ -90,7 +90,6 @@ const Recommendations = ({ header, className, limit = 10, endpoint }: Recommenda
       <ProfileList
         isLoading={isLoading || isFetchingNextPage || isFetchingPreviousPage}
         loadingRows={limit}
-        listClassName="rounded-xl px-2 sm:px-0 gap-2 2xl:gap-3"
         profiles={displayedProfiles?.slice(0, limit).map((account) => ({
           address: account.address,
           tags: [] as string[],
