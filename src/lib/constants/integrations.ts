@@ -18,6 +18,7 @@ import HarvestArt from 'public/assets/partners/harvestart.jpeg'
 import VibesScapes from 'public/assets/partners/vibesscapes.jpeg'
 import EngagementVision from 'public/assets/partners/engagementvision.jpeg'
 import POAP from 'public/assets/partners/poap.jpeg'
+import JustaName from 'public/assets/partners/justaname.jpeg'
 
 
 export const INTEGRATIONS = [
@@ -110,6 +111,11 @@ export const INTEGRATIONS = [
     name: 'Engagement Vision',
     url: 'https://engagement.vision/',
     logo: EngagementVision
+  },
+  {
+    name: 'JustaName',
+    url: 'https://www.justaname.id/',
+    logo: JustaName
   }
 ] as {
   name: string
