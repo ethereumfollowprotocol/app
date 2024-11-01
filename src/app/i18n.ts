@@ -102,8 +102,8 @@ i18n
       'shakespearean',
       'frens',
       'ermahgersh',
-      'millennial',
-      'halloween'
+      'millennial'
+      // 'halloween'
     ],
     fallbackLng: 'en',
     keySeparator: '.',

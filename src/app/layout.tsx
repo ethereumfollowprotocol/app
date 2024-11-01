@@ -33,12 +33,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       //   backgroundImage: `url(assets/art/waves-background.svg)`
       // }}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="halloween"
-          enableSystem={true}
-          themes={THEMES}
-        >
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true} themes={THEMES}>
           <Image
             src={BackgroundImage}
             alt="background waves"

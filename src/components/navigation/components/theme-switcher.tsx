@@ -1,10 +1,9 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTheme } from "next-themes";
 import { FiArrowLeft } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import { useClickAway } from "@uidotdev/usehooks";
-import { GiPumpkinLantern } from "react-icons/gi";
 import { MdLightMode, MdDarkMode } from "react-icons/md";
 import { HiOutlineDesktopComputer } from "react-icons/hi";
 
@@ -16,23 +15,26 @@ export const themesWithIcons = [
   {
     theme: "system",
     icon: <HiOutlineDesktopComputer />,
+    language: undefined,
   },
   {
     theme: "light",
     icon: <MdLightMode />,
+    language: undefined,
   },
   {
     theme: "dark",
     icon: <MdDarkMode />,
+    language: undefined,
   },
-  {
-    theme: "halloween",
-    icon: <GiPumpkinLantern />,
-    language: "halloween",
-  },
+  // {
+  //   theme: "halloween",
+  //   icon: <GiPumpkinLantern />,
+  //   language: "halloween",
+  // },
 ];
 
-const themes = ["system", "light", "dark", "halloween"] as const;
+const themes = ["system", "light", "dark"] as const;
 type ThemeType = (typeof themes)[number];
 
 interface ThemeSwitcherProps {
@@ -50,12 +52,6 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
 
   const { t } = useTranslation();
   const { setTheme, theme: selectedTheme } = useTheme();
-
-  useEffect(() => {
-    if (selectedTheme === "halloween") {
-      i18n.changeLanguage("halloween");
-    }
-  }, [selectedTheme]);
 
   return (
     <div ref={clickAwayThemeRef} className="cursor-pointer group relative w-full">
