@@ -471,7 +471,7 @@ const useSaveListSettings = ({
 
   const getRequiredChain = useCallback(
     async (index: number) =>
-      DEFAULT_CHAIN_LIST_ACTIONS.includes(actions[index] ? actions[index]?.type : '')
+      DEFAULT_CHAIN_LIST_ACTIONS.includes(actions[index] ? actions[index]?.type || '' : '')
         ? DEFAULT_CHAIN.id
         : selectedList
           ? fromHex(
