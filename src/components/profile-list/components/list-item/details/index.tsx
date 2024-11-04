@@ -87,7 +87,7 @@ const ProfileListItemDetails: React.FC<ProfileListItemDetailsProps> = ({
             className={cn(
               "flex flex-col justify-center items-start tabular-nums relative",
               isCart
-                ? "md:w-52"
+                ? "md:w-52 md:min-w-52"
                 : !isBlockedList && showTags
                 ? displayedTags.length > 0
                   ? "xl:max-w-[55%] 2xl:max-w-[60%]"

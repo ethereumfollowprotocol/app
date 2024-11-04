@@ -112,14 +112,12 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
               height={window.innerHeight - 186}
               width={window.innerWidth}
               overscanRowCount={10}
-              className="overflow-y-visible"
-              estimatedRowSize={window.innerWidth > 1536 ? 82 : 74}
               rowCount={
                 (profiles?.length || 0) +
                 (loadingCartItems || 0) +
-                (window.innerWidth > 1536 ? 2 : window.innerWidth > 1280 ? 3 : 2)
+                (window.innerWidth > 1536 ? 2 : 3)
               }
-              rowHeight={window.innerWidth > 1536 ? 82 : 74}
+              rowHeight={window.innerWidth > 1536 ? 82 : 88}
               rowRenderer={({ key, index, style }) => {
                 const profile = profiles?.[index];
                 if (!profile)

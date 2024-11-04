@@ -44,7 +44,7 @@ const TagsDropdown: React.FC<TagsDropdownProps> = ({
   return (
     <>
       {open && (
-        <div className="absolute z-[9999] flex flex-col w-60 gap-2 left-0 top-8 glass-card bg-neutral p-2 border-[3px] border-grey rounded-lg">
+        <div className="absolute z-[9999] flex flex-col w-60 gap-2 left-0 top-10 glass-card bg-neutral p-2 border-[3px] border-grey rounded-lg">
           <div className="w-full flex items-center gap-1.5 justify-between bg-zinc-300 dark:bg-zinc-400 rounded-lg font-bold p-1 text-left">
             <input
               ref={tagInputRef}
@@ -102,7 +102,7 @@ const TagsDropdown: React.FC<TagsDropdownProps> = ({
             }`}
           >
             <button
-              className={`font-bold py-1 px-2 sm:py-1.5 max-w-full w-fit sm:px-3 text-darkGrey truncate text-sm hover:opacity-80 rounded-full ${
+              className={`font-bold py-1 px-2 md:py-1.5 max-w-full w-fit md:px-3 text-darkGrey truncate text-sm hover:opacity-80 rounded-full ${
                 canEditTags && removingTag ? "bg-deletion" : "bg-zinc-300"
               }`}
               onClick={(e) => {

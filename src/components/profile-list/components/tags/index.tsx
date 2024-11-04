@@ -25,6 +25,8 @@ const Tags: React.FC<TagsProps> = ({ profiles, platform, canEditTags, isBlockedL
 
   const address = profiles?.[0]?.address;
   const { hasListOpRemoveRecord, hasListOpRemoveTag, hasListOpAddTag } = useCart();
+
+  // Hide tags if the profile is being removed or restricted/unrestricted
   const isBeingRemoved = address ? hasListOpRemoveRecord(address) : false;
   const isBeingUnrestricted = address
     ? hasListOpRemoveTag({ address, tag: "block" }) || hasListOpRemoveTag({ address, tag: "mute" })
@@ -37,10 +39,7 @@ const Tags: React.FC<TagsProps> = ({ profiles, platform, canEditTags, isBlockedL
   return (
     <div
       className={cn(
-        "relative min-h-8 flex max-w-[90%] flex-wrap gap-2 items-center",
-        // isCart
-        //   ? "xl:max-w-[55%] 2xl:max-w-[65%] 3xl:max-w-[75%]"
-        //   : "xl:max-w-[45%] 2xl:max-w-[42.5%] 3xl:max-w-[47.5%]",
+        "relative min-h-8 flex max-w-full flex-wrap gap-2 items-center",
         (isBeingRemoved || isRestriction) && "hidden"
       )}
       ref={clickAwayTagDropwdownRef}
