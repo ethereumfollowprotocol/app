@@ -2,6 +2,7 @@ import type { Address } from 'viem'
 import { useEffect, useMemo, useState } from 'react'
 import { init, useQuery, useQueryWithPagination } from '@airstack/airstack-react'
 
+import { SECOND } from '#/lib/constants'
 import { useCart } from '#/contexts/cart-context'
 import { listOpAddListRecord } from '#/utils/list-ops'
 import type { ImportPlatformType } from '#/types/common'
@@ -31,7 +32,7 @@ const useImportModal = (platform: ImportPlatformType) => {
       setHandle(currHandle)
       setFollowings([])
       setAllFollowings([])
-    }, 500)
+    }, 0.5 * SECOND)
     return () => clearTimeout(inputTimeout)
   }, [currHandle])
 
@@ -135,8 +136,8 @@ const useImportModal = (platform: ImportPlatformType) => {
       .filter(
         ({ address: addr }) =>
           !(
-            allFollowingAddresses?.includes(addr.toLowerCase()) ||
-            getAddressesFromCart().includes(addr.toLowerCase())
+            allFollowingAddresses?.includes(addr.toLowerCase() as Address) ||
+            getAddressesFromCart().includes(addr.toLowerCase() as Address)
           )
       )
       .map(followingAddress => ({
@@ -148,7 +149,7 @@ const useImportModal = (platform: ImportPlatformType) => {
   }
 
   const alreadyFollow = followings.filter(({ address: addr }) =>
-    allFollowingAddresses?.includes(addr.toLowerCase())
+    allFollowingAddresses?.includes(addr.toLowerCase() as Address)
   )
 
   // add query to fetch airstack profile and all following addresses, download AIrstack SDK

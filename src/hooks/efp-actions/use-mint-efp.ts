@@ -3,7 +3,7 @@ import { encodePacked, type Address } from 'viem'
 import { useAccount, useWalletClient } from 'wagmi'
 
 import * as abi from 'src/lib/abi.ts'
-import { DEFAULT_CHAIN } from '#/lib/constants/chain'
+import { DEFAULT_CHAIN } from '#/lib/constants/chains'
 import { generateListStorageLocationSlot } from '#/utils/generateSlot'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts.ts'
 

@@ -14,15 +14,12 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useAccount, useChainId, useSwitchChain, useWalletClient } from 'wagmi'
 
-import {
-  listOpAddTag,
-  listOpAddListRecord,
-} from '#/utils/list-ops'
+import { listOpAddTag, listOpAddListRecord } from '#/utils/list-ops'
 import { Step } from '#/components/checkout/types'
-import { rpcProviders } from '#/lib/constants/providers'
+import { rpcProviders } from '#/lib/constants/rpc-providers'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { useCart, type CartItem } from '#/contexts/cart-context'
-import { DEFAULT_CHAIN, LIST_OP_LIMITS } from '#/lib/constants/chain'
+import { DEFAULT_CHAIN, LIST_OP_LIMITS } from '#/lib/constants/chains'
 import { generateListStorageLocationSlot } from '#/utils/generateSlot'
 import type { FollowingResponse, ProfileDetailsResponse } from '#/types/requests'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
@@ -184,7 +181,13 @@ const useSaveListSettings = ({
       const operations = items.map(item => {
         // append mandatory types and data
         const types = ['uint8', 'uint8', 'uint8', 'uint8', 'bytes']
-        const data: (string | number)[] = [item.listOp.version, item.listOp.opcode, 1, 1, item.listOp.data]
+        const data: (string | number)[] = [
+          item.listOp.version,
+          item.listOp.opcode,
+          1,
+          1,
+          item.listOp.data
+        ]
 
         // return encoded data into a single HEX string
         return encodePacked(types, data)
@@ -253,7 +256,7 @@ const useSaveListSettings = ({
     if (!(userAddress && chain)) return
 
     const hash = await walletClient?.writeContract({
-      address: (ListRecordContracts[chain?.id] as Address),
+      address: ListRecordContracts[chain?.id] as Address,
       abi: efpListRecordsAbi,
       functionName: 'setMetadataValuesAndApplyListOps',
       // @ts-ignore - diff data type handled
@@ -281,7 +284,7 @@ const useSaveListSettings = ({
         BigInt(selectedList),
         encodePacked(
           ['uint8', 'uint8', 'uint256', 'address', 'uint'],
-          [1, 1, BigInt(chain.id), (ListRecordContracts[chain?.id] as Address), newSlot]
+          [1, 1, BigInt(chain.id), ListRecordContracts[chain?.id] as Address, newSlot]
         )
       ]
     })
@@ -402,8 +405,10 @@ const useSaveListSettings = ({
     }
 
     const actionsToExecute: Action[] = []
-    if (!completeTransactions.resetSlot && changedValuesState.resetSlot) actionsToExecute.push(resetSlotAction)
-    if (!completeTransactions.claimSlot && changedValuesState.resetSlot) actionsToExecute.push(claimNewSlotAction)
+    if (!completeTransactions.resetSlot && changedValuesState.resetSlot)
+      actionsToExecute.push(resetSlotAction)
+    if (!completeTransactions.claimSlot && changedValuesState.resetSlot)
+      actionsToExecute.push(claimNewSlotAction)
 
     if (!completeTransactions.user && changedValuesState.user) actionsToExecute.push(setListUser)
     if (!completeTransactions.manager && changedValuesState.manager)
@@ -527,7 +532,7 @@ const useSaveListSettings = ({
       else setFetchFreshStats(true)
     }
 
-    if(changedValues.resetSlot) {
+    if (changedValues.resetSlot) {
       queryClient.invalidateQueries({ queryKey: ['top8'] })
       queryClient.invalidateQueries({ queryKey: ['follow state'] })
       queryClient.invalidateQueries({ queryKey: ['list state'] })

@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { useCart } from '#/contexts/cart-context'
 import { useSounds } from '#/contexts/sounds-context'
 import { listOpAddListRecord } from '#/utils/list-ops'
-import { RECOMMENDED_PROFILES_LIMIT } from '#/lib/constants'
+import { RECOMMENDED_PROFILES_LIMIT, SECOND } from '#/lib/constants'
 import { useRecommendedProfiles } from '#/contexts/recommended-profiles-context'
 
 const to = () => ({
@@ -74,7 +74,7 @@ export const useRecommendedProfilesCards = () => {
               )
             })
             handleStartAnimationAndSound()
-          }, 150)
+          }, 0.15 * SECOND)
         }
       }
 
@@ -140,7 +140,7 @@ export const useRecommendedProfilesCards = () => {
             )
           })
           handleStartAnimationAndSound()
-        }, 150)
+        }, 0.15 * SECOND)
 
         return {
           x: (250 + window.innerWidth / 1.5) * 1,
@@ -169,7 +169,7 @@ export const useRecommendedProfilesCards = () => {
               recommendedProfiles[i].address
             )
           )
-        }, 500)
+        }, 0.5 * SECOND)
 
         return to()
       }

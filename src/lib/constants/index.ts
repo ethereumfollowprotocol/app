@@ -19,25 +19,25 @@ export const APP_NAME_SHORT = 'EFP'
 export const APP_DESCRIPTION =
   'A native Ethereum protocol for following and tagging Ethereum accounts.'
 export const APP_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:4321'
-
 export const ENS_SUBGRAPH_URL = `https://gateway-arbitrum.network.thegraph.com/api/${process.env.NEXT_PUBLIC_ENS_SUBGRAPH_API_KEY}/subgraphs/id/5XqPmWe6gjyrJtFn9cLy237i4cWw2j9HcUJEXsP5qGtH`
 
 export const FETCH_LIMIT_PARAM = 12
-export const LEADERBOARD_FETCH_LIMIT_PARAM = 60
 export const LEADERBOARD_CHUNK_SIZE = 20
 export const RECOMMENDED_PROFILES_LIMIT = 10
+export const LEADERBOARD_FETCH_LIMIT_PARAM = 60
+
 export const SECOND = 1_000
 export const MINUTE = 60 * SECOND
 export const HOUR = 60 * MINUTE
 export const DAY = 24 * HOUR
-export const WEEK = 7 * DAY
 
 export const PROFILE_TABS: ProfileTabType[] = ['following', 'followers']
 export const BLOCKED_MUTED_TABS: ProfileTableTitleType[] = ['Blocked/Muted', 'Blocked/Muted By']
 
-export const DEFAULT_TAGS_TO_ADD = ['irl', 'bff', 'based', 'degen', 'top8']
 export const DEFAULT_TAGS = ['no tag']
 export const BLOCKED_MUTED_TAGS = ['block', 'mute']
+export const DEFAULT_TAGS_TO_ADD = ['irl', 'bff', 'based', 'degen', 'top8']
+
 export const SORT_OPTIONS: FollowSortType[] = ['follower count', 'latest first', 'earliest first']
 
 export const NAV_ITEMS = [
@@ -51,10 +51,6 @@ export const NAV_ITEMS = [
     name: 'profile',
     hiddenOnDesktop: true
   },
-  // {
-  //   href: () => '/feed',
-  //   name: 'feed',
-  // },
   {
     href: () => '/swipe',
     name: 'swipe',
@@ -68,11 +64,6 @@ export const NAV_ITEMS = [
 ]
 
 export const EXTERNAL_LINKS = [
-  // <  {
-  //     text: 'swipe',
-  //     href: '/swipe',
-  //     target: ''
-  //   },
   {
     text: 'about',
     href: '/about',
@@ -109,11 +100,8 @@ export const leaderboardFiltersEmojies = [
   PirateFlagEmoji
 ] as const
 
-export const THEMES = ['light', 'dark', 'halloween']
-const DARK_ICON_THEME = [
-  'dark'
-  //  'halloween'
-] as const
+export const THEMES = ['light', 'dark']
+const DARK_ICON_THEME = ['dark']
 
 export const profileCardSocials = [
   {

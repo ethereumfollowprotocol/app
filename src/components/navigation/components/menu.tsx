@@ -59,7 +59,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
             ? `${(themesWithIcons.length || 0) * 56 + 56}px`
             : volumeMenuOpen
             ? `${(volumeOptions.length || 0) * 56 + 56}px`
-            : "h-auto",
+            : "auto",
         }}
       >
         <ThemeSwitcher

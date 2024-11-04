@@ -11,9 +11,10 @@ import { useEffect, useState } from 'react'
 import { useAccount, useChains } from 'wagmi'
 import { useQuery } from '@tanstack/react-query'
 
+import { SECOND } from '#/lib/constants'
 import { resolveEnsAddress } from '#/utils/ens'
-import { DEFAULT_CHAIN } from '#/lib/constants/chain'
-import { rpcProviders } from '#/lib/constants/providers'
+import { DEFAULT_CHAIN } from '#/lib/constants/chains'
+import { rpcProviders } from '#/lib/constants/rpc-providers'
 import { coreEfpContracts } from '#/lib/constants/contracts'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import type { FollowingResponse, ProfileDetailsResponse } from '#/types/requests'
@@ -97,7 +98,7 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
     }
 
     setUserLoading(true)
-    const userTimeout = setTimeout(updateValue, 500)
+    const userTimeout = setTimeout(updateValue, 0.5 * SECOND)
     return () => clearTimeout(userTimeout)
   }, [currentUser])
 
@@ -144,7 +145,7 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
     }
 
     setManagerLoading(true)
-    const managerTimeout = setTimeout(updateValue, 500)
+    const managerTimeout = setTimeout(updateValue, 0.5 * SECOND)
     return () => clearTimeout(managerTimeout)
   }, [currentManager])
 
@@ -188,7 +189,7 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
     }
 
     setOwnerLoading(true)
-    const ownerTimeout = setTimeout(updateValue, 500)
+    const ownerTimeout = setTimeout(updateValue, 0.5 * SECOND)
     return () => clearTimeout(ownerTimeout)
   }, [currentOwner])
 
@@ -196,7 +197,7 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
     queryKey: ['list state', list],
     queryFn: async () => {
       const listStateReq = await fetch(`${process.env.NEXT_PUBLIC_EFP_API_URL}/exportState/${list}`)
-      const listStateRes = await listStateReq.json()
+      const listStateRes = (await listStateReq.json()) as { following: FollowingResponse[] }
       return listStateRes.following as FollowingResponse[]
     },
     staleTime: 180000

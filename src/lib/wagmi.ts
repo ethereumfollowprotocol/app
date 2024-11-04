@@ -28,7 +28,7 @@ const connectors = connectorsForWallets(
         rabbyWallet,
         safeWallet,
         walletConnectWallet,
-        injectedWallet,
+        injectedWallet
       ]
     }
   ],
@@ -108,7 +108,7 @@ export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
         url: 'https://eth.blockscout.com/'
       }
     }
-  },
+  }
   // {
   //   ...baseSepolia,
   //   iconUrl: '/assets/chains/base.svg',
@@ -138,13 +138,6 @@ export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
 
 const config = createConfig({
   ssr: true,
-  // connectors: [
-  //   safe({
-  //     allowedDomains: [/^app\.safe\.global\*.blockscout.com\$/],
-  //     debug: false
-  //   }),
-  //   ...connectors
-  // ],
   connectors,
   chains,
   storage: createStorage({

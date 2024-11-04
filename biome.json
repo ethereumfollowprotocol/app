@@ -56,6 +56,7 @@
       "style": {
         "all": true,
         "noNamespace": "off",
+        "useImportType": "off",
         "noDefaultExport": "off",
         "noNamespaceImport": "off",
         "useFragmentSyntax": "off",

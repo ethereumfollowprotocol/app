@@ -13,6 +13,7 @@ import {
 import { useAccount } from "wagmi";
 import type { Address } from "viem";
 
+import { SECOND } from "#/lib/constants";
 import type { ImportPlatformType } from "#/types/common";
 import type { ListOp, ListOpTagOpParams } from "#/types/list-op";
 import { isTagListOp, listOpAddTag, listOpRemoveTag, extractAddressAndTag } from "#/utils/list-ops";
@@ -86,7 +87,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
     const updateLocalStorageTimeout = setTimeout(() => {
       localStorage.setItem("cart items", JSON.stringify(cartItems));
       localStorage.setItem("cart address", address);
-    }, 500);
+    }, 0.5 * SECOND);
 
     return () => clearTimeout(updateLocalStorageTimeout);
   }, [cartItems, address]);
