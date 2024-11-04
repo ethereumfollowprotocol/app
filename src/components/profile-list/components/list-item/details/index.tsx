@@ -8,12 +8,12 @@ import Tags from "../../tags";
 import { cn } from "#/lib/utilities";
 import { Avatar } from "#/components/avatar";
 import { useCart } from "#/contexts/cart-context";
-import type { ProfileStatsType } from "#/types/common";
 import useFollowerState from "#/hooks/use-follower-state";
 import LoadingCell from "../../../../loaders/loading-cell";
 import ProfileListItemName from "./profile-list-item-name";
 import ProfileListItemCounts from "./profile-list-item-counts";
 import { useEFPProfile } from "#/contexts/efp-profile-context";
+import type { ProfileStatsType, TagsDropdownPositionType } from "#/types/common";
 
 interface ProfileListItemDetailsProps {
   address: Address;
@@ -24,6 +24,7 @@ interface ProfileListItemDetailsProps {
   showTags?: boolean;
   tags: string[];
   canEditTags?: boolean;
+  tagsDropdownPosition?: TagsDropdownPositionType;
   isEnsProfileLoading?: boolean;
   isBlockedList?: boolean;
 }
@@ -37,6 +38,7 @@ const ProfileListItemDetails: React.FC<ProfileListItemDetailsProps> = ({
   avatarUrl,
   showFollowsYouBadges,
   canEditTags,
+  tagsDropdownPosition,
   isEnsProfileLoading,
   isBlockedList,
 }) => {
@@ -102,7 +104,7 @@ const ProfileListItemDetails: React.FC<ProfileListItemDetailsProps> = ({
               isCart={isCart}
               isLoading={isEnsProfileLoading}
             />
-            {showFollowsYouBadges && !isEnsProfileLoading && (
+            {showFollowsYouBadges && (
               <div
                 className={`rounded-full font-bold text-[10px] text-darkGrey bg-zinc-300 py-[3px] text-center px-2 w-fit max-w-full ${followerTag.className}`}
               >
@@ -112,9 +114,10 @@ const ProfileListItemDetails: React.FC<ProfileListItemDetailsProps> = ({
           </div>
           <Tags
             profiles={[{ address, tags }]}
+            showTags={showTags}
             canEditTags={canEditTags}
             isBlockedList={isBlockedList}
-            isCart={isCart}
+            dropdownPosition={tagsDropdownPosition}
           />
         </div>
       </div>

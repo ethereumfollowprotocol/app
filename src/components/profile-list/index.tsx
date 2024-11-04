@@ -1,5 +1,6 @@
 import type { Address } from "viem";
 
+import { cn } from "#/lib/utilities";
 import type { ENSProfile } from "#/types/requests";
 import type { ProfileStatsType } from "#/types/common";
 import LoadingRow from "./components/list-item/loading-list-item";
@@ -36,10 +37,16 @@ const ProfileList: React.FC<ProfileListProps> = ({
   isBlockedBy,
 }) => {
   const displayLoadingRows = isLoadingMore || isLoading;
+  const isShortList = (profiles?.length || 0) <= 3;
 
   return (
-    <div className="flex flex-col w-full gap-2 2xl:gap-3">
-      {profiles?.map(({ address, tags, ens, counts }) => (
+    <div
+      className={cn(
+        "flex flex-col w-full gap-2 2xl:gap-3",
+        isShortList && showTags ? "pb-32" : "pb-0"
+      )}
+    >
+      {profiles?.map(({ address, tags, ens, counts }, index) => (
         <ProfileListItem
           key={address + tags.join(",")}
           address={address}
@@ -51,6 +58,11 @@ const ProfileList: React.FC<ProfileListProps> = ({
           canEditTags={canEditTags}
           isBlockedList={isBlockedList}
           isBlockedBy={isBlockedBy}
+          tagsDropdownPosition={
+            (index === profiles.length - 1 || index === profiles.length - 2) && index >= 2
+              ? "top"
+              : "bottom"
+          }
         />
       ))}
       {displayLoadingRows &&

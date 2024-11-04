@@ -2,11 +2,11 @@ import React from "react";
 import type { Address } from "viem";
 import { useQuery } from "@tanstack/react-query";
 
+import ProfileListItemDetails from "./details";
 import { resolveEnsProfile } from "#/utils/ens";
 import type { ENSProfile } from "#/types/requests";
 import FollowButton from "#/components/follow-button";
-import type { ProfileStatsType } from "#/types/common";
-import ProfileListItemDetails from "./details";
+import type { ProfileStatsType, TagsDropdownPositionType } from "#/types/common";
 
 export interface ProfileListItemProps {
   address: Address;
@@ -18,6 +18,7 @@ export interface ProfileListItemProps {
   canEditTags?: boolean;
   isBlockedList?: boolean;
   isBlockedBy?: boolean;
+  tagsDropdownPosition?: TagsDropdownPositionType;
 }
 
 const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
@@ -31,6 +32,7 @@ const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
     canEditTags,
     isBlockedList,
     isBlockedBy,
+    tagsDropdownPosition,
   }) => {
     const { data: fetchedEnsProfile, isLoading: isEnsProfileLoading } = useQuery({
       queryKey: ["ens metadata", address],
@@ -54,6 +56,7 @@ const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
           canEditTags={canEditTags}
           isEnsProfileLoading={isEnsProfileLoading}
           isBlockedList={isBlockedList}
+          tagsDropdownPosition={tagsDropdownPosition}
         />
         {/* Right section: Follow Button */}
         <FollowButton isBlockedBy={isBlockedBy} address={address} />

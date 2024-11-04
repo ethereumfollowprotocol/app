@@ -112,11 +112,7 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
               height={window.innerHeight - 186}
               width={window.innerWidth}
               overscanRowCount={10}
-              rowCount={
-                (profiles?.length || 0) +
-                (loadingCartItems || 0) +
-                (window.innerWidth > 1536 ? 2 : 3)
-              }
+              rowCount={(profiles?.length || 0) + (loadingCartItems || 0) + 2}
               rowHeight={window.innerWidth > 1536 ? 82 : 88}
               rowRenderer={({ key, index, style }) => {
                 const profile = profiles?.[index];

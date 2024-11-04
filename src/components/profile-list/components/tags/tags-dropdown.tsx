@@ -2,12 +2,13 @@ import Image from "next/image";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
+import { cn } from "#/lib/utilities";
 import type { ProfileListProfile } from "../..";
 import { tagRegex } from "#/lib/constants/regex";
 import { useCart } from "#/contexts/cart-context";
 import Plus from "public/assets/icons/plus-squared.svg";
-import type { ImportPlatformType } from "#/types/common";
 import { useTagsDropdown } from "../../hooks/use-tags-dropdown";
+import type { ImportPlatformType, TagsDropdownPositionType } from "#/types/common";
 
 interface TagsDropdownProps {
   open: boolean;
@@ -15,6 +16,7 @@ interface TagsDropdownProps {
   profiles: ProfileListProfile[];
   platform?: ImportPlatformType;
   isBlockedList?: boolean;
+  position?: TagsDropdownPositionType;
 }
 
 const TagsDropdown: React.FC<TagsDropdownProps> = ({
@@ -23,6 +25,7 @@ const TagsDropdown: React.FC<TagsDropdownProps> = ({
   open,
   canEditTags,
   isBlockedList,
+  position = "bottom",
 }) => {
   const { t } = useTranslation();
   const { hasListOpAddTag, hasListOpRemoveTag } = useCart();
@@ -44,7 +47,12 @@ const TagsDropdown: React.FC<TagsDropdownProps> = ({
   return (
     <>
       {open && (
-        <div className="absolute z-[9999] flex flex-col w-60 gap-2 left-0 top-10 glass-card bg-neutral p-2 border-[3px] border-grey rounded-lg">
+        <div
+          className={cn(
+            "absolute z-[9999] flex flex-col w-56 sm:w-64 gap-2 left-0 glass-card bg-neutral p-2 border-[3px] border-grey rounded-lg",
+            position === "bottom" ? "top-8" : "bottom-8"
+          )}
+        >
           <div className="w-full flex items-center gap-1.5 justify-between bg-zinc-300 dark:bg-zinc-400 rounded-lg font-bold p-1 text-left">
             <input
               ref={tagInputRef}

@@ -7,17 +7,25 @@ import TagsDropdown from "./tags-dropdown";
 import type { ProfileListProfile } from "../..";
 import { useCart } from "#/contexts/cart-context";
 import Plus from "public/assets/icons/plus-squared.svg";
-import type { ImportPlatformType } from "#/types/common";
+import type { ImportPlatformType, TagsDropdownPositionType } from "#/types/common";
 
 interface TagsProps {
   profiles: ProfileListProfile[];
   platform?: ImportPlatformType;
+  showTags?: boolean;
   canEditTags?: boolean;
   isBlockedList?: boolean;
-  isCart?: boolean;
+  dropdownPosition?: TagsDropdownPositionType;
 }
 
-const Tags: React.FC<TagsProps> = ({ profiles, platform, canEditTags, isBlockedList, isCart }) => {
+const Tags: React.FC<TagsProps> = ({
+  profiles,
+  platform,
+  showTags,
+  canEditTags,
+  isBlockedList,
+  dropdownPosition,
+}) => {
   const [tagDropdownOpen, setTagDropdownOpen] = useState(false);
   const clickAwayTagDropwdownRef = useClickAway<HTMLDivElement>(() => {
     setTagDropdownOpen(false);
@@ -36,11 +44,13 @@ const Tags: React.FC<TagsProps> = ({ profiles, platform, canEditTags, isBlockedL
     : false;
   const isRestriction = isBeingUnrestricted || isBeingRestricted;
 
+  const hideTags = !showTags || (canEditTags && (isBeingRemoved || isRestriction));
+
   return (
     <div
       className={cn(
         "relative min-h-8 flex max-w-full flex-wrap gap-2 items-center",
-        (isBeingRemoved || isRestriction) && "hidden"
+        hideTags && "hidden"
       )}
       ref={clickAwayTagDropwdownRef}
     >
@@ -61,6 +71,7 @@ const Tags: React.FC<TagsProps> = ({ profiles, platform, canEditTags, isBlockedL
         open={tagDropdownOpen}
         canEditTags={canEditTags}
         isBlockedList={isBlockedList}
+        position={dropdownPosition}
       />
       {canEditTags && tagDropdownOpen && (
         <div
