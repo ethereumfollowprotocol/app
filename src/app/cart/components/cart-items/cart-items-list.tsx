@@ -22,7 +22,6 @@ export interface ProfileListProfile {
 
 interface CartItemsListProps {
   listClassName?: string;
-  listItemClassName?: string;
   profiles?: ProfileListProfile[];
   socialProfiles?: SocialProfileListProfile[];
   showTags?: boolean;
@@ -35,7 +34,6 @@ interface CartItemsListProps {
 
 const CartItemsList: React.FC<CartItemsListProps> = ({
   listClassName = "",
-  listItemClassName = "",
   profiles,
   socialProfiles,
   showTags,
@@ -82,13 +80,14 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
   return (
     <div className={`flex flex-col w-full ${listClassName}`}>
       {isLoading ? (
-        new Array(loadingRows)
-          .fill(1)
-          .map((_, i) => <LoadingRow key={i} className={listItemClassName} showTags={showTags} />)
+        new Array(loadingRows).fill(1).map((_, i) => <LoadingRow key={i} showTags={showTags} />)
       ) : (
         <>
           {isCreatingNewList && (
-            <div className="flex w-[350px] sm:w-full items-center hover:bg-list ounded-xl gap-2 2xl:p-4 p-1.5 sm:p-2 sm:gap-3">
+            <div
+              key={"new list"}
+              className="flex w-[350px] sm:w-full items-center hover:bg-list ounded-xl gap-2 2xl:p-4 p-1.5 sm:p-2 sm:gap-3"
+            >
               <Image
                 src={EFPLogo}
                 alt="EFP List"
@@ -109,30 +108,25 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
             <List
               ref={listRef}
               autoWidth={true}
+              key={"list"}
               height={window.innerHeight - 186}
               width={window.innerWidth}
               overscanRowCount={10}
-              className="overflow-y-visible"
-              rowCount={
-                (profiles?.length || 0) +
-                (loadingCartItems || 0) +
-                (window.innerWidth > 1536 ? 2 : window.innerWidth > 1280 ? 3 : 0)
-              }
-              rowHeight={window.innerWidth > 1536 ? 82 : 64}
-              rowRenderer={({ index, style }) => {
+              rowCount={(profiles?.length || 0) + (loadingCartItems || 0) + 2}
+              rowHeight={window.innerWidth > 1536 ? 82 : 88}
+              rowRenderer={({ key, index, style }) => {
                 const profile = profiles?.[index];
                 if (!profile)
                   return (
-                    <div style={style} className="opacity-0">
-                      <LoadingRow key={index} className={listItemClassName} showTags={showTags} />
+                    <div style={style} key={key} className="opacity-0">
+                      <LoadingRow showTags={showTags} />
                     </div>
                   );
 
                 return (
-                  <div className="w-full" style={style}>
+                  <div className="w-full" key={key} style={style}>
                     <ProfileListItem
                       key={profile.address}
-                      className={listItemClassName}
                       address={profile.address}
                       ensProfile={profile.ens}
                       showTags={true}

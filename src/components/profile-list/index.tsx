@@ -1,5 +1,6 @@
 import type { Address } from "viem";
 
+import { cn } from "#/lib/utilities";
 import type { ENSProfile } from "#/types/requests";
 import type { ProfileStatsType } from "#/types/common";
 import LoadingRow from "./components/list-item/loading-list-item";
@@ -13,8 +14,6 @@ export interface ProfileListProfile {
 }
 
 interface ProfileListProps {
-  listClassName?: string;
-  listItemClassName?: string;
   profiles?: ProfileListProfile[];
   showFollowsYouBadges?: boolean; // Handle showing "Follows you" badges in the ProfileList
   showTags?: boolean;
@@ -24,12 +23,9 @@ interface ProfileListProps {
   canEditTags?: boolean;
   isBlockedList?: boolean; // If the list is displaying blocked and blocked by profiles
   isBlockedBy?: boolean; // Used to handle the "Block Back" on FollowButton
-  isFollowers?: boolean; // If the list is displaying followers
 }
 
 const ProfileList: React.FC<ProfileListProps> = ({
-  listClassName = "",
-  listItemClassName = "",
   profiles,
   showFollowsYouBadges,
   showTags,
@@ -39,15 +35,19 @@ const ProfileList: React.FC<ProfileListProps> = ({
   canEditTags,
   isBlockedList,
   isBlockedBy,
-  isFollowers,
 }) => {
   const displayLoadingRows = isLoadingMore || isLoading;
+  const isShortList = (profiles?.length || 0) <= 3;
 
   return (
-    <div className={`flex flex-col w-full ${listClassName}`}>
-      {profiles?.map(({ address, tags, ens, counts }) => (
+    <div
+      className={cn(
+        "flex flex-col w-full gap-2 2xl:gap-3",
+        isShortList && showTags ? "pb-32" : "pb-0"
+      )}
+    >
+      {profiles?.map(({ address, tags, ens, counts }, index) => (
         <ProfileListItem
-          className={listItemClassName}
           key={address + tags.join(",")}
           address={address}
           ensProfile={ens}
@@ -58,13 +58,15 @@ const ProfileList: React.FC<ProfileListProps> = ({
           canEditTags={canEditTags}
           isBlockedList={isBlockedList}
           isBlockedBy={isBlockedBy}
-          isFollowers={isFollowers}
+          tagsDropdownPosition={
+            (index === profiles.length - 1 || index === profiles.length - 2) && index >= 2
+              ? "top"
+              : "bottom"
+          }
         />
       ))}
       {displayLoadingRows &&
-        new Array(loadingRows)
-          .fill(1)
-          .map((_, i) => <LoadingRow key={i} className={listItemClassName} showTags={showTags} />)}
+        new Array(loadingRows).fill(1).map((_, i) => <LoadingRow key={i} showTags={showTags} />)}
     </div>
   );
 };

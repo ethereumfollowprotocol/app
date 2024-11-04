@@ -44,7 +44,6 @@ const LatestFollowers = () => {
       </div>
       <ProfileList
         loadingRows={11}
-        listClassName="gap-2 2xl:gap-3"
         showFollowsYouBadges={false}
         profiles={displayedProfiles}
         isLoading={isLatestFollowersLoading}

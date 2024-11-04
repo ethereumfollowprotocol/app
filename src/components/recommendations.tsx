@@ -65,8 +65,8 @@ const Recommendations = ({ header, className, limit = 10, endpoint }: Recommenda
   }, [userAddress, selectedList, limit]);
 
   return (
-    <div className={cn("flex flex-col gap-4 2xl:gap-6", className)}>
-      <div className="px-2 pt-2 w-full">
+    <div className={cn("flex flex-col gap-4 px-2 sm:px-4 2xl:gap-6", className)}>
+      <div className="pt-2 sm:px-1 w-full">
         <div className="w-full flex items-center justify-between">
           <h2
             className={`pl-2 sm:pl-0 text-start text-2xl ${
@@ -90,7 +90,6 @@ const Recommendations = ({ header, className, limit = 10, endpoint }: Recommenda
       <ProfileList
         isLoading={isLoading || isFetchingNextPage || isFetchingPreviousPage}
         loadingRows={limit}
-        listClassName="rounded-xl px-2 sm:px-0 gap-2 2xl:gap-3"
         profiles={displayedProfiles?.slice(0, limit).map((account) => ({
           address: account.address,
           tags: [] as string[],

@@ -47,7 +47,7 @@ const CartItems = ({ setClearCartModalOpen, containerRef }: CartItemsProps) => {
 
   return (
     <>
-      <div className="flex justify-between gap-2 flex-row items-center px-3 md:px-4">
+      <div className="flex justify-between gap-2 flex-row items-center px-2">
         <h3 className="font-bold text-left text-xl sm:text-3xl xxs:w-2/3">
           {t("cart unc-changes")}
         </h3>
@@ -72,7 +72,6 @@ const CartItems = ({ setClearCartModalOpen, containerRef }: CartItemsProps) => {
         profiles={profiles}
         socialProfiles={socialProfiles}
         listClassName="rounded-xl gap-1 2xl:gap-0"
-        listItemClassName="rounded-xl 2xl:p-4 p-1.5 sm:p-2"
         createListItem={!hasCreatedEfpList}
         loadingCartItems={loadingCartItems}
       />

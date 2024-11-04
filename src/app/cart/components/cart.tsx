@@ -78,10 +78,10 @@ const Cart = () => {
           )}
           {clearCartModalOpen && <ClearCartModal closeModal={() => setClearCartModalOpen(false)} />}
           <div
-            className="flex flex-col mb-6 xl:sticky glass-card gap-4 px-1 py-4 sm:p-4 h-fit rounded-2xl border-[3px] border-grey xl:max-w-[600px] w-full xl:w-1/3"
+            className="flex flex-col mb-6 xl:sticky glass-card gap-4 px-1 py-4 h-fit rounded-2xl border-[3px] border-grey xl:max-w-[600px] w-full xl:w-1/3"
             ref={SidebarRef}
           >
-            <div className="w-full flex justify-between items-center px-4 sm:px-2 pt-2">
+            <div className="w-full flex justify-between items-center px-3 sm:px-5 pt-2">
               <h1 className="text-left text-xl sm:text-3xl font-bold">{t("editor title")}</h1>
               <div className="flex gap-1">
                 <p className="text-lg font-bold text-right mr-1">{t("import")}</p>
@@ -107,7 +107,7 @@ const Cart = () => {
                 /> */}
               </div>
             </div>
-            <Search size="w-full z-50 px-2 pt-2" isEditor={true} />
+            <Search size="w-full z-50 px-2 sm:px-4 pt-2" isEditor={true} />
             <Recommendations header={t("recommendations")} endpoint="recommended" limit={30} />
           </div>
           <div

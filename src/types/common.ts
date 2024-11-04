@@ -30,3 +30,5 @@ export type ProfileStatsType = {
 export type LeaderboardFilter = (typeof leaderboardFilters)[number]
 
 export type ImportPlatformType = 'farcaster'
+
+export type TagsDropdownPositionType = 'top' | 'bottom'

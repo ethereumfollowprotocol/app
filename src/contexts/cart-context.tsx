@@ -34,7 +34,7 @@ type CartContextType = {
     farcaster: Address[];
   };
   cartItems: CartItem[];
-  setCartItems: (items: CartItem[]) => void;
+  setCartItems: Dispatch<SetStateAction<CartItem[]>>;
   loadingCartItems: number;
   setLoadingCartItems: Dispatch<SetStateAction<number>>;
   getAddressesFromCart: () => string[];
@@ -106,7 +106,9 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
 
   const addCartItem = useCallback(
     (item: CartItem) => {
-      const exists = cartItems.some((cartItem) => cartItem.listOp.data === item.listOp.data);
+      const exists = cartItems.some(
+        (cartItem) => cartItem.listOp.data.toLowerCase() === item.listOp.data.toLowerCase()
+      );
       if (!exists) setCartItems((prevItems) => [...prevItems, item]);
       setLoadingCartItems((prevLoading) => (prevLoading > 0 ? prevLoading - 1 : prevLoading));
     },
@@ -114,7 +116,9 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   );
 
   const removeCartItem = (listOp: ListOp) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.listOp.data !== listOp.data));
+    setCartItems((prevItems) =>
+      prevItems.filter((item) => item.listOp.data.toLowerCase() !== listOp.data.toLowerCase())
+    );
   };
 
   const hasListOpAddRecord = useCallback(

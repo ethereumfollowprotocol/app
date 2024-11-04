@@ -168,7 +168,7 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
         <div
           ref={ref}
           className={cn(
-            "flex flex-col",
+            "flex flex-col px-3 sm:px-0",
             BLOCKED_MUTED_TABS.includes(title) ? "" : "xl:overflow-y-scroll",
             BLOCKED_MUTED_TABS.includes(title)
               ? ""
@@ -181,13 +181,10 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
             isLoading={isLoading}
             isLoadingMore={isFetchingMore}
             loadingRows={FETCH_LIMIT_PARAM}
-            listClassName="gap-2 rounded-xl w-full px-3 sm:px-0"
-            listItemClassName={`rounded-xl w-full px-0 py-2 sm:p-2`}
             profiles={profiles}
             showTags={showTags}
             showFollowsYouBadges={showFollowsYouBadges}
             canEditTags={canEditTags}
-            isFollowers={title === "followers" || title === "Blocked/Muted By"}
             isBlockedList={isShowingBlocked}
             isBlockedBy={title === "Blocked/Muted By" && isProfile}
           />
