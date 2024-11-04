@@ -50,7 +50,7 @@ const TagsDropdown: React.FC<TagsDropdownProps> = ({
         <div
           className={cn(
             "absolute z-[9999] flex flex-col w-56 sm:w-64 gap-2 left-0 glass-card bg-neutral p-2 border-[3px] border-grey rounded-lg",
-            position === "bottom" ? "top-8" : "bottom-8"
+            position === "bottom" ? "top-10" : "bottom-8"
           )}
         >
           <div className="w-full flex items-center gap-1.5 justify-between bg-zinc-300 dark:bg-zinc-400 rounded-lg font-bold p-1 text-left">
