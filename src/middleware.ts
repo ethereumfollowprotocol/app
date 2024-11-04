@@ -14,8 +14,8 @@ export function middleware(request: NextRequest) {
     object-src 'none';
     base-uri 'none';
     form-action 'self';
-    frame-src 'self' *.blockscout.com. https://verify.walletconnect.com/ https://verify.walletconnect.org/ https://vercel.live/ https://app.interface.social/;
-    frame-ancestors * *.blockscout.com. https://verify.walletconnect.org/ https://verify.walletconnect.com/ https://app.interface.social/;
+    frame-src 'self' *.blockscout.com. https://verify.walletconnect.com/ https://verify.walletconnect.org/ https://vercel.live/ https://app.interface.social/ 'https://secure.walletconnect.org/';
+    frame-ancestors * *.blockscout.com. https://verify.walletconnect.org/ https://verify.walletconnect.com/ https://app.interface.social/ 'https://secure.walletconnect.org/';
     upgrade-insecure-requests;
   `
 
