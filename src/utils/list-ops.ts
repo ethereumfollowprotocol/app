@@ -33,7 +33,7 @@ export const listOpRemoveTag = (address: Address, tag: string): ListOp => {
   }
 }
 
-// Extract address and tag from a ListOp add/remove tag data buffer
+// Extract address and tag from a ListOp add/remove tag data
 export const extractAddressAndTag = (listOp: TagListOp): { address: Address; tag: string } => {
   const address = listOp.data.slice(0, 42) as Address
   const tag = fromHex(`0x${listOp.data.slice(42)}`, 'string')

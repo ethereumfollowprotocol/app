@@ -29,21 +29,21 @@ import { useCoolMode } from "#/hooks/useCoolMode";
 import LoadingCell from "../loaders/loading-cell";
 import { useCart } from "#/contexts/cart-context";
 import { formatNumber } from "#/utils/formatNumber";
-import { profileCardSocials } from "#/lib/constants";
 import { cn, truncateAddress } from "#/lib/utilities";
 import FollowButton from "#/components/follow-button";
 import ImageWithFallback from "../image-with-fallback";
 import useFollowerState from "#/hooks/use-follower-state";
 import CommonFollowers from "./components/common-followers";
 import useFollowingState from "#/hooks/use-following-state";
+import { profileCardSocials, SECOND } from "#/lib/constants";
 import { useEFPProfile } from "#/contexts/efp-profile-context";
 import { isValidEnsName, resolveEnsProfile } from "#/utils/ens";
 import DefaultAvatar from "public/assets/art/default-avatar.svg";
 import DefaultHeader from "public/assets/art/default-header.svg";
 import LoadingProfileCard from "./components/loading-profile-card";
-import type { ProfileDetailsResponse, StatsResponse } from "#/types/requests";
 import ConnectButton from "../navigation/components/connect-button";
-import { FollowButtonCoolEmoji } from "#/lib/constants/follow-button";
+import { FOLLOW_BUTTON_COOL_EMOJI } from "#/lib/constants/follow-button";
+import type { ProfileDetailsResponse, StatsResponse } from "#/types/requests";
 
 interface UserProfileCardProps {
   profileList?: number | null;
@@ -242,7 +242,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const ranks = Object.values(profile?.ranks || {});
 
   const blockCoolEmoji =
-    FollowButtonCoolEmoji[followState === "blocks" || isPendingBlock ? "Unblock" : "Block"][
+    FOLLOW_BUTTON_COOL_EMOJI[followState === "blocks" || isPendingBlock ? "Unblock" : "Block"][
       resolvedTheme || "light"
     ];
   const blockCoolMode = useCoolMode(
@@ -252,7 +252,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   );
 
   const muteCoolEmoji =
-    FollowButtonCoolEmoji[followState === "mutes" || isPendingMute ? "Unmute" : "Mute"][
+    FOLLOW_BUTTON_COOL_EMOJI[followState === "mutes" || isPendingMute ? "Unmute" : "Mute"][
       resolvedTheme || "light"
     ];
   const muteCoolMode = useCoolMode(muteCoolEmoji || "", !muteCoolEmoji, !moreOptionsDropdownOpen);
@@ -498,7 +498,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                             onClick={() => {
                               navigator.clipboard.writeText(profile.address);
                               setCopyAddressPressed(true);
-                              setTimeout(() => setCopyAddressPressed(false), 3000);
+                              setTimeout(() => setCopyAddressPressed(false), 3 * SECOND);
                             }}
                             className="rounded-lg cursor-pointer hover:bg-text/5 transition-colors w-full relative text-xs flex items-center gap-1 justify-center font-bold p-3"
                           >
@@ -519,7 +519,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                                 }`
                               );
                               setCopyProfileLinkPressed(true);
-                              setTimeout(() => setCopyProfileLinkPressed(false), 3000);
+                              setTimeout(() => setCopyProfileLinkPressed(false), 3 * SECOND);
                             }}
                             className="rounded-lg cursor-pointer hover:bg-text/5 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3"
                           >
@@ -533,7 +533,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                               onClick={() => {
                                 navigator.clipboard.writeText(profileName);
                                 setCopyENSPressed(true);
-                                setTimeout(() => setCopyENSPressed(false), 3000);
+                                setTimeout(() => setCopyENSPressed(false), 3 * SECOND);
                               }}
                               className="rounded-lg cursor-pointer hover:bg-text/5 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3"
                             >

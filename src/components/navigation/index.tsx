@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { useAccount } from "wagmi";
@@ -19,13 +21,12 @@ import { LANGUAGES } from "#/lib/constants/languages.ts";
 import { useSounds } from "#/contexts/sounds-context.tsx";
 import FullLogoDark from "public/assets/logo-full-dark.svg";
 import ConnectButton from "./components/connect-button.tsx";
-import LogoHalloween from "public/assets/logo-halloween.svg";
-import FullLogoHalloween from "public/assets/logo-full-halloween.svg";
 
 const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
-  const { resolvedTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
   const { totalCartItems } = useCart();
   const { address: userAddress } = useAccount();
   const { backgroundMusicRef, backgroundSoundsMuted } = useSounds();
@@ -35,12 +36,18 @@ const Navigation = () => {
   });
 
   useEffect(() => {
+    if (resolvedTheme === "halloween") {
+      setTheme("system");
+    }
+
+    if (!isClient) return setIsClient(true);
+
     track(
       `Loaded with language ${
         LANGUAGES.find((lang) => lang.key === i18n.language)?.englishLanguage
       }`
     );
-  }, []);
+  }, [isClient]);
 
   return (
     <header className="w-full fixed z-50 glass-card bg-white/50 dark:bg-black/75 halloween:bg-black/85 top-0 left-0 border-b-[3px] border-grey p-4 lg:px-6 xl:px-8">
@@ -67,24 +74,24 @@ const Navigation = () => {
               className="hidden dark:sm:block sm:max-w-[120px] select-none hover:scale-110 transition-transform"
               alt={"Ethereum Follow Protocol Logo"}
             />
-            <Image
+            {/* <Image
               src={FullLogoHalloween}
               priority={true}
               className="hidden halloween:sm:block sm:max-w-[120px] select-none hover:scale-110 transition-transform"
               alt={"Ethereum Follow Protocol Logo"}
-            />
+            /> */}
             <Image
               src={Logo}
               priority={true}
               className="w-[56px] halloween:hidden sm:hidden select-none hover:scale-110 transition-transform"
               alt="Ethereum Follow Protocol Logo"
             />
-            <Image
+            {/* <Image
               src={LogoHalloween}
               priority={true}
               className="w-[56px] hidden halloween:block halloween:sm:hidden select-none hover:scale-110 transition-transform"
               alt="Ethereum Follow Protocol Logo"
-            />
+            /> */}
           </Link>
           <Search size="w-fit max-w-[200px] lg:w-5/6 xl:w-full xxs:max-w-[350px]" />
         </div>

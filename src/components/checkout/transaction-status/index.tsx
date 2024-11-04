@@ -10,6 +10,7 @@ import TransactionDetails from "./transaction-details";
 import { useActions } from "#/contexts/actions-context";
 import CancelButton from "#/components/buttons/cancel-button";
 import { PrimaryButton } from "#/components/buttons/primary-button";
+import { SECOND } from "#/lib/constants";
 
 interface TransactionStatusProps {
   onFinish: () => void;
@@ -46,7 +47,7 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
   useEffect(() => {
     if (allActionsSuccessful) {
       openPoapModal?.();
-      setTimeout(() => setTransactionsAreFinished(true), 5000 + (totalCartItems / 10) * 2);
+      setTimeout(() => setTransactionsAreFinished(true), (5 + totalCartItems / 100) * SECOND);
     }
   }, [allActionsSuccessful]);
 

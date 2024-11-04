@@ -8,13 +8,13 @@ import { useAccount, useChainId, useChains, useSwitchChain, useWalletClient } fr
 
 import { Step } from '#/components/checkout/types'
 import type { ChainWithDetails } from '#/lib/wagmi'
-import { rpcProviders } from '#/lib/constants/providers'
+import { rpcProviders } from '#/lib/constants/rpc-providers'
 import type { FollowingResponse } from '#/types/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { useCart, type CartItem } from '#/contexts/cart-context'
 import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
 import { useMintEFP } from '../../../hooks/efp-actions/use-mint-efp'
-import { DEFAULT_CHAIN, LIST_OP_LIMITS } from '#/lib/constants/chain'
+import { DEFAULT_CHAIN, LIST_OP_LIMITS } from '#/lib/constants/chains'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
 

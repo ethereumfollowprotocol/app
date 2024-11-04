@@ -1,3 +1,5 @@
+"use client";
+
 import { useAccount } from "wagmi";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useContext, createContext, useState, useEffect, useMemo } from "react";

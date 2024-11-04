@@ -1,11 +1,12 @@
+import { useTranslation } from "react-i18next";
 import { useWaitForTransactionReceipt } from "wagmi";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { cn } from "#/lib/utilities";
 import useChain from "#/hooks/use-chain";
-import { useTranslation } from "react-i18next";
-import type { Action } from "#/contexts/actions-context";
+import { SECOND } from "#/lib/constants";
 import { useCart } from "#/contexts/cart-context";
+import type { Action } from "#/contexts/actions-context";
 
 const TransactionDetails = ({
   action,
@@ -25,7 +26,7 @@ const TransactionDetails = ({
   const [isLastActionSuccessful, setIsLastActionSuccessful] = useState(false);
   useEffect(() => {
     if (isSuccess && isLastAction)
-      setTimeout(() => setIsLastActionSuccessful(true), 5000 + (totalCartItems / 10) * 2);
+      setTimeout(() => setIsLastActionSuccessful(true), (5 + totalCartItems / 100) * SECOND);
   }, [isSuccess]);
 
   const statusDescription = useMemo(() => {

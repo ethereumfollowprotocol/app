@@ -6,7 +6,7 @@ import useChain from "#/hooks/use-chain";
 import { useCart } from "#/contexts/cart-context";
 import { ChainIcon } from "#/components/chain-icon";
 import CancelButton from "#/components/buttons/cancel-button";
-import { DEFAULT_CHAIN } from "#/lib/constants/chain";
+import { DEFAULT_CHAIN } from "#/lib/constants/chains";
 import { PrimaryButton } from "#/components/buttons/primary-button";
 import { EFPActionType, type Action } from "#/contexts/actions-context";
 

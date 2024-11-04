@@ -64,7 +64,7 @@ import SouthAfricaFlag from 'public/assets/icons/flags/south-africa.svg'
 import SaudiArabiaFlag from 'public/assets/icons/flags/saudi-arabia.svg'
 import VaticanCityFlag from 'public/assets/icons/flags/vatican-city.svg'
 import CzechRepublicFlag from 'public/assets/icons/flags/czech-republic.svg'
-import HalloweenFlag from 'public/assets/icons/flags/halloween.svg'
+// import HalloweenFlag from 'public/assets/icons/flags/halloween.svg'
 
 export const LANGUAGES = [
   // ----------- normal languages -----------
@@ -209,12 +209,12 @@ export const LANGUAGES = [
     icon: MillennialFlag,
     englishLanguage: 'Millennial',
     special: true
-  },
-  {
-    language: 'Halloween',
-    key: 'halloween',
-    icon: HalloweenFlag,
-    englishLanguage: 'Halloween',
-    special: true
   }
+  // {
+  //   language: 'Halloween',
+  //   key: 'halloween',
+  //   icon: HalloweenFlag,
+  //   englishLanguage: 'Halloween',
+  //   special: true
+  // }
 ]

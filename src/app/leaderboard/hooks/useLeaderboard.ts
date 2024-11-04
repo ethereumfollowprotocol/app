@@ -8,7 +8,7 @@ import type { LeaderboardFilter } from '#/types/common'
 import type { LeaderboardItem } from '#/types/requests'
 import { fetchleaderboard } from '#/api/fetchLeaderboard'
 import { fetchLeaderboardStats } from '#/api/fetchLeaderboardStats'
-import { LEADERBOARD_CHUNK_SIZE, LEADERBOARD_FETCH_LIMIT_PARAM } from '#/lib/constants'
+import { LEADERBOARD_CHUNK_SIZE, LEADERBOARD_FETCH_LIMIT_PARAM, SECOND } from '#/lib/constants'
 
 const useLeaderboard = () => {
   const router = useRouter()
@@ -52,7 +52,7 @@ const useLeaderboard = () => {
     if (term.length > 2) setPage(1)
 
     if (term) {
-      searchTimeout.current = setTimeout(() => setSearch(term), 500)
+      searchTimeout.current = setTimeout(() => setSearch(term), 0.5 * SECOND)
     } else {
       setSearch('')
       router.push(pathname.replace('query=', ''))

@@ -17,7 +17,7 @@ import Recommendations from "#/components/recommendations";
 import FarcasterIcon from "public/assets/icons/farcaster.svg";
 import { useEFPProfile } from "#/contexts/efp-profile-context";
 import { PrimaryButton } from "#/components/buttons/primary-button";
-import { DEFAULT_CHAIN, LIST_OP_LIMITS } from "#/lib/constants/chain";
+import { DEFAULT_CHAIN, LIST_OP_LIMITS } from "#/lib/constants/chains";
 import useStickyScroll from "#/components/home/hooks/use-sticky-scroll";
 
 const CartItems = lazy(() => import("./cart-items"));

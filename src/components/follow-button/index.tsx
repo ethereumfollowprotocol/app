@@ -9,9 +9,9 @@ import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useEffect, useMemo, useRef, useState, type Ref } from "react";
 
 import {
-  FollowButtonSound,
-  FollowButtonStyle,
-  FollowButtonCoolEmoji,
+  FOLLOW_BUTTON_SOUND,
+  FOLLOW_BUTTON_STYLES,
+  FOLLOW_BUTTON_COOL_EMOJI,
 } from "#/lib/constants/follow-button";
 import { cn } from "#/lib/utilities";
 import LoadingCell from "../loaders/loading-cell";
@@ -46,7 +46,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
 
   const theme = resolvedTheme || "light";
 
-  const buttonStyle = useMemo(() => FollowButtonStyle[buttonState], [buttonState]);
+  const buttonStyle = useMemo(() => FOLLOW_BUTTON_STYLES[buttonState], [buttonState]);
   const hoverStyle = disableHover
     ? buttonState === "Follow"
       ? "bg-right"
@@ -54,13 +54,13 @@ const FollowButton: React.FC<FollowButtonProps> = ({
     : `hover:scale-110 ${buttonStyle.hover}`;
 
   const coolModeRef = useCoolMode(
-    FollowButtonCoolEmoji[buttonState][theme] || "",
-    !FollowButtonCoolEmoji[buttonState][theme],
+    FOLLOW_BUTTON_COOL_EMOJI[buttonState][theme] || "",
+    !FOLLOW_BUTTON_COOL_EMOJI[buttonState][theme],
     isLoading
   );
 
   const soundRef = useRef<HTMLAudioElement>(null);
-  const clickSound = useMemo(() => FollowButtonSound[buttonState][theme], [buttonState, theme]);
+  const clickSound = useMemo(() => FOLLOW_BUTTON_SOUND[buttonState][theme], [buttonState, theme]);
 
   useEffect(() => {
     if (!soundRef.current) return;

@@ -1,4 +1,5 @@
 import { toast } from 'sonner'
+import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 import { isAddress, type Address } from 'viem'
 import { useQuery } from '@tanstack/react-query'
@@ -6,7 +7,7 @@ import { useClickAway } from '@uidotdev/usehooks'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
-import { useAccount } from 'wagmi'
+import { SECOND } from '#/lib/constants'
 import { resolveEnsAddress } from '#/utils/ens'
 import { formatError } from '#/utils/formatError'
 import { searchENSNames } from '#/api/searchENSNames'
@@ -136,7 +137,7 @@ const useSearch = (isEditor?: boolean) => {
     setCurrentSearch(term)
 
     if (!isEditor) {
-      if (term) searchTimeout.current = setTimeout(() => setSearch(term), 500)
+      if (term) searchTimeout.current = setTimeout(() => setSearch(term), 0.5 * SECOND)
       else {
         setSearch('')
         router.push(pathname.replace('query=', ''))

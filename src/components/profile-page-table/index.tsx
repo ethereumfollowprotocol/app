@@ -17,7 +17,7 @@ import TableHeader from "./components/table-headers";
 import { useIsEditView } from "#/hooks/use-is-edit-view";
 import type { ProfileTableTitleType } from "#/types/common";
 import { useEFPProfile } from "#/contexts/efp-profile-context";
-import { BLOCKED_MUTED_TABS, FETCH_LIMIT_PARAM } from "#/lib/constants";
+import { BLOCKED_MUTED_TABS, FETCH_LIMIT_PARAM, SECOND } from "#/lib/constants";
 
 interface UserProfilePageTableProps {
   title: ProfileTableTitleType;
@@ -71,7 +71,7 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
 
     // Debounce search to prevent unnecessary re-fetches
     useEffect(() => {
-      const searchTimeout = setTimeout(() => setSearchFilter(search), 500);
+      const searchTimeout = setTimeout(() => setSearchFilter(search), 0.5 * SECOND);
       return () => clearTimeout(searchTimeout);
     }, [search]);
 

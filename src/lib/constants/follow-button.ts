@@ -2,7 +2,7 @@ import type { THEMES } from '.'
 import MainnetRed from 'public/assets/mainnet-red.svg'
 import type { FollowButtonState } from '#/components/follow-button/hooks/use-follow-button'
 
-export const FollowButtonStyle: Record<
+export const FOLLOW_BUTTON_STYLES: Record<
   FollowButtonState,
   { bg: string; hover?: string; text: string; border: string; imageSrc?: string }
 > = {
@@ -107,7 +107,7 @@ export const FollowButtonStyle: Record<
   }
 }
 
-export const FollowButtonCoolEmoji: Record<
+export const FOLLOW_BUTTON_COOL_EMOJI: Record<
   FollowButtonState,
   Record<(typeof THEMES)[number], string | undefined>
 > = {
@@ -176,7 +176,7 @@ export const FollowButtonCoolEmoji: Record<
   }
 }
 
-export const FollowButtonSound: Record<
+export const FOLLOW_BUTTON_SOUND: Record<
   FollowButtonState,
   Record<(typeof THEMES)[number], string | undefined>
 > = {
