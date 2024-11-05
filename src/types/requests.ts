@@ -1,5 +1,6 @@
 import type { Address, GetEnsAvatarReturnType } from 'viem'
 import type { LeaderboardFilter } from './common'
+import type { StaticImageData } from 'next/image'
 
 declare global {
   interface Window {
@@ -237,3 +238,5 @@ export type DiscoverResponseType = {
 export type RecommendedProfilesResponseType = {
   recommended: ProfileDetailsResponse[]
 }
+
+export type QRCodeResponse = StaticImageData

@@ -13,6 +13,9 @@ import UserProfileCard from "#/components/user-profile-card";
 import { useEFPProfile } from "#/contexts/efp-profile-context";
 import type { ProfileDetailsResponse } from "#/types/requests";
 import UserProfilePageTable from "#/components/profile-page-table";
+import { fetchProfileQRCode } from "#/api/fetchProfileQRCode";
+import { useQuery } from "@tanstack/react-query";
+import QRCodeModal from "#/components/qr-code-modal";
 
 interface UserInfoProps {
   user: string;
@@ -23,6 +26,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   const initialBlockedOpen = searchParams.get("modal") === "blockmutelists";
   const defaultParam = (searchParams.get("tab") as ProfileTabType) ?? "following";
 
+  const [qrCodeModalOpen, setQrCodeModalOpen] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [listSettingsOpen, setListSettingsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<ProfileTabType>(defaultParam);
@@ -165,6 +169,11 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     }
   }, [searchParams]);
 
+  const { data: qrCode } = useQuery({
+    queryKey: ["qrCode", profile],
+    queryFn: async () => (profile?.address ? await fetchProfileQRCode(profile.address) : null),
+  });
+
   const tableRef = useRef<HTMLDivElement>(null);
   const TopEightRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -253,6 +262,9 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
 
   return (
     <>
+      {qrCodeModalOpen && qrCode && (
+        <QRCodeModal onClose={() => setQrCodeModalOpen(false)} qrCode={qrCode} />
+      )}
       {isBlockedMutedOpen && (
         <BlockedMuted
           user={user}

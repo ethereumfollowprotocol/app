@@ -11,8 +11,8 @@ export const fetchLeaderboardStats = async () => {
       }
     })
 
-    const data = await response.json()
-    return data.stats as LeaderboardStatsResponse
+    const data = (await response.json()) as { stats: LeaderboardStatsResponse }
+    return data.stats
   } catch (err: unknown) {
     return {
       address_count: '0',
