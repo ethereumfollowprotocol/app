@@ -5,10 +5,10 @@ import Image from "next/image";
 import { useState } from "react";
 import { useAccount } from "wagmi";
 import { useTheme } from "next-themes";
-import { FaLink } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { useClickAway } from "@uidotdev/usehooks";
+import { FaLink, FaSyncAlt } from "react-icons/fa";
 import { ens_beautify } from "@adraffy/ens-normalize";
 import { PiArrowElbowRightUpBold } from "react-icons/pi";
 
@@ -44,6 +44,7 @@ interface UserProfileCardProps {
   openListSettingsModal?: () => void;
   isRecommended?: boolean;
   refetchProfile?: () => void;
+  openQrCodeModal?: () => void;
 }
 
 const UserProfileCard: React.FC<UserProfileCardProps> = ({
@@ -59,6 +60,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   openListSettingsModal,
   isRecommended,
   refetchProfile,
+  openQrCodeModal,
 }) => {
   const [cardTooltipOpen, setCardTooltipOpen] = useState(false);
   const clickAwayCardTooltip = useClickAway<HTMLDivElement>(() => {
@@ -113,39 +115,48 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 {t("list")} #{formatNumber(profileList)}
               </p>
             )}
-            {profileList && profileList !== Number(profile.primary_list) ? (
-              <div ref={clickAwayCardTooltip} className="relative group z-50 cursor-help">
-                <p
-                  onClick={() => setCardTooltipOpen(!cardTooltipOpen)}
-                  className="text-[12px] italic text-end rounded-full py-0.5 px-2 bg-neutral/80"
-                >
-                  {t("not primary list")}
-                </p>
-                <div
-                  className={`${
-                    cardTooltipOpen ? "block" : "hidden"
-                  } group-hover:block transition-all text-sm w-68 p-2 glass-card border-grey bg-neutral/90 border-[3px] mt-2 rounded-md absolute top-5 right-0`}
-                >
-                  {t("not primary list tooltip")}
+            <div className="flex items-center gap-1">
+              {profileList && profileList !== Number(profile.primary_list) ? (
+                <div ref={clickAwayCardTooltip} className="relative group z-50 cursor-help">
+                  <p
+                    onClick={() => setCardTooltipOpen(!cardTooltipOpen)}
+                    className="text-[12px] italic text-end rounded-full py-0.5 px-2 bg-neutral/80"
+                  >
+                    {t("not primary list")}
+                  </p>
+                  <div
+                    className={`${
+                      cardTooltipOpen ? "block" : "hidden"
+                    } group-hover:block transition-all text-sm w-68 p-2 glass-card border-grey bg-neutral/90 border-[3px] mt-2 rounded-md absolute top-5 right-0`}
+                  >
+                    {t("not primary list tooltip")}
+                  </div>
                 </div>
-              </div>
-            ) : isConnectedUserCard ? (
-              <a
-                href={`https://app.ens.domains/${profileName || ""}`}
-                target="_blank"
-                rel="noreferrer"
-                className="flex gap-1 items-center hover:scale-110 transition-all bg-neutral/80 rounded-full py-[3px] px-2 pl-1"
+              ) : isConnectedUserCard ? (
+                <a
+                  href={`https://app.ens.domains/${profileName || ""}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex gap-1.5 items-center hover:scale-110 transition-all bg-neutral/80 rounded-full py-[3px] px-2 pl-1"
+                >
+                  <Image
+                    alt="edit profile"
+                    src="/assets/icons/ens.svg"
+                    width={22}
+                    height={22}
+                    className={cn("cursor-pointer hover:opacity-70 transition-all")}
+                  />
+                  {/* <FaEdit className="text-[17px] -translate-y-[1px]" /> */}
+                  <p className={cn(" text-sm")}>{t("edit profile")}</p>
+                </a>
+              ) : null}
+              <button
+                className="bg-neutral/80 p-1.5 rounded-full hover:scale-110 transition-all"
+                onClick={() => refetchProfile?.()}
               >
-                <Image
-                  alt="edit profile"
-                  src="/assets/icons/ens.svg"
-                  width={22}
-                  height={22}
-                  className={cn("cursor-pointer hover:opacity-70 transition-all")}
-                />
-                <p className={cn(" text-sm")}>{t("edit profile")}</p>
-              </a>
-            ) : null}
+                <FaSyncAlt />
+              </button>
+            </div>
           </div>
           {isProfileLoading ? (
             <LoadingCell className="w-full h-[120px] absolute top-0 left-0 rounded-t-lg" />
@@ -223,8 +234,8 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                         showMoreOptions={!!showMoreOptions}
                         isConnectedUserCard={isConnectedUserCard}
                         followState={followState}
-                        refetchProfile={refetchProfile}
                         openBlockModal={openBlockModal}
+                        openQrCodeModal={openQrCodeModal}
                         openListSettingsModal={openListSettingsModal}
                       />
                     </div>

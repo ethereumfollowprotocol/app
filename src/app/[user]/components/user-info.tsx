@@ -26,7 +26,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   const initialBlockedOpen = searchParams.get("modal") === "blockmutelists";
   const defaultParam = (searchParams.get("tab") as ProfileTabType) ?? "following";
 
-  const [qrCodeModalOpen, setQrCodeModalOpen] = useState(true);
+  const [qrCodeModalOpen, setQrCodeModalOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [listSettingsOpen, setListSettingsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<ProfileTabType>(defaultParam);
@@ -331,6 +331,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
                 setIsBlockedMutedOpen(true);
                 router.push(`/${user}?modal=blockmutelists`);
               }}
+              openQrCodeModal={() => setQrCodeModalOpen(true)}
               openListSettingsModal={() => setListSettingsOpen(true)}
             />
           </div>

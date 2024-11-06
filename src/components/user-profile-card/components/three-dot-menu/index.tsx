@@ -1,9 +1,9 @@
 import React from "react";
 import type { Address } from "viem";
 import { useTheme } from "next-themes";
-import { useTranslation } from "react-i18next";
-import { IoRefresh } from "react-icons/io5";
+import { FaQrcode } from "react-icons/fa";
 import { IoMdSettings } from "react-icons/io";
+import { useTranslation } from "react-i18next";
 
 import { cn } from "#/lib/utilities";
 import CopyValue from "./components/copy-value";
@@ -23,8 +23,8 @@ interface ThreeDotMenuProps {
   isConnectedUserCard: boolean;
   showMoreOptions: boolean;
   followState: FollowState;
-  refetchProfile?: () => void;
   openBlockModal?: () => void;
+  openQrCodeModal?: () => void;
   openListSettingsModal?: () => void;
 }
 
@@ -36,8 +36,8 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
   isConnectedUserCard,
   showMoreOptions,
   followState,
-  refetchProfile,
   openBlockModal,
+  openQrCodeModal,
   openListSettingsModal,
 }) => {
   const {
@@ -120,7 +120,7 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
           text="copy profile"
         />
         {profileName && <CopyValue value={profileName} text="copy ens" />}
-        {refetchProfile && (
+        {/* {refetchProfile && (
           <button
             onClick={refetchProfile}
             className="rounded-lg cursor-pointer hover:bg-text/5 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3"
@@ -128,7 +128,7 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
             <IoRefresh className="text-base" />
             <p className="text-nowrap">{t("refresh ens")}</p>
           </button>
-        )}
+        )} */}
         <a
           href={`https://app.ens.domains${profileName ? `/${profileName}` : ""}`}
           target="_blank"
@@ -155,6 +155,16 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
             }}
             text="settings"
             icon={<IoMdSettings className="text-lg" />}
+          />
+        )}
+        {openQrCodeModal && (
+          <OpenModalButton
+            onClick={() => {
+              openQrCodeModal();
+              setThreeDotMenuOpen(false);
+            }}
+            text="qr code"
+            icon={<FaQrcode className="text-lg mr-1" />}
           />
         )}
       </div>
