@@ -1,13 +1,13 @@
-import useCheckout from "#/app/cart/hooks/use-checkout";
-import { Step } from "../../../components/checkout/types";
-import ClaimPoapModal from "#/components/checkout/claim-poap-modal";
-import TransactionStatus from "../../../components/checkout/transaction-status";
-import { SelectChainCard } from "../../../components/checkout/select-chain-card";
-import InitiateActionsCard from "../../../components/checkout/initiate-actions-card";
+import useCheckout from '#/app/cart/hooks/use-checkout'
+import { Step } from '../../../components/checkout/types'
+import ClaimPoapModal from '#/components/checkout/claim-poap-modal'
+import TransactionStatus from '../../../components/checkout/transaction-status'
+import { SelectChainCard } from '../../../components/checkout/select-chain-card'
+import InitiateActionsCard from '../../../components/checkout/initiate-actions-card'
 
 interface CheckoutProps {
-  setOpen: (open: boolean) => void;
-  hasCreatedEfpList?: boolean;
+  setOpen: (open: boolean) => void
+  hasCreatedEfpList?: boolean
 }
 
 const Checkout: React.FC<CheckoutProps> = ({ setOpen, hasCreatedEfpList }) => {
@@ -28,8 +28,8 @@ const Checkout: React.FC<CheckoutProps> = ({ setOpen, hasCreatedEfpList }) => {
     setNewListAsPrimary,
     setClaimPoapModalOpen,
     handleInitiateActions,
-    setSetNewListAsPrimary,
-  } = useCheckout();
+    setSetNewListAsPrimary
+  } = useCheckout()
 
   return (
     <div>
@@ -40,7 +40,7 @@ const Checkout: React.FC<CheckoutProps> = ({ setOpen, hasCreatedEfpList }) => {
           isLoading={poapLoading}
         />
       )}
-      <div className="flex glass-card gap-5 bg-neutral/40 flex-col mt-28 mb-4 w-full sm:w-[552px] items-center border-[3px] border-grey text-center justify-between rounded-xl p-6 py-8 sm:p-14">
+      <div className='flex glass-card gap-5 bg-neutral/40 flex-col mt-28 mb-4 w-full sm:w-[552px] items-center border-[3px] border-grey text-center justify-between rounded-xl p-6 py-8 sm:p-14'>
         {currentStep === Step.SelectChain && (
           <SelectChainCard
             chains={chains}
@@ -72,7 +72,7 @@ const Checkout: React.FC<CheckoutProps> = ({ setOpen, hasCreatedEfpList }) => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Checkout;
+export default Checkout

@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import Image, { type ImageProps, type StaticImageData } from "next/image";
+import { useEffect, useState } from 'react'
+import Image, { type ImageProps, type StaticImageData } from 'next/image'
 
-import DefaultAvatar from "public/assets/art/default-avatar.svg";
+import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 
 interface ImageWithFallbackProps extends ImageProps {
-  fallback?: StaticImageData | string;
-  alt: string;
-  src: string;
+  fallback?: StaticImageData | string
+  alt: string
+  src: string
 }
 
 const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
@@ -15,28 +15,28 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   src,
   ...props
 }) => {
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    setError(null);
-  }, [src]);
+    setError(null)
+  }, [src])
 
   return (
     <Image
       alt={alt}
-      data-loaded="false"
-      onLoad={(event) => {
-        event.currentTarget.setAttribute("data-loaded", "true");
+      data-loaded='false'
+      onLoad={event => {
+        event.currentTarget.setAttribute('data-loaded', 'true')
       }}
-      onError={(event) => {
-        setError("invalid image");
-        event.currentTarget.setAttribute("data-loaded", "true");
+      onError={event => {
+        setError('invalid image')
+        event.currentTarget.setAttribute('data-loaded', 'true')
       }}
       loader={fallback}
       src={error ? fallback : src}
       {...props}
     />
-  );
-};
+  )
+}
 
-export default ImageWithFallback;
+export default ImageWithFallback

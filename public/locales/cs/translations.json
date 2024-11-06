@@ -1,5 +1,5 @@
-{ 
-  "language name": "Čeština", 
+{
+  "language name": "Čeština",
 
   "home": "Domů",
   "recent": "Nedávná aktivita",
@@ -54,7 +54,7 @@
   "Blocked/Muted": "Zablokováno/Ztišeno",
   "Blocked/Muted By": "Zablokováno/Ztišeno od",
   "Block Back": "Blokovat zpět",
-  "location": "Umístění seznamu", 
+  "location": "Umístění seznamu",
   "owner": "Vlastník",
   "manager": "Správce",
   "user": "Uživatel",
@@ -67,7 +67,7 @@
   "set as primary": "Nastavit seznam jako hlavní seznam",
   "resolved": "Rozpoznáno:",
   "no resolution": "Nerozpoznáno",
- 
+
   "editor title": "Editor",
   "empty cart": " Váš košík je prázdný. Sledujte lidi a pak se sem vraťte, abyste to potvrdili onchain.",
   "add": "Přidat",
@@ -89,7 +89,7 @@
   "unresolved": "Jména nerozpoznána: ",
   "clear cart": "Vyprázdnit koš",
   "clear cart message": "Určitě chcete vyprázdnit svůj koš?",
- 
+
   "import title": "Přidejte, koho sledujete na",
   "import from": "Importovat z",
   "no profile": "Žádný profil",
@@ -98,8 +98,8 @@
   "follow on": "Sledujete na",
   "follow on efp": "Již sledujete na EFP",
   "to add": "Celkem přidáváte do košíku",
- 
-   "next": "Další",
+
+  "next": "Další",
   "finish": "Dokončit",
   "back": "Zpět",
   "cancel": "Zrušit",
@@ -113,7 +113,7 @@
   "Low gas fees": "Nízké gas poplatky",
   "Super Low gas fees": "Super nízké gas poplatky",
   "set new primary": "Nastavit nový seznam jako Hlavní seznam",
- 
+
   "action title": "Onchain aktualizace",
   "summary": "Souhrn",
   "actions": "Kroky",
@@ -123,7 +123,7 @@
   "list op": "seznam operace",
   "req transactions": " Požadované transakce",
   "chain": "Řetězec",
- 
+
   "status title": "Status",
   "of": "z",
   "approve": "Transakce vyžaduje potvrzení",
@@ -136,7 +136,7 @@
   "confirmation error": "Transakce zamítnuta",
   "check wallet": " Zkontrolujte peněženku",
   "block explorer": "Zkontrolujte přes Block Explorer",
- 
+
   "leaderboard": "Žebříček",
   "lists": "Seznamy",
   "addresses": "Adresy",

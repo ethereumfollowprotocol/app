@@ -1,23 +1,22 @@
-{ 
+{
+  "language name in language": "Ελληνικά",
+  "language name in English": "Greek",
 
-  "language name in language": "Ελληνικά", 
-  "language name in English": "Greek", 
- 
-  "home": "Αρχική σελίδα", 
-  "recent": " Πρόσφατη δραστηριότητα ", 
-  "no followers": "Δεν έχεις ακόλουθους", 
-  "latest followers": "Τελευταίοι ακόλουθοι", 
-  "connect wallet to view": "Σύνδεση πορτοφολιού για προβολή", 
-  "phrase": "Είναι για το ποιον ξέρεις. 😜", 
-  "social graph first": "Το κοινωνικό γράφημα", 
-  "social graph second": "για το Ethereum.", 
-  "follow ghost first": "Ακολούθα τους φίλους σου.", 
-  "follow ghost second": "Κρύψε τους εχθρούς σου.", 
-  "follower list first": "Μια λίστα ακολούθων", 
-  "follower list second": "Κατέχεις.", 
-  "integrations": "Ενσωματώσεις", 
-  "partners": "Συνεργάτες", 
-  "sponsors": "Υποστήριξη από επιχορηγήσεις από:", 
+  "home": "Αρχική σελίδα",
+  "recent": " Πρόσφατη δραστηριότητα ",
+  "no followers": "Δεν έχεις ακόλουθους",
+  "latest followers": "Τελευταίοι ακόλουθοι",
+  "connect wallet to view": "Σύνδεση πορτοφολιού για προβολή",
+  "phrase": "Είναι για το ποιον ξέρεις. 😜",
+  "social graph first": "Το κοινωνικό γράφημα",
+  "social graph second": "για το Ethereum.",
+  "follow ghost first": "Ακολούθα τους φίλους σου.",
+  "follow ghost second": "Κρύψε τους εχθρούς σου.",
+  "follower list first": "Μια λίστα ακολούθων",
+  "follower list second": "Κατέχεις.",
+  "integrations": "Ενσωματώσεις",
+  "partners": "Συνεργάτες",
+  "sponsors": "Υποστήριξη από επιχορηγήσεις από:",
   "support": "Υποστήριξη",
 
   "profile": " Το προφίλ μου",
@@ -67,9 +66,9 @@
   "set user": "Όρισε χρήστη της λίστας",
   "set primary": "Όρισε πρωταρχική λίστα",
   "set as primary": "Όρισε αυτή την λίστα ως πρωταρχική",
-  "resolved": "Βρέθηκε:", 
+  "resolved": "Βρέθηκε:",
   "no resolution": "Δεν βρέθηκε",
- 
+
   "editor title": "Editor",
   "empty cart": "Το καλάθι σας είναι άδειο. Ακολουθήστε άτομα και μετά επιστρέψτε εδώ για να το επιβεβαιώσετε onchain",
   "add": "Πρόσθεσε",
@@ -91,7 +90,7 @@
   "unresolved": "Τα ονόματα δεν έχουν οριστεί: ",
   "clear cart": "Clear Cart",
   "clear cart message": "Είστε βέβαιοι ότι θέλετε να εκκαθαρίσετε το καλάθι σας;",
- 
+
   "import title": "Εισαγάγετε ποιους ακολουθείτε",
   "import from": "Εισαγωγή από",
   "no profile": "Χωρίς προφίλ",
@@ -138,7 +137,7 @@
   "confirmation error": "Η συναλλαγή απορρίφθηκε",
   "check wallet": "Ελέγξτε το πορτοφόλι σας",
   "block explorer": "Προβολή στο Block Explorer",
- 
+
   "leaderboard": "Βαθμολογικός πίνακας",
   "lists": "Λίστες",
   "top8": "Τοπ 8",
@@ -148,28 +147,28 @@
   "followers_rank": "Ακόλουθοι",
   "following_rank": "Ακολουθώ",
   "top8_rank": "Τοπ 8",
-  "last updated": "Τελευταία ενημέρωση", 
+  "last updated": "Τελευταία ενημέρωση",
 
-  "system": "Σύστημα", 
-  "light": "Φωτεινό", 
+  "system": "Σύστημα",
+  "light": "Φωτεινό",
   "dark": "Σκοτεινό",
   "disconnect": "Αποσύνδεση",
-  "connect": "Σύνδεση Πορτοφολιού", 
-  "list": "Λίστα", 
+  "connect": "Σύνδεση Πορτοφολιού",
+  "list": "Λίστα",
   "primary": "Κύριο",
   "mint new list": "Δημιούργησε καινούρια λίστα",
   "accounts": "λογαριασμοί",
   "search no results": "Δεν υπάρχουν αποτελέσματα",
-  "team": "Ομάδα", 
+  "team": "Ομάδα",
 
   "docs": "Έγγραφα",
   "faq": "Συχνές ερωτήσεις",
   "bug bounty": "Επιβράβευση εύρεσης σφαλμάτων",
   "followers": "ακόλουθοι",
   "following": "Ακολουθείς ",
-  "search placeholder": "Βρες ENS η διεύθυνση", 
-  "blocks you": "Σε μπλοκάρει", 
-  "mutes you": "Σε έχει σιγάσει", 
+  "search placeholder": "Βρες ENS η διεύθυνση",
+  "blocks you": "Σε μπλοκάρει",
+  "mutes you": "Σε έχει σιγάσει",
   "follows you": "Σε ακολουθεί",
   "connect wallet": "Σύνδεσε το πορτοφόλι σου",
   "mutuals": "Αμοιβαίοι ακόλουθοι",
@@ -186,6 +185,5 @@
   "Unmute": "Κατάργηση σίγασης",
 
   "feed": "Onchain δραστηριότητα",
-  "feed description": "Η πιο πρόσφατη δραστηριότητα onchain των ατόμων που ακολουθείτε στο EFP 👀" 
-
-} 
+  "feed description": "Η πιο πρόσφατη δραστηριότητα onchain των ατόμων που ακολουθείτε στο EFP 👀"
+}

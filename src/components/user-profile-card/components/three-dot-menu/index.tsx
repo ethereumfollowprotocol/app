@@ -85,7 +85,7 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
         )}
       >
         {!isConnectedUserCard && (
-          <>
+          <div className="flex w-full items-center justify-center pt-2 flex-col gap-3">
             <RestrictButton
               blockCoolMode={blockCoolMode}
               onClickOption={onClickOption}
@@ -98,7 +98,7 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
               text="Mute"
               type="mute"
             />
-          </>
+          </div>
         )}
         {!isConnectedUserCard && (
           <button

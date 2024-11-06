@@ -1,13 +1,13 @@
-import { useTranslation } from "react-i18next";
-import UserProfileCard from "#/components/user-profile-card";
-import type { ProfileDetailsResponse } from "#/types/requests";
+import { useTranslation } from 'react-i18next'
+import UserProfileCard from '#/components/user-profile-card'
+import type { ProfileDetailsResponse } from '#/types/requests'
 
 interface LoadingRecommendedCardsProps {
-  gone: Set<number>;
-  isLoading: boolean;
-  userAddress?: string;
-  isFetchingNextPage: boolean;
-  recommendedProfiles: ProfileDetailsResponse[];
+  gone: Set<number>
+  isLoading: boolean
+  userAddress?: string
+  isFetchingNextPage: boolean
+  recommendedProfiles: ProfileDetailsResponse[]
 }
 
 const LoadingRecommendedCards = ({
@@ -15,23 +15,23 @@ const LoadingRecommendedCards = ({
   isLoading,
   userAddress,
   isFetchingNextPage,
-  recommendedProfiles,
+  recommendedProfiles
 }: LoadingRecommendedCardsProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return userAddress ? (
     gone.size === recommendedProfiles.length && !(isFetchingNextPage || isLoading) ? (
-      <div className="flex border-[3px] items-center border-[#FFDBD9] dark:border-[#a36d7d] halloween:border-[#a36d7d] sm:mr-[14px] rounded-xl bg-neutral h-[536px] w-full xxs:max-w-92">
-        <p className="text-center w-full text-lg font-semibold px-6">{t("no more profiles")}</p>
+      <div className='flex border-[3px] items-center border-[#FFDBD9] dark:border-[#a36d7d] halloween:border-[#a36d7d] sm:mr-[14px] rounded-xl bg-neutral h-[536px] w-full xxs:max-w-92'>
+        <p className='text-center w-full text-lg font-semibold px-6'>{t('no more profiles')}</p>
       </div>
     ) : (
       (isLoading || isFetchingNextPage || recommendedProfiles.length === 0) &&
       new Array(3).fill(1).map((_, i) => (
         <div
-          className="h-fit w-full xxs:max-w-92 absolute top-0 z-10 sm:mr-[14px]"
+          className='h-fit w-full xxs:max-w-92 absolute top-0 z-10 sm:mr-[14px]'
           key={i}
           style={{
-            marginTop: `${30 - i * 10}px`,
+            marginTop: `${30 - i * 10}px`
           }}
         >
           <UserProfileCard
@@ -44,10 +44,10 @@ const LoadingRecommendedCards = ({
       ))
     )
   ) : (
-    <div className="h-fit w-full sm:max-w-92 absolute top-0 z-10 sm:mr-[14px]">
+    <div className='h-fit w-full sm:max-w-92 absolute top-0 z-10 sm:mr-[14px]'>
       <UserProfileCard isResponsive={false} hideFollowButton={true} isRecommended={true} />
     </div>
-  );
-};
+  )
+}
 
-export default LoadingRecommendedCards;
+export default LoadingRecommendedCards

@@ -6,7 +6,6 @@ import i18n from '#/app/i18n'
 import { LANGUAGES } from '#/lib/constants/languages'
 
 const useLanguage = () => {
-
   const [languageMenOpenu, setLanguageMenuOpen] = useState(false)
   const [selectedLanguage, setSelectedLanguage] = useState(
     LANGUAGES[LANGUAGES.map(lang => lang.key).indexOf(i18n.language || 'en')]
@@ -26,7 +25,9 @@ const useLanguage = () => {
 
   useEffect(() => {
     setSelectedLanguage(LANGUAGES[LANGUAGES.map(lang => lang.key).indexOf(i18n.language || 'en')])
-    track(`Changed language to ${LANGUAGES.find(lang => lang.key === i18n.language)?.englishLanguage}`)
+    track(
+      `Changed language to ${LANGUAGES.find(lang => lang.key === i18n.language)?.englishLanguage}`
+    )
   }, [i18n.language])
 
   return {

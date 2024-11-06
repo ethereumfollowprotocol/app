@@ -1,7 +1,7 @@
-import type { Address } from "viem"
-import type { RecommendedProfilesResponseType } from "#/types/requests"
+import type { Address } from 'viem'
+import type { RecommendedProfilesResponseType } from '#/types/requests'
 
-export const fetchRecommendedProfiles =  async (
+export const fetchRecommendedProfiles = async (
   addressOrName?: string | Address,
   list?: number,
   limit = 10,
@@ -9,11 +9,9 @@ export const fetchRecommendedProfiles =  async (
 ) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_EFP_API_URL}/${
-        `${list ? 'lists' : 'users'}/${
-          list ?? addressOrName
-        }/recommended/details?limit=${limit}&offset=${pageParam * limit}`
-      }`,
+      `${process.env.NEXT_PUBLIC_EFP_API_URL}/${`${list ? 'lists' : 'users'}/${
+        list ?? addressOrName
+      }/recommended/details?limit=${limit}&offset=${pageParam * limit}`}`,
       {
         cache: 'default',
         headers: {
