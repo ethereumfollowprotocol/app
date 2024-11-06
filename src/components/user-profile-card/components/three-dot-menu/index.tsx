@@ -9,7 +9,6 @@ import { cn } from "#/lib/utilities";
 import CopyValue from "./components/copy-value";
 import { useCoolMode } from "#/hooks/useCoolMode";
 import type { FollowState } from "#/types/common";
-import { HiOutlineExternalLink } from "react-icons/hi";
 import { useThreeDotMenu } from "../../hooks/use-three-dot-menu";
 import RestrictButton from "./components/restrict-button";
 import OpenModalButton from "./components/open-modal-button";
@@ -120,24 +119,6 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
           text="copy profile"
         />
         {profileName && <CopyValue value={profileName} text="copy ens" />}
-        {/* {refetchProfile && (
-          <button
-            onClick={refetchProfile}
-            className="rounded-lg cursor-pointer hover:bg-text/5 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3"
-          >
-            <IoRefresh className="text-base" />
-            <p className="text-nowrap">{t("refresh ens")}</p>
-          </button>
-        )} */}
-        <a
-          href={`https://app.ens.domains${profileName ? `/${profileName}` : ""}`}
-          target="_blank"
-          rel="noreferrer"
-          className="rounded-lg cursor-pointer hover:bg-text/5 transition-colors relative text-xs flex items-center gap-1 justify-center font-bold w-full p-3"
-        >
-          <p className="text-nowrap">ENS app</p>
-          <HiOutlineExternalLink className="text-lg" />
-        </a>
         {openBlockModal && (
           <OpenModalButton
             onClick={() => {
