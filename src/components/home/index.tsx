@@ -24,7 +24,9 @@ const Home = () => {
     listsIsLoading,
     refetchProfile,
     profileIsLoading,
+    fetchFreshProfile,
     followersIsLoading,
+    setFetchFreshProfile,
   } = useEFPProfile();
   const router = useRouter();
   const { t } = useTranslation();
@@ -52,7 +54,10 @@ const Home = () => {
             profile={profile}
             isStatsLoading={statsIsLoading}
             isLoading={profileIsLoading}
-            refetchProfile={refetchProfile}
+            refetchProfile={() => {
+              if (fetchFreshProfile) refetchProfile();
+              else setFetchFreshProfile(true);
+            }}
             showMoreOptions={true}
             openBlockModal={() => {
               if (profile) router.push(`/${profile.address}?modal=block_mute_list`);

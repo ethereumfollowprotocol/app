@@ -1,21 +1,21 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import useUser from "../hooks/useUser";
 import TopEight from "#/components/top-eight";
+import QRCodeModal from "#/components/qr-code-modal";
 import type { ProfileTabType } from "#/types/common";
 import ListSettings from "#/components/list-settings";
 import BlockedMuted from "#/components/blocked-muted";
 import { useIsEditView } from "#/hooks/use-is-edit-view";
 import UserProfileCard from "#/components/user-profile-card";
+import { fetchProfileQRCode } from "#/api/fetchProfileQRCode";
 import { useEFPProfile } from "#/contexts/efp-profile-context";
 import type { ProfileDetailsResponse } from "#/types/requests";
 import UserProfilePageTable from "#/components/profile-page-table";
-import { fetchProfileQRCode } from "#/api/fetchProfileQRCode";
-import { useQuery } from "@tanstack/react-query";
-import QRCodeModal from "#/components/qr-code-modal";
 
 interface UserInfoProps {
   user: string;
