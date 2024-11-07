@@ -2,14 +2,16 @@ import React from 'react'
 
 import Modal from './modal'
 import LoadingCell from './loaders/loading-cell'
+import Image from 'next/image'
 
 interface QRCodeModalProps {
   onClose: () => void
   qrCode?: string | null
   isLoading: boolean
+  qrCodeUrl: string
 }
 
-const QRCodeModal: React.FC<QRCodeModalProps> = ({ onClose, qrCode, isLoading }) => {
+const QRCodeModal: React.FC<QRCodeModalProps> = ({ onClose, qrCode, isLoading, qrCodeUrl }) => {
   return (
     <Modal onCancel={onClose}>
       {isLoading ? (
@@ -27,6 +29,7 @@ const QRCodeModal: React.FC<QRCodeModalProps> = ({ onClose, qrCode, isLoading })
           <p>Failed to load QR code.</p>
         </div>
       )}
+      <img src={qrCodeUrl} alt='QR Code' width={436} height={492} />
     </Modal>
   )
 }
