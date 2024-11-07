@@ -3,7 +3,6 @@ import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import LoadingCell from '../../loaders/loading-cell'
 import { profileCardSocials } from '#/lib/constants'
-import { cn } from '#/lib/utilities'
 
 interface LoadingProfileCardProps {
   isResponsive?: boolean
@@ -19,10 +18,7 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
   isRecommended
 }) => {
   const { t } = useTranslation()
-  // const { resolvedTheme } = useTheme()
   const { openConnectModal } = useConnectModal()
-
-  const ranks = ['mutuals_rank', 'followers_rank', 'following_rank', 'top8_rank', 'blocks_rank']
 
   return (
     <>
@@ -86,41 +82,8 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
               {t('followers')}
             </div>
           </div>
-          <div
-            className={cn(
-              'flex flex-col w-full items-center gap-3',
-              isRecommended && 'hidden sm:flex'
-            )}
-          >
-            <div className='text-lg font-bold'>{t('leaderboard')}</div>
-            <div className='flex justify-center flex-wrap gap-3 xxs:gap-8 gap-y-3 xxs:gap-y-3 xl:gap-3'>
-              {ranks.map((rank, i) => (
-                <div
-                  key={i}
-                  className='flex gap-2 2xl:gap-3 justify-between items-center font-bold'
-                >
-                  <p className='text-[#888] dark:text-[#aaa]'>{t(rank)}</p>
-                  <LoadingCell className='h-5 w-10 rounded-md' isStatic={isStatic} />
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
-      {/* {!hideFollowButton && (
-        <div className='w-full flex items-center mx-auto max-w-108 justify-center gap-2 p-4 pt-0'>
-          <div className='flex items-center'>
-            <LoadingCell isStatic={isStatic} className='w-9 h-9 rounded-full z-0 ' />
-            <LoadingCell isStatic={isStatic} className='w-9 h-9 rounded-full z-10 -ml-[18px]' />
-            <LoadingCell isStatic={isStatic} className='w-9 h-9 rounded-full z-20 -ml-[18px]' />
-          </div>
-          <LoadingCell
-            isStatic={isStatic}
-            className='h-10 rounded-xl'
-            style={{ width: 'calc(100% - 80px)' }}
-          />
-        </div>
-      )} */}
     </>
   )
 }

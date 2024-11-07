@@ -164,6 +164,31 @@ export interface ProfileDetailsResponse {
   stats?: StatsResponse | undefined
 }
 
+export interface ProfileBadgesResponse {
+  eventId: string
+  participated: boolean
+  collection: ProfileBadgeColletionType | null
+}
+
+export interface ProfileBadgeColletionType {
+  event: {
+    id: number
+    fancy_id: string
+    name: string
+    event_url: string
+    image_url: string
+    country: string
+    city: string
+    description: string
+    year: number
+    start_date: string
+    end_date: string
+    expiry_date: string
+  }
+  tokenId: string
+  owner: string
+}
+
 export interface ProfileDetailsWithStats extends ProfileDetailsResponse {
   stats: StatsResponse
 }

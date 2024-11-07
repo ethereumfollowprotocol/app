@@ -117,6 +117,7 @@ const RecommendedCards = () => {
                         stats={recommendedProfiles[i]?.stats}
                         hideFollowButton={true}
                         isRecommended={true}
+                        displayAchievements={false}
                       />
                     </div>
                   </animated.div>
