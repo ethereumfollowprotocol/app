@@ -2,7 +2,6 @@ import React from 'react'
 
 import Modal from './modal'
 import LoadingCell from './loaders/loading-cell'
-import Image from 'next/image'
 
 interface QRCodeModalProps {
   onClose: () => void
