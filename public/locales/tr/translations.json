@@ -1,6 +1,6 @@
 {
   "language name": "Türkçe",
-  
+
   "home": "Ana Sayfa",
   "recent": "Son Aktivite",
   "no followers": "Takipçi Yok",
@@ -17,7 +17,7 @@
   "partners": "Başlangıç Partnerleri",
   "sponsors": "Buralardan alınan hibelerle desteklenmiştir:",
   "support": "Destek",
-  
+
   "profile": "Profilim",
   "profile error": "Kullanıcı mevcut değil",
   "settings": "Liste Ayarları",
@@ -67,7 +67,7 @@
   "set as primary": "Listeyi Ana Liste olarak seç",
   "resolved": "Çözümlendi:",
   "no resolution": "Çözümlenemiyor",
-  
+
   "editor title": "Editör",
   "empty cart": "Sepetin boş. İnsanları takip et ve blokzincir üzerinde onaylamak için tekrar buraya gel.",
   "add": "Ekle",
@@ -89,7 +89,7 @@
   "unresolved": "İsimler çözümlenemiyor: ",
   "clear cart": "Sepeti temizle",
   "clear cart message": "Sepetini temizlemek istediğine emin misin?",
-  
+
   "import title": "Takip ettiğin kişileri içeri aktar",
   "import from": "Buradan içeri aktar",
   "no profile": "Profili yok",
@@ -98,7 +98,7 @@
   "follow on": "Takip ettiğin platform",
   "follow on efp": "Zaten EFP'de takip ediyorsun",
   "to add": "Sepete eklenecek toplam",
-  
+
   "next": "Sıradaki",
   "finish": "Bitir",
   "back": "Geri",
@@ -113,7 +113,7 @@
   "Low gas fees": "Düşük işlem ücretleri",
   "Super Low gas fees": "Çok düşük işlem ücretleri",
   "set new primary": "Yeni bir listeyi Ana Liste olarak seç",
-  
+
   "action title": "Blokzincir üstünde güncelleme",
   "summary": "Özet",
   "actions": "Eylemler",
@@ -123,7 +123,7 @@
   "list op": "liste operasyonu",
   "req transactions": "Gerekli işlemler",
   "chain": "Blokzincir",
-  
+
   "status title": "Durum",
   "of": "",
   "approve": "İşlemin onaylanması gerekiyor",
@@ -136,7 +136,7 @@
   "confirmation error": "İşlem reddedildi",
   "check wallet": "Cüzdanını kontrol et",
   "block explorer": "Blok tarayıcısında görüntüle",
-  
+
   "leaderboard": "Lider Tahtası",
   "lists": "Listeler",
   "top8": "En İyi 8'li",
@@ -147,7 +147,7 @@
   "following_rank": "Takip Edilenler",
   "top8_rank": "En İyi 8'li",
   "last updated": "Son Güncellenen",
-  
+
   "system": "Sistem",
   "light": "Açık",
   "dark": "Koyu",
@@ -180,4 +180,4 @@
   "Mute": "Sustur",
   "Muted": "Susturulmuş",
   "Unmute": "Susturmayı Kaldır"
-  }
+}

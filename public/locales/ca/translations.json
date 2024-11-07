@@ -1,7 +1,7 @@
 {
   "language name in language": "Català",
   "language name in English": "Catalan",
-  
+
   "home": "A casa ",
   "recent": "Activitat recent",
   "no followers": "Sense seguidors",
@@ -46,7 +46,7 @@
   "not primary list": "No confirmat per l'usuari",
   "not primary list tooltip": "No es confirma que aquesta llista sigui propietat de l'usuari que es mostra. Un usuari ha d'establir una llista com a llista principal per confirmar-la com a llista.",
   "following myprofile empty first": "Encara no segueixes ningú!",
-  "following myprofile empty second": "Per començar, només cal navegar i començar a seguir.Un cop els confirmeu en cadena, apareixeran aquí.", 
+  "following myprofile empty second": "Per començar, només cal navegar i començar a seguir.Un cop els confirmeu en cadena, apareixeran aquí.",
   "followers myprofile empty": "No hi ha seguidors",
   "following empty first": "Aquest usuari no segueix ningú.",
   "followers empty": "Aquest usuari no té seguidors",
@@ -176,5 +176,4 @@
   "Unmute": "Activa el so",
   "feed": "Alimentació en cadena",
   "feed description": "L'última activitat onchain de qui seguiu a EFP 👀"
-
 }

@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import {
   useRef,
@@ -7,34 +7,34 @@ import {
   useContext,
   createContext,
   type Dispatch,
-  type SetStateAction,
-} from "react";
+  type SetStateAction
+} from 'react'
 
 type SoundsContextType = {
-  actionsSoundsMuted: boolean;
-  setActionsSoundsMuted: Dispatch<SetStateAction<boolean>>;
-  backgroundSoundsMuted: boolean;
-  setBackgroundSoundsMuted: Dispatch<SetStateAction<boolean>>;
-  selectedVolume: string;
-  setSelectedVolume: Dispatch<SetStateAction<string>>;
-  backgroundMusicRef: React.RefObject<HTMLAudioElement>;
-};
+  actionsSoundsMuted: boolean
+  setActionsSoundsMuted: Dispatch<SetStateAction<boolean>>
+  backgroundSoundsMuted: boolean
+  setBackgroundSoundsMuted: Dispatch<SetStateAction<boolean>>
+  selectedVolume: string
+  setSelectedVolume: Dispatch<SetStateAction<string>>
+  backgroundMusicRef: React.RefObject<HTMLAudioElement>
+}
 
-const SoundsContext = createContext<SoundsContextType | undefined>(undefined);
+const SoundsContext = createContext<SoundsContextType | undefined>(undefined)
 
 export const SoundsProvider = ({ children }: { children: React.ReactNode }) => {
-  const [actionsSoundsMuted, setActionsSoundsMuted] = useState(false);
-  const [backgroundSoundsMuted, setBackgroundSoundsMuted] = useState(true);
-  const [selectedVolume, setSelectedVolume] = useState("sfx only");
+  const [actionsSoundsMuted, setActionsSoundsMuted] = useState(false)
+  const [backgroundSoundsMuted, setBackgroundSoundsMuted] = useState(true)
+  const [selectedVolume, setSelectedVolume] = useState('sfx only')
 
-  const backgroundMusicRef = useRef<HTMLAudioElement>(null);
+  const backgroundMusicRef = useRef<HTMLAudioElement>(null)
   useEffect(() => {
     if (backgroundMusicRef.current) {
-      backgroundMusicRef.current.volume = 0.3;
-      if (backgroundSoundsMuted) backgroundMusicRef.current.pause();
-      else backgroundMusicRef.current.play();
+      backgroundMusicRef.current.volume = 0.3
+      if (backgroundSoundsMuted) backgroundMusicRef.current.pause()
+      else backgroundMusicRef.current.play()
     }
-  }, [backgroundSoundsMuted]);
+  }, [backgroundSoundsMuted])
 
   // const { resolvedTheme } = useTheme();
   // useEffect(() => {
@@ -62,18 +62,18 @@ export const SoundsProvider = ({ children }: { children: React.ReactNode }) => {
         backgroundMusicRef,
         setActionsSoundsMuted,
         backgroundSoundsMuted,
-        setBackgroundSoundsMuted,
+        setBackgroundSoundsMuted
       }}
     >
       {children}
     </SoundsContext.Provider>
-  );
-};
+  )
+}
 
 export const useSounds = (): SoundsContextType => {
-  const context = useContext(SoundsContext);
+  const context = useContext(SoundsContext)
   if (!context) {
-    throw new Error("useSounds must be used within a SoundsProvider");
+    throw new Error('useSounds must be used within a SoundsProvider')
   }
-  return context;
-};
+  return context
+}

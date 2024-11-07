@@ -6,7 +6,7 @@ export const formatNumber = (number: number) => {
 
 export const formatNumberLeaderboard = (number: number) => {
   const formatter = new Intl.NumberFormat(navigator.language ?? 'en-US', {
-    maximumFractionDigits: 1,
+    maximumFractionDigits: 1
   })
 
   const floorLastDigit = (num: number) => Math.floor(num * 10) / 10
