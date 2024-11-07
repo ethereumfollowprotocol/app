@@ -52,9 +52,6 @@ export const useProfileCard = (profile?: ProfileDetailsResponse | null) => {
     Object.keys(profile || {}).includes('message')
   )
 
-  const rankTitles = Object.keys(profile?.ranks || {})
-  const ranks = Object.values(profile?.ranks || {})
-
   const onProfileStatClick = (stat: string) => {
     if (pathname === '/recommended' || !profile) return
 
@@ -80,8 +77,6 @@ export const useProfileCard = (profile?: ProfileDetailsResponse | null) => {
     followState,
     followerTag,
     isProfileValid,
-    rankTitles,
-    ranks,
     isProfileLoading,
     searchURLParam,
     onProfileStatClick,

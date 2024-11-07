@@ -141,7 +141,7 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
     return (
       <div
         className={cn(
-          'flex flex-col w-full gap-4 py-2 px-0 sm:p-4 border-[3px] rounded-2xl border-grey',
+          'flex flex-col w-full gap-4 py-4 px-0 sm:px-4 border-[3px] rounded-2xl border-grey',
           !(isLoading || isFetchingMore) && 'pb-0 sm:pb-0',
           BLOCKED_MUTED_TABS.includes(title) ? 'bg-neutral/70' : 'glass-card',
           customClass
