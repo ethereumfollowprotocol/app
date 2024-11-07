@@ -1,47 +1,47 @@
-"use client";
+'use client'
 
-import Link from "next/link";
-import { useAccount } from "wagmi";
-import { useRouter } from "next/navigation";
-import { useTranslation } from "react-i18next";
-import { ens_beautify } from "@adraffy/ens-normalize";
-import { PiArrowElbowRightUpBold } from "react-icons/pi";
+import Link from 'next/link'
+import { useAccount } from 'wagmi'
+import { useRouter } from 'next/navigation'
+import { useTranslation } from 'react-i18next'
+import { ens_beautify } from '@adraffy/ens-normalize'
+import { PiArrowElbowRightUpBold } from 'react-icons/pi'
 
-import { Avatar } from "../avatar";
-import Stat from "./components/stat";
-import Links from "./components/links";
-import TopRow from "./components/top-row";
-import Socials from "./components/socials";
-import { isValidEnsName } from "#/utils/ens";
-import LoadingCell from "../loaders/loading-cell";
-import Description from "./components/description";
-import { cn, truncateAddress } from "#/lib/utilities";
-import FollowButton from "#/components/follow-button";
-import ThreeDotMenu from "./components/three-dot-menu";
-import ImageWithFallback from "../image-with-fallback";
-import { useProfileCard } from "./hooks/use-profile-card";
-import CommonFollowers from "./components/common-followers";
-import LeaderboardRanks from "./components/leaderboard-ranks";
-import DefaultAvatar from "public/assets/art/default-avatar.svg";
-import DefaultHeader from "public/assets/art/default-header.svg";
-import LoadingProfileCard from "./components/loading-profile-card";
-import ConnectButton from "../navigation/components/connect-button";
-import type { ProfileDetailsResponse, StatsResponse } from "#/types/requests";
+import { Avatar } from '../avatar'
+import Stat from './components/stat'
+import Links from './components/links'
+import TopRow from './components/top-row'
+import Socials from './components/socials'
+import { isValidEnsName } from '#/utils/ens'
+import LoadingCell from '../loaders/loading-cell'
+import Description from './components/description'
+import { cn, truncateAddress } from '#/lib/utilities'
+import FollowButton from '#/components/follow-button'
+import ThreeDotMenu from './components/three-dot-menu'
+import ImageWithFallback from '../image-with-fallback'
+import { useProfileCard } from './hooks/use-profile-card'
+import CommonFollowers from './components/common-followers'
+import LeaderboardRanks from './components/leaderboard-ranks'
+import DefaultAvatar from 'public/assets/art/default-avatar.svg'
+import DefaultHeader from 'public/assets/art/default-header.svg'
+import LoadingProfileCard from './components/loading-profile-card'
+import ConnectButton from '../navigation/components/connect-button'
+import type { ProfileDetailsResponse, StatsResponse } from '#/types/requests'
 
 interface UserProfileCardProps {
-  profileList?: number | null;
-  isResponsive?: boolean;
-  hideFollowButton?: boolean;
-  profile?: ProfileDetailsResponse | null;
-  isLoading?: boolean;
-  isStatsLoading?: boolean;
-  stats?: StatsResponse | null;
-  showMoreOptions?: boolean;
-  openBlockModal?: () => void;
-  openListSettingsModal?: () => void;
-  isRecommended?: boolean;
-  refetchProfile?: () => void;
-  openQrCodeModal?: () => void;
+  profileList?: number | null
+  isResponsive?: boolean
+  hideFollowButton?: boolean
+  profile?: ProfileDetailsResponse | null
+  isLoading?: boolean
+  isStatsLoading?: boolean
+  stats?: StatsResponse | null
+  showMoreOptions?: boolean
+  openBlockModal?: () => void
+  openListSettingsModal?: () => void
+  isRecommended?: boolean
+  refetchProfile?: () => void
+  openQrCodeModal?: () => void
 }
 
 const UserProfileCard: React.FC<UserProfileCardProps> = ({
@@ -57,7 +57,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   openListSettingsModal,
   isRecommended,
   refetchProfile,
-  openQrCodeModal,
+  openQrCodeModal
 }) => {
   const {
     ranks,
@@ -71,20 +71,20 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
     isProfileLoading,
     onProfileStatClick,
     isConnectedUserCard,
-    hasSearchedDifferentName,
-  } = useProfileCard(profile);
-  const router = useRouter();
-  const { t } = useTranslation();
-  const { address: connectedAddress } = useAccount();
+    hasSearchedDifferentName
+  } = useProfileCard(profile)
+  const router = useRouter()
+  const { t } = useTranslation()
+  const { address: connectedAddress } = useAccount()
 
   return (
     <div
       className={cn(
-        "flex border-[3px] z-10 flex-col border-grey rounded-xl relative",
-        isRecommended ? "bg-neutral" : "glass-card",
+        'flex border-[3px] z-10 flex-col border-grey rounded-xl relative',
+        isRecommended ? 'bg-neutral' : 'glass-card',
         isResponsive
-          ? "w-full xl:w-[324px] xl:min-w-[324px] 3xl:w-86 3xl:min-w-86"
-          : "w-full xxs:w-92"
+          ? 'w-full xl:w-[324px] xl:min-w-[324px] 3xl:w-86 3xl:min-w-86'
+          : 'w-full xxs:w-92'
       )}
     >
       {isLoading ? (
@@ -103,28 +103,28 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
             refetchProfile={refetchProfile}
           />
           {isProfileLoading ? (
-            <LoadingCell className="w-full h-[120px] absolute top-0 left-0 rounded-t-lg" />
+            <LoadingCell className='w-full h-[120px] absolute top-0 left-0 rounded-t-lg' />
           ) : (
             <ImageWithFallback
               src={profile.ens.records?.header || DefaultHeader}
               fallback={DefaultHeader}
-              alt="profile header"
+              alt='profile header'
               width={360}
               height={120}
               className={cn(
-                "w-full h-[120px] absolute object-cover rounded-t-lg top-0 left-0 -z-10"
+                'w-full h-[120px] absolute object-cover rounded-t-lg top-0 left-0 -z-10'
               )}
               unoptimized={true}
             />
           )}
-          <div className="flex w-full items-center flex-col pt-10 pb-4 px-4 sm:p-6 sm:pt-9 gap-5 sm:gap-6 3xl:gap-7">
-            <div className="flex w-full flex-col justify-center items-center gap-2.5 3xl:gap-3">
+          <div className='flex w-full items-center flex-col pt-10 pb-4 px-4 sm:p-6 sm:pt-9 gap-5 sm:gap-6 3xl:gap-7'>
+            <div className='flex w-full flex-col justify-center items-center gap-2.5 3xl:gap-3'>
               {isProfileLoading ? (
                 <LoadingCell
                   className={
                     isResponsive
-                      ? "h-[70px] w-[70px] sm:h-[75px] sm:w-[75px] xl:h-[100px] xl:w-[100px] rounded-full"
-                      : "h-[100px] w-[100px] rounded-full"
+                      ? 'h-[70px] w-[70px] sm:h-[75px] sm:w-[75px] xl:h-[100px] xl:w-[100px] rounded-full'
+                      : 'h-[100px] w-[100px] rounded-full'
                   }
                 />
               ) : (
@@ -134,40 +134,40 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                   onClick={() => router.push(`/${profile.address}`)}
                   size={
                     isResponsive
-                      ? "h-[100px] w-[100px] cursor-pointer hover:scale-110 transition-transform"
-                      : "h-[100px] w-[100px] cursor-pointer  hover:scale-110 transition-transform"
+                      ? 'h-[100px] w-[100px] cursor-pointer hover:scale-110 transition-transform'
+                      : 'h-[100px] w-[100px] cursor-pointer  hover:scale-110 transition-transform'
                   }
                 />
               )}
-              <div className="flex w-full items-center flex-col gap-3 justify-center">
-                <div className="flex flex-col items-center justify-center gap-1.5 w-full">
+              <div className='flex w-full items-center flex-col gap-3 justify-center'>
+                <div className='flex flex-col items-center justify-center gap-1.5 w-full'>
                   {isProfileLoading ? (
-                    <LoadingCell className="w-48 sm:w-68 xl:w-3/4 h-7 rounded-lg" />
+                    <LoadingCell className='w-48 sm:w-68 xl:w-3/4 h-7 rounded-lg' />
                   ) : (
                     <div
                       className={cn(
-                        "font-bold flex gap-2 items-center relative text-center",
+                        'font-bold flex gap-2 items-center relative text-center',
                         isResponsive
-                          ? "max-w-[90%] xl:max-w-72 relative 3xl:max-w-[325px] sm:text-2xl text-xl"
-                          : "max-w-[332px] text-2xl",
-                        hasSearchedDifferentName && "mb-[22px]"
+                          ? 'max-w-[90%] xl:max-w-72 relative 3xl:max-w-[325px] sm:text-2xl text-xl'
+                          : 'max-w-[332px] text-2xl',
+                        hasSearchedDifferentName && 'mb-[22px]'
                       )}
                     >
                       <Link
                         href={`/${profile.address}`}
-                        className={showMoreOptions ? "w-[87.5%]" : "w-full"}
+                        className={showMoreOptions ? 'w-[87.5%]' : 'w-full'}
                       >
-                        <p className="truncate hover:opacity-70 hover:scale-105 text-[22px] 3xl:text-2xl transition-all">
+                        <p className='truncate hover:opacity-70 hover:scale-105 text-[22px] 3xl:text-2xl transition-all'>
                           {profileName && isValidEnsName(profileName)
                             ? ens_beautify(profileName)
                             : truncateAddress(profile.address)}
                         </p>
                       </Link>
                       {hasSearchedDifferentName && (
-                        <div className="absolute -bottom-[22px] w-full flex justify-center">
-                          <div className="flex items-center gap-1 rounded-full px-2 py-0.5 bg-text text-neutral">
-                            <p className="text-xs">{searchURLParam}</p>
-                            <PiArrowElbowRightUpBold className="text-sm -translate-y-[2px]" />
+                        <div className='absolute -bottom-[22px] w-full flex justify-center'>
+                          <div className='flex items-center gap-1 rounded-full px-2 py-0.5 bg-text text-neutral'>
+                            <p className='text-xs'>{searchURLParam}</p>
+                            <PiArrowElbowRightUpBold className='text-sm -translate-y-[2px]' />
                           </div>
                         </div>
                       )}
@@ -196,25 +196,25 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                     <FollowButton address={profile.address} />
                   )}
                 </div>
-                <div className="flex flex-col gap-2 w-full items-center">
+                <div className='flex flex-col gap-2 w-full items-center'>
                   <Description profile={profile} />
                   <Links profile={profile} />
                   <Socials profile={profile} />
                 </div>
               </div>
             </div>
-            <div className="flex w-full flex-wrap justify-center gap-10 gap-y-6 sm:gap-y-5 3xl:gap-y-6 sm:gap-x-[50px] 3xl:gap-x-[60px] items-center mx-auto text-center">
+            <div className='flex w-full flex-wrap justify-center gap-10 gap-y-6 sm:gap-y-5 3xl:gap-y-6 sm:gap-x-[50px] 3xl:gap-x-[60px] items-center mx-auto text-center'>
               <Stat
-                onClick={() => onProfileStatClick("following")}
+                onClick={() => onProfileStatClick('following')}
                 isLoading={!!isStatsLoading}
                 stat={stats?.following_count}
-                label={t("following")}
+                label={t('following')}
               />
               <Stat
-                onClick={() => onProfileStatClick("followers")}
+                onClick={() => onProfileStatClick('followers')}
                 isLoading={!!isStatsLoading}
                 stat={stats?.followers_count}
-                label={t("followers")}
+                label={t('followers')}
               />
               <LeaderboardRanks
                 ranks={ranks}
@@ -233,22 +233,22 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           isStatic={!isLoading}
         />
       ) : isRecommended ? (
-        <div className="flex items-center flex-col gap-4 justify-center w-full h-[536px]">
-          <p className="text-xl px-8 font-bold">{t("connect to see more")}</p>
+        <div className='flex items-center flex-col gap-4 justify-center w-full h-[536px]'>
+          <p className='text-xl px-8 font-bold'>{t('connect to see more')}</p>
           <ConnectButton isResponsive={false} />
         </div>
       ) : (
         <div
           className={cn(
-            "w-full h-20 text-lg 3xl:text-xl flex items-center justify-center font-bold italic",
-            hideFollowButton ? "xl:h-[360px]" : "xl:h-[420px]"
+            'w-full h-20 text-lg 3xl:text-xl flex items-center justify-center font-bold italic',
+            hideFollowButton ? 'xl:h-[360px]' : 'xl:h-[420px]'
           )}
         >
-          {t("profile error")}
+          {t('profile error')}
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default UserProfileCard;
+export default UserProfileCard
