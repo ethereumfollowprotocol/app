@@ -19,7 +19,7 @@ const QRCodeModal: React.FC<QRCodeModalProps> = ({ onClose, qrCode, isLoading })
       ) : qrCode ? (
         <>
           <div
-            className='max-w-[436px] rounded-lg flex items-center justify-center w-full sm:w-[436px] h-auto sm:h-[492px]'
+            className=' rounded-lg flex items-center justify-center w-full sm:w-[436px] text-center h-auto sm:h-[492px]'
             // biome-ignore lint/security/noDangerouslySetInnerHtml: has to be set as dangerouslySetInnerHTML to work on all browsers and devices
             dangerouslySetInnerHTML={{ __html: qrCode }}
           />
