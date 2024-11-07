@@ -81,7 +81,12 @@ const nextConfig = {
 				hostname: "rainbow.mypinata.cloud",
 				port: "",
 				pathname: "/*",
-
+			},
+			{
+				protocol: "https",
+				hostname: "api.ethfollow.xyz",
+				port: "",
+				pathname: "/*",
 			},
       {
         protocol: "https",

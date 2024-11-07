@@ -270,7 +270,6 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
           }}
           isLoading={qrCodeIsLoading || !profile}
           qrCode={qrCode}
-          qrCodeUrl={`${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${profile?.address}/qr`}
         />
       )}
       {isBlockedMutedOpen && (
