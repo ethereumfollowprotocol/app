@@ -46,7 +46,6 @@ const Tags: React.FC<TagsProps> = ({
 
   const hideTags = !showTags || (canEditTags && (isBeingRemoved || isRestriction))
 
-  if (platform) console.log(showTags, canEditTags, isBeingRemoved, isRestriction)
   return (
     <div
       className={cn(
