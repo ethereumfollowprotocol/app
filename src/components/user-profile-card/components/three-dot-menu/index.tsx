@@ -99,6 +99,16 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
             />
           </div>
         )}
+        {openQrCodeModal && (
+          <OpenModalButton
+            onClick={() => {
+              openQrCodeModal()
+              setThreeDotMenuOpen(false)
+            }}
+            text='qr code'
+            icon={<FaQrcode className='text-lg mr-1' />}
+          />
+        )}
         {!isConnectedUserCard && (
           <button
             onClick={toggleTopEight}
@@ -136,16 +146,6 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
             }}
             text='settings'
             icon={<IoMdSettings className='text-lg' />}
-          />
-        )}
-        {openQrCodeModal && (
-          <OpenModalButton
-            onClick={() => {
-              openQrCodeModal()
-              setThreeDotMenuOpen(false)
-            }}
-            text='qr code'
-            icon={<FaQrcode className='text-lg mr-1' />}
           />
         )}
       </div>
