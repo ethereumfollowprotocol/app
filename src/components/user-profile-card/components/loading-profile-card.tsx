@@ -44,7 +44,7 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
           isResponsive ? 'gap-5 sm:gap-6 md:gap-9 2xl:gap-10' : 'gap-5'
         }`}
       >
-        <div className='flex w-full flex-col justify-center items-center gap-5'>
+        <div className='flex w-full flex-col justify-center items-center gap-4'>
           <LoadingCell isStatic={isStatic} className='h-[100px] w-[100px] rounded-full' />
           <div
             className={`flex items-center ${
@@ -57,7 +57,7 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
                 <LoadingCell isStatic={isStatic} className='w-[120px] h-10 rounded-lg' />
               )}
             </div>
-            <LoadingCell isStatic={isStatic} className='w-4/5 h-5 rounded-lg' />
+            <LoadingCell isStatic={isStatic} className='w-4/5 h-4 rounded-lg' />
             <div className='flex gap-2 items-center'>
               {profileCardSocials.map(social => (
                 <LoadingCell

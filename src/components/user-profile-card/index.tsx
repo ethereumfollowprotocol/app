@@ -212,13 +212,13 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 <Stat
                   onClick={() => onProfileStatClick('following')}
                   isLoading={!!isStatsLoading}
-                  stat={stats?.following_count}
+                  value={stats?.following_count}
                   label={t('following')}
                 />
                 <Stat
                   onClick={() => onProfileStatClick('followers')}
                   isLoading={!!isStatsLoading}
-                  stat={stats?.followers_count}
+                  value={stats?.followers_count}
                   label={t('followers')}
                 />
               </div>
