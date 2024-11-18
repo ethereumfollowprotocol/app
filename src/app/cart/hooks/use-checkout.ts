@@ -1,32 +1,28 @@
-import { http, fromHex, getContract, encodePacked, type Address, createPublicClient } from 'viem'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
-import { track } from '@vercel/analytics/react'
 import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useState } from 'react'
-import { useAccount, useChainId, useChains, useSwitchChain, useWalletClient } from 'wagmi'
+import { fromHex, encodePacked, type Address } from 'viem'
+import { useAccount, useChains, useWalletClient } from 'wagmi'
 
+import useChain from '#/hooks/use-chain'
+import { efpListRecordsAbi } from '#/lib/abi'
 import { Step } from '#/components/checkout/types'
 import type { ChainWithDetails } from '#/lib/wagmi'
-import { rpcProviders } from '#/lib/constants/rpc-providers'
 import type { FollowingResponse } from '#/types/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { useCart, type CartItem } from '#/contexts/cart-context'
-import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
+import { listRegistryContract } from '#/lib/constants/contracts'
+import { triggerCustomEvent } from '#/utils/trigger-custom-event'
 import { useMintEFP } from '../../../hooks/efp-actions/use-mint-efp'
 import { DEFAULT_CHAIN, LIST_OP_LIMITS } from '#/lib/constants/chains'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
 
 const useCheckout = () => {
-  const {
-    actions,
-    addActions,
-    resetActions,
-    moveToNextAction,
-    currentActionIndex,
-    executeActionByIndex
-  } = useActions()
+  const { actions, addActions, resetActions, handleNextAction, handleInitiateActions } =
+    useActions()
+
   const {
     lists,
     profile,
@@ -46,38 +42,16 @@ const useCheckout = () => {
     setSetNewListAsSelected,
     setIsRefetchingFollowing
   } = useEFPProfile()
+
   const chains = useChains()
   const router = useRouter()
   const { t } = useTranslation()
   const queryClient = useQueryClient()
-  const { switchChain } = useSwitchChain()
-  const initialCurrentChainId = useChainId()
+  const { currentChainId } = useChain()
   const { address: userAddress } = useAccount()
   const { data: walletClient } = useWalletClient()
   const { cartItems, resetCart, setCartItems } = useCart()
   const { mint, nonce: mintNonce, listHasBeenMinted } = useMintEFP()
-
-  const [currentChainId, setCurrentChainId] = useState(initialCurrentChainId)
-  const getCurrentChain = useCallback(async () => {
-    if (!walletClient) return
-
-    const chainId = await walletClient.getChainId()
-    setCurrentChainId(chainId)
-  }, [walletClient])
-
-  useEffect(() => {
-    getCurrentChain()
-  }, [walletClient])
-
-  // get contract for selected chain to pull list storage location from
-  const listRegistryContract = getContract({
-    address: coreEfpContracts.EFPListRegistry,
-    abi: efpListRegistryAbi,
-    client: createPublicClient({
-      chain: DEFAULT_CHAIN,
-      transport: http(rpcProviders[DEFAULT_CHAIN.id])
-    })
-  })
 
   // Set step to initiating transactions if the user has already created their EFP list
   // Selecting the chain is only an option when creating a new EFP list to select List records location
@@ -92,18 +66,10 @@ const useCheckout = () => {
 
   const listOpTx = useCallback(
     async (items: CartItem[]) => {
-      // const walletClient = await getWalletClient(config)
-
       // Get list storage location via token ID
       const listStorageLocation = selectedList
         ? await listRegistryContract.read.getListStorageLocation([BigInt(selectedList)])
         : null
-
-      // Get slot, chain, and List Records contract from storage location or use options from the mint
-      // const chainId = listStorageLocation
-      //   ? fromHex(`0x${listStorageLocation.slice(64, 70)}`, 'number')
-      //   : selectedChain?.id
-      // const fetchedChain = chains.find(chain => chain.id === chainId)
 
       const nonce = listStorageLocation ? BigInt(`0x${listStorageLocation.slice(-64)}`) : mintNonce
       const ListRecordsContract = listStorageLocation
@@ -214,69 +180,19 @@ const useCheckout = () => {
     setCurrentStep(Step.InitiateTransactions)
   }, [selectedChain])
 
-  const getRequiredChain = useCallback(
-    async (index: number) =>
-      actions[index || 0]?.label === 'create list'
-        ? DEFAULT_CHAIN.id
-        : selectedList
-          ? fromHex(
-              `0x${(
-                await listRegistryContract.read.getListStorageLocation([BigInt(selectedList)])
-              ).slice(64, 70)}`,
-              'number'
-            )
-          : selectedChainId,
-    [actions, listRegistryContract, profile, selectedChainId]
-  )
-
-  // Handle action initiation
-  const handleInitiateActions = useCallback(async () => {
-    const chainId = await getRequiredChain(currentActionIndex)
-    if (!chainId) return
-    if (currentChainId !== chainId) {
-      switchChain(
-        { chainId },
-        {
-          onSuccess: () => setCurrentChainId(chainId)
-        }
-      )
-      return
-    }
-
-    setCurrentStep(Step.TransactionStatus)
-    executeActionByIndex(currentActionIndex || 0)
-  }, [executeActionByIndex, currentChainId, getRequiredChain])
-
-  const handleNextAction = useCallback(async () => {
-    const chainId = await getRequiredChain(currentActionIndex + 1)
-    if (!chainId) return
-    if (currentChainId !== chainId) {
-      switchChain(
-        { chainId },
-        {
-          onSuccess: () => {
-            setCurrentChainId(chainId)
-            setCurrentStep(Step.InitiateTransactions)
-          }
-        }
-      )
-      return
-    }
-
-    const nextActionIndex = moveToNextAction()
-    executeActionByIndex(nextActionIndex)
-  }, [moveToNextAction, executeActionByIndex, getRequiredChain, currentChainId, currentActionIndex])
+  const onInitiateActions = () =>
+    handleInitiateActions(() => setCurrentStep(Step.TransactionStatus))
+  const onNextAction = () => handleNextAction(() => setCurrentStep(Step.InitiateTransactions))
 
   const onFinish = useCallback(() => {
-    const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
-    if (regex.test(navigator.userAgent))
-      track(`${listHasBeenMinted ? 'Mint' : 'Checkout'} - Mobile`)
-    else track(`${listHasBeenMinted ? 'Mint' : 'Checkout'} - Desktop`)
+    // Track event for mobile or desktop (not essential)
+    triggerCustomEvent(listHasBeenMinted ? 'Mint' : 'Checkout')
 
     if (fetchFreshStats) refetchStats()
     else setFetchFreshStats(true)
 
     setIsRefetchingFollowing(true)
+    // Invalidate the queries related to following state
     queryClient.invalidateQueries({ queryKey: ['top8'] })
     queryClient.invalidateQueries({ queryKey: ['follow state'] })
     queryClient.invalidateQueries({ queryKey: ['list state'] })
@@ -298,6 +214,7 @@ const useCheckout = () => {
       return
     }
 
+    // Clear up following pages to start fetching new ones from the beginning
     queryClient.setQueryData(
       ['following', userAddress, selectedList],
       (prev: {
@@ -317,7 +234,7 @@ const useCheckout = () => {
     router.push(`/${selectedList ?? userAddress}`)
   }, [resetActions, resetCart, setNewListAsPrimary])
 
-  // Claim POAP logic temporary for beta testing period
+  // Claim POAP logic
   const [claimPoapModalOpen, setClaimPoapModalOpen] = useState(false)
   const [poapLoading, setPoapLoading] = useState(false)
   const [poapLink, setPoapLink] = useState('')
@@ -365,8 +282,8 @@ const useCheckout = () => {
     handleChainClick,
     handleNextStep,
     setClaimPoapModalOpen,
-    handleInitiateActions,
-    handleNextAction,
+    onInitiateActions,
+    onNextAction,
     setNewListAsPrimary,
     setSetNewListAsPrimary
   }

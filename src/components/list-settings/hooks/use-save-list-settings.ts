@@ -88,7 +88,7 @@ const useSaveListSettings = ({
     actions,
     addActions,
     resetActions,
-    moveToNextAction,
+    getNextActionIndex,
     currentActionIndex,
     executeActionByIndex
   } = useActions()
@@ -508,9 +508,9 @@ const useSaveListSettings = ({
         }
       )
 
-    const nextActionIndex = moveToNextAction()
+    const nextActionIndex = getNextActionIndex()
     executeActionByIndex(nextActionIndex)
-  }, [moveToNextAction, executeActionByIndex, currentChainId, currentActionIndex])
+  }, [getNextActionIndex, executeActionByIndex, currentChainId, currentActionIndex])
 
   const onFinish = useCallback(() => {
     setIsRefetchingProfile(true)

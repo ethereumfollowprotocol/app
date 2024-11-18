@@ -1,5 +1,8 @@
-import type { Address } from 'viem'
+import { createPublicClient, getContract, http, type Address } from 'viem'
 import { base, mainnet, optimism } from 'viem/chains'
+import { rpcProviders } from './rpc-providers'
+import { DEFAULT_CHAIN } from './chains'
+import { efpListRegistryAbi } from '../abi'
 
 export const coreEfpContracts: {
   EFPAccountMetadata: Address
@@ -21,3 +24,12 @@ export const ListRecordContracts: Record<number, Address> = {
   // [optimismSepolia.id]: process.env['NEXT_PUBLIC_EFP_LIST_RECORDS_OP_SEPOLIA'] as Address,
   // [sepolia.id]: process.env['NEXT_PUBLIC_EFP_LIST_RECORDS_SEPOLIA'] as Address
 }
+
+export const listRegistryContract = getContract({
+  address: coreEfpContracts.EFPListRegistry,
+  abi: efpListRegistryAbi,
+  client: createPublicClient({
+    chain: DEFAULT_CHAIN,
+    transport: http(rpcProviders[DEFAULT_CHAIN.id])
+  })
+})

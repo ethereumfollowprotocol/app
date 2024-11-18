@@ -111,7 +111,8 @@ const RequiredTransaction = ({
   chainId: number
   transactions?: number
 }) => {
-  const chain = useChain(chainId)
+  const { getChain } = useChain()
+  const chain = getChain(chainId)
 
   if (!chain) return null
 

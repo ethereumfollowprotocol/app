@@ -1,8 +1,12 @@
 'use client'
 
-import type { WriteContractReturnType } from 'viem'
 import { useWaitForTransactionReceipt } from 'wagmi'
+import { fromHex, type WriteContractReturnType } from 'viem'
 import { createContext, useContext, useState, type ReactNode, useCallback, useMemo } from 'react'
+
+import useChain from '#/hooks/use-chain'
+import { DEFAULT_CHAIN } from '#/lib/constants/chains'
+import { listRegistryContract } from '#/lib/constants/contracts'
 
 export enum EFPActionType {
   CreateEFPList = 'CreateEFPList',
@@ -39,8 +43,10 @@ type ActionsContextType = {
   currentAction: Action | undefined
   currentActionIndex: number
   executeActionByIndex: (index: number) => void
-  moveToNextAction: () => number
+  getNextActionIndex: () => number
   resetActions: () => void
+  handleInitiateActions: (onExecute: () => void) => void
+  handleNextAction: (onChainSwitch: () => void) => void
 }
 
 const ActionsContext = createContext<ActionsContextType | undefined>(undefined)
@@ -52,6 +58,8 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
   const [actions, setActions] = useState<Action[]>([])
   const [currentActionIndex, setCurrentActionIndex] = useState(-1)
   const currentAction = actions[currentActionIndex]
+
+  const { currentChainId, checkChain } = useChain()
 
   const { isSuccess: currentActionTxIsSuccess } = useWaitForTransactionReceipt({
     hash: currentAction?.txHash,
@@ -85,7 +93,7 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
   )
 
   // Moves to the next action to be able to call execute on that action
-  const moveToNextAction = useCallback(() => {
+  const getNextActionIndex = useCallback(() => {
     // Calculate the next index
     const nextIndex = currentActionIndex + 1 < actions.length ? currentActionIndex + 1 : -1
 
@@ -100,6 +108,22 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
     // Return the next index for use
     return nextIndex
   }, [currentActionIndex, actions.length])
+
+  const getRequiredChain = useCallback(
+    async (index: number, list?: number | string) =>
+      actions[index || 0]?.label === 'create list'
+        ? DEFAULT_CHAIN.id
+        : list
+          ? fromHex(
+              `0x${(await listRegistryContract.read.getListStorageLocation([BigInt(list)])).slice(
+                64,
+                70
+              )}`,
+              'number'
+            )
+          : currentChainId,
+    [actions, listRegistryContract, currentChainId]
+  )
 
   // Executes the action based on the index to be able to handle async execution with synchronous state updates
   const executeActionByIndex = useCallback(
@@ -141,6 +165,27 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
     [actions, updateAction]
   )
 
+  const handleInitiateActions = useCallback(
+    async (onExecute: () => void) => {
+      const chainId = await getRequiredChain(currentActionIndex)
+      const isCorrectChain = checkChain({ chainId, onSuccess: onExecute })
+      if (!isCorrectChain) return
+
+      onExecute()
+      executeActionByIndex(currentActionIndex || 0)
+    },
+    [executeActionByIndex, checkChain, getRequiredChain]
+  )
+
+  const handleNextAction = async (onChainSwitch: () => void) => {
+    const chainId = await getRequiredChain(currentActionIndex + 1)
+    const isCorrectChain = checkChain({ chainId, onSuccess: onChainSwitch })
+    if (!isCorrectChain) return
+
+    const nextActionIndex = getNextActionIndex()
+    executeActionByIndex(nextActionIndex)
+  }
+
   const resetActions = useCallback(() => {
     setActions([])
     setCurrentActionIndex(0) // Reset to initial state
@@ -153,8 +198,10 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
     currentAction,
     currentActionIndex,
     executeActionByIndex,
-    moveToNextAction,
-    resetActions
+    getNextActionIndex,
+    resetActions,
+    handleInitiateActions,
+    handleNextAction
   }
 
   return <ActionsContext.Provider value={value}>{children}</ActionsContext.Provider>
