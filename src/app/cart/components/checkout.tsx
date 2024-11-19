@@ -1,6 +1,6 @@
 import useCheckout from '#/app/cart/hooks/use-checkout'
 import { Step } from '../../../components/checkout/types'
-import ClaimPoapModal from '#/components/checkout/claim-poap-modal'
+import ClaimPoapModal from '#/components/claim-poap-modal'
 import TransactionStatus from '../../../components/checkout/transaction-status'
 import { SelectChainCard } from '../../../components/checkout/select-chain-card'
 import InitiateActionsCard from '../../../components/checkout/initiate-actions-card'
@@ -21,14 +21,14 @@ const Checkout: React.FC<CheckoutProps> = ({ setOpen, hasCreatedEfpList }) => {
     onNextAction,
     openPoapModal,
     selectedChain,
-    handleNextStep,
     setCurrentStep,
     handleChainClick,
     onInitiateActions,
     claimPoapModalOpen,
     setNewListAsPrimary,
     setClaimPoapModalOpen,
-    setSetNewListAsPrimary
+    setSetNewListAsPrimary,
+    moveToInitiateTransactions
   } = useCheckout()
 
   const currentStepComponent = {
@@ -39,7 +39,7 @@ const Checkout: React.FC<CheckoutProps> = ({ setOpen, hasCreatedEfpList }) => {
         onCancel={() => setOpen(false)}
         handleChainClick={handleChainClick}
         selectedChain={selectedChain}
-        handleNextStep={handleNextStep}
+        handleNextStep={moveToInitiateTransactions}
         setNewListAsPrimary={setNewListAsPrimary}
         setSetNewListAsPrimary={setSetNewListAsPrimary}
       />

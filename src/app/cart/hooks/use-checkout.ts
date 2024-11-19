@@ -7,6 +7,7 @@ import { useAccount, useChains, useWalletClient } from 'wagmi'
 
 import useChain from '#/hooks/use-chain'
 import { efpListRecordsAbi } from '#/lib/abi'
+import { usePoapModal } from '../../../components/claim-poap-modal/use-poap-modal'
 import { Step } from '#/components/checkout/types'
 import type { ChainWithDetails } from '#/lib/wagmi'
 import type { FollowingResponse } from '#/types/requests'
@@ -175,7 +176,7 @@ const useCheckout = () => {
   }, [])
 
   // Move to the next step
-  const handleNextStep = useCallback(() => {
+  const moveToInitiateTransactions = useCallback(() => {
     if (!selectedChain) return
     setCurrentStep(Step.InitiateTransactions)
   }, [selectedChain])
@@ -234,36 +235,11 @@ const useCheckout = () => {
     router.push(`/${selectedList ?? userAddress}`)
   }, [resetActions, resetCart, setNewListAsPrimary])
 
-  // Claim POAP logic
-  const [claimPoapModalOpen, setClaimPoapModalOpen] = useState(false)
-  const [poapLoading, setPoapLoading] = useState(false)
-  const [poapLink, setPoapLink] = useState('')
-  const openPoapModal = useCallback(async () => {
-    if (listHasBeenMinted && lists?.lists?.length === 0 && !!profile?.ens.name) {
+  const { poapLink, poapLoading, claimPoapModalOpen, setClaimPoapModalOpen } =
+    usePoapModal(userAddress)
+  const openPoapModal = useCallback(() => {
+    if (listHasBeenMinted && lists?.lists?.length === 0 && !!profile?.ens.name)
       setClaimPoapModalOpen(true)
-      setPoapLoading(true)
-
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${userAddress}/poap`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          }
-        )
-
-        const data = await res.json()
-        if (data.link) {
-          setPoapLink(data.link)
-        }
-
-        setPoapLoading(false)
-      } catch (err: unknown) {
-        return
-      }
-    }
   }, [listHasBeenMinted])
 
   return {
@@ -280,9 +256,9 @@ const useCheckout = () => {
     claimPoapModalOpen,
     setSelectedChainId,
     handleChainClick,
-    handleNextStep,
     setClaimPoapModalOpen,
     onInitiateActions,
+    moveToInitiateTransactions,
     onNextAction,
     setNewListAsPrimary,
     setSetNewListAsPrimary

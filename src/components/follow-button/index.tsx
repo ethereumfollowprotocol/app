@@ -91,8 +91,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
           e.stopPropagation()
 
           if (!userAddress && openConnectModal) return openConnectModal()
-
-          if (clickSound) soundRef.current?.play()
+          if (clickSound && !actionsSoundsMuted) soundRef.current?.play()
 
           setDisableHover(true)
           handleAction()

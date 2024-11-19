@@ -33,7 +33,7 @@ const ClaimPoapModal: React.FC<ClaimPoapModalProps> = ({ onClose, link, isLoadin
         <div className='w-full flex items-center justify-between'>
           <CancelButton onClick={onClose} label={t('No thanks')} />
           <a href={link} target='_blank' rel='noreferrer'>
-            <PrimaryButton onClick={onClose} disabled={link.length === 0} label={t('Claim')} />
+            <PrimaryButton onClick={onClose} disabled={!link} label={t('Claim')} />
           </a>
         </div>
       </div>
