@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { fetchProfileBadges } from '#/api/fetchProfileBadges'
+import { fetchProfileBadges } from '#/api/profile/fetch-profile-badges'
 
 interface UseAchievementsProps {
   address?: string

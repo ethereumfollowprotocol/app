@@ -13,7 +13,7 @@ import {
 import { resolveEnsAddress } from '#/utils/ens'
 import type { TagListOp } from '#/types/list-op'
 import { useCart } from '#/contexts/cart-context'
-import { fetchFollowState } from '#/api/fetchFollowState'
+import { fetchFollowState } from '#/api/fetch-follow-state'
 import type { TopEightProfileType } from './use-top-eight'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 

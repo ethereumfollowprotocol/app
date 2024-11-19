@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
 
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import { fetchLatestFollowers } from '#/api/fetchLatestFollowers'
+import { fetchLatestFollowers } from '#/api/followers/fetch-latest-followers'
 
 export const useLatestFollowers = () => {
   const [page, setPage] = useState(1)

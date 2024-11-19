@@ -7,7 +7,7 @@ import { useContext, createContext, useState, useEffect, useMemo } from 'react'
 import { useEFPProfile } from './efp-profile-context'
 import { RECOMMENDED_PROFILES_LIMIT } from '#/lib/constants'
 import type { ProfileDetailsResponse } from '#/types/requests'
-import { fetchRecommendedProfiles } from '#/api/fetchRecommendedProfiles'
+import { fetchRecommendedProfiles } from '#/api/recommended/fetch-recommended-profiles'
 
 // Define the type for the profile context
 type RecommendedProfilesContextType = {

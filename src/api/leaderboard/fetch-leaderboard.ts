@@ -16,10 +16,10 @@ export const fetchleaderboard = async ({
       direction
     })
 
-    const url =
-      search && search.length > 2
-        ? `${process.env.NEXT_PUBLIC_EFP_API_URL}/leaderboard/search?term=${search}`
-        : `${process.env.NEXT_PUBLIC_EFP_API_URL}/leaderboard/ranked?${queryParams}`
+    const url = `${process.env.NEXT_PUBLIC_EFP_API_URL}/leaderboard/${
+      search && search.length > 2 ? 'search' : 'ranked'
+    }?${queryParams}&term=${search}`
+
     const response = await fetch(url, {
       cache: 'default',
       headers: {

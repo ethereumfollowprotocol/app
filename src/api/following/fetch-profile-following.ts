@@ -28,22 +28,15 @@ export const fetchProfileFollowing = async ({
       cache: fresh ? 'fresh' : undefined
     })
 
-    const url =
-      list !== undefined
-        ? `${process.env.NEXT_PUBLIC_EFP_API_URL}/lists/${list}/${
-            allResults
-              ? 'allFollowing'
-              : search && search?.length >= 3
-                ? 'searchFollowing'
-                : 'following'
-          }?${queryParams}`
-        : `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/${
-            allResults
-              ? 'allFollowing'
-              : search && search?.length >= 3
-                ? 'searchFollowing'
-                : 'following'
-          }?${queryParams}`
+    const followingEndpoint = allResults
+      ? 'allFollowing'
+      : search && search?.length >= 3
+        ? 'searchFollowing'
+        : 'following'
+
+    const url = `${process.env.NEXT_PUBLIC_EFP_API_URL}/${list === undefined ? 'users' : 'lists'}/${
+      list ?? addressOrName
+    }/${followingEndpoint}?${queryParams}`
 
     const response = await fetch(url, {
       cache: 'default',

@@ -1,4 +1,4 @@
-import { fetchleaderboard } from '#/api/fetchLeaderboard'
+import { fetchleaderboard } from '#/api/leaderboard/fetch-leaderboard'
 import { leaderboardFilters } from '#/lib/constants'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'

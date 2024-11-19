@@ -4,7 +4,7 @@ import type { Address } from 'viem'
 import { useQuery } from '@tanstack/react-query'
 
 import type { FollowState } from '#/types/common'
-import { fetchFollowState } from '#/api/fetchFollowState'
+import { fetchFollowState } from '#/api/fetch-follow-state'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 const useFollowingState = ({

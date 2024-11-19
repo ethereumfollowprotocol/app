@@ -7,7 +7,6 @@ import { useAccount, useChains, useWalletClient } from 'wagmi'
 
 import useChain from '#/hooks/use-chain'
 import { efpListRecordsAbi } from '#/lib/abi'
-import { usePoapModal } from '../../../components/claim-poap-modal/use-poap-modal'
 import { Step } from '#/components/checkout/types'
 import type { ChainWithDetails } from '#/lib/wagmi'
 import type { FollowingResponse } from '#/types/requests'
@@ -18,6 +17,7 @@ import { triggerCustomEvent } from '#/utils/trigger-custom-event'
 import { useMintEFP } from '../../../hooks/efp-actions/use-mint-efp'
 import { DEFAULT_CHAIN, LIST_OP_LIMITS } from '#/lib/constants/chains'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
+import { usePoapModal } from '../../../components/claim-poap-modal/use-poap-modal'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
 
 const useCheckout = () => {

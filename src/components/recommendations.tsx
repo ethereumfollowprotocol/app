@@ -8,7 +8,7 @@ import { cn } from '#/lib/utilities'
 import ProfileList from '#/components/profile-list'
 import type { DiscoverItemType } from '#/types/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import { fetchRecommendations } from '#/api/fetchRecommendations'
+import { fetchRecommendations } from '#/api/recommended/fetch-recommendations'
 import PageSelector from '#/app/leaderboard/components/page-selector'
 
 interface RecommendationsProps {

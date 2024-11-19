@@ -4,7 +4,7 @@ import { isAddress, type Address } from 'viem'
 import { useQuery } from '@tanstack/react-query'
 
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import { fetchProfileFollowing } from '#/api/fetchProfileFollowing'
+import { fetchProfileFollowing } from '#/api/following/fetch-profile-following'
 import type { ENSProfile, FollowingResponse } from '#/types/requests'
 
 export type TopEightProfileType = {
