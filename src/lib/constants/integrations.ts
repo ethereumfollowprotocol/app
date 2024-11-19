@@ -19,6 +19,8 @@ import LikeButton from 'public/assets/partners/likebutton.jpeg'
 import HarvestArt from 'public/assets/partners/harvestart.jpeg'
 import VibesScapes from 'public/assets/partners/vibesscapes.jpeg'
 import EngagementVision from 'public/assets/partners/engagementvision.jpeg'
+import DevconCollabPortal from 'public/assets/partners/devconcollabportal.jpeg'
+import DevconPassport from 'public/assets/partners/devconpassport.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -115,6 +117,16 @@ export const INTEGRATIONS = [
     name: 'JustaName',
     url: 'https://www.justaname.id/',
     logo: JustaName
+  },
+  {
+    name: 'Devcon VI Collab Portal',
+    url: 'https://devcon.fileverse.io/devcon7/portal',
+    logo: DevconCollabPortal
+  },
+  {
+    name: 'Devcon VI Passport',
+    url: 'https://app.devcon.org/',
+    logo: DevconPassport
   }
 ] as {
   name: string

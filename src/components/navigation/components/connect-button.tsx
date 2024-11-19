@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { IoIosArrowDown } from 'react-icons/io'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
-import { HiOutlineWallet } from 'react-icons/hi2'
+import { SlWallet } from 'react-icons/sl'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useAccount, useDisconnect, useWalletClient, useChains } from 'wagmi'
 
@@ -114,12 +114,15 @@ const ConnectButton: React.FC<ConnectButtonProps> = ({ isResponsive = true }) =>
             />
           </>
         ) : (
-          <div className='w-full sm:w-60 h-full flex items-center justify-center rounded-full'>
+          <div className=' sm:w-60 h-full flex items-center justify-center rounded-full'>
             <p className={cn('font-bold text-lg px-1', isResponsive ? 'hidden sm:block' : 'block')}>
               {t('connect')}
             </p>
-            <HiOutlineWallet
-              className={cn('text-4xl w-[41px]', isResponsive ? 'block sm:hidden' : 'hidden')}
+            <SlWallet
+              className={cn(
+                'text-3xl w-[42px] -translate-y-px',
+                isResponsive ? 'block sm:hidden' : 'hidden'
+              )}
             />
           </div>
         )}

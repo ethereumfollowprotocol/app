@@ -55,7 +55,7 @@ export const useProfileCard = (profile?: ProfileDetailsResponse | null) => {
   const onProfileStatClick = (stat: string) => {
     if (pathname === '/recommended' || !profile) return
 
-    if (pathname.length === 0 || pathname === '/team') {
+    if (pathname === '/' || pathname === '/team') {
       if (isConnectedUserCard) {
         return router.push(
           `/${
