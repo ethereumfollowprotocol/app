@@ -4,15 +4,16 @@ import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
-import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
+import { lazy, Suspense, useMemo, useRef, useState } from 'react'
 
 import Checkout from './checkout'
 import { cn } from '#/lib/utilities'
 import ImportModal from './import-modal'
 import { Search } from '#/components/search'
 import ClearCartModal from './clear-cart-modal'
+import { useIsClient } from '@uidotdev/usehooks'
 import { useCart } from '#/contexts/cart-context'
-import { formatNumber } from '#/utils/formatNumber'
+import { formatNumber } from '#/utils/format/format-number'
 import Recommendations from '#/components/recommendations'
 import FarcasterIcon from 'public/assets/icons/farcaster.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
@@ -23,16 +24,12 @@ import useStickyScroll from '#/components/home/hooks/use-sticky-scroll'
 const CartItems = lazy(() => import('./cart-items'))
 
 const Cart = () => {
-  const [isClient, setIsClient] = useState(false)
   const [isCheckingOut, setIsCheckingOut] = useState(false)
   const [importModalOpen, setImportModalOpen] = useState(false)
   const [clearCartModalOpen, setClearCartModalOpen] = useState(false)
   const [selectedPlatform, setSelectedPlatform] = useState<'farcaster'>('farcaster')
 
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
-
+  const isClient = useIsClient()
   const { t } = useTranslation()
   const { isConnected } = useAccount()
   const { openConnectModal } = useConnectModal()

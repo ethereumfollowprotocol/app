@@ -1,4 +1,4 @@
-import { formatQueryParams } from '#/utils/formatQueryParams'
+import { formatQueryParams } from '#/utils/format/format-query-params'
 import type { InfiniteLeaderboardQueryProps, LeaderboardResponse } from '#/types/requests'
 
 export const fetchleaderboard = async ({

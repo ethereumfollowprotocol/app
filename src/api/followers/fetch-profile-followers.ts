@@ -1,4 +1,4 @@
-import { formatQueryParams } from '#/utils/formatQueryParams'
+import { formatQueryParams } from '#/utils/format/format-query-params'
 import type { FollowerResponse, InfiniteProfileQueryProps } from '#/types/requests'
 
 export const fetchProfileFollowers = async ({

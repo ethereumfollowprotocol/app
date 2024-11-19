@@ -15,7 +15,7 @@ import {
 } from '#/lib/constants/follow-button'
 import { cn } from '#/lib/utilities'
 import LoadingCell from '../loaders/loading-cell'
-import { useCoolMode } from '#/hooks/useCoolMode'
+import { useCoolMode } from '#/hooks/use-cool-mode'
 import { useSounds } from '#/contexts/sounds-context'
 import MainnetBlack from 'public/assets/mainnet-black.svg'
 import { useFollowButton } from './hooks/use-follow-button'

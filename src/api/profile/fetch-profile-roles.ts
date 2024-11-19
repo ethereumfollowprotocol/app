@@ -1,11 +1,11 @@
 import type { Config, UseChainsReturnType } from 'wagmi'
 import { createPublicClient, fromHex, getContract, http, type Address } from 'viem'
 
+import { efpListRecordsAbi } from '#/lib/abi'
 import type { ProfileRoles } from '#/types/requests'
 import { DEFAULT_CHAIN } from '#/lib/constants/chains'
 import { rpcProviders } from '#/lib/constants/rpc-providers'
-import { coreEfpContracts } from '#/lib/constants/contracts'
-import { efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
+import { coreEfpContracts, listRegistryContract } from '#/lib/constants/contracts'
 
 export const fetchProfileRoles = async ({
   list,
@@ -16,21 +16,13 @@ export const fetchProfileRoles = async ({
   userAddress: Address
   chains: UseChainsReturnType<Config>
 }) => {
-  const listRegistryContract = getContract({
-    address: coreEfpContracts.EFPListRegistry,
-    abi: efpListRegistryAbi,
-    client: createPublicClient({
-      chain: DEFAULT_CHAIN,
-      transport: http(rpcProviders[DEFAULT_CHAIN.id])
-    })
-  })
-
   const listStorageLocation = await listRegistryContract.read.getListStorageLocation([BigInt(list)])
 
   const listStorageLocationChainId = fromHex(`0x${listStorageLocation.slice(64, 70)}`, 'number')
+  const listStorageLocationChain = chains.find(item => item.id === listStorageLocationChainId)
 
   const slot = BigInt(`0x${listStorageLocation.slice(-64)}`)
-  const listStorageLocationChain = chains.find(item => item.id === listStorageLocationChainId)
+
   const listRecordsContractAddress = listStorageLocation
     ? (`0x${listStorageLocation.slice(70, 110)}` as Address)
     : coreEfpContracts.EFPListRecords
@@ -52,6 +44,8 @@ export const fetchProfileRoles = async ({
     isOwner: listOwner?.toLowerCase() === userAddress?.toLowerCase(),
     isManager: listManager?.toLowerCase() === userAddress?.toLowerCase(),
     isUser: listUser?.toLowerCase() === userAddress?.toLowerCase(),
-    listChainId: listStorageLocationChainId
+    listChainId: listStorageLocationChainId,
+    listRecordsContract: listRecordsContractAddress,
+    listSlot: slot
   } as ProfileRoles
 }

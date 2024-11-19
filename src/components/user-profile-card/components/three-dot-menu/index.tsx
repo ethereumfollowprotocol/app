@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 
 import { cn } from '#/lib/utilities'
 import CopyValue from './components/copy-value'
-import { useCoolMode } from '#/hooks/useCoolMode'
+import { useCoolMode } from '#/hooks/use-cool-mode'
 import type { FollowState } from '#/types/common'
 import { useThreeDotMenu } from '../../hooks/use-three-dot-menu'
 import RestrictButton from './components/restrict-button'

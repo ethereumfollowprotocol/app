@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 
 export const metadataBaseUrl = new URL('https://ethfollow.xyz')
 
-// export const metadataTitle = 'Ethereum Follow Protocol'
-export const metadataSiteName = 'App - Ethereum Follow Protocol'
+export const metadataTitle = 'Ethereum Follow Protocol'
+export const metadataSiteName = 'Ethereum Follow Protocol'
 export const metadataDescription = "It's about who you know. The social graph for Ethereum."
 
 export const sharedMetadataIcons: Metadata['icons'] = [
@@ -12,13 +12,14 @@ export const sharedMetadataIcons: Metadata['icons'] = [
     url: 'https://ethfollow.xyz/assets/favicon.ico'
   }
 ]
+
 export const sharedMetadataOpenGraph: Metadata['openGraph'] = {
   type: 'website',
-  // title: metadataTitle,
+  title: metadataTitle,
   description: metadataDescription,
   locale: 'en_US',
-  // siteName: metadataSiteName,
-  // url: 'https://ethfollow.xyz',
+  siteName: metadataSiteName,
+  url: 'https://ethfollow.xyz',
   emails: ['contact@ethfollow.xyz']
   // images: [
   //   {
@@ -26,6 +27,7 @@ export const sharedMetadataOpenGraph: Metadata['openGraph'] = {
   //   }
   // ]
 }
+
 export const sharedMetadataTwitter: Metadata['twitter'] = {
   card: 'summary_large_image',
   site: '@efp',
@@ -35,7 +37,7 @@ export const sharedMetadataTwitter: Metadata['twitter'] = {
 }
 
 export const sharedMetadata: Metadata = {
-  // title: metadataTitle,
+  title: metadataTitle,
   description: metadataDescription,
   applicationName: metadataSiteName,
   keywords: ['efp', 'follow', 'protocol', 'social', 'eth', 'ethereum', 'blockchain'],

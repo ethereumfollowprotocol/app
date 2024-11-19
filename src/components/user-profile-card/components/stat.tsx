@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { formatNumber } from '#/utils/formatNumber'
+import { formatNumber } from '#/utils/format/format-number'
 import LoadingCell from '#/components/loaders/loading-cell'
 
 interface StatProps {

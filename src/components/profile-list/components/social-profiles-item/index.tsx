@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Image, { type StaticImageData } from 'next/image'
 
 import Tags from '../tags'
-import { formatNumber } from '#/utils/formatNumber'
+import { formatNumber } from '#/utils/format/format-number'
 import SocialFollowButton from './social-follow-button'
 import type { ImportPlatformType } from '#/types/common'
 import type { ProfileListProfile } from '#/app/cart/components/cart-items/cart-items-list'

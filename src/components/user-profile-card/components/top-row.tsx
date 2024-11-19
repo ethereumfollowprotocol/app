@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
 
 import { cn } from '#/lib/utilities'
-import { formatNumber } from '#/utils/formatNumber'
+import { formatNumber } from '#/utils/format/format-number'
 
 interface TopRowProps {
   profileList?: number | null

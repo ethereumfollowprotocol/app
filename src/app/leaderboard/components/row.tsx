@@ -6,7 +6,7 @@ import { usePathname, useRouter } from 'next/navigation'
 
 import { isValidEnsName } from '#/utils/ens'
 import { Avatar } from '#/components/avatar'
-import { formatNumber } from '#/utils/formatNumber'
+import { formatNumber } from '#/utils/format/format-number'
 import { cn, truncateAddress } from '#/lib/utilities'
 import FollowButton from '#/components/follow-button'
 import type { LeaderboardFilter } from '#/types/common'

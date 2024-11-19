@@ -7,7 +7,7 @@ import { IoIosArrowDown } from 'react-icons/io'
 import { useClickAway } from '@uidotdev/usehooks'
 
 import { cn } from '#/lib/utilities'
-import { formatNumber } from '#/utils/formatNumber'
+import { formatNumber } from '#/utils/format/format-number'
 import LoadingCell from '#/components/loaders/loading-cell'
 import type { ProfileTableTitleType } from '#/types/common'
 import GreenCheck from 'public/assets/icons/check-green.svg'

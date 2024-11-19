@@ -9,7 +9,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { SECOND } from '#/lib/constants'
 import { resolveEnsAddress } from '#/utils/ens'
-import { formatError } from '#/utils/formatError'
+import { formatError } from '#/utils/format/format-error'
 import { searchENSNames } from '#/api/search-ens-names'
 import { useCart } from '#/contexts/cart-context.tsx'
 import { fetchFollowState } from '#/api/fetch-follow-state'
