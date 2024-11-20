@@ -90,7 +90,8 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
     const { lists } = useEFPProfile()
     const isProfile = useIsEditView()
 
-    const showFollowsYouBadges = !isProfile || title === 'following'
+    const isFollowingTable = title === 'following'
+    const showFollowsYouBadges = !isProfile || isFollowingTable
 
     const profiles =
       results?.map(res => ({
@@ -112,18 +113,16 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
           <div className='justify-center min-h-12 flex items-center font-bold'>{t('none')}</div>
         ) : (
           <div className='text-center min-h-12  font-bold'>
-            {title === 'following' && (
-              <div className='flex flex-col justify-center min-h-12 gap-4 items-center'>
-                <p className='text-xl italic'>
-                  {t(isProfile ? 'following myprofile empty first' : 'following empty first')}
+            <div className='flex flex-col justify-center min-h-12 gap-4 items-center'>
+              <p className='text-xl italic'>
+                {t(isProfile ? 'following myprofile empty first' : 'following empty first')}
+              </p>
+              {isProfile && (
+                <p className='text-base italic w-3/4 max-w-96'>
+                  {t('following myprofile empty second')}
                 </p>
-                {isProfile && (
-                  <p className='text-base italic w-3/4 max-w-96'>
-                    {t('following myprofile empty second')}
-                  </p>
-                )}
-              </div>
-            )}
+              )}
+            </div>
           </div>
         ),
       followers:
@@ -169,12 +168,10 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
           ref={ref}
           className={cn(
             'flex flex-col px-3 sm:px-0',
-            BLOCKED_MUTED_TABS.includes(title) ? '' : 'xl:overflow-y-scroll',
-            BLOCKED_MUTED_TABS.includes(title)
-              ? ''
-              : showTags
-                ? 'profile-page-table-tags'
-                : 'profile-page-table'
+            BLOCKED_MUTED_TABS.includes(title) && 'xl:overflow-y-scroll',
+            BLOCKED_MUTED_TABS.includes(title) && showTags
+              ? 'profile-page-table-tags'
+              : 'profile-page-table'
           )}
         >
           <ProfileList
@@ -189,7 +186,7 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
             isBlockedBy={title === 'Blocked/Muted By' && isProfile}
           />
           <div ref={loadMoreRef} className='h-px w-full mb-4' />
-          {title === 'following' && isProfile && lists?.lists && lists.lists.length === 0 && (
+          {isFollowingTable && isProfile && (lists?.lists?.length || 0) === 0 && (
             <Recommendations
               limit={40}
               endpoint='recommended'

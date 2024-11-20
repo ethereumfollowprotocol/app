@@ -22,7 +22,7 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose }) => {
   const router = useRouter()
   const { t } = useTranslation()
   const { loadingCartItems } = useCart()
-  const { editedProfiles, addProfileSearch, setAddProfileSearch, onSubmit, validTopEightsLength } =
+  const { editedProfiles, addProfileSearch, setAddProfileSearch, onSubmit, isTopEightFull } =
     useEditTopEight(profiles)
 
   return (
@@ -58,23 +58,19 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose }) => {
         <p
           className={cn(
             'font-semibold text-center',
-            validTopEightsLength >= 8 ? 'text-red-400' : 'text-text/40'
+            isTopEightFull ? 'text-red-400' : 'text-text/40'
           )}
         >
-          {t(validTopEightsLength >= 8 ? 'top eight limit' : 'top eight description')}
+          {t(isTopEightFull ? 'top eight limit' : 'top eight description')}
         </p>
-        <div
-          className={cn(
-            'flex items-start justify-evenly xxs:justify-start bg-neutral/90 min-h-[430px] rounded-xl p-2 md:p-4 flex-wrap w-full 3xs:gap-x-1 md:gap-x-2'
-          )}
-        >
+        <div className='flex items-start justify-evenly sm:justify-start bg-neutral/90 min-h-[430px] rounded-xl p-2 md:p-4 flex-wrap w-full 3xs:gap-x-1 md:gap-x-2'>
           {editedProfiles.map((profile, index) => (
             <TopEightProfile profile={profile} isEditing={true} key={index} />
           ))}
           {new Array(loadingCartItems).fill(1).map((_, i) => (
             <div
               key={`loading ${i}`}
-              className='flex flex-col p-4 items-center gap-2 relative border-grey rounded-xl w-[144px] h-[192px] border-[3px] border-lime-500/50'
+              className='flex flex-col p-4 items-center gap-2 relative border-grey rounded-xl w-[144px] h-[186px] border-[3px] border-lime-500/50'
             >
               <LoadingCell className='h-[50px] w-[50px] rounded-full' />
               <LoadingCell className='h-7 w-24 rounded-lg' />
@@ -91,7 +87,7 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose }) => {
         <div className='w-full mt-4 flex justify-between items-center'>
           <CancelButton onClick={onClose} />
           <PrimaryButton
-            disabled={validTopEightsLength > 8}
+            disabled={isTopEightFull}
             onClick={() => {
               router.push('/cart')
               onClose()
