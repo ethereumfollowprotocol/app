@@ -16,11 +16,12 @@ import { useAccount, useChainId, useSwitchChain, useWalletClient } from 'wagmi'
 
 import { Step } from '#/components/checkout/types'
 import { rpcProviders } from '#/lib/constants/rpc-providers'
+import { useListOps } from '#/hooks/efp-actions/use-list-ops'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { useCart, type CartItem } from '#/contexts/cart-context'
 import { listOpAddTag, listOpAddListRecord } from '#/utils/list-ops'
 import { DEFAULT_CHAIN, LIST_OP_LIMITS } from '#/lib/constants/chains'
-import { generateListStorageLocationSlot } from '#/utils/generateSlot'
+import { generateListStorageLocationSlot } from '#/utils/generate-slot'
 import type { FollowingResponse, ProfileDetailsResponse } from '#/types/requests'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
@@ -58,7 +59,6 @@ type SaveListSettingsParams = {
 
 const useSaveListSettings = ({
   selectedList,
-  // profile,
   chain,
   newChain,
   slot,
@@ -88,7 +88,7 @@ const useSaveListSettings = ({
     actions,
     addActions,
     resetActions,
-    moveToNextAction,
+    getNextActionIndex,
     currentActionIndex,
     executeActionByIndex
   } = useActions()
@@ -109,7 +109,6 @@ const useSaveListSettings = ({
     refetchFollowingTags,
     setIsRefetchingProfile,
     setIsRefetchingFollowing
-    // selectedList: selectedProfileList
   } = useEFPProfile()
   const { t } = useTranslation()
   const { resetCart } = useCart()
@@ -117,6 +116,7 @@ const useSaveListSettings = ({
   const { switchChain } = useSwitchChain()
   const initialCurrentChainId = useChainId()
   const { address: userAddress } = useAccount()
+  const { getListOpsTransaction } = useListOps()
   const { data: walletClient } = useWalletClient()
   const newSlot = useMemo(() => generateListStorageLocationSlot(), [])
 
@@ -177,29 +177,10 @@ const useSaveListSettings = ({
         ? (ListRecordContracts[newChain?.id] as Address)
         : coreEfpContracts.EFPListRecords
 
-      // format list operations
-      const operations = items.map(item => {
-        // append mandatory types and data
-        const types = ['uint8', 'uint8', 'uint8', 'uint8', 'bytes']
-        const data: (string | number)[] = [
-          item.listOp.version,
-          item.listOp.opcode,
-          1,
-          1,
-          item.listOp.data
-        ]
-
-        // return encoded data into a single HEX string
-        return encodePacked(types, data)
-      })
-
-      // initiate  'applyListOps' transaction
-      const hash = await walletClient?.writeContract({
-        address: listRecordsContract,
-        abi: efpListRecordsAbi,
-        functionName: 'setMetadataValuesAndApplyListOps',
-        // @ts-ignore - diff data type handled
-        args: [newSlot, [{ key: 'user', value: userAddress }], operations]
+      const hash = await getListOpsTransaction({
+        items,
+        nonce: newSlot,
+        listRecordsContract
       })
 
       // return transaction hash to enable following transaction status in transaction details component
@@ -508,9 +489,9 @@ const useSaveListSettings = ({
         }
       )
 
-    const nextActionIndex = moveToNextAction()
+    const nextActionIndex = getNextActionIndex()
     executeActionByIndex(nextActionIndex)
-  }, [moveToNextAction, executeActionByIndex, currentChainId, currentActionIndex])
+  }, [getNextActionIndex, executeActionByIndex, currentChainId, currentActionIndex])
 
   const onFinish = useCallback(() => {
     setIsRefetchingProfile(true)

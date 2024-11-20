@@ -8,14 +8,10 @@ export const fetchProfileDetails = async (
   fresh?: boolean
 ) => {
   try {
-    const url =
-      list !== undefined
-        ? `${process.env.NEXT_PUBLIC_EFP_API_URL}/lists/${list}/details${
-            fresh ? '?cache=fresh' : ''
-          }`
-        : `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/details${
-            fresh ? '?cache=fresh' : ''
-          }`
+    const url = `${process.env.NEXT_PUBLIC_EFP_API_URL}/${list === undefined ? 'users' : 'lists'}/${
+      list ?? addressOrName
+    }/details${fresh ? '?cache=fresh' : ''}`
+
     const response = await fetch(url, {
       cache: 'default',
       headers: {

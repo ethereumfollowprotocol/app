@@ -1,9 +1,54 @@
 import type { ChainWithDetails } from '#/lib/wagmi'
-import { useChains } from 'wagmi'
+import { useCallback, useEffect, useState } from 'react'
+import { useChainId, useChains, useSwitchChain, useWalletClient } from 'wagmi'
 
-const useChain = (chainId: number | undefined) => {
+const useChain = () => {
+  const { switchChain } = useSwitchChain()
+  const initialCurrentChainId = useChainId()
+  const { data: walletClient } = useWalletClient()
+
+  const [currentChainId, setCurrentChainId] = useState(initialCurrentChainId)
+  const getCurrentChain = useCallback(async () => {
+    if (!walletClient) return
+
+    const chainId = await walletClient.getChainId()
+    setCurrentChainId(chainId)
+  }, [walletClient])
+
+  useEffect(() => {
+    getCurrentChain()
+  }, [walletClient])
+
+  const checkChain = useCallback(
+    ({
+      chainId,
+      onSuccess,
+      onError
+    }: {
+      chainId: number
+      onSuccess?: () => void
+      onError?: () => void
+    }) => {
+      if (!chainId) return false
+      if (currentChainId !== chainId) {
+        switchChain({ chainId }, { onSuccess, onError })
+        return false
+      }
+
+      return true
+    },
+    [currentChainId, switchChain]
+  )
+
   const chains = useChains() as unknown as ChainWithDetails[] // TODO: Fix this type issue
-  return chains.find(chain => chain.id === chainId)
+  const getChain = (chainId: number | undefined) => chains.find(chain => chain.id === chainId)
+
+  return {
+    getChain,
+    checkChain,
+    currentChainId,
+    setCurrentChainId
+  }
 }
 
 export default useChain

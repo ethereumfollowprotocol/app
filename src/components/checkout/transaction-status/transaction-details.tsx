@@ -15,7 +15,9 @@ const TransactionDetails = ({
   action: Action
   isLastAction?: boolean
 }) => {
-  const chain = useChain(action.chainId)
+  const { getChain } = useChain()
+  const chain = getChain(action.chainId)
+
   const { totalCartItems } = useCart()
   const { t } = useTranslation()
   const { isPending, isSuccess, isError, error } = useWaitForTransactionReceipt({

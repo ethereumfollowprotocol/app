@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { IoCartSharp } from 'react-icons/io5'
 
-import { formatNumber } from '#/utils/formatNumber'
+import { formatNumber } from '#/utils/format/format-number'
 import HalloweenCart from 'public/assets/icons/halloween-cart.png'
 
 const CartButton = ({ cartItemsCount }: { cartItemsCount: number }) => {

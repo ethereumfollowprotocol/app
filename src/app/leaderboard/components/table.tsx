@@ -19,7 +19,7 @@ import useLeaderboard from '../hooks/useLeaderboard.ts'
 import type { LeaderboardItem } from '#/types/requests.ts'
 import type { LeaderboardFilter } from '#/types/common.ts'
 import LoadingCell from '#/components/loaders/loading-cell.tsx'
-import { formatNumberLeaderboard } from '#/utils/formatNumber.ts'
+import { formatNumberLeaderboard } from '#/utils/format/format-number.ts'
 
 const LeaderboardStatNames = ['addresses', 'lists', 'list ops', 'unique users']
 

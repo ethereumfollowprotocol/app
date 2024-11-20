@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 
 import { cn } from '#/lib/utilities'
-import { formatNumber } from '#/utils/formatNumber'
+import { formatNumber } from '#/utils/format/format-number'
 import LoadingCell from '#/components/loaders/loading-cell'
 
 interface LeaderboardRanksProps {

@@ -6,8 +6,8 @@ import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-quer
 
 import type { LeaderboardFilter } from '#/types/common'
 import type { LeaderboardItem } from '#/types/requests'
-import { fetchleaderboard } from '#/api/fetchLeaderboard'
-import { fetchLeaderboardStats } from '#/api/fetchLeaderboardStats'
+import { fetchleaderboard } from '#/api/leaderboard/fetch-leaderboard'
+import { fetchLeaderboardStats } from '#/api/leaderboard/fetch-leaderboard-stats'
 import { LEADERBOARD_CHUNK_SIZE, LEADERBOARD_FETCH_LIMIT_PARAM, SECOND } from '#/lib/constants'
 
 const useLeaderboard = () => {

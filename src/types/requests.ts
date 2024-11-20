@@ -230,6 +230,8 @@ export type ProfileRoles = {
   isManager: boolean
   isUser: boolean
   listChainId: number
+  listRecordsContract: Address
+  listSlot: bigint
 }
 
 export type AccountResponseType = {

@@ -34,17 +34,19 @@ import type {
   FollowingTagsResponse
 } from '#/types/requests'
 import { useCart } from './cart-context'
-import { fetchProfileRoles } from '#/api/fetchProfileRoles'
-import { fetchProfileLists } from '#/api/fetchProfileLists'
+import { DEFAULT_CHAIN } from '#/lib/constants/chains'
 import type { ProfileTableTitleType } from '#/types/common'
-import { fetchProfileStats } from '#/api/fetchProfileStats'
-import { fetchProfileDetails } from '#/api/fetchProfileDetails'
-import { fetchProfileFollowers } from '#/api/fetchProfileFollowers'
-import { fetchProfileFollowing } from '#/api/fetchProfileFollowing'
-import { fetchProfileAllFollowings } from '#/api/fetchProfileAllFollowings'
-import { fetchFollowerTags, nullFollowerTags } from '#/api/fetchFollowerTags'
-import { fetchFollowingTags, nullFollowingTags } from '#/api/fetchFollowingTags'
+import { fetchProfileRoles } from '#/api/profile/fetch-profile-roles'
+import { fetchProfileLists } from '#/api/profile/fetch-profile-lists'
+import { fetchProfileStats } from '#/api/profile/fetch-profile-stats'
+import { fetchProfileDetails } from '#/api/profile/fetch-profile-details'
+import { fetchProfileFollowers } from '#/api/followers/fetch-profile-followers'
+import { fetchProfileFollowing } from '#/api/following/fetch-profile-following'
+import { fetchProfileAllFollowings } from '#/api/following/fetch-profile-all-followings'
+import { fetchFollowerTags, nullFollowerTags } from '#/api/followers/fetch-follower-tags'
+import { fetchFollowingTags, nullFollowingTags } from '#/api/following/fetch-following-tags'
 import { BLOCKED_MUTED_TAGS, DEFAULT_TAGS_TO_ADD, FETCH_LIMIT_PARAM } from '#/lib/constants'
+import { coreEfpContracts } from '#/lib/constants/contracts'
 
 // Define the type for the profile context
 type EFPProfileContextType = {
@@ -516,7 +518,9 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
           isOwner: true,
           isManager: true,
           isUser: true,
-          listChainId: 0
+          listChainId: DEFAULT_CHAIN.id,
+          listRecordsContract: coreEfpContracts.EFPListRecords,
+          listSlot: BigInt(0)
         }
 
       const fetchedRoles = await fetchProfileRoles({

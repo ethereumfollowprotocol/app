@@ -10,9 +10,9 @@ import {
   FOUNDATION_ADDRESSES
 } from '#/lib/constants/team'
 import LoadingCell from '#/components/loaders/loading-cell'
-import { fetchProfileStats } from '#/api/fetchProfileStats'
+import { fetchProfileStats } from '#/api/profile/fetch-profile-stats'
 import UserProfileCard from '#/components/user-profile-card'
-import { fetchProfileDetails } from '#/api/fetchProfileDetails'
+import { fetchProfileDetails } from '#/api/profile/fetch-profile-details'
 
 const Members = () => {
   const { data: teamProfiles, isLoading: teamIsLoading } = useQuery({

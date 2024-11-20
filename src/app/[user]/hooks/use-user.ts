@@ -4,13 +4,13 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 
 import { FETCH_LIMIT_PARAM } from '#/lib/constants'
 import type { ProfileTableTitleType } from '#/types/common'
-import { fetchProfileStats } from '#/api/fetchProfileStats'
-import { fetchProfileDetails } from '#/api/fetchProfileDetails'
-import { fetchProfileFollowers } from '#/api/fetchProfileFollowers'
-import { fetchProfileFollowing } from '#/api/fetchProfileFollowing'
-import { fetchFollowerTags, nullFollowerTags } from '#/api/fetchFollowerTags'
-import { fetchFollowingTags, nullFollowingTags } from '#/api/fetchFollowingTags'
+import { fetchProfileStats } from '#/api/profile/fetch-profile-stats'
+import { fetchProfileDetails } from '#/api/profile/fetch-profile-details'
+import { fetchProfileFollowers } from '#/api/followers/fetch-profile-followers'
+import { fetchProfileFollowing } from '#/api/following/fetch-profile-following'
+import { fetchFollowerTags, nullFollowerTags } from '#/api/followers/fetch-follower-tags'
 import type { FollowerResponse, FollowingResponse, FollowSortType } from '#/types/requests'
+import { fetchFollowingTags, nullFollowingTags } from '#/api/following/fetch-following-tags'
 
 const useUser = (user: string) => {
   const [fetchFreshProfile, setFetchFreshProfile] = useState(false)

@@ -34,7 +34,8 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
   openPoapModal
 }) => {
   const { actions, currentAction, currentActionIndex, allActionsSuccessful } = useActions()
-  const chain = useChain(currentAction?.chainId)
+  const { getChain } = useChain()
+  const chain = getChain(currentAction?.chainId)
   const { isSuccess, isLoading } = useWaitForTransactionReceipt({
     hash: currentAction?.txHash,
     chainId: currentAction?.chainId

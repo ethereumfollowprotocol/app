@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Avatar } from '#/components/avatar'
 import { truncateAddress } from '#/lib/utilities'
 import LoadingCell from '#/components/loaders/loading-cell'
-import { fetchRecommendations } from '#/api/fetchRecommendations'
+import { fetchRecommendations } from '#/api/recommended/fetch-recommendations'
 
 const SocialGraphArt = () => {
   const { isLoading, data: socialGraphProfiles } = useQuery({

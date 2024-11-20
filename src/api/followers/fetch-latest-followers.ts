@@ -1,4 +1,4 @@
-import { formatQueryParams } from '#/utils/formatQueryParams'
+import { formatQueryParams } from '#/utils/format/format-query-params'
 import type { ProfileListProfile } from '#/components/profile-list'
 import type { InfiniteProfileQueryProps, LatestFollowersResponse } from '#/types/requests'
 

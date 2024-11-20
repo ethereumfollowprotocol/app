@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 import type { ProfileListProfile } from '..'
-import { yieldToMain } from '#/utils/yieldToMain'
+import { yieldToMain } from '#/utils/yield-to-main'
 import { useCart } from '#/contexts/cart-context'
 import type { ImportPlatformType } from '#/types/common'
 import { useEFPProfile } from '#/contexts/efp-profile-context'

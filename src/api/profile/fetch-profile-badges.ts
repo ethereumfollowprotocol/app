@@ -6,14 +6,10 @@ export const fetchProfileBadges = async (
   fresh?: boolean
 ) => {
   try {
-    const url =
-      list !== undefined
-        ? `${process.env.NEXT_PUBLIC_EFP_API_URL}/lists/${list}/badges${
-            fresh ? '?cache=fresh' : ''
-          }`
-        : `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/badges${
-            fresh ? '?cache=fresh' : ''
-          }`
+    const url = `${process.env.NEXT_PUBLIC_EFP_API_URL}/${list === undefined ? 'users' : 'lists'}/${
+      list ?? addressOrName
+    }/badges${fresh ? '?cache=fresh' : ''}`
+
     const response = await fetch(url, {
       cache: 'default',
       headers: {

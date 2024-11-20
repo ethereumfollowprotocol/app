@@ -4,7 +4,7 @@ import { useAccount, useWalletClient } from 'wagmi'
 
 import * as abi from 'src/lib/abi.ts'
 import { DEFAULT_CHAIN } from '#/lib/constants/chains'
-import { generateListStorageLocationSlot } from '#/utils/generateSlot'
+import { generateListStorageLocationSlot } from '#/utils/generate-slot'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts.ts'
 
 export function useMintEFP() {

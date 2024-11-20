@@ -15,7 +15,7 @@ import {
 } from '#/lib/constants/follow-button'
 import { cn } from '#/lib/utilities'
 import LoadingCell from '../loaders/loading-cell'
-import { useCoolMode } from '#/hooks/useCoolMode'
+import { useCoolMode } from '#/hooks/use-cool-mode'
 import { useSounds } from '#/contexts/sounds-context'
 import MainnetBlack from 'public/assets/mainnet-black.svg'
 import { useFollowButton } from './hooks/use-follow-button'
@@ -91,8 +91,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
           e.stopPropagation()
 
           if (!userAddress && openConnectModal) return openConnectModal()
-
-          if (clickSound) soundRef.current?.play()
+          if (clickSound && !actionsSoundsMuted) soundRef.current?.play()
 
           setDisableHover(true)
           handleAction()

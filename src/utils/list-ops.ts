@@ -1,5 +1,8 @@
 import { fromHex, toHex, type Address } from 'viem'
 import type { ListOp, TagListOp } from '#/types/list-op'
+import { DEFAULT_CHAIN } from '#/lib/constants/chains'
+import { LIST_OP_LIMITS } from '#/lib/constants/chains'
+import type { CartItem } from '#/contexts/cart-context'
 
 export const listOpAddListRecord = (address: Address): ListOp => {
   return {
@@ -44,4 +47,14 @@ export const extractAddressAndTag = (listOp: TagListOp): { address: Address; tag
 // Type guard to check if a ListOp is a TagListOp
 export const isTagListOp = (listOp: ListOp): listOp is TagListOp => {
   return listOp.opcode === 3 || listOp.opcode === 4
+}
+
+export const splitListOps = (listOps: CartItem[], chainId: number) => {
+  const splitSize = LIST_OP_LIMITS[chainId || DEFAULT_CHAIN.id] || 1000
+  const splitListOps: CartItem[][] = []
+  for (let i = 0; i < listOps.length; i += splitSize) {
+    splitListOps.push(listOps.slice(i, i + splitSize))
+  }
+
+  return splitListOps
 }

@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 
 import { cn } from '#/lib/utilities'
-import { formatNumber } from '#/utils/formatNumber'
+import { formatNumber } from '#/utils/format/format-number'
 import type { ProfileStatsType } from '#/types/common'
 
 interface ProfileListItemCountsProps {

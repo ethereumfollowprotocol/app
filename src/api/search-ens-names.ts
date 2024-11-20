@@ -2,6 +2,19 @@ import type { Address } from 'viem'
 import { normalize } from 'viem/ens'
 import { ENS_SUBGRAPH_URL } from '#/lib/constants'
 
+const searchQuery = /*GraphQL*/ `
+  query SearchQuery($search: String) {
+    domains(
+      where: {and: [{name_starts_with: $search}]}
+      orderBy: labelName
+      orderDirection: asc
+    ) {
+      name
+      resolvedAddress { id }
+    }
+  }
+`
+
 export const searchENSNames = async ({ search }: { search: string }) => {
   const sanitizedSearch = normalize(search.trim())
   if (search.length === 0) return []
@@ -10,17 +23,7 @@ export const searchENSNames = async ({ search }: { search: string }) => {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      query: /*GraphQL*/ `
-        query SearchQuery($search: String) {
-          domains(
-            where: {and: [{name_starts_with: $search}]}
-            orderBy: labelName
-            orderDirection: asc
-          ) {
-            name
-            resolvedAddress { id }
-          }
-        }`,
+      query: searchQuery,
       variables: { search: sanitizedSearch },
       operationName: 'SearchQuery'
     })
