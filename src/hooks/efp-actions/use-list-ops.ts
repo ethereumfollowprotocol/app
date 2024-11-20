@@ -7,8 +7,8 @@ import type { CartItem } from '#/contexts/cart-context'
 interface GetListOpsTransactionProps {
   nonce: bigint
   items: CartItem[]
+  selectedList?: number
   listRecordsContract: Address
-  selectedList: number | undefined
 }
 
 export const useListOps = () => {
