@@ -134,11 +134,6 @@ const useCheckout = () => {
     setActions()
   }, [setActions])
 
-  // Handle selecting a chain
-  const handleChainClick = useCallback((chainId: number) => {
-    setSelectedChainId(chainId)
-  }, [])
-
   // Move to the next step
   const moveToInitiateTransactions = useCallback(() => {
     if (!selectedChain) return
@@ -219,7 +214,7 @@ const useCheckout = () => {
     selectedChainId,
     claimPoapModalOpen,
     setSelectedChainId,
-    handleChainClick,
+    handleChainClick: setSelectedChainId,
     setClaimPoapModalOpen,
     onInitiateActions,
     moveToInitiateTransactions,
