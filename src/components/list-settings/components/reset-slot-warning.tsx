@@ -1,6 +1,7 @@
-import CancelButton from '#/components/buttons/cancel-button'
-import Modal from '#/components/modal'
 import { useTranslation } from 'react-i18next'
+
+import Modal from '#/components/modal'
+import CancelButton from '#/components/buttons/cancel-button'
 
 interface ResetSlotWarningProps {
   closeModal: () => void

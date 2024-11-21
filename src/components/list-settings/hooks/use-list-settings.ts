@@ -11,12 +11,15 @@ import { useEffect, useState } from 'react'
 import { useAccount, useChains } from 'wagmi'
 import { useQuery } from '@tanstack/react-query'
 
+import { SECOND } from '#/lib/constants'
 import { efpListRecordsAbi } from '#/lib/abi'
 import { resolveEnsAddress } from '#/utils/ens'
-import { MINUTE, SECOND } from '#/lib/constants'
+import type { ListSettingsKey } from '#/types/common'
 import { DEFAULT_CHAIN } from '#/lib/constants/chains'
+import { fetchListState } from '#/api/fetch-list-state'
 import { rpcProviders } from '#/lib/constants/rpc-providers'
-import type { FollowingResponse, ProfileDetailsResponse } from '#/types/requests'
+import type { ProfileDetailsResponse } from '#/types/requests'
+import { INITIAL_CHANGED_VALUES } from '#/lib/constants/list-settings'
 import { coreEfpContracts, listRegistryContract } from '#/lib/constants/contracts'
 
 const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; list: number }) => {
@@ -25,14 +28,17 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
   const [fetchedChain, setFetchedChain] = useState<Chain>()
 
   const [isListSettingsLoading, setIsListSettingsLoading] = useState(false)
+
   const [user, setUser] = useState<string>('')
   const [userLoading, setUserLoading] = useState(false)
   const [currentUser, setCurrentUser] = useState<string>('')
   const [fetchedUser, setFetchedUser] = useState<string>('')
+
   const [owner, setOwner] = useState<string>('')
   const [ownerLoading, setOwnerLoading] = useState(false)
   const [currentOwner, setCurrentOwner] = useState<string>('')
   const [fetchedOwner, setFetchedOwner] = useState<string>('')
+
   const [manager, setManager] = useState<string>('')
   const [managerLoading, setManagerLoading] = useState(false)
   const [currentManager, setCurrentManager] = useState<string>('')
@@ -42,15 +48,7 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
     ? Number(profile.primary_list) === list
     : false
   const [isPrimaryList, setIsPrimaryList] = useState(initialPrimaryListState)
-
-  const [changedValues, setChangedValues] = useState({
-    chain: false,
-    owner: false,
-    manager: false,
-    user: false,
-    setPrimary: false,
-    resetSlot: false
-  })
+  const [changedValues, setChangedValues] = useState(INITIAL_CHANGED_VALUES)
 
   const { address: connectedAddress } = useAccount()
 
@@ -69,18 +67,14 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
     setValue: (value: string) => void
     setLoading: (loading: boolean) => void
     onValueChange: () => void
-    key: 'user' | 'owner' | 'manager' | 'chain' | 'setPrimary' | 'resetSlot'
+    key: ListSettingsKey
   }) => {
     if (isAddress(currentValue) && currentValue.toLowerCase() !== fetchedValue?.toLowerCase()) {
       setValue(currentValue)
       setLoading(false)
       if (checkPrimaryList && currentValue.toLowerCase() === connectedAddress?.toLowerCase())
         setIsPrimaryList(false)
-      return setChangedValues(currValues => ({
-        ...currValues,
-        user: true,
-        setPrimary: false
-      }))
+      return onValueChange()
     }
 
     if (currentValue.includes('.')) {
@@ -100,13 +94,9 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
     if (changedValues[key]) {
       setValue('')
       onValueChange()
-      setChangedValues(currValues => ({
-        ...currValues,
-        user: false,
-        setPrimary: isPrimaryList !== initialPrimaryListState
-      }))
     }
-    setUserLoading(false)
+
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -206,12 +196,7 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
 
   const { data: listState, isLoading: isListStateLoading } = useQuery({
     queryKey: ['list state', list],
-    queryFn: async () => {
-      const listStateReq = await fetch(`${process.env.NEXT_PUBLIC_EFP_API_URL}/exportState/${list}`)
-      const listStateRes = (await listStateReq.json()) as { following: FollowingResponse[] }
-      return listStateRes.following as FollowingResponse[]
-    },
-    staleTime: 5 * MINUTE
+    queryFn: async () => await fetchListState(list)
   })
 
   const [fetchedSlot, setFetchedSlot] = useState<bigint>()
@@ -270,14 +255,7 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
   useEffect(() => {
     setIsListSettingsLoading(true)
     fetchListData()
-    setChangedValues({
-      chain: false,
-      owner: false,
-      manager: false,
-      user: false,
-      setPrimary: false,
-      resetSlot: false
-    })
+    setChangedValues(INITIAL_CHANGED_VALUES)
   }, [profile, list])
 
   return {

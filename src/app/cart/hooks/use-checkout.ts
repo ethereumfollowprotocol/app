@@ -19,6 +19,7 @@ import { useMintEFP } from '../../../hooks/efp-actions/use-mint-efp'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
 import { usePoapModal } from '../../../components/claim-poap-modal/use-poap-modal'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
+import { refetchState, resetFollowingRelatedQueries } from '#/utils/reset-queries'
 
 const useCheckout = () => {
   const { actions, addActions, resetActions, handleNextAction, handleInitiateActions } =
@@ -148,14 +149,9 @@ const useCheckout = () => {
     // Track event for mobile or desktop (not essential)
     triggerCustomEvent(listHasBeenMinted ? 'Mint' : 'Checkout')
 
-    if (fetchFreshStats) refetchStats()
-    else setFetchFreshStats(true)
-
+    refetchState(fetchFreshStats, setFetchFreshStats, refetchStats)
     setIsRefetchingFollowing(true)
-    // Invalidate the queries related to following state
-    queryClient.invalidateQueries({ queryKey: ['top8'] })
-    queryClient.invalidateQueries({ queryKey: ['follow state'] })
-    queryClient.invalidateQueries({ queryKey: ['list state'] })
+    resetFollowingRelatedQueries(queryClient)
 
     if (listHasBeenMinted || selectedList === undefined) {
       if (setNewListAsPrimary)
@@ -164,11 +160,8 @@ const useCheckout = () => {
       setIsRefetchingProfile(true)
       setSetNewListAsSelected(true)
 
-      if (fetchFreshLists) refetchLists()
-      else setFetchFreshLists(true)
-
-      if (fetchFreshProfile) refetchProfile()
-      else setFetchFreshProfile(true)
+      refetchState(fetchFreshLists, setFetchFreshLists, refetchLists)
+      refetchState(fetchFreshProfile, setFetchFreshProfile, refetchProfile)
 
       router.push('/loading')
       return
