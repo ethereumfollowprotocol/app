@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
+
 import SocialGraphArt from './social-graph-art'
 import LineDesktop from 'public/assets/lines/desktop/line-2.svg'
 import LineDesktopTop from 'public/assets/lines/desktop/line-1.svg'
@@ -17,12 +18,6 @@ export default function SocialGraph() {
         <p className='text-center lg:text-start'>{t('social graph first')}</p>
         <p className='text-[#ffb4a1] text-center lg:text-start'>{t('social graph second')}</p>
       </div>
-      {/* <Image
-        src={SocialGraphImage}
-        alt='Social Graph'
-        width={500}
-        className='pointer-events-none z-10 mr-8 md:mr-10 w-[330px] md:w-[450px] lg:w-[425px] xl:w-[500px]'
-      /> */}
       <SocialGraphArt />
       <Image
         src={LineDesktopTop}

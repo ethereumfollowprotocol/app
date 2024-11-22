@@ -168,10 +168,9 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
           ref={ref}
           className={cn(
             'flex flex-col px-3 sm:px-0',
-            BLOCKED_MUTED_TABS.includes(title) && 'xl:overflow-y-scroll',
-            BLOCKED_MUTED_TABS.includes(title) && showTags
-              ? 'profile-page-table-tags'
-              : 'profile-page-table'
+            !BLOCKED_MUTED_TABS.includes(title) && 'xl:overflow-y-scroll',
+            !BLOCKED_MUTED_TABS.includes(title) &&
+              (showTags ? 'profile-page-table-tags' : 'profile-page-table')
           )}
         >
           <ProfileList
