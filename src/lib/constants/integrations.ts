@@ -21,6 +21,7 @@ import VibesScapes from 'public/assets/partners/vibesscapes.jpeg'
 import EngagementVision from 'public/assets/partners/engagementvision.jpeg'
 import DevconCollabPortal from 'public/assets/partners/devconcollabportal.jpeg'
 import DevconPassport from 'public/assets/partners/devconpassport.jpeg'
+import ETHTools from 'public/assets/partners/ethtools.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -127,6 +128,11 @@ export const INTEGRATIONS = [
     name: 'Devcon VI Passport',
     url: 'https://app.devcon.org/',
     logo: DevconPassport
+  },
+  {
+    name: 'ETH Tools',
+    url: 'https://ethtools.com/',
+    logo: ETHTools
   }
 ] as {
   name: string
