@@ -8,14 +8,12 @@ interface LoadingProfileCardProps {
   isResponsive?: boolean
   hideFollowButton?: boolean
   isStatic?: boolean
-  isRecommended?: boolean
 }
 
 const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
   isResponsive,
   hideFollowButton,
-  isStatic,
-  isRecommended
+  isStatic
 }) => {
   const { t } = useTranslation()
   const { openConnectModal } = useConnectModal()

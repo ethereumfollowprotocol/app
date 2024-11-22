@@ -161,7 +161,7 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
           toggleSelectedTags={toggleSelectedTags}
           isShowingBlocked={isShowingBlocked}
         />
-        {!isLoading && results?.length === 0 && (
+        {!isLoading && results.length === 0 && (
           <div className='text-center font-bold py-4 px-2'>{noResults}</div>
         )}
         <div
