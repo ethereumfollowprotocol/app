@@ -25,17 +25,15 @@ const useChain = () => {
       onSuccess,
       onError
     }: {
-      chainId: number
+      chainId?: number
       onSuccess?: () => void
       onError?: () => void
     }) => {
       if (!chainId) return false
-      if (currentChainId !== chainId) {
-        switchChain({ chainId }, { onSuccess, onError })
-        return false
-      }
+      if (currentChainId === chainId) return true
 
-      return true
+      switchChain({ chainId }, { onSuccess, onError })
+      return false
     },
     [currentChainId, switchChain]
   )

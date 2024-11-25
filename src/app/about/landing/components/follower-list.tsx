@@ -2,8 +2,8 @@
 
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
-import LineDesktop from 'public/assets/lines/desktop/line-4.svg'
 import LineMobile from 'public/assets/lines/mobile/line-6.svg'
+import LineDesktop from 'public/assets/lines/desktop/line-4.svg'
 import FollowerListArt from 'public/assets/art/follower-list.svg'
 
 const FollowerList = () => {

@@ -1,7 +1,8 @@
 'use client'
 
+import { useState } from 'react'
 import { useTheme } from 'next-themes'
-import { useEffect, useState } from 'react'
+import { useIsClient } from '@uidotdev/usehooks'
 import { WagmiProvider, type State } from 'wagmi'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { darkTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit'
@@ -35,11 +36,8 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
       })
   )
 
+  const isClient = useIsClient()
   const { resolvedTheme } = useTheme()
-  const [isClient, setIsClient] = useState(false)
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
 
   return (
     <QueryClientProvider client={queryClient}>

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-export default function NotFound() {
+const NotFound = () => {
   return (
     <main>
       <h2>Not Found</h2>
@@ -9,3 +9,5 @@ export default function NotFound() {
     </main>
   )
 }
+
+export default NotFound

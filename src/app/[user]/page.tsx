@@ -14,13 +14,14 @@ export function generateMetadata({ params }: Props): Metadata {
     ? (truncateAddress(params.user) as string)
     : params.user
   const isList = Number.isInteger(Number(user)) && !(isAddress(user) || isHex(user))
+  const displayUser = isList ? `List #${user}` : truncatedUser
 
   return {
-    title: `${isList ? `List #${user}` : truncatedUser} | EFP`,
+    title: `${displayUser} | EFP`,
     openGraph: {
-      title: `${isList ? `List #${user}` : truncatedUser} | EFP`,
-      siteName: `${isList ? `List #${user}` : truncatedUser} - EFP profile`,
-      description: `${isList ? `List #${user}` : truncatedUser} - EFP profile`,
+      title: `${displayUser} | EFP`,
+      siteName: `${displayUser} - EFP profile`,
+      description: `${displayUser} - EFP profile`,
       url: `https://ethfollow.xyz/${user}`,
       images: [
         {

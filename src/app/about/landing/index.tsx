@@ -1,8 +1,8 @@
+import Phrase from './components/phrase'
 import SocialGraph from './components/social-graph'
 import FollowGhost from './components/follow-ghost'
 import FollowerList from './components/follower-list'
 import LaunchPartners from './components/launch-partners'
-import Phrase from './components/phrase'
 
 const Landing = () => {
   return (

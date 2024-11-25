@@ -18,8 +18,8 @@ const TransactionDetails = ({
   const { getChain } = useChain()
   const chain = getChain(action.chainId)
 
-  const { totalCartItems } = useCart()
   const { t } = useTranslation()
+  const { totalCartItems } = useCart()
   const { isPending, isSuccess, isError, error } = useWaitForTransactionReceipt({
     hash: action.txHash,
     chainId: action.chainId
@@ -36,9 +36,6 @@ const TransactionDetails = ({
     if (action.isConfirmationError) return `${t('error')}: ${t('confirmation error')}`
     if (isPending) return 'pending'
     if (isSuccess) return 'successful'
-    // if (isLastAction && isLastActionSuccessful) return t('successful')
-    // if (isLastAction && isSuccess) return t('finishing')
-    // if (isLastAction && !isLastActionSuccessful) return t('pending')
     if (isError) return `${t('error')} ${error}`
   }, [
     action.isPendingConfirmation,
@@ -55,9 +52,6 @@ const TransactionDetails = ({
     if (action.isConfirmationError) return 'text-salmon-500'
     if (isPending) return 'text-kournikova-600 loading-ellipsis'
     if (isSuccess) return 'text-lime-600'
-    // if (isLastAction && isLastActionSuccessful) return 'text-lime-600'
-    // if (isLastAction && isSuccess) return 'text-kournikova-600'
-    // if (isLastAction && !isLastActionSuccessful) return 'text-kournikova-600'
     if (isError) return 'text-red-600'
   }, [
     action.isPendingConfirmation,

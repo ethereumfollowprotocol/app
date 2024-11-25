@@ -19,13 +19,13 @@ export const metadata: Metadata = {
   }
 }
 
-export default function EditorPage() {
-  return (
-    <main
-      suppressHydrationWarning={true}
-      className='flex flex-col-reverse xl:flex-row gap-4 min-h-full xl:h-screen w-full items-center xl:items-start xl:justify-center text-center'
-    >
-      <Cart />
-    </main>
-  )
-}
+const CartPage = () => (
+  <main
+    suppressHydrationWarning={true}
+    className='flex flex-col-reverse xl:flex-row gap-4 min-h-full xl:h-screen w-full items-center xl:items-start xl:justify-center text-center'
+  >
+    <Cart />
+  </main>
+)
+
+export default CartPage

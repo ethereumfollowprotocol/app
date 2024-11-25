@@ -4,13 +4,13 @@ import { ChainIcon } from '#/components/chain-icon'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
 import { Step } from '../types'
+import { SECOND } from '#/lib/constants'
 import useChain from '#/hooks/use-chain'
 import { useCart } from '#/contexts/cart-context'
 import TransactionDetails from './transaction-details'
 import { useActions } from '#/contexts/actions-context'
 import CancelButton from '#/components/buttons/cancel-button'
 import { PrimaryButton } from '#/components/buttons/primary-button'
-import { SECOND } from '#/lib/constants'
 
 interface TransactionStatusProps {
   onFinish: () => void
@@ -23,8 +23,6 @@ interface TransactionStatusProps {
 /**
  * @description Component for displaying the status of an onchain transaction
  * and the details of the action being executed
- *
- * The component also provides a button to move to the next action, using the actions-context
  */
 const TransactionStatus: React.FC<TransactionStatusProps> = ({
   onFinish,

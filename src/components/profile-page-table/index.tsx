@@ -106,14 +106,15 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
 
       if (results.length > 0 && results.length % FETCH_LIMIT_PARAM === 0) fetchMore()
     }, [entry?.isIntersecting, results])
+    const profilesEmpty = !isLoading && results.length === 0
 
     const noResults = {
       following:
         search.length > 2 ? (
-          <div className='justify-center min-h-12 flex items-center font-bold'>{t('none')}</div>
+          <div className='justify-center h-full flex items-center font-bold'>{t('none')}</div>
         ) : (
-          <div className='text-center min-h-12  font-bold'>
-            <div className='flex flex-col justify-center min-h-12 gap-4 items-center'>
+          <div className='text-center h-full font-bold'>
+            <div className='flex flex-col justify-center h-full gap-4 items-center'>
               <p className='text-xl italic'>
                 {t(isProfile ? 'following myprofile empty first' : 'following empty first')}
               </p>
@@ -127,9 +128,9 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
         ),
       followers:
         search.length > 2 ? (
-          <div className='justify-center min-h-12 flex items-center font-bold'>{t('none')}</div>
+          <div className='justify-center h-full flex items-center font-bold'>{t('none')}</div>
         ) : (
-          <p className='text-xl italic flex justify-center items-center min-h-12'>
+          <p className='text-xl italic flex h-full justify-center items-center min-h-12'>
             {t(isProfile ? 'followers myprofile empty' : 'followers empty')}
           </p>
         ),
@@ -161,15 +162,17 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
           toggleSelectedTags={toggleSelectedTags}
           isShowingBlocked={isShowingBlocked}
         />
-        {!isLoading && results.length === 0 && (
-          <div className='text-center font-bold py-4 px-2'>{noResults}</div>
+        {profilesEmpty && (
+          <div className='text-center font-bold h-[152px] py-4 content-center px-2'>
+            {noResults}
+          </div>
         )}
         <div
           ref={ref}
           className={cn(
             'flex flex-col px-3 sm:px-0',
             !BLOCKED_MUTED_TABS.includes(title) && 'xl:overflow-y-scroll',
-            !BLOCKED_MUTED_TABS.includes(title) &&
+            !(BLOCKED_MUTED_TABS.includes(title) || profilesEmpty) &&
               (showTags ? 'profile-page-table-tags' : 'profile-page-table')
           )}
         >

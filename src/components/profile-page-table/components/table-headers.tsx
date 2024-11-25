@@ -201,7 +201,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
           </div>
         </div>
       </div>
-      {tagsEmpty && (
+      {showTags && tagsEmpty && (
         <p className='text-center w-full font-bold text-text/40 italic'>{t('no tags')}</p>
       )}
       {showTags && (

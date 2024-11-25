@@ -5,8 +5,8 @@ import { useClickAway } from '@uidotdev/usehooks'
 
 import { BLOCKED_MUTED_TABS } from '#/lib/constants'
 import { useIsEditView } from '#/hooks/use-is-edit-view'
-import type { BlockedMutedTabType } from '#/types/common'
 import UserProfilePageTable from '../profile-page-table'
+import type { BlockedMutedTabType } from '#/types/common'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import useBlockedMuted, { EMPTY_COUNT_TAGS, TAGS } from './hooks/use-blocked-muted'
 
@@ -78,7 +78,6 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ user, list, isManager, onCl
   ]
 
   const displayedBlocking = isMyProfile && !selectedList ? [] : blocking
-
   const tableRef = useRef<HTMLDivElement>(null)
 
   const mobileActiveEl = {

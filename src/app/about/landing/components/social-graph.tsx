@@ -9,7 +9,7 @@ import LineDesktopTop from 'public/assets/lines/desktop/line-1.svg'
 import LineMobileFirst from 'public/assets/lines/mobile/line-2.svg'
 import LineMobileSecond from 'public/assets/lines/mobile/line-3.svg'
 
-export default function SocialGraph() {
+const SocialGraph = () => {
   const { t } = useTranslation()
 
   return (
@@ -46,3 +46,5 @@ export default function SocialGraph() {
     </div>
   )
 }
+
+export default SocialGraph

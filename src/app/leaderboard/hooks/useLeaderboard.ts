@@ -74,7 +74,7 @@ const useLeaderboard = () => {
       const data = await fetchLeaderboardStats()
       return data
     },
-    refetchInterval: 600000
+    refetchInterval: 60000
   })
 
   const {

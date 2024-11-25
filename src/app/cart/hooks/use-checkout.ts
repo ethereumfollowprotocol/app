@@ -18,8 +18,8 @@ import { triggerCustomEvent } from '#/utils/trigger-custom-event'
 import { useMintEFP } from '../../../hooks/efp-actions/use-mint-efp'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
 import { usePoapModal } from '../../../components/claim-poap-modal/use-poap-modal'
-import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
 import { refetchState, resetFollowingRelatedQueries } from '#/utils/reset-queries'
+import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
 
 const useCheckout = () => {
   const { actions, addActions, resetActions, handleNextAction, handleInitiateActions } =
@@ -122,7 +122,7 @@ const useCheckout = () => {
       isPendingConfirmation: false
     }
 
-    // add Create list action if user doesn't have the EFP list yet
+    // add Create list action if user doesn't have a List yet
     const actionsToExecute = selectedList
       ? [...cartItemActions]
       : listOpsFinished

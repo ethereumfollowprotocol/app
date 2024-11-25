@@ -5,7 +5,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL
 
 const validRoutes = ['page.tsx', 'route.tsx', 'route.ts']
 
-export default function sitemap(): MetadataRoute.Sitemap {
+const sitemap = (): MetadataRoute.Sitemap => {
   const appDirectoryPath = fs.realpathSync(`${process.cwd()}/src/app`)
 
   const allIndexibleRoutes = fs
@@ -28,3 +28,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7
   }))
 }
+
+export default sitemap

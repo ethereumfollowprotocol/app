@@ -166,8 +166,8 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
   )
 
   const handleInitiateActions = useCallback(
-    async (onExecute: () => void) => {
-      const chainId = await getRequiredChain(currentActionIndex)
+    (onExecute: () => void) => {
+      const chainId = actions[currentActionIndex || 0]?.chainId
       const isCorrectChain = checkChain({ chainId, onSuccess: onExecute })
       if (!isCorrectChain) return
 
@@ -177,8 +177,8 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
     [executeActionByIndex, checkChain, getRequiredChain]
   )
 
-  const handleNextAction = async (onChainSwitch: () => void) => {
-    const chainId = await getRequiredChain(currentActionIndex + 1)
+  const handleNextAction = (onChainSwitch: () => void) => {
+    const chainId = actions[currentActionIndex + 1]?.chainId
     const isCorrectChain = checkChain({ chainId, onSuccess: onChainSwitch })
     if (!isCorrectChain) return
 

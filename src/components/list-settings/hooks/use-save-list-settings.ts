@@ -383,7 +383,7 @@ const useSaveListSettings = ({
         const cartItemActions: Action[] = splitCartItems.map((listOps, i) => ({
           id: `${EFPActionType.UpdateEFPList} ${i}`, // Unique identifier for the action
           type: EFPActionType.UpdateEFPList,
-          label: `Transfer List State ${i + 1}/${splitListOps.length}`,
+          label: `Transfer List State ${i + 1}/${splitCartItems.length}`,
           chainId: newChain.id,
           execute: async () => await listOpTx(listOps),
           isPendingConfirmation: false

@@ -24,8 +24,8 @@ const useImportModal = (platform: ImportPlatformType) => {
   const [onlyImportWithEns, setOnlyImportWithEns] = useState(true)
   const [isFollowingsLoading, setIsFollowingsLoading] = useState(false)
 
-  const { cartItems, setCartItems, getAddressesFromCart } = useCart()
   const { allFollowingAddresses } = useEFPProfile()
+  const { cartItems, setCartItems, getAddressesFromCart } = useCart()
 
   useEffect(() => {
     const inputTimeout = setTimeout(() => {
@@ -36,7 +36,7 @@ const useImportModal = (platform: ImportPlatformType) => {
     return () => clearTimeout(inputTimeout)
   }, [currHandle])
 
-  // TODO: if itproves that lens uses addresses and not other identities than switch to filter by userId for lens, as the lens uses profile addresses as user IDs
+  // Fetch profile from Airstack
   const profileQuery = `
     query ProfileQuery ($platform: SocialDappName) {
       Socials(
@@ -68,6 +68,7 @@ const useImportModal = (platform: ImportPlatformType) => {
         }
       : null
 
+  // Fetch followings from Airstack
   const followingsQuery = useMemo(
     () => `
   query FollowingsQuery ($platform: SocialDappName) {
@@ -83,7 +84,7 @@ const useImportModal = (platform: ImportPlatformType) => {
         }
       }
     }
-}
+  }
 `,
     [socialProfile]
   )
@@ -98,20 +99,24 @@ const useImportModal = (platform: ImportPlatformType) => {
     if (currHandle !== handle) return
     if (!hasPrevPage) setFollowings([])
     if (hasNextPage) getNextPage()
+
     if (
       fetchedFollowings?.SocialFollowings?.Following &&
       fetchedFollowings?.SocialFollowings?.Following.length > 0
     ) {
       setIsFollowingsLoading(true)
+
       const newFollowingAddresses = fetchedFollowings?.SocialFollowings?.Following.map(
         (following: any) => ({
           address: following.followingAddress.addresses?.[0],
           primaryDomain: following.followingAddress?.primaryDomain?.name
         })
       )
+
       const filteredNewFollowingAddresses = newFollowingAddresses.filter((following: any) =>
         onlyImportWithEns ? !!following.primaryDomain : true
       )
+
       setAllFollowings(currFollowings => [
         ...new Set([...currFollowings, ...newFollowingAddresses])
       ])

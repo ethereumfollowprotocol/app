@@ -1,7 +1,6 @@
 'use client'
 
 import { useTranslation } from 'react-i18next'
-import { useQuery } from '@tanstack/react-query'
 
 import {
   TEAM_ROLES,
@@ -9,59 +8,21 @@ import {
   FOUNDATION_ROLES,
   FOUNDATION_ADDRESSES
 } from '#/lib/constants/team'
+import { useMembers } from '../hooks/use-members'
 import LoadingCell from '#/components/loaders/loading-cell'
-import { fetchProfileStats } from '#/api/profile/fetch-profile-stats'
 import UserProfileCard from '#/components/user-profile-card'
-import { fetchProfileDetails } from '#/api/profile/fetch-profile-details'
 
 const Members = () => {
-  const { data: teamProfiles, isLoading: teamIsLoading } = useQuery({
-    queryKey: ['team', TEAM_ADDRESSES],
-    queryFn: async () => {
-      if (!TEAM_ADDRESSES) return []
-
-      const data = await Promise.all(
-        TEAM_ADDRESSES.map(async address => await fetchProfileDetails(address))
-      )
-      return data
-    }
-  })
-  const { data: teamStats, isLoading: teamStatsIsLoading } = useQuery({
-    queryKey: ['team', 'stats', TEAM_ADDRESSES],
-    queryFn: async () => {
-      if (!TEAM_ADDRESSES) return []
-
-      const data = await Promise.all(
-        TEAM_ADDRESSES.map(async address => await fetchProfileStats(address))
-      )
-
-      return data
-    }
-  })
-
-  const { data: foundationProfiles, isLoading: foundationIsLoading } = useQuery({
-    queryKey: ['follow protocol foundation', FOUNDATION_ADDRESSES],
-    queryFn: async () => {
-      if (!FOUNDATION_ADDRESSES) return []
-
-      const data = await Promise.all(
-        FOUNDATION_ADDRESSES.map(async address => await fetchProfileDetails(address))
-      )
-      return data
-    }
-  })
-  const { data: foundationStats, isLoading: foundationStatsIsLoading } = useQuery({
-    queryKey: ['follow protocol foundation', 'stats', FOUNDATION_ADDRESSES],
-    queryFn: async () => {
-      if (!FOUNDATION_ADDRESSES) return []
-
-      const data = await Promise.all(
-        FOUNDATION_ADDRESSES.map(async address => await fetchProfileStats(address))
-      )
-
-      return data
-    }
-  })
+  const {
+    teamProfiles,
+    teamStats,
+    foundationProfiles,
+    foundationStats,
+    teamIsLoading,
+    teamStatsIsLoading,
+    foundationIsLoading,
+    foundationStatsIsLoading
+  } = useMembers()
 
   const { t } = useTranslation()
 

@@ -3,8 +3,8 @@
 import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import { useTheme } from 'next-themes'
-import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useIsClient } from '@uidotdev/usehooks'
 import { HiArrowUturnDown } from 'react-icons/hi2'
 import { animated, to as interpolate } from '@react-spring/web'
 
@@ -32,14 +32,10 @@ const RecommendedCards = () => {
     handleStopAnimationAndSound
   } = useRecommendedProfilesCards()
 
+  const isClient = useIsClient()
   const { t } = useTranslation()
   const { resolvedTheme } = useTheme()
   const { address: userAddress } = useAccount()
-
-  const [isClient, setIsClient] = useState(false)
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
 
   return (
     <div className='flex w-full items-center justify-start flex-col'>

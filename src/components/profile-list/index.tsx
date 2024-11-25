@@ -38,12 +38,13 @@ const ProfileList: React.FC<ProfileListProps> = ({
 }) => {
   const displayLoadingRows = isLoadingMore || isLoading
   const isShortList = (profiles?.length || 0) <= 3
+  const isEmpty = !isLoading && (profiles?.length || 0) === 0
 
   return (
     <div
       className={cn(
         'flex flex-col w-full gap-2 2xl:gap-3',
-        isShortList && showTags ? 'pb-32' : 'pb-0'
+        !isEmpty && isShortList && showTags && canEditTags ? 'pb-32' : 'pb-0'
       )}
     >
       {profiles?.map(({ address, tags, ens, counts }, index) => (
