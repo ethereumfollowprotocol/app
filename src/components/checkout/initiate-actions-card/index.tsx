@@ -7,7 +7,7 @@ import { DEFAULT_CHAIN } from '#/lib/constants/chains'
 import RequiredTransaction from './required-transactions'
 import CancelButton from '#/components/buttons/cancel-button'
 import { PrimaryButton } from '#/components/buttons/primary-button'
-import { EFPActionType, type Action } from '#/contexts/actions-context'
+import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
 
 interface InitiateActionsCardProps {
   actions: Action[]
@@ -24,6 +24,7 @@ const InitiateActionsCard: React.FC<InitiateActionsCardProps> = ({
 }) => {
   const { t } = useTranslation()
   const { totalCartItems } = useCart()
+  const { isCorrectChain } = useActions()
 
   const listOpActions = actions.filter(action => action.type === EFPActionType.UpdateEFPList)
   const transformedActions = useMemo(() => {
@@ -94,7 +95,7 @@ const InitiateActionsCard: React.FC<InitiateActionsCardProps> = ({
           className='bg-[#cccccc]'
         />
         <PrimaryButton
-          label={t('initiate')}
+          label={t(isCorrectChain ? 'initiate' : 'switch chain')}
           onClick={handleInitiateActions}
           className='text-lg w-auto px-4 min-w-32'
         />

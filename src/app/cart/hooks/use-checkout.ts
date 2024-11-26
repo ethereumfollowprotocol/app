@@ -5,7 +5,6 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useState } from 'react'
 import { useAccount, useChains, useWalletClient } from 'wagmi'
 
-import useChain from '#/hooks/use-chain'
 import { splitListOps } from '#/utils/list-ops'
 import { Step } from '#/components/checkout/types'
 import type { ChainWithDetails } from '#/lib/wagmi'
@@ -22,8 +21,14 @@ import { refetchState, resetFollowingRelatedQueries } from '#/utils/reset-querie
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
 
 const useCheckout = () => {
-  const { actions, addActions, resetActions, handleNextAction, handleInitiateActions } =
-    useActions()
+  const {
+    actions,
+    addActions,
+    resetActions,
+    handleNextAction,
+    handleInitiateActions,
+    setIsCorrectChain
+  } = useActions()
 
   const {
     roles,
@@ -50,7 +55,6 @@ const useCheckout = () => {
   const router = useRouter()
   const { t } = useTranslation()
   const queryClient = useQueryClient()
-  const { currentChainId } = useChain()
   const { address: userAddress } = useAccount()
   const { getListOpsTransaction } = useListOps()
   const { data: walletClient } = useWalletClient()
@@ -95,7 +99,7 @@ const useCheckout = () => {
       // return transaction hash to enable following transaction status in transaction details component
       return hash
     },
-    [currentChainId, selectedChain, selectedList, walletClient]
+    [selectedChain, selectedList, walletClient]
   )
 
   const setActions = useCallback(async () => {
@@ -143,7 +147,11 @@ const useCheckout = () => {
 
   const onInitiateActions = () =>
     handleInitiateActions(() => setCurrentStep(Step.TransactionStatus))
-  const onNextAction = () => handleNextAction(() => setCurrentStep(Step.InitiateTransactions))
+  const onNextAction = () =>
+    handleNextAction(() => {
+      setIsCorrectChain(true)
+      setCurrentStep(Step.InitiateTransactions)
+    })
 
   const onFinish = useCallback(() => {
     // Track event for mobile or desktop (not essential)

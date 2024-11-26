@@ -6,7 +6,7 @@ import { cn } from '#/lib/utilities'
 import useChain from '#/hooks/use-chain'
 import { SECOND } from '#/lib/constants'
 import { useCart } from '#/contexts/cart-context'
-import type { Action } from '#/contexts/actions-context'
+import { useActions, type Action } from '#/contexts/actions-context'
 
 const TransactionDetails = ({
   action,
@@ -16,7 +16,9 @@ const TransactionDetails = ({
   isLastAction?: boolean
 }) => {
   const { getChain } = useChain()
+  const { currentChainId } = useChain()
   const chain = getChain(action.chainId)
+  const { setIsCorrectChain, actions, currentActionIndex } = useActions()
 
   const { t } = useTranslation()
   const { totalCartItems } = useCart()
@@ -27,8 +29,10 @@ const TransactionDetails = ({
 
   const [isLastActionSuccessful, setIsLastActionSuccessful] = useState(false)
   useEffect(() => {
-    if (isSuccess && isLastAction)
-      setTimeout(() => setIsLastActionSuccessful(true), (5 + totalCartItems / 100) * SECOND)
+    if (isSuccess)
+      if (isLastAction)
+        setTimeout(() => setIsLastActionSuccessful(true), (5 + totalCartItems / 100) * SECOND)
+      else setIsCorrectChain(actions[currentActionIndex + 1]?.chainId === currentChainId)
   }, [isSuccess])
 
   const statusDescription = useMemo(() => {

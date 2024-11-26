@@ -31,7 +31,8 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
   handleNextAction,
   openPoapModal
 }) => {
-  const { actions, currentAction, currentActionIndex, allActionsSuccessful } = useActions()
+  const { actions, currentAction, currentActionIndex, allActionsSuccessful, isCorrectChain } =
+    useActions()
   const { getChain } = useChain()
   const chain = getChain(currentAction?.chainId)
   const { isSuccess, isLoading } = useWaitForTransactionReceipt({
@@ -93,14 +94,14 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
         />
         {currentAction.isConfirmationError && (
           <PrimaryButton
-            label={t('reinitiate')}
+            label={t(isCorrectChain ? 'reinitiate' : 'switch chain')}
             onClick={handleReInitiateActions}
             className='text-lg w-fit px-4 min-w-32'
           />
         )}
         {showNextButton && (
           <PrimaryButton
-            label={t('next')}
+            label={t(isCorrectChain ? 'next' : 'switch chain')}
             onClick={handleNextAction}
             className='text-lg w-32'
             disabled={nextButtonIsDisabled}
