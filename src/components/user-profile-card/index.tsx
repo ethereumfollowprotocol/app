@@ -96,7 +96,6 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           <LoadingProfileCard
             isResponsive={isResponsive}
             hideFollowButton={hideFollowButton || isConnectedUserCard}
-            isRecommended={isRecommended}
           />
         ) : profile && isProfileValid ? (
           <>
@@ -247,7 +246,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           </div>
         )}
       </div>
-      {displayAchievements && (
+      {displayAchievements && !isRecommended && (
         <Achievements
           profile={profile}
           list={profileList}

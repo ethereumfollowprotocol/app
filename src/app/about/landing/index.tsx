@@ -1,8 +1,8 @@
+import Phrase from './components/phrase'
 import SocialGraph from './components/social-graph'
 import FollowGhost from './components/follow-ghost'
+import Integrations from './components/integrations'
 import FollowerList from './components/follower-list'
-import LaunchPartners from './components/launch-partners'
-import Phrase from './components/phrase'
 
 const Landing = () => {
   return (
@@ -11,7 +11,7 @@ const Landing = () => {
       <SocialGraph />
       <FollowGhost />
       <FollowerList />
-      <LaunchPartners />
+      <Integrations />
     </div>
   )
 }

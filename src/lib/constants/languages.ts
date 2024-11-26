@@ -218,3 +218,5 @@ export const LANGUAGES = [
   //   special: true
   // }
 ]
+
+export const languageKeys = LANGUAGES.map(language => language.key)

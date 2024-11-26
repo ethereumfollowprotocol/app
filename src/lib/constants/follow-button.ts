@@ -34,7 +34,7 @@ export const FOLLOW_BUTTON_STYLES: Record<
       'border-0 after:absolute after:h-4 after:w-4 after:rounded-full after:-top-1.5 after:-right-1.5 after:bg-green-400'
   },
   // Subscribe: {
-  //   bg: "bg-kournikova-300",
+  //   bg: "btn-grad",
   //   text: "text-zinc-800",
   //   border: "border-0 ",
   // },

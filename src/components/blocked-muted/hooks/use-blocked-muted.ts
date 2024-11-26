@@ -6,8 +6,8 @@ import type { ProfileTableTitleType } from '#/types/common'
 import { fetchProfileFollowers } from '#/api/followers/fetch-profile-followers'
 import { fetchProfileFollowing } from '#/api/following/fetch-profile-following'
 import { fetchFollowerTags, nullFollowerTags } from '#/api/followers/fetch-follower-tags'
-import { fetchFollowingTags, nullFollowingTags } from '#/api/following/fetch-following-tags'
 import type { FollowerResponse, FollowingResponse, FollowSortType } from '#/types/requests'
+import { fetchFollowingTags, nullFollowingTags } from '#/api/following/fetch-following-tags'
 
 export const TAGS = ['All', 'block', 'mute']
 export const EMPTY_COUNT_TAGS = [

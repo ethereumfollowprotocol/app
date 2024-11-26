@@ -8,7 +8,11 @@ import { IoCartSharp } from 'react-icons/io5'
 import { formatNumber } from '#/utils/format/format-number'
 import HalloweenCart from 'public/assets/icons/halloween-cart.png'
 
-const CartButton = ({ cartItemsCount }: { cartItemsCount: number }) => {
+interface CartButtonProps {
+  cartItemsCount: number
+}
+
+const CartButton: React.FC<CartButtonProps> = ({ cartItemsCount }) => {
   const pathname = usePathname()
   return (
     <Link href='/cart' passHref={true} legacyBehavior={true}>

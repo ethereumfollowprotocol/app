@@ -5,11 +5,11 @@ import { useChainId, useSwitchChain, type Config, type UseChainsReturnType } fro
 
 import type { ChainWithDetails } from '#/lib/wagmi'
 import { ChainIcon } from '#/components/chain-icon'
-import CancelButton from '#/components/buttons/cancel-button'
 import { DEFAULT_CHAIN } from '#/lib/constants/chains'
-import { PrimaryButton } from '#/components/buttons/primary-button'
 import GreenCheck from 'public/assets/icons/check-green.svg'
+import CancelButton from '#/components/buttons/cancel-button'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
+import { PrimaryButton } from '#/components/buttons/primary-button'
 
 export function SelectChainCard({
   chains,
@@ -121,7 +121,7 @@ function ChainItem({
           alt='selected'
           height={32}
           width={32}
-          className='absolute left-0 text-lime-500 -ml-8 sm:-ml-12'
+          className='absolute left-0 text-green-500 -ml-8 sm:-ml-12'
         />
       )}
       <ChainIcon chain={chain as ChainWithDetails} className={'h-[50px] w-[50px]'} />

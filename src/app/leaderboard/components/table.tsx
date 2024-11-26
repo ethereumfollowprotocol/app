@@ -1,18 +1,13 @@
 'use client'
 
-import Image from 'next/image'
 import { Fragment } from 'react'
 import { FiSearch } from 'react-icons/fi'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 
-import {
-  leaderboardFilters,
-  LEADERBOARD_CHUNK_SIZE,
-  leaderboardFiltersEmojies,
-  LEADERBOARD_FETCH_LIMIT_PARAM
-} from '#/lib/constants/index.ts'
+import { LEADERBOARD_CHUNK_SIZE, LEADERBOARD_FETCH_LIMIT_PARAM } from '#/lib/constants/index.ts'
 import TableRow from './row.tsx'
+import Filters from './filters.tsx'
 import LoadingRow from './loading-row.tsx'
 import PageSelector from './page-selector.tsx'
 import useLeaderboard from '../hooks/useLeaderboard.ts'
@@ -76,21 +71,19 @@ const LeaderboardTable = () => {
     <Fragment>
       <p className='text-3xl sm:text-4xl font-bold'>{t('leaderboard')}</p>
       <div className='mt-4 sm:mt-6 mb-4 sm:mb-6 lg:mb-0 flex items-center justify-center flex-wrap gap-4 xs:gap-8'>
-        {new Array(4).fill(1).map((_, i) => (
+        {LeaderboardStatNames.map((name, i) => (
           <div
             key={`stat ${i}`}
             className='gradient-border flex flex-col rounded-2xl items-center justify-center h-28 w-full xs:w-56'
           >
             {isLeaderboardStatsLoading || !leaderboardStats ? (
-              <LoadingCell className='h-10 w-32 rounded-lg' />
+              <LoadingCell className='h-8 w-24 rounded-lg' />
             ) : (
               <p className='font-bold text-2xl md:text-2xl'>
                 {formatNumberLeaderboard(Number(Object.values(leaderboardStats)[i]))}
               </p>
             )}
-            <p className='font-bold capitalize text-lg text-[#888] dark:text-[#aaa]'>
-              {t(LeaderboardStatNames[i] || '')}
-            </p>
+            <p className='font-bold capitalize text-lg text-[#888] dark:text-[#aaa]'>{t(name)}</p>
           </div>
         ))}
       </div>
@@ -101,19 +94,8 @@ const LeaderboardTable = () => {
         </span>
       </div>
       <div className='flex flex-col gap-6 w-full max-w-[1300px]'>
-        <div className='flex w-full flex-wrap justify-center lg:hidden items-center gap-4'>
-          {leaderboardFilters.map((item, i) => (
-            <div
-              key={item}
-              className={`p-2 font-bold px-4 flex gap-1 justify-center capitalize cursor-pointer transition-all rounded-full ${
-                filter === item ? 'bg-text-neutral shadow-inner' : 'bg-grey hover:scale-110'
-              }`}
-              onClick={() => onSelectFilter(item)}
-            >
-              <p className='text-nowrap'>{t(item)}</p>
-              <Image src={leaderboardFiltersEmojies[i]} alt={item} width={22} height={22} />
-            </div>
-          ))}
+        <div className='flex xl:hidden'>
+          <Filters filter={filter} onSelectFilter={onSelectFilter} />
         </div>
         <div className='flex justify-between gap-4'>
           <div className='relative w-full sm:w-[260px] 2xl:w-[300px]'>
@@ -137,19 +119,8 @@ const LeaderboardTable = () => {
               />
             </div>
           </div>
-          <div className='hidden lg:flex items-center gap-4'>
-            {leaderboardFilters.map((item, i) => (
-              <div
-                key={item}
-                className={`p-2 font-bold px-4 flex gap-1 capitalize cursor-pointer rounded-full transition-all ${
-                  filter === item ? 'bg-text-neutral shadow-inner' : 'bg-grey hover:scale-110'
-                }`}
-                onClick={() => onSelectFilter(item)}
-              >
-                <p className='text-nowrap'>{t(item)}</p>
-                <Image src={leaderboardFiltersEmojies[i]} alt={item} width={22} height={22} />
-              </div>
-            ))}
+          <div className='hidden xl:flex'>
+            <Filters filter={filter} onSelectFilter={onSelectFilter} />
           </div>
           <PageSelector
             page={page}

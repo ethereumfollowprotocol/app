@@ -20,22 +20,22 @@ const useChain = () => {
   }, [walletClient])
 
   const checkChain = useCallback(
-    ({
+    async ({
       chainId,
       onSuccess,
       onError
     }: {
-      chainId: number
+      chainId?: number
       onSuccess?: () => void
       onError?: () => void
     }) => {
       if (!chainId) return false
-      if (currentChainId !== chainId) {
-        switchChain({ chainId }, { onSuccess, onError })
-        return false
-      }
+      if (currentChainId === chainId) return true
 
-      return true
+      await new Promise(resolve =>
+        switchChain({ chainId }, { onSuccess, onError, onSettled: resolve })
+      )
+      return false
     },
     [currentChainId, switchChain]
   )

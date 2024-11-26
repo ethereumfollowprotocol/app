@@ -1,10 +1,9 @@
 'use client'
 
 import { useTranslation } from 'react-i18next'
-
 import FeedCard from '#/components/feed-card'
 
-export default function Feed() {
+const Feed = () => {
   const { t } = useTranslation()
 
   return (
@@ -20,3 +19,5 @@ export default function Feed() {
     </div>
   )
 }
+
+export default Feed

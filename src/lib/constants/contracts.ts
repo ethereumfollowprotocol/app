@@ -1,8 +1,9 @@
-import { createPublicClient, getContract, http, type Address } from 'viem'
 import { base, mainnet, optimism } from 'viem/chains'
-import { rpcProviders } from './rpc-providers'
-import { DEFAULT_CHAIN } from './chains'
+import { createPublicClient, getContract, http, type Address } from 'viem'
+
 import { efpListRegistryAbi } from '../abi'
+import { DEFAULT_CHAIN } from './chains'
+import { rpcProviders } from './rpc-providers'
 
 export const coreEfpContracts: {
   EFPAccountMetadata: Address

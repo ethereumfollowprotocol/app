@@ -3,9 +3,9 @@
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
 import LineDesktop from 'public/assets/lines/desktop/line-3.svg'
+import FriendsEnemies from 'public/assets/art/friends-enemies.svg'
 import LineMobileFirst from 'public/assets/lines/mobile/line-4.svg'
 import LineMobileSecond from 'public/assets/lines/mobile/line-5.svg'
-import FriendsEnemies from 'public/assets/art/friends-enemies.svg'
 import FriendsEnemiesMobile from 'public/assets/art/friends-enemies-mobile.svg'
 
 const FollowGhost = () => {

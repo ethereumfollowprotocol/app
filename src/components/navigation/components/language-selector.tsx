@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useState, type Dispatch, type SetStateAction } from 'react'
 
-import useLanguage from '../hooks/useLanguage'
+import useLanguage from '../hooks/use-language'
 import { LANGUAGES } from '#/lib/constants/languages'
 import GreenCheck from 'public/assets/icons/check-green.svg'
 

@@ -5,7 +5,6 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useState } from 'react'
 import { useAccount, useChains, useWalletClient } from 'wagmi'
 
-import useChain from '#/hooks/use-chain'
 import { splitListOps } from '#/utils/list-ops'
 import { Step } from '#/components/checkout/types'
 import type { ChainWithDetails } from '#/lib/wagmi'
@@ -18,11 +17,18 @@ import { triggerCustomEvent } from '#/utils/trigger-custom-event'
 import { useMintEFP } from '../../../hooks/efp-actions/use-mint-efp'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
 import { usePoapModal } from '../../../components/claim-poap-modal/use-poap-modal'
+import { refetchState, resetFollowingRelatedQueries } from '#/utils/reset-queries'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
 
 const useCheckout = () => {
-  const { actions, addActions, resetActions, handleNextAction, handleInitiateActions } =
-    useActions()
+  const {
+    actions,
+    addActions,
+    resetActions,
+    handleNextAction,
+    handleInitiateActions,
+    setIsCorrectChain
+  } = useActions()
 
   const {
     roles,
@@ -49,7 +55,6 @@ const useCheckout = () => {
   const router = useRouter()
   const { t } = useTranslation()
   const queryClient = useQueryClient()
-  const { currentChainId } = useChain()
   const { address: userAddress } = useAccount()
   const { getListOpsTransaction } = useListOps()
   const { data: walletClient } = useWalletClient()
@@ -94,7 +99,7 @@ const useCheckout = () => {
       // return transaction hash to enable following transaction status in transaction details component
       return hash
     },
-    [currentChainId, selectedChain, selectedList, walletClient]
+    [selectedChain, selectedList, walletClient]
   )
 
   const setActions = useCallback(async () => {
@@ -121,7 +126,7 @@ const useCheckout = () => {
       isPendingConfirmation: false
     }
 
-    // add Create list action if user doesn't have the EFP list yet
+    // add Create list action if user doesn't have a List yet
     const actionsToExecute = selectedList
       ? [...cartItemActions]
       : listOpsFinished
@@ -142,20 +147,19 @@ const useCheckout = () => {
 
   const onInitiateActions = () =>
     handleInitiateActions(() => setCurrentStep(Step.TransactionStatus))
-  const onNextAction = () => handleNextAction(() => setCurrentStep(Step.InitiateTransactions))
+  const onNextAction = () =>
+    handleNextAction(() => {
+      setIsCorrectChain(true)
+      setCurrentStep(Step.InitiateTransactions)
+    })
 
   const onFinish = useCallback(() => {
     // Track event for mobile or desktop (not essential)
     triggerCustomEvent(listHasBeenMinted ? 'Mint' : 'Checkout')
 
-    if (fetchFreshStats) refetchStats()
-    else setFetchFreshStats(true)
-
+    refetchState(fetchFreshStats, setFetchFreshStats, refetchStats)
     setIsRefetchingFollowing(true)
-    // Invalidate the queries related to following state
-    queryClient.invalidateQueries({ queryKey: ['top8'] })
-    queryClient.invalidateQueries({ queryKey: ['follow state'] })
-    queryClient.invalidateQueries({ queryKey: ['list state'] })
+    resetFollowingRelatedQueries(queryClient)
 
     if (listHasBeenMinted || selectedList === undefined) {
       if (setNewListAsPrimary)
@@ -164,11 +168,8 @@ const useCheckout = () => {
       setIsRefetchingProfile(true)
       setSetNewListAsSelected(true)
 
-      if (fetchFreshLists) refetchLists()
-      else setFetchFreshLists(true)
-
-      if (fetchFreshProfile) refetchProfile()
-      else setFetchFreshProfile(true)
+      refetchState(fetchFreshLists, setFetchFreshLists, refetchLists)
+      refetchState(fetchFreshProfile, setFetchFreshProfile, refetchProfile)
 
       router.push('/loading')
       return

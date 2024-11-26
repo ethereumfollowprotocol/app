@@ -49,29 +49,23 @@ const SaveSettings: React.FC<SaveSettingsProps> = ({
   isListStateLoading,
   isPrimaryList
 }) => {
-  const {
-    actions,
-    onFinish,
-    currentStep,
-    setCurrentStep,
-    handleNextAction,
-    handleInitiateActions
-  } = useSaveListSettings({
-    slot,
-    user,
-    owner,
-    chain,
-    profile,
-    manager,
-    onClose,
-    onCancel,
-    newChain,
-    listState,
-    selectedList,
-    changedValues,
-    isPrimaryList,
-    listRecordsContractAddress
-  })
+  const { actions, onFinish, currentStep, setCurrentStep, onNextAction, onInitiateActions } =
+    useSaveListSettings({
+      slot,
+      user,
+      owner,
+      chain,
+      profile,
+      manager,
+      onClose,
+      onCancel,
+      newChain,
+      listState,
+      selectedList,
+      changedValues,
+      isPrimaryList,
+      listRecordsContractAddress
+    })
 
   return (
     <div className='w-full flex justify-center px-4 pt-[6.75rem] pb-16 overflow-scroll sm:pt-32'>
@@ -87,15 +81,15 @@ const SaveSettings: React.FC<SaveSettingsProps> = ({
                 actions={actions}
                 onCancel={onCancel}
                 setCurrentStep={setCurrentStep}
-                handleInitiateActions={handleInitiateActions}
+                handleInitiateActions={onInitiateActions}
               />
             )}
             {currentStep === Step.TransactionStatus && (
               <TransactionStatus
                 onFinish={onFinish}
                 setCurrentStep={setCurrentStep}
-                handleNextAction={handleNextAction}
-                handleReInitiateActions={handleInitiateActions}
+                handleNextAction={onNextAction}
+                handleReInitiateActions={onInitiateActions}
               />
             )}
           </>

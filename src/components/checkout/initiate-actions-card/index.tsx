@@ -1,14 +1,13 @@
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Step } from './types'
-import useChain from '#/hooks/use-chain'
+import { Step } from '../types'
 import { useCart } from '#/contexts/cart-context'
-import { ChainIcon } from '#/components/chain-icon'
-import CancelButton from '#/components/buttons/cancel-button'
 import { DEFAULT_CHAIN } from '#/lib/constants/chains'
+import RequiredTransaction from './required-transactions'
+import CancelButton from '#/components/buttons/cancel-button'
 import { PrimaryButton } from '#/components/buttons/primary-button'
-import { EFPActionType, type Action } from '#/contexts/actions-context'
+import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
 
 interface InitiateActionsCardProps {
   actions: Action[]
@@ -23,8 +22,9 @@ const InitiateActionsCard: React.FC<InitiateActionsCardProps> = ({
   setCurrentStep,
   handleInitiateActions
 }) => {
-  const { totalCartItems } = useCart()
   const { t } = useTranslation()
+  const { totalCartItems } = useCart()
+  const { isCorrectChain } = useActions()
 
   const listOpActions = actions.filter(action => action.type === EFPActionType.UpdateEFPList)
   const transformedActions = useMemo(() => {
@@ -95,35 +95,12 @@ const InitiateActionsCard: React.FC<InitiateActionsCardProps> = ({
           className='bg-[#cccccc]'
         />
         <PrimaryButton
-          label={t('initiate')}
+          label={t(isCorrectChain ? 'initiate' : 'switch chain')}
           onClick={handleInitiateActions}
           className='text-lg w-auto px-4 min-w-32'
         />
       </div>
     </>
-  )
-}
-
-const RequiredTransaction = ({
-  chainId,
-  transactions = 1
-}: {
-  chainId: number
-  transactions?: number
-}) => {
-  const { getChain } = useChain()
-  const chain = getChain(chainId)
-
-  if (!chain) return null
-
-  return (
-    <div className='grid grid-cols-2 gap-2'>
-      <div className='flex items-center justify-self-end gap-2'>
-        <p className='font-bold'>{transactions} tx</p>
-        <ChainIcon chain={chain} className='h-[30px] w-[30px]' />
-      </div>
-      <p className='justify-self-start'>{chain.name}</p>
-    </div>
   )
 }
 

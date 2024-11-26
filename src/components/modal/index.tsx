@@ -15,7 +15,7 @@ const Modal: React.FC<ModalProps> = ({ onCancel, children, className, disableBac
         'fixed z-50 top-0 flex px-4 left-0 justify-center w-screen h-screen bg-black/40 py-12 overflow-scroll',
         className ?? 'items-center'
       )}
-      onClick={() => (disableBackgroundClose ? null : onCancel())}
+      onClick={() => !disableBackgroundClose && onCancel()}
     >
       <div className={`flex w-full sm:w-fit gap-2 flex-col items-end`}>
         <div

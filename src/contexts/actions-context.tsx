@@ -1,12 +1,18 @@
 'use client'
 
+import {
+  useMemo,
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+  createContext,
+  type ReactNode
+} from 'react'
+import type { WriteContractReturnType } from 'viem'
 import { useWaitForTransactionReceipt } from 'wagmi'
-import { fromHex, type WriteContractReturnType } from 'viem'
-import { createContext, useContext, useState, type ReactNode, useCallback, useMemo } from 'react'
 
 import useChain from '#/hooks/use-chain'
-import { DEFAULT_CHAIN } from '#/lib/constants/chains'
-import { listRegistryContract } from '#/lib/constants/contracts'
 
 export enum EFPActionType {
   CreateEFPList = 'CreateEFPList',
@@ -47,6 +53,8 @@ type ActionsContextType = {
   resetActions: () => void
   handleInitiateActions: (onExecute: () => void) => void
   handleNextAction: (onChainSwitch: () => void) => void
+  isCorrectChain: boolean
+  setIsCorrectChain: (isCorrectChain: boolean) => void
 }
 
 const ActionsContext = createContext<ActionsContextType | undefined>(undefined)
@@ -60,11 +68,17 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
   const currentAction = actions[currentActionIndex]
 
   const { currentChainId, checkChain } = useChain()
-
   const { isSuccess: currentActionTxIsSuccess } = useWaitForTransactionReceipt({
     hash: currentAction?.txHash,
     chainId: currentAction?.chainId
   })
+
+  const [isCorrectChain, setIsCorrectChain] = useState(
+    currentChainId === actions[currentActionIndex || 0]?.chainId
+  )
+  useEffect(() => {
+    setIsCorrectChain(currentChainId === actions[currentActionIndex]?.chainId)
+  }, [currentChainId, actions, currentActionIndex])
 
   const allActionsSuccessful = useMemo(() => {
     return currentActionIndex === actions.length - 1 && currentActionTxIsSuccess
@@ -109,22 +123,6 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
     return nextIndex
   }, [currentActionIndex, actions.length])
 
-  const getRequiredChain = useCallback(
-    async (index: number, list?: number | string) =>
-      actions[index || 0]?.label === 'create list'
-        ? DEFAULT_CHAIN.id
-        : list
-          ? fromHex(
-              `0x${(await listRegistryContract.read.getListStorageLocation([BigInt(list)])).slice(
-                64,
-                70
-              )}`,
-              'number'
-            )
-          : currentChainId,
-    [actions, listRegistryContract, currentChainId]
-  )
-
   // Executes the action based on the index to be able to handle async execution with synchronous state updates
   const executeActionByIndex = useCallback(
     async (index: number) => {
@@ -167,19 +165,19 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
 
   const handleInitiateActions = useCallback(
     async (onExecute: () => void) => {
-      const chainId = await getRequiredChain(currentActionIndex)
-      const isCorrectChain = checkChain({ chainId, onSuccess: onExecute })
+      const chainId = actions[currentActionIndex || 0]?.chainId
+      const isCorrectChain = await checkChain({ chainId })
       if (!isCorrectChain) return
 
       onExecute()
       executeActionByIndex(currentActionIndex || 0)
     },
-    [executeActionByIndex, checkChain, getRequiredChain]
+    [executeActionByIndex, checkChain]
   )
 
   const handleNextAction = async (onChainSwitch: () => void) => {
-    const chainId = await getRequiredChain(currentActionIndex + 1)
-    const isCorrectChain = checkChain({ chainId, onSuccess: onChainSwitch })
+    const chainId = actions[currentActionIndex + 1]?.chainId
+    const isCorrectChain = await checkChain({ chainId, onSuccess: onChainSwitch })
     if (!isCorrectChain) return
 
     const nextActionIndex = getNextActionIndex()
@@ -194,6 +192,8 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
   const value = {
     actions,
     addActions,
+    isCorrectChain,
+    setIsCorrectChain,
     allActionsSuccessful,
     currentAction,
     currentActionIndex,

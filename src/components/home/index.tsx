@@ -4,14 +4,15 @@ import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 
 import { cn } from '#/lib/utilities.ts'
+import { useRouter } from 'next/navigation'
 import FeedCard from '#/components/feed-card.tsx'
+import { refetchState } from '#/utils/reset-queries.ts'
 import Recommendations from '#/components/recommendations'
 import useStickyScroll from './hooks/use-sticky-scroll.ts'
 import LatestFollowers from './components/latest-followers'
 import UserProfileCard from '#/components/user-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import LeaderboardSummary from './components/leaderboard-summary.tsx'
-import { useRouter } from 'next/navigation'
 
 const Home = () => {
   const {
@@ -54,10 +55,9 @@ const Home = () => {
             profile={profile}
             isStatsLoading={statsIsLoading}
             isLoading={profileIsLoading}
-            refetchProfile={() => {
-              if (fetchFreshProfile) refetchProfile()
-              else setFetchFreshProfile(true)
-            }}
+            refetchProfile={() =>
+              refetchState(fetchFreshProfile, setFetchFreshProfile, refetchProfile)
+            }
             showMoreOptions={true}
             openBlockModal={() => {
               if (profile) router.push(`/${profile.address}?modal=block_mute_list`)

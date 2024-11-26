@@ -61,6 +61,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
   const displayedTags = allTags?.filter(tag =>
     isShowingBlocked ? true : !QUERY_BLOCK_TAGS.includes(tag.tag)
   )
+  const tagsEmpty = !tagsLoading && (!displayedTags || displayedTags.length === 0)
 
   return (
     <div className='flex flex-col gap-4 px-4 z-40 sm:px-2 w-full'>
@@ -200,35 +201,32 @@ const TableHeader: React.FC<TableHeaderProps> = ({
           </div>
         </div>
       </div>
+      {showTags && tagsEmpty && (
+        <p className='text-center w-full font-bold text-text/40 italic'>{t('no tags')}</p>
+      )}
       {showTags && (
         <div className='flex flex-wrap w-full gap-2'>
-          {tagsLoading ? (
-            <>
-              <LoadingCell className='w-20 h-7 md:h-9 rounded-full' />
-              <LoadingCell className='w-20 h-7 md:h-9 rounded-full' />
-              <LoadingCell className='w-20 h-7 md:h-9 rounded-full' />
-            </>
-          ) : !displayedTags || displayedTags.length === 0 ? (
-            <p className='text-center w-full font-bold text-text/40 italic'>{t('no tags')}</p>
-          ) : (
-            displayedTags?.map((tag, i) => (
-              <button
-                key={tag.tag + i}
-                className={`text-sm flex gap-1.5 px-4 py-2 font-bold items-center max-w-[33%] hover:scale-110 transition-transform ${
-                  selectedTags?.includes(tag.tag)
-                    ? 'text-darkGrey bg-zinc-100 shadow-inner shadow-black/10'
-                    : 'text-zinc-500 bg-zinc-300/80'
-                } rounded-full`}
-                name={tag.tag.toLowerCase()}
-                onClick={() => toggleSelectedTags(title, tag.tag)}
-              >
-                <p className='max-w-[95%] truncate'>
-                  {BLOCKED_MUTED_TAGS.includes(tag.tag) ? t(tag.tag) : tag.tag}
-                </p>
-                <p className='text-darkGrey/50'>{formatNumber(tag.count)}</p>
-              </button>
-            ))
-          )}
+          {tagsLoading
+            ? new Array(4)
+                .fill(1)
+                .map((_, i) => <LoadingCell key={i} className='w-20 h-7 md:h-9 rounded-full' />)
+            : displayedTags?.map((tag, i) => (
+                <button
+                  key={tag.tag + i}
+                  className={`text-sm flex gap-1.5 px-4 py-2 font-bold items-center max-w-[33%] hover:scale-110 transition-transform ${
+                    selectedTags?.includes(tag.tag)
+                      ? 'text-darkGrey bg-zinc-100 shadow-inner shadow-black/10'
+                      : 'text-zinc-500 bg-zinc-300/80'
+                  } rounded-full`}
+                  name={tag.tag.toLowerCase()}
+                  onClick={() => toggleSelectedTags(title, tag.tag)}
+                >
+                  <p className='max-w-[95%] truncate'>
+                    {BLOCKED_MUTED_TAGS.includes(tag.tag) ? t(tag.tag) : tag.tag}
+                  </p>
+                  <p className='text-darkGrey/50'>{formatNumber(tag.count)}</p>
+                </button>
+              ))}
         </div>
       )}
     </div>

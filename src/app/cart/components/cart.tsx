@@ -38,10 +38,8 @@ const Cart = () => {
 
   const containerRef = useRef<HTMLDivElement>(null)
   const { StickyScrollRef: SidebarRef, onScroll: onScrollSidebar } = useStickyScroll(140)
-  // const { StickyScrollRef: CartItemsRef, onScroll: onScrollCartItems } = useStickyScroll(260);
 
   const hasCreatedEfpList = !!selectedList
-
   const transactionsCount = useMemo(() => {
     let count = 0
     const splitSize = LIST_OP_LIMITS[roles?.listChainId || DEFAULT_CHAIN.id] || 1000

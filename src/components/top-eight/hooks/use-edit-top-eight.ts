@@ -13,8 +13,8 @@ import {
 import { resolveEnsAddress } from '#/utils/ens'
 import type { TagListOp } from '#/types/list-op'
 import { useCart } from '#/contexts/cart-context'
-import { fetchFollowState } from '#/api/fetch-follow-state'
 import type { TopEightProfileType } from './use-top-eight'
+import { fetchFollowState } from '#/api/fetch-follow-state'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 export const useEditTopEight = (profiles: TopEightProfileType[]) => {
@@ -40,7 +40,7 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
 
   const [editedProfiles, setEditedProfiles] = useState([...profiles, ...topEightInCart])
 
-  const validTopEightsLength = useMemo(() => {
+  const currentTopEightLength = useMemo(() => {
     const topEightRemoved = cartItems.filter(
       ({ listOp }) =>
         listOp.opcode === 4 && isTagListOp(listOp) && extractAddressAndTag(listOp).tag === 'top8'
@@ -48,12 +48,11 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
 
     return editedProfiles.length - topEightRemoved.length
   }, [editedProfiles])
+  const isTopEightFull = currentTopEightLength >= 8
 
   useEffect(() => {
     setEditedProfiles([...profiles, ...topEightInCart])
   }, [topEightInCart])
-
-  const [addProfileSearch, setAddProfileSearch] = useState('')
 
   const getFollowingState = async (address: Address) => {
     const followingStatus = await fetchFollowState({
@@ -64,7 +63,6 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
     })
 
     if (!followingStatus) return 'none'
-
     if (followingStatus.state.block) return 'blocks'
     if (followingStatus.state.mute) return 'mutes'
     if (followingStatus.state.follow) return 'follows'
@@ -90,38 +88,18 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
     }
 
     const followState = await getFollowingState(address)
-
     if (followState === 'none') addCartItem({ listOp: listOpAddListRecord(address) })
     addCartItem({ listOp: listOpAddTag(address, 'top8') })
 
     setLoadingCartItems(prevLoading => (prevLoading > 0 ? prevLoading - 1 : prevLoading))
   }
 
+  const [addProfileSearch, setAddProfileSearch] = useState('')
   const onSubmit = async () => {
-    if (validTopEightsLength >= 8) return toast.error(t('top eight limit'))
+    if (isTopEightFull) return toast.error(t('top eight limit'))
     if (!roles?.isManager) return toast.error(t('not manager'))
 
     setAddProfileSearch('')
-
-    // const hasMultipleNames =
-    //   addProfileSearch.includes(',') ||
-    //   addProfileSearch.includes(' ') ||
-    //   addProfileSearch.includes('\n')
-
-    // if (hasMultipleNames) {
-    //   const namesToAdd = addProfileSearch
-    //     .replaceAll(',', ' ')
-    //     .replaceAll('\n', ' ')
-    //     .split(' ')
-    //     .map(name => name.trim())
-    //     .filter(name => !!name)
-
-    //   const addedToCart = await Promise.all(namesToAdd.map(async name => await addToCart(name)))
-
-    //   const erroredNames = addedToCart.filter(item => item?.user).map(item => item?.user)
-    //   if (erroredNames.length > 0) toast.error(`${t('unresolved')} ${formatError(erroredNames)}`)
-    // }
-
     const addedToCart = await addToCart(addProfileSearch)
     if (addedToCart?.user) toast.error(`${t('unresolved')} ${addProfileSearch}`)
   }
@@ -129,9 +107,9 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
   return {
     onSubmit,
     topEightInCart,
+    isTopEightFull,
     editedProfiles,
     addProfileSearch,
-    setAddProfileSearch,
-    validTopEightsLength
+    setAddProfileSearch
   }
 }

@@ -6,7 +6,7 @@ import { useAccount } from 'wagmi'
 import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
 import { track } from '@vercel/analytics/react'
-import { useClickAway } from '@uidotdev/usehooks'
+import { useClickAway, useIsClient } from '@uidotdev/usehooks'
 
 import i18n from '#/app/i18n'
 import { Search } from '../search'
@@ -15,20 +15,20 @@ import Logo from 'public/assets/logo.svg'
 import MobileMenu from './components/menu.tsx'
 import NavItems from './components/nav-items.tsx'
 import FullLogo from 'public/assets/logo-full.svg'
+import WalletMenu from './components/wallet-menu.tsx'
 import CartButton from './components/cart-button.tsx'
 import { useCart } from '#/contexts/cart-context.tsx'
 import { LANGUAGES } from '#/lib/constants/languages.ts'
 import { useSounds } from '#/contexts/sounds-context.tsx'
 import FullLogoDark from 'public/assets/logo-full-dark.svg'
-import ConnectButton from './components/connect-button.tsx'
 
 const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [isClient, setIsClient] = useState(false)
 
-  const { resolvedTheme, setTheme } = useTheme()
+  const isClient = useIsClient()
   const { totalCartItems } = useCart()
   const { address: userAddress } = useAccount()
+  const { resolvedTheme, setTheme } = useTheme()
   const { backgroundMusicRef, backgroundSoundsMuted } = useSounds()
 
   const clickAwayRef = useClickAway<HTMLDivElement>(_ => {
@@ -36,15 +36,13 @@ const Navigation = () => {
   })
 
   useEffect(() => {
-    if (resolvedTheme === 'halloween') {
-      setTheme('system')
-    }
-
-    if (!isClient) return setIsClient(true)
-
-    track(
-      `Loaded with language ${LANGUAGES.find(lang => lang.key === i18n.language)?.englishLanguage}`
-    )
+    if (resolvedTheme === 'halloween') setTheme('system')
+    if (isClient)
+      track(
+        `Loaded with language ${
+          LANGUAGES.find(lang => lang.key === i18n.language)?.englishLanguage
+        }`
+      )
   }, [isClient])
 
   return (
@@ -126,8 +124,7 @@ const Navigation = () => {
               </div>
               {mobileMenuOpen && <MobileMenu open={mobileMenuOpen} setOpen={setMobileMenuOpen} />}
             </div>
-
-            <ConnectButton />
+            <WalletMenu />
           </div>
         </div>
       </nav>

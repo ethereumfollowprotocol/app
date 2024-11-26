@@ -6,7 +6,7 @@ import { cn } from '#/lib/utilities'
 import useChain from '#/hooks/use-chain'
 import { SECOND } from '#/lib/constants'
 import { useCart } from '#/contexts/cart-context'
-import type { Action } from '#/contexts/actions-context'
+import { useActions, type Action } from '#/contexts/actions-context'
 
 const TransactionDetails = ({
   action,
@@ -16,10 +16,12 @@ const TransactionDetails = ({
   isLastAction?: boolean
 }) => {
   const { getChain } = useChain()
+  const { currentChainId } = useChain()
   const chain = getChain(action.chainId)
+  const { setIsCorrectChain, actions, currentActionIndex } = useActions()
 
-  const { totalCartItems } = useCart()
   const { t } = useTranslation()
+  const { totalCartItems } = useCart()
   const { isPending, isSuccess, isError, error } = useWaitForTransactionReceipt({
     hash: action.txHash,
     chainId: action.chainId
@@ -27,8 +29,10 @@ const TransactionDetails = ({
 
   const [isLastActionSuccessful, setIsLastActionSuccessful] = useState(false)
   useEffect(() => {
-    if (isSuccess && isLastAction)
-      setTimeout(() => setIsLastActionSuccessful(true), (5 + totalCartItems / 100) * SECOND)
+    if (isSuccess)
+      if (isLastAction)
+        setTimeout(() => setIsLastActionSuccessful(true), (5 + totalCartItems / 100) * SECOND)
+      else setIsCorrectChain(actions[currentActionIndex + 1]?.chainId === currentChainId)
   }, [isSuccess])
 
   const statusDescription = useMemo(() => {
@@ -36,9 +40,6 @@ const TransactionDetails = ({
     if (action.isConfirmationError) return `${t('error')}: ${t('confirmation error')}`
     if (isPending) return 'pending'
     if (isSuccess) return 'successful'
-    // if (isLastAction && isLastActionSuccessful) return t('successful')
-    // if (isLastAction && isSuccess) return t('finishing')
-    // if (isLastAction && !isLastActionSuccessful) return t('pending')
     if (isError) return `${t('error')} ${error}`
   }, [
     action.isPendingConfirmation,
@@ -52,12 +53,9 @@ const TransactionDetails = ({
 
   const getStatusColor = useCallback(() => {
     if (action.isPendingConfirmation) return 'text-blue-500'
-    if (action.isConfirmationError) return 'text-salmon-500'
-    if (isPending) return 'text-kournikova-600 loading-ellipsis'
-    if (isSuccess) return 'text-lime-600'
-    // if (isLastAction && isLastActionSuccessful) return 'text-lime-600'
-    // if (isLastAction && isSuccess) return 'text-kournikova-600'
-    // if (isLastAction && !isLastActionSuccessful) return 'text-kournikova-600'
+    if (action.isConfirmationError) return 'text-red-500'
+    if (isPending) return 'text-amber-400 loading-ellipsis'
+    if (isSuccess) return 'text-green-500'
     if (isError) return 'text-red-600'
   }, [
     action.isPendingConfirmation,
@@ -84,7 +82,7 @@ const TransactionDetails = ({
         {isLastAction && isSuccess && (
           <p
             className={cn(
-              isLastActionSuccessful ? 'text-lime-600' : 'text-kournikova-600 loading-ellipsis',
+              isLastActionSuccessful ? 'text-green-500' : 'text-amber-400 loading-ellipsis',
               'font-bold text-lg sm:text-xl'
             )}
           >

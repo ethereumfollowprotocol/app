@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { useAccount } from 'wagmi'
+import { FiRefreshCw } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
-import { useClickAway } from '@uidotdev/usehooks'
 import { IoIosArrowDown } from 'react-icons/io'
+import { useClickAway } from '@uidotdev/usehooks'
 
 import Modal from '../modal'
+import { cn } from '#/lib/utilities'
 import LoadingCell from '../loaders/loading-cell'
 import CancelButton from '../buttons/cancel-button'
 import type { ChainWithDetails } from '#/lib/wagmi'
@@ -12,12 +14,10 @@ import { ChainIcon } from '#/components/chain-icon'
 import SaveSettings from './components/save-settings'
 import useListSettings from './hooks/use-list-settings'
 import SettingsInput from './components/settings-input'
+import ResetSlotWarning from './components/reset-slot-warning'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { PrimaryButton } from '#/components/buttons/primary-button'
-import { FiRefreshCw } from 'react-icons/fi'
-import { cn } from '#/lib/utilities'
-import ResetSlotWarning from './components/reset-slot-warning'
 
 interface ListSettingsProps {
   selectedList: number

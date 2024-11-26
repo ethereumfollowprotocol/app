@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
 import LineMobile from 'public/assets/lines/mobile/line-1.svg'
 
-export default function Phrase() {
+const Phrase = () => {
   const { t } = useTranslation()
 
   return (
@@ -21,3 +21,5 @@ export default function Phrase() {
     </div>
   )
 }
+
+export default Phrase

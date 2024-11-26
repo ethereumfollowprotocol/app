@@ -113,6 +113,7 @@
   "cancel": "Cancel",
   "initiate": "Initiate",
   "reinitiate": "Reinitiate",
+  "switch chain": "Switch Chain",
   "choose your": "Choose your",
   "create list title": "List Storage Location",
   "chain comment": "This is where you'll submit transactions when you follow people. You will need ETH on that chain.",
