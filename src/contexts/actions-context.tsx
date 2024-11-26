@@ -1,16 +1,16 @@
 'use client'
 
+import {
+  useMemo,
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+  createContext,
+  type ReactNode
+} from 'react'
 import type { WriteContractReturnType } from 'viem'
 import { useWaitForTransactionReceipt } from 'wagmi'
-import {
-  createContext,
-  useContext,
-  useState,
-  type ReactNode,
-  useCallback,
-  useMemo,
-  useEffect
-} from 'react'
 
 import useChain from '#/hooks/use-chain'
 
@@ -122,22 +122,6 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
     // Return the next index for use
     return nextIndex
   }, [currentActionIndex, actions.length])
-
-  // const getRequiredChain = useCallback(
-  //   async (index: number, list?: number | string) =>
-  //     actions[index || 0]?.label === 'create list'
-  //       ? DEFAULT_CHAIN.id
-  //       : list
-  //         ? fromHex(
-  //             `0x${(await listRegistryContract.read.getListStorageLocation([BigInt(list)])).slice(
-  //               64,
-  //               70
-  //             )}`,
-  //             'number'
-  //           )
-  //         : currentChainId,
-  //   [actions, listRegistryContract, currentChainId]
-  // )
 
   // Executes the action based on the index to be able to handle async execution with synchronous state updates
   const executeActionByIndex = useCallback(

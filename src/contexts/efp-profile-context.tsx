@@ -36,6 +36,7 @@ import type {
 import { useCart } from './cart-context'
 import { DEFAULT_CHAIN } from '#/lib/constants/chains'
 import type { ProfileTableTitleType } from '#/types/common'
+import { coreEfpContracts } from '#/lib/constants/contracts'
 import { fetchProfileRoles } from '#/api/profile/fetch-profile-roles'
 import { fetchProfileLists } from '#/api/profile/fetch-profile-lists'
 import { fetchProfileStats } from '#/api/profile/fetch-profile-stats'
@@ -46,7 +47,6 @@ import { fetchProfileAllFollowings } from '#/api/following/fetch-profile-all-fol
 import { fetchFollowerTags, nullFollowerTags } from '#/api/followers/fetch-follower-tags'
 import { fetchFollowingTags, nullFollowingTags } from '#/api/following/fetch-following-tags'
 import { BLOCKED_MUTED_TAGS, DEFAULT_TAGS_TO_ADD, FETCH_LIMIT_PARAM } from '#/lib/constants'
-import { coreEfpContracts } from '#/lib/constants/contracts'
 
 // Define the type for the profile context
 type EFPProfileContextType = {
