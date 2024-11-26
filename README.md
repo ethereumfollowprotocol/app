@@ -3,8 +3,6 @@
 
 <br />
 
-# Ethereum Follow Protocol Web App
-
 <p align="center">
   <a href="https://ethfollow.xyz" target="_blank" rel="noopener noreferrer">
     <img width="275" src="https://docs.ethfollow.xyz/logo.png" alt="EFP logo" />
@@ -17,9 +15,11 @@
   <a href="https://x.com/efp"><img src="https://img.shields.io/twitter/follow/efp?label=%40efp&style=social&link=https%3A%2F%2Fx.com%2Fefp" alt="x account" /></a>
 </p>
 
+<h1 align="center" style="font-size: 2.75rem; font-weight: 900; color: white;">Ethereum Follow Protocol Web App</h1>
+
 ## Overview
 
-The Ethereum Follow Protocol (EFP) is a native Ethereum protocol designed for following and tagging Ethereum accounts. This web application serves as the interface for interacting with the protocol, providing users with a seamless experience to manage their social graph on the blockchain.
+The Ethereum Follow Protocol (EFP) is a native Ethereum protocol designed for following and tagging Ethereum addresses. This web application serves as the interface for interacting with the protocol, providing users with a seamless experience to manage their social graph on the blockchain.
 
 ## Important Links
 
