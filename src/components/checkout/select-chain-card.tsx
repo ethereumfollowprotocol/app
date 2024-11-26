@@ -121,7 +121,7 @@ function ChainItem({
           alt='selected'
           height={32}
           width={32}
-          className='absolute left-0 text-lime-500 -ml-8 sm:-ml-12'
+          className='absolute left-0 text-green-500 -ml-8 sm:-ml-12'
         />
       )}
       <ChainIcon chain={chain as ChainWithDetails} className={'h-[50px] w-[50px]'} />

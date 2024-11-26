@@ -49,9 +49,9 @@ const TransactionDetails = ({
 
   const getStatusColor = useCallback(() => {
     if (action.isPendingConfirmation) return 'text-blue-500'
-    if (action.isConfirmationError) return 'text-salmon-500'
-    if (isPending) return 'text-kournikova-600 loading-ellipsis'
-    if (isSuccess) return 'text-lime-600'
+    if (action.isConfirmationError) return 'text-red-500'
+    if (isPending) return 'text-amber-400 loading-ellipsis'
+    if (isSuccess) return 'text-green-500'
     if (isError) return 'text-red-600'
   }, [
     action.isPendingConfirmation,
@@ -78,7 +78,7 @@ const TransactionDetails = ({
         {isLastAction && isSuccess && (
           <p
             className={cn(
-              isLastActionSuccessful ? 'text-lime-600' : 'text-kournikova-600 loading-ellipsis',
+              isLastActionSuccessful ? 'text-green-500' : 'text-amber-400 loading-ellipsis',
               'font-bold text-lg sm:text-xl'
             )}
           >

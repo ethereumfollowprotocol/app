@@ -59,7 +59,7 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
         isEditing
           ? 'cursor-pointer border-[3px] border-transparent w-[144px] h-[186px]'
           : 'w-[129px] 2xl:w-36 hover:bg-text/5 h-[180px]',
-        isAddingToTopEight && 'border-[3px] border-lime-500/50',
+        isAddingToTopEight && 'border-[3px] border-green-500/50',
         isRemovingFromTopEight && 'border-[3px] dark:border-red-500/70 border-red-400/70'
       )}
       onClick={onClick}
@@ -68,7 +68,7 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
         <div
           className={cn(
             'absolute top-1 right-1 p-1 rounded-full text-white',
-            isAddingToTopEight && 'bg-lime-500/50',
+            isAddingToTopEight && 'bg-green-500/50',
             isRemovingFromTopEight && 'bg-red-400/70',
             !(isAddingToTopEight || isRemovingFromTopEight) &&
               'bg-[#A2A2A277] group-hover:block hidden '

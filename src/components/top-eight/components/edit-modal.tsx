@@ -70,12 +70,12 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose }) => {
           {new Array(loadingCartItems).fill(1).map((_, i) => (
             <div
               key={`loading ${i}`}
-              className='flex flex-col p-4 items-center gap-2 relative border-grey rounded-xl w-[144px] h-[186px] border-[3px] border-lime-500/50'
+              className='flex flex-col p-4 items-center gap-2 relative border-grey rounded-xl w-[144px] h-[186px] border-[3px] border-green-500/50'
             >
               <LoadingCell className='h-[50px] w-[50px] rounded-full' />
               <LoadingCell className='h-7 w-24 rounded-lg' />
               <LoadingCell className='h-9 w-[120px] mt-5 rounded-lg' />
-              <div className='absolute top-1 right-1 p-1 rounded-full text-white bg-lime-500/50'>
+              <div className='absolute top-1 right-1 p-1 rounded-full text-white bg-green-500/50'>
                 <HiPlus />
               </div>
             </div>
