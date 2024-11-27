@@ -9,7 +9,7 @@ import ProfileList from '#/components/profile-list'
 import type { DiscoverItemType } from '#/types/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { fetchRecommendations } from '#/api/recommended/fetch-recommendations'
-import PageSelector from '#/app/leaderboard/components/page-selector'
+import PageSelector from '#/components/page-selector'
 
 interface RecommendationsProps {
   header?: string

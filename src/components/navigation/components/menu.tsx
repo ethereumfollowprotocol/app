@@ -9,11 +9,11 @@ import { useState, type Dispatch, type SetStateAction } from 'react'
 import { cn } from '#/lib/utilities'
 import { socials } from '#/components/footer'
 import { usePathname } from 'next/navigation'
-import VolumeSwitcher, { volumeOptions } from './volume-switcher'
 import LanguageSelector from './language-selector'
 import { LANGUAGES } from '#/lib/constants/languages'
 import { EXTERNAL_LINKS, NAV_ITEMS } from '#/lib/constants'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
+import VolumeSwitcher, { volumeOptions } from './volume-switcher'
 import ThemeSwitcher, { themesWithIcons } from '#/components/navigation/components/theme-switcher'
 
 interface MenuProps {
@@ -42,7 +42,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
   return (
     <div
       className={cn(
-        'bg-neutral w-[220px] z-50 overflow-x-hidden sm:overflow-visible shadow-md border-[3px] transition-transform rounded-md border-grey absolute top-[120%] flex flex-col items-end -left-[90px]'
+        'bg-neutral w-[220px] z-50 overflow-x-hidden sm:overflow-auto shadow-md border-[3px] transition-transform rounded-md border-grey absolute top-[120%] flex flex-col items-end -left-[90px]'
       )}
     >
       <div

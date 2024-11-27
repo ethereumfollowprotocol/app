@@ -9,7 +9,7 @@ import { LEADERBOARD_CHUNK_SIZE, LEADERBOARD_FETCH_LIMIT_PARAM } from '#/lib/con
 import TableRow from './row.tsx'
 import Filters from './filters.tsx'
 import LoadingRow from './loading-row.tsx'
-import PageSelector from './page-selector.tsx'
+import PageSelector from '../../../components/page-selector.tsx'
 import useLeaderboard from '../hooks/useLeaderboard.ts'
 import type { LeaderboardItem } from '#/types/requests.ts'
 import type { LeaderboardFilter } from '#/types/common.ts'
