@@ -42,7 +42,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
   return (
     <div
       className={cn(
-        'bg-neutral w-[220px] z-50 overflow-x-hidden sm:overflow-visible shadow-md border-[3px] transition-transform rounded-md border-grey absolute top-[120%] flex flex-col items-end -left-[90px]'
+        'bg-neutral w-[220px] z-50 overflow-x-hidden sm:overflow-visible shadow-md border-[3px] transition-transform rounded-md border-grey absolute top-10 flex flex-col items-end -right-3'
       )}
     >
       <div

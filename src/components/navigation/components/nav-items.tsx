@@ -1,11 +1,14 @@
 'use client'
 
 import Link from 'next/link'
+import { useState } from 'react'
 import { useAccount } from 'wagmi'
 import { usePathname } from 'next/navigation'
+import { useClickAway } from '@uidotdev/usehooks'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
-import { NAV_ITEMS } from '#/lib/constants'
+import Menu from './menu'
+import { EXTERNAL_LINKS, NAV_ITEMS } from '#/lib/constants'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 const NavItems = () => {
@@ -14,18 +17,27 @@ const NavItems = () => {
   const { openConnectModal } = useConnectModal()
   const { selectedList, lists } = useEFPProfile()
 
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const clickAwayRef = useClickAway<HTMLDivElement>(_ => {
+    setMobileMenuOpen(false)
+  })
+
   const itemUrl =
     pathname?.toLowerCase() === `/${userAddress?.toLowerCase()}` &&
     selectedList === Number(lists?.primary_list)
       ? userAddress?.toLowerCase()
       : selectedList?.toString() ?? userAddress?.toLowerCase()
+  const itemIndex = EXTERNAL_LINKS.find(link => link.href === pathname)
+    ? 4
+    : NAV_ITEMS.findIndex(item => item.href(itemUrl) === pathname)
 
   return (
-    <div className='flex flex-row items-center relative gap-4 px-[9px] glass-card h-12 border-[3px] border-grey rounded-full'>
+    <div className='flex flex-row items-center relative gap-5 px-2.5 glass-card h-[54px] border-[3px] border-grey rounded-full'>
       <div
-        className='w-9 absolute top-[3px] h-9 transition-all bg-followButton rounded-full'
+        className='w-[42px] absolute top-[3px] h-[42px] duration-300 transition-all bg-followButton rounded-full'
         style={{
-          left: `${NAV_ITEMS.findIndex(item => item.href(itemUrl) === pathname) * 40 + 3}px`
+          left: itemIndex === -1 ? '100%' : `${itemIndex * 48 + (4 - Math.ceil(itemIndex / 3))}px`,
+          opacity: itemIndex === -1 ? 0 : 1
         }}
       />
       {NAV_ITEMS.map(item => (
@@ -45,9 +57,20 @@ const NavItems = () => {
             }
           }}
         >
-          <item.icon className='text-2xl w-6 h-6 font-bold z-10 hover:scale-[1.2] transition-transform cursor-pointer' />
+          <item.icon className='text-7 w-7 h-7 font-bold z-10 hover:scale-110 transition-transform cursor-pointer' />
         </Link>
       ))}
+      <div ref={clickAwayRef} className='relative'>
+        <div
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className='flex hover:scale-110 w-7 cursor-pointer group relative transition-all pr-px items-center justify-center gap-[5px] flex-col'
+        >
+          <div className='w-6 h-1 rounded-full transition-all bg-text -translate-x-px'></div>
+          <div className='w-6 h-1 rounded-full transition-all bg-text -translate-x-px'></div>
+          <div className='w-6 h-1 rounded-full transition-all bg-text -translate-x-px'></div>
+        </div>
+        {mobileMenuOpen && <Menu open={mobileMenuOpen} setOpen={setMobileMenuOpen} />}
+      </div>
     </div>
   )
 }

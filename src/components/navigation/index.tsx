@@ -2,38 +2,31 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { useEffect } from 'react'
 import { useAccount } from 'wagmi'
 import { useTheme } from 'next-themes'
-import { useEffect, useState } from 'react'
 import { track } from '@vercel/analytics/react'
-import { useClickAway, useIsClient } from '@uidotdev/usehooks'
+import { useIsClient } from '@uidotdev/usehooks'
 
 import i18n from '#/app/i18n'
 import { Search } from '../search'
-import { cn } from '#/lib/utilities.ts'
 import Logo from 'public/assets/logo.svg'
-import MobileMenu from './components/menu.tsx'
 import NavItems from './components/nav-items.tsx'
 import FullLogo from 'public/assets/logo-full.svg'
 import WalletMenu from './components/wallet-menu.tsx'
 import CartButton from './components/cart-button.tsx'
 import { useCart } from '#/contexts/cart-context.tsx'
+import Integrations from './components/integrations.tsx'
 import { LANGUAGES } from '#/lib/constants/languages.ts'
 import { useSounds } from '#/contexts/sounds-context.tsx'
 import FullLogoDark from 'public/assets/logo-full-dark.svg'
 
 const Navigation = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
   const isClient = useIsClient()
   const { totalCartItems } = useCart()
   const { address: userAddress } = useAccount()
   const { resolvedTheme, setTheme } = useTheme()
   const { backgroundMusicRef, backgroundSoundsMuted } = useSounds()
-
-  const clickAwayRef = useClickAway<HTMLDivElement>(_ => {
-    setMobileMenuOpen(false)
-  })
 
   useEffect(() => {
     if (resolvedTheme === 'halloween') setTheme('system')
@@ -92,40 +85,12 @@ const Navigation = () => {
           <Search size='w-fit max-w-[200px] lg:w-5/6 xl:w-full xxs:max-w-[350px]' />
         </div>
         <div className='flex lg:gap-4 xl:gap-6 w-3/4 sm:w-full lg:w-3/4 justify-end items-center'>
-          <NavItems />
-          <div className='flex items-center gap-3 md:gap-4'>
+          <div className='flex items-center gap-1.5'>
+            <NavItems />
             {userAddress ? <CartButton cartItemsCount={totalCartItems} /> : null}
-            <div ref={clickAwayRef} className='relative'>
-              <div
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className={cn(
-                  'flex hover:scale-110 cursor-pointer group relative transition-all items-center justify-center gap-[5px] flex-col h-12 w-12 glass-card border-[3px] rounded-full hover:border-text border-zinc-400',
-                  mobileMenuOpen ? 'border-text' : 'border-zinc-400 group-hover:border-text'
-                )}
-              >
-                <div
-                  className={cn(
-                    'w-5 h-[3px] rounded-full transition-all',
-                    mobileMenuOpen ? 'bg-text' : 'bg-zinc-400 group-hover:bg-text'
-                  )}
-                ></div>
-                <div
-                  className={cn(
-                    'w-5 h-[3px] rounded-full transition-all',
-                    mobileMenuOpen ? 'bg-text' : 'bg-zinc-400 group-hover:bg-text'
-                  )}
-                ></div>
-                <div
-                  className={cn(
-                    'w-5 h-[3px] rounded-full transition-all',
-                    mobileMenuOpen ? 'bg-text' : 'bg-zinc-400 group-hover:bg-text'
-                  )}
-                ></div>
-              </div>
-              {mobileMenuOpen && <MobileMenu open={mobileMenuOpen} setOpen={setMobileMenuOpen} />}
-            </div>
-            <WalletMenu />
           </div>
+          <Integrations />
+          <WalletMenu />
         </div>
       </nav>
     </header>
