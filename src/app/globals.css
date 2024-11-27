@@ -31,7 +31,6 @@ body {
   left: -34vw;
   min-width: 210vw;
   height: 129vw;
-  overflow: visible;
   object-fit: cover;
   pointer-events: none;
 }

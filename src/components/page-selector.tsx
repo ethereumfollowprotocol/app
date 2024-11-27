@@ -62,6 +62,7 @@ const PageSelector: React.FC<PageSelectorProps> = ({
         <button
           onClick={() => handlePageChange(1)}
           disabled={page === 1}
+          aria-label='skip to first page'
           className='glass-card flex items-center hover:scale-110 disabled:hover:scale-100 justify-center font-bold group h-9 w-9 border-[3px] hover:border-text border-text/40 transition-all rounded-[10px] disabled:border-text/10'
         >
           <MdKeyboardDoubleArrowLeft className='w-6 h-6 group-hover:opacity-100 opacity-40 dark:opacity-80 group-disabled:opacity-20 transition-opacity' />
@@ -70,6 +71,7 @@ const PageSelector: React.FC<PageSelectorProps> = ({
       <button
         onClick={() => handlePageChange(page - 1)}
         disabled={page === 1}
+        aria-label='previous page'
         className='glass-card flex items-center hover:scale-110 disabled:hover:scale-100 justify-center font-bold group hover:border-text h-9 w-9 border-[3px] border-text/40 transition-all rounded-[10px] disabled:border-text/10'
       >
         <MdKeyboardArrowLeft className='w-6 h-6 group-hover:opacity-100 opacity-40 dark:opacity-80 group-disabled:opacity-20 transition-opacity' />
@@ -82,6 +84,7 @@ const PageSelector: React.FC<PageSelectorProps> = ({
       <button
         onClick={() => handlePageChange(page + 1)}
         disabled={!hasNextPage}
+        aria-label='next page'
         className='glass-card flex items-center hover:scale-110 disabled:hover:scale-100 justify-center font-bold group hover:border-text h-9 w-9 border-[3px] border-text/40 transition-all rounded-[10px] disabled:border-text/10'
       >
         <MdKeyboardArrowRight className='w-6 h-6 group-hover:opacity-100 opacity-40 dark:opacity-80 group-disabled:opacity-20 transition-opacity' />

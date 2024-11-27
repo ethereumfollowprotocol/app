@@ -1,4 +1,4 @@
-import PageSelector from '#/app/leaderboard/components/page-selector'
+import PageSelector from '#/components/page-selector'
 import { useTranslation } from 'react-i18next'
 import { useLeaderboardSummary } from '../hooks/useLeaderboardSummary'
 import { leaderboardFilters, leaderboardFiltersEmojies } from '#/lib/constants'

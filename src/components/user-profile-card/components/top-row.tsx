@@ -80,6 +80,7 @@ const TopRow: React.FC<TopRowProps> = ({
           <button
             className='bg-neutral/80 p-1.5 rounded-full hover:scale-110 transition-all'
             onClick={() => refetchProfile()}
+            aria-label='refresh profile'
           >
             <FaSyncAlt />
           </button>

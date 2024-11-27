@@ -165,7 +165,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
         >
           <div
             ref={ProfileCardRef}
-            className='xl:sticky xl:h-fit xl:pb-4 overflow-visible'
+            className='xl:sticky xl:h-fit xl:pb-4'
             style={{
               top: '0px'
             }}

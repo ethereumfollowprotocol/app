@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import ProfileList from '#/components/profile-list'
 import { useLatestFollowers } from '../hooks/use-latest-followers'
-import PageSelector from '#/app/leaderboard/components/page-selector'
+import PageSelector from '#/components/page-selector'
 
 const LatestFollowers = () => {
   const { t } = useTranslation()
