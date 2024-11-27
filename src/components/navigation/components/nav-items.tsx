@@ -3,16 +3,13 @@
 import Link from 'next/link'
 import { useAccount } from 'wagmi'
 import { usePathname } from 'next/navigation'
-import { useTranslation } from 'react-i18next'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
-import { cn } from '#/lib/utilities'
 import { NAV_ITEMS } from '#/lib/constants'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 const NavItems = () => {
   const pathname = usePathname()
-  const { t } = useTranslation()
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
   const { selectedList, lists } = useEFPProfile()
@@ -24,40 +21,34 @@ const NavItems = () => {
       : selectedList?.toString() ?? userAddress?.toLowerCase()
 
   return (
-    <ul className='lg:flex hidden lg:gap-4 xl:gap-6 items-center'>
+    <div className='flex flex-row items-center relative gap-4 px-[9px] glass-card h-12 border-[3px] border-grey rounded-full'>
+      <div
+        className='w-9 absolute top-[3px] h-9 transition-all bg-followButton rounded-full'
+        style={{
+          left: `${NAV_ITEMS.findIndex(item => item.href(itemUrl) === pathname) * 40 + 3}px`
+        }}
+      />
       {NAV_ITEMS.map(item => (
-        <li
-          className={cn(
-            'font-bold hover:scale-110 transition-transform',
-            item.hiddenOnDesktop ? '' : 'hidden'
-          )}
-          key={`${item.name}`}
+        <Link
+          key={item.name}
+          prefetch={true}
+          className='z-10'
+          href={item.href(itemUrl)}
+          onClick={e => {
+            if (
+              (item.name === 'profile' || item.name === 'feed') &&
+              !userAddress &&
+              openConnectModal
+            ) {
+              e.preventDefault()
+              openConnectModal()
+            }
+          }}
         >
-          <Link
-            prefetch={true}
-            href={item.href(itemUrl)}
-            className={cn([
-              'capitalize xl:text-[18px] lg:text-lg transition-all',
-              item.href(itemUrl) === pathname.toLowerCase()
-                ? 'text-text hover:text-text'
-                : 'text-text-neutral hover:text-text'
-            ])}
-            onClick={e => {
-              if (
-                (item.name === 'profile' || item.name === 'feed') &&
-                !userAddress &&
-                openConnectModal
-              ) {
-                e.preventDefault()
-                openConnectModal()
-              }
-            }}
-          >
-            <span className='hidden sm:block text-nowrap'>{t(`${item.name}`)}</span>
-          </Link>
-        </li>
+          <item.icon className='text-2xl w-6 h-6 font-bold z-10 hover:scale-[1.2] transition-transform cursor-pointer' />
+        </Link>
       ))}
-    </ul>
+    </div>
   )
 }
 

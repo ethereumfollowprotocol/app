@@ -1,3 +1,7 @@
+import { GoTrophy } from 'react-icons/go'
+import { MdOutlineSwipe } from 'react-icons/md'
+import { IoHomeOutline, IoPersonOutline } from 'react-icons/io5'
+
 import type { FollowSortType } from '#/types/requests'
 import type { ProfileTableTitleType, ProfileTabType } from '#/types/common'
 
@@ -44,21 +48,25 @@ export const NAV_ITEMS = [
   {
     href: () => '/',
     name: 'home',
+    icon: IoHomeOutline,
     hiddenOnDesktop: true
   },
   {
     href: (url?: string) => `/${url ?? 'profile'}`,
     name: 'profile',
+    icon: IoPersonOutline,
     hiddenOnDesktop: true
   },
   {
     href: () => '/swipe',
     name: 'swipe',
+    icon: MdOutlineSwipe,
     hiddenOnDesktop: true
   },
   {
     href: () => '/leaderboard',
     name: 'leaderboard',
+    icon: GoTrophy,
     hiddenOnDesktop: true
   }
 ]
