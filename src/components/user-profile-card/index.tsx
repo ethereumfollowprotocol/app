@@ -115,7 +115,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 alt='profile header'
                 width={360}
                 height={120}
-                className={cn('w-full absolute object-cover rounded-t-lg top-0 left-0 -z-10')}
+                className={cn(
+                  'w-full h-[120px] absolute object-cover rounded-t-lg top-0 left-0 -z-10'
+                )}
                 unoptimized={true}
               />
             )}
