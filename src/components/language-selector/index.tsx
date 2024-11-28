@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useState, type Dispatch, type SetStateAction } from 'react'
 
-import useLanguage from '../hooks/use-language'
+import useLanguage from './use-language'
 import { LANGUAGES } from '#/lib/constants/languages'
 import GreenCheck from 'public/assets/icons/check-green.svg'
 
@@ -64,11 +64,11 @@ const LanguageSelector = ({
         </div>
       </div>
       <div
-        className={`absolute -right-[223px] sm:right-[95%] -top-[55px] z-50 sm:-top-[6px] ${
+        className={`absolute -right-[250px] sm:right-[95%] -top-[199px] z-50 sm:-top-[6px] ${
           languageMenOpenu ? 'block' : 'hidden'
         } group-hover:block sm:pr-6`}
       >
-        <div className='flex overflow-scroll flex-col lg:grid max-h-[75vh] sm:max-h-[75vh] lg:grid-cols-2 gap-2 gap-x-px w-[220px] lg:w-[450px] bg-neutral border-[3px] border-grey p-1 rounded-lg shadow-md'>
+        <div className='flex overflow-scroll flex-col lg:grid sm:max-h-[75vh] max-h-[85vh] h-full lg:grid-cols-2 gap-2 gap-x-px w-[246px] lg:w-[450px] bg-neutral border-[3px] border-grey p-1 rounded-lg shadow-md'>
           <div
             onClick={closeLanguageMenu}
             className='flex sm:hidden justify-between items-center w-full hover:bg-navItem p-3 rounded-md transition-opacity cursor-pointer'
@@ -148,6 +148,7 @@ const LanguageSelector = ({
               </div>
             </div>
           ))}
+          <div className='h-4 sm:h-0 pb-6 sm:pb-0 w-full' />
         </div>
       </div>
     </div>

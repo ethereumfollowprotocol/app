@@ -9,11 +9,11 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { SECOND } from '#/lib/constants'
 import { resolveEnsAddress } from '#/utils/ens'
-import { formatError } from '#/utils/format/format-error'
-import { searchENSNames } from '#/api/search-ens-names'
 import { useCart } from '#/contexts/cart-context.tsx'
-import { fetchFollowState } from '#/api/fetch-follow-state'
+import { searchENSNames } from '#/api/search-ens-names'
 import { listOpAddListRecord } from '#/utils/list-ops.ts'
+import { formatError } from '#/utils/format/format-error'
+import { fetchFollowState } from '#/api/fetch-follow-state'
 import { useEFPProfile } from '#/contexts/efp-profile-context.tsx'
 
 const useSearch = (isEditor?: boolean) => {
@@ -103,6 +103,7 @@ const useSearch = (isEditor?: boolean) => {
 
   const resetSearch = () => {
     setCurrentSearch('')
+    setDialogOpen(false)
     setDropdownMenuOpen(false)
     searchBarRef.current?.blur()
   }

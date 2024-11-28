@@ -54,7 +54,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
   const { setTheme, theme: selectedTheme } = useTheme()
 
   return (
-    <div ref={clickAwayThemeRef} className='cursor-pointer group relative w-full'>
+    <div ref={clickAwayThemeRef} className='cursor-pointer group h-full relative w-full'>
       <div
         onClick={() => {
           setThemeMenuOpen(!themeMenuOpen)
@@ -72,11 +72,11 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
       </div>
       <div
         className={cn(
-          'absolute group-hover:block block h-[230px] sm:h-[174px] z-50 -right-[223px] sm:right-[97.2%] min-w-[220px] -top-[7px] sm:pr-5',
+          'absolute group-hover:block block h-[250px] sm:h-[174px] z-50 -right-[250px] sm:right-[97.2%] min-w-[246px] -top-[7px] sm:pr-5',
           themeMenuOpen ? 'block' : 'hidden'
         )}
       >
-        <div className='flex flex-col p-1 gap-2 w-full max-h-[75vh] sm:max-h-[90vh] border-[3px] rounded-lg bg-neutral border-grey shadow-md'>
+        <div className='flex flex-col p-1 gap-2 w-full max-h-[80vh] h-full sm:max-h-[90vh] border-[3px] rounded-lg bg-neutral border-grey shadow-md'>
           <div
             onClick={() => {
               setThemeMenuOpen(false)

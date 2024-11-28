@@ -25,7 +25,7 @@ import CommonFollowers from './components/common-followers'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 import DefaultHeader from 'public/assets/art/default-header.svg'
 import LoadingProfileCard from './components/loading-profile-card'
-import ConnectButton from '../navigation/components/connect-button'
+import ConnectButton from '../connect-button'
 import type { ProfileDetailsResponse, StatsResponse } from '#/types/requests'
 
 interface UserProfileCardProps {

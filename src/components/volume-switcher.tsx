@@ -72,11 +72,11 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = ({
       </div>
       <div
         className={cn(
-          'absolute group-hover:block block h-[230px] sm:h-[174px] z-50 -right-[223px] sm:right-[97.2%] min-w-[220px] -top-[106px] sm:-top-[7px] sm:pr-5',
+          'absolute group-hover:block block h-[250px] sm:h-[174px] z-50 -right-[250px] sm:right-[97.2%] min-w-[246px] -top-[106px] sm:-top-[7px] sm:pr-5',
           volumeMenuOpen ? 'block' : 'hidden'
         )}
       >
-        <div className='flex flex-col p-1 gap-2 w-full h-[230px] sm:h-[174px] max-h-[75vh] sm:max-h-[90vh] overflow-scroll border-[3px] rounded-lg bg-neutral border-grey shadow-md'>
+        <div className='flex flex-col p-1 gap-2 w-full h-[250px] sm:h-[174px] max-h-[75vh] sm:max-h-[90vh] border-[3px] rounded-lg bg-neutral border-grey shadow-md'>
           <div
             onClick={() => {
               setVolumeMenuOpen(false)
