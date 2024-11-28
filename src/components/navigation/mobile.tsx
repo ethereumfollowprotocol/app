@@ -14,7 +14,7 @@ const Mobile: React.FC = () => {
     <nav
       className={cn(
         'fixed mx-auto bottom-6 z-50 flex justify-center w-full lg:hidden',
-        pathname === '/cart' && 'bottom-32'
+        pathname === '/cart' && 'bottom-28 sm:bottom-32'
       )}
     >
       <div className='flex items-center gap-1.5'>
