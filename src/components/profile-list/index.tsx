@@ -14,6 +14,7 @@ export interface ProfileListProfile {
 }
 
 interface ProfileListProps {
+  className?: string
   profiles?: ProfileListProfile[]
   showFollowsYouBadges?: boolean // Handle showing "Follows you" badges in the ProfileList
   showTags?: boolean
@@ -26,6 +27,7 @@ interface ProfileListProps {
 }
 
 const ProfileList: React.FC<ProfileListProps> = ({
+  className,
   profiles,
   showFollowsYouBadges,
   showTags,
@@ -44,7 +46,8 @@ const ProfileList: React.FC<ProfileListProps> = ({
     <div
       className={cn(
         'flex flex-col w-full gap-2 2xl:gap-3',
-        !isEmpty && isShortList && showTags && canEditTags ? 'pb-32' : 'pb-0'
+        !isEmpty && isShortList && showTags && canEditTags ? 'pb-32' : 'pb-0',
+        className
       )}
     >
       {profiles?.map(({ address, tags, ens, counts }, index) => (

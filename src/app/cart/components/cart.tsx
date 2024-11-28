@@ -62,9 +62,11 @@ const Cart = () => {
       ) : (
         <div
           ref={containerRef}
-          className='flex flex-col-reverse xl:flex-row overflow-y-auto justify-center gap-4 w-full h-full xl:gap-6 pt-[6.75rem] px-2 lg:px-8 pb-6 xl:pb-0'
+          className={cn(
+            'flex flex-col-reverse xl:flex-row overflow-y-auto justify-center gap-4 w-full h-full xl:gap-6 pt-[6.75rem] px-2 lg:px-8 pb-6 xl:pb-8',
+            totalCartItems >= 30 && 'xl:pb-0'
+          )}
           onScroll={e => {
-            // onScrollCartItems(e);
             onScrollSidebar(e)
           }}
         >
@@ -73,7 +75,10 @@ const Cart = () => {
           )}
           {clearCartModalOpen && <ClearCartModal closeModal={() => setClearCartModalOpen(false)} />}
           <div
-            className='flex flex-col mb-6 xl:sticky glass-card gap-4 px-1 py-4 h-fit rounded-2xl border-[3px] border-grey xl:max-w-[600px] w-full xl:w-1/3'
+            className={cn(
+              'flex flex-col mb-6 glass-card gap-4 px-1 py-4 h-fit rounded-2xl border-[3px] border-grey xl:max-w-[600px] w-full xl:w-1/3',
+              totalCartItems > 30 && 'xl:sticky'
+            )}
             ref={SidebarRef}
           >
             <div className='w-full flex justify-between items-center px-3 sm:px-5 pt-2'>
@@ -90,24 +95,16 @@ const Cart = () => {
                     setSelectedPlatform('farcaster')
                   }}
                 />
-                {/* <Image
-                  src={LensIcon}
-                  alt='Import from Lens'
-                  width={30}
-                  className='cursor-pointer rounded-lg hover:opacity-75 hover:scale-110 transition-all'
-                  onClick={() => {
-                    setImportModalOpen(true)
-                    setSelectedPlatform('lens')
-                  }}
-                /> */}
               </div>
             </div>
             <Search size='w-full z-50 px-2 sm:px-4 pt-2' isEditor={true} />
             <Recommendations header={t('recommendations')} endpoint='recommended' limit={30} />
           </div>
           <div
-            className='flex flex-col h-fit xl:sticky relative top-0  w-full xl:w-2/3'
-            // ref={CartItemsRef}
+            className={cn(
+              'flex flex-col h-fit relative top-0  w-full xl:w-2/3',
+              totalCartItems >= 30 && 'xl:sticky'
+            )}
           >
             <Suspense
               fallback={
@@ -129,11 +126,11 @@ const Cart = () => {
           {isClient && (
             <div
               className={cn(
-                'fixed md:w-fit w-full bottom-4 sm:bottom-[3vh] right-0 px-2 sm:px-4 lg:right-[3vw] justify-end',
+                'fixed md:w-fit w-full -bottom-1 lg:bottom-[3vh] right-0 lg:right-[3vw] justify-end',
                 isClient && totalCartItems > 0 ? 'flex' : 'hidden'
               )}
             >
-              <div className='flex gap-1 xxs:gap-2 md:gap-6 w-full border-[3px] border-grey lg:w-fit items-center px-3 py-4 sm:p-4 bg-white/10 justify-between glass-card bg-opacity-50 shadow-xl rounded-xl'>
+              <div className='flex gap-1 xxs:gap-2 md:gap-6 w-full border-[3px] border-b-0 md:border-b-[3px] bg-neutral/50 border-grey lg:w-fit items-center px-3 py-4 sm:p-4 justify-between glass-card bg-opacity-50 shadow-xl rounded-t-xl md:rounded-b-xl'>
                 <div className='flex flex-col gap-1 items-start'>
                   <div className='flex gap-2 items-center'>
                     <p className='text-4xl 3xs:text-5xl sm:text-6xl font-bold'>

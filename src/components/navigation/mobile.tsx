@@ -1,14 +1,22 @@
 import React from 'react'
 import { useAccount } from 'wagmi'
+import { usePathname } from 'next/navigation'
 
 import NavItems from './components/nav-items'
 import CartButton from './components/cart-button'
+import { cn } from '#/lib/utilities'
 
 const Mobile: React.FC = () => {
+  const pathname = usePathname()
   const { address: userAddress } = useAccount()
 
   return (
-    <nav className='fixed mx-auto bottom-4 z-50 flex justify-center w-full lg:hidden'>
+    <nav
+      className={cn(
+        'fixed mx-auto bottom-6 z-50 flex justify-center w-full lg:hidden',
+        pathname === '/cart' && 'bottom-32'
+      )}
+    >
       <div className='flex items-center gap-1.5'>
         <NavItems />
         {userAddress && <CartButton />}
