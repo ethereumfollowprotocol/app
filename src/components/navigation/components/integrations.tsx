@@ -12,7 +12,7 @@ const Integrations: React.FC = () => {
 
   return (
     <div className='relative group cursor-help' ref={clickAwayRef}>
-      <div className='flex items-center gap-1' onClick={() => setTooltipOpen(!tooltipOpen)}>
+      <div className='flex items-center gap-1 ' onClick={() => setTooltipOpen(!tooltipOpen)}>
         <TbAppsFilled className='text-4xl font-bold' />
         <p className='text-xl font-bold'>{INTEGRATIONS.length}</p>
       </div>
@@ -25,7 +25,7 @@ const Integrations: React.FC = () => {
         <div className='w-full rounded-lg border-grey border-[3px] bg-neutral p-3'>
           <p className='text-[20px] font-bold'>{INTEGRATIONS.length} Integrations</p>
           <p className='text-sm font-medium'>
-            Connect your apps to your account to use them in your projects.
+            Browse apps that use EFP, and learn how to integrate it into your app.
           </p>
           <Link
             href='/about'

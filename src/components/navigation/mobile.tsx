@@ -5,16 +5,18 @@ import { usePathname } from 'next/navigation'
 import NavItems from './components/nav-items'
 import CartButton from './components/cart-button'
 import { cn } from '#/lib/utilities'
+import { useCart } from '#/contexts/cart-context'
 
 const Mobile: React.FC = () => {
   const pathname = usePathname()
+  const { totalCartItems } = useCart()
   const { address: userAddress } = useAccount()
 
   return (
     <nav
       className={cn(
         'fixed mx-auto bottom-6 z-50 flex justify-center w-full lg:hidden',
-        pathname === '/cart' && 'bottom-28 sm:bottom-32'
+        pathname === '/cart' && totalCartItems > 0 && 'bottom-28 sm:bottom-32'
       )}
     >
       <div className='flex items-center gap-1.5'>
