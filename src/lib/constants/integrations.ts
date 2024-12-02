@@ -22,6 +22,7 @@ import EngagementVision from 'public/assets/partners/engagementvision.jpeg'
 import DevconCollabPortal from 'public/assets/partners/devconcollabportal.jpeg'
 import DevconPassport from 'public/assets/partners/devconpassport.jpeg'
 import ETHTools from 'public/assets/partners/ethtools.jpeg'
+import Yodl from 'public/assets/partners/yodl.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -43,6 +44,11 @@ export const INTEGRATIONS = [
     name: 'Blockscout',
     url: 'https://www.blockscout.com/',
     logo: Blockscout
+  },
+  {
+    name: 'Yodl',
+    url: 'https://yodl.me/',
+    logo: Yodl
   },
   {
     name: 'Vibes',
