@@ -36,13 +36,12 @@ const NavItems = () => {
     <div ref={clickAwayRef} className='relative'>
       <div
         key='nav items'
-        className='z-40 bg-neutral/80 backdrop-blur-xl flex items-center hover:scale-[1.025] hover:border-text transition-all h-[54px] border-[3px] border-grey rounded-full'
+        className='z-40 bg-neutral/80 backdrop-blur-xl flex items-center hover:border-text transition-all h-[54px] border-[3px] border-grey rounded-full'
       >
-        <div className='flex flex-row items-center px-0.5 pl-0 relative hover:scale-[0.975] transition-all h-[54px]'>
+        <div className='flex flex-row items-center pr-0.5 transition-all h-[54px]'>
           {NAV_ITEMS.map(item => (
             <Link
               key={item.name}
-              prefetch={true}
               className='z-10 px-0.5 group/nav-item'
               href={item.href(itemUrl)}
               onClick={e => {
