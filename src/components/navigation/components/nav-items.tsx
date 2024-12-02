@@ -8,9 +8,9 @@ import { useClickAway } from '@uidotdev/usehooks'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import Menu from './menu'
+import { cn } from '#/lib/utilities'
 import { EXTERNAL_LINKS, NAV_ITEMS } from '#/lib/constants'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import { cn } from '#/lib/utilities'
 
 const NavItems = () => {
   const pathname = usePathname()
@@ -36,7 +36,7 @@ const NavItems = () => {
     <div ref={clickAwayRef} className='relative'>
       <div className='flex flex-row items-center z-40 relative gap-5 px-2.5 bg-neutral/80 backdrop-blur-xl h-[54px] border-[3px] border-grey rounded-full'>
         <div
-          className='w-[42px] absolute top-[3px] h-[42px] bg-gradient-to-b from-[#FFDE60] to-[#FFA997] rounded-full'
+          className='w-[42px] absolute top-[3px] h-[42px] bg-[#FFC47B] rounded-full'
           style={{
             left:
               itemIndex === -1 ? '100%' : `${itemIndex * 48 + (4 - Math.ceil(itemIndex / 3))}px`,

@@ -20,11 +20,11 @@ import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { PrimaryButton } from '#/components/buttons/primary-button'
 import { DEFAULT_CHAIN, LIST_OP_LIMITS } from '#/lib/constants/chains'
 import useStickyScroll from '#/components/home/hooks/use-sticky-scroll'
+import { useActions } from '#/contexts/actions-context'
 
 const CartItems = lazy(() => import('./cart-items'))
 
 const Cart = () => {
-  const [isCheckingOut, setIsCheckingOut] = useState(false)
   const [importModalOpen, setImportModalOpen] = useState(false)
   const [clearCartModalOpen, setClearCartModalOpen] = useState(false)
   const [selectedPlatform, setSelectedPlatform] = useState<'farcaster'>('farcaster')
@@ -35,6 +35,7 @@ const Cart = () => {
   const { openConnectModal } = useConnectModal()
   const { selectedList, roles } = useEFPProfile()
   const { totalCartItems, cartItems } = useCart()
+  const { setIsCheckingOut, isCheckingOut } = useActions()
 
   const containerRef = useRef<HTMLDivElement>(null)
   const { StickyScrollRef: SidebarRef, onScroll: onScrollSidebar } = useStickyScroll(140)

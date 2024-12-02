@@ -43,6 +43,8 @@ export type Action = {
 }
 
 type ActionsContextType = {
+  isCheckingOut: boolean
+  setIsCheckingOut: (isCheckingOut: boolean) => void
   actions: Action[]
   addActions: (newActions: Action[]) => void
   allActionsSuccessful: boolean // If all actions' transactions are successful
@@ -63,6 +65,7 @@ const ActionsContext = createContext<ActionsContextType | undefined>(undefined)
  * @description Provider for handling bundled actions in the app such as creating and/or updating EFP lists
  */
 export const ActionsProvider = ({ children }: { children: ReactNode }) => {
+  const [isCheckingOut, setIsCheckingOut] = useState(false)
   const [actions, setActions] = useState<Action[]>([])
   const [currentActionIndex, setCurrentActionIndex] = useState(-1)
   const currentAction = actions[currentActionIndex]
@@ -190,6 +193,8 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
   }, [])
 
   const value = {
+    isCheckingOut,
+    setIsCheckingOut,
     actions,
     addActions,
     isCorrectChain,

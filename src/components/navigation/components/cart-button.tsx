@@ -24,7 +24,7 @@ const CartButton = () => {
       >
         <div
           className={cn(
-            'w-[42px] absolute top-[3px] h-[42px] bg-gradient-to-b from-[#FFDE60] to-[#FFA997] rounded-full',
+            'w-[42px] absolute top-[3px] h-[42px] bg-[#FFC47B] rounded-full',
             pathname === '/cart' ? 'opacity-100' : 'opacity-0'
           )}
         />
