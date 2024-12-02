@@ -196,10 +196,10 @@ export function Search({
           )}
         </div>
       </div>
-      <div className={` relative z-50 ${isEditor ? 'hidden' : 'xl:hidden block'}`}>
+      <div className={`relative w-fit z-50 ${isEditor ? 'hidden' : 'xl:hidden block'}`}>
         <FiSearch
           onClick={() => setDialogOpen(true)}
-          className='text-3xl hover:scale-125 cursor-pointer transition-all hover:opacity-65'
+          className='text-3xl hover:scale-125 w-fit cursor-pointer transition-all hover:opacity-65'
           aria-hidden='true'
         />
         <div

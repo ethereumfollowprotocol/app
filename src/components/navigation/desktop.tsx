@@ -27,26 +27,14 @@ const Desktop: React.FC = () => {
             className='hidden dark:sm:block sm:max-w-[120px] select-none hover:scale-110 transition-transform'
             alt={'Ethereum Follow Protocol Logo'}
           />
-          {/* <Image
-            src={FullLogoHalloween}
-            priority={true}
-            className="hidden halloween:sm:block sm:max-w-[120px] select-none hover:scale-110 transition-transform"
-            alt={"Ethereum Follow Protocol Logo"}
-          /> */}
           <Image
             src={Logo}
             priority={true}
             className='w-[56px] halloween:hidden sm:hidden select-none hover:scale-110 transition-transform'
             alt='Ethereum Follow Protocol Logo'
           />
-          {/* <Image
-            src={LogoHalloween}
-            priority={true}
-            className="w-[56px] hidden halloween:block halloween:sm:hidden select-none hover:scale-110 transition-transform"
-            alt="Ethereum Follow Protocol Logo"
-          /> */}
         </Link>
-        <Search size='w-fit max-w-[200px] lg:w-5/6 xl:w-full xxs:max-w-[350px]' />
+        <Search size='w-fit max-w-[200px] lg:max-w-5/6 xl:w-3/5 2xl:w-full xxs:max-w-[350px]' />
       </div>
       <div className='items-center gap-1.5 hidden absolute left-1/2 -translate-x-36 xl:-translate-x-[153px] lg:flex'>
         <NavItems />

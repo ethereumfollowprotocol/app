@@ -23,9 +23,9 @@ export const metadata: Metadata = {
 
 const Integrations = () => {
   return (
-    <main className='flex gap-4 px-4 md:px-8 lg:px-16 flex-col items-center relative pt-[6.75rem] sm:pt-[7.75rem]'>
-      <LiveIntegrations />
+    <main className='flex flex-row pb-28 lg:pb-10 gap-4 px-4 md:px-8 w-full justify-center flex-wrap relative pt-[6.75rem] sm:pt-[7.75rem]'>
       <Guide />
+      <LiveIntegrations />
     </main>
   )
 }

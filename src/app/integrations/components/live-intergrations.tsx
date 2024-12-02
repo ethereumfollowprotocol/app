@@ -3,24 +3,20 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
-
 import { INTEGRATIONS } from '#/lib/constants/integrations'
-import { PrimaryButton } from '#/components/buttons/primary-button'
 
 const LiveIntegrations = () => {
   const { t } = useTranslation()
 
   return (
-    <div className='glass-card border-[3px] flex-col flex gap-12 items-center rounded-xl w-full p-10 max-w-[750px] border-grey'>
-      <div className='flex flex-col gap-6 items-center h-full w-full'>
-        <h1 className='text-4xl font-bold'>{t('integrations')}</h1>
-        <p className='text-lg text-center font-medium text-text/70'>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae voluptas, et numquam
-          deserunt itaque ipsa. Inventore velit ex quo doloremque nobis earum, iusto placeat nulla
-          repellendus, veritatis quos non sapiente?
-        </p>
+    <div className='glass-card border-[3px] flex-col flex gap-8 sm:gap-10 md:gap-12 items-center xl:items-start rounded-xl w-full px-6 md:px-8 py-8 md:py-10 max-w-[700px] border-grey'>
+      <div className='flex gap-6 px-2 items-center h-full'>
+        <h1 className='text-3xl sm:text-4xl font-bold'>{t('integrations')}</h1>
+        <div className='flex flex-col gap-2 font-bold rounded-full bg-grey text-2xl sm:text-3xl px-4 sm:px-5 py-1'>
+          {INTEGRATIONS.length}
+        </div>
       </div>
-      <div className='flex flex-row w-full items-center justify-center flex-wrap gap-4'>
+      <div className='flex flex-row w-full items-center justify-evenly sm:justify-center xl:justify-start flex-wrap gap-4'>
         {INTEGRATIONS.map(integration => (
           <div
             key={integration.name}
@@ -48,13 +44,6 @@ const LiveIntegrations = () => {
           </div>
         ))}
       </div>
-      <PrimaryButton
-        label='Integrate Yourself'
-        className='w-fit text-xl px-6'
-        onClick={() => {
-          window.open('https://ethfollow.xyz/integrations', '_blank')
-        }}
-      />
     </div>
   )
 }

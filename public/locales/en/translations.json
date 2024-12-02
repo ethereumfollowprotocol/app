@@ -19,6 +19,9 @@
   "sponsors": "Supported by grants from:",
   "support": "Support",
 
+  "integrate efp": "Integrate EFP",
+  "integrate efp description": "EFP is an onchain social graph protocol for Ethereum accounts, a primitive of the Ethereum identity stack designed to complement ENS and Sign-in with Ethereum.",
+
   "profile": "My Profile",
   "profile error": "User doesn't exist",
   "connect to see more": "Connect your wallet to start swiping!",
