@@ -9,29 +9,40 @@ import { cn } from '#/lib/utilities'
 import { useCart } from '#/contexts/cart-context'
 import { formatNumber } from '#/utils/format/format-number'
 import HalloweenCart from 'public/assets/icons/halloween-cart.png'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
+import { useAccount } from 'wagmi'
 
 const CartButton = () => {
   const pathname = usePathname()
   const { totalCartItems } = useCart()
+  const { address: userAddress } = useAccount()
+  const { openConnectModal } = useConnectModal()
 
   return (
-    <Link href='/cart'>
+    <Link
+      href='/cart'
+      onClick={e => {
+        if (!userAddress && openConnectModal) {
+          e.preventDefault()
+          openConnectModal()
+        }
+      }}
+    >
       <div
         className={cn(
-          'border-[3px] bg-neutral/80 group z-50 h-[54px] justify-center items-center w-[54px] transition-all backdrop-blur-xl cursor-pointer hover:scale-110 relative flex rounded-full',
-          pathname === '/cart' ? 'border-text' : 'border-grey hover:border-text'
+          'border-[3px] bg-neutral/80 group z-50 h-[54px] justify-center items-center w-[54px] transition-all backdrop-blur-xl cursor-pointer hover:scale-110 relative flex rounded-full border-grey hover:border-text'
         )}
       >
         <div
           className={cn(
-            'w-[42px] absolute top-[3px] h-[42px] bg-[#FFC47B] rounded-full',
+            'w-[42px] absolute top-[3px] h-[42px] bg-followButton rounded-full',
             pathname === '/cart' ? 'opacity-100' : 'opacity-0'
           )}
         />
         <IoCartSharp
           className={cn(
             'text-[28px] -translate-x-px transition-all',
-            pathname === '/cart' ? 'text-text' : 'text-text-neutral group-hover:text-text'
+            pathname === '/cart' ? 'text-black' : 'text-text-neutral group-hover:text-text'
           )}
         />
         <Image

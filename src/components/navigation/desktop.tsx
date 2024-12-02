@@ -1,8 +1,5 @@
-'use client'
-
 import Link from 'next/link'
 import Image from 'next/image'
-import { useAccount } from 'wagmi'
 
 import { Search } from '../search'
 import Logo from 'public/assets/logo.svg'
@@ -14,8 +11,6 @@ import Integrations from './components/integrations.tsx'
 import FullLogoDark from 'public/assets/logo-full-dark.svg'
 
 const Desktop: React.FC = () => {
-  const { address: userAddress } = useAccount()
-
   return (
     <nav className='my-auto flex w-full flex-row items-center justify-between'>
       <div className='flex w-fit lg:w-2/5 2xl:w-1/3 justify-start items-center gap-4 md:gap-6 xl:gap-6'>
@@ -53,11 +48,11 @@ const Desktop: React.FC = () => {
         </Link>
         <Search size='w-fit max-w-[200px] lg:w-5/6 xl:w-full xxs:max-w-[350px]' />
       </div>
-      <div className='flex gap-4 xl:gap-6 w-3/4 sm:w-full lg:w-3/4 justify-end items-center'>
-        <div className='items-center gap-1.5 hidden lg:flex'>
-          <NavItems />
-          {userAddress && <CartButton />}
-        </div>
+      <div className='items-center gap-1.5 hidden absolute left-1/2 -translate-x-36 xl:-translate-x-[156px] lg:flex'>
+        <NavItems />
+        <CartButton />
+      </div>
+      <div className='flex gap-4 xl:gap-5 justify-end items-center'>
         <Integrations />
         <WalletMenu />
       </div>
