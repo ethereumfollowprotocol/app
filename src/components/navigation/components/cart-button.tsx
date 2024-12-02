@@ -2,15 +2,15 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { useAccount } from 'wagmi'
 import { usePathname } from 'next/navigation'
 import { IoCartSharp } from 'react-icons/io5'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import { cn } from '#/lib/utilities'
 import { useCart } from '#/contexts/cart-context'
 import { formatNumber } from '#/utils/format/format-number'
 import HalloweenCart from 'public/assets/icons/halloween-cart.png'
-import { useConnectModal } from '@rainbow-me/rainbowkit'
-import { useAccount } from 'wagmi'
 
 const CartButton = () => {
   const pathname = usePathname()

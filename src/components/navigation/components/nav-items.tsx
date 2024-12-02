@@ -13,7 +13,6 @@ import { EXTERNAL_LINKS, NAV_ITEMS } from '#/lib/constants'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 const NavItems = () => {
-  const [isHoverOnSelectedItem, setIsHoverOnSelectedItem] = useState(false)
   const pathname = usePathname()
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
@@ -35,24 +34,13 @@ const NavItems = () => {
 
   return (
     <div ref={clickAwayRef} className='relative'>
-      <div className=' z-40 bg-neutral/80 backdrop-blur-xl flex items-center hover:scale-[1.025] hover:border-text transition-all h-[54px] border-[3px] border-grey rounded-full'>
-        <div className='flex flex-row items-center z-40 relative hover:scale-[0.975] transition-all h-[54px]'>
-          <div
-            className={cn(
-              'w-[42px] absolute top-[6px] h-[42px] border-[3px] border-transparent hover:scale-110 transition-transform bg-followButton rounded-full',
-              isHoverOnSelectedItem && 'scale-110'
-            )}
-            style={{
-              left:
-                itemIndex === -1 ? '100%' : `${itemIndex * 48 + (4 - Math.ceil(itemIndex / 3))}px`,
-              opacity: itemIndex === -1 ? 0 : 1
-            }}
-          />
+      <div className='z-40 bg-neutral/80 backdrop-blur-xl flex items-center hover:scale-[1.025] hover:border-text transition-all h-[54px] border-[3px] border-grey rounded-full'>
+        <div className='flex flex-row items-center px-0.5 relative hover:scale-[0.975] transition-all h-[56px]'>
           {NAV_ITEMS.map(item => (
             <Link
               key={item.name}
               prefetch={true}
-              className='z-10'
+              className='z-10 px-0.5 group/nav-item'
               href={item.href(itemUrl)}
               onClick={e => {
                 if (
@@ -68,15 +56,11 @@ const NavItems = () => {
               }}
             >
               <item.icon
-                onMouseEnter={() =>
-                  item.href(itemUrl) === pathname && setIsHoverOnSelectedItem(true)
-                }
-                onMouseLeave={() => setIsHoverOnSelectedItem(false)}
                 className={cn(
-                  'px-2.5 w-[48px] h-12 font-bold text-[28px] z-50 hover:scale-[1.15] transition-all cursor-pointer',
+                  'px-2 w-11 h-11 font-bold text-[28px] z-50 group-hover/nav-item:scale-110 transition-all cursor-pointer',
                   item.href(itemUrl) === pathname
-                    ? 'text-black'
-                    : 'text-text-neutral hover:text-text'
+                    ? 'text-black bg-followButton rounded-full'
+                    : 'text-text-neutral group-hover/nav-item:text-text'
                 )}
               />
             </Link>
@@ -84,23 +68,26 @@ const NavItems = () => {
           <div className='relative'>
             <div
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className='flex hover:scale-[1.2] w-[54px] px-3 cursor-pointer group/hamburger relative transition-all items-center justify-center gap-[5px] flex-col'
+              className={cn(
+                'flex hover:scale-110 h-11 w-11 cursor-pointer group/hamburger relative transition-all items-center justify-center gap-[5px] flex-col',
+                itemIndex === 4 ? 'bg-followButton rounded-full' : ''
+              )}
             >
               <div
                 className={cn(
-                  'w-6 h-1 rounded-full transition-all bg-text -translate-x-px',
+                  'w-6 h-1 rounded-full transition-all bg-text',
                   itemIndex === 4 ? 'bg-black' : 'bg-text-neutral group-hover/hamburger:bg-text'
                 )}
               ></div>
               <div
                 className={cn(
-                  'w-6 h-1 rounded-full transition-all bg-text -translate-x-px',
+                  'w-6 h-1 rounded-full transition-all bg-text',
                   itemIndex === 4 ? 'bg-black' : 'bg-text-neutral group-hover/hamburger:bg-text'
                 )}
               ></div>
               <div
                 className={cn(
-                  'w-6 h-1 rounded-full transition-all bg-text -translate-x-px',
+                  'w-6 h-1 rounded-full transition-all bg-text',
                   itemIndex === 4 ? 'bg-black' : 'bg-text-neutral group-hover/hamburger:bg-text'
                 )}
               ></div>
