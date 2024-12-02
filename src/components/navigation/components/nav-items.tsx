@@ -34,10 +34,7 @@ const NavItems = () => {
 
   return (
     <div ref={clickAwayRef} className='relative'>
-      <div
-        key='nav items'
-        className='z-40 bg-neutral/80 backdrop-blur-xl flex items-center hover:border-text transition-all h-[54px] border-[3px] border-grey rounded-full'
-      >
+      <div className='z-40 bg-neutral/80 backdrop-blur-xl flex items-center h-[54px] border-[3px] border-grey hover:border-text transition-all rounded-full'>
         <div className='flex flex-row items-center pr-0.5 transition-all h-[54px]'>
           {NAV_ITEMS.map(item => (
             <Link
@@ -67,24 +64,22 @@ const NavItems = () => {
               />
             </Link>
           ))}
-          <div className='relative'>
-            <div
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={cn(
-                'flex hover:scale-110 h-11 w-11 cursor-pointer group/hamburger relative transition-all items-center justify-center gap-[5px] flex-col',
-                itemIndex === 4 ? 'bg-followButton rounded-full' : ''
-              )}
-            >
-              {new Array(3).fill(0).map((_, index) => (
-                <div
-                  key={index}
-                  className={cn(
-                    'w-6 h-1 rounded-full transition-all bg-text',
-                    itemIndex === 4 ? 'bg-black' : 'bg-text-neutral group-hover/hamburger:bg-text'
-                  )}
-                ></div>
-              ))}
-            </div>
+          <div
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className={cn(
+              'flex hover:scale-110 h-11 w-11 cursor-pointer group/hamburger relative transition-all items-center justify-center gap-[5px] flex-col',
+              itemIndex === 4 ? 'bg-followButton rounded-full' : ''
+            )}
+          >
+            {new Array(3).fill(0).map((_, index) => (
+              <div
+                key={index}
+                className={cn(
+                  'w-6 h-1 rounded-full transition-all bg-text',
+                  itemIndex === 4 ? 'bg-black' : 'bg-text-neutral group-hover/hamburger:bg-text'
+                )}
+              ></div>
+            ))}
           </div>
         </div>
       </div>
