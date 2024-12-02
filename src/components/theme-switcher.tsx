@@ -72,7 +72,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
       </div>
       <div
         className={cn(
-          'absolute group-hover:block block h-[250px] sm:h-[174px] z-50 -right-[250px] sm:right-[97.2%] min-w-[246px] -top-[7px] sm:pr-5',
+          'absolute group-hover:block block h-[250px] sm:h-[174px] z-50 -right-[251px] sm:right-[97.2%] min-w-[246px] -top-[7px] sm:pr-5',
           themeMenuOpen ? 'block' : 'hidden'
         )}
       >

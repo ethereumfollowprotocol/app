@@ -34,8 +34,11 @@ const NavItems = () => {
 
   return (
     <div ref={clickAwayRef} className='relative'>
-      <div className='z-40 bg-neutral/80 backdrop-blur-xl flex items-center hover:scale-[1.025] hover:border-text transition-all h-[54px] border-[3px] border-grey rounded-full'>
-        <div className='flex flex-row items-center px-0.5 relative hover:scale-[0.975] transition-all h-[56px]'>
+      <div
+        key='nav items'
+        className='z-40 bg-neutral/80 backdrop-blur-xl flex items-center hover:scale-[1.025] hover:border-text transition-all h-[54px] border-[3px] border-grey rounded-full'
+      >
+        <div className='flex flex-row items-center px-0.5 pl-0 relative hover:scale-[0.975] transition-all h-[54px]'>
           {NAV_ITEMS.map(item => (
             <Link
               key={item.name}
@@ -73,24 +76,15 @@ const NavItems = () => {
                 itemIndex === 4 ? 'bg-followButton rounded-full' : ''
               )}
             >
-              <div
-                className={cn(
-                  'w-6 h-1 rounded-full transition-all bg-text',
-                  itemIndex === 4 ? 'bg-black' : 'bg-text-neutral group-hover/hamburger:bg-text'
-                )}
-              ></div>
-              <div
-                className={cn(
-                  'w-6 h-1 rounded-full transition-all bg-text',
-                  itemIndex === 4 ? 'bg-black' : 'bg-text-neutral group-hover/hamburger:bg-text'
-                )}
-              ></div>
-              <div
-                className={cn(
-                  'w-6 h-1 rounded-full transition-all bg-text',
-                  itemIndex === 4 ? 'bg-black' : 'bg-text-neutral group-hover/hamburger:bg-text'
-                )}
-              ></div>
+              {new Array(3).fill(0).map((_, index) => (
+                <div
+                  key={index}
+                  className={cn(
+                    'w-6 h-1 rounded-full transition-all bg-text',
+                    itemIndex === 4 ? 'bg-black' : 'bg-text-neutral group-hover/hamburger:bg-text'
+                  )}
+                ></div>
+              ))}
             </div>
           </div>
         </div>

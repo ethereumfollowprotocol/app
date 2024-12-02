@@ -64,7 +64,7 @@ const LanguageSelector = ({
         </div>
       </div>
       <div
-        className={`absolute -right-[250px] sm:right-[95%] -top-[140px] z-50 sm:-top-[6px] ${
+        className={`absolute -right-[251px] sm:right-[95%] -top-[140px] z-50 sm:-top-[6px] ${
           languageMenOpenu ? 'block' : 'hidden'
         } group-hover:block sm:pr-6`}
       >
