@@ -114,7 +114,7 @@ export function Search({
                     !!searchResult
                 )
               }}
-              className='h-12 block pr-12 w-full truncate font-medium rounded-xl border-[3px] border-grey pl-4 sm:text-sm bg-neutral/70 focus:border-text/80 hover:border-text/80 transition-colors'
+              className='h-[54px] block pr-12 w-full truncate font-medium rounded-xl border-[3px] border-grey pl-4 sm:text-sm bg-neutral/70 focus:border-text/80 hover:border-text/80 transition-colors'
             />
           )}
           <div
@@ -196,10 +196,10 @@ export function Search({
           )}
         </div>
       </div>
-      <div className={` relative z-50 ${isEditor ? 'hidden' : 'xl:hidden block'}`}>
+      <div className={`relative w-fit z-50 ${isEditor ? 'hidden' : 'xl:hidden block'}`}>
         <FiSearch
           onClick={() => setDialogOpen(true)}
-          className='text-3xl hover:scale-125 cursor-pointer transition-all hover:opacity-65'
+          className='text-3xl hover:scale-125 w-fit cursor-pointer transition-all hover:opacity-65'
           aria-hidden='true'
         />
         <div
@@ -212,7 +212,7 @@ export function Search({
             <input
               name='search'
               ref={searchBarRef as LegacyRef<HTMLInputElement>}
-              className='h-12 block pr-12 w-full  truncate font-medium rounded-xl border-[3px] pl-4 sm:text-sm bg-neutral focus:border-text border-grey transition-colors'
+              className='h-[54px] block pr-12 w-full  truncate font-medium rounded-xl border-[3px] pl-4 sm:text-sm bg-neutral focus:border-text border-grey transition-colors'
               spellCheck={false}
               placeholder={t('search placeholder')}
               disabled={disabled}

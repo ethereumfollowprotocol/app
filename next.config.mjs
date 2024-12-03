@@ -139,7 +139,7 @@ const nextConfig = {
 		},
 		{
 			source: "/(chat|discord)",
-			destination: "https://discord.ethfollow.xyz",
+			destination: "https://discord.com/invite/ZUyG3mSXFD",
 			permanent: true,
 		},
 	],

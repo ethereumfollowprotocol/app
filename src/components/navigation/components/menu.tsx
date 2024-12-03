@@ -1,20 +1,15 @@
 'use client'
 
 import Link from 'next/link'
-import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
-import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useState, type Dispatch, type SetStateAction } from 'react'
 
 import { cn } from '#/lib/utilities'
 import { socials } from '#/components/footer'
-import { usePathname } from 'next/navigation'
-import LanguageSelector from './language-selector'
-import { LANGUAGES } from '#/lib/constants/languages'
-import { EXTERNAL_LINKS, NAV_ITEMS } from '#/lib/constants'
-import { useEFPProfile } from '#/contexts/efp-profile-context'
-import VolumeSwitcher, { volumeOptions } from './volume-switcher'
-import ThemeSwitcher, { themesWithIcons } from '#/components/navigation/components/theme-switcher'
+import { EXTERNAL_LINKS } from '#/lib/constants'
+import LanguageSelector from '../../language-selector'
+import VolumeSwitcher, { volumeOptions } from '../../volume-switcher'
+import ThemeSwitcher, { themesWithIcons } from '#/components/theme-switcher'
 
 interface MenuProps {
   open: boolean
@@ -26,35 +21,23 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
   const [volumeMenuOpen, setVolumeMenuOpen] = useState(false)
   const [languageMenOpenu, setLanguageMenuOpen] = useState(false)
 
-  const pathname = usePathname()
   const { t } = useTranslation()
-  const { openConnectModal } = useConnectModal()
-  const { address: userAddress } = useAccount()
-  const { selectedList, lists } = useEFPProfile()
-  const itemUrl =
-    pathname?.toLowerCase() === `/${userAddress?.toLowerCase()}` &&
-    selectedList === Number(lists?.primary_list)
-      ? userAddress?.toLowerCase()
-      : selectedList?.toString() ?? userAddress?.toLowerCase()
 
   if (!open) return null
 
   return (
-    <div
-      className={cn(
-        'bg-neutral w-[220px] z-50 overflow-x-hidden sm:overflow-visible shadow-md border-[3px] transition-transform rounded-md border-grey absolute top-[120%] flex flex-col items-end -left-[90px]'
-      )}
-    >
+    <div className='bg-neutral w-[244px] h-fit nav-menu -z-20 overflow-x-hidden lg:overflow-visible shadow-md border-[3px] transition-all rounded-xl lg:rounded-md border-grey pb-6 lg:pb-0 lg:pt-8 absolute bottom-6 lg:top-5 flex flex-col items-end right-0'>
       <div
         className={cn(
-          'flex flex-col w-full transition-all overflow-x-visible max-h-[74vh] sm:h-auto p-1',
+          'flex flex-col w-full transition-all overflow-x-visible max-h-[80vh] lg:h-auto p-1',
           languageMenOpenu || themeMenuOpen || volumeMenuOpen
-            ? '-translate-x-[216px] sm:translate-x-0'
+            ? '-translate-x-[244px] lg:translate-x-0'
             : ''
         )}
         style={{
           height: languageMenOpenu
-            ? `${(LANGUAGES.length || 0) * 56 + 111}px`
+            ? // ? `${(LANGUAGES.length || 0) * 56 + 111}px`
+              'auto'
             : themeMenuOpen
               ? `${(themesWithIcons.length || 0) * 56 + 56}px`
               : volumeMenuOpen
@@ -81,26 +64,6 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
             setVolumeMenuOpen(false)
           }}
         />
-        {NAV_ITEMS.map(item => (
-          <div
-            className={cn('font-bold w-full ', item.hiddenOnDesktop ? 'lg:hidden' : '')}
-            key={`${item.name}`}
-          >
-            <Link
-              prefetch={true}
-              href={item.href(itemUrl)}
-              className='capitalize lg:text-lg text-end block transition-colors p-3 w-full rounded-md hover:bg-navItem text-text'
-              onClick={e => {
-                if (item.name === 'profile' && !userAddress && openConnectModal) {
-                  e.preventDefault()
-                  openConnectModal()
-                } else setOpen(false)
-              }}
-            >
-              {t(`${item.name}`)}
-            </Link>
-          </div>
-        ))}
         {EXTERNAL_LINKS.map(link => (
           <Link
             key={link.href}

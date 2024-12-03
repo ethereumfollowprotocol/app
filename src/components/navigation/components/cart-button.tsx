@@ -2,42 +2,59 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { useAccount } from 'wagmi'
 import { usePathname } from 'next/navigation'
 import { IoCartSharp } from 'react-icons/io5'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 
+import { cn } from '#/lib/utilities'
+import { useCart } from '#/contexts/cart-context'
 import { formatNumber } from '#/utils/format/format-number'
 import HalloweenCart from 'public/assets/icons/halloween-cart.png'
 
-interface CartButtonProps {
-  cartItemsCount: number
-}
-
-const CartButton: React.FC<CartButtonProps> = ({ cartItemsCount }) => {
+const CartButton = () => {
   const pathname = usePathname()
+  const { totalCartItems } = useCart()
+  const { address: userAddress } = useAccount()
+  const { openConnectModal } = useConnectModal()
+
   return (
-    <Link href='/cart' passHref={true} legacyBehavior={true}>
+    <Link
+      href='/cart'
+      onClick={e => {
+        if (!userAddress && openConnectModal) {
+          e.preventDefault()
+          openConnectModal()
+        }
+      }}
+    >
       <div
-        className={`glass-card border-[3px] h-[48px] group justify-center items-center w-[48px] transition-all cursor-pointer hover:border-opacity-100 hover:scale-110 relative flex rounded-full ${
-          pathname === '/cart'
-            ? 'border-text hover:scale-100 halloween:bg-text/50'
-            : 'border-text/40 hover:border-text halloween:hover:bg-text/50 halloween:bg-text/30'
-        }`}
+        className={cn(
+          'border-[3px] bg-neutral/80 group z-50 h-[54px] justify-center items-center w-[54px] transition-all backdrop-blur-xl cursor-pointer hover:scale-110 relative flex rounded-full border-grey hover:border-text'
+        )}
       >
+        <div
+          className={cn(
+            'w-[42px] absolute top-[3px] h-[42px] bg-followButton rounded-full',
+            pathname === '/cart' ? 'opacity-100' : 'opacity-0'
+          )}
+        />
         <IoCartSharp
-          className={`${
-            pathname === '/cart' ? 'opacity-100' : 'opacity-40'
-          } group-hover:opacity-100 transition-opacity text-2xl -translate-x-px halloween:hidden`}
+          className={cn(
+            'text-[28px] -translate-x-px transition-all',
+            pathname === '/cart' ? 'text-black' : 'text-text-neutral group-hover:text-text'
+          )}
         />
         <Image
           src={HalloweenCart}
           alt='cart'
-          width={24}
-          height={24}
+          width={32}
+          height={32}
           className='halloween:block hidden'
         />
-        {cartItemsCount === 0 ? null : (
-          <span className='absolute -right-3 sm:-right-[14px] -top-3 sm:-top-[14px] flex h-6 sm:h-7 w-fit min-w-6 sm:min-w-7 items-center px-1 justify-center rounded-full bg-green-400 text-sm font-bold text-black'>
-            {formatNumber(cartItemsCount)}
+        {totalCartItems === 0 ? null : (
+          <span className='absolute -right-3 sm:-right-3 -top-3 sm:-top-3 flex h-6 sm:h-7 w-fit min-w-6 sm:min-w-7 items-center px-1 justify-center rounded-full bg-green-400 text-sm font-bold text-black'>
+            {formatNumber(totalCartItems)}
           </span>
         )}
       </div>

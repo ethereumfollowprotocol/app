@@ -12,6 +12,7 @@ import SocialProfilesItem, {
 } from '#/components/profile-list/components/social-profiles-item'
 import LoadingRow from '#/components/profile-list/components/list-item/loading-list-item'
 import ProfileListItem from '#/components/profile-list/components/list-item/profile-list-item'
+import ProfileList from '#/components/profile-list'
 
 export interface ProfileListProfile {
   address: Address
@@ -104,7 +105,7 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
           {socialProfiles?.map(social => (
             <SocialProfilesItem key={social.platform} {...social} />
           ))}
-          {(profiles?.length || 0) > 0 && (
+          {(profiles?.length || 0) >= 30 ? (
             <List
               ref={listRef}
               autoWidth={true}
@@ -137,6 +138,12 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
                   </div>
                 )
               }}
+            />
+          ) : (
+            <ProfileList
+              profiles={profiles}
+              isLoading={isLoading}
+              className='gap-4 2xl:gap-5 pb-4'
             />
           )}
         </>

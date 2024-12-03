@@ -1,3 +1,6 @@
+import { MdSwipe } from 'react-icons/md'
+import { IoHome, IoPerson, IoTrophy } from 'react-icons/io5'
+
 import type { FollowSortType } from '#/types/requests'
 import type { ProfileTableTitleType, ProfileTabType } from '#/types/common'
 
@@ -44,21 +47,25 @@ export const NAV_ITEMS = [
   {
     href: () => '/',
     name: 'home',
+    icon: IoHome,
     hiddenOnDesktop: true
   },
   {
     href: (url?: string) => `/${url ?? 'profile'}`,
     name: 'profile',
+    icon: IoPerson,
     hiddenOnDesktop: true
   },
   {
     href: () => '/swipe',
     name: 'swipe',
+    icon: MdSwipe,
     hiddenOnDesktop: true
   },
   {
     href: () => '/leaderboard',
     name: 'leaderboard',
+    icon: IoTrophy,
     hiddenOnDesktop: true
   }
 ]

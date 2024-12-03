@@ -423,6 +423,20 @@ input {
   transition: all 200ms ease-in-out;
 }
 
+/* @starting-style {
+  .nav-menu {
+    transform: translateY(100%);
+  }
+}
+
+@media (max-width: 1024px) {
+  @starting-style {
+    .nav-menu {
+      transform: translateY(-100%);
+    }
+  }
+} */
+
 .loading-ellipsis:after {
   overflow: hidden;
   display: inline-block;

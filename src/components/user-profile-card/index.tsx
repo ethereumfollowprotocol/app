@@ -25,7 +25,7 @@ import CommonFollowers from './components/common-followers'
 import DefaultAvatar from 'public/assets/art/default-avatar.svg'
 import DefaultHeader from 'public/assets/art/default-header.svg'
 import LoadingProfileCard from './components/loading-profile-card'
-import ConnectButton from '../navigation/components/connect-button'
+import ConnectButton from '../connect-button'
 import type { ProfileDetailsResponse, StatsResponse } from '#/types/requests'
 
 interface UserProfileCardProps {
@@ -231,7 +231,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
             isStatic={!isLoading}
           />
         ) : isRecommended ? (
-          <div className='flex items-center flex-col gap-4 justify-center w-full h-[536px]'>
+          <div className='flex items-center flex-col gap-4 justify-center mx-auto w-3/4 h-[536px]'>
             <p className='text-xl px-8 font-bold'>{t('connect to see more')}</p>
             <ConnectButton isResponsive={false} />
           </div>
