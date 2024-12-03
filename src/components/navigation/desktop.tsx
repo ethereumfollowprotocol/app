@@ -36,7 +36,7 @@ const Desktop: React.FC = () => {
         </Link>
         <Search size='w-fit max-w-[200px] lg:max-w-5/6 xl:w-3/5 2xl:w-full xxs:max-w-[350px]' />
       </div>
-      <div className='items-center gap-1.5 hidden absolute left-1/2 -translate-x-36 xl:-translate-x-[153px] lg:flex'>
+      <div className='items-center gap-1.5 hidden absolute left-1/2 -translate-x-36 xl:-translate-x-[152px] lg:flex'>
         <NavItems />
         <CartButton />
       </div>

@@ -64,7 +64,7 @@ const Cart = () => {
         <div
           ref={containerRef}
           className={cn(
-            'flex flex-col-reverse xl:flex-row overflow-y-auto justify-center gap-4 w-full h-full xl:gap-6 pt-[6.75rem] px-2 lg:px-8 pb-6 xl:pb-8',
+            'flex flex-col-reverse xl:flex-row overflow-y-auto justify-center gap-4 w-full h-full xl:gap-6 pt-[6.75rem] px-2 lg:px-8 pb-40 sm:pb-44 xl:pb-8',
             totalCartItems >= 30 && 'xl:pb-0'
           )}
           onScroll={e => {
@@ -127,7 +127,7 @@ const Cart = () => {
           {isClient && (
             <div
               className={cn(
-                'fixed md:w-fit w-full -bottom-1 lg:bottom-[3vh] right-0 lg:right-[3vw] justify-end',
+                'fixed lg:w-fit w-full -bottom-1 lg:bottom-[3vh] right-0 lg:right-[3vw] justify-end',
                 isClient && totalCartItems > 0 ? 'flex' : 'hidden'
               )}
             >
