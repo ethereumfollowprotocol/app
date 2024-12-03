@@ -25,7 +25,7 @@ const FollowerList = () => {
         src={LineDesktop}
         alt='line'
         width={3}
-        className='absolute hidden lg:block -bottom-[153px] xl:-bottom-[153px] left-[760px] xl:left-[768px]'
+        className='absolute hidden lg:block -bottom-[153px] xl:-bottom-[153px] left-[650px]'
       />
       <Image src={LineMobile} alt='line' width={4} className='absolute lg:hidden -bottom-[46px] ' />
     </div>
