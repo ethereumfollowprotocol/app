@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next'
 import EnsDao from 'public/assets/sponsors/ensdao.svg'
 import Mask from 'public/assets/sponsors/masknetwork.svg'
 import Line from 'public/assets/lines/desktop/line-5.svg'
-import { INTEGRATIONS } from '#/lib/constants/integrations'
 import EnsDaoDark from 'public/assets/sponsors/ensdao-dark.svg'
 import MaskDark from 'public/assets/sponsors/masknetwork-dark.svg'
 
@@ -18,7 +17,7 @@ const Integrations = () => {
 
   return (
     <div className='flex flex-col items-center gap-0 relative'>
-      {INTEGRATIONS.length > 0 && (
+      {/* {INTEGRATIONS.length > 0 && (
         <div className='glass-card z-10 sm:p-8 md:p-10 border-[3px] border-[#aaaaaa] mb-[34px] md:mb-12 p-4 font-bold text-center text-sm rounded-3xl mx-auto w-full max-w-4xl'>
           <h2 className='text-3xl font-bold pb-6 sm:pb-8'>{t('integrations')}</h2>
           <section className='w-full gap-y-8 z-10 gap-x-10 sm:gap-x-14 flex flex-row justify-evenly flex-wrap'>
@@ -50,7 +49,7 @@ const Integrations = () => {
             ))}
           </section>
         </div>
-      )}
+      )} */}
       {/* <div className='glass-card z-10 sm:p-8 mb-[34px] md:mb-12 md:p-10 border-[3px] border-[#aaaaaa] p-4 font-bold text-center text-sm rounded-3xl mx-auto w-full max-w-4xl'>
         <p className='text-3xl font-bold pb-6 sm:pb-8'>{t('partners')}</p>
         <section className='w-full gap-y-8 z-10 gap-x-10 sm:gap-x-14 flex flex-row justify-evenly flex-wrap'>
@@ -84,7 +83,7 @@ const Integrations = () => {
         alt='line'
         width={3}
         height={154}
-        className='absolute -bottom-[100px] lg:-bottom-[170px]'
+        className='absolute -bottom-[100px] lg:-bottom-[250px]'
       />
       <div className='glass-card w-full flex flex-col gap-8 items-center py-6 mx-auto border-[3px] border-[#aaaaaa] text-dark-gray font-bold text-center text-sm rounded-3xl max-w-4xl'>
         <p className=' text-xl sm:text-2xl md:text-3xl font-bold'>{t('sponsors')}</p>

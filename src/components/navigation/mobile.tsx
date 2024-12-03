@@ -1,10 +1,9 @@
 import React from 'react'
-import { useAccount } from 'wagmi'
 import { usePathname } from 'next/navigation'
 
+import { cn } from '#/lib/utilities'
 import NavItems from './components/nav-items'
 import CartButton from './components/cart-button'
-import { cn } from '#/lib/utilities'
 import { useCart } from '#/contexts/cart-context'
 import { useActions } from '#/contexts/actions-context'
 
@@ -12,7 +11,6 @@ const Mobile: React.FC = () => {
   const pathname = usePathname()
   const { totalCartItems } = useCart()
   const { isCheckingOut } = useActions()
-  const { address: userAddress } = useAccount()
 
   return (
     <nav
@@ -23,7 +21,7 @@ const Mobile: React.FC = () => {
     >
       <div className='flex items-center gap-1.5'>
         <NavItems />
-        {userAddress && <CartButton />}
+        <CartButton />
       </div>
     </nav>
   )

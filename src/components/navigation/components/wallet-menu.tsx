@@ -1,13 +1,13 @@
 'use client'
 import Image from 'next/image'
 
+import { SlWallet } from 'react-icons/sl'
 import { useEffect, useState } from 'react'
 import { FiArrowLeft } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
 import { IoIosArrowDown } from 'react-icons/io'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
-import { SlWallet } from 'react-icons/sl'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useAccount, useDisconnect, useWalletClient, useChains } from 'wagmi'
 
