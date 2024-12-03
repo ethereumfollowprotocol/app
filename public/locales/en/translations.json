@@ -19,6 +19,7 @@
   "sponsors": "Supported by grants from:",
   "support": "Support",
 
+  "integrate description": "If you integrate EFP into your app, message us and we'll add you to this list, promote you on Twitter, and send you a special EFP Integration POAP!",
   "integrate efp": "Integrate EFP",
   "integrate efp description": "EFP is an onchain social graph protocol for Ethereum accounts, a primitive of the Ethereum identity stack designed to complement ENS and Sign-in with Ethereum.",
 

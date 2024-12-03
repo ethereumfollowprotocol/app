@@ -64,19 +64,19 @@ const LanguageSelector = ({
         </div>
       </div>
       <div
-        className={`absolute -right-[251px] sm:right-[95%] -top-[140px] z-50 sm:-top-[6px] ${
-          languageMenOpenu ? 'block' : 'hidden'
-        } group-hover:block sm:pr-6`}
+        className={`-right-[251px] -top-[56px] lg:-top-[6px] absolute lg:right-[95%] z-50 ${
+          languageMenOpenu ? 'block' : 'hidden top-0'
+        } group-hover:block lg:pr-6`}
       >
-        <div className='flex overflow-scroll flex-col lg:grid sm:max-h-[75vh] max-h-[85vh] h-full lg:grid-cols-2 gap-2 gap-x-px w-[246px] lg:w-[450px] bg-neutral border-[3px] border-grey p-1 rounded-lg shadow-md'>
+        <div className='flex overflow-scroll flex-col lg:grid lg:max-h-[75vh] max-h-[85vh] h-full xl:grid-cols-2 gap-2 gap-x-px w-[246px] xl:w-[450px] bg-neutral border-[3px] border-grey p-1 rounded-lg shadow-md'>
           <div
             onClick={closeLanguageMenu}
-            className='flex sm:hidden justify-between items-center w-full hover:bg-navItem p-3 rounded-md transition-opacity cursor-pointer'
+            className='flex lg:hidden justify-between items-center w-full hover:bg-navItem p-3 rounded-md transition-opacity cursor-pointer'
           >
             <FiArrowLeft className='text-xl font-bold' />
             <p className=' font-bold'>Back</p>
           </div>
-          <div className='lg:col-span-2 p-3 flex flex-col gap-3 items-center'>
+          <div className='xl:col-span-2 p-3 flex flex-col gap-3 items-center'>
             <input
               type='text'
               placeholder='Search'
@@ -120,7 +120,7 @@ const LanguageSelector = ({
             </div>
           ))}
           {specialLanguages.length > 0 && regularLanguages.length > 0 && (
-            <div className='sm:col-span-2 px-3 py-1 sm:py-3 flex flex-col gap-3 items-center'>
+            <div className='xl:col-span-2 px-3 py-1 xl:py-3 flex flex-col gap-3 items-center'>
               <hr className='border-[1px] rounded-full border-zinc-300 dark:border-zinc-500 w-full' />
             </div>
           )}
@@ -148,7 +148,7 @@ const LanguageSelector = ({
               </div>
             </div>
           ))}
-          <div className='h-4 sm:h-0 pb-6 sm:pb-0 w-full' />
+          <div className='h-4 lg:h-0 pb-6 lg:pb-0 w-full' />
         </div>
       </div>
     </div>

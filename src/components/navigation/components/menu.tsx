@@ -7,7 +7,6 @@ import { useState, type Dispatch, type SetStateAction } from 'react'
 import { cn } from '#/lib/utilities'
 import { socials } from '#/components/footer'
 import { EXTERNAL_LINKS } from '#/lib/constants'
-import { LANGUAGES } from '#/lib/constants/languages'
 import LanguageSelector from '../../language-selector'
 import VolumeSwitcher, { volumeOptions } from '../../volume-switcher'
 import ThemeSwitcher, { themesWithIcons } from '#/components/theme-switcher'
@@ -27,17 +26,18 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
   if (!open) return null
 
   return (
-    <div className='bg-neutral w-[244px] h-fit nav-menu -z-20 overflow-x-hidden sm:overflow-visible shadow-md border-[3px] transition-all rounded-xl lg:rounded-md border-grey pb-6 lg:pb-0 lg:pt-8 absolute bottom-6 lg:top-5 flex flex-col items-end right-0'>
+    <div className='bg-neutral w-[244px] h-fit nav-menu -z-20 overflow-x-hidden lg:overflow-visible shadow-md border-[3px] transition-all rounded-xl lg:rounded-md border-grey pb-6 lg:pb-0 lg:pt-8 absolute bottom-6 lg:top-5 flex flex-col items-end right-0'>
       <div
         className={cn(
-          'flex flex-col w-full transition-all overflow-x-visible max-h-[80vh] sm:h-auto p-1',
+          'flex flex-col w-full transition-all overflow-x-visible max-h-[80vh] lg:h-auto p-1',
           languageMenOpenu || themeMenuOpen || volumeMenuOpen
-            ? '-translate-x-[244px] sm:translate-x-0'
+            ? '-translate-x-[244px] lg:translate-x-0'
             : ''
         )}
         style={{
           height: languageMenOpenu
-            ? `${(LANGUAGES.length || 0) * 56 + 111}px`
+            ? // ? `${(LANGUAGES.length || 0) * 56 + 111}px`
+              'auto'
             : themeMenuOpen
               ? `${(themesWithIcons.length || 0) * 56 + 56}px`
               : volumeMenuOpen
