@@ -43,7 +43,7 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
       <ReactQueryStreamedHydration>
         <WagmiProvider config={wagmiConfig} initialState={initialState}>
           <RainbowKitProvider
-            coolMode={true}
+            coolMode={false}
             theme={
               isClient && darkThemes.includes(resolvedTheme || 'dark') ? darkTheme() : undefined
             }
