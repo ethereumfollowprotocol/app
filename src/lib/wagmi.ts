@@ -15,21 +15,23 @@ import { http, fallback, createStorage, cookieStorage, createConfig } from 'wagm
 
 import { APP_DESCRIPTION, APP_NAME, APP_URL } from '#/lib/constants'
 
+coinbaseWallet.preference = 'smartWalletOnly'
+
 // Define the connectors for the app
 // Purposely using only these for now because of a localStorage error with the Coinbase Wallet connector
 const connectors = connectorsForWallets(
   [
     {
       groupName: 'Recommended',
-      wallets: [
-        coinbaseWallet,
-        rainbowWallet,
-        metaMaskWallet,
-        rabbyWallet,
-        safeWallet,
-        walletConnectWallet,
-        injectedWallet
-      ]
+      wallets: [coinbaseWallet, injectedWallet]
+    },
+    {
+      groupName: 'Popular',
+      wallets: [rainbowWallet, metaMaskWallet, walletConnectWallet]
+    },
+    {
+      groupName: 'Other',
+      wallets: [rabbyWallet, safeWallet]
     }
   ],
   {
