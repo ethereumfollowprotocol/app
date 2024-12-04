@@ -40,7 +40,7 @@ export const sharedMetadata: Metadata = {
   title: metadataTitle,
   description: metadataDescription,
   applicationName: metadataSiteName,
-  keywords: ['efp', 'follow', 'protocol', 'social', 'eth', 'ethereum', 'blockchain'],
+  keywords: ['efp', 'ethereum follow protocol', 'follow', 'protocol', 'social graph', 'ethereum'],
   icons: sharedMetadataIcons,
   openGraph: sharedMetadataOpenGraph,
   authors: {
