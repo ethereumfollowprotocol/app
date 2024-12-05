@@ -1,7 +1,10 @@
-import React from 'react'
 import Image from 'next/image'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { IoIosArrowDown } from 'react-icons/io'
+import { useClickAway } from '@uidotdev/usehooks'
 
+import { cn } from '#/lib/utilities'
 import type { LeaderboardFilter } from '#/types/common'
 import { leaderboardFiltersEmojies, leaderboardFilters } from '#/lib/constants'
 
@@ -11,22 +14,59 @@ interface FiltersProps {
 }
 
 const Filters: React.FC<FiltersProps> = ({ filter, onSelectFilter }) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const clickAwayRef = useClickAway<HTMLDivElement>(() => setIsDropdownOpen(false))
+
   const { t } = useTranslation()
 
   return (
-    <div className='flex w-full flex-wrap justify-center items-center gap-4'>
-      {leaderboardFilters.map((item, i) => (
+    <div ref={clickAwayRef} className='relative w-full md:w-64 z-40 mx-auto max-w-108'>
+      <div
+        onClick={() => setIsDropdownOpen(prev => !prev)}
+        className='flex w-full cursor-pointer flex-wrap h-[50px] z-30 justify-between px-3 glass-card border-grey hover:border-text/80 transition-colors rounded-xl border-[3px] bg-neutral items-center gap-4'
+      >
         <div
-          key={item}
-          className={`p-2 font-bold px-4 flex gap-1 justify-center capitalize cursor-pointer transition-all rounded-full ${
-            filter === item ? 'bg-text-neutral shadow-inner' : 'bg-grey hover:scale-110'
-          }`}
-          onClick={() => onSelectFilter(item)}
+          key={filter}
+          className={`font-bold flex gap-1 justify-center capitalize cursor-pointer transition-all rounded-full`}
+          onClick={() => onSelectFilter(filter)}
         >
-          <p className='text-nowrap'>{t(item)}</p>
-          <Image src={leaderboardFiltersEmojies[i]} alt={item} width={22} height={22} />
+          <p className='text-nowrap'>{t(filter)}</p>
+          <Image
+            src={leaderboardFiltersEmojies[leaderboardFilters.indexOf(filter)]}
+            alt={filter}
+            width={22}
+            height={22}
+          />
         </div>
-      ))}
+        <IoIosArrowDown className='w-4 h-4' />
+      </div>
+      <div
+        className={cn(
+          'absolute top-1/2 rounded-xl glass-card left-0 bg-neutral border-grey border-[3px] -z-10 w-full h-fit pt-5 transition-all',
+          isDropdownOpen ? 'flex' : 'hidden pointer-events-none'
+        )}
+      >
+        <div className='flex w-full flex-col'>
+          {leaderboardFilters.map(item => (
+            <div
+              key={item}
+              onClick={() => {
+                onSelectFilter(item)
+                setIsDropdownOpen(false)
+              }}
+              className='flex items-center gap-2 p-4 w-full rounded-lg hover:bg-text/10'
+            >
+              <p className='font-bold text-lg'>{t(item)}</p>
+              <Image
+                src={leaderboardFiltersEmojies[leaderboardFilters.indexOf(item)]}
+                alt={item}
+                width={22}
+                height={22}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }

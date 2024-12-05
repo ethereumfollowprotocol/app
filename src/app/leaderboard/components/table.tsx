@@ -70,11 +70,11 @@ const LeaderboardTable = () => {
   return (
     <Fragment>
       <p className='text-3xl sm:text-4xl font-bold'>{t('leaderboard')}</p>
-      <div className='mt-4 sm:mt-6 mb-4 sm:mb-6 lg:mb-0 flex items-center justify-center flex-wrap gap-4 xs:gap-8'>
+      <div className='mt-4 sm:mt-6 mb-4 sm:mb-6 lg:mb-0 flex items-center justify-center flex-wrap gap-4 sm:gap-8'>
         {LeaderboardStatNames.map((name, i) => (
           <div
             key={`stat ${i}`}
-            className='gradient-border flex flex-col rounded-2xl items-center justify-center h-28 w-full xs:w-56'
+            className='gradient-border flex flex-col rounded-2xl items-center justify-center h-28 w-[47.5%] sm:w-56'
           >
             {isLeaderboardStatsLoading || !leaderboardStats ? (
               <LoadingCell className='h-8 w-24 rounded-lg' />
@@ -87,17 +87,17 @@ const LeaderboardTable = () => {
           </div>
         ))}
       </div>
-      <div className='flex w-full gap-1.5 justify-center lg:justify-end max-w-[1300px] text-sm mt-4 font-bold text-[#aaaaaa] md:text-[#CDCDCD] italic'>
+      <div className='flex w-full gap-1.5 justify-center md:justify-end max-w-[1300px] text-sm mt-4 font-bold text-[#aaaaaa] md:text-[#CDCDCD] italic'>
         {t('last updated')}
         <span>
           {isLeaderboardLoading ? <LoadingCell className='h-5 w-16 rounded-md' /> : timeStamp}
         </span>
       </div>
-      <div className='flex flex-col gap-6 w-full max-w-[1300px]'>
-        <div className='flex xl:hidden'>
+      <div className='flex flex-col gap-2 w-full max-w-[1300px]'>
+        <div className='flex md:hidden'>
           <Filters filter={filter} onSelectFilter={onSelectFilter} />
         </div>
-        <div className='flex justify-between gap-4'>
+        <div className='flex justify-between gap-2'>
           <div className='relative w-full sm:w-[260px] 2xl:w-[300px]'>
             <div className='rounded-xl w-full group glass-card overflow-hidden border-[3px] border-grey sm:text-sm focus:border-text/80 hover:border-text/80 focus-within:border-text/80 transition-colors'>
               <div
@@ -119,26 +119,28 @@ const LeaderboardTable = () => {
               />
             </div>
           </div>
-          <div className='hidden xl:flex'>
-            <Filters filter={filter} onSelectFilter={onSelectFilter} />
+          <div className='flex items-center gap-4'>
+            <div className='hidden md:flex'>
+              <Filters filter={filter} onSelectFilter={onSelectFilter} />
+            </div>
+            <PageSelector
+              page={page}
+              setPage={setPage}
+              hasNextPage={true}
+              scrollUp={true}
+              isLoading={isFetchingNextLeaderboard || isFetchingPreviousLeaderboard}
+              fetchNext={() => {
+                setChunk(1)
+                fetchNextLeaderboard()
+              }}
+              fetchPrevious={() => {
+                setChunk(1)
+                fetchPreviousLeaderboard()
+              }}
+            />
           </div>
-          <PageSelector
-            page={page}
-            setPage={setPage}
-            hasNextPage={true}
-            scrollUp={true}
-            isLoading={isFetchingNextLeaderboard || isFetchingPreviousLeaderboard}
-            fetchNext={() => {
-              setChunk(1)
-              fetchNextLeaderboard()
-            }}
-            fetchPrevious={() => {
-              setChunk(1)
-              fetchPreviousLeaderboard()
-            }}
-          />
         </div>
-        <div className='glass-card border-grey border-[3px] rounded-xl flex flex-col gap-4 p-1 sm:px-4 sm:py-6 lg:px-8 relative'>
+        <div className='glass-card border-grey mt-1 border-[3px] rounded-xl flex flex-col gap-4 p-1 sm:px-4 sm:py-6 lg:px-8 relative'>
           {leaderboard
             ?.slice(0, chunk * LEADERBOARD_CHUNK_SIZE)
             .map((entry: LeaderboardItem, index) => (
