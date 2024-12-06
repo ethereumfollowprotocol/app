@@ -26,6 +26,7 @@ const useCheckout = () => {
     addActions,
     resetActions,
     handleNextAction,
+    setIsCheckingOut,
     handleInitiateActions,
     setIsCorrectChain
   } = useActions()
@@ -192,6 +193,7 @@ const useCheckout = () => {
 
     resetCart()
     resetActions()
+    setIsCheckingOut(false)
     router.push(`/${selectedList ?? userAddress}`)
   }, [resetActions, resetCart, setNewListAsPrimary])
 
