@@ -54,7 +54,7 @@ const Filters: React.FC<FiltersProps> = ({ filter, onSelectFilter }) => {
                 onSelectFilter(item)
                 setIsDropdownOpen(false)
               }}
-              className='flex items-center gap-2 p-4 w-full rounded-lg hover:bg-text/10'
+              className='flex cursor-pointer items-center gap-2 p-4 w-full rounded-lg hover:bg-text/10'
             >
               <p className='font-bold text-lg'>{t(item)}</p>
               <Image

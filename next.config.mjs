@@ -12,7 +12,7 @@
 //   plugins.push(withBundleAnalyzer({ enabled: true }))
 // }
 
-import million from "million/compiler";
+import MillionLint from "@million/lint";
 import childProcess from "node:child_process";
 import { withSentryConfig } from "@sentry/nextjs";
 
@@ -200,4 +200,4 @@ const nextConfigWithSentry = withSentryConfig(nextConfig, {
 
 export default process.env.NODE_ENV === "development"
 	? nextConfigWithSentry
-	: million.next(nextConfigWithSentry, { auto: { rsc: true } });
+	: MillionLint.next({ rsc: true })(nextConfig);

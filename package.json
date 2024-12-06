@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@airstack/airstack-react": "^0.6.4",
+    "@million/lint": "^1.0.13",
     "@rainbow-me/rainbowkit": "^2.2.1",
     "@react-spring/web": "^9.7.5",
     "@sentry/nextjs": "^8",
@@ -30,7 +31,7 @@
     "i18next": "^23.11.5",
     "i18next-browser-languagedetector": "^8.0.0",
     "i18next-http-backend": "^2.5.2",
-    "million": "^2.6.4",
+    "million": "^3.1.11",
     "next": "^14.1.4",
     "next-themes": "^0.3.0",
     "next-usequerystate": "^1.15.4",
