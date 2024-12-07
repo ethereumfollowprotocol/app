@@ -26,9 +26,9 @@ const RESOURCES = [
     className: 'bg-[#7289da] text-white'
   },
   {
-    name: 'Github',
+    name: 'GitHub',
     icon: <BsGithub />,
-    href: 'https://github.com/ethfollow',
+    href: 'https://github.com/ethereumfollowprotocol',
     className: 'bg-darkGrey text-white'
   }
 ]
