@@ -72,8 +72,8 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
                 <LoadingCell className='rounded-full h-[50px] w-[50px]' />
               ) : (
                 <Avatar
-                  name={socialProfile.profileName}
-                  avatarUrl={socialProfile.profileImage}
+                  name={socialProfile?.profileName || socialProfile?.userAddress || ''}
+                  avatarUrl={socialProfile?.profileImage}
                   size='h-[50px] w-[50px]'
                 />
               )}
@@ -82,9 +82,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
                   <LoadingCell className='rounded-lg h-7 w-40' />
                 ) : (
                   <p className='text-lg font-bold'>
-                    @
-                    {socialProfile.profileName ||
-                      truncateAddress(socialProfile.userAssociatedAddresses?.[0])}
+                    @{socialProfile?.profileName || truncateAddress(socialProfile?.userAddress)}
                   </p>
                 )}
                 <p className='font-medium text-text/70 capitalize'>{platform} Name</p>
