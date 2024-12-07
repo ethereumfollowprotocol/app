@@ -267,3 +267,30 @@ export type RecommendedProfilesResponseType = {
 }
 
 export type QRCodeResponse = StaticImageData
+
+// Airstack
+export type AirstackProfileResponse = {
+  data: {
+    Socials: {
+      Social: {
+        profileImage: string
+        profileHandle: string
+        profileName: string
+        userAddress: string
+      }[]
+    }
+  }
+}
+
+export type AirstackFollowings = {
+  followingAddress: { addresses: Address[]; primaryDomain: { name: string } }
+}
+
+export type AirstackFollowingsResponse = {
+  data: {
+    SocialFollowings: {
+      Following: AirstackFollowings[]
+      pageInfo: { nextCursor: string; hasPrevPage: boolean; hasNextPage: boolean }
+    }
+  }
+}

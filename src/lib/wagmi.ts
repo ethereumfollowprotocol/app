@@ -15,7 +15,7 @@ import { http, fallback, createStorage, cookieStorage, createConfig } from 'wagm
 
 import { APP_DESCRIPTION, APP_NAME, APP_URL } from '#/lib/constants'
 
-coinbaseWallet.preference = 'smartWalletOnly'
+coinbaseWallet.preference = 'all'
 
 // Define the connectors for the app
 // Purposely using only these for now because of a localStorage error with the Coinbase Wallet connector

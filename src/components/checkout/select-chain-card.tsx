@@ -30,11 +30,10 @@ export function SelectChainCard({
   setNewListAsPrimary: boolean
   setSetNewListAsPrimary: (state: boolean) => void
 }) {
+  const { t } = useTranslation()
+  const { lists } = useEFPProfile()
   const currentChainId = useChainId()
   const { switchChain } = useSwitchChain()
-
-  const { lists } = useEFPProfile()
-  const { t } = useTranslation()
 
   return (
     <>

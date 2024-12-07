@@ -16,7 +16,6 @@
     "preinstall": "npm_config_yes=true npm exec --no-package-lock=true only-allow@latest bun"
   },
   "dependencies": {
-    "@airstack/airstack-react": "^0.6.4",
     "@million/lint": "^1.0.13",
     "@rainbow-me/rainbowkit": "^2.2.1",
     "@react-spring/web": "^9.7.5",

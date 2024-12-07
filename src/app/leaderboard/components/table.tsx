@@ -99,7 +99,7 @@ const LeaderboardTable = () => {
         </div>
         <div className='flex justify-between gap-2'>
           <div className='relative w-full sm:w-[260px] 2xl:w-[300px]'>
-            <div className='rounded-xl w-full group glass-card overflow-hidden border-[3px] border-grey sm:text-sm focus:border-text/80 hover:border-text/80 focus-within:border-text/80 transition-colors'>
+            <div className='rounded-xl w-full group overflow-hidden border-[3px] border-grey sm:text-sm focus:border-text/80 hover:border-text/80 focus-within:border-text/80 transition-colors'>
               <div
                 className='pointer-events-none absolute inset-y-0 right-0 flex items-center pl-3'
                 aria-hidden='true'
@@ -115,7 +115,7 @@ const LeaderboardTable = () => {
                 placeholder={t('search placeholder')}
                 value={currentSearch}
                 onChange={handleSearchEvent}
-                className='h-[44px] block w-full border-0 font-medium border-transparent pl-4 pr-10 sm:text-sm bg-neutral/70'
+                className='h-[44px] block w-full border-0 font-medium border-transparent pl-4 pr-10 sm:text-sm bg-neutral'
               />
             </div>
           </div>
