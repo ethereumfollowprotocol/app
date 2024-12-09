@@ -23,12 +23,18 @@ import DevconCollabPortal from 'public/assets/partners/devconcollabportal.jpeg'
 import DevconPassport from 'public/assets/partners/devconpassport.jpeg'
 import ETHTools from 'public/assets/partners/ethtools.jpeg'
 import Yodl from 'public/assets/partners/yodl.jpeg'
+import Snapshot from 'public/assets/partners/snapshot.jpeg'
 
 export const INTEGRATIONS = [
   {
     name: 'Interface',
     url: 'https://interface.social',
     logo: Interface
+  },
+  {
+    name: 'Snapshot',
+    url: 'https://snapshot.box/',
+    logo: Snapshot
   },
   {
     name: 'POAP',
@@ -41,14 +47,14 @@ export const INTEGRATIONS = [
     logo: EnsVision
   },
   {
-    name: 'Blockscout',
-    url: 'https://www.blockscout.com/',
-    logo: Blockscout
-  },
-  {
     name: 'Yodl',
     url: 'https://yodl.me/',
     logo: Yodl
+  },
+  {
+    name: 'Blockscout',
+    url: 'https://www.blockscout.com/',
+    logo: Blockscout
   },
   {
     name: 'Vibes',
