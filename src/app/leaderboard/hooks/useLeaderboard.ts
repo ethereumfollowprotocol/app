@@ -1,4 +1,3 @@
-import { useQueryState } from 'next-usequerystate'
 import { useIntersectionObserver } from '@uidotdev/usehooks'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
@@ -37,11 +36,7 @@ const useLeaderboard = () => {
 
   const initialSearch = searchParams.get('query')
   const [currentSearch, setCurrentSearch] = useState(initialSearch ?? '')
-  const [search, setSearch] = useQueryState('query', {
-    history: 'push',
-    parse: value => value?.trim().toLowerCase(),
-    serialize: value => value.trim().toLowerCase()
-  })
+  const [search, setSearch] = useState('')
 
   const searchTimeout = useRef<NodeJS.Timeout | null>(null)
   const handleSearchEvent = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

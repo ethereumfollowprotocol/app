@@ -42,7 +42,7 @@ const Filters: React.FC<FiltersProps> = ({ filter, onSelectFilter }) => {
       </div>
       <div
         className={cn(
-          'absolute top-1/2 rounded-xl left-0 bg-neutral border-grey border-[3px] -z-10 w-full h-fit pt-5 transition-all',
+          'absolute top-1/2 rounded-xl left-0 bg-neutral p-1 border-grey border-[3px] -z-10 w-full h-fit pt-6 transition-all',
           isDropdownOpen ? 'flex' : 'hidden pointer-events-none'
         )}
       >
@@ -54,9 +54,9 @@ const Filters: React.FC<FiltersProps> = ({ filter, onSelectFilter }) => {
                 onSelectFilter(item)
                 setIsDropdownOpen(false)
               }}
-              className='flex cursor-pointer items-center gap-2 p-4 w-full rounded-lg hover:bg-text/10'
+              className='flex cursor-pointer items-center gap-2 p-3 w-full rounded-lg hover:bg-text/10'
             >
-              <p className='font-bold text-lg'>{t(item)}</p>
+              <p className='font-bold'>{t(item)}</p>
               <Image
                 src={leaderboardFiltersEmojies[leaderboardFilters.indexOf(item)]}
                 alt={item}

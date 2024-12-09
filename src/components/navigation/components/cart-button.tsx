@@ -35,7 +35,7 @@ const CartButton = () => {
       >
         <div
           className={cn(
-            'w-[42px] absolute top-[3px] h-[42px] bg-followButton rounded-full',
+            'w-[44px] absolute top-[2px] h-[44px] bg-followButton rounded-full',
             pathname === '/cart' ? 'opacity-100' : 'opacity-0'
           )}
         />
