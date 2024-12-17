@@ -24,6 +24,9 @@ import DevconPassport from 'public/assets/partners/devconpassport.jpeg'
 import ETHTools from 'public/assets/partners/ethtools.jpeg'
 import Yodl from 'public/assets/partners/yodl.jpeg'
 import Snapshot from 'public/assets/partners/snapshot.jpeg'
+import BanklessAcademy from 'public/assets/partners/banklessacademy.jpeg'
+import ENSResolver from 'public/assets/partners/ensresolver.jpeg'
+
 
 export const INTEGRATIONS = [
   {
@@ -70,6 +73,11 @@ export const INTEGRATIONS = [
     name: 'Webhash',
     url: 'https://webhash.com',
     logo: WebHash
+  },
+  {
+    name: 'Bankless Academy',
+    url: 'https://app.banklessacademy.com/',
+    logo: BanklessAcademy
   },
   {
     name: 'Payflow',
@@ -145,6 +153,11 @@ export const INTEGRATIONS = [
     name: 'ETH Tools',
     url: 'https://ethtools.com/',
     logo: ETHTools
+  },
+  {
+    name: 'ENS Resolver',
+    url: 'https://adraffy.github.io/ens-normalize.js/test/resolver.html',
+    logo: ENSResolver
   }
 ] as {
   name: string
