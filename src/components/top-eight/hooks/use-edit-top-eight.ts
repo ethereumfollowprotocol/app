@@ -5,12 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { useEffect, useMemo, useState } from 'react'
 import { fetchFollowState } from 'ethereum-identity-kit'
 
-import {
-  isTagListOp,
-  listOpAddTag,
-  listOpAddListRecord,
-  extractAddressAndTag
-} from '#/utils/list-ops'
+import { isTagListOp, listOpAddTag, listOpAddListRecord, extractAddressAndTag } from '#/utils/list-ops'
 import { resolveEnsAddress } from '#/utils/ens'
 import type { TagListOp } from '#/types/list-op'
 import { useCart } from '#/contexts/cart-context'
@@ -27,13 +22,10 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
     () =>
       cartItems
         .filter(
-          ({ listOp }) =>
-            listOp.opcode === 3 &&
-            isTagListOp(listOp) &&
-            extractAddressAndTag(listOp).tag === 'top8'
+          ({ listOp }) => listOp.opcode === 3 && isTagListOp(listOp) && extractAddressAndTag(listOp).tag === 'top8'
         )
         .map(({ listOp }) => ({
-          address: extractAddressAndTag(listOp as TagListOp).address
+          address: extractAddressAndTag(listOp as TagListOp).address,
         })),
     [cartItems]
   )
@@ -42,8 +34,7 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
 
   const currentTopEightLength = useMemo(() => {
     const topEightRemoved = cartItems.filter(
-      ({ listOp }) =>
-        listOp.opcode === 4 && isTagListOp(listOp) && extractAddressAndTag(listOp).tag === 'top8'
+      ({ listOp }) => listOp.opcode === 4 && isTagListOp(listOp) && extractAddressAndTag(listOp).tag === 'top8'
     )
 
     return editedProfiles.length - topEightRemoved.length
@@ -61,7 +52,7 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
       lookupAddressOrName: address,
       connectedAddress: userAddress,
       list: selectedList,
-      type: 'following'
+      type: 'following',
     })
 
     if (!followingStatus) return 'none'
@@ -78,14 +69,14 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
       return
     }
 
-    setLoadingCartItems(prevLoading => prevLoading + 1)
+    setLoadingCartItems((prevLoading) => prevLoading + 1)
 
     const address = isAddress(user) ? user : await resolveEnsAddress(user)
-    if (editedProfiles.find(profile => profile.address.toLowerCase() === address?.toLowerCase()))
-      return setLoadingCartItems(prevLoading => (prevLoading > 0 ? prevLoading - 1 : prevLoading))
+    if (editedProfiles.find((profile) => profile.address.toLowerCase() === address?.toLowerCase()))
+      return setLoadingCartItems((prevLoading) => (prevLoading > 0 ? prevLoading - 1 : prevLoading))
 
     if (!address) {
-      setLoadingCartItems(prevLoading => (prevLoading > 0 ? prevLoading - 1 : prevLoading))
+      setLoadingCartItems((prevLoading) => (prevLoading > 0 ? prevLoading - 1 : prevLoading))
       return { user }
     }
 
@@ -93,7 +84,7 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
     if (followState === 'none') addCartItem({ listOp: listOpAddListRecord(address) })
     addCartItem({ listOp: listOpAddTag(address, 'top8') })
 
-    setLoadingCartItems(prevLoading => (prevLoading > 0 ? prevLoading - 1 : prevLoading))
+    setLoadingCartItems((prevLoading) => (prevLoading > 0 ? prevLoading - 1 : prevLoading))
   }
 
   const [addProfileSearch, setAddProfileSearch] = useState('')
@@ -112,6 +103,6 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
     isTopEightFull,
     editedProfiles,
     addProfileSearch,
-    setAddProfileSearch
+    setAddProfileSearch,
   }
 }

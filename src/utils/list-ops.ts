@@ -8,7 +8,7 @@ export const listOpAddListRecord = (address: Address): ListOp => {
   return {
     version: 1,
     opcode: 1,
-    data: address
+    data: address,
   }
 }
 
@@ -16,7 +16,7 @@ export const listOpRemoveListRecord = (address: Address): ListOp => {
   return {
     version: 1,
     opcode: 2,
-    data: address
+    data: address,
   }
 }
 
@@ -24,7 +24,7 @@ export const listOpAddTag = (address: Address, tag: string): ListOp => {
   return {
     version: 1,
     opcode: 3,
-    data: `${address}${toHex(tag).slice(2)}`
+    data: `${address}${toHex(tag).slice(2)}`,
   }
 }
 
@@ -32,7 +32,7 @@ export const listOpRemoveTag = (address: Address, tag: string): ListOp => {
   return {
     version: 1,
     opcode: 4,
-    data: `${address}${toHex(tag).slice(2)}`
+    data: `${address}${toHex(tag).slice(2)}`,
   }
 }
 

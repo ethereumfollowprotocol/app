@@ -4,7 +4,7 @@ import type { AirstackFollowingsResponse } from '#/types/requests'
 export const fetchAirstackFollowings = async ({
   profileAddress,
   platform,
-  pageParam
+  pageParam,
 }: {
   profileAddress: Address
   platform: string
@@ -37,13 +37,13 @@ export const fetchAirstackFollowings = async ({
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: process.env.NEXT_PUBLIC_AIRSTACK_API_KEY
+        Authorization: process.env.NEXT_PUBLIC_AIRSTACK_API_KEY,
       } as HeadersInit,
       body: JSON.stringify({
         query: followingsQuery,
         variables: { platform, cursor: pageParam },
-        operationName: 'FollowingsQuery'
-      })
+        operationName: 'FollowingsQuery',
+      }),
     })
 
     const json = (await response.json()) as AirstackFollowingsResponse
@@ -51,13 +51,14 @@ export const fetchAirstackFollowings = async ({
       followings: json.data.SocialFollowings,
       nextPageParam: json.data.SocialFollowings.pageInfo.nextCursor,
       hasNextPage: json.data.SocialFollowings.pageInfo.hasNextPage,
-      hasPrevPage: json.data.SocialFollowings.pageInfo.hasPrevPage
+      hasPrevPage: json.data.SocialFollowings.pageInfo.hasPrevPage,
     }
   } catch (error) {
+    console.error('Error fetching followings:', error)
     return {
       followings: null,
       nextPageParam: undefined,
-      hasNextPage: false
+      hasNextPage: false,
     }
   }
 }

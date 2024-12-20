@@ -24,15 +24,13 @@ const useUser = (user: string) => {
   const listNum = userIsList ? Number(user) : undefined
 
   const isValidUser =
-    isAddress(user) ||
-    (userIsList && listNum && listNum > 0 && listNum < 1000000000) ||
-    user.includes('.')
+    isAddress(user) || (userIsList && listNum && listNum > 0 && listNum < 1000000000) || user.includes('.')
 
   const {
     data: profile,
     isLoading: profileIsLoading,
     isRefetching: isRefetchingProfile,
-    refetch: refetchProfile
+    refetch: refetchProfile,
   } = useQuery({
     queryKey: ['profile', user, fetchFreshProfile],
     queryFn: async () => {
@@ -42,13 +40,13 @@ const useUser = (user: string) => {
       return fetchedProfile
     },
     staleTime: 30000,
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
   })
 
   const {
     data: stats,
     isLoading: statsIsLoading,
-    isRefetching: isRefetchingStatsQuery
+    isRefetching: isRefetchingStatsQuery,
   } = useQuery({
     queryKey: ['stats', user],
     queryFn: async () => {
@@ -59,13 +57,13 @@ const useUser = (user: string) => {
       return fetchedStats
     },
     // refetchInterval: 60000
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
   })
 
   const {
     data: followerTags,
     isLoading: followerTagsLoading,
-    isRefetching: isRefetchingFollowerTags
+    isRefetching: isRefetchingFollowerTags,
   } = useQuery({
     queryKey: ['follower tags', user],
     queryFn: async () => {
@@ -75,7 +73,7 @@ const useUser = (user: string) => {
       return fetchedTags
     },
     staleTime: 30000,
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
   })
 
   const [isEndOfFollowers, setIsEndOfFollowers] = useState(false)
@@ -84,14 +82,14 @@ const useUser = (user: string) => {
     isLoading: followersIsLoading,
     fetchNextPage: fetchMoreFollowers,
     isFetchingNextPage: isFetchingMoreFollowers,
-    isRefetching: isRefetchingFollowers
+    isRefetching: isRefetchingFollowers,
   } = useInfiniteQuery({
     queryKey: [
       'followers',
       user,
       followersSort,
       followersTagsFilter,
-      followersSearch.length > 2 ? followersSearch : undefined
+      followersSearch.length > 2 ? followersSearch : undefined,
     ],
     queryFn: async ({ pageParam = 0 }) => {
       setIsEndOfFollowers(false)
@@ -99,7 +97,7 @@ const useUser = (user: string) => {
       if (!isValidUser)
         return {
           followers: [],
-          nextPageParam: pageParam
+          nextPageParam: pageParam,
         }
 
       const fetchedFollowers = await fetchProfileFollowers({
@@ -109,7 +107,7 @@ const useUser = (user: string) => {
         pageParam,
         tags: followersTagsFilter,
         sort: followersSort,
-        search: followersSearch
+        search: followersSearch,
       })
 
       if (fetchedFollowers.followers.length === 0) setIsEndOfFollowers(true)
@@ -118,14 +116,14 @@ const useUser = (user: string) => {
     },
     staleTime: 30000,
     initialPageParam: 0,
-    getNextPageParam: lastPage => lastPage.nextPageParam,
-    refetchOnWindowFocus: false
+    getNextPageParam: (lastPage) => lastPage.nextPageParam,
+    refetchOnWindowFocus: false,
   })
 
   const {
     data: followingTags,
     isLoading: followingTagsLoading,
-    isRefetching: isRefetchingFollowingTags
+    isRefetching: isRefetchingFollowingTags,
   } = useQuery({
     queryKey: ['following tags', user],
     queryFn: async () => {
@@ -135,7 +133,7 @@ const useUser = (user: string) => {
       return fetchedTags
     },
     staleTime: 30000,
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
   })
 
   const [isEndOfFollowing, setIsEndOfFollowing] = useState(false)
@@ -144,14 +142,14 @@ const useUser = (user: string) => {
     isLoading: followingIsLoading,
     fetchNextPage: fetchMoreFollowing,
     isFetchingNextPage: isFetchingMoreFollowing,
-    isRefetching: isRefetchingFollowing
+    isRefetching: isRefetchingFollowing,
   } = useInfiniteQuery({
     queryKey: [
       'following',
       user,
       followingSort,
       followingTagsFilter,
-      followingSearch.length > 2 ? followingSearch : undefined
+      followingSearch.length > 2 ? followingSearch : undefined,
     ],
     queryFn: async ({ pageParam = 0 }) => {
       setIsEndOfFollowing(false)
@@ -159,7 +157,7 @@ const useUser = (user: string) => {
       if (!isValidUser)
         return {
           following: [],
-          nextPageParam: pageParam
+          nextPageParam: pageParam,
         }
 
       const fetchedFollowing = await fetchProfileFollowing({
@@ -169,7 +167,7 @@ const useUser = (user: string) => {
         pageParam,
         tags: followingTagsFilter,
         sort: followingSort,
-        search: followingSearch
+        search: followingSearch,
       })
 
       if (fetchedFollowing.following.length === 0) setIsEndOfFollowing(true)
@@ -178,28 +176,22 @@ const useUser = (user: string) => {
     },
     staleTime: 30000,
     initialPageParam: 0,
-    getNextPageParam: lastPage => lastPage.nextPageParam,
-    refetchOnWindowFocus: false
+    getNextPageParam: (lastPage) => lastPage.nextPageParam,
+    refetchOnWindowFocus: false,
   })
 
   const followers = fetchedFollowers
-    ? fetchedFollowers.pages.reduce(
-        (acc, el) => [...acc, ...el.followers],
-        [] as FollowerResponse[]
-      )
+    ? fetchedFollowers.pages.reduce((acc, el) => [...acc, ...el.followers], [] as FollowerResponse[])
     : []
 
   const following = fetchedFollowing
-    ? fetchedFollowing.pages.reduce(
-        (acc, el) => [...acc, ...el.following],
-        [] as FollowingResponse[]
-      )
+    ? fetchedFollowing.pages.reduce((acc, el) => [...acc, ...el.following], [] as FollowingResponse[])
     : []
 
   const toggleTag = (tab: ProfileTableTitleType, tag: string) => {
     if (tab === 'following') {
       if (followingTagsFilter.includes(tag)) {
-        setFollowingTagsFilter(followingTagsFilter.filter(item => item !== tag))
+        setFollowingTagsFilter(followingTagsFilter.filter((item) => item !== tag))
       } else {
         setFollowingTagsFilter([...followingTagsFilter, tag])
       }
@@ -207,7 +199,7 @@ const useUser = (user: string) => {
 
     if (tab === 'followers') {
       if (followersTagsFilter.includes(tag)) {
-        setFollowersTagsFilter(followersTagsFilter.filter(item => item !== tag))
+        setFollowersTagsFilter(followersTagsFilter.filter((item) => item !== tag))
       } else {
         setFollowersTagsFilter([...followersTagsFilter, tag])
       }
@@ -248,7 +240,7 @@ const useUser = (user: string) => {
     setFollowingTagsFilter,
     refetchProfile,
     fetchFreshProfile,
-    setFetchFreshProfile
+    setFetchFreshProfile,
   }
 }
 

@@ -10,18 +10,18 @@ export const metadata: Metadata = {
     url: 'https://ethfollow.xyz/swipe',
     images: [
       {
-        url: 'https://ethfollow.xyz/assets/banners/swipe.png'
-      }
-    ]
+        url: 'https://ethfollow.xyz/assets/banners/swipe.png',
+      },
+    ],
   },
   twitter: {
-    images: 'https://ethfollow.xyz/assets/banners/swipe.png'
-  }
+    images: 'https://ethfollow.xyz/assets/banners/swipe.png',
+  },
 }
 
 const SwipePage = () => {
   return (
-    <main className='w-full pt-[6.75rem] sm:pt-32 mb-4 px-2 text-center'>
+    <main className="w-full pt-[6.75rem] sm:pt-32 mb-4 px-2 text-center">
       <RecommendedCards />
     </main>
   )

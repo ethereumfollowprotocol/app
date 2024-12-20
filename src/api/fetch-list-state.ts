@@ -6,6 +6,7 @@ export const fetchListState = async (list: number) => {
     const listStateRes = (await listStateReq.json()) as { following: FollowingResponse[] }
     return listStateRes.following as FollowingResponse[]
   } catch (error) {
+    console.error('Error fetching list state:', error)
     return []
   }
 }

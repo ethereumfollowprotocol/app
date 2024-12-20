@@ -9,8 +9,8 @@ export const metadataDescription = "It's about who you know. The social graph fo
 export const sharedMetadataIcons: Metadata['icons'] = [
   {
     rel: 'icon',
-    url: 'https://ethfollow.xyz/assets/favicon.ico'
-  }
+    url: 'https://ethfollow.xyz/assets/favicon.ico',
+  },
 ]
 
 export const sharedMetadataOpenGraph: Metadata['openGraph'] = {
@@ -20,7 +20,7 @@ export const sharedMetadataOpenGraph: Metadata['openGraph'] = {
   locale: 'en_US',
   siteName: metadataSiteName,
   url: 'https://ethfollow.xyz',
-  emails: ['contact@ethfollow.xyz']
+  emails: ['contact@ethfollow.xyz'],
   // images: [
   //   {
   //     url: 'https://ethfollow.xyz/assets/banner.png'
@@ -32,7 +32,7 @@ export const sharedMetadataTwitter: Metadata['twitter'] = {
   card: 'summary_large_image',
   site: '@efp',
   creator: '@efp',
-  description: metadataDescription
+  description: metadataDescription,
   // images: 'https://ethfollow.xyz/assets/banner.png'
 }
 
@@ -45,7 +45,7 @@ export const sharedMetadata: Metadata = {
   openGraph: sharedMetadataOpenGraph,
   authors: {
     name: 'Ethereum Follow Protocol',
-    url: 'https://ethfollow.xyz'
+    url: 'https://ethfollow.xyz',
   },
   robots: {
     index: true,
@@ -53,7 +53,7 @@ export const sharedMetadata: Metadata = {
     noarchive: false,
     nosnippet: false,
     noimageindex: false,
-    notranslate: false
+    notranslate: false,
   },
-  metadataBase: metadataBaseUrl
+  metadataBase: metadataBaseUrl,
 }

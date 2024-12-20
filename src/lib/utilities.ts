@@ -19,13 +19,11 @@ export function cn(...args: ClassValue[]): string {
   return tailwindMerge(clsx(...args))
 }
 
-export function urlSearchParams(
-  params: Record<string, string | number | boolean | undefined | null>
-) {
+export function urlSearchParams(params: Record<string, string | number | boolean | undefined | null>) {
   return new URLSearchParams(
     JSON.parse(
       JSON.stringify({
-        ...params
+        ...params,
       })
     ) as Record<string, string>
   )

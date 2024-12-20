@@ -4,7 +4,7 @@ export const nullFollowerTags = {
   token_id: 0,
   tags: [],
   tagCounts: [],
-  taggedAddresses: []
+  taggedAddresses: [],
 }
 
 export const fetchFollowerTags = async (addressOrName: string, list?: number | string) => {
@@ -17,13 +17,14 @@ export const fetchFollowerTags = async (addressOrName: string, list?: number | s
       cache: 'default',
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json'
-      }
+        Accept: 'application/json',
+      },
     })
 
     const data = (await response.json()) as FollowingTagsResponse
     return data
-  } catch (err: unknown) {
+  } catch (error) {
+    console.error('Error fetching follower tags:', error)
     return nullFollowerTags
   }
 }

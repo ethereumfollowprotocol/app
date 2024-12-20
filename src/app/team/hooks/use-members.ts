@@ -8,23 +8,19 @@ export const useMembers = () => {
     queryFn: async () => {
       if (!TEAM_ADDRESSES) return []
 
-      const data = await Promise.all(
-        TEAM_ADDRESSES.map(async address => await fetchProfileDetails(address))
-      )
+      const data = await Promise.all(TEAM_ADDRESSES.map(async (address) => await fetchProfileDetails(address)))
       return data
-    }
+    },
   })
   const { data: teamStats, isLoading: teamStatsIsLoading } = useQuery({
     queryKey: ['team', 'stats', TEAM_ADDRESSES],
     queryFn: async () => {
       if (!TEAM_ADDRESSES) return []
 
-      const data = await Promise.all(
-        TEAM_ADDRESSES.map(async address => await fetchProfileStats(address))
-      )
+      const data = await Promise.all(TEAM_ADDRESSES.map(async (address) => await fetchProfileStats(address)))
 
       return data
-    }
+    },
   })
 
   const { data: foundationProfiles, isLoading: foundationIsLoading } = useQuery({
@@ -32,23 +28,19 @@ export const useMembers = () => {
     queryFn: async () => {
       if (!FOUNDATION_ADDRESSES) return []
 
-      const data = await Promise.all(
-        FOUNDATION_ADDRESSES.map(async address => await fetchProfileDetails(address))
-      )
+      const data = await Promise.all(FOUNDATION_ADDRESSES.map(async (address) => await fetchProfileDetails(address)))
       return data
-    }
+    },
   })
   const { data: foundationStats, isLoading: foundationStatsIsLoading } = useQuery({
     queryKey: ['follow protocol foundation', 'stats', FOUNDATION_ADDRESSES],
     queryFn: async () => {
       if (!FOUNDATION_ADDRESSES) return []
 
-      const data = await Promise.all(
-        FOUNDATION_ADDRESSES.map(async address => await fetchProfileStats(address))
-      )
+      const data = await Promise.all(FOUNDATION_ADDRESSES.map(async (address) => await fetchProfileStats(address)))
 
       return data
-    }
+    },
   })
 
   return {
@@ -59,6 +51,6 @@ export const useMembers = () => {
     teamIsLoading,
     teamStatsIsLoading,
     foundationIsLoading,
-    foundationStatsIsLoading
+    foundationStatsIsLoading,
   }
 }

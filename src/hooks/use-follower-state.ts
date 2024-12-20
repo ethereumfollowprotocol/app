@@ -9,7 +9,7 @@ import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 const useFollowerState = ({
   address,
-  showFollowerBadge = true
+  showFollowerBadge = true,
 }: {
   address?: Address
   showFollowerBadge?: boolean
@@ -20,7 +20,7 @@ const useFollowerState = ({
   const {
     data: followerStatus,
     isLoading: isFollowerStatusLoading,
-    isRefetching: isFollowerStateRefetching
+    isRefetching: isFollowerStateRefetching,
   } = useQuery({
     queryKey: ['follower state', address, selectedList, userAddress],
     queryFn: async () => {
@@ -31,12 +31,12 @@ const useFollowerState = ({
         lookupAddressOrName: address,
         connectedAddress: userAddress,
         list: selectedList,
-        type: 'follower'
+        type: 'follower',
       })
 
       return fetchedStatus
     },
-    staleTime: Infinity
+    staleTime: Infinity,
   })
 
   const followState = useMemo((): FollowState => {
@@ -53,26 +53,26 @@ const useFollowerState = ({
   const followerTag = {
     blocks: {
       text: 'blocks you',
-      className: 'text-red-500'
+      className: 'text-red-500',
     },
     mutes: {
       text: 'mutes you',
-      className: 'text-red-500'
+      className: 'text-red-500',
     },
     follows: {
       text: 'follows you',
-      className: 'text-darkGray'
+      className: 'text-darkGray',
     },
     none: {
       text: '',
-      className: 'hidden text-darkGray'
-    }
+      className: 'hidden text-darkGray',
+    },
   }[followState]
 
   return {
     followState,
     followerTag,
-    isFollowerStateLoading
+    isFollowerStateLoading,
   }
 }
 

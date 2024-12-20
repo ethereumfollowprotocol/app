@@ -17,8 +17,7 @@ export const useCoolMode = (imageUrl: string, disabled?: boolean, isLoading?: bo
   const resolvedImageUrl = imageUrl
 
   useEffect(() => {
-    if (ref.current && !isLoading && resolvedImageUrl)
-      return makeElementCool(ref.current, resolvedImageUrl, !!disabled)
+    if (ref.current && !isLoading && resolvedImageUrl) return makeElementCool(ref.current, resolvedImageUrl, !!disabled)
   }, [resolvedImageUrl, isLoading, disabled])
 
   return ref
@@ -45,7 +44,7 @@ const getContainer = () => {
       'right:0',
       'bottom:0',
       'pointer-events:none',
-      'z-index:2147483647'
+      'z-index:2147483647',
     ].join(';')
   )
 
@@ -88,7 +87,7 @@ function makeElementCool(element: HTMLElement, imageUrl: string, disabled: boole
         'will-change:transform',
         `top:${top}px`,
         `left:${left}px`,
-        `transform:rotate(${spinVal}deg)`
+        `transform:rotate(${spinVal}deg)`,
       ].join(';')
     )
 
@@ -103,7 +102,7 @@ function makeElementCool(element: HTMLElement, imageUrl: string, disabled: boole
       speedUp,
       spinSpeed,
       spinVal,
-      top
+      top,
     })
   }
 
@@ -115,7 +114,7 @@ function makeElementCool(element: HTMLElement, imageUrl: string, disabled: boole
       p.spinVal = p.spinVal + p.spinSpeed
 
       if (p.top >= Math.max(window.innerHeight, document.body.clientHeight) + p.size) {
-        particles = particles.filter(o => o !== p)
+        particles = particles.filter((o) => o !== p)
         p.element.remove()
       }
 
@@ -126,7 +125,7 @@ function makeElementCool(element: HTMLElement, imageUrl: string, disabled: boole
           'will-change:transform',
           `top:${p.top}px`,
           `left:${p.left}px`,
-          `transform:rotate(${p.spinVal}deg)`
+          `transform:rotate(${p.spinVal}deg)`,
         ].join(';')
       )
     }
@@ -145,7 +144,7 @@ function makeElementCool(element: HTMLElement, imageUrl: string, disabled: boole
 
   const isTouchInteraction =
     'ontouchstart' in window ||
-    // @ts-expect-error
+    // @ts-expect-error - msMaxTouchPoints is not a valid property on the navigator object
     navigator.msMaxTouchPoints
 
   const tap = isTouchInteraction ? 'touchstart' : 'mousedown'
@@ -177,7 +176,7 @@ function makeElementCool(element: HTMLElement, imageUrl: string, disabled: boole
   element.addEventListener(tap, tapHandler, { passive: true })
   element.addEventListener(tapEnd, disableAutoAddParticle, { passive: true })
   element.addEventListener('mouseleave', disableAutoAddParticle, {
-    passive: true
+    passive: true,
   })
 
   return () => {

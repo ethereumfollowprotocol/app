@@ -26,19 +26,15 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   const initialState = cookieToInitialState(wagmiConfig, headers().get('cookie'))
 
   return (
-    <html lang='en' suppressHydrationWarning={true} className='dark'>
+    <html lang="en" suppressHydrationWarning={true} className="dark">
       <HeadTag />
       <body>
-        <ThemeProvider attribute='class' defaultTheme='system' enableSystem={true} themes={THEMES}>
-          <Image
-            src={BackgroundImage}
-            alt='background waves'
-            className='background -z-10 halloween:hidden'
-          />
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true} themes={THEMES}>
+          <Image src={BackgroundImage} alt="background waves" className="background -z-10 halloween:hidden" />
           <Image
             src={HalloweenBackground}
-            alt='halloween background'
-            className='hidden fixed top-0 -z-10 left-0 h-screen opacity-50 w-screen halloween:block object-cover'
+            alt="halloween background"
+            className="hidden fixed top-0 -z-10 left-0 h-screen opacity-50 w-screen halloween:block object-cover"
           />
           <Toaster richColors={true} />
           <Providers initialState={initialState}>{children}</Providers>
@@ -56,37 +52,37 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 const HeadTag = () => {
   return (
     <head>
-      <meta charSet='utf-8' />
-      <meta name='viewport' content='width=device-width, initial-scale=1' />
-      <link rel='manifest' href='/site.webmanifest' crossOrigin='use-credentials' />
-      <link rel='icon' href='/assets/favicon.ico' sizes='any' />
+      <meta charSet="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel="manifest" href="/site.webmanifest" crossOrigin="use-credentials" />
+      <link rel="icon" href="/assets/favicon.ico" sizes="any" />
 
-      <meta name='apple-mobile-web-app-capable' content='yes' />
-      <meta name='apple-mobile-web-app-status-bar-style' content='default' />
-      <meta name='apple-mobile-web-app-title' content='EFP' />
-      <meta name='mobile-web-app-capable' content='yes' />
-      <meta name='theme-color' content='#FFE066' />
-      <meta name='apple-mobile-web-app-status-bar-style' content='#FFE066' />
-      <meta name='msapplication-TileColor' content='#FFE066' />
-      <meta name='author' content='Ethereum Follow Protocol Team' />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+      <meta name="apple-mobile-web-app-title" content="EFP" />
+      <meta name="mobile-web-app-capable" content="yes" />
+      <meta name="theme-color" content="#FFE066" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="#FFE066" />
+      <meta name="msapplication-TileColor" content="#FFE066" />
+      <meta name="author" content="Ethereum Follow Protocol Team" />
 
       {/* Preload fonts */}
-      <link rel='preconnect' href='https://fonts.googleapis.com' />
-      <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin='anonymous' />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link
-        href='https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap'
-        rel='stylesheet'
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet"
       />
 
       {/* Preload crucial assets */}
-      <link rel='preload' href='/assets/art/waves-background.svg' as='image' />
-      <link rel='preload' href='/assets/logo.svg' as='image' />
-      <link rel='preload' href='/assets/icons/block-emoji.svg' as='image' />
-      <link rel='preload' href='/assets/icons/mute-emoji.svg' as='image' />
-      <link rel='preload' href='/assets/icons/unfollow-emoji.svg' as='image' />
-      <link rel='preload' href='/assets/icons/halloween-emoji.svg' as='image' />
-      <link rel='preload' href='/assets/icons/ghost-emoji.png' as='image' />
-      <link rel='preload' href='/assets/icons/spider-web-emoji.png' as='image' />
+      <link rel="preload" href="/assets/art/waves-background.svg" as="image" />
+      <link rel="preload" href="/assets/logo.svg" as="image" />
+      <link rel="preload" href="/assets/icons/block-emoji.svg" as="image" />
+      <link rel="preload" href="/assets/icons/mute-emoji.svg" as="image" />
+      <link rel="preload" href="/assets/icons/unfollow-emoji.svg" as="image" />
+      <link rel="preload" href="/assets/icons/halloween-emoji.svg" as="image" />
+      <link rel="preload" href="/assets/icons/ghost-emoji.png" as="image" />
+      <link rel="preload" href="/assets/icons/spider-web-emoji.png" as="image" />
     </head>
   )
 }

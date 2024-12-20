@@ -25,24 +25,20 @@ export const useTopEight = (user: string | Address) => {
     selectedList,
     topEight: topEightProfile,
     topEightIsLoading: topEightProfileLoading,
-    topEightIsRefetching: topEightProfileRefetching
+    topEightIsRefetching: topEightProfileRefetching,
   } = useEFPProfile()
 
   const userIsList = !(isAddress(user) || user.includes('.') || Number.isNaN(Number(user)))
   const listNum = userIsList ? Number(user) : undefined
   const isValidUser =
-    isAddress(user) ||
-    (userIsList && listNum && listNum > 0 && listNum < 1000000000) ||
-    user.includes('.')
+    isAddress(user) || (userIsList && listNum && listNum > 0 && listNum < 1000000000) || user.includes('.')
 
-  const isConnectedUser = userIsList
-    ? Number(user) === selectedList
-    : user.toLowerCase() === userAddress?.toLowerCase()
+  const isConnectedUser = userIsList ? Number(user) === selectedList : user.toLowerCase() === userAddress?.toLowerCase()
 
   const {
     data: topEightFetched,
     isLoading: topEightIsLoading,
-    isRefetching: topEightIsRefetching
+    isRefetching: topEightIsRefetching,
   } = useQuery({
     queryKey: ['top8', user],
     queryFn: async () => {
@@ -55,19 +51,19 @@ export const useTopEight = (user: string | Address) => {
         limit: 100,
         pageParam: 0,
         tags: ['top8'],
-        sort: 'latest first'
+        sort: 'latest first',
       })
 
       return fetchedFollowing.following
     },
-    staleTime: 300000
+    staleTime: 300000,
   })
 
   const topEight = isConnectedUser
     ? topEightProfile
-    : topEightFetched?.map(profile => ({
+    : topEightFetched?.map((profile) => ({
         address: (profile as FollowingResponse).address,
-        ens: profile.ens
+        ens: profile.ens,
       })) || []
   const isLoading = isConnectedUser ? topEightProfileLoading : topEightIsLoading
   const isRefetching = isConnectedUser ? topEightProfileRefetching : topEightIsRefetching
@@ -79,6 +75,6 @@ export const useTopEight = (user: string | Address) => {
     setDisplayLimit,
     setEditModalOpen,
     topEightIsLoading: isLoading,
-    topEightIsRefetching: isRefetching
+    topEightIsRefetching: isRefetching,
   }
 }

@@ -17,22 +17,22 @@ const ClaimPoapModal: React.FC<ClaimPoapModalProps> = ({ onClose, link, isLoadin
 
   return (
     <Modal onCancel={onClose} disableBackgroundClose={true}>
-      <div className='flex flex-col gap-6 items-center'>
-        <h2 className='text-2xl font-bold'>You are now officially Early to EFP</h2>
-        <p className='font-medium'>Congrats! 👏 Here's a limited edition "Early to EFP" POAP.</p>
-        <div className='p-6 w-full bg-neutral rounded-xl'>
+      <div className="flex flex-col gap-6 items-center">
+        <h2 className="text-2xl font-bold">You are now officially Early to EFP</h2>
+        <p className="font-medium">Congrats! 👏 Here&apos;s a limited edition &quot;Early to EFP&quot; POAP.</p>
+        <div className="p-6 w-full bg-neutral rounded-xl">
           <Image
             src={EarlyUserPoap}
-            alt='Early user Poap'
+            alt="Early user Poap"
             width={300}
             height={300}
-            className='animate-spin-y mx-auto'
+            className="animate-spin-y mx-auto"
           />
         </div>
-        {isLoading && <p className='font-semibold loading-ellipsis'>Loading your POAP link</p>}
-        <div className='w-full flex items-center justify-between'>
+        {isLoading && <p className="font-semibold loading-ellipsis">Loading your POAP link</p>}
+        <div className="w-full flex items-center justify-between">
           <CancelButton onClick={onClose} label={t('No thanks')} />
-          <a href={link} target='_blank' rel='noreferrer'>
+          <a href={link} target="_blank" rel="noreferrer">
             <PrimaryButton onClick={onClose} disabled={!link} label={t('Claim')} />
           </a>
         </div>

@@ -16,8 +16,8 @@ export const fetchRecommendedProfiles = async (
         cache: 'default',
         headers: {
           'Content-Type': 'application/json',
-          Accept: 'application/json'
-        }
+          Accept: 'application/json',
+        },
       }
     )
 
@@ -26,12 +26,13 @@ export const fetchRecommendedProfiles = async (
 
     return {
       recommended: recommended || [],
-      nextPageParam: pageParam + 1
+      nextPageParam: pageParam + 1,
     }
-  } catch (err: unknown) {
+  } catch (error) {
+    console.error('Error fetching recommended profiles:', error)
     return {
       recommended: [],
-      nextPageParam: pageParam + 1
+      nextPageParam: pageParam + 1,
     }
   }
 }

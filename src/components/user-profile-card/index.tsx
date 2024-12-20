@@ -46,7 +46,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   refetchProfile,
   openQrCodeModal,
   isStatsLoading,
-  displayAchievements = true
+  displayAchievements = true,
 }) => {
   const router = useRouter()
   const { t } = useTranslation()
@@ -58,9 +58,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
     <div
       className={cn(
         'flex flex-col gap-4',
-        isResponsive
-          ? 'w-full xl:w-[324px] xl:min-w-[324px] 3xl:w-86 3xl:min-w-86'
-          : 'w-full xxs:w-92'
+        isResponsive ? 'w-full xl:w-[324px] xl:min-w-[324px] 3xl:w-86 3xl:min-w-86' : 'w-full xxs:w-92'
       )}
     >
       {isLoading ? (
@@ -100,13 +98,11 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 openListSettingsModal={openListSettingsModal}
               />
             ),
-            followButton: !(hideFollowButton || isConnectedUserCard) && (
-              <FollowButton address={profile.address} />
-            )
+            followButton: !(hideFollowButton || isConnectedUserCard) && <FollowButton address={profile.address} />,
           }}
           style={{
             width: '100%',
-            zIndex: 10
+            zIndex: 10,
           }}
         />
       ) : (
@@ -117,8 +113,8 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           )}
         >
           {isRecommended ? (
-            <div className='flex items-center flex-col gap-4 justify-center mx-auto w-3/4 h-[436px]'>
-              <p className='text-xl px-8 font-bold'>{t('connect to see more')}</p>
+            <div className="flex items-center flex-col gap-4 justify-center mx-auto w-3/4 h-[436px]">
+              <p className="text-xl px-8 font-bold">{t('connect to see more')}</p>
               <ConnectButton isResponsive={false} />
             </div>
           ) : (

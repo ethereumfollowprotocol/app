@@ -12,18 +12,18 @@ export const metadata: Metadata = {
     url: 'https://ethfollow.xyz/integrations',
     images: [
       {
-        url: 'https://ethfollow.xyz/assets/banners/integrations.png'
-      }
-    ]
+        url: 'https://ethfollow.xyz/assets/banners/integrations.png',
+      },
+    ],
   },
   twitter: {
-    images: 'https://ethfollow.xyz/assets/banners/integrations.png'
-  }
+    images: 'https://ethfollow.xyz/assets/banners/integrations.png',
+  },
 }
 
 const Integrations = () => {
   return (
-    <main className='flex flex-row pb-28 lg:pb-10 gap-4 px-4 md:px-8 w-full justify-center flex-wrap relative pt-[6.75rem] sm:pt-[7.75rem]'>
+    <main className="flex flex-row pb-28 lg:pb-10 gap-4 px-4 md:px-8 w-full justify-center flex-wrap relative pt-[6.75rem] sm:pt-[7.75rem]">
       <Guide />
       <LiveIntegrations />
     </main>

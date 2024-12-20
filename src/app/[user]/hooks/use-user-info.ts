@@ -44,7 +44,7 @@ export const useUserInfo = (user: string) => {
     setFollowingTagsFilter: profileSetFollowingTagsFilter,
     setFollowersTagsFilter: profileSetFollowersTagsFilter,
     isFetchingMoreFollowers: profileIsFetchingMoreFollowers,
-    isFetchingMoreFollowing: profileIsFetchingMoreFollowing
+    isFetchingMoreFollowing: profileIsFetchingMoreFollowing,
   } = useEFPProfile()
 
   const {
@@ -81,21 +81,17 @@ export const useUserInfo = (user: string) => {
     isFetchingMoreFollowers: userIsFetchingMoreFollowers,
     isFetchingMoreFollowing: userIsFetchingMoreFollowing,
     setFollowersTagsFilter: userSetFollowersTagsFilter,
-    setFollowingTagsFilter: userSetFollowingTagsFilter
+    setFollowingTagsFilter: userSetFollowingTagsFilter,
   } = useUser(user)
 
   const stats = isMyProfile ? profileStats : userStats
   const statsIsLoading = isLoadPage || (isMyProfile ? profileStatsIsLoading : userStatsIsLoading)
-  const profile: ProfileDetailsResponse | null | undefined = isMyProfile
-    ? profileProfile
-    : userProfile
-  const profileIsLoading =
-    isLoadPage || (isMyProfile ? profileProfileIsLoading : userProfileIsLoading)
+  const profile: ProfileDetailsResponse | null | undefined = isMyProfile ? profileProfile : userProfile
+  const profileIsLoading = isLoadPage || (isMyProfile ? profileProfileIsLoading : userProfileIsLoading)
   const following = isMyProfile ? profileFollowing : userFollowing
   const followers = isMyProfile ? profileFollowers : userFollowers
   const followingTags = isMyProfile ? profileFollowingTags : userFollowingTags
-  const followingTagsLoading =
-    isLoadPage || (isMyProfile ? profileFollowingTagsLoading : userFollowingTagsLoading)
+  const followingTagsLoading = isLoadPage || (isMyProfile ? profileFollowingTagsLoading : userFollowingTagsLoading)
   const followingTagsFilter = isMyProfile ? profileFollowingTagsFilter : userFollowingTagsFilter
   const followersTagsFilter = isMyProfile ? profileFollowersTagsFilter : userFollowersTagsFilter
   const toggleTag = isMyProfile ? profileToggleTag : userToggleTag
@@ -105,29 +101,18 @@ export const useUserInfo = (user: string) => {
   const setFollowingSort = isMyProfile ? profileSetFollowingSort : userSetFollowingSort
   const setFollowingSearch = isMyProfile ? profileSetFollowingSearch : userSetFollowingSearch
   const setFollowersSearch = isMyProfile ? profileSetFollowersSearch : userSetFollowersSearch
-  const followingIsLoading =
-    isLoadPage || (isMyProfile ? profileFollowingIsLoading : userFollowingIsLoading)
-  const followersIsLoading =
-    isLoadPage || (isMyProfile ? profileFollowersIsLoading : userFollowersIsLoading)
+  const followingIsLoading = isLoadPage || (isMyProfile ? profileFollowingIsLoading : userFollowingIsLoading)
+  const followersIsLoading = isLoadPage || (isMyProfile ? profileFollowersIsLoading : userFollowersIsLoading)
   const fetchMoreFollowers = isMyProfile ? profileFetchMoreFollowers : userFetchMoreFollowers
   const fetchMoreFollowing = isMyProfile ? profileFetchMoreFollowing : userFetchMoreFollowing
   const isEndOfFollowers = isMyProfile ? profileIsEndOfFollowers : userIsEndOfFollowers
   const isEndOfFollowing = isMyProfile ? profileIsEndOfFollowing : userIsEndOfFollowing
-  const followerTagsLoading =
-    isLoadPage || (isMyProfile ? profileFollowerTagsLoading : userFollowerTagsLoading)
+  const followerTagsLoading = isLoadPage || (isMyProfile ? profileFollowerTagsLoading : userFollowerTagsLoading)
   const followerTags = isMyProfile ? profileFollowerTags : userFollowerTags
-  const setFollowingTagsFilter = isMyProfile
-    ? profileSetFollowingTagsFilter
-    : userSetFollowingTagsFilter
-  const setFollowersTagsFilter = isMyProfile
-    ? profileSetFollowersTagsFilter
-    : userSetFollowersTagsFilter
-  const isFetchingMoreFollowers = isMyProfile
-    ? profileIsFetchingMoreFollowers
-    : userIsFetchingMoreFollowers
-  const isFetchingMoreFollowing = isMyProfile
-    ? profileIsFetchingMoreFollowing
-    : userIsFetchingMoreFollowing
+  const setFollowingTagsFilter = isMyProfile ? profileSetFollowingTagsFilter : userSetFollowingTagsFilter
+  const setFollowersTagsFilter = isMyProfile ? profileSetFollowersTagsFilter : userSetFollowersTagsFilter
+  const isFetchingMoreFollowers = isMyProfile ? profileIsFetchingMoreFollowers : userIsFetchingMoreFollowers
+  const isFetchingMoreFollowing = isMyProfile ? profileIsFetchingMoreFollowing : userIsFetchingMoreFollowing
 
   const profileList = userIsList
     ? (listNum as number)
@@ -137,7 +122,7 @@ export const useUserInfo = (user: string) => {
 
   const { data: qrCode, isLoading: qrCodeIsLoading } = useQuery({
     queryKey: ['qrCode', profile],
-    queryFn: async () => (profile?.address ? await fetchProfileQRCode(profile.address) : null)
+    queryFn: async () => (profile?.address ? await fetchProfileQRCode(profile.address) : null),
   })
 
   const refetchProfile = () => {
@@ -183,6 +168,6 @@ export const useUserInfo = (user: string) => {
     setFollowingTagsFilter,
     setFollowersTagsFilter,
     isFetchingMoreFollowers,
-    isFetchingMoreFollowing
+    isFetchingMoreFollowing,
   }
 }

@@ -13,7 +13,7 @@ const to = () => ({
   y: 0,
   scale: 1,
   rot: 0,
-  delay: 0
+  delay: 0,
 })
 const from = () => ({ x: 0, rot: 0, scale: 1, y: 0 })
 
@@ -23,8 +23,7 @@ export const trans = (r: number, s: number) =>
 export const useRecommendedProfilesCards = () => {
   const { actionsSoundsMuted } = useSounds()
   const { addCartItem, removeCartItem, cartAddresses } = useCart()
-  const { gone, recommendedProfiles, isLoading, isFetchingNextPage, fetchNextPage } =
-    useRecommendedProfiles()
+  const { gone, recommendedProfiles, isLoading, isFetchingNextPage, fetchNextPage } = useRecommendedProfiles()
 
   const soundRef = useRef<HTMLAudioElement>(null)
   const animatedRef = useRef<HTMLDivElement>(null)
@@ -41,16 +40,15 @@ export const useRecommendedProfilesCards = () => {
   }
 
   const [didSwipeBack, setDidSwipeBack] = useState(false)
-  const [cards, cardsApi] = useSprings(recommendedProfiles.length, i => ({
+  const [cards, cardsApi] = useSprings(recommendedProfiles.length, () => ({
     ...to(),
-    from: from()
+    from: from(),
   }))
 
   const canFetchMoreProfiles = useCallback(
     (index: number) =>
       index - recommendedProfiles.length + RECOMMENDED_PROFILES_LIMIT > 0 &&
-      (index - recommendedProfiles.length + RECOMMENDED_PROFILES_LIMIT) %
-        Math.ceil(RECOMMENDED_PROFILES_LIMIT / 2) ===
+      (index - recommendedProfiles.length + RECOMMENDED_PROFILES_LIMIT) % Math.ceil(RECOMMENDED_PROFILES_LIMIT / 2) ===
         0,
     [fetchNextPage, recommendedProfiles]
   )
@@ -68,16 +66,16 @@ export const useRecommendedProfilesCards = () => {
         setTimeout(() => {
           addCartItem({
             listOp: listOpAddListRecord(
-              // @ts-ignore the index comes from the cardsApi which is the same length as recommendedProfiles
+              // @ts-expect-error the index comes from the cardsApi which is the same length as recommendedProfiles
               recommendedProfiles[index].address
-            )
+            ),
           })
           handleStartAnimationAndSound()
         }, 0.15 * SECOND)
       }
     }
 
-    cardsApi.start(i => {
+    cardsApi.start((i) => {
       if (index !== i) return
 
       const isGone = gone.has(index)
@@ -90,19 +88,18 @@ export const useRecommendedProfilesCards = () => {
         rot,
         scale,
         delay: undefined,
-        config: { friction: 80, tension: down ? 800 : isGone ? 250 : 800 }
+        config: { friction: 80, tension: down ? 800 : isGone ? 250 : 800 },
       }
     })
   })
 
   const onSwipeLeft = useCallback(() => {
-    if (recommendedProfiles.length === 0 || isLoading || gone.size === recommendedProfiles.length)
-      return
+    if (recommendedProfiles.length === 0 || isLoading || gone.size === recommendedProfiles.length) return
 
     const lastCardX = Math.ceil(Math.abs(cards[gone.size - 1]?.x.get() || 0))
     if (gone.size > 0 && lastCardX < 250) return
 
-    cardsApi.start(i => {
+    cardsApi.start((i) => {
       if (i === gone.size) {
         if (canFetchMoreProfiles(i)) fetchNextPage()
 
@@ -111,7 +108,7 @@ export const useRecommendedProfilesCards = () => {
           rot: -15,
           scale: 1,
           delay: undefined,
-          config: { friction: 80, tension: 250 }
+          config: { friction: 80, tension: 250 },
         }
       }
     })
@@ -120,22 +117,21 @@ export const useRecommendedProfilesCards = () => {
   }, [gone, fetchNextPage, cardsApi, isLoading, recommendedProfiles])
 
   const onSwipeRight = useCallback(() => {
-    if (recommendedProfiles.length === 0 || isLoading || gone.size === recommendedProfiles.length)
-      return
+    if (recommendedProfiles.length === 0 || isLoading || gone.size === recommendedProfiles.length) return
 
     const lastCardX = Math.ceil(Math.abs(cards[gone.size - 1]?.x.get() || 0))
     if (gone.size > 0 && lastCardX < 250) return
 
-    cardsApi.start(i => {
+    cardsApi.start((i) => {
       if (i === gone.size) {
         if (canFetchMoreProfiles(i)) fetchNextPage()
 
         setTimeout(() => {
           addCartItem({
             listOp: listOpAddListRecord(
-              // @ts-ignore cardsApi is the same length as recommendedProfiles so indexes are valid
+              // @ts-expect-error cardsApi is the same length as recommendedProfiles so indexes are valid
               recommendedProfiles[i].address
-            )
+            ),
           })
           handleStartAnimationAndSound()
         }, 0.15 * SECOND)
@@ -145,7 +141,7 @@ export const useRecommendedProfilesCards = () => {
           rot: 15,
           scale: 1,
           delay: undefined,
-          config: { friction: 80, tension: 250 }
+          config: { friction: 80, tension: 250 },
         }
       }
     })
@@ -157,13 +153,13 @@ export const useRecommendedProfilesCards = () => {
     if (didSwipeBack) return
 
     gone.delete(gone.size - 1)
-    cardsApi.start(i => {
+    cardsApi.start((i) => {
       if (i === gone.size) {
         setDidSwipeBack(true)
         setTimeout(() => {
           removeCartItem(
             listOpAddListRecord(
-              // @ts-ignore cardsApi is the same length as recommendedProfiles so indexes are valid
+              // @ts-expect-error cardsApi is the same length as recommendedProfiles so indexes are valid
               recommendedProfiles[i].address
             )
           )
@@ -196,14 +192,14 @@ export const useRecommendedProfilesCards = () => {
   }, [handleKeyDown])
 
   useEffect(() => {
-    cardsApi.start(i => {
+    cardsApi.start((i) => {
       if (gone.has(i)) {
         return {
           x: (250 + window.innerWidth / 1.5) * -1,
           rot: -50,
           scale: 1,
           delay: undefined,
-          config: { friction: 0, tension: 0 }
+          config: { friction: 0, tension: 0 },
         }
       }
     })
@@ -222,6 +218,6 @@ export const useRecommendedProfilesCards = () => {
     bindDragToCards,
     isFetchingNextPage,
     recommendedProfiles,
-    handleStopAnimationAndSound
+    handleStopAnimationAndSound,
   }
 }

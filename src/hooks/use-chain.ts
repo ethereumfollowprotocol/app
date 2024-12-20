@@ -20,34 +20,24 @@ const useChain = () => {
   }, [walletClient])
 
   const checkChain = useCallback(
-    async ({
-      chainId,
-      onSuccess,
-      onError
-    }: {
-      chainId?: number
-      onSuccess?: () => void
-      onError?: () => void
-    }) => {
+    async ({ chainId, onSuccess, onError }: { chainId?: number; onSuccess?: () => void; onError?: () => void }) => {
       if (!chainId) return false
       if (currentChainId === chainId) return true
 
-      await new Promise(resolve =>
-        switchChain({ chainId }, { onSuccess, onError, onSettled: resolve })
-      )
+      await new Promise((resolve) => switchChain({ chainId }, { onSuccess, onError, onSettled: resolve }))
       return false
     },
     [currentChainId, switchChain]
   )
 
   const chains = useChains() as unknown as ChainWithDetails[] // TODO: Fix this type issue
-  const getChain = (chainId: number | undefined) => chains.find(chain => chain.id === chainId)
+  const getChain = (chainId: number | undefined) => chains.find((chain) => chain.id === chainId)
 
   return {
     getChain,
     checkChain,
     currentChainId,
-    setCurrentChainId
+    setCurrentChainId,
   }
 }
 

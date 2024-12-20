@@ -10,7 +10,7 @@ export const fetchProfileFollowing = async ({
   pageParam,
   search,
   allResults,
-  fresh
+  fresh,
 }: InfiniteProfileQueryProps) => {
   try {
     const queryParams = formatQueryParams({
@@ -22,10 +22,10 @@ export const fetchProfileFollowing = async ({
         ? {
             'earliest first': 'earliest',
             'latest first': 'latest',
-            'follower count': 'followers'
+            'follower count': 'followers',
           }[sort]
         : undefined,
-      cache: fresh ? 'fresh' : undefined
+      cache: fresh ? 'fresh' : undefined,
     })
 
     const followingEndpoint = allResults
@@ -42,19 +42,20 @@ export const fetchProfileFollowing = async ({
       cache: 'default',
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json'
-      }
+        Accept: 'application/json',
+      },
     })
 
     const data = ((await response.json()) as { following: FollowingResponse[] }).following
     return {
       following: data ?? [],
-      nextPageParam: pageParam + 1
+      nextPageParam: pageParam + 1,
     }
-  } catch (err: unknown) {
+  } catch (error) {
+    console.error('Error fetching profile following:', error)
     return {
       following: [],
-      nextPageParam: pageParam + 1
+      nextPageParam: pageParam + 1,
     }
   }
 }

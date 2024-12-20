@@ -24,7 +24,7 @@ export const useTagsDropdown = (
     getTagsFromCartByAddress,
     hasListOpAddTag,
     hasListOpRemoveTag,
-    hasListOpRemoveRecord
+    hasListOpRemoveRecord,
   } = useCart()
 
   const address = profiles?.[0]?.address
@@ -39,10 +39,10 @@ export const useTagsDropdown = (
   const initialDisplayedTags = () => {
     return [
       ...new Set(
-        [...tags, ...(canEditTags ? tagsFromCart : [])].filter(tag =>
+        [...tags, ...(canEditTags ? tagsFromCart : [])].filter((tag) =>
           isBlockedList ? ['block', 'mute'].includes(tag) : true
         )
-      )
+      ),
     ]
   }
   const [displayedTags, setDisplayedTags] = useState<string[]>(initialDisplayedTags())
@@ -56,12 +56,12 @@ export const useTagsDropdown = (
   const addTag = async (tag: string) => {
     if (!displayedTags.includes(tag)) {
       addRecentTag(tag)
-      setDisplayedTags(prevTags => [...prevTags, tag])
+      setDisplayedTags((prevTags) => [...prevTags, tag])
       await yieldToMain()
 
       const newCartItems = profiles.map(({ address }) => ({
         listOp: listOpAddTag(address, tag),
-        import: platform
+        import: platform,
       }))
 
       setCartItems([...cartItems, ...newCartItems])
@@ -74,13 +74,13 @@ export const useTagsDropdown = (
     const addresses = profiles.map(({ address }) => address.toLowerCase())
 
     if (hasListOpAddTag({ address, tag })) {
-      setDisplayedTags(prevTags => prevTags.filter(prevTag => prevTag !== tag))
+      setDisplayedTags((prevTags) => prevTags.filter((prevTag) => prevTag !== tag))
 
       await yieldToMain()
 
-      return setCartItems(oldCartItems =>
+      return setCartItems((oldCartItems) =>
         oldCartItems.filter(
-          item =>
+          (item) =>
             !(isTagListOp(item.listOp)
               ? addresses.includes(extractAddressAndTag(item.listOp).address.toLowerCase()) &&
                 extractAddressAndTag(item.listOp).tag === tag
@@ -90,9 +90,9 @@ export const useTagsDropdown = (
     }
 
     if (hasListOpRemoveTag({ address, tag }))
-      return setCartItems(oldCartItems =>
+      return setCartItems((oldCartItems) =>
         oldCartItems.filter(
-          item =>
+          (item) =>
             !(isTagListOp(item.listOp)
               ? addresses.includes(extractAddressAndTag(item.listOp).address.toLowerCase()) &&
                 extractAddressAndTag(item.listOp).tag === tag
@@ -102,7 +102,7 @@ export const useTagsDropdown = (
 
     const newCartItems = profiles.map(({ address }) => ({
       listOp: listOpRemoveTag(address, tag),
-      import: platform
+      import: platform,
     }))
 
     setCartItems([...cartItems, ...newCartItems])
@@ -117,16 +117,14 @@ export const useTagsDropdown = (
 
   const isBeingRemoved = address ? hasListOpRemoveRecord(address) : false
   const isBeingRestricted =
-    address &&
-    (hasListOpAddTag({ address, tag: 'block' }) || hasListOpAddTag({ address, tag: 'mute' }))
+    address && (hasListOpAddTag({ address, tag: 'block' }) || hasListOpAddTag({ address, tag: 'mute' }))
   const isBeingUnrestricted =
-    address &&
-    (hasListOpRemoveTag({ address, tag: 'block' }) || hasListOpRemoveTag({ address, tag: 'mute' }))
+    address && (hasListOpRemoveTag({ address, tag: 'block' }) || hasListOpRemoveTag({ address, tag: 'mute' }))
 
   useEffect(() => {
     if (!isBeingRemoved || isBeingUnrestricted) return setDisplayedTags(initialDisplayedTags())
 
-    tagsFromCart.forEach(tag => {
+    tagsFromCart.forEach((tag) => {
       removeTag(tag)
     })
   }, [isBeingRemoved, isBeingRestricted, isBeingUnrestricted])
@@ -139,6 +137,6 @@ export const useTagsDropdown = (
     removeTag,
     addTag,
     displayedTags,
-    recentTags
+    recentTags,
   }
 }

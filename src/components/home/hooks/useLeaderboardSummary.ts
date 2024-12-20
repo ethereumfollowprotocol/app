@@ -9,11 +9,11 @@ export const useLeaderboardSummary = () => {
   const { data: leaderboardSummaryData, isLoading: isLeaderboardSummaryLoading } = useQuery({
     queryKey: ['leaderboard summary'],
     queryFn: async () => {
-      const data = leaderboardFilters.map(async filter => {
+      const data = leaderboardFilters.map(async (filter) => {
         const results = await fetchleaderboard({
           limit: 5,
           pageParam: 0,
-          filter
+          filter,
         })
 
         return results.results
@@ -21,13 +21,13 @@ export const useLeaderboardSummary = () => {
 
       return await Promise.all(data)
     },
-    staleTime: 600000
+    staleTime: 600000,
   })
 
   return {
     page,
     setPage,
     leaderboardSummaryData,
-    isLeaderboardSummaryLoading
+    isLeaderboardSummaryLoading,
   }
 }

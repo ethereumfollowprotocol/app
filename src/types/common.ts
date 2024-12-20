@@ -34,3 +34,13 @@ export type ImportPlatformType = 'farcaster'
 export type TagsDropdownPositionType = 'top' | 'bottom'
 
 export type ListSettingsKey = 'user' | 'owner' | 'manager' | 'chain' | 'setPrimary' | 'resetSlot'
+
+export type AccountResponseType = {
+  address: Address
+  ens: {
+    name: string | null
+    avatar: string
+    records: Record<string, string>
+  }
+  primary_list?: string | null
+}

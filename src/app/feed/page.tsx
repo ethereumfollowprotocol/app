@@ -10,18 +10,18 @@ export const metadata: Metadata = {
     url: 'https://ethfollow.xyz/feed',
     images: [
       {
-        url: 'https://ethfollow.xyz/assets/banners/feed.png'
-      }
-    ]
+        url: 'https://ethfollow.xyz/assets/banners/feed.png',
+      },
+    ],
   },
   twitter: {
-    images: 'https://ethfollow.xyz/assets/banners/feed.png'
-  }
+    images: 'https://ethfollow.xyz/assets/banners/feed.png',
+  },
 }
 
 const FeedPage = () => {
   return (
-    <main className='h-screen w-full'>
+    <main className="h-screen w-full">
       <Feed />
     </main>
   )

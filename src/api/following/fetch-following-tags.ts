@@ -4,14 +4,10 @@ export const nullFollowingTags = {
   token_id: 0,
   tags: [],
   tagCounts: [],
-  taggedAddresses: []
+  taggedAddresses: [],
 }
 
-export const fetchFollowingTags = async (
-  addressOrName: string,
-  list?: number | string,
-  fresh?: boolean
-) => {
+export const fetchFollowingTags = async (addressOrName: string, list?: number | string, fresh?: boolean) => {
   try {
     const url = `${process.env.NEXT_PUBLIC_EFP_API_URL}/${list === undefined ? 'users' : 'lists'}/${
       list ?? addressOrName
@@ -21,13 +17,14 @@ export const fetchFollowingTags = async (
       cache: 'default',
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json'
-      }
+        Accept: 'application/json',
+      },
     })
 
     const data = (await response.json()) as FollowingTagsResponse
     return data
-  } catch (err: unknown) {
+  } catch (error) {
+    console.error('Error fetching following tags:', error)
     return nullFollowingTags
   }
 }
