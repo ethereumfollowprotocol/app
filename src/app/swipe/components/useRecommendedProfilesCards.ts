@@ -56,7 +56,7 @@ export const useRecommendedProfilesCards = () => {
   )
 
   const bindDragToCards = useDrag(
-    ({ args: [index], down, movement: [mx], direction: [xDir], velocity }) => {
+    ({ args: [index], down, movement: [mx], direction: [xDir] }) => {
       if (index !== gone.size) return
       const trigger = (mx > 50 && xDir === 1) || (mx < -50 && xDir === -1) // Card has to be moved more than 50px in either direction to trigger the swipe
 

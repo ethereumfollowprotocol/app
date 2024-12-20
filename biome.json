@@ -65,6 +65,7 @@
         "useNumberNamespace": "off",
         "useNamingConvention": "off",
         "useShorthandArrayType": "off",
+        "useExplicitLengthCheck": "off",
         "useSingleCaseStatement": "off",
         "useSelfClosingElements": "off",
         "noUnusedTemplateLiteral": "off"
@@ -75,6 +76,7 @@
         "useButtonType": "off",
         "useMediaCaption": "off",
         "noSvgWithoutTitle": "off",
+        "noLabelWithoutControl": "off",
         "useKeyWithClickEvents": "off",
         "noDistractingElements": "off"
       },
@@ -83,9 +85,11 @@
         "noEnum": "off",
         "noSecrets": "off",
         "noProcessEnv": "off",
+        "noImgElement": "off",
         "useExplicitType": "off",
         "noNestedTernary": "off",
         "useSortedClasses": "off",
+        "noExportedImports": "off",
         "useImportRestrictions": "off",
         "useConsistentCurlyBraces": "off",
         "noStaticElementInteractions": "off",
@@ -99,6 +103,7 @@
       },
       "correctness": {
         "all": true,
+        "noNodejsModules": "off",
         "noUnusedVariables": "off",
         "useImportExtensions": "off",
         "noUndeclaredVariables": "off",
