@@ -1,7 +1,8 @@
+'use client'
+
 import { default as NextError } from 'next/error'
 
 interface GlobalErrorProps {
-  error: NextError & { digest?: string }
   reset: () => void
 }
 
