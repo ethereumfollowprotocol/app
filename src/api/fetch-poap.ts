@@ -9,7 +9,7 @@ export const fetchPoapLink = async (userAddress: Address) => {
       }
     })
 
-    const data = await res.json()
+    const data = (await res.json()) as { link: string }
     return data.link
   } catch (err: unknown) {
     return

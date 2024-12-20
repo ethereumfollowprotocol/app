@@ -13,6 +13,7 @@ import {
 import { useCart } from '#/contexts/cart-context'
 import type { FollowState } from '#/types/common'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
+import { toast } from 'sonner'
 
 export const useThreeDotMenu = ({
   address,
@@ -23,7 +24,7 @@ export const useThreeDotMenu = ({
     setThreeDotMenuOpen(false)
   })
 
-  const { topEight } = useEFPProfile()
+  const { topEight, roles } = useEFPProfile()
   const { openConnectModal } = useConnectModal()
   const { address: connectedAddress } = useAccount()
   const { addCartItem, removeCartItem, hasListOpAddTag, hasListOpRemoveTag } = useCart()
@@ -40,6 +41,11 @@ export const useThreeDotMenu = ({
   const onClickOption = (buttonText: 'block' | 'mute') => {
     if (!connectedAddress && openConnectModal) {
       openConnectModal()
+      return
+    }
+
+    if (!roles?.isManager) {
+      toast.error('You are not the manager of this list')
       return
     }
 

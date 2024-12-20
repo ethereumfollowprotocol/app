@@ -21,6 +21,7 @@ import {
 import type { Address } from 'viem'
 import { useRouter } from 'next/navigation'
 import { useAccount, useChains } from 'wagmi'
+import { fetchProfileDetails, fetchProfileStats } from 'ethereum-identity-kit'
 
 import type {
   ENSProfile,
@@ -30,8 +31,8 @@ import type {
   FollowerResponse,
   FollowingResponse,
   ProfileListsResponse,
-  ProfileDetailsResponse,
-  FollowingTagsResponse
+  FollowingTagsResponse,
+  ProfileDetailsResponse
 } from '#/types/requests'
 import { useCart } from './cart-context'
 import { DEFAULT_CHAIN } from '#/lib/constants/chains'
@@ -39,8 +40,6 @@ import type { ProfileTableTitleType } from '#/types/common'
 import { coreEfpContracts } from '#/lib/constants/contracts'
 import { fetchProfileRoles } from '#/api/profile/fetch-profile-roles'
 import { fetchProfileLists } from '#/api/profile/fetch-profile-lists'
-import { fetchProfileStats } from '#/api/profile/fetch-profile-stats'
-import { fetchProfileDetails } from '#/api/profile/fetch-profile-details'
 import { fetchProfileFollowers } from '#/api/followers/fetch-profile-followers'
 import { fetchProfileFollowing } from '#/api/following/fetch-profile-following'
 import { fetchProfileAllFollowings } from '#/api/following/fetch-profile-all-followings'
@@ -266,9 +265,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       }
 
       const fetchedProfile = await fetchProfileDetails(userAddress, listToFetch, fetchFreshProfile)
-
       setIsRefetchingProfile(false)
-
       return fetchedProfile
     },
     staleTime: Infinity,
@@ -286,7 +283,6 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       if (!userAddress) return null
 
       const fetchedStats = await fetchProfileStats(userAddress, listToFetch, fetchFreshStats)
-
       return fetchedStats
     },
     refetchOnWindowFocus: false
@@ -421,16 +417,16 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
 
   const followers = fetchedFollowers
     ? fetchedFollowers.pages.reduce(
-        (acc, el) => [...acc, ...el.followers],
-        [] as FollowerResponse[]
-      )
+      (acc, el) => [...acc, ...el.followers],
+      [] as FollowerResponse[]
+    )
     : []
 
   const following = fetchedFollowing
     ? fetchedFollowing.pages.reduce(
-        (acc, el) => [...acc, ...el.following],
-        [] as FollowingResponse[]
-      )
+      (acc, el) => [...acc, ...el.following],
+      [] as FollowingResponse[]
+    )
     : []
 
   const {

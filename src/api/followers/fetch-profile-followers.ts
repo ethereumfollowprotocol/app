@@ -44,7 +44,7 @@ export const fetchProfileFollowers = async ({
       }
     })
 
-    const data = (await response.json()).followers as FollowerResponse[]
+    const data = ((await response.json()) as { followers: FollowerResponse[] }).followers
     return {
       followers: data ?? [],
       nextPageParam: pageParam + 1
