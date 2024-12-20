@@ -80,21 +80,29 @@
       },
       "nursery": {
         "all": true,
+        "noEnum": "off",
+        "noSecrets": "off",
+        "noProcessEnv": "off",
+        "useExplicitType": "off",
+        "noNestedTernary": "off",
         "useSortedClasses": "off",
-        "noReactSpecificProps": "off",
         "useImportRestrictions": "off",
-        "useExplicitLengthCheck": "off",
-        "noUndeclaredDependencies": "off"
+        "useConsistentCurlyBraces": "off",
+        "noStaticElementInteractions": "off",
+        "useComponentExportOnlyModules": "off"
       },
       "performance": {
         "all": true,
         "noReExportAll": "off",
+        "useTopLevelRegex": "off",
         "noAccumulatingSpread": "off"
       },
       "correctness": {
         "all": true,
         "noUnusedVariables": "off",
+        "useImportExtensions": "off",
         "noUndeclaredVariables": "off",
+        "noUndeclaredDependencies": "off",
         "useExhaustiveDependencies": "off"
       },
       "suspicious": {

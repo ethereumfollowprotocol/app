@@ -54,8 +54,6 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const { address: connectedAddress } = useAccount()
   const { followState, profileName, isConnectedUserCard } = useProfileCard(profile)
 
-  console.log(profile, profileList)
-
   return (
     <div
       className={cn(
