@@ -141,23 +141,21 @@ const LeaderboardTable = () => {
           </div>
         </div>
         <div className='glass-card border-grey mt-1 border-[3px] rounded-xl flex flex-col gap-4 p-1 sm:px-4 sm:py-6 lg:px-8 relative'>
-          {leaderboard
-            ?.slice(0, chunk * LEADERBOARD_CHUNK_SIZE)
-            .map((entry: LeaderboardItem) => (
-              <TableRow
-                key={entry.address}
-                address={entry.address}
-                name={entry.name}
-                avatar={entry.avatar}
-                rank={Number(selectedRank(entry))}
-                followers={Number(entry.followers) || 0}
-                following={Number(entry.following) || 0}
-                mutuals={Number(entry.mutuals) || 0}
-                top8={Number(entry.top8) || 0}
-                blocked={Number(entry.blocks) || 0}
-                firstStat={filter}
-              />
-            ))}
+          {leaderboard?.slice(0, chunk * LEADERBOARD_CHUNK_SIZE).map((entry: LeaderboardItem) => (
+            <TableRow
+              key={entry.address}
+              address={entry.address}
+              name={entry.name}
+              avatar={entry.avatar}
+              rank={Number(selectedRank(entry))}
+              followers={Number(entry.followers) || 0}
+              following={Number(entry.following) || 0}
+              mutuals={Number(entry.mutuals) || 0}
+              top8={Number(entry.top8) || 0}
+              blocked={Number(entry.blocks) || 0}
+              firstStat={filter}
+            />
+          ))}
           {new Array(isLoading ? LEADERBOARD_CHUNK_SIZE : 0).fill(1).map((_, i) => (
             <LoadingRow key={i} staticStats={false} />
           ))}

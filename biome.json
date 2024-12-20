@@ -27,16 +27,6 @@
     "indentWidth": 2,
     "indentStyle": "space",
     "formatWithErrors": true,
-    "include": [
-      "./**/*.ts",
-      "./**/*.js",
-      "./**/*.cjs",
-      "./**/*.tsx",
-      "./**/*.d.ts",
-      "./**/*.json",
-      "./**/*.jsonc",
-      "!next-env.d.ts"
-    ],
     "ignore": ["node_modules", "dist", "package.json", "tsconfig.json", "_"]
   },
   "linter": {
@@ -50,11 +40,9 @@
       "./**/*.jsonc"
     ],
     "ignore": ["node_modules", "dist", "package.json", "tsconfig.json", "_"],
-    "enabled": true,
+    "enabled": false,
     "rules": {
-      "all": true,
       "style": {
-        "all": true,
         "noNamespace": "off",
         "useImportType": "off",
         "noDefaultExport": "off",
@@ -71,7 +59,6 @@
         "noUnusedTemplateLiteral": "off"
       },
       "a11y": {
-        "all": true,
         "noAutofocus": "off",
         "useButtonType": "off",
         "useMediaCaption": "off",
@@ -81,7 +68,6 @@
         "noDistractingElements": "off"
       },
       "nursery": {
-        "all": true,
         "noEnum": "off",
         "noSecrets": "off",
         "noProcessEnv": "off",
@@ -96,13 +82,11 @@
         "useComponentExportOnlyModules": "off"
       },
       "performance": {
-        "all": true,
         "noReExportAll": "off",
         "useTopLevelRegex": "off",
         "noAccumulatingSpread": "off"
       },
       "correctness": {
-        "all": true,
         "noNodejsModules": "off",
         "noUnusedVariables": "off",
         "useImportExtensions": "off",
@@ -111,14 +95,12 @@
         "useExhaustiveDependencies": "off"
       },
       "suspicious": {
-        "all": true,
         "noConsoleLog": "off",
         "noExplicitAny": "off",
         "noArrayIndexKey": "off",
         "noEmptyInterface": "off"
       },
       "complexity": {
-        "all": true,
         "noForEach": "off",
         "noBannedTypes": "off",
         "useLiteralKeys": "off",

@@ -1,5 +1,4 @@
 {
-  "schema": "https://json.schemastore.org/tsconfig.json",
   "display": "Default",
   "compilerOptions": {
     "strict": true,
@@ -49,6 +48,6 @@
     ".next/types/**/*.ts",
     "svgr.d.ts"
   ],
-  "files": ["biome.json", "environment.d.ts", "next.config.mjs", "env.ts"],
+  "files": ["environment.d.ts", "next.config.mjs", "env.ts"],
   "exclude": ["node_modules", "./src/lib/generated", "_"]
 }
