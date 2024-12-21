@@ -99,6 +99,9 @@ const nextConfig = {
     /* WalletConnect x wagmi needed configuration */
     if (config.resolve) config.resolve.fallback = { fs: false, net: false, tls: false }
     if (Array.isArray(config.externals)) {
+      if (context.isServer) {
+        config.externals.push('@opentelemetry/instrumentation')
+      }
       config.externals.push('lokijs', 'pino-pretty', 'encoding')
     }
     if (config.plugins) {
@@ -193,4 +196,4 @@ const nextConfigWithSentry = withSentryConfig(nextConfig, {
 
 export default process.env.NODE_ENV === 'development'
   ? nextConfigWithSentry
-  : MillionLint.next({ rsc: true })(nextConfigWithSentry)
+  : MillionLint.next({ rsc: true })(nextConfig)
