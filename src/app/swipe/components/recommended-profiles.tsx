@@ -13,7 +13,7 @@ import SwipeButtons from './swipeButtons'
 import UserProfileCard from '#/components/user-profile-card'
 import LoadingRecommendedCards from './loading-recommended-cards'
 import HalloweenEmoji from 'public/assets/icons/halloween-emoji.svg'
-import { trans, useRecommendedProfilesCards } from './useRecommendedProfilesCards'
+import { trans, useRecommendedProfilesCards } from './useRescommendedProfilesCards'
 
 const RecommendedCards = () => {
   const {

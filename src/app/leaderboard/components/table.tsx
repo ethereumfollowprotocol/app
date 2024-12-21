@@ -143,7 +143,7 @@ const LeaderboardTable = () => {
         <div className='glass-card border-grey mt-1 border-[3px] rounded-xl flex flex-col gap-4 p-1 sm:px-4 sm:py-6 lg:px-8 relative'>
           {leaderboard
             ?.slice(0, chunk * LEADERBOARD_CHUNK_SIZE)
-            .map((entry: LeaderboardItem) => (
+            .map((entry: LeaderboardItem, index) => (
               <TableRow
                 key={entry.address}
                 address={entry.address}
