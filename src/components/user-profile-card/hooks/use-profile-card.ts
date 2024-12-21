@@ -14,7 +14,7 @@ export const useProfileCard = (profile?: ProfileDetailsResponse | null) => {
     queryFn: async () => {
       if (!profile) return null
       return await resolveEnsProfile(profile?.address)
-    },
+    }
   })
 
   const profileName = fetchedEnsProfile?.name
@@ -28,22 +28,28 @@ export const useProfileCard = (profile?: ProfileDetailsResponse | null) => {
   const searchParams = useSearchParams()
   const searchURLParam = searchParams.get('search')
   const hasSearchedDifferentName =
-    searchURLParam && searchURLParam.length > 0 && searchURLParam !== profileName && !Number(searchURLParam)
+    searchURLParam &&
+    searchURLParam.length > 0 &&
+    searchURLParam !== profileName &&
+    !Number(searchURLParam)
 
   const isConnectedUserCard =
     pathname === '/' ||
     (pathname?.toLowerCase() === `/${connectedAddress?.toLowerCase()}` &&
-      (profile?.primary_list && selectedList ? selectedList === Number(profile?.primary_list) : true)) ||
+      (profile?.primary_list && selectedList
+        ? selectedList === Number(profile?.primary_list)
+        : true)) ||
     pathname === `/${selectedList?.toString() ?? connectedAddress}`
 
   const { followingState: followState } = useFollowingState({ address: profile?.address })
   const { followerTag } = useFollowerState({
     address: profile?.address,
-    showFollowerBadge: !isConnectedUserCard,
+    showFollowerBadge: !isConnectedUserCard
   })
 
   const isProfileValid = !(
-    Object.keys(profile || {}).includes('response') || Object.keys(profile || {}).includes('message')
+    Object.keys(profile || {}).includes('response') ||
+    Object.keys(profile || {}).includes('message')
   )
 
   const onProfileStatClick = (stat: string) => {
@@ -52,7 +58,9 @@ export const useProfileCard = (profile?: ProfileDetailsResponse | null) => {
     if (pathname === '/' || pathname === '/team') {
       if (isConnectedUserCard) {
         return router.push(
-          `/${selectedList === Number(profile.primary_list) ? profile.address : selectedList}?tab=${stat}`
+          `/${
+            selectedList === Number(profile.primary_list) ? profile.address : selectedList
+          }?tab=${stat}`
         )
       }
 
@@ -72,6 +80,6 @@ export const useProfileCard = (profile?: ProfileDetailsResponse | null) => {
     isProfileLoading,
     searchURLParam,
     onProfileStatClick,
-    hasSearchedDifferentName,
+    hasSearchedDifferentName
   }
 }

@@ -23,7 +23,9 @@ type Props = {
   children: React.ReactNode
 }
 
-const RecommendedProfilesContext = createContext<RecommendedProfilesContextType | undefined>(undefined)
+const RecommendedProfilesContext = createContext<RecommendedProfilesContextType | undefined>(
+  undefined
+)
 
 export const RecommendedProfilesProvider: React.FC<Props> = ({ children }) => {
   const [gone] = useState(() => new Set()) // The set flags all the cards that are flicked out
@@ -42,19 +44,24 @@ export const RecommendedProfilesProvider: React.FC<Props> = ({ children }) => {
     isLoading,
     isFetchingNextPage,
     hasNextPage,
-    fetchNextPage,
+    fetchNextPage
   } = useInfiniteQuery({
     queryKey: ['recommended profiles', userAddress, listToFetch, randomNumber],
     queryFn: ({ pageParam = 0 }) => {
       if (!userAddress) return { recommended: [], nextPageParam: 0 }
 
-      return fetchRecommendedProfiles(userAddress, listToFetch, RECOMMENDED_PROFILES_LIMIT, pageParam)
+      return fetchRecommendedProfiles(
+        userAddress,
+        listToFetch,
+        RECOMMENDED_PROFILES_LIMIT,
+        pageParam
+      )
     },
-    getNextPageParam: (lastPage) => lastPage?.nextPageParam,
+    getNextPageParam: lastPage => lastPage?.nextPageParam,
     initialPageParam: 0,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
-    refetchOnReconnect: false,
+    refetchOnReconnect: false
   })
 
   const recommendedProfiles =
@@ -71,7 +78,7 @@ export const RecommendedProfilesProvider: React.FC<Props> = ({ children }) => {
         hasNextPage,
         fetchNextPage,
         isFetchingNextPage,
-        recommendedProfiles,
+        recommendedProfiles
       }}
     >
       {children}

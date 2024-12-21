@@ -18,7 +18,14 @@ interface TagsProps {
   dropdownPosition?: TagsDropdownPositionType
 }
 
-const Tags: React.FC<TagsProps> = ({ profiles, platform, showTags, canEditTags, isBlockedList, dropdownPosition }) => {
+const Tags: React.FC<TagsProps> = ({
+  profiles,
+  platform,
+  showTags,
+  canEditTags,
+  isBlockedList,
+  dropdownPosition
+}) => {
   const [tagDropdownOpen, setTagDropdownOpen] = useState(false)
   const clickAwayTagDropwdownRef = useClickAway<HTMLDivElement>(() => {
     setTagDropdownOpen(false)
@@ -41,18 +48,21 @@ const Tags: React.FC<TagsProps> = ({ profiles, platform, showTags, canEditTags, 
 
   return (
     <div
-      className={cn('relative min-h-8 flex max-w-full flex-wrap gap-2 items-center', hideTags && 'hidden')}
+      className={cn(
+        'relative min-h-8 flex max-w-full flex-wrap gap-2 items-center',
+        hideTags && 'hidden'
+      )}
       ref={clickAwayTagDropwdownRef}
     >
       {canEditTags && (
         <button
-          className="p-1.5 rounded-full hover:opacity-80 hover:scale-110 bg-zinc-300"
-          onClick={(e) => {
+          className='p-1.5 rounded-full hover:opacity-80 hover:scale-110 bg-zinc-300'
+          onClick={e => {
             e.stopPropagation()
             setTagDropdownOpen(!tagDropdownOpen)
           }}
         >
-          <Image src={Plus} alt="Add Tag" width={12} />
+          <Image src={Plus} alt='Add Tag' width={12} />
         </button>
       )}
       <TagsDropdown
@@ -65,8 +75,8 @@ const Tags: React.FC<TagsProps> = ({ profiles, platform, showTags, canEditTags, 
       />
       {canEditTags && tagDropdownOpen && (
         <div
-          className="fixed z-30 top-0 left-0 w-full h-full bg-transparent"
-          onClick={(e) => {
+          className='fixed z-30 top-0 left-0 w-full h-full bg-transparent'
+          onClick={e => {
             e.stopPropagation()
             setTagDropdownOpen(false)
           }}

@@ -10,7 +10,7 @@ import {
   listOpRemoveTag,
   listOpAddListRecord,
   extractAddressAndTag,
-  listOpRemoveListRecord,
+  listOpRemoveListRecord
 } from '#/utils/list-ops'
 import { useCart } from '#/contexts/cart-context'
 import useFollowerState from '#/hooks/use-follower-state'
@@ -50,13 +50,16 @@ type FollowButtonText =
   | 'Unmute'
 // | 'Unsubscribe'
 
-export const useFollowButton = ({ address, isBlockedBy }: { address: Address; isBlockedBy?: boolean }) => {
+export const useFollowButton = ({
+  address,
+  isBlockedBy
+}: { address: Address; isBlockedBy?: boolean }) => {
   const { roles } = useEFPProfile()
   const { address: userAddress } = useAccount()
   const { followingState: followState, isFollowingStateLoading } = useFollowingState({ address })
   const { followState: followerState } = useFollowerState({
     address,
-    showFollowerBadge: isBlockedBy,
+    showFollowerBadge: isBlockedBy
   })
   const { t } = useTranslation()
   const {
@@ -68,7 +71,7 @@ export const useFollowButton = ({ address, isBlockedBy }: { address: Address; is
     hasListOpRemoveTag,
     removeAddTagFromCart,
     hasListOpRemoveRecord,
-    removeRemoveTagFromCart,
+    removeRemoveTagFromCart
   } = useCart()
 
   const pendingState = useMemo(() => {
@@ -152,11 +155,11 @@ export const useFollowButton = ({ address, isBlockedBy }: { address: Address; is
 
     // remove address and tags for this address from cart if it's a pending follow
     if (buttonState === 'Pending Following') {
-      const addressTags = cartItems.filter((item) =>
+      const addressTags = cartItems.filter(item =>
         isTagListOp(item.listOp) ? extractAddressAndTag(item.listOp).address === address : false
       )
       removeCartItem(listOpAddListRecord(address))
-      addressTags.flatMap((item) => removeCartItem(item.listOp))
+      addressTags.flatMap(item => removeCartItem(item.listOp))
       return
     }
     // remove from cart if it's a pending unfollow

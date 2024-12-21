@@ -26,7 +26,8 @@ const useStickyScroll = (bottomOffset = 0) => {
       if (stickyScrollTop >= 70) stickyScroll.style.top = '0px'
       else
         stickyScroll.style.top = `${
-          Number(stickyScroll.style.top.replace('px', '')) + (scrollTopSidebar - e.currentTarget.scrollTop)
+          Number(stickyScroll.style.top.replace('px', '')) +
+          (scrollTopSidebar - e.currentTarget.scrollTop)
         }px`
     }
 
@@ -35,7 +36,8 @@ const useStickyScroll = (bottomOffset = 0) => {
         stickyScroll.style.top = `${viewportHeight - bottomOffset - stickyScrollHeight}px`
       else
         stickyScroll.style.top = `${
-          Number(stickyScroll.style.top.replace('px', '')) - (e.currentTarget.scrollTop - scrollTopSidebar)
+          Number(stickyScroll.style.top.replace('px', '')) -
+          (e.currentTarget.scrollTop - scrollTopSidebar)
         }px`
     }
 

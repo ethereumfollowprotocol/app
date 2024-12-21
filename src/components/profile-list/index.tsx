@@ -36,7 +36,7 @@ const ProfileList: React.FC<ProfileListProps> = ({
   isLoadingMore,
   canEditTags,
   isBlockedList,
-  isBlockedBy,
+  isBlockedBy
 }) => {
   const displayLoadingRows = isLoadingMore || isLoading
   const isShortList = (profiles?.length || 0) <= 3
@@ -63,11 +63,14 @@ const ProfileList: React.FC<ProfileListProps> = ({
           isBlockedList={isBlockedList}
           isBlockedBy={isBlockedBy}
           tagsDropdownPosition={
-            (index === profiles.length - 1 || index === profiles.length - 2) && index >= 2 ? 'top' : 'bottom'
+            (index === profiles.length - 1 || index === profiles.length - 2) && index >= 2
+              ? 'top'
+              : 'bottom'
           }
         />
       ))}
-      {displayLoadingRows && new Array(loadingRows).fill(1).map((_, i) => <LoadingRow key={i} showTags={showTags} />)}
+      {displayLoadingRows &&
+        new Array(loadingRows).fill(1).map((_, i) => <LoadingRow key={i} showTags={showTags} />)}
     </div>
   )
 }

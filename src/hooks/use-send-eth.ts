@@ -4,12 +4,8 @@ import { useChainId, useSendTransaction, useSwitchChain } from 'wagmi'
 const useSendEth = ({
   chainId,
   value,
-  to,
-}: {
-  chainId: number | undefined
-  value: bigint
-  to: `0x${string}` | undefined
-}) => {
+  to
+}: { chainId: number | undefined; value: bigint; to: `0x${string}` | undefined }) => {
   const currentChainId = useChainId()
   const { sendTransactionAsync } = useSendTransaction()
   const { switchChainAsync } = useSwitchChain()
@@ -25,7 +21,7 @@ const useSendEth = ({
     return await sendTransactionAsync({
       chainId,
       value,
-      to,
+      to
     })
   }, [chainId, currentChainId, switchChainAsync, sendTransactionAsync, to, value])
 

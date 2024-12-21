@@ -15,16 +15,26 @@ interface ProfileListItemNameProps {
   isLoading?: boolean
 }
 
-const ProfileListItemName: React.FC<ProfileListItemNameProps> = ({ name, address, showTags, isCart, isLoading }) => {
+const ProfileListItemName: React.FC<ProfileListItemNameProps> = ({
+  name,
+  address,
+  showTags,
+  isCart,
+  isLoading
+}) => {
   if (isLoading) {
-    return <LoadingCell className="w-28 2xl:w-32 h-6 rounded-lg" />
+    return <LoadingCell className='w-28 2xl:w-32 h-6 rounded-lg' />
   }
 
   return (
     <Link href={`/${address}`} className={cn(!isCart && 'w-full')}>
       <p
         className={`font-bold 2xl:text-lg text-start hover:scale-110 ${
-          showTags ? (isCart ? 'truncate max-w-52' : 'truncate w-full') : 'w-fit max-w-full truncate'
+          showTags
+            ? isCart
+              ? 'truncate max-w-52'
+              : 'truncate w-full'
+            : 'w-fit max-w-full truncate'
         } hover:opacity-75 transition-all`}
       >
         {name && isValidEnsName(name) ? ens_beautify(name) : truncateAddress(address)}

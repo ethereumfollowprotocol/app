@@ -40,7 +40,7 @@ const useImportModal = (platform: ImportPlatformType) => {
   const { data: fetchedProfile, isFetching: isSocialProfileLoading } = useQuery({
     queryKey: ['profile', platform, handle],
     queryFn: async () => await fetchAirstackProfile(platform, handle),
-    enabled: !!handle,
+    enabled: !!handle
   })
 
   // replace ipfs with pinata gateway (pinata currently most stable for me https://ipfs.github.io/public-gateway-checker/)
@@ -49,7 +49,7 @@ const useImportModal = (platform: ImportPlatformType) => {
         ...fetchedProfile,
         profileImage: fetchedProfile?.profileImage?.includes('ipfs://')
           ? `https://ipfs.io/ipfs/${fetchedProfile?.profileImage.replace('ipfs://', '')}`
-          : fetchedProfile?.profileImage,
+          : fetchedProfile?.profileImage
       }
     : null
 
@@ -58,20 +58,21 @@ const useImportModal = (platform: ImportPlatformType) => {
     isLoading: isFetchedFollowingsLoading,
     hasNextPage: hasNextPageFollowings,
     hasPreviousPage: hasPreviousPageFollowings,
-    fetchNextPage: fetchNextPageFollowings,
+    fetchNextPage: fetchNextPageFollowings
   } = useInfiniteQuery({
     queryKey: ['followings', platform, handle, socialProfile?.userAddress],
     queryFn: async ({ pageParam }) => {
-      if (!socialProfile?.userAddress) return { followings: null, nextPageParam: undefined, hasNextPage: false }
+      if (!socialProfile?.userAddress)
+        return { followings: null, nextPageParam: undefined, hasNextPage: false }
 
       return await fetchAirstackFollowings({
         profileAddress: socialProfile.userAddress as Address,
         platform,
-        pageParam,
+        pageParam
       })
     },
     initialPageParam: '',
-    getNextPageParam: (lastPage) => (lastPage?.hasNextPage ? lastPage?.nextPageParam : undefined),
+    getNextPageParam: lastPage => (lastPage?.hasNextPage ? lastPage?.nextPageParam : undefined)
   })
 
   const reducedFollowings = useMemo(
@@ -93,7 +94,7 @@ const useImportModal = (platform: ImportPlatformType) => {
 
       const followingAddresses = reducedFollowings.map((following: any) => ({
         address: following.followingAddress.addresses?.[0],
-        primaryDomain: following.followingAddress?.primaryDomain?.name,
+        primaryDomain: following.followingAddress?.primaryDomain?.name
       }))
 
       const filteredFollowingAddresses = followingAddresses.filter((following: any) =>
@@ -127,9 +128,9 @@ const useImportModal = (platform: ImportPlatformType) => {
             getAddressesFromCart().includes(addr.toLowerCase() as Address)
           )
       )
-      .map((followingAddress) => ({
+      .map(followingAddress => ({
         listOp: listOpAddListRecord(followingAddress.address as Address),
-        import: platform,
+        import: platform
       }))
 
     setCartItems([...cartItems, ...newCartItems])
@@ -150,7 +151,7 @@ const useImportModal = (platform: ImportPlatformType) => {
     isSocialProfileLoading,
     isFollowingsLoading: isFollowingsLoading || isFetchedFollowingsLoading,
     onAddFollowings,
-    alreadyFollow,
+    alreadyFollow
   }
 }
 

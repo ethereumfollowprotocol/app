@@ -1,4 +1,12 @@
-import { http, fromHex, isAddress, type Chain, getContract, type Address, createPublicClient } from 'viem'
+import {
+  http,
+  fromHex,
+  isAddress,
+  type Chain,
+  getContract,
+  type Address,
+  createPublicClient
+} from 'viem'
 import { useEffect, useState } from 'react'
 import { useAccount, useChains } from 'wagmi'
 import { useQuery } from '@tanstack/react-query'
@@ -36,7 +44,9 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
   const [currentManager, setCurrentManager] = useState<string>('')
   const [fetchedManager, setFetchedManager] = useState<string>('')
 
-  const initialPrimaryListState = profile.primary_list ? Number(profile.primary_list) === list : false
+  const initialPrimaryListState = profile.primary_list
+    ? Number(profile.primary_list) === list
+    : false
   const [isPrimaryList, setIsPrimaryList] = useState(initialPrimaryListState)
   const [changedValues, setChangedValues] = useState(INITIAL_CHANGED_VALUES)
 
@@ -49,7 +59,7 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
     setLoading,
     checkPrimaryList,
     onValueChange,
-    key,
+    key
   }: {
     currentValue: string
     fetchedValue: string
@@ -62,7 +72,8 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
     if (isAddress(currentValue) && currentValue.toLowerCase() !== fetchedValue?.toLowerCase()) {
       setValue(currentValue)
       setLoading(false)
-      if (checkPrimaryList && currentValue.toLowerCase() === connectedAddress?.toLowerCase()) setIsPrimaryList(false)
+      if (checkPrimaryList && currentValue.toLowerCase() === connectedAddress?.toLowerCase())
+        setIsPrimaryList(false)
       return onValueChange()
     }
 
@@ -91,16 +102,16 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
   useEffect(() => {
     const onValueChange = () => {
       if (changedValues.user)
-        setChangedValues((currValues) => ({
+        setChangedValues(currValues => ({
           ...currValues,
           user: false,
-          setPrimary: isPrimaryList !== initialPrimaryListState,
+          setPrimary: isPrimaryList !== initialPrimaryListState
         }))
       else
-        setChangedValues((currValues) => ({
+        setChangedValues(currValues => ({
           ...currValues,
           user: true,
-          setPrimary: false,
+          setPrimary: false
         }))
     }
 
@@ -114,7 +125,7 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
           setLoading: setUserLoading,
           checkPrimaryList: true,
           onValueChange,
-          key: 'user',
+          key: 'user'
         }),
       0.5 * SECOND
     )
@@ -124,14 +135,14 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
   useEffect(() => {
     const onValueChange = () => {
       if (changedValues.manager)
-        setChangedValues((currValues) => ({
+        setChangedValues(currValues => ({
           ...currValues,
-          manager: false,
+          manager: false
         }))
       else
-        setChangedValues((currValues) => ({
+        setChangedValues(currValues => ({
           ...currValues,
-          manager: true,
+          manager: true
         }))
     }
 
@@ -145,7 +156,7 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
           setLoading: setManagerLoading,
           checkPrimaryList: false,
           onValueChange,
-          key: 'manager',
+          key: 'manager'
         }),
       0.5 * SECOND
     )
@@ -155,14 +166,14 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
   useEffect(() => {
     const onValueChange = () => {
       if (changedValues.owner)
-        setChangedValues((currValues) => ({
+        setChangedValues(currValues => ({
           ...currValues,
-          owner: false,
+          owner: false
         }))
       else
-        setChangedValues((currValues) => ({
+        setChangedValues(currValues => ({
           ...currValues,
-          owner: true,
+          owner: true
         }))
     }
 
@@ -176,7 +187,7 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
           setLoading: setOwnerLoading,
           checkPrimaryList: false,
           onValueChange,
-          key: 'owner',
+          key: 'owner'
         }),
       0.5 * SECOND
     )
@@ -185,20 +196,23 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
 
   const { data: listState, isLoading: isListStateLoading } = useQuery({
     queryKey: ['list state', list],
-    queryFn: async () => await fetchListState(list),
+    queryFn: async () => await fetchListState(list)
   })
 
   const [fetchedSlot, setFetchedSlot] = useState<bigint>()
-  const [fetchedListRecordsContractAddress, setFetchedListRecordsContractAddress] = useState<Address>()
+  const [fetchedListRecordsContractAddress, setFetchedListRecordsContractAddress] =
+    useState<Address>()
 
   const fetchListData = async () => {
-    const listStorageLocation = await listRegistryContract.read.getListStorageLocation([BigInt(list)])
+    const listStorageLocation = await listRegistryContract.read.getListStorageLocation([
+      BigInt(list)
+    ])
     const listOwner = await listRegistryContract.read.ownerOf([BigInt(list)])
     const listStorageLocationChainId = fromHex(`0x${listStorageLocation.slice(64, 70)}`, 'number')
 
     const slot = BigInt(`0x${listStorageLocation.slice(-64)}`)
 
-    const listStorageLocationChain = chains.find((item) => item.id === listStorageLocationChainId)
+    const listStorageLocationChain = chains.find(item => item.id === listStorageLocationChainId)
     const listRecordsContractAddress = listStorageLocation
       ? (`0x${listStorageLocation.slice(70, 110)}` as Address)
       : coreEfpContracts.EFPListRecords
@@ -208,8 +222,8 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
       abi: efpListRecordsAbi,
       client: createPublicClient({
         chain: listStorageLocationChain || DEFAULT_CHAIN,
-        transport: http(rpcProviders[listStorageLocationChain?.id || DEFAULT_CHAIN.id]),
-      }),
+        transport: http(rpcProviders[listStorageLocationChain?.id || DEFAULT_CHAIN.id])
+      })
     })
 
     const listManager = await listRecordsContract.read.getListManager([slot])
@@ -272,7 +286,7 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
     userLoading,
     managerLoading,
     ownerLoading,
-    isListSettingsLoading,
+    isListSettingsLoading
   }
 }
 

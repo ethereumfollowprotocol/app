@@ -32,19 +32,20 @@ const TableRow: React.FC<TableRowProps> = ({
   mutuals,
   top8,
   blocked,
-  firstStat,
+  firstStat
 }) => {
-  const rankedAs = rank === 0 ? 'no-rank' : rank <= 3 ? 'top-three' : rank <= 10 ? 'top-ten' : 'regular'
+  const rankedAs =
+    rank === 0 ? 'no-rank' : rank <= 3 ? 'top-three' : rank <= 10 ? 'top-ten' : 'regular'
 
   const rankNumber = {
-    'no-rank': <p className="text-2xl sm:text-3xl font-bold w-min mx-auto">-</p>,
+    'no-rank': <p className='text-2xl sm:text-3xl font-bold w-min mx-auto'>-</p>,
     'top-three': (
       <p
         className={`text-2xl xxs:text-3xl sm:text-4xl md:text-5xl ${
           {
             1: 'first-place',
             2: 'second-place',
-            3: 'third-place',
+            3: 'third-place'
           }[rank]
         }
         `}
@@ -52,7 +53,11 @@ const TableRow: React.FC<TableRowProps> = ({
         {rank}
       </p>
     ),
-    'top-ten': <p className="text-2xl xxs:text-3xl sm:text-4xl md:text-5xl font-bold w-min mx-auto">{rank}</p>,
+    'top-ten': (
+      <p className='text-2xl xxs:text-3xl sm:text-4xl md:text-5xl font-bold w-min mx-auto'>
+        {rank}
+      </p>
+    ),
     regular: (
       <p
         className={`text ${
@@ -65,7 +70,7 @@ const TableRow: React.FC<TableRowProps> = ({
       >
         {formatNumber(rank)}
       </p>
-    ),
+    )
   }[rankedAs]
 
   const pathname = usePathname()
@@ -74,9 +79,9 @@ const TableRow: React.FC<TableRowProps> = ({
   const isHome = pathname === '/'
 
   return (
-    <div className="flex flex-col">
-      <div className="flex items-center w-full gap-3 p-2 pr-1.5 sm:p-4 xl:py-2 2xl:py-4  hover:bg-text/5 rounded-xl sm:gap-6 md:gap-8 h-[66px] 2xl:h-[76px]">
-        <div className="tabular-nums min-w-4 w-4 xxs:min-w-6 xxs:w-6 sm:w-10 flex justify-center text-right">
+    <div className='flex flex-col'>
+      <div className='flex items-center w-full gap-3 p-2 pr-1.5 sm:p-4 xl:py-2 2xl:py-4  hover:bg-text/5 rounded-xl sm:gap-6 md:gap-8 h-[66px] 2xl:h-[76px]'>
+        <div className='tabular-nums min-w-4 w-4 xxs:min-w-6 xxs:w-6 sm:w-10 flex justify-center text-right'>
           {rankNumber}
         </div>
         <Name address={address} name={name} avatar={avatar} followerTag={followerTag} />
@@ -88,7 +93,11 @@ const TableRow: React.FC<TableRowProps> = ({
           top8={top8}
           blocked={blocked}
         />
-        <div className={`w-fit ${isHome ? 'lg:w-[25%] 2xl:w-[20%]' : 'lg:w-[15%] 2xl:w-[10%]'} flex justify-end`}>
+        <div
+          className={`w-fit ${
+            isHome ? 'lg:w-[25%] 2xl:w-[20%]' : 'lg:w-[15%] 2xl:w-[10%]'
+          } flex justify-end`}
+        >
           <FollowButton address={address} />
         </div>
       </div>

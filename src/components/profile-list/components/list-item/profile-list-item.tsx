@@ -32,18 +32,18 @@ const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
     canEditTags,
     isBlockedList,
     isBlockedBy,
-    tagsDropdownPosition,
+    tagsDropdownPosition
   }) => {
     const { data: fetchedEnsProfile, isLoading: isEnsProfileLoading } = useQuery({
       queryKey: ['ens metadata', address],
-      queryFn: async () => (ensProfile ? ensProfile : await resolveEnsProfile(address)),
+      queryFn: async () => (ensProfile ? ensProfile : await resolveEnsProfile(address))
     })
 
     const profileName = fetchedEnsProfile?.name
     const profileAvatar = fetchedEnsProfile?.avatar
 
     return (
-      <div className="flex items-center justify-between hover:bg-text/5 transition-all p-1.5 2xl:p-2 rounded-xl">
+      <div className='flex items-center justify-between hover:bg-text/5 transition-all p-1.5 2xl:p-2 rounded-xl'>
         {/* Left section: Avatar, Name, and Tags */}
         <ProfileListItemDetails
           address={address}
@@ -64,7 +64,5 @@ const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
     )
   }
 )
-
-ProfileListItem.displayName = 'ProfileListItem'
 
 export default ProfileListItem

@@ -1,6 +1,14 @@
 'use client'
 
-import { useRef, useState, useEffect, useContext, createContext, type Dispatch, type SetStateAction } from 'react'
+import {
+  useRef,
+  useState,
+  useEffect,
+  useContext,
+  createContext,
+  type Dispatch,
+  type SetStateAction
+} from 'react'
 
 type SoundsContextType = {
   actionsSoundsMuted: boolean
@@ -54,7 +62,7 @@ export const SoundsProvider = ({ children }: { children: React.ReactNode }) => {
         backgroundMusicRef,
         setActionsSoundsMuted,
         backgroundSoundsMuted,
-        setBackgroundSoundsMuted,
+        setBackgroundSoundsMuted
       }}
     >
       {children}

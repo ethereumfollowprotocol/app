@@ -25,8 +25,8 @@ export const searchENSNames = async ({ search }: { search: string }) => {
     body: JSON.stringify({
       query: searchQuery,
       variables: { search: sanitizedSearch },
-      operationName: 'SearchQuery',
-    }),
+      operationName: 'SearchQuery'
+    })
   })
 
   if (!response.ok) return []
@@ -35,5 +35,7 @@ export const searchENSNames = async ({ search }: { search: string }) => {
     data: { domains: { name: string; resolvedAddress: { id: Address } | null }[] }
   }
 
-  return json.data.domains.filter((domain) => !!domain.resolvedAddress).sort((a, b) => a.name.length - b.name.length)
+  return json.data.domains
+    .filter(domain => !!domain.resolvedAddress)
+    .sort((a, b) => a.name.length - b.name.length)
 }

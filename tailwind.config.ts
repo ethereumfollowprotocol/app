@@ -13,7 +13,7 @@ const { colors, fontFamily, fontSize, keyframes, animation, spacing, screens } =
     '3xs': '390px',
     xxs: '420px',
     xs: '500px',
-    ...defaultTheme.screens,
+    ...defaultTheme.screens
   },
   colors: {
     yellow: '#FFF500',
@@ -22,10 +22,10 @@ const { colors, fontFamily, fontSize, keyframes, animation, spacing, screens } =
     darkGrey: '#333333',
     addition: '#A1F783',
     deletion: '#FF7C7C',
-    'text-neutral': '#999999',
+    'text-neutral': '#999999'
   },
   fontFamily: {
-    sans: ['inter', ...defaultTheme.fontFamily.sans],
+    sans: ['inter', ...defaultTheme.fontFamily.sans]
     // mono: ['var(--font-ibm-plex-mono)']
   },
   fontSize: {
@@ -64,47 +64,47 @@ const { colors, fontFamily, fontSize, keyframes, animation, spacing, screens } =
     /** 18px size / 24px high / semibold */
     caption: ['1.125rem', { lineHeight: '1.5rem', fontWeight: '600' }],
     /** 12px size / 16px high / bold */
-    button: ['0.75rem', { lineHeight: '1rem', fontWeight: '700' }],
+    button: ['0.75rem', { lineHeight: '1rem', fontWeight: '700' }]
   },
   keyframes: {
     wiggle: {
       '0%, 100%': { transform: 'rotate(-3deg)' },
-      '50%': { transform: 'rotate(3deg)' },
+      '50%': { transform: 'rotate(3deg)' }
     },
     'accordion-down': {
       from: { height: '0' },
-      to: { height: 'var(--radix-accordion-content-height)' },
+      to: { height: 'var(--radix-accordion-content-height)' }
     },
     'accordion-up': {
       from: { height: 'var(--radix-accordion-content-height)' },
-      to: { height: '0' },
+      to: { height: '0' }
     },
     loading: {
       '0%': {
-        'background-position': '200% 0',
+        'background-position': '200% 0'
       },
       '50%': {
-        'background-position': '0% 0',
+        'background-position': '0% 0'
       },
       '100%': {
-        'background-position': '-200% 0',
-      },
+        'background-position': '-200% 0'
+      }
     },
     spinY: {
       '0%': {
-        transform: 'rotateY(0deg)',
+        transform: 'rotateY(0deg)'
       },
       '100%': {
-        transform: 'rotateY(360deg)',
-      },
-    },
+        transform: 'rotateY(360deg)'
+      }
+    }
   },
   animation: {
     'accordion-down': 'accordion-down 0.2s ease-out',
     'accordion-up': 'accordion-up 0.2s ease-out',
     'spin-slow': 'spin 2s linear infinite',
     loading: 'loading 5s ease-in-out infinite',
-    'spin-y': 'spinY 5s ease-in-out infinite',
+    'spin-y': 'spinY 5s ease-in-out infinite'
   },
   spacing: {
     '68': '17rem',
@@ -115,12 +115,16 @@ const { colors, fontFamily, fontSize, keyframes, animation, spacing, screens } =
     '108': '28rem',
     '116': '30rem',
     '128': '32rem',
-    '144': '36rem',
-  },
+    '144': '36rem'
+  }
 } satisfies Config['theme']
 
 export default {
-  content: ['./src/**/*.{js,ts,jsx,tsx}', './src/app/**/*.{js,ts,jsx,tsx}', './src/components/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    './src/**/*.{js,ts,jsx,tsx}',
+    './src/app/**/*.{js,ts,jsx,tsx}',
+    './src/components/**/*.{js,ts,jsx,tsx}'
+  ],
   darkMode: 'class',
   important: true,
   future: { hoverOnlyWhenSupported: true },
@@ -134,8 +138,8 @@ export default {
       fontSize,
       fontFamily,
       animation,
-      keyframes,
-    },
+      keyframes
+    }
   },
   plugins: [
     TailwindThemer({
@@ -147,9 +151,9 @@ export default {
               text: '#000000',
               neutral: '#ffffff',
               grey: '#E4E4E7',
-              navItem: '#b4b4b4',
-            },
-          },
+              navItem: '#b4b4b4'
+            }
+          }
         },
         {
           name: 'dark',
@@ -158,9 +162,9 @@ export default {
               text: '#ffffff',
               neutral: '#333333',
               grey: '#71717A',
-              navItem: '#94a3b822',
-            },
-          },
+              navItem: '#94a3b822'
+            }
+          }
         },
         {
           name: 'halloween',
@@ -169,11 +173,11 @@ export default {
               text: '#ffffff',
               neutral: '#000000',
               grey: '#61616A',
-              navItem: '#94a3b822',
-            },
-          },
-        },
-      ],
+              navItem: '#94a3b822'
+            }
+          }
+        }
+      ]
     }),
     tailwindAnimate,
     typographyPlugin,
@@ -181,7 +185,7 @@ export default {
     containerQueriesPlugin,
     plugin(({ addVariant, addUtilities, matchUtilities, theme }) => {
       matchUtilities(
-        { 'animation-delay': (value) => ({ 'animation-delay': value }) },
+        { 'animation-delay': value => ({ 'animation-delay': value }) },
         { values: theme('transitionDelay') }
       )
       addVariant('optional', '&:optional')
@@ -190,8 +194,8 @@ export default {
       addUtilities({
         '.content-auto': { 'content-visibility': 'auto' },
         '.content-hidden': { 'content-visibility': 'hidden' },
-        '.content-visible': { 'content-visibility': 'visible' },
+        '.content-visible': { 'content-visibility': 'visible' }
       })
-    }),
-  ],
+    })
+  ]
 } satisfies Config

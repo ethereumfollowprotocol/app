@@ -1,4 +1,8 @@
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardDoubleArrowLeft } from 'react-icons/md'
+import {
+  MdKeyboardArrowLeft,
+  MdKeyboardArrowRight,
+  MdKeyboardDoubleArrowLeft
+} from 'react-icons/md'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 interface PageSelectorProps {
@@ -24,7 +28,7 @@ const PageSelector: React.FC<PageSelectorProps> = ({
   adjustUrl = true,
   displayPageNumber = true,
   isLoading,
-  scrollUp,
+  scrollUp
 }) => {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -45,7 +49,7 @@ const PageSelector: React.FC<PageSelectorProps> = ({
       if (search) params.set('search', search)
       params.set('page', newPage.toString())
       router.push(`/leaderboard?${params.toString()}`, {
-        scroll: false,
+        scroll: false
       })
     }
 
@@ -53,37 +57,37 @@ const PageSelector: React.FC<PageSelectorProps> = ({
   }
 
   return (
-    <div className="flex gap-2 items-center justify-end px-1">
+    <div className='flex gap-2 items-center justify-end px-1'>
       {hasSkipToFirst && (
         <button
           onClick={() => handlePageChange(1)}
           disabled={page === 1}
-          aria-label="skip to first page"
-          className="glass-card flex items-center hover:scale-110 disabled:hover:scale-100 justify-center font-bold group h-9 w-9 border-[3px] hover:border-text border-text/40 transition-all rounded-[10px] disabled:border-text/10"
+          aria-label='skip to first page'
+          className='glass-card flex items-center hover:scale-110 disabled:hover:scale-100 justify-center font-bold group h-9 w-9 border-[3px] hover:border-text border-text/40 transition-all rounded-[10px] disabled:border-text/10'
         >
-          <MdKeyboardDoubleArrowLeft className="w-6 h-6 group-hover:opacity-100 opacity-40 dark:opacity-80 group-disabled:opacity-20 transition-opacity" />
+          <MdKeyboardDoubleArrowLeft className='w-6 h-6 group-hover:opacity-100 opacity-40 dark:opacity-80 group-disabled:opacity-20 transition-opacity' />
         </button>
       )}
       <button
         onClick={() => handlePageChange(page - 1)}
         disabled={page === 1}
-        aria-label="previous page"
-        className="glass-card flex items-center hover:scale-110 disabled:hover:scale-100 justify-center font-bold group hover:border-text h-9 w-9 border-[3px] border-text/40 transition-all rounded-[10px] disabled:border-text/10"
+        aria-label='previous page'
+        className='glass-card flex items-center hover:scale-110 disabled:hover:scale-100 justify-center font-bold group hover:border-text h-9 w-9 border-[3px] border-text/40 transition-all rounded-[10px] disabled:border-text/10'
       >
-        <MdKeyboardArrowLeft className="w-6 h-6 group-hover:opacity-100 opacity-40 dark:opacity-80 group-disabled:opacity-20 transition-opacity" />
+        <MdKeyboardArrowLeft className='w-6 h-6 group-hover:opacity-100 opacity-40 dark:opacity-80 group-disabled:opacity-20 transition-opacity' />
       </button>
       {displayPageNumber && (
-        <p className="glass-card flex items-center disabled:hover:scale-100 justify-center font-bold group  h-9 w-9 border-[3px] border-text transition-all rounded-[10px]">
+        <p className='glass-card flex items-center disabled:hover:scale-100 justify-center font-bold group  h-9 w-9 border-[3px] border-text transition-all rounded-[10px]'>
           {page}
         </p>
       )}
       <button
         onClick={() => handlePageChange(page + 1)}
         disabled={!hasNextPage}
-        aria-label="next page"
-        className="glass-card flex items-center hover:scale-110 disabled:hover:scale-100 justify-center font-bold group hover:border-text h-9 w-9 border-[3px] border-text/40 transition-all rounded-[10px] disabled:border-text/10"
+        aria-label='next page'
+        className='glass-card flex items-center hover:scale-110 disabled:hover:scale-100 justify-center font-bold group hover:border-text h-9 w-9 border-[3px] border-text/40 transition-all rounded-[10px] disabled:border-text/10'
       >
-        <MdKeyboardArrowRight className="w-6 h-6 group-hover:opacity-100 opacity-40 dark:opacity-80 group-disabled:opacity-20 transition-opacity" />
+        <MdKeyboardArrowRight className='w-6 h-6 group-hover:opacity-100 opacity-40 dark:opacity-80 group-disabled:opacity-20 transition-opacity' />
       </button>
     </div>
   )

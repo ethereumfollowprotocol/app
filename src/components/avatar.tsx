@@ -15,7 +15,7 @@ export const Avatar = ({
   name,
   onClick,
   avatarUrl,
-  size = 'h-[70px] w-[70px] md:h-[100px] md:w-[100px]',
+  size = 'h-[70px] w-[70px] md:h-[100px] md:w-[100px]'
 }: AvatarProps) => {
   return (
     <ImageWithFallback

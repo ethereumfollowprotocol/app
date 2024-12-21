@@ -8,7 +8,7 @@ import EFPLogo from 'public/assets/logo.svg'
 import type { ENSProfile } from '#/types/requests'
 import type { ProfileStatsType } from '#/types/common'
 import SocialProfilesItem, {
-  type SocialProfileListProfile,
+  type SocialProfileListProfile
 } from '#/components/profile-list/components/social-profiles-item'
 import LoadingRow from '#/components/profile-list/components/list-item/loading-list-item'
 import ProfileListItem from '#/components/profile-list/components/list-item/profile-list-item'
@@ -42,13 +42,14 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
   loadingRows = 7,
   isLoading,
   loadingCartItems,
-  containerRef,
+  containerRef
 }) => {
   const { t } = useTranslation()
 
   const isCreatingNewList =
     createListItem &&
-    ((profiles && profiles?.length > 0) || socialProfiles?.map((profile) => profile.profiles.length > 0).includes(true))
+    ((profiles && profiles?.length > 0) ||
+      socialProfiles?.map(profile => profile.profiles.length > 0).includes(true))
 
   const listRef = useRef<List>(null)
 
@@ -57,7 +58,8 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
     if (listRef.current) {
       // Adjust the scroll position of the div
       const maxScrollTop =
-        listRef.current.props.rowCount * Number(listRef.current.props.rowHeight) - listRef.current.props.height
+        listRef.current.props.rowCount * Number(listRef.current.props.rowHeight) -
+        listRef.current.props.height
 
       if (scrollTop < maxScrollTop || event.deltaY < 0) {
         listRef.current.scrollToPosition(scrollTop + event.deltaY)
@@ -85,16 +87,24 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
           {isCreatingNewList && (
             <div
               key={'new list'}
-              className="flex w-[350px] sm:w-full items-center hover:bg-list ounded-xl gap-2 2xl:p-4 p-1.5 sm:p-2 sm:gap-3"
+              className='flex w-[350px] sm:w-full items-center hover:bg-list ounded-xl gap-2 2xl:p-4 p-1.5 sm:p-2 sm:gap-3'
             >
-              <Image src={EFPLogo} alt="EFP List" className="rounded-full h-[45px] w-[45px] md:h-[50px] md:w-[50px]" />
-              <div className="flex flex-col md:flex-row md:items-center">
-                <p className="text-lg font-bold w-fit sm:w-56 text-left">{t('mint name')}</p>
-                <p className="font-bold text-sm sm:text-base text-left italic text-text/80">{t('mint description')}</p>
+              <Image
+                src={EFPLogo}
+                alt='EFP List'
+                className='rounded-full h-[45px] w-[45px] md:h-[50px] md:w-[50px]'
+              />
+              <div className='flex flex-col md:flex-row md:items-center'>
+                <p className='text-lg font-bold w-fit sm:w-56 text-left'>{t('mint name')}</p>
+                <p className='font-bold text-sm sm:text-base text-left italic text-text/80'>
+                  {t('mint description')}
+                </p>
               </div>
             </div>
           )}
-          {socialProfiles?.map((social) => <SocialProfilesItem key={social.platform} {...social} />)}
+          {socialProfiles?.map(social => (
+            <SocialProfilesItem key={social.platform} {...social} />
+          ))}
           {(profiles?.length || 0) >= 30 ? (
             <List
               ref={listRef}
@@ -109,13 +119,13 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
                 const profile = profiles?.[index]
                 if (!profile)
                   return (
-                    <div style={style} key={key} className="opacity-0">
+                    <div style={style} key={key} className='opacity-0'>
                       <LoadingRow showTags={showTags} />
                     </div>
                   )
 
                 return (
-                  <div className="w-full" key={key} style={style}>
+                  <div className='w-full' key={key} style={style}>
                     <ProfileListItem
                       key={profile.address}
                       address={profile.address}
@@ -130,7 +140,11 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
               }}
             />
           ) : (
-            <ProfileList profiles={profiles} isLoading={isLoading} className="gap-4 2xl:gap-5 pb-4" />
+            <ProfileList
+              profiles={profiles}
+              isLoading={isLoading}
+              className='gap-4 2xl:gap-5 pb-4'
+            />
           )}
         </>
       )}

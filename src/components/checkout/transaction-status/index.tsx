@@ -29,14 +29,15 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
   setCurrentStep,
   handleReInitiateActions,
   handleNextAction,
-  openPoapModal,
+  openPoapModal
 }) => {
-  const { actions, currentAction, currentActionIndex, allActionsSuccessful, isCorrectChain } = useActions()
+  const { actions, currentAction, currentActionIndex, allActionsSuccessful, isCorrectChain } =
+    useActions()
   const { getChain } = useChain()
   const chain = getChain(currentAction?.chainId)
   const { isSuccess, isLoading } = useWaitForTransactionReceipt({
     hash: currentAction?.txHash,
-    chainId: currentAction?.chainId,
+    chainId: currentAction?.chainId
   })
 
   const { t } = useTranslation()
@@ -62,47 +63,47 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
 
   return (
     <>
-      <div className="flex flex-col gap-1">
-        <h1 className="text-2xl font-bold">{t('status title')}</h1>
-        <p className="text-lg font-bold">
+      <div className='flex flex-col gap-1'>
+        <h1 className='text-2xl font-bold'>{t('status title')}</h1>
+        <p className='text-lg font-bold'>
           {currentActionIndex + 1} {t('of')} {actions.length}
         </p>
       </div>
-      <div className="flex flex-col gap-1">
-        <p className="text-xl font-bold">{t('action')}</p>
-        <p className="text-lg font-bold">
+      <div className='flex flex-col gap-1'>
+        <p className='text-xl font-bold'>{t('action')}</p>
+        <p className='text-lg font-bold'>
           {currentAction.label === 'create list' ? t(currentAction.label) : currentAction.label}
         </p>
       </div>
       {chain && (
-        <div className="flex flex-col gap-2">
-          <p className="font-bold text-lg sm:text-xl">{t('chain')}</p>
-          <div className="flex items-center gap-2">
-            <ChainIcon chain={chain} className="w-[30px] h-[30px]" />
-            <p className="font-bold text-lg">{chain.name}</p>
+        <div className='flex flex-col gap-2'>
+          <p className='font-bold text-lg sm:text-xl'>{t('chain')}</p>
+          <div className='flex items-center gap-2'>
+            <ChainIcon chain={chain} className='w-[30px] h-[30px]' />
+            <p className='font-bold text-lg'>{chain.name}</p>
           </div>
         </div>
       )}
       <TransactionDetails action={currentAction} isLastAction={isLastAction} />
-      <div className="w-full mt-6 gap-8 flex justify-between items-center">
+      <div className='w-full mt-6 gap-8 flex justify-between items-center'>
         <CancelButton
           label={t('back')}
           onClick={() => setCurrentStep(Step.InitiateTransactions)}
           disabled={isSuccess || isLoading}
-          className="bg-[#cccccc]"
+          className='bg-[#cccccc]'
         />
         {currentAction.isConfirmationError && (
           <PrimaryButton
             label={t(isCorrectChain ? 'reinitiate' : 'switch chain')}
             onClick={handleReInitiateActions}
-            className="text-lg w-fit px-4 min-w-32"
+            className='text-lg w-fit px-4 min-w-32'
           />
         )}
         {showNextButton && (
           <PrimaryButton
             label={t(isCorrectChain ? 'next' : 'switch chain')}
             onClick={handleNextAction}
-            className="text-lg w-32"
+            className='text-lg w-32'
             disabled={nextButtonIsDisabled}
           />
         )}
@@ -110,7 +111,7 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
           <PrimaryButton
             label={t('finish')}
             onClick={() => onFinish()}
-            className="text-lg w-32"
+            className='text-lg w-32'
             disabled={finishButtonIsDisabled}
           />
         )}

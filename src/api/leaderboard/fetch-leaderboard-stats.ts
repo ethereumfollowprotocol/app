@@ -7,19 +7,18 @@ export const fetchLeaderboardStats = async () => {
       cache: 'default',
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
+        Accept: 'application/json'
+      }
     })
 
     const data = (await response.json()) as { stats: LeaderboardStatsResponse }
     return data.stats
-  } catch (error) {
-    console.error('Error fetching leaderboard stats:', error)
+  } catch (err: unknown) {
     return {
       address_count: '0',
       list_count: '0',
       list_op_count: '0',
-      user_count: '0',
+      user_count: '0'
     }
   }
 }

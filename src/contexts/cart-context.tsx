@@ -8,7 +8,7 @@ import {
   createContext,
   type Dispatch,
   type ReactNode,
-  type SetStateAction,
+  type SetStateAction
 } from 'react'
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
@@ -75,7 +75,6 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
         const storedCartItems = JSON.parse(storedCartItemsJson) as CartItem[]
         setCartItems(storedCartItems)
       } catch (error) {
-        console.error('Error parsing cart items from localStorage:', error)
         localStorage.removeItem('cart items')
       }
     }
@@ -107,23 +106,25 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
 
   const addCartItem = useCallback(
     (item: CartItem) => {
-      const exists = cartItems.some((cartItem) => cartItem.listOp.data.toLowerCase() === item.listOp.data.toLowerCase())
-      if (!exists) setCartItems((prevItems) => [...prevItems, item])
-      setLoadingCartItems((prevLoading) => (prevLoading > 0 ? prevLoading - 1 : prevLoading))
+      const exists = cartItems.some(
+        cartItem => cartItem.listOp.data.toLowerCase() === item.listOp.data.toLowerCase()
+      )
+      if (!exists) setCartItems(prevItems => [...prevItems, item])
+      setLoadingCartItems(prevLoading => (prevLoading > 0 ? prevLoading - 1 : prevLoading))
     },
     [cartItems]
   )
 
   const removeCartItem = (listOp: ListOp) => {
-    setCartItems((prevItems) =>
-      prevItems.filter((item) => item.listOp.data.toLowerCase() !== listOp.data.toLowerCase())
+    setCartItems(prevItems =>
+      prevItems.filter(item => item.listOp.data.toLowerCase() !== listOp.data.toLowerCase())
     )
   }
 
   const hasListOpAddRecord = useCallback(
     (address: Address): boolean =>
       cartItems.some(
-        (cartItem) =>
+        cartItem =>
           cartItem.listOp.version === 1 &&
           cartItem.listOp.opcode === 1 &&
           cartItem.listOp.data.toLowerCase() === address?.toLowerCase()
@@ -134,7 +135,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   const hasListOpRemoveRecord = useCallback(
     (address: Address): boolean =>
       cartItems.some(
-        (cartItem) =>
+        cartItem =>
           cartItem.listOp.version === 1 &&
           cartItem.listOp.opcode === 2 &&
           cartItem.listOp.data.toLowerCase() === address?.toLowerCase()
@@ -144,22 +145,30 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
 
   const hasListOpAddTag = useCallback(
     ({ address, tag }: { address: Address; tag: string }): boolean =>
-      cartItems.some((cartItem) => {
+      cartItems.some(cartItem => {
         if (!isTagListOp(cartItem.listOp)) return false
 
         const { address: opAddress, tag: opTag } = extractAddressAndTag(cartItem.listOp)
-        return cartItem.listOp.opcode === 3 && opAddress.toLowerCase() === address?.toLowerCase() && opTag === tag
+        return (
+          cartItem.listOp.opcode === 3 &&
+          opAddress.toLowerCase() === address?.toLowerCase() &&
+          opTag === tag
+        )
       }),
     [cartItems]
   )
 
   const hasListOpRemoveTag = useCallback(
     ({ address, tag }: { address: Address; tag: string }): boolean =>
-      cartItems.some((cartItem) => {
+      cartItems.some(cartItem => {
         if (!isTagListOp(cartItem.listOp)) return false
 
         const { address: opAddress, tag: opTag } = extractAddressAndTag(cartItem.listOp)
-        return cartItem.listOp.opcode === 4 && opAddress.toLowerCase() === address?.toLowerCase() && opTag === tag
+        return (
+          cartItem.listOp.opcode === 4 &&
+          opAddress.toLowerCase() === address?.toLowerCase() &&
+          opTag === tag
+        )
       }),
     [cartItems]
   )
@@ -257,7 +266,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   const getAddressesFromCart = useCallback(
     (platform?: ImportPlatformType): Address[] => {
       const addresses = cartItems
-        .filter((item) => item.import === platform)
+        .filter(item => item.import === platform)
         .map(({ listOp }) => listOp.data.slice(0, 42).toLowerCase() as Address)
 
       return [...new Set(addresses)]
@@ -273,7 +282,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
   const totalCartItems = cartItems.length + loadingCartItems
   const cartAddresses = getAddressesFromCart()
   const socialAddresses = {
-    farcaster: getAddressesFromCart('farcaster'),
+    farcaster: getAddressesFromCart('farcaster')
     // lens: getAddressesFromCart('lens')
   }
 
@@ -299,7 +308,7 @@ export const CartProvider: React.FC<Props> = ({ children }: Props) => {
         removeCartItem,
         removeRemoveTagFromCart,
         resetCart,
-        totalCartItems,
+        totalCartItems
       }}
     >
       {children}

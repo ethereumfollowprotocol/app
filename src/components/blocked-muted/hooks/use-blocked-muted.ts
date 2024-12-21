@@ -12,7 +12,7 @@ import { fetchFollowingTags, nullFollowingTags } from '#/api/following/fetch-fol
 export const TAGS = ['All', 'block', 'mute']
 export const EMPTY_COUNT_TAGS = [
   { tag: 'block', count: 0 },
-  { tag: 'mute', count: 0 },
+  { tag: 'mute', count: 0 }
 ]
 export const QUERY_BLOCK_TAGS = ['block', 'mute']
 
@@ -27,7 +27,7 @@ const useBlockedMuted = (user: string, list?: string | number) => {
   const {
     data: blockedByTags,
     isLoading: blockedByTagsLoading,
-    isRefetching: blockedByTagsRefetching,
+    isRefetching: blockedByTagsRefetching
   } = useQuery({
     queryKey: ['follower tags', user, list],
     queryFn: async () => {
@@ -36,7 +36,7 @@ const useBlockedMuted = (user: string, list?: string | number) => {
       const fetchedTags = await fetchFollowerTags(user, list)
       return fetchedTags
     },
-    staleTime: 30000,
+    staleTime: 30000
   })
 
   const {
@@ -44,14 +44,14 @@ const useBlockedMuted = (user: string, list?: string | number) => {
     isLoading: blockedByIsLoading,
     isRefetching: blockedByIsRefetching,
     fetchNextPage: fetchMoreBlockedBy,
-    isFetchingNextPage: isFetchingMoreBlockedBy,
+    isFetchingNextPage: isFetchingMoreBlockedBy
   } = useInfiniteQuery({
     queryKey: ['followers', user, list, blockedBySort, blockedByTagsFilter, blockedBySearch],
     queryFn: async ({ pageParam = 0 }) => {
       if (!user)
         return {
           followers: [],
-          nextPageParam: pageParam,
+          nextPageParam: pageParam
         }
 
       const fetchedBlockedBy = await fetchProfileFollowers({
@@ -62,19 +62,19 @@ const useBlockedMuted = (user: string, list?: string | number) => {
         limit: FETCH_LIMIT_PARAM,
         pageParam,
         search: blockedBySearch,
-        allResults: true,
+        allResults: true
       })
       return fetchedBlockedBy
     },
     initialPageParam: 0,
-    getNextPageParam: (lastPage) => lastPage.nextPageParam,
-    staleTime: 30000,
+    getNextPageParam: lastPage => lastPage.nextPageParam,
+    staleTime: 30000
   })
 
   const {
     data: blockingTags,
     isLoading: blockingTagsLoading,
-    isRefetching: blockingTagsRefetching,
+    isRefetching: blockingTagsRefetching
   } = useQuery({
     queryKey: ['following tags', user, list],
     queryFn: async () => {
@@ -83,7 +83,7 @@ const useBlockedMuted = (user: string, list?: string | number) => {
       const fetchedTags = await fetchFollowingTags(user, list)
       return fetchedTags
     },
-    staleTime: 30000,
+    staleTime: 30000
   })
 
   const {
@@ -91,14 +91,14 @@ const useBlockedMuted = (user: string, list?: string | number) => {
     isLoading: blockingIsLoading,
     isRefetching: blockingIsRefetching,
     fetchNextPage: fetchMoreBlocking,
-    isFetchingNextPage: isFetchingMoreBlocking,
+    isFetchingNextPage: isFetchingMoreBlocking
   } = useInfiniteQuery({
     queryKey: ['following', user, list, blockingSort, blockingTagsFilter, blockingSearch],
     queryFn: async ({ pageParam = 0 }) => {
       if (!user)
         return {
           following: [],
-          nextPageParam: pageParam,
+          nextPageParam: pageParam
         }
 
       const fetchedBlockedBy = await fetchProfileFollowing({
@@ -109,21 +109,27 @@ const useBlockedMuted = (user: string, list?: string | number) => {
         limit: FETCH_LIMIT_PARAM,
         pageParam,
         search: blockingSearch,
-        allResults: true,
+        allResults: true
       })
       return fetchedBlockedBy
     },
     initialPageParam: 0,
-    getNextPageParam: (lastPage) => lastPage.nextPageParam,
-    staleTime: 30000,
+    getNextPageParam: lastPage => lastPage.nextPageParam,
+    staleTime: 30000
   })
 
   const blockedBy = fetchedBlockedBy
-    ? fetchedBlockedBy.pages.reduce((acc, el) => [...acc, ...el.followers], [] as FollowerResponse[])
+    ? fetchedBlockedBy.pages.reduce(
+        (acc, el) => [...acc, ...el.followers],
+        [] as FollowerResponse[]
+      )
     : []
 
   const blocking = fetchedBlocking
-    ? fetchedBlocking.pages.reduce((acc, el) => [...acc, ...el.following], [] as FollowingResponse[])
+    ? fetchedBlocking.pages.reduce(
+        (acc, el) => [...acc, ...el.following],
+        [] as FollowingResponse[]
+      )
     : []
 
   const toggleTag = (tab: ProfileTableTitleType, tag: string) => {
@@ -154,7 +160,7 @@ const useBlockedMuted = (user: string, list?: string | number) => {
     setBlockingSearch,
     setBlockedBySearch,
     setBlockingTagsFilter,
-    setBlockedByTagsFilter,
+    setBlockedByTagsFilter
   }
 }
 

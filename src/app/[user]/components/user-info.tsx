@@ -67,7 +67,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     isFetchingMoreFollowers,
     isFetchingMoreFollowing,
     setFollowersTagsFilter,
-    setFollowingTagsFilter,
+    setFollowingTagsFilter
   } = useUserInfo(user)
   const router = useRouter()
   const isMyProfile = useIsEditView()
@@ -101,7 +101,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       isFetchingMore: isFetchingMoreFollowers,
       fetchMore: () => fetchMoreFollowers(),
       title: 'followers' as ProfileTabType,
-      canEditTags: false,
+      canEditTags: false
     },
     following: {
       isLoading: followingIsLoading,
@@ -118,8 +118,9 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       isFetchingMore: isFetchingMoreFollowing,
       fetchMore: () => fetchMoreFollowing(),
       title: 'following' as ProfileTabType,
-      canEditTags: Number(userIsList ? listNum : profile?.primary_list) === selectedList && roles?.isManager,
-    },
+      canEditTags:
+        Number(userIsList ? listNum : profile?.primary_list) === selectedList && roles?.isManager
+    }
   }[activeTab]
 
   return (
@@ -159,14 +160,14 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       )}
       {!isSaving && (
         <div
-          className="flex relative xl:h-screen flex-col xl:flex-row pt-[108px] sm:pt-[6.75rem] pb-8 xl:pb-0 overflow-y-auto xl:justify-center gap-4 px-4 lg:px-6 xl:px-8 w-full"
+          className='flex relative xl:h-screen flex-col xl:flex-row pt-[108px] sm:pt-[6.75rem] pb-8 xl:pb-0 overflow-y-auto xl:justify-center gap-4 px-4 lg:px-6 xl:px-8 w-full'
           ref={containerRef}
         >
           <div
             ref={ProfileCardRef}
-            className="xl:sticky xl:h-fit xl:pb-4"
+            className='xl:sticky xl:h-fit xl:pb-4'
             style={{
-              top: '0px',
+              top: '0px'
             }}
           >
             <UserProfileCard
@@ -185,19 +186,19 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
               openListSettingsModal={() => setListSettingsOpen(true)}
             />
           </div>
-          <div className="xl:hidden">
+          <div className='xl:hidden'>
             <TopEight user={user} isConnectedUserProfile={isMyProfile} />
           </div>
           <div
             ref={titleRef}
-            className="w-full xl:max-w-[800px] xl:sticky relative xl:top-0 h-fit"
+            className='w-full xl:max-w-[800px] xl:sticky relative xl:top-0 h-fit'
             style={{
-              scrollMarginTop: '100px',
+              scrollMarginTop: '100px'
             }}
           >
-            <div className="xl:absolute xl:top-0 xl:left-0 w-full h-fit">
+            <div className='xl:absolute xl:top-0 xl:left-0 w-full h-fit'>
               <UserProfilePageTable
-                setActiveTab={(tab) => setActiveTab(tab as ProfileTabType)}
+                setActiveTab={tab => setActiveTab(tab as ProfileTabType)}
                 ref={tableRef}
                 {...tableProps}
               />
@@ -205,9 +206,9 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
           </div>
           <div
             ref={TopEightRef}
-            className="sticky pb-4 h-fit hidden xl:block"
+            className='sticky pb-4 h-fit hidden xl:block'
             style={{
-              top: '0px',
+              top: '0px'
             }}
           >
             <TopEight user={user} isConnectedUserProfile={isMyProfile} />

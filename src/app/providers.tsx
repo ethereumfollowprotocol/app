@@ -30,8 +30,8 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
     () =>
       new QueryClient({
         defaultOptions: {
-          queries: { gcTime: 1 * DAY, staleTime: 1 * MINUTE },
-        },
+          queries: { gcTime: 1 * DAY, staleTime: 1 * MINUTE }
+        }
       })
   )
 
@@ -44,7 +44,9 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
         <WagmiProvider config={wagmiConfig} initialState={initialState}>
           <RainbowKitProvider
             coolMode={false}
-            theme={isClient && darkThemes.includes(resolvedTheme || 'dark') ? darkTheme() : undefined}
+            theme={
+              isClient && darkThemes.includes(resolvedTheme || 'dark') ? darkTheme() : undefined
+            }
           >
             <CartProvider>
               <EFPProfileProvider>

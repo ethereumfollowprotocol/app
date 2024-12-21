@@ -14,7 +14,7 @@ import { PrimaryButton } from '../buttons/primary-button.tsx'
 export function Search({
   disabled,
   size = 'w-full max-w-[350px]',
-  isEditor,
+  isEditor
 }: {
   disabled?: boolean
   size?: string
@@ -38,29 +38,31 @@ export function Search({
     isAddingToCart,
     dropdownMenuOpen,
     handleSearchEvent,
-    setDropdownMenuOpen,
+    setDropdownMenuOpen
   } = useSearch(isEditor)
 
   return (
     <div className={`relative z-50 ${size}`} ref={clickAwayRef}>
-      <label htmlFor="search" className="sr-only">
+      <label htmlFor='search' className='sr-only'>
         Search
       </label>
-      <div className={`rounded-md gap-2 ${isEditor ? 'flex flex-col xs:flex-row' : 'hidden xl:flex'}`}>
-        <div className="w-full relative group">
+      <div
+        className={`rounded-md gap-2 ${isEditor ? 'flex flex-col xs:flex-row' : 'hidden xl:flex'}`}
+      >
+        <div className='w-full relative group'>
           {isEditor ? (
             <>
               <textarea
                 ref={searchBarRef as LegacyRef<HTMLTextAreaElement>}
-                id="search"
-                name="search"
+                id='search'
+                name='search'
                 rows={1}
                 cols={50}
                 spellCheck={false}
-                autoComplete="off"
+                autoComplete='off'
                 disabled={disabled}
                 value={currentSearch}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   if (e.key === 'Enter' && e.shiftKey === false) {
                     e.preventDefault()
                     onSubmit()
@@ -72,58 +74,71 @@ export function Search({
                 }}
                 placeholder={t('search placeholder')}
                 onChange={handleSearchEvent}
-                onClick={(event) => {
+                onClick={event => {
                   event.preventDefault()
                   setDropdownMenuOpen(
-                    event.currentTarget.value.length >= 3 && !!search && search.length >= 3 && !!searchResult
+                    event.currentTarget.value.length >= 3 &&
+                      !!search &&
+                      search.length >= 3 &&
+                      !!searchResult
                   )
                 }}
-                className="max-h-20 min-h-12 block text-wrap w-full py-3 pr-12 truncate outline-none font-medium rounded-xl border-[3px] focus:border-text/80 hover:border-text/80 transition-colors border-grey pl-4 sm:text-sm bg-neutral/70"
+                className='max-h-20 min-h-12 block text-wrap w-full py-3 pr-12 truncate outline-none font-medium rounded-xl border-[3px] focus:border-text/80 hover:border-text/80 transition-colors border-grey pl-4 sm:text-sm bg-neutral/70'
               />
             </>
           ) : (
             <input
               ref={searchBarRef as LegacyRef<HTMLInputElement>}
-              type="text"
-              id="search"
-              name="search"
+              type='text'
+              id='search'
+              name='search'
               spellCheck={false}
-              autoComplete="off"
+              autoComplete='off'
               disabled={disabled}
               value={currentSearch}
               placeholder={t('search placeholder')}
               onChange={handleSearchEvent}
-              onKeyDown={(e) => {
+              onKeyDown={e => {
                 if (e.key === 'Enter') onSubmit()
                 if (e.key === 'Escape') {
                   searchBarRef.current?.blur()
                   setDropdownMenuOpen(false)
                 }
               }}
-              onClick={(event) => {
+              onClick={event => {
                 event.preventDefault()
                 setDropdownMenuOpen(
-                  event.currentTarget.value.length >= 3 && !!search && search.length >= 3 && !!searchResult
+                  event.currentTarget.value.length >= 3 &&
+                    !!search &&
+                    search.length >= 3 &&
+                    !!searchResult
                 )
               }}
-              className="h-[54px] block pr-12 w-full truncate font-medium rounded-xl border-[3px] border-grey pl-4 sm:text-sm bg-neutral/70 focus:border-text/80 hover:border-text/80 transition-colors"
+              className='h-[54px] block pr-12 w-full truncate font-medium rounded-xl border-[3px] border-grey pl-4 sm:text-sm bg-neutral/70 focus:border-text/80 hover:border-text/80 transition-colors'
             />
           )}
-          <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center" aria-hidden="true">
+          <div
+            className='pointer-events-none absolute inset-y-0 right-4 flex items-center'
+            aria-hidden='true'
+          >
             {isEditor && isAddingToCart ? (
-              <div className="mt-1">
+              <div className='mt-1'>
                 <GraySpinner />
               </div>
             ) : (
               <FiSearch
-                className="text-xl opacity-50 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100"
-                aria-hidden="true"
+                className='text-xl opacity-50 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100'
+                aria-hidden='true'
               />
             )}
           </div>
         </div>
         {isEditor && (
-          <PrimaryButton label={t('add')} className="mx-auto w-full xs:w-32 h-12 text-lg" onClick={() => onSubmit()} />
+          <PrimaryButton
+            label={t('add')}
+            className='mx-auto w-full xs:w-32 h-12 text-lg'
+            onClick={() => onSubmit()}
+          />
         )}
       </div>
       <div
@@ -133,41 +148,48 @@ export function Search({
       >
         <div
           className={`w-full items-start text-lg flex-col ${isEditor ? 'flex' : 'hidden md:flex'}`}
-          onFocusCapture={(event) => {
+          onFocusCapture={event => {
             event.preventDefault()
             event.stopPropagation()
             searchBarRef.current?.focus()
           }}
         >
           {isLoading && (
-            <div className="w-full h-40">
+            <div className='w-full h-40'>
               <LoadingSpinner />
             </div>
           )}
           {!isLoading && searchResult.length === 0 ? (
-            <div className="w-full h-16 flex items-center justify-center italic font-bold text-text/50">
+            <div className='w-full h-16 flex items-center justify-center italic font-bold text-text/50'>
               {t('search no results')}
             </div>
           ) : (
-            searchResult.map((result) => (
+            searchResult.map(result => (
               <div
                 key={result.name}
                 onClick={() => {
                   if (isEditor && result.resolvedAddress) addToCart(result.resolvedAddress.id)
                   else
                     router.push(
-                      `/${result.resolvedAddress?.id || (result.name[0] === '#' ? result.name.slice(1) : result.name)}${
-                        isAddress(result.name) || result.name[0] === '#' ? '' : `?search=${result.name}`
+                      `/${
+                        result.resolvedAddress?.id ||
+                        (result.name[0] === '#' ? result.name.slice(1) : result.name)
+                      }${
+                        isAddress(result.name) || result.name[0] === '#'
+                          ? ''
+                          : `?search=${result.name}`
                       }`
                     )
 
                   resetSearch()
                 }}
-                className="max-w-full hover:scale-105 truncate text-md flex items-center hover:opacity-75 gap-1 cursor-pointer transition-all"
+                className='max-w-full hover:scale-105 truncate text-md flex items-center hover:opacity-75 gap-1 cursor-pointer transition-all'
               >
                 <p>{result.name}</p>
                 {result.resolvedAddress?.id && (
-                  <p className="text-sm text-text/50">- {truncateAddress(result.resolvedAddress?.id)}</p>
+                  <p className='text-sm text-text/50'>
+                    - {truncateAddress(result.resolvedAddress?.id)}
+                  </p>
                 )}
               </div>
             ))
@@ -177,8 +199,8 @@ export function Search({
       <div className={`relative w-fit z-50 ${isEditor ? 'hidden' : 'xl:hidden block'}`}>
         <FiSearch
           onClick={() => setDialogOpen(true)}
-          className="text-3xl hover:scale-125 w-fit cursor-pointer transition-all hover:opacity-65"
-          aria-hidden="true"
+          className='text-3xl hover:scale-125 w-fit cursor-pointer transition-all hover:opacity-65'
+          aria-hidden='true'
         />
         <div
           ref={clickAwayRef}
@@ -188,26 +210,29 @@ export function Search({
         >
           <div>
             <input
-              name="search"
+              name='search'
               ref={searchBarRef as LegacyRef<HTMLInputElement>}
-              className="h-[54px] block pr-12 w-full  truncate font-medium rounded-xl border-[3px] pl-4 sm:text-sm bg-neutral focus:border-text border-grey transition-colors"
+              className='h-[54px] block pr-12 w-full  truncate font-medium rounded-xl border-[3px] pl-4 sm:text-sm bg-neutral focus:border-text border-grey transition-colors'
               spellCheck={false}
               placeholder={t('search placeholder')}
               disabled={disabled}
               onSubmit={onSubmit}
               value={currentSearch}
-              onKeyDown={(e) => {
+              onKeyDown={e => {
                 if (e.key === 'Enter') onSubmit()
                 if (e.key === 'Escape') setDialogOpen(false)
               }}
               onChange={handleSearchEvent}
-              onClick={(event) => {
+              onClick={event => {
                 event.preventDefault()
                 setDropdownMenuOpen(
-                  event.currentTarget.value.length >= 3 && !!search && search.length >= 3 && !!searchResult
+                  event.currentTarget.value.length >= 3 &&
+                    !!search &&
+                    search.length >= 3 &&
+                    !!searchResult
                 )
               }}
-              autoComplete="off"
+              autoComplete='off'
             />
           </div>
           <div
@@ -216,25 +241,25 @@ export function Search({
             }`}
           >
             <div
-              className="w-full mx-auto min-w-full text-lg py-0 xl:hidden block "
+              className='w-full mx-auto min-w-full text-lg py-0 xl:hidden block '
               ref={clickAwayRef}
-              onFocusCapture={(event) => {
+              onFocusCapture={event => {
                 event.preventDefault()
                 event.stopPropagation()
                 searchBarRef.current?.focus()
               }}
             >
               {isLoading && (
-                <div className="w-full h-40">
+                <div className='w-full h-40'>
                   <LoadingSpinner />
                 </div>
               )}
               {!isLoading && searchResult.length === 0 ? (
-                <div className="w-full h-16 flex items-center pb-4 justify-center italic font-bold text-zinc-400">
+                <div className='w-full h-16 flex items-center pb-4 justify-center italic font-bold text-zinc-400'>
                   {t('search no results')}
                 </div>
               ) : (
-                searchResult.map((result) => (
+                searchResult.map(result => (
                   <div
                     key={result.name}
                     onClick={() => {
@@ -242,24 +267,31 @@ export function Search({
                       else
                         router.push(
                           `/${
-                            result.resolvedAddress?.id || (result.name[0] === '#' ? result.name.slice(1) : result.name)
-                          }${isAddress(result.name) || result.name[0] === '#' ? '' : `?search=${result.name}`}`
+                            result.resolvedAddress?.id ||
+                            (result.name[0] === '#' ? result.name.slice(1) : result.name)
+                          }${
+                            isAddress(result.name) || result.name[0] === '#'
+                              ? ''
+                              : `?search=${result.name}`
+                          }`
                         )
 
                       resetSearch()
                     }}
-                    className="max-w-full truncate text-md flex items-center hover:opacity-75 gap-1 cursor-pointer transition-opacity"
+                    className='max-w-full truncate text-md flex items-center hover:opacity-75 gap-1 cursor-pointer transition-opacity'
                   >
                     <p>{result.name}</p>
                     {result.resolvedAddress?.id && (
-                      <p className="text-sm text-zinc-400">- {truncateAddress(result.resolvedAddress?.id)}</p>
+                      <p className='text-sm text-zinc-400'>
+                        - {truncateAddress(result.resolvedAddress?.id)}
+                      </p>
                     )}
                   </div>
                 ))
               )}
             </div>
           </div>
-          <label className="sr-only">Search</label>
+          <label className='sr-only'>Search</label>
         </div>
       </div>
     </div>

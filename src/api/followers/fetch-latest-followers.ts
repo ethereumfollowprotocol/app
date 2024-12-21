@@ -2,10 +2,15 @@ import { formatQueryParams } from '#/utils/format/format-query-params'
 import type { ProfileListProfile } from '#/components/profile-list'
 import type { InfiniteProfileQueryProps, LatestFollowersResponse } from '#/types/requests'
 
-export const fetchLatestFollowers = async ({ addressOrName, list, limit, pageParam }: InfiniteProfileQueryProps) => {
+export const fetchLatestFollowers = async ({
+  addressOrName,
+  list,
+  limit,
+  pageParam
+}: InfiniteProfileQueryProps) => {
   const queryParams = formatQueryParams({
     limit,
-    offset: pageParam * limit,
+    offset: pageParam * limit
   })
 
   try {
@@ -17,25 +22,24 @@ export const fetchLatestFollowers = async ({ addressOrName, list, limit, pagePar
       cache: 'default',
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
+        Accept: 'application/json'
+      }
     })
 
     const data = ((await response.json()) as { followers: LatestFollowersResponse[] }).followers
-    const transformedData = data.map((follower) => ({
+    const transformedData = data.map(follower => ({
       ...follower,
-      tags: [],
+      tags: []
     })) as ProfileListProfile[]
 
     return {
       followers: transformedData ?? [],
-      nextPageParam: pageParam + 1,
+      nextPageParam: pageParam + 1
     }
-  } catch (error) {
-    console.error('Error fetching latest followers:', error)
+  } catch (err: unknown) {
     return {
       followers: [],
-      nextPageParam: pageParam + 1,
+      nextPageParam: pageParam + 1
     }
   }
 }

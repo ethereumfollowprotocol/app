@@ -55,7 +55,7 @@ const useSaveListSettings = ({
   onClose,
   onCancel,
   listState,
-  isPrimaryList,
+  isPrimaryList
 }: SaveListSettingsParams) => {
   const [changedValuesState] = useState(changedValues)
   const [currentStep, setCurrentStep] = useState(Step.InitiateTransactions)
@@ -77,7 +77,7 @@ const useSaveListSettings = ({
     setFetchFreshProfile,
     refetchFollowingTags,
     setIsRefetchingProfile,
-    setIsRefetchingFollowing,
+    setIsRefetchingFollowing
   } = useEFPProfile()
   const { t } = useTranslation()
   const { resetCart } = useCart()
@@ -85,7 +85,8 @@ const useSaveListSettings = ({
   const { address: userAddress } = useAccount()
   const { getListOpsTransaction } = useListOps()
   const { data: walletClient } = useWalletClient()
-  const { actions, addActions, resetActions, handleNextAction, handleInitiateActions } = useActions()
+  const { actions, addActions, resetActions, handleNextAction, handleInitiateActions } =
+    useActions()
 
   const newSlot = useMemo(() => generateListStorageLocationSlot(), [])
   const setListStorageLocationTx = useCallback(async () => {
@@ -104,13 +105,13 @@ const useSaveListSettings = ({
       address: coreEfpContracts.EFPListRegistry,
       abi: efpListRegistryAbi,
       functionName: 'setListStorageLocation',
-      args: [BigInt(selectedList), data],
+      args: [BigInt(selectedList), data]
     })
 
     if (hash) {
-      setCompleteTransactions((prev) => ({
+      setCompleteTransactions(prev => ({
         ...prev,
-        chain: true,
+        chain: true
       }))
     }
 
@@ -127,7 +128,7 @@ const useSaveListSettings = ({
       const hash = await getListOpsTransaction({
         items,
         nonce: newSlot,
-        listRecordsContract,
+        listRecordsContract
       })
 
       // return transaction hash to enable following transaction status in transaction details component
@@ -143,13 +144,13 @@ const useSaveListSettings = ({
       address: coreEfpContracts.EFPListRegistry,
       abi: efpListRegistryAbi,
       functionName: 'transferFrom',
-      args: [userAddress, owner as Address, BigInt(selectedList)],
+      args: [userAddress, owner as Address, BigInt(selectedList)]
     })
 
     if (hash) {
-      setCompleteTransactions((prev) => ({
+      setCompleteTransactions(prev => ({
         ...prev,
-        owner: true,
+        owner: true
       }))
     }
 
@@ -165,13 +166,13 @@ const useSaveListSettings = ({
       address: coreEfpContracts.EFPAccountMetadata,
       abi: efpAccountMetadataAbi,
       functionName: 'setValueForAddress',
-      args: [userAddress, 'primary-list', `0x${listHex.padStart(64, '0')}`],
+      args: [userAddress, 'primary-list', `0x${listHex.padStart(64, '0')}`]
     })
 
     if (hash) {
-      setCompleteTransactions((prev) => ({
+      setCompleteTransactions(prev => ({
         ...prev,
-        setPrimary: true,
+        setPrimary: true
       }))
     }
 
@@ -186,13 +187,14 @@ const useSaveListSettings = ({
       address: ListRecordContracts[chain?.id] as Address,
       abi: efpListRecordsAbi,
       functionName: 'setMetadataValuesAndApplyListOps',
-      args: [newSlot, [{ key: 'user', value: userAddress }], []],
+      // @ts-ignore - diff data type handled
+      args: [newSlot, [{ key: 'user', value: userAddress }], []]
     })
 
     if (hash) {
-      setCompleteTransactions((prev) => ({
+      setCompleteTransactions(prev => ({
         ...prev,
-        resetSlot: true,
+        resetSlot: true
       }))
     }
 
@@ -212,14 +214,14 @@ const useSaveListSettings = ({
         encodePacked(
           ['uint8', 'uint8', 'uint256', 'address', 'uint'],
           [1, 1, BigInt(chain.id), ListRecordContracts[chain?.id] as Address, newSlot]
-        ),
-      ],
+        )
+      ]
     })
 
     if (hash) {
-      setCompleteTransactions((prev) => ({
+      setCompleteTransactions(prev => ({
         ...prev,
-        claimSlot: true,
+        claimSlot: true
       }))
     }
 
@@ -234,13 +236,13 @@ const useSaveListSettings = ({
       address: listRecordsContractAddress,
       abi: efpListRecordsAbi,
       functionName: 'setListManager',
-      args: [slot, manager as Address],
+      args: [slot, manager as Address]
     })
 
     if (hash) {
-      setCompleteTransactions((prev) => ({
+      setCompleteTransactions(prev => ({
         ...prev,
-        manager: true,
+        manager: true
       }))
     }
 
@@ -255,13 +257,13 @@ const useSaveListSettings = ({
       address: listRecordsContractAddress,
       abi: efpListRecordsAbi,
       functionName: 'setListUser',
-      args: [slot, user as Address],
+      args: [slot, user as Address]
     })
 
     if (hash) {
-      setCompleteTransactions((prev) => ({
+      setCompleteTransactions(prev => ({
         ...prev,
-        user: true,
+        user: true
       }))
     }
 
@@ -279,7 +281,7 @@ const useSaveListSettings = ({
       label: t('reset slot'),
       chainId: chain.id,
       execute: resetSlotTx,
-      isPendingConfirmation: false,
+      isPendingConfirmation: false
     }
     const claimNewSlotAction: Action = {
       id: EFPActionType.SetEFPListStorageLocation, // Unique identifier for the action
@@ -287,7 +289,7 @@ const useSaveListSettings = ({
       label: t('claim slot'),
       chainId: DEFAULT_CHAIN.id,
       execute: claimNewSlotTx,
-      isPendingConfirmation: false,
+      isPendingConfirmation: false
     }
     const setListStorageLocation: Action = {
       id: EFPActionType.SetEFPListStorageLocation, // Unique identifier for the action
@@ -295,7 +297,7 @@ const useSaveListSettings = ({
       label: t('set location'),
       chainId: DEFAULT_CHAIN.id,
       execute: setListStorageLocationTx,
-      isPendingConfirmation: false,
+      isPendingConfirmation: false
     }
     const setListOwner: Action = {
       id: EFPActionType.SetEFPListOwner, // Unique identifier for the action
@@ -303,7 +305,7 @@ const useSaveListSettings = ({
       label: t('set owner'),
       chainId: DEFAULT_CHAIN.id,
       execute: setOwnerTx,
-      isPendingConfirmation: false,
+      isPendingConfirmation: false
     }
     const setListManager: Action = {
       id: EFPActionType.SetEFPListManager, // Unique identifier for the action
@@ -311,7 +313,7 @@ const useSaveListSettings = ({
       label: t('set manager'),
       chainId: chain.id,
       execute: setManagerTx,
-      isPendingConfirmation: false,
+      isPendingConfirmation: false
     }
     const setListUser: Action = {
       id: EFPActionType.SetEFPListUser, // Unique identifier for the action
@@ -319,7 +321,7 @@ const useSaveListSettings = ({
       label: t('set user'),
       chainId: chain.id,
       execute: setUserTx,
-      isPendingConfirmation: false,
+      isPendingConfirmation: false
     }
     const setPrimaryList: Action = {
       id: EFPActionType.SetPrimaryList, // Unique identifier for the action
@@ -327,50 +329,51 @@ const useSaveListSettings = ({
       label: t('set primary'),
       chainId: DEFAULT_CHAIN.id,
       execute: setPrimaryListTx,
-      isPendingConfirmation: false,
+      isPendingConfirmation: false
     }
 
     const executableActions = [
       {
         action: resetSlotAction,
-        condition: !completeTransactions.resetSlot && changedValuesState.resetSlot,
+        condition: !completeTransactions.resetSlot && changedValuesState.resetSlot
       },
       {
         action: claimNewSlotAction,
-        condition: !completeTransactions.claimSlot && changedValuesState.resetSlot,
+        condition: !completeTransactions.claimSlot && changedValuesState.resetSlot
       },
       {
         action: setListUser,
-        condition: !completeTransactions.user && changedValuesState.user,
+        condition: !completeTransactions.user && changedValuesState.user
       },
       {
         action: setListManager,
-        condition: !completeTransactions.manager && changedValuesState.manager,
+        condition: !completeTransactions.manager && changedValuesState.manager
       },
       {
         action: setPrimaryList,
-        condition: !completeTransactions.setPrimary && changedValuesState.setPrimary,
+        condition: !completeTransactions.setPrimary && changedValuesState.setPrimary
       },
       {
         action: setListStorageLocation,
-        condition: !completeTransactions.chain && changedValuesState.chain && newChain && !listState?.length,
+        condition:
+          !completeTransactions.chain && changedValuesState.chain && newChain && !listState?.length
       },
       {
         action: setListOwner,
-        condition: !completeTransactions.owner && changedValuesState.owner,
-      },
+        condition: !completeTransactions.owner && changedValuesState.owner
+      }
     ]
     const actionsToExecute: Action[] = executableActions
-      .filter((action) => action.condition)
-      .map((action) => action.action)
+      .filter(action => action.condition)
+      .map(action => action.action)
 
     if (changedValuesState.chain && newChain) {
       if (listState) {
-        const listOps = listState.flatMap((item) => {
+        const listOps = listState.flatMap(item => {
           const operations: CartItem[] = []
           operations.push({ listOp: listOpAddListRecord(item.address) })
           if (item.tags.length > 0)
-            item.tags.map((tag) => {
+            item.tags.map(tag => {
               operations.push({ listOp: listOpAddTag(item.address, tag) })
             })
           return operations
@@ -383,7 +386,7 @@ const useSaveListSettings = ({
           label: `Transfer List State ${i + 1}/${splitCartItems.length}`,
           chainId: newChain.id,
           execute: async () => await listOpTx(listOps),
-          isPendingConfirmation: false,
+          isPendingConfirmation: false
         }))
 
         if (completeTransactions.chain) actionsToExecute.push(...cartItemActions)
@@ -392,13 +395,22 @@ const useSaveListSettings = ({
     }
 
     addActions(actionsToExecute)
-  }, [listOpTx, setListStorageLocationTx, setOwnerTx, setManagerTx, setUserTx, changedValuesState, chain])
+  }, [
+    listOpTx,
+    setListStorageLocationTx,
+    setOwnerTx,
+    setManagerTx,
+    setUserTx,
+    changedValuesState,
+    chain
+  ])
 
   useEffect(() => {
     setActions()
   }, [setActions])
 
-  const onInitiateActions = () => handleInitiateActions(() => setCurrentStep(Step.TransactionStatus))
+  const onInitiateActions = () =>
+    handleInitiateActions(() => setCurrentStep(Step.TransactionStatus))
   const onNextAction = () => handleNextAction(() => setCurrentStep(Step.InitiateTransactions))
 
   const onFinish = useCallback(() => {
@@ -433,7 +445,7 @@ const useSaveListSettings = ({
     currentStep,
     setCurrentStep,
     onNextAction,
-    onInitiateActions,
+    onInitiateActions
   }
 }
 

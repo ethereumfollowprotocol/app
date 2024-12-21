@@ -6,14 +6,14 @@ export const fetchleaderboard = async ({
   search,
   filter,
   pageParam,
-  direction,
+  direction
 }: InfiniteLeaderboardQueryProps) => {
   try {
     const queryParams = formatQueryParams({
       limit,
       offset: pageParam * limit,
       sort: filter,
-      direction,
+      direction
     })
 
     const url = `${process.env.NEXT_PUBLIC_EFP_API_URL}/leaderboard/${
@@ -24,25 +24,24 @@ export const fetchleaderboard = async ({
       cache: 'default',
       headers: {
         'Content-Type': 'application/json',
-        cors: 'no-cors',
-      },
+        cors: 'no-cors'
+      }
     })
 
     const data = (await response.json()) as LeaderboardResponse
     return {
       results: data ?? [],
       nextPageParam: pageParam + 1,
-      prevPageParam: pageParam > 0 ? pageParam - 1 : 0,
+      prevPageParam: pageParam > 0 ? pageParam - 1 : 0
     }
-  } catch (error) {
-    console.error('Error fetching leaderboard:', error)
+  } catch (err: unknown) {
     return {
       results: {
         last_updated: 0,
-        results: [],
+        results: []
       },
       nextPageParam: pageParam + 1,
-      prevPageParam: pageParam > 0 ? pageParam - 1 : 0,
+      prevPageParam: pageParam > 0 ? pageParam - 1 : 0
     }
   }
 }

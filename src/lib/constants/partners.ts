@@ -55,258 +55,258 @@ export const LAUNCH_PARTNERS = [
   {
     name: 'PPM',
     url: 'https://marketplace.pudgypenguins.com/',
-    logo: PPMLogo,
+    logo: PPMLogo
   },
   {
     name: 'Snapshot',
     url: 'https://snapshot.org/',
-    logo: Snapshot,
+    logo: Snapshot
   },
   {
     name: 'Nifty Island',
     url: 'https://niftyisland.io',
-    logo: NiftyIsland,
+    logo: NiftyIsland
   },
   {
     name: 'Vision',
     url: 'https://vision.io/',
-    logo: EnsVision,
+    logo: EnsVision
   },
   {
     name: 'Interface',
     url: 'https://interface.social',
-    logo: Interface,
+    logo: Interface
   },
   {
     name: 'Daylight',
     url: 'https://www.daylight.xyz/',
-    logo: Daylight,
+    logo: Daylight
   },
   {
     name: 'eth.limo',
     url: 'https://eth.limo/',
-    logo: EthLimo,
+    logo: EthLimo
   },
   {
     name: 'Namehash',
     url: 'https://namehash.io',
-    logo: NameHash,
+    logo: NameHash
   },
   {
     name: 'LlamaFolio',
     url: 'https://llamafolio.com',
-    logo: Llamafolio,
+    logo: Llamafolio
   },
   {
     name: 'Alpha Wallet',
     url: 'https://alphawallet.com/',
-    logo: AlphaWallet,
+    logo: AlphaWallet
   },
   {
     name: 'Gallery',
     url: 'https://gallery.so/',
-    logo: Gallery,
+    logo: Gallery
   },
   {
     name: 'Brume Wallet',
     url: 'https://brume.money',
-    logo: Brume,
+    logo: Brume
   },
   {
     name: 'Seam',
     url: 'https://seam.so/',
-    logo: Seam,
+    logo: Seam
   },
   {
     name: 'Center',
     url: 'https://center.app/',
-    logo: Center,
+    logo: Center
   },
   {
     name: 'Nimi',
     url: 'https://nimi.io',
-    logo: Nimi,
+    logo: Nimi
   },
   {
     name: 'ENSBook',
     url: 'https://ensbook.xyz/',
-    logo: EnsBook,
+    logo: EnsBook
   },
   {
     name: 'Roam',
     url: 'https://roam.xyz/',
-    logo: Roam,
+    logo: Roam
   },
   {
     name: 'NFT Valuations',
     url: 'https://nftvaluations.com/',
-    logo: NftValuations,
+    logo: NftValuations
   },
   {
     name: 'ENS Surf',
     url: 'https://ens.surf/',
-    logo: EnsSurf,
+    logo: EnsSurf
   },
   {
     name: 'Common Ground',
     url: 'https://www.commonground.cg/',
-    logo: CommonGround,
+    logo: CommonGround
   },
   {
     name: 'Blockhead',
     url: 'https://blockhead.info/',
-    logo: Blockhead,
+    logo: Blockhead
   },
   {
     name: 'BerryLab',
     url: 'https://berrylab.xyz/',
-    logo: BerryLab,
+    logo: BerryLab
   },
   {
     name: 'TKN',
     url: 'https://tkn.xyz/',
-    logo: Tkn,
+    logo: Tkn
   },
   {
     name: 'Saga',
     url: 'https://www.pob.studio/ethverse',
-    logo: Saga,
+    logo: Saga
   },
   {
     name: 'DappLooker',
     url: 'https://dapplooker.com/',
-    logo: DappLooker,
+    logo: DappLooker
   },
   {
     name: 'Webhash',
     url: 'https://webhash.com',
-    logo: WebHash,
+    logo: WebHash
   },
   {
     name: 'Payflow',
     url: 'https://payflow.me',
-    logo: Payflow,
+    logo: Payflow
   },
   {
     name: 'Noves',
     url: 'https://noves.fi',
-    logo: Noves,
+    logo: Noves
   },
   {
     name: 'Persona',
     url: 'https://persona.art/',
-    logo: Persona,
+    logo: Persona
   },
   {
     name: 'eth.lk',
     url: 'https://eth.lk',
-    logo: OnewThree,
+    logo: OnewThree
   },
   {
     name: 'eth.cd',
     url: 'https://eth.cd',
-    logo: EthDotCd,
+    logo: EthDotCd
   },
   {
     name: 'Outposts',
     url: 'https://outposts.io',
-    logo: Outpost,
+    logo: Outpost
   },
   {
     name: 'Fileverse',
     url: 'https://fileverse.io',
-    logo: Fileverse,
+    logo: Fileverse
   },
   {
     name: 'eth.ad',
     url: 'https://eth.ad',
-    logo: EthAd,
+    logo: EthAd
   },
   {
     name: 'Mest',
     url: 'https://mest.io',
-    logo: Mest,
+    logo: Mest
   },
   {
     name: '3cities',
     url: 'https://3cities.xyz/',
-    logo: ThreeCities,
+    logo: ThreeCities
   },
   {
     name: 'GoDID',
     url: 'https://godid.io',
-    logo: GoDid,
+    logo: GoDid
   },
   {
     name: 'Neura Name',
     url: 'https://www.neuraname.com/',
-    logo: Neuraname,
+    logo: Neuraname
   },
   {
     name: 'Mask Network',
     url: 'https://mask.io/',
-    logo: MaskNetwork,
+    logo: MaskNetwork
   },
   {
     name: 'eth.co',
     url: 'https://eth.co/',
-    logo: EthDotCo,
+    logo: EthDotCo
   },
   {
     name: 'W3Link',
     url: 'https://w3.link/',
-    logo: WebThreeLink,
+    logo: WebThreeLink
   },
   {
     name: 'Web3 Bio',
     url: 'https://web3.bio/',
-    logo: WebThreeBio,
+    logo: WebThreeBio
   },
   {
     name: 'Domain Plug',
     url: 'http://domainplug.io/',
-    logo: DomainPlug,
+    logo: DomainPlug
   },
   {
     name: 'U3',
     url: 'https://u3.xyz/',
-    logo: UThree,
+    logo: UThree
   },
   {
     name: 'Namespace',
     url: 'https://namespace.ninja/',
-    logo: Namespace,
+    logo: Namespace
   },
   {
     name: 'Icebreaker',
     url: 'https://www.icebreaker.xyz/',
-    logo: Icebreaker,
+    logo: Icebreaker
   },
   {
     name: 'Stargazer',
     url: 'https://stargazer.domains/',
-    logo: Stargazer,
+    logo: Stargazer
   },
   {
     name: 'Once Upon',
     url: 'https://www.onceupon.gg/home',
-    logo: OnceUpon,
+    logo: OnceUpon
   },
   {
     name: 'Integrous',
     url: 'https://integrous.xyz/',
-    logo: Integrous,
+    logo: Integrous
   },
   {
     name: 'Linkeh',
     url: 'https://www.linkeh.xyz/',
-    logo: Linkeh,
+    logo: Linkeh
   },
   {
     name: 'Namefi',
     url: 'https://www.namefi.io/',
-    logo: Namefi,
-  },
+    logo: Namefi
+  }
 ] satisfies {
   name: string
   url: string

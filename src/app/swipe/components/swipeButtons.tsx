@@ -25,14 +25,14 @@ const SwipeButtons = ({
   isFetchingNextPage,
   gone,
   onSwipeLeft,
-  onSwipeRight,
+  onSwipeRight
 }: SwipeButtonsProps) => {
   const { t } = useTranslation()
 
   return (
     <>
       <button
-        className="absolute -left-1 sm:left-auto sm:mr-[475px] z-30 sm:z-10 top-48 sm:top-48 rounded-xl w-14 text-lg font-semibold h-14 flex items-center justify-center glass-card border-[3px] border-text/70 transition-all hover:scale-110"
+        className='absolute -left-1 sm:left-auto sm:mr-[475px] z-30 sm:z-10 top-48 sm:top-48 rounded-xl w-14 text-lg font-semibold h-14 flex items-center justify-center glass-card border-[3px] border-text/70 transition-all hover:scale-110'
         disabled={
           !userAddress ||
           recommendedProfiles.length === 0 ||
@@ -44,7 +44,7 @@ const SwipeButtons = ({
         {t('meh')}
       </button>
       <button
-        className="absolute -right-1 sm:right-auto sm:ml-[445px] z-30 sm:z-10 top-48 sm:top-48 rounded-xl w-14 h-14 flex items-center justify-center pl-1.5 pt-1 text-black btn-grad transition-all hover:scale-110"
+        className='absolute -right-1 sm:right-auto sm:ml-[445px] z-30 sm:z-10 top-48 sm:top-48 rounded-xl w-14 h-14 flex items-center justify-center pl-1.5 pt-1 text-black btn-grad transition-all hover:scale-110'
         disabled={
           !userAddress ||
           recommendedProfiles.length === 0 ||
@@ -53,7 +53,7 @@ const SwipeButtons = ({
         }
         onClick={onSwipeRight}
       >
-        <Image src={MainnetBlack} alt="mainnet" width={24} height={24} />
+        <Image src={MainnetBlack} alt='mainnet' width={24} height={24} />
       </button>
     </>
   )

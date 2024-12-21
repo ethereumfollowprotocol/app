@@ -28,7 +28,7 @@ const useCheckout = () => {
     handleNextAction,
     setIsCheckingOut,
     handleInitiateActions,
-    setIsCorrectChain,
+    setIsCorrectChain
   } = useActions()
 
   const {
@@ -49,7 +49,7 @@ const useCheckout = () => {
     setFetchFreshProfile,
     setIsRefetchingProfile,
     setSetNewListAsSelected,
-    setIsRefetchingFollowing,
+    setIsRefetchingFollowing
   } = useEFPProfile()
 
   const chains = useChains()
@@ -64,12 +64,14 @@ const useCheckout = () => {
 
   // Set step to initiating transactions if the user has already created their EFP list
   // Selecting the chain is only an option when creating a new EFP list to select List records location
-  const [currentStep, setCurrentStep] = useState(selectedList ? Step.InitiateTransactions : Step.SelectChain)
+  const [currentStep, setCurrentStep] = useState(
+    selectedList ? Step.InitiateTransactions : Step.SelectChain
+  )
 
   const [listOpsFinished, setListOpsFinished] = useState(false)
   const [selectedChainId, setSelectedChainId] = useState<number>(DEFAULT_CHAIN.id)
   const [setNewListAsPrimary, setSetNewListAsPrimary] = useState(!lists?.primary_list)
-  const selectedChain = chains.find((chain) => chain.id === selectedChainId) as ChainWithDetails
+  const selectedChain = chains.find(chain => chain.id === selectedChainId) as ChainWithDetails
 
   const listOpTx = useCallback(
     async (items: CartItem[]) => {
@@ -85,12 +87,12 @@ const useCheckout = () => {
         nonce,
         items,
         selectedList,
-        listRecordsContract: ListRecordsContract,
+        listRecordsContract: ListRecordsContract
       })
 
       setListOpsFinished(true)
       if (hash) {
-        setCartItems(cartItems.filter((item) => !items.includes(item)))
+        setCartItems(cartItems.filter(item => !items.includes(item)))
         queryClient.invalidateQueries({ queryKey: ['following'] })
         queryClient.invalidateQueries({ queryKey: ['profile'] })
       }
@@ -113,7 +115,7 @@ const useCheckout = () => {
       label: `${listOps.length} ${listOps.length === 1 ? t('list op') : t('list ops')}`,
       chainId,
       execute: async () => await listOpTx(listOps),
-      isPendingConfirmation: false,
+      isPendingConfirmation: false
     }))
 
     const createEFPListAction: Action = {
@@ -122,7 +124,7 @@ const useCheckout = () => {
       label: 'create list',
       chainId: DEFAULT_CHAIN.id, // Chain ID where main contracts are stored at
       execute: async () => await mint({ selectedChainId, setNewListAsPrimary }),
-      isPendingConfirmation: false,
+      isPendingConfirmation: false
     }
 
     // add Create list action if user doesn't have a List yet
@@ -144,7 +146,8 @@ const useCheckout = () => {
     setCurrentStep(Step.InitiateTransactions)
   }, [selectedChain])
 
-  const onInitiateActions = () => handleInitiateActions(() => setCurrentStep(Step.TransactionStatus))
+  const onInitiateActions = () =>
+    handleInitiateActions(() => setCurrentStep(Step.TransactionStatus))
   const onNextAction = () =>
     handleNextAction(() => {
       setIsCorrectChain(true)
@@ -160,7 +163,8 @@ const useCheckout = () => {
     resetFollowingRelatedQueries(queryClient)
 
     if (listHasBeenMinted || selectedList === undefined) {
-      if (setNewListAsPrimary) queryClient.invalidateQueries({ queryKey: ['profile', userAddress, undefined] })
+      if (setNewListAsPrimary)
+        queryClient.invalidateQueries({ queryKey: ['profile', userAddress, undefined] })
 
       setIsRefetchingProfile(true)
       setSetNewListAsSelected(true)
@@ -175,9 +179,12 @@ const useCheckout = () => {
     // Clear up following pages to start fetching new ones from the beginning
     queryClient.setQueryData(
       ['following', userAddress, selectedList],
-      (prev: { pages: FollowingResponse[][]; pageParams: number[] }) => ({
+      (prev: {
+        pages: FollowingResponse[][]
+        pageParams: number[]
+      }) => ({
         pages: prev?.pages?.slice(0, 1),
-        pageParams: prev?.pageParams?.slice(0, 1),
+        pageParams: prev?.pageParams?.slice(0, 1)
       })
     )
 
@@ -190,9 +197,11 @@ const useCheckout = () => {
     router.push(`/${selectedList ?? userAddress}`)
   }, [resetActions, resetCart, setNewListAsPrimary])
 
-  const { poapLink, poapLoading, claimPoapModalOpen, setClaimPoapModalOpen } = usePoapModal(userAddress)
+  const { poapLink, poapLoading, claimPoapModalOpen, setClaimPoapModalOpen } =
+    usePoapModal(userAddress)
   const openPoapModal = useCallback(() => {
-    if (listHasBeenMinted && lists?.lists?.length === 0 && !!profile?.ens.name) setClaimPoapModalOpen(true)
+    if (listHasBeenMinted && lists?.lists?.length === 0 && !!profile?.ens.name)
+      setClaimPoapModalOpen(true)
   }, [listHasBeenMinted])
 
   return {
@@ -214,7 +223,7 @@ const useCheckout = () => {
     moveToInitiateTransactions,
     onNextAction,
     setNewListAsPrimary,
-    setSetNewListAsPrimary,
+    setSetNewListAsPrimary
   }
 }
 

@@ -1,4 +1,4 @@
 export const yieldToMain = () =>
-  new Promise((resolve) => {
+  new Promise(resolve => {
     setTimeout(resolve, 0)
   })

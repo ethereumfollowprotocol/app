@@ -16,11 +16,8 @@ export function useMintEFP() {
 
   const mint = async ({
     selectedChainId,
-    setNewListAsPrimary,
-  }: {
-    selectedChainId?: number
-    setNewListAsPrimary?: boolean
-  }) => {
+    setNewListAsPrimary
+  }: { selectedChainId?: number; setNewListAsPrimary?: boolean }) => {
     if (!accountAddress) return
 
     // const walletClient = await getWalletClient(config)
@@ -39,8 +36,8 @@ export function useMintEFP() {
           encodePacked(
             ['uint8', 'uint8', 'uint256', 'address', 'uint'],
             [1, 1, BigInt(selectedChainId || DEFAULT_CHAIN.id), listRecordsContractAddress, nonce]
-          ),
-        ],
+          )
+        ]
       })
 
       setListHasBeenMinted(true)
@@ -55,6 +52,6 @@ export function useMintEFP() {
     mint,
     nonce,
     walletClient,
-    listHasBeenMinted,
+    listHasBeenMinted
   }
 }

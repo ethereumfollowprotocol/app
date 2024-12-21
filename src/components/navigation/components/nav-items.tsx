@@ -19,28 +19,33 @@ const NavItems = () => {
   const { selectedList, lists } = useEFPProfile()
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const clickAwayRef = useClickAway<HTMLDivElement>(() => {
+  const clickAwayRef = useClickAway<HTMLDivElement>(_ => {
     setMobileMenuOpen(false)
   })
 
   const itemUrl =
-    pathname?.toLowerCase() === `/${userAddress?.toLowerCase()}` && selectedList === Number(lists?.primary_list)
+    pathname?.toLowerCase() === `/${userAddress?.toLowerCase()}` &&
+    selectedList === Number(lists?.primary_list)
       ? userAddress?.toLowerCase()
       : (selectedList?.toString() ?? userAddress?.toLowerCase())
-  const itemIndex = EXTERNAL_LINKS.find((link) => link.href === pathname)
+  const itemIndex = EXTERNAL_LINKS.find(link => link.href === pathname)
     ? 4
-    : NAV_ITEMS.findIndex((item) => item.href(itemUrl) === pathname)
+    : NAV_ITEMS.findIndex(item => item.href(itemUrl) === pathname)
 
   return (
-    <div ref={clickAwayRef} className="relative">
-      <div className="z-40 bg-neutral/80 backdrop-blur-xl flex flex-row items-center pr-0.5 h-[54px] border-[3px] border-grey hover:border-text transition-all rounded-full">
-        {NAV_ITEMS.map((item) => (
+    <div ref={clickAwayRef} className='relative'>
+      <div className='z-40 bg-neutral/80 backdrop-blur-xl flex flex-row items-center pr-0.5 h-[54px] border-[3px] border-grey hover:border-text transition-all rounded-full'>
+        {NAV_ITEMS.map(item => (
           <Link
             key={item.name}
-            className="z-10 px-0.5 group/nav-item"
+            className='z-10 px-0.5 group/nav-item'
             href={item.href(itemUrl)}
-            onClick={(e) => {
-              if ((item.name === 'profile' || item.name === 'feed') && !userAddress && openConnectModal) {
+            onClick={e => {
+              if (
+                (item.name === 'profile' || item.name === 'feed') &&
+                !userAddress &&
+                openConnectModal
+              ) {
                 e.preventDefault()
                 openConnectModal()
               }

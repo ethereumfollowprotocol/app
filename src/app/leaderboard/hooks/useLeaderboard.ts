@@ -23,12 +23,15 @@ const useLeaderboard = () => {
 
   const [chunk, setChunk] = useState(1)
   const [loadChunkRef, entry] = useIntersectionObserver({
-    rootMargin: '200px 0px 0px 0px',
+    rootMargin: '200px 0px 0px 0px'
   })
 
   useEffect(() => {
-    if (entry?.isIntersecting && (chunk * LEADERBOARD_CHUNK_SIZE) / LEADERBOARD_FETCH_LIMIT_PARAM < 1)
-      setChunk((prev) => prev + 1)
+    if (
+      entry?.isIntersecting &&
+      (chunk * LEADERBOARD_CHUNK_SIZE) / LEADERBOARD_FETCH_LIMIT_PARAM < 1
+    )
+      setChunk(prev => prev + 1)
   }, [entry])
 
   const initialSearch = searchParams.get('query')
@@ -66,7 +69,7 @@ const useLeaderboard = () => {
       const data = await fetchLeaderboardStats()
       return data
     },
-    refetchInterval: 60000,
+    refetchInterval: 60000
   })
 
   const {
@@ -76,7 +79,7 @@ const useLeaderboard = () => {
     fetchNextPage: fetchNextLeaderboard,
     fetchPreviousPage: fetchPreviousLeaderboard,
     isFetchingNextPage: isFetchingNextLeaderboard,
-    isFetchingPreviousPage: isFetchingPreviousLeaderboard,
+    isFetchingPreviousPage: isFetchingPreviousLeaderboard
   } = useInfiniteQuery({
     queryKey: ['leaderboard', filter, search && search?.length > 2 ? search : ''],
     queryFn: async ({ pageParam = 0 }) => {
@@ -84,15 +87,15 @@ const useLeaderboard = () => {
         limit: LEADERBOARD_FETCH_LIMIT_PARAM,
         pageParam,
         filter,
-        search,
+        search
       })
 
       return data
     },
     initialPageParam: page - 1,
-    getNextPageParam: (lastPage) => lastPage.nextPageParam,
-    getPreviousPageParam: (lastPage) => lastPage.prevPageParam,
-    staleTime: 600000,
+    getNextPageParam: lastPage => lastPage.nextPageParam,
+    getPreviousPageParam: lastPage => lastPage.prevPageParam,
+    staleTime: 600000
   })
 
   useEffect(() => {
@@ -108,21 +111,24 @@ const useLeaderboard = () => {
           limit: LEADERBOARD_FETCH_LIMIT_PARAM,
           pageParam: page - 1,
           filter,
-          search,
+          search
         })
 
         queryClient.setQueryData(
           ['leaderboard', filter, search && search?.length > 2 ? search : ''],
-          (oldData: { pages: LeaderboardItem[][]; pageParams: number[] }) => ({
+          (oldData: {
+            pages: LeaderboardItem[][]
+            pageParams: number[]
+          }) => ({
             pages: [
               ...oldData.pages,
               {
                 results: data.results,
                 nextPageParam: page,
-                prevPageParam: page === 1 ? 0 : page - 2,
-              },
+                prevPageParam: page === 1 ? 0 : page - 2
+              }
             ],
-            pageParams: [...oldData.pageParams, page - 1],
+            pageParams: [...oldData.pageParams, page - 1]
           })
         )
 
@@ -136,7 +142,7 @@ const useLeaderboard = () => {
   const timeStamp = new Date(results?.pages[0]?.results.last_updated || 0).toLocaleString('en-US', {
     hour: 'numeric',
     minute: 'numeric',
-    hour12: true,
+    hour12: true
   })
 
   const leaderboard = useMemo(() => {
@@ -165,7 +171,7 @@ const useLeaderboard = () => {
     isLeaderboardStatsLoading,
     isFetchingNextLeaderboard,
     isFetchingPreviousLeaderboard,
-    isLeaderboardLoading: isLeaderboardLoading || isRefetchingLeaderboard,
+    isLeaderboardLoading: isLeaderboardLoading || isRefetchingLeaderboard
   }
 }
 

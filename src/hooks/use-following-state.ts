@@ -14,7 +14,7 @@ const useFollowingState = ({ address }: { address?: Address }) => {
   const {
     data: followingStatus,
     isLoading: isFollowingStatusLoading,
-    isRefetching: isFollowingStatusRefetching,
+    isRefetching: isFollowingStatusRefetching
   } = useQuery({
     queryKey: ['follow state', address, selectedList, fetchFreshStats, listsIsLoading],
     queryFn: async () => {
@@ -26,12 +26,12 @@ const useFollowingState = ({ address }: { address?: Address }) => {
         connectedAddress: userAddress,
         list: selectedList,
         type: 'following',
-        fresh: fetchFreshStats,
+        fresh: fetchFreshStats
       })
       return fetchedProfile
     },
     staleTime: Infinity,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: false
   })
 
   const followingState = useMemo((): FollowState => {
@@ -44,31 +44,32 @@ const useFollowingState = ({ address }: { address?: Address }) => {
     return 'none'
   }, [followingStatus])
 
-  const isFollowingStateLoading = isFollowingStatusLoading || isFollowingStatusRefetching || listsIsLoading
+  const isFollowingStateLoading =
+    isFollowingStatusLoading || isFollowingStatusRefetching || listsIsLoading
 
   const followerTag = {
     blocks: {
       text: 'blocks you',
-      className: 'text-red-500',
+      className: 'text-red-500'
     },
     mutes: {
       text: 'mutes you',
-      className: 'text-red-500',
+      className: 'text-red-500'
     },
     follows: {
       text: 'follows you',
-      className: 'text-darkGray',
+      className: 'text-darkGray'
     },
     none: {
       text: '',
-      className: 'hidden text-darkGray',
-    },
+      className: 'hidden text-darkGray'
+    }
   }[followingState]
 
   return {
     followingState,
     followerTag,
-    isFollowingStateLoading,
+    isFollowingStateLoading
   }
 }
 

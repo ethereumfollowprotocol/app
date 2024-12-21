@@ -19,7 +19,7 @@ export const useLatestFollowers = () => {
     fetchPreviousPage,
     isFetchingNextPage,
     isFetchingPreviousPage,
-    data: profilesToRecommend,
+    data: profilesToRecommend
   } = useInfiniteQuery({
     queryKey: ['latest followers', userAddress, listToFetch],
     queryFn: async ({ pageParam = 0 }) => {
@@ -29,20 +29,20 @@ export const useLatestFollowers = () => {
         addressOrName: userAddress,
         list: listToFetch,
         limit: 55,
-        pageParam,
+        pageParam
       })
 
       return {
         results: latestFollowers.followers,
         nextPageParam: pageParam + 1,
-        previousPageParam: pageParam > 0 ? pageParam - 1 : 0,
+        previousPageParam: pageParam > 0 ? pageParam - 1 : 0
       }
     },
     refetchInterval: 60000,
     staleTime: 60000,
     initialPageParam: page - 1,
-    getNextPageParam: (lastPage) => lastPage.nextPageParam,
-    getPreviousPageParam: (lastPage) => lastPage.previousPageParam,
+    getNextPageParam: lastPage => lastPage.nextPageParam,
+    getPreviousPageParam: lastPage => lastPage.previousPageParam
   })
 
   const displayedProfiles = useMemo(() => {
@@ -64,6 +64,6 @@ export const useLatestFollowers = () => {
     fetchNextPage,
     fetchPreviousPage,
     isFetchingNextPage,
-    isFetchingPreviousPage,
+    isFetchingPreviousPage
   }
 }
