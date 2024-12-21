@@ -55,45 +55,47 @@ export const useRecommendedProfilesCards = () => {
     [fetchNextPage, recommendedProfiles]
   )
 
-  const bindDragToCards = useDrag(({ args: [index], down, movement: [mx], direction: [xDir] }) => {
-    if (index !== gone.size) return
-    const trigger = (mx > 50 && xDir === 1) || (mx < -50 && xDir === -1) // Card has to be moved more than 50px in either direction to trigger the swipe
+  const bindDragToCards = useDrag(
+    ({ args: [index], down, movement: [mx], direction: [xDir] }) => {
+      if (index !== gone.size) return
+      const trigger = (mx > 50 && xDir === 1) || (mx < -50 && xDir === -1) // Card has to be moved more than 50px in either direction to trigger the swipe
 
-    if (!down && trigger) {
-      setDidSwipeBack(false)
-      gone.add(index)
+      if (!down && trigger) {
+        setDidSwipeBack(false)
+        gone.add(index)
 
-      if (canFetchMoreProfiles(index)) fetchNextPage()
-      if (xDir === 1) {
-        setTimeout(() => {
-          addCartItem({
-            listOp: listOpAddListRecord(
-              // @ts-ignore the index comes from the cardsApi which is the same length as recommendedProfiles
-              recommendedProfiles[index].address
-            )
-          })
-          handleStartAnimationAndSound()
-        }, 0.15 * SECOND)
+        if (canFetchMoreProfiles(index)) fetchNextPage()
+        if (xDir === 1) {
+          setTimeout(() => {
+            addCartItem({
+              listOp: listOpAddListRecord(
+                // @ts-ignore the index comes from the cardsApi which is the same length as recommendedProfiles
+                recommendedProfiles[index].address
+              )
+            })
+            handleStartAnimationAndSound()
+          }, 0.15 * SECOND)
+        }
       }
+
+      cardsApi.start(i => {
+        if (index !== i) return
+
+        const isGone = gone.has(index)
+        const x = isGone ? (250 + window.innerWidth / 1.5) * xDir : down ? mx : 0 // When a card is gone it flys out left or right, otherwise goes back to zero
+        const rot = mx / 100 + (isGone ? xDir * 10 : 0) // How much the card tilts
+        const scale = down ? 1.075 : 1 // Active cards lift up a bit
+
+        return {
+          x,
+          rot,
+          scale,
+          delay: undefined,
+          config: { friction: 80, tension: down ? 800 : isGone ? 250 : 800 }
+        }
+      })
     }
-
-    cardsApi.start(i => {
-      if (index !== i) return
-
-      const isGone = gone.has(index)
-      const x = isGone ? (250 + window.innerWidth / 1.5) * xDir : down ? mx : 0 // When a card is gone it flys out left or right, otherwise goes back to zero
-      const rot = mx / 100 + (isGone ? xDir * 10 : 0) // How much the card tilts
-      const scale = down ? 1.075 : 1 // Active cards lift up a bit
-
-      return {
-        x,
-        rot,
-        scale,
-        delay: undefined,
-        config: { friction: 80, tension: down ? 800 : isGone ? 250 : 800 }
-      }
-    })
-  })
+  )
 
   const onSwipeLeft = useCallback(() => {
     if (recommendedProfiles.length === 0 || isLoading || gone.size === recommendedProfiles.length)

@@ -164,7 +164,7 @@ export function Search({
               {t('search no results')}
             </div>
           ) : (
-            searchResult.map(result => (
+            searchResult.map((result) => (
               <div
                 key={result.name}
                 onClick={() => {
@@ -259,7 +259,7 @@ export function Search({
                   {t('search no results')}
                 </div>
               ) : (
-                searchResult.map(result => (
+                searchResult.map((result) => (
                   <div
                     key={result.name}
                     onClick={() => {

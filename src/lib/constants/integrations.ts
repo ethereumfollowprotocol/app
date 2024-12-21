@@ -27,6 +27,7 @@ import Snapshot from 'public/assets/partners/snapshot.jpeg'
 import BanklessAcademy from 'public/assets/partners/banklessacademy.jpeg'
 import ENSResolver from 'public/assets/partners/ensresolver.jpeg'
 
+
 export const INTEGRATIONS = [
   {
     name: 'Interface',

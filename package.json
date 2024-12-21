@@ -47,7 +47,7 @@
     "wagmi": "^2.12.16"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
+    "@biomejs/biome": "^1.7.3",
     "@next/bundle-analyzer": "^14.1.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/container-queries": "^0.1.1",

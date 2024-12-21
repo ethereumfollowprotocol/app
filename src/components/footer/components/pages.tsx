@@ -35,7 +35,7 @@ const Pages = () => {
 
   return (
     <div className='flex flex-wrap w-52 gap-x-8 gap-y-4'>
-      {footerPages.map(route => (
+      {footerPages.map((route) => (
         <div
           className='font-bold hover:scale-110 w-fit transition-transform'
           key={`route-${route.href}`}

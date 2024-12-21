@@ -417,16 +417,16 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
 
   const followers = fetchedFollowers
     ? fetchedFollowers.pages.reduce(
-        (acc, el) => [...acc, ...el.followers],
-        [] as FollowerResponse[]
-      )
+      (acc, el) => [...acc, ...el.followers],
+      [] as FollowerResponse[]
+    )
     : []
 
   const following = fetchedFollowing
     ? fetchedFollowing.pages.reduce(
-        (acc, el) => [...acc, ...el.following],
-        [] as FollowingResponse[]
-      )
+      (acc, el) => [...acc, ...el.following],
+      [] as FollowingResponse[]
+    )
     : []
 
   const {
