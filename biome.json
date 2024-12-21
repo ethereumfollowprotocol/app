@@ -133,7 +133,7 @@
       "indentWidth": 2,
       "indentStyle": "space",
       "quoteStyle": "single",
-      "trailingCommas": "none",
+      "trailingComma": "none",
       "semicolons": "asNeeded",
       "jsxQuoteStyle": "single",
       "quoteProperties": "asNeeded",
