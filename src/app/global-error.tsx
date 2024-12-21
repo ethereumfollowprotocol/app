@@ -1,3 +1,7 @@
+'use client'
+
+import { useEffect } from 'react'
+import { captureException } from '@sentry/nextjs'
 import { default as NextError } from 'next/error'
 
 interface GlobalErrorProps {
@@ -5,7 +9,11 @@ interface GlobalErrorProps {
   reset: () => void
 }
 
-const GlobalError: React.FC<GlobalErrorProps> = ({ reset }) => {
+const GlobalError: React.FC<GlobalErrorProps> = ({ error, reset }) => {
+  useEffect(() => {
+    captureException(error)
+  }, [error])
+
   return (
     <html lang="en">
       <body className="pt-40">
