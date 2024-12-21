@@ -99,9 +99,6 @@ const nextConfig = {
     /* WalletConnect x wagmi needed configuration */
     if (config.resolve) config.resolve.fallback = { fs: false, net: false, tls: false };
     if (Array.isArray(config.externals)) {
-      if(context.isServer) {
-        config.externals.push('@opentelemetry/instrumentation');
-      }
       config.externals.push("lokijs", "pino-pretty", "encoding");
     }
     if (config.plugins) {
