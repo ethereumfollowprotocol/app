@@ -1,5 +1,6 @@
 import './i18n'
 import './globals.css'
+import 'ethereum-identity-kit/css'
 import '@rainbow-me/rainbowkit/styles.css'
 
 import Image from 'next/image'

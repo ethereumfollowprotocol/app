@@ -1,78 +1,79 @@
-import { useMemo } from 'react'
-import { useAccount } from 'wagmi'
-import type { Address } from 'viem'
-import { useQuery } from '@tanstack/react-query'
+import { useMemo } from "react";
+import { useAccount } from "wagmi";
+import type { Address } from "viem";
+import { useQuery } from "@tanstack/react-query";
+import { fetchFollowState } from "ethereum-identity-kit";
 
-import type { FollowState } from '#/types/common'
-import { fetchFollowState } from '#/api/fetch-follow-state'
-import { useEFPProfile } from '#/contexts/efp-profile-context'
+import type { FollowState } from "#/types/common";
+import { useEFPProfile } from "#/contexts/efp-profile-context";
 
 const useFollowerState = ({
   address,
-  showFollowerBadge = true
+  showFollowerBadge = true,
 }: {
-  address?: Address
-  showFollowerBadge?: boolean
+  address?: Address;
+  showFollowerBadge?: boolean;
 }) => {
-  const { selectedList } = useEFPProfile()
-  const { address: userAddress } = useAccount()
+  const { selectedList } = useEFPProfile();
+  const { address: userAddress } = useAccount();
 
   const {
     data: followerStatus,
     isLoading: isFollowerStatusLoading,
-    isRefetching: isFollowerStateRefetching
+    isRefetching: isFollowerStateRefetching,
   } = useQuery({
-    queryKey: ['follower state', address, selectedList, userAddress, showFollowerBadge],
+    queryKey: ["follower state", address, selectedList, userAddress],
     queryFn: async () => {
-      if (!(address && showFollowerBadge)) return null
+      if (!(address && showFollowerBadge)) return null;
+      if (!userAddress) return null;
 
       const fetchedStatus = await fetchFollowState({
-        address: address,
-        userAddress,
+        lookupAddressOrName: address,
+        connectedAddress: userAddress,
         list: selectedList,
-        type: 'follower'
-      })
+        type: "follower",
+      });
 
-      return fetchedStatus
+      return fetchedStatus;
     },
-    staleTime: Infinity
-  })
+    staleTime: Infinity,
+  });
 
   const followState = useMemo((): FollowState => {
-    if (!followerStatus?.state) return 'none'
+    if (!followerStatus?.state) return "none";
 
-    if (followerStatus.state.block) return 'blocks'
-    if (followerStatus.state.mute) return 'mutes'
-    if (followerStatus.state.follow) return 'follows'
+    if (followerStatus.state.block) return "blocks";
+    if (followerStatus.state.mute) return "mutes";
+    if (followerStatus.state.follow) return "follows";
 
-    return 'none'
-  }, [followerStatus])
+    return "none";
+  }, [followerStatus]);
 
-  const isFollowerStateLoading = isFollowerStatusLoading || isFollowerStateRefetching
+  const isFollowerStateLoading = isFollowerStatusLoading || isFollowerStateRefetching;
   const followerTag = {
     blocks: {
-      text: 'blocks you',
-      className: 'text-red-500'
+      text: "blocks you",
+      className: "text-red-500",
     },
     mutes: {
-      text: 'mutes you',
-      className: 'text-red-500'
+      text: "mutes you",
+      className: "text-red-500",
     },
     follows: {
-      text: 'follows you',
-      className: 'text-darkGray'
+      text: "follows you",
+      className: "text-darkGray",
     },
     none: {
-      text: '',
-      className: 'hidden text-darkGray'
-    }
-  }[followState]
+      text: "",
+      className: "hidden text-darkGray",
+    },
+  }[followState];
 
   return {
     followState,
     followerTag,
-    isFollowerStateLoading
-  }
-}
+    isFollowerStateLoading,
+  };
+};
 
-export default useFollowerState
+export default useFollowerState;
