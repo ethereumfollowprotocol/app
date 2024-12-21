@@ -65,7 +65,7 @@ const Checkout: React.FC<CheckoutProps> = ({ setOpen, hasCreatedEfpList }) => {
 
   return (
     <div>
-      {claimPoapModalOpen && poapLink && (
+      {claimPoapModalOpen && (
         <ClaimPoapModal
           onClose={() => setClaimPoapModalOpen(false)}
           link={poapLink}

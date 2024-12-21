@@ -26,7 +26,7 @@ export const fetchLatestFollowers = async ({
       }
     })
 
-    const data = ((await response.json()) as { followers: LatestFollowersResponse[] }).followers
+    const data = (await response.json()).followers as LatestFollowersResponse[]
     const transformedData = data.map(follower => ({
       ...follower,
       tags: []

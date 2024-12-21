@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
-import { cn } from '#/lib/utilities'
 import LoadingCell from '../../loaders/loading-cell'
 import { profileCardSocials } from '#/lib/constants'
 
@@ -9,20 +8,18 @@ interface LoadingProfileCardProps {
   isResponsive?: boolean
   hideFollowButton?: boolean
   isStatic?: boolean
-  className?: string
 }
 
 const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
   isResponsive,
   hideFollowButton,
-  isStatic,
-  className
+  isStatic
 }) => {
   const { t } = useTranslation()
   const { openConnectModal } = useConnectModal()
 
   return (
-    <div className={cn('border-[3px] border-grey rounded-xl', className)}>
+    <>
       {isStatic && (
         <div className='absolute w-full h-full left-0 rounded-[10px] flex items-center justify-center'>
           <button
@@ -85,7 +82,7 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

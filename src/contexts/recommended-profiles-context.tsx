@@ -6,13 +6,13 @@ import { useContext, createContext, useState, useEffect, useMemo } from 'react'
 
 import { useEFPProfile } from './efp-profile-context'
 import { RECOMMENDED_PROFILES_LIMIT } from '#/lib/constants'
-import type { ProfileDetailsResponseWithStats } from '#/types/requests'
+import type { ProfileDetailsResponse } from '#/types/requests'
 import { fetchRecommendedProfiles } from '#/api/recommended/fetch-recommended-profiles'
 
 // Define the type for the profile context
 type RecommendedProfilesContextType = {
   gone: Set<any>
-  recommendedProfiles: ProfileDetailsResponseWithStats[]
+  recommendedProfiles: ProfileDetailsResponse[]
   isLoading: boolean
   isFetchingNextPage: boolean
   hasNextPage: boolean
@@ -67,7 +67,7 @@ export const RecommendedProfilesProvider: React.FC<Props> = ({ children }) => {
   const recommendedProfiles =
     recommendedProfilesFetched?.pages?.reduce(
       (acc, el) => [...acc, ...el.recommended],
-      [] as ProfileDetailsResponseWithStats[]
+      [] as ProfileDetailsResponse[]
     ) || []
 
   return (

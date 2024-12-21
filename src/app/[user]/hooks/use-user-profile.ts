@@ -1,106 +1,107 @@
-import { useState } from "react";
-import { isAddress } from "viem";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { fetchProfileDetails, fetchProfileStats } from "ethereum-identity-kit";
+import { useState } from 'react'
+import { isAddress } from 'viem'
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 
-import { FETCH_LIMIT_PARAM } from "#/lib/constants";
-import type { ProfileTableTitleType } from "#/types/common";
-import { fetchProfileFollowers } from "#/api/followers/fetch-profile-followers";
-import { fetchProfileFollowing } from "#/api/following/fetch-profile-following";
-import { fetchFollowerTags, nullFollowerTags } from "#/api/followers/fetch-follower-tags";
-import type { FollowerResponse, FollowingResponse, FollowSortType } from "#/types/requests";
-import { fetchFollowingTags, nullFollowingTags } from "#/api/following/fetch-following-tags";
+import { FETCH_LIMIT_PARAM } from '#/lib/constants'
+import type { ProfileTableTitleType } from '#/types/common'
+import { fetchProfileStats } from '#/api/profile/fetch-profile-stats'
+import { fetchProfileDetails } from '#/api/profile/fetch-profile-details'
+import { fetchProfileFollowers } from '#/api/followers/fetch-profile-followers'
+import { fetchProfileFollowing } from '#/api/following/fetch-profile-following'
+import { fetchFollowerTags, nullFollowerTags } from '#/api/followers/fetch-follower-tags'
+import type { FollowerResponse, FollowingResponse, FollowSortType } from '#/types/requests'
+import { fetchFollowingTags, nullFollowingTags } from '#/api/following/fetch-following-tags'
 
 const useUser = (user: string) => {
-  const [fetchFreshProfile, setFetchFreshProfile] = useState(false);
-  const [followingSearch, setFollowingSearch] = useState<string>("");
-  const [followersSearch, setFollowersSearch] = useState<string>("");
-  const [followingTagsFilter, setFollowingTagsFilter] = useState<string[]>([]);
-  const [followersTagsFilter, setFollowersTagsFilter] = useState<string[]>([]);
-  const [followingSort, setFollowingSort] = useState<FollowSortType>("follower count");
-  const [followersSort, setFollowersSort] = useState<FollowSortType>("follower count");
+  const [fetchFreshProfile, setFetchFreshProfile] = useState(false)
+  const [followingSearch, setFollowingSearch] = useState<string>('')
+  const [followersSearch, setFollowersSearch] = useState<string>('')
+  const [followingTagsFilter, setFollowingTagsFilter] = useState<string[]>([])
+  const [followersTagsFilter, setFollowersTagsFilter] = useState<string[]>([])
+  const [followingSort, setFollowingSort] = useState<FollowSortType>('follower count')
+  const [followersSort, setFollowersSort] = useState<FollowSortType>('follower count')
 
-  const userIsList = !(isAddress(user) || user.includes(".") || Number.isNaN(Number(user)));
-  const listNum = userIsList ? Number(user) : undefined;
+  const userIsList = !(isAddress(user) || user.includes('.') || Number.isNaN(Number(user)))
+  const listNum = userIsList ? Number(user) : undefined
 
   const isValidUser =
     isAddress(user) ||
     (userIsList && listNum && listNum > 0 && listNum < 1000000000) ||
-    user.includes(".");
+    user.includes('.')
 
   const {
     data: profile,
     isLoading: profileIsLoading,
     isRefetching: isRefetchingProfile,
-    refetch: refetchProfile,
+    refetch: refetchProfile
   } = useQuery({
-    queryKey: ["profile", user, fetchFreshProfile],
+    queryKey: ['profile', user, fetchFreshProfile],
     queryFn: async () => {
-      if (!isValidUser) return null;
+      if (!isValidUser) return null
 
-      const fetchedProfile = await fetchProfileDetails(user, listNum, fetchFreshProfile);
-      return fetchedProfile;
+      const fetchedProfile = await fetchProfileDetails(user, listNum, fetchFreshProfile)
+      return fetchedProfile
     },
     staleTime: 30000,
-    refetchOnWindowFocus: false,
-  });
+    refetchOnWindowFocus: false
+  })
 
   const {
     data: stats,
     isLoading: statsIsLoading,
-    isRefetching: isRefetchingStatsQuery,
+    isRefetching: isRefetchingStatsQuery
   } = useQuery({
-    queryKey: ["stats", user],
+    queryKey: ['stats', user],
     queryFn: async () => {
-      if (!isValidUser) return null;
+      if (!isValidUser) return null
 
-      const fetchedStats = await fetchProfileStats(user, listNum);
+      const fetchedStats = await fetchProfileStats(user, listNum)
 
-      return fetchedStats;
+      return fetchedStats
     },
     // refetchInterval: 60000
-    refetchOnWindowFocus: false,
-  });
+    refetchOnWindowFocus: false
+  })
 
   const {
     data: followerTags,
     isLoading: followerTagsLoading,
-    isRefetching: isRefetchingFollowerTags,
+    isRefetching: isRefetchingFollowerTags
   } = useQuery({
-    queryKey: ["follower tags", user],
+    queryKey: ['follower tags', user],
     queryFn: async () => {
-      if (!isValidUser) return nullFollowerTags;
+      if (!isValidUser) return nullFollowerTags
 
-      const fetchedTags = await fetchFollowerTags(user, userIsList ? listNum : undefined);
-      return fetchedTags;
+      const fetchedTags = await fetchFollowerTags(user, userIsList ? listNum : undefined)
+      return fetchedTags
     },
     staleTime: 30000,
-    refetchOnWindowFocus: false,
-  });
+    refetchOnWindowFocus: false
+  })
 
-  const [isEndOfFollowers, setIsEndOfFollowers] = useState(false);
+  const [isEndOfFollowers, setIsEndOfFollowers] = useState(false)
   const {
     data: fetchedFollowers,
     isLoading: followersIsLoading,
     fetchNextPage: fetchMoreFollowers,
     isFetchingNextPage: isFetchingMoreFollowers,
-    isRefetching: isRefetchingFollowers,
+    isRefetching: isRefetchingFollowers
   } = useInfiniteQuery({
     queryKey: [
-      "followers",
+      'followers',
       user,
       followersSort,
       followersTagsFilter,
-      followersSearch.length > 2 ? followersSearch : undefined,
+      followersSearch.length > 2 ? followersSearch : undefined
     ],
     queryFn: async ({ pageParam = 0 }) => {
-      setIsEndOfFollowers(false);
+      setIsEndOfFollowers(false)
 
       if (!isValidUser)
         return {
           followers: [],
-          nextPageParam: pageParam,
-        };
+          nextPageParam: pageParam
+        }
 
       const fetchedFollowers = await fetchProfileFollowers({
         addressOrName: user,
@@ -109,58 +110,58 @@ const useUser = (user: string) => {
         pageParam,
         tags: followersTagsFilter,
         sort: followersSort,
-        search: followersSearch,
-      });
+        search: followersSearch
+      })
 
-      if (fetchedFollowers.followers.length === 0) setIsEndOfFollowers(true);
+      if (fetchedFollowers.followers.length === 0) setIsEndOfFollowers(true)
 
-      return fetchedFollowers;
+      return fetchedFollowers
     },
     staleTime: 30000,
     initialPageParam: 0,
-    getNextPageParam: (lastPage) => lastPage.nextPageParam,
-    refetchOnWindowFocus: false,
-  });
+    getNextPageParam: lastPage => lastPage.nextPageParam,
+    refetchOnWindowFocus: false
+  })
 
   const {
     data: followingTags,
     isLoading: followingTagsLoading,
-    isRefetching: isRefetchingFollowingTags,
+    isRefetching: isRefetchingFollowingTags
   } = useQuery({
-    queryKey: ["following tags", user],
+    queryKey: ['following tags', user],
     queryFn: async () => {
-      if (!isValidUser) return nullFollowingTags;
+      if (!isValidUser) return nullFollowingTags
 
-      const fetchedTags = await fetchFollowingTags(user, listNum);
-      return fetchedTags;
+      const fetchedTags = await fetchFollowingTags(user, listNum)
+      return fetchedTags
     },
     staleTime: 30000,
-    refetchOnWindowFocus: false,
-  });
+    refetchOnWindowFocus: false
+  })
 
-  const [isEndOfFollowing, setIsEndOfFollowing] = useState(false);
+  const [isEndOfFollowing, setIsEndOfFollowing] = useState(false)
   const {
     data: fetchedFollowing,
     isLoading: followingIsLoading,
     fetchNextPage: fetchMoreFollowing,
     isFetchingNextPage: isFetchingMoreFollowing,
-    isRefetching: isRefetchingFollowing,
+    isRefetching: isRefetchingFollowing
   } = useInfiniteQuery({
     queryKey: [
-      "following",
+      'following',
       user,
       followingSort,
       followingTagsFilter,
-      followingSearch.length > 2 ? followingSearch : undefined,
+      followingSearch.length > 2 ? followingSearch : undefined
     ],
     queryFn: async ({ pageParam = 0 }) => {
-      setIsEndOfFollowing(false);
+      setIsEndOfFollowing(false)
 
       if (!isValidUser)
         return {
           following: [],
-          nextPageParam: pageParam,
-        };
+          nextPageParam: pageParam
+        }
 
       const fetchedFollowing = await fetchProfileFollowing({
         addressOrName: user,
@@ -169,50 +170,50 @@ const useUser = (user: string) => {
         pageParam,
         tags: followingTagsFilter,
         sort: followingSort,
-        search: followingSearch,
-      });
+        search: followingSearch
+      })
 
-      if (fetchedFollowing.following.length === 0) setIsEndOfFollowing(true);
+      if (fetchedFollowing.following.length === 0) setIsEndOfFollowing(true)
 
-      return fetchedFollowing;
+      return fetchedFollowing
     },
     staleTime: 30000,
     initialPageParam: 0,
-    getNextPageParam: (lastPage) => lastPage.nextPageParam,
-    refetchOnWindowFocus: false,
-  });
+    getNextPageParam: lastPage => lastPage.nextPageParam,
+    refetchOnWindowFocus: false
+  })
 
   const followers = fetchedFollowers
     ? fetchedFollowers.pages.reduce(
         (acc, el) => [...acc, ...el.followers],
         [] as FollowerResponse[]
       )
-    : [];
+    : []
 
   const following = fetchedFollowing
     ? fetchedFollowing.pages.reduce(
         (acc, el) => [...acc, ...el.following],
         [] as FollowingResponse[]
       )
-    : [];
+    : []
 
   const toggleTag = (tab: ProfileTableTitleType, tag: string) => {
-    if (tab === "following") {
+    if (tab === 'following') {
       if (followingTagsFilter.includes(tag)) {
-        setFollowingTagsFilter(followingTagsFilter.filter((item) => item !== tag));
+        setFollowingTagsFilter(followingTagsFilter.filter(item => item !== tag))
       } else {
-        setFollowingTagsFilter([...followingTagsFilter, tag]);
+        setFollowingTagsFilter([...followingTagsFilter, tag])
       }
     }
 
-    if (tab === "followers") {
+    if (tab === 'followers') {
       if (followersTagsFilter.includes(tag)) {
-        setFollowersTagsFilter(followersTagsFilter.filter((item) => item !== tag));
+        setFollowersTagsFilter(followersTagsFilter.filter(item => item !== tag))
       } else {
-        setFollowersTagsFilter([...followersTagsFilter, tag]);
+        setFollowersTagsFilter([...followersTagsFilter, tag])
       }
     }
-  };
+  }
 
   return {
     stats,
@@ -248,8 +249,8 @@ const useUser = (user: string) => {
     setFollowingTagsFilter,
     refetchProfile,
     fetchFreshProfile,
-    setFetchFreshProfile,
-  };
-};
+    setFetchFreshProfile
+  }
+}
 
-export default useUser;
+export default useUser
