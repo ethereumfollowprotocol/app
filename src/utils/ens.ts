@@ -1,6 +1,6 @@
 import { normalize } from 'viem/ens'
 import { mainnet } from 'viem/chains'
-import { createPublicClient, http, type Address } from 'viem'
+import { createPublicClient, http } from 'viem'
 
 import { rpcProviders } from '#/lib/constants/rpc-providers'
 

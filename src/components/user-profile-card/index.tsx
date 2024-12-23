@@ -69,7 +69,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
         <LoadingProfileCard
           isResponsive={isResponsive}
           hideFollowButton={true}
-        className={isRecommended ? 'bg-neutral' : 'glass-card'}
+          className={isRecommended ? 'bg-neutral' : 'glass-card'}
         />
       ) : profile?.address ? (
         <ProfileCard
