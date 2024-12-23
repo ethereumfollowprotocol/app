@@ -74,6 +74,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
       ) : profile?.address ? (
         <ProfileCard
           list={profileList}
+          onStatClick={({ stat }) => {
+            router.push(`/${profile.address}?tab=${stat}`)
+          }}
           showFollowerState={true}
           darkMode={resolvedTheme === 'dark'}
           addressOrName={profile.address}
