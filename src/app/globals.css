@@ -587,6 +587,17 @@ input {
   left: 32px;
 }
 
+/* Ethereum Identity Kit - extensions */
+.profile-stats-item {
+  gap: 0px !important;
+  transition: transform 0.2s ease;
+}
+
+.profile-stats-item:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
 /* Leaderboard top three */
 .first-place, .second-place, .third-place {
 	position: relative;

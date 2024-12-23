@@ -69,8 +69,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
         <LoadingProfileCard
           isResponsive={isResponsive}
           hideFollowButton={true}
-          isStatic={!isLoading}
-          className={isRecommended ? 'bg-neutral' : 'glass-card'}
+        className={isRecommended ? 'bg-neutral' : 'glass-card'}
         />
       ) : profile?.address ? (
         <ProfileCard
@@ -82,7 +81,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           onProfileClick={() => {
             router.push(`/${profile.address}`)
           }}
-          className={isRecommended ? '' : 'glass-card bg-transparent'}
+          className={isRecommended ? 'bg-neutral' : 'glass-card bg-transparent'}
           options={{
             profileData: profile,
             statsData: stats,

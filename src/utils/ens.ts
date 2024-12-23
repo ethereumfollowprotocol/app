@@ -44,9 +44,9 @@ export const resolveEnsAddress = async (name: string) => {
       name: normalize(name)
     })
 
-    return ensAddress as Address
+    return ensAddress
   } catch {
-    return '' as Address
+    return ''
   }
 }
 

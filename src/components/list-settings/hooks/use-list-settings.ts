@@ -82,6 +82,7 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
       if (resolvedAddress) {
         setValue(resolvedAddress)
         setLoading(false)
+
         if (resolvedAddress.toLowerCase() !== fetchedValue?.toLowerCase()) {
           if (checkPrimaryList && resolvedAddress.toLowerCase() === connectedAddress?.toLowerCase())
             setIsPrimaryList(false)
@@ -208,10 +209,9 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
       BigInt(list)
     ])
     const listOwner = await listRegistryContract.read.ownerOf([BigInt(list)])
-    const listStorageLocationChainId = fromHex(`0x${listStorageLocation.slice(64, 70)}`, 'number')
 
     const slot = BigInt(`0x${listStorageLocation.slice(-64)}`)
-
+    const listStorageLocationChainId = fromHex(`0x${listStorageLocation.slice(64, 70)}`, 'number')
     const listStorageLocationChain = chains.find(item => item.id === listStorageLocationChainId)
     const listRecordsContractAddress = listStorageLocation
       ? (`0x${listStorageLocation.slice(70, 110)}` as Address)
