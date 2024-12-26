@@ -26,6 +26,7 @@ import Yodl from 'public/assets/partners/yodl.jpeg'
 import Snapshot from 'public/assets/partners/snapshot.jpeg'
 import BanklessAcademy from 'public/assets/partners/banklessacademy.jpeg'
 import ENSResolver from 'public/assets/partners/ensresolver.jpeg'
+import Rotki from 'public/assets/partners/rotki.jpeg'
 
 
 export const INTEGRATIONS = [
@@ -53,6 +54,11 @@ export const INTEGRATIONS = [
     name: 'Yodl',
     url: 'https://yodl.me/',
     logo: Yodl
+  },
+  {
+    name: 'Rotki',
+    url: 'https://rotki.com/',
+    logo: Rotki
   },
   {
     name: 'Blockscout',
