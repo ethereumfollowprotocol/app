@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next'
 import Modal from '../modal'
 import CancelButton from '../buttons/cancel-button'
 import { PrimaryButton } from '../buttons/primary-button'
-import EarlyUserPoap from 'public/assets/art/early-user-poap.svg'
+import EarlyUserPoap2024 from 'public/assets/art/early-user-poap-2024.svg'
+import EarlyUserPoap2025 from 'public/assets/art/early-user-poap-2025.svg'
 
 interface ClaimPoapModalProps {
   onClose: () => void
@@ -14,6 +15,8 @@ interface ClaimPoapModalProps {
 
 const ClaimPoapModal: React.FC<ClaimPoapModalProps> = ({ onClose, link, isLoading }) => {
   const { t } = useTranslation()
+  const now = new Date().getTime()
+  const is2025 = now > new Date('2025-01-01').getTime()
 
   return (
     <Modal onCancel={onClose} disableBackgroundClose={true}>
@@ -22,7 +25,7 @@ const ClaimPoapModal: React.FC<ClaimPoapModalProps> = ({ onClose, link, isLoadin
         <p className='font-medium'>Congrats! 👏 Here's a limited edition "Early to EFP" POAP.</p>
         <div className='p-6 w-full bg-neutral rounded-xl'>
           <Image
-            src={EarlyUserPoap}
+            src={is2025 ? EarlyUserPoap2025 : EarlyUserPoap2024}
             alt='Early user Poap'
             width={300}
             height={300}
