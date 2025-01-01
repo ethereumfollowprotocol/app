@@ -17,11 +17,11 @@ import { Avatar } from '#/components/avatar'
 import { resolveEnsProfile } from '#/utils/ens'
 import { fetchPoapLink } from '#/api/fetch-poap'
 import { cn, truncateAddress } from '#/lib/utilities'
+import { EARLY_POAP_EVENT_IDS } from '#/lib/constants'
 import { useAutoConnect } from '#/hooks/useAutoConnect'
 import LoadingCell from '#/components/loaders/loading-cell'
 import GreenCheck from 'public/assets/icons/check-green.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import EarlyUserPoap2024 from 'public/assets/art/early-user-poap-2024.svg'
 import EarlyUserPoap2025 from 'public/assets/art/early-user-poap-2025.svg'
 import { useAchievements } from '#/components/user-profile-card/components/achievements/hooks/use-achievements'
 
@@ -83,15 +83,13 @@ const WalletMenu: React.FC<WalletMenuProps> = ({ isResponsive = true }) => {
     address: userAddress,
     list: selectedList
   })
-  const hasEarlyPoap = ownedBadges.find(badge => badge.eventId === '178066')
+  const hasEarlyPoap = ownedBadges.find(badge => EARLY_POAP_EVENT_IDS.includes(badge.eventId))
   const canMintEarlyPoap = !(isBadgesLoading || ensProfileIsLoading) && typeof lists?.primary_list === 'string' && (userAddress && !!ensProfile?.name && !hasEarlyPoap)
 
   const { data: poap, isLoading: poapLoading } = useQuery({
     queryKey: ['poap-link', canMintEarlyPoap, ensProfile, ownedBadges],
     queryFn: async () => (canMintEarlyPoap ? await fetchPoapLink(userAddress) : null)
   })
-  const now = new Date().getTime()
-  const is2025 = now > new Date('2025-01-01').getTime()
 
   useAutoConnect()
 
@@ -252,8 +250,7 @@ const WalletMenu: React.FC<WalletMenuProps> = ({ isResponsive = true }) => {
                 <FiExternalLink className='text-2xl' />
                 <div className='flex gap-2 items-center'>
                   <p className='text-end'>{`${t('get poap')}`}</p>
-                  <Image src={is2025 ? EarlyUserPoap2025 : EarlyUserPoap2024} alt='Early user Poap' width={30} height={30} />
-
+                  <Image src={EarlyUserPoap2025} alt='Early user Poap' width={30} height={30} />
                 </div>
               </Link>
             )}

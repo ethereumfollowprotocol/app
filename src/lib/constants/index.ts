@@ -43,6 +43,8 @@ export const DEFAULT_TAGS_TO_ADD = ['irl', 'bff', 'based', 'degen', 'top8']
 
 export const SORT_OPTIONS: FollowSortType[] = ['follower count', 'latest first', 'earliest first']
 
+export const EARLY_POAP_EVENT_IDS = ['178066', '183182']
+
 export const NAV_ITEMS = [
   {
     href: () => '/',
