@@ -3,7 +3,6 @@
 import {
   useRef,
   useState,
-  useEffect,
   useContext,
   createContext,
   type Dispatch,
@@ -25,16 +24,16 @@ const SoundsContext = createContext<SoundsContextType | undefined>(undefined)
 export const SoundsProvider = ({ children }: { children: React.ReactNode }) => {
   const [actionsSoundsMuted, setActionsSoundsMuted] = useState(false)
   const [backgroundSoundsMuted, setBackgroundSoundsMuted] = useState(true)
-  const [selectedVolume, setSelectedVolume] = useState('sfx only')
+  const [selectedVolume, setSelectedVolume] = useState('sfx')
 
   const backgroundMusicRef = useRef<HTMLAudioElement>(null)
-  useEffect(() => {
-    if (backgroundMusicRef.current) {
-      backgroundMusicRef.current.volume = 0.3
-      if (backgroundSoundsMuted) backgroundMusicRef.current.pause()
-      else backgroundMusicRef.current.play()
-    }
-  }, [backgroundSoundsMuted])
+  // useEffect(() => {
+  //   if (backgroundMusicRef.current) {
+  //     backgroundMusicRef.current.volume = 0.3
+  //     if (backgroundSoundsMuted) backgroundMusicRef.current.pause()
+  //     else backgroundMusicRef.current.play()
+  //   }
+  // }, [backgroundSoundsMuted])
 
   // const { resolvedTheme } = useTheme();
   // useEffect(() => {

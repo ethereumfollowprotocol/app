@@ -3,21 +3,21 @@ import { useState } from 'react'
 import { FiArrowLeft } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
-import { RiVolumeDownFill, RiVolumeMuteFill, RiVolumeUpFill } from 'react-icons/ri'
+import { RiVolumeDownFill, RiVolumeMuteFill } from 'react-icons/ri'
 
 import { cn } from '#/lib/utilities'
 import { useSounds } from '#/contexts/sounds-context'
 import GreenCheck from 'public/assets/icons/check-green.svg'
 
 export const volumeOptions = [
+  // {
+  //   label: 'sfx & music',
+  //   icon: <RiVolumeUpFill />,
+  //   muteBackgroundMusic: false,
+  //   muteActionsSounds: false
+  // },
   {
-    label: 'sfx & music',
-    icon: <RiVolumeUpFill />,
-    muteBackgroundMusic: false,
-    muteActionsSounds: false
-  },
-  {
-    label: 'sfx only',
+    label: 'sfx',
     icon: <RiVolumeDownFill />,
     muteBackgroundMusic: true,
     muteActionsSounds: false
@@ -72,11 +72,11 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = ({
       </div>
       <div
         className={cn(
-          'absolute group-hover:block block h-[250px] lg:h-[174px] z-50 -right-[251px] lg:right-[97.2%] min-w-[246px] -top-[106px] lg:-top-[7px] lg:pr-5',
+          'absolute group-hover:block block h-[192px] lg:h-[140px] z-50 -right-[251px] lg:right-[97.2%] min-w-[246px] -top-[106px] lg:-top-[7px] lg:pr-5',
           volumeMenuOpen ? 'block' : 'hidden'
         )}
       >
-        <div className='flex flex-col p-1 gap-2 w-full h-[250px] lg:h-[174px] max-h-[75vh] lg:max-h-[90vh] border-[3px] rounded-lg bg-neutral border-grey shadow-md'>
+        <div className='flex flex-col p-1 gap-2 w-full h-full border-[3px] rounded-lg bg-neutral border-grey shadow-md'>
           <div
             onClick={() => {
               setVolumeMenuOpen(false)
