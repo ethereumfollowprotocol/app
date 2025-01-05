@@ -411,7 +411,6 @@ input {
 .btn-grad:hover {
   background-position: right center;
   transition: all .3s;
-   /* change the direction of the change here */
 }
 
 .btn-following-pending {

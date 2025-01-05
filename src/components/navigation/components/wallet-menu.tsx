@@ -1,29 +1,24 @@
 'use client'
 import Image from 'next/image'
 
-import Link from 'next/link'
 import { SlWallet } from 'react-icons/sl'
 import { useEffect, useState } from 'react'
+import { FiArrowLeft } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
 import { IoIosArrowDown } from 'react-icons/io'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
-import { FiArrowLeft, FiExternalLink } from 'react-icons/fi'
 import { useAccount, useDisconnect, useWalletClient, useChains } from 'wagmi'
 
 import EthBalance from './eth-balance'
 import { Avatar } from '#/components/avatar'
 import { resolveEnsProfile } from '#/utils/ens'
-import { fetchPoapLink } from '#/api/fetch-poap'
 import { cn, truncateAddress } from '#/lib/utilities'
-import { EARLY_POAP_EVENT_IDS } from '#/lib/constants'
 import { useAutoConnect } from '#/hooks/useAutoConnect'
 import LoadingCell from '#/components/loaders/loading-cell'
 import GreenCheck from 'public/assets/icons/check-green.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import EarlyUserPoap2025 from 'public/assets/art/early-user-poap-2025.svg'
-import { useAchievements } from '#/components/user-profile-card/components/achievements/hooks/use-achievements'
 
 const nullEnsProfile = {
   name: null,
@@ -79,17 +74,17 @@ const WalletMenu: React.FC<WalletMenuProps> = ({ isResponsive = true }) => {
     }
   })
 
-  const { ownedBadges, isLoading: isBadgesLoading } = useAchievements({
-    address: userAddress,
-    list: selectedList
-  })
-  const hasEarlyPoap = ownedBadges.find(badge => EARLY_POAP_EVENT_IDS.includes(badge.eventId))
-  const canMintEarlyPoap = !(isBadgesLoading || ensProfileIsLoading) && typeof lists?.primary_list === 'string' && (userAddress && !!ensProfile?.name && !hasEarlyPoap)
+  // const { ownedBadges, isLoading: isBadgesLoading } = useAchievements({
+  //   address: userAddress,
+  //   list: selectedList
+  // })
+  // const hasEarlyPoap = ownedBadges.find(badge => EARLY_POAP_EVENT_IDS.includes(badge.eventId))
+  // const canMintEarlyPoap = !(isBadgesLoading || ensProfileIsLoading) && typeof lists?.primary_list === 'string' && (userAddress && !!ensProfile?.name && !hasEarlyPoap)
 
-  const { data: poap, isLoading: poapLoading } = useQuery({
-    queryKey: ['poap-link', canMintEarlyPoap, ensProfile, ownedBadges],
-    queryFn: async () => (canMintEarlyPoap ? await fetchPoapLink(userAddress) : null)
-  })
+  // const { data: poap, isLoading: poapLoading } = useQuery({
+  //   queryKey: ['poap-link', canMintEarlyPoap, ensProfile, ownedBadges],
+  //   queryFn: async () => (canMintEarlyPoap ? await fetchPoapLink(userAddress) : null)
+  // })
 
   useAutoConnect()
 
@@ -241,7 +236,7 @@ const WalletMenu: React.FC<WalletMenuProps> = ({ isResponsive = true }) => {
                 </div>
               </div>
             )}
-            {!poapLoading && poap && (
+            {/* {!poapLoading && poap && (
               <Link
                 href={poap}
                 target='_blank'
@@ -253,7 +248,7 @@ const WalletMenu: React.FC<WalletMenuProps> = ({ isResponsive = true }) => {
                   <Image src={EarlyUserPoap2025} alt='Early user Poap' width={30} height={30} />
                 </div>
               </Link>
-            )}
+            )} */}
             {userAddress && <EthBalance address={userAddress} chain={listChain || chains[0]} />}
             <p
               className='text-red-500 p-3 text-right font-bold w-full text-nowrap rounded-md hover:bg-navItem transition-opacity cursor-pointer'
