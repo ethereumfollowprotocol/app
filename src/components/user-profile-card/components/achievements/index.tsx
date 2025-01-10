@@ -24,7 +24,7 @@ const Achievements: React.FC<AchievementsProps> = ({
 }) => {
   const { ownedBadges, isLoading: isBadgesLoading } = useAchievements({
     address: profile?.address,
-    list
+    list: list || undefined
   })
 
   const rankTitles = Object.keys(profile?.ranks || {})

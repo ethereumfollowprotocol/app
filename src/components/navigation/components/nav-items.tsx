@@ -24,8 +24,7 @@ const NavItems = () => {
   })
 
   const itemUrl =
-    pathname?.toLowerCase() === `/${userAddress?.toLowerCase()}` &&
-    selectedList === Number(lists?.primary_list)
+    selectedList === Number(lists?.primary_list) && pathname !== `/${selectedList}`
       ? userAddress?.toLowerCase()
       : selectedList?.toString() ?? userAddress?.toLowerCase()
   const itemIndex = EXTERNAL_LINKS.find(link => link.href === pathname)

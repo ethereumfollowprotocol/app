@@ -36,7 +36,7 @@ const TopRow: React.FC<TopRowProps> = ({
         profileList ? 'justify-between' : 'justify-end'
       )}
     >
-      {!!profileList && (
+      {profileList && (
         <p className='text-sm sm:text-sm bg-neutral/80 py-[3px] px-2 rounded-full'>
           {t('list')} #{formatNumber(profileList)}
         </p>

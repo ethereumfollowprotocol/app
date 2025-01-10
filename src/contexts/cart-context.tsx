@@ -60,7 +60,7 @@ type Props = {
 }
 
 // Define the provider component
-export const CartProvider: React.FC<Props> = ({ children }: Props) => {
+export const CartProvider: React.FC<Props> = ({ children }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([])
   const [loadingCartItems, setLoadingCartItems] = useState<number>(0)
 

@@ -60,13 +60,13 @@ const Home = () => {
             }
             showMoreOptions={true}
             openBlockModal={() => {
-              if (profile) router.push(`/${profile.address}?modal=block_mute_list`)
+              if (profile) router.push(`/${selectedList && selectedList !== Number(profile.primary_list) ? selectedList : profile.address}?modal=block_mute_list`)
             }}
             openListSettingsModal={() => {
-              if (profile) router.push(`/${profile.address}?modal=list_settings`)
+              if (profile) router.push(`/${selectedList && selectedList !== Number(profile.primary_list) ? selectedList : profile.address}?modal=list_settings`)
             }}
             openQrCodeModal={() => {
-              if (profile) router.push(`/${profile.address}?modal=qr_code`)
+              if (profile) router.push(`/${selectedList && selectedList !== Number(profile.primary_list) ? selectedList : profile.address}?modal=qr_code`)
             }}
           />
         </div>

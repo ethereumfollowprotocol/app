@@ -20,8 +20,6 @@ export function useMintEFP() {
   }: { selectedChainId?: number; setNewListAsPrimary?: boolean }) => {
     if (!accountAddress) return
 
-    // const walletClient = await getWalletClient(config)
-
     const listRecordsContractAddress = selectedChainId
       ? (ListRecordContracts[selectedChainId] as Address)
       : coreEfpContracts.EFPListRecords

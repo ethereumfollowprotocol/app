@@ -138,7 +138,7 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
             text='block-mute'
           />
         )}
-        {openListSettingsModal && profileList && (
+        {openListSettingsModal && !!profileList && (
           <OpenModalButton
             onClick={() => {
               openListSettingsModal()
