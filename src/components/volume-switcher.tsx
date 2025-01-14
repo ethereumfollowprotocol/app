@@ -72,7 +72,7 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = ({
       </div>
       <div
         className={cn(
-          'absolute group-hover:block block h-[192px] lg:h-[140px] z-50 -right-[251px] lg:right-[97.2%] min-w-[246px] -top-[106px] lg:-top-[7px] lg:pr-5',
+          'absolute group-hover:block block h-[192px] lg:h-[118px] z-50 -right-[251px] lg:right-[97.2%] min-w-[246px] -top-[106px] lg:-top-[7px] lg:pr-5',
           volumeMenuOpen ? 'block' : 'hidden'
         )}
       >
