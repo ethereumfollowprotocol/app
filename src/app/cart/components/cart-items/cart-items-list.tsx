@@ -130,9 +130,9 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
                       key={profile.address}
                       address={profile.address}
                       ensProfile={profile.ens}
-                      showTags={true}
                       tags={profile.tags}
                       counts={profile.counts}
+                      showTags={true}
                       canEditTags={true}
                     />
                   </div>
@@ -141,6 +141,8 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
             />
           ) : (
             <ProfileList
+            showTags={true}
+            canEditTags={true}
               profiles={profiles}
               isLoading={isLoading}
               className='gap-4 2xl:gap-5 pb-4'

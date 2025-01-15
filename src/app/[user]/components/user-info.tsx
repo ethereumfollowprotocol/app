@@ -119,7 +119,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       fetchMore: () => fetchMoreFollowing(),
       title: 'following' as ProfileTabType,
       canEditTags:
-        Number(userIsList ? listNum : profile?.primary_list) === selectedList && roles?.isManager
+        isMyProfile && roles?.isManager
     }
   }[activeTab]
 
