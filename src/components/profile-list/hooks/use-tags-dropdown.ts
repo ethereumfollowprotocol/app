@@ -54,6 +54,8 @@ export const useTagsDropdown = (
   // }, [addressListOpsInCart])
 
   const addTag = async (tag: string) => {
+    if (!canEditTags) return
+
     if (!displayedTags.includes(tag)) {
       addRecentTag(tag)
       setDisplayedTags(prevTags => [...prevTags, tag])
@@ -69,7 +71,7 @@ export const useTagsDropdown = (
   }
 
   const removeTag = async (tag: string) => {
-    if (!address) return null
+    if (!address || !canEditTags) return null
 
     const addresses = profiles.map(({ address }) => address.toLowerCase())
 
