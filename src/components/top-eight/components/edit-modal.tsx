@@ -87,7 +87,7 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose }) => {
         <div className='w-full mt-4 flex justify-between items-center'>
           <CancelButton onClick={onClose} />
           <PrimaryButton
-            disabled={isTopEightFull}
+            // disabled={isTopEightFull}
             onClick={() => {
               router.push('/cart')
               onClose()

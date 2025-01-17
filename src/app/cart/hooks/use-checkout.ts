@@ -193,8 +193,8 @@ const useCheckout = () => {
 
     resetCart()
     resetActions()
-    setIsCheckingOut(false)
     router.push(`/${selectedList ?? userAddress}`)
+    setIsCheckingOut(false)
   }, [resetActions, resetCart, setNewListAsPrimary])
 
   const { poapLink, poapLoading, claimPoapModalOpen, setClaimPoapModalOpen } =
