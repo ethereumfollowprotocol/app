@@ -11,7 +11,6 @@ import { ThemeProvider } from 'next-themes'
 import { cookieToInitialState } from 'wagmi'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-import { GoogleAnalytics } from '@next/third-parties/google'
 
 import Providers from './providers.tsx'
 import wagmiConfig from '../lib/wagmi.ts'
@@ -50,7 +49,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           <SpeedInsights />
         </Production>
       </body>
-      <GoogleAnalytics gaId='G-4YT2CMF6F2' />
     </html>
   )
 }
