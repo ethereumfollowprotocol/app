@@ -56,6 +56,11 @@ export const INTEGRATIONS = [
     logo: Yodl
   },
   {
+    name: 'Zapper',
+    url: 'https://zapper.xyz/',
+    logo: Zapper
+  },
+  {
     name: 'Rotki',
     url: 'https://rotki.com/',
     logo: Rotki
