@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@million/lint": "^1.0.13",
+    "@next/third-parties": "^15.1.6",
     "@rainbow-me/rainbowkit": "^2.2.1",
     "@react-spring/web": "^9.7.5",
     "@sentry/nextjs": "^8",
