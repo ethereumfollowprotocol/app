@@ -27,6 +27,7 @@ import Snapshot from 'public/assets/partners/snapshot.jpeg'
 import BanklessAcademy from 'public/assets/partners/banklessacademy.jpeg'
 import ENSResolver from 'public/assets/partners/ensresolver.jpeg'
 import Rotki from 'public/assets/partners/rotki.jpeg'
+import Zapper from 'public/assets/partners/zapper.jpeg'
 
 
 export const INTEGRATIONS = [
@@ -49,6 +50,11 @@ export const INTEGRATIONS = [
     name: 'Vision',
     url: 'https://vision.io/',
     logo: EnsVision
+  },
+    {
+    name: 'Zapper',
+    url: 'https://zapper.xyz/',
+    logo: Zapper
   },
   {
     name: 'Yodl',
