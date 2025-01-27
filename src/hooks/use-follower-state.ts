@@ -2,10 +2,10 @@ import { useMemo } from "react";
 import { useAccount } from "wagmi";
 import type { Address } from "viem";
 import { useQuery } from "@tanstack/react-query";
-import { fetchFollowState } from "ethereum-identity-kit";
 
 import type { FollowState } from "#/types/common";
 import { useEFPProfile } from "#/contexts/efp-profile-context";
+import { fetchFollowState } from "#/api/fetch-follow-state";
 
 const useFollowerState = ({
   address,
@@ -28,8 +28,8 @@ const useFollowerState = ({
       if (!userAddress) return null;
 
       const fetchedStatus = await fetchFollowState({
-        lookupAddressOrName: address,
-        connectedAddress: userAddress,
+        address: address,
+        userAddress: userAddress,
         list: selectedList,
         type: "follower",
       });
