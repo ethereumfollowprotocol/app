@@ -1,3 +1,4 @@
+import type { Address } from 'viem'
 import { useTranslation } from 'react-i18next'
 import { usePathname, useRouter } from 'next/navigation'
 
@@ -6,6 +7,7 @@ import { formatNumber } from '#/utils/format/format-number'
 import type { LeaderboardFilter } from '#/types/common'
 
 interface StatsDesktopProps {
+  address: Address
   firstStat?: LeaderboardFilter
   followers?: number
   following?: number
@@ -15,6 +17,7 @@ interface StatsDesktopProps {
 }
 
 const StatsDesktop: React.FC<StatsDesktopProps> = ({
+  address,
   firstStat,
   followers,
   following,
@@ -25,7 +28,6 @@ const StatsDesktop: React.FC<StatsDesktopProps> = ({
   const { t } = useTranslation()
   const router = useRouter()
   const pathname = usePathname()
-  const address = pathname.split('/')[1]
 
   const isHome = pathname === '/'
   const statLink = {

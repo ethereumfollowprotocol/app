@@ -86,6 +86,7 @@ const TableRow: React.FC<TableRowProps> = ({
         </div>
         <Name address={address} name={name} avatar={avatar} followerTag={followerTag} />
         <StatsDesktop
+          address={address}
           firstStat={firstStat}
           followers={followers}
           following={following}
@@ -102,6 +103,7 @@ const TableRow: React.FC<TableRowProps> = ({
         </div>
       </div>
       <StatsMobile
+        address={address}
         firstStat={firstStat}
         followers={followers}
         following={following}
