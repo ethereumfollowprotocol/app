@@ -1,11 +1,13 @@
+import type { Address } from 'viem'
+import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
-import { usePathname, useRouter } from 'next/navigation'
 
 import { cn } from '#/lib/utilities'
 import type { LeaderboardFilter } from '#/types/common'
 import { formatNumber } from '#/utils/format/format-number'
 
 interface StatsMobileProps {
+  address: Address
   firstStat?: LeaderboardFilter
   followers?: number
   following?: number
@@ -15,6 +17,7 @@ interface StatsMobileProps {
 }
 
 const StatsMobile: React.FC<StatsMobileProps> = ({
+  address,
   firstStat,
   followers,
   following,
@@ -24,8 +27,6 @@ const StatsMobile: React.FC<StatsMobileProps> = ({
 }) => {
   const { t } = useTranslation()
   const router = useRouter()
-  const pathname = usePathname()
-  const address = pathname.split('/')[1]
 
   const statLink = {
     followers: `/${address}?tab=followers`,

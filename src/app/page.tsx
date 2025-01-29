@@ -2,10 +2,10 @@ import type { Metadata } from 'next'
 import Home from '#/components/home'
 
 export const metadata: Metadata = {
-  title: 'Home | EFP',
+  title: 'Ethereum Follow Protocol',
   openGraph: {
-    title: 'Home | EFP',
-    siteName: 'App - Ethereum Follow Protocol',
+    title: 'Ethereum Follow Protocol',
+    siteName: 'Ethereum Follow Protocol',
     description: 'Social graph for Ethereum',
     url: 'https://ethfollow.xyz',
     images: [
