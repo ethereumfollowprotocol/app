@@ -17,7 +17,7 @@ import { formatNumber } from '#/utils/format/format-number'
 import Recommendations from '#/components/recommendations'
 import FarcasterIcon from 'public/assets/icons/farcaster.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import { PrimaryButton } from '#/components/buttons/primary-button'
+import PrimaryButton from '#/components/buttons/primary-button'
 import { DEFAULT_CHAIN, LIST_OP_LIMITS } from '#/lib/constants/chains'
 import useStickyScroll from '#/components/home/hooks/use-sticky-scroll'
 import { useActions } from '#/contexts/actions-context'
@@ -67,13 +67,11 @@ const Cart = () => {
             'flex flex-col-reverse xl:flex-row overflow-y-auto justify-center gap-4 w-full h-full xl:gap-6 pt-[6.75rem] px-2 lg:px-8 pb-40 sm:pb-44 xl:pb-8',
             totalCartItems >= 30 && 'xl:pb-0'
           )}
-          onScroll={e => {
+          onScroll={(e) => {
             onScrollSidebar(e)
           }}
         >
-          {importModalOpen && (
-            <ImportModal onClose={() => setImportModalOpen(false)} platform={selectedPlatform} />
-          )}
+          {importModalOpen && <ImportModal onClose={() => setImportModalOpen(false)} platform={selectedPlatform} />}
           {clearCartModalOpen && <ClearCartModal closeModal={() => setClearCartModalOpen(false)} />}
           <div
             className={cn(
@@ -102,25 +100,17 @@ const Cart = () => {
             <Recommendations header={t('recommendations')} endpoint='recommended' limit={30} />
           </div>
           <div
-            className={cn(
-              'flex flex-col h-fit relative top-0  w-full xl:w-2/3',
-              totalCartItems >= 30 && 'xl:sticky'
-            )}
+            className={cn('flex flex-col h-fit relative top-0  w-full xl:w-2/3', totalCartItems >= 30 && 'xl:sticky')}
           >
             <Suspense
               fallback={
                 <div className='flex justify-between gap-2 flex-row items-center px-3 md:px-4'>
-                  <h3 className='font-bold text-left text-xl sm:text-3xl xxs:w-2/3'>
-                    {t('cart unc-changes')}
-                  </h3>
+                  <h3 className='font-bold text-left text-xl sm:text-3xl xxs:w-2/3'>{t('cart unc-changes')}</h3>
                 </div>
               }
             >
               <div className='xl:absolute xl:top-0 xl:left-0 w-full h-fit flex flex-col gap-3 md:gap-4 md:pt-6 pt-5 pb-2 px-1 sm:px-3 md:px-4 glass-card rounded-2xl border-[3px] border-grey'>
-                <CartItems
-                  containerRef={containerRef}
-                  setClearCartModalOpen={setClearCartModalOpen}
-                />
+                <CartItems containerRef={containerRef} setClearCartModalOpen={setClearCartModalOpen} />
               </div>
             </Suspense>
           </div>
@@ -134,9 +124,7 @@ const Cart = () => {
               <div className='flex gap-1 xxs:gap-2 md:gap-6 w-full border-[3px] border-b-0 md:border-b-[3px] bg-neutral/50 border-grey lg:w-fit items-center px-3 py-4 sm:p-4 justify-between glass-card bg-opacity-50 shadow-xl rounded-t-xl md:rounded-b-xl'>
                 <div className='flex flex-col gap-1 items-start'>
                   <div className='flex gap-2 items-center'>
-                    <p className='text-4xl 3xs:text-5xl sm:text-6xl font-bold'>
-                      {formatNumber(totalCartItems)}
-                    </p>
+                    <p className='text-4xl 3xs:text-5xl sm:text-6xl font-bold'>{formatNumber(totalCartItems)}</p>
                     <div className='flex gap-0 flex-col w-24 sm:w-28 font-bold text-sm 3xs:text-base sm:text-lg text-left whitespace-break-spaces'>
                       {t('unc-changes')}
                     </div>

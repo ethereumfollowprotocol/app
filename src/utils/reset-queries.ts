@@ -6,11 +6,7 @@ export const resetFollowingRelatedQueries = (queryClient: QueryClient) => {
   queryClient.invalidateQueries({ queryKey: ['list state'] })
 }
 
-export const refetchState = (
-  state: boolean,
-  setState: (state: boolean) => void,
-  refetch: () => void
-) => {
+export const refetchState = (state: boolean, setState: (state: boolean) => void, refetch: () => void) => {
   if (state) refetch()
   else setState(true)
 }

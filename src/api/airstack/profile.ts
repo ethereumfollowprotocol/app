@@ -21,13 +21,13 @@ export const fetchAirstackProfile = async (platform: string, handle: string) => 
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: process.env.NEXT_PUBLIC_AIRSTACK_API_KEY
+      Authorization: process.env.NEXT_PUBLIC_AIRSTACK_API_KEY,
     } as HeadersInit,
     body: JSON.stringify({
       query: profileQuery,
       variables: { platform },
-      operationName: 'ProfileQuery'
-    })
+      operationName: 'ProfileQuery',
+    }),
   })
 
   const json = (await response.json()) as AirstackProfileResponse

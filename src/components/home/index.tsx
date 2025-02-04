@@ -27,7 +27,7 @@ const Home = () => {
     profileIsLoading,
     fetchFreshProfile,
     followersIsLoading,
-    setFetchFreshProfile
+    setFetchFreshProfile,
   } = useEFPProfile()
   const router = useRouter()
   const { t } = useTranslation()
@@ -41,7 +41,7 @@ const Home = () => {
   return (
     <div
       className='pt-[108px] relative md:pt-[6.75rem] w-full h-screen px-4 overflow-y-scroll lg:px-6 xl:px-8 flex items-start lg:justify-center lg:gap-4 xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4'
-      onScroll={e => {
+      onScroll={(e) => {
         onScrollSidebar(e)
         onScrollProfileCard(e)
       }}
@@ -55,18 +55,25 @@ const Home = () => {
             profile={profile}
             isStatsLoading={statsIsLoading}
             isLoading={profileIsLoading}
-            refetchProfile={() =>
-              refetchState(fetchFreshProfile, setFetchFreshProfile, refetchProfile)
-            }
+            refetchProfile={() => refetchState(fetchFreshProfile, setFetchFreshProfile, refetchProfile)}
             showMoreOptions={true}
             openBlockModal={() => {
-              if (profile) router.push(`/${selectedList && selectedList !== Number(profile.primary_list) ? selectedList : profile.address}?modal=block_mute_list`)
+              if (profile)
+                router.push(
+                  `/${selectedList && selectedList !== Number(profile.primary_list) ? selectedList : profile.address}?modal=block_mute_list`
+                )
             }}
             openListSettingsModal={() => {
-              if (profile) router.push(`/${selectedList && selectedList !== Number(profile.primary_list) ? selectedList : profile.address}?modal=list_settings`)
+              if (profile)
+                router.push(
+                  `/${selectedList && selectedList !== Number(profile.primary_list) ? selectedList : profile.address}?modal=list_settings`
+                )
             }}
             openQrCodeModal={() => {
-              if (profile) router.push(`/${selectedList && selectedList !== Number(profile.primary_list) ? selectedList : profile.address}?modal=qr_code`)
+              if (profile)
+                router.push(
+                  `/${selectedList && selectedList !== Number(profile.primary_list) ? selectedList : profile.address}?modal=qr_code`
+                )
             }}
           />
         </div>
@@ -104,16 +111,14 @@ const Home = () => {
             : 'w-full xl:w-1/2 xl:max-w-[900px] h-[638px]'
         )}
         style={{
-          top: userAddress ? 'calc(100vh - 108px - 2000px)' : '0'
+          top: userAddress ? 'calc(100vh - 108px - 2000px)' : '0',
         }}
       >
         <Recommendations
           limit={11}
           endpoint='discover'
           header={t('recent')}
-          className={cn(
-            'h-fit w-full py-4 p-3 2xl:p-4 glass-card border-[3px] border-grey rounded-2xl'
-          )}
+          className={cn('h-fit w-full py-4 p-3 2xl:p-4 glass-card border-[3px] border-grey rounded-2xl')}
         />
         {!isFollowersEmpty && userAddress && <LatestFollowers />}
       </div>

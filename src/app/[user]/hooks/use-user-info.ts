@@ -12,11 +12,7 @@ export const useUserInfo = (user: string) => {
   const isLoadPage = pathname === '/loading'
 
   const profileData = useEFPProfile()
-  const {
-    listNum,
-    userIsList,
-    ...userData
-    } = useUser(user)
+  const { listNum, userIsList, ...userData } = useUser(user)
 
   const selectedData = isMyProfile ? profileData : userData
   const profileIsLoading = isLoadPage || selectedData.profileIsLoading
@@ -28,7 +24,8 @@ export const useUserInfo = (user: string) => {
 
   const { data: qrCode, isLoading: qrCodeIsLoading } = useQuery({
     queryKey: ['qrCode', selectedData.profile],
-    queryFn: async () => (selectedData.profile?.address ? await fetchProfileQRCode(selectedData.profile.address) : null)
+    queryFn: async () =>
+      selectedData.profile?.address ? await fetchProfileQRCode(selectedData.profile.address) : null,
   })
 
   const refetchProfile = () => {

@@ -21,7 +21,7 @@ const CartButton = () => {
   return (
     <Link
       href='/cart'
-      onClick={e => {
+      onClick={(e) => {
         if (!userAddress && openConnectModal) {
           e.preventDefault()
           openConnectModal()
@@ -45,13 +45,7 @@ const CartButton = () => {
             pathname === '/cart' ? 'text-black' : 'text-text-neutral group-hover:text-text'
           )}
         />
-        <Image
-          src={HalloweenCart}
-          alt='cart'
-          width={32}
-          height={32}
-          className='halloween:block hidden'
-        />
+        <Image src={HalloweenCart} alt='cart' width={32} height={32} className='halloween:block hidden' />
         {totalCartItems === 0 ? null : (
           <span className='absolute -right-3 sm:-right-3 -top-3 sm:-top-3 flex h-6 sm:h-7 w-fit min-w-6 sm:min-w-7 items-center px-1 justify-center rounded-full bg-green-400 text-sm font-bold text-black'>
             {formatNumber(totalCartItems)}

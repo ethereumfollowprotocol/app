@@ -32,11 +32,11 @@ const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
     canEditTags,
     isBlockedList,
     isBlockedBy,
-    tagsDropdownPosition
+    tagsDropdownPosition,
   }) => {
     const { data: fetchedEnsProfile, isLoading: isEnsProfileLoading } = useQuery({
       queryKey: ['ens metadata', address],
-      queryFn: async () => (ensProfile ? ensProfile : await resolveEnsProfile(address))
+      queryFn: async () => (ensProfile ? ensProfile : await resolveEnsProfile(address)),
     })
 
     const profileName = fetchedEnsProfile?.name
@@ -64,5 +64,7 @@ const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
     )
   }
 )
+
+ProfileListItem.displayName = 'ProfileListItem'
 
 export default ProfileListItem

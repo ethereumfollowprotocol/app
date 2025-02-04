@@ -22,7 +22,7 @@ import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 const nullEnsProfile = {
   name: null,
-  avatar: null
+  avatar: null,
 }
 
 interface WalletMenuProps {
@@ -33,12 +33,12 @@ const WalletMenu: React.FC<WalletMenuProps> = ({ isResponsive = true }) => {
   const [listMenuOpen, setListMenuOpen] = useState(false)
   const [walletMenOpenu, setWalletMenuOpen] = useState(false)
 
-  const clickAwayWalletRef = useClickAway<HTMLDivElement>(_ => {
+  const clickAwayWalletRef = useClickAway<HTMLDivElement>((_) => {
     setWalletMenuOpen(false)
     setListMenuOpen(false)
   })
 
-  const clickAwayListRef = useClickAway<HTMLDivElement>(_ => {
+  const clickAwayListRef = useClickAway<HTMLDivElement>((_) => {
     setListMenuOpen(false)
   })
 
@@ -50,7 +50,7 @@ const WalletMenu: React.FC<WalletMenuProps> = ({ isResponsive = true }) => {
   const { selectedList, lists, setSelectedList, roles } = useEFPProfile()
   const { isLoading: isLoadingWalletClient, data: walletClient } = useWalletClient()
 
-  const listChain = chains.find(chain => chain.id === roles?.listChainId)
+  const listChain = chains.find((chain) => chain.id === roles?.listChainId)
 
   useEffect(() => {
     if (
@@ -71,7 +71,7 @@ const WalletMenu: React.FC<WalletMenuProps> = ({ isResponsive = true }) => {
 
       const data = await resolveEnsProfile(userAddress)
       return data
-    }
+    },
   })
 
   // const { ownedBadges, isLoading: isBadgesLoading } = useAchievements({
@@ -98,11 +98,7 @@ const WalletMenu: React.FC<WalletMenuProps> = ({ isResponsive = true }) => {
           isResponsive ? 'w-fit sm:w-48 md:w-56' : 'w-56'
         )}
         onClick={() =>
-          userAddress
-            ? setWalletMenuOpen(!walletMenOpenu)
-            : openConnectModal
-              ? openConnectModal()
-              : null
+          userAddress ? setWalletMenuOpen(!walletMenOpenu) : openConnectModal ? openConnectModal() : null
         }
       >
         {userAddress ? (
@@ -121,20 +117,13 @@ const WalletMenu: React.FC<WalletMenuProps> = ({ isResponsive = true }) => {
                 {ensProfile?.name || truncateAddress(userAddress)}
               </p>
             </div>
-            <IoIosArrowDown
-              className={`${walletMenOpenu ? 'rotate-180' : ''} text-2xl transition-transform mr-1`}
-            />
+            <IoIosArrowDown className={`${walletMenOpenu ? 'rotate-180' : ''} text-2xl transition-transform mr-1`} />
           </>
         ) : (
           <div className=' sm:w-60 h-full flex items-center justify-center rounded-full'>
-            <p className={cn('font-bold text-lg px-1', isResponsive ? 'hidden sm:block' : 'block')}>
-              {t('connect')}
-            </p>
+            <p className={cn('font-bold text-lg px-1', isResponsive ? 'hidden sm:block' : 'block')}>{t('connect')}</p>
             <SlWallet
-              className={cn(
-                'text-3xl w-[42px] -translate-y-px',
-                isResponsive ? 'block sm:hidden' : 'hidden'
-              )}
+              className={cn('text-3xl w-[42px] -translate-y-px', isResponsive ? 'block sm:hidden' : 'hidden')}
             />
           </div>
         )}
@@ -151,7 +140,7 @@ const WalletMenu: React.FC<WalletMenuProps> = ({ isResponsive = true }) => {
               listMenuOpen ? '-translate-x-[221px] sm:translate-x-0 sm:p-1' : 'p-1'
             )}
             style={{
-              height: listMenuOpen ? `${(lists?.lists?.length || 0) * 56 + 111}px` : 'auto'
+              height: listMenuOpen ? `${(lists?.lists?.length || 0) * 56 + 111}px` : 'auto',
             }}
           >
             {lists?.lists && lists.lists.length > 0 && (
@@ -161,9 +150,7 @@ const WalletMenu: React.FC<WalletMenuProps> = ({ isResponsive = true }) => {
                   className='flex justify-between items-center w-full group-hover:bg-navItem p-3 rounded-md transition-opacity cursor-pointer'
                 >
                   <FiArrowLeft className='text-xl' />
-                  <p className=' font-bold'>
-                    {selectedList ? `${t('list')} #${selectedList}` : t('mint new list')}
-                  </p>
+                  <p className=' font-bold'>{selectedList ? `${t('list')} #${selectedList}` : t('mint new list')}</p>
                 </div>
                 <div
                   className={cn(
@@ -183,7 +170,7 @@ const WalletMenu: React.FC<WalletMenuProps> = ({ isResponsive = true }) => {
                       <FiArrowLeft className='text-xl' />
                       <p className='font-bold'>Back</p>
                     </div>
-                    {lists?.lists?.map(list => (
+                    {lists?.lists?.map((list) => (
                       <div
                         className='flex items-center relative p-3 pl-8 w-full gap-1 rounded-md hover:bg-navItem'
                         key={list}
@@ -223,12 +210,7 @@ const WalletMenu: React.FC<WalletMenuProps> = ({ isResponsive = true }) => {
                       }}
                     >
                       {selectedList === undefined && (
-                        <Image
-                          src={GreenCheck}
-                          alt='List selected'
-                          width={16}
-                          className='absolute left-2 top-[17px]'
-                        />
+                        <Image src={GreenCheck} alt='List selected' width={16} className='absolute left-2 top-[17px]' />
                       )}
                       <p className=' font-bold'>{t('mint new list')}</p>
                     </div>

@@ -10,13 +10,13 @@ export const metadata: Metadata = {
     url: 'https://ethfollow.xyz',
     images: [
       {
-        url: 'https://ethfollow.xyz/assets/banners/home.png'
-      }
-    ]
+        url: 'https://ethfollow.xyz/assets/banners/home.png',
+      },
+    ],
   },
   twitter: {
-    images: 'https://ethfollow.xyz/assets/banners/home.png'
-  }
+    images: 'https://ethfollow.xyz/assets/banners/home.png',
+  },
 }
 
 const HomePage = () => {

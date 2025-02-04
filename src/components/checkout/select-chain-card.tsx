@@ -9,7 +9,7 @@ import { DEFAULT_CHAIN } from '#/lib/constants/chains'
 import GreenCheck from 'public/assets/icons/check-green.svg'
 import CancelButton from '#/components/buttons/cancel-button'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import { PrimaryButton } from '#/components/buttons/primary-button'
+import PrimaryButton from '#/components/buttons/primary-button'
 
 export function SelectChainCard({
   chains,
@@ -19,7 +19,7 @@ export function SelectChainCard({
   selectedChain,
   handleNextStep,
   setNewListAsPrimary,
-  setSetNewListAsPrimary
+  setSetNewListAsPrimary,
 }: {
   chains: UseChainsReturnType<Config>
   isCreatingNewList: boolean
@@ -38,9 +38,7 @@ export function SelectChainCard({
   return (
     <>
       <div className='flex flex-col gap-2'>
-        <h1 className='text-2xl font-bold'>
-          {t(isCreatingNewList ? 'create list title' : 'title list op')}
-        </h1>
+        <h1 className='text-2xl font-bold'>{t(isCreatingNewList ? 'create list title' : 'title list op')}</h1>
         {isCreatingNewList && <p className='font-medium text-zinc-400'>{t('chain comment')}</p>}
       </div>
       <div className='flex flex-col items-center gap-4'>
@@ -54,7 +52,7 @@ export function SelectChainCard({
             className='toggle'
             type='checkbox'
             defaultChecked={setNewListAsPrimary}
-            onChange={e => setSetNewListAsPrimary(e.target.checked)}
+            onChange={(e) => setSetNewListAsPrimary(e.target.checked)}
           />
         </div>
       )}
@@ -78,7 +76,7 @@ export function SelectChainCard({
 export function ChainList({
   chains,
   onClick,
-  selectedChain
+  selectedChain,
 }: {
   chains: UseChainsReturnType<Config>
   onClick: (chainId: number) => void
@@ -86,13 +84,8 @@ export function ChainList({
 }) {
   return (
     <div className='flex flex-col gap-4'>
-      {chains.map(chain => (
-        <ChainItem
-          key={chain.id}
-          chain={chain}
-          onClick={onClick}
-          isSelected={chain.id === selectedChain?.id}
-        />
+      {chains.map((chain) => (
+        <ChainItem key={chain.id} chain={chain} onClick={onClick} isSelected={chain.id === selectedChain?.id} />
       ))}
     </div>
   )
@@ -101,7 +94,7 @@ export function ChainList({
 function ChainItem({
   chain,
   onClick,
-  isSelected
+  isSelected,
 }: {
   isSelected: boolean
   chain: Chain
@@ -110,10 +103,7 @@ function ChainItem({
   const { t } = useTranslation()
 
   return (
-    <div
-      className='flex items-center relative gap-3 hover:cursor-pointer'
-      onClick={() => onClick(chain.id)}
-    >
+    <div className='flex items-center relative gap-3 hover:cursor-pointer' onClick={() => onClick(chain.id)}>
       {isSelected && (
         <Image
           src={GreenCheck}

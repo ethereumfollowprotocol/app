@@ -1,43 +1,41 @@
-import { toast } from "sonner";
-import { useAccount } from "wagmi";
-import { useTranslation } from "react-i18next";
-import { isAddress, type Address } from "viem";
-import { useQuery } from "@tanstack/react-query";
-import { useClickAway } from "@uidotdev/usehooks";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { fetchFollowState } from "ethereum-identity-kit";
+import { toast } from 'sonner'
+import { useAccount } from 'wagmi'
+import { useTranslation } from 'react-i18next'
+import { isAddress, type Address } from 'viem'
+import { useQuery } from '@tanstack/react-query'
+import { useClickAway } from '@uidotdev/usehooks'
+import { usePathname, useRouter } from 'next/navigation'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { fetchFollowState } from 'ethereum-identity-kit'
 
-import { SECOND } from "#/lib/constants";
-import { resolveEnsAddress } from "#/utils/ens";
-import { useCart } from "#/contexts/cart-context.tsx";
-import { searchENSNames } from "#/api/search-ens-names";
-import { listOpAddListRecord } from "#/utils/list-ops.ts";
-import { formatError } from "#/utils/format/format-error";
-import { useEFPProfile } from "#/contexts/efp-profile-context.tsx";
+import { SECOND } from '#/lib/constants'
+import { resolveEnsAddress } from '#/utils/ens'
+import { useCart } from '#/contexts/cart-context.tsx'
+import { searchENSNames } from '#/api/search-ens-names'
+import { listOpAddListRecord } from '#/utils/list-ops.ts'
+import { formatError } from '#/utils/format/format-error'
+import { useEFPProfile } from '#/contexts/efp-profile-context.tsx'
 
 const useSearch = (isEditor?: boolean) => {
-  const [isAddingToCart, setIsAddingToCart] = useState(false);
-  const [dropdownMenuOpen, setDropdownMenuOpen] = useState(false);
-  const [dialogOpen, setDialogOpen] = useState<undefined | boolean>(undefined);
+  const [isAddingToCart, setIsAddingToCart] = useState(false)
+  const [dropdownMenuOpen, setDropdownMenuOpen] = useState(false)
+  const [dialogOpen, setDialogOpen] = useState<undefined | boolean>(undefined)
 
-  // const searchParams = useSearchParams()
-  // const initialSearch = searchParams.get('search')
-  const [currentSearch, setCurrentSearch] = useState("");
-  const [search, setSearch] = useState("");
+  const [currentSearch, setCurrentSearch] = useState('')
+  const [search, setSearch] = useState('')
 
-  const router = useRouter();
-  const pathname = usePathname();
-  const { t } = useTranslation();
-  const { address: userAddress } = useAccount();
-  const { roles, selectedList } = useEFPProfile();
-  const { addCartItem, hasListOpAddRecord, setLoadingCartItems } = useCart();
+  const router = useRouter()
+  const pathname = usePathname()
+  const { t } = useTranslation()
+  const { address: userAddress } = useAccount()
+  const { roles, selectedList } = useEFPProfile()
+  const { addCartItem, hasListOpAddRecord, setLoadingCartItems } = useCart()
 
   const clickAwayRef = useClickAway<HTMLDivElement>((_) => {
-    setDropdownMenuOpen(false);
-    setDialogOpen(false);
-  });
-  const searchBarRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
+    setDropdownMenuOpen(false)
+    setDialogOpen(false)
+  })
+  const searchBarRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
 
   // useEffect(() => {
   //   if (initialSearch && initialSearch?.length > 0 && searchBarRef) {
@@ -49,206 +47,189 @@ const useSearch = (isEditor?: boolean) => {
   // }, [searchBarRef])
 
   useEffect(() => {
-    if (dialogOpen) searchBarRef.current?.focus();
-  }, [dialogOpen]);
+    if (dialogOpen) searchBarRef.current?.focus()
+  }, [dialogOpen])
 
-  const searchKey = useMemo(
-    () => (isEditor ? currentSearch : search),
-    [isEditor, search, currentSearch]
-  );
+  const searchKey = useMemo(() => (isEditor ? currentSearch : search), [isEditor, search, currentSearch])
 
   const {
     data,
     status: searchResultStatus,
     isLoading,
   } = useQuery({
-    queryKey: ["ens-subgraph-search", { seaarch: searchKey }],
-    queryFn: async () => await searchENSNames({ search: searchKey ?? "" }),
+    queryKey: ['ens-subgraph-search', { seaarch: searchKey }],
+    queryFn: async () => await searchENSNames({ search: searchKey ?? '' }),
     refetchOnMount: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
     refetchIntervalInBackground: false,
     enabled: Boolean(searchKey && searchKey.length > 0),
-  });
+  })
 
   const searchResult =
-    searchResultStatus !== "pending"
+    searchResultStatus !== 'pending'
       ? !data || data.length === 0
         ? !(isEditor || isAddress(searchKey)) &&
-          (!Number.isNaN(Number(searchKey)) ||
-            (searchKey[0] === "#" && !Number.isNaN(Number(searchKey.slice(1)))))
+          (!Number.isNaN(Number(searchKey)) || (searchKey[0] === '#' && !Number.isNaN(Number(searchKey.slice(1)))))
           ? [
               {
-                name: `#${searchKey[0] === "#" ? searchKey.slice(1) : searchKey}`,
+                name: `#${searchKey[0] === '#' ? searchKey.slice(1) : searchKey}`,
                 resolvedAddress: null,
               },
             ]
-          : !isEditor && searchKey.includes(".")
-          ? [
-              {
-                name: searchKey,
-                resolvedAddress: null,
-              },
-            ]
-          : isAddress(searchKey)
-          ? [
-              {
-                name: searchKey,
-                resolvedAddress: { id: searchKey },
-              },
-            ]
-          : []
+          : !isEditor && searchKey.includes('.')
+            ? [
+                {
+                  name: searchKey,
+                  resolvedAddress: null,
+                },
+              ]
+            : isAddress(searchKey)
+              ? [
+                  {
+                    name: searchKey,
+                    resolvedAddress: { id: searchKey },
+                  },
+                ]
+              : []
         : data.slice(0, 5)
-      : [];
+      : []
 
   const resetSearch = () => {
-    setCurrentSearch("");
-    setDialogOpen(false);
-    setDropdownMenuOpen(false);
-    searchBarRef.current?.blur();
-  };
+    setCurrentSearch('')
+    setDialogOpen(false)
+    setDropdownMenuOpen(false)
+    searchBarRef.current?.blur()
+  }
 
   const getFollowingState = async (address: Address) => {
-    if (!userAddress) return "none";
+    if (!userAddress) return 'none'
 
     const followingStatus = await fetchFollowState({
       lookupAddressOrName: address,
       connectedAddress: userAddress,
       list: selectedList,
-      type: "following",
-    });
+      type: 'following',
+    })
 
-    if (!followingStatus) return "none";
-    if (followingStatus.state.block) return "blocks";
-    if (followingStatus.state.mute) return "mutes";
-    if (followingStatus.state.follow) return "follows";
+    if (!followingStatus) return 'none'
+    if (followingStatus.state.block) return 'blocks'
+    if (followingStatus.state.mute) return 'mutes'
+    if (followingStatus.state.follow) return 'follows'
 
-    return "none";
-  };
+    return 'none'
+  }
 
-  const searchTimeout = useRef<NodeJS.Timeout | null>(null);
+  const searchTimeout = useRef<NodeJS.Timeout | null>(null)
 
   const handleSearchEvent = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const term = event?.target.value.toLowerCase();
-    if (!isEditor && term.includes(" ")) return;
-    if (searchTimeout.current) clearTimeout(searchTimeout.current);
+    const term = event?.target.value.toLowerCase()
+    if (!isEditor && term.includes(' ')) return
+    if (searchTimeout.current) clearTimeout(searchTimeout.current)
 
-    const hasMultipleNames =
-      isEditor && (term.includes(",") || term.includes(" ") || term.includes("\n"));
-    setDropdownMenuOpen(!hasMultipleNames && term.length > 0);
-    setCurrentSearch(term);
+    const hasMultipleNames = isEditor && (term.includes(',') || term.includes(' ') || term.includes('\n'))
+    setDropdownMenuOpen(!hasMultipleNames && term.length > 0)
+    setCurrentSearch(term)
 
     if (!isEditor) {
-      if (term) searchTimeout.current = setTimeout(() => setSearch(term), 0.5 * SECOND);
+      if (term) searchTimeout.current = setTimeout(() => setSearch(term), 0.5 * SECOND)
       else {
-        setSearch("");
-        router.push(pathname.replace("query=", ""));
+        setSearch('')
+        router.push(pathname.replace('query=', ''))
       }
     }
-  };
+  }
 
   const addToCart = async (user: string) => {
     if (!roles?.isManager) {
-      toast.error(t("not manager"));
-      return;
+      toast.error(t('not manager'))
+      return
     }
 
-    const address = isAddress(user) ? user : await resolveEnsAddress(user);
+    const address = isAddress(user) ? user : await resolveEnsAddress(user)
 
     if (!address) {
-      setLoadingCartItems((prevLoading) => (prevLoading > 0 ? prevLoading - 1 : prevLoading));
-      return { user };
+      setLoadingCartItems((prevLoading) => (prevLoading > 0 ? prevLoading - 1 : prevLoading))
+      return { user }
     }
 
-    const followState = await getFollowingState(address);
-    const isPendingFollow = hasListOpAddRecord(address);
+    const followState = await getFollowingState(address)
+    const isPendingFollow = hasListOpAddRecord(address)
 
     if (isPendingFollow) {
-      setLoadingCartItems((prevLoading) => (prevLoading > 0 ? prevLoading - 1 : prevLoading));
-      return { user, isFollowing: false, inCart: true };
+      setLoadingCartItems((prevLoading) => (prevLoading > 0 ? prevLoading - 1 : prevLoading))
+      return { user, isFollowing: false, inCart: true }
     }
 
-    if (followState === "follows") {
-      setLoadingCartItems((prevLoading) => (prevLoading > 0 ? prevLoading - 1 : prevLoading));
-      return { user, isFollowing: true };
+    if (followState === 'follows') {
+      setLoadingCartItems((prevLoading) => (prevLoading > 0 ? prevLoading - 1 : prevLoading))
+      return { user, isFollowing: true }
     }
 
-    if (followState === "none") addCartItem({ listOp: listOpAddListRecord(address) });
-  };
+    if (followState === 'none') addCartItem({ listOp: listOpAddListRecord(address) })
+  }
 
   const onSubmit = async () => {
     if (isEditor) {
-      resetSearch();
-      searchBarRef.current?.focus();
+      resetSearch()
+      searchBarRef.current?.focus()
 
-      if (!roles?.isManager) return toast.error(t("not manager"));
+      if (!roles?.isManager) return toast.error(t('not manager'))
 
-      setIsAddingToCart(true);
+      setIsAddingToCart(true)
 
       const hasMultipleNames =
-        isEditor &&
-        (currentSearch.includes(",") ||
-          currentSearch.includes(" ") ||
-          currentSearch.includes("\n"));
+        isEditor && (currentSearch.includes(',') || currentSearch.includes(' ') || currentSearch.includes('\n'))
 
       if (hasMultipleNames) {
         const namesToAdd = currentSearch
-          .replaceAll(",", " ")
-          .replaceAll("\n", " ")
-          .split(" ")
+          .replaceAll(',', ' ')
+          .replaceAll('\n', ' ')
+          .split(' ')
           .map((name) => name.trim())
-          .filter((name) => !!name);
+          .filter((name) => !!name)
 
-        setLoadingCartItems(namesToAdd.length);
+        setLoadingCartItems(namesToAdd.length)
 
-        const addedToCart = await Promise.all(
-          namesToAdd.map(async (name) => await addToCart(name))
-        );
+        const addedToCart = await Promise.all(namesToAdd.map(async (name) => await addToCart(name)))
 
-        const namesInCart = addedToCart.filter((item) => item?.inCart).map((item) => item?.user);
-        const alreadyFollowed = addedToCart
-          .filter((item) => item?.isFollowing)
-          .map((item) => item?.user);
+        const namesInCart = addedToCart.filter((item) => item?.inCart).map((item) => item?.user)
+        const alreadyFollowed = addedToCart.filter((item) => item?.isFollowing).map((item) => item?.user)
         const erroredNames = addedToCart
           .filter((item) => !(item?.inCart || item?.isFollowing) && !!item?.user)
-          .map((item) => item?.user);
+          .map((item) => item?.user)
 
-        if (erroredNames.length > 0) toast.error(`${t("unresolved")} ${formatError(erroredNames)}`);
-        if (namesInCart.length > 0) toast.error(`${t("in cart")} ${formatError(namesInCart)}`);
-        if (alreadyFollowed.length > 0)
-          toast.error(`${t("already followed")} ${formatError(alreadyFollowed)}`);
+        if (erroredNames.length > 0) toast.error(`${t('unresolved')} ${formatError(erroredNames)}`)
+        if (namesInCart.length > 0) toast.error(`${t('in cart')} ${formatError(namesInCart)}`)
+        if (alreadyFollowed.length > 0) toast.error(`${t('already followed')} ${formatError(alreadyFollowed)}`)
 
-        return setIsAddingToCart(false);
+        return setIsAddingToCart(false)
       }
 
-      setLoadingCartItems(1);
-      const erroredName = await addToCart(currentSearch);
-      if (erroredName?.isFollowing) toast.error(`${t("already followed")} ${erroredName.user}`);
-      else if (erroredName?.inCart) toast.error(`${t("in cart")} ${erroredName.user}`);
-      else if (erroredName) toast.error(`${t("unresolved")} ${erroredName?.user}`);
+      setLoadingCartItems(1)
+      const erroredName = await addToCart(currentSearch)
+      if (erroredName?.isFollowing) toast.error(`${t('already followed')} ${erroredName.user}`)
+      else if (erroredName?.inCart) toast.error(`${t('in cart')} ${erroredName.user}`)
+      else if (erroredName) toast.error(`${t('unresolved')} ${erroredName?.user}`)
 
-      return setIsAddingToCart(false);
+      return setIsAddingToCart(false)
     }
 
     if (
       !Number.isNaN(Number(currentSearch)) ||
-      (currentSearch[0] === "#" && !Number.isNaN(Number(currentSearch.slice(1))))
+      (currentSearch[0] === '#' && !Number.isNaN(Number(currentSearch.slice(1))))
     ) {
-      router.push(`/${currentSearch[0] === "#" ? currentSearch.slice(1) : currentSearch}`);
-      resetSearch();
+      router.push(`/${currentSearch[0] === '#' ? currentSearch.slice(1) : currentSearch}`)
+      resetSearch()
     }
 
-    if (isAddress(currentSearch) || currentSearch.includes(".")) {
-      const address = isAddress(currentSearch)
-        ? currentSearch
-        : await resolveEnsAddress(currentSearch);
+    if (isAddress(currentSearch) || currentSearch.includes('.')) {
+      const address = isAddress(currentSearch) ? currentSearch : await resolveEnsAddress(currentSearch)
 
-      router.push(
-        `/${address || currentSearch}${isAddress(currentSearch) ? "" : `?search=${currentSearch}`}`
-      );
-      resetSearch();
+      router.push(`/${address || currentSearch}${isAddress(currentSearch) ? '' : `?search=${currentSearch}`}`)
+      resetSearch()
     }
-  };
+  }
 
   return {
     router,
@@ -267,7 +248,7 @@ const useSearch = (isEditor?: boolean) => {
     dropdownMenuOpen,
     handleSearchEvent,
     setDropdownMenuOpen,
-  };
-};
+  }
+}
 
-export default useSearch;
+export default useSearch

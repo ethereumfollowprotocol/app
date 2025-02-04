@@ -23,26 +23,19 @@ interface TopEightProfileProps {
 const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing }) => {
   const { data: fetchedEnsProfile, isLoading: isEnsProfileLoading } = useQuery({
     queryKey: ['ens metadata', profile.address],
-    queryFn: async () => (profile.ens ? profile.ens : await resolveEnsProfile(profile.address))
+    queryFn: async () => (profile.ens ? profile.ens : await resolveEnsProfile(profile.address)),
   })
 
   const profileName = fetchedEnsProfile?.name
   const profileAvatar = fetchedEnsProfile?.avatar
   const { followerTag } = useFollowerState({ address: profile?.address, showFollowerBadge: true })
 
-  const {
-    addCartItem,
-    removeCartItem,
-    hasListOpAddTag,
-    hasListOpRemoveTag,
-    hasListOpRemoveRecord
-  } = useCart()
+  const { addCartItem, removeCartItem, hasListOpAddTag, hasListOpRemoveTag, hasListOpRemoveRecord } = useCart()
   const { t } = useTranslation()
   const isAddingToTopEight = isEditing && hasListOpAddTag({ address: profile.address, tag: 'top8' })
   const isRemovingFromTopEight =
     isEditing &&
-    (hasListOpRemoveTag({ address: profile.address, tag: 'top8' }) ||
-      hasListOpRemoveRecord(profile.address))
+    (hasListOpRemoveTag({ address: profile.address, tag: 'top8' }) || hasListOpRemoveRecord(profile.address))
 
   const onClick = () => {
     if (!isEditing) return
@@ -70,8 +63,7 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
             'absolute top-1 right-1 p-1 rounded-full text-white',
             isAddingToTopEight && 'bg-green-500/50',
             isRemovingFromTopEight && 'bg-red-400/70',
-            !(isAddingToTopEight || isRemovingFromTopEight) &&
-              'bg-[#A2A2A277] group-hover:block hidden '
+            !(isAddingToTopEight || isRemovingFromTopEight) && 'bg-[#A2A2A277] group-hover:block hidden '
           )}
         >
           {isAddingToTopEight ? <HiPlus /> : <IoClose />}
@@ -84,10 +76,7 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
           <Link href={`/${profile.address}`} className={cn(isEditing && 'pointer-events-none')}>
             <Avatar
               name={profileName || profile.address}
-              size={cn(
-                'h-[50px] w-[50px]',
-                !isEditing && 'hover:scale-110 hover:opacity-75 transition-all'
-              )}
+              size={cn('h-[50px] w-[50px]', !isEditing && 'hover:scale-110 hover:opacity-75 transition-all')}
               avatarUrl={profileAvatar}
             />
           </Link>
@@ -102,9 +91,7 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
               isEditing ? 'pointer-events-none' : 'hover:scale-110 hover:opacity-75 transition-all'
             )}
           >
-            {profileName && isValidEnsName(profileName)
-              ? ens_beautify(profileName)
-              : truncateAddress(profile.address)}
+            {profileName && isValidEnsName(profileName) ? ens_beautify(profileName) : truncateAddress(profile.address)}
           </Link>
         )}
       </div>

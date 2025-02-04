@@ -50,31 +50,27 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ user, list, isManager, onCl
     setBlockingTagsFilter,
     setBlockedByTagsFilter,
     isFetchingMoreBlocking,
-    isFetchingMoreBlockedBy
+    isFetchingMoreBlockedBy,
   } = useBlockedMuted(user, list)
   const { t } = useTranslation()
 
-  const filteredBlockingTags = blockingTags?.tagCounts?.filter(tag => TAGS.includes(tag.tag)) || []
+  const filteredBlockingTags = blockingTags?.tagCounts?.filter((tag) => TAGS.includes(tag.tag)) || []
   const displayedBlockingTags = [
     {
       tag: 'All',
-      count:
-        isMyProfile && !selectedList
-          ? 0
-          : filteredBlockingTags?.reduce((acc, tag) => acc + tag.count, 0)
+      count: isMyProfile && !selectedList ? 0 : filteredBlockingTags?.reduce((acc, tag) => acc + tag.count, 0),
     },
     ...(filteredBlockingTags.length > 0
       ? isMyProfile && !selectedList
         ? EMPTY_COUNT_TAGS
         : filteredBlockingTags
-      : EMPTY_COUNT_TAGS)
+      : EMPTY_COUNT_TAGS),
   ]
 
-  const filteredBlockedByTags =
-    blockedByTags?.tagCounts?.filter(tag => TAGS.includes(tag.tag)) || []
+  const filteredBlockedByTags = blockedByTags?.tagCounts?.filter((tag) => TAGS.includes(tag.tag)) || []
   const displayedBlockedByTags = [
     { tag: 'All', count: filteredBlockedByTags?.reduce((acc, tag) => acc + tag.count, 0) },
-    ...(filteredBlockedByTags.length > 0 ? filteredBlockedByTags : EMPTY_COUNT_TAGS)
+    ...(filteredBlockedByTags.length > 0 ? filteredBlockedByTags : EMPTY_COUNT_TAGS),
   ]
 
   const displayedBlocking = isMyProfile && !selectedList ? [] : blocking
@@ -125,7 +121,7 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ user, list, isManager, onCl
         title='Blocked/Muted By'
         customClass='border-t-0 rounded-t-none'
       />
-    )
+    ),
   }[activeTab]
 
   return (
@@ -187,7 +183,7 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ user, list, isManager, onCl
         </div>
         <div className='w-full mt-12 relative bg-neutral/80 h-fit rounded-2xl xl:hidden'>
           <div className='w-full absolute -top-[46px] left-0 '>
-            {BLOCKED_MUTED_TABS.map(option => (
+            {BLOCKED_MUTED_TABS.map((option) => (
               <button
                 key={option}
                 onClick={() => setActiveTab(option as BlockedMutedTabType)}

@@ -13,7 +13,7 @@ const Description: React.FC<DescriptionProps> = ({ profile }) => {
   return (
     <p className='text-text/80 w-full font-medium text-sm sm:text-sm text-center'>
       {profile.ens.records?.description ? (
-        profile.ens.records.description.split(' ').map(word =>
+        profile.ens.records.description.split(' ').map((word) =>
           word.includes('@') ? (
             <Link
               key={word}

@@ -20,14 +20,14 @@ export const volumeOptions = [
     label: 'sfx',
     icon: <RiVolumeDownFill />,
     muteBackgroundMusic: true,
-    muteActionsSounds: false
+    muteActionsSounds: false,
   },
   {
     label: 'no sounds',
     icon: <RiVolumeMuteFill />,
     muteBackgroundMusic: true,
-    muteActionsSounds: true
-  }
+    muteActionsSounds: true,
+  },
 ]
 
 interface VolumeSwitcherProps {
@@ -35,12 +35,8 @@ interface VolumeSwitcherProps {
   setExternalVolumeMenuOpen?: (open: boolean) => void
 }
 
-const VolumeSwitcher: React.FC<VolumeSwitcherProps> = ({
-  closeMenu,
-  setExternalVolumeMenuOpen
-}) => {
-  const { setActionsSoundsMuted, setBackgroundSoundsMuted, selectedVolume, setSelectedVolume } =
-    useSounds()
+const VolumeSwitcher: React.FC<VolumeSwitcherProps> = ({ closeMenu, setExternalVolumeMenuOpen }) => {
+  const { setActionsSoundsMuted, setBackgroundSoundsMuted, selectedVolume, setSelectedVolume } = useSounds()
   const [volumeMenuOpen, setVolumeMenuOpen] = useState(false)
 
   const clickAwayVolumeRef = useClickAway<HTMLDivElement>(() => {
@@ -64,9 +60,7 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = ({
       >
         <FiArrowLeft className='text-xl' />
         <div className='flex items-center justify-end gap-2'>
-          <p className='text-2xl'>
-            {volumeOptions.find(({ label }) => label === selectedVolume)?.icon}
-          </p>
+          <p className='text-2xl'>{volumeOptions.find(({ label }) => label === selectedVolume)?.icon}</p>
           <p className='capitalize font-bold'>{t(selectedVolume || 'system')}</p>
         </div>
       </div>
@@ -101,12 +95,7 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = ({
               }}
             >
               {selectedVolume === label && (
-                <Image
-                  src={GreenCheck}
-                  alt='List selected'
-                  width={16}
-                  className='absolute left-2 top-[19px]'
-                />
+                <Image src={GreenCheck} alt='List selected' width={16} className='absolute left-2 top-[19px]' />
               )}
               <p className='text-2xl'>{icon}</p>
               <p className='text-nowrap capitalize font-bold'>{t(label)}</p>

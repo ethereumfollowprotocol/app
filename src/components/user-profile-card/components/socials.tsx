@@ -13,12 +13,10 @@ const Socials: React.FC<SocialsProps> = ({ profile }) => {
 
   return (
     <div className='flex items-center gap-2'>
-      {profileCardSocials.map(social => (
+      {profileCardSocials.map((social) => (
         <a
           key={social.name}
-          href={social.url(
-            social.name === 'etherscan' ? profile.address : profile.ens.records?.[social.name] || ''
-          )}
+          href={social.url(social.name === 'etherscan' ? profile.address : profile.ens.records?.[social.name] || '')}
           target='_blank'
           rel='noreferrer'
           className={

@@ -23,12 +23,7 @@ const FollowGhost = () => {
         width={400}
         className='pointer-events-none hidden lg:block lg:w-[360px] xl:w-[400px]'
       />
-      <Image
-        src={FriendsEnemiesMobile}
-        alt='Social Graph'
-        width={350}
-        className='pointer-events-none z-10 lg:hidden'
-      />
+      <Image src={FriendsEnemiesMobile} alt='Social Graph' width={350} className='pointer-events-none z-10 lg:hidden' />
       <Image
         src={LineDesktop}
         alt='line'

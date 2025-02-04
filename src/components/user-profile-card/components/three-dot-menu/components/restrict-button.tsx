@@ -2,18 +2,13 @@ import Image from 'next/image'
 import React, { type Ref, type RefObject } from 'react'
 
 interface RestrictButtonProps {
-  blockCoolMode: RefObject<HTMLButtonElement | HTMLDivElement>
+  blockCoolMode: RefObject<HTMLButtonElement | HTMLDivElement | null>
   onClickOption: (option: 'block' | 'mute') => void
   text: string
   type: 'block' | 'mute'
 }
 
-const RestrictButton: React.FC<RestrictButtonProps> = ({
-  blockCoolMode,
-  onClickOption,
-  text,
-  type
-}) => {
+const RestrictButton: React.FC<RestrictButtonProps> = ({ blockCoolMode, onClickOption, text, type }) => {
   return (
     <button
       ref={blockCoolMode as Ref<HTMLButtonElement>}
@@ -24,7 +19,7 @@ const RestrictButton: React.FC<RestrictButtonProps> = ({
       <p
         className='max-w-20 break-words text-wrap'
         style={{
-          lineHeight: '0.95rem'
+          lineHeight: '0.95rem',
         }}
       >
         {text}

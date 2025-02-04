@@ -25,7 +25,7 @@ const SwipeButtons = ({
   isFetchingNextPage,
   gone,
   onSwipeLeft,
-  onSwipeRight
+  onSwipeRight,
 }: SwipeButtonsProps) => {
   const { t } = useTranslation()
 

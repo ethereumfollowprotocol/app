@@ -1,9 +1,7 @@
-import {
-  MdKeyboardArrowLeft,
-  MdKeyboardArrowRight,
-  MdKeyboardDoubleArrowLeft
-} from 'react-icons/md'
+'use client'
+
 import { useRouter, useSearchParams } from 'next/navigation'
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardDoubleArrowLeft } from 'react-icons/md'
 
 interface PageSelectorProps {
   page: number
@@ -28,7 +26,7 @@ const PageSelector: React.FC<PageSelectorProps> = ({
   adjustUrl = true,
   displayPageNumber = true,
   isLoading,
-  scrollUp
+  scrollUp,
 }) => {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -49,7 +47,7 @@ const PageSelector: React.FC<PageSelectorProps> = ({
       if (search) params.set('search', search)
       params.set('page', newPage.toString())
       router.push(`/leaderboard?${params.toString()}`, {
-        scroll: false
+        scroll: false,
       })
     }
 

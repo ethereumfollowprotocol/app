@@ -13,11 +13,7 @@ interface ProfileListItemCountsProps {
   address: Address
 }
 
-const ProfileListItemCounts: React.FC<ProfileListItemCountsProps> = ({
-  counts,
-  isFollowersEmpty,
-  address
-}) => {
+const ProfileListItemCounts: React.FC<ProfileListItemCountsProps> = ({ counts, isFollowersEmpty, address }) => {
   const router = useRouter()
   const { t } = useTranslation()
   const { address: userAddress } = useAccount()

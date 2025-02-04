@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import LeaderboardTable from './components/table.tsx'
+import { Suspense } from 'react'
 
 export const metadata: Metadata = {
   title: 'Leaderboard | EFP',
@@ -10,19 +11,21 @@ export const metadata: Metadata = {
     url: 'https://ethfollow.xyz/leaderboard',
     images: [
       {
-        url: 'https://ethfollow.xyz/assets/banners/leaderboard.png'
-      }
-    ]
+        url: 'https://ethfollow.xyz/assets/banners/leaderboard.png',
+      },
+    ],
   },
   twitter: {
-    images: 'https://ethfollow.xyz/assets/banners/leaderboard.png'
-  }
+    images: 'https://ethfollow.xyz/assets/banners/leaderboard.png',
+  },
 }
 
 const Leaderboard = () => {
   return (
     <main className=' mx-auto flex gap-2 h-full min-h-full w-full flex-col items-center overflow-scroll mb-12 px-4 mt-24 sm:mt-28 lg:mt-32 text-center'>
-      <LeaderboardTable />
+      <Suspense>
+        <LeaderboardTable />
+      </Suspense>
     </main>
   )
 }

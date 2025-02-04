@@ -29,7 +29,7 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
   setValue,
   isEditingSettings,
   isLoading,
-  isSettingsLoading
+  isSettingsLoading,
 }) => {
   const { t } = useTranslation()
   const { address: connectedAddress } = useAccount()
@@ -41,8 +41,8 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
         ? await resolveEnsProfile((isAddress(value) ? value : resolvedAddress) as Address)
         : {
             name: null,
-            avatar: null
-          }
+            avatar: null,
+          },
   })
 
   return (
@@ -56,14 +56,12 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
         <input
           value={value}
           placeholder={placeholder}
-          onChange={e => {
+          onChange={(e) => {
             const input = e.target.value
             if (input.includes(' ')) return
             setValue(input)
           }}
-          disabled={
-            !isEditingSettings || connectedAddress?.toLowerCase() !== disableValue?.toLowerCase()
-          }
+          disabled={!isEditingSettings || connectedAddress?.toLowerCase() !== disableValue?.toLowerCase()}
           className='p-3 font-medium truncate rounded-lg w-full bg-neutral/70 disabled:text-zinc-400 disabled:cursor-not-allowed'
         />
       )}
@@ -71,8 +69,7 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
         <div
           className={cn(
             'font-medium flex items-center gap-2 h-10 text-sm',
-            (value.includes('.') && resolvedAddress && resolvedAddress?.length > 0) ||
-              resolvedProfile?.name
+            (value.includes('.') && resolvedAddress && resolvedAddress?.length > 0) || resolvedProfile?.name
               ? 'text-text/80'
               : 'text-red-400'
           )}

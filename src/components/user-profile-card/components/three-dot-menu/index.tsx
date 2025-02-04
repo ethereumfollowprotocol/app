@@ -37,7 +37,7 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
   followState,
   openBlockModal,
   openQrCodeModal,
-  openListSettingsModal
+  openListSettingsModal,
 }) => {
   const {
     threeDotMenuOpen,
@@ -49,22 +49,18 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
     isPendingMute,
     isInTopEight,
     isAddingToTopEight,
-    isRemovingFromTopEight
+    isRemovingFromTopEight,
   } = useThreeDotMenu({ address, followState })
 
   const { t } = useTranslation()
   const { resolvedTheme } = useTheme()
 
   const blockCoolEmoji =
-    FOLLOW_BUTTON_COOL_EMOJI[followState === 'blocks' || isPendingBlock ? 'Unblock' : 'Block'][
-      resolvedTheme || 'light'
-    ]
+    FOLLOW_BUTTON_COOL_EMOJI[followState === 'blocks' || isPendingBlock ? 'Unblock' : 'Block'][resolvedTheme || 'light']
   const blockCoolMode = useCoolMode(blockCoolEmoji || '', !blockCoolEmoji, !threeDotMenuOpen)
 
   const muteCoolEmoji =
-    FOLLOW_BUTTON_COOL_EMOJI[followState === 'mutes' || isPendingMute ? 'Unmute' : 'Mute'][
-      resolvedTheme || 'light'
-    ]
+    FOLLOW_BUTTON_COOL_EMOJI[followState === 'mutes' || isPendingMute ? 'Unmute' : 'Mute'][resolvedTheme || 'light']
   const muteCoolMode = useCoolMode(muteCoolEmoji || '', !muteCoolEmoji, !threeDotMenuOpen)
 
   return (
@@ -85,18 +81,8 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
       >
         {!isConnectedUserCard && (
           <div className='flex w-full items-center justify-center pt-2 flex-col gap-3'>
-            <RestrictButton
-              blockCoolMode={blockCoolMode}
-              onClickOption={onClickOption}
-              text='Block'
-              type='block'
-            />
-            <RestrictButton
-              blockCoolMode={muteCoolMode}
-              onClickOption={onClickOption}
-              text='Mute'
-              type='mute'
-            />
+            <RestrictButton blockCoolMode={blockCoolMode} onClickOption={onClickOption} text='Block' type='block' />
+            <RestrictButton blockCoolMode={muteCoolMode} onClickOption={onClickOption} text='Mute' type='mute' />
           </div>
         )}
         {openQrCodeModal && (

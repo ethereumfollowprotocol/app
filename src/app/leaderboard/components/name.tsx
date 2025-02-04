@@ -37,10 +37,7 @@ const Name: React.FC<NameProps> = ({ address, name, avatar, followerTag }) => {
           size='h-[45px] w-[45px] 2xl:h-[50px] 2xl:w-[50px] hover:opacity-80 transition-all hover:scale-110 transition-all'
         />
       </Link>
-      <div
-        className='flex flex-col items-start justify-center text-left'
-        style={{ maxWidth: 'calc(100% - 65px)' }}
-      >
+      <div className='flex flex-col items-start justify-center text-left' style={{ maxWidth: 'calc(100% - 65px)' }}>
         <Link href={`/${address}`} className='w-full'>
           <p className='font-bold text-base xxs:text-lg truncate max-w-full hover:opacity-60 hover:scale-110 transition-all'>
             {name && isValidEnsName(name) ? ens_beautify(name) : truncateAddress(address)}

@@ -9,13 +9,13 @@ interface UseAchievementsProps {
 export const useAchievements = ({ address, list }: UseAchievementsProps) => {
   const { data, isLoading } = useQuery({
     queryKey: ['profile-badges', address, list],
-    queryFn: async () => (address ? await fetchProfileBadges(address, list) : [])
+    queryFn: async () => (address ? await fetchProfileBadges(address, list) : []),
   })
 
-  const ownedBadges = data?.filter(badge => badge.collection !== null) || []
+  const ownedBadges = data?.filter((badge) => badge.collection !== null) || []
 
   return {
     ownedBadges,
-    isLoading
+    isLoading,
   }
 }

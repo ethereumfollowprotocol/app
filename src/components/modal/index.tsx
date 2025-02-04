@@ -26,7 +26,7 @@ const Modal: React.FC<ModalProps> = ({ onCancel, children, className, disableBac
         </div>
         <div
           className='glass-card p-4 sm:p-6 w-full sm:w-fit rounded-xl bg-neutral/55'
-          onClick={e => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
         >
           {children}
         </div>

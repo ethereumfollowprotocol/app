@@ -15,12 +15,7 @@ const FollowerList = () => {
         <p className='text-center lg:text-start'>{t('follower list first')}</p>
         <p className='text-[#ee90bc] text-center lg:text-start'>{t('follower list second')}</p>
       </div>
-      <Image
-        src={FollowerListArt}
-        alt='Social Graph'
-        width={350}
-        className='hidden lg:block lg:w-[350px]'
-      />
+      <Image src={FollowerListArt} alt='Social Graph' width={350} className='hidden lg:block lg:w-[350px]' />
       <Image
         src={LineDesktop}
         alt='line'

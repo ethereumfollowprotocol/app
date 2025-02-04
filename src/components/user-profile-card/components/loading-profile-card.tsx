@@ -16,7 +16,7 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
   isResponsive,
   hideFollowButton,
   isStatic,
-  className
+  className,
 }) => {
   const { t } = useTranslation()
   const { openConnectModal } = useConnectModal()
@@ -48,24 +48,16 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
         <div className='flex w-full flex-col justify-center items-center gap-4'>
           <LoadingCell isStatic={isStatic} className='h-[100px] w-[100px] rounded-full' />
           <div
-            className={`flex items-center ${
-              isResponsive ? 'w-3/4 xl:w-full' : 'w-full'
-            } flex-col gap-4 justify-center`}
+            className={`flex items-center ${isResponsive ? 'w-3/4 xl:w-full' : 'w-full'} flex-col gap-4 justify-center`}
           >
             <div className='flex flex-col items-center justify-center gap-2 w-full'>
               <LoadingCell isStatic={isStatic} className='w-48 sm:w-68 xl:w-3/4 h-7 rounded-lg' />
-              {!hideFollowButton && (
-                <LoadingCell isStatic={isStatic} className='w-[120px] h-10 rounded-lg' />
-              )}
+              {!hideFollowButton && <LoadingCell isStatic={isStatic} className='w-[120px] h-10 rounded-lg' />}
             </div>
             <LoadingCell isStatic={isStatic} className='w-4/5 h-4 rounded-lg' />
             <div className='flex gap-2 items-center'>
-              {profileCardSocials.map(social => (
-                <LoadingCell
-                  key={social.name}
-                  isStatic={isStatic}
-                  className='w-8 h-8 2xl:w-9 2xl:h-9 rounded-full'
-                />
+              {profileCardSocials.map((social) => (
+                <LoadingCell key={social.name} isStatic={isStatic} className='w-8 h-8 2xl:w-9 2xl:h-9 rounded-full' />
               ))}
             </div>
           </div>
@@ -73,15 +65,11 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
         <div className='flex w-full flex-wrap justify-center gap-10 gap-y-6 sm:gap-y-5 2xl:gap-y-6 sm:gap-x-[50px] 2xl:gap-x-[60px] items-center mx-auto text-center'>
           <div className='flex flex-col items-center gap-2'>
             <LoadingCell isStatic={isStatic} className='w-12 h-6 rounded-lg' />
-            <div className='text-[16px] 2xl:text-lg font-bold text-[#888] dark:text-[#aaa]'>
-              {t('following')}
-            </div>
+            <div className='text-[16px] 2xl:text-lg font-bold text-[#888] dark:text-[#aaa]'>{t('following')}</div>
           </div>
           <div className='flex flex-col items-center gap-2'>
             <LoadingCell isStatic={isStatic} className='w-12 h-6 rounded-lg' />
-            <div className='text-[16px] 2xl:text-lg font-bold text-[#888] dark:text-[#aaa]'>
-              {t('followers')}
-            </div>
+            <div className='text-[16px] 2xl:text-lg font-bold text-[#888] dark:text-[#aaa]'>{t('followers')}</div>
           </div>
         </div>
       </div>

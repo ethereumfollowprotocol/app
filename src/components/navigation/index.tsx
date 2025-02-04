@@ -18,12 +18,7 @@ const Navigation = () => {
 
   useEffect(() => {
     if (resolvedTheme === 'halloween') setTheme('system')
-    if (isClient)
-      track(
-        `Loaded with language ${
-          LANGUAGES.find(lang => lang.key === i18n.language)?.englishLanguage
-        }`
-      )
+    if (isClient) track(`Loaded with language ${LANGUAGES.find((lang) => lang.key === i18n.language)?.englishLanguage}`)
   }, [isClient])
 
   return (

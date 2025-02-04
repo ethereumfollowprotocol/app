@@ -62,10 +62,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
             )}
           </div>
           <div
-            className={cn(
-              'hidden lg:flex flex-col items-center gap-1 w-1/2 lg:w-1/4 xl:w-1/4',
-              isHome && 'xl:hidden'
-            )}
+            className={cn('hidden lg:flex flex-col items-center gap-1 w-1/2 lg:w-1/4 xl:w-1/4', isHome && 'xl:hidden')}
           >
             <LoadingCell className='w-10 h-6 rounded-lg' />
             {staticStats ? (
@@ -88,10 +85,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
             )}
           </div>
           <div
-            className={cn(
-              'flex-col items-center gap-1 w-1/2 lg:w-1/4 xl:w-1/4',
-              isHome ? 'hidden' : 'hidden xl:flex'
-            )}
+            className={cn('flex-col items-center gap-1 w-1/2 lg:w-1/4 xl:w-1/4', isHome ? 'hidden' : 'hidden xl:flex')}
           >
             <LoadingCell className='w-10 h-6 rounded-lg' />
             {staticStats ? (
@@ -101,12 +95,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
             )}
           </div>
         </div>
-        <div
-          className={cn(
-            'w-fit flex justify-end',
-            isHome ? 'lg:w-[25%] 2xl:w-[20%]' : 'lg:w-[15%] 2xl:w-[10%]'
-          )}
-        >
+        <div className={cn('w-fit flex justify-end', isHome ? 'lg:w-[25%] 2xl:w-[20%]' : 'lg:w-[15%] 2xl:w-[10%]')}>
           <LoadingCell className='h-10 w-[120px] rounded-xl' />
         </div>
       </div>

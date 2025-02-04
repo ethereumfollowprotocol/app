@@ -13,21 +13,21 @@ export const resolveEnsProfile = async (address: `0x${string}`) => {
   if (name && !isValidEnsName(name))
     return {
       name: null,
-      avatar: null
+      avatar: null,
     }
 
   const avatar = name ? `https://metadata.ens.domains/mainnet/avatar/${name}` : null
 
   return {
     name,
-    avatar
+    avatar,
   }
 }
 
 export const resolveEnsName = async (address: `0x${string}`) => {
   const publicClient = createPublicClient({
     chain: mainnet,
-    transport: http(rpcProviders[1])
+    transport: http(rpcProviders[1]),
   })
   const lookup = await publicClient.getEnsName({ address })
 
@@ -38,10 +38,10 @@ export const resolveEnsAddress = async (name: string) => {
   try {
     const publicClient = createPublicClient({
       chain: mainnet,
-      transport: http(rpcProviders[1])
+      transport: http(rpcProviders[1]),
     })
     const ensAddress = await publicClient.getEnsAddress({
-      name: normalize(name)
+      name: normalize(name),
     })
 
     return ensAddress

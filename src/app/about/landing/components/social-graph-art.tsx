@@ -15,7 +15,7 @@ const SocialGraphArt = () => {
 
       return fetchedAccounts
     },
-    staleTime: Infinity
+    staleTime: Infinity,
   })
 
   return (

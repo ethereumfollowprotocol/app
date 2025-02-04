@@ -44,7 +44,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
   sort,
   setSort,
   isShowingBlocked,
-  setActiveTab
+  setActiveTab,
 }) => {
   const [showSort, setShowSort] = useState(false)
   const [showSearch, setShowSearch] = useState(false)
@@ -58,9 +58,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
 
   const { t } = useTranslation()
 
-  const displayedTags = allTags?.filter(tag =>
-    isShowingBlocked ? true : !QUERY_BLOCK_TAGS.includes(tag.tag)
-  )
+  const displayedTags = allTags?.filter((tag) => (isShowingBlocked ? true : !QUERY_BLOCK_TAGS.includes(tag.tag)))
   const tagsEmpty = !tagsLoading && (!displayedTags || displayedTags.length === 0)
 
   return (
@@ -69,9 +67,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
         <div className='flex gap-3 flex-wrap justify-between sm:justify-start sm:flex-nowrap items-center w-full'>
           <div className='flex gap-3 w-full sm:w-fit items-center'>
             {BLOCKED_MUTED_TABS.includes(title) ? (
-              <h2 className='capitalize text-lg sm:text-3xl hidden xl:block font-bold text-nowrap'>
-                {t(title)}
-              </h2>
+              <h2 className='capitalize text-lg sm:text-3xl hidden xl:block font-bold text-nowrap'>{t(title)}</h2>
             ) : (
               <div className='flex items-center bg-grey w-full sm:w-fit relative rounded-xl'>
                 <div
@@ -132,10 +128,10 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                     autoFocus={true}
                     autoComplete='off'
                     placeholder={t('search placeholder')}
-                    onChange={e => {
+                    onChange={(e) => {
                       setSearch(e.target.value.toLowerCase().trim())
                     }}
-                    onKeyDown={e => {
+                    onKeyDown={(e) => {
                       if (e.key === 'Enter' || e.key === 'Escape') {
                         e.preventDefault()
                         setShowSearch(false)
@@ -148,10 +144,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                     className='pointer-events-none absolute inset-y-0 right-0 flex items-center pl-3'
                     aria-hidden='true'
                   >
-                    <FiSearch
-                      className='mr-3 text-xl dark:text-white/90 text-zinc-400'
-                      aria-hidden='true'
-                    />
+                    <FiSearch className='mr-3 text-xl dark:text-white/90 text-zinc-400' aria-hidden='true' />
                   </div>
                 </div>
               )}
@@ -172,25 +165,18 @@ const TableHeader: React.FC<TableHeaderProps> = ({
             >
               <div className='flex gap-1 hover:scale-110 items-center transition-transform'>
                 <p className='text-sm capitalize font-bold'>{t(sort)}</p>
-                <IoIosArrowDown
-                  className={`transition-transform ${showSort ? 'rotate-180' : ''}`}
-                />
+                <IoIosArrowDown className={`transition-transform ${showSort ? 'rotate-180' : ''}`} />
               </div>
               {showSort && (
                 <div className='bg-neutral glass-card p-1 gap-1 z-50 shadow-md border-[3px] rounded-md border-grey absolute top-[120%] flex flex-col items-center -right-2'>
-                  {SORT_OPTIONS.map(option => (
+                  {SORT_OPTIONS.map((option) => (
                     <div
                       className='font-bold capitalize w-full text-nowrap relative rounded-md hover:bg-navItem transition-colors p-3 pl-8'
                       key={option}
                       onClick={() => setSort(option)}
                     >
                       {sort === option && (
-                        <Image
-                          src={GreenCheck}
-                          alt='List selected'
-                          width={16}
-                          className='absolute left-2 top-[17px]'
-                        />
+                        <Image src={GreenCheck} alt='List selected' width={16} className='absolute left-2 top-[17px]' />
                       )}
                       <p>{t(option)}</p>
                     </div>
@@ -201,15 +187,11 @@ const TableHeader: React.FC<TableHeaderProps> = ({
           </div>
         </div>
       </div>
-      {showTags && tagsEmpty && (
-        <p className='text-center w-full font-bold text-text/40 italic'>{t('no tags')}</p>
-      )}
+      {showTags && tagsEmpty && <p className='text-center w-full font-bold text-text/40 italic'>{t('no tags')}</p>}
       {showTags && (
         <div className='flex flex-wrap w-full gap-2'>
           {tagsLoading
-            ? new Array(4)
-                .fill(1)
-                .map((_, i) => <LoadingCell key={i} className='w-20 h-7 md:h-9 rounded-full' />)
+            ? new Array(4).fill(1).map((_, i) => <LoadingCell key={i} className='w-20 h-7 md:h-9 rounded-full' />)
             : displayedTags?.map((tag, i) => (
                 <button
                   key={tag.tag + i}
@@ -221,9 +203,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                   name={tag.tag.toLowerCase()}
                   onClick={() => toggleSelectedTags(title, tag.tag)}
                 >
-                  <p className='max-w-[95%] truncate'>
-                    {BLOCKED_MUTED_TAGS.includes(tag.tag) ? t(tag.tag) : tag.tag}
-                  </p>
+                  <p className='max-w-[95%] truncate'>{BLOCKED_MUTED_TAGS.includes(tag.tag) ? t(tag.tag) : tag.tag}</p>
                   <p className='text-darkGrey/50'>{formatNumber(tag.count)}</p>
                 </button>
               ))}

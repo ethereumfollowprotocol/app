@@ -11,26 +11,26 @@ const RESOURCES = [
     name: 'Docs',
     icon: <BsBook />,
     href: 'https://docs.ethfollow.xyz',
-    className: 'bg-followButton/90 text-darkGrey'
+    className: 'bg-followButton/90 text-darkGrey',
   },
   {
     name: 'API',
     icon: <AiOutlineApi />,
     href: 'https://docs.ethfollow.xyz/api/',
-    className: 'bg-[#FFC7E9] text-darkGrey'
+    className: 'bg-[#FFC7E9] text-darkGrey',
   },
   {
     name: 'Discord',
     icon: <BsDiscord />,
     href: 'https://discord.com/invite/ZUyG3mSXFD',
-    className: 'bg-[#7289da] text-white'
+    className: 'bg-[#7289da] text-white',
   },
   {
     name: 'GitHub',
     icon: <BsGithub />,
     href: 'https://github.com/ethereumfollowprotocol',
-    className: 'bg-darkGrey text-white'
-  }
+    className: 'bg-darkGrey text-white',
+  },
 ]
 
 const Guide = () => {
@@ -38,14 +38,10 @@ const Guide = () => {
 
   return (
     <div className='glass-card flex flex-col px-4 py-8 sm:p-6 md:p-8 lg:p-10 items-center xl:items-start rounded-xl border-[3px] w-full max-w-[700px] h-fit gap-4 border-grey'>
-      <h2 className='text-3xl xxs:text-4xl font-bold text-center xl:text-start'>
-        {t('integrate efp')}
-      </h2>
-      <p className='xxs:text-lg text-text/80 text-center xl:text-start'>
-        {t('integrate efp description')}
-      </p>
+      <h2 className='text-3xl xxs:text-4xl font-bold text-center xl:text-start'>{t('integrate efp')}</h2>
+      <p className='xxs:text-lg text-text/80 text-center xl:text-start'>{t('integrate efp description')}</p>
       <div className='flex flex-row flex-wrap justify-center items-center w-full xl:justify-start mt-4 gap-4 md:gap-6'>
-        {RESOURCES.map(resource => (
+        {RESOURCES.map((resource) => (
           <Link
             key={resource.name}
             href={resource.href}

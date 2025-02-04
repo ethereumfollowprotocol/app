@@ -12,13 +12,13 @@ export const metadata: Metadata = {
     url: 'https://ethfollow.xyz/about',
     images: [
       {
-        url: 'https://ethfollow.xyz/assets/banners/about.png'
-      }
-    ]
+        url: 'https://ethfollow.xyz/assets/banners/about.png',
+      },
+    ],
   },
   twitter: {
-    images: 'https://ethfollow.xyz/assets/banners/about.png'
-  }
+    images: 'https://ethfollow.xyz/assets/banners/about.png',
+  },
 }
 
 const AboutPage = () => {

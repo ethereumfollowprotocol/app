@@ -19,27 +19,15 @@ const LeaderboardRanks: React.FC<LeaderboardRanksProps> = ({
   rankTitles,
   isResponsive,
   isRecommended,
-  isLoading
+  isLoading,
 }) => {
   const { t } = useTranslation()
-  const ranksTypes = [
-    'mutuals_rank',
-    'followers_rank',
-    'following_rank',
-    'top8_rank',
-    'blocks_rank'
-  ]
+  const ranksTypes = ['mutuals_rank', 'followers_rank', 'following_rank', 'top8_rank', 'blocks_rank']
 
   return (
-    <div
-      className={cn('flex flex-col w-full items-center gap-2', isRecommended && 'hidden sm:flex')}
-    >
+    <div className={cn('flex flex-col w-full items-center gap-2', isRecommended && 'hidden sm:flex')}>
       <Link href='/leaderboard'>
-        <div
-          className={`${
-            isResponsive ? 'text-lg sm:text-xl' : 'text-xl'
-          } font-bold hover:scale-110 transition-all`}
-        >
+        <div className={`${isResponsive ? 'text-lg sm:text-xl' : 'text-xl'} font-bold hover:scale-110 transition-all`}>
           {t('leaderboard')}
         </div>
       </Link>
@@ -61,7 +49,7 @@ const LeaderboardRanks: React.FC<LeaderboardRanksProps> = ({
                   followers_rank: 'followers',
                   following_rank: 'following',
                   top8_rank: 'top8',
-                  blocks_rank: 'blocked'
+                  blocks_rank: 'blocked',
                 }[rankTitles[i] || '']
                   ?.replaceAll(' ', '')
                   ?.toLowerCase()}`}
@@ -74,7 +62,7 @@ const LeaderboardRanks: React.FC<LeaderboardRanksProps> = ({
                     {
                       1: 'first-place text-xl',
                       2: 'second-place text-xl',
-                      3: 'third-place text-xl'
+                      3: 'third-place text-xl',
                     }[rank]
                   }
                 >

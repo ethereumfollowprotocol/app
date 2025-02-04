@@ -30,9 +30,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
       <div
         className={cn(
           'flex flex-col w-full transition-all overflow-x-visible max-h-[80vh] lg:h-auto p-1',
-          languageMenOpenu || themeMenuOpen || volumeMenuOpen
-            ? '-translate-x-[244px] lg:translate-x-0'
-            : ''
+          languageMenOpenu || themeMenuOpen || volumeMenuOpen ? '-translate-x-[244px] lg:translate-x-0' : ''
         )}
         style={{
           height: languageMenOpenu
@@ -42,7 +40,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
               ? `${(themesWithIcons.length || 0) * 56 + 56}px`
               : volumeMenuOpen
                 ? `${(volumeOptions.length || 0) * 56 + 56}px`
-                : 'auto'
+                : 'auto',
         }}
       >
         <ThemeSwitcher
@@ -53,10 +51,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
             setOpen(false)
           }}
         />
-        <LanguageSelector
-          setExternalLanguageMenuOpen={setLanguageMenuOpen}
-          setParentOpen={setOpen}
-        />
+        <LanguageSelector setExternalLanguageMenuOpen={setLanguageMenuOpen} setParentOpen={setOpen} />
         <VolumeSwitcher
           setExternalVolumeMenuOpen={setVolumeMenuOpen}
           closeMenu={() => {
@@ -64,7 +59,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
             setVolumeMenuOpen(false)
           }}
         />
-        {EXTERNAL_LINKS.map(link => (
+        {EXTERNAL_LINKS.map((link) => (
           <Link
             key={link.href}
             href={link.href}
@@ -76,7 +71,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
           </Link>
         ))}
         <div className='flex items-center w-full justify-between p-3'>
-          {socials.map(item => (
+          {socials.map((item) => (
             <a
               target='_blank'
               rel='noreferrer'

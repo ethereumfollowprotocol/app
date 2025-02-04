@@ -10,7 +10,7 @@ import { useCart } from '#/contexts/cart-context'
 import TransactionDetails from './transaction-details'
 import { useActions } from '#/contexts/actions-context'
 import CancelButton from '#/components/buttons/cancel-button'
-import { PrimaryButton } from '#/components/buttons/primary-button'
+import PrimaryButton from '#/components/buttons/primary-button'
 
 interface TransactionStatusProps {
   onFinish: () => void
@@ -29,15 +29,14 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
   setCurrentStep,
   handleReInitiateActions,
   handleNextAction,
-  openPoapModal
+  openPoapModal,
 }) => {
-  const { actions, currentAction, currentActionIndex, allActionsSuccessful, isCorrectChain } =
-    useActions()
+  const { actions, currentAction, currentActionIndex, allActionsSuccessful, isCorrectChain } = useActions()
   const { getChain } = useChain()
   const chain = getChain(currentAction?.chainId)
   const { isSuccess, isLoading } = useWaitForTransactionReceipt({
     hash: currentAction?.txHash,
-    chainId: currentAction?.chainId
+    chainId: currentAction?.chainId,
   })
 
   const { t } = useTranslation()

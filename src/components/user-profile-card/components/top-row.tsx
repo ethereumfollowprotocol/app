@@ -15,13 +15,7 @@ interface TopRowProps {
   refetchProfile?: () => void
 }
 
-const TopRow: React.FC<TopRowProps> = ({
-  profileList,
-  name,
-  primaryList,
-  isConnectedUserCard,
-  refetchProfile
-}) => {
+const TopRow: React.FC<TopRowProps> = ({ profileList, name, primaryList, isConnectedUserCard, refetchProfile }) => {
   const [cardTooltipOpen, setCardTooltipOpen] = useState(false)
   const clickAwayCardTooltip = useClickAway<HTMLDivElement>(() => {
     setCardTooltipOpen(false)

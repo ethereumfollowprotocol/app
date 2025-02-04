@@ -12,7 +12,7 @@ import { formatNumber } from '#/utils/format/format-number'
 import LoadingCell from '#/components/loaders/loading-cell'
 import FarcasterIcon from 'public/assets/icons/farcaster.svg'
 import CancelButton from '#/components/buttons/cancel-button'
-import { PrimaryButton } from '#/components/buttons/primary-button'
+import PrimaryButton from '#/components/buttons/primary-button'
 
 interface ImportModalprops {
   onClose: () => void
@@ -30,7 +30,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
     onlyImportWithEns,
     isFollowingsLoading,
     setOnlyImportWithEns,
-    isSocialProfileLoading
+    isSocialProfileLoading,
   } = useImportModal(platform)
   const { t } = useTranslation()
 
@@ -42,12 +42,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
             {t('import title')}&nbsp;
             <span className='capitalize'>{platform}</span>
           </p>
-          <Image
-            src={FarcasterIcon}
-            alt='Import from Farcaster'
-            className='rounded-lg'
-            width={30}
-          />
+          <Image src={FarcasterIcon} alt='Import from Farcaster' className='rounded-lg' width={30} />
         </div>
         <div className='relative w-full'>
           <input
@@ -58,7 +53,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
             autoComplete='off'
             value={currHandle}
             placeholder={`${t('enter')} ${platform[0]?.toUpperCase()}${platform.slice(1)} Name`}
-            onChange={e => setCurrHandle(e.target.value)}
+            onChange={(e) => setCurrHandle(e.target.value)}
             className='h-12 block pr-12 w-full truncate font-medium rounded-xl border-[3px] border-grey pl-4 sm:text-sm bg-neutral/60'
           />
           <div className='absolute w-8 rounded-lg right-2 top-2 h-8 flex justify-center items-center bg-grey'>
@@ -122,14 +117,12 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
                 )}
               </div>
               <div className='flex items-center w-full justify-between gap-3 sm:gap-5'>
-                <p className='text-lg font-bold text-start max-w-[75%]'>
-                  {t('Only import accounts with an ENS name')}
-                </p>
+                <p className='text-lg font-bold text-start max-w-[75%]'>{t('Only import accounts with an ENS name')}</p>
                 <input
                   className='toggle'
                   type='checkbox'
                   defaultChecked={onlyImportWithEns}
-                  onChange={e => setOnlyImportWithEns(e.target.checked)}
+                  onChange={(e) => setOnlyImportWithEns(e.target.checked)}
                 />
               </div>
             </div>
@@ -148,11 +141,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
               onClose()
             }}
             className='py-[10px] w-32'
-            disabled={
-              isFollowingsLoading ||
-              followings.length === 0 ||
-              alreadyFollow.length === followings.length
-            }
+            disabled={isFollowingsLoading || followings.length === 0 || alreadyFollow.length === followings.length}
           />
         </div>
       </div>

@@ -21,14 +21,13 @@ export const fetchRecommendations = async (
       cache: 'default',
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json'
-      }
+        Accept: 'application/json',
+      },
     })
 
     const data = (await res.json()) as DiscoverResponseType
 
-    const formattedData =
-      endpoint === 'recommended' ? data.recommended : (data.latestFollows as DiscoverItemType[])
+    const formattedData = endpoint === 'recommended' ? data.recommended : (data.latestFollows as DiscoverItemType[])
 
     return formattedData
   } catch (err: unknown) {

@@ -20,11 +20,8 @@ const LiveIntegrations = () => {
         <p className='text-text/80 text-center xl:text-start'>{t('integrate description')}</p>
       </div>
       <div className='flex flex-row w-full items-center justify-evenly sm:justify-center xl:justify-start flex-wrap gap-4'>
-        {INTEGRATIONS.map(integration => (
-          <div
-            key={integration.name}
-            className='w-28 hover:scale-110 flex items-center flex-col transition-transform'
-          >
+        {INTEGRATIONS.map((integration) => (
+          <div key={integration.name} className='w-28 hover:scale-110 flex items-center flex-col transition-transform'>
             <Link
               className='text-xs rounded-full space-y-2'
               target='_blank'
@@ -37,10 +34,7 @@ const LiveIntegrations = () => {
                 width={60}
                 className='mx-auto rounded-full sm:w-19'
               />
-              <p
-                className='pt-1 mt-2 text-base text-center font-bold'
-                style={{ lineHeight: '25px', fontSize: '17px' }}
-              >
+              <p className='pt-1 mt-2 text-base text-center font-bold' style={{ lineHeight: '25px', fontSize: '17px' }}>
                 {integration.name}
               </p>
             </Link>

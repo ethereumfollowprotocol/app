@@ -2,15 +2,11 @@
 
 import { useTranslation } from 'react-i18next'
 
-import {
-  TEAM_ROLES,
-  TEAM_ADDRESSES,
-  FOUNDATION_ROLES,
-  FOUNDATION_ADDRESSES
-} from '#/lib/constants/team'
+import { TEAM_ROLES, TEAM_ADDRESSES, FOUNDATION_ROLES, FOUNDATION_ADDRESSES } from '#/lib/constants/team'
 import { useMembers } from '../hooks/use-members'
 import LoadingCell from '#/components/loaders/loading-cell'
 import UserProfileCard from '#/components/user-profile-card'
+import { Suspense } from 'react'
 
 const Members = () => {
   const {
@@ -21,7 +17,7 @@ const Members = () => {
     teamIsLoading,
     teamStatsIsLoading,
     foundationIsLoading,
-    foundationStatsIsLoading
+    foundationStatsIsLoading,
   } = useMembers()
 
   const { t } = useTranslation()
@@ -47,15 +43,17 @@ const Members = () => {
             </div>
           ))}
           {teamIsLoading &&
-            TEAM_ADDRESSES.map(address => (
+            TEAM_ADDRESSES.map((address) => (
               <div key={address} className='flex flex-col items-center gap-2'>
                 <LoadingCell className='rounded-lg h-7 w-52' />
-                <UserProfileCard
-                  isResponsive={false}
-                  isLoading={teamIsLoading}
-                  // x={records?.['com.twitter'] ?? ''}
-                  // github={records?.['com.github'] ?? ''}
-                />
+                <Suspense>
+                  <UserProfileCard
+                    isResponsive={false}
+                    isLoading={teamIsLoading}
+                    // x={records?.['com.twitter'] ?? ''}
+                    // github={records?.['com.github'] ?? ''}
+                  />
+                </Suspense>
               </div>
             ))}
         </div>
@@ -64,9 +62,7 @@ const Members = () => {
           <div className='flex-row flex-wrap flex mx-auto lg:flex-row gap-8 align-middle justify-center items-start'>
             {foundationProfiles?.map((profile, i) => (
               <div key={profile?.address} className='flex flex-col items-center gap-2'>
-                <p className='text-lg font-bold text-zinc-500 dark:text-zinc-200'>
-                  {FOUNDATION_ROLES[i]}
-                </p>
+                <p className='text-lg font-bold text-zinc-500 dark:text-zinc-200'>{FOUNDATION_ROLES[i]}</p>
                 <UserProfileCard
                   isResponsive={false}
                   profile={profile}
@@ -80,15 +76,17 @@ const Members = () => {
               </div>
             ))}
             {foundationIsLoading &&
-              FOUNDATION_ADDRESSES.map(address => (
+              FOUNDATION_ADDRESSES.map((address) => (
                 <div key={address} className='flex flex-col items-center gap-2'>
                   <LoadingCell className='rounded-lg h-7 w-52' />
-                  <UserProfileCard
-                    isResponsive={false}
-                    isLoading={foundationIsLoading}
-                    // x={records?.['com.twitter'] ?? ''}
-                    // github={records?.['com.github'] ?? ''}
-                  />
+                  <Suspense>
+                    <UserProfileCard
+                      isResponsive={false}
+                      isLoading={foundationIsLoading}
+                      // x={records?.['com.twitter'] ?? ''}
+                      // github={records?.['com.github'] ?? ''}
+                    />
+                  </Suspense>
                 </div>
               ))}
           </div>

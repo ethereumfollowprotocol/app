@@ -47,25 +47,24 @@ const SaveSettings: React.FC<SaveSettingsProps> = ({
   onCancel,
   listState,
   isListStateLoading,
-  isPrimaryList
+  isPrimaryList,
 }) => {
-  const { actions, onFinish, currentStep, setCurrentStep, onNextAction, onInitiateActions } =
-    useSaveListSettings({
-      slot,
-      user,
-      owner,
-      chain,
-      profile,
-      manager,
-      onClose,
-      onCancel,
-      newChain,
-      listState,
-      selectedList,
-      changedValues,
-      isPrimaryList,
-      listRecordsContractAddress
-    })
+  const { actions, onFinish, currentStep, setCurrentStep, onNextAction, onInitiateActions } = useSaveListSettings({
+    slot,
+    user,
+    owner,
+    chain,
+    profile,
+    manager,
+    onClose,
+    onCancel,
+    newChain,
+    listState,
+    selectedList,
+    changedValues,
+    isPrimaryList,
+    listRecordsContractAddress,
+  })
 
   return (
     <div className='w-full flex justify-center px-4 pt-[6.75rem] pb-16 overflow-scroll sm:pt-32'>

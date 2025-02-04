@@ -31,12 +31,9 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
 
   return (
     <div
-      className={cn(
-        'flex glass-card border-grey border-[3px] items-center sm:items-end flex-col gap-1',
-        cardSize
-      )}
+      className={cn('flex glass-card border-grey border-[3px] items-center sm:items-end flex-col gap-1', cardSize)}
       style={{
-        backdropFilter: 'blur(1rem)'
+        backdropFilter: 'blur(1rem)',
       }}
     >
       <div
@@ -56,13 +53,7 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
           rel='noreferrer'
           className='hover:scale-110 transition-transform'
         >
-          <Image
-            src={InterfaceLight}
-            alt='Interface'
-            width={150}
-            height={35}
-            className='w-36 h-9'
-          />
+          <Image src={InterfaceLight} alt='Interface' width={150} height={35} className='w-36 h-9' />
         </a>
       </div>
       {description && (
@@ -92,17 +83,12 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
           ) : (
             <div className='w-full h-full max-h-[60vh] flex items-center font-semibold flex-col justify-center text-center'>
               <p className='text-lg font-bold'>{t('following myprofile empty first')}</p>
-              <p className='text-base italic w-3/4 max-w-96'>
-                {t('following myprofile empty second')}
-              </p>
+              <p className='text-base italic w-3/4 max-w-96'>{t('following myprofile empty second')}</p>
             </div>
           )
         ) : (
           <div className='h-full w-full flex items-center justify-center'>
-            <button
-              className='connect-button text-xl font-bold w-64 h-fit p-3'
-              onClick={() => openConnectModal?.()}
-            >
+            <button className='connect-button text-xl font-bold w-64 h-fit p-3' onClick={() => openConnectModal?.()}>
               {t('connect')}
             </button>
           </div>

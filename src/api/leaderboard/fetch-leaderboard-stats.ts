@@ -7,8 +7,8 @@ export const fetchLeaderboardStats = async () => {
       cache: 'default',
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json'
-      }
+        Accept: 'application/json',
+      },
     })
 
     const data = (await response.json()) as { stats: LeaderboardStatsResponse }
@@ -18,7 +18,7 @@ export const fetchLeaderboardStats = async () => {
       address_count: '0',
       list_count: '0',
       list_op_count: '0',
-      user_count: '0'
+      user_count: '0',
     }
   }
 }

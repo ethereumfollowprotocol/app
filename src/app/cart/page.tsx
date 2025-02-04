@@ -10,13 +10,13 @@ export const metadata: Metadata = {
     url: 'https://ethfollow.xyz/cart',
     images: [
       {
-        url: 'https://ethfollow.xyz/assets/banners/editor.png'
-      }
-    ]
+        url: 'https://ethfollow.xyz/assets/banners/editor.png',
+      },
+    ],
   },
   twitter: {
-    images: 'https://ethfollow.xyz/assets/banners/editor.png'
-  }
+    images: 'https://ethfollow.xyz/assets/banners/editor.png',
+  },
 }
 
 const CartPage = () => (

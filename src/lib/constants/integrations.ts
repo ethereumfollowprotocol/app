@@ -29,148 +29,147 @@ import ENSResolver from 'public/assets/partners/ensresolver.jpeg'
 import Rotki from 'public/assets/partners/rotki.jpeg'
 import Zapper from 'public/assets/partners/zapper.png'
 
-
 export const INTEGRATIONS = [
   {
     name: 'Interface',
     url: 'https://interface.social',
-    logo: Interface
+    logo: Interface,
   },
   {
     name: 'Snapshot',
     url: 'https://snapshot.box/',
-    logo: Snapshot
+    logo: Snapshot,
   },
   {
     name: 'POAP',
     url: 'https://poap.xyz',
-    logo: POAP
+    logo: POAP,
   },
   {
     name: 'Vision',
     url: 'https://vision.io/',
-    logo: EnsVision
+    logo: EnsVision,
   },
   {
     name: 'Yodl',
     url: 'https://yodl.me/',
-    logo: Yodl
+    logo: Yodl,
   },
   {
     name: 'Zapper',
     url: 'https://zapper.xyz/',
-    logo: Zapper
+    logo: Zapper,
   },
   {
     name: 'Rotki',
     url: 'https://rotki.com/',
-    logo: Rotki
+    logo: Rotki,
   },
   {
     name: 'Blockscout',
     url: 'https://www.blockscout.com/',
-    logo: Blockscout
+    logo: Blockscout,
   },
   {
     name: 'Vibes',
     url: 'https://vibes.scapes.xyz/',
-    logo: VibesScapes
+    logo: VibesScapes,
   },
   {
     name: 'LikeButton.eth',
     url: 'https://likebutton.eth.limo/',
-    logo: LikeButton
+    logo: LikeButton,
   },
   {
     name: 'Webhash',
     url: 'https://webhash.com',
-    logo: WebHash
+    logo: WebHash,
   },
   {
     name: 'Bankless Academy',
     url: 'https://app.banklessacademy.com/',
-    logo: BanklessAcademy
+    logo: BanklessAcademy,
   },
   {
     name: 'Payflow',
     url: 'https://payflow.me',
-    logo: Payflow
+    logo: Payflow,
   },
   {
     name: 'eth.cd',
     url: 'https://eth.cd',
-    logo: EthDotCd
+    logo: EthDotCd,
   },
   {
     name: 'EFP Bot',
     url: 'https://x.com/efpbots',
-    logo: EFPBot
+    logo: EFPBot,
   },
   {
     name: 'EFP Updates',
     url: 'https://x.com/efp_updates',
-    logo: EFPUpdates
+    logo: EFPUpdates,
   },
   {
     name: 'PWN',
     url: 'https://pwn.xyz/',
-    logo: PWN
+    logo: PWN,
   },
   {
     name: 'Namefi',
     url: 'https://www.namefi.io/',
-    logo: Namefi
+    logo: Namefi,
   },
   {
     name: 'ENSBook',
     url: 'https://ensbook.xyz/',
-    logo: ENSBook
+    logo: ENSBook,
   },
   {
     name: 'Web3 Bio',
     url: 'https://web3.bio/',
-    logo: WebThreeBio
+    logo: WebThreeBio,
   },
   {
     name: 'Roc Box',
     url: 'https://roc.box/',
-    logo: Rocbox
+    logo: Rocbox,
   },
   {
     name: 'Harvest.art',
     url: 'https://harvest.art/',
-    logo: HarvestArt
+    logo: HarvestArt,
   },
   {
     name: 'Engagement Vision',
     url: 'https://engagement.vision/',
-    logo: EngagementVision
+    logo: EngagementVision,
   },
   {
     name: 'JustaName',
     url: 'https://www.justaname.id/',
-    logo: JustaName
+    logo: JustaName,
   },
   {
     name: 'Devcon VI Collab Portal',
     url: 'https://devcon.fileverse.io/devcon7/portal',
-    logo: DevconCollabPortal
+    logo: DevconCollabPortal,
   },
   {
     name: 'Devcon VI Passport',
     url: 'https://app.devcon.org/',
-    logo: DevconPassport
+    logo: DevconPassport,
   },
   {
     name: 'ETH Tools',
     url: 'https://ethtools.com/',
-    logo: ETHTools
+    logo: ETHTools,
   },
   {
     name: 'ENS Resolver',
     url: 'https://adraffy.github.io/ens-normalize.js/test/resolver.html',
-    logo: ENSResolver
-  }
+    logo: ENSResolver,
+  },
 ] as {
   name: string
   url: string

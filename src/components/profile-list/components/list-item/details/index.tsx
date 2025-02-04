@@ -40,7 +40,7 @@ const ProfileListItemDetails: React.FC<ProfileListItemDetailsProps> = ({
   canEditTags,
   tagsDropdownPosition,
   isEnsProfileLoading,
-  isBlockedList
+  isBlockedList,
 }) => {
   const router = useRouter()
   const pathname = usePathname()
@@ -55,17 +55,17 @@ const ProfileListItemDetails: React.FC<ProfileListItemDetailsProps> = ({
 
   const displayedTags = [
     ...new Set(
-      [...tags, ...(canEditTags ? tagsFromCart : [])].filter(tag =>
+      [...tags, ...(canEditTags ? tagsFromCart : [])].filter((tag) =>
         isBlockedList ? ['block', 'mute'].includes(tag) : true
       )
-    )
+    ),
   ]
 
   return (
     <div
       className='flex gap-2 sm:gap-3 items-center p-0'
       style={{
-        width: isBlockedList ? 'calc(100% - 132px)' : 'calc(100% - 120px)'
+        width: isBlockedList ? 'calc(100% - 132px)' : 'calc(100% - 120px)',
       }}
     >
       <div className={cn('flex gap-2 sm:gap-3 items-center p-0', counts ? 'w-2/3' : 'w-full')}>
@@ -82,7 +82,7 @@ const ProfileListItemDetails: React.FC<ProfileListItemDetailsProps> = ({
         <div
           className='flex flex-col md:flex-row md:gap-3 xl:gap-2 2xl:gap-3 gap-[2px]'
           style={{
-            width: counts ? '80%' : 'calc(100% - 60px)'
+            width: counts ? '80%' : 'calc(100% - 60px)',
           }}
         >
           <div
@@ -121,11 +121,7 @@ const ProfileListItemDetails: React.FC<ProfileListItemDetailsProps> = ({
           />
         </div>
       </div>
-      <ProfileListItemCounts
-        counts={counts}
-        isFollowersEmpty={isFollowersEmpty}
-        address={address}
-      />
+      <ProfileListItemCounts counts={counts} isFollowersEmpty={isFollowersEmpty} address={address} />
     </div>
   )
 }

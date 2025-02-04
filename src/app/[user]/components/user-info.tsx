@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import TopEight from '#/components/top-eight'
@@ -67,7 +67,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     isFetchingMoreFollowers,
     isFetchingMoreFollowing,
     setFollowersTagsFilter,
-    setFollowingTagsFilter
+    setFollowingTagsFilter,
   } = useUserInfo(user)
   const router = useRouter()
   const isMyProfile = useIsEditView()
@@ -101,7 +101,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       isFetchingMore: isFetchingMoreFollowers,
       fetchMore: () => fetchMoreFollowers(),
       title: 'followers' as ProfileTabType,
-      canEditTags: false
+      canEditTags: false,
     },
     following: {
       isLoading: followingIsLoading,
@@ -118,9 +118,8 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       isFetchingMore: isFetchingMoreFollowing,
       fetchMore: () => fetchMoreFollowing(),
       title: 'following' as ProfileTabType,
-      canEditTags:
-        isMyProfile && roles?.isManager
-    }
+      canEditTags: isMyProfile && roles?.isManager,
+    },
   }[activeTab]
 
   return (
@@ -167,24 +166,26 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
             ref={ProfileCardRef}
             className='xl:sticky xl:h-fit xl:pb-4'
             style={{
-              top: '0px'
+              top: '0px',
             }}
           >
-            <UserProfileCard
-              profileList={profileList}
-              stats={stats}
-              profile={profile}
-              refetchProfile={refetchProfile}
-              isLoading={profileIsLoading}
-              isStatsLoading={statsIsLoading}
-              showMoreOptions={true}
-              openBlockModal={() => {
-                setIsBlockedMutedOpen(true)
-                router.push(`/${user}?modal=block_mute_list`)
-              }}
-              openQrCodeModal={() => setQrCodeModalOpen(true)}
-              openListSettingsModal={() => setListSettingsOpen(true)}
-            />
+            <Suspense>
+              <UserProfileCard
+                profileList={profileList}
+                stats={stats}
+                profile={profile}
+                refetchProfile={refetchProfile}
+                isLoading={profileIsLoading}
+                isStatsLoading={statsIsLoading}
+                showMoreOptions={true}
+                openBlockModal={() => {
+                  setIsBlockedMutedOpen(true)
+                  router.push(`/${user}?modal=block_mute_list`)
+                }}
+                openQrCodeModal={() => setQrCodeModalOpen(true)}
+                openListSettingsModal={() => setListSettingsOpen(true)}
+              />
+            </Suspense>
           </div>
           <div className='xl:hidden'>
             <TopEight user={user} isConnectedUserProfile={isMyProfile} />
@@ -193,12 +194,12 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
             ref={titleRef}
             className='w-full xl:max-w-[800px] xl:sticky relative xl:top-0 h-fit'
             style={{
-              scrollMarginTop: '100px'
+              scrollMarginTop: '100px',
             }}
           >
             <div className='xl:absolute xl:top-0 xl:left-0 w-full h-fit'>
               <UserProfilePageTable
-                setActiveTab={tab => setActiveTab(tab as ProfileTabType)}
+                setActiveTab={(tab) => setActiveTab(tab as ProfileTabType)}
                 ref={tableRef}
                 {...tableProps}
               />
@@ -208,7 +209,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
             ref={TopEightRef}
             className='sticky pb-4 h-fit hidden xl:block'
             style={{
-              top: '0px'
+              top: '0px',
             }}
           >
             <TopEight user={user} isConnectedUserProfile={isMyProfile} />

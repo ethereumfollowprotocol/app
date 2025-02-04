@@ -10,13 +10,13 @@ export const metadata: Metadata = {
     url: 'https://ethfollow.xyz/swipe',
     images: [
       {
-        url: 'https://ethfollow.xyz/assets/banners/swipe.png'
-      }
-    ]
+        url: 'https://ethfollow.xyz/assets/banners/swipe.png',
+      },
+    ],
   },
   twitter: {
-    images: 'https://ethfollow.xyz/assets/banners/swipe.png'
-  }
+    images: 'https://ethfollow.xyz/assets/banners/swipe.png',
+  },
 }
 
 const SwipePage = () => {

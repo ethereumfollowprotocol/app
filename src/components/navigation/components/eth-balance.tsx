@@ -18,19 +18,19 @@ interface EthBalanceProps {
 const EthBalance: React.FC<EthBalanceProps> = ({ address, chain }) => {
   const { data: balance } = useBalance({
     address: address,
-    chainId: chain.id
+    chainId: chain.id,
   })
 
   const bridges = {
     [base.id]: 'https://bridge.base.org/deposit',
     [optimism.id]: 'https://gateway.optimism.io/bridge/eth',
-    [mainnet.id]: 'https://www.alchemy.com/list-of/web3-bridges-on-ethereum'
+    [mainnet.id]: 'https://www.alchemy.com/list-of/web3-bridges-on-ethereum',
   }
 
   const currencies = {
     [base.id]: 'Base ETH',
     [optimism.id]: 'OP ETH',
-    [mainnet.id]: 'ETH'
+    [mainnet.id]: 'ETH',
   }
 
   return (
@@ -40,7 +40,7 @@ const EthBalance: React.FC<EthBalanceProps> = ({ address, chain }) => {
         {balance?.value
           ? Number(formatEther(balance.value)).toLocaleString(navigator.language, {
               minimumFractionDigits: 2,
-              maximumFractionDigits: 4
+              maximumFractionDigits: 4,
             })
           : 0}{' '}
         {currencies[chain.id as keyof typeof currencies]}
@@ -51,9 +51,7 @@ const EthBalance: React.FC<EthBalanceProps> = ({ address, chain }) => {
         className='capitalize flex justify-between items-center transition-colors p-3 w-full rounded-md hover:bg-navItem text-text font-bold'
       >
         <FiExternalLink className='text-2xl' />
-        <p className='text-end'>{`${currencies[chain.id as keyof typeof currencies]} ${t(
-          'bridge'
-        )}`}</p>
+        <p className='text-end'>{`${currencies[chain.id as keyof typeof currencies]} ${t('bridge')}`}</p>
       </Link>
     </>
   )

@@ -13,10 +13,7 @@ interface LanguageSelectorProps {
   setParentOpen?: Dispatch<SetStateAction<boolean>>
 }
 
-const LanguageSelector = ({
-  setExternalLanguageMenuOpen,
-  setParentOpen
-}: LanguageSelectorProps) => {
+const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: LanguageSelectorProps) => {
   const [languageMenuSearch, setLanguageMenuSearch] = useState('')
 
   const { t } = useTranslation()
@@ -28,15 +25,15 @@ const LanguageSelector = ({
     setExternalLanguageMenuOpen?.(false)
   }
 
-  const clickAwayLanguageRef = useClickAway<HTMLDivElement>(_ => closeLanguageMenu())
+  const clickAwayLanguageRef = useClickAway<HTMLDivElement>((_) => closeLanguageMenu())
 
-  const regularLanguages = LANGUAGES.filter(lang => !lang.special).filter(lang =>
+  const regularLanguages = LANGUAGES.filter((lang) => !lang.special).filter((lang) =>
     languageMenuSearch
       ? lang.language.toLowerCase().includes(languageMenuSearch.toLowerCase()) ||
         lang.englishLanguage.toLowerCase().includes(languageMenuSearch.toLowerCase())
       : true
   )
-  const specialLanguages = LANGUAGES.filter(lang => !!lang.special).filter(lang =>
+  const specialLanguages = LANGUAGES.filter((lang) => !!lang.special).filter((lang) =>
     languageMenuSearch
       ? lang.language.toLowerCase().includes(languageMenuSearch.toLowerCase()) ||
         lang.englishLanguage.toLowerCase().includes(languageMenuSearch.toLowerCase())
@@ -54,12 +51,7 @@ const LanguageSelector = ({
       >
         <FiArrowLeft className='text-xl' />
         <div className='flex justify-end gap-2'>
-          <Image
-            src={selectedLanguage?.icon || ''}
-            alt='Language icon'
-            width={26}
-            className='rounded-md'
-          />
+          <Image src={selectedLanguage?.icon || ''} alt='Language icon' width={26} className='rounded-md' />
           <p className='font-bold w-fit'>{selectedLanguage?.language}</p>
         </div>
       </div>
@@ -81,10 +73,10 @@ const LanguageSelector = ({
               type='text'
               placeholder='Search'
               value={languageMenuSearch}
-              onChange={e => setLanguageMenuSearch(e.target.value)}
+              onChange={(e) => setLanguageMenuSearch(e.target.value)}
               className='w-full px-4 py-2 border-[3px] border-grey transition-colors rounded-md bg-grey/30 focus:border-text/80'
             />
-            {LANGUAGES.filter(lang =>
+            {LANGUAGES.filter((lang) =>
               languageMenuSearch
                 ? lang.language.toLowerCase().includes(languageMenuSearch.toLowerCase()) ||
                   lang.englishLanguage.toLowerCase().includes(languageMenuSearch.toLowerCase())
@@ -95,7 +87,7 @@ const LanguageSelector = ({
               </div>
             )}
           </div>
-          {regularLanguages.map(lang => (
+          {regularLanguages.map((lang) => (
             <div
               className='py-3 pl-8 relative flex items-center font-bold rounded-md hover:bg-navItem transition-colors'
               key={lang.language}
@@ -106,12 +98,7 @@ const LanguageSelector = ({
               }}
             >
               {selectedLanguage && selectedLanguage.key === lang.key && (
-                <Image
-                  src={GreenCheck}
-                  alt='List selected'
-                  width={16}
-                  className='absolute left-2 top-[35%]'
-                />
+                <Image src={GreenCheck} alt='List selected' width={16} className='absolute left-2 top-[35%]' />
               )}
               <div className='flex gap-2 pr-3'>
                 <Image src={lang.icon} alt='Language icon' width={26} className='rounded-md' />
@@ -124,7 +111,7 @@ const LanguageSelector = ({
               <hr className='border-[1px] rounded-full border-zinc-300 dark:border-zinc-500 w-full' />
             </div>
           )}
-          {specialLanguages.map(lang => (
+          {specialLanguages.map((lang) => (
             <div
               className='py-3 pl-8 relative flex items-center font-bold rounded-md hover:bg-navItem transition-colors'
               key={lang.language}
@@ -135,12 +122,7 @@ const LanguageSelector = ({
               }}
             >
               {selectedLanguage && selectedLanguage.key === lang.key && (
-                <Image
-                  src={GreenCheck}
-                  alt='List selected'
-                  width={16}
-                  className='absolute left-2 top-[35%]'
-                />
+                <Image src={GreenCheck} alt='List selected' width={16} className='absolute left-2 top-[35%]' />
               )}
               <div className='flex gap-2 pr-3'>
                 <Image src={lang.icon} alt='Language icon' width={26} className='rounded-md' />

@@ -29,7 +29,7 @@ const RecommendedCards = () => {
     bindDragToCards,
     isFetchingNextPage,
     recommendedProfiles,
-    handleStopAnimationAndSound
+    handleStopAnimationAndSound,
   } = useRecommendedProfilesCards()
 
   const isClient = useIsClient()
@@ -54,12 +54,12 @@ const RecommendedCards = () => {
       <div
         ref={animatedRef}
         className='pointer-events-none h-screen w-screen fixed -right-[101vw] top-0 z-50 delay-150'
-        onAnimationEnd={e => {
+        onAnimationEnd={(e) => {
           e.stopPropagation()
           handleStopAnimationAndSound()
         }}
       >
-        {new Array(10).fill(1).map(index => {
+        {new Array(10).fill(1).map((index) => {
           const randomLeft = Math.random() * 80
           const randomTop = 10 + Math.random() * 30
           const icon = resolvedTheme === 'halloween' ? HalloweenEmoji : Logo
@@ -70,7 +70,7 @@ const RecommendedCards = () => {
               src={icon}
               style={{
                 top: `${randomTop}%`,
-                left: `${randomLeft}%`
+                left: `${randomLeft}%`,
               }}
               className='animate-spin absolute repeat-infinite'
               alt='follow icon'
@@ -94,16 +94,18 @@ const RecommendedCards = () => {
               if (gone.has(i + 3)) return null
 
               return (
+                // @ts-expect-error animated.div is a valid component
                 <animated.div
                   className='h-fit w-full max-w-92 absolute top-0 will-change-transform z-20 sm:mr-[14px]'
                   key={`${recommendedProfiles[i]?.address}-${i}`}
                   style={{ x, y }}
                 >
+                  {/* @ts-expect-error animated.div is a valid component */}
                   <animated.div
                     {...bindDragToCards(i)}
                     style={{
                       transform: interpolate([rot, scale], trans),
-                      touchAction: 'none'
+                      touchAction: 'none',
                     }}
                   >
                     <div className='cursor-pointer'>

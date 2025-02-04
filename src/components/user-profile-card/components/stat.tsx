@@ -16,9 +16,7 @@ const Stat: React.FC<StatProps> = ({ onClick, isLoading, value, label }) => {
       {isLoading ? (
         <LoadingCell className='w-12 h-6 mb-1 rounded-lg mx-auto' />
       ) : (
-        <div className='text-[21px] 3xl:text-2xl text-center font-bold'>
-          {value ? formatNumber(value) : '-'}
-        </div>
+        <div className='text-[21px] 3xl:text-2xl text-center font-bold'>{value ? formatNumber(value) : '-'}</div>
       )}
       <div className='text-[16px] 3xl:text-lg font-bold text-text/40'>{label}</div>
     </div>

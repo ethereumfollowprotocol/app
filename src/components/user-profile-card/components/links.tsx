@@ -32,16 +32,8 @@ const Links: React.FC<LinksProps> = ({ profile }) => {
           rel='noreferrer'
           className='flex items-center text-sm gap-1 mb-1 bg-grey rounded-full py-0.5 px-2 pr-0.5 hover:scale-110 transition-all'
         >
-          <p className='dark:text-blue-400 halloween:text-blue-400 text-blue-600 font-semibold'>
-            dweb
-          </p>
-          <Image
-            src='/assets/icons/dweb.svg'
-            alt='dweb'
-            width={20}
-            height={20}
-            className='rounded-full'
-          />
+          <p className='dark:text-blue-400 halloween:text-blue-400 text-blue-600 font-semibold'>dweb</p>
+          <Image src='/assets/icons/dweb.svg' alt='dweb' width={20} height={20} className='rounded-full' />
         </a>
       )}
     </div>

@@ -6,15 +6,12 @@ import '@rainbow-me/rainbowkit/styles.css'
 import Image from 'next/image'
 import { Toaster } from 'sonner'
 import type { Metadata } from 'next'
-import { headers } from 'next/headers'
 import { ThemeProvider } from 'next-themes'
-import { cookieToInitialState } from 'wagmi'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { GoogleAnalytics } from '@next/third-parties/google'
 
 import Providers from './providers.tsx'
-import wagmiConfig from '../lib/wagmi.ts'
 import { Production } from './production.tsx'
 import { sharedMetadata } from '#/lib/metadata.ts'
 import { THEMES } from '../lib/constants/index.ts'
@@ -24,25 +21,19 @@ import HalloweenBackground from 'public/assets/art/halloween-background.jpeg'
 export const metadata: Metadata = sharedMetadata
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
-  const initialState = cookieToInitialState(wagmiConfig, headers().get('cookie'))
-
   return (
     <html lang='en' suppressHydrationWarning={true} className='dark'>
       <HeadTag />
       <body>
         <ThemeProvider attribute='class' defaultTheme='system' enableSystem={true} themes={THEMES}>
-          <Image
-            src={BackgroundImage}
-            alt='background waves'
-            className='background -z-10 halloween:hidden'
-          />
+          <Image src={BackgroundImage} alt='background waves' className='background -z-10 halloween:hidden' />
           <Image
             src={HalloweenBackground}
             alt='halloween background'
             className='hidden fixed top-0 -z-10 left-0 h-screen opacity-50 w-screen halloween:block object-cover'
           />
           <Toaster richColors={true} />
-          <Providers initialState={initialState}>{children}</Providers>
+          <Providers>{children}</Providers>
           {/* <VercelToolbar /> */}
         </ThemeProvider>
         <Production>
@@ -81,14 +72,11 @@ const HeadTag = () => {
       />
 
       {/* Preload crucial assets */}
-      <link rel='preload' href='/assets/art/waves-background.svg' as='image' />
+      {/* <link rel="preload" href="/assets/art/waves-background.svg" as="image" /> */}
       <link rel='preload' href='/assets/logo.svg' as='image' />
-      <link rel='preload' href='/assets/icons/block-emoji.svg' as='image' />
-      <link rel='preload' href='/assets/icons/mute-emoji.svg' as='image' />
+      {/* <link rel="preload" href="/assets/icons/block-emoji.svg" as="image" />
+      <link rel="preload" href="/assets/icons/mute-emoji.svg" as="image" /> */}
       <link rel='preload' href='/assets/icons/unfollow-emoji.svg' as='image' />
-      <link rel='preload' href='/assets/icons/halloween-emoji.svg' as='image' />
-      <link rel='preload' href='/assets/icons/ghost-emoji.png' as='image' />
-      <link rel='preload' href='/assets/icons/spider-web-emoji.png' as='image' />
     </head>
   )
 }

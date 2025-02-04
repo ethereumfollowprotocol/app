@@ -23,7 +23,7 @@ const CommonFollowers: React.FC<CommonFollowersProps> = ({ address }) => {
 
       const response = await fetchCommonFollowers(userAddress, address)
       return response
-    }
+    },
   })
 
   if (!userAddress || (data?.results?.length || 0) === 0) return null
@@ -71,14 +71,10 @@ const CommonFollowers: React.FC<CommonFollowersProps> = ({ address }) => {
           {displayedNames
             ?.map(
               (profile, index) =>
-                `${profile.name || truncateAddress(profile.address)}${
-                  resultLength > 2 && index === 1 ? ',' : ''
-                }`
+                `${profile.name || truncateAddress(profile.address)}${resultLength > 2 && index === 1 ? ',' : ''}`
             )
             .join(', ')}{' '}
-          {`${resultLength > 2 ? `${t('and')} ${resultLength - 2}` : ''} ${commonFollowersText(
-            resultLength
-          )}`}
+          {`${resultLength > 2 ? `${t('and')} ${resultLength - 2}` : ''} ${commonFollowersText(resultLength)}`}
         </p>
       )}
     </div>

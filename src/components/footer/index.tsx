@@ -9,12 +9,12 @@ export const socials = [
   {
     text: 'X',
     href: 'https://x.com/efp',
-    icon: <FaXTwitter />
+    icon: <FaXTwitter />,
   },
   {
     text: 'GitHub',
     href: 'https://github.com/ethereumfollowprotocol',
-    icon: <FaGithub />
+    icon: <FaGithub />,
   },
   /**
    * TODO: add Discord link once we have one
@@ -22,8 +22,8 @@ export const socials = [
   {
     text: 'Discord',
     href: 'https://discord.com/invite/ZUyG3mSXFD',
-    icon: <FaDiscord />
-  }
+    icon: <FaDiscord />,
+  },
 ]
 
 const Footer = () => {
@@ -43,7 +43,7 @@ const Footer = () => {
           <div className='my-auto flex flex-col justify-center gap-4 sm:gap-6'>
             <Pages />
             <div className='flex items-center w-52 gap-8 sm:gap-10'>
-              {socials.map(item => (
+              {socials.map((item) => (
                 <a
                   target='_blank'
                   rel='noreferrer'

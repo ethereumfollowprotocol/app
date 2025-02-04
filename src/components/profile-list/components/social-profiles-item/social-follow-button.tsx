@@ -20,7 +20,7 @@ const SocialFollowButton: React.FC<SocialFollowButtonProps> = ({ profiles }) => 
     const addresses = profiles.map(({ address }) => address.toLowerCase())
 
     const filteredCartItems = cartItems.filter(
-      item => !addresses.includes(item.listOp.data.slice(0, 42).toLowerCase())
+      (item) => !addresses.includes(item.listOp.data.slice(0, 42).toLowerCase())
     )
 
     setCartItems(filteredCartItems)

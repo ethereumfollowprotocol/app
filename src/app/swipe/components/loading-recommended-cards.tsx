@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import UserProfileCard from '#/components/user-profile-card'
 import type { ProfileDetailsResponse } from '#/types/requests'
+import { Suspense } from 'react'
 
 interface LoadingRecommendedCardsProps {
   gone: Set<number>
@@ -15,7 +16,7 @@ const LoadingRecommendedCards = ({
   isLoading,
   userAddress,
   isFetchingNextPage,
-  recommendedProfiles
+  recommendedProfiles,
 }: LoadingRecommendedCardsProps) => {
   const { t } = useTranslation()
 
@@ -31,21 +32,18 @@ const LoadingRecommendedCards = ({
           className='h-fit w-full xxs:max-w-92 absolute top-0 z-10 sm:mr-[14px]'
           key={i}
           style={{
-            marginTop: `${30 - i * 10}px`
+            marginTop: `${30 - i * 10}px`,
           }}
         >
-          <UserProfileCard
-            isLoading={true}
-            isResponsive={false}
-            hideFollowButton={true}
-            isRecommended={true}
-          />
+          <UserProfileCard isLoading={true} isResponsive={false} hideFollowButton={true} isRecommended={true} />
         </div>
       ))
     )
   ) : (
     <div className='h-fit w-full sm:max-w-92 absolute top-0 z-10 sm:mr-[14px]'>
-      <UserProfileCard isResponsive={false} hideFollowButton={true} isRecommended={true} />
+      <Suspense>
+        <UserProfileCard isResponsive={false} hideFollowButton={true} isRecommended={true} />
+      </Suspense>
     </div>
   )
 }

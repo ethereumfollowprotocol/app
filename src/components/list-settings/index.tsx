@@ -17,7 +17,7 @@ import SettingsInput from './components/settings-input'
 import ResetSlotWarning from './components/reset-slot-warning'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import { PrimaryButton } from '#/components/buttons/primary-button'
+import PrimaryButton from '#/components/buttons/primary-button'
 
 interface ListSettingsProps {
   selectedList: number
@@ -27,13 +27,7 @@ interface ListSettingsProps {
   setIsSaving: (state: boolean) => void
 }
 
-const ListSettings: React.FC<ListSettingsProps> = ({
-  selectedList,
-  isSaving,
-  onClose,
-  setIsSaving,
-  profile
-}) => {
+const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onClose, setIsSaving, profile }) => {
   const [isResetSlotWarningOpen, setIsResetSlotWarningOpen] = useState(false)
   const [isEditingSettings, setIsEditingSettings] = useState(false)
   const [chainDropdownOpen, setChainDropdownOpen] = useState(false)
@@ -73,7 +67,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
     setChangedValues,
     isListStateLoading,
     isListSettingsLoading,
-    fetchedListRecordsContractAddress
+    fetchedListRecordsContractAddress,
   } = useListSettings({ profile, list: selectedList })
 
   const isOwner = connectedAddress?.toLowerCase() === fetchedOwner?.toLowerCase()
@@ -132,37 +126,25 @@ const ListSettings: React.FC<ListSettingsProps> = ({
               <button
                 className='w-[170px] sm:w-[190px] gap-0.5 flex items-center justify-between px-2 sm:px-3 h-[42px] sm:h-12 bg-neutral/50 p-1 hover:bg-neutral/70 rounded-xl disabled:opacity-75 disabled:cursor-not-allowed'
                 onClick={() => setChainDropdownOpen(!chainDropdownOpen)}
-                disabled={
-                  !isEditingSettings ||
-                  connectedAddress?.toLowerCase() !== fetchedOwner?.toLowerCase()
-                }
+                disabled={!isEditingSettings || connectedAddress?.toLowerCase() !== fetchedOwner?.toLowerCase()}
               >
                 {isListSettingsLoading ? (
                   <LoadingCell className='h-8 w-full rounded-lg' />
                 ) : (
                   <>
-                    {chain && (
-                      <ChainIcon
-                        chain={chain as ChainWithDetails}
-                        className={'h-6 w-6 rounded-lg'}
-                      />
-                    )}
+                    {chain && <ChainIcon chain={chain as ChainWithDetails} className={'h-6 w-6 rounded-lg'} />}
                     <p className='sm:text-lg font-bold truncate'>{chain?.name}</p>
                   </>
                 )}
                 {isEditingSettings ? (
-                  <IoIosArrowDown
-                    className={`${
-                      chainDropdownOpen ? 'rotate-180' : ''
-                    } h-5 w-5 transition-transform`}
-                  />
+                  <IoIosArrowDown className={`${chainDropdownOpen ? 'rotate-180' : ''} h-5 w-5 transition-transform`} />
                 ) : (
                   <div />
                 )}
               </button>
               {chainDropdownOpen && (
                 <div className='absolute top-12 sm:top-14 z-10 flex bg-neutral flex-col rounded-xl w-full'>
-                  {chains.map(item => (
+                  {chains.map((item) => (
                     <div
                       key={item.id}
                       onClick={() => {
@@ -170,15 +152,12 @@ const ListSettings: React.FC<ListSettingsProps> = ({
                         setChainDropdownOpen(false)
                         setChangedValues({
                           ...changedValues,
-                          chain: fetchedChain?.id !== item.id
+                          chain: fetchedChain?.id !== item.id,
                         })
                       }}
                       className='w-full hover:bg-grey/40 cursor-pointer rounded-xl flex items-center gap-3 p-3'
                     >
-                      <ChainIcon
-                        chain={item as ChainWithDetails}
-                        className={'h-6 sm:h-7 w-6 sm:w-7'}
-                      />
+                      <ChainIcon chain={item as ChainWithDetails} className={'h-6 sm:h-7 w-6 sm:w-7'} />
                       <p className='sm:text-lg font-bold truncate'>{item?.name}</p>
                     </div>
                   ))}
@@ -193,14 +172,14 @@ const ListSettings: React.FC<ListSettingsProps> = ({
                 className='toggle disabled:opacity-40 disabled:cursor-not-allowed'
                 type='checkbox'
                 defaultChecked={isPrimaryList}
-                onChange={e => {
+                onChange={(e) => {
                   setIsPrimaryList(e.target.checked)
-                  setChangedValues(prev => ({
+                  setChangedValues((prev) => ({
                     ...prev,
                     setPrimary:
                       user.toLowerCase() === connectedAddress?.toLowerCase()
                         ? e.target.checked
-                        : e.target.checked !== (Number(profile.primary_list) === selectedList)
+                        : e.target.checked !== (Number(profile.primary_list) === selectedList),
                   }))
                 }}
                 disabled={!isEditingSettings}
@@ -272,7 +251,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({
               manager: false,
               user: false,
               setPrimary: false,
-              resetSlot: true
+              resetSlot: true,
             })
 
             setIsSaving(true)

@@ -10,7 +10,7 @@ import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 interface CartItemsProps {
   setClearCartModalOpen: (open: boolean) => void
-  containerRef: React.RefObject<HTMLDivElement>
+  containerRef: React.RefObject<HTMLDivElement | null>
 }
 
 const CartItems = ({ setClearCartModalOpen, containerRef }: CartItemsProps) => {
@@ -20,21 +20,21 @@ const CartItems = ({ setClearCartModalOpen, containerRef }: CartItemsProps) => {
   const hasCreatedEfpList = !!selectedList
 
   const profiles = useMemo(() => {
-    return cartAddresses.map(address => ({
+    return cartAddresses.map((address) => ({
       address,
-      tags: []
+      tags: [],
     }))
   }, [cartAddresses])
 
   const socialProfiles = [
     {
       platform: 'farcaster',
-      profiles: socialAddresses.farcaster.map(address => ({
+      profiles: socialAddresses.farcaster.map((address) => ({
         address,
-        tags: []
+        tags: [],
       })),
-      icon: FarcasterIcon
-    }
+      icon: FarcasterIcon,
+    },
     // {
     //   platform: 'lens',
     //   profiles: socialAddresses.lens.map(address => ({
@@ -48,9 +48,7 @@ const CartItems = ({ setClearCartModalOpen, containerRef }: CartItemsProps) => {
   return (
     <>
       <div className='flex justify-between gap-2 flex-row items-center px-2'>
-        <h3 className='font-bold text-left text-xl sm:text-3xl xxs:w-2/3'>
-          {t('cart unc-changes')}
-        </h3>
+        <h3 className='font-bold text-left text-xl sm:text-3xl xxs:w-2/3'>{t('cart unc-changes')}</h3>
         {totalCartItems > 0 && (
           <button
             className='flex gap-2 cursor-pointer hover:scale-110 transition-transform items-center hover:opacity-80'

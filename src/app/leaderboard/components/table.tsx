@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment } from 'react'
+import { Fragment, Suspense } from 'react'
 import { FiSearch } from 'react-icons/fi'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
@@ -40,7 +40,7 @@ const LeaderboardTable = () => {
     fetchPreviousLeaderboard,
     isLeaderboardStatsLoading,
     isFetchingNextLeaderboard,
-    isFetchingPreviousLeaderboard
+    isFetchingPreviousLeaderboard,
   } = useLeaderboard()
   const { t } = useTranslation()
 
@@ -52,19 +52,18 @@ const LeaderboardTable = () => {
     params.set('filter', newFilter)
     if (search) params.set('query', search)
     router.push(`/leaderboard?${params.toString()}`, {
-      scroll: false
+      scroll: false,
     })
   }
 
-  const isLoading =
-    isLeaderboardLoading || isFetchingNextLeaderboard || isFetchingPreviousLeaderboard
+  const isLoading = isLeaderboardLoading || isFetchingNextLeaderboard || isFetchingPreviousLeaderboard
 
   const selectedRank = {
     followers: (entry: LeaderboardItem) => entry.followers_rank,
     following: (entry: LeaderboardItem) => entry.following_rank,
     mutuals: (entry: LeaderboardItem) => entry.mutuals_rank,
     top8: (entry: LeaderboardItem) => entry.top8_rank,
-    blocked: (entry: LeaderboardItem) => entry.blocks_rank
+    blocked: (entry: LeaderboardItem) => entry.blocks_rank,
   }[filter]
 
   return (
@@ -89,9 +88,7 @@ const LeaderboardTable = () => {
       </div>
       <div className='flex w-full gap-1.5 justify-center md:justify-end max-w-[1300px] text-sm mt-4 font-bold text-[#aaaaaa] md:text-[#CDCDCD] italic'>
         {t('last updated')}
-        <span>
-          {isLeaderboardLoading ? <LoadingCell className='h-5 w-16 rounded-md' /> : timeStamp}
-        </span>
+        <span>{isLeaderboardLoading ? <LoadingCell className='h-5 w-16 rounded-md' /> : timeStamp}</span>
       </div>
       <div className='flex flex-col gap-2 w-full max-w-[1300px]'>
         <div className='flex md:hidden'>
@@ -100,10 +97,7 @@ const LeaderboardTable = () => {
         <div className='flex justify-between gap-2'>
           <div className='relative w-full sm:w-[260px] 2xl:w-[300px]'>
             <div className='rounded-xl w-full group overflow-hidden border-[3px] border-grey sm:text-sm focus:border-text/80 hover:border-text/80 focus-within:border-text/80 transition-colors'>
-              <div
-                className='pointer-events-none absolute inset-y-0 right-0 flex items-center pl-3'
-                aria-hidden='true'
-              >
+              <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center pl-3' aria-hidden='true'>
                 <FiSearch
                   className='mr-3 text-xl opacity-30 dark:opacity-60 group-hover:opacity-80 dark:group-hover:opacity-100 group-focus-within:opacity-80 dark:group-focus-within:opacity-100 transition-opacity'
                   aria-hidden='true'
@@ -123,21 +117,23 @@ const LeaderboardTable = () => {
             <div className='hidden md:flex'>
               <Filters filter={filter} onSelectFilter={onSelectFilter} />
             </div>
-            <PageSelector
-              page={page}
-              setPage={setPage}
-              hasNextPage={true}
-              scrollUp={true}
-              isLoading={isFetchingNextLeaderboard || isFetchingPreviousLeaderboard}
-              fetchNext={() => {
-                setChunk(1)
-                fetchNextLeaderboard()
-              }}
-              fetchPrevious={() => {
-                setChunk(1)
-                fetchPreviousLeaderboard()
-              }}
-            />
+            <Suspense>
+              <PageSelector
+                page={page}
+                setPage={setPage}
+                hasNextPage={true}
+                scrollUp={true}
+                isLoading={isFetchingNextLeaderboard || isFetchingPreviousLeaderboard}
+                fetchNext={() => {
+                  setChunk(1)
+                  fetchNextLeaderboard()
+                }}
+                fetchPrevious={() => {
+                  setChunk(1)
+                  fetchPreviousLeaderboard()
+                }}
+              />
+            </Suspense>
           </div>
         </div>
         <div className='glass-card border-grey mt-1 border-[3px] rounded-xl flex flex-col gap-4 p-1 sm:px-4 sm:py-6 lg:px-8 relative'>
@@ -178,21 +174,23 @@ const LeaderboardTable = () => {
             </div>
           )}
         </div>
-        <PageSelector
-          page={page}
-          scrollUp={true}
-          setPage={setPage}
-          hasNextPage={true}
-          isLoading={isFetchingNextLeaderboard || isFetchingPreviousLeaderboard}
-          fetchNext={() => {
-            setChunk(1)
-            fetchNextLeaderboard()
-          }}
-          fetchPrevious={() => {
-            setChunk(1)
-            fetchPreviousLeaderboard()
-          }}
-        />
+        <Suspense>
+          <PageSelector
+            page={page}
+            scrollUp={true}
+            setPage={setPage}
+            hasNextPage={true}
+            isLoading={isFetchingNextLeaderboard || isFetchingPreviousLeaderboard}
+            fetchNext={() => {
+              setChunk(1)
+              fetchNextLeaderboard()
+            }}
+            fetchPrevious={() => {
+              setChunk(1)
+              fetchPreviousLeaderboard()
+            }}
+          />
+        </Suspense>
       </div>
     </Fragment>
   )

@@ -15,16 +15,10 @@ interface AchievementsProps {
   isRecommended: boolean
 }
 
-const Achievements: React.FC<AchievementsProps> = ({
-  list,
-  profile,
-  isLoading,
-  isResponsive,
-  isRecommended
-}) => {
+const Achievements: React.FC<AchievementsProps> = ({ list, profile, isLoading, isResponsive, isRecommended }) => {
   const { ownedBadges, isLoading: isBadgesLoading } = useAchievements({
     address: profile?.address,
-    list: list || undefined
+    list: list || undefined,
   })
 
   const rankTitles = Object.keys(profile?.ranks || {})
@@ -45,7 +39,7 @@ const Achievements: React.FC<AchievementsProps> = ({
             <LoadingCell className='w-[90px] h-[90px] rounded-full' />
           </>
         ) : (
-          ownedBadges.map(badge => (
+          ownedBadges.map((badge) => (
             <Link
               href={`https://collectors.poap.xyz/token/${badge.collection?.tokenId || ''}`}
               key={badge.collection?.tokenId}

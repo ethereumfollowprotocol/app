@@ -1,13 +1,7 @@
 import useChain from '#/hooks/use-chain'
 import { ChainIcon } from '#/components/chain-icon'
 
-const RequiredTransaction = ({
-  chainId,
-  transactions = 1
-}: {
-  chainId: number
-  transactions?: number
-}) => {
+const RequiredTransaction = ({ chainId, transactions = 1 }: { chainId: number; transactions?: number }) => {
   const { getChain } = useChain()
   const chain = getChain(chainId)
 

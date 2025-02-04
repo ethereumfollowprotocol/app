@@ -77,7 +77,7 @@ export const LANGUAGES = [
     language: 'Español (MX)',
     key: 'es-MX',
     icon: MexicoFlag,
-    englishLanguage: 'Spanish (Mexican)'
+    englishLanguage: 'Spanish (Mexican)',
   },
   { language: '日本語', key: 'ja', icon: JapanFlag, englishLanguage: 'Japanese' },
   { language: '한국어', key: 'ko', icon: KoreaFlag, englishLanguage: 'Korean' },
@@ -88,13 +88,13 @@ export const LANGUAGES = [
     language: 'Português (BR)',
     key: 'pt-BR',
     icon: BrazilFLag,
-    englishLanguage: 'Portuguese (Brazilian)'
+    englishLanguage: 'Portuguese (Brazilian)',
   },
   {
     language: 'Nigerian Pidgin',
     key: 'pcm',
     icon: NigeriaFlag,
-    englishLanguage: 'Nigerian Pidgin'
+    englishLanguage: 'Nigerian Pidgin',
   },
   { language: '繁體中文', key: 'zh-TW', icon: TaiwanFlag, englishLanguage: 'Traditional Chinese' },
   { language: 'Nederlands', key: 'nl', icon: NetherlandsFlag, englishLanguage: 'Dutch' },
@@ -173,43 +173,43 @@ export const LANGUAGES = [
     key: 'corp',
     icon: CorporateFlag,
     englishLanguage: 'Corporate',
-    special: true
+    special: true,
   },
   {
     language: 'Gen Alpha',
     key: 'genalpha',
     icon: GenAlphaFlag,
     englishLanguage: 'Gen Alpha',
-    special: true
+    special: true,
   },
   {
     language: 'Shakespearean',
     key: 'shakespearean',
     icon: EnglandFlag,
     englishLanguage: 'Shakespearean',
-    special: true
+    special: true,
   },
   {
     language: 'frENS',
     key: 'frens',
     icon: frensFlag,
     englishLanguage: 'frENS',
-    special: true
+    special: true,
   },
   {
     language: 'Ermahgersh',
     key: 'ermahgersh',
     icon: ErmahgershFlag,
     englishLanguage: 'Ermahgersh',
-    special: true
+    special: true,
   },
   {
     language: 'Millennial',
     key: 'millennial',
     icon: MillennialFlag,
     englishLanguage: 'Millennial',
-    special: true
-  }
+    special: true,
+  },
   // {
   //   language: 'Halloween',
   //   key: 'halloween',
@@ -219,4 +219,4 @@ export const LANGUAGES = [
   // }
 ]
 
-export const languageKeys = LANGUAGES.map(language => language.key)
+export const languageKeys = LANGUAGES.map((language) => language.key)

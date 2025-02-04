@@ -17,8 +17,8 @@ i18n
     defaultNS: 'translations',
     ns: ['translations'],
     react: {
-      useSuspense: true
-    }
+      useSuspense: true,
+    },
   })
 
 // preload languages

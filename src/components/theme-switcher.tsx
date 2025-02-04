@@ -15,18 +15,18 @@ export const themesWithIcons = [
   {
     theme: 'system',
     icon: <HiOutlineDesktopComputer />,
-    language: undefined
+    language: undefined,
   },
   {
     theme: 'light',
     icon: <MdLightMode />,
-    language: undefined
+    language: undefined,
   },
   {
     theme: 'dark',
     icon: <MdDarkMode />,
-    language: undefined
-  }
+    language: undefined,
+  },
   // {
   //   theme: "halloween",
   //   icon: <GiPumpkinLantern />,
@@ -64,9 +64,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
       >
         <FiArrowLeft className='text-xl' />
         <div className='flex items-center justify-end gap-2'>
-          <p className='text-2xl'>
-            {themesWithIcons.find(({ theme }) => theme === selectedTheme)?.icon}
-          </p>
+          <p className='text-2xl'>{themesWithIcons.find(({ theme }) => theme === selectedTheme)?.icon}</p>
           <p className='capitalize font-bold'>{t(selectedTheme || 'system')}</p>
         </div>
       </div>
@@ -102,12 +100,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
               }}
             >
               {selectedTheme === theme && (
-                <Image
-                  src={GreenCheck}
-                  alt='List selected'
-                  width={16}
-                  className='absolute left-2 top-[19px]'
-                />
+                <Image src={GreenCheck} alt='List selected' width={16} className='absolute left-2 top-[19px]' />
               )}
               <p className='text-2xl'>{icon}</p>
               <p className='text-nowrap capitalize font-bold'>{t(theme)}</p>

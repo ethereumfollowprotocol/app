@@ -22,7 +22,7 @@ const Filters: React.FC<FiltersProps> = ({ filter, onSelectFilter }) => {
   return (
     <div ref={clickAwayRef} className='relative w-full md:w-64 z-40 mx-auto max-w-108'>
       <div
-        onClick={() => setIsDropdownOpen(prev => !prev)}
+        onClick={() => setIsDropdownOpen((prev) => !prev)}
         className='flex w-full cursor-pointer flex-wrap h-[50px] z-30 justify-between px-3 border-grey hover:border-text/80 transition-colors rounded-xl border-[3px] bg-neutral items-center gap-4'
       >
         <div
@@ -47,7 +47,7 @@ const Filters: React.FC<FiltersProps> = ({ filter, onSelectFilter }) => {
         )}
       >
         <div className='flex w-full flex-col'>
-          {leaderboardFilters.map(item => (
+          {leaderboardFilters.map((item) => (
             <div
               key={item}
               onClick={() => {
