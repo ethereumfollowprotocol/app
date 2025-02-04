@@ -67,7 +67,7 @@
     "bufferutil": "^4.0.8",
     "encoding": "^0.1.13",
     "eslint": "^9.19.0",
-    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-react": "^7.37.4",
     "lokijs": "^1.5.12",
     "pino-pretty": "^10.3.1",
