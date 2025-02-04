@@ -54,7 +54,7 @@ const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile }) => 
         )}
         <div className='flex w-full flex-wrap justify-around transition-none sm:justify-between 2xl:justify-start items-start xl:gap-0 sm:gap-1'>
           {!isTopEightLoading &&
-            topEight?.slice(0, displayLimit).map((profile, index) => <TopEightProfile profile={profile} key={index} />)}
+            topEight.slice(0, displayLimit).map((profile, index) => <TopEightProfile profile={profile} key={index} />)}
           {new Array(isTopEightLoading ? displayLimit : 0).fill(0).map((_, index) => (
             <div key={index} className='flex flex-col w-28 xl:w-[128px] 2xl:w-36 py-4 px-0 items-center gap-2'>
               <LoadingCell className='h-[50px] w-[50px] rounded-full' />

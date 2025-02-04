@@ -2,6 +2,7 @@
   "recommendations": [
     "mikestead.dotenv",
     "gruntfuggly.todo-tree",
+    "esbenp.prettier-vscode",
     "bradlc.vscode-tailwindcss",
     "EditorConfig.EditorConfig"
   ]

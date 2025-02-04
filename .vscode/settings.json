@@ -1,30 +1,16 @@
 {
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.inlayHints.parameterNames.enabled": "all",
   "typescript.preferences.preferTypeOnlyAutoImports": true,
-  "files.associations": {
-    // tells vscode that the file can take comments
-    "*.css": "tailwindcss"
-  },
   "editor.quickSuggestions": {
     "strings": "on"
   },
-  "tailwindCSS.includeLanguages": {
-    "plaintext": "html"
-  },
   // git settings
   "git.autofetch": true,
-  "git.confirmSync": false,
   "git.enableCommitSigning": true,
   // format & lint settings
-  "editor.format.enable": true,
+
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
-  },
-  "eslint.validate": ["javascript", "typescript"],
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -40,6 +26,10 @@
   "[scss]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.validate": ["javascript", "typescript"],
   "stylelint.validate": ["css", "scss"],
   "search.exclude": {
     "**/node_modules": true,
