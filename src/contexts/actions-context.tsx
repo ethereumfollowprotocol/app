@@ -1,14 +1,6 @@
 'use client'
 
-import {
-  useMemo,
-  useState,
-  useEffect,
-  useContext,
-  useCallback,
-  createContext,
-  type ReactNode
-} from 'react'
+import { useMemo, useState, useEffect, useContext, useCallback, createContext, type ReactNode } from 'react'
 import type { WriteContractReturnType } from 'viem'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
@@ -22,7 +14,7 @@ export enum EFPActionType {
   SetEFPListUser = 'SetEFPListUser',
   SetPrimaryList = 'SetEFPPrimaryList',
   ResetSlot = 'ResetSlot',
-  SetEFPListStorageLocation = 'SetEFPListStorageLocation'
+  SetEFPListStorageLocation = 'SetEFPListStorageLocation',
 }
 
 export type Action = {
@@ -73,12 +65,10 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
   const { currentChainId, checkChain } = useChain()
   const { isSuccess: currentActionTxIsSuccess } = useWaitForTransactionReceipt({
     hash: currentAction?.txHash,
-    chainId: currentAction?.chainId
+    chainId: currentAction?.chainId,
   })
 
-  const [isCorrectChain, setIsCorrectChain] = useState(
-    currentChainId === actions[currentActionIndex || 0]?.chainId
-  )
+  const [isCorrectChain, setIsCorrectChain] = useState(currentChainId === actions[currentActionIndex || 0]?.chainId)
   useEffect(() => {
     setIsCorrectChain(currentChainId === actions[currentActionIndex]?.chainId)
   }, [currentChainId, actions, currentActionIndex])
@@ -97,7 +87,7 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
   const updateAction = useCallback(
     (updatedAction: Action) => {
       // Find the index of the action to update
-      const index = actions.findIndex(action => action.id === updatedAction.id)
+      const index = actions.findIndex((action) => action.id === updatedAction.id)
       if (index < 0) return
 
       // Update the action
@@ -130,8 +120,7 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
   const executeActionByIndex = useCallback(
     async (index: number) => {
       // Validate the index
-      if (index < 0 || index >= actions.length)
-        throw new Error(`Action index out of bounds: ${index}`)
+      if (index < 0 || index >= actions.length) throw new Error(`Action index out of bounds: ${index}`)
 
       // Get the action to execute
       const actionToExecute = actions[index]
@@ -146,20 +135,20 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
           return updateAction({
             ...actionToExecute,
             isPendingConfirmation: false,
-            isConfirmationError: true
+            isConfirmationError: true,
           })
 
         updateAction({
           ...actionToExecute,
           isPendingConfirmation: false,
           txHash: hash,
-          isConfirmationError: false
+          isConfirmationError: false,
         })
       } catch (error: any) {
         updateAction({
           ...actionToExecute,
           isPendingConfirmation: false,
-          isConfirmationError: true
+          isConfirmationError: true,
         })
       }
     },
@@ -206,7 +195,7 @@ export const ActionsProvider = ({ children }: { children: ReactNode }) => {
     getNextActionIndex,
     resetActions,
     handleInitiateActions,
-    handleNextAction
+    handleNextAction,
   }
 
   return <ActionsContext.Provider value={value}>{children}</ActionsContext.Provider>

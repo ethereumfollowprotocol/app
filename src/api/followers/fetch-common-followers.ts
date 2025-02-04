@@ -3,7 +3,7 @@ import type { CommonFollowersResponse } from '#/types/requests'
 
 export const noCommonFollowers = {
   results: [],
-  length: 0
+  length: 0,
 } satisfies CommonFollowersResponse
 
 export const fetchCommonFollowers = async (user: Address, addressOrName: string) => {
@@ -14,8 +14,8 @@ export const fetchCommonFollowers = async (user: Address, addressOrName: string)
         cache: 'default',
         headers: {
           'Content-Type': 'application/json',
-          Accept: 'application/json'
-        }
+          Accept: 'application/json',
+        },
       }
     )
 

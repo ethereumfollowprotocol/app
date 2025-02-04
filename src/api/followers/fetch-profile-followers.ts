@@ -9,7 +9,7 @@ export const fetchProfileFollowers = async ({
   tags,
   search,
   pageParam,
-  allResults
+  allResults,
 }: InfiniteProfileQueryProps) => {
   try {
     const queryParams = formatQueryParams({
@@ -20,10 +20,10 @@ export const fetchProfileFollowers = async ({
         ? {
             'earliest first': 'earliest',
             'latest first': 'latest',
-            'follower count': 'followers'
+            'follower count': 'followers',
           }[sort]
         : undefined,
-      tags
+      tags,
     })
 
     const followersEndpoint = allResults
@@ -40,19 +40,19 @@ export const fetchProfileFollowers = async ({
       cache: 'default',
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json'
-      }
+        Accept: 'application/json',
+      },
     })
 
     const data = (await response.json()).followers as FollowerResponse[]
     return {
       followers: data ?? [],
-      nextPageParam: pageParam + 1
+      nextPageParam: pageParam + 1,
     }
   } catch (err: unknown) {
     return {
       followers: [],
-      nextPageParam: pageParam + 1
+      nextPageParam: pageParam + 1,
     }
   }
 }

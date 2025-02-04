@@ -10,7 +10,7 @@ import { coreEfpContracts, listRegistryContract } from '#/lib/constants/contract
 export const fetchProfileRoles = async ({
   list,
   userAddress,
-  chains
+  chains,
 }: {
   list: number | string
   userAddress: Address
@@ -19,7 +19,7 @@ export const fetchProfileRoles = async ({
   const listStorageLocation = await listRegistryContract.read.getListStorageLocation([BigInt(list)])
 
   const listStorageLocationChainId = fromHex(`0x${listStorageLocation.slice(64, 70)}`, 'number')
-  const listStorageLocationChain = chains.find(item => item.id === listStorageLocationChainId)
+  const listStorageLocationChain = chains.find((item) => item.id === listStorageLocationChainId)
 
   const slot = BigInt(`0x${listStorageLocation.slice(-64)}`)
 
@@ -32,8 +32,8 @@ export const fetchProfileRoles = async ({
     abi: efpListRecordsAbi,
     client: createPublicClient({
       chain: listStorageLocationChain || DEFAULT_CHAIN,
-      transport: http(rpcProviders[listStorageLocationChain?.id || DEFAULT_CHAIN.id])
-    })
+      transport: http(rpcProviders[listStorageLocationChain?.id || DEFAULT_CHAIN.id]),
+    }),
   })
 
   const listOwner = await listRegistryContract.read.ownerOf([BigInt(list)])
@@ -46,6 +46,6 @@ export const fetchProfileRoles = async ({
     isUser: listUser?.toLowerCase() === userAddress?.toLowerCase(),
     listChainId: listStorageLocationChainId,
     listRecordsContract: listRecordsContractAddress,
-    listSlot: slot
+    listSlot: slot,
   } as ProfileRoles
 }

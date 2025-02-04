@@ -15,18 +15,18 @@ export const themesWithIcons = [
   {
     theme: 'system',
     icon: <HiOutlineDesktopComputer />,
-    language: undefined
+    language: undefined,
   },
   {
     theme: 'light',
     icon: <MdLightMode />,
-    language: undefined
+    language: undefined,
   },
   {
     theme: 'dark',
     icon: <MdDarkMode />,
-    language: undefined
-  }
+    language: undefined,
+  },
   // {
   //   theme: "halloween",
   //   icon: <GiPumpkinLantern />,
@@ -54,20 +54,18 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
   const { setTheme, theme: selectedTheme } = useTheme()
 
   return (
-    <div ref={clickAwayThemeRef} className='cursor-pointer group h-full relative w-full'>
+    <div ref={clickAwayThemeRef} className="cursor-pointer group h-full relative w-full">
       <div
         onClick={() => {
           setThemeMenuOpen(!themeMenuOpen)
           setExternalThemeMenuOpen?.(!themeMenuOpen)
         }}
-        className='flex justify-between items-center rounded-md transition-opacity cursor-pointer group-hover:bg-navItem p-3 w-full'
+        className="flex justify-between items-center rounded-md transition-opacity cursor-pointer group-hover:bg-navItem p-3 w-full"
       >
-        <FiArrowLeft className='text-xl' />
-        <div className='flex items-center justify-end gap-2'>
-          <p className='text-2xl'>
-            {themesWithIcons.find(({ theme }) => theme === selectedTheme)?.icon}
-          </p>
-          <p className='capitalize font-bold'>{t(selectedTheme || 'system')}</p>
+        <FiArrowLeft className="text-xl" />
+        <div className="flex items-center justify-end gap-2">
+          <p className="text-2xl">{themesWithIcons.find(({ theme }) => theme === selectedTheme)?.icon}</p>
+          <p className="capitalize font-bold">{t(selectedTheme || 'system')}</p>
         </div>
       </div>
       <div
@@ -76,20 +74,20 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
           themeMenuOpen ? 'block' : 'hidden'
         )}
       >
-        <div className='flex flex-col p-1 gap-2 w-full max-h-[80vh] h-full lg:max-h-[90vh] border-[3px] rounded-lg bg-neutral border-grey shadow-md'>
+        <div className="flex flex-col p-1 gap-2 w-full max-h-[80vh] h-full lg:max-h-[90vh] border-[3px] rounded-lg bg-neutral border-grey shadow-md">
           <div
             onClick={() => {
               setThemeMenuOpen(false)
               setExternalThemeMenuOpen?.(false)
             }}
-            className='flex lg:hidden justify-between items-center w-full hover:bg-navItem p-3 rounded-md transition-opacity cursor-pointer'
+            className="flex lg:hidden justify-between items-center w-full hover:bg-navItem p-3 rounded-md transition-opacity cursor-pointer"
           >
-            <FiArrowLeft className='text-xl' />
-            <p className='font-bold'>Back</p>
+            <FiArrowLeft className="text-xl" />
+            <p className="font-bold">Back</p>
           </div>
           {themesWithIcons.map(({ theme, icon, language }) => (
             <div
-              className='flex items-center relative p-3 pl-8 w-full gap-2 rounded-md hover:bg-navItem'
+              className="flex items-center relative p-3 pl-8 w-full gap-2 rounded-md hover:bg-navItem"
               key={theme}
               onClick={() => {
                 setTheme(theme as ThemeType)
@@ -102,15 +100,10 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
               }}
             >
               {selectedTheme === theme && (
-                <Image
-                  src={GreenCheck}
-                  alt='List selected'
-                  width={16}
-                  className='absolute left-2 top-[19px]'
-                />
+                <Image src={GreenCheck} alt="List selected" width={16} className="absolute left-2 top-[19px]" />
               )}
-              <p className='text-2xl'>{icon}</p>
-              <p className='text-nowrap capitalize font-bold'>{t(theme)}</p>
+              <p className="text-2xl">{icon}</p>
+              <p className="text-nowrap capitalize font-bold">{t(theme)}</p>
             </div>
           ))}
         </div>

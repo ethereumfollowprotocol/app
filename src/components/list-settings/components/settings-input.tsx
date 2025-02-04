@@ -29,7 +29,7 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
   setValue,
   isEditingSettings,
   isLoading,
-  isSettingsLoading
+  isSettingsLoading,
 }) => {
   const { t } = useTranslation()
   const { address: connectedAddress } = useAccount()
@@ -41,55 +41,52 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
         ? await resolveEnsProfile((isAddress(value) ? value : resolvedAddress) as Address)
         : {
             name: null,
-            avatar: null
-          }
+            avatar: null,
+          },
   })
 
   return (
-    <div className='flex flex-col gap-1'>
-      <p className='font-bold text-lg'>{option}</p>
+    <div className="flex flex-col gap-1">
+      <p className="font-bold text-lg">{option}</p>
       {isSettingsLoading ? (
-        <div className='p-3 font-medium truncate rounded-lg w-full bg-neutral/70 disabled:text-zinc-400 disabled:cursor-not-allowed'>
-          <LoadingCell className='w-full h-7 rounded-md' />
+        <div className="p-3 font-medium truncate rounded-lg w-full bg-neutral/70 disabled:text-zinc-400 disabled:cursor-not-allowed">
+          <LoadingCell className="w-full h-7 rounded-md" />
         </div>
       ) : (
         <input
           value={value}
           placeholder={placeholder}
-          onChange={e => {
+          onChange={(e) => {
             const input = e.target.value
             if (input.includes(' ')) return
             setValue(input)
           }}
-          disabled={
-            !isEditingSettings || connectedAddress?.toLowerCase() !== disableValue?.toLowerCase()
-          }
-          className='p-3 font-medium truncate rounded-lg w-full bg-neutral/70 disabled:text-zinc-400 disabled:cursor-not-allowed'
+          disabled={!isEditingSettings || connectedAddress?.toLowerCase() !== disableValue?.toLowerCase()}
+          className="p-3 font-medium truncate rounded-lg w-full bg-neutral/70 disabled:text-zinc-400 disabled:cursor-not-allowed"
         />
       )}
       {(isSettingsLoading || value.includes('.') || resolvedProfile?.name) && (
         <div
           className={cn(
             'font-medium flex items-center gap-2 h-10 text-sm',
-            (value.includes('.') && resolvedAddress && resolvedAddress?.length > 0) ||
-              resolvedProfile?.name
+            (value.includes('.') && resolvedAddress && resolvedAddress?.length > 0) || resolvedProfile?.name
               ? 'text-text/80'
               : 'text-red-400'
           )}
         >
           {isSettingsLoading || isLoading || isNameLoading ? (
             <>
-              <LoadingCell className='w-8 h-8 rounded-full' />
-              <LoadingCell className='w-full h-5 rounded-md' gradient={LIGHT_LOADING_GRADIENT} />
+              <LoadingCell className="w-8 h-8 rounded-full" />
+              <LoadingCell className="w-full h-5 rounded-md" gradient={LIGHT_LOADING_GRADIENT} />
             </>
           ) : (
             <>
               <Avatar
                 name={resolvedProfile?.name || value}
-                size='h-8 w-8 rounded-full'
+                size="h-8 w-8 rounded-full"
                 avatarUrl={resolvedProfile?.avatar}
               />
-              <p className='font-bold truncate'>
+              <p className="font-bold truncate">
                 {value.includes('.')
                   ? resolvedAddress && resolvedAddress?.length > 0
                     ? resolvedAddress

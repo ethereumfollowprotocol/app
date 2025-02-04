@@ -23,7 +23,7 @@ const StatsDesktop: React.FC<StatsDesktopProps> = ({
   following,
   mutuals,
   top8,
-  blocked
+  blocked,
 }) => {
   const { t } = useTranslation()
   const router = useRouter()
@@ -35,7 +35,7 @@ const StatsDesktop: React.FC<StatsDesktopProps> = ({
     following: `/${address}?tab=following`,
     mutuals: `/${address}`,
     top8: `/${address}`,
-    blocked: `/${address}?modal=block_mute_list`
+    blocked: `/${address}?modal=block_mute_list`,
   }
 
   return (
@@ -53,18 +53,18 @@ const StatsDesktop: React.FC<StatsDesktopProps> = ({
           )}
           onClick={() => firstStat && router.push(statLink[firstStat])}
         >
-          <p className='font-bold text-sm sm:text-lg'>
+          <p className="font-bold text-sm sm:text-lg">
             {formatNumber(
               {
                 followers,
                 following,
                 mutuals,
                 top8,
-                blocked
+                blocked,
               }[firstStat] || 0
             )}
           </p>
-          <p className='font-bold text-sm capitalize text-text/60 text-wrap text-center break-words w-full'>
+          <p className="font-bold text-sm capitalize text-text/60 text-wrap text-center break-words w-full">
             {t(firstStat)}
           </p>
         </div>
@@ -83,10 +83,8 @@ const StatsDesktop: React.FC<StatsDesktopProps> = ({
           isHome ? 'w-1/2 md:w-1/2 lg:w-1/4 2xl:w-1/2' : 'w-1/2 lg:w-1/4 xl:w-1/5 2xl:w-1/5`'
         )}
       >
-        <p className='font-bold text-sm sm:text-lg'>{formatNumber(mutuals || 0)}</p>
-        <p className='font-bold text-sm  text-text/60 text-wrap break-words text-center w-full'>
-          {t('mutuals')}
-        </p>
+        <p className="font-bold text-sm sm:text-lg">{formatNumber(mutuals || 0)}</p>
+        <p className="font-bold text-sm  text-text/60 text-wrap break-words text-center w-full">{t('mutuals')}</p>
       </div>
       <div
         className={cn(
@@ -107,10 +105,8 @@ const StatsDesktop: React.FC<StatsDesktopProps> = ({
         )}
         onClick={() => router.push(statLink.followers)}
       >
-        <p className='font-bold text-sm sm:text-lg'>{formatNumber(followers || 0)}</p>
-        <p className='font-bold text-sm  text-text/60 text-wrap break-words text-center w-full'>
-          {t('followers')}
-        </p>
+        <p className="font-bold text-sm sm:text-lg">{formatNumber(followers || 0)}</p>
+        <p className="font-bold text-sm  text-text/60 text-wrap break-words text-center w-full">{t('followers')}</p>
       </div>
       <div
         className={`${
@@ -124,10 +120,8 @@ const StatsDesktop: React.FC<StatsDesktopProps> = ({
         } transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/4 xl:w-1/5`}
         onClick={() => router.push(statLink.following)}
       >
-        <p className='font-bold text-sm sm:text-lg'>{formatNumber(following || 0)}</p>
-        <p className='font-bold text-sm  text-text/60 text-wrap break-words text-center w-full'>
-          {t('following')}
-        </p>
+        <p className="font-bold text-sm sm:text-lg">{formatNumber(following || 0)}</p>
+        <p className="font-bold text-sm  text-text/60 text-wrap break-words text-center w-full">{t('following')}</p>
       </div>
       <div
         className={`${
@@ -139,10 +133,8 @@ const StatsDesktop: React.FC<StatsDesktopProps> = ({
         } transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/4 xl:w-1/5`}
         onClick={() => router.push(statLink.top8)}
       >
-        <p className='font-bold text-sm sm:text-lg'>{formatNumber(top8 || 0)}</p>
-        <p className='font-bold text-sm text-text/60 text-wrap break-words text-center w-full'>
-          {t('top8')}
-        </p>
+        <p className="font-bold text-sm sm:text-lg">{formatNumber(top8 || 0)}</p>
+        <p className="font-bold text-sm text-text/60 text-wrap break-words text-center w-full">{t('top8')}</p>
       </div>
       <div
         className={` transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/3 xl:w-1/5 ${
@@ -150,10 +142,8 @@ const StatsDesktop: React.FC<StatsDesktopProps> = ({
         } `}
         onClick={() => router.push(statLink.blocked)}
       >
-        <p className='font-bold text-sm sm:text-lg'>{formatNumber(blocked || 0)}</p>
-        <p className='font-bold text-sm text-text/60 text-wrap break-words text-center w-full'>
-          {t('blocked')}
-        </p>
+        <p className="font-bold text-sm sm:text-lg">{formatNumber(blocked || 0)}</p>
+        <p className="font-bold text-sm text-text/60 text-wrap break-words text-center w-full">{t('blocked')}</p>
       </div>
     </div>
   )

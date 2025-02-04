@@ -19,18 +19,12 @@ export const useListOps = () => {
     nonce,
     items,
     selectedList,
-    listRecordsContract
+    listRecordsContract,
   }: GetListOpsTransactionProps) => {
     // format list operations
-    const operations = items.map(item => {
+    const operations = items.map((item) => {
       const types = ['uint8', 'uint8', 'uint8', 'uint8', 'bytes']
-      const data: (string | number)[] = [
-        item.listOp.version,
-        item.listOp.opcode,
-        1,
-        1,
-        item.listOp.data
-      ]
+      const data: (string | number)[] = [item.listOp.version, item.listOp.opcode, 1, 1, item.listOp.data]
 
       return encodePacked(types, data)
     })
@@ -41,10 +35,8 @@ export const useListOps = () => {
       address: listRecordsContract,
       abi: efpListRecordsAbi,
       functionName: selectedList ? 'applyListOps' : 'setMetadataValuesAndApplyListOps',
-      // @ts-ignore - diff data type handled
-      args: selectedList
-        ? [nonce, operations]
-        : [nonce, [{ key: 'user', value: userAddress }], operations]
+      // @ts-expect-error diff data type handled
+      args: selectedList ? [nonce, operations] : [nonce, [{ key: 'user', value: userAddress }], operations],
     })
 
     return hash

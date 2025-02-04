@@ -19,7 +19,7 @@ const Mobile: React.FC = () => {
         pathname === '/cart' && totalCartItems > 0 && !isCheckingOut && 'bottom-28 sm:bottom-32'
       )}
     >
-      <div className='flex items-center gap-1.5'>
+      <div className="flex items-center gap-1.5">
         <NavItems />
         <CartButton />
       </div>

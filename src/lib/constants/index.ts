@@ -19,8 +19,7 @@ import EtherscanIconLight from 'public/assets/icons/etherscan-light.svg'
 
 export const APP_NAME = 'Ethereum Follow Protocol'
 export const APP_NAME_SHORT = 'EFP'
-export const APP_DESCRIPTION =
-  'A native Ethereum protocol for following and tagging Ethereum accounts.'
+export const APP_DESCRIPTION = 'A native Ethereum protocol for following and tagging Ethereum accounts.'
 export const APP_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:4321'
 export const ENS_SUBGRAPH_URL = `https://gateway-arbitrum.network.thegraph.com/api/${process.env.NEXT_PUBLIC_ENS_SUBGRAPH_API_KEY}/subgraphs/id/5XqPmWe6gjyrJtFn9cLy237i4cWw2j9HcUJEXsP5qGtH`
 
@@ -50,64 +49,58 @@ export const NAV_ITEMS = [
     href: () => '/',
     name: 'home',
     icon: IoHome,
-    hiddenOnDesktop: true
+    hiddenOnDesktop: true,
   },
   {
     href: (url?: string) => `/${url ?? 'profile'}`,
     name: 'profile',
     icon: IoPerson,
-    hiddenOnDesktop: true
+    hiddenOnDesktop: true,
   },
   {
     href: () => '/swipe',
     name: 'swipe',
     icon: MdSwipe,
-    hiddenOnDesktop: true
+    hiddenOnDesktop: true,
   },
   {
     href: () => '/leaderboard',
     name: 'leaderboard',
     icon: IoTrophy,
-    hiddenOnDesktop: true
-  }
+    hiddenOnDesktop: true,
+  },
 ]
 
 export const EXTERNAL_LINKS = [
   {
     text: 'about',
     href: '/about',
-    target: ''
+    target: '',
   },
   {
     text: 'docs',
     href: 'https://docs.ethfollow.xyz/intro',
-    target: '_blank'
+    target: '_blank',
   },
   {
     text: 'faq',
     href: 'https://docs.ethfollow.xyz/faq',
-    target: '_blank'
+    target: '_blank',
   },
   {
     text: 'bug bounty',
     href: 'https://docs.ethfollow.xyz/bugbounty',
-    target: '_blank'
+    target: '_blank',
   },
   {
     text: 'team',
     href: '/team',
-    target: ''
-  }
+    target: '',
+  },
 ]
 
 export const leaderboardFilters = ['mutuals', 'followers', 'following', 'top8', 'blocked'] as const
-export const leaderboardFiltersEmojies = [
-  HuggingEmoji,
-  StarEyesEmoji,
-  EyesEmoji,
-  FireEmoji,
-  PirateFlagEmoji
-] as const
+export const leaderboardFiltersEmojies = [HuggingEmoji, StarEyesEmoji, EyesEmoji, FireEmoji, PirateFlagEmoji] as const
 
 export const THEMES = ['light', 'dark']
 const DARK_ICON_THEME = ['dark']
@@ -116,26 +109,26 @@ export const profileCardSocials = [
   {
     name: 'etherscan',
     url: (address: string) => `https://etherscan.io/address/${address}`,
-    icon: (theme: string) => (DARK_ICON_THEME.includes(theme) ? EtherscanIconLight : EtherscanIcon)
+    icon: (theme: string) => (DARK_ICON_THEME.includes(theme) ? EtherscanIconLight : EtherscanIcon),
   },
   {
     name: 'com.twitter',
     url: (username: string) => `https://twitter.com/${username}`,
-    icon: (theme: string) => (DARK_ICON_THEME.includes(theme) ? TwitterIcon : TwitterIcon)
+    icon: (theme: string) => (DARK_ICON_THEME.includes(theme) ? TwitterIcon : TwitterIcon),
   },
   {
     name: 'com.github',
     url: (username: string) => `https://github.com/${username}`,
-    icon: (theme: string) => (DARK_ICON_THEME.includes(theme) ? GithubIconLight : GithubIcon)
+    icon: (theme: string) => (DARK_ICON_THEME.includes(theme) ? GithubIconLight : GithubIcon),
   },
   {
     name: 'org.telegram',
     url: (username: string) => `https://t.me/${username}`,
-    icon: (theme: string) => (DARK_ICON_THEME.includes(theme) ? TelegramIcon : TelegramIcon)
+    icon: (theme: string) => (DARK_ICON_THEME.includes(theme) ? TelegramIcon : TelegramIcon),
   },
   {
     name: 'com.discord',
     url: (username: string) => `https://discord.com/users/${username}`,
-    icon: (theme: string) => (DARK_ICON_THEME.includes(theme) ? DiscordIcon : DiscordIcon)
-  }
+    icon: (theme: string) => (DARK_ICON_THEME.includes(theme) ? DiscordIcon : DiscordIcon),
+  },
 ] as const

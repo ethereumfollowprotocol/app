@@ -4,10 +4,10 @@ export const INITIAL_CHANGED_VALUES = {
   manager: false,
   user: false,
   setPrimary: false,
-  resetSlot: false
+  resetSlot: false,
 }
 
 export const INITIAL_COMPLETE_TRANSACTIONS = {
   ...INITIAL_CHANGED_VALUES,
-  claimSlot: false
+  claimSlot: false,
 }

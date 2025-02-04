@@ -9,12 +9,7 @@ interface ImageWithFallbackProps extends ImageProps {
   src: string
 }
 
-const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
-  fallback = DefaultAvatar,
-  alt,
-  src,
-  ...props
-}) => {
+const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({ fallback = DefaultAvatar, alt, src, ...props }) => {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -24,11 +19,11 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   return (
     <Image
       alt={alt}
-      data-loaded='false'
-      onLoad={event => {
+      data-loaded="false"
+      onLoad={(event) => {
         event.currentTarget.setAttribute('data-loaded', 'true')
       }}
-      onError={event => {
+      onError={(event) => {
         setError('invalid image')
         event.currentTarget.setAttribute('data-loaded', 'true')
       }}

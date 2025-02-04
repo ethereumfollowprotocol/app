@@ -9,7 +9,7 @@ import { DEFAULT_CHAIN } from '#/lib/constants/chains'
 import GreenCheck from 'public/assets/icons/check-green.svg'
 import CancelButton from '#/components/buttons/cancel-button'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import { PrimaryButton } from '#/components/buttons/primary-button'
+import PrimaryButton from '#/components/buttons/primary-button'
 
 export function SelectChainCard({
   chains,
@@ -19,7 +19,7 @@ export function SelectChainCard({
   selectedChain,
   handleNextStep,
   setNewListAsPrimary,
-  setSetNewListAsPrimary
+  setSetNewListAsPrimary,
 }: {
   chains: UseChainsReturnType<Config>
   isCreatingNewList: boolean
@@ -37,29 +37,27 @@ export function SelectChainCard({
 
   return (
     <>
-      <div className='flex flex-col gap-2'>
-        <h1 className='text-2xl font-bold'>
-          {t(isCreatingNewList ? 'create list title' : 'title list op')}
-        </h1>
-        {isCreatingNewList && <p className='font-medium text-zinc-400'>{t('chain comment')}</p>}
+      <div className="flex flex-col gap-2">
+        <h1 className="text-2xl font-bold">{t(isCreatingNewList ? 'create list title' : 'title list op')}</h1>
+        {isCreatingNewList && <p className="font-medium text-zinc-400">{t('chain comment')}</p>}
       </div>
-      <div className='flex flex-col items-center gap-4'>
-        <p className='text-xl font-bold'>{t('select')}</p>
+      <div className="flex flex-col items-center gap-4">
+        <p className="text-xl font-bold">{t('select')}</p>
         <ChainList chains={chains} onClick={handleChainClick} selectedChain={selectedChain} />
       </div>
       {lists?.lists && lists.lists.length > 0 && (
-        <div className='flex mt-4 items-center gap-3 sm:gap-5'>
-          <p className='text-lg font-bold'>{t('set new primary')}</p>
+        <div className="flex mt-4 items-center gap-3 sm:gap-5">
+          <p className="text-lg font-bold">{t('set new primary')}</p>
           <input
-            className='toggle'
-            type='checkbox'
+            className="toggle"
+            type="checkbox"
             defaultChecked={setNewListAsPrimary}
-            onChange={e => setSetNewListAsPrimary(e.target.checked)}
+            onChange={(e) => setSetNewListAsPrimary(e.target.checked)}
           />
         </div>
       )}
-      <div className='w-full mt-6 flex justify-between items-center'>
-        <CancelButton className='h-14' onClick={onCancel} />
+      <div className="w-full mt-6 flex justify-between items-center">
+        <CancelButton className="h-14" onClick={onCancel} />
         <PrimaryButton
           label={t('next')}
           onClick={() => {
@@ -67,7 +65,7 @@ export function SelectChainCard({
             if (currentChainId !== DEFAULT_CHAIN.id) switchChain({ chainId: DEFAULT_CHAIN.id })
             handleNextStep()
           }}
-          className='text-lg w-32'
+          className="text-lg w-32"
           disabled={!selectedChain}
         />
       </div>
@@ -78,21 +76,16 @@ export function SelectChainCard({
 export function ChainList({
   chains,
   onClick,
-  selectedChain
+  selectedChain,
 }: {
   chains: UseChainsReturnType<Config>
   onClick: (chainId: number) => void
   selectedChain: ChainWithDetails | undefined
 }) {
   return (
-    <div className='flex flex-col gap-4'>
-      {chains.map(chain => (
-        <ChainItem
-          key={chain.id}
-          chain={chain}
-          onClick={onClick}
-          isSelected={chain.id === selectedChain?.id}
-        />
+    <div className="flex flex-col gap-4">
+      {chains.map((chain) => (
+        <ChainItem key={chain.id} chain={chain} onClick={onClick} isSelected={chain.id === selectedChain?.id} />
       ))}
     </div>
   )
@@ -101,7 +94,7 @@ export function ChainList({
 function ChainItem({
   chain,
   onClick,
-  isSelected
+  isSelected,
 }: {
   isSelected: boolean
   chain: Chain
@@ -110,24 +103,21 @@ function ChainItem({
   const { t } = useTranslation()
 
   return (
-    <div
-      className='flex items-center relative gap-3 hover:cursor-pointer'
-      onClick={() => onClick(chain.id)}
-    >
+    <div className="flex items-center relative gap-3 hover:cursor-pointer" onClick={() => onClick(chain.id)}>
       {isSelected && (
         <Image
           src={GreenCheck}
-          alt='selected'
+          alt="selected"
           height={32}
           width={32}
-          className='absolute left-0 text-green-500 -ml-8 sm:-ml-12'
+          className="absolute left-0 text-green-500 -ml-8 sm:-ml-12"
         />
       )}
       <ChainIcon chain={chain as ChainWithDetails} className={'h-[50px] w-[50px]'} />
-      <div className='flex flex-col items-start'>
-        <p className='text-sm'>{chain?.custom?.chainDetail as string}</p>
-        <p className='font-bold'>{chain.name}</p>
-        <p className='text-sm'>{t(chain?.custom?.gasFeeDetail as string)}</p>
+      <div className="flex flex-col items-start">
+        <p className="text-sm">{chain?.custom?.chainDetail as string}</p>
+        <p className="font-bold">{chain.name}</p>
+        <p className="text-sm">{t(chain?.custom?.gasFeeDetail as string)}</p>
       </div>
     </div>
   )

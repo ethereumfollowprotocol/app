@@ -8,7 +8,7 @@ interface PrimaryButtonProps {
   disabled?: boolean
 }
 
-export const PrimaryButton = forwardRef<HTMLButtonElement, PrimaryButtonProps>(
+const PrimaryButton = forwardRef<HTMLButtonElement, PrimaryButtonProps>(
   ({ className, label, onClick, ...props }, ref) => {
     return (
       <button
@@ -27,3 +27,7 @@ export const PrimaryButton = forwardRef<HTMLButtonElement, PrimaryButtonProps>(
     )
   }
 )
+
+PrimaryButton.displayName = 'PrimaryButton'
+
+export default PrimaryButton

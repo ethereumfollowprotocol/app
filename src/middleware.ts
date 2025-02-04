@@ -27,8 +27,8 @@ export function middleware(request: NextRequest) {
 
   const response = NextResponse.next({
     request: {
-      headers: requestHeaders
-    }
+      headers: requestHeaders,
+    },
   })
   response.headers.set('Content-Security-Policy', contentSecurityPolicyHeaderValue)
 
@@ -48,8 +48,8 @@ export const config = {
       source: '/((?!api|_next/static|_next/image|favicon.ico).*)',
       missing: [
         { type: 'header', key: 'next-router-prefetch' },
-        { type: 'header', key: 'purpose', value: 'prefetch' }
-      ]
-    }
-  ]
+        { type: 'header', key: 'purpose', value: 'prefetch' },
+      ],
+    },
+  ],
 }

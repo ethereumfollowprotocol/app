@@ -8,11 +8,7 @@ import { useTranslation } from 'react-i18next'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useEffect, useMemo, useRef, useState, type Ref } from 'react'
 
-import {
-  FOLLOW_BUTTON_SOUND,
-  FOLLOW_BUTTON_STYLES,
-  FOLLOW_BUTTON_COOL_EMOJI
-} from '#/lib/constants/follow-button'
+import { FOLLOW_BUTTON_SOUND, FOLLOW_BUTTON_STYLES, FOLLOW_BUTTON_COOL_EMOJI } from '#/lib/constants/follow-button'
 import { cn } from '#/lib/utilities'
 import LoadingCell from '../loaders/loading-cell'
 import { useCoolMode } from '#/hooks/use-cool-mode'
@@ -26,12 +22,7 @@ interface FollowButtonProps {
   isBlockedBy?: boolean
 }
 
-const FollowButton: React.FC<FollowButtonProps> = ({
-  address,
-  className = '',
-  isBlockedBy,
-  ...props
-}) => {
+const FollowButton: React.FC<FollowButtonProps> = ({ address, className = '', isBlockedBy, ...props }) => {
   const [disableHover, setDisableHover] = useState(false)
 
   const { t } = useTranslation()
@@ -41,7 +32,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
   const { openConnectModal } = useConnectModal()
   const { buttonText, buttonState, handleAction, isLoading } = useFollowButton({
     address,
-    isBlockedBy
+    isBlockedBy,
   })
 
   const theme = resolvedTheme || 'light'
@@ -71,11 +62,11 @@ const FollowButton: React.FC<FollowButtonProps> = ({
 
   return isLoading ? (
     <div className={`rounded-xl ${isBlockedBy ? 'w-[132px]' : 'w-[110px] 2xl:w-[120px]'}`}>
-      <LoadingCell className='h-9 2xl:h-10 w-full rounded-lg' />
+      <LoadingCell className="h-9 2xl:h-10 w-full rounded-lg" />
     </div>
   ) : (
     <div ref={coolModeRef as Ref<HTMLDivElement>}>
-      <audio ref={soundRef} src={clickSound} key={theme} preload='auto' />
+      <audio ref={soundRef} src={clickSound} key={theme} preload="auto" />
       <button
         className={cn([
           buttonStyle.bg,
@@ -84,10 +75,10 @@ const FollowButton: React.FC<FollowButtonProps> = ({
           hoverStyle,
           // Base styles are applied before className so they can be overridden
           'rounded-[11px] 2xl:rounded-xl relative text-[13px] 2xl:text-sm flex h-9 2xl:h-10 items-center w-[110px] 2xl:w-[120px] gap-1.5 transition-all px-2 duration-200 justify-center font-bold',
-          className
+          className,
         ])}
         onMouseLeave={() => setDisableHover(false)}
-        onClick={e => {
+        onClick={(e) => {
           e.stopPropagation()
 
           if (!userAddress && openConnectModal) return openConnectModal()
@@ -99,15 +90,15 @@ const FollowButton: React.FC<FollowButtonProps> = ({
         {...props}
       >
         <Image
-          alt='follow button icon'
+          alt="follow button icon"
           src={buttonStyle.imageSrc || MainnetBlack}
           width={16}
-          className='pointer-events-none w-3.5 2xl:w-4'
+          className="pointer-events-none w-3.5 2xl:w-4"
         />
         <p
-          className='text-wrap break-words max-w-[90px]'
+          className="text-wrap break-words max-w-[90px]"
           style={{
-            lineHeight: '0.95rem'
+            lineHeight: '0.95rem',
           }}
         >
           {t(buttonText)}
