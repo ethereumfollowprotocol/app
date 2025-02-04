@@ -36,7 +36,7 @@ const connectors = connectorsForWallets(
   ],
   {
     appName: APP_NAME,
-    projectId: process.env.WALLET_CONNECT_PROJECT_ID || process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
+    projectId: 'e726b061ac854a69790d01fa66c76401',
     appDescription: APP_DESCRIPTION,
     appUrl: APP_URL,
     appIcon: 'https://ethfollow.xyz/logo.png',
