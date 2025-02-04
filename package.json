@@ -79,6 +79,7 @@
     "tailwindcss-themer": "^4.0.0",
     "typed-query-selector": "^2.11.0",
     "typescript": "^5.3.3",
+    "typescript-eslint": "^8.23.0",
     "utf-8-validate": "^6.0.3",
     "webpack": "^5.90.0"
   },
