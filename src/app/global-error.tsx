@@ -15,11 +15,11 @@ const GlobalError: React.FC<GlobalErrorProps> = ({ error, reset }) => {
   }, [error])
 
   return (
-    <html lang="en">
-      <body className="pt-40">
+    <html lang='en'>
+      <body className='pt-40'>
         {/* This is the default Next.js error component but it doesn't allow omitting the statusCode property yet. */}
         <NextError statusCode={undefined as any} />
-        <button type="button" onClick={() => reset()}>
+        <button type='button' onClick={() => reset()}>
           Try again
         </button>
       </body>

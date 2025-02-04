@@ -26,7 +26,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
   if (!open) return null
 
   return (
-    <div className="bg-neutral w-[244px] h-fit nav-menu -z-20 overflow-x-hidden lg:overflow-visible shadow-md border-[3px] transition-all rounded-xl lg:rounded-md border-grey pb-6 lg:pb-0 lg:pt-8 absolute bottom-6 lg:top-5 flex flex-col items-end right-0">
+    <div className='bg-neutral w-[244px] h-fit nav-menu -z-20 overflow-x-hidden lg:overflow-visible shadow-md border-[3px] transition-all rounded-xl lg:rounded-md border-grey pb-6 lg:pb-0 lg:pt-8 absolute bottom-6 lg:top-5 flex flex-col items-end right-0'>
       <div
         className={cn(
           'flex flex-col w-full transition-all overflow-x-visible max-h-[80vh] lg:h-auto p-1',
@@ -65,19 +65,19 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
             href={link.href}
             target={link.target}
             onClick={() => setOpen(false)}
-            className="capitalize block transition-colors p-3 w-full rounded-md hover:bg-navItem text-text font-bold"
+            className='capitalize block transition-colors p-3 w-full rounded-md hover:bg-navItem text-text font-bold'
           >
-            <p className="text-end">{t(link.text)}</p>
+            <p className='text-end'>{t(link.text)}</p>
           </Link>
         ))}
-        <div className="flex items-center w-full justify-between p-3">
+        <div className='flex items-center w-full justify-between p-3'>
           {socials.map((item) => (
             <a
-              target="_blank"
-              rel="noreferrer"
+              target='_blank'
+              rel='noreferrer'
               key={item.text}
               href={item.href}
-              className="hover:scale-125 text-3xl transition-transform"
+              className='hover:scale-125 text-3xl transition-transform'
             >
               {item.icon}
             </a>

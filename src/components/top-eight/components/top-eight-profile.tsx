@@ -69,9 +69,9 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
           {isAddingToTopEight ? <HiPlus /> : <IoClose />}
         </div>
       )}
-      <div className="flex flex-col w-full items-center gap-1">
+      <div className='flex flex-col w-full items-center gap-1'>
         {isEnsProfileLoading ? (
-          <LoadingCell className="h-[50px] w-[50px] rounded-full" />
+          <LoadingCell className='h-[50px] w-[50px] rounded-full' />
         ) : (
           <Link href={`/${profile.address}`} className={cn(isEditing && 'pointer-events-none')}>
             <Avatar
@@ -82,7 +82,7 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
           </Link>
         )}
         {isEnsProfileLoading ? (
-          <LoadingCell className="h-7 w-24 rounded-lg" />
+          <LoadingCell className='h-7 w-24 rounded-lg' />
         ) : (
           <Link
             href={`/${profile.address}`}

@@ -42,13 +42,13 @@ const CommonFollowers: React.FC<CommonFollowersProps> = ({ address }) => {
   }
 
   return (
-    <div className="w-full max-w-108 mx-auto flex items-center justify-center gap-2 p-4 pt-0">
-      <div className="flex">
+    <div className='w-full max-w-108 mx-auto flex items-center justify-center gap-2 p-4 pt-0'>
+      <div className='flex'>
         {isLoading ? (
           <>
-            <LoadingCell className="w-9 h-9 rounded-full z-0 " />
-            <LoadingCell className="w-9 h-9 rounded-full z-10 -ml-[18px]" />
-            <LoadingCell className="w-9 h-9 rounded-full z-20 -ml-[18px]" />
+            <LoadingCell className='w-9 h-9 rounded-full z-0 ' />
+            <LoadingCell className='w-9 h-9 rounded-full z-10 -ml-[18px]' />
+            <LoadingCell className='w-9 h-9 rounded-full z-20 -ml-[18px]' />
           </>
         ) : (
           displayedAvatars?.map((result, index) => (
@@ -62,10 +62,10 @@ const CommonFollowers: React.FC<CommonFollowersProps> = ({ address }) => {
         )}
       </div>
       {isLoading ? (
-        <LoadingCell className="h-10 rounded-xl" style={{ width: 'calc(100% - 80px)' }} />
+        <LoadingCell className='h-10 rounded-xl' style={{ width: 'calc(100% - 80px)' }} />
       ) : (
         <p
-          className="text-left font-medium text-text/40 text-sm overflow-hidden"
+          className='text-left font-medium text-text/40 text-sm overflow-hidden'
           style={{ maxWidth: 'calc(100% - 84px)' }}
         >
           {displayedNames

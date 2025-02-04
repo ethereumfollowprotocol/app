@@ -47,7 +47,7 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = ({ closeMenu, setExternalV
   const { t } = useTranslation()
 
   return (
-    <div ref={clickAwayVolumeRef} className="cursor-pointer group relative w-full">
+    <div ref={clickAwayVolumeRef} className='cursor-pointer group relative w-full'>
       <div
         onClick={() => {
           setVolumeMenuOpen(!volumeMenuOpen)
@@ -58,10 +58,10 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = ({ closeMenu, setExternalV
           'group-hover:bg-navItem p-3 w-full'
         )}
       >
-        <FiArrowLeft className="text-xl" />
-        <div className="flex items-center justify-end gap-2">
-          <p className="text-2xl">{volumeOptions.find(({ label }) => label === selectedVolume)?.icon}</p>
-          <p className="capitalize font-bold">{t(selectedVolume || 'system')}</p>
+        <FiArrowLeft className='text-xl' />
+        <div className='flex items-center justify-end gap-2'>
+          <p className='text-2xl'>{volumeOptions.find(({ label }) => label === selectedVolume)?.icon}</p>
+          <p className='capitalize font-bold'>{t(selectedVolume || 'system')}</p>
         </div>
       </div>
       <div
@@ -70,20 +70,20 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = ({ closeMenu, setExternalV
           volumeMenuOpen ? 'block' : 'hidden'
         )}
       >
-        <div className="flex flex-col p-1 gap-2 w-full h-full border-[3px] rounded-lg bg-neutral border-grey shadow-md">
+        <div className='flex flex-col p-1 gap-2 w-full h-full border-[3px] rounded-lg bg-neutral border-grey shadow-md'>
           <div
             onClick={() => {
               setVolumeMenuOpen(false)
               setExternalVolumeMenuOpen?.(false)
             }}
-            className="flex lg:hidden justify-between items-center w-full hover:bg-navItem p-3 rounded-md transition-opacity cursor-pointer"
+            className='flex lg:hidden justify-between items-center w-full hover:bg-navItem p-3 rounded-md transition-opacity cursor-pointer'
           >
-            <FiArrowLeft className="text-xl" />
-            <p className="font-bold">Back</p>
+            <FiArrowLeft className='text-xl' />
+            <p className='font-bold'>Back</p>
           </div>
           {volumeOptions.map(({ label, icon, muteBackgroundMusic, muteActionsSounds }) => (
             <div
-              className="flex items-center relative p-3 pl-8 w-full gap-2 rounded-md hover:bg-navItem"
+              className='flex items-center relative p-3 pl-8 w-full gap-2 rounded-md hover:bg-navItem'
               key={label}
               onClick={() => {
                 setSelectedVolume(label)
@@ -95,10 +95,10 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = ({ closeMenu, setExternalV
               }}
             >
               {selectedVolume === label && (
-                <Image src={GreenCheck} alt="List selected" width={16} className="absolute left-2 top-[19px]" />
+                <Image src={GreenCheck} alt='List selected' width={16} className='absolute left-2 top-[19px]' />
               )}
-              <p className="text-2xl">{icon}</p>
-              <p className="text-nowrap capitalize font-bold">{t(label)}</p>
+              <p className='text-2xl'>{icon}</p>
+              <p className='text-nowrap capitalize font-bold'>{t(label)}</p>
             </div>
           ))}
         </div>

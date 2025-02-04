@@ -17,7 +17,7 @@ interface ProfileListItemNameProps {
 
 const ProfileListItemName: React.FC<ProfileListItemNameProps> = ({ name, address, showTags, isCart, isLoading }) => {
   if (isLoading) {
-    return <LoadingCell className="w-28 2xl:w-32 h-6 rounded-lg" />
+    return <LoadingCell className='w-28 2xl:w-32 h-6 rounded-lg' />
   }
 
   return (

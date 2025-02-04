@@ -62,11 +62,11 @@ const FollowButton: React.FC<FollowButtonProps> = ({ address, className = '', is
 
   return isLoading ? (
     <div className={`rounded-xl ${isBlockedBy ? 'w-[132px]' : 'w-[110px] 2xl:w-[120px]'}`}>
-      <LoadingCell className="h-9 2xl:h-10 w-full rounded-lg" />
+      <LoadingCell className='h-9 2xl:h-10 w-full rounded-lg' />
     </div>
   ) : (
     <div ref={coolModeRef as Ref<HTMLDivElement>}>
-      <audio ref={soundRef} src={clickSound} key={theme} preload="auto" />
+      <audio ref={soundRef} src={clickSound} key={theme} preload='auto' />
       <button
         className={cn([
           buttonStyle.bg,
@@ -90,13 +90,13 @@ const FollowButton: React.FC<FollowButtonProps> = ({ address, className = '', is
         {...props}
       >
         <Image
-          alt="follow button icon"
+          alt='follow button icon'
           src={buttonStyle.imageSrc || MainnetBlack}
           width={16}
-          className="pointer-events-none w-3.5 2xl:w-4"
+          className='pointer-events-none w-3.5 2xl:w-4'
         />
         <p
-          className="text-wrap break-words max-w-[90px]"
+          className='text-wrap break-words max-w-[90px]'
           style={{
             lineHeight: '0.95rem',
           }}

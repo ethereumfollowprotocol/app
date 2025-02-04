@@ -34,10 +34,10 @@ const Pages = () => {
   const { t } = useTranslation()
 
   return (
-    <div className="flex flex-wrap w-52 gap-x-8 gap-y-4">
+    <div className='flex flex-wrap w-52 gap-x-8 gap-y-4'>
       {footerPages.map((route, index) => (
-        <div className="font-bold hover:scale-110 w-fit transition-transform" key={`route-${route.href}`}>
-          <a href={route.href} className={`text-lg text-pink-400`} target={route.target} rel="noreferrer">
+        <div className='font-bold hover:scale-110 w-fit transition-transform' key={`route-${route.href}`}>
+          <a href={route.href} className={`text-lg text-pink-400`} target={route.target} rel='noreferrer'>
             <span>{t(route.text)}</span>
           </a>
         </div>

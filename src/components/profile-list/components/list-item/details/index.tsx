@@ -63,24 +63,24 @@ const ProfileListItemDetails: React.FC<ProfileListItemDetailsProps> = ({
 
   return (
     <div
-      className="flex gap-2 sm:gap-3 items-center p-0"
+      className='flex gap-2 sm:gap-3 items-center p-0'
       style={{
         width: isBlockedList ? 'calc(100% - 132px)' : 'calc(100% - 120px)',
       }}
     >
       <div className={cn('flex gap-2 sm:gap-3 items-center p-0', counts ? 'w-2/3' : 'w-full')}>
         {isEnsProfileLoading ? (
-          <LoadingCell className="h-[45px] w-[45px] min-w-[45px] 2xl:h-[50px] 2xl:w-[50px] 2xl:min-w-[50px] rounded-full" />
+          <LoadingCell className='h-[45px] w-[45px] min-w-[45px] 2xl:h-[50px] 2xl:w-[50px] 2xl:min-w-[50px] rounded-full' />
         ) : (
           <Avatar
             name={name || address}
             avatarUrl={avatarUrl}
-            size="h-[45px] w-[45px] 2xl:h-[50px] cursor-pointer 2xl:w-[50px] hover:opacity-80 transition-all hover:scale-110"
+            size='h-[45px] w-[45px] 2xl:h-[50px] cursor-pointer 2xl:w-[50px] hover:opacity-80 transition-all hover:scale-110'
             onClick={() => router.push(`/${address || name}`)}
           />
         )}
         <div
-          className="flex flex-col md:flex-row md:gap-3 xl:gap-2 2xl:gap-3 gap-[2px]"
+          className='flex flex-col md:flex-row md:gap-3 xl:gap-2 2xl:gap-3 gap-[2px]'
           style={{
             width: counts ? '80%' : 'calc(100% - 60px)',
           }}

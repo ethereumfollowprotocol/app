@@ -1,3 +1,5 @@
+'use client'
+
 import { useIntersectionObserver } from '@uidotdev/usehooks'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'

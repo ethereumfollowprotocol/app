@@ -5,10 +5,11 @@ import UserInfo from './components/user-info'
 import { truncateAddress } from '#/lib/utilities'
 
 interface Props {
-  params: { user: string }
+  params: Promise<{ user: string }>
 }
 
-export function generateMetadata({ params }: Props): Metadata {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params
   const user = isAddress(params.user) ? params.user : params.user
   const truncatedUser = isAddress(params.user) ? (truncateAddress(params.user) as string) : params.user
   const isList = Number.isInteger(Number(user)) && !(isAddress(user) || isHex(user))
@@ -33,9 +34,10 @@ export function generateMetadata({ params }: Props): Metadata {
   }
 }
 
-const UserPage = ({ params }: Props) => {
+const UserPage = async (props: Props) => {
+  const params = await props.params
   return (
-    <main className="xl:overflow-hidden h-screen w-full">
+    <main className='xl:overflow-hidden h-screen w-full'>
       <UserInfo user={params.user} />
     </main>
   )

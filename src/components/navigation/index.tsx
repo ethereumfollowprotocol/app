@@ -23,7 +23,7 @@ const Navigation = () => {
 
   return (
     <>
-      <header className="w-full fixed z-50 glass-card bg-white/50 dark:bg-black/75 halloween:bg-black/85 top-0 left-0 border-b-[3px] border-grey p-4 lg:px-6 xl:px-8">
+      <header className='w-full fixed z-50 glass-card bg-white/50 dark:bg-black/75 halloween:bg-black/85 top-0 left-0 border-b-[3px] border-grey p-4 lg:px-6 xl:px-8'>
         {!backgroundSoundsMuted && (
           <audio
             ref={backgroundMusicRef}

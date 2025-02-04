@@ -43,7 +43,7 @@ const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
     const profileAvatar = fetchedEnsProfile?.avatar
 
     return (
-      <div className="flex items-center justify-between hover:bg-text/5 transition-all p-1.5 2xl:p-2 rounded-xl">
+      <div className='flex items-center justify-between hover:bg-text/5 transition-all p-1.5 2xl:p-2 rounded-xl'>
         {/* Left section: Avatar, Name, and Tags */}
         <ProfileListItemDetails
           address={address}

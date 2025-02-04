@@ -21,8 +21,6 @@ const useSearch = (isEditor?: boolean) => {
   const [dropdownMenuOpen, setDropdownMenuOpen] = useState(false)
   const [dialogOpen, setDialogOpen] = useState<undefined | boolean>(undefined)
 
-  // const searchParams = useSearchParams()
-  // const initialSearch = searchParams.get('search')
   const [currentSearch, setCurrentSearch] = useState('')
   const [search, setSearch] = useState('')
 

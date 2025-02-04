@@ -19,7 +19,7 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({ fallback = Defaul
   return (
     <Image
       alt={alt}
-      data-loaded="false"
+      data-loaded='false'
       onLoad={(event) => {
         event.currentTarget.setAttribute('data-loaded', 'true')
       }}

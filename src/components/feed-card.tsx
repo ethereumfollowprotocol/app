@@ -44,20 +44,20 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
       >
         {title && (
           // <Link href={'/feed'} className='hover:scale-110 transition-transform'>
-          <h2 className="text-2xl 2xl:text-3xl font-bold">{title}</h2>
+          <h2 className='text-2xl 2xl:text-3xl font-bold'>{title}</h2>
           // </Link>
         )}
         <a
-          href="https://www.interface.social/"
-          target="_blank"
-          rel="noreferrer"
-          className="hover:scale-110 transition-transform"
+          href='https://www.interface.social/'
+          target='_blank'
+          rel='noreferrer'
+          className='hover:scale-110 transition-transform'
         >
-          <Image src={InterfaceLight} alt="Interface" width={150} height={35} className="w-36 h-9" />
+          <Image src={InterfaceLight} alt='Interface' width={150} height={35} className='w-36 h-9' />
         </a>
       </div>
       {description && (
-        <p className="w-full px-4 xs:px-0 text-sm mt-3 text-center xs:text-start font-semibold text-text/80">
+        <p className='w-full px-4 xs:px-0 text-sm mt-3 text-center xs:text-start font-semibold text-text/80'>
           {description}
         </p>
       )}
@@ -70,25 +70,25 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
       >
         {userAddress ? (
           listsIsLoading ? (
-            <div className="h-full w-full flex items-center justify-center bg-neutral">
+            <div className='h-full w-full flex items-center justify-center bg-neutral'>
               <LoadingSpinner />
             </div>
           ) : (lists?.lists?.length || 0) > 0 ? (
             <iframe
               key={`${userAddress} ${resolvedTheme}`}
-              title="Feed"
+              title='Feed'
               src={url}
-              className="w-full h-full bg-neutral"
+              className='w-full h-full bg-neutral'
             />
           ) : (
-            <div className="w-full h-full max-h-[60vh] flex items-center font-semibold flex-col justify-center text-center">
-              <p className="text-lg font-bold">{t('following myprofile empty first')}</p>
-              <p className="text-base italic w-3/4 max-w-96">{t('following myprofile empty second')}</p>
+            <div className='w-full h-full max-h-[60vh] flex items-center font-semibold flex-col justify-center text-center'>
+              <p className='text-lg font-bold'>{t('following myprofile empty first')}</p>
+              <p className='text-base italic w-3/4 max-w-96'>{t('following myprofile empty second')}</p>
             </div>
           )
         ) : (
-          <div className="h-full w-full flex items-center justify-center">
-            <button className="connect-button text-xl font-bold w-64 h-fit p-3" onClick={() => openConnectModal?.()}>
+          <div className='h-full w-full flex items-center justify-center'>
+            <button className='connect-button text-xl font-bold w-64 h-fit p-3' onClick={() => openConnectModal?.()}>
               {t('connect')}
             </button>
           </div>

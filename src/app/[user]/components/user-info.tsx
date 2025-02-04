@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import TopEight from '#/components/top-eight'
@@ -159,43 +159,45 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       )}
       {!isSaving && (
         <div
-          className="flex relative xl:h-screen flex-col xl:flex-row pt-[108px] sm:pt-[6.75rem] pb-8 xl:pb-0 overflow-y-auto xl:justify-center gap-4 px-4 lg:px-6 xl:px-8 w-full"
+          className='flex relative xl:h-screen flex-col xl:flex-row pt-[108px] sm:pt-[6.75rem] pb-8 xl:pb-0 overflow-y-auto xl:justify-center gap-4 px-4 lg:px-6 xl:px-8 w-full'
           ref={containerRef}
         >
           <div
             ref={ProfileCardRef}
-            className="xl:sticky xl:h-fit xl:pb-4"
+            className='xl:sticky xl:h-fit xl:pb-4'
             style={{
               top: '0px',
             }}
           >
-            <UserProfileCard
-              profileList={profileList}
-              stats={stats}
-              profile={profile}
-              refetchProfile={refetchProfile}
-              isLoading={profileIsLoading}
-              isStatsLoading={statsIsLoading}
-              showMoreOptions={true}
-              openBlockModal={() => {
-                setIsBlockedMutedOpen(true)
-                router.push(`/${user}?modal=block_mute_list`)
-              }}
-              openQrCodeModal={() => setQrCodeModalOpen(true)}
-              openListSettingsModal={() => setListSettingsOpen(true)}
-            />
+            <Suspense>
+              <UserProfileCard
+                profileList={profileList}
+                stats={stats}
+                profile={profile}
+                refetchProfile={refetchProfile}
+                isLoading={profileIsLoading}
+                isStatsLoading={statsIsLoading}
+                showMoreOptions={true}
+                openBlockModal={() => {
+                  setIsBlockedMutedOpen(true)
+                  router.push(`/${user}?modal=block_mute_list`)
+                }}
+                openQrCodeModal={() => setQrCodeModalOpen(true)}
+                openListSettingsModal={() => setListSettingsOpen(true)}
+              />
+            </Suspense>
           </div>
-          <div className="xl:hidden">
+          <div className='xl:hidden'>
             <TopEight user={user} isConnectedUserProfile={isMyProfile} />
           </div>
           <div
             ref={titleRef}
-            className="w-full xl:max-w-[800px] xl:sticky relative xl:top-0 h-fit"
+            className='w-full xl:max-w-[800px] xl:sticky relative xl:top-0 h-fit'
             style={{
               scrollMarginTop: '100px',
             }}
           >
-            <div className="xl:absolute xl:top-0 xl:left-0 w-full h-fit">
+            <div className='xl:absolute xl:top-0 xl:left-0 w-full h-fit'>
               <UserProfilePageTable
                 setActiveTab={(tab) => setActiveTab(tab as ProfileTabType)}
                 ref={tableRef}
@@ -205,7 +207,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
           </div>
           <div
             ref={TopEightRef}
-            className="sticky pb-4 h-fit hidden xl:block"
+            className='sticky pb-4 h-fit hidden xl:block'
             style={{
               top: '0px',
             }}

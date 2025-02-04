@@ -32,12 +32,12 @@ const NavItems = () => {
     : NAV_ITEMS.findIndex((item) => item.href(itemUrl) === pathname)
 
   return (
-    <div ref={clickAwayRef} className="relative">
-      <div className="z-40 bg-neutral/80 backdrop-blur-xl flex flex-row items-center pr-0.5 h-[54px] border-[3px] border-grey hover:border-text transition-all rounded-full">
+    <div ref={clickAwayRef} className='relative'>
+      <div className='z-40 bg-neutral/80 backdrop-blur-xl flex flex-row items-center pr-0.5 h-[54px] border-[3px] border-grey hover:border-text transition-all rounded-full'>
         {NAV_ITEMS.map((item) => (
           <Link
             key={item.name}
-            className="z-10 px-0.5 group/nav-item"
+            className='z-10 px-0.5 group/nav-item'
             href={item.href(itemUrl)}
             onClick={(e) => {
               if ((item.name === 'profile' || item.name === 'feed') && !userAddress && openConnectModal) {

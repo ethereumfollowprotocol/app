@@ -40,14 +40,14 @@ const Home = () => {
 
   return (
     <div
-      className="pt-[108px] relative md:pt-[6.75rem] w-full h-screen px-4 overflow-y-scroll lg:px-6 xl:px-8 flex items-start lg:justify-center lg:gap-4 xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4"
+      className='pt-[108px] relative md:pt-[6.75rem] w-full h-screen px-4 overflow-y-scroll lg:px-6 xl:px-8 flex items-start lg:justify-center lg:gap-4 xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4'
       onScroll={(e) => {
         onScrollSidebar(e)
         onScrollProfileCard(e)
       }}
     >
       {userAddress && (
-        <div className="xl:sticky w-full xl:w-fit " ref={ProfileCardRef}>
+        <div className='xl:sticky w-full xl:w-fit ' ref={ProfileCardRef}>
           <UserProfileCard
             profileList={selectedList || Number(profile?.primary_list)}
             hideFollowButton={true}
@@ -78,10 +78,10 @@ const Home = () => {
           />
         </div>
       )}
-      <div className="flex flex-col gap-4 h-auto w-full lg:hidden xl:sticky">
+      <div className='flex flex-col gap-4 h-auto w-full lg:hidden xl:sticky'>
         <Recommendations
           limit={10}
-          endpoint="discover"
+          endpoint='discover'
           header={t('recent')}
           className={cn('h-fit w-full py-4 sm:p-4 glass-card border-[3px] border-grey rounded-2xl')}
         />
@@ -95,7 +95,7 @@ const Home = () => {
               ? 'h-[50vh] md:h-[640px] xl:w-2/5 2xl:w-[550px] '
               : 'h-[1000000vh] xl:w-[45%] 2xl:w-[650px]'
           )}
-          contentSize="h-full w-full rounded-2xl"
+          contentSize='h-full w-full rounded-2xl'
           title={t('feed')}
           description={t('feed description')}
         />
@@ -116,7 +116,7 @@ const Home = () => {
       >
         <Recommendations
           limit={11}
-          endpoint="discover"
+          endpoint='discover'
           header={t('recent')}
           className={cn('h-fit w-full py-4 p-3 2xl:p-4 glass-card border-[3px] border-grey rounded-2xl')}
         />

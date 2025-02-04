@@ -35,8 +35,8 @@ const EthBalance: React.FC<EthBalanceProps> = ({ address, chain }) => {
 
   return (
     <>
-      <div className="flex justify-between items-center w-full group-hover:bg-navItem p-3 rounded-md transition-opacity">
-        <ChainIcon chain={chain as ChainWithDetails} className="h-6 w-6" />
+      <div className='flex justify-between items-center w-full group-hover:bg-navItem p-3 rounded-md transition-opacity'>
+        <ChainIcon chain={chain as ChainWithDetails} className='h-6 w-6' />
         {balance?.value
           ? Number(formatEther(balance.value)).toLocaleString(navigator.language, {
               minimumFractionDigits: 2,
@@ -47,11 +47,11 @@ const EthBalance: React.FC<EthBalanceProps> = ({ address, chain }) => {
       </div>
       <Link
         href={bridges[chain.id as keyof typeof bridges]}
-        target="_blank"
-        className="capitalize flex justify-between items-center transition-colors p-3 w-full rounded-md hover:bg-navItem text-text font-bold"
+        target='_blank'
+        className='capitalize flex justify-between items-center transition-colors p-3 w-full rounded-md hover:bg-navItem text-text font-bold'
       >
-        <FiExternalLink className="text-2xl" />
-        <p className="text-end">{`${currencies[chain.id as keyof typeof currencies]} ${t('bridge')}`}</p>
+        <FiExternalLink className='text-2xl' />
+        <p className='text-end'>{`${currencies[chain.id as keyof typeof currencies]} ${t('bridge')}`}</p>
       </Link>
     </>
   )

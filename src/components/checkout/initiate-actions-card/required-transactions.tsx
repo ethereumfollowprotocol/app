@@ -8,12 +8,12 @@ const RequiredTransaction = ({ chainId, transactions = 1 }: { chainId: number; t
   if (!chain) return null
 
   return (
-    <div className="grid grid-cols-2 gap-2">
-      <div className="flex items-center justify-self-end gap-2">
-        <p className="font-bold">{transactions} tx</p>
-        <ChainIcon chain={chain} className="h-[30px] w-[30px]" />
+    <div className='grid grid-cols-2 gap-2'>
+      <div className='flex items-center justify-self-end gap-2'>
+        <p className='font-bold'>{transactions} tx</p>
+        <ChainIcon chain={chain} className='h-[30px] w-[30px]' />
       </div>
-      <p className="justify-self-start">{chain.name}</p>
+      <p className='justify-self-start'>{chain.name}</p>
     </div>
   )
 }

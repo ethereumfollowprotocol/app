@@ -9,7 +9,7 @@ type SoundsContextType = {
   setBackgroundSoundsMuted: Dispatch<SetStateAction<boolean>>
   selectedVolume: string
   setSelectedVolume: Dispatch<SetStateAction<string>>
-  backgroundMusicRef: React.RefObject<HTMLAudioElement>
+  backgroundMusicRef: React.RefObject<HTMLAudioElement | null>
 }
 
 const SoundsContext = createContext<SoundsContextType | undefined>(undefined)

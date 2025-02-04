@@ -30,7 +30,7 @@ interface CartItemsListProps {
   loadingRows?: number
   isLoading: boolean
   loadingCartItems?: number
-  containerRef: React.RefObject<HTMLDivElement>
+  containerRef: React.RefObject<HTMLDivElement | null>
 }
 
 const CartItemsList: React.FC<CartItemsListProps> = ({
@@ -85,17 +85,18 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
           {isCreatingNewList && (
             <div
               key={'new list'}
-              className="flex w-[350px] sm:w-full items-center hover:bg-list ounded-xl gap-2 2xl:p-4 p-1.5 sm:p-2 sm:gap-3"
+              className='flex w-[350px] sm:w-full items-center hover:bg-list ounded-xl gap-2 2xl:p-4 p-1.5 sm:p-2 sm:gap-3'
             >
-              <Image src={EFPLogo} alt="EFP List" className="rounded-full h-[45px] w-[45px] md:h-[50px] md:w-[50px]" />
-              <div className="flex flex-col md:flex-row md:items-center">
-                <p className="text-lg font-bold w-fit sm:w-56 text-left">{t('mint name')}</p>
-                <p className="font-bold text-sm sm:text-base text-left italic text-text/80">{t('mint description')}</p>
+              <Image src={EFPLogo} alt='EFP List' className='rounded-full h-[45px] w-[45px] md:h-[50px] md:w-[50px]' />
+              <div className='flex flex-col md:flex-row md:items-center'>
+                <p className='text-lg font-bold w-fit sm:w-56 text-left'>{t('mint name')}</p>
+                <p className='font-bold text-sm sm:text-base text-left italic text-text/80'>{t('mint description')}</p>
               </div>
             </div>
           )}
           {socialProfiles?.map((social) => <SocialProfilesItem key={social.platform} {...social} />)}
           {(profiles?.length || 0) >= 30 ? (
+            // @ts-expect-error react-virtualized List is a valid component
             <List
               ref={listRef}
               autoWidth={true}
@@ -109,13 +110,13 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
                 const profile = profiles?.[index]
                 if (!profile)
                   return (
-                    <div style={style} key={key} className="opacity-0">
+                    <div style={style} key={key} className='opacity-0'>
                       <LoadingRow showTags={showTags} />
                     </div>
                   )
 
                 return (
-                  <div className="w-full" key={key} style={style}>
+                  <div className='w-full' key={key} style={style}>
                     <ProfileListItem
                       key={profile.address}
                       address={profile.address}
@@ -135,7 +136,7 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
               canEditTags={true}
               profiles={profiles}
               isLoading={isLoading}
-              className="gap-4 2xl:gap-5 pb-4"
+              className='gap-4 2xl:gap-5 pb-4'
             />
           )}
         </>

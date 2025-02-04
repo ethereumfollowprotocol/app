@@ -35,15 +35,15 @@ const ProfileListItemCounts: React.FC<ProfileListItemCountsProps> = ({ counts, i
         } hidden sm:flex`}
         onClick={() => router.push(`/${address}?tab=following`)}
       >
-        <p className="font-bold text-lg">{formatNumber(counts.following)}</p>
-        <p className="font-bold text-sm text-center text-text/60">{t('following')}</p>
+        <p className='font-bold text-lg'>{formatNumber(counts.following)}</p>
+        <p className='font-bold text-sm text-center text-text/60'>{t('following')}</p>
       </div>
       <div
-        className="flex flex-col items-center hover:scale-110 cursor-pointer transition-transform"
+        className='flex flex-col items-center hover:scale-110 cursor-pointer transition-transform'
         onClick={() => router.push(`/${address}?tab=followers`)}
       >
-        <p className="font-bold text-lg">{formatNumber(counts.followers)}</p>
-        <p className="font-bold text-sm text-center text-text/60">{t('followers')}</p>
+        <p className='font-bold text-lg'>{formatNumber(counts.followers)}</p>
+        <p className='font-bold text-sm text-center text-text/60'>{t('followers')}</p>
       </div>
     </div>
   )

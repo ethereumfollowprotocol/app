@@ -106,27 +106,27 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
     const noResults = {
       following:
         search.length > 2 ? (
-          <div className="justify-center h-full flex items-center font-bold">{t('none')}</div>
+          <div className='justify-center h-full flex items-center font-bold'>{t('none')}</div>
         ) : (
-          <div className="text-center h-full font-bold">
-            <div className="flex flex-col justify-center h-full gap-4 items-center">
-              <p className="text-xl italic">
+          <div className='text-center h-full font-bold'>
+            <div className='flex flex-col justify-center h-full gap-4 items-center'>
+              <p className='text-xl italic'>
                 {t(isProfile ? 'following myprofile empty first' : 'following empty first')}
               </p>
-              {isProfile && <p className="text-base italic w-3/4 max-w-96">{t('following myprofile empty second')}</p>}
+              {isProfile && <p className='text-base italic w-3/4 max-w-96'>{t('following myprofile empty second')}</p>}
             </div>
           </div>
         ),
       followers:
         search.length > 2 ? (
-          <div className="justify-center h-full flex items-center font-bold">{t('none')}</div>
+          <div className='justify-center h-full flex items-center font-bold'>{t('none')}</div>
         ) : (
-          <p className="text-xl italic flex h-full justify-center items-center min-h-12">
+          <p className='text-xl italic flex h-full justify-center items-center min-h-12'>
             {t(isProfile ? 'followers myprofile empty' : 'followers empty')}
           </p>
         ),
-      'Blocked/Muted By': <span className="text-lg">{t('none')}</span>,
-      'Blocked/Muted': <span className="text-lg">{t('none')}</span>,
+      'Blocked/Muted By': <span className='text-lg'>{t('none')}</span>,
+      'Blocked/Muted': <span className='text-lg'>{t('none')}</span>,
     }[title]
 
     return (
@@ -153,7 +153,7 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
           toggleSelectedTags={toggleSelectedTags}
           isShowingBlocked={isShowingBlocked}
         />
-        {profilesEmpty && <div className="text-center font-bold h-[152px] py-4 content-center px-2">{noResults}</div>}
+        {profilesEmpty && <div className='text-center font-bold h-[152px] py-4 content-center px-2'>{noResults}</div>}
         <div
           ref={ref}
           className={cn(
@@ -174,9 +174,9 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
             isBlockedList={isShowingBlocked}
             isBlockedBy={title === 'Blocked/Muted By' && isProfile}
           />
-          <div ref={loadMoreRef} className="h-px w-full mb-4" />
+          <div ref={loadMoreRef} className='h-px w-full mb-4' />
           {isFollowingTable && isProfile && (lists?.lists?.length || 0) === 0 && (
-            <Recommendations limit={40} endpoint="recommended" header={t('recommendations')} className="py-2" />
+            <Recommendations limit={40} endpoint='recommended' header={t('recommendations')} className='py-2' />
           )}
         </div>
       </div>

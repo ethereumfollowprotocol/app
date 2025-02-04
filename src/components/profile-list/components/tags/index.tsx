@@ -46,13 +46,13 @@ const Tags: React.FC<TagsProps> = ({ profiles, platform, showTags, canEditTags, 
     >
       {canEditTags && (
         <button
-          className="p-1.5 rounded-full hover:opacity-80 hover:scale-110 bg-zinc-300"
+          className='p-1.5 rounded-full hover:opacity-80 hover:scale-110 bg-zinc-300'
           onClick={(e) => {
             e.stopPropagation()
             setTagDropdownOpen(!tagDropdownOpen)
           }}
         >
-          <Image src={Plus} alt="Add Tag" width={12} />
+          <Image src={Plus} alt='Add Tag' width={12} />
         </button>
       )}
       <TagsDropdown
@@ -65,7 +65,7 @@ const Tags: React.FC<TagsProps> = ({ profiles, platform, showTags, canEditTags, 
       />
       {canEditTags && tagDropdownOpen && (
         <div
-          className="fixed z-30 top-0 left-0 w-full h-full bg-transparent"
+          className='fixed z-30 top-0 left-0 w-full h-full bg-transparent'
           onClick={(e) => {
             e.stopPropagation()
             setTagDropdownOpen(false)

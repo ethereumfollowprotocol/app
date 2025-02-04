@@ -45,7 +45,7 @@ const TagsDropdown: React.FC<TagsDropdownProps> = ({
             position === 'bottom' ? 'top-10' : 'bottom-8'
           )}
         >
-          <div className="w-full flex items-center gap-1.5 justify-between bg-zinc-300 dark:bg-zinc-400 rounded-lg font-bold p-1 text-left">
+          <div className='w-full flex items-center gap-1.5 justify-between bg-zinc-300 dark:bg-zinc-400 rounded-lg font-bold p-1 text-left'>
             <input
               ref={tagInputRef}
               placeholder={t('custom tag')}
@@ -58,23 +58,23 @@ const TagsDropdown: React.FC<TagsDropdownProps> = ({
               onKeyDown={(e) => {
                 if (e.key === 'Enter') addCustomTag()
               }}
-              className="p-1 pl-2 rounded-md lowercase bg-neutral/70 w-full"
+              className='p-1 pl-2 rounded-md lowercase bg-neutral/70 w-full'
             />
             <button
-              className="flex items-center rounded-full hover:scale-110 transition-all hover:opacity-80 bg-white dark:bg-zinc-300 justify-center p-1.5"
+              className='flex items-center rounded-full hover:scale-110 transition-all hover:opacity-80 bg-white dark:bg-zinc-300 justify-center p-1.5'
               onClick={(e) => {
                 e.stopPropagation()
                 addCustomTag()
               }}
             >
-              <Image src={Plus} alt="Add Tag" height={16} width={16} />
+              <Image src={Plus} alt='Add Tag' height={16} width={16} />
             </button>
           </div>
-          <div className="w-full flex max-w-full flex-wrap items-center gap-2">
+          <div className='w-full flex max-w-full flex-wrap items-center gap-2'>
             {recentTags.map((tag, i) => (
               <button
                 key={`${profiles?.[0]?.address} ${tag} ${i}`}
-                className="font-bold py-1.5 hover:scale-110 transition-all text-sm truncate px-3 hover:opacity-80 text-darkGrey bg-zinc-300 rounded-full"
+                className='font-bold py-1.5 hover:scale-110 transition-all text-sm truncate px-3 hover:opacity-80 text-darkGrey bg-zinc-300 rounded-full'
                 onClick={(e) => {
                   e.stopPropagation()
                   addTag(tag)
@@ -112,7 +112,7 @@ const TagsDropdown: React.FC<TagsDropdownProps> = ({
               {tag}
             </button>
             {(removingTag || addingTag) && canEditTags && (
-              <div className="absolute h-4 w-4 rounded-full -top-1 -right-1 bg-green-400" />
+              <div className='absolute h-4 w-4 rounded-full -top-1 -right-1 bg-green-400' />
             )}
           </div>
         )

@@ -68,7 +68,7 @@ const Checkout: React.FC<CheckoutProps> = ({ setOpen, hasCreatedEfpList }) => {
       {claimPoapModalOpen && poapLink && (
         <ClaimPoapModal onClose={() => setClaimPoapModalOpen(false)} link={poapLink} isLoading={poapLoading} />
       )}
-      <div className="flex glass-card gap-5 bg-neutral/40 flex-col mt-28 mb-4 w-full sm:w-[552px] items-center border-[3px] border-grey text-center justify-between rounded-xl p-6 py-8 sm:p-14">
+      <div className='flex glass-card gap-5 bg-neutral/40 flex-col mt-28 mb-4 w-full sm:w-[552px] items-center border-[3px] border-grey text-center justify-between rounded-xl p-6 py-8 sm:p-14'>
         {currentStepComponent}
       </div>
     </div>

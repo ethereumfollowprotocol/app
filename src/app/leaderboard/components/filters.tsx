@@ -20,17 +20,17 @@ const Filters: React.FC<FiltersProps> = ({ filter, onSelectFilter }) => {
   const { t } = useTranslation()
 
   return (
-    <div ref={clickAwayRef} className="relative w-full md:w-64 z-40 mx-auto max-w-108">
+    <div ref={clickAwayRef} className='relative w-full md:w-64 z-40 mx-auto max-w-108'>
       <div
         onClick={() => setIsDropdownOpen((prev) => !prev)}
-        className="flex w-full cursor-pointer flex-wrap h-[50px] z-30 justify-between px-3 border-grey hover:border-text/80 transition-colors rounded-xl border-[3px] bg-neutral items-center gap-4"
+        className='flex w-full cursor-pointer flex-wrap h-[50px] z-30 justify-between px-3 border-grey hover:border-text/80 transition-colors rounded-xl border-[3px] bg-neutral items-center gap-4'
       >
         <div
           key={filter}
           className={`font-bold flex gap-1 justify-center capitalize cursor-pointer transition-all rounded-full`}
           onClick={() => onSelectFilter(filter)}
         >
-          <p className="text-nowrap">{t(filter)}</p>
+          <p className='text-nowrap'>{t(filter)}</p>
           <Image
             src={leaderboardFiltersEmojies[leaderboardFilters.indexOf(filter)]}
             alt={filter}
@@ -38,7 +38,7 @@ const Filters: React.FC<FiltersProps> = ({ filter, onSelectFilter }) => {
             height={22}
           />
         </div>
-        <IoIosArrowDown className="w-4 h-4" />
+        <IoIosArrowDown className='w-4 h-4' />
       </div>
       <div
         className={cn(
@@ -46,7 +46,7 @@ const Filters: React.FC<FiltersProps> = ({ filter, onSelectFilter }) => {
           isDropdownOpen ? 'flex' : 'hidden pointer-events-none'
         )}
       >
-        <div className="flex w-full flex-col">
+        <div className='flex w-full flex-col'>
           {leaderboardFilters.map((item) => (
             <div
               key={item}
@@ -54,9 +54,9 @@ const Filters: React.FC<FiltersProps> = ({ filter, onSelectFilter }) => {
                 onSelectFilter(item)
                 setIsDropdownOpen(false)
               }}
-              className="flex cursor-pointer items-center gap-2 p-3 w-full rounded-lg hover:bg-text/10"
+              className='flex cursor-pointer items-center gap-2 p-3 w-full rounded-lg hover:bg-text/10'
             >
-              <p className="font-bold">{t(item)}</p>
+              <p className='font-bold'>{t(item)}</p>
               <Image
                 src={leaderboardFiltersEmojies[leaderboardFilters.indexOf(item)]}
                 alt={item}

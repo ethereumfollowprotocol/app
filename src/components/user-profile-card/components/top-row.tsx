@@ -31,16 +31,16 @@ const TopRow: React.FC<TopRowProps> = ({ profileList, name, primaryList, isConne
       )}
     >
       {profileList && (
-        <p className="text-sm sm:text-sm bg-neutral/80 py-[3px] px-2 rounded-full">
+        <p className='text-sm sm:text-sm bg-neutral/80 py-[3px] px-2 rounded-full'>
           {t('list')} #{formatNumber(profileList)}
         </p>
       )}
-      <div className="flex items-center gap-1">
+      <div className='flex items-center gap-1'>
         {profileList && profileList !== Number(primaryList) ? (
-          <div ref={clickAwayCardTooltip} className="relative group z-50 cursor-help">
+          <div ref={clickAwayCardTooltip} className='relative group z-50 cursor-help'>
             <p
               onClick={() => setCardTooltipOpen(!cardTooltipOpen)}
-              className="text-[12px] italic text-end rounded-full py-0.5 px-2 bg-neutral/80"
+              className='text-[12px] italic text-end rounded-full py-0.5 px-2 bg-neutral/80'
             >
               {t('not primary list')}
             </p>
@@ -55,13 +55,13 @@ const TopRow: React.FC<TopRowProps> = ({ profileList, name, primaryList, isConne
         ) : isConnectedUserCard ? (
           <a
             href={`https://app.ens.domains/${name || ''}`}
-            target="_blank"
-            rel="noreferrer"
-            className="flex gap-1.5 items-center hover:scale-110 transition-all bg-neutral/80 rounded-full py-[3px] px-2 pl-1"
+            target='_blank'
+            rel='noreferrer'
+            className='flex gap-1.5 items-center hover:scale-110 transition-all bg-neutral/80 rounded-full py-[3px] px-2 pl-1'
           >
             <Image
-              alt="edit profile"
-              src="/assets/icons/ens.svg"
+              alt='edit profile'
+              src='/assets/icons/ens.svg'
               width={22}
               height={22}
               className={cn('cursor-pointer hover:opacity-70 transition-all')}
@@ -72,9 +72,9 @@ const TopRow: React.FC<TopRowProps> = ({ profileList, name, primaryList, isConne
         ) : null}
         {refetchProfile && (
           <button
-            className="bg-neutral/80 p-1.5 rounded-full hover:scale-110 transition-all"
+            className='bg-neutral/80 p-1.5 rounded-full hover:scale-110 transition-all'
             onClick={() => refetchProfile()}
-            aria-label="refresh profile"
+            aria-label='refresh profile'
           >
             <FaSyncAlt />
           </button>

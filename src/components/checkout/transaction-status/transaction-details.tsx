@@ -59,9 +59,9 @@ const TransactionDetails = ({ action, isLastAction }: { action: Action; isLastAc
   }/tx/${action.txHash}`
 
   return shouldShowComponent ? (
-    <div className="flex gap-1 flex-col">
-      <p className="text-xl sm:text-2xl font-bold">{t('status title')}</p>
-      <div className="flex flex-col gap-1">
+    <div className='flex gap-1 flex-col'>
+      <p className='text-xl sm:text-2xl font-bold'>{t('status title')}</p>
+      <div className='flex flex-col gap-1'>
         <p className={cn(getStatusColor(), 'text-lg sm:text-xl font-bold')}>{t(statusDescription || '')}</p>
         {isLastAction && isSuccess && (
           <p
@@ -75,9 +75,9 @@ const TransactionDetails = ({ action, isLastAction }: { action: Action; isLastAc
         )}
       </div>
       {action.isPendingConfirmation ? (
-        <p className="text-lg text-zinc-400 italic font-bold">{t('check wallet')}</p>
+        <p className='text-lg text-zinc-400 italic font-bold'>{t('check wallet')}</p>
       ) : (
-        <a href={explorerUrl} target="_blank" rel="noreferrer" className="text-sm font-bold text-blue-600">
+        <a href={explorerUrl} target='_blank' rel='noreferrer' className='text-sm font-bold text-blue-600'>
           {t('block explorer')}
         </a>
       )}

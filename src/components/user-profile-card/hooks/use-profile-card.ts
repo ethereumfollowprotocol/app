@@ -1,3 +1,5 @@
+'use client'
+
 import { useAccount } from 'wagmi'
 import { useQuery } from '@tanstack/react-query'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'

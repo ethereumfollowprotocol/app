@@ -66,12 +66,12 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
   return (
     <div className={showMoreOptions ? 'block' : 'hidden'} ref={threeDotMenuRef}>
       <div
-        className="flex gap-[3px] px-1.5 py-2 rounded-md bg-zinc-300 cursor-pointer items-center hover:opacity-50 transition-all hover:scale-110"
+        className='flex gap-[3px] px-1.5 py-2 rounded-md bg-zinc-300 cursor-pointer items-center hover:opacity-50 transition-all hover:scale-110'
         onClick={() => setThreeDotMenuOpen(!threeDotMenuOpen)}
       >
-        <div className="h-1 w-1 bg-black rounded-full"></div>
-        <div className="h-1 w-1 bg-black rounded-full"></div>
-        <div className="h-1 w-1 bg-black rounded-full"></div>
+        <div className='h-1 w-1 bg-black rounded-full'></div>
+        <div className='h-1 w-1 bg-black rounded-full'></div>
+        <div className='h-1 w-1 bg-black rounded-full'></div>
       </div>
       <div
         className={cn(
@@ -80,9 +80,9 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
         )}
       >
         {!isConnectedUserCard && (
-          <div className="flex w-full items-center justify-center pt-2 flex-col gap-3">
-            <RestrictButton blockCoolMode={blockCoolMode} onClickOption={onClickOption} text="Block" type="block" />
-            <RestrictButton blockCoolMode={muteCoolMode} onClickOption={onClickOption} text="Mute" type="mute" />
+          <div className='flex w-full items-center justify-center pt-2 flex-col gap-3'>
+            <RestrictButton blockCoolMode={blockCoolMode} onClickOption={onClickOption} text='Block' type='block' />
+            <RestrictButton blockCoolMode={muteCoolMode} onClickOption={onClickOption} text='Mute' type='mute' />
           </div>
         )}
         {openQrCodeModal && (
@@ -91,14 +91,14 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
               openQrCodeModal()
               setThreeDotMenuOpen(false)
             }}
-            text="qr code"
-            icon={<FaQrcode className="text-lg mr-1" />}
+            text='qr code'
+            icon={<FaQrcode className='text-lg mr-1' />}
           />
         )}
         {!isConnectedUserCard && (
           <button
             onClick={toggleTopEight}
-            className="rounded-lg text-nowrap cursor-pointer hover:bg-text/5 transition-colors w-full relative text-xs flex items-center gap-1 justify-center font-bold p-3"
+            className='rounded-lg text-nowrap cursor-pointer hover:bg-text/5 transition-colors w-full relative text-xs flex items-center gap-1 justify-center font-bold p-3'
           >
             {t(
               (isInTopEight || isAddingToTopEight) && !isRemovingFromTopEight
@@ -107,21 +107,21 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
             )}
           </button>
         )}
-        <CopyValue value={address} text="copy address" />
+        <CopyValue value={address} text='copy address' />
         <CopyValue
           value={`https://ethfollow.xyz/${
             profileList ? (profileList === Number(primaryList) ? address : profileList) : address
           }`}
-          text="copy profile"
+          text='copy profile'
         />
-        {profileName && <CopyValue value={profileName} text="copy ens" />}
+        {profileName && <CopyValue value={profileName} text='copy ens' />}
         {openBlockModal && (
           <OpenModalButton
             onClick={() => {
               openBlockModal()
               setThreeDotMenuOpen(false)
             }}
-            text="block-mute"
+            text='block-mute'
           />
         )}
         {openListSettingsModal && !!profileList && (
@@ -130,8 +130,8 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
               openListSettingsModal()
               setThreeDotMenuOpen(false)
             }}
-            text="settings"
-            icon={<IoMdSettings className="text-lg" />}
+            text='settings'
+            icon={<IoMdSettings className='text-lg' />}
           />
         )}
       </div>

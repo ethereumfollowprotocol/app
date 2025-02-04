@@ -38,7 +38,7 @@ const RecommendedCards = () => {
   const { address: userAddress } = useAccount()
 
   return (
-    <div className="flex w-full items-center justify-start flex-col">
+    <div className='flex w-full items-center justify-start flex-col'>
       {isClient && (
         <audio
           ref={soundRef}
@@ -48,12 +48,12 @@ const RecommendedCards = () => {
               : '/assets/sound-effects/follow.mp3'
           }
           key={resolvedTheme}
-          preload="auto"
+          preload='auto'
         />
       )}
       <div
         ref={animatedRef}
-        className="pointer-events-none h-screen w-screen fixed -right-[101vw] top-0 z-50 delay-150"
+        className='pointer-events-none h-screen w-screen fixed -right-[101vw] top-0 z-50 delay-150'
         onAnimationEnd={(e) => {
           e.stopPropagation()
           handleStopAnimationAndSound()
@@ -72,15 +72,15 @@ const RecommendedCards = () => {
                 top: `${randomTop}%`,
                 left: `${randomLeft}%`,
               }}
-              className="animate-spin absolute repeat-infinite"
-              alt="follow icon"
+              className='animate-spin absolute repeat-infinite'
+              alt='follow icon'
               width={32}
               height={32}
             />
           )
         })}
       </div>
-      <div className="flex flex-col w-full items-center justify-start h-fit min-h-[500px] sm:min-h-[680px] relative">
+      <div className='flex flex-col w-full items-center justify-start h-fit min-h-[500px] sm:min-h-[680px] relative'>
         <LoadingRecommendedCards
           userAddress={userAddress}
           isLoading={isLoading}
@@ -94,11 +94,13 @@ const RecommendedCards = () => {
               if (gone.has(i + 3)) return null
 
               return (
+                // @ts-expect-error animated.div is a valid component
                 <animated.div
-                  className="h-fit w-full max-w-92 absolute top-0 will-change-transform z-20 sm:mr-[14px]"
+                  className='h-fit w-full max-w-92 absolute top-0 will-change-transform z-20 sm:mr-[14px]'
                   key={`${recommendedProfiles[i]?.address}-${i}`}
                   style={{ x, y }}
                 >
+                  {/* @ts-expect-error animated.div is a valid component */}
                   <animated.div
                     {...bindDragToCards(i)}
                     style={{
@@ -106,7 +108,7 @@ const RecommendedCards = () => {
                       touchAction: 'none',
                     }}
                   >
-                    <div className="cursor-pointer">
+                    <div className='cursor-pointer'>
                       <UserProfileCard
                         profile={recommendedProfiles[i]}
                         isResponsive={false}
@@ -132,11 +134,11 @@ const RecommendedCards = () => {
         />
       </div>
       <button
-        className="cursor-pointer z-40 rounded-full fixed bottom-4 sm:bottom-10 lg:bottom-20 bg-text/20 flex flex-row-reverse items-center gap-2 hover:bg-text/40 transition-all hover:scale-110 px-3 py-2 text-xl disabled:hidden"
+        className='cursor-pointer z-40 rounded-full fixed bottom-4 sm:bottom-10 lg:bottom-20 bg-text/20 flex flex-row-reverse items-center gap-2 hover:bg-text/40 transition-all hover:scale-110 px-3 py-2 text-xl disabled:hidden'
         onClick={onSwipeBack}
         disabled={didSwipeBack || gone.size === 0}
       >
-        <p className="font-semibold text-lg">{t('undo')}</p> <HiArrowUturnDown />
+        <p className='font-semibold text-lg'>{t('undo')}</p> <HiArrowUturnDown />
       </button>
     </div>
   )

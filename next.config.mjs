@@ -1,18 +1,8 @@
 /**
  * @typedef {import('next').NextConfig} NextConfig
  * @typedef {Array<((config: NextConfig & any) => NextConfig)>} NextConfigPlugins
- * @typedef {import('webpack').Configuration} WebpackConfiguration
  */
 
-// /** @type {NextConfigPlugins} */
-// const plugins = []
-
-// if (process.env['ANALYZE']) {
-//   const { default: withBundleAnalyzer } = await import('@next/bundle-analyzer')
-//   plugins.push(withBundleAnalyzer({ enabled: true }))
-// }
-
-import MillionLint from '@million/lint'
 import childProcess from 'node:child_process'
 import { withSentryConfig } from '@sentry/nextjs'
 
@@ -29,9 +19,6 @@ const nextConfig = {
   trailingSlash: false,
   reactStrictMode: true,
   poweredByHeader: false,
-  experimental: {
-    useLightningcss: true,
-  },
   generateBuildId: async () => APP_VERSION,
   env: {
     NEXT_TELEMETRY_DISABLED: '1',
@@ -90,29 +77,6 @@ const nextConfig = {
         hostname: '**',
       },
     ],
-  },
-  /** @param {WebpackConfiguration} config */
-  webpack: (config, context) => {
-    if (config.name === 'server' && config.optimization) {
-      config.optimization.concatenateModules = false
-    }
-    /* WalletConnect x wagmi needed configuration */
-    if (config.resolve) config.resolve.fallback = { fs: false, net: false, tls: false }
-    if (Array.isArray(config.externals)) {
-      config.externals.push('lokijs', 'pino-pretty', 'encoding')
-    }
-    if (config.plugins) {
-      config.plugins.push(
-        new context.webpack.IgnorePlugin({
-          resourceRegExp: /^(lokijs|pino-pretty|encoding)$/,
-        }),
-        new context.webpack.NormalModuleReplacementPlugin(/node:/, (/** @type {{ request: string; }} */ resource) => {
-          resource.request = resource.request.replace(/^node:/, '')
-        })
-      )
-    }
-
-    return config
   },
   redirects: async () => [
     {
@@ -191,6 +155,4 @@ const nextConfigWithSentry = withSentryConfig(nextConfig, {
   // silent: process.env['NODE_ENV'] !== 'development'
 })
 
-export default process.env.NODE_ENV === 'development'
-  ? nextConfigWithSentry
-  : MillionLint.next({ rsc: true })(nextConfigWithSentry)
+export default process.env.NODE_ENV === 'development' ? nextConfig : nextConfigWithSentry

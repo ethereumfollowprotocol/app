@@ -8,15 +8,15 @@ const Phrase = () => {
   const { t } = useTranslation()
 
   return (
-    <div className="relative">
-      <p className="text-[25px] z-50 glass-card p-4 sm:p-6 rounded-xl text-center text-xl xxs:text-2xl sm:text-3xl border-[3px] border-[#aaaaaa] md:text-4xl lg:text-5xl xl:text-6xl font-bold">
+    <div className='relative'>
+      <p className='text-[25px] z-50 glass-card p-4 sm:p-6 rounded-xl text-center text-xl xxs:text-2xl sm:text-3xl border-[3px] border-[#aaaaaa] md:text-4xl lg:text-5xl xl:text-6xl font-bold'>
         {t('phrase')}
       </p>
       <Image
         src={LineMobile}
-        alt="line"
+        alt='line'
         width={3}
-        className="lg:hidden pointer-events-none absolute -bottom-[57px] left-[49%]"
+        className='lg:hidden pointer-events-none absolute -bottom-[57px] left-[49%]'
       />
     </div>
   )
