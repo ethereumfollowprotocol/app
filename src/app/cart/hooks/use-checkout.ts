@@ -12,13 +12,13 @@ import { DEFAULT_CHAIN } from '#/lib/constants/chains'
 import type { FollowingResponse } from '#/types/requests'
 import { useListOps } from '#/hooks/efp-actions/use-list-ops'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import { useCart, type CartItem } from '#/contexts/cart-context'
 import { triggerCustomEvent } from '#/utils/trigger-custom-event'
 import { useMintEFP } from '../../../hooks/efp-actions/use-mint-efp'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
 import { usePoapModal } from '../../../components/claim-poap-modal/use-poap-modal'
 import { refetchState, resetFollowingRelatedQueries } from '#/utils/reset-queries'
 import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
+import { useCart, type CartItemType } from '#/hooks/use-cart'
 
 const useCheckout = () => {
   const {
@@ -58,8 +58,8 @@ const useCheckout = () => {
   const queryClient = useQueryClient()
   const { address: userAddress } = useAccount()
   const { getListOpsTransaction } = useListOps()
+  const { cart, resetCart, setCart } = useCart()
   const { data: walletClient } = useWalletClient()
-  const { cartItems, resetCart, setCartItems } = useCart()
   const { mint, nonce: mintNonce, listHasBeenMinted } = useMintEFP()
 
   // Set step to initiating transactions if the user has already created their EFP list
@@ -72,7 +72,7 @@ const useCheckout = () => {
   const selectedChain = chains.find((chain) => chain.id === selectedChainId) as ChainWithDetails
 
   const listOpTx = useCallback(
-    async (items: CartItem[]) => {
+    async (items: CartItemType[]) => {
       const nonce = selectedList && roles ? roles.listSlot : mintNonce
       const ListRecordsContract =
         selectedList && roles
@@ -90,7 +90,7 @@ const useCheckout = () => {
 
       setListOpsFinished(true)
       if (hash) {
-        setCartItems(cartItems.filter((item) => !items.includes(item)))
+        setCart(cart.filter((item) => !items.includes(item)))
         queryClient.invalidateQueries({ queryKey: ['following'] })
         queryClient.invalidateQueries({ queryKey: ['profile'] })
       }
@@ -106,7 +106,7 @@ const useCheckout = () => {
     const chainId = selectedList ? roles?.listChainId : selectedChain?.id
     if (!chainId) return
 
-    const splitCartItems = splitListOps(cartItems, chainId)
+    const splitCartItems = splitListOps(cart, chainId)
     const cartItemActions: Action[] = splitCartItems.map((listOps, i) => ({
       id: `${EFPActionType.UpdateEFPList} ${i}`, // Unique identifier for the action
       type: EFPActionType.UpdateEFPList,

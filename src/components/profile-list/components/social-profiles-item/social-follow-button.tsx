@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
 
 import type { ProfileListProfile } from '../..'
-import { useCart } from '#/contexts/cart-context'
+import { useCart } from '#/hooks/use-cart'
 import MainnetBlack from 'public/assets/mainnet-black.svg'
 
 interface SocialFollowButtonProps {
@@ -11,7 +11,7 @@ interface SocialFollowButtonProps {
 
 const SocialFollowButton: React.FC<SocialFollowButtonProps> = ({ profiles }) => {
   const { t } = useTranslation()
-  const { cartItems, setCartItems } = useCart()
+  const { cart, setCart } = useCart()
 
   const removeCarItems = async () => {
     const address = profiles?.[0]?.address
@@ -19,11 +19,8 @@ const SocialFollowButton: React.FC<SocialFollowButtonProps> = ({ profiles }) => 
 
     const addresses = profiles.map(({ address }) => address.toLowerCase())
 
-    const filteredCartItems = cartItems.filter(
-      (item) => !addresses.includes(item.listOp.data.slice(0, 42).toLowerCase())
-    )
-
-    setCartItems(filteredCartItems)
+    const filteredCartItems = cart.filter((item) => !addresses.includes(item.listOp.data.slice(0, 42).toLowerCase()))
+    setCart(filteredCartItems)
   }
 
   return (

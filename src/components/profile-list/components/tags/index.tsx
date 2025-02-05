@@ -5,7 +5,7 @@ import { useClickAway } from '@uidotdev/usehooks'
 import { cn } from '#/lib/utilities'
 import TagsDropdown from './tags-dropdown'
 import type { ProfileListProfile } from '../..'
-import { useCart } from '#/contexts/cart-context'
+import { useCart } from '#/hooks/use-cart'
 import Plus from 'public/assets/icons/plus-squared.svg'
 import type { ImportPlatformType, TagsDropdownPositionType } from '#/types/common'
 
@@ -30,11 +30,9 @@ const Tags: React.FC<TagsProps> = ({ profiles, platform, showTags, canEditTags, 
   // Hide tags if the profile is being removed or restricted/unrestricted
   const isBeingRemoved = address ? hasListOpRemoveRecord(address) : false
   const isBeingUnrestricted = address
-    ? hasListOpRemoveTag({ address, tag: 'block' }) || hasListOpRemoveTag({ address, tag: 'mute' })
+    ? hasListOpRemoveTag(address, 'block') || hasListOpRemoveTag(address, 'mute')
     : false
-  const isBeingRestricted = address
-    ? hasListOpAddTag({ address, tag: 'block' }) || hasListOpAddTag({ address, tag: 'mute' })
-    : false
+  const isBeingRestricted = address ? hasListOpAddTag(address, 'block') || hasListOpAddTag(address, 'mute') : false
   const isRestriction = isBeingUnrestricted || isBeingRestricted
 
   const hideTags = !showTags || (canEditTags && (isBeingRemoved || isRestriction))

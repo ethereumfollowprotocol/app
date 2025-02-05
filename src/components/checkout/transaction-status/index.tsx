@@ -6,7 +6,7 @@ import { useWaitForTransactionReceipt } from 'wagmi'
 import { Step } from '../types'
 import { SECOND } from '#/lib/constants'
 import useChain from '#/hooks/use-chain'
-import { useCart } from '#/contexts/cart-context'
+import { useCart } from '#/hooks/use-cart'
 import TransactionDetails from './transaction-details'
 import { useActions } from '#/contexts/actions-context'
 import CancelButton from '#/components/buttons/cancel-button'
@@ -40,7 +40,8 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
   })
 
   const { t } = useTranslation()
-  const { totalCartItems } = useCart()
+  const { cart } = useCart()
+  const totalCartItems = cart.length
   // Add separate transaction finished state for custom delay to wait for backend to update after finishing the llast transaction
   const [transactionsAreFinished, setTransactionsAreFinished] = useState(false)
   useEffect(() => {

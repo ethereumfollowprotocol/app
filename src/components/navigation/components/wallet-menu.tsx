@@ -1,21 +1,21 @@
 'use client'
-import Image from 'next/image'
 
+import Image from 'next/image'
+import { useState } from 'react'
 import { SlWallet } from 'react-icons/sl'
-import { useEffect, useState } from 'react'
 import { FiArrowLeft } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
 import { IoIosArrowDown } from 'react-icons/io'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
-import { useAccount, useDisconnect, useWalletClient, useChains } from 'wagmi'
+import { useAccount, useDisconnect, useChains } from 'wagmi'
 
 import EthBalance from './eth-balance'
 import { Avatar } from '#/components/avatar'
 import { resolveEnsProfile } from '#/utils/ens'
 import { cn, truncateAddress } from '#/lib/utilities'
-import { useAutoConnect } from '#/hooks/useAutoConnect'
+import { useAutoConnect } from '#/hooks/use-auto-connect'
 import LoadingCell from '#/components/loaders/loading-cell'
 import GreenCheck from 'public/assets/icons/check-green.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
@@ -46,23 +46,10 @@ const WalletMenu: React.FC<WalletMenuProps> = ({ isResponsive = true }) => {
   const { t } = useTranslation()
   const { disconnect } = useDisconnect()
   const { openConnectModal } = useConnectModal()
-  const { address: userAddress, isConnected, connector } = useAccount()
+  const { address: userAddress } = useAccount()
   const { selectedList, lists, setSelectedList, roles } = useEFPProfile()
-  const { isLoading: isLoadingWalletClient, data: walletClient } = useWalletClient()
 
   const listChain = chains.find((chain) => chain.id === roles?.listChainId)
-
-  useEffect(() => {
-    if (
-      isConnected &&
-      userAddress !== undefined &&
-      connector !== undefined &&
-      !isLoadingWalletClient &&
-      !walletClient
-    ) {
-      disconnect()
-    }
-  }, [connector, walletClient, isLoadingWalletClient])
 
   const { data: ensProfile, isLoading: ensProfileIsLoading } = useQuery({
     queryKey: ['ens-data', userAddress],
@@ -73,18 +60,6 @@ const WalletMenu: React.FC<WalletMenuProps> = ({ isResponsive = true }) => {
       return data
     },
   })
-
-  // const { ownedBadges, isLoading: isBadgesLoading } = useAchievements({
-  //   address: userAddress,
-  //   list: selectedList
-  // })
-  // const hasEarlyPoap = ownedBadges.find(badge => EARLY_POAP_EVENT_IDS.includes(badge.eventId))
-  // const canMintEarlyPoap = !(isBadgesLoading || ensProfileIsLoading) && typeof lists?.primary_list === 'string' && (userAddress && !!ensProfile?.name && !hasEarlyPoap)
-
-  // const { data: poap, isLoading: poapLoading } = useQuery({
-  //   queryKey: ['poap-link', canMintEarlyPoap, ensProfile, ownedBadges],
-  //   queryFn: async () => (canMintEarlyPoap ? await fetchPoapLink(userAddress) : null)
-  // })
 
   useAutoConnect()
 

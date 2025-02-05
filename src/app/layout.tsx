@@ -16,7 +16,6 @@ import { Production } from './production.tsx'
 import { sharedMetadata } from '#/lib/metadata.ts'
 import { THEMES } from '../lib/constants/index.ts'
 import BackgroundImage from 'public/assets/art/waves-background.svg'
-import HalloweenBackground from 'public/assets/art/halloween-background.jpeg'
 
 export const metadata: Metadata = sharedMetadata
 
@@ -26,12 +25,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <HeadTag />
       <body>
         <ThemeProvider attribute='class' defaultTheme='system' enableSystem={true} themes={THEMES}>
-          <Image src={BackgroundImage} alt='background waves' className='background -z-10 halloween:hidden' />
-          <Image
-            src={HalloweenBackground}
-            alt='halloween background'
-            className='hidden fixed top-0 -z-10 left-0 h-screen opacity-50 w-screen halloween:block object-cover'
-          />
+          <Image src={BackgroundImage} priority={true} alt='background waves' className='background -z-10' />
           <Toaster richColors={true} />
           <Providers>{children}</Providers>
           {/* <VercelToolbar /> */}
@@ -72,10 +66,7 @@ const HeadTag = () => {
       />
 
       {/* Preload crucial assets */}
-      {/* <link rel="preload" href="/assets/art/waves-background.svg" as="image" /> */}
       <link rel='preload' href='/assets/logo.svg' as='image' />
-      {/* <link rel="preload" href="/assets/icons/block-emoji.svg" as="image" />
-      <link rel="preload" href="/assets/icons/mute-emoji.svg" as="image" /> */}
       <link rel='preload' href='/assets/icons/unfollow-emoji.svg' as='image' />
     </head>
   )

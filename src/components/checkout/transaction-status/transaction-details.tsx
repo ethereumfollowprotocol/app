@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { cn } from '#/lib/utilities'
 import useChain from '#/hooks/use-chain'
 import { SECOND } from '#/lib/constants'
-import { useCart } from '#/contexts/cart-context'
+import { useCart } from '#/hooks/use-cart'
 import { useActions, type Action } from '#/contexts/actions-context'
 
 const TransactionDetails = ({ action, isLastAction }: { action: Action; isLastAction?: boolean }) => {
@@ -15,7 +15,8 @@ const TransactionDetails = ({ action, isLastAction }: { action: Action; isLastAc
   const { setIsCorrectChain, actions, currentActionIndex } = useActions()
 
   const { t } = useTranslation()
-  const { totalCartItems } = useCart()
+  const { cart } = useCart()
+  const totalCartItems = cart.length
   const { isPending, isSuccess, isError, error } = useWaitForTransactionReceipt({
     hash: action.txHash,
     chainId: action.chainId,

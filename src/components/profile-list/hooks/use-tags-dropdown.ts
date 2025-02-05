@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 
+import { useCart } from '#/hooks/use-cart'
 import type { ProfileListProfile } from '..'
 import { yieldToMain } from '#/utils/yield-to-main'
-import { useCart } from '#/contexts/cart-context'
 import type { ImportPlatformType } from '#/types/common'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
@@ -18,20 +18,15 @@ export const useTagsDropdown = (
   const tagInputRef = useRef<HTMLInputElement>(null)
 
   const { recentTags, addRecentTag } = useEFPProfile()
-  const {
-    cartItems,
-    setCartItems,
-    getTagsFromCartByAddress,
-    hasListOpAddTag,
-    hasListOpRemoveTag,
-    hasListOpRemoveRecord,
-  } = useCart()
+  const { cart, setCart, getTagsFromCartByAddress, hasListOpAddTag, hasListOpRemoveTag, hasListOpRemoveRecord } =
+    useCart()
 
+  // Take the first address for checking cart states for all social profiles
   const address = profiles?.[0]?.address
   const tags = profiles.flatMap(({ tags }) => tags)
   const tagsFromCart = address ? getTagsFromCartByAddress(address) : []
   // const addressListOpsInCart = address
-  //   ? cartItems.filter(
+  //   ? cart.filter(
   //       item => item.listOp.data.slice(0, 42).toLowerCase() === address.toLowerCase()
   //     )
   //   : []
@@ -66,7 +61,7 @@ export const useTagsDropdown = (
         import: platform,
       }))
 
-      setCartItems([...cartItems, ...newCartItems])
+      setCart([...cart, ...newCartItems])
     }
   }
 
@@ -75,13 +70,13 @@ export const useTagsDropdown = (
 
     const addresses = profiles.map(({ address }) => address.toLowerCase())
 
-    if (hasListOpAddTag({ address, tag })) {
+    if (hasListOpAddTag(address, tag)) {
       setDisplayedTags((prevTags) => prevTags.filter((prevTag) => prevTag !== tag))
 
       await yieldToMain()
 
-      return setCartItems((oldCartItems) =>
-        oldCartItems.filter(
+      return setCart(
+        cart.filter(
           (item) =>
             !(isTagListOp(item.listOp)
               ? addresses.includes(extractAddressAndTag(item.listOp).address.toLowerCase()) &&
@@ -91,9 +86,9 @@ export const useTagsDropdown = (
       )
     }
 
-    if (hasListOpRemoveTag({ address, tag }))
-      return setCartItems((oldCartItems) =>
-        oldCartItems.filter(
+    if (hasListOpRemoveTag(address, tag))
+      return setCart(
+        cart.filter(
           (item) =>
             !(isTagListOp(item.listOp)
               ? addresses.includes(extractAddressAndTag(item.listOp).address.toLowerCase()) &&
@@ -107,7 +102,7 @@ export const useTagsDropdown = (
       import: platform,
     }))
 
-    setCartItems([...cartItems, ...newCartItems])
+    setCart([...cart, ...newCartItems])
   }
 
   const addCustomTag = () => {
@@ -118,10 +113,8 @@ export const useTagsDropdown = (
   }
 
   const isBeingRemoved = address ? hasListOpRemoveRecord(address) : false
-  const isBeingRestricted =
-    address && (hasListOpAddTag({ address, tag: 'block' }) || hasListOpAddTag({ address, tag: 'mute' }))
-  const isBeingUnrestricted =
-    address && (hasListOpRemoveTag({ address, tag: 'block' }) || hasListOpRemoveTag({ address, tag: 'mute' }))
+  const isBeingRestricted = address && (hasListOpAddTag(address, 'block') || hasListOpAddTag(address, 'mute'))
+  const isBeingUnrestricted = address && (hasListOpRemoveTag(address, 'block') || hasListOpRemoveTag(address, 'mute'))
 
   useEffect(() => {
     if (!isBeingRemoved || isBeingUnrestricted) return setDisplayedTags(initialDisplayedTags())

@@ -2,11 +2,11 @@ import { encodePacked, type Address } from 'viem'
 import { useAccount, useWalletClient } from 'wagmi'
 
 import { efpListRecordsAbi } from '#/lib/abi'
-import type { CartItem } from '#/contexts/cart-context'
+import type { CartItemType } from '../use-cart'
 
 interface GetListOpsTransactionProps {
   nonce: bigint
-  items: CartItem[]
+  items: CartItemType[]
   selectedList?: number
   listRecordsContract: Address
 }

@@ -1,8 +1,8 @@
 import { useDrag } from '@use-gesture/react'
 import { useSprings } from '@react-spring/web'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { useCart } from '#/contexts/cart-context'
+import { useCart } from '#/hooks/use-cart'
 import { useSounds } from '#/contexts/sounds-context'
 import { listOpAddListRecord } from '#/utils/list-ops'
 import { RECOMMENDED_PROFILES_LIMIT, SECOND } from '#/lib/constants'
@@ -22,8 +22,12 @@ export const trans = (r: number, s: number) =>
 
 export const useRecommendedProfilesCards = () => {
   const { actionsSoundsMuted } = useSounds()
-  const { addCartItem, removeCartItem, cartAddresses } = useCart()
   const { gone, recommendedProfiles, isLoading, isFetchingNextPage, fetchNextPage } = useRecommendedProfiles()
+  const { cart, addToCart, removeFromCart, getAddressesFromCart } = useCart()
+
+  const cartAddresses = useMemo(() => {
+    return getAddressesFromCart()
+  }, [cart])
 
   const soundRef = useRef<HTMLAudioElement>(null)
   const animatedRef = useRef<HTMLDivElement>(null)
@@ -64,12 +68,13 @@ export const useRecommendedProfilesCards = () => {
       if (canFetchMoreProfiles(index)) fetchNextPage()
       if (xDir === 1) {
         setTimeout(() => {
-          addCartItem({
+          addToCart({
             listOp: listOpAddListRecord(
               // @ts-expect-error the index comes from the cardsApi which is the same length as recommendedProfiles therefore it is never undefined
               recommendedProfiles[index]?.address
             ),
           })
+
           handleStartAnimationAndSound()
         }, 0.15 * SECOND)
       }
@@ -127,12 +132,13 @@ export const useRecommendedProfilesCards = () => {
         if (canFetchMoreProfiles(i)) fetchNextPage()
 
         setTimeout(() => {
-          addCartItem({
+          addToCart({
             listOp: listOpAddListRecord(
               // @ts-expect-error the index comes from the cardsApi which is the same length as recommendedProfiles therefore it is never undefined
               recommendedProfiles[i].address
             ),
           })
+
           handleStartAnimationAndSound()
         }, 0.15 * SECOND)
 
@@ -157,7 +163,7 @@ export const useRecommendedProfilesCards = () => {
       if (i === gone.size) {
         setDidSwipeBack(true)
         setTimeout(() => {
-          removeCartItem(
+          removeFromCart(
             listOpAddListRecord(
               // @ts-expect-error the index comes from the cardsApi which is the same length as recommendedProfiles therefore it is never undefined
               recommendedProfiles[i].address
@@ -168,7 +174,7 @@ export const useRecommendedProfilesCards = () => {
         return to()
       }
     })
-  }, [gone, cardsApi, cartAddresses, recommendedProfiles, removeCartItem, didSwipeBack])
+  }, [gone, cardsApi, cartAddresses, recommendedProfiles, didSwipeBack])
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {

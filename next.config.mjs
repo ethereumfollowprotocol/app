@@ -155,4 +155,4 @@ const nextConfigWithSentry = withSentryConfig(nextConfig, {
   // silent: process.env['NODE_ENV'] !== 'development'
 })
 
-export default process.env.NODE_ENV === 'development' ? nextConfig : nextConfigWithSentry
+export default nextConfigWithSentry
