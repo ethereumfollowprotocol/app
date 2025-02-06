@@ -39,7 +39,6 @@ const NavItems = () => {
             key={item.name}
             className='z-10 px-0.5 group/nav-item'
             href={item.href(itemUrl)}
-            prefetch={true}
             onClick={(e) => {
               if ((item.name === 'profile' || item.name === 'feed') && !userAddress && openConnectModal) {
                 e.preventDefault()

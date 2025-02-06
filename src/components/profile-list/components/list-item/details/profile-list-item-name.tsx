@@ -21,7 +21,7 @@ const ProfileListItemName: React.FC<ProfileListItemNameProps> = ({ name, address
   }
 
   return (
-    <Link href={`/${address}`} prefetch={true} className={cn(!isCart && 'w-full')}>
+    <Link href={`/${address}`} className={cn(!isCart && 'w-full')}>
       <p
         className={`font-bold 2xl:text-lg text-start hover:scale-110 ${
           showTags ? (isCart ? 'truncate max-w-52' : 'truncate w-full') : 'w-fit max-w-full truncate'
