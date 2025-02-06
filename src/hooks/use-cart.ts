@@ -1,7 +1,7 @@
 // hooks/useCart.ts
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 import type { ImportPlatformType } from '#/types/common'
@@ -16,7 +16,6 @@ export type CartItemType = {
 }
 
 export function useCart() {
-  const [loadingCartItems, setLoadingCartItems] = useState(0)
   const queryClient = useQueryClient()
 
   const { address } = useAccount()
@@ -24,7 +23,6 @@ export function useCart() {
 
   const { data: cart = [] } = useQuery<CartItemType[]>({
     queryKey: ['cart', address, listToFetch],
-    queryFn: () => [],
     staleTime: Infinity,
     gcTime: 1 * DAY,
     meta: {
@@ -133,7 +131,5 @@ export function useCart() {
     hasListOpRemoveTag,
     getTagsFromCartByAddress,
     getAddressesFromCart,
-    loadingCartItems,
-    setLoadingCartItems,
   }
 }

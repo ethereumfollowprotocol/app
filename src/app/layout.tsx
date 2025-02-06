@@ -28,7 +28,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           <Image src={BackgroundImage} priority={true} alt='background waves' className='background -z-10' />
           <Toaster richColors={true} />
           <Providers>{children}</Providers>
-          {/* <VercelToolbar /> */}
         </ThemeProvider>
         <Production>
           <Analytics />

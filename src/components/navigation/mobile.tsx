@@ -2,9 +2,9 @@ import React from 'react'
 import { usePathname } from 'next/navigation'
 
 import { cn } from '#/lib/utilities'
+import { useCart } from '#/hooks/use-cart'
 import NavItems from './components/nav-items'
 import CartButton from './components/cart-button'
-import { useCart } from '#/hooks/use-cart'
 import { useActions } from '#/contexts/actions-context'
 
 const Mobile: React.FC = () => {

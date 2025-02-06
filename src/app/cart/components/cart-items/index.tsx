@@ -16,7 +16,7 @@ interface CartItemsProps {
 const CartItems = ({ setClearCartModalOpen, containerRef }: CartItemsProps) => {
   const { t } = useTranslation()
   const { selectedList } = useEFPProfile()
-  const { cart, loadingCartItems, getAddressesFromCart } = useCart()
+  const { cart, getAddressesFromCart } = useCart()
 
   const hasCreatedEfpList = !!selectedList
   const totalCartItems = cart.length
@@ -63,7 +63,7 @@ const CartItems = ({ setClearCartModalOpen, containerRef }: CartItemsProps) => {
           </button>
         )}
       </div>
-      {totalCartItems === 0 && !loadingCartItems && (
+      {totalCartItems === 0 && (
         <div className='font-bold h-28 xl:h-[86vh] px-4 justify-center flex text-lg items-center italic'>
           {t('empty cart')}
         </div>
@@ -75,7 +75,6 @@ const CartItems = ({ setClearCartModalOpen, containerRef }: CartItemsProps) => {
         socialProfiles={socialProfiles}
         listClassName='rounded-xl gap-1 2xl:gap-0'
         createListItem={!hasCreatedEfpList}
-        loadingCartItems={loadingCartItems}
       />
     </>
   )

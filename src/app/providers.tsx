@@ -1,16 +1,14 @@
 'use client'
 
-import { useState } from 'react'
 import localforage from 'localforage'
 import { useTheme } from 'next-themes'
 import { useIsClient } from '@uidotdev/usehooks'
 import { WagmiProvider, type State } from 'wagmi'
-import { QueryClient, type Query } from '@tanstack/react-query'
+import { isServer, QueryClient, type Query } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { darkTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
-import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental'
 
 import wagmiConfig from '#/lib/wagmi'
 import { DAY, MINUTE } from '#/lib/constants'
@@ -27,16 +25,26 @@ type ProviderProps = {
 
 const darkThemes = ['dark', 'halloween']
 
-const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
-  const [queryClient] = useState(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: { gcTime: 1 * DAY, staleTime: 5 * MINUTE },
-        },
-      })
-  )
+const makeQueryClient = () =>
+  new QueryClient({
+    defaultOptions: {
+      queries: { gcTime: 1 * DAY, staleTime: 5 * MINUTE },
+    },
+  })
 
+let browserQueryClient: QueryClient | undefined = undefined
+
+function getQueryClient() {
+  if (isServer) {
+    return makeQueryClient()
+  } else {
+    if (!browserQueryClient) browserQueryClient = makeQueryClient()
+    return browserQueryClient
+  }
+}
+
+const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
+  const queryClient = getQueryClient()
   const asyncStoragePersistor = createAsyncStoragePersister({
     storage: localforage,
   })
@@ -54,25 +62,23 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
         },
       }}
     >
-      <ReactQueryStreamedHydration>
-        <WagmiProvider config={wagmiConfig} initialState={initialState}>
-          <RainbowKitProvider
-            coolMode={false}
-            theme={isClient && darkThemes.includes(resolvedTheme || 'dark') ? darkTheme() : undefined}
-          >
-            <EFPProfileProvider>
-              <ActionsProvider>
-                <SoundsProvider>
-                  <RecommendedProfilesProvider>
-                    <Navigation />
-                    {children}
-                  </RecommendedProfilesProvider>
-                </SoundsProvider>
-              </ActionsProvider>
-            </EFPProfileProvider>
-          </RainbowKitProvider>
-        </WagmiProvider>
-      </ReactQueryStreamedHydration>
+      <WagmiProvider config={wagmiConfig} initialState={initialState}>
+        <RainbowKitProvider
+          coolMode={false}
+          theme={isClient && darkThemes.includes(resolvedTheme || 'dark') ? darkTheme() : undefined}
+        >
+          <EFPProfileProvider>
+            <ActionsProvider>
+              <SoundsProvider>
+                <RecommendedProfilesProvider>
+                  <Navigation />
+                  {children}
+                </RecommendedProfilesProvider>
+              </SoundsProvider>
+            </ActionsProvider>
+          </EFPProfileProvider>
+        </RainbowKitProvider>
+      </WagmiProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </PersistQueryClientProvider>
   )

@@ -9,12 +9,12 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { fetchFollowState } from 'ethereum-identity-kit'
 
 import { SECOND } from '#/lib/constants'
+import { useCart } from '#/hooks/use-cart'
 import { resolveEnsAddress } from '#/utils/ens'
 import { searchENSNames } from '#/api/search-ens-names'
 import { listOpAddListRecord } from '#/utils/list-ops.ts'
 import { formatError } from '#/utils/format/format-error'
 import { useEFPProfile } from '#/contexts/efp-profile-context.tsx'
-import { useCart } from '#/hooks/use-cart'
 
 const useSearch = (isEditor?: boolean) => {
   const [isAddingToCart, setIsAddingToCart] = useState(false)
@@ -29,7 +29,7 @@ const useSearch = (isEditor?: boolean) => {
   const { t } = useTranslation()
   const { address: userAddress } = useAccount()
   const { roles, selectedList } = useEFPProfile()
-  const { addToCart, hasListOpAddRecord, setLoadingCartItems } = useCart()
+  const { addToCart, hasListOpAddRecord } = useCart()
 
   const clickAwayRef = useClickAway<HTMLDivElement>((_) => {
     setDropdownMenuOpen(false)
@@ -148,23 +148,14 @@ const useSearch = (isEditor?: boolean) => {
 
     const address = isAddress(user) ? user : await resolveEnsAddress(user)
 
-    if (!address) {
-      setLoadingCartItems((prevLoading) => (prevLoading > 0 ? prevLoading - 1 : prevLoading))
-      return { user }
-    }
+    if (!address) return { user }
 
     const followState = await getFollowingState(address)
     const isPendingFollow = hasListOpAddRecord(address)
 
-    if (isPendingFollow) {
-      setLoadingCartItems((prevLoading) => (prevLoading > 0 ? prevLoading - 1 : prevLoading))
-      return { user, isFollowing: false, inCart: true }
-    }
+    if (isPendingFollow) return { user, isFollowing: false, inCart: true }
 
-    if (followState === 'follows') {
-      setLoadingCartItems((prevLoading) => (prevLoading > 0 ? prevLoading - 1 : prevLoading))
-      return { user, isFollowing: true }
-    }
+    if (followState === 'follows') return { user, isFollowing: true }
 
     if (followState === 'none') addToCart({ listOp: listOpAddListRecord(address) })
   }
@@ -189,8 +180,6 @@ const useSearch = (isEditor?: boolean) => {
           .map((name) => name.trim())
           .filter((name) => !!name)
 
-        setLoadingCartItems(namesToAdd.length)
-
         const addedToCart = await Promise.all(namesToAdd.map(async (name) => await addProfilesToCart(name)))
 
         const namesInCart = addedToCart.filter((item) => item?.inCart).map((item) => item?.user)
@@ -206,7 +195,6 @@ const useSearch = (isEditor?: boolean) => {
         return setIsAddingToCart(false)
       }
 
-      setLoadingCartItems(1)
       const erroredName = await addProfilesToCart(currentSearch)
       if (erroredName?.isFollowing) toast.error(`${t('already followed')} ${erroredName.user}`)
       else if (erroredName?.inCart) toast.error(`${t('in cart')} ${erroredName.user}`)
