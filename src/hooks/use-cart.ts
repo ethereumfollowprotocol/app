@@ -4,11 +4,11 @@ import type { Address } from 'viem'
 import { useCallback } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 
+import { DAY } from '#/lib/constants'
 import type { ListOp } from '#/types/list-op'
 import type { ImportPlatformType } from '#/types/common'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { extractAddressAndTag, isTagListOp, listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
-import { DAY } from '#/lib/constants'
 
 export type CartItemType = {
   listOp: ListOp
@@ -59,11 +59,11 @@ export function useCart() {
   }
 
   const hasListOpAddRecord = (address: string) => {
-    return cart.some((item) => item.listOp.opcode === 1 && item.listOp.data === address)
+    return cart.some((item) => item.listOp.opcode === 1 && item.listOp.data.toLowerCase() === address.toLowerCase())
   }
 
   const hasListOpRemoveRecord = (address: string) => {
-    return cart.some((item) => item.listOp.opcode === 2 && item.listOp.data === address)
+    return cart.some((item) => item.listOp.opcode === 2 && item.listOp.data.toLowerCase() === address.toLowerCase())
   }
 
   const hasListOpAddTag = (address: Address, tag: string) => {

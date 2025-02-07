@@ -145,9 +145,7 @@ const useSearch = (isEditor?: boolean) => {
     const isPendingFollow = hasListOpAddRecord(address)
 
     if (isPendingFollow) return { user, isFollowing: false, inCart: true }
-
     if (followState === 'follows') return { user, isFollowing: true }
-
     if (followState === 'none') return { user, payload: { listOp: listOpAddListRecord(address) } }
   }
 
