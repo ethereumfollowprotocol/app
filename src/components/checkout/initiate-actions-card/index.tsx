@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Step } from '../types'
-import { useCart } from '#/contexts/cart-context'
+import { useCart } from '#/hooks/use-cart'
 import { DEFAULT_CHAIN } from '#/lib/constants/chains'
 import RequiredTransaction from './required-transactions'
 import CancelButton from '#/components/buttons/cancel-button'
@@ -22,8 +22,9 @@ const InitiateActionsCard: React.FC<InitiateActionsCardProps> = ({
   setCurrentStep,
   handleInitiateActions,
 }) => {
+  const { cart } = useCart()
+  const totalCartItems = cart.length
   const { t } = useTranslation()
-  const { totalCartItems } = useCart()
   const { isCorrectChain } = useActions()
 
   const listOpActions = actions.filter((action) => action.type === EFPActionType.UpdateEFPList)

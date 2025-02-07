@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 
 import { SECOND } from '#/lib/constants'
-import { useCart } from '#/contexts/cart-context'
+import { useCart } from '#/hooks/use-cart'
 import { listOpAddListRecord } from '#/utils/list-ops'
 import type { ImportPlatformType } from '#/types/common'
 import type { AirstackFollowings } from '#/types/requests'
@@ -26,7 +26,7 @@ const useImportModal = (platform: ImportPlatformType) => {
   const [isFollowingsLoading, setIsFollowingsLoading] = useState(false)
 
   const { allFollowingAddresses } = useEFPProfile()
-  const { cartItems, setCartItems, getAddressesFromCart } = useCart()
+  const { cart, setCart, getAddressesFromCart } = useCart()
 
   useEffect(() => {
     const inputTimeout = setTimeout(() => {
@@ -132,7 +132,7 @@ const useImportModal = (platform: ImportPlatformType) => {
         import: platform,
       }))
 
-    setCartItems([...cartItems, ...newCartItems])
+    setCart([...cart, ...newCartItems])
   }
 
   const alreadyFollow = followings.filter(({ address: addr }) =>

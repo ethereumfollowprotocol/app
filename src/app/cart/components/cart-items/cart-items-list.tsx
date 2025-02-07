@@ -29,7 +29,6 @@ interface CartItemsListProps {
   createListItem?: boolean
   loadingRows?: number
   isLoading: boolean
-  loadingCartItems?: number
   containerRef: React.RefObject<HTMLDivElement | null>
 }
 
@@ -41,7 +40,6 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
   createListItem,
   loadingRows = 7,
   isLoading,
-  loadingCartItems,
   containerRef,
 }) => {
   const { t } = useTranslation()
@@ -104,7 +102,7 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
               height={window.innerHeight - 186}
               width={window.innerWidth}
               overscanRowCount={10}
-              rowCount={(profiles?.length || 0) + (loadingCartItems || 0) + 2}
+              rowCount={(profiles?.length || 0) + 2}
               rowHeight={window.innerWidth > 1536 ? 82 : 88}
               rowRenderer={({ key, index, style }) => {
                 const profile = profiles?.[index]

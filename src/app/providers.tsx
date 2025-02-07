@@ -1,18 +1,18 @@
 'use client'
 
-import { useState } from 'react'
+import localforage from 'localforage'
 import { useTheme } from 'next-themes'
 import { useIsClient } from '@uidotdev/usehooks'
 import { WagmiProvider, type State } from 'wagmi'
+import { isServer, QueryClient, type Query } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { darkTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental'
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
+import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
 
 import wagmiConfig from '#/lib/wagmi'
 import { DAY, MINUTE } from '#/lib/constants'
 import Navigation from '#/components/navigation'
-import { CartProvider } from '#/contexts/cart-context'
 import { SoundsProvider } from '#/contexts/sounds-context'
 import { ActionsProvider } from '#/contexts/actions-context'
 import { EFPProfileProvider } from '#/contexts/efp-profile-context'
@@ -25,44 +25,62 @@ type ProviderProps = {
 
 const darkThemes = ['dark', 'halloween']
 
+const makeQueryClient = () =>
+  new QueryClient({
+    defaultOptions: {
+      queries: { gcTime: 1 * DAY, staleTime: 5 * MINUTE },
+    },
+  })
+
+let browserQueryClient: QueryClient | undefined = undefined
+
+function getQueryClient() {
+  if (isServer) {
+    return makeQueryClient()
+  } else {
+    if (!browserQueryClient) browserQueryClient = makeQueryClient()
+    return browserQueryClient
+  }
+}
+
 const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
-  const [queryClient] = useState(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: { gcTime: 1 * DAY, staleTime: 1 * MINUTE },
-        },
-      })
-  )
+  const queryClient = getQueryClient()
+  const asyncStoragePersistor = createAsyncStoragePersister({
+    storage: localforage,
+  })
 
   const isClient = useIsClient()
   const { resolvedTheme } = useTheme()
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ReactQueryStreamedHydration>
-        <WagmiProvider config={wagmiConfig} initialState={initialState}>
-          <RainbowKitProvider
-            coolMode={false}
-            theme={isClient && darkThemes.includes(resolvedTheme || 'dark') ? darkTheme() : undefined}
-          >
-            <CartProvider>
-              <EFPProfileProvider>
-                <ActionsProvider>
-                  <SoundsProvider>
-                    <RecommendedProfilesProvider>
-                      <Navigation />
-                      {children}
-                    </RecommendedProfilesProvider>
-                  </SoundsProvider>
-                </ActionsProvider>
-              </EFPProfileProvider>
-            </CartProvider>
-          </RainbowKitProvider>
-        </WagmiProvider>
-      </ReactQueryStreamedHydration>
+    <PersistQueryClientProvider
+      client={queryClient}
+      persistOptions={{
+        persister: asyncStoragePersistor,
+        dehydrateOptions: {
+          shouldDehydrateQuery: (query: Query) => query.state.status === 'success' && !!query.meta?.persist,
+        },
+      }}
+    >
+      <WagmiProvider config={wagmiConfig} initialState={initialState}>
+        <RainbowKitProvider
+          coolMode={false}
+          theme={isClient && darkThemes.includes(resolvedTheme || 'dark') ? darkTheme() : undefined}
+        >
+          <EFPProfileProvider>
+            <ActionsProvider>
+              <SoundsProvider>
+                <RecommendedProfilesProvider>
+                  <Navigation />
+                  {children}
+                </RecommendedProfilesProvider>
+              </SoundsProvider>
+            </ActionsProvider>
+          </EFPProfileProvider>
+        </RainbowKitProvider>
+      </WagmiProvider>
       <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    </PersistQueryClientProvider>
   )
 }
 

@@ -8,13 +8,13 @@ import { IoCartSharp } from 'react-icons/io5'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import { cn } from '#/lib/utilities'
-import { useCart } from '#/contexts/cart-context'
+import { useCart } from '#/hooks/use-cart'
 import { formatNumber } from '#/utils/format/format-number'
 import HalloweenCart from 'public/assets/icons/halloween-cart.png'
 
 const CartButton = () => {
   const pathname = usePathname()
-  const { totalCartItems } = useCart()
+  const { cart } = useCart()
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
 
@@ -46,9 +46,9 @@ const CartButton = () => {
           )}
         />
         <Image src={HalloweenCart} alt='cart' width={32} height={32} className='halloween:block hidden' />
-        {totalCartItems === 0 ? null : (
+        {cart.length === 0 ? null : (
           <span className='absolute -right-3 sm:-right-3 -top-3 sm:-top-3 flex h-6 sm:h-7 w-fit min-w-6 sm:min-w-7 items-center px-1 justify-center rounded-full bg-green-400 text-sm font-bold text-black'>
-            {formatNumber(totalCartItems)}
+            {formatNumber(cart.length)}
           </span>
         )}
       </div>

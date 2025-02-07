@@ -6,9 +6,9 @@ import { toHex, isAddress, type Chain, encodePacked, type Address } from 'viem'
 
 import { Step } from '#/components/checkout/types'
 import { DEFAULT_CHAIN } from '#/lib/constants/chains'
+import { useCart, type CartItemType } from '#/hooks/use-cart'
 import { useListOps } from '#/hooks/efp-actions/use-list-ops'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import { useCart, type CartItem } from '#/contexts/cart-context'
 import { generateListStorageLocationSlot } from '#/utils/generate-slot'
 import { INITIAL_COMPLETE_TRANSACTIONS } from '#/lib/constants/list-settings'
 import type { FollowingResponse, ProfileDetailsResponse } from '#/types/requests'
@@ -119,7 +119,7 @@ const useSaveListSettings = ({
   }, [walletClient, newChain])
 
   const listOpTx = useCallback(
-    async (items: CartItem[]) => {
+    async (items: CartItemType[]) => {
       const listRecordsContract = newChain
         ? (ListRecordContracts[newChain?.id] as Address)
         : coreEfpContracts.EFPListRecords
@@ -367,7 +367,7 @@ const useSaveListSettings = ({
     if (changedValuesState.chain && newChain) {
       if (listState) {
         const listOps = listState.flatMap((item) => {
-          const operations: CartItem[] = []
+          const operations: CartItemType[] = []
           operations.push({ listOp: listOpAddListRecord(item.address) })
           if (item.tags.length > 0)
             item.tags.map((tag) => {

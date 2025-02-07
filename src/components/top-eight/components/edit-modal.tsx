@@ -6,12 +6,11 @@ import { useTranslation } from 'react-i18next'
 import { cn } from '#/lib/utilities'
 import Modal from '#/components/modal'
 import TopEightProfile from './top-eight-profile'
-import { useCart } from '#/contexts/cart-context'
 import LoadingCell from '#/components/loaders/loading-cell'
 import CancelButton from '#/components/buttons/cancel-button'
 import { useEditTopEight } from '../hooks/use-edit-top-eight'
-import type { TopEightProfileType } from '../hooks/use-top-eight'
 import PrimaryButton from '#/components/buttons/primary-button'
+import type { TopEightProfileType } from '../hooks/use-top-eight'
 
 interface EditModalProps {
   profiles: TopEightProfileType[]
@@ -21,8 +20,8 @@ interface EditModalProps {
 const EditModal: React.FC<EditModalProps> = ({ profiles, onClose }) => {
   const router = useRouter()
   const { t } = useTranslation()
-  const { loadingCartItems } = useCart()
-  const { editedProfiles, addProfileSearch, setAddProfileSearch, onSubmit, isTopEightFull } = useEditTopEight(profiles)
+  const { editedProfiles, addProfileSearch, setAddProfileSearch, onSubmit, isTopEightFull, loadingItems } =
+    useEditTopEight(profiles)
 
   return (
     <Modal onCancel={onClose} className='items-start md:pt-[12.5vh]'>
@@ -61,7 +60,7 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose }) => {
           {editedProfiles.map((profile, index) => (
             <TopEightProfile profile={profile} isEditing={true} key={index} />
           ))}
-          {new Array(loadingCartItems).fill(1).map((_, i) => (
+          {new Array(loadingItems).fill(1).map((_, i) => (
             <div
               key={`loading ${i}`}
               className='flex flex-col p-4 items-center gap-2 relative border-grey rounded-xl w-[144px] h-[186px] border-[3px] border-green-500/50'

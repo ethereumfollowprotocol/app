@@ -26,7 +26,6 @@ import type {
   FollowingTagsResponse,
   ProfileDetailsResponse,
 } from '#/types/requests'
-import { useCart } from './cart-context'
 import { DEFAULT_CHAIN } from '#/lib/constants/chains'
 import type { ProfileTableTitleType } from '#/types/common'
 import { coreEfpContracts } from '#/lib/constants/contracts'
@@ -169,7 +168,6 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
 
   const chains = useChains()
   const router = useRouter()
-  const { resetCart } = useCart()
   const { address: userAddress } = useAccount()
 
   const {
@@ -186,6 +184,9 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     },
     refetchOnWindowFocus: false,
     staleTime: Infinity,
+    meta: {
+      persist: true,
+    },
   })
 
   useEffect(() => {
@@ -244,6 +245,9 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     },
     staleTime: Infinity,
     refetchOnWindowFocus: false,
+    meta: {
+      persist: true,
+    },
   })
 
   const {
@@ -260,6 +264,9 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       return fetchedStats
     },
     refetchOnWindowFocus: false,
+    meta: {
+      persist: true,
+    },
   })
 
   const [isEndOfFollowing, setIsEndOfFollowing] = useState(false)
@@ -310,6 +317,9 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.nextPageParam,
+    // meta: {
+    //   persist: true,
+    // },
   })
 
   const [isEndOfFollowers, setIsEndOfFollowers] = useState(false)
@@ -356,6 +366,9 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.nextPageParam,
+    // meta: {
+    //      persist: true,
+    //    },
   })
 
   const followers = fetchedFollowers
@@ -380,6 +393,9 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       return fetchedProfile
     },
     refetchOnWindowFocus: false,
+    // meta: {
+    //      persist: true,
+    //    },
   })
 
   const {
@@ -395,6 +411,9 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       const fetchedTags = await fetchFollowerTags(userAddress, listToFetch)
       return fetchedTags
     },
+    // meta: {
+    //      persist: true,
+    //    },
   })
 
   const {
@@ -420,25 +439,12 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       return fetchedFollowing.following
     },
     staleTime: 300000,
+    // meta: {
+    //      persist: true,
+    //    },
   })
 
   const topEight = topEightFetched?.map((profile) => ({ address: profile.address, ens: profile.ens })) || []
-
-  useEffect(() => {
-    const cartList = localStorage.getItem('cart list')
-    const cartAddress = localStorage.getItem('cart address')
-
-    if (
-      lists === undefined ||
-      ((userAddress?.toLowerCase() === cartAddress?.toLowerCase() || !userAddress) &&
-        Number(cartList) === (selectedList || 'none'))
-    )
-      return
-
-    resetCart()
-
-    localStorage.setItem('cart list', selectedList ? selectedList.toString() : 'none')
-  }, [userAddress, selectedList])
 
   const toggleTag = (tab: ProfileTableTitleType, tag: string) => {
     if (tab === 'following') {
@@ -494,6 +500,9 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
 
       return fetchedRoles
     },
+    // meta: {
+    //      persist: true,
+    //    },
   })
 
   const { data: allFollowingAddresses, refetch: refetchAllFollowings } = useQuery({
@@ -504,6 +513,9 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       const fetchedFollowings = await fetchProfileAllFollowings(selectedList)
       return fetchedFollowings.map((address) => address.toLowerCase() as Address)
     },
+    // meta: {
+    //      persist: true,
+    //    },
   })
 
   return (

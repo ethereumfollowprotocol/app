@@ -5,15 +5,15 @@ import { isAddress, type Address } from 'viem'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
 import { usePathname, useRouter } from 'next/navigation'
-import { useEffect, useMemo, useRef, useState } from 'react'
 import { fetchFollowState } from 'ethereum-identity-kit'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { SECOND } from '#/lib/constants'
 import { resolveEnsAddress } from '#/utils/ens'
-import { useCart } from '#/contexts/cart-context.tsx'
 import { searchENSNames } from '#/api/search-ens-names'
 import { listOpAddListRecord } from '#/utils/list-ops.ts'
 import { formatError } from '#/utils/format/format-error'
+import { useCart, type CartItemType } from '#/hooks/use-cart'
 import { useEFPProfile } from '#/contexts/efp-profile-context.tsx'
 
 const useSearch = (isEditor?: boolean) => {
@@ -29,22 +29,13 @@ const useSearch = (isEditor?: boolean) => {
   const { t } = useTranslation()
   const { address: userAddress } = useAccount()
   const { roles, selectedList } = useEFPProfile()
-  const { addCartItem, hasListOpAddRecord, setLoadingCartItems } = useCart()
+  const { addToCart, hasListOpAddRecord } = useCart()
 
   const clickAwayRef = useClickAway<HTMLDivElement>((_) => {
     setDropdownMenuOpen(false)
     setDialogOpen(false)
   })
   const searchBarRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
-
-  // useEffect(() => {
-  //   if (initialSearch && initialSearch?.length > 0 && searchBarRef) {
-  //     searchBarRef.current?.focus()
-  //     searchBarRef.current?.setSelectionRange(initialSearch?.length, initialSearch.length)
-  //     setDropdownMenuOpen(true)
-  //     setDialogOpen(true)
-  //   }
-  // }, [searchBarRef])
 
   useEffect(() => {
     if (dialogOpen) searchBarRef.current?.focus()
@@ -140,7 +131,7 @@ const useSearch = (isEditor?: boolean) => {
     }
   }
 
-  const addToCart = async (user: string) => {
+  const getProfileDetails = async (user: string) => {
     if (!roles?.isManager) {
       toast.error(t('not manager'))
       return
@@ -148,25 +139,14 @@ const useSearch = (isEditor?: boolean) => {
 
     const address = isAddress(user) ? user : await resolveEnsAddress(user)
 
-    if (!address) {
-      setLoadingCartItems((prevLoading) => (prevLoading > 0 ? prevLoading - 1 : prevLoading))
-      return { user }
-    }
+    if (!address) return { user }
 
     const followState = await getFollowingState(address)
     const isPendingFollow = hasListOpAddRecord(address)
 
-    if (isPendingFollow) {
-      setLoadingCartItems((prevLoading) => (prevLoading > 0 ? prevLoading - 1 : prevLoading))
-      return { user, isFollowing: false, inCart: true }
-    }
-
-    if (followState === 'follows') {
-      setLoadingCartItems((prevLoading) => (prevLoading > 0 ? prevLoading - 1 : prevLoading))
-      return { user, isFollowing: true }
-    }
-
-    if (followState === 'none') addCartItem({ listOp: listOpAddListRecord(address) })
+    if (isPendingFollow) return { user, isFollowing: false, inCart: true }
+    if (followState === 'follows') return { user, isFollowing: true }
+    if (followState === 'none') return { user, payload: { listOp: listOpAddListRecord(address) } }
   }
 
   const onSubmit = async () => {
@@ -189,14 +169,15 @@ const useSearch = (isEditor?: boolean) => {
           .map((name) => name.trim())
           .filter((name) => !!name)
 
-        setLoadingCartItems(namesToAdd.length)
+        const formatAddToCart = await Promise.all(namesToAdd.map(async (name) => await getProfileDetails(name)))
 
-        const addedToCart = await Promise.all(namesToAdd.map(async (name) => await addToCart(name)))
+        const itemsToAdd = formatAddToCart.filter((item) => !!item?.payload).map((item) => item?.payload)
+        if (itemsToAdd.length > 0) addToCart(itemsToAdd as CartItemType[])
 
-        const namesInCart = addedToCart.filter((item) => item?.inCart).map((item) => item?.user)
-        const alreadyFollowed = addedToCart.filter((item) => item?.isFollowing).map((item) => item?.user)
-        const erroredNames = addedToCart
-          .filter((item) => !(item?.inCart || item?.isFollowing) && !!item?.user)
+        const namesInCart = formatAddToCart.filter((item) => item?.inCart).map((item) => item?.user)
+        const alreadyFollowed = formatAddToCart.filter((item) => item?.isFollowing).map((item) => item?.user)
+        const erroredNames = formatAddToCart
+          .filter((item) => !(item?.inCart || item?.isFollowing) && !item?.payload && !!item?.user)
           .map((item) => item?.user)
 
         if (erroredNames.length > 0) toast.error(`${t('unresolved')} ${formatError(erroredNames)}`)
@@ -206,9 +187,9 @@ const useSearch = (isEditor?: boolean) => {
         return setIsAddingToCart(false)
       }
 
-      setLoadingCartItems(1)
-      const erroredName = await addToCart(currentSearch)
-      if (erroredName?.isFollowing) toast.error(`${t('already followed')} ${erroredName.user}`)
+      const erroredName = await getProfileDetails(currentSearch)
+      if (erroredName?.payload) addToCart(erroredName.payload)
+      else if (erroredName?.isFollowing) toast.error(`${t('already followed')} ${erroredName.user}`)
       else if (erroredName?.inCart) toast.error(`${t('in cart')} ${erroredName.user}`)
       else if (erroredName) toast.error(`${t('unresolved')} ${erroredName?.user}`)
 

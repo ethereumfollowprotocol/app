@@ -4,7 +4,7 @@ import { FiTrash2 } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
 
 import CartItemsList from './cart-items-list'
-import { useCart } from '#/contexts/cart-context'
+import { useCart } from '#/hooks/use-cart'
 import FarcasterIcon from 'public/assets/icons/farcaster.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 
@@ -16,8 +16,12 @@ interface CartItemsProps {
 const CartItems = ({ setClearCartModalOpen, containerRef }: CartItemsProps) => {
   const { t } = useTranslation()
   const { selectedList } = useEFPProfile()
-  const { totalCartItems, loadingCartItems, cartAddresses, socialAddresses } = useCart()
+  const { cart, getAddressesFromCart } = useCart()
+
   const hasCreatedEfpList = !!selectedList
+  const totalCartItems = cart.length
+  const cartAddresses = useMemo(() => getAddressesFromCart(), [cart])
+  const socialAddresses = useMemo(() => getAddressesFromCart('farcaster'), [cart])
 
   const profiles = useMemo(() => {
     return cartAddresses.map((address) => ({
@@ -29,7 +33,7 @@ const CartItems = ({ setClearCartModalOpen, containerRef }: CartItemsProps) => {
   const socialProfiles = [
     {
       platform: 'farcaster',
-      profiles: socialAddresses.farcaster.map((address) => ({
+      profiles: socialAddresses.map((address) => ({
         address,
         tags: [],
       })),
@@ -59,7 +63,7 @@ const CartItems = ({ setClearCartModalOpen, containerRef }: CartItemsProps) => {
           </button>
         )}
       </div>
-      {totalCartItems === 0 && !loadingCartItems && (
+      {totalCartItems === 0 && (
         <div className='font-bold h-28 xl:h-[86vh] px-4 justify-center flex text-lg items-center italic'>
           {t('empty cart')}
         </div>
@@ -71,7 +75,6 @@ const CartItems = ({ setClearCartModalOpen, containerRef }: CartItemsProps) => {
         socialProfiles={socialProfiles}
         listClassName='rounded-xl gap-1 2xl:gap-0'
         createListItem={!hasCreatedEfpList}
-        loadingCartItems={loadingCartItems}
       />
     </>
   )

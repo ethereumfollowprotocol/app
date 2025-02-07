@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { cn } from '#/lib/utilities'
 import type { ProfileListProfile } from '../..'
 import { tagRegex } from '#/lib/constants/regex'
-import { useCart } from '#/contexts/cart-context'
+import { useCart } from '#/hooks/use-cart'
 import Plus from 'public/assets/icons/plus-squared.svg'
 import { useTagsDropdown } from '../../hooks/use-tags-dropdown'
 import type { ImportPlatformType, TagsDropdownPositionType } from '#/types/common'
@@ -90,8 +90,8 @@ const TagsDropdown: React.FC<TagsDropdownProps> = ({
         const address = profiles?.[0]?.address
         if (!address) return null
 
-        const addingTag = hasListOpAddTag({ address, tag })
-        const removingTag = hasListOpRemoveTag({ address, tag })
+        const addingTag = hasListOpAddTag(address, tag)
+        const removingTag = hasListOpRemoveTag(address, tag)
 
         return (
           <div

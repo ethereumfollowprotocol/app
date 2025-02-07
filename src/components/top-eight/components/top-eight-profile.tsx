@@ -6,14 +6,14 @@ import { useQuery } from '@tanstack/react-query'
 import { ens_beautify } from '@adraffy/ens-normalize'
 
 import { Avatar } from '#/components/avatar'
-import { useCart } from '#/contexts/cart-context'
+import { useCart } from '#/hooks/use-cart'
 import { cn, truncateAddress } from '#/lib/utilities'
 import FollowButton from '#/components/follow-button'
 import useFollowerState from '#/hooks/use-follower-state'
 import LoadingCell from '#/components/loaders/loading-cell'
 import { isValidEnsName, resolveEnsProfile } from '#/utils/ens'
-import { listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
 import type { TopEightProfileType } from '../hooks/use-top-eight'
+import { listOpAddListRecord, listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
 
 interface TopEightProfileProps {
   profile: TopEightProfileType
@@ -28,21 +28,25 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
 
   const profileName = fetchedEnsProfile?.name
   const profileAvatar = fetchedEnsProfile?.avatar
-  const { followerTag } = useFollowerState({ address: profile?.address, showFollowerBadge: true })
+  const { followerTag, followState } = useFollowerState({ address: profile?.address, showFollowerBadge: true })
 
-  const { addCartItem, removeCartItem, hasListOpAddTag, hasListOpRemoveTag, hasListOpRemoveRecord } = useCart()
+  const { addToCart, removeFromCart, hasListOpAddTag, hasListOpRemoveTag, hasListOpRemoveRecord } = useCart()
   const { t } = useTranslation()
-  const isAddingToTopEight = isEditing && hasListOpAddTag({ address: profile.address, tag: 'top8' })
+  const isAddingToTopEight = isEditing && hasListOpAddTag(profile.address, 'top8')
   const isRemovingFromTopEight =
-    isEditing &&
-    (hasListOpRemoveTag({ address: profile.address, tag: 'top8' }) || hasListOpRemoveRecord(profile.address))
+    isEditing && (hasListOpRemoveTag(profile.address, 'top8') || hasListOpRemoveRecord(profile.address))
 
   const onClick = () => {
     if (!isEditing) return
 
-    if (isAddingToTopEight) removeCartItem(listOpAddTag(profile.address, 'top8'))
-    else if (isRemovingFromTopEight) removeCartItem(listOpRemoveTag(profile.address, 'top8'))
-    else addCartItem({ listOp: listOpRemoveTag(profile.address, 'top8') })
+    if (isAddingToTopEight) {
+      const removeItems = [listOpAddTag(profile.address, 'top8')]
+      if (followState === 'none') removeItems.push(listOpAddListRecord(profile.address))
+      removeFromCart(removeItems)
+    } else if (isRemovingFromTopEight) removeFromCart(listOpRemoveTag(profile.address, 'top8'))
+    else {
+      addToCart({ listOp: listOpRemoveTag(profile.address, 'top8') })
+    }
   }
 
   return (

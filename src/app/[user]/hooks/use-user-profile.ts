@@ -3,7 +3,7 @@ import { isAddress } from 'viem'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { fetchProfileDetails, fetchProfileStats } from 'ethereum-identity-kit'
 
-import { FETCH_LIMIT_PARAM } from '#/lib/constants'
+import { FETCH_LIMIT_PARAM, MINUTE } from '#/lib/constants'
 import type { ProfileTableTitleType } from '#/types/common'
 import { fetchProfileFollowers } from '#/api/followers/fetch-profile-followers'
 import { fetchProfileFollowing } from '#/api/following/fetch-profile-following'
@@ -39,7 +39,7 @@ const useUser = (user: string) => {
       const fetchedProfile = await fetchProfileDetails(user, listNum, fetchFreshProfile)
       return fetchedProfile
     },
-    staleTime: 30000,
+    staleTime: 3 * MINUTE,
     refetchOnWindowFocus: false,
   })
 

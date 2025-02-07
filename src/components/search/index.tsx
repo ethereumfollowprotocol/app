@@ -10,6 +10,7 @@ import { truncateAddress } from '#/lib/utilities.ts'
 import GraySpinner from '../loaders/gray-spinner.tsx'
 import PrimaryButton from '../buttons/primary-button.tsx'
 import LoadingSpinner from '../loaders/loading-spinner.tsx'
+import { listOpAddListRecord } from '#/utils/list-ops.ts'
 
 export function Search({
   disabled,
@@ -153,7 +154,8 @@ export function Search({
               <div
                 key={result.name}
                 onClick={() => {
-                  if (isEditor && result.resolvedAddress) addToCart(result.resolvedAddress.id)
+                  if (isEditor && result.resolvedAddress)
+                    addToCart({ listOp: listOpAddListRecord(result.resolvedAddress.id) })
                   else
                     router.push(
                       `/${result.resolvedAddress?.id || (result.name[0] === '#' ? result.name.slice(1) : result.name)}${
@@ -238,7 +240,8 @@ export function Search({
                   <div
                     key={result.name}
                     onClick={() => {
-                      if (isEditor && result.resolvedAddress) addToCart(result.resolvedAddress.id)
+                      if (isEditor && result.resolvedAddress)
+                        addToCart({ listOp: listOpAddListRecord(result.resolvedAddress.id) })
                       else
                         router.push(
                           `/${
