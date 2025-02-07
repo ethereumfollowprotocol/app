@@ -19,7 +19,7 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
   const { address: userAddress } = useAccount()
   const { roles, selectedList } = useEFPProfile()
 
-  const { cart, addToCart } = useCart()
+  const { cart, addToCart, hasListOpRemoveRecord } = useCart()
   const topEightInCart = useMemo(
     () =>
       cart
@@ -38,10 +38,11 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
     const topEightRemoved = cart.filter(
       ({ listOp }) => listOp.opcode === 4 && isTagListOp(listOp) && extractAddressAndTag(listOp).tag === 'top8'
     )
-
-    return editedProfiles.length - topEightRemoved.length
-  }, [editedProfiles])
+    const removedProfiles = profiles.filter((profile) => hasListOpRemoveRecord(profile.address))
+    return editedProfiles.length - topEightRemoved.length - removedProfiles.length
+  }, [editedProfiles, cart])
   const isTopEightFull = currentTopEightLength >= 8
+  console.log(currentTopEightLength)
 
   useEffect(() => {
     setEditedProfiles([...profiles, ...topEightInCart])
@@ -80,8 +81,10 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
     if (!address) return { unresolved: true }
 
     const followState = await getFollowingState(address)
-    if (followState === 'none') addToCart({ listOp: listOpAddListRecord(address) })
-    addToCart({ listOp: listOpAddTag(address, 'top8') })
+
+    const addCartItems = [{ listOp: listOpAddTag(address, 'top8') }]
+    if (followState === 'none') addCartItems.push({ listOp: listOpAddListRecord(address) })
+    addToCart(addCartItems)
   }
 
   const [addProfileSearch, setAddProfileSearch] = useState('')
@@ -92,6 +95,7 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
     setAddProfileSearch('')
     const addedToCart = await addProfileToCart(addProfileSearch)
     if (addedToCart?.unresolved) toast.error(`${t('unresolved')} ${addProfileSearch}`)
+    setLoadingItems(0)
   }
 
   return {

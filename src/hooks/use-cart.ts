@@ -4,9 +4,9 @@ import type { Address } from 'viem'
 import { useCallback } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 
+import type { ListOp } from '#/types/list-op'
 import type { ImportPlatformType } from '#/types/common'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import type { ListOp, ListOpTagOpParams } from '#/types/list-op'
 import { extractAddressAndTag, isTagListOp, listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
 import { DAY } from '#/lib/constants'
 
@@ -38,35 +38,20 @@ export function useCart() {
     setCartState(payload)
   }
 
-  const addToCart = (payload: CartItemType) => {
-    const alreadyExists = cart.some((item) => item.listOp.data.toLowerCase() === payload.listOp.data.toLowerCase())
-    if (alreadyExists) return
-
-    setCartState([...cart, payload])
+  const addToCart = (payload: CartItemType[] | CartItemType) => {
+    const newItems = Array.isArray(payload)
+      ? payload.filter(
+          (item) => !cart.some((cartItem) => cartItem.listOp.data.toLowerCase() === item.listOp.data.toLowerCase())
+        )
+      : [payload]
+    setCartState([...cart, ...newItems])
   }
 
-  const addAddTagToCart = (payload: ListOpTagOpParams) => {
-    const newOp = listOpAddTag(payload.address, payload.tag)
-    const exists = cart.some(
-      (item) => item.listOp.opcode === 3 && item.listOp.data.toLowerCase() === newOp.data.toLowerCase()
-    )
-    if (exists) return
-
-    setCartState([...cart, { listOp: newOp }])
-  }
-
-  const addRemoveTagToCart = (payload: ListOpTagOpParams) => {
-    const newOp = listOpRemoveTag(payload.address, payload.tag)
-    const exists = cart.some(
-      (item) => item.listOp.opcode === 4 && item.listOp.data.toLowerCase() === newOp.data.toLowerCase()
-    )
-    if (exists) return
-
-    setCartState([...cart, { listOp: newOp }])
-  }
-
-  const removeFromCart = (payload: ListOp) => {
-    setCartState(cart.filter((item) => item.listOp.data.toLowerCase() !== payload.data.toLowerCase()))
+  const removeFromCart = (payload: ListOp | ListOp[]) => {
+    const filteredCart = Array.isArray(payload)
+      ? cart.filter((item) => !payload.some((op) => op.data.toLowerCase() === item.listOp.data.toLowerCase()))
+      : cart.filter((item) => item.listOp.data.toLowerCase() !== payload.data.toLowerCase())
+    setCartState(filteredCart)
   }
 
   const resetCart = () => {
@@ -121,8 +106,6 @@ export function useCart() {
     cart,
     setCart,
     addToCart,
-    addAddTagToCart,
-    addRemoveTagToCart,
     removeFromCart,
     resetCart,
     hasListOpAddRecord,

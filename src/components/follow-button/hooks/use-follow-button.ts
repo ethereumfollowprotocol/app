@@ -128,60 +128,53 @@ export const useFollowButton = ({ address, isBlockedBy }: { address: Address; is
     if (!roles?.isManager) return toast.error(t('not manager'))
 
     if (buttonState === 'Pending Block') {
-      if (followState === 'mutes') removeFromCart(listOpRemoveTag(address, 'mute'))
-      removeFromCart(listOpAddListRecord(address))
-      removeFromCart(listOpAddTag(address, 'block'))
+      const removeItems = [listOpAddListRecord(address), listOpAddTag(address, 'block')]
+      if (followState === 'mutes') removeItems.push(listOpRemoveTag(address, 'mute'))
+      removeFromCart(removeItems)
       return
     }
-    if (buttonState === 'Unblock') {
-      removeFromCart(listOpRemoveTag(address, 'block'))
-      removeFromCart(listOpRemoveListRecord(address))
-      return
-    }
+    if (buttonState === 'Unblock')
+      return removeFromCart([listOpRemoveTag(address, 'block'), listOpRemoveListRecord(address)])
 
     if (buttonState === 'Pending Mute') {
-      if (followState === 'blocks') removeFromCart(listOpRemoveTag(address, 'block'))
-      removeFromCart(listOpAddListRecord(address))
-      removeFromCart(listOpAddTag(address, 'mute'))
+      const removeItems = [listOpAddListRecord(address), listOpAddTag(address, 'mute')]
+      if (followState === 'blocks') removeItems.push(listOpRemoveTag(address, 'block'))
+      removeFromCart(removeItems)
       return
     }
-    if (buttonState === 'Unmute') {
-      removeFromCart(listOpRemoveTag(address, 'mute'))
-      removeFromCart(listOpRemoveListRecord(address))
-      return
-    }
+    if (buttonState === 'Unmute')
+      return removeFromCart([listOpRemoveListRecord(address), listOpRemoveTag(address, 'mute')])
 
     // remove address and tags for this address from cart if it's a pending follow
     if (buttonState === 'Pending Following') {
-      const addressTags = cart.filter((item) =>
-        isTagListOp(item.listOp) ? extractAddressAndTag(item.listOp).address === address : false
-      )
-      removeFromCart(listOpAddListRecord(address))
-      addressTags.flatMap((item) => removeFromCart(item.listOp))
+      const addressListOps = cart
+        .filter((item) => (isTagListOp(item.listOp) ? extractAddressAndTag(item.listOp).address === address : false))
+        .map((item) => item.listOp)
+      removeFromCart([listOpAddListRecord(address), ...addressListOps])
       return
     }
     // remove from cart if it's a pending unfollow
     if (buttonState === 'Unfollow') return removeFromCart(listOpRemoveListRecord(address))
 
     if (buttonState === 'Block') {
-      if (followState !== 'follows') addToCart({ listOp: listOpAddListRecord(address) })
-      return addToCart({ listOp: listOpAddTag(address, 'block') })
+      const addItems = [{ listOp: listOpAddTag(address, 'block') }]
+      if (followState !== 'follows') addItems.push({ listOp: listOpAddListRecord(address) })
+      console.log('addItems', addItems)
+      return addToCart(addItems)
     }
-    if (buttonState === 'Blocked') {
-      addToCart({ listOp: listOpRemoveListRecord(address) })
-      addToCart({ listOp: listOpRemoveTag(address, 'block') })
+
+    if (buttonState === 'Blocked')
+      return addToCart([{ listOp: listOpRemoveListRecord(address) }, { listOp: listOpRemoveTag(address, 'block') }])
+
+    if (buttonState === 'Mute') {
+      const addItems = [{ listOp: listOpRemoveTag(address, 'mute') }]
+      if (followState !== 'follows') addItems.push({ listOp: listOpRemoveListRecord(address) })
+      addToCart(addItems)
       return
     }
 
-    if (buttonState === 'Mute') {
-      if (followState !== 'follows') addToCart({ listOp: listOpRemoveListRecord(address) })
-      return addToCart({ listOp: listOpRemoveTag(address, 'mute') })
-    }
-    if (buttonState === 'Muted') {
-      addToCart({ listOp: listOpRemoveListRecord(address) })
-      addToCart({ listOp: listOpRemoveTag(address, 'mute') })
-      return
-    }
+    if (buttonState === 'Muted')
+      return addToCart([{ listOp: listOpRemoveListRecord(address) }, { listOp: listOpRemoveTag(address, 'mute') }])
 
     // add to cart if it's a follow
     if (buttonText === 'Follow') return addToCart({ listOp: listOpAddListRecord(address) })
