@@ -9,11 +9,11 @@ import { fetchFollowState } from 'ethereum-identity-kit'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { SECOND } from '#/lib/constants'
-import { useCart } from '#/hooks/use-cart'
 import { resolveEnsAddress } from '#/utils/ens'
 import { searchENSNames } from '#/api/search-ens-names'
 import { listOpAddListRecord } from '#/utils/list-ops.ts'
 import { formatError } from '#/utils/format/format-error'
+import { useCart, type CartItemType } from '#/hooks/use-cart'
 import { useEFPProfile } from '#/contexts/efp-profile-context.tsx'
 
 const useSearch = (isEditor?: boolean) => {
@@ -174,7 +174,7 @@ const useSearch = (isEditor?: boolean) => {
         const formatAddToCart = await Promise.all(namesToAdd.map(async (name) => await getProfileDetails(name)))
 
         const itemsToAdd = formatAddToCart.filter((item) => !!item?.payload).map((item) => item?.payload)
-        if (itemsToAdd.length > 0) addToCart(itemsToAdd)
+        if (itemsToAdd.length > 0) addToCart(itemsToAdd as CartItemType[])
 
         const namesInCart = formatAddToCart.filter((item) => item?.inCart).map((item) => item?.user)
         const alreadyFollowed = formatAddToCart.filter((item) => item?.isFollowing).map((item) => item?.user)
