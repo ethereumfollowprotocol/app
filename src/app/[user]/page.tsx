@@ -39,12 +39,14 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
 const UserPage = async (props: Props) => {
   const { user } = await props.params
+  const isList = Number.isInteger(Number(user)) && !(isAddress(user) || isHex(user))
+  const listNum = isList ? Number(user) : undefined
 
   const queryClient = new QueryClient()
 
   await queryClient.prefetchQuery({
     queryKey: ['profile', user, false],
-    queryFn: () => (user ? fetchProfileDetails(user as string) : null),
+    queryFn: () => (user ? fetchProfileDetails(user as string, listNum) : null),
     staleTime: 3 * MINUTE,
   })
 
