@@ -153,7 +153,7 @@ export const useRecommendedProfilesCards = () => {
     })
     setDidSwipeBack(false)
     gone.add(gone.size)
-  }, [gone, fetchNextPage, cardsApi, isLoading, recommendedProfiles])
+  }, [gone, fetchNextPage, cardsApi, isLoading, recommendedProfiles, cart])
 
   const onSwipeBack = useCallback(() => {
     if (didSwipeBack) return
@@ -174,7 +174,7 @@ export const useRecommendedProfilesCards = () => {
         return to()
       }
     })
-  }, [gone, cardsApi, cartAddresses, recommendedProfiles, didSwipeBack])
+  }, [gone, cardsApi, cartAddresses, recommendedProfiles, didSwipeBack, cart])
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
