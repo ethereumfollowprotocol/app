@@ -13,6 +13,7 @@ import { fetchFollowingTags, nullFollowingTags } from '#/api/following/fetch-fol
 
 const useUser = (user: string) => {
   const [fetchFreshProfile, setFetchFreshProfile] = useState(false)
+  const [fetchFreshStats, setFetchFreshStats] = useState(false)
   const [followingSearch, setFollowingSearch] = useState<string>('')
   const [followersSearch, setFollowersSearch] = useState<string>('')
   const [followingTagsFilter, setFollowingTagsFilter] = useState<string[]>([])
@@ -135,12 +136,13 @@ const useUser = (user: string) => {
     data: stats,
     isLoading: statsIsLoading,
     isRefetching: isRefetchingStatsQuery,
+    refetch: refetchStats,
   } = useQuery({
-    queryKey: ['stats', user],
+    queryKey: ['stats', user, fetchFreshStats],
     queryFn: async () => {
       if (!isValidUser) return null
 
-      const fetchedStats = await fetchProfileStats(user, listNum)
+      const fetchedStats = await fetchProfileStats(user, listNum, fetchFreshStats)
 
       return fetchedStats
     },
@@ -241,6 +243,9 @@ const useUser = (user: string) => {
     refetchProfile,
     fetchFreshProfile,
     setFetchFreshProfile,
+    refetchStats,
+    fetchFreshStats,
+    setFetchFreshStats,
   }
 }
 

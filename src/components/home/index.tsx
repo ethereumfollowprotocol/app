@@ -28,6 +28,9 @@ const Home = () => {
     fetchFreshProfile,
     followersIsLoading,
     setFetchFreshProfile,
+    setFetchFreshStats,
+    refetchStats,
+    fetchFreshStats,
   } = useEFPProfile()
   const router = useRouter()
   const { t } = useTranslation()
@@ -55,7 +58,10 @@ const Home = () => {
             profile={profile}
             isStatsLoading={statsIsLoading}
             isLoading={profileIsLoading}
-            refetchProfile={() => refetchState(fetchFreshProfile, setFetchFreshProfile, refetchProfile)}
+            refetchProfile={() => {
+              refetchState(fetchFreshProfile, setFetchFreshProfile, refetchProfile)
+              refetchState(fetchFreshStats, setFetchFreshStats, refetchStats)
+            }}
             showMoreOptions={true}
             openBlockModal={() => {
               if (profile)

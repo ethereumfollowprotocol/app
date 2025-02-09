@@ -31,6 +31,9 @@ export const useUserInfo = (user: string) => {
   const refetchProfile = () => {
     if (selectedData.fetchFreshProfile) selectedData.refetchProfile()
     else selectedData.setFetchFreshProfile(true)
+
+    if (selectedData.fetchFreshStats) selectedData.refetchStats()
+    else selectedData.setFetchFreshStats(true)
   }
 
   return {

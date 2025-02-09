@@ -245,9 +245,9 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     },
     staleTime: Infinity,
     refetchOnWindowFocus: false,
-    meta: {
-      persist: true,
-    },
+    // meta: {
+    //   persist: true,
+    // },
   })
 
   const {
@@ -264,9 +264,9 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       return fetchedStats
     },
     refetchOnWindowFocus: false,
-    meta: {
-      persist: true,
-    },
+    // meta: {
+    //   persist: true,
+    // },
   })
 
   const [isEndOfFollowing, setIsEndOfFollowing] = useState(false)

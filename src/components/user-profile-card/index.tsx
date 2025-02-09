@@ -28,6 +28,7 @@ interface UserProfileCardProps {
   openListSettingsModal?: () => void
   isRecommended?: boolean
   refetchProfile?: () => void
+  refetchStats?: () => void
   openQrCodeModal?: () => void
   displayAchievements?: boolean
 }
@@ -44,6 +45,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   openListSettingsModal,
   isRecommended,
   refetchProfile,
+  refetchStats,
   openQrCodeModal,
   isStatsLoading,
   displayAchievements = true,
@@ -84,6 +86,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           options={{
             profileData: profile,
             statsData: stats,
+            refetchStatsData: refetchStats,
             refetchProfileData: refetchProfile,
             prefetchedStatsLoading: isStatsLoading,
             nameMenu: (
