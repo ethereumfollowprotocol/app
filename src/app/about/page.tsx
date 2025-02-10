@@ -9,15 +9,15 @@ export const metadata: Metadata = {
     title: 'About | EFP',
     siteName: 'About - Ethereum Follow Protocol',
     description: 'Discover what Ethereum Follow Protocol is all about',
-    url: 'https://ethfollow.xyz/about',
+    url: 'https://efp.app/about',
     images: [
       {
-        url: 'https://ethfollow.xyz/assets/banners/about.png',
+        url: 'https://efp.app/assets/banners/about.png',
       },
     ],
   },
   twitter: {
-    images: 'https://ethfollow.xyz/assets/banners/about.png',
+    images: 'https://efp.app/assets/banners/about.png',
   },
 }
 

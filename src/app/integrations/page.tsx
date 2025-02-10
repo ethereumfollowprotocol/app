@@ -9,15 +9,15 @@ export const metadata: Metadata = {
     title: 'Integrations | EFP',
     siteName: 'Integrations - Ethereum Follow Protocol',
     description: 'Integrate Ethereum Follow Protocol with your favorite apps',
-    url: 'https://ethfollow.xyz/integrations',
+    url: 'https://efp.app/integrations',
     images: [
       {
-        url: 'https://ethfollow.xyz/assets/banners/integrations.png',
+        url: 'https://efp.app/assets/banners/integrations.png',
       },
     ],
   },
   twitter: {
-    images: 'https://ethfollow.xyz/assets/banners/integrations.png',
+    images: 'https://efp.app/assets/banners/integrations.png',
   },
 }
 

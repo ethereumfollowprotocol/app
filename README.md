@@ -4,8 +4,8 @@
 <br />
 
 <p align="center">
-  <a href="https://ethfollow.xyz" target="_blank" rel="noopener noreferrer">
-    <img width="275" src="https://docs.ethfollow.xyz/logo.png" alt="EFP logo" />
+  <a href="https://efp.app" target="_blank" rel="noopener noreferrer">
+    <img width="275" src="https://docs.efp.app/logo.png" alt="EFP logo" />
   </a>
 </p>
 
@@ -23,13 +23,13 @@ The Ethereum Follow Protocol (EFP) is a native Ethereum protocol designed for fo
 
 ## Important Links
 
-- **Documentation**: [docs.ethfollow.xyz](https://docs.ethfollow.xyz)
+- **Documentation**: [docs.efp.app](https://docs.efp.app)
 - **Follow us on 𝕏**: [@efp](https://x.com/efp)
-- **Join our Discord**: [Discord](https://discord.ethfollow.xyz)
+- **Join our Discord**: [Discord](https://discord.efp.app)
 
 ## Important links
 
-- Documentation: [**docs.ethfollow.xyz**](https://docs.ethfollow.xyz)
+- Documentation: [**docs.efp.app**](https://docs.efp.app)
 
 ## Getting started with development
 
@@ -80,6 +80,6 @@ For any inquiries, please contact the project maintainer at [encrypted@ethfollow
 
 ---
 
-Follow [**@efp**](https://x.com/efp) on **𝕏** for updates and join the [**Discord**](https://discord.ethfollow.xyz) to get involved.
+Follow [**@efp**](https://x.com/efp) on **𝕏** for updates and join the [**Discord**](https://discord.efp.app) to get involved.
 
 This README provides a comprehensive overview of the Ethereum Follow Protocol Web App, including setup instructions, important links, and contribution guidelines. Feel free to reach out if you have any questions or need further assistance.

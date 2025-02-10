@@ -37,7 +37,7 @@ const connectors = connectorsForWallets(
     projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
     appDescription: APP_DESCRIPTION,
     appUrl: APP_URL,
-    appIcon: 'https://ethfollow.xyz/logo.png',
+    appIcon: 'https://efp.app/logo.png',
   }
 )
 

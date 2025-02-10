@@ -55,7 +55,7 @@ export async function GET(req: NextRequest) {
             alt='avatar'
             width='100'
             height='100'
-            src={`${fetchedAvatar || 'https://testing.ethfollow.xyz/assets/gradient-circle.svg'}`}
+            src={`${fetchedAvatar || 'https://efp.app/assets/gradient-circle.svg'}`}
             style={{
               borderRadius: 50,
               margin: 0,
@@ -157,7 +157,7 @@ export async function GET(req: NextRequest) {
           >
             Profile
           </p>
-          <img alt='avatar' width='150' src='https://ethfollow.xyz/assets/logo-full.svg' />
+          <img alt='avatar' width='150' src='https://efp.app/assets/logo-full.svg' />
         </div>
       </div>
     ),

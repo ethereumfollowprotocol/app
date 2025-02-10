@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { isAddress, isHex } from 'viem'
-import { fetchProfileDetails } from 'ethereum-identity-kit'
+import { fetchProfileDetails, fetchProfileStats } from 'ethereum-identity-kit'
 
 import { MINUTE } from '#/lib/constants'
 import UserInfo from './components/user-info'
@@ -24,15 +24,15 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       title: `${displayUser} | EFP`,
       siteName: `${displayUser} - EFP profile`,
       description: `${displayUser} - EFP profile`,
-      url: `https://ethfollow.xyz/${user}`,
+      url: `https://efp.app/${user}`,
       images: [
         {
-          url: `https://ethfollow.xyz/og?user=${user}`,
+          url: `https://efp.app/og?user=${user}`,
         },
       ],
     },
     twitter: {
-      images: `https://ethfollow.xyz/og?user=${user}`,
+      images: `https://efp.app/og?user=${user}`,
     },
   }
 }
@@ -47,6 +47,12 @@ const UserPage = async (props: Props) => {
   await queryClient.prefetchQuery({
     queryKey: ['profile', user, false],
     queryFn: () => (user ? fetchProfileDetails(user as string, listNum) : null),
+    staleTime: 3 * MINUTE,
+  })
+
+  await queryClient.prefetchQuery({
+    queryKey: ['stats', user, false],
+    queryFn: () => (user ? fetchProfileStats(user as string, listNum) : null),
     staleTime: 3 * MINUTE,
   })
 

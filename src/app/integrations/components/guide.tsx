@@ -10,13 +10,13 @@ const RESOURCES = [
   {
     name: 'Docs',
     icon: <BsBook />,
-    href: 'https://docs.ethfollow.xyz',
+    href: 'https://docs.efp.app',
     className: 'bg-followButton/90 text-darkGrey',
   },
   {
     name: 'API',
     icon: <AiOutlineApi />,
-    href: 'https://docs.ethfollow.xyz/api/',
+    href: 'https://docs.efp.app/api/',
     className: 'bg-[#FFC7E9] text-darkGrey',
   },
   {

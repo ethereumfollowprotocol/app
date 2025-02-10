@@ -109,7 +109,7 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
         )}
         <CopyValue value={address} text='copy address' />
         <CopyValue
-          value={`https://ethfollow.xyz/${
+          value={`https://efp.app/${
             profileList ? (profileList === Number(primaryList) ? address : profileList) : address
           }`}
           text='copy profile'

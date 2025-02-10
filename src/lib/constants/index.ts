@@ -79,17 +79,17 @@ export const EXTERNAL_LINKS = [
   },
   {
     text: 'docs',
-    href: 'https://docs.ethfollow.xyz/intro',
+    href: 'https://docs.efp.app/intro',
     target: '_blank',
   },
   {
     text: 'faq',
-    href: 'https://docs.ethfollow.xyz/faq',
+    href: 'https://docs.efp.app/faq',
     target: '_blank',
   },
   {
     text: 'bug bounty',
-    href: 'https://docs.ethfollow.xyz/bugbounty',
+    href: 'https://docs.efp.app/bugbounty',
     target: '_blank',
   },
   {

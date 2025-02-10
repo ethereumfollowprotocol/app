@@ -7,15 +7,15 @@ export const metadata: Metadata = {
     title: 'Swipe | EFP',
     siteName: 'Swipe - Ethereum Follow Protocol',
     description: 'Discover the team behind Ethereum Follow Protocol',
-    url: 'https://ethfollow.xyz/swipe',
+    url: 'https://efp.app/swipe',
     images: [
       {
-        url: 'https://ethfollow.xyz/assets/banners/swipe.png',
+        url: 'https://efp.app/assets/banners/swipe.png',
       },
     ],
   },
   twitter: {
-    images: 'https://ethfollow.xyz/assets/banners/swipe.png',
+    images: 'https://efp.app/assets/banners/swipe.png',
   },
 }
 

@@ -193,5 +193,9 @@ export default {
         '.content-visible': { 'content-visibility': 'visible' },
       })
     }),
+    /** @type {import('tailwindcss/types/config').PluginCreator} */
+    ({ addVariant }: any) => {
+      addVariant('starting', '@starting-style')
+    },
   ],
 } satisfies Config

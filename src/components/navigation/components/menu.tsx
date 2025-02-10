@@ -1,5 +1,6 @@
 'use client'
 
+import clsx from 'clsx'
 import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 import { useState, type Dispatch, type SetStateAction } from 'react'
@@ -23,10 +24,13 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
 
   const { t } = useTranslation()
 
-  if (!open) return null
-
   return (
-    <div className='bg-neutral w-[244px] h-fit nav-menu -z-20 overflow-x-hidden lg:overflow-visible shadow-md border-[3px] transition-all rounded-xl lg:rounded-md border-grey pb-6 lg:pb-0 lg:pt-8 absolute bottom-6 lg:top-5 flex flex-col items-end right-0'>
+    <div
+      className={clsx(
+        'bg-neutral w-[244px] h-fit nav-menu -z-20 overflow-x-hidden lg:overflow-visible transition-discrete starting:translate-y-full lg:starting:-translate-y-full shadow-md border-[3px] transition-all rounded-xl lg:rounded-md border-grey pb-6 lg:pb-0 lg:pt-8 absolute bottom-6 lg:top-5 flex-col items-end right-0',
+        open ? 'flex' : 'hidden translate-x-4'
+      )}
+    >
       <div
         className={cn(
           'flex flex-col w-full transition-all overflow-x-visible max-h-[80vh] lg:h-auto p-1',

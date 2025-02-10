@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-export const metadataBaseUrl = new URL('https://ethfollow.xyz')
+export const metadataBaseUrl = new URL('https://efp.app')
 
 export const metadataTitle = 'Ethereum Follow Protocol'
 export const metadataSiteName = 'Ethereum Follow Protocol'
@@ -9,7 +9,7 @@ export const metadataDescription = "It's about who you know. The social graph fo
 export const sharedMetadataIcons: Metadata['icons'] = [
   {
     rel: 'icon',
-    url: 'https://ethfollow.xyz/assets/favicon.ico',
+    url: 'https://efp.app/assets/favicon.ico',
   },
 ]
 
@@ -19,11 +19,11 @@ export const sharedMetadataOpenGraph: Metadata['openGraph'] = {
   description: metadataDescription,
   locale: 'en_US',
   siteName: metadataSiteName,
-  url: 'https://ethfollow.xyz',
+  url: 'https://efp.app',
   emails: ['contact@ethfollow.xyz'],
   // images: [
   //   {
-  //     url: 'https://ethfollow.xyz/assets/banner.png'
+  //     url: 'https://efp.app/assets/banner.png'
   //   }
   // ]
 }
@@ -33,7 +33,7 @@ export const sharedMetadataTwitter: Metadata['twitter'] = {
   site: '@efp',
   creator: '@efp',
   description: metadataDescription,
-  // images: 'https://ethfollow.xyz/assets/banner.png'
+  // images: 'https://efp.app/assets/banner.png'
 }
 
 export const sharedMetadata: Metadata = {
@@ -45,7 +45,7 @@ export const sharedMetadata: Metadata = {
   openGraph: sharedMetadataOpenGraph,
   authors: {
     name: 'Ethereum Follow Protocol',
-    url: 'https://ethfollow.xyz',
+    url: 'https://efp.app',
   },
   robots: {
     index: true,

@@ -91,7 +91,7 @@ const nextConfig = {
     },
     {
       source: '/(docs|documentation)',
-      destination: 'https://docs.ethfollow.xyz/intro',
+      destination: 'https://docs.efp.app/intro',
       permanent: true,
     },
     {

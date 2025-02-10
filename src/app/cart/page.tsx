@@ -7,15 +7,15 @@ export const metadata: Metadata = {
     title: 'Cart | EFP',
     siteName: 'Cart - Ethereum Follow Protocol',
     description: 'Confirm your changes on chain',
-    url: 'https://ethfollow.xyz/cart',
+    url: 'https://efp.app/cart',
     images: [
       {
-        url: 'https://ethfollow.xyz/assets/banners/editor.png',
+        url: 'https://efp.app/assets/banners/editor.png',
       },
     ],
   },
   twitter: {
-    images: 'https://ethfollow.xyz/assets/banners/editor.png',
+    images: 'https://efp.app/assets/banners/editor.png',
   },
 }
 
