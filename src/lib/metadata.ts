@@ -21,11 +21,6 @@ export const sharedMetadataOpenGraph: Metadata['openGraph'] = {
   siteName: metadataSiteName,
   url: 'https://efp.app',
   emails: ['contact@ethfollow.xyz'],
-  // images: [
-  //   {
-  //     url: 'https://efp.app/assets/banner.png'
-  //   }
-  // ]
 }
 
 export const sharedMetadataTwitter: Metadata['twitter'] = {
@@ -33,7 +28,6 @@ export const sharedMetadataTwitter: Metadata['twitter'] = {
   site: '@efp',
   creator: '@efp',
   description: metadataDescription,
-  // images: 'https://efp.app/assets/banner.png'
 }
 
 export const sharedMetadata: Metadata = {

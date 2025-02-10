@@ -18,11 +18,6 @@ body {
 }
 
 body {
-  /* background-repeat: no-repeat;
-  background-position: -34.1vw -34vw;
-  background-size: 210vw 129vw;
-  background-attachment: fixed; */
-  /* background-image: url("/assets/art/waves-background.svg"); */
   @apply text-text bg-neutral;
 }
 
