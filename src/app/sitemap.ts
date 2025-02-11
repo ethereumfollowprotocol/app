@@ -25,7 +25,7 @@ const sitemap = (): MetadataRoute.Sitemap => {
     url: `${SITE_URL}/${route}`,
     lastModified: new Date(),
     changeFrequency: 'daily',
-    priority: 0.7,
+    priority: route === '' ? 1 : 0.7,
   }))
 }
 
