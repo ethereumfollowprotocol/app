@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import CartItemsList from './cart-items-list'
 import { useCart } from '#/hooks/use-cart'
-import FarcasterIcon from 'public/assets/icons/farcaster.svg'
+import FarcasterIcon from 'public/assets/icons/socials/farcaster.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 interface CartItemsProps {
@@ -51,11 +51,11 @@ const CartItems = ({ setClearCartModalOpen, containerRef }: CartItemsProps) => {
 
   return (
     <>
-      <div className='flex justify-between gap-2 flex-row items-center px-2'>
-        <h3 className='font-bold text-left text-xl sm:text-3xl xxs:w-2/3'>{t('cart unc-changes')}</h3>
+      <div className='flex flex-row items-center justify-between gap-2 px-2'>
+        <h3 className='xxs:w-2/3 text-left text-xl font-bold sm:text-3xl'>{t('cart unc-changes')}</h3>
         {totalCartItems > 0 && (
           <button
-            className='flex gap-2 cursor-pointer hover:scale-110 transition-transform items-center hover:opacity-80'
+            className='flex cursor-pointer items-center gap-2 transition-transform hover:scale-110 hover:opacity-80'
             onClick={() => setClearCartModalOpen(true)}
           >
             <p className='font-bold text-nowrap'>{t('clear cart')}</p>
@@ -64,7 +64,7 @@ const CartItems = ({ setClearCartModalOpen, containerRef }: CartItemsProps) => {
         )}
       </div>
       {totalCartItems === 0 && (
-        <div className='font-bold h-28 xl:h-[86vh] px-4 justify-center flex text-lg items-center italic'>
+        <div className='flex h-28 items-center justify-center px-4 text-lg font-bold italic xl:h-[86vh]'>
           {t('empty cart')}
         </div>
       )}

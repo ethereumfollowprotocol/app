@@ -37,31 +37,30 @@ const TableRow: React.FC<TableRowProps> = ({
   const rankedAs = rank === 0 ? 'no-rank' : rank <= 3 ? 'top-three' : rank <= 10 ? 'top-ten' : 'regular'
 
   const rankNumber = {
-    'no-rank': <p className='text-2xl sm:text-3xl font-bold w-min mx-auto'>-</p>,
+    'no-rank': <p className='mx-auto w-min text-2xl font-bold sm:text-3xl'>-</p>,
     'top-three': (
       <p
-        className={`text-2xl xxs:text-3xl sm:text-4xl md:text-5xl ${
+        className={`xxs:text-3xl text-2xl sm:text-4xl md:text-5xl ${
           {
             1: 'first-place',
             2: 'second-place',
             3: 'third-place',
           }[rank]
-        }
-        `}
+        } `}
       >
         {rank}
       </p>
     ),
-    'top-ten': <p className='text-2xl xxs:text-3xl sm:text-4xl md:text-5xl font-bold w-min mx-auto'>{rank}</p>,
+    'top-ten': <p className='xxs:text-3xl mx-auto w-min text-2xl font-bold sm:text-4xl md:text-5xl'>{rank}</p>,
     regular: (
       <p
         className={`text ${
           rank >= 10000
-            ? 'text-xs xxs:text-sm sm:text-lg'
+            ? 'xxs:text-sm text-xs sm:text-lg'
             : rank >= 1000
-              ? 'text-sm xxs:text-base sm:text-xl'
+              ? 'xxs:text-base text-sm sm:text-xl'
               : 'xxs:text-xl sm:text-2xl'
-        } font-bold w-min mx-auto`}
+        } mx-auto w-min font-bold`}
       >
         {formatNumber(rank)}
       </p>
@@ -75,8 +74,8 @@ const TableRow: React.FC<TableRowProps> = ({
 
   return (
     <div className='flex flex-col'>
-      <div className='flex items-center w-full gap-3 p-2 pr-1.5 sm:p-4 xl:py-2 2xl:py-4  hover:bg-text/5 rounded-xl sm:gap-6 md:gap-8 h-[66px] 2xl:h-[76px]'>
-        <div className='tabular-nums min-w-4 w-4 xxs:min-w-6 xxs:w-6 sm:w-10 flex justify-center text-right'>
+      <div className='hover:bg-text/5 flex h-[66px] w-full items-center gap-3 rounded-xl p-2 pr-1.5 sm:gap-6 sm:p-4 md:gap-8 xl:py-2 2xl:h-[76px] 2xl:py-4'>
+        <div className='xxs:min-w-6 xxs:w-6 flex w-4 min-w-4 justify-center text-right tabular-nums sm:w-10'>
           {rankNumber}
         </div>
         <Name address={address} name={name} avatar={avatar} followerTag={followerTag} />

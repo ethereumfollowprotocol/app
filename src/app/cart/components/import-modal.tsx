@@ -10,7 +10,7 @@ import useImportModal from '../hooks/use-import-modal'
 import type { ImportPlatformType } from '#/types/common'
 import { formatNumber } from '#/utils/format/format-number'
 import LoadingCell from '#/components/loaders/loading-cell'
-import FarcasterIcon from 'public/assets/icons/farcaster.svg'
+import FarcasterIcon from 'public/assets/icons/socials/farcaster.svg'
 import CancelButton from '#/components/buttons/cancel-button'
 import PrimaryButton from '#/components/buttons/primary-button'
 
@@ -36,13 +36,13 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
 
   return (
     <Modal onCancel={onClose}>
-      <div className='w-full sm:w-[540px] sm:p-0 p-2 flex flex-col gap-6'>
-        <div className='w-full gap-2 flex justify-between items-center'>
+      <div className='flex w-full flex-col gap-6 p-2 sm:w-[540px] sm:p-0'>
+        <div className='flex w-full items-center justify-between gap-2'>
           <p className='text-xl font-bold'>
             {t('import title')}&nbsp;
             <span className='capitalize'>{platform}</span>
           </p>
-          <Image src={FarcasterIcon} alt='Import from Farcaster' className='rounded-lg' width={30} />
+          <Image src={FarcasterIcon} alt='Import from Farcaster' className='rounded-sm' width={30} />
         </div>
         <div className='relative w-full'>
           <input
@@ -54,17 +54,17 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
             value={currHandle}
             placeholder={`${t('enter')} ${platform[0]?.toUpperCase()}${platform.slice(1)} Name`}
             onChange={(e) => setCurrHandle(e.target.value)}
-            className='h-12 block pr-12 w-full truncate font-medium rounded-xl border-[3px] border-grey pl-4 sm:text-sm bg-neutral/60'
+            className='border-grey bg-neutral/60 block h-12 w-full truncate rounded-xl border-[3px] pr-12 pl-4 font-medium sm:text-sm'
           />
-          <div className='absolute w-8 rounded-lg right-2 top-2 h-8 flex justify-center items-center bg-grey'>
+          <div className='bg-grey absolute top-2 right-2 flex h-8 w-8 items-center justify-center rounded-sm'>
             <FiSearch />
           </div>
         </div>
         {socialProfile || (isSocialProfileLoading && currHandle.length > 0) ? (
           <div className='flex flex-col gap-6'>
-            <div className='flex justify-center gap-3 items-center'>
+            <div className='flex items-center justify-center gap-3'>
               {isSocialProfileLoading ? (
-                <LoadingCell className='rounded-full h-[50px] w-[50px]' />
+                <LoadingCell className='h-[50px] w-[50px] rounded-full' />
               ) : (
                 <Avatar
                   name={socialProfile?.profileName || socialProfile?.userAddress || ''}
@@ -74,50 +74,50 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
               )}
               <div className='flex flex-col items-start'>
                 {isSocialProfileLoading ? (
-                  <LoadingCell className='rounded-lg h-7 w-40' />
+                  <LoadingCell className='h-7 w-40 rounded-sm' />
                 ) : (
                   <p className='text-lg font-bold'>
                     @{socialProfile?.profileName || truncateAddress(socialProfile?.userAddress)}
                   </p>
                 )}
-                <p className='font-medium text-text/70 capitalize'>{platform} Name</p>
+                <p className='text-text/70 font-medium capitalize'>{platform} Name</p>
               </div>
             </div>
-            <div className='bg-neutral/90 rounded-lg text-text/70 flex flex-col gap-4 p-4'>
-              <div className='w-full flex justify-between items-center'>
-                <p className=' text-xs xxs:text-sm font-medium'>
+            <div className='bg-neutral/90 text-text/70 flex flex-col gap-4 rounded-sm p-4'>
+              <div className='flex w-full items-center justify-between'>
+                <p className='xxs:text-sm text-xs font-medium'>
                   {t('follow on')} <span className='capitalize'>{platform}</span>
                 </p>
                 {isFollowingsLoading || isSocialProfileLoading ? (
                   <LoadingCell className='h-5 w-24 rounded-md' />
                 ) : (
-                  <p className='text-xs xxs:text-sm font-medium'>
+                  <p className='xxs:text-sm text-xs font-medium'>
                     {formatNumber(followings.length)} {t('accounts')}
                   </p>
                 )}
               </div>
-              <div className='w-full flex justify-between items-center'>
-                <p className='text-xs xxs:text-sm font-medium'>{t('follow on efp')}</p>
+              <div className='flex w-full items-center justify-between'>
+                <p className='xxs:text-sm text-xs font-medium'>{t('follow on efp')}</p>
                 {isFollowingsLoading || isSocialProfileLoading ? (
                   <LoadingCell className='h-5 w-24 rounded-md' />
                 ) : (
-                  <p className='text-xs xxs:text-sm font-medium'>
+                  <p className='xxs:text-sm text-xs font-medium'>
                     -{formatNumber(alreadyFollow.length)} {t('accounts')}
                   </p>
                 )}
               </div>
-              <div className='w-full flex justify-between items-center text-text/90'>
-                <p className='text-sm xxs:text-base sm:text-lg font-bold'>{t('to add')}</p>
+              <div className='text-text/90 flex w-full items-center justify-between'>
+                <p className='xxs:text-base text-sm font-bold sm:text-lg'>{t('to add')}</p>
                 {isFollowingsLoading || isSocialProfileLoading ? (
                   <LoadingCell className='h-5 w-24 rounded-md' />
                 ) : (
-                  <p className='text-sm xxs:text-base sm:text-lg font-bold'>
+                  <p className='xxs:text-base text-sm font-bold sm:text-lg'>
                     {formatNumber(followings.length - alreadyFollow.length)} {t('accounts')}
                   </p>
                 )}
               </div>
-              <div className='flex items-center w-full justify-between gap-3 sm:gap-5'>
-                <p className='text-lg font-bold text-start max-w-[75%]'>{t('Only import accounts with an ENS name')}</p>
+              <div className='flex w-full items-center justify-between gap-3 sm:gap-5'>
+                <p className='max-w-[75%] text-start text-lg font-bold'>{t('Only import accounts with an ENS name')}</p>
                 <input
                   className='toggle'
                   type='checkbox'
@@ -128,11 +128,11 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
             </div>
           </div>
         ) : (
-          <div className='h-[274px] sm:h-[256px] w-full justify-center flex items-center font-bold'>
+          <div className='flex h-[274px] w-full items-center justify-center font-bold sm:h-[256px]'>
             {t('no profile')}
           </div>
         )}
-        <div className='w-full flex items-center justify-between'>
+        <div className='flex w-full items-center justify-between'>
           <CancelButton onClick={onClose} />
           <PrimaryButton
             label={t('add')}
@@ -140,7 +140,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
               onAddFollowings()
               onClose()
             }}
-            className='py-[10px] w-32'
+            className='w-32 py-[10px]'
             disabled={isFollowingsLoading || followings.length === 0 || alreadyFollow.length === followings.length}
           />
         </div>

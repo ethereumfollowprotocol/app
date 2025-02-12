@@ -75,7 +75,7 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
   }, [handleWheel])
 
   return (
-    <div className={`flex flex-col w-full ${listClassName}`}>
+    <div className={`flex w-full flex-col ${listClassName}`}>
       {isLoading ? (
         new Array(loadingRows).fill(1).map((_, i) => <LoadingRow key={i} showTags={showTags} />)
       ) : (
@@ -83,12 +83,12 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
           {isCreatingNewList && (
             <div
               key={'new list'}
-              className='flex w-[350px] sm:w-full items-center hover:bg-list ounded-xl gap-2 2xl:p-4 p-1.5 sm:p-2 sm:gap-3'
+              className='hover:bg-list ounded-xl flex w-[350px] items-center gap-2 p-1.5 sm:w-full sm:gap-3 sm:p-2 2xl:p-4'
             >
-              <Image src={EFPLogo} alt='EFP List' className='rounded-full h-[45px] w-[45px] md:h-[50px] md:w-[50px]' />
+              <Image src={EFPLogo} alt='EFP List' className='h-[45px] w-[45px] rounded-full md:h-[50px] md:w-[50px]' />
               <div className='flex flex-col md:flex-row md:items-center'>
-                <p className='text-lg font-bold w-fit sm:w-56 text-left'>{t('mint name')}</p>
-                <p className='font-bold text-sm sm:text-base text-left italic text-text/80'>{t('mint description')}</p>
+                <p className='w-fit text-left text-lg font-bold sm:w-56'>{t('mint name')}</p>
+                <p className='text-text/80 text-left text-sm font-bold italic sm:text-base'>{t('mint description')}</p>
               </div>
             </div>
           )}
@@ -134,7 +134,7 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
               canEditTags={true}
               profiles={profiles}
               isLoading={isLoading}
-              className='gap-4 2xl:gap-5 pb-4'
+              className='gap-4 pb-4 2xl:gap-5'
             />
           )}
         </>

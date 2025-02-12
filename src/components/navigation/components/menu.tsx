@@ -8,9 +8,9 @@ import { useState, type Dispatch, type SetStateAction } from 'react'
 import { cn } from '#/lib/utilities'
 import { socials } from '#/components/footer'
 import { EXTERNAL_LINKS } from '#/lib/constants'
+import VolumeSwitcher from '../../volume-switcher'
 import LanguageSelector from '../../language-selector'
-import VolumeSwitcher, { volumeOptions } from '../../volume-switcher'
-import ThemeSwitcher, { themesWithIcons } from '#/components/theme-switcher'
+import ThemeSwitcher from '#/components/theme-switcher'
 
 interface MenuProps {
   open: boolean
@@ -23,29 +23,20 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
   const [languageMenOpenu, setLanguageMenuOpen] = useState(false)
 
   const { t } = useTranslation()
+  const isExtraMenuOpen = languageMenOpenu || themeMenuOpen || volumeMenuOpen
 
   return (
     <div
       className={clsx(
-        'bg-neutral w-[244px] h-fit nav-menu -z-20 overflow-x-hidden lg:overflow-visible transition-discrete starting:translate-y-full lg:starting:-translate-y-full shadow-md border-[3px] transition-all rounded-xl lg:rounded-md border-grey pb-6 lg:pb-0 lg:pt-8 absolute bottom-6 lg:top-5 flex-col items-end right-0',
-        open ? 'flex' : 'hidden translate-x-4'
+        open ? 'flex' : 'hidden',
+        'absolute -top-full left-full z-50 overflow-hidden pt-1 pl-4 group-hover/hamburger:flex sm:overflow-visible'
       )}
     >
       <div
         className={cn(
-          'flex flex-col w-full transition-all overflow-x-visible max-h-[80vh] lg:h-auto p-1',
-          languageMenOpenu || themeMenuOpen || volumeMenuOpen ? '-translate-x-[244px] lg:translate-x-0' : ''
+          isExtraMenuOpen && '-translate-x-[244px] lg:translate-x-0',
+          'bg-neutral flex max-h-[80vh] w-full flex-col overflow-x-visible p-1 shadow-xl transition-all lg:h-auto'
         )}
-        style={{
-          height: languageMenOpenu
-            ? // ? `${(LANGUAGES.length || 0) * 56 + 111}px`
-              'auto'
-            : themeMenuOpen
-              ? `${(themesWithIcons.length || 0) * 56 + 56}px`
-              : volumeMenuOpen
-                ? `${(volumeOptions.length || 0) * 56 + 56}px`
-                : 'auto',
-        }}
       >
         <ThemeSwitcher
           setExternalThemeMenuOpen={setThemeMenuOpen}
@@ -69,19 +60,19 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
             href={link.href}
             target={link.target}
             onClick={() => setOpen(false)}
-            className='capitalize block transition-colors p-3 w-full rounded-md hover:bg-navItem text-text font-bold'
+            className='hover:bg-navItem text-text block w-full rounded-md p-3 font-bold capitalize transition-colors'
           >
             <p className='text-end'>{t(link.text)}</p>
           </Link>
         ))}
-        <div className='flex items-center w-full justify-between p-3'>
+        <div className='flex w-full items-center justify-between p-3'>
           {socials.map((item) => (
             <a
               target='_blank'
               rel='noreferrer'
               key={item.text}
               href={item.href}
-              className='hover:scale-125 text-3xl transition-transform'
+              className='text-3xl transition-transform hover:scale-125'
             >
               {item.icon}
             </a>

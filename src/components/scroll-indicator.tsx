@@ -20,12 +20,12 @@ const ScrollIndicator = () => {
 
   return (
     <div
-      className='scroll-indicator xl:block hidden transition-opacity'
+      className='scroll-indicator hidden transition-opacity xl:block'
       style={{
         opacity: hideIndicator ? 0 : 1,
       }}
     >
-      <IoArrowDownOutline className='text-6xl text-darkGrey dark:text-[#aaa]' />
+      <IoArrowDownOutline className='text-darkGrey text-6xl dark:text-[#aaa]' />
     </div>
   )
 }

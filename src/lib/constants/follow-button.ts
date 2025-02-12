@@ -114,65 +114,50 @@ export const FOLLOW_BUTTON_COOL_EMOJI: Record<
   Follow: {
     light: '/assets/logo.svg',
     dark: '/assets/logo.svg',
-    halloween: '/assets/icons/halloween-emoji.svg',
   },
   'Pending Following': {
     light: undefined,
     dark: undefined,
-    halloween: undefined,
   },
   Following: {
     light: '/assets/icons/unfollow-emoji.svg',
     dark: '/assets/icons/unfollow-emoji.svg',
-    halloween: '/assets/icons/unfollow-halloween-emoji.png',
   },
   Unfollow: {
     light: undefined,
     dark: undefined,
-    halloween: undefined,
   },
-  // Subscribe: "",
-  // Subscribed: "",
-  // Unsubscribe: "",
   Block: {
     light: '/assets/icons/block-emoji.svg',
     dark: '/assets/icons/block-emoji.svg',
-    halloween: '/assets/icons/spider-web-emoji.svg',
   },
   'Pending Block': {
     light: undefined,
     dark: undefined,
-    halloween: undefined,
   },
   Blocked: {
     light: undefined,
     dark: undefined,
-    halloween: undefined,
   },
   Unblock: {
     light: undefined,
     dark: undefined,
-    halloween: undefined,
   },
   'Pending Mute': {
     light: undefined,
     dark: undefined,
-    halloween: undefined,
   },
   Mute: {
     light: '/assets/icons/mute-emoji.svg',
     dark: '/assets/icons/mute-emoji.svg',
-    halloween: '/assets/icons/ghost-emoji.svg',
   },
   Muted: {
     light: undefined,
     dark: undefined,
-    halloween: undefined,
   },
   Unmute: {
     light: undefined,
     dark: undefined,
-    halloween: undefined,
   },
 }
 
@@ -180,76 +165,49 @@ export const FOLLOW_BUTTON_SOUND: Record<FollowButtonState, Record<(typeof THEME
   Follow: {
     light: '/assets/sound-effects/follow.mp3',
     dark: '/assets/sound-effects/follow.mp3',
-    halloween: '/assets/sound-effects/follow-halloween.mp3',
   },
   'Pending Following': {
     light: undefined,
     dark: undefined,
-    halloween: undefined,
   },
   Following: {
     light: '/assets/sound-effects/unfollow.mp3',
     dark: '/assets/sound-effects/unfollow.mp3',
-    halloween: '/assets/sound-effects/unfollow-halloween.mp3',
   },
   Unfollow: {
     light: undefined,
     dark: undefined,
-    halloween: undefined,
   },
-  // Subscribe: {
-  //   light: undefined,
-  //   dark: undefined,
-  //   halloween: undefined
-  // },
-  // Subscribed: {
-  //   light: undefined,
-  //   dark: undefined,
-  //   halloween: undefined
-  // },
-  // Unsubscribe: {
-  //   light: undefined,
-  //   dark: undefined,
-  //   halloween: undefined
-  // },
   Block: {
     light: undefined,
     dark: undefined,
-    halloween: undefined,
   },
   'Pending Block': {
     light: undefined,
     dark: undefined,
-    halloween: undefined,
   },
   Blocked: {
     light: undefined,
     dark: undefined,
-    halloween: undefined,
   },
   Unblock: {
     light: undefined,
     dark: undefined,
-    halloween: undefined,
   },
   Mute: {
     light: undefined,
     dark: undefined,
-    halloween: undefined,
   },
   'Pending Mute': {
     light: undefined,
     dark: undefined,
-    halloween: undefined,
   },
   Muted: {
     light: undefined,
     dark: undefined,
-    halloween: undefined,
   },
   Unmute: {
     light: undefined,
     dark: undefined,
-    halloween: undefined,
   },
 }

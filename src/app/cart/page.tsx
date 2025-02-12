@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 const CartPage = () => (
   <main
     suppressHydrationWarning={true}
-    className='flex flex-col-reverse xl:flex-row gap-4 min-h-full xl:h-screen w-full items-center xl:items-start xl:justify-center text-center'
+    className='flex min-h-full w-full flex-col-reverse items-center gap-4 text-center xl:h-screen xl:flex-row xl:items-start xl:justify-center'
   >
     <Cart />
   </main>

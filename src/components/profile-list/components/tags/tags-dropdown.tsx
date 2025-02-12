@@ -6,7 +6,7 @@ import { cn } from '#/lib/utilities'
 import type { ProfileListProfile } from '../..'
 import { tagRegex } from '#/lib/constants/regex'
 import { useCart } from '#/hooks/use-cart'
-import Plus from 'public/assets/icons/plus-squared.svg'
+import Plus from 'public/assets/icons/ui/plus-squared.svg'
 import { useTagsDropdown } from '../../hooks/use-tags-dropdown'
 import type { ImportPlatformType, TagsDropdownPositionType } from '#/types/common'
 
@@ -41,11 +41,11 @@ const TagsDropdown: React.FC<TagsDropdownProps> = ({
       {open && (
         <div
           className={cn(
-            'absolute z-[9999] flex flex-col w-56 sm:w-64 gap-2 left-0 glass-card bg-neutral p-2 border-[3px] border-grey rounded-lg',
+            'glass-card bg-neutral border-grey absolute left-0 z-[9999] flex w-56 flex-col gap-2 rounded-sm border-[3px] p-2 sm:w-64',
             position === 'bottom' ? 'top-10' : 'bottom-8'
           )}
         >
-          <div className='w-full flex items-center gap-1.5 justify-between bg-zinc-300 dark:bg-zinc-400 rounded-lg font-bold p-1 text-left'>
+          <div className='flex w-full items-center justify-between gap-1.5 rounded-sm bg-zinc-300 p-1 text-left font-bold dark:bg-zinc-400'>
             <input
               ref={tagInputRef}
               placeholder={t('custom tag')}
@@ -58,10 +58,10 @@ const TagsDropdown: React.FC<TagsDropdownProps> = ({
               onKeyDown={(e) => {
                 if (e.key === 'Enter') addCustomTag()
               }}
-              className='p-1 pl-2 rounded-md lowercase bg-neutral/70 w-full'
+              className='bg-neutral/70 w-full rounded-md p-1 pl-2 lowercase'
             />
             <button
-              className='flex items-center rounded-full hover:scale-110 transition-all hover:opacity-80 bg-white dark:bg-zinc-300 justify-center p-1.5'
+              className='flex items-center justify-center rounded-full bg-white p-1.5 transition-all hover:scale-110 hover:opacity-80 dark:bg-zinc-300'
               onClick={(e) => {
                 e.stopPropagation()
                 addCustomTag()
@@ -70,11 +70,11 @@ const TagsDropdown: React.FC<TagsDropdownProps> = ({
               <Image src={Plus} alt='Add Tag' height={16} width={16} />
             </button>
           </div>
-          <div className='w-full flex max-w-full flex-wrap items-center gap-2'>
+          <div className='flex w-full max-w-full flex-wrap items-center gap-2'>
             {recentTags.map((tag, i) => (
               <button
                 key={`${profiles?.[0]?.address} ${tag} ${i}`}
-                className='font-bold py-1.5 hover:scale-110 transition-all text-sm truncate px-3 hover:opacity-80 text-darkGrey bg-zinc-300 rounded-full'
+                className='text-darkGrey truncate rounded-full bg-zinc-300 px-3 py-1.5 text-sm font-bold transition-all hover:scale-110 hover:opacity-80'
                 onClick={(e) => {
                   e.stopPropagation()
                   addTag(tag)
@@ -97,11 +97,11 @@ const TagsDropdown: React.FC<TagsDropdownProps> = ({
           <div
             key={tag + i}
             className={`relative ${open ? 'z-40' : 'z-10'} max-w-full ${
-              canEditTags ? 'hover:scale-110 transition-all' : ''
+              canEditTags ? 'transition-all hover:scale-110' : ''
             }`}
           >
             <button
-              className={`font-bold py-1 px-2 md:py-1.5 max-w-full w-fit md:px-3 text-darkGrey truncate text-sm hover:opacity-80 rounded-full ${
+              className={`text-darkGrey w-fit max-w-full truncate rounded-full px-2 py-1 text-sm font-bold hover:opacity-80 md:px-3 md:py-1.5 ${
                 canEditTags && removingTag ? 'bg-deletion' : 'bg-zinc-300'
               }`}
               onClick={(e) => {
@@ -112,7 +112,7 @@ const TagsDropdown: React.FC<TagsDropdownProps> = ({
               {tag}
             </button>
             {(removingTag || addingTag) && canEditTags && (
-              <div className='absolute h-4 w-4 rounded-full -top-1 -right-1 bg-green-400' />
+              <div className='absolute -top-1 -right-1 h-4 w-4 rounded-full bg-green-400' />
             )}
           </div>
         )

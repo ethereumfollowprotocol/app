@@ -25,8 +25,8 @@ const Name: React.FC<NameProps> = ({ address, name, avatar, followerTag }) => {
 
   return (
     <div
-      className={`flex gap-2 items-center w-[50%] 3xs:w-[52%] xxs:w-[54%] xs:w-2/3 sm:w-1/2 md:w-[40%] ${
-        isHome ? 'w-full md:w-1/2 lg:w-[55%] xl:w-1/2' : 'xl:w-1/3 '
+      className={`3xs:w-[52%] xxs:w-[54%] xs:w-2/3 flex w-[50%] items-center gap-2 sm:w-1/2 md:w-[40%] ${
+        isHome ? 'w-full md:w-1/2 lg:w-[55%] xl:w-1/2' : 'xl:w-1/3'
       }`}
       data-name='name-column'
     >
@@ -39,12 +39,12 @@ const Name: React.FC<NameProps> = ({ address, name, avatar, followerTag }) => {
       </Link>
       <div className='flex flex-col items-start justify-center text-left' style={{ maxWidth: 'calc(100% - 65px)' }}>
         <Link href={`/${address}`} prefetch={true} className='w-full'>
-          <p className='font-bold text-base xxs:text-lg truncate max-w-full hover:opacity-60 hover:scale-110 transition-all'>
+          <p className='xxs:text-lg max-w-full truncate text-base font-bold transition-all hover:scale-110 hover:opacity-60'>
             {name && isValidEnsName(name) ? ens_beautify(name) : truncateAddress(address)}
           </p>
         </Link>
         <div
-          className={`rounded-full font-bold text-[10px] flex items-center justify-center text-darkGrey bg-zinc-300 h-5 px-2 w-fit ${followerTag.className}`}
+          className={`text-darkGrey flex h-5 w-fit items-center justify-center rounded-full bg-zinc-300 px-2 text-[10px] font-bold ${followerTag.className}`}
         >
           {t(followerTag.text)}
         </div>

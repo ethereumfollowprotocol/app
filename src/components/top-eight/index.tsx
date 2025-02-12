@@ -34,38 +34,38 @@ const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile }) => 
       {isConnectedUserProfile && editModalOpen && (
         <EditModal profiles={topEight || []} onClose={() => setEditModalOpen(false)} />
       )}
-      <div className='glass-card relative xl:w-80 2xl:w-[602px] items-center justify-center w-full border-[3px] px-5 2xl:px-2 py-4 rounded-xl flex flex-col gap-4 xl:gap-4 border-grey'>
+      <div className='glass-card border-grey relative flex w-full flex-col items-center justify-center gap-4 rounded-xl border-[3px] px-5 py-4 xl:w-80 xl:gap-4 2xl:w-[602px] 2xl:px-2'>
         {isConnectedUserProfile && (
           <div
             onClick={() => setEditModalOpen(true)}
-            className='absolute top-2 right-2.5 font-semibold text-sm flex gap-1 items-center text-text-neutral hover:text-text/70 cursor-pointer hover:scale-110 transition-all'
+            className='text-text-neutral hover:text-text/70 absolute top-2 right-2.5 flex cursor-pointer items-center gap-1 text-sm font-semibold transition-all hover:scale-110'
           >
             <FaRegEdit />
             <p>{t('edit')}</p>
           </div>
         )}
         <div
-          className={cn('flex gap-2 font-bold justify-center items-center', isConnectedUserProfile ? 'mt-4' : 'mt-2')}
+          className={cn('flex items-center justify-center gap-2 font-bold', isConnectedUserProfile ? 'mt-4' : 'mt-2')}
         >
           <h3 className='text-2xl'>{t('top eight title')}</h3>
         </div>
         {isTopEightEmpty && (
-          <p className='font-medium italic text-lg my-16 text-center text-text'>{t('no top eight')}</p>
+          <p className='text-text my-16 text-center text-lg font-medium italic'>{t('no top eight')}</p>
         )}
-        <div className='flex w-full flex-wrap justify-around transition-none sm:justify-between 2xl:justify-start items-start xl:gap-0 sm:gap-1'>
+        <div className='flex w-full flex-wrap items-start justify-around transition-none sm:justify-between sm:gap-1 xl:gap-0 2xl:justify-start'>
           {!isTopEightLoading &&
             topEight.slice(0, displayLimit).map((profile, index) => <TopEightProfile profile={profile} key={index} />)}
           {new Array(isTopEightLoading ? displayLimit : 0).fill(0).map((_, index) => (
-            <div key={index} className='flex flex-col w-28 xl:w-[128px] 2xl:w-36 py-4 px-0 items-center gap-2'>
+            <div key={index} className='flex w-28 flex-col items-center gap-2 px-0 py-4 xl:w-[128px] 2xl:w-36'>
               <LoadingCell className='h-[50px] w-[50px] rounded-full' />
-              <LoadingCell className='h-7 w-24 rounded-lg' />
-              <LoadingCell className='h-9 w-[110px] 2xl:w-[120px] 2xl:h-10 rounded-lg' />
+              <LoadingCell className='h-7 w-24 rounded-sm' />
+              <LoadingCell className='h-9 w-[110px] rounded-sm 2xl:h-10 2xl:w-[120px]' />
             </div>
           ))}
         </div>
         {topEight.length > displayLimit && (
           <div
-            className='text-2xl rounded-xl w-full p-2 justify-center cursor-pointer border-[3px] text-text/80 gap-2 flex lg:hidden font-semibold items-center'
+            className='text-text/80 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-[3px] p-2 text-2xl font-semibold lg:hidden'
             onClick={() => setDisplayLimit(displayLimit >= 8 ? 2 : 8)}
           >
             <IoIosArrowDown className={cn('transition-transform', displayLimit >= 8 && 'rotate-180')} />

@@ -1,12 +1,12 @@
 'use client'
 
 import { isAddress } from 'viem'
-import type { LegacyRef } from 'react'
+import type { LegacyRef, RefObject } from 'react'
 import { FiSearch } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
 
 import useSearch from './hooks/useSearch.ts'
-import { truncateAddress } from '#/lib/utilities.ts'
+import { cn, truncateAddress } from '#/lib/utilities.ts'
 import GraySpinner from '../loaders/gray-spinner.tsx'
 import PrimaryButton from '../buttons/primary-button.tsx'
 import LoadingSpinner from '../loaders/loading-spinner.tsx'
@@ -43,12 +43,12 @@ export function Search({
   } = useSearch(isEditor)
 
   return (
-    <div className={`relative z-50 ${size}`} ref={clickAwayRef}>
+    <div className={`relative z-40`} ref={clickAwayRef}>
       <label htmlFor='search' className='sr-only'>
         Search
       </label>
-      <div className={`rounded-md gap-2 ${isEditor ? 'flex flex-col xs:flex-row' : 'hidden xl:flex'}`}>
-        <div className='w-full relative group'>
+      <div className={cn(isEditor ? 'xs:flex-row flex flex-col' : 'hidden', 'gap-2 rounded-md')}>
+        <div className='group relative w-full'>
           {isEditor ? (
             <>
               <textarea
@@ -79,12 +79,12 @@ export function Search({
                     event.currentTarget.value.length >= 3 && !!search && search.length >= 3 && !!searchResult
                   )
                 }}
-                className='max-h-20 min-h-12 block text-wrap w-full py-3 pr-12 truncate outline-none font-medium rounded-xl border-[3px] focus:border-text/80 hover:border-text/80 transition-colors border-grey pl-4 sm:text-sm bg-neutral/70'
+                className='focus:border-text/80 hover:border-text/80 border-grey bg-neutral/70 block max-h-20 min-h-12 w-full truncate rounded-xl border-[3px] py-3 pr-12 pl-4 font-medium text-wrap transition-colors outline-none sm:text-sm'
               />
             </>
           ) : (
             <input
-              ref={searchBarRef as LegacyRef<HTMLInputElement>}
+              ref={searchBarRef as RefObject<HTMLInputElement>}
               type='text'
               id='search'
               name='search'
@@ -107,7 +107,7 @@ export function Search({
                   event.currentTarget.value.length >= 3 && !!search && search.length >= 3 && !!searchResult
                 )
               }}
-              className='h-[54px] block pr-12 w-full truncate font-medium rounded-xl border-[3px] border-grey pl-4 sm:text-sm bg-neutral/70 focus:border-text/80 hover:border-text/80 transition-colors'
+              className='border-grey bg-neutral/70 focus:border-text/80 hover:border-text/80 block h-[54px] w-full truncate rounded-xl border-[3px] pr-12 pl-4 font-medium transition-colors sm:text-sm'
             />
           )}
           <div className='pointer-events-none absolute inset-y-0 right-4 flex items-center' aria-hidden='true'>
@@ -117,23 +117,23 @@ export function Search({
               </div>
             ) : (
               <FiSearch
-                className='text-xl opacity-50 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100'
+                className='text-xl opacity-50 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100'
                 aria-hidden='true'
               />
             )}
           </div>
         </div>
         {isEditor && (
-          <PrimaryButton label={t('add')} className='mx-auto w-full xs:w-32 h-12 text-lg' onClick={() => onSubmit()} />
+          <PrimaryButton label={t('add')} className='xs:w-32 mx-auto h-12 w-full text-lg' onClick={() => onSubmit()} />
         )}
       </div>
       <div
-        className={`absolute glass-card p-3 md:p-4 w-full shadow-md border-[3px] border-grey bg-neutral rounded-xl top-full mt-2 left-0 ${
+        className={`glass-card border-grey bg-neutral absolute top-full left-0 mt-2 w-full rounded-xl border-[3px] p-3 shadow-md md:p-4 ${
           dropdownMenuOpen ? (isEditor ? 'block' : 'hidden xl:block') : 'hidden'
         }`}
       >
         <div
-          className={`w-full items-start text-lg flex-col ${isEditor ? 'flex' : 'hidden md:flex'}`}
+          className={`w-full flex-col items-start text-lg ${isEditor ? 'flex' : 'hidden md:flex'}`}
           onFocusCapture={(event) => {
             event.preventDefault()
             event.stopPropagation()
@@ -141,12 +141,12 @@ export function Search({
           }}
         >
           {isLoading && (
-            <div className='w-full h-40'>
+            <div className='h-40 w-full'>
               <LoadingSpinner />
             </div>
           )}
           {!isLoading && searchResult.length === 0 ? (
-            <div className='w-full h-16 flex items-center justify-center italic font-bold text-text/50'>
+            <div className='text-text/50 flex h-16 w-full items-center justify-center font-bold italic'>
               {t('search no results')}
             </div>
           ) : (
@@ -165,26 +165,26 @@ export function Search({
 
                   resetSearch()
                 }}
-                className='max-w-full hover:scale-105 truncate text-md flex items-center hover:opacity-75 gap-1 cursor-pointer transition-all'
+                className='text-md flex max-w-full cursor-pointer items-center gap-1 truncate transition-all hover:scale-105 hover:opacity-75'
               >
                 <p>{result.name}</p>
                 {result.resolvedAddress?.id && (
-                  <p className='text-sm text-text/50'>- {truncateAddress(result.resolvedAddress?.id)}</p>
+                  <p className='text-text/50 text-sm'>- {truncateAddress(result.resolvedAddress?.id)}</p>
                 )}
               </div>
             ))
           )}
         </div>
       </div>
-      <div className={`relative w-fit z-50 ${isEditor ? 'hidden' : 'xl:hidden block'}`}>
+      <div className={cn(isEditor ? 'hidden' : 'block', 'relative z-50 w-fit')}>
         <FiSearch
           onClick={() => setDialogOpen(true)}
-          className='text-3xl hover:scale-125 w-fit cursor-pointer transition-all hover:opacity-65'
+          className='w-fit cursor-pointer text-4xl transition-all hover:scale-125 hover:opacity-65'
           aria-hidden='true'
         />
         <div
           ref={clickAwayRef}
-          className={`p-0 2xl:hidden w-[40vw] min-w-68 max-w-86 absolute -top-3 left-0 mx-auto ${
+          className={`absolute -top-3 left-0 mx-auto w-[40vw] max-w-86 min-w-68 p-0 2xl:hidden ${
             dialogOpen ? 'block' : 'hidden'
           }`}
         >
@@ -192,7 +192,7 @@ export function Search({
             <input
               name='search'
               ref={searchBarRef as LegacyRef<HTMLInputElement>}
-              className='h-[54px] block pr-12 w-full  truncate font-medium rounded-xl border-[3px] pl-4 sm:text-sm bg-neutral focus:border-text border-grey transition-colors'
+              className='bg-neutral focus:border-text border-grey block h-[54px] w-full truncate rounded-xl border-[3px] pr-12 pl-4 font-medium transition-colors sm:text-sm'
               spellCheck={false}
               placeholder={t('search placeholder')}
               disabled={disabled}
@@ -213,12 +213,12 @@ export function Search({
             />
           </div>
           <div
-            className={`absolute glass-card w-full shadow-md border-[3px] p-3 rounded-xl border-grey bg-neutral top-full mt-2 left-0 ${
+            className={`glass-card border-grey bg-neutral absolute top-full left-0 mt-2 w-full rounded-xl border-[3px] p-3 shadow-md ${
               dropdownMenuOpen ? 'block' : 'hidden'
             }`}
           >
             <div
-              className='w-full mx-auto min-w-full text-lg py-0 xl:hidden block '
+              className='mx-auto block w-full min-w-full py-0 text-lg xl:hidden'
               ref={clickAwayRef}
               onFocusCapture={(event) => {
                 event.preventDefault()
@@ -227,12 +227,12 @@ export function Search({
               }}
             >
               {isLoading && (
-                <div className='w-full h-40'>
+                <div className='h-40 w-full'>
                   <LoadingSpinner />
                 </div>
               )}
               {!isLoading && searchResult.length === 0 ? (
-                <div className='w-full h-16 flex items-center pb-4 justify-center italic font-bold text-zinc-400'>
+                <div className='flex h-16 w-full items-center justify-center pb-4 font-bold text-zinc-400 italic'>
                   {t('search no results')}
                 </div>
               ) : (
@@ -251,7 +251,7 @@ export function Search({
 
                       resetSearch()
                     }}
-                    className='max-w-full truncate text-md flex items-center hover:opacity-75 gap-1 cursor-pointer transition-opacity'
+                    className='text-md flex max-w-full cursor-pointer items-center gap-1 truncate transition-opacity hover:opacity-75'
                   >
                     <p>{result.name}</p>
                     {result.resolvedAddress?.id && (

@@ -6,7 +6,7 @@ import { cn } from '#/lib/utilities'
 import TagsDropdown from './tags-dropdown'
 import type { ProfileListProfile } from '../..'
 import { useCart } from '#/hooks/use-cart'
-import Plus from 'public/assets/icons/plus-squared.svg'
+import Plus from 'public/assets/icons/ui/plus-squared.svg'
 import type { ImportPlatformType, TagsDropdownPositionType } from '#/types/common'
 
 interface TagsProps {
@@ -39,12 +39,12 @@ const Tags: React.FC<TagsProps> = ({ profiles, platform, showTags, canEditTags, 
 
   return (
     <div
-      className={cn('relative min-h-8 flex max-w-full flex-wrap gap-2 items-center', hideTags && 'hidden')}
+      className={cn('relative flex min-h-8 max-w-full flex-wrap items-center gap-2', hideTags && 'hidden')}
       ref={clickAwayTagDropwdownRef}
     >
       {canEditTags && (
         <button
-          className='p-1.5 rounded-full hover:opacity-80 hover:scale-110 bg-zinc-300'
+          className='rounded-full bg-zinc-300 p-1.5 hover:scale-110 hover:opacity-80'
           onClick={(e) => {
             e.stopPropagation()
             setTagDropdownOpen(!tagDropdownOpen)
@@ -63,7 +63,7 @@ const Tags: React.FC<TagsProps> = ({ profiles, platform, showTags, canEditTags, 
       />
       {canEditTags && tagDropdownOpen && (
         <div
-          className='fixed z-30 top-0 left-0 w-full h-full bg-transparent'
+          className='fixed top-0 left-0 z-30 h-full w-full bg-transparent'
           onClick={(e) => {
             e.stopPropagation()
             setTagDropdownOpen(false)

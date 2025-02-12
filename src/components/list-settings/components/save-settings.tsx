@@ -67,10 +67,10 @@ const SaveSettings: React.FC<SaveSettingsProps> = ({
   })
 
   return (
-    <div className='w-full flex justify-center px-4 pt-[6.75rem] pb-16 overflow-scroll sm:pt-32'>
-      <div className='flex glass-card gap-4 sm:gap-6 flex-col w-full sm:w-[532px] items-center border-[3px] border-grey text-center justify-between rounded-xl px-4 py-8 sm:p-12'>
+    <div className='flex w-full justify-center overflow-scroll px-4 pt-[6.75rem] pb-16 sm:pt-32'>
+      <div className='glass-card border-grey flex w-full flex-col items-center justify-between gap-4 rounded-xl border-[3px] px-4 py-8 text-center sm:w-[532px] sm:gap-6 sm:p-12'>
         {changedValues.chain && isListStateLoading ? (
-          <div className='w-full h-144'>
+          <div className='h-144 w-full'>
             <LoadingSpinner />
           </div>
         ) : (

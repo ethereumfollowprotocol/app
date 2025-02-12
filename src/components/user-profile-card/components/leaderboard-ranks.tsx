@@ -25,18 +25,18 @@ const LeaderboardRanks: React.FC<LeaderboardRanksProps> = ({
   const ranksTypes = ['mutuals_rank', 'followers_rank', 'following_rank', 'top8_rank', 'blocks_rank']
 
   return (
-    <div className={cn('flex flex-col w-full items-center gap-2', isRecommended && 'hidden sm:flex')}>
+    <div className={cn('flex w-full flex-col items-center gap-2', isRecommended && 'hidden sm:flex')}>
       <Link href='/leaderboard'>
-        <div className={`${isResponsive ? 'text-lg sm:text-xl' : 'text-xl'} font-bold hover:scale-110 transition-all`}>
+        <div className={`${isResponsive ? 'text-lg sm:text-xl' : 'text-xl'} font-bold transition-all hover:scale-110`}>
           {t('leaderboard')}
         </div>
       </Link>
-      <div className='flex flex-row w-full justify-center flex-wrap gap-x-4 gap-y-0 xxs:gap-x-8 xl:gap-x-1 3xl:gap-x-2'>
+      <div className='xxs:gap-x-8 3xl:gap-x-2 flex w-full flex-row flex-wrap justify-center gap-x-4 gap-y-0 xl:gap-x-1'>
         {isLoading
           ? ranksTypes.map((rank, i) => (
               <div
                 key={i}
-                className='w-fit flex gap-2 3xl:gap-3 justify-between items-center font-bold px-2 py-1.5 rounded-lg hover:bg-text/5 transition-all'
+                className='3xl:gap-3 hover:bg-text/5 flex w-fit items-center justify-between gap-2 rounded-sm px-2 py-1.5 font-bold transition-all'
               >
                 <p className='text-[#888] dark:text-[#aaa]'>{t(rank)}</p>
                 <LoadingCell className='h-5 w-10 rounded-md' isStatic={false} />
@@ -54,9 +54,9 @@ const LeaderboardRanks: React.FC<LeaderboardRanksProps> = ({
                   ?.replaceAll(' ', '')
                   ?.toLowerCase()}`}
                 key={rankTitles[i]}
-                className=' w-fit flex gap-2 3xl:gap-3 justify-between items-center font-bold px-2 py-1 rounded-lg hover:bg-text/5 transition-all'
+                className='3xl:gap-3 hover:bg-text/5 flex w-fit items-center justify-between gap-2 rounded-sm px-2 py-1 font-bold transition-all'
               >
-                <p className='font-bold text-text/40 text-start'>{t(rankTitles[i] || '')}</p>
+                <p className='text-text/40 text-start font-bold'>{t(rankTitles[i] || '')}</p>
                 <p
                   className={
                     {

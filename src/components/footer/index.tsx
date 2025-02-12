@@ -28,8 +28,8 @@ export const socials = [
 
 const Footer = () => {
   return (
-    <footer className='w-full  z-20 flex justify-center border-t-2 border-t-[#aaaaaa] glass-card py-8 md:py-16 items-center'>
-      <div className='flex items-center justify-center h-full w-full gap-4 xxs:gap-6 sm:gap-28 md:gap-44'>
+    <footer className='glass-card z-20 flex w-full items-center justify-center border-t-2 border-t-[#aaaaaa] py-8 md:py-16'>
+      <div className='xxs:gap-6 flex h-full w-full items-center justify-center gap-4 sm:gap-28 md:gap-44'>
         <section className='flex gap-4 align-middle'>
           <Image
             src='/assets/logo.png'
@@ -42,14 +42,14 @@ const Footer = () => {
         <section className='my-auto flex align-middle'>
           <div className='my-auto flex flex-col justify-center gap-4 sm:gap-6'>
             <Pages />
-            <div className='flex items-center w-52 gap-8 sm:gap-10'>
+            <div className='flex w-52 items-center gap-8 sm:gap-10'>
               {socials.map((item) => (
                 <a
                   target='_blank'
                   rel='noreferrer'
                   key={item.text}
                   href={item.href}
-                  className='hover:scale-110 text-4xl transition-transform'
+                  className='text-4xl transition-transform hover:scale-110'
                 >
                   {item.icon}
                 </a>

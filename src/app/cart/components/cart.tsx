@@ -15,7 +15,7 @@ import ClearCartModal from './clear-cart-modal'
 import { useIsClient } from '@uidotdev/usehooks'
 import { formatNumber } from '#/utils/format/format-number'
 import Recommendations from '#/components/recommendations'
-import FarcasterIcon from 'public/assets/icons/farcaster.svg'
+import FarcasterIcon from 'public/assets/icons/socials/farcaster.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import PrimaryButton from '#/components/buttons/primary-button'
 import { DEFAULT_CHAIN, LIST_OP_LIMITS } from '#/lib/constants/chains'
@@ -64,7 +64,7 @@ const Cart = () => {
         <div
           ref={containerRef}
           className={cn(
-            'flex flex-col-reverse xl:flex-row overflow-y-auto justify-center gap-4 w-full h-full xl:gap-6 pt-[6.75rem] px-2 lg:px-8 pb-40 sm:pb-44 xl:pb-8',
+            'flex h-full w-full flex-col-reverse justify-center gap-4 overflow-y-auto px-2 pt-[6.75rem] pb-40 sm:pb-44 lg:px-8 xl:flex-row xl:gap-6 xl:pb-8',
             cart.length >= 30 && 'xl:pb-0'
           )}
           onScroll={(e) => {
@@ -75,20 +75,20 @@ const Cart = () => {
           {clearCartModalOpen && <ClearCartModal closeModal={() => setClearCartModalOpen(false)} />}
           <div
             className={cn(
-              'flex flex-col mb-6 glass-card gap-4 px-1 py-4 h-fit rounded-2xl border-[3px] border-grey xl:max-w-[600px] w-full xl:w-1/3',
+              'glass-card border-grey mb-6 flex h-fit w-full flex-col gap-4 rounded-2xl border-[3px] px-1 py-4 xl:w-1/3 xl:max-w-[600px]',
               cart.length > 30 && 'xl:sticky'
             )}
             ref={SidebarRef}
           >
-            <div className='w-full flex justify-between items-center px-3 sm:px-5 pt-2'>
-              <h1 className='text-left text-xl sm:text-3xl font-bold'>{t('editor title')}</h1>
+            <div className='flex w-full items-center justify-between px-3 pt-2 sm:px-5'>
+              <h1 className='text-left text-xl font-bold sm:text-3xl'>{t('editor title')}</h1>
               <div className='flex gap-1'>
-                <p className='text-lg font-bold text-right mr-1'>{t('import')}</p>
+                <p className='mr-1 text-right text-lg font-bold'>{t('import')}</p>
                 <Image
                   src={FarcasterIcon}
                   alt='Import from Farcaster'
                   width={30}
-                  className='cursor-pointer rounded-lg hover:opacity-75 hover:scale-110 transition-all'
+                  className='cursor-pointer rounded-sm transition-all hover:scale-110 hover:opacity-75'
                   onClick={() => {
                     setImportModalOpen(true)
                     setSelectedPlatform('farcaster')
@@ -99,15 +99,15 @@ const Cart = () => {
             <Search size='w-full z-50 px-2 sm:px-4 pt-2' isEditor={true} />
             <Recommendations header={t('recommendations')} endpoint='recommended' limit={30} />
           </div>
-          <div className={cn('flex flex-col h-fit relative top-0  w-full xl:w-2/3', cart.length >= 30 && 'xl:sticky')}>
+          <div className={cn('relative top-0 flex h-fit w-full flex-col xl:w-2/3', cart.length >= 30 && 'xl:sticky')}>
             <Suspense
               fallback={
-                <div className='flex justify-between gap-2 flex-row items-center px-3 md:px-4'>
-                  <h3 className='font-bold text-left text-xl sm:text-3xl xxs:w-2/3'>{t('cart unc-changes')}</h3>
+                <div className='flex flex-row items-center justify-between gap-2 px-3 md:px-4'>
+                  <h3 className='xxs:w-2/3 text-left text-xl font-bold sm:text-3xl'>{t('cart unc-changes')}</h3>
                 </div>
               }
             >
-              <div className='xl:absolute xl:top-0 xl:left-0 w-full h-fit flex flex-col gap-3 md:gap-4 md:pt-6 pt-5 pb-2 px-1 sm:px-3 md:px-4 glass-card rounded-2xl border-[3px] border-grey'>
+              <div className='glass-card border-grey flex h-fit w-full flex-col gap-3 rounded-2xl border-[3px] px-1 pt-5 pb-2 sm:px-3 md:gap-4 md:px-4 md:pt-6 xl:absolute xl:top-0 xl:left-0'>
                 <CartItems containerRef={containerRef} setClearCartModalOpen={setClearCartModalOpen} />
               </div>
             </Suspense>
@@ -115,24 +115,24 @@ const Cart = () => {
           {isClient && (
             <div
               className={cn(
-                'fixed lg:w-fit w-full -bottom-1 lg:bottom-[3vh] right-0 lg:right-[3vw] justify-end',
+                'fixed right-0 -bottom-1 w-full justify-end lg:right-[3vw] lg:bottom-[3vh] lg:w-fit',
                 isClient && cart.length > 0 ? 'flex' : 'hidden'
               )}
             >
-              <div className='flex gap-1 xxs:gap-2 md:gap-6 w-full border-[3px] border-b-0 md:border-b-[3px] bg-neutral/50 border-grey lg:w-fit items-center px-3 py-4 sm:p-4 justify-between glass-card bg-opacity-50 shadow-xl rounded-t-xl md:rounded-b-xl'>
-                <div className='flex flex-col gap-1 items-start'>
-                  <div className='flex gap-2 items-center'>
-                    <p className='text-4xl 3xs:text-5xl sm:text-6xl font-bold'>{formatNumber(cart.length)}</p>
-                    <div className='flex gap-0 flex-col w-24 sm:w-28 font-bold text-sm 3xs:text-base sm:text-lg text-left whitespace-break-spaces'>
+              <div className='xxs:gap-2 bg-neutral/50 border-grey glass-card bg-opacity-50 flex w-full items-center justify-between gap-1 rounded-t-xl border-[3px] border-b-0 px-3 py-4 shadow-xl sm:p-4 md:gap-6 md:rounded-b-xl md:border-b-[3px] lg:w-fit'>
+                <div className='flex flex-col items-start gap-1'>
+                  <div className='flex items-center gap-2'>
+                    <p className='3xs:text-5xl text-4xl font-bold sm:text-6xl'>{formatNumber(cart.length)}</p>
+                    <div className='3xs:text-base flex w-24 flex-col gap-0 text-left text-sm font-bold whitespace-break-spaces sm:w-28 sm:text-lg'>
                       {t('unc-changes')}
                     </div>
                   </div>
-                  <p className='text-base pl-2 font-medium'>{`${formatNumber(transactionsCount)} ${
+                  <p className='pl-2 text-base font-medium'>{`${formatNumber(transactionsCount)} ${
                     transactionsCount === 1 ? t('transaction') : t('transactions')
                   }`}</p>
                 </div>
                 <PrimaryButton
-                  className=' px-4 text-xl rounded-full'
+                  className='rounded-full px-4 text-xl'
                   onClick={() => {
                     if (!isConnected) {
                       if (openConnectModal) openConnectModal()

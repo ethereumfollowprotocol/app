@@ -9,21 +9,21 @@ const LiveIntegrations = () => {
   const { t } = useTranslation()
 
   return (
-    <div className='glass-card border-[3px] flex-col flex gap-8 sm:gap-10 md:gap-12 items-center xl:items-start rounded-xl w-full px-6 md:px-8 py-8 md:py-10 max-w-[700px] border-grey'>
-      <div className='flex px-2 flex-col gap-4 w-full'>
-        <div className='flex gap-6 items-center justify-center xl:justify-start h-full'>
-          <h1 className='text-3xl sm:text-4xl font-bold'>{t('integrations')}</h1>
-          <div className='flex flex-col gap-2 font-bold rounded-full bg-grey text-2xl sm:text-3xl px-4 sm:px-5 py-1'>
+    <div className='glass-card border-grey flex w-full max-w-[700px] flex-col items-center gap-8 rounded-xl border-[3px] px-6 py-8 sm:gap-10 md:gap-12 md:px-8 md:py-10 xl:items-start'>
+      <div className='flex w-full flex-col gap-4 px-2'>
+        <div className='flex h-full items-center justify-center gap-6 xl:justify-start'>
+          <h1 className='text-3xl font-bold sm:text-4xl'>{t('integrations')}</h1>
+          <div className='bg-grey flex flex-col gap-2 rounded-full px-4 py-1 text-2xl font-bold sm:px-5 sm:text-3xl'>
             {INTEGRATIONS.length}
           </div>
         </div>
         <p className='text-text/80 text-center xl:text-start'>{t('integrate description')}</p>
       </div>
-      <div className='flex flex-row w-full items-center justify-evenly sm:justify-center xl:justify-start flex-wrap gap-4'>
+      <div className='flex w-full flex-row flex-wrap items-center justify-evenly gap-4 sm:justify-center xl:justify-start'>
         {INTEGRATIONS.map((integration) => (
-          <div key={integration.name} className='w-28 hover:scale-110 flex items-center flex-col transition-transform'>
+          <div key={integration.name} className='flex w-28 flex-col items-center transition-transform hover:scale-110'>
             <Link
-              className='text-xs rounded-full space-y-2'
+              className='space-y-2 rounded-full text-xs'
               target='_blank'
               rel='noopener noreferrer'
               href={integration.url}
@@ -34,7 +34,7 @@ const LiveIntegrations = () => {
                 width={60}
                 className='mx-auto rounded-full sm:w-19'
               />
-              <p className='pt-1 mt-2 text-base text-center font-bold' style={{ lineHeight: '25px', fontSize: '17px' }}>
+              <p className='mt-2 pt-1 text-center text-base font-bold' style={{ lineHeight: '25px', fontSize: '17px' }}>
                 {integration.name}
               </p>
             </Link>

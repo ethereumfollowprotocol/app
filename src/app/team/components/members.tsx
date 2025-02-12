@@ -24,9 +24,9 @@ const Members = () => {
 
   return (
     <>
-      <h2 className='font-bold text-4xl'>{t('team')}</h2>
-      <div className='flex flex-col w-full gap-16'>
-        <div className='flex-row flex-wrap flex mx-auto lg:flex-row gap-8 align-middle justify-center items-start'>
+      <h2 className='text-4xl font-bold'>{t('team')}</h2>
+      <div className='flex w-full flex-col gap-16'>
+        <div className='mx-auto flex flex-row flex-wrap items-start justify-center gap-8 align-middle lg:flex-row'>
           {teamProfiles?.map((profile, i) => (
             <div key={profile?.address} className='flex flex-col items-center gap-2'>
               <p className='text-lg font-bold text-zinc-500 dark:text-zinc-200'>{TEAM_ROLES[i]}</p>
@@ -45,7 +45,7 @@ const Members = () => {
           {teamIsLoading &&
             TEAM_ADDRESSES.map((address) => (
               <div key={address} className='flex flex-col items-center gap-2'>
-                <LoadingCell className='rounded-lg h-7 w-52' />
+                <LoadingCell className='h-7 w-52 rounded-sm' />
                 <Suspense>
                   <UserProfileCard
                     isResponsive={false}
@@ -59,7 +59,7 @@ const Members = () => {
         </div>
         <div className='flex flex-col gap-10'>
           <h2 className='text-4xl font-bold'>Follow Protocol Foundation</h2>
-          <div className='flex-row flex-wrap flex mx-auto lg:flex-row gap-8 align-middle justify-center items-start'>
+          <div className='mx-auto flex flex-row flex-wrap items-start justify-center gap-8 align-middle lg:flex-row'>
             {foundationProfiles?.map((profile, i) => (
               <div key={profile?.address} className='flex flex-col items-center gap-2'>
                 <p className='text-lg font-bold text-zinc-500 dark:text-zinc-200'>{FOUNDATION_ROLES[i]}</p>
@@ -78,7 +78,7 @@ const Members = () => {
             {foundationIsLoading &&
               FOUNDATION_ADDRESSES.map((address) => (
                 <div key={address} className='flex flex-col items-center gap-2'>
-                  <LoadingCell className='rounded-lg h-7 w-52' />
+                  <LoadingCell className='h-7 w-52 rounded-sm' />
                   <Suspense>
                     <UserProfileCard
                       isResponsive={false}

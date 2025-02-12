@@ -6,7 +6,7 @@ import { useChainId, useSwitchChain, type Config, type UseChainsReturnType } fro
 import type { ChainWithDetails } from '#/lib/wagmi'
 import { ChainIcon } from '#/components/chain-icon'
 import { DEFAULT_CHAIN } from '#/lib/constants/chains'
-import GreenCheck from 'public/assets/icons/check-green.svg'
+import GreenCheck from 'public/assets/icons/ui/check-green.svg'
 import CancelButton from '#/components/buttons/cancel-button'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import PrimaryButton from '#/components/buttons/primary-button'
@@ -46,7 +46,7 @@ export function SelectChainCard({
         <ChainList chains={chains} onClick={handleChainClick} selectedChain={selectedChain} />
       </div>
       {lists?.lists && lists.lists.length > 0 && (
-        <div className='flex mt-4 items-center gap-3 sm:gap-5'>
+        <div className='mt-4 flex items-center gap-3 sm:gap-5'>
           <p className='text-lg font-bold'>{t('set new primary')}</p>
           <input
             className='toggle'
@@ -56,7 +56,7 @@ export function SelectChainCard({
           />
         </div>
       )}
-      <div className='w-full mt-6 flex justify-between items-center'>
+      <div className='mt-6 flex w-full items-center justify-between'>
         <CancelButton className='h-14' onClick={onCancel} />
         <PrimaryButton
           label={t('next')}
@@ -65,7 +65,7 @@ export function SelectChainCard({
             if (currentChainId !== DEFAULT_CHAIN.id) switchChain({ chainId: DEFAULT_CHAIN.id })
             handleNextStep()
           }}
-          className='text-lg w-32'
+          className='w-32 text-lg'
           disabled={!selectedChain}
         />
       </div>
@@ -103,14 +103,14 @@ function ChainItem({
   const { t } = useTranslation()
 
   return (
-    <div className='flex items-center relative gap-3 hover:cursor-pointer' onClick={() => onClick(chain.id)}>
+    <div className='relative flex items-center gap-3 hover:cursor-pointer' onClick={() => onClick(chain.id)}>
       {isSelected && (
         <Image
           src={GreenCheck}
           alt='selected'
           height={32}
           width={32}
-          className='absolute left-0 text-green-500 -ml-8 sm:-ml-12'
+          className='absolute left-0 -ml-8 text-green-500 sm:-ml-12'
         />
       )}
       <ChainIcon chain={chain as ChainWithDetails} className={'h-[50px] w-[50px]'} />

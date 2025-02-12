@@ -9,15 +9,15 @@ interface LinksProps {
 
 const Links: React.FC<LinksProps> = ({ profile }) => {
   return (
-    <div className='w-full flex justify-center gap-2 flex-wrap items-center'>
+    <div className='flex w-full flex-wrap items-center justify-center gap-2'>
       {profile.ens.records?.url && (
         <a
           href={`https://${profile.ens.records.url.replace('https://', '').replace('http://', '')}`}
           target='_blank'
           rel='noreferrer'
-          className='flex max-w-48 items-center text-sm gap-1 mb-1 bg-grey rounded-full py-0.5 px-2 hover:scale-110 transition-all'
+          className='bg-grey mb-1 flex max-w-48 items-center gap-1 rounded-full px-2 py-0.5 text-sm transition-all hover:scale-110'
         >
-          <p className='dark:text-blue-400 halloween:text-blue-400 text-blue-600 max-w-[90%] truncate font-semibold'>
+          <p className='halloween:text-blue-400 max-w-[90%] truncate font-semibold text-blue-600 dark:text-blue-400'>
             {profile.ens.records?.url.slice(-1) === '/'
               ? profile.ens.records?.url.replace('https://', '').slice(0, -1)
               : profile.ens.records?.url.replace('https://', '')}
@@ -30,9 +30,9 @@ const Links: React.FC<LinksProps> = ({ profile }) => {
           href={`https://${profile.ens.name}.limo`}
           target='_blank'
           rel='noreferrer'
-          className='flex items-center text-sm gap-1 mb-1 bg-grey rounded-full py-0.5 px-2 pr-0.5 hover:scale-110 transition-all'
+          className='bg-grey mb-1 flex items-center gap-1 rounded-full px-2 py-0.5 pr-0.5 text-sm transition-all hover:scale-110'
         >
-          <p className='dark:text-blue-400 halloween:text-blue-400 text-blue-600 font-semibold'>dweb</p>
+          <p className='halloween:text-blue-400 font-semibold text-blue-600 dark:text-blue-400'>dweb</p>
           <Image src='/assets/icons/dweb.svg' alt='dweb' width={20} height={20} className='rounded-full' />
         </a>
       )}

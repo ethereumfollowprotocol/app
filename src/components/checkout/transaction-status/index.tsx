@@ -77,15 +77,15 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
       </div>
       {chain && (
         <div className='flex flex-col gap-2'>
-          <p className='font-bold text-lg sm:text-xl'>{t('chain')}</p>
+          <p className='text-lg font-bold sm:text-xl'>{t('chain')}</p>
           <div className='flex items-center gap-2'>
-            <ChainIcon chain={chain} className='w-[30px] h-[30px]' />
-            <p className='font-bold text-lg'>{chain.name}</p>
+            <ChainIcon chain={chain} className='h-[30px] w-[30px]' />
+            <p className='text-lg font-bold'>{chain.name}</p>
           </div>
         </div>
       )}
       <TransactionDetails action={currentAction} isLastAction={isLastAction} />
-      <div className='w-full mt-6 gap-8 flex justify-between items-center'>
+      <div className='mt-6 flex w-full items-center justify-between gap-8'>
         <CancelButton
           label={t('back')}
           onClick={() => setCurrentStep(Step.InitiateTransactions)}
@@ -96,14 +96,14 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
           <PrimaryButton
             label={t(isCorrectChain ? 'reinitiate' : 'switch chain')}
             onClick={handleReInitiateActions}
-            className='text-lg w-fit px-4 min-w-32'
+            className='w-fit min-w-32 px-4 text-lg'
           />
         )}
         {showNextButton && (
           <PrimaryButton
             label={t(isCorrectChain ? 'next' : 'switch chain')}
             onClick={handleNextAction}
-            className='text-lg w-32'
+            className='w-32 text-lg'
             disabled={nextButtonIsDisabled}
           />
         )}
@@ -111,7 +111,7 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
           <PrimaryButton
             label={t('finish')}
             onClick={() => onFinish()}
-            className='text-lg w-32'
+            className='w-32 text-lg'
             disabled={finishButtonIsDisabled}
           />
         )}

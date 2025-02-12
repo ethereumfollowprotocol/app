@@ -15,17 +15,17 @@ import Providers from './providers.tsx'
 import { Production } from './production.tsx'
 import { sharedMetadata } from '#/lib/metadata.ts'
 import { THEMES } from '../lib/constants/index.ts'
-import BackgroundImage from 'public/assets/art/waves-background.svg'
+import BackgroundImage from 'public/assets/art/background.jpg'
 
 export const metadata: Metadata = sharedMetadata
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <html lang='en' suppressHydrationWarning={true} className='dark'>
+    <html lang='en' suppressHydrationWarning={true}>
       <HeadTag />
       <body>
-        <ThemeProvider attribute='class' defaultTheme='system' enableSystem={true} themes={THEMES}>
-          <Image src={BackgroundImage} priority={true} alt='background waves' className='background -z-10' />
+        <ThemeProvider attribute='class' enableSystem={true} themes={THEMES}>
+          <Image src={BackgroundImage} priority={true} alt='background image' className='background -z-10' />
           <Toaster richColors={true} />
           <Providers>{children}</Providers>
         </ThemeProvider>

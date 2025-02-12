@@ -62,7 +62,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({ address, className = '', is
 
   return isLoading ? (
     <div className={`rounded-xl ${isBlockedBy ? 'w-[132px]' : 'w-[110px] 2xl:w-[120px]'}`}>
-      <LoadingCell className='h-9 2xl:h-10 w-full rounded-lg' />
+      <LoadingCell className='h-9 w-full rounded-sm 2xl:h-10' />
     </div>
   ) : (
     <div ref={coolModeRef as Ref<HTMLDivElement>}>
@@ -74,7 +74,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({ address, className = '', is
           buttonStyle.border,
           hoverStyle,
           // Base styles are applied before className so they can be overridden
-          'rounded-[11px] 2xl:rounded-xl relative text-[13px] 2xl:text-sm flex h-9 2xl:h-10 items-center w-[110px] 2xl:w-[120px] gap-1.5 transition-all px-2 duration-200 justify-center font-bold',
+          'relative flex h-9 w-[110px] items-center justify-center gap-1.5 rounded-[11px] px-2 text-[13px] font-bold transition-all duration-200 2xl:h-10 2xl:w-[120px] 2xl:rounded-xl 2xl:text-sm',
           className,
         ])}
         onMouseLeave={() => setDisableHover(false)}
@@ -96,7 +96,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({ address, className = '', is
           className='pointer-events-none w-3.5 2xl:w-4'
         />
         <p
-          className='text-wrap break-words max-w-[90px]'
+          className='max-w-[90px] text-wrap break-words'
           style={{
             lineHeight: '0.95rem',
           }}

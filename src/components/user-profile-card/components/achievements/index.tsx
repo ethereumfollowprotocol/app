@@ -24,7 +24,7 @@ const Achievements: React.FC<AchievementsProps> = ({ list, profile, isLoading, i
   const rankTitles = Object.keys(profile?.ranks || {})
   const ranks = Object.values(profile?.ranks || {})
   return (
-    <div className='flex flex-col gap-4 sm:gap-4 p-4 sm:py-6 glass-card border-[3px] border-grey rounded-xl'>
+    <div className='glass-card border-grey flex flex-col gap-4 rounded-xl border-[3px] p-4 sm:gap-4 sm:py-6'>
       <LeaderboardRanks
         ranks={ranks}
         isLoading={isLoading}
@@ -32,11 +32,11 @@ const Achievements: React.FC<AchievementsProps> = ({ list, profile, isLoading, i
         isResponsive={isResponsive}
         isRecommended={isRecommended}
       />
-      <div className='flex flex-wrap gap-2 3xl:gap-3 justify-evenly sm:justify-center'>
+      <div className='3xl:gap-3 flex flex-wrap justify-evenly gap-2 sm:justify-center'>
         {isBadgesLoading || isLoading ? (
           <>
-            <LoadingCell className='w-[90px] h-[90px] rounded-full' />
-            <LoadingCell className='w-[90px] h-[90px] rounded-full' />
+            <LoadingCell className='h-[90px] w-[90px] rounded-full' />
+            <LoadingCell className='h-[90px] w-[90px] rounded-full' />
           </>
         ) : (
           ownedBadges.map((badge) => (
@@ -50,7 +50,7 @@ const Achievements: React.FC<AchievementsProps> = ({ list, profile, isLoading, i
                 alt={badge.collection?.event?.name || ''}
                 width={90}
                 height={90}
-                className='hover:scale-110 transition-all'
+                className='transition-all hover:scale-110'
               />
             </Link>
           ))

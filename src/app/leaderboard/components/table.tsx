@@ -68,38 +68,38 @@ const LeaderboardTable = () => {
 
   return (
     <Fragment>
-      <p className='text-3xl sm:text-4xl font-bold'>{t('leaderboard')}</p>
-      <div className='mt-4 sm:mt-6 mb-4 sm:mb-6 lg:mb-0 flex items-center justify-center flex-wrap gap-4 sm:gap-8'>
+      <p className='text-3xl font-bold sm:text-4xl'>{t('leaderboard')}</p>
+      <div className='mt-4 mb-4 flex flex-wrap items-center justify-center gap-4 sm:mt-6 sm:mb-6 sm:gap-8 lg:mb-0'>
         {LeaderboardStatNames.map((name, i) => (
           <div
             key={`stat ${i}`}
-            className='gradient-border flex flex-col rounded-2xl items-center justify-center h-28 w-[47.5%] sm:w-56'
+            className='gradient-border flex h-28 w-[47.5%] flex-col items-center justify-center rounded-2xl sm:w-56'
           >
             {isLeaderboardStatsLoading || !leaderboardStats ? (
-              <LoadingCell className='h-8 w-24 rounded-lg' />
+              <LoadingCell className='h-8 w-24 rounded-sm' />
             ) : (
-              <p className='font-bold text-2xl md:text-2xl'>
+              <p className='text-2xl font-bold md:text-2xl'>
                 {formatNumberLeaderboard(Number(Object.values(leaderboardStats)[i]))}
               </p>
             )}
-            <p className='font-bold capitalize text-lg text-[#888] dark:text-[#aaa]'>{t(name)}</p>
+            <p className='text-lg font-bold text-[#888] capitalize dark:text-[#aaa]'>{t(name)}</p>
           </div>
         ))}
       </div>
-      <div className='flex w-full gap-1.5 justify-center md:justify-end max-w-[1300px] text-sm mt-4 font-bold text-[#aaaaaa] md:text-[#CDCDCD] italic'>
+      <div className='mt-4 flex w-full max-w-[1300px] justify-center gap-1.5 text-sm font-bold text-[#aaaaaa] italic md:justify-end md:text-[#CDCDCD]'>
         {t('last updated')}
         <span>{isLeaderboardLoading ? <LoadingCell className='h-5 w-16 rounded-md' /> : timeStamp}</span>
       </div>
-      <div className='flex flex-col gap-2 w-full max-w-[1300px]'>
+      <div className='flex w-full max-w-[1300px] flex-col gap-2'>
         <div className='flex md:hidden'>
           <Filters filter={filter} onSelectFilter={onSelectFilter} />
         </div>
         <div className='flex justify-between gap-2'>
           <div className='relative w-full sm:w-[260px] 2xl:w-[300px]'>
-            <div className='rounded-xl w-full group overflow-hidden border-[3px] border-grey sm:text-sm focus:border-text/80 hover:border-text/80 focus-within:border-text/80 transition-colors'>
+            <div className='group border-grey focus:border-text/80 hover:border-text/80 focus-within:border-text/80 w-full overflow-hidden rounded-xl border-[3px] transition-colors sm:text-sm'>
               <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center pl-3' aria-hidden='true'>
                 <FiSearch
-                  className='mr-3 text-xl opacity-30 dark:opacity-60 group-hover:opacity-80 dark:group-hover:opacity-100 group-focus-within:opacity-80 dark:group-focus-within:opacity-100 transition-opacity'
+                  className='mr-3 text-xl opacity-30 transition-opacity group-focus-within:opacity-80 group-hover:opacity-80 dark:opacity-60 dark:group-focus-within:opacity-100 dark:group-hover:opacity-100'
                   aria-hidden='true'
                 />
               </div>
@@ -109,7 +109,7 @@ const LeaderboardTable = () => {
                 placeholder={t('search placeholder')}
                 value={currentSearch}
                 onChange={handleSearchEvent}
-                className='h-[44px] block w-full border-0 font-medium border-transparent pl-4 pr-10 sm:text-sm bg-neutral'
+                className='bg-neutral block h-[44px] w-full border-0 border-transparent pr-10 pl-4 font-medium sm:text-sm'
               />
             </div>
           </div>
@@ -136,7 +136,7 @@ const LeaderboardTable = () => {
             </Suspense>
           </div>
         </div>
-        <div className='glass-card border-grey mt-1 border-[3px] rounded-xl flex flex-col gap-4 p-1 sm:px-4 sm:py-6 lg:px-8 relative'>
+        <div className='glass-card border-grey relative mt-1 flex flex-col gap-4 rounded-xl border-[3px] p-1 sm:px-4 sm:py-6 lg:px-8'>
           {leaderboard
             ?.slice(0, chunk * LEADERBOARD_CHUNK_SIZE)
             .map((entry: LeaderboardItem, index) => (
@@ -163,10 +163,10 @@ const LeaderboardTable = () => {
               <div ref={loadChunkRef} className='h-px w-full' />
             )}
           {!isLoading && leaderboard?.length === 0 && (
-            <div className='flex justify-center flex-col items-center h-40'>
+            <div className='flex h-40 flex-col items-center justify-center'>
               <p className='text-lg font-bold'>No results found</p>
               <p
-                className='transition-colors italic hover:text-gray-700 text-zinc-400 cursor-pointer font-bold'
+                className='cursor-pointer font-bold text-zinc-400 italic transition-colors hover:text-gray-700'
                 onClick={() => resetSearch()}
               >
                 Clear Search

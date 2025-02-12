@@ -26,28 +26,28 @@ const TopRow: React.FC<TopRowProps> = ({ profileList, name, primaryList, isConne
   return (
     <div
       className={cn(
-        'flex gap-2 items-center h-5 absolute px-2 w-full left-0 top-3 font-bold',
+        'absolute top-3 left-0 flex h-5 w-full items-center gap-2 px-2 font-bold',
         profileList ? 'justify-between' : 'justify-end'
       )}
     >
       {profileList && (
-        <p className='text-sm sm:text-sm bg-neutral/80 py-[3px] px-2 rounded-full'>
+        <p className='bg-neutral/80 rounded-full px-2 py-[3px] text-sm sm:text-sm'>
           {t('list')} #{formatNumber(profileList)}
         </p>
       )}
       <div className='flex items-center gap-1'>
         {profileList && profileList !== Number(primaryList) ? (
-          <div ref={clickAwayCardTooltip} className='relative group z-50 cursor-help'>
+          <div ref={clickAwayCardTooltip} className='group relative z-50 cursor-help'>
             <p
               onClick={() => setCardTooltipOpen(!cardTooltipOpen)}
-              className='text-[12px] italic text-end rounded-full py-0.5 px-2 bg-neutral/80'
+              className='bg-neutral/80 rounded-full px-2 py-0.5 text-end text-[12px] italic'
             >
               {t('not primary list')}
             </p>
             <div
               className={`${
                 cardTooltipOpen ? 'block' : 'hidden'
-              } group-hover:block transition-all text-sm w-68 p-2 glass-card border-grey bg-neutral/90 border-[3px] mt-2 rounded-md absolute top-5 right-0`}
+              } glass-card border-grey bg-neutral/90 absolute top-5 right-0 mt-2 w-68 rounded-md border-[3px] p-2 text-sm transition-all group-hover:block`}
             >
               {t('not primary list tooltip')}
             </div>
@@ -57,22 +57,22 @@ const TopRow: React.FC<TopRowProps> = ({ profileList, name, primaryList, isConne
             href={`https://app.ens.domains/${name || ''}`}
             target='_blank'
             rel='noreferrer'
-            className='flex gap-1.5 items-center hover:scale-110 transition-all bg-neutral/80 rounded-full py-[3px] px-2 pl-1'
+            className='bg-neutral/80 flex items-center gap-1.5 rounded-full px-2 py-[3px] pl-1 transition-all hover:scale-110'
           >
             <Image
               alt='edit profile'
               src='/assets/icons/ens.svg'
               width={22}
               height={22}
-              className={cn('cursor-pointer hover:opacity-70 transition-all')}
+              className={cn('cursor-pointer transition-all hover:opacity-70')}
             />
             {/* <FaEdit className="text-[17px] -translate-y-[1px]" /> */}
-            <p className={cn(' text-sm')}>{t('edit profile')}</p>
+            <p className={cn('text-sm')}>{t('edit profile')}</p>
           </a>
         ) : null}
         {refetchProfile && (
           <button
-            className='bg-neutral/80 p-1.5 rounded-full hover:scale-110 transition-all'
+            className='bg-neutral/80 rounded-full p-1.5 transition-all hover:scale-110'
             onClick={() => refetchProfile()}
             aria-label='refresh profile'
           >

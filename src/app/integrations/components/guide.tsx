@@ -37,10 +37,10 @@ const Guide = () => {
   const { t } = useTranslation()
 
   return (
-    <div className='glass-card flex flex-col px-4 py-8 sm:p-6 md:p-8 lg:p-10 items-center xl:items-start rounded-xl border-[3px] w-full max-w-[700px] h-fit gap-4 border-grey'>
-      <h2 className='text-3xl xxs:text-4xl font-bold text-center xl:text-start'>{t('integrate efp')}</h2>
+    <div className='glass-card border-grey flex h-fit w-full max-w-[700px] flex-col items-center gap-4 rounded-xl border-[3px] px-4 py-8 sm:p-6 md:p-8 lg:p-10 xl:items-start'>
+      <h2 className='xxs:text-4xl text-center text-3xl font-bold xl:text-start'>{t('integrate efp')}</h2>
       <p className='xxs:text-lg text-text/80 text-center xl:text-start'>{t('integrate efp description')}</p>
-      <div className='flex flex-row flex-wrap justify-center items-center w-full xl:justify-start mt-4 gap-4 md:gap-6'>
+      <div className='mt-4 flex w-full flex-row flex-wrap items-center justify-center gap-4 md:gap-6 xl:justify-start'>
         {RESOURCES.map((resource) => (
           <Link
             key={resource.name}
@@ -48,11 +48,11 @@ const Guide = () => {
             target='_blank'
             rel='noopener noreferrer'
             className={cn(
-              'flex flex-row w-36 xxs:w-40 sm:w-48 md:w-56 lg:w-64 rounded-xl hover:scale-105 font-semibold transition-transform p-3 xxs:p-4 lg:p-6 text-2xl xxs:text-3xl md:text-4xl lg:text-5xl md:h-24 lg:h-28 justify-between items-center text-text-neutral text-text/80',
+              'xxs:w-40 xxs:p-4 xxs:text-3xl text-text-neutral text-text/80 flex w-36 flex-row items-center justify-between rounded-xl p-3 text-2xl font-semibold transition-transform hover:scale-105 sm:w-48 md:h-24 md:w-56 md:text-4xl lg:h-28 lg:w-64 lg:p-6 lg:text-5xl',
               resource.className
             )}
           >
-            <p className='text-xl xxs:text-2xl md:text-3xl lg:text-4xl'>{resource.name}</p>
+            <p className='xxs:text-2xl text-xl md:text-3xl lg:text-4xl'>{resource.name}</p>
             {resource.icon}
           </Link>
         ))}

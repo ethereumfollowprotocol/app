@@ -32,7 +32,7 @@ const SwipeButtons = ({
   return (
     <>
       <button
-        className='absolute -left-1 sm:left-auto sm:mr-[475px] z-30 sm:z-10 top-48 sm:top-48 rounded-xl w-14 text-lg font-semibold h-14 flex items-center justify-center glass-card border-[3px] border-text/70 transition-all hover:scale-110'
+        className='glass-card border-text/70 absolute top-48 -left-1 z-30 flex h-14 w-14 items-center justify-center rounded-xl border-[3px] text-lg font-semibold transition-all hover:scale-110 sm:top-48 sm:left-auto sm:z-10 sm:mr-[475px]'
         disabled={
           !userAddress ||
           recommendedProfiles.length === 0 ||
@@ -44,7 +44,7 @@ const SwipeButtons = ({
         {t('meh')}
       </button>
       <button
-        className='absolute -right-1 sm:right-auto sm:ml-[445px] z-30 sm:z-10 top-48 sm:top-48 rounded-xl w-14 h-14 flex items-center justify-center pl-1.5 pt-1 text-black btn-grad transition-all hover:scale-110'
+        className='btn-grad absolute top-48 -right-1 z-30 flex h-14 w-14 items-center justify-center rounded-xl pt-1 pl-1.5 text-black transition-all hover:scale-110 sm:top-48 sm:right-auto sm:z-10 sm:ml-[445px]'
         disabled={
           !userAddress ||
           recommendedProfiles.length === 0 ||

@@ -9,7 +9,7 @@ import { HiOutlineDesktopComputer } from 'react-icons/hi'
 
 import i18n from '#/app/i18n'
 import { cn } from '#/lib/utilities'
-import GreenCheck from 'public/assets/icons/check-green.svg'
+import GreenCheck from 'public/assets/icons/ui/check-green.svg'
 
 export const themesWithIcons = [
   {
@@ -54,40 +54,40 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
   const { setTheme, theme: selectedTheme } = useTheme()
 
   return (
-    <div ref={clickAwayThemeRef} className='cursor-pointer group h-full relative w-full'>
+    <div ref={clickAwayThemeRef} className='group relative h-full w-full cursor-pointer'>
       <div
         onClick={() => {
           setThemeMenuOpen(!themeMenuOpen)
           setExternalThemeMenuOpen?.(!themeMenuOpen)
         }}
-        className='flex justify-between items-center rounded-md transition-opacity cursor-pointer group-hover:bg-navItem p-3 w-full'
+        className='group-hover:bg-navItem flex w-full cursor-pointer items-center justify-between rounded-md p-3 transition-opacity'
       >
         <FiArrowLeft className='text-xl' />
         <div className='flex items-center justify-end gap-2'>
           <p className='text-2xl'>{themesWithIcons.find(({ theme }) => theme === selectedTheme)?.icon}</p>
-          <p className='capitalize font-bold'>{t(selectedTheme || 'system')}</p>
+          <p className='font-bold capitalize'>{t(selectedTheme || 'system')}</p>
         </div>
       </div>
       <div
         className={cn(
-          'absolute group-hover:block block h-[250px] lg:h-[174px] z-50 -right-[251px] lg:right-[97.2%] min-w-[246px] -top-[7px] lg:pr-5',
+          'absolute -top-[7px] -right-[251px] z-50 block h-[250px] min-w-[246px] group-hover:block lg:left-[97.2%] lg:h-[174px] lg:pr-5',
           themeMenuOpen ? 'block' : 'hidden'
         )}
       >
-        <div className='flex flex-col p-1 gap-2 w-full max-h-[80vh] h-full lg:max-h-[90vh] border-[3px] rounded-lg bg-neutral border-grey shadow-md'>
+        <div className='bg-neutral border-grey flex h-full max-h-[80vh] w-full flex-col gap-2 rounded-sm border-[3px] p-1 shadow-md lg:max-h-[90vh]'>
           <div
             onClick={() => {
               setThemeMenuOpen(false)
               setExternalThemeMenuOpen?.(false)
             }}
-            className='flex lg:hidden justify-between items-center w-full hover:bg-navItem p-3 rounded-md transition-opacity cursor-pointer'
+            className='hover:bg-navItem flex w-full cursor-pointer items-center justify-between rounded-md p-3 transition-opacity lg:hidden'
           >
             <FiArrowLeft className='text-xl' />
             <p className='font-bold'>Back</p>
           </div>
           {themesWithIcons.map(({ theme, icon, language }) => (
             <div
-              className='flex items-center relative p-3 pl-8 w-full gap-2 rounded-md hover:bg-navItem'
+              className='hover:bg-navItem relative flex w-full items-center gap-2 rounded-md p-3 pl-8'
               key={theme}
               onClick={() => {
                 setTheme(theme as ThemeType)
@@ -100,10 +100,10 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
               }}
             >
               {selectedTheme === theme && (
-                <Image src={GreenCheck} alt='List selected' width={16} className='absolute left-2 top-[19px]' />
+                <Image src={GreenCheck} alt='List selected' width={16} className='absolute top-[19px] left-2' />
               )}
               <p className='text-2xl'>{icon}</p>
-              <p className='text-nowrap capitalize font-bold'>{t(theme)}</p>
+              <p className='font-bold text-nowrap capitalize'>{t(theme)}</p>
             </div>
           ))}
         </div>

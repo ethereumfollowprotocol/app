@@ -20,7 +20,7 @@ export const Avatar = ({
   return (
     <ImageWithFallback
       alt={`${name}'s avatar`}
-      className={cn('rounded-full my-auto', size)}
+      className={cn('my-auto rounded-full', size)}
       height={50}
       width={50}
       onClick={() => onClick?.()}

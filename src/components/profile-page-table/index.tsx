@@ -106,22 +106,22 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
     const noResults = {
       following:
         search.length > 2 ? (
-          <div className='justify-center h-full flex items-center font-bold'>{t('none')}</div>
+          <div className='flex h-full items-center justify-center font-bold'>{t('none')}</div>
         ) : (
-          <div className='text-center h-full font-bold'>
-            <div className='flex flex-col justify-center h-full gap-4 items-center'>
+          <div className='h-full text-center font-bold'>
+            <div className='flex h-full flex-col items-center justify-center gap-4'>
               <p className='text-xl italic'>
                 {t(isProfile ? 'following myprofile empty first' : 'following empty first')}
               </p>
-              {isProfile && <p className='text-base italic w-3/4 max-w-96'>{t('following myprofile empty second')}</p>}
+              {isProfile && <p className='w-3/4 max-w-96 text-base italic'>{t('following myprofile empty second')}</p>}
             </div>
           </div>
         ),
       followers:
         search.length > 2 ? (
-          <div className='justify-center h-full flex items-center font-bold'>{t('none')}</div>
+          <div className='flex h-full items-center justify-center font-bold'>{t('none')}</div>
         ) : (
-          <p className='text-xl italic flex h-full justify-center items-center min-h-12'>
+          <p className='flex h-full min-h-12 items-center justify-center text-xl italic'>
             {t(isProfile ? 'followers myprofile empty' : 'followers empty')}
           </p>
         ),
@@ -132,7 +132,7 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
     return (
       <div
         className={cn(
-          'flex flex-col w-full gap-4 py-4 px-0 sm:px-4 border-[3px] rounded-2xl border-grey',
+          'border-grey flex w-full flex-col gap-4 rounded-2xl border-[3px] px-0 py-4 sm:px-4',
           !(isLoading || isFetchingMore) && 'pb-0 sm:pb-0',
           BLOCKED_MUTED_TABS.includes(title) ? 'bg-neutral/70' : 'glass-card',
           customClass
@@ -153,7 +153,7 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
           toggleSelectedTags={toggleSelectedTags}
           isShowingBlocked={isShowingBlocked}
         />
-        {profilesEmpty && <div className='text-center font-bold h-[152px] py-4 content-center px-2'>{noResults}</div>}
+        {profilesEmpty && <div className='h-[152px] content-center px-2 py-4 text-center font-bold'>{noResults}</div>}
         <div
           ref={ref}
           className={cn(
@@ -174,7 +174,7 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
             isBlockedList={isShowingBlocked}
             isBlockedBy={title === 'Blocked/Muted By' && isProfile}
           />
-          <div ref={loadMoreRef} className='h-px w-full mb-4' />
+          <div ref={loadMoreRef} className='mb-4 h-px w-full' />
           {isFollowingTable && isProfile && (lists?.lists?.length || 0) === 0 && (
             <Recommendations limit={40} endpoint='recommended' header={t('recommendations')} className='py-2' />
           )}

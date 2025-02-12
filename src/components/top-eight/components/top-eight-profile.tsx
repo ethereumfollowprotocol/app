@@ -52,28 +52,28 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
   return (
     <div
       className={cn(
-        'flex relative flex-col group w-[129px] 2xl:w-36 justify-between px-0.5 py-4 rounded-2xl items-center gap-2 hover:border-[#A2A2A277]',
+        'group relative flex w-[129px] flex-col items-center justify-between gap-2 rounded-2xl px-0.5 py-4 hover:border-[#A2A2A277] 2xl:w-36',
         isEditing
-          ? 'cursor-pointer border-[3px] border-transparent w-[144px] h-[186px]'
-          : 'w-[129px] 2xl:w-36 hover:bg-text/5 h-[180px]',
+          ? 'h-[186px] w-[144px] cursor-pointer border-[3px] border-transparent'
+          : 'hover:bg-text/5 h-[180px] w-[129px] 2xl:w-36',
         isAddingToTopEight && 'border-[3px] border-green-500/50',
-        isRemovingFromTopEight && 'border-[3px] dark:border-red-500/70 border-red-400/70'
+        isRemovingFromTopEight && 'border-[3px] border-red-400/70 dark:border-red-500/70'
       )}
       onClick={onClick}
     >
       {isEditing && (
         <div
           className={cn(
-            'absolute top-1 right-1 p-1 rounded-full text-white',
+            'absolute top-1 right-1 rounded-full p-1 text-white',
             isAddingToTopEight && 'bg-green-500/50',
             isRemovingFromTopEight && 'bg-red-400/70',
-            !(isAddingToTopEight || isRemovingFromTopEight) && 'bg-[#A2A2A277] group-hover:block hidden '
+            !(isAddingToTopEight || isRemovingFromTopEight) && 'hidden bg-[#A2A2A277] group-hover:block'
           )}
         >
           {isAddingToTopEight ? <HiPlus /> : <IoClose />}
         </div>
       )}
-      <div className='flex flex-col w-full items-center gap-1'>
+      <div className='flex w-full flex-col items-center gap-1'>
         {isEnsProfileLoading ? (
           <LoadingCell className='h-[50px] w-[50px] rounded-full' />
         ) : (
@@ -86,13 +86,13 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
           </Link>
         )}
         {isEnsProfileLoading ? (
-          <LoadingCell className='h-7 w-24 rounded-lg' />
+          <LoadingCell className='h-7 w-24 rounded-sm' />
         ) : (
           <Link
             href={`/${profile.address}`}
             className={cn(
-              'text-lg font-bold max-w-full truncate',
-              isEditing ? 'pointer-events-none' : 'hover:scale-110 hover:opacity-75 transition-all'
+              'max-w-full truncate text-lg font-bold',
+              isEditing ? 'pointer-events-none' : 'transition-all hover:scale-110 hover:opacity-75'
             )}
           >
             {profileName && isValidEnsName(profileName) ? ens_beautify(profileName) : truncateAddress(profile.address)}
@@ -102,7 +102,7 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
       {followerTag && (
         <div
           className={cn(
-            'rounded-full absolute font-bold text-[10px] flex bottom-[62px] items-center justify-center bg-zinc-300 h-5 min-w-20 w-fit px-1',
+            'absolute bottom-[62px] flex h-5 w-fit min-w-20 items-center justify-center rounded-full bg-zinc-300 px-1 text-[10px] font-bold',
             followerTag.className,
             'text-darkGrey'
           )}

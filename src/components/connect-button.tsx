@@ -32,10 +32,10 @@ const ConnectButton: React.FC<ConnectButtonProps> = () => {
   return (
     <button
       type='button'
-      className='z-50 px-1 pl-[3px] transition-all border-[3px] w-60 gap-[5px] hover:scale-105 cursor-pointer flex justify-center items-center h-[54px] glass-card rounded-full connect-button'
+      className='glass-card connect-button z-50 flex h-[54px] w-60 cursor-pointer items-center justify-center gap-[5px] rounded-full border-[3px] px-1 pl-[3px] transition-all hover:scale-105'
       onClick={() => openConnectModal?.()}
     >
-      <p className='font-bold text-lg'>{t('connect')}</p>
+      <p className='text-lg font-bold'>{t('connect')}</p>
     </button>
   )
 }

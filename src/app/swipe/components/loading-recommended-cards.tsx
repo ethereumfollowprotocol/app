@@ -22,14 +22,14 @@ const LoadingRecommendedCards = ({
 
   return userAddress ? (
     gone.size === recommendedProfiles.length && !(isFetchingNextPage || isLoading) ? (
-      <div className='flex border-[3px] items-center border-[#FFDBD9] dark:border-[#a36d7d] halloween:border-[#a36d7d] sm:mr-[14px] rounded-xl bg-neutral h-[536px] w-full xxs:max-w-92'>
-        <p className='text-center w-full text-lg font-semibold px-6'>{t('no more profiles')}</p>
+      <div className='halloween:border-[#a36d7d] bg-neutral xxs:max-w-92 flex h-[536px] w-full items-center rounded-xl border-[3px] border-[#FFDBD9] sm:mr-[14px] dark:border-[#a36d7d]'>
+        <p className='w-full px-6 text-center text-lg font-semibold'>{t('no more profiles')}</p>
       </div>
     ) : (
       (isLoading || isFetchingNextPage || recommendedProfiles.length === 0) &&
       new Array(3).fill(1).map((_, i) => (
         <div
-          className='h-fit w-full xxs:max-w-92 absolute top-0 z-10 sm:mr-[14px]'
+          className='xxs:max-w-92 absolute top-0 z-10 h-fit w-full sm:mr-[14px]'
           key={i}
           style={{
             marginTop: `${30 - i * 10}px`,
@@ -40,7 +40,7 @@ const LoadingRecommendedCards = ({
       ))
     )
   ) : (
-    <div className='h-fit w-full sm:max-w-92 absolute top-0 z-10 sm:mr-[14px]'>
+    <div className='absolute top-0 z-10 h-fit w-full sm:mr-[14px] sm:max-w-92'>
       <Suspense>
         <UserProfileCard isResponsive={false} hideFollowButton={true} isRecommended={true} />
       </Suspense>

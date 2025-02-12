@@ -12,7 +12,6 @@ import Logo from 'public/assets/logo.svg'
 import SwipeButtons from './swipeButtons'
 import UserProfileCard from '#/components/user-profile-card'
 import LoadingRecommendedCards from './loading-recommended-cards'
-import HalloweenEmoji from 'public/assets/icons/halloween-emoji.svg'
 import { trans, useRecommendedProfilesCards } from './useRescommendedProfilesCards'
 
 const RecommendedCards = () => {
@@ -38,7 +37,7 @@ const RecommendedCards = () => {
   const { address: userAddress } = useAccount()
 
   return (
-    <div className='flex w-full items-center justify-start flex-col'>
+    <div className='flex w-full flex-col items-center justify-start'>
       {isClient && (
         <audio
           ref={soundRef}
@@ -53,7 +52,7 @@ const RecommendedCards = () => {
       )}
       <div
         ref={animatedRef}
-        className='pointer-events-none h-screen w-screen fixed -right-[101vw] top-0 z-50 delay-150'
+        className='pointer-events-none fixed top-0 -right-[101vw] z-50 h-screen w-screen delay-150'
         onAnimationEnd={(e) => {
           e.stopPropagation()
           handleStopAnimationAndSound()
@@ -62,17 +61,16 @@ const RecommendedCards = () => {
         {new Array(10).fill(1).map((index) => {
           const randomLeft = Math.random() * 80
           const randomTop = 10 + Math.random() * 30
-          const icon = resolvedTheme === 'halloween' ? HalloweenEmoji : Logo
 
           return (
             <Image
               key={`icons-${index}-${randomLeft}-${randomTop}`}
-              src={icon}
+              src={Logo}
               style={{
                 top: `${randomTop}%`,
                 left: `${randomLeft}%`,
               }}
-              className='animate-spin absolute repeat-infinite'
+              className='repeat-infinite absolute animate-spin'
               alt='follow icon'
               width={32}
               height={32}
@@ -80,7 +78,7 @@ const RecommendedCards = () => {
           )
         })}
       </div>
-      <div className='flex flex-col w-full items-center justify-start h-fit min-h-[500px] sm:min-h-[680px] relative'>
+      <div className='relative flex h-fit min-h-[500px] w-full flex-col items-center justify-start sm:min-h-[680px]'>
         <LoadingRecommendedCards
           userAddress={userAddress}
           isLoading={isLoading}
@@ -96,7 +94,7 @@ const RecommendedCards = () => {
               return (
                 // @ts-expect-error animated.div is a valid component
                 <animated.div
-                  className='h-fit w-full max-w-92 absolute top-0 will-change-transform z-20 sm:mr-[14px]'
+                  className='absolute top-0 z-20 h-fit w-full max-w-92 will-change-transform sm:mr-[14px]'
                   key={`${recommendedProfiles[i]?.address}-${i}`}
                   style={{ x, y }}
                 >
@@ -134,11 +132,11 @@ const RecommendedCards = () => {
         />
       </div>
       <button
-        className='cursor-pointer z-40 rounded-full fixed bottom-4 sm:bottom-10 lg:bottom-20 bg-text/20 flex flex-row-reverse items-center gap-2 hover:bg-text/40 transition-all hover:scale-110 px-3 py-2 text-xl disabled:hidden'
+        className='bg-text/20 hover:bg-text/40 fixed bottom-4 z-40 flex cursor-pointer flex-row-reverse items-center gap-2 rounded-full px-3 py-2 text-xl transition-all hover:scale-110 disabled:hidden sm:bottom-10 lg:bottom-20'
         onClick={onSwipeBack}
         disabled={didSwipeBack || gone.size === 0}
       >
-        <p className='font-semibold text-lg'>{t('undo')}</p> <HiArrowUturnDown />
+        <p className='text-lg font-semibold'>{t('undo')}</p> <HiArrowUturnDown />
       </button>
     </div>
   )

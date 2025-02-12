@@ -18,9 +18,9 @@ const LeaderboardSummary = () => {
   const displayedEmojies = leaderboardFiltersEmojies.slice((page - 1) * 2, page * 2)
 
   return (
-    <div className='glass-card mb-3 w-full xl:w-1/2 xl:max-w-[900px] rounded-2xl flex flex-col gap-3 2xl:gap-4 p-1 py-3 border-[3px] border-grey'>
-      <div className='w-full flex items-center justify-between p-2 sm:px-4'>
-        <h3 className='text-2xl 2xl:text-3xl font-bold'>{t('leaderboard')}</h3>
+    <div className='glass-card border-grey mb-3 flex w-full flex-col gap-3 rounded-2xl border-[3px] p-1 py-3 xl:w-1/2 xl:max-w-[900px] 2xl:gap-4'>
+      <div className='flex w-full items-center justify-between p-2 sm:px-4'>
+        <h3 className='text-2xl font-bold 2xl:text-3xl'>{t('leaderboard')}</h3>
         <Suspense>
           <PageSelector
             page={page}
@@ -44,12 +44,12 @@ const LeaderboardSummary = () => {
 
           return (
             <div key={title} className='flex flex-col gap-1 2xl:gap-1.5'>
-              <h4 className='text-xl flex gap-2 sm:text-xl 2xl:text-2xl font-bold capitalize px-2 sm:px-4'>
+              <h4 className='flex gap-2 px-2 text-xl font-bold capitalize sm:px-4 sm:text-xl 2xl:text-2xl'>
                 <p>{t(title)}</p>
                 <Image src={displayedEmojies[index]} alt={title} width={24} height={24} className='inline-block' />
               </h4>
               {isLeaderboardSummaryLoading ? (
-                <div className='animate-pulse flex flex-col'>
+                <div className='flex animate-pulse flex-col'>
                   {new Array(5).fill(null).map((_, index) => (
                     <LoadingRow key={index} />
                   ))}

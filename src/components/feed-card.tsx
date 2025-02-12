@@ -8,7 +8,7 @@ import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import { cn } from '#/lib/utilities'
 import LoadingSpinner from './loaders/loading-spinner'
-import InterfaceLight from 'public/assets/icons/interface.png'
+import InterfaceLight from 'public/assets/icons/socials/interface.png'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 interface FeedCardProps {
@@ -31,46 +31,46 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
 
   return (
     <div
-      className={cn('flex glass-card border-grey border-[3px] items-center sm:items-end flex-col gap-1', cardSize)}
+      className={cn('glass-card border-grey flex flex-col items-center gap-1 border-[3px] sm:items-end', cardSize)}
       style={{
         backdropFilter: 'blur(1rem)',
       }}
     >
       <div
         className={cn(
-          'w-full flex items-start px-4 xs:px-0 xs:items-center',
+          'xs:px-0 xs:items-center flex w-full items-start px-4',
           title ? 'justify-between' : 'justify-end'
         )}
       >
         {title && (
           // <Link href={'/feed'} className='hover:scale-110 transition-transform'>
-          <h2 className='text-2xl 2xl:text-3xl font-bold'>{title}</h2>
+          <h2 className='text-2xl font-bold 2xl:text-3xl'>{title}</h2>
           // </Link>
         )}
         <a
           href='https://www.interface.social/'
           target='_blank'
           rel='noreferrer'
-          className='hover:scale-110 transition-transform'
+          className='transition-transform hover:scale-110'
         >
-          <Image src={InterfaceLight} alt='Interface' width={150} height={35} className='w-36 h-9' />
+          <Image src={InterfaceLight} alt='Interface' width={150} height={35} className='h-9 w-36' />
         </a>
       </div>
       {description && (
-        <p className='w-full px-4 xs:px-0 text-sm mt-3 text-center xs:text-start font-semibold text-text/80'>
+        <p className='xs:px-0 xs:text-start text-text/80 mt-3 w-full px-4 text-center text-sm font-semibold'>
           {description}
         </p>
       )}
       <div
         className={cn(
-          'w-full max-w-[900px] mt-4 flex justify-center overflow-hidden',
+          'mt-4 flex w-full max-w-[900px] justify-center overflow-hidden',
           contentSize,
           !listsIsLoading && (lists?.lists?.length || 0) === 0 ? 'h-[60vh]' : 'h-[100000vh]'
         )}
       >
         {userAddress ? (
           listsIsLoading ? (
-            <div className='h-full w-full flex items-center justify-center bg-neutral'>
+            <div className='bg-neutral flex h-full w-full items-center justify-center'>
               <LoadingSpinner />
             </div>
           ) : (lists?.lists?.length || 0) > 0 ? (
@@ -78,17 +78,17 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
               key={`${userAddress} ${resolvedTheme}`}
               title='Feed'
               src={url}
-              className='w-full h-full bg-neutral'
+              className='bg-neutral h-full w-full'
             />
           ) : (
-            <div className='w-full h-full max-h-[60vh] flex items-center font-semibold flex-col justify-center text-center'>
+            <div className='flex h-full max-h-[60vh] w-full flex-col items-center justify-center text-center font-semibold'>
               <p className='text-lg font-bold'>{t('following myprofile empty first')}</p>
-              <p className='text-base italic w-3/4 max-w-96'>{t('following myprofile empty second')}</p>
+              <p className='w-3/4 max-w-96 text-base italic'>{t('following myprofile empty second')}</p>
             </div>
           )
         ) : (
-          <div className='h-full w-full flex items-center justify-center'>
-            <button className='connect-button text-xl font-bold w-64 h-fit p-3' onClick={() => openConnectModal?.()}>
+          <div className='flex h-full w-full items-center justify-center'>
+            <button className='connect-button h-fit w-64 p-3 text-xl font-bold' onClick={() => openConnectModal?.()}>
               {t('connect')}
             </button>
           </div>

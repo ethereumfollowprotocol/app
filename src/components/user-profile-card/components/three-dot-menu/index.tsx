@@ -66,21 +66,21 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
   return (
     <div className={showMoreOptions ? 'block' : 'hidden'} ref={threeDotMenuRef}>
       <div
-        className='flex gap-[3px] px-1.5 py-2 rounded-md bg-zinc-300 cursor-pointer items-center hover:opacity-50 transition-all hover:scale-110'
+        className='flex cursor-pointer items-center gap-[3px] rounded-md bg-zinc-300 px-1.5 py-2 transition-all hover:scale-110 hover:opacity-50'
         onClick={() => setThreeDotMenuOpen(!threeDotMenuOpen)}
       >
-        <div className='h-1 w-1 bg-black rounded-full'></div>
-        <div className='h-1 w-1 bg-black rounded-full'></div>
-        <div className='h-1 w-1 bg-black rounded-full'></div>
+        <div className='h-1 w-1 rounded-full bg-black'></div>
+        <div className='h-1 w-1 rounded-full bg-black'></div>
+        <div className='h-1 w-1 rounded-full bg-black'></div>
       </div>
       <div
         className={cn(
           threeDotMenuOpen && showMoreOptions ? 'flex' : 'hidden',
-          'absolute top-9 right-0 flex-col items-center z-50 gap-2 w-fit p-1  bg-neutral border-grey border-[3px] rounded-xl drop-shadow-lg'
+          'bg-neutral border-grey absolute top-9 right-0 z-50 w-fit flex-col items-center gap-2 rounded-xl border-[3px] p-1 drop-shadow-lg'
         )}
       >
         {!isConnectedUserCard && (
-          <div className='flex w-full items-center justify-center pt-2 flex-col gap-3'>
+          <div className='flex w-full flex-col items-center justify-center gap-3 pt-2'>
             <RestrictButton blockCoolMode={blockCoolMode} onClickOption={onClickOption} text='Block' type='block' />
             <RestrictButton blockCoolMode={muteCoolMode} onClickOption={onClickOption} text='Mute' type='mute' />
           </div>
@@ -92,13 +92,13 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
               setThreeDotMenuOpen(false)
             }}
             text='qr code'
-            icon={<FaQrcode className='text-lg mr-1' />}
+            icon={<FaQrcode className='mr-1 text-lg' />}
           />
         )}
         {!isConnectedUserCard && (
           <button
             onClick={toggleTopEight}
-            className='rounded-lg text-nowrap cursor-pointer hover:bg-text/5 transition-colors w-full relative text-xs flex items-center gap-1 justify-center font-bold p-3'
+            className='hover:bg-text/5 relative flex w-full cursor-pointer items-center justify-center gap-1 rounded-sm p-3 text-xs font-bold text-nowrap transition-colors'
           >
             {t(
               (isInTopEight || isAddingToTopEight) && !isRemovingFromTopEight

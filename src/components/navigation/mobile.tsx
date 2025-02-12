@@ -15,7 +15,7 @@ const Mobile: React.FC = () => {
   return (
     <nav
       className={cn(
-        'fixed mx-auto bottom-6 z-50 flex justify-center w-full lg:hidden',
+        'fixed bottom-6 z-50 mx-auto flex w-full justify-center lg:hidden',
         pathname === '/cart' && cart.length > 0 && !isCheckingOut && 'bottom-28 sm:bottom-32'
       )}
     >

@@ -47,10 +47,10 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
 
   return (
     <div className='flex flex-col gap-1'>
-      <p className='font-bold text-lg'>{option}</p>
+      <p className='text-lg font-bold'>{option}</p>
       {isSettingsLoading ? (
-        <div className='p-3 font-medium truncate rounded-lg w-full bg-neutral/70 disabled:text-zinc-400 disabled:cursor-not-allowed'>
-          <LoadingCell className='w-full h-7 rounded-md' />
+        <div className='bg-neutral/70 w-full truncate rounded-sm p-3 font-medium disabled:cursor-not-allowed disabled:text-zinc-400'>
+          <LoadingCell className='h-7 w-full rounded-md' />
         </div>
       ) : (
         <input
@@ -62,13 +62,13 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
             setValue(input)
           }}
           disabled={!isEditingSettings || connectedAddress?.toLowerCase() !== disableValue?.toLowerCase()}
-          className='p-3 font-medium truncate rounded-lg w-full bg-neutral/70 disabled:text-zinc-400 disabled:cursor-not-allowed'
+          className='bg-neutral/70 w-full truncate rounded-sm p-3 font-medium disabled:cursor-not-allowed disabled:text-zinc-400'
         />
       )}
       {(isSettingsLoading || value.includes('.') || resolvedProfile?.name) && (
         <div
           className={cn(
-            'font-medium flex items-center gap-2 h-10 text-sm',
+            'flex h-10 items-center gap-2 text-sm font-medium',
             (value.includes('.') && resolvedAddress && resolvedAddress?.length > 0) || resolvedProfile?.name
               ? 'text-text/80'
               : 'text-red-400'
@@ -76,8 +76,8 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
         >
           {isSettingsLoading || isLoading || isNameLoading ? (
             <>
-              <LoadingCell className='w-8 h-8 rounded-full' />
-              <LoadingCell className='w-full h-5 rounded-md' gradient={LIGHT_LOADING_GRADIENT} />
+              <LoadingCell className='h-8 w-8 rounded-full' />
+              <LoadingCell className='h-5 w-full rounded-md' gradient={LIGHT_LOADING_GRADIENT} />
             </>
           ) : (
             <>
@@ -86,7 +86,7 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
                 size='h-8 w-8 rounded-full'
                 avatarUrl={resolvedProfile?.avatar}
               />
-              <p className='font-bold truncate'>
+              <p className='truncate font-bold'>
                 {value.includes('.')
                   ? resolvedAddress && resolvedAddress?.length > 0
                     ? resolvedAddress

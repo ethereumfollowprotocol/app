@@ -12,9 +12,9 @@ const LatestFollowers = () => {
   const isLatestFollowersLoading = isLoading || isFetchingNextPage || isFetchingPreviousPage
 
   return (
-    <div className='glass-card w-full px-2 py-4 sm:p-4 xl:p-3 flex flex-col gap-3 2xl:gap-4 rounded-2xl border-[3px] border-grey'>
+    <div className='glass-card border-grey flex w-full flex-col gap-3 rounded-2xl border-[3px] px-2 py-4 sm:p-4 xl:p-3 2xl:gap-4'>
       <div className='flex w-full items-center justify-between'>
-        <h2 className='text-2xl 2xl:text-3xl w-full p-2 font-bold'>{t('latest followers')}</h2>
+        <h2 className='w-full p-2 text-2xl font-bold 2xl:text-3xl'>{t('latest followers')}</h2>
         <Suspense>
           <PageSelector
             page={subPage}
@@ -46,7 +46,7 @@ const LatestFollowers = () => {
         isLoading={isLatestFollowersLoading}
       />
       {!isLoading && displayedProfiles?.length === 0 && (
-        <div className='w-full lg:h-[638px] flex justify-center items-center font-bold italic text-lg'>
+        <div className='flex w-full items-center justify-center text-lg font-bold italic lg:h-[638px]'>
           {t('no followers')}
         </div>
       )}
