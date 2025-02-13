@@ -15,7 +15,7 @@ import Providers from './providers.tsx'
 import { Production } from './production.tsx'
 import { sharedMetadata } from '#/lib/metadata.ts'
 import { THEMES } from '../lib/constants/index.ts'
-import BackgroundImage from 'public/assets/art/background.jpg'
+import BackgroundImage from 'public/assets/art/background.png'
 
 export const metadata: Metadata = sharedMetadata
 
