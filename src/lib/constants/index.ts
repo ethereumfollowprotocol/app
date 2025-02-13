@@ -1,27 +1,30 @@
-import { MdSwipe } from 'react-icons/md'
-import { IoHome, IoPerson, IoTrophy } from 'react-icons/io5'
-
 import type { FollowSortType } from '#/types/requests'
 import type { ProfileTableTitleType, ProfileTabType } from '#/types/common'
 
-import FireEmoji from 'public/assets/icons/emojis/fire.svg'
-import EyesEmoji from 'public/assets/icons/emojis/eyes.svg'
+import HomeIcon from 'public/assets/icons/ui/home.svg'
+import SwipeIcon from 'public/assets/icons/ui/swipe.svg'
+import PersonIcon from 'public/assets/icons/ui/person.svg'
+import FireEmoji from 'public/assets/icons/emojis/fire.svg?url'
+import EyesEmoji from 'public/assets/icons/emojis/eyes.svg?url'
 import GithubIcon from 'public/assets/icons/socials/github.svg'
-import DiscordIcon from 'public/assets/icons/socials/discord.svg'
-import TwitterIcon from 'public/assets/icons/socials/twitter.svg'
-import HuggingEmoji from 'public/assets/icons/emojis/hugging.svg'
-import TelegramIcon from 'public/assets/icons/socials/telegram.svg'
-import StarEyesEmoji from 'public/assets/icons/emojis/star-eyes.svg'
-import EtherscanIcon from 'public/assets/icons/socials/etherscan.svg'
+import DiscordIcon from 'public/assets/icons/socials/discord.svg?url'
+import TwitterIcon from 'public/assets/icons/socials/twitter.svg?url'
+import HuggingEmoji from 'public/assets/icons/emojis/hugging.svg?url'
+import TelegramIcon from 'public/assets/icons/socials/telegram.svg?url'
+import StarEyesEmoji from 'public/assets/icons/emojis/star-eyes.svg?url'
+import LeaderboardIcon from 'public/assets/icons/ui/leaderboard.svg'
+import EtherscanIcon from 'public/assets/icons/socials/etherscan.svg?url'
 import PirateFlagEmoji from 'public/assets/icons/flags/pirate-flag.svg'
-import GithubIconLight from 'public/assets/icons/socials/github-white.svg'
-import EtherscanIconLight from 'public/assets/icons/socials/etherscan-light.svg'
+import GithubIconLight from 'public/assets/icons/socials/github-white.svg?url'
+import EtherscanIconLight from 'public/assets/icons/socials/etherscan-light.svg?url'
 
 export const APP_NAME = 'Ethereum Follow Protocol'
 export const APP_NAME_SHORT = 'EFP'
 export const APP_DESCRIPTION = 'A native Ethereum protocol for following and tagging Ethereum accounts.'
 export const APP_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:4321'
 export const ENS_SUBGRAPH_URL = `https://gateway-arbitrum.network.thegraph.com/api/${process.env.NEXT_PUBLIC_ENS_SUBGRAPH_API_KEY}/subgraphs/id/5XqPmWe6gjyrJtFn9cLy237i4cWw2j9HcUJEXsP5qGtH`
+
+export const DEFAULT_AVATAR_URL = 'https://efp.app/assets/art/default-avatar.svg'
 
 export const FETCH_LIMIT_PARAM = 12
 export const LEADERBOARD_CHUNK_SIZE = 20
@@ -48,26 +51,26 @@ export const NAV_ITEMS = [
   {
     href: () => '/',
     name: 'home',
-    icon: IoHome,
-    hiddenOnDesktop: true,
+    icon: HomeIcon,
+    hiddenOnDisconnected: false,
   },
   {
     href: (url?: string) => `/${url ?? 'profile'}`,
     name: 'profile',
-    icon: IoPerson,
-    hiddenOnDesktop: true,
+    icon: PersonIcon,
+    hiddenOnDisconnected: true,
   },
   {
     href: () => '/swipe',
     name: 'swipe',
-    icon: MdSwipe,
-    hiddenOnDesktop: true,
+    icon: SwipeIcon,
+    hiddenOnDisconnected: true,
   },
   {
     href: () => '/leaderboard',
     name: 'leaderboard',
-    icon: IoTrophy,
-    hiddenOnDesktop: true,
+    icon: LeaderboardIcon,
+    hiddenOnDisconnected: false,
   },
 ]
 

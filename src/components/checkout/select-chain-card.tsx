@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import type { Chain } from 'viem/chains'
 import { useTranslation } from 'react-i18next'
 import { useChainId, useSwitchChain, type Config, type UseChainsReturnType } from 'wagmi'
@@ -6,7 +5,7 @@ import { useChainId, useSwitchChain, type Config, type UseChainsReturnType } fro
 import type { ChainWithDetails } from '#/lib/wagmi'
 import { ChainIcon } from '#/components/chain-icon'
 import { DEFAULT_CHAIN } from '#/lib/constants/chains'
-import GreenCheck from 'public/assets/icons/ui/check-green.svg'
+import Check from 'public/assets/icons/ui/check.svg'
 import CancelButton from '#/components/buttons/cancel-button'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import PrimaryButton from '#/components/buttons/primary-button'
@@ -104,15 +103,7 @@ function ChainItem({
 
   return (
     <div className='relative flex items-center gap-3 hover:cursor-pointer' onClick={() => onClick(chain.id)}>
-      {isSelected && (
-        <Image
-          src={GreenCheck}
-          alt='selected'
-          height={32}
-          width={32}
-          className='absolute left-0 -ml-8 text-green-500 sm:-ml-12'
-        />
-      )}
+      {isSelected && <Check className='absolute left-0 -ml-8 text-green-500 sm:-ml-12' />}
       <ChainIcon chain={chain as ChainWithDetails} className={'h-[50px] w-[50px]'} />
       <div className='flex flex-col items-start'>
         <p className='text-sm'>{chain?.custom?.chainDetail as string}</p>

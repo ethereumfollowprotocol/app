@@ -1,7 +1,7 @@
 import React from 'react'
 import type { ProfileDetailsResponse } from '#/types/requests'
-import Image from 'next/image'
 import { FaLink } from 'react-icons/fa'
+import DwebIcon from 'public/assets/icons/dweb.svg'
 
 interface LinksProps {
   profile: ProfileDetailsResponse
@@ -33,7 +33,7 @@ const Links: React.FC<LinksProps> = ({ profile }) => {
           className='bg-grey mb-1 flex items-center gap-1 rounded-full px-2 py-0.5 pr-0.5 text-sm transition-all hover:scale-110'
         >
           <p className='halloween:text-blue-400 font-semibold text-blue-600 dark:text-blue-400'>dweb</p>
-          <Image src='/assets/icons/dweb.svg' alt='dweb' width={20} height={20} className='rounded-full' />
+          <DwebIcon className='rounded-full' />
         </a>
       )}
     </div>

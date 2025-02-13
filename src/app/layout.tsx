@@ -25,7 +25,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <HeadTag />
       <body>
         <ThemeProvider attribute='class' enableSystem={true} themes={THEMES}>
-          <Image src={BackgroundImage} priority={true} alt='background image' className='background -z-10' />
+          <Image src={BackgroundImage} priority={true} alt='background image' fill className='background -z-10' />
           <Toaster richColors={true} />
           <Providers>{children}</Providers>
         </ThemeProvider>
@@ -66,7 +66,7 @@ const HeadTag = () => {
 
       {/* Preload crucial assets */}
       <link rel='preload' href='/assets/logo.svg' as='image' />
-      <link rel='preload' href='/assets/icons/unfollow-emoji.svg' as='image' />
+      <link rel='preload' href='/assets/icons/emojis/unfollow-emoji.svg' as='image' />
     </head>
   )
 }

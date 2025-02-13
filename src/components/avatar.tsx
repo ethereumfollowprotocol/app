@@ -2,7 +2,7 @@ import type { GetEnsAvatarReturnType } from 'viem'
 
 import { cn } from '#/lib/utilities'
 import ImageWithFallback from './image-with-fallback'
-import DefaultAvatar from 'public/assets/art/default-avatar.svg'
+import { DEFAULT_AVATAR_URL } from '#/lib/constants'
 
 interface AvatarProps {
   name: string // ENS name or address
@@ -24,7 +24,7 @@ export const Avatar = ({
       height={50}
       width={50}
       onClick={() => onClick?.()}
-      src={avatarUrl || DefaultAvatar}
+      src={avatarUrl || DEFAULT_AVATAR_URL}
       unoptimized={true}
     />
   )

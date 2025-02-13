@@ -3,16 +3,16 @@
 import Link from 'next/link'
 import { useAccount } from 'wagmi'
 import { usePathname } from 'next/navigation'
-import { IoCartSharp } from 'react-icons/io5'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import { cn } from '#/lib/utilities'
 import { useCart } from '#/hooks/use-cart'
 import { formatNumber } from '#/utils/format/format-number'
+import CartIcon from 'public/assets/icons/ui/cart.svg'
 
 const CartButton = () => {
-  const pathname = usePathname()
   const { cart } = useCart()
+  const pathname = usePathname()
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
 
@@ -27,7 +27,7 @@ const CartButton = () => {
         }
       }}
     >
-      <IoCartSharp
+      <CartIcon
         className={cn(
           'h-11 -translate-x-px text-4xl transition-all',
           pathname === '/cart' ? 'text-follow-button' : 'text-text'

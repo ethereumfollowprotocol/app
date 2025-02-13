@@ -128,8 +128,8 @@ export function Search({
         )}
       </div>
       <div
-        className={`glass-card border-grey bg-neutral absolute top-full left-0 mt-2 w-full rounded-xl border-[3px] p-3 shadow-md md:p-4 ${
-          dropdownMenuOpen ? (isEditor ? 'block' : 'hidden xl:block') : 'hidden'
+        className={`bg-neutral absolute top-full left-0 mt-2 w-full rounded-xl border-[3px] p-3 shadow-md md:p-4 ${
+          dropdownMenuOpen ? (isEditor ? 'block' : 'hidden') : 'hidden'
         }`}
       >
         <div
@@ -178,47 +178,42 @@ export function Search({
       </div>
       <div className={cn(isEditor ? 'hidden' : 'block', 'relative z-50 w-fit')}>
         <FiSearch
-          onClick={() => setDialogOpen(true)}
+          onClick={() => setDialogOpen(!dialogOpen)}
           className='w-fit cursor-pointer text-4xl transition-all hover:scale-125 hover:opacity-65'
           aria-hidden='true'
         />
         <div
           ref={clickAwayRef}
-          className={`absolute -top-3 left-0 mx-auto w-[40vw] max-w-86 min-w-68 p-0 2xl:hidden ${
-            dialogOpen ? 'block' : 'hidden'
-          }`}
+          className={cn(
+            'absolute -top-2 left-10 w-[40vw] max-w-86 min-w-68 shadow-md transition-all sm:left-16',
+            dialogOpen ? 'block opacity-100 starting:opacity-0' : 'hidden opacity-0'
+          )}
         >
-          <div>
-            <input
-              name='search'
-              ref={searchBarRef as LegacyRef<HTMLInputElement>}
-              className='bg-neutral focus:border-text border-grey block h-[54px] w-full truncate rounded-xl border-[3px] pr-12 pl-4 font-medium transition-colors sm:text-sm'
-              spellCheck={false}
-              placeholder={t('search placeholder')}
-              disabled={disabled}
-              onSubmit={onSubmit}
-              value={currentSearch}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') onSubmit()
-                if (e.key === 'Escape') setDialogOpen(false)
-              }}
-              onChange={handleSearchEvent}
-              onClick={(event) => {
-                event.preventDefault()
-                setDropdownMenuOpen(
-                  event.currentTarget.value.length >= 3 && !!search && search.length >= 3 && !!searchResult
-                )
-              }}
-              autoComplete='off'
-            />
-          </div>
-          <div
-            className={`glass-card border-grey bg-neutral absolute top-full left-0 mt-2 w-full rounded-xl border-[3px] p-3 shadow-md ${
-              dropdownMenuOpen ? 'block' : 'hidden'
-            }`}
-          >
+          <input
+            name='search'
+            ref={searchBarRef as LegacyRef<HTMLInputElement>}
+            className='bg-neutral block h-12 w-full rounded-sm px-4 font-medium shadow-md sm:h-[54px] sm:text-sm'
+            spellCheck={false}
+            placeholder={t('search placeholder')}
+            disabled={disabled}
+            onSubmit={onSubmit}
+            value={currentSearch}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') onSubmit()
+              if (e.key === 'Escape') setDialogOpen(false)
+            }}
+            onChange={handleSearchEvent}
+            onClick={(event) => {
+              event.preventDefault()
+              setDropdownMenuOpen(
+                event.currentTarget.value.length >= 3 && !!search && search.length >= 3 && !!searchResult
+              )
+            }}
+            autoComplete='off'
+          />
+          <div className={`bg-neutral mt-2 w-full rounded-sm p-3 shadow-md ${dropdownMenuOpen ? 'block' : 'hidden'}`}>
             <div
-              className='mx-auto block w-full min-w-full py-0 text-lg xl:hidden'
+              className='mx-auto block w-full min-w-full py-0 text-lg'
               ref={clickAwayRef}
               onFocusCapture={(event) => {
                 event.preventDefault()

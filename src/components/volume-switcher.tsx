@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { useState } from 'react'
 import { FiArrowLeft } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
@@ -7,7 +6,7 @@ import { RiVolumeDownFill, RiVolumeMuteFill } from 'react-icons/ri'
 
 import { cn } from '#/lib/utilities'
 import { useSounds } from '#/contexts/sounds-context'
-import GreenCheck from 'public/assets/icons/ui/check-green.svg'
+import Check from 'public/assets/icons/ui/check.svg'
 
 export const volumeOptions = [
   // {
@@ -94,9 +93,7 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = ({ closeMenu, setExternalV
                 closeMenu?.()
               }}
             >
-              {selectedVolume === label && (
-                <Image src={GreenCheck} alt='List selected' width={16} className='absolute top-[19px] left-2' />
-              )}
+              {selectedVolume === label && <Check className='absolute top-[19px] left-2' />}
               <p className='text-2xl'>{icon}</p>
               <p className='font-bold text-nowrap capitalize'>{t(label)}</p>
             </div>

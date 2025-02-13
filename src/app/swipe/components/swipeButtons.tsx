@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
 import type { SpringValue } from '@react-spring/web'
 import MainnetBlack from 'public/assets/mainnet-black.svg'
@@ -53,7 +52,7 @@ const SwipeButtons = ({
         }
         onClick={onSwipeRight}
       >
-        <Image src={MainnetBlack} alt='mainnet' width={24} height={24} />
+        <MainnetBlack width={24} height={24} />
       </button>
     </>
   )

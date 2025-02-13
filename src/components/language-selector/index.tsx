@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { FiArrowLeft } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
@@ -6,7 +5,7 @@ import { useState, type Dispatch, type SetStateAction } from 'react'
 
 import useLanguage from './use-language'
 import { LANGUAGES } from '#/lib/constants/languages'
-import GreenCheck from 'public/assets/icons/ui/check-green.svg'
+import Check from 'public/assets/icons/ui/check.svg'
 
 interface LanguageSelectorProps {
   setExternalLanguageMenuOpen?: Dispatch<SetStateAction<boolean>>
@@ -51,7 +50,7 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
       >
         <FiArrowLeft className='text-xl' />
         <div className='flex justify-end gap-2'>
-          <Image src={selectedLanguage?.icon || ''} alt='Language icon' width={26} className='rounded-md' />
+          {selectedLanguage && <selectedLanguage.icon width={26} className='rounded-md' />}
           <p className='w-fit font-bold'>{selectedLanguage?.language}</p>
         </div>
       </div>
@@ -98,10 +97,10 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
               }}
             >
               {selectedLanguage && selectedLanguage.key === lang.key && (
-                <Image src={GreenCheck} alt='List selected' width={16} className='absolute top-[35%] left-2' />
+                <Check width={16} className='absolute top-[35%] left-2' />
               )}
               <div className='flex gap-2 pr-3'>
-                <Image src={lang.icon} alt='Language icon' width={26} className='rounded-md' />
+                <lang.icon width={26} className='rounded-md' />
                 <p>{lang.language}</p>
               </div>
             </div>
@@ -122,10 +121,10 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
               }}
             >
               {selectedLanguage && selectedLanguage.key === lang.key && (
-                <Image src={GreenCheck} alt='List selected' width={16} className='absolute top-[35%] left-2' />
+                <Check width={16} className='absolute top-[35%] left-2' />
               )}
               <div className='flex gap-2 pr-3'>
-                <Image src={lang.icon} alt='Language icon' width={26} className='rounded-md' />
+                <lang.icon width={26} className='rounded-md' />
                 <p>{lang.language}</p>
               </div>
             </div>

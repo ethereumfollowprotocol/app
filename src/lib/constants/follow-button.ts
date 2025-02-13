@@ -1,10 +1,11 @@
 import type { THEMES } from '.'
 import MainnetRed from 'public/assets/mainnet-red.svg'
 import type { FollowButtonState } from '#/components/follow-button/hooks/use-follow-button'
+import type { SVGProps } from 'react'
 
 export const FOLLOW_BUTTON_STYLES: Record<
   FollowButtonState,
-  { bg: string; hover?: string; text: string; border: string; imageSrc?: string }
+  { bg: string; hover?: string; text: string; border: string; imageSrc?: React.ComponentType<SVGProps<SVGSVGElement>> }
 > = {
   Follow: {
     bg: 'btn-grad',

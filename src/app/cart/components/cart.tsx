@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
@@ -84,9 +83,7 @@ const Cart = () => {
               <h1 className='text-left text-xl font-bold sm:text-3xl'>{t('editor title')}</h1>
               <div className='flex gap-1'>
                 <p className='mr-1 text-right text-lg font-bold'>{t('import')}</p>
-                <Image
-                  src={FarcasterIcon}
-                  alt='Import from Farcaster'
+                <FarcasterIcon
                   width={30}
                   className='cursor-pointer rounded-sm transition-all hover:scale-110 hover:opacity-75'
                   onClick={() => {

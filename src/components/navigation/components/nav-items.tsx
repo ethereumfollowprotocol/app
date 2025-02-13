@@ -3,9 +3,9 @@
 import Link from 'next/link'
 import { useAccount } from 'wagmi'
 import { usePathname } from 'next/navigation'
+import { Avatar } from 'ethereum-identity-kit'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
-import Hamburger from './hamburger'
 import { NAV_ITEMS } from '#/lib/constants'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 
@@ -13,7 +13,7 @@ const NavItems = () => {
   const pathname = usePathname()
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
-  const { selectedList, lists } = useEFPProfile()
+  const { selectedList, lists, profile } = useEFPProfile()
 
   const itemUrl =
     selectedList === Number(lists?.primary_list) && pathname !== `/${selectedList}`
@@ -21,24 +21,31 @@ const NavItems = () => {
       : (selectedList?.toString() ?? userAddress?.toLowerCase())
 
   return (
-    <div className='flex flex-col items-center gap-4'>
-      {NAV_ITEMS.map((item) => (
-        <Link
-          key={item.name}
-          className='group/nav-item z-10 px-0.5'
-          href={item.href(itemUrl)}
-          prefetch={true}
-          onClick={(e) => {
-            if ((item.name === 'profile' || item.name === 'feed') && !userAddress && openConnectModal) {
-              e.preventDefault()
-              openConnectModal()
-            }
-          }}
-        >
-          <item.icon className='z-50 h-12 w-12 cursor-pointer px-2 text-[28px] font-bold transition-all group-hover/nav-item:scale-110' />
-        </Link>
-      ))}
-      <Hamburger />
+    <div className='flex items-center gap-[8vw] sm:flex-col sm:justify-start sm:gap-6'>
+      {NAV_ITEMS.map((item) => {
+        if (item.hiddenOnDisconnected && !userAddress) return null
+
+        return (
+          <Link
+            key={item.name}
+            className='group/nav-item z-10'
+            href={item.href(itemUrl)}
+            prefetch={true}
+            onClick={(e) => {
+              if ((item.name === 'profile' || item.name === 'feed') && !userAddress && openConnectModal) {
+                e.preventDefault()
+                openConnectModal()
+              }
+            }}
+          >
+            {item.name === 'profile' ? (
+              <Avatar src={profile?.ens.avatar} address={userAddress} className='h-9 w-9' />
+            ) : (
+              <item.icon className='z-50 h-auto w-8 cursor-pointer transition-all group-hover/nav-item:scale-110' />
+            )}
+          </Link>
+        )
+      })}
     </div>
   )
 }

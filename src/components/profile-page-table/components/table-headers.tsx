@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { useState } from 'react'
 import { FiSearch } from 'react-icons/fi'
 import { IoClose } from 'react-icons/io5'
@@ -10,7 +9,7 @@ import { cn } from '#/lib/utilities'
 import { formatNumber } from '#/utils/format/format-number'
 import LoadingCell from '#/components/loaders/loading-cell'
 import type { ProfileTableTitleType } from '#/types/common'
-import GreenCheck from 'public/assets/icons/ui/check-green.svg'
+import Check from 'public/assets/icons/ui/check.svg'
 import type { FollowSortType, TagCountType } from '#/types/requests'
 import { QUERY_BLOCK_TAGS } from '#/components/blocked-muted/hooks/use-blocked-muted'
 import { BLOCKED_MUTED_TABS, BLOCKED_MUTED_TAGS, SORT_OPTIONS } from '#/lib/constants'
@@ -175,9 +174,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                       key={option}
                       onClick={() => setSort(option)}
                     >
-                      {sort === option && (
-                        <Image src={GreenCheck} alt='List selected' width={16} className='absolute top-[17px] left-2' />
-                      )}
+                      {sort === option && <Check className='absolute top-[17px] left-2' />}
                       <p>{t(option)}</p>
                     </div>
                   ))}

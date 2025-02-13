@@ -13,10 +13,7 @@ const Integrations: React.FC = () => {
   return (
     <Link
       href='/integrations'
-      className={cn(
-        'text-text-neutral hover:text-text flex items-center gap-0.5 transition-all hover:scale-110',
-        isSelected && 'text-text'
-      )}
+      className={cn('flex items-center gap-0.5 transition-all hover:scale-110', isSelected && 'text-text')}
     >
       <TbAppsFilled className='text-2xl font-bold' />
       <p className='text-lg font-bold'>{INTEGRATIONS.length}</p>

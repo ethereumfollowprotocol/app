@@ -6,7 +6,6 @@
 import childProcess from 'node:child_process'
 import { withSentryConfig } from '@sentry/nextjs'
 
-// curl https://api.github.com/repos/ethereumfollowprotocol/app/commits/develop | jq --raw-output '.sha'
 const APP_VERSION =
   process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA ||
   childProcess.execSync('git rev-parse --short HEAD || echo "no-git"').toString().trim()
@@ -144,6 +143,28 @@ const nextConfig = {
       ],
     },
   ],
+  webpack(config) {
+    // @ts-expect-error rule type is not typed
+    const fileLoaderRule = config.module.rules.find((rule) => rule.test?.test?.('.svg'))
+
+    config.module.rules.push(
+      {
+        ...fileLoaderRule,
+        test: /\.svg$/i,
+        resourceQuery: /url/,
+      },
+      {
+        test: /\.svg$/i,
+        issuer: fileLoaderRule.issuer,
+        resourceQuery: { not: [...fileLoaderRule.resourceQuery.not, /url/] },
+        use: ['@svgr/webpack'],
+      }
+    )
+
+    fileLoaderRule.exclude = /\.svg$/i
+
+    return config
+  },
 }
 
 // https://github.com/getsentry/sentry-webpack-plugin#options

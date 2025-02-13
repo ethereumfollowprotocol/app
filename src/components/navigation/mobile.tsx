@@ -1,29 +1,37 @@
 import React from 'react'
-import { usePathname } from 'next/navigation'
+import Link from 'next/link'
 
-import { cn } from '#/lib/utilities'
-import { useCart } from '#/hooks/use-cart'
+import { Search } from '../search'
+import Logo from 'public/assets/efp-logo.svg'
 import NavItems from './components/nav-items'
+import Hamburger from './components/hamburger'
 import CartButton from './components/cart-button'
-import { useActions } from '#/contexts/actions-context'
+import WalletMenu from './components/wallet-menu'
+import Integrations from './components/integrations'
 
 const Mobile: React.FC = () => {
-  const { cart } = useCart()
-  const pathname = usePathname()
-  const { isCheckingOut } = useActions()
-
   return (
-    <nav
-      className={cn(
-        'fixed bottom-6 z-50 mx-auto flex w-full justify-center lg:hidden',
-        pathname === '/cart' && cart.length > 0 && !isCheckingOut && 'bottom-28 sm:bottom-32'
-      )}
-    >
-      <div className='flex items-center gap-1.5'>
-        <NavItems />
-        <CartButton />
+    <>
+      <div className='fixed top-0 left-0 z-50 flex w-full justify-between p-4 sm:hidden'>
+        <div className='flex items-center gap-4'>
+          <Link href='/' className='select-none' aria-label='Ethereum Follow Protocol'>
+            <Logo className='w-7 translate-x-1 transition-transform select-none hover:scale-110 sm:w-8' />
+          </Link>
+          <Search />
+        </div>
+        <div className='flex items-center gap-4'>
+          <Integrations />
+          <WalletMenu />
+        </div>
       </div>
-    </nav>
+      <nav className='bg-neutral fixed bottom-0 left-0 z-50 flex w-full justify-center p-3 sm:hidden'>
+        <div className='flex items-center gap-[8vw]'>
+          <NavItems />
+          <CartButton />
+          <Hamburger />
+        </div>
+      </nav>
+    </>
   )
 }
 

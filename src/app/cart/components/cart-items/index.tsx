@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import CartItemsList from './cart-items-list'
 import { useCart } from '#/hooks/use-cart'
-import FarcasterIcon from 'public/assets/icons/socials/farcaster.svg'
+import FarcasterIcon from 'public/assets/icons/socials/farcaster.svg?url'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 interface CartItemsProps {

@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -67,7 +66,7 @@ const TagsDropdown: React.FC<TagsDropdownProps> = ({
                 addCustomTag()
               }}
             >
-              <Image src={Plus} alt='Add Tag' height={16} width={16} />
+              <Plus />
             </button>
           </div>
           <div className='flex w-full max-w-full flex-wrap items-center gap-2'>

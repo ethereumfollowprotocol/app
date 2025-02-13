@@ -1,4 +1,5 @@
-import Image from 'next/image'
+'use client'
+
 import { useState } from 'react'
 import { useTheme } from 'next-themes'
 import { FiArrowLeft } from 'react-icons/fi'
@@ -9,7 +10,7 @@ import { HiOutlineDesktopComputer } from 'react-icons/hi'
 
 import i18n from '#/app/i18n'
 import { cn } from '#/lib/utilities'
-import GreenCheck from 'public/assets/icons/ui/check-green.svg'
+import Check from 'public/assets/icons/ui/check.svg'
 
 export const themesWithIcons = [
   {
@@ -27,11 +28,6 @@ export const themesWithIcons = [
     icon: <MdDarkMode />,
     language: undefined,
   },
-  // {
-  //   theme: "halloween",
-  //   icon: <GiPumpkinLantern />,
-  //   language: "halloween",
-  // },
 ]
 
 const themes = ['system', 'light', 'dark'] as const
@@ -99,9 +95,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
                 closeMenu?.()
               }}
             >
-              {selectedTheme === theme && (
-                <Image src={GreenCheck} alt='List selected' width={16} className='absolute top-[19px] left-2' />
-              )}
+              {selectedTheme === theme && <Check className='absolute top-[19px] left-2' />}
               <p className='text-2xl'>{icon}</p>
               <p className='font-bold text-nowrap capitalize'>{t(theme)}</p>
             </div>

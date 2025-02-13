@@ -1,5 +1,4 @@
 import type React from 'react'
-import Image from 'next/image'
 import { FiSearch } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
 
@@ -42,7 +41,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
             {t('import title')}&nbsp;
             <span className='capitalize'>{platform}</span>
           </p>
-          <Image src={FarcasterIcon} alt='Import from Farcaster' className='rounded-sm' width={30} />
+          <FarcasterIcon className='rounded-sm' width={30} />
         </div>
         <div className='relative w-full'>
           <input

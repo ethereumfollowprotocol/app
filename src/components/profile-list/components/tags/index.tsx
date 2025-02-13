@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { useState } from 'react'
 import { useClickAway } from '@uidotdev/usehooks'
 
@@ -50,7 +49,7 @@ const Tags: React.FC<TagsProps> = ({ profiles, platform, showTags, canEditTags, 
             setTagDropdownOpen(!tagDropdownOpen)
           }}
         >
-          <Image src={Plus} alt='Add Tag' width={12} />
+          <Plus />
         </button>
       )}
       <TagsDropdown

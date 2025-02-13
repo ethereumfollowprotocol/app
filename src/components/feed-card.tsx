@@ -8,8 +8,8 @@ import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import { cn } from '#/lib/utilities'
 import LoadingSpinner from './loaders/loading-spinner'
-import InterfaceLight from 'public/assets/icons/socials/interface.png'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
+import InterfaceLight from 'public/assets/icons/socials/interface.png'
 
 interface FeedCardProps {
   cardSize?: string

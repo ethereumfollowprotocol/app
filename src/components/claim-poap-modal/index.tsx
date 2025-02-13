@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next'
 import Modal from '../modal'
 import CancelButton from '../buttons/cancel-button'
 import PrimaryButton from '../buttons/primary-button'
-import EarlyUserPoap2024 from 'public/assets/art/early-user-poap-2024.svg'
-import EarlyUserPoap2025 from 'public/assets/art/early-user-poap-2025.svg'
+import EarlyUserPoap2024 from 'public/assets/art/early-user-poap-2024.svg?url'
+import EarlyUserPoap2025 from 'public/assets/art/early-user-poap-2025.svg?url'
 
 interface ClaimPoapModalProps {
   onClose: () => void

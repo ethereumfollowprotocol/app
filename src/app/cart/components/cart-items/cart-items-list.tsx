@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import type { Address } from 'viem'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useCallback, useRef } from 'react'
@@ -85,7 +84,7 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
               key={'new list'}
               className='hover:bg-list ounded-xl flex w-[350px] items-center gap-2 p-1.5 sm:w-full sm:gap-3 sm:p-2 2xl:p-4'
             >
-              <Image src={EFPLogo} alt='EFP List' className='h-[45px] w-[45px] rounded-full md:h-[50px] md:w-[50px]' />
+              <EFPLogo className='h-[45px] w-[45px] rounded-full md:h-[50px] md:w-[50px]' />
               <div className='flex flex-col md:flex-row md:items-center'>
                 <p className='w-fit text-left text-lg font-bold sm:w-56'>{t('mint name')}</p>
                 <p className='text-text/80 text-left text-sm font-bold italic sm:text-base'>{t('mint description')}</p>

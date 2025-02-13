@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
 import { useTheme } from 'next-themes'
@@ -8,13 +7,13 @@ import { useTranslation } from 'react-i18next'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useEffect, useMemo, useRef, useState, type Ref } from 'react'
 
-import { FOLLOW_BUTTON_SOUND, FOLLOW_BUTTON_STYLES, FOLLOW_BUTTON_COOL_EMOJI } from '#/lib/constants/follow-button'
 import { cn } from '#/lib/utilities'
 import LoadingCell from '../loaders/loading-cell'
 import { useCoolMode } from '#/hooks/use-cool-mode'
 import { useSounds } from '#/contexts/sounds-context'
 import MainnetBlack from 'public/assets/mainnet-black.svg'
 import { useFollowButton } from './hooks/use-follow-button'
+import { FOLLOW_BUTTON_SOUND, FOLLOW_BUTTON_STYLES, FOLLOW_BUTTON_COOL_EMOJI } from '#/lib/constants/follow-button'
 
 interface FollowButtonProps {
   address: Address
@@ -89,20 +88,13 @@ const FollowButton: React.FC<FollowButtonProps> = ({ address, className = '', is
         }}
         {...props}
       >
-        <Image
-          alt='follow button icon'
-          src={buttonStyle.imageSrc || MainnetBlack}
-          width={16}
-          className='pointer-events-none w-3.5 2xl:w-4'
-        />
-        <p
-          className='max-w-[90px] text-wrap break-words'
-          style={{
-            lineHeight: '0.95rem',
-          }}
-        >
-          {t(buttonText)}
-        </p>
+        {buttonStyle.imageSrc ? (
+          <buttonStyle.imageSrc className='pointer-events-none w-3.5 2xl:w-4' />
+        ) : (
+          <MainnetBlack className='pointer-events-none w-3.5 2xl:w-4' />
+        )}
+
+        <p className='max-w-[90px] text-wrap break-words'>{t(buttonText)}</p>
       </button>
     </div>
   )
