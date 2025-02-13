@@ -9,8 +9,12 @@
   --color-neutral: #ffffff;
   --color-text: #000000;
   --color-text-neutral: #888888;
+  --color-nav-item: #f4f4f4;
   --font-sans: 'inter', sans-serif;
   --font-size-text-md: 1rem;
+  --shadow-small: 1px 1px 4px 0px rgba(0, 0, 0, 0.25);
+  --shadow-medium: 2px 2px 7px 0px rgba(0, 0, 0, 0.25);
+  --shadow-large: 2px 2px 10px 0px rgba(0, 0, 0, 0.3);
   /* --font-size-mega: 5rem;
   --font-size-h1: 3.5rem;
   --font-size-h2: 2.5rem;
@@ -45,6 +49,7 @@
   --color-neutral: #333333;
   --color-text: #ffffff;
   --color-text-neutral: #aaaaaa;
+  --color-nav-item: #444444;
 }
 
 @layer base {

@@ -11,6 +11,7 @@ import { EXTERNAL_LINKS } from '#/lib/constants'
 import VolumeSwitcher from '../../volume-switcher'
 import LanguageSelector from '../../language-selector'
 import ThemeSwitcher from '#/components/theme-switcher'
+import Image from 'next/image'
 
 interface MenuProps {
   open: boolean
@@ -29,13 +30,13 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
     <div
       className={clsx(
         open ? 'flex' : 'hidden',
-        'absolute -top-full left-full z-50 overflow-hidden pt-1 pl-4 group-hover/hamburger:flex sm:overflow-visible'
+        'absolute -top-2 left-full z-50 overflow-hidden pt-1 pl-8 group-hover/hamburger:flex sm:overflow-visible'
       )}
     >
       <div
         className={cn(
-          isExtraMenuOpen && '-translate-x-[244px] lg:translate-x-0',
-          'bg-neutral flex max-h-[80vh] w-full flex-col overflow-x-visible p-1 shadow-xl transition-all lg:h-auto'
+          isExtraMenuOpen && '-translate-x-[244px] sm:translate-x-0',
+          'bg-neutral shadow-medium flex max-h-[80vh] w-full flex-col overflow-x-visible rounded-sm transition-all sm:w-60 lg:h-auto'
         )}
       >
         <ThemeSwitcher
@@ -60,12 +61,12 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
             href={link.href}
             target={link.target}
             onClick={() => setOpen(false)}
-            className='hover:bg-navItem text-text block w-full rounded-md p-3 font-bold capitalize transition-colors'
+            className='hover:bg-nav-item text-text block w-full rounded-sm p-4 font-bold capitalize transition-colors'
           >
-            <p className='text-end'>{t(link.text)}</p>
+            <p>{t(link.text)}</p>
           </Link>
         ))}
-        <div className='flex w-full items-center justify-between p-3'>
+        <div className='flex w-full items-center justify-between p-4'>
           {socials.map((item) => (
             <a
               target='_blank'
@@ -74,7 +75,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
               href={item.href}
               className='text-3xl transition-transform hover:scale-125'
             >
-              {item.icon}
+              <Image src={item.icon} alt={item.text} width={36} height={36} />
             </a>
           ))}
         </div>

@@ -5,7 +5,6 @@ import { useAccount } from 'wagmi'
 import { useTheme } from 'next-themes'
 import { useTranslation } from 'react-i18next'
 import { useIsClient } from '@uidotdev/usehooks'
-import { HiArrowUturnDown } from 'react-icons/hi2'
 import { animated, to as interpolate } from '@react-spring/web'
 
 import SwipeButtons from './swipeButtons'
@@ -13,6 +12,7 @@ import Logo from 'public/assets/logo.svg?url'
 import UserProfileCard from '#/components/user-profile-card'
 import LoadingRecommendedCards from './loading-recommended-cards'
 import { trans, useRecommendedProfilesCards } from './useRescommendedProfilesCards'
+import ArrowUturnDown from 'public/assets/icons/ui/arrow-uturn-down.svg'
 
 const RecommendedCards = () => {
   const {
@@ -136,7 +136,7 @@ const RecommendedCards = () => {
         onClick={onSwipeBack}
         disabled={didSwipeBack || gone.size === 0}
       >
-        <p className='text-lg font-semibold'>{t('undo')}</p> <HiArrowUturnDown />
+        <p className='text-lg font-semibold'>{t('undo')}</p> <ArrowUturnDown />
       </button>
     </div>
   )

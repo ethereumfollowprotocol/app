@@ -1,7 +1,6 @@
 'use client'
 
 import { Fragment, Suspense } from 'react'
-import { FiSearch } from 'react-icons/fi'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 
@@ -15,7 +14,7 @@ import type { LeaderboardItem } from '#/types/requests.ts'
 import type { LeaderboardFilter } from '#/types/common.ts'
 import LoadingCell from '#/components/loaders/loading-cell.tsx'
 import { formatNumberLeaderboard } from '#/utils/format/format-number.ts'
-
+import MagnifyingGlass from 'public/assets/icons/ui/magnifying-glass.svg'
 const LeaderboardStatNames = ['addresses', 'lists', 'list ops', 'unique users']
 
 const LeaderboardTable = () => {
@@ -73,7 +72,7 @@ const LeaderboardTable = () => {
         {LeaderboardStatNames.map((name, i) => (
           <div
             key={`stat ${i}`}
-            className='gradient-border flex h-28 w-[47.5%] flex-col items-center justify-center rounded-2xl sm:w-56'
+            className='gradient-border flex h-28 w-[47.5%] flex-col items-center justify-center rounded-sm sm:w-56'
           >
             {isLeaderboardStatsLoading || !leaderboardStats ? (
               <LoadingCell className='h-8 w-24 rounded-sm' />
@@ -88,7 +87,7 @@ const LeaderboardTable = () => {
       </div>
       <div className='mt-4 flex w-full max-w-[1300px] justify-center gap-1.5 text-sm font-bold text-[#aaaaaa] italic md:justify-end md:text-[#CDCDCD]'>
         {t('last updated')}
-        <span>{isLeaderboardLoading ? <LoadingCell className='h-5 w-16 rounded-md' /> : timeStamp}</span>
+        <span>{isLeaderboardLoading ? <LoadingCell className='h-5 w-16 rounded-sm' /> : timeStamp}</span>
       </div>
       <div className='flex w-full max-w-[1300px] flex-col gap-2'>
         <div className='flex md:hidden'>
@@ -96,9 +95,9 @@ const LeaderboardTable = () => {
         </div>
         <div className='flex justify-between gap-2'>
           <div className='relative w-full sm:w-[260px] 2xl:w-[300px]'>
-            <div className='group border-grey focus:border-text/80 hover:border-text/80 focus-within:border-text/80 w-full overflow-hidden rounded-xl border-[3px] transition-colors sm:text-sm'>
+            <div className='group border-grey focus:border-text/80 hover:border-text/80 focus-within:border-text/80 w-full overflow-hidden rounded-sm border-[3px] transition-colors sm:text-sm'>
               <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center pl-3' aria-hidden='true'>
-                <FiSearch
+                <MagnifyingGlass
                   className='mr-3 text-xl opacity-30 transition-opacity group-focus-within:opacity-80 group-hover:opacity-80 dark:opacity-60 dark:group-focus-within:opacity-100 dark:group-hover:opacity-100'
                   aria-hidden='true'
                 />
@@ -136,7 +135,7 @@ const LeaderboardTable = () => {
             </Suspense>
           </div>
         </div>
-        <div className='glass-card border-grey relative mt-1 flex flex-col gap-4 rounded-xl border-[3px] p-1 sm:px-4 sm:py-6 lg:px-8'>
+        <div className='glass-card border-grey relative mt-1 flex flex-col gap-4 rounded-sm border-[3px] p-1 sm:px-4 sm:py-6 lg:px-8'>
           {leaderboard
             ?.slice(0, chunk * LEADERBOARD_CHUNK_SIZE)
             .map((entry: LeaderboardItem, index) => (

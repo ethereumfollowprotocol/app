@@ -30,19 +30,19 @@ const Home = () => {
           limit={10}
           endpoint='discover'
           header={t('recent')}
-          className={cn('glass-card border-grey h-fit w-full rounded-2xl border-[3px] py-4 sm:p-4')}
+          className={cn('glass-card border-grey h-fit w-full rounded-sm border-[3px] py-4 sm:p-4')}
         />
         {!isFollowersEmpty && userAddress && <LatestFollowers />}
       </div>
       {userAddress ? (
         <FeedCard
           cardSize={cn(
-            'w-full xl:min-w-[430px] lg:w-[49%] px-0 pt-4 xs:p-4 xl:p-[18px] 2xl:p-6 rounded-2xl',
+            'w-full xl:min-w-[430px] lg:w-[49%] px-0 pt-4 xs:p-4 xl:p-[18px] 2xl:p-6 rounded-sm',
             (lists?.lists?.length || 0) === 0 && !listsIsLoading
               ? 'h-[50vh] md:h-[640px] xl:w-2/5 2xl:w-[550px] '
               : 'h-[1000000vh] xl:w-[45%] 2xl:w-[650px]'
           )}
-          contentSize='h-full w-full rounded-2xl'
+          contentSize='h-full w-full rounded-sm'
           title={t('feed')}
           description={t('feed description')}
         />
@@ -65,7 +65,7 @@ const Home = () => {
           limit={11}
           endpoint='discover'
           header={t('recent')}
-          className={cn('glass-card border-grey h-fit w-full rounded-2xl border-[3px] p-3 py-4 2xl:p-4')}
+          className={cn('glass-card border-grey h-fit w-full rounded-sm border-[3px] p-3 py-4 2xl:p-4')}
         />
         {!isFollowersEmpty && userAddress && <LatestFollowers />}
       </div>

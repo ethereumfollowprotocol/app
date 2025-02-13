@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
-import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'
 
 import { cn } from '#/lib/utilities'
-import { useEFPProfile } from '#/contexts/efp-profile-context'
 import Check from 'public/assets/icons/ui/check.svg'
+import ArrowLeft from 'public/assets/icons/ui/arrow-left.svg'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 interface ListSelectorProps {
   setWalletMenuOpen: (open: boolean) => void
@@ -30,28 +30,28 @@ const ListSelector: React.FC<ListSelectorProps> = ({ setWalletMenuOpen, setSubMe
     <div ref={clickAwayListRef} className='group relative w-full cursor-pointer'>
       <div
         onClick={() => setMenuOpen(!open)}
-        className='group-hover:bg-navItem flex w-full cursor-pointer items-center justify-between rounded-md p-4 transition-opacity sm:flex-row-reverse'
+        className='group-hover:bg-nav-item flex w-full cursor-pointer items-center justify-between p-4 transition-opacity sm:flex-row-reverse'
       >
+        <ArrowLeft className='h-4 w-4 sm:rotate-180' />
         <p className='font-bold'>{selectedList ? `${t('list')} #${selectedList}` : t('mint new list')}</p>
-        <FiArrowRight className='text-xl' />
       </div>
       <div
         className={cn(
-          'absolute top-0 -right-full z-50 block h-full w-[224px] transition-transform group-hover:block sm:left-full sm:w-fit sm:pl-2',
+          'absolute top-0 -right-full z-50 block h-full w-56 transition-transform group-hover:block sm:left-full sm:w-fit sm:pl-2',
           lists?.lists && lists?.lists?.length > 0 ? (open ? 'sm:block' : 'sm:hidden') : 'hidden group-hover:hidden'
         )}
       >
-        <div className='bg-neutral border-grey flex w-full min-w-[224px] flex-col gap-2 overflow-auto rounded-sm shadow-lg sm:max-h-[80vh]'>
+        <div className='bg-neutral flex w-full min-w-56 flex-col gap-2 overflow-auto rounded-sm shadow-lg sm:max-h-[80vh]'>
           <div
             onClick={() => setMenuOpen(false)}
-            className='flex w-full cursor-pointer items-center justify-between rounded-md p-4 transition-opacity hover:bg-slate-100 sm:hidden dark:hover:bg-zinc-400/20'
+            className='hover:bg-nav-item flex w-full cursor-pointer items-center justify-between p-4 transition-opacity sm:hidden'
           >
-            <FiArrowLeft className='text-xl' />
+            <ArrowLeft className='h-6 w-6' />
             <p className='font-bold'>Back</p>
           </div>
           {lists?.lists?.map((list) => (
             <div
-              className='hover:bg-navItem relative flex w-full items-center gap-1 rounded-md p-4 pl-8'
+              className='hover:bg-nav-item relative flex w-full items-center gap-1 rounded-sm p-4 pl-8'
               key={list}
               onClick={() => {
                 localStorage.setItem('selected-list', list)
@@ -60,7 +60,7 @@ const ListSelector: React.FC<ListSelectorProps> = ({ setWalletMenuOpen, setSubMe
                 setWalletMenuOpen(false)
               }}
             >
-              {selectedList === Number(list) && <Check className='absolute top-[17px] left-2' />}
+              {selectedList === Number(list) && <Check className='absolute top-5 left-2.5 h-4 w-4 text-green-500' />}
               <div className='flex flex-wrap items-end gap-1 sm:flex-nowrap'>
                 <p className='font-bold text-wrap'>{`${t('list')} #${list}`}</p>
                 {lists.primary_list === list && (
@@ -71,7 +71,7 @@ const ListSelector: React.FC<ListSelectorProps> = ({ setWalletMenuOpen, setSubMe
           ))}
           <div
             key={'new list'}
-            className='hover:bg-navItem relative flex gap-2 rounded-md p-4 pl-8'
+            className='relative flex gap-2 rounded-sm p-4 pl-8 hover:bg-slate-100'
             onClick={() => {
               localStorage.setItem('selected-list', 'new list')
               setSelectedList(undefined)

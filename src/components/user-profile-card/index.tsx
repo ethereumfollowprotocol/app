@@ -113,7 +113,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
       ) : (
         <div
           className={cn(
-            'border-grey relative z-10 flex flex-col rounded-xl border-[3px]',
+            'border-grey relative z-10 flex flex-col rounded-sm border-[3px]',
             isRecommended ? 'bg-neutral' : 'glass-card'
           )}
         >

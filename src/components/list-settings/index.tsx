@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import { useAccount } from 'wagmi'
-import { FiRefreshCw } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
-import { IoIosArrowDown } from 'react-icons/io'
 import { useClickAway } from '@uidotdev/usehooks'
 
 import Modal from '../modal'
@@ -18,7 +16,8 @@ import ResetSlotWarning from './components/reset-slot-warning'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import PrimaryButton from '#/components/buttons/primary-button'
-
+import Refresh from 'public/assets/icons/ui/refresh.svg'
+import ArrowDown from 'public/assets/icons/ui/arrow-down.svg'
 interface ListSettingsProps {
   selectedList: number
   isSaving: boolean
@@ -95,7 +94,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
   ) : (
     <>
       <Modal onCancel={onClose} className='items-start py-[5vh]'>
-        <div className='flex w-full max-w-full flex-col gap-5 rounded-xl p-1 sm:w-[554px] sm:gap-7 sm:p-3'>
+        <div className='flex w-full max-w-full flex-col gap-5 rounded-sm p-1 sm:w-[554px] sm:gap-7 sm:p-3'>
           <div className='flex w-full items-center justify-between'>
             <div className='flex cursor-pointer items-center gap-2'>
               <h3 className='text-4xl font-bold sm:text-5xl'>
@@ -105,7 +104,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
             {roles?.isOwner && isOwner && (
               <button
                 className={cn(
-                  'hover text-text flex items-center gap-2 rounded-xl bg-red-500 p-3 font-semibold transition-all',
+                  'hover text-text flex items-center gap-2 rounded-sm bg-red-500 p-3 font-semibold transition-all',
                   isEditingSettings
                     ? 'cursor-pointer hover:scale-110 hover:bg-red-400'
                     : 'cursor-not-allowed opacity-60'
@@ -116,7 +115,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
                 }}
               >
                 <p>{t('reset slot')}</p>
-                <FiRefreshCw className='text-xl' />
+                <Refresh className='text-xl' />
               </button>
             )}
           </div>
@@ -124,7 +123,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
             <p className='text-base font-bold sm:text-xl'>{t('location')}</p>
             <div className='relative' ref={chainDropdownRef}>
               <button
-                className='bg-neutral/50 hover:bg-neutral/70 flex h-[42px] w-[170px] items-center justify-between gap-0.5 rounded-xl p-1 px-2 disabled:cursor-not-allowed disabled:opacity-75 sm:h-12 sm:w-[190px] sm:px-3'
+                className='bg-neutral/50 hover:bg-neutral/70 flex h-[42px] w-[170px] items-center justify-between gap-0.5 rounded-sm p-1 px-2 disabled:cursor-not-allowed disabled:opacity-75 sm:h-12 sm:w-[190px] sm:px-3'
                 onClick={() => setChainDropdownOpen(!chainDropdownOpen)}
                 disabled={!isEditingSettings || connectedAddress?.toLowerCase() !== fetchedOwner?.toLowerCase()}
               >
@@ -137,13 +136,13 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
                   </>
                 )}
                 {isEditingSettings ? (
-                  <IoIosArrowDown className={`${chainDropdownOpen ? 'rotate-180' : ''} h-5 w-5 transition-transform`} />
+                  <ArrowDown className={`${chainDropdownOpen ? 'rotate-180' : ''} h-5 w-5 transition-transform`} />
                 ) : (
                   <div />
                 )}
               </button>
               {chainDropdownOpen && (
-                <div className='bg-neutral absolute top-12 z-10 flex w-full flex-col rounded-xl sm:top-14'>
+                <div className='bg-neutral absolute top-12 z-10 flex w-full flex-col rounded-sm sm:top-14'>
                   {chains.map((item) => (
                     <div
                       key={item.id}
@@ -155,7 +154,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
                           chain: fetchedChain?.id !== item.id,
                         })
                       }}
-                      className='hover:bg-grey/40 flex w-full cursor-pointer items-center gap-3 rounded-xl p-3'
+                      className='hover:bg-grey/40 flex w-full cursor-pointer items-center gap-3 rounded-sm p-3'
                     >
                       <ChainIcon chain={item as ChainWithDetails} className={'h-6 w-6 sm:h-7 sm:w-7'} />
                       <p className='truncate font-bold sm:text-lg'>{item?.name}</p>

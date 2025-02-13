@@ -1,6 +1,5 @@
 import { cn } from '#/lib/utilities'
-import { IoClose } from 'react-icons/io5'
-
+import Cross from 'public/assets/icons/ui/cross.svg'
 interface ModalProps {
   onCancel: () => void
   children: React.ReactNode
@@ -20,12 +19,12 @@ const Modal: React.FC<ModalProps> = ({ onCancel, children, className, disableBac
       <div className={`flex w-full flex-col items-end gap-2 sm:w-fit`}>
         <div
           onClick={onCancel}
-          className='bg-grey/90 z-50 translate-x-4 translate-y-8 cursor-pointer rounded-2xl p-2 transition-all hover:scale-110 hover:opacity-90'
+          className='bg-grey/90 z-50 translate-x-4 translate-y-8 cursor-pointer rounded-sm p-2 transition-all hover:scale-110 hover:opacity-90'
         >
-          <IoClose className='text-2xl' />
+          <Cross className='text-2xl' />
         </div>
         <div
-          className='glass-card bg-neutral/55 w-full rounded-xl p-4 sm:w-fit sm:p-6'
+          className='glass-card bg-neutral/55 w-full rounded-sm p-4 sm:w-fit sm:p-6'
           onClick={(e) => e.stopPropagation()}
         >
           {children}

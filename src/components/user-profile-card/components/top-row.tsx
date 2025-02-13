@@ -1,10 +1,10 @@
 import Image from 'next/image'
 import React, { useState } from 'react'
-import { FaSyncAlt } from 'react-icons/fa'
 import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
 
 import { cn } from '#/lib/utilities'
+import Refresh from 'public/assets/icons/ui/refresh.svg'
 import { formatNumber } from '#/utils/format/format-number'
 
 interface TopRowProps {
@@ -47,7 +47,7 @@ const TopRow: React.FC<TopRowProps> = ({ profileList, name, primaryList, isConne
             <div
               className={`${
                 cardTooltipOpen ? 'block' : 'hidden'
-              } glass-card border-grey bg-neutral/90 absolute top-5 right-0 mt-2 w-68 rounded-md border-[3px] p-2 text-sm transition-all group-hover:block`}
+              } glass-card border-grey bg-neutral/90 absolute top-5 right-0 mt-2 w-68 rounded-sm border-[3px] p-2 text-sm transition-all group-hover:block`}
             >
               {t('not primary list tooltip')}
             </div>
@@ -76,7 +76,7 @@ const TopRow: React.FC<TopRowProps> = ({ profileList, name, primaryList, isConne
             onClick={() => refetchProfile()}
             aria-label='refresh profile'
           >
-            <FaSyncAlt />
+            <Refresh />
           </button>
         )}
       </div>

@@ -1,6 +1,4 @@
 import Link from 'next/link'
-import { HiPlus } from 'react-icons/hi'
-import { IoClose } from 'react-icons/io5'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
 import { ens_beautify } from '@adraffy/ens-normalize'
@@ -14,6 +12,8 @@ import LoadingCell from '#/components/loaders/loading-cell'
 import { isValidEnsName, resolveEnsProfile } from '#/utils/ens'
 import type { TopEightProfileType } from '../hooks/use-top-eight'
 import { listOpAddListRecord, listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
+import Plus from 'public/assets/icons/ui/plus.svg'
+import Cross from 'public/assets/icons/ui/cross.svg'
 
 interface TopEightProfileProps {
   profile: TopEightProfileType
@@ -52,7 +52,7 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
   return (
     <div
       className={cn(
-        'group relative flex w-[129px] flex-col items-center justify-between gap-2 rounded-2xl px-0.5 py-4 hover:border-[#A2A2A277] 2xl:w-36',
+        'group relative flex w-[129px] flex-col items-center justify-between gap-2 rounded-sm px-0.5 py-4 hover:border-[#A2A2A277] 2xl:w-36',
         isEditing
           ? 'h-[186px] w-[144px] cursor-pointer border-[3px] border-transparent'
           : 'hover:bg-text/5 h-[180px] w-[129px] 2xl:w-36',
@@ -70,7 +70,7 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
             !(isAddingToTopEight || isRemovingFromTopEight) && 'hidden bg-[#A2A2A277] group-hover:block'
           )}
         >
-          {isAddingToTopEight ? <HiPlus /> : <IoClose />}
+          {isAddingToTopEight ? <Plus /> : <Cross />}
         </div>
       )}
       <div className='flex w-full flex-col items-center gap-1'>

@@ -12,7 +12,7 @@ const LatestFollowers = () => {
   const isLatestFollowersLoading = isLoading || isFetchingNextPage || isFetchingPreviousPage
 
   return (
-    <div className='glass-card border-grey flex w-full flex-col gap-3 rounded-2xl border-[3px] px-2 py-4 sm:p-4 xl:p-3 2xl:gap-4'>
+    <div className='glass-card border-grey flex w-full flex-col gap-3 rounded-sm border-[3px] px-2 py-4 sm:p-4 xl:p-3 2xl:gap-4'>
       <div className='flex w-full items-center justify-between'>
         <h2 className='w-full p-2 text-2xl font-bold 2xl:text-3xl'>{t('latest followers')}</h2>
         <Suspense>

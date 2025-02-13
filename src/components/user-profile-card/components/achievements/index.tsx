@@ -24,7 +24,7 @@ const Achievements: React.FC<AchievementsProps> = ({ list, profile, isLoading, i
   const rankTitles = Object.keys(profile?.ranks || {})
   const ranks = Object.values(profile?.ranks || {})
   return (
-    <div className='glass-card border-grey flex flex-col gap-4 rounded-xl border-[3px] p-4 sm:gap-4 sm:py-6'>
+    <div className='glass-card border-grey flex flex-col gap-4 rounded-sm border-[3px] p-4 sm:gap-4 sm:py-6'>
       <LeaderboardRanks
         ranks={ranks}
         isLoading={isLoading}

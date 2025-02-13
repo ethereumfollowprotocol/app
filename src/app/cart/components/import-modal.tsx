@@ -1,5 +1,4 @@
 import type React from 'react'
-import { FiSearch } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
 
 import Modal from '#/components/modal'
@@ -12,6 +11,7 @@ import LoadingCell from '#/components/loaders/loading-cell'
 import FarcasterIcon from 'public/assets/icons/socials/farcaster.svg'
 import CancelButton from '#/components/buttons/cancel-button'
 import PrimaryButton from '#/components/buttons/primary-button'
+import MagnifyingGlass from 'public/assets/icons/ui/magnifying-glass.svg'
 
 interface ImportModalprops {
   onClose: () => void
@@ -53,10 +53,10 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
             value={currHandle}
             placeholder={`${t('enter')} ${platform[0]?.toUpperCase()}${platform.slice(1)} Name`}
             onChange={(e) => setCurrHandle(e.target.value)}
-            className='border-grey bg-neutral/60 block h-12 w-full truncate rounded-xl border-[3px] pr-12 pl-4 font-medium sm:text-sm'
+            className='border-grey bg-neutral/60 block h-12 w-full truncate rounded-sm border-[3px] pr-12 pl-4 font-medium sm:text-sm'
           />
           <div className='bg-grey absolute top-2 right-2 flex h-8 w-8 items-center justify-center rounded-sm'>
-            <FiSearch />
+            <MagnifyingGlass />
           </div>
         </div>
         {socialProfile || (isSocialProfileLoading && currHandle.length > 0) ? (
@@ -88,7 +88,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
                   {t('follow on')} <span className='capitalize'>{platform}</span>
                 </p>
                 {isFollowingsLoading || isSocialProfileLoading ? (
-                  <LoadingCell className='h-5 w-24 rounded-md' />
+                  <LoadingCell className='h-5 w-24 rounded-sm' />
                 ) : (
                   <p className='xxs:text-sm text-xs font-medium'>
                     {formatNumber(followings.length)} {t('accounts')}
@@ -98,7 +98,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
               <div className='flex w-full items-center justify-between'>
                 <p className='xxs:text-sm text-xs font-medium'>{t('follow on efp')}</p>
                 {isFollowingsLoading || isSocialProfileLoading ? (
-                  <LoadingCell className='h-5 w-24 rounded-md' />
+                  <LoadingCell className='h-5 w-24 rounded-sm' />
                 ) : (
                   <p className='xxs:text-sm text-xs font-medium'>
                     -{formatNumber(alreadyFollow.length)} {t('accounts')}
@@ -108,7 +108,7 @@ const ImportModal: React.FC<ImportModalprops> = ({ onClose, platform }) => {
               <div className='text-text/90 flex w-full items-center justify-between'>
                 <p className='xxs:text-base text-sm font-bold sm:text-lg'>{t('to add')}</p>
                 {isFollowingsLoading || isSocialProfileLoading ? (
-                  <LoadingCell className='h-5 w-24 rounded-md' />
+                  <LoadingCell className='h-5 w-24 rounded-sm' />
                 ) : (
                   <p className='xxs:text-base text-sm font-bold sm:text-lg'>
                     {formatNumber(followings.length - alreadyFollow.length)} {t('accounts')}

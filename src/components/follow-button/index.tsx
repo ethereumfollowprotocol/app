@@ -60,7 +60,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({ address, className = '', is
   }, [clickSound, actionsSoundsMuted])
 
   return isLoading ? (
-    <div className={`rounded-xl ${isBlockedBy ? 'w-[132px]' : 'w-[110px] 2xl:w-[120px]'}`}>
+    <div className={`rounded-sm ${isBlockedBy ? 'w-[132px]' : 'w-[110px] 2xl:w-[120px]'}`}>
       <LoadingCell className='h-9 w-full rounded-sm 2xl:h-10' />
     </div>
   ) : (
@@ -73,7 +73,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({ address, className = '', is
           buttonStyle.border,
           hoverStyle,
           // Base styles are applied before className so they can be overridden
-          'relative flex h-9 w-[110px] items-center justify-center gap-1.5 rounded-[11px] px-2 text-[13px] font-bold transition-all duration-200 2xl:h-10 2xl:w-[120px] 2xl:rounded-xl 2xl:text-sm',
+          'relative flex h-9 w-[110px] items-center justify-center gap-1.5 rounded-[11px] px-2 text-[13px] font-bold transition-all duration-200 2xl:h-10 2xl:w-[120px] 2xl:rounded-sm 2xl:text-sm',
           className,
         ])}
         onMouseLeave={() => setDisableHover(false)}

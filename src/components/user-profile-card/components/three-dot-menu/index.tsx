@@ -1,8 +1,6 @@
 import React from 'react'
 import type { Address } from 'viem'
 import { useTheme } from 'next-themes'
-import { FaQrcode } from 'react-icons/fa'
-import { IoMdSettings } from 'react-icons/io'
 import { useTranslation } from 'react-i18next'
 
 import { cn } from '#/lib/utilities'
@@ -13,6 +11,8 @@ import { useThreeDotMenu } from '../../hooks/use-three-dot-menu'
 import RestrictButton from './components/restrict-button'
 import OpenModalButton from './components/open-modal-button'
 import { FOLLOW_BUTTON_COOL_EMOJI } from '#/lib/constants/follow-button'
+import QrCode from 'public/assets/icons/ui/qr-code.svg'
+import Settings from 'public/assets/icons/ui/settings.svg'
 
 interface ThreeDotMenuProps {
   address: Address
@@ -66,7 +66,7 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
   return (
     <div className={showMoreOptions ? 'block' : 'hidden'} ref={threeDotMenuRef}>
       <div
-        className='flex cursor-pointer items-center gap-[3px] rounded-md bg-zinc-300 px-1.5 py-2 transition-all hover:scale-110 hover:opacity-50'
+        className='flex cursor-pointer items-center gap-[3px] rounded-sm bg-zinc-300 px-1.5 py-2 transition-all hover:scale-110 hover:opacity-50'
         onClick={() => setThreeDotMenuOpen(!threeDotMenuOpen)}
       >
         <div className='h-1 w-1 rounded-full bg-black'></div>
@@ -76,7 +76,7 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
       <div
         className={cn(
           threeDotMenuOpen && showMoreOptions ? 'flex' : 'hidden',
-          'bg-neutral border-grey absolute top-9 right-0 z-50 w-fit flex-col items-center gap-2 rounded-xl border-[3px] p-1 drop-shadow-lg'
+          'bg-neutral border-grey absolute top-9 right-0 z-50 w-fit flex-col items-center gap-2 rounded-sm border-[3px] p-1 drop-shadow-lg'
         )}
       >
         {!isConnectedUserCard && (
@@ -92,7 +92,7 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
               setThreeDotMenuOpen(false)
             }}
             text='qr code'
-            icon={<FaQrcode className='mr-1 text-lg' />}
+            icon={<QrCode />}
           />
         )}
         {!isConnectedUserCard && (
@@ -131,7 +131,7 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
               setThreeDotMenuOpen(false)
             }}
             text='settings'
-            icon={<IoMdSettings className='text-lg' />}
+            icon={<Settings />}
           />
         )}
       </div>

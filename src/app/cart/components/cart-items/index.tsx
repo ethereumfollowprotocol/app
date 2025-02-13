@@ -1,12 +1,12 @@
 import type React from 'react'
 import { useMemo } from 'react'
-import { FiTrash2 } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
 
-import CartItemsList from './cart-items-list'
 import { useCart } from '#/hooks/use-cart'
-import FarcasterIcon from 'public/assets/icons/socials/farcaster.svg?url'
+import CartItemsList from './cart-items-list'
+import Trash from 'public/assets/icons/ui/trash.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
+import FarcasterIcon from 'public/assets/icons/socials/farcaster.svg?url'
 
 interface CartItemsProps {
   setClearCartModalOpen: (open: boolean) => void
@@ -59,7 +59,7 @@ const CartItems = ({ setClearCartModalOpen, containerRef }: CartItemsProps) => {
             onClick={() => setClearCartModalOpen(true)}
           >
             <p className='font-bold text-nowrap'>{t('clear cart')}</p>
-            <FiTrash2 className='text-xl' />
+            <Trash className='text-xl' />
           </button>
         )}
       </div>
@@ -73,7 +73,7 @@ const CartItems = ({ setClearCartModalOpen, containerRef }: CartItemsProps) => {
         isLoading={false}
         profiles={profiles}
         socialProfiles={socialProfiles}
-        listClassName='rounded-xl gap-1 2xl:gap-0'
+        listClassName='rounded-sm gap-1 2xl:gap-0'
         createListItem={!hasCreatedEfpList}
       />
     </>

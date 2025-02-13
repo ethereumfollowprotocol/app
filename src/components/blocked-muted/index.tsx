@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react'
-import { IoClose } from 'react-icons/io5'
 import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
 
@@ -9,6 +8,7 @@ import UserProfilePageTable from '../profile-page-table'
 import type { BlockedMutedTabType } from '#/types/common'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import useBlockedMuted, { EMPTY_COUNT_TAGS, TAGS } from './hooks/use-blocked-muted'
+import Cross from 'public/assets/icons/ui/cross.svg'
 
 interface BlockedMutedProps {
   user: string
@@ -128,15 +128,15 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ user, list, isManager, onCl
     <div className='fixed top-0 left-0 z-50 flex h-full w-full justify-center overflow-scroll bg-black/50'>
       <div
         ref={blockedMutedRef}
-        className='relative mt-[85px] mb-24 flex h-fit w-full gap-6 rounded-xl px-4 md:mt-24 md:px-6 lg:mt-28 xl:w-fit 2xl:gap-8'
+        className='relative mt-[85px] mb-24 flex h-fit w-full gap-6 rounded-sm px-4 md:mt-24 md:px-6 lg:mt-28 xl:w-fit 2xl:gap-8'
       >
         <div
           onClick={onClose}
-          className='bg-neutral/90 absolute -top-[18px] right-1 z-50 cursor-pointer rounded-2xl p-2 transition-all hover:scale-110 hover:opacity-90'
+          className='bg-neutral/90 absolute -top-[18px] right-1 z-50 cursor-pointer rounded-sm p-2 transition-all hover:scale-110 hover:opacity-90'
         >
-          <IoClose className='text-2xl' />
+          <Cross className='text-2xl' />
         </div>
-        <div className='bg-neutral/80 hidden h-fit w-full rounded-2xl xl:block'>
+        <div className='bg-neutral/80 hidden h-fit w-full rounded-sm xl:block'>
           <UserProfilePageTable
             ref={tableRef}
             key={'Blocked/Muted'}
@@ -159,7 +159,7 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ user, list, isManager, onCl
             customClass='hidden xl:flex min-w-[600px] max-w-[47.5%]'
           />
         </div>
-        <div className='bg-neutral/80 hidden h-fit w-full rounded-2xl xl:block'>
+        <div className='bg-neutral/80 hidden h-fit w-full rounded-sm xl:block'>
           <UserProfilePageTable
             ref={tableRef}
             key={'Blocked/Muted By'}
@@ -181,7 +181,7 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ user, list, isManager, onCl
             customClass='hidden xl:flex min-w-[600px] max-w-[47.5%]'
           />
         </div>
-        <div className='bg-neutral/80 relative mt-12 h-fit w-full rounded-2xl xl:hidden'>
+        <div className='bg-neutral/80 relative mt-12 h-fit w-full rounded-sm xl:hidden'>
           <div className='absolute -top-[46px] left-0 w-full'>
             {BLOCKED_MUTED_TABS.map((option) => (
               <button

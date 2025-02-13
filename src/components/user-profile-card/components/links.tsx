@@ -1,8 +1,7 @@
 import React from 'react'
 import type { ProfileDetailsResponse } from '#/types/requests'
-import { FaLink } from 'react-icons/fa'
 import DwebIcon from 'public/assets/icons/dweb.svg'
-
+import Link from 'public/assets/icons/ui/link.svg'
 interface LinksProps {
   profile: ProfileDetailsResponse
 }
@@ -22,7 +21,7 @@ const Links: React.FC<LinksProps> = ({ profile }) => {
               ? profile.ens.records?.url.replace('https://', '').slice(0, -1)
               : profile.ens.records?.url.replace('https://', '')}
           </p>
-          <FaLink />
+          <Link />
         </a>
       )}
       {(profile.ens.contenthash || profile.ens.records?.contenthash) && (

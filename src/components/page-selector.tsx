@@ -1,7 +1,9 @@
 'use client'
 
 import { useRouter, useSearchParams } from 'next/navigation'
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardDoubleArrowLeft } from 'react-icons/md'
+import DoubleArrowLeft from 'public/assets/icons/ui/double-arrow-left.svg'
+import ArrowLeft from 'public/assets/icons/ui/short-arrow-left.svg'
+import ArrowRight from 'public/assets/icons/ui/short-arrow-right.svg'
 
 interface PageSelectorProps {
   page: number
@@ -63,7 +65,7 @@ const PageSelector: React.FC<PageSelectorProps> = ({
           aria-label='skip to first page'
           className='glass-card group hover:border-text border-text/40 disabled:border-text/10 flex h-9 w-9 items-center justify-center rounded-[10px] border-[3px] font-bold transition-all hover:scale-110 disabled:hover:scale-100'
         >
-          <MdKeyboardDoubleArrowLeft className='h-6 w-6 opacity-40 transition-opacity group-hover:opacity-100 group-disabled:opacity-20 dark:opacity-80' />
+          <DoubleArrowLeft className='h-6 w-6 opacity-40 transition-opacity group-hover:opacity-100 group-disabled:opacity-20 dark:opacity-80' />
         </button>
       )}
       <button
@@ -72,7 +74,7 @@ const PageSelector: React.FC<PageSelectorProps> = ({
         aria-label='previous page'
         className='glass-card group hover:border-text border-text/40 disabled:border-text/10 flex h-9 w-9 items-center justify-center rounded-[10px] border-[3px] font-bold transition-all hover:scale-110 disabled:hover:scale-100'
       >
-        <MdKeyboardArrowLeft className='h-6 w-6 opacity-40 transition-opacity group-hover:opacity-100 group-disabled:opacity-20 dark:opacity-80' />
+        <ArrowLeft className='h-6 w-6 opacity-40 transition-opacity group-hover:opacity-100 group-disabled:opacity-20 dark:opacity-80' />
       </button>
       {displayPageNumber && (
         <p className='glass-card group border-text flex h-9 w-9 items-center justify-center rounded-[10px] border-[3px] font-bold transition-all disabled:hover:scale-100'>
@@ -85,7 +87,7 @@ const PageSelector: React.FC<PageSelectorProps> = ({
         aria-label='next page'
         className='glass-card group hover:border-text border-text/40 disabled:border-text/10 flex h-9 w-9 items-center justify-center rounded-[10px] border-[3px] font-bold transition-all hover:scale-110 disabled:hover:scale-100'
       >
-        <MdKeyboardArrowRight className='h-6 w-6 opacity-40 transition-opacity group-hover:opacity-100 group-disabled:opacity-20 dark:opacity-80' />
+        <ArrowRight className='h-6 w-6 opacity-40 transition-opacity group-hover:opacity-100 group-disabled:opacity-20 dark:opacity-80' />
       </button>
     </div>
   )

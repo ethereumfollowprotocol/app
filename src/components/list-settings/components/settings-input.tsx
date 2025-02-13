@@ -50,7 +50,7 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
       <p className='text-lg font-bold'>{option}</p>
       {isSettingsLoading ? (
         <div className='bg-neutral/70 w-full truncate rounded-sm p-3 font-medium disabled:cursor-not-allowed disabled:text-zinc-400'>
-          <LoadingCell className='h-7 w-full rounded-md' />
+          <LoadingCell className='h-7 w-full rounded-sm' />
         </div>
       ) : (
         <input
@@ -77,7 +77,7 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
           {isSettingsLoading || isLoading || isNameLoading ? (
             <>
               <LoadingCell className='h-8 w-8 rounded-full' />
-              <LoadingCell className='h-5 w-full rounded-md' gradient={LIGHT_LOADING_GRADIENT} />
+              <LoadingCell className='h-5 w-full rounded-sm' gradient={LIGHT_LOADING_GRADIENT} />
             </>
           ) : (
             <>

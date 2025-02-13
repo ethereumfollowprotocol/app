@@ -1,5 +1,3 @@
-import { HiPlus } from 'react-icons/hi'
-import { FiSearch } from 'react-icons/fi'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 
@@ -11,6 +9,8 @@ import CancelButton from '#/components/buttons/cancel-button'
 import { useEditTopEight } from '../hooks/use-edit-top-eight'
 import PrimaryButton from '#/components/buttons/primary-button'
 import type { TopEightProfileType } from '../hooks/use-top-eight'
+import Plus from 'public/assets/icons/ui/plus.svg'
+import MagnifyingGlass from 'public/assets/icons/ui/magnifying-glass.svg'
 
 interface EditModalProps {
   profiles: TopEightProfileType[]
@@ -45,10 +45,10 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose }) => {
               }}
               placeholder={t('search placeholder')}
               onChange={(e) => setAddProfileSearch(e.target.value.trim().toLowerCase())}
-              className='border-grey bg-neutral/90 block h-12 w-full truncate rounded-xl border-[3px] pr-12 pl-4 font-medium sm:text-sm'
+              className='border-grey bg-neutral/90 block h-12 w-full truncate rounded-sm border-[3px] pr-12 pl-4 font-medium sm:text-sm'
             />
             <div className='bg-grey absolute top-2 right-2 flex h-8 w-8 items-center justify-center rounded-sm'>
-              <FiSearch />
+              <MagnifyingGlass />
             </div>
           </div>
           <PrimaryButton onClick={onSubmit} label={t('add')} className='h-12 w-full sm:w-32' />
@@ -56,20 +56,20 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose }) => {
         <p className={cn('text-center font-semibold', isTopEightFull ? 'text-red-400' : 'text-text/40')}>
           {t(isTopEightFull ? 'top eight limit' : 'top eight description')}
         </p>
-        <div className='bg-neutral/90 3xs:gap-x-1 flex min-h-[430px] w-full flex-wrap items-start justify-evenly rounded-xl p-2 sm:justify-start md:gap-x-2 md:p-4'>
+        <div className='bg-neutral/90 3xs:gap-x-1 flex min-h-[430px] w-full flex-wrap items-start justify-evenly rounded-sm p-2 sm:justify-start md:gap-x-2 md:p-4'>
           {editedProfiles.map((profile, index) => (
             <TopEightProfile profile={profile} isEditing={true} key={index} />
           ))}
           {new Array(loadingItems).fill(1).map((_, i) => (
             <div
               key={`loading ${i}`}
-              className='border-grey relative flex h-[186px] w-[144px] flex-col items-center gap-2 rounded-xl border-[3px] border-green-500/50 p-4'
+              className='border-grey relative flex h-[186px] w-[144px] flex-col items-center gap-2 rounded-sm border-[3px] border-green-500/50 p-4'
             >
               <LoadingCell className='h-[50px] w-[50px] rounded-full' />
               <LoadingCell className='h-7 w-24 rounded-sm' />
               <LoadingCell className='mt-5 h-9 w-[120px] rounded-sm' />
               <div className='absolute top-1 right-1 rounded-full bg-green-500/50 p-1 text-white'>
-                <HiPlus />
+                <Plus />
               </div>
             </div>
           ))}

@@ -1,4 +1,3 @@
-import { FiArrowLeft } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useState, type Dispatch, type SetStateAction } from 'react'
@@ -6,6 +5,8 @@ import { useState, type Dispatch, type SetStateAction } from 'react'
 import useLanguage from './use-language'
 import { LANGUAGES } from '#/lib/constants/languages'
 import Check from 'public/assets/icons/ui/check.svg'
+import ArrowLeft from 'public/assets/icons/ui/arrow-left.svg'
+import ArrowRight from 'public/assets/icons/ui/arrow-right.svg'
 
 interface LanguageSelectorProps {
   setExternalLanguageMenuOpen?: Dispatch<SetStateAction<boolean>>
@@ -46,25 +47,25 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
           setLanguageMenuOpen(!languageMenOpenu)
           setExternalLanguageMenuOpen?.(!languageMenOpenu)
         }}
-        className='group-hover:bg-navItem flex w-full items-center justify-between rounded-md p-3'
+        className='group-hover:bg-nav-item flex w-full items-center justify-between rounded-sm p-4'
       >
-        <FiArrowLeft className='text-xl' />
-        <div className='flex justify-end gap-2'>
-          {selectedLanguage && <selectedLanguage.icon width={26} className='rounded-md' />}
+        <div className='flex items-center gap-2'>
+          {selectedLanguage && <selectedLanguage.icon className='h-7 w-8 scale-90 rounded-sm' />}
           <p className='w-fit font-bold'>{selectedLanguage?.language}</p>
         </div>
+        <ArrowRight className='text-xl' />
       </div>
       <div
-        className={`absolute -top-[56px] -right-[251px] z-50 lg:-top-[6px] lg:left-[95%] ${
+        className={`absolute -top-[56px] -right-[251px] z-50 sm:top-0 sm:left-full sm:pl-2 ${
           languageMenOpenu ? 'block' : 'top-0 hidden'
-        } group-hover:block lg:pr-6`}
+        } group-hover:block`}
       >
-        <div className='bg-neutral border-grey flex h-full max-h-[85vh] w-[246px] flex-col gap-2 gap-x-px overflow-scroll rounded-sm border-[3px] p-1 shadow-md lg:grid lg:max-h-[75vh] xl:w-[450px] xl:grid-cols-2'>
+        <div className='bg-neutral flex h-full max-h-[85vh] w-[246px] flex-col gap-2 gap-x-px overflow-scroll rounded-sm shadow-md lg:grid lg:max-h-[75vh] xl:w-[450px] xl:grid-cols-2'>
           <div
             onClick={closeLanguageMenu}
-            className='hover:bg-navItem flex w-full cursor-pointer items-center justify-between rounded-md p-3 transition-opacity lg:hidden'
+            className='hover:bg-nav-item flex w-full cursor-pointer items-center justify-between rounded-sm p-4 transition-opacity lg:hidden'
           >
-            <FiArrowLeft className='text-xl font-bold' />
+            <ArrowLeft className='text-xl font-bold' />
             <p className='font-bold'>Back</p>
           </div>
           <div className='flex flex-col items-center gap-3 p-3 xl:col-span-2'>
@@ -73,7 +74,7 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
               placeholder='Search'
               value={languageMenuSearch}
               onChange={(e) => setLanguageMenuSearch(e.target.value)}
-              className='border-grey bg-grey/30 focus:border-text/80 w-full rounded-md border-[3px] px-4 py-2 transition-colors'
+              className='bg-text-neutral/30 w-full rounded-sm px-4 py-2 transition-colors'
             />
             {LANGUAGES.filter((lang) =>
               languageMenuSearch
@@ -88,7 +89,7 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
           </div>
           {regularLanguages.map((lang) => (
             <div
-              className='hover:bg-navItem relative flex items-center rounded-md py-3 pl-8 font-bold transition-colors'
+              className='hover:bg-nav-item relative flex items-center rounded-sm py-4 pl-8 font-bold transition-colors'
               key={lang.language}
               onClick={() => {
                 changeLanguage(lang)
@@ -97,22 +98,22 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
               }}
             >
               {selectedLanguage && selectedLanguage.key === lang.key && (
-                <Check width={16} className='absolute top-[35%] left-2' />
+                <Check width={16} className='absolute top-5 left-2 h-5 w-5 text-green-500' />
               )}
-              <div className='flex gap-2 pr-3'>
-                <lang.icon width={26} className='rounded-md' />
+              <div className='flex items-center gap-2 pr-3'>
+                <lang.icon className='h-7 w-8 scale-90 rounded-sm' />
                 <p>{lang.language}</p>
               </div>
             </div>
           ))}
           {specialLanguages.length > 0 && regularLanguages.length > 0 && (
-            <div className='flex flex-col items-center gap-3 px-3 py-1 xl:col-span-2 xl:py-3'>
-              <hr className='w-full rounded-full border-[1px] border-zinc-300 dark:border-zinc-500' />
+            <div className='flex flex-col items-center gap-3 px-3 py-1 xl:col-span-2 xl:py-4'>
+              <hr className='border-neutral w-full rounded-full border-[1px]' />
             </div>
           )}
           {specialLanguages.map((lang) => (
             <div
-              className='hover:bg-navItem relative flex items-center rounded-md py-3 pl-8 font-bold transition-colors'
+              className='hover:bg-nav-item relative flex items-center rounded-sm py-4 pl-8 font-bold transition-colors'
               key={lang.language}
               onClick={() => {
                 changeLanguage(lang)
@@ -123,8 +124,8 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
               {selectedLanguage && selectedLanguage.key === lang.key && (
                 <Check width={16} className='absolute top-[35%] left-2' />
               )}
-              <div className='flex gap-2 pr-3'>
-                <lang.icon width={26} className='rounded-md' />
+              <div className='flex items-center gap-2 pr-3'>
+                <lang.icon className='h-7 w-8 scale-90 rounded-sm' />
                 <p>{lang.language}</p>
               </div>
             </div>

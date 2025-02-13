@@ -1,13 +1,12 @@
 import Image from 'next/image'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { IoIosArrowDown } from 'react-icons/io'
 import { useClickAway } from '@uidotdev/usehooks'
 
 import { cn } from '#/lib/utilities'
 import type { LeaderboardFilter } from '#/types/common'
 import { leaderboardFiltersEmojies, leaderboardFilters } from '#/lib/constants'
-
+import ArrowDown from 'public/assets/icons/ui/arrow-down.svg'
 interface FiltersProps {
   filter: LeaderboardFilter
   onSelectFilter: (filter: LeaderboardFilter) => void
@@ -23,7 +22,7 @@ const Filters: React.FC<FiltersProps> = ({ filter, onSelectFilter }) => {
     <div ref={clickAwayRef} className='relative z-40 mx-auto w-full max-w-108 md:w-64'>
       <div
         onClick={() => setIsDropdownOpen((prev) => !prev)}
-        className='border-grey hover:border-text/80 bg-neutral z-30 flex h-[50px] w-full cursor-pointer flex-wrap items-center justify-between gap-4 rounded-xl border-[3px] px-3 transition-colors'
+        className='hover:border-text/80 bg-neutral z-30 flex h-[50px] w-full cursor-pointer flex-wrap items-center justify-between gap-4 rounded-sm px-3 transition-colors'
       >
         <div
           key={filter}
@@ -38,11 +37,11 @@ const Filters: React.FC<FiltersProps> = ({ filter, onSelectFilter }) => {
             height={22}
           />
         </div>
-        <IoIosArrowDown className='h-4 w-4' />
+        <ArrowDown className='h-4 w-4' />
       </div>
       <div
         className={cn(
-          'bg-neutral border-grey absolute top-1/2 left-0 -z-10 h-fit w-full rounded-xl border-[3px] p-1 pt-6 transition-all',
+          'bg-neutral absolute top-1/2 left-0 -z-10 h-fit w-full rounded-sm p-1 pt-6 transition-all',
           isDropdownOpen ? 'flex' : 'pointer-events-none hidden'
         )}
       >

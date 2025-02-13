@@ -57,7 +57,7 @@ const TagsDropdown: React.FC<TagsDropdownProps> = ({
               onKeyDown={(e) => {
                 if (e.key === 'Enter') addCustomTag()
               }}
-              className='bg-neutral/70 w-full rounded-md p-1 pl-2 lowercase'
+              className='bg-neutral/70 w-full rounded-sm p-1 pl-2 lowercase'
             />
             <button
               className='flex items-center justify-center rounded-full bg-white p-1.5 transition-all hover:scale-110 hover:opacity-80 dark:bg-zinc-300'

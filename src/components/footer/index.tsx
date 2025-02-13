@@ -1,7 +1,7 @@
 import Image from 'next/image'
-import { FaGithub } from 'react-icons/fa'
-import { FaDiscord } from 'react-icons/fa'
-import { FaXTwitter } from 'react-icons/fa6'
+import Twitter from 'public/assets/icons/socials/twitter.svg?url'
+import Github from 'public/assets/icons/socials/github.svg?url'
+import Discord from 'public/assets/icons/socials/discord.svg?url'
 
 import Pages from './components/pages'
 
@@ -9,20 +9,17 @@ export const socials = [
   {
     text: 'X',
     href: 'https://x.com/efp',
-    icon: <FaXTwitter />,
+    icon: Twitter,
   },
   {
     text: 'GitHub',
     href: 'https://github.com/ethereumfollowprotocol',
-    icon: <FaGithub />,
+    icon: Github,
   },
-  /**
-   * TODO: add Discord link once we have one
-   */
   {
     text: 'Discord',
     href: 'https://discord.com/invite/ZUyG3mSXFD',
-    icon: <FaDiscord />,
+    icon: Discord,
   },
 ]
 
@@ -51,7 +48,7 @@ const Footer = () => {
                   href={item.href}
                   className='text-4xl transition-transform hover:scale-110'
                 >
-                  {item.icon}
+                  <Image src={item.icon} alt={item.text} width={24} height={24} />
                 </a>
               ))}
             </div>

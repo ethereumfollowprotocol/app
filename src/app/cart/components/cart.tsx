@@ -74,7 +74,7 @@ const Cart = () => {
           {clearCartModalOpen && <ClearCartModal closeModal={() => setClearCartModalOpen(false)} />}
           <div
             className={cn(
-              'glass-card border-grey mb-6 flex h-fit w-full flex-col gap-4 rounded-2xl border-[3px] px-1 py-4 xl:w-1/3 xl:max-w-[600px]',
+              'glass-card border-grey mb-6 flex h-fit w-full flex-col gap-4 rounded-sm border-[3px] px-1 py-4 xl:w-1/3 xl:max-w-[600px]',
               cart.length > 30 && 'xl:sticky'
             )}
             ref={SidebarRef}
@@ -104,7 +104,7 @@ const Cart = () => {
                 </div>
               }
             >
-              <div className='glass-card border-grey flex h-fit w-full flex-col gap-3 rounded-2xl border-[3px] px-1 pt-5 pb-2 sm:px-3 md:gap-4 md:px-4 md:pt-6 xl:absolute xl:top-0 xl:left-0'>
+              <div className='glass-card border-grey flex h-fit w-full flex-col gap-3 rounded-sm border-[3px] px-1 pt-5 pb-2 sm:px-3 md:gap-4 md:px-4 md:pt-6 xl:absolute xl:top-0 xl:left-0'>
                 <CartItems containerRef={containerRef} setClearCartModalOpen={setClearCartModalOpen} />
               </div>
             </Suspense>

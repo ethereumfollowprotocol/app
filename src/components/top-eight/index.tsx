@@ -1,13 +1,13 @@
 import type { Address } from 'viem'
-import { FaRegEdit } from 'react-icons/fa'
 import { useTranslation } from 'react-i18next'
-import { IoIosArrowDown } from 'react-icons/io'
 
 import { cn } from '#/lib/utilities'
 import EditModal from './components/edit-modal'
 import LoadingCell from '../loaders/loading-cell'
 import { useTopEight } from './hooks/use-top-eight'
 import TopEightProfile from './components/top-eight-profile'
+import Edit from 'public/assets/icons/ui/edit.svg'
+import ArrowDown from 'public/assets/icons/ui/arrow-down.svg'
 
 interface TopEightProps {
   user: Address | string
@@ -34,13 +34,13 @@ const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile }) => 
       {isConnectedUserProfile && editModalOpen && (
         <EditModal profiles={topEight || []} onClose={() => setEditModalOpen(false)} />
       )}
-      <div className='glass-card border-grey relative flex w-full flex-col items-center justify-center gap-4 rounded-xl border-[3px] px-5 py-4 xl:w-80 xl:gap-4 2xl:w-[602px] 2xl:px-2'>
+      <div className='glass-card border-grey relative flex w-full flex-col items-center justify-center gap-4 rounded-sm border-[3px] px-5 py-4 xl:w-80 xl:gap-4 2xl:w-[602px] 2xl:px-2'>
         {isConnectedUserProfile && (
           <div
             onClick={() => setEditModalOpen(true)}
             className='text-text-neutral hover:text-text/70 absolute top-2 right-2.5 flex cursor-pointer items-center gap-1 text-sm font-semibold transition-all hover:scale-110'
           >
-            <FaRegEdit />
+            <Edit className='text-2xl' />
             <p>{t('edit')}</p>
           </div>
         )}
@@ -65,10 +65,10 @@ const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile }) => 
         </div>
         {topEight.length > displayLimit && (
           <div
-            className='text-text/80 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-[3px] p-2 text-2xl font-semibold lg:hidden'
+            className='text-text/80 flex w-full cursor-pointer items-center justify-center gap-2 rounded-sm border-[3px] p-2 text-2xl font-semibold lg:hidden'
             onClick={() => setDisplayLimit(displayLimit >= 8 ? 2 : 8)}
           >
-            <IoIosArrowDown className={cn('transition-transform', displayLimit >= 8 && 'rotate-180')} />
+            <ArrowDown className={cn('transition-transform', displayLimit >= 8 && 'rotate-180')} />
           </div>
         )}
       </div>

@@ -9,7 +9,7 @@ const LiveIntegrations = () => {
   const { t } = useTranslation()
 
   return (
-    <div className='glass-card border-grey flex w-full max-w-[700px] flex-col items-center gap-8 rounded-xl border-[3px] px-6 py-8 sm:gap-10 md:gap-12 md:px-8 md:py-10 xl:items-start'>
+    <div className='glass-card border-grey flex w-full max-w-[700px] flex-col items-center gap-8 rounded-sm border-[3px] px-6 py-8 sm:gap-10 md:gap-12 md:px-8 md:py-10 xl:items-start'>
       <div className='flex w-full flex-col gap-4 px-2'>
         <div className='flex h-full items-center justify-center gap-6 xl:justify-start'>
           <h1 className='text-3xl font-bold sm:text-4xl'>{t('integrations')}</h1>

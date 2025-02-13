@@ -15,7 +15,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
 
   return (
     <div className='flex flex-col'>
-      <div className='flex h-[75px] w-full items-center gap-4 rounded-xl p-2 sm:gap-6 sm:p-4 md:gap-8'>
+      <div className='flex h-[75px] w-full items-center gap-4 rounded-sm p-2 sm:gap-6 sm:p-4 md:gap-8'>
         <div className='xxs:min-w-6 xxs:w-6 flex w-4 min-w-4 justify-center text-right tabular-nums sm:w-10'>
           <LoadingCell className='xxs:w-8 h-10 w-4 rounded-sm sm:h-12 sm:w-10' />
         </div>
@@ -45,7 +45,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
             {staticStats ? (
               <p className='text-sm font-bold text-[#888] dark:text-[#aaa]'>{t('mutuals')}</p>
             ) : (
-              <LoadingCell className='h-4 w-20 rounded-md' />
+              <LoadingCell className='h-4 w-20 rounded-sm' />
             )}
           </div>
           <div
@@ -58,7 +58,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
             {staticStats ? (
               <p className='text-sm font-bold text-[#888] dark:text-[#aaa]'>{t('followers')}</p>
             ) : (
-              <LoadingCell className='h-4 w-20 rounded-md' />
+              <LoadingCell className='h-4 w-20 rounded-sm' />
             )}
           </div>
           <div
@@ -68,7 +68,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
             {staticStats ? (
               <p className='text-sm font-bold text-[#888] dark:text-[#aaa]'>{t('following')}</p>
             ) : (
-              <LoadingCell className='h-4 w-20 rounded-md' />
+              <LoadingCell className='h-4 w-20 rounded-sm' />
             )}
           </div>
           <div
@@ -81,7 +81,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
             {staticStats ? (
               <p className='text-sm font-bold text-[#888] dark:text-[#aaa]'>{t('top8')}</p>
             ) : (
-              <LoadingCell className='h-4 w-20 rounded-md' />
+              <LoadingCell className='h-4 w-20 rounded-sm' />
             )}
           </div>
           <div
@@ -91,12 +91,12 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
             {staticStats ? (
               <p className='text-sm font-bold text-[#888] dark:text-[#aaa]'>{t('blocked')}</p>
             ) : (
-              <LoadingCell className='h-4 w-20 rounded-md' />
+              <LoadingCell className='h-4 w-20 rounded-sm' />
             )}
           </div>
         </div>
         <div className={cn('flex w-fit justify-end', isHome ? 'lg:w-[25%] 2xl:w-[20%]' : 'lg:w-[15%] 2xl:w-[10%]')}>
-          <LoadingCell className='h-10 w-[120px] rounded-xl' />
+          <LoadingCell className='h-10 w-[120px] rounded-sm' />
         </div>
       </div>
       <div className={`flex w-full items-center justify-evenly sm:hidden`}>
@@ -105,7 +105,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
           {staticStats ? (
             <p className='text-sm font-bold text-[#888] dark:text-[#aaa]'>{t('mutuals')}</p>
           ) : (
-            <LoadingCell className='h-4 w-20 rounded-md' />
+            <LoadingCell className='h-4 w-20 rounded-sm' />
           )}
         </div>
         <div className='flex flex-col items-center gap-0.5'>
@@ -113,7 +113,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
           {staticStats ? (
             <p className='text-sm font-bold text-[#888] dark:text-[#aaa]'>{t('followers')}</p>
           ) : (
-            <LoadingCell className='h-4 w-20 rounded-md' />
+            <LoadingCell className='h-4 w-20 rounded-sm' />
           )}
         </div>
         <div className='flex flex-col items-center gap-0.5'>
@@ -121,7 +121,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
           {staticStats ? (
             <p className='text-sm font-bold text-[#888] dark:text-[#aaa]'>{t('following')}</p>
           ) : (
-            <LoadingCell className='h-4 w-20 rounded-md' />
+            <LoadingCell className='h-4 w-20 rounded-sm' />
           )}
         </div>
         <div className='flex flex-col items-center gap-0.5'>
@@ -129,7 +129,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ staticStats = true }) => {
           {staticStats ? (
             <p className='text-sm font-bold text-[#888] dark:text-[#aaa]'>{t('top8')}</p>
           ) : (
-            <LoadingCell className='h-4 w-20 rounded-md' />
+            <LoadingCell className='h-4 w-20 rounded-sm' />
           )}
         </div>
       </div>

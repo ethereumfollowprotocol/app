@@ -1,8 +1,7 @@
 'use client'
 
 import { isAddress } from 'viem'
-import type { LegacyRef, RefObject } from 'react'
-import { FiSearch } from 'react-icons/fi'
+import type { RefObject } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import useSearch from './hooks/useSearch.ts'
@@ -11,6 +10,7 @@ import GraySpinner from '../loaders/gray-spinner.tsx'
 import PrimaryButton from '../buttons/primary-button.tsx'
 import LoadingSpinner from '../loaders/loading-spinner.tsx'
 import { listOpAddListRecord } from '#/utils/list-ops.ts'
+import MagnifyingGlass from 'public/assets/icons/ui/magnifying-glass.svg'
 
 export function Search({
   disabled,
@@ -47,12 +47,12 @@ export function Search({
       <label htmlFor='search' className='sr-only'>
         Search
       </label>
-      <div className={cn(isEditor ? 'xs:flex-row flex flex-col' : 'hidden', 'gap-2 rounded-md')}>
+      <div className={cn(isEditor ? 'xs:flex-row flex flex-col' : 'hidden', 'gap-2 rounded-sm')}>
         <div className='group relative w-full'>
           {isEditor ? (
             <>
               <textarea
-                ref={searchBarRef as LegacyRef<HTMLTextAreaElement>}
+                ref={searchBarRef as RefObject<HTMLTextAreaElement>}
                 id='search'
                 name='search'
                 rows={1}
@@ -79,7 +79,7 @@ export function Search({
                     event.currentTarget.value.length >= 3 && !!search && search.length >= 3 && !!searchResult
                   )
                 }}
-                className='focus:border-text/80 hover:border-text/80 border-grey bg-neutral/70 block max-h-20 min-h-12 w-full truncate rounded-xl border-[3px] py-3 pr-12 pl-4 font-medium text-wrap transition-colors outline-none sm:text-sm'
+                className='focus:border-text/80 hover:border-text/80 border-grey bg-neutral/70 block max-h-20 min-h-12 w-full truncate rounded-sm border-[3px] py-3 pr-12 pl-4 font-medium text-wrap transition-colors outline-none sm:text-sm'
               />
             </>
           ) : (
@@ -107,7 +107,7 @@ export function Search({
                   event.currentTarget.value.length >= 3 && !!search && search.length >= 3 && !!searchResult
                 )
               }}
-              className='border-grey bg-neutral/70 focus:border-text/80 hover:border-text/80 block h-[54px] w-full truncate rounded-xl border-[3px] pr-12 pl-4 font-medium transition-colors sm:text-sm'
+              className='border-grey bg-neutral/70 focus:border-text/80 hover:border-text/80 block h-[54px] w-full truncate rounded-sm border-[3px] pr-12 pl-4 font-medium transition-colors sm:text-sm'
             />
           )}
           <div className='pointer-events-none absolute inset-y-0 right-4 flex items-center' aria-hidden='true'>
@@ -116,7 +116,7 @@ export function Search({
                 <GraySpinner />
               </div>
             ) : (
-              <FiSearch
+              <MagnifyingGlass
                 className='text-xl opacity-50 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100'
                 aria-hidden='true'
               />
@@ -128,7 +128,7 @@ export function Search({
         )}
       </div>
       <div
-        className={`bg-neutral absolute top-full left-0 mt-2 w-full rounded-xl border-[3px] p-3 shadow-md md:p-4 ${
+        className={`bg-neutral absolute top-full left-0 mt-2 w-full rounded-sm border-[3px] p-3 shadow-md md:p-4 ${
           dropdownMenuOpen ? (isEditor ? 'block' : 'hidden') : 'hidden'
         }`}
       >
@@ -177,10 +177,9 @@ export function Search({
         </div>
       </div>
       <div className={cn(isEditor ? 'hidden' : 'block', 'relative z-50 w-fit')}>
-        <FiSearch
+        <MagnifyingGlass
           onClick={() => setDialogOpen(!dialogOpen)}
-          className='w-fit cursor-pointer text-4xl transition-all hover:scale-125 hover:opacity-65'
-          aria-hidden='true'
+          className='h-auto w-9 cursor-pointer transition-all hover:scale-125 hover:opacity-65'
         />
         <div
           ref={clickAwayRef}
@@ -191,7 +190,7 @@ export function Search({
         >
           <input
             name='search'
-            ref={searchBarRef as LegacyRef<HTMLInputElement>}
+            ref={searchBarRef as RefObject<HTMLInputElement>}
             className='bg-neutral block h-12 w-full rounded-sm px-4 font-medium shadow-md sm:h-[54px] sm:text-sm'
             spellCheck={false}
             placeholder={t('search placeholder')}

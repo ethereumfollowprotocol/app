@@ -39,7 +39,7 @@ const LeaderboardRanks: React.FC<LeaderboardRanksProps> = ({
                 className='3xl:gap-3 hover:bg-text/5 flex w-fit items-center justify-between gap-2 rounded-sm px-2 py-1.5 font-bold transition-all'
               >
                 <p className='text-[#888] dark:text-[#aaa]'>{t(rank)}</p>
-                <LoadingCell className='h-5 w-10 rounded-md' isStatic={false} />
+                <LoadingCell className='h-5 w-10 rounded-sm' isStatic={false} />
               </div>
             ))
           : ranks.map((rank, i) => (

@@ -14,7 +14,7 @@ import TelegramIcon from 'public/assets/icons/socials/telegram.svg?url'
 import StarEyesEmoji from 'public/assets/icons/emojis/star-eyes.svg?url'
 import LeaderboardIcon from 'public/assets/icons/ui/leaderboard.svg'
 import EtherscanIcon from 'public/assets/icons/socials/etherscan.svg?url'
-import PirateFlagEmoji from 'public/assets/icons/flags/pirate-flag.svg'
+import PirateFlagEmoji from 'public/assets/icons/flags/pirate-flag.svg?url'
 import GithubIconLight from 'public/assets/icons/socials/github-white.svg?url'
 import EtherscanIconLight from 'public/assets/icons/socials/etherscan-light.svg?url'
 

@@ -1,18 +1,18 @@
 import { useState } from 'react'
-import { FiSearch } from 'react-icons/fi'
-import { IoClose } from 'react-icons/io5'
 import { useTranslation } from 'react-i18next'
-import { IoIosArrowDown } from 'react-icons/io'
 import { useClickAway } from '@uidotdev/usehooks'
 
 import { cn } from '#/lib/utilities'
 import { formatNumber } from '#/utils/format/format-number'
 import LoadingCell from '#/components/loaders/loading-cell'
 import type { ProfileTableTitleType } from '#/types/common'
-import Check from 'public/assets/icons/ui/check.svg'
 import type { FollowSortType, TagCountType } from '#/types/requests'
 import { QUERY_BLOCK_TAGS } from '#/components/blocked-muted/hooks/use-blocked-muted'
 import { BLOCKED_MUTED_TABS, BLOCKED_MUTED_TAGS, SORT_OPTIONS } from '#/lib/constants'
+import Check from 'public/assets/icons/ui/check.svg'
+import Cross from 'public/assets/icons/ui/cross.svg'
+import ArrowDown from 'public/assets/icons/ui/arrow-down.svg'
+import MagnifyingGlass from 'public/assets/icons/ui/magnifying-glass.svg'
 
 interface TableHeaderProps {
   title: ProfileTableTitleType
@@ -68,10 +68,10 @@ const TableHeader: React.FC<TableHeaderProps> = ({
             {BLOCKED_MUTED_TABS.includes(title) ? (
               <h2 className='hidden text-lg font-bold text-nowrap capitalize sm:text-3xl xl:block'>{t(title)}</h2>
             ) : (
-              <div className='bg-grey relative flex w-full items-center rounded-xl sm:w-fit'>
+              <div className='bg-grey relative flex w-full items-center rounded-sm sm:w-fit'>
                 <div
                   className={cn(
-                    'border-grey bg-neutral absolute h-full w-1/2 rounded-xl border-[3px] transition-all duration-200 sm:w-32',
+                    'border-grey bg-neutral absolute h-full w-1/2 rounded-sm border-[3px] transition-all duration-200 sm:w-32',
                     title === 'following' ? 'left-0' : 'left-1/2 sm:left-32'
                   )}
                 />
@@ -105,13 +105,13 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 )}
                 onClick={() => setShowSearch(!showSearch)}
               >
-                <FiSearch className='text-2xl opacity-50 transition-opacity hover:opacity-100' />
+                <MagnifyingGlass className='text-2xl opacity-50 transition-opacity hover:opacity-100' />
                 <p className='hidden truncate text-sm font-medium sm:block md:hidden lg:block xl:hidden 2xl:block'>
                   {search}
                 </p>
               </div>
               {search && (
-                <IoClose
+                <Cross
                   onClick={() => {
                     setSearch('')
                     setShowSearch(false)
@@ -120,7 +120,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 />
               )}
               {showSearch && (
-                <div className='glass-card bg-neutral border-grey absolute -top-4 left-0 flex h-fit w-64 items-center gap-1 rounded-xl border-[3px] shadow-md xl:-left-10'>
+                <div className='glass-card bg-neutral border-grey absolute -top-4 left-0 flex h-fit w-64 items-center gap-1 rounded-sm border-[3px] shadow-md xl:-left-10'>
                   <input
                     type='text'
                     spellCheck={false}
@@ -143,7 +143,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                     className='pointer-events-none absolute inset-y-0 right-0 flex items-center pl-3'
                     aria-hidden='true'
                   >
-                    <FiSearch className='mr-3 text-xl text-zinc-400 dark:text-white/90' aria-hidden='true' />
+                    <MagnifyingGlass className='mr-3 text-xl text-zinc-400 dark:text-white/90' aria-hidden='true' />
                   </div>
                 </div>
               )}
@@ -155,7 +155,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
               className='flex cursor-pointer items-center gap-1 transition-transform hover:scale-110'
             >
               <p className='text-sm font-bold'>{t('tags')}</p>
-              <IoIosArrowDown className={`transition-transform ${showTags ? 'rotate-180' : ''}`} />
+              <ArrowDown className={`transition-transform ${showTags ? 'rotate-180' : ''}`} />
             </div>
             <div
               ref={clickAwaySortRef}
@@ -164,13 +164,13 @@ const TableHeader: React.FC<TableHeaderProps> = ({
             >
               <div className='flex items-center gap-1 transition-transform hover:scale-110'>
                 <p className='text-sm font-bold capitalize'>{t(sort)}</p>
-                <IoIosArrowDown className={`transition-transform ${showSort ? 'rotate-180' : ''}`} />
+                <ArrowDown className={`transition-transform ${showSort ? 'rotate-180' : ''}`} />
               </div>
               {showSort && (
-                <div className='bg-neutral glass-card border-grey absolute top-[120%] -right-2 z-50 flex flex-col items-center gap-1 rounded-md border-[3px] p-1 shadow-md'>
+                <div className='bg-neutral glass-card border-grey absolute top-[120%] -right-2 z-50 flex flex-col items-center gap-1 rounded-sm border-[3px] p-1 shadow-md'>
                   {SORT_OPTIONS.map((option) => (
                     <div
-                      className='hover:bg-navItem relative w-full rounded-md p-3 pl-8 font-bold text-nowrap capitalize transition-colors'
+                      className='hover:bg-nav-item relative w-full rounded-sm p-3 pl-8 font-bold text-nowrap capitalize transition-colors'
                       key={option}
                       onClick={() => setSort(option)}
                     >
