@@ -1,9 +1,11 @@
 'use client'
 
 import Image from 'next/image'
+import { useState } from 'react'
 import { useAccount } from 'wagmi'
 import { useTheme } from 'next-themes'
 import { useTranslation } from 'react-i18next'
+import { RefreshIcon } from 'ethereum-identity-kit'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import { cn } from '#/lib/utilities'
@@ -19,6 +21,7 @@ interface FeedCardProps {
 }
 
 const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, description }) => {
+  const [feedKey, setFeedKey] = useState(0)
   const { t } = useTranslation()
   const { resolvedTheme } = useTheme()
   const { address: userAddress } = useAccount()
@@ -30,40 +33,26 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
   }`
 
   return (
-    <div
-      className={cn('glass-card border-grey flex flex-col items-center gap-1 border-[3px] sm:items-end', cardSize)}
-      style={{
-        backdropFilter: 'blur(1rem)',
-      }}
-    >
-      <div
-        className={cn(
-          'xs:px-0 xs:items-center flex w-full items-start px-4',
-          title ? 'justify-between' : 'justify-end'
-        )}
-      >
-        {title && (
-          // <Link href={'/feed'} className='hover:scale-110 transition-transform'>
-          <h2 className='text-2xl font-bold 2xl:text-3xl'>{title}</h2>
-          // </Link>
-        )}
-        <a
-          href='https://www.interface.social/'
-          target='_blank'
-          rel='noreferrer'
-          className='transition-transform hover:scale-110'
-        >
-          <Image src={InterfaceLight} alt='Interface' width={150} height={35} className='h-9 w-36' />
-        </a>
+    <div className={cn('flex flex-col items-center gap-4 sm:items-end', cardSize)}>
+      <div className='bg-neutral shadow-medium flex w-full items-center justify-between rounded-sm p-4 px-4'>
+        {title && <h2 className='text-xl font-bold sm:text-2xl 2xl:text-3xl'>{title}</h2>}
+        <div className='flex items-center gap-4 sm:gap-5'>
+          <a
+            href='https://www.interface.social/'
+            target='_blank'
+            rel='noreferrer'
+            className='transition-transform hover:scale-105'
+          >
+            <Image src={InterfaceLight} alt='Interface' width={150} height={35} className='h-auto w-32' />
+          </a>
+          <button onClick={() => setFeedKey((prev) => prev + 1)} className='transition-transform hover:scale-110'>
+            <RefreshIcon height={24} width={24} />
+          </button>
+        </div>
       </div>
-      {description && (
-        <p className='xs:px-0 xs:text-start text-text/80 mt-3 w-full px-4 text-center text-sm font-semibold'>
-          {description}
-        </p>
-      )}
       <div
         className={cn(
-          'mt-4 flex w-full max-w-[900px] justify-center overflow-hidden',
+          'bg-neutral shadow-medium flex w-full max-w-[900px] justify-center overflow-hidden',
           contentSize,
           !listsIsLoading && (lists?.lists?.length || 0) === 0 ? 'h-[60vh]' : 'h-[100000vh]'
         )}
@@ -75,7 +64,7 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
             </div>
           ) : (lists?.lists?.length || 0) > 0 ? (
             <iframe
-              key={`${userAddress} ${resolvedTheme}`}
+              key={`${userAddress} ${resolvedTheme} ${feedKey}`}
               title='Feed'
               src={url}
               className='bg-neutral h-full w-full'

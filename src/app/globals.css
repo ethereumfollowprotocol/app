@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 
 @theme {
+  --breakpoint-xs: 400px;
   --color-yellow: #fff500;
   --color-pink: #ff79c9;
   --color-follow-button: #ffe066;

@@ -179,7 +179,7 @@ export function Search({
       <div className={cn(isEditor ? 'hidden' : 'block', 'relative z-50 w-fit')}>
         <MagnifyingGlass
           onClick={() => setDialogOpen(!dialogOpen)}
-          className='h-auto w-9 cursor-pointer transition-all hover:scale-125 hover:opacity-65'
+          className='h-auto w-9 cursor-pointer transition-all hover:scale-110 hover:opacity-65'
         />
         <div
           ref={clickAwayRef}

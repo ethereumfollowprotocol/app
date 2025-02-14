@@ -22,6 +22,7 @@ export const metadata: Metadata = {
 const HomePage = () => {
   return (
     <main className='mx-auto flex min-h-screen w-full flex-col items-center overflow-hidden bg-transparent'>
+      <h1 className='hidden'>Ethereum Follow Protocol</h1>
       <Home />
     </main>
   )

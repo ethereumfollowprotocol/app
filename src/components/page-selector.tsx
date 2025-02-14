@@ -63,7 +63,7 @@ const PageSelector: React.FC<PageSelectorProps> = ({
           onClick={() => handlePageChange(1)}
           disabled={page === 1}
           aria-label='skip to first page'
-          className='glass-card group hover:border-text border-text/40 disabled:border-text/10 flex h-9 w-9 items-center justify-center rounded-[10px] border-[3px] font-bold transition-all hover:scale-110 disabled:hover:scale-100'
+          className='group hover:border-text border-text/40 disabled:border-text/10 flex h-9 w-9 items-center justify-center rounded-sm border-[3px] font-bold transition-all hover:scale-110 disabled:hover:scale-100'
         >
           <DoubleArrowLeft className='h-6 w-6 opacity-40 transition-opacity group-hover:opacity-100 group-disabled:opacity-20 dark:opacity-80' />
         </button>
@@ -72,12 +72,12 @@ const PageSelector: React.FC<PageSelectorProps> = ({
         onClick={() => handlePageChange(page - 1)}
         disabled={page === 1}
         aria-label='previous page'
-        className='glass-card group hover:border-text border-text/40 disabled:border-text/10 flex h-9 w-9 items-center justify-center rounded-[10px] border-[3px] font-bold transition-all hover:scale-110 disabled:hover:scale-100'
+        className='group hover:border-text border-text/40 disabled:border-text/10 flex h-9 w-9 items-center justify-center rounded-sm border-[3px] font-bold transition-all hover:scale-110 disabled:hover:scale-100'
       >
         <ArrowLeft className='h-6 w-6 opacity-40 transition-opacity group-hover:opacity-100 group-disabled:opacity-20 dark:opacity-80' />
       </button>
       {displayPageNumber && (
-        <p className='glass-card group border-text flex h-9 w-9 items-center justify-center rounded-[10px] border-[3px] font-bold transition-all disabled:hover:scale-100'>
+        <p className='glass-card group border-text flex h-9 w-9 items-center justify-center rounded-sm border-[3px] font-bold transition-all disabled:hover:scale-100'>
           {page}
         </p>
       )}
@@ -85,7 +85,7 @@ const PageSelector: React.FC<PageSelectorProps> = ({
         onClick={() => handlePageChange(page + 1)}
         disabled={!hasNextPage}
         aria-label='next page'
-        className='glass-card group hover:border-text border-text/40 disabled:border-text/10 flex h-9 w-9 items-center justify-center rounded-[10px] border-[3px] font-bold transition-all hover:scale-110 disabled:hover:scale-100'
+        className='glass-card group hover:border-text border-text/40 disabled:border-text/10 flex h-9 w-9 items-center justify-center rounded-sm border-[3px] font-bold transition-all hover:scale-110 disabled:hover:scale-100'
       >
         <ArrowRight className='h-6 w-6 opacity-40 transition-opacity group-hover:opacity-100 group-disabled:opacity-20 dark:opacity-80' />
       </button>

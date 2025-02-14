@@ -8,7 +8,8 @@ const useStickyScroll = (bottomOffset = 0) => {
     const stickyScroll = StickyScrollRef.current
     if (!stickyScroll) return
 
-    if (window.innerWidth < 1280) {
+    // Disable sticky scroll on tablet/mobile
+    if (window.innerWidth < 1024) {
       stickyScroll.style.top = '0px'
       return
     }
@@ -17,19 +18,22 @@ const useStickyScroll = (bottomOffset = 0) => {
     const stickyScrollTop = stickyScroll.getBoundingClientRect().top || 0
     const viewportHeight = window.innerHeight
 
-    if (stickyScrollHeight + 108 < viewportHeight) {
+    // Disable sticky scroll if element is smaller than viewport
+    if (stickyScrollHeight < viewportHeight) {
       stickyScroll.style.top = '0px'
       return
     }
 
+    // Scroll up
     if (scrollTopSidebar > e.currentTarget.scrollTop) {
-      if (stickyScrollTop >= 70) stickyScroll.style.top = '0px'
+      if (stickyScrollTop >= 0) stickyScroll.style.top = '0px'
       else
         stickyScroll.style.top = `${
           Number(stickyScroll.style.top.replace('px', '')) + (scrollTopSidebar - e.currentTarget.scrollTop)
         }px`
     }
 
+    // Scroll down
     if (scrollTopSidebar < e.currentTarget.scrollTop) {
       if (stickyScrollTop < viewportHeight - stickyScrollHeight + 120)
         stickyScroll.style.top = `${viewportHeight - bottomOffset - stickyScrollHeight}px`
