@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useTheme } from 'next-themes'
 import { useTranslation } from 'react-i18next'
-import { useClickAway } from '@uidotdev/usehooks'
+import { useClickAway, useIsClient } from '@uidotdev/usehooks'
 
 import i18n from '#/app/i18n'
 import { cn } from '#/lib/utilities'
@@ -48,9 +48,10 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
     setExternalThemeMenuOpen?.(false)
   })
 
+  const isClient = useIsClient()
   const { t } = useTranslation()
   const { setTheme, theme: selectedTheme } = useTheme()
-  const selectedThemeIcon = themesWithIcons.find(({ theme }) => theme === selectedTheme)
+  const selectedThemeIcon = isClient ? themesWithIcons.find(({ theme }) => theme === selectedTheme) : { icon: Computer }
 
   return (
     <div ref={clickAwayThemeRef} className='group relative h-full w-full cursor-pointer'>
@@ -63,17 +64,17 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
       >
         <div className='flex items-center justify-end gap-2'>
           {selectedThemeIcon && <selectedThemeIcon.icon className='h-6 w-6' />}
-          <p className='font-bold capitalize'>{t(selectedTheme || 'system')}</p>
+          <p className='font-bold capitalize'>{t(isClient ? selectedTheme || 'system' : 'system')}</p>
         </div>
         <ArrowRight />
       </div>
       <div
         className={cn(
-          'absolute top-0 -right-full z-50 block h-full transition-transform group-hover:block sm:left-full sm:w-fit sm:pl-2',
-          themeMenuOpen ? 'sm:block' : 'sm:hidden'
+          'absolute top-0 -right-full z-50 block h-full w-full transition-all transition-discrete group-hover:block sm:left-full sm:w-fit sm:pl-2',
+          themeMenuOpen ? 'block' : 'hidden'
         )}
       >
-        <div className='bg-neutral flex h-fit max-h-[80vh] w-56 flex-col gap-2 rounded-sm shadow-md lg:max-h-[50vh]'>
+        <div className='bg-neutral shadow-medium flex h-screen max-h-[80vh] w-full flex-col gap-2 rounded-sm sm:h-auto sm:max-h-[50vh] sm:w-56'>
           <div
             onClick={() => {
               setThemeMenuOpen(false)
@@ -98,8 +99,10 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
                 closeMenu?.()
               }}
             >
-              {selectedTheme === theme.theme && <Check className='absolute top-5 left-2.5 h-4 w-4 text-green-500' />}
-              <theme.icon className='h-6 w-6' />
+              {isClient && (selectedTheme || 'system') === theme.theme && (
+                <Check className='absolute top-5 left-2.5 h-4 w-4 text-green-500' />
+              )}
+              <theme.icon className='h-6 w-6' suppressHydrationWarning />
               <p className='font-bold text-nowrap capitalize'>{t(theme.theme)}</p>
             </div>
           ))}

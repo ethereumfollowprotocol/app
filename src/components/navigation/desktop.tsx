@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { Search } from '../search'
 import Logo from 'public/assets/efp-logo.svg'
 import NavItems from './components/nav-items.tsx'
-import Hamburger from './components/hamburger.tsx'
 import WalletMenu from './components/wallet-menu.tsx'
 import CartButton from './components/cart-button.tsx'
 import Integrations from './components/integrations.tsx'
@@ -24,7 +23,6 @@ const Desktop = () => {
           <CartButton />
           <hr className='border-text-neutral mb-1 w-10 border-[1px]' />
           <NavItems />
-          <Hamburger />
         </div>
       </div>
       <div className='flex flex-col items-center justify-end gap-4'>

@@ -29,14 +29,16 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
   return (
     <div
       className={clsx(
-        open ? 'flex' : 'hidden',
-        'absolute -top-2 left-full z-50 overflow-hidden pt-1 pl-8 group-hover/hamburger:flex sm:overflow-visible'
+        open
+          ? '-translate-y-mobile-menu flex sm:flex sm:translate-y-0 sm:opacity-100 starting:translate-y-0'
+          : 'translate-y-0 sm:hidden sm:opacity-0',
+        'top-screen fixed left-0 -z-20 h-fit w-screen overflow-hidden transition-all transition-discrete group-hover/hamburger:flex sm:absolute sm:-top-2 sm:left-full sm:z-50 sm:h-fit sm:overflow-visible sm:pl-8 sm:opacity-0 sm:group-hover/hamburger:opacity-100 sm:starting:opacity-0 sm:starting:group-hover/hamburger:opacity-0'
       )}
     >
       <div
         className={cn(
-          isExtraMenuOpen && '-translate-x-[244px] sm:translate-x-0',
-          'bg-neutral shadow-medium flex max-h-[80vh] w-full flex-col overflow-x-visible rounded-sm transition-all sm:w-60 lg:h-auto'
+          isExtraMenuOpen && '-translate-x-full sm:translate-x-0',
+          'bg-neutral sm:shadow-medium flex h-fit w-full flex-col overflow-x-visible rounded-sm transition-all sm:h-auto sm:max-h-[80vh] sm:w-60'
         )}
       >
         <ThemeSwitcher

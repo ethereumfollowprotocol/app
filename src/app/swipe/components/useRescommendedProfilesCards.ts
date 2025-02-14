@@ -21,7 +21,7 @@ export const trans = (r: number, s: number) =>
   `perspective(1500px) rotateX(0deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`
 
 export const useRecommendedProfilesCards = () => {
-  const { actionsSoundsMuted } = useSounds()
+  const { selectedVolume } = useSounds()
   const { gone, recommendedProfiles, isLoading, isFetchingNextPage, fetchNextPage } = useRecommendedProfiles()
   const { cart, addToCart, removeFromCart, getAddressesFromCart } = useCart()
 
@@ -32,7 +32,7 @@ export const useRecommendedProfilesCards = () => {
   const soundRef = useRef<HTMLAudioElement>(null)
   const animatedRef = useRef<HTMLDivElement>(null)
   const handleStartAnimationAndSound = () => {
-    if (soundRef.current && !actionsSoundsMuted) {
+    if (soundRef.current && selectedVolume !== 'no sounds') {
       soundRef.current.volume = 0.3
       soundRef.current?.play()
     }
@@ -40,7 +40,6 @@ export const useRecommendedProfilesCards = () => {
   }
   const handleStopAnimationAndSound = () => {
     animatedRef.current?.classList.remove('falling-element')
-    // if (soundRef.current && !actionsSoundsMuted) soundRef.current.pause()
   }
 
   const [didSwipeBack, setDidSwipeBack] = useState(false)

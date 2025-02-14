@@ -9,6 +9,7 @@ const robots = (): MetadataRoute.Robots => ({
     disallow: ['/api'],
   },
   host: process.env.NEXT_PUBLIC_SITE_URL,
+  sitemap: `${process.env.NEXT_PUBLIC_SITE_URL}/sitemap.ts`,
 })
 
 export default robots

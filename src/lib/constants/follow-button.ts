@@ -121,16 +121,16 @@ export const FOLLOW_BUTTON_COOL_EMOJI: Record<
     dark: undefined,
   },
   Following: {
-    light: '/assets/icons/unfollow-emoji.svg',
-    dark: '/assets/icons/unfollow-emoji.svg',
+    light: '/assets/icons/emojis/unfollow-emoji.svg',
+    dark: '/assets/icons/emojis/unfollow-emoji.svg',
   },
   Unfollow: {
     light: undefined,
     dark: undefined,
   },
   Block: {
-    light: '/assets/icons/block-emoji.svg',
-    dark: '/assets/icons/block-emoji.svg',
+    light: '/assets/icons/emojis/block-emoji.svg',
+    dark: '/assets/icons/emojis/block-emoji.svg',
   },
   'Pending Block': {
     light: undefined,
@@ -149,8 +149,8 @@ export const FOLLOW_BUTTON_COOL_EMOJI: Record<
     dark: undefined,
   },
   Mute: {
-    light: '/assets/icons/mute-emoji.svg',
-    dark: '/assets/icons/mute-emoji.svg',
+    light: '/assets/icons/emojis/mute-emoji.svg',
+    dark: '/assets/icons/emojis/mute-emoji.svg',
   },
   Muted: {
     light: undefined,

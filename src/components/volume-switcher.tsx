@@ -3,12 +3,19 @@ import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
 
 import { cn } from '#/lib/utilities'
-import { useSounds } from '#/contexts/sounds-context'
+import { useSounds, type VolumeType } from '#/contexts/sounds-context'
 import Check from 'public/assets/icons/ui/check.svg'
 import VolumeUp from 'public/assets/icons/ui/volume-up.svg'
 import ArrowLeft from 'public/assets/icons/ui/arrow-left.svg'
 import VolumeMute from 'public/assets/icons/ui/volume-mute.svg'
 import ArrowRight from 'public/assets/icons/ui/arrow-right.svg'
+
+type VolumeOption = {
+  label: VolumeType
+  icon: React.FC<React.SVGProps<SVGSVGElement>>
+  muteBackgroundMusic: boolean
+  muteActionsSounds: boolean
+}
 
 export const volumeOptions = [
   // {
@@ -29,7 +36,7 @@ export const volumeOptions = [
     muteBackgroundMusic: true,
     muteActionsSounds: true,
   },
-]
+] satisfies VolumeOption[]
 
 interface VolumeSwitcherProps {
   closeMenu?: () => void
@@ -37,7 +44,7 @@ interface VolumeSwitcherProps {
 }
 
 const VolumeSwitcher: React.FC<VolumeSwitcherProps> = ({ closeMenu, setExternalVolumeMenuOpen }) => {
-  const { setActionsSoundsMuted, setBackgroundSoundsMuted, selectedVolume, setSelectedVolume } = useSounds()
+  const { selectedVolume, setSelectedVolume } = useSounds()
   const [volumeMenuOpen, setVolumeMenuOpen] = useState(false)
 
   const clickAwayVolumeRef = useClickAway<HTMLDivElement>(() => {
@@ -68,11 +75,11 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = ({ closeMenu, setExternalV
       </div>
       <div
         className={cn(
-          'absolute top-0 -right-full z-50 block h-full transition-transform group-hover:block sm:left-full sm:w-fit sm:pl-2',
-          volumeMenuOpen ? 'sm:block' : 'sm:hidden'
+          'absolute -top-[116px] -right-full z-50 block w-full transition-all transition-discrete group-hover:block sm:top-0 sm:left-full sm:w-fit sm:pl-2',
+          volumeMenuOpen ? 'block' : 'hidden'
         )}
       >
-        <div className='bg-neutral flex h-fit max-h-[80vh] w-56 flex-col gap-2 rounded-sm shadow-md'>
+        <div className='bg-neutral flex h-screen max-h-[80vh] w-full flex-col gap-2 rounded-sm shadow-md sm:h-auto sm:w-56'>
           <div
             onClick={() => {
               setVolumeMenuOpen(false)
@@ -89,8 +96,6 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = ({ closeMenu, setExternalV
               key={option.label}
               onClick={() => {
                 setSelectedVolume(option.label)
-                setBackgroundSoundsMuted(option.muteBackgroundMusic)
-                setActionsSoundsMuted(option.muteActionsSounds)
                 setVolumeMenuOpen(false)
                 setExternalVolumeMenuOpen?.(false)
                 closeMenu?.()

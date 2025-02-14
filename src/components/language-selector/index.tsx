@@ -56,11 +56,11 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
         <ArrowRight className='text-xl' />
       </div>
       <div
-        className={`absolute -top-[56px] -right-[251px] z-50 sm:top-0 sm:left-full sm:pl-2 ${
-          languageMenOpenu ? 'block' : 'top-0 hidden'
+        className={`absolute -top-[56px] left-full z-50 w-full transition-all transition-discrete sm:top-0 sm:w-fit sm:pl-2 ${
+          languageMenOpenu ? 'block' : 'hidden'
         } group-hover:block`}
       >
-        <div className='bg-neutral flex h-full max-h-[85vh] w-[246px] flex-col gap-2 gap-x-px overflow-scroll rounded-sm shadow-md lg:grid lg:max-h-[75vh] xl:w-[450px] xl:grid-cols-2'>
+        <div className='bg-neutral flex max-h-[520px] w-full flex-col gap-2 gap-x-px overflow-scroll rounded-sm shadow-md sm:max-h-[45vh] sm:w-56 lg:grid lg:w-[450px] lg:grid-cols-2'>
           <div
             onClick={closeLanguageMenu}
             className='hover:bg-nav-item flex w-full cursor-pointer items-center justify-between rounded-sm p-4 transition-opacity lg:hidden'
@@ -68,7 +68,7 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
             <ArrowLeft className='text-xl font-bold' />
             <p className='font-bold'>Back</p>
           </div>
-          <div className='flex flex-col items-center gap-3 p-3 xl:col-span-2'>
+          <div className='flex flex-col items-center gap-4 p-4 lg:col-span-2'>
             <input
               type='text'
               placeholder='Search'
@@ -82,7 +82,7 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
                   lang.englishLanguage.toLowerCase().includes(languageMenuSearch.toLowerCase())
                 : true
             ).length === 0 && (
-              <div className='p-3'>
+              <div className='p-4'>
                 <p className='font-bold'>{t('search no results')}</p>
               </div>
             )}
@@ -107,8 +107,8 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
             </div>
           ))}
           {specialLanguages.length > 0 && regularLanguages.length > 0 && (
-            <div className='flex flex-col items-center gap-3 px-3 py-1 xl:col-span-2 xl:py-4'>
-              <hr className='border-neutral w-full rounded-full border-[1px]' />
+            <div className='flex flex-col items-center gap-4 p-4 lg:col-span-2'>
+              <hr className='border-text-neutral/50 w-full rounded-full border-[1px]' />
             </div>
           )}
           {specialLanguages.map((lang) => (

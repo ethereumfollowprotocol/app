@@ -1,39 +1,36 @@
 'use client'
 
+import { useIsClient } from '@uidotdev/usehooks'
 import { useRef, useState, useContext, createContext, type Dispatch, type SetStateAction, useEffect } from 'react'
 
+export type VolumeType = 'sfx' | 'sfx & music' | 'no sounds'
+
 type SoundsContextType = {
-  actionsSoundsMuted: boolean
-  setActionsSoundsMuted: Dispatch<SetStateAction<boolean>>
-  backgroundSoundsMuted: boolean
-  setBackgroundSoundsMuted: Dispatch<SetStateAction<boolean>>
-  selectedVolume: string
-  setSelectedVolume: Dispatch<SetStateAction<string>>
+  selectedVolume: VolumeType
+  setSelectedVolume: Dispatch<SetStateAction<VolumeType>>
   backgroundMusicRef: React.RefObject<HTMLAudioElement | null>
 }
 
 const SoundsContext = createContext<SoundsContextType | undefined>(undefined)
 
 export const SoundsProvider = ({ children }: { children: React.ReactNode }) => {
-  const [actionsSoundsMuted, setActionsSoundsMuted] = useState(false)
-  const [backgroundSoundsMuted, setBackgroundSoundsMuted] = useState(true)
-  const [selectedVolume, setSelectedVolume] = useState('sfx')
+  const [selectedVolume, setSelectedVolume] = useState<VolumeType>('sfx')
+  const isClient = useIsClient()
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
+    if (!isClient) return
 
-    const storedSelectedVolumeJson = localStorage.getItem('selectedVolume')
-    if (storedSelectedVolumeJson) {
-      try {
-        const storedSelectedVolume = JSON.parse(storedSelectedVolumeJson) as string
-        setSelectedVolume(storedSelectedVolume)
-      } catch (error) {
-        localStorage.removeItem('selectedVolume')
-      }
+    const storedSelectedVolume = localStorage.getItem('selectedVolume')
+    if (storedSelectedVolume) {
+      setSelectedVolume(storedSelectedVolume as VolumeType)
+    } else {
+      localStorage.removeItem('selectedVolume')
     }
-  }, [])
+  }, [isClient])
 
   useEffect(() => {
+    if (!isClient) return
+
     localStorage.setItem('selectedVolume', selectedVolume)
   }, [selectedVolume])
 
@@ -68,11 +65,7 @@ export const SoundsProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         selectedVolume,
         setSelectedVolume,
-        actionsSoundsMuted,
         backgroundMusicRef,
-        setActionsSoundsMuted,
-        backgroundSoundsMuted,
-        setBackgroundSoundsMuted,
       }}
     >
       {children}

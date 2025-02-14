@@ -26,7 +26,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({ address, className = '', is
 
   const { t } = useTranslation()
   const { resolvedTheme } = useTheme()
-  const { actionsSoundsMuted } = useSounds()
+  const { selectedVolume } = useSounds()
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
   const { buttonText, buttonState, handleAction, isLoading } = useFollowButton({
@@ -55,9 +55,9 @@ const FollowButton: React.FC<FollowButtonProps> = ({ address, className = '', is
   useEffect(() => {
     if (!soundRef.current) return
 
-    if (actionsSoundsMuted) soundRef.current.volume = 0
+    if (selectedVolume === 'no sounds') soundRef.current.volume = 0
     else soundRef.current.volume = 0.3
-  }, [clickSound, actionsSoundsMuted])
+  }, [clickSound, selectedVolume])
 
   return isLoading ? (
     <div className={`rounded-sm ${isBlockedBy ? 'w-[132px]' : 'w-[110px] 2xl:w-[120px]'}`}>
@@ -81,7 +81,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({ address, className = '', is
           e.stopPropagation()
 
           if (!userAddress && openConnectModal) return openConnectModal()
-          if (clickSound && !actionsSoundsMuted) soundRef.current?.play()
+          if (clickSound && selectedVolume !== 'no sounds') soundRef.current?.play()
 
           setDisableHover(true)
           handleAction()
