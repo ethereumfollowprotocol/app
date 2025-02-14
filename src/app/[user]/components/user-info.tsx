@@ -159,7 +159,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       )}
       {!isSaving && (
         <div
-          className='flex relative xl:h-screen flex-col xl:flex-row pt-[108px] sm:pt-[6.75rem] pb-8 xl:pb-0 overflow-y-auto xl:justify-center gap-4 px-4 lg:px-6 xl:px-8 w-full'
+          className='relative flex w-full flex-col gap-4 overflow-y-auto px-4 pt-[108px] pb-8 sm:pt-[6.75rem] lg:px-6 xl:h-screen xl:flex-row xl:justify-center xl:px-8 xl:pb-0'
           ref={containerRef}
         >
           <div
@@ -192,12 +192,12 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
           </div>
           <div
             ref={titleRef}
-            className='w-full xl:max-w-[800px] xl:sticky relative xl:top-0 h-fit'
+            className='relative h-fit w-full xl:sticky xl:top-0 xl:max-w-[800px]'
             style={{
               scrollMarginTop: '100px',
             }}
           >
-            <div className='xl:absolute xl:top-0 xl:left-0 w-full h-fit'>
+            <div className='h-fit w-full xl:absolute xl:top-0 xl:left-0'>
               <UserProfilePageTable
                 setActiveTab={(tab) => setActiveTab(tab as ProfileTabType)}
                 ref={tableRef}
@@ -207,7 +207,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
           </div>
           <div
             ref={TopEightRef}
-            className='sticky pb-4 h-fit hidden xl:block'
+            className='sticky hidden h-fit pb-4 xl:block'
             style={{
               top: '0px',
             }}

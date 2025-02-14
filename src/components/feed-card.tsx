@@ -1,15 +1,17 @@
 'use client'
 
 import Image from 'next/image'
+import { useState } from 'react'
 import { useAccount } from 'wagmi'
 import { useTheme } from 'next-themes'
 import { useTranslation } from 'react-i18next'
+import { RefreshIcon } from 'ethereum-identity-kit'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import { cn } from '#/lib/utilities'
 import LoadingSpinner from './loaders/loading-spinner'
-import InterfaceLight from 'public/assets/icons/interface.png'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
+import InterfaceLight from 'public/assets/icons/socials/interface.png'
 
 interface FeedCardProps {
   cardSize?: string
@@ -19,6 +21,7 @@ interface FeedCardProps {
 }
 
 const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, description }) => {
+  const [feedKey, setFeedKey] = useState(0)
   const { t } = useTranslation()
   const { resolvedTheme } = useTheme()
   const { address: userAddress } = useAccount()
@@ -30,65 +33,51 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
   }`
 
   return (
-    <div
-      className={cn('flex glass-card border-grey border-[3px] items-center sm:items-end flex-col gap-1', cardSize)}
-      style={{
-        backdropFilter: 'blur(1rem)',
-      }}
-    >
-      <div
-        className={cn(
-          'w-full flex items-start px-4 xs:px-0 xs:items-center',
-          title ? 'justify-between' : 'justify-end'
-        )}
-      >
-        {title && (
-          // <Link href={'/feed'} className='hover:scale-110 transition-transform'>
-          <h2 className='text-2xl 2xl:text-3xl font-bold'>{title}</h2>
-          // </Link>
-        )}
-        <a
-          href='https://www.interface.social/'
-          target='_blank'
-          rel='noreferrer'
-          className='hover:scale-110 transition-transform'
-        >
-          <Image src={InterfaceLight} alt='Interface' width={150} height={35} className='w-36 h-9' />
-        </a>
+    <div className={cn('flex flex-col items-center gap-4 sm:items-end', cardSize)}>
+      <div className='bg-neutral shadow-medium flex w-full items-center justify-between rounded-sm p-4 px-4'>
+        {title && <h2 className='text-xl font-bold sm:text-2xl 2xl:text-3xl'>{title}</h2>}
+        <div className='flex items-center gap-4 sm:gap-5'>
+          <a
+            href='https://www.interface.social/'
+            target='_blank'
+            rel='noreferrer'
+            className='transition-transform hover:scale-105'
+          >
+            <Image src={InterfaceLight} alt='Interface' width={150} height={35} className='h-auto w-32' />
+          </a>
+          <button onClick={() => setFeedKey((prev) => prev + 1)} className='transition-transform hover:scale-110'>
+            <RefreshIcon height={24} width={24} />
+          </button>
+        </div>
       </div>
-      {description && (
-        <p className='w-full px-4 xs:px-0 text-sm mt-3 text-center xs:text-start font-semibold text-text/80'>
-          {description}
-        </p>
-      )}
       <div
         className={cn(
-          'w-full max-w-[900px] mt-4 flex justify-center overflow-hidden',
+          'bg-neutral shadow-medium flex w-full max-w-[900px] justify-center overflow-hidden',
           contentSize,
           !listsIsLoading && (lists?.lists?.length || 0) === 0 ? 'h-[60vh]' : 'h-[100000vh]'
         )}
       >
         {userAddress ? (
           listsIsLoading ? (
-            <div className='h-full w-full flex items-center justify-center bg-neutral'>
+            <div className='bg-neutral flex h-full w-full items-center justify-center'>
               <LoadingSpinner />
             </div>
           ) : (lists?.lists?.length || 0) > 0 ? (
             <iframe
-              key={`${userAddress} ${resolvedTheme}`}
+              key={`${userAddress} ${resolvedTheme} ${feedKey}`}
               title='Feed'
               src={url}
-              className='w-full h-full bg-neutral'
+              className='bg-neutral h-full w-full'
             />
           ) : (
-            <div className='w-full h-full max-h-[60vh] flex items-center font-semibold flex-col justify-center text-center'>
+            <div className='flex h-full max-h-[60vh] w-full flex-col items-center justify-center text-center font-semibold'>
               <p className='text-lg font-bold'>{t('following myprofile empty first')}</p>
-              <p className='text-base italic w-3/4 max-w-96'>{t('following myprofile empty second')}</p>
+              <p className='w-3/4 max-w-96 text-base italic'>{t('following myprofile empty second')}</p>
             </div>
           )
         ) : (
-          <div className='h-full w-full flex items-center justify-center'>
-            <button className='connect-button text-xl font-bold w-64 h-fit p-3' onClick={() => openConnectModal?.()}>
+          <div className='flex h-full w-full items-center justify-center'>
+            <button className='connect-button h-fit w-64 p-3 text-xl font-bold' onClick={() => openConnectModal?.()}>
               {t('connect')}
             </button>
           </div>

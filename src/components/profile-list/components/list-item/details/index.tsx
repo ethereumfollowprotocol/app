@@ -63,14 +63,14 @@ const ProfileListItemDetails: React.FC<ProfileListItemDetailsProps> = ({
 
   return (
     <div
-      className='flex gap-2 sm:gap-3 items-center p-0'
+      className='flex items-center gap-2 p-0 sm:gap-3'
       style={{
         width: isBlockedList ? 'calc(100% - 132px)' : 'calc(100% - 120px)',
       }}
     >
-      <div className={cn('flex gap-2 sm:gap-3 items-center p-0', counts ? 'w-2/3' : 'w-full')}>
+      <div className={cn('flex items-center gap-2 p-0 sm:gap-3', counts ? 'w-2/3' : 'w-full')}>
         {isEnsProfileLoading ? (
-          <LoadingCell className='h-[45px] w-[45px] min-w-[45px] 2xl:h-[50px] 2xl:w-[50px] 2xl:min-w-[50px] rounded-full' />
+          <LoadingCell className='h-[45px] w-[45px] min-w-[45px] rounded-full 2xl:h-[50px] 2xl:w-[50px] 2xl:min-w-[50px]' />
         ) : (
           <Avatar
             name={name || address}
@@ -80,20 +80,20 @@ const ProfileListItemDetails: React.FC<ProfileListItemDetailsProps> = ({
           />
         )}
         <div
-          className='flex flex-col md:flex-row md:gap-3 xl:gap-2 2xl:gap-3 gap-[2px]'
+          className='flex flex-col gap-[2px] md:flex-row md:gap-3 xl:gap-2 2xl:gap-3'
           style={{
             width: counts ? '80%' : 'calc(100% - 60px)',
           }}
         >
           <div
             className={cn(
-              'flex flex-col justify-center items-start tabular-nums relative',
+              'relative flex flex-col items-start justify-center tabular-nums',
               isCart
                 ? 'md:w-52 md:min-w-52'
                 : !isBlockedList && showTags
                   ? displayedTags.length > 0
                     ? 'xl:max-w-[55%] 2xl:max-w-[60%]'
-                    : 'max-w-[70%] 3xs:max-w-[70%] xxs:max-w-[90%]'
+                    : '3xs:max-w-[70%] xxs:max-w-[90%] max-w-[70%]'
                   : 'max-w-full'
             )}
           >
@@ -106,7 +106,7 @@ const ProfileListItemDetails: React.FC<ProfileListItemDetailsProps> = ({
             />
             {showFollowsYouBadges && (
               <div
-                className={`rounded-full font-bold text-[10px] text-darkGrey bg-zinc-300 py-[3px] text-center px-2 w-fit max-w-full ${followerTag.className}`}
+                className={`text-darkGrey w-fit max-w-full rounded-full bg-zinc-300 px-2 py-[3px] text-center text-[10px] font-bold ${followerTag.className}`}
               >
                 {t(followerTag.text)}
               </div>

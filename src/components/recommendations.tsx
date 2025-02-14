@@ -66,10 +66,10 @@ const Recommendations = ({ header, className, limit = 10, endpoint }: Recommenda
 
   return (
     <div className={cn('flex flex-col gap-4 px-2 sm:px-4 2xl:gap-6', className)}>
-      <div className='pt-2 sm:px-1 w-full'>
-        <div className='w-full flex items-center justify-between'>
+      <div className='w-full pt-2 sm:px-1'>
+        <div className='flex w-full items-center justify-between'>
           <h2
-            className={`pl-2 sm:pl-0 text-start text-2xl ${endpoint === 'recommended' ? '' : '2xl:text-3xl'} font-bold`}
+            className={`pl-2 text-start text-2xl sm:pl-0 ${endpoint === 'recommended' ? '' : '2xl:text-3xl'} font-bold`}
           >
             {header}
           </h2>
@@ -110,10 +110,10 @@ const Recommendations = ({ header, className, limit = 10, endpoint }: Recommenda
       />
       {!(isLoading || isFetchingNextPage || isFetchingPreviousPage) &&
         (displayedProfiles?.length === 0 || !displayedProfiles) && (
-          <div className='w-full h-28 mb-14 flex justify-center items-center font-bold italic text-lg'>No results</div>
+          <div className='mb-14 flex h-28 w-full items-center justify-center text-lg font-bold italic'>No results</div>
         )}
       {endpoint === 'recommended' && (
-        <div className='px-3 sm:px-2 pb-2'>
+        <div className='px-3 pb-2 sm:px-2'>
           <Suspense>
             <PageSelector
               page={page}

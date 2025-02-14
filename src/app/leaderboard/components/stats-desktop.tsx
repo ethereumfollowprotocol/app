@@ -40,20 +40,20 @@ const StatsDesktop: React.FC<StatsDesktopProps> = ({
 
   return (
     <div
-      className={`items-center justify-between hidden gap-1 sm:flex ${
+      className={`hidden items-center justify-between gap-1 sm:flex ${
         isHome ? 'sm:w-1/4 md:w-1/3 lg:w-2/3 xl:w-1/4 2xl:w-1/3' : 'sm:w-1/4 md:w-3/5'
       }`}
     >
       {firstStat && (
         <div
           className={cn(
-            'flex-col items-center flex w-full md:w-1/2 lg:w-1/4',
-            firstStat !== 'mutuals' && 'cursor-pointer hover:scale-110 transition-transform',
+            'flex w-full flex-col items-center md:w-1/2 lg:w-1/4',
+            firstStat !== 'mutuals' && 'cursor-pointer transition-transform hover:scale-110',
             isHome ? 'xl:w-full 2xl:w-1/2' : 'xl:hidden'
           )}
           onClick={() => firstStat && router.push(statLink[firstStat])}
         >
-          <p className='font-bold text-sm sm:text-lg'>
+          <p className='text-sm font-bold sm:text-lg'>
             {formatNumber(
               {
                 followers,
@@ -64,7 +64,7 @@ const StatsDesktop: React.FC<StatsDesktopProps> = ({
               }[firstStat] || 0
             )}
           </p>
-          <p className='font-bold text-sm capitalize text-text/60 text-wrap text-center break-words w-full'>
+          <p className='text-text/60 w-full text-center text-sm font-bold text-wrap break-words capitalize'>
             {t(firstStat)}
           </p>
         </div>
@@ -80,11 +80,11 @@ const StatsDesktop: React.FC<StatsDesktopProps> = ({
                 ? 'hidden md:flex xl:hidden 2xl:flex'
                 : 'hidden md:flex'
           } flex-col items-center`,
-          isHome ? 'w-1/2 md:w-1/2 lg:w-1/4 2xl:w-1/2' : 'w-1/2 lg:w-1/4 xl:w-1/5 2xl:w-1/5`'
+          isHome ? 'w-1/2 md:w-1/2 lg:w-1/4 2xl:w-1/2' : '2xl:w-1/5` w-1/2 lg:w-1/4 xl:w-1/5'
         )}
       >
-        <p className='font-bold text-sm sm:text-lg'>{formatNumber(mutuals || 0)}</p>
-        <p className='font-bold text-sm  text-text/60 text-wrap break-words text-center w-full'>{t('mutuals')}</p>
+        <p className='text-sm font-bold sm:text-lg'>{formatNumber(mutuals || 0)}</p>
+        <p className='text-text/60 w-full text-center text-sm font-bold text-wrap break-words'>{t('mutuals')}</p>
       </div>
       <div
         className={cn(
@@ -100,13 +100,13 @@ const StatsDesktop: React.FC<StatsDesktopProps> = ({
                 : isHome
                   ? 'hidden lg:flex xl:hidden'
                   : 'hidden lg:flex'
-          } transition-all hover:scale-110 cursor-pointer flex-col items-center`,
-          isHome ? 'w-1/2 md:w-1/2 lg:w-1/4 2xl:w-1/2' : 'w-1/2 lg:w-1/4 xl:w-1/5  2xl:w-1/5`'
+          } cursor-pointer flex-col items-center transition-all hover:scale-110`,
+          isHome ? 'w-1/2 md:w-1/2 lg:w-1/4 2xl:w-1/2' : '2xl:w-1/5` w-1/2 lg:w-1/4 xl:w-1/5'
         )}
         onClick={() => router.push(statLink.followers)}
       >
-        <p className='font-bold text-sm sm:text-lg'>{formatNumber(followers || 0)}</p>
-        <p className='font-bold text-sm  text-text/60 text-wrap break-words text-center w-full'>{t('followers')}</p>
+        <p className='text-sm font-bold sm:text-lg'>{formatNumber(followers || 0)}</p>
+        <p className='text-text/60 w-full text-center text-sm font-bold text-wrap break-words'>{t('followers')}</p>
       </div>
       <div
         className={`${
@@ -117,11 +117,11 @@ const StatsDesktop: React.FC<StatsDesktopProps> = ({
             : isHome
               ? 'hidden lg:flex xl:hidden'
               : 'hidden lg:flex'
-        } transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/4 xl:w-1/5`}
+        } w-1/2 cursor-pointer flex-col items-center transition-all hover:scale-110 lg:w-1/4 xl:w-1/5`}
         onClick={() => router.push(statLink.following)}
       >
-        <p className='font-bold text-sm sm:text-lg'>{formatNumber(following || 0)}</p>
-        <p className='font-bold text-sm  text-text/60 text-wrap break-words text-center w-full'>{t('following')}</p>
+        <p className='text-sm font-bold sm:text-lg'>{formatNumber(following || 0)}</p>
+        <p className='text-text/60 w-full text-center text-sm font-bold text-wrap break-words'>{t('following')}</p>
       </div>
       <div
         className={`${
@@ -130,20 +130,20 @@ const StatsDesktop: React.FC<StatsDesktopProps> = ({
               ? 'hidden'
               : 'hidden xl:flex'
             : `hidden lg:flex ${isHome ? 'xl:hidden' : ''}`
-        } transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/4 xl:w-1/5`}
+        } w-1/2 cursor-pointer flex-col items-center transition-all hover:scale-110 lg:w-1/4 xl:w-1/5`}
         onClick={() => router.push(statLink.top8)}
       >
-        <p className='font-bold text-sm sm:text-lg'>{formatNumber(top8 || 0)}</p>
-        <p className='font-bold text-sm text-text/60 text-wrap break-words text-center w-full'>{t('top8')}</p>
+        <p className='text-sm font-bold sm:text-lg'>{formatNumber(top8 || 0)}</p>
+        <p className='text-text/60 w-full text-center text-sm font-bold text-wrap break-words'>{t('top8')}</p>
       </div>
       <div
-        className={` transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/2 lg:w-1/3 xl:w-1/5 ${
+        className={`w-1/2 cursor-pointer flex-col items-center transition-all hover:scale-110 lg:w-1/3 xl:w-1/5 ${
           isHome ? 'hidden' : 'hidden xl:flex'
         } `}
         onClick={() => router.push(statLink.blocked)}
       >
-        <p className='font-bold text-sm sm:text-lg'>{formatNumber(blocked || 0)}</p>
-        <p className='font-bold text-sm text-text/60 text-wrap break-words text-center w-full'>{t('blocked')}</p>
+        <p className='text-sm font-bold sm:text-lg'>{formatNumber(blocked || 0)}</p>
+        <p className='text-text/60 w-full text-center text-sm font-bold text-wrap break-words'>{t('blocked')}</p>
       </div>
     </div>
   )

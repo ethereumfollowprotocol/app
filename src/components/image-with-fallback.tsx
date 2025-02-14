@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import Image, { type ImageProps, type StaticImageData } from 'next/image'
-
-import DefaultAvatar from 'public/assets/art/default-avatar.svg'
+import { DEFAULT_AVATAR_URL } from '#/lib/constants'
 
 interface ImageWithFallbackProps extends ImageProps {
   fallback?: StaticImageData | string
@@ -9,7 +8,7 @@ interface ImageWithFallbackProps extends ImageProps {
   src: string
 }
 
-const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({ fallback = DefaultAvatar, alt, src, ...props }) => {
+const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({ fallback = DEFAULT_AVATAR_URL, alt, src, ...props }) => {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -27,7 +26,6 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({ fallback = Defaul
         setError('invalid image')
         event.currentTarget.setAttribute('data-loaded', 'true')
       }}
-      loader={fallback}
       src={error ? fallback : src}
       {...props}
     />

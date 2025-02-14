@@ -1,3 +1,5 @@
+import type { SVGProps } from 'react'
+
 import IranFlag from 'public/assets/icons/flags/iran.svg'
 import LaosFlag from 'public/assets/icons/flags/laos.svg'
 import IndiaFlag from 'public/assets/icons/flags/india.svg'
@@ -66,7 +68,13 @@ import VaticanCityFlag from 'public/assets/icons/flags/vatican-city.svg'
 import CzechRepublicFlag from 'public/assets/icons/flags/czech-republic.svg'
 // import HalloweenFlag from 'public/assets/icons/flags/halloween.svg'
 
-export const LANGUAGES = [
+export const LANGUAGES: {
+  language: string
+  key: string
+  icon: React.FC<SVGProps<SVGSVGElement>>
+  englishLanguage: string
+  special?: boolean
+}[] = [
   // ----------- normal languages -----------
   { language: 'English', key: 'en', icon: USAFlag, englishLanguage: 'English' },
   { language: 'Slovenščina', key: 'sl', icon: SloveniaFlag, englishLanguage: 'Slovenian' },

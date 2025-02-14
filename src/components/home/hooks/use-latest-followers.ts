@@ -5,7 +5,7 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { fetchLatestFollowers } from '#/api/followers/fetch-latest-followers'
 
-export const useLatestFollowers = () => {
+export const useLatestFollowers = (pageLimit = 5, pageItemsLimit = 5) => {
   const [page, setPage] = useState(1)
   const [subPage, setSubPage] = useState(1)
 
@@ -28,7 +28,7 @@ export const useLatestFollowers = () => {
       const latestFollowers = await fetchLatestFollowers({
         addressOrName: userAddress,
         list: listToFetch,
-        limit: 55,
+        limit: pageLimit * pageItemsLimit,
         pageParam,
       })
 
@@ -48,8 +48,8 @@ export const useLatestFollowers = () => {
   const displayedProfiles = useMemo(() => {
     const pageIndex = profilesToRecommend?.pageParams.indexOf(page - 1) || 0
     return profilesToRecommend?.pages[pageIndex]?.results.slice(
-      (subPage - 1 - (page - 1) * 5) * 11,
-      (subPage - (page - 1) * 5) * 11
+      (subPage - 1 - (page - 1) * pageLimit) * pageItemsLimit,
+      (subPage - (page - 1) * pageLimit) * pageItemsLimit
     )
   }, [profilesToRecommend, page, subPage])
 
