@@ -65,7 +65,7 @@ const Recommendations = ({ header, className, limit = 10, endpoint }: Recommenda
   }, [userAddress, selectedList, limit])
 
   return (
-    <div className={cn('flex flex-col gap-4 px-2 sm:px-4 2xl:gap-6', className)}>
+    <div className={cn('bg-neutral shadow-medium flex flex-col gap-4 rounded-sm p-4 2xl:gap-6', className)}>
       <div className='w-full pt-2 sm:px-1'>
         <div className='flex w-full items-center justify-between'>
           <h2

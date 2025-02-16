@@ -14,6 +14,7 @@ import { useUserScroll } from '../hooks/use-user-scroll'
 import UserProfileCard from '#/components/user-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import UserProfilePageTable from '#/components/profile-page-table'
+import UserProfile from '#/components/user-profile'
 
 interface UserInfoProps {
   user: string
@@ -72,7 +73,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   const router = useRouter()
   const isMyProfile = useIsEditView()
   const { roles, selectedList } = useEFPProfile()
-  const { tableRef, TopEightRef, containerRef, ProfileCardRef } = useUserScroll()
+  const { tableRef, TopEightRef, containerRef } = useUserScroll()
 
   const titleRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
@@ -159,16 +160,10 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       )}
       {!isSaving && (
         <div
-          className='relative flex w-full flex-col gap-4 overflow-y-auto px-4 pt-[108px] pb-8 sm:pt-[6.75rem] lg:px-6 xl:h-screen xl:flex-row xl:justify-center xl:px-8 xl:pb-0'
+          className='relative flex w-full flex-col gap-4 overflow-y-auto px-4 sm:pr-0 sm:pl-20 lg:h-screen lg:gap-0'
           ref={containerRef}
         >
-          <div
-            ref={ProfileCardRef}
-            className='xl:sticky xl:h-fit xl:pb-4'
-            style={{
-              top: '0px',
-            }}
-          >
+          <div className='mt-20 w-full lg:mt-0'>
             <Suspense>
               <UserProfileCard
                 profileList={profileList}
@@ -185,34 +180,40 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
                 openQrCodeModal={() => setQrCodeModalOpen(true)}
                 openListSettingsModal={() => setListSettingsOpen(true)}
               />
+              <UserProfile
+                isMyProfile={isMyProfile}
+                profileList={profileList}
+                stats={stats}
+                profile={profile}
+                refetchProfile={refetchProfile}
+                isLoading={profileIsLoading}
+                isStatsLoading={statsIsLoading}
+                openBlockModal={() => {
+                  setIsBlockedMutedOpen(true)
+                  router.push(`/${user}?modal=block_mute_list`)
+                }}
+                openQrCodeModal={() => setQrCodeModalOpen(true)}
+                openListSettingsModal={() => setListSettingsOpen(true)}
+              />
             </Suspense>
           </div>
-          <div className='xl:hidden'>
-            <TopEight user={user} isConnectedUserProfile={isMyProfile} />
-          </div>
-          <div
-            ref={titleRef}
-            className='relative h-fit w-full xl:sticky xl:top-0 xl:max-w-[800px]'
-            style={{
-              scrollMarginTop: '100px',
-            }}
-          >
-            <div className='h-fit w-full xl:absolute xl:top-0 xl:left-0'>
+          <div className='z-10 -mt-24 flex flex-col-reverse gap-4 px-4 lg:flex-row xl:px-8'>
+            <div className='h-fit w-full'>
               <UserProfilePageTable
                 setActiveTab={(tab) => setActiveTab(tab as ProfileTabType)}
                 ref={tableRef}
                 {...tableProps}
               />
             </div>
-          </div>
-          <div
-            ref={TopEightRef}
-            className='sticky hidden h-fit pb-4 xl:block'
-            style={{
-              top: '0px',
-            }}
-          >
-            <TopEight user={user} isConnectedUserProfile={isMyProfile} />
+            <div
+              ref={TopEightRef}
+              className='sticky h-fit pb-4'
+              style={{
+                top: '32px',
+              }}
+            >
+              <TopEight user={user} isConnectedUserProfile={isMyProfile} />
+            </div>
           </div>
         </div>
       )}

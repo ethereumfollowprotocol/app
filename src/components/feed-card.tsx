@@ -35,7 +35,7 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
   return (
     <div className={cn('flex flex-col items-center gap-4 sm:items-end', cardSize)}>
       <div className='bg-neutral shadow-medium flex w-full items-center justify-between rounded-sm p-4 px-4'>
-        {title && <h2 className='text-xl font-bold sm:text-2xl 2xl:text-3xl'>{title}</h2>}
+        {title && <h2 className='text-xl font-bold sm:text-2xl'>{title}</h2>}
         <div className='flex items-center gap-4 sm:gap-5'>
           <a
             href='https://www.interface.social/'

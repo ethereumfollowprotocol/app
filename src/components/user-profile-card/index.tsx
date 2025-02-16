@@ -8,7 +8,6 @@ import { ProfileCard } from 'ethereum-identity-kit'
 
 import { cn } from '#/lib/utilities'
 import ConnectButton from '../connect-button'
-import Achievements from './components/achievements'
 import FollowButton from '#/components/follow-button'
 import ThreeDotMenu from './components/three-dot-menu'
 import { useProfileCard } from './hooks/use-profile-card'
@@ -59,7 +58,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   return (
     <div
       className={cn(
-        'flex flex-col gap-4',
+        'flex flex-col gap-4 md:hidden',
         isResponsive ? '3xl:w-86 3xl:min-w-86 w-full xl:w-[324px] xl:min-w-[324px]' : 'xxs:w-92 w-full'
       )}
     >
@@ -134,7 +133,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           )}
         </div>
       )}
-      {displayAchievements && !isRecommended && (
+      {/* {displayAchievements && !isRecommended && (
         <Achievements
           profile={profile}
           list={profileList}
@@ -142,7 +141,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           isResponsive={isResponsive}
           isRecommended={!!isRecommended}
         />
-      )}
+      )} */}
     </div>
   )
 }

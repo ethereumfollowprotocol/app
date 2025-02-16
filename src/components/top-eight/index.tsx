@@ -34,32 +34,28 @@ const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile }) => 
       {isConnectedUserProfile && editModalOpen && (
         <EditModal profiles={topEight || []} onClose={() => setEditModalOpen(false)} />
       )}
-      <div className='glass-card border-grey relative flex w-full flex-col items-center justify-center gap-4 rounded-sm border-[3px] px-5 py-4 xl:w-80 xl:gap-4 2xl:w-[602px] 2xl:px-2'>
-        {isConnectedUserProfile && (
-          <div
-            onClick={() => setEditModalOpen(true)}
-            className='text-text-neutral hover:text-text/70 absolute top-2 right-2.5 flex cursor-pointer items-center gap-1 text-sm font-semibold transition-all hover:scale-110'
-          >
-            <Edit className='text-2xl' />
-            <p>{t('edit')}</p>
-          </div>
-        )}
-        <div
-          className={cn('flex items-center justify-center gap-2 font-bold', isConnectedUserProfile ? 'mt-4' : 'mt-2')}
-        >
-          <h3 className='text-2xl'>{t('top eight title')}</h3>
+      <div className='flex w-full flex-col items-center justify-center gap-4 rounded-sm lg:w-80 lg:gap-4 xl:w-[602px]'>
+        <div className='bg-neutral shadow-medium flex w-full items-center justify-between rounded-sm p-4'>
+          <h3 className='text-xl font-bold'>{t('top eight title')}</h3>
+          {isConnectedUserProfile && (
+            <button onClick={() => setEditModalOpen(true)} className='transition-all hover:scale-110'>
+              <Edit className='h-5 w-5' />
+            </button>
+          )}
         </div>
         {isTopEightEmpty && (
-          <p className='text-text my-16 text-center text-lg font-medium italic'>{t('no top eight')}</p>
+          <p className='bg-neutral shadow-medium w-full rounded-sm py-20 text-center text-lg font-medium italic'>
+            {t('no top eight')}
+          </p>
         )}
-        <div className='flex w-full flex-wrap items-start justify-around transition-none sm:justify-between sm:gap-1 xl:gap-0 2xl:justify-start'>
+        <div className='flex w-full flex-wrap items-start justify-start gap-2 transition-none'>
           {!isTopEightLoading &&
             topEight.slice(0, displayLimit).map((profile, index) => <TopEightProfile profile={profile} key={index} />)}
           {new Array(isTopEightLoading ? displayLimit : 0).fill(0).map((_, index) => (
-            <div key={index} className='flex w-28 flex-col items-center gap-2 px-0 py-4 xl:w-[128px] 2xl:w-36'>
+            <div key={index} className='flex w-28 flex-col items-center gap-2 px-0 py-4 lg:w-[128px] xl:w-36'>
               <LoadingCell className='h-[50px] w-[50px] rounded-full' />
               <LoadingCell className='h-7 w-24 rounded-sm' />
-              <LoadingCell className='h-9 w-[110px] rounded-sm 2xl:h-10 2xl:w-[120px]' />
+              <LoadingCell className='h-9 w-[110px] rounded-sm xl:h-10 xl:w-[120px]' />
             </div>
           ))}
         </div>

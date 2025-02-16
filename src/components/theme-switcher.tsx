@@ -70,7 +70,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
       </div>
       <div
         className={cn(
-          'absolute top-0 -right-full z-50 block h-full w-full transition-all transition-discrete group-hover:block sm:left-full sm:w-fit sm:pl-2',
+          'absolute top-0 -right-full z-50 block h-full w-full transition-all transition-discrete group-hover:block sm:left-full sm:w-fit sm:pl-2 sm:transition-normal',
           themeMenuOpen ? 'block' : 'hidden'
         )}
       >

@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 
 @theme {
+  --spacing-summary-name: calc(100% - 3.5rem);
   --breakpoint-xs: 400px;
   --color-yellow: #fff500;
   --color-pink: #ff79c9;
@@ -9,7 +10,7 @@
   --color-addition: #a1f783;
   --color-neutral: #ffffff;
   --color-text: #000000;
-  --color-text-neutral: #888888;
+  --color-text-neutral: #666666;
   --color-nav-item: #f4f4f4;
   --font-sans: 'inter', sans-serif;
   --font-size-text-md: 1rem;

@@ -22,15 +22,15 @@ const Socials: React.FC<SocialsProps> = ({ profile }) => {
           className={
             profile.ens.records?.[social.name] || social.name === 'etherscan'
               ? 'opacity-100 transition-all hover:scale-110 hover:opacity-80'
-              : 'pointer-events-none opacity-20'
+              : 'pointer-events-none opacity-30'
           }
         >
           <Image
             src={social.icon(resolvedTheme || '')}
             alt={social.name}
-            width={36}
-            height={36}
-            className='3xl:w-9 3xl:h-9 h-8 w-8 rounded-full'
+            width={52}
+            height={52}
+            className='h-auto w-10 rounded-full'
           />
         </a>
       ))}

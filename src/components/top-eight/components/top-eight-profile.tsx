@@ -52,10 +52,8 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
   return (
     <div
       className={cn(
-        'group relative flex w-[129px] flex-col items-center justify-between gap-2 rounded-sm px-0.5 py-4 hover:border-[#A2A2A277] 2xl:w-36',
-        isEditing
-          ? 'h-[186px] w-[144px] cursor-pointer border-[3px] border-transparent'
-          : 'hover:bg-text/5 h-[180px] w-[129px] 2xl:w-36',
+        'group bg-neutral shadow-small relative flex w-[48.75%] flex-col items-center justify-between gap-2 rounded-sm px-0.5 py-4 md:w-[24.05%] lg:w-[48%] xl:w-[24%]',
+        isEditing ? 'h-[186px] w-[144px] cursor-pointer border-[3px] border-transparent' : 'h-[180px]',
         isAddingToTopEight && 'border-[3px] border-green-500/50',
         isRemovingFromTopEight && 'border-[3px] border-red-400/70 dark:border-red-500/70'
       )}

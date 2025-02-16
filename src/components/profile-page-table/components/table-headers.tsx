@@ -9,6 +9,7 @@ import type { ProfileTableTitleType } from '#/types/common'
 import type { FollowSortType, TagCountType } from '#/types/requests'
 import { QUERY_BLOCK_TAGS } from '#/components/blocked-muted/hooks/use-blocked-muted'
 import { BLOCKED_MUTED_TABS, BLOCKED_MUTED_TAGS, SORT_OPTIONS } from '#/lib/constants'
+import Tag from 'public/assets/icons/ui/tag.svg'
 import Check from 'public/assets/icons/ui/check.svg'
 import Cross from 'public/assets/icons/ui/cross.svg'
 import ArrowDown from 'public/assets/icons/ui/arrow-down.svg'
@@ -61,7 +62,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
   const tagsEmpty = !tagsLoading && (!displayedTags || displayedTags.length === 0)
 
   return (
-    <div className='z-40 flex w-full flex-col gap-4 px-4 sm:px-2'>
+    <div className='bg-neutral shadow-medium z-40 flex w-full flex-col gap-4 rounded-sm p-4 py-2 pl-2'>
       <div className='flex w-full justify-between'>
         <div className='flex w-full flex-wrap items-center justify-between gap-3 sm:flex-nowrap sm:justify-start'>
           <div className='flex w-full items-center gap-3 sm:w-fit'>
@@ -71,7 +72,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
               <div className='bg-grey relative flex w-full items-center rounded-sm sm:w-fit'>
                 <div
                   className={cn(
-                    'border-grey bg-neutral absolute h-full w-1/2 rounded-sm border-[3px] transition-all duration-200 sm:w-32',
+                    'bg-text/20 absolute h-full w-1/2 rounded-sm transition-all duration-200 sm:w-32',
                     title === 'following' ? 'left-0' : 'left-1/2 sm:left-32'
                   )}
                 />
@@ -96,31 +97,26 @@ const TableHeader: React.FC<TableHeaderProps> = ({
               </div>
             )}
           </div>
-          {!BLOCKED_MUTED_TABS.includes(title) && (
-            <div ref={clickAwaySearchRef} className='relative z-50 flex gap-1 sm:gap-3'>
-              <div
-                className={cn(
-                  'flex h-6 max-w-40 cursor-pointer items-center gap-2 transition-all hover:opacity-75',
-                  search ? 'hover:scale-[1.15]' : 'hover:scale-125'
-                )}
-                onClick={() => setShowSearch(!showSearch)}
-              >
-                <MagnifyingGlass className='text-2xl opacity-50 transition-opacity hover:opacity-100' />
-                <p className='hidden truncate text-sm font-medium sm:block md:hidden lg:block xl:hidden 2xl:block'>
-                  {search}
-                </p>
-              </div>
-              {search && (
-                <Cross
-                  onClick={() => {
-                    setSearch('')
-                    setShowSearch(false)
-                  }}
-                  className='text-darkGrey mt-0.5 cursor-pointer rounded-full bg-zinc-300 p-0.5 text-xl opacity-50 transition-all hover:scale-125 hover:opacity-60'
-                />
-              )}
-              {showSearch && (
-                <div className='glass-card bg-neutral border-grey absolute -top-4 left-0 flex h-fit w-64 items-center gap-1 rounded-sm border-[3px] shadow-md xl:-left-10'>
+          <div className='flex justify-end gap-4 sm:w-full'>
+            {!BLOCKED_MUTED_TABS.includes(title) && (
+              <div ref={clickAwaySearchRef} className='relative z-50 flex gap-1 sm:gap-3'>
+                <div
+                  className='flex h-6 max-w-40 cursor-pointer items-center gap-2'
+                  onClick={() => setShowSearch(!showSearch)}
+                >
+                  <MagnifyingGlass className='h-6 w-auto transition-transform hover:scale-110' />
+                  <p className='text-sm font-medium'>{search}</p>
+                  {search && (
+                    <Cross
+                      onClick={() => {
+                        setSearch('')
+                        setShowSearch(false)
+                      }}
+                      className='text-darkGrey -ml-1 h-6 w-auto cursor-pointer rounded-full text-xl opacity-50 transition-all hover:scale-125 hover:opacity-60'
+                    />
+                  )}
+                </div>
+                {showSearch && (
                   <input
                     type='text'
                     spellCheck={false}
@@ -137,25 +133,17 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                       }
                     }}
                     value={search}
-                    className='bg-neutral/50 block w-full rounded-sm border-0 border-transparent py-3 pr-10 pl-3 font-medium sm:text-sm'
+                    className='bg-text/20 absolute -top-2 right-[110%] block w-52 rounded-sm border-0 border-transparent py-2 pr-10 pl-3 font-medium sm:text-sm'
                   />
-                  <div
-                    className='pointer-events-none absolute inset-y-0 right-0 flex items-center pl-3'
-                    aria-hidden='true'
-                  >
-                    <MagnifyingGlass className='mr-3 text-xl text-zinc-400 dark:text-white/90' aria-hidden='true' />
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-          <div className='flex justify-end gap-4 sm:w-full'>
+                )}
+              </div>
+            )}
             <div
               onClick={() => setShowTags(!showTags)}
               className='flex cursor-pointer items-center gap-1 transition-transform hover:scale-110'
             >
-              <p className='text-sm font-bold'>{t('tags')}</p>
-              <ArrowDown className={`transition-transform ${showTags ? 'rotate-180' : ''}`} />
+              <Tag className='h-auto w-5' />
+              <ArrowDown className={`h-auto w-4 transition-transform ${showTags ? 'rotate-180' : ''}`} />
             </div>
             <div
               ref={clickAwaySortRef}
@@ -164,7 +152,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
             >
               <div className='flex items-center gap-1 transition-transform hover:scale-110'>
                 <p className='text-sm font-bold capitalize'>{t(sort)}</p>
-                <ArrowDown className={`transition-transform ${showSort ? 'rotate-180' : ''}`} />
+                <ArrowDown className={`h-auto w-4 transition-transform ${showSort ? 'rotate-180' : ''}`} />
               </div>
               {showSort && (
                 <div className='bg-neutral glass-card border-grey absolute top-[120%] -right-2 z-50 flex flex-col items-center gap-1 rounded-sm border-[3px] p-1 shadow-md'>
@@ -188,15 +176,16 @@ const TableHeader: React.FC<TableHeaderProps> = ({
       {showTags && (
         <div className='flex w-full flex-wrap gap-2'>
           {tagsLoading
-            ? new Array(4).fill(1).map((_, i) => <LoadingCell key={i} className='h-7 w-20 rounded-full md:h-9' />)
+            ? new Array(4).fill(1).map((_, i) => <LoadingCell key={i} className='h-7 w-20 rounded-sm md:h-9' />)
             : displayedTags?.map((tag, i) => (
                 <button
                   key={tag.tag + i}
-                  className={`flex max-w-[33%] items-center gap-1.5 px-4 py-2 text-sm font-bold transition-transform hover:scale-110 ${
+                  className={cn(
+                    'flex max-w-[33%] items-center gap-1.5 rounded-sm px-4 py-2 text-sm font-bold transition-transform hover:scale-110',
                     selectedTags?.includes(tag.tag)
                       ? 'text-darkGrey bg-zinc-100 shadow-inner shadow-black/10'
                       : 'bg-zinc-300/80 text-zinc-500'
-                  } rounded-full`}
+                  )}
                   name={tag.tag.toLowerCase()}
                   onClick={() => toggleSelectedTags(title, tag.tag)}
                 >

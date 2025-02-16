@@ -75,7 +75,7 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = ({ closeMenu, setExternalV
       </div>
       <div
         className={cn(
-          'absolute -top-[116px] -right-full z-50 block w-full transition-all transition-discrete group-hover:block sm:top-0 sm:left-full sm:w-fit sm:pl-2',
+          'absolute -top-[116px] -right-full z-50 block w-full transition-all transition-discrete group-hover:block sm:top-0 sm:left-full sm:w-fit sm:pl-2 sm:transition-normal',
           volumeMenuOpen ? 'block' : 'hidden'
         )}
       >

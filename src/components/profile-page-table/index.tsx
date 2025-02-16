@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next'
 import { useEffect, useState, forwardRef } from 'react'
 import { useIntersectionObserver } from '@uidotdev/usehooks'
 
-import type { TagCountType, FollowSortType, FollowerResponse, FollowingResponse } from '#/types/requests'
 import { cn } from '#/lib/utilities'
 import Recommendations from '../recommendations'
 import ProfileList from '#/components/profile-list'
@@ -13,6 +12,7 @@ import { useIsEditView } from '#/hooks/use-is-edit-view'
 import type { ProfileTableTitleType } from '#/types/common'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { BLOCKED_MUTED_TABS, FETCH_LIMIT_PARAM, SECOND } from '#/lib/constants'
+import type { TagCountType, FollowSortType, FollowerResponse, FollowingResponse } from '#/types/requests'
 
 interface UserProfilePageTableProps {
   title: ProfileTableTitleType
@@ -132,37 +132,35 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
     return (
       <div
         className={cn(
-          'border-grey flex w-full flex-col gap-4 rounded-sm border-[3px] px-0 py-4 sm:px-4',
+          'flex w-full flex-col rounded-sm',
           !(isLoading || isFetchingMore) && 'pb-0 sm:pb-0',
           BLOCKED_MUTED_TABS.includes(title) ? 'bg-neutral/70' : 'glass-card',
           customClass
         )}
       >
-        <TableHeader
-          setActiveTab={setActiveTab}
-          search={search}
-          setSearch={setSearch}
-          showTags={showTags}
-          setShowTags={(option: boolean) => setShowTags(option)}
-          title={title}
-          allTags={allTags}
-          tagsLoading={tagsLoading}
-          selectedTags={selectedTags}
-          sort={sort}
-          setSort={setSort}
-          toggleSelectedTags={toggleSelectedTags}
-          isShowingBlocked={isShowingBlocked}
-        />
-        {profilesEmpty && <div className='h-[152px] content-center px-2 py-4 text-center font-bold'>{noResults}</div>}
-        <div
-          ref={ref}
-          className={cn(
-            'flex flex-col px-3 sm:px-0',
-            !BLOCKED_MUTED_TABS.includes(title) && 'xl:overflow-y-scroll',
-            !(BLOCKED_MUTED_TABS.includes(title) || profilesEmpty) &&
-              (showTags ? 'profile-page-table-tags' : 'profile-page-table')
+        <div className='sticky top-0 z-10' ref={ref}>
+          <TableHeader
+            setActiveTab={setActiveTab}
+            search={search}
+            setSearch={setSearch}
+            showTags={showTags}
+            setShowTags={(option: boolean) => setShowTags(option)}
+            title={title}
+            allTags={allTags}
+            tagsLoading={tagsLoading}
+            selectedTags={selectedTags}
+            sort={sort}
+            setSort={setSort}
+            toggleSelectedTags={toggleSelectedTags}
+            isShowingBlocked={isShowingBlocked}
+          />
+        </div>
+        <div className={cn('flex flex-col pt-4')}>
+          {profilesEmpty && (
+            <div className='bg-neutral shadow-medium content-center rounded-sm p-8 text-center font-bold'>
+              {noResults}
+            </div>
           )}
-        >
           <ProfileList
             isLoading={isLoading}
             isLoadingMore={isFetchingMore}
@@ -173,8 +171,9 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
             canEditTags={canEditTags}
             isBlockedList={isShowingBlocked}
             isBlockedBy={title === 'Blocked/Muted By' && isProfile}
+            className={cn('bg-neutral shadow-medium rounded-sm p-4', !isLoading && profiles.length === 0 && 'hidden')}
           />
-          <div ref={loadMoreRef} className='mb-4 h-px w-full' />
+          {!isLoading && <div ref={loadMoreRef} className='mb-4 h-px w-full' />}
           {isFollowingTable && isProfile && (lists?.lists?.length || 0) === 0 && (
             <Recommendations limit={40} endpoint='recommended' header={t('recommendations')} className='py-2' />
           )}
