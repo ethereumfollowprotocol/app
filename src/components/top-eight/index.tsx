@@ -8,13 +8,15 @@ import { useTopEight } from './hooks/use-top-eight'
 import TopEightProfile from './components/top-eight-profile'
 import Edit from 'public/assets/icons/ui/edit.svg'
 import ArrowDown from 'public/assets/icons/ui/arrow-down.svg'
+import type { UserProfilePageTableProps } from '../profile-page-table'
 
 interface TopEightProps {
   user: Address | string
   isConnectedUserProfile?: boolean
+  followingListProps: UserProfilePageTableProps
 }
 
-const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile }) => {
+const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile, followingListProps }) => {
   const {
     topEight,
     displayLimit,
@@ -32,7 +34,11 @@ const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile }) => 
   return (
     <>
       {isConnectedUserProfile && editModalOpen && (
-        <EditModal profiles={topEight || []} onClose={() => setEditModalOpen(false)} />
+        <EditModal
+          profiles={topEight || []}
+          onClose={() => setEditModalOpen(false)}
+          followingListProps={followingListProps}
+        />
       )}
       <div className='flex w-full flex-col items-center justify-center gap-4 rounded-sm lg:w-80 lg:gap-4 xl:w-[602px]'>
         <div className='bg-neutral shadow-medium flex w-full items-center justify-between rounded-sm p-4'>
@@ -52,7 +58,10 @@ const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile }) => 
           {!isTopEightLoading &&
             topEight.slice(0, displayLimit).map((profile, index) => <TopEightProfile profile={profile} key={index} />)}
           {new Array(isTopEightLoading ? displayLimit : 0).fill(0).map((_, index) => (
-            <div key={index} className='flex w-28 flex-col items-center gap-2 px-0 py-4 lg:w-[128px] xl:w-36'>
+            <div
+              key={index}
+              className='bg-neutral shadow-small flex w-28 flex-col items-center gap-2 px-0 py-4 lg:w-[128px] xl:w-36'
+            >
               <LoadingCell className='h-[50px] w-[50px] rounded-full' />
               <LoadingCell className='h-7 w-24 rounded-sm' />
               <LoadingCell className='h-9 w-[110px] rounded-sm xl:h-10 xl:w-[120px]' />

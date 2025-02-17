@@ -24,6 +24,7 @@ interface ProfileListProps {
   canEditTags?: boolean
   isBlockedList?: boolean // If the list is displaying blocked and blocked by profiles
   isBlockedBy?: boolean // Used to handle the "Block Back" on FollowButton
+  isTopEight?: boolean
 }
 
 const ProfileList: React.FC<ProfileListProps> = ({
@@ -37,6 +38,7 @@ const ProfileList: React.FC<ProfileListProps> = ({
   canEditTags,
   isBlockedList,
   isBlockedBy,
+  isTopEight,
 }) => {
   const displayLoadingRows = isLoadingMore || isLoading
   const isShortList = (profiles?.length || 0) <= 3
@@ -62,6 +64,7 @@ const ProfileList: React.FC<ProfileListProps> = ({
           canEditTags={canEditTags}
           isBlockedList={isBlockedList}
           isBlockedBy={isBlockedBy}
+          isTopEight={isTopEight}
           tagsDropdownPosition={
             (index === profiles.length - 1 || index === profiles.length - 2) && index >= 2 ? 'top' : 'bottom'
           }

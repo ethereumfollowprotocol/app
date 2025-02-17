@@ -1,5 +1,7 @@
 import { cn } from '#/lib/utilities'
 import Cross from 'public/assets/icons/ui/cross.svg'
+import type { ReactNode } from 'react'
+import { createPortal } from 'react-dom'
 interface ModalProps {
   onCancel: () => void
   children: React.ReactNode
@@ -7,31 +9,26 @@ interface ModalProps {
   disableBackgroundClose?: boolean
 }
 
-const Modal: React.FC<ModalProps> = ({ onCancel, children, className, disableBackgroundClose }) => {
-  return (
+const Modal = ({ onCancel, children, className, disableBackgroundClose }: ModalProps) => {
+  return createPortal(
     <div
       className={cn(
-        'fixed top-0 left-0 z-50 flex h-screen w-screen justify-center overflow-scroll bg-black/40 px-4 py-12',
+        'fixed top-0 left-0 z-50 flex h-screen w-screen justify-center overflow-scroll bg-black/40 px-2 py-12 sm:px-4',
         className ?? 'items-center'
       )}
       onClick={() => !disableBackgroundClose && onCancel()}
     >
-      <div className={`flex w-full flex-col items-end gap-2 sm:w-fit`}>
-        <div
-          onClick={onCancel}
-          className='bg-grey/90 z-50 translate-x-4 translate-y-8 cursor-pointer rounded-sm p-2 transition-all hover:scale-110 hover:opacity-90'
-        >
-          <Cross className='text-2xl' />
-        </div>
-        <div
-          className='glass-card bg-neutral/55 w-full rounded-sm p-4 sm:w-fit sm:p-6'
-          onClick={(e) => e.stopPropagation()}
-        >
+      <div className='bg-neutral relative w-full rounded-sm p-3 sm:w-fit sm:p-4'>
+        <button onClick={onCancel} className='absolute top-0.5 right-0.5 transition-all hover:scale-110'>
+          <Cross className='h-auto w-7' />
+        </button>
+        <div className='w-full' onClick={(e) => e.stopPropagation()}>
           {children}
         </div>
       </div>
-    </div>
-  )
+    </div>,
+    document.getElementById('modal-root') as HTMLElement
+  ) as ReactNode
 }
 
 export default Modal

@@ -42,7 +42,6 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
     return editedProfiles.length - topEightRemoved.length - removedProfiles.length
   }, [editedProfiles, cart])
   const isTopEightFull = currentTopEightLength >= 8
-  console.log(currentTopEightLength)
 
   useEffect(() => {
     setEditedProfiles([...profiles, ...topEightInCart])

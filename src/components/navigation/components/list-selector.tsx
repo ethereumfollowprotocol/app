@@ -41,7 +41,7 @@ const ListSelector: React.FC<ListSelectorProps> = ({ setWalletMenuOpen, setSubMe
           lists?.lists && lists?.lists?.length > 0 ? (open ? 'sm:block' : 'sm:hidden') : 'hidden group-hover:hidden'
         )}
       >
-        <div className='bg-neutral flex w-full min-w-56 flex-col gap-2 overflow-auto rounded-sm shadow-lg sm:max-h-[80vh]'>
+        <div className='bg-neutral shadow-medium flex w-full min-w-56 flex-col gap-2 overflow-auto rounded-sm sm:max-h-[80vh]'>
           <div
             onClick={() => setMenuOpen(false)}
             className='hover:bg-nav-item flex w-full cursor-pointer items-center justify-between p-4 transition-opacity sm:hidden'

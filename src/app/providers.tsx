@@ -72,6 +72,7 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
                 <RecommendedProfilesProvider>
                   <Navigation />
                   {children}
+                  <div id='modal-root' />
                 </RecommendedProfilesProvider>
               </SoundsProvider>
             </ActionsProvider>

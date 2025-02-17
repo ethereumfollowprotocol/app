@@ -7,6 +7,7 @@ import { resolveEnsProfile } from '#/utils/ens'
 import type { ENSProfile } from '#/types/requests'
 import FollowButton from '#/components/follow-button'
 import type { ProfileStatsType, TagsDropdownPositionType } from '#/types/common'
+import TopEightAddButton from '#/components/top-eight/components/top-eight-add-button'
 
 export interface ProfileListItemProps {
   address: Address
@@ -18,6 +19,7 @@ export interface ProfileListItemProps {
   canEditTags?: boolean
   isBlockedList?: boolean
   isBlockedBy?: boolean
+  isTopEight?: boolean
   tagsDropdownPosition?: TagsDropdownPositionType
 }
 
@@ -32,6 +34,7 @@ const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
     canEditTags,
     isBlockedList,
     isBlockedBy,
+    isTopEight,
     tagsDropdownPosition,
   }) => {
     const { data: fetchedEnsProfile, isLoading: isEnsProfileLoading } = useQuery({
@@ -59,7 +62,11 @@ const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
           tagsDropdownPosition={tagsDropdownPosition}
         />
         {/* Right section: Follow Button */}
-        <FollowButton isBlockedBy={isBlockedBy} address={address} />
+        {isTopEight ? (
+          <TopEightAddButton address={address} tags={tags} />
+        ) : (
+          <FollowButton isBlockedBy={isBlockedBy} address={address} />
+        )}
       </div>
     )
   }

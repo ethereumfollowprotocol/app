@@ -132,11 +132,11 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ user, list, isManager, onCl
       >
         <div
           onClick={onClose}
-          className='bg-neutral/90 absolute -top-[18px] right-1 z-50 cursor-pointer rounded-sm p-2 transition-all hover:scale-110 hover:opacity-90'
+          className='bg-neutral absolute -top-9 right-4 z-50 cursor-pointer rounded-sm p-1 transition-all hover:scale-110 hover:opacity-90 md:right-6'
         >
-          <Cross className='text-2xl' />
+          <Cross className='h-auto w-7' />
         </div>
-        <div className='bg-neutral/80 hidden h-fit w-full rounded-sm xl:block'>
+        <div className='hidden h-fit w-full rounded-sm xl:block'>
           <UserProfilePageTable
             ref={tableRef}
             key={'Blocked/Muted'}
@@ -159,7 +159,7 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ user, list, isManager, onCl
             customClass='hidden xl:flex min-w-[600px] max-w-[47.5%]'
           />
         </div>
-        <div className='bg-neutral/80 hidden h-fit w-full rounded-sm xl:block'>
+        <div className='hidden h-fit w-full rounded-sm xl:block'>
           <UserProfilePageTable
             ref={tableRef}
             key={'Blocked/Muted By'}
@@ -181,14 +181,14 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ user, list, isManager, onCl
             customClass='hidden xl:flex min-w-[600px] max-w-[47.5%]'
           />
         </div>
-        <div className='bg-neutral/80 relative mt-12 h-fit w-full rounded-sm xl:hidden'>
-          <div className='absolute -top-[46px] left-0 w-full'>
+        <div className='relative mt-12 h-fit w-full rounded-sm xl:hidden'>
+          <div className='absolute -top-[42px] left-0 w-full'>
             {BLOCKED_MUTED_TABS.map((option) => (
               <button
                 key={option}
                 onClick={() => setActiveTab(option as BlockedMutedTabType)}
-                className={`glass-selector border-grey w-1/2 rounded-t-lg border-[3px] py-2 text-lg font-bold capitalize ${
-                  activeTab === option ? 'bg-neutral/80 border-b-0' : 'bg-grey/70 hover:bg-grey/80'
+                className={`w-1/2 rounded-t-sm py-2 text-lg font-bold capitalize transition-all ${
+                  activeTab === option ? 'bg-neutral' : 'hover:bg-nav-item bg-zinc-200'
                 }`}
               >
                 {t(option)}

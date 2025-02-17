@@ -7,9 +7,11 @@ import { cn } from '#/lib/utilities'
 import { Avatar } from '#/components/avatar'
 import { resolveEnsProfile } from '#/utils/ens'
 import LoadingCell, { LIGHT_LOADING_GRADIENT } from '#/components/loaders/loading-cell'
+import type React from 'react'
 
 interface SettingsInputProps {
   option: string
+  Icon: React.FC<React.SVGProps<SVGSVGElement>>
   value: string
   resolvedAddress?: string
   disableValue: string
@@ -22,6 +24,7 @@ interface SettingsInputProps {
 
 const SettingsInput: React.FC<SettingsInputProps> = ({
   option,
+  Icon,
   resolvedAddress,
   value,
   disableValue,
@@ -47,7 +50,10 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
 
   return (
     <div className='flex flex-col gap-1'>
-      <p className='text-lg font-bold'>{option}</p>
+      <div className='text-text/80 flex items-center gap-2 pl-3'>
+        <p className='font-semibold'>{option}</p>
+        {Icon && <Icon className='h-auto w-5' />}
+      </div>
       {isSettingsLoading ? (
         <div className='bg-neutral/70 w-full truncate rounded-sm p-3 font-medium disabled:cursor-not-allowed disabled:text-zinc-400'>
           <LoadingCell className='h-7 w-full rounded-sm' />
@@ -62,13 +68,13 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
             setValue(input)
           }}
           disabled={!isEditingSettings || connectedAddress?.toLowerCase() !== disableValue?.toLowerCase()}
-          className='bg-neutral/70 w-full truncate rounded-sm p-3 font-medium disabled:cursor-not-allowed disabled:text-zinc-400'
+          className='bg-nav-item w-full truncate rounded-sm p-3 font-medium disabled:cursor-not-allowed disabled:opacity-50'
         />
       )}
       {(isSettingsLoading || value.includes('.') || resolvedProfile?.name) && (
         <div
           className={cn(
-            'flex h-10 items-center gap-2 text-sm font-medium',
+            'flex h-10 items-center gap-2 pl-3 text-sm font-medium',
             (value.includes('.') && resolvedAddress && resolvedAddress?.length > 0) || resolvedProfile?.name
               ? 'text-text/80'
               : 'text-red-400'

@@ -36,7 +36,7 @@ const NavItems = () => {
             key={item.name}
             className={cn(
               'group/nav-item relative z-10 rounded-sm p-1.5 transition-all',
-              pathname === item.href(itemUrl) && 'bg-follow-button/30 text-follow-button'
+              pathname === item.href(itemUrl) && 'bg-primary/30 text-primary'
             )}
             href={item.href(itemUrl)}
             prefetch={true}

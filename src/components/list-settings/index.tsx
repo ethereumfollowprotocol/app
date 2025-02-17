@@ -16,8 +16,14 @@ import ResetSlotWarning from './components/reset-slot-warning'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import PrimaryButton from '#/components/buttons/primary-button'
+import List from 'public/assets/icons/ui/list.svg'
+import Owner from 'public/assets/icons/ui/key.svg'
+import User from 'public/assets/icons/ui/person.svg'
+import Manager from 'public/assets/icons/ui/edit.svg'
 import Refresh from 'public/assets/icons/ui/refresh.svg'
+import Location from 'public/assets/icons/ui/location.svg'
 import ArrowDown from 'public/assets/icons/ui/arrow-down.svg'
+
 interface ListSettingsProps {
   selectedList: number
   isSaving: boolean
@@ -94,17 +100,17 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
   ) : (
     <>
       <Modal onCancel={onClose} className='items-start py-[5vh]'>
-        <div className='flex w-full max-w-full flex-col gap-5 rounded-sm p-1 sm:w-[554px] sm:gap-7 sm:p-3'>
-          <div className='flex w-full items-center justify-between'>
+        <div className='flex w-full max-w-full flex-col gap-5 rounded-sm p-2 pt-6 sm:w-[554px]'>
+          <div className='flex w-full items-center justify-between px-3'>
             <div className='flex cursor-pointer items-center gap-2'>
-              <h3 className='text-4xl font-bold sm:text-5xl'>
+              <h3 className='text-4xl font-bold'>
                 {t('list')} #{selectedList}
               </h3>
             </div>
             {roles?.isOwner && isOwner && (
               <button
                 className={cn(
-                  'hover text-text flex items-center gap-2 rounded-sm bg-red-500 p-3 font-semibold transition-all',
+                  'hover text-text flex items-center gap-2 rounded-sm bg-red-400 p-2.5 font-semibold transition-all',
                   isEditingSettings
                     ? 'cursor-pointer hover:scale-110 hover:bg-red-400'
                     : 'cursor-not-allowed opacity-60'
@@ -115,58 +121,16 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
                 }}
               >
                 <p>{t('reset slot')}</p>
-                <Refresh className='text-xl' />
+                <Refresh className='h-auto w-4' />
               </button>
             )}
           </div>
-          <div className='flex max-w-full items-center justify-between gap-2'>
-            <p className='text-base font-bold sm:text-xl'>{t('location')}</p>
-            <div className='relative' ref={chainDropdownRef}>
-              <button
-                className='bg-neutral/50 hover:bg-neutral/70 flex h-[42px] w-[170px] items-center justify-between gap-0.5 rounded-sm p-1 px-2 disabled:cursor-not-allowed disabled:opacity-75 sm:h-12 sm:w-[190px] sm:px-3'
-                onClick={() => setChainDropdownOpen(!chainDropdownOpen)}
-                disabled={!isEditingSettings || connectedAddress?.toLowerCase() !== fetchedOwner?.toLowerCase()}
-              >
-                {isListSettingsLoading ? (
-                  <LoadingCell className='h-8 w-full rounded-sm' />
-                ) : (
-                  <>
-                    {chain && <ChainIcon chain={chain as ChainWithDetails} className={'h-6 w-6 rounded-sm'} />}
-                    <p className='truncate font-bold sm:text-lg'>{chain?.name}</p>
-                  </>
-                )}
-                {isEditingSettings ? (
-                  <ArrowDown className={`${chainDropdownOpen ? 'rotate-180' : ''} h-5 w-5 transition-transform`} />
-                ) : (
-                  <div />
-                )}
-              </button>
-              {chainDropdownOpen && (
-                <div className='bg-neutral absolute top-12 z-10 flex w-full flex-col rounded-sm sm:top-14'>
-                  {chains.map((item) => (
-                    <div
-                      key={item.id}
-                      onClick={() => {
-                        setChain(item)
-                        setChainDropdownOpen(false)
-                        setChangedValues({
-                          ...changedValues,
-                          chain: fetchedChain?.id !== item.id,
-                        })
-                      }}
-                      className='hover:bg-grey/40 flex w-full cursor-pointer items-center gap-3 rounded-sm p-3'
-                    >
-                      <ChainIcon chain={item as ChainWithDetails} className={'h-6 w-6 sm:h-7 sm:w-7'} />
-                      <p className='truncate font-bold sm:text-lg'>{item?.name}</p>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
           {(user ? connectedAddress?.toLowerCase() === user.toLowerCase() : roles?.isUser) && (
-            <div className='flex w-full items-center justify-between'>
-              <p className='w-3/4 text-base font-bold sm:w-fit sm:text-lg'>{t('set as primary')}</p>
+            <div className='flex w-full items-center justify-between px-3'>
+              <div className='flex items-center gap-2'>
+                <p className='text-lg font-bold'>{t('set as primary')}</p>
+                <List className='h-auto w-4' />
+              </div>
               <input
                 className='toggle disabled:cursor-not-allowed disabled:opacity-40'
                 type='checkbox'
@@ -185,8 +149,57 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
               />
             </div>
           )}
+          <div className='flex w-full flex-col gap-2'>
+            <div className='flex items-center gap-2 pl-3'>
+              <p className='font-bold'>{t('location')}</p>
+              <Location className='h-auto w-4' />
+            </div>
+            <div className='relative w-full' ref={chainDropdownRef}>
+              <button
+                className='bg-nav-item hover:bg-text/5 flex h-[42px] w-full items-center justify-between gap-0.5 rounded-sm p-1 px-2 disabled:cursor-not-allowed disabled:opacity-75 sm:h-12 sm:px-3'
+                onClick={() => setChainDropdownOpen(!chainDropdownOpen)}
+                disabled={!isEditingSettings || connectedAddress?.toLowerCase() !== fetchedOwner?.toLowerCase()}
+              >
+                {isListSettingsLoading ? (
+                  <LoadingCell className='h-8 w-full rounded-sm' />
+                ) : (
+                  <div className='flex items-center gap-2'>
+                    {chain && <ChainIcon chain={chain as ChainWithDetails} className={'h-6 w-6 rounded-sm'} />}
+                    <p className='truncate font-bold sm:text-lg'>{chain?.name}</p>
+                  </div>
+                )}
+                {isEditingSettings ? (
+                  <ArrowDown className={`${chainDropdownOpen ? 'rotate-180' : ''} h-5 w-5 transition-transform`} />
+                ) : (
+                  <div />
+                )}
+              </button>
+              {chainDropdownOpen && (
+                <div className='bg-nav-item shadow-small absolute top-12 z-10 flex w-full flex-col rounded-sm sm:top-14'>
+                  {chains.map((item) => (
+                    <div
+                      key={item.id}
+                      onClick={() => {
+                        setChain(item)
+                        setChainDropdownOpen(false)
+                        setChangedValues({
+                          ...changedValues,
+                          chain: fetchedChain?.id !== item.id,
+                        })
+                      }}
+                      className='hover:bg-text/5 flex w-full cursor-pointer items-center gap-3 rounded-sm p-3'
+                    >
+                      <ChainIcon chain={item as ChainWithDetails} className={'h-6 w-6 sm:h-7 sm:w-7'} />
+                      <p className='truncate font-bold sm:text-lg'>{item?.name}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
           <SettingsInput
             option={t('owner')}
+            Icon={Owner}
             value={currentOwner}
             resolvedAddress={owner}
             placeholder={fetchedOwner || 'Address or ENS name'}
@@ -198,6 +211,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
           />
           <SettingsInput
             option={t('manager')}
+            Icon={Manager}
             value={currentManager}
             resolvedAddress={manager}
             placeholder={fetchedManager || 'Address or ENS name'}
@@ -209,6 +223,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
           />
           <SettingsInput
             option={t('user')}
+            Icon={User}
             value={currentUser}
             resolvedAddress={user}
             placeholder={fetchedUser || 'Address or ENS name'}
@@ -225,14 +240,13 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
                 <PrimaryButton
                   label={t('save')}
                   onClick={() => setIsSaving(true)}
-                  className='w-32 text-lg'
                   disabled={!Object.values(changedValues).includes(true)}
                 />
               </div>
             ) : (
               <button
                 onClick={() => setIsEditingSettings(true)}
-                className='text-darkGrey mx-auto mt-4 h-14 rounded-full bg-[#bbbbbb] px-6 text-lg font-bold transition-all hover:scale-110 hover:opacity-90'
+                className='bg-nav-item hover:bg-text/10 w-full rounded-sm px-6 py-3 text-lg font-bold transition-all'
               >
                 {t('edit settings')}
               </button>

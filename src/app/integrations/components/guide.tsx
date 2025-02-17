@@ -14,7 +14,7 @@ const RESOURCES = [
     name: 'Docs',
     icon: <Book />,
     href: 'https://docs.efp.app',
-    className: 'bg-followButton/90 text-darkGrey',
+    className: 'bg-primary/90 text-darkGrey',
   },
   {
     name: 'API',

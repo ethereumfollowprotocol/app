@@ -12,7 +12,7 @@ const OpenModalButton: React.FC<OpenModalButtonProps> = ({ onClick, icon, text }
   return (
     <button
       onClick={onClick}
-      className='hover:bg-text/5 relative flex w-full cursor-pointer items-center justify-center gap-1 rounded-sm p-3 text-xs font-bold transition-colors'
+      className='hover:bg-text/5 relative flex w-full cursor-pointer items-center justify-center gap-1 rounded-sm p-4 text-xs font-bold transition-colors'
     >
       {icon}
       <p className='text-nowrap'>{t(text)}</p>

@@ -52,12 +52,12 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
     <Loading />
   ) : (
     profile && (
-      <div className='relative w-full px-4 pt-12 pb-36 xl:px-8'>
+      <div className='relative hidden w-full px-4 pt-12 pb-36 md:block xl:px-8'>
         <MoreOptions
           address={profile.address}
           primaryList={Number(profile.primary_list)}
           profileList={profileList}
-          isConnectedUserCard={false}
+          isConnectedUserCard={Boolean(isMyProfile)}
           openBlockModal={openBlockModal}
           openQrCodeModal={openQrCodeModal}
           openListSettingsModal={openListSettingsModal}
@@ -66,7 +66,7 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
         <div className='absolute right-8 bottom-30 pb-5'>
           <Achievements profile={profile} isLoading={isLoading} list={profileList} />
         </div>
-        <div className='group xs:gap-3 z-50 flex w-full items-start gap-2 sm:gap-4'>
+        <div className='xs:gap-3 flex w-full items-start gap-2 sm:gap-4'>
           <Avatar
             avatarUrl={profile.ens?.avatar}
             name={profile.ens?.name || profile.address}
@@ -91,13 +91,13 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
                 <FollowsYou connectedAddress={userAddress} addressOrName={profile.address} list={selectedList} />
               )}
             </div>
-            <div className='-mt-1 flex items-center justify-start gap-8'>
+            <div className='flex items-center justify-start gap-8 lg:-mt-1'>
               <Stats stats={stats} isLoading={isStatsLoading} />
               <div className='hidden lg:block'>
                 <CommonFollowers address={profile.address} />
               </div>
             </div>
-            <p className='max-w-1/2 text-lg'>
+            <p className='max-w-2/3 lg:max-w-1/2 lg:text-lg'>
               {profile.ens?.records?.description ? (
                 profile.ens.records.description.split(' ').map((word) =>
                   word.includes('@') ? (
@@ -112,7 +112,7 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
                 <i>No bio set</i>
               )}
             </p>
-            <div className='flex items-center gap-4'>
+            <div className='flex flex-col gap-4 lg:flex-row lg:items-center'>
               <Socials profile={profile} />
               <Links profile={profile} />
             </div>
@@ -121,13 +121,15 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
             </div>
           </div>
         </div>
-        <Image
-          src={profile?.ens?.records?.header || DefaultHeader}
-          alt='Profile Summary Card'
-          width={1440}
-          height={1440}
-          className='absolute top-0 left-0 -z-10 h-full w-full object-cover opacity-20'
-        />
+        <div className='bg-neutral absolute top-0 left-0 -z-10 h-full w-full'>
+          <Image
+            src={profile?.ens?.records?.header || DefaultHeader}
+            alt='Profile Summary Card'
+            width={1440}
+            height={1440}
+            className='h-full w-full object-cover opacity-20'
+          />
+        </div>
       </div>
     )
   )

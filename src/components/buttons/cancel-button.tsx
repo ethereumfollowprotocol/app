@@ -16,7 +16,7 @@ const CancelButton: React.FC<CancelbuttonProps> = ({ onClick, label, disabled, c
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        'text-darkGrey h-14 w-32 rounded-full bg-[#bbbbbb] text-lg font-bold transition-all hover:scale-110 hover:opacity-90 disabled:opacity-40 disabled:hover:scale-100',
+        'bg-nav-item hover:bg-text/10 h-11 w-full rounded-sm text-lg font-bold transition-all disabled:opacity-50',
         className
       )}
     >

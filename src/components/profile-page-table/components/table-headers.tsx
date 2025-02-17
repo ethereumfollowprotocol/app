@@ -67,12 +67,14 @@ const TableHeader: React.FC<TableHeaderProps> = ({
         <div className='flex w-full flex-wrap items-center justify-between gap-3 sm:flex-nowrap sm:justify-start'>
           <div className='flex w-full items-center gap-3 sm:w-fit'>
             {BLOCKED_MUTED_TABS.includes(title) ? (
-              <h2 className='hidden text-lg font-bold text-nowrap capitalize sm:text-3xl xl:block'>{t(title)}</h2>
+              <h2 className='hidden py-2 pl-2 text-lg font-bold text-nowrap capitalize sm:text-xl xl:block'>
+                {t(title)}
+              </h2>
             ) : (
               <div className='bg-grey relative flex w-full items-center rounded-sm sm:w-fit'>
                 <div
                   className={cn(
-                    'bg-text/20 absolute h-full w-1/2 rounded-sm transition-all duration-200 sm:w-32',
+                    'bg-text/10 absolute h-full w-1/2 rounded-sm transition-all duration-200 sm:w-32',
                     title === 'following' ? 'left-0' : 'left-1/2 sm:left-32'
                   )}
                 />
@@ -97,18 +99,19 @@ const TableHeader: React.FC<TableHeaderProps> = ({
               </div>
             )}
           </div>
-          <div className='flex justify-end gap-4 sm:w-full'>
+          <div className='item-center z-10 flex w-full justify-between gap-4 sm:justify-end'>
             {!BLOCKED_MUTED_TABS.includes(title) && (
               <div ref={clickAwaySearchRef} className='relative z-50 flex gap-1 sm:gap-3'>
                 <div
                   className='flex h-6 max-w-40 cursor-pointer items-center gap-2'
                   onClick={() => setShowSearch(!showSearch)}
                 >
-                  <MagnifyingGlass className='h-6 w-auto transition-transform hover:scale-110' />
-                  <p className='text-sm font-medium'>{search}</p>
-                  {search && (
+                  <MagnifyingGlass className='h-7 w-auto transition-transform hover:scale-110' />
+                  {search && !showSearch && <p className='text-sm font-medium'>{search}</p>}
+                  {search && !showSearch && (
                     <Cross
-                      onClick={() => {
+                      onClick={(e: React.MouseEvent<SVGElement>) => {
+                        e.stopPropagation()
                         setSearch('')
                         setShowSearch(false)
                       }}
@@ -133,41 +136,43 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                       }
                     }}
                     value={search}
-                    className='bg-text/20 absolute -top-2 right-[110%] block w-52 rounded-sm border-0 border-transparent py-2 pr-10 pl-3 font-medium sm:text-sm'
+                    className='bg-nav-item absolute -top-1 left-[110%] z-50 block w-52 rounded-sm border-0 border-transparent py-1.5 pr-10 pl-3 text-sm font-medium sm:-top-2 sm:right-[110%] sm:py-2.5'
                   />
                 )}
               </div>
             )}
-            <div
-              onClick={() => setShowTags(!showTags)}
-              className='flex cursor-pointer items-center gap-1 transition-transform hover:scale-110'
-            >
-              <Tag className='h-auto w-5' />
-              <ArrowDown className={`h-auto w-4 transition-transform ${showTags ? 'rotate-180' : ''}`} />
-            </div>
-            <div
-              ref={clickAwaySortRef}
-              onClick={() => setShowSort(!showSort)}
-              className='relative flex cursor-pointer items-center gap-1'
-            >
-              <div className='flex items-center gap-1 transition-transform hover:scale-110'>
-                <p className='text-sm font-bold capitalize'>{t(sort)}</p>
-                <ArrowDown className={`h-auto w-4 transition-transform ${showSort ? 'rotate-180' : ''}`} />
+            <div className='flex items-center gap-3 sm:gap-4'>
+              <div
+                onClick={() => setShowTags(!showTags)}
+                className='flex cursor-pointer items-center gap-0.5 transition-transform hover:scale-110 sm:gap-1'
+              >
+                <Tag className='h-auto w-6' />
+                <ArrowDown className={`h-auto w-4 transition-transform ${showTags ? 'rotate-180' : ''}`} />
               </div>
-              {showSort && (
-                <div className='bg-neutral glass-card border-grey absolute top-[120%] -right-2 z-50 flex flex-col items-center gap-1 rounded-sm border-[3px] p-1 shadow-md'>
-                  {SORT_OPTIONS.map((option) => (
-                    <div
-                      className='hover:bg-nav-item relative w-full rounded-sm p-3 pl-8 font-bold text-nowrap capitalize transition-colors'
-                      key={option}
-                      onClick={() => setSort(option)}
-                    >
-                      {sort === option && <Check className='absolute top-[17px] left-2' />}
-                      <p>{t(option)}</p>
-                    </div>
-                  ))}
+              <div
+                ref={clickAwaySortRef}
+                onClick={() => setShowSort(!showSort)}
+                className='relative flex cursor-pointer items-center gap-1'
+              >
+                <div className='flex items-center gap-1 transition-transform hover:scale-110'>
+                  <p className='font-semibold capitalize'>{t(sort)}</p>
+                  <ArrowDown className={`h-auto w-4 transition-transform ${showSort ? 'rotate-180' : ''}`} />
                 </div>
-              )}
+                {showSort && (
+                  <div className='bg-neutral shadow-small absolute top-[120%] -right-2 z-50 flex flex-col items-center gap-1 rounded-sm p-1'>
+                    {SORT_OPTIONS.map((option) => (
+                      <div
+                        className='hover:bg-nav-item relative w-full rounded-sm p-3 pl-8 font-bold text-nowrap capitalize transition-colors'
+                        key={option}
+                        onClick={() => setSort(option)}
+                      >
+                        {sort === option && <Check className='absolute top-[17px] left-2 h-auto w-4' />}
+                        <p>{t(option)}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

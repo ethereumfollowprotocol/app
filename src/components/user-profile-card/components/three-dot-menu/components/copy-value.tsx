@@ -19,9 +19,9 @@ const CopyValue: React.FC<CopyValueProps> = ({ value, text }) => {
         setHasBeenCopied(true)
         setTimeout(() => setHasBeenCopied(false), 3 * SECOND)
       }}
-      className='hover:bg-text/5 relative flex w-full cursor-pointer items-center justify-center gap-1 rounded-sm p-3 text-xs font-bold transition-colors'
+      className='hover:bg-text/5 relative flex w-full cursor-pointer items-center justify-center gap-1 rounded-sm p-4 text-xs font-bold transition-colors'
     >
-      <Copy />
+      <Copy className='h-auto w-4' />
       <p className='text-nowrap'>{t(hasBeenCopied ? 'copied' : text)}</p>
     </button>
   )

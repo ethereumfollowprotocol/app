@@ -66,12 +66,12 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
   return (
     <div className={showMoreOptions ? 'block' : 'hidden'} ref={threeDotMenuRef}>
       <div
-        className='bg-neutral flex cursor-pointer items-center gap-[3px] rounded-sm px-[5px] py-2 transition-all hover:scale-110 hover:opacity-50 md:py-[11px]'
+        className='bg-nav-item flex cursor-pointer items-center gap-[3px] rounded-sm px-[5px] py-2 transition-all hover:scale-110 hover:opacity-50 md:py-[11px]'
         onClick={() => setThreeDotMenuOpen(!threeDotMenuOpen)}
       >
-        <div className='h-1 w-1 rounded-full bg-black'></div>
-        <div className='h-1 w-1 rounded-full bg-black'></div>
-        <div className='h-1 w-1 rounded-full bg-black'></div>
+        <div className='bg-text h-1 w-1 rounded-full'></div>
+        <div className='bg-text h-1 w-1 rounded-full'></div>
+        <div className='bg-text h-1 w-1 rounded-full'></div>
       </div>
       <div
         className={cn(
@@ -80,7 +80,7 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
         )}
       >
         {!isConnectedUserCard && (
-          <div className='flex w-full flex-col items-center justify-center gap-3 pt-2'>
+          <div className='flex w-full flex-col items-center justify-center gap-4 pt-2'>
             <RestrictButton blockCoolMode={blockCoolMode} onClickOption={onClickOption} text='Block' type='block' />
             <RestrictButton blockCoolMode={muteCoolMode} onClickOption={onClickOption} text='Mute' type='mute' />
           </div>
@@ -92,13 +92,13 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
               setThreeDotMenuOpen(false)
             }}
             text='qr code'
-            icon={<QrCode />}
+            icon={<QrCode className='h-auto w-4' />}
           />
         )}
         {!isConnectedUserCard && (
           <button
             onClick={toggleTopEight}
-            className='hover:bg-text/5 relative flex w-full cursor-pointer items-center justify-center gap-1 rounded-sm p-3 text-xs font-bold text-nowrap transition-colors'
+            className='hover:bg-text/5 relative flex w-full cursor-pointer items-center justify-center gap-1 rounded-sm p-4 text-xs font-bold text-nowrap transition-colors'
           >
             {t(
               (isInTopEight || isAddingToTopEight) && !isRemovingFromTopEight
@@ -131,7 +131,7 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
               setThreeDotMenuOpen(false)
             }}
             text='settings'
-            icon={<Settings />}
+            icon={<Settings className='h-auto w-4' />}
           />
         )}
       </div>

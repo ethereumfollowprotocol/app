@@ -79,7 +79,7 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = ({ closeMenu, setExternalV
           volumeMenuOpen ? 'block' : 'hidden'
         )}
       >
-        <div className='bg-neutral flex h-screen max-h-[80vh] w-full flex-col gap-2 rounded-sm shadow-md sm:h-auto sm:w-56'>
+        <div className='bg-neutral shadow-medium flex h-screen max-h-[80vh] w-full flex-col gap-2 rounded-sm sm:h-auto sm:w-56'>
           <div
             onClick={() => {
               setVolumeMenuOpen(false)

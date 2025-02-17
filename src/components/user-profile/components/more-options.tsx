@@ -1,5 +1,7 @@
-import React from 'react'
 import type { Address } from 'viem'
+import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useClickAway } from '@uidotdev/usehooks'
 import { RefreshIcon } from 'ethereum-identity-kit'
 import useFollowingState from '#/hooks/use-following-state'
 import ThreeDotMenu from '#/components/user-profile-card/components/three-dot-menu'
@@ -27,16 +29,40 @@ const MoreOptions: React.FC<MoreOptionsProps> = ({
   openListSettingsModal,
   refetchData,
 }) => {
+  const [cardTooltipOpen, setCardTooltipOpen] = useState(false)
+  const clickAwayCardTooltip = useClickAway<HTMLDivElement>(() => {
+    setCardTooltipOpen(false)
+  })
+
+  const { t } = useTranslation()
+
   const { followingState } = useFollowingState({
     address,
   })
 
   return (
-    <div className='absolute top-6 right-8 flex gap-2'>
-      <p className='bg-neutral rounded-sm px-2 py-[3px] text-sm font-semibold sm:text-sm'>#{profileList}</p>
+    <div className='absolute top-4 right-8 flex gap-2 lg:top-6'>
+      {profileList !== Number(primaryList) && (
+        <div ref={clickAwayCardTooltip} className='group relative z-50 cursor-help'>
+          <p
+            onClick={() => setCardTooltipOpen(!cardTooltipOpen)}
+            className='bg-nav-item rounded-sm px-2 py-1 text-end text-[12px] font-medium text-red-300 italic'
+          >
+            {t('not primary list')}
+          </p>
+          <div
+            className={`${
+              cardTooltipOpen ? 'block' : 'hidden'
+            } bg-nav-item shadow-medium absolute top-9 left-0 w-68 rounded-sm p-2 text-sm transition-all group-hover:block`}
+          >
+            {t('not primary list tooltip')}
+          </div>
+        </div>
+      )}
+      <p className='bg-nav-item rounded-sm px-2 py-[3px] text-sm font-semibold sm:text-sm'>#{profileList}</p>
       <button
         onClick={refetchData}
-        className='bg-neutral rounded-sm p-1 transition-all hover:scale-110 hover:opacity-60'
+        className='bg-nav-item rounded-sm p-1 transition-all hover:scale-110 hover:opacity-60'
       >
         <RefreshIcon height={16} width={16} />
       </button>

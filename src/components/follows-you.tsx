@@ -15,7 +15,7 @@ const FollowsYou: React.FC<FollowsYouProps> = ({ addressOrName, connectedAddress
   const { followerTag } = useFollowerState({ addressOrName: addressOrName, connectedAddress, list })
 
   return (
-    <div className={cn('rounded-sm bg-zinc-100 px-2 py-0.5 text-xs font-medium', followerTag.className)}>
+    <div className={cn('bg-nav-item text-text! rounded-sm px-2 py-[3px] text-xs font-semibold', followerTag.className)}>
       {t(followerTag.text)}
     </div>
   )

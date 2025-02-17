@@ -10,11 +10,11 @@ import ProfileList from '#/components/profile-list'
 import TableHeader from './components/table-headers'
 import { useIsEditView } from '#/hooks/use-is-edit-view'
 import type { ProfileTableTitleType } from '#/types/common'
+import { FETCH_LIMIT_PARAM, SECOND } from '#/lib/constants'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import { BLOCKED_MUTED_TABS, FETCH_LIMIT_PARAM, SECOND } from '#/lib/constants'
 import type { TagCountType, FollowSortType, FollowerResponse, FollowingResponse } from '#/types/requests'
 
-interface UserProfilePageTableProps {
+export interface UserProfilePageTableProps {
   title: ProfileTableTitleType
   customClass?: string
   isLoading: boolean
@@ -31,6 +31,7 @@ interface UserProfilePageTableProps {
   toggleSelectedTags: (title: ProfileTableTitleType, tag: string) => void
   showTagsByDefault?: boolean
   isShowingBlocked?: boolean
+  isTopEight?: boolean
   setSelectedTags: (tags: string[]) => void
   setSearchFilter: (search: string) => void
   setActiveTab?: (tab: ProfileTableTitleType) => void
@@ -55,6 +56,7 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
       setSort,
       showTagsByDefault,
       isShowingBlocked,
+      isTopEight,
       setSelectedTags,
       setSearchFilter,
       setActiveTab,
@@ -131,14 +133,9 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
 
     return (
       <div
-        className={cn(
-          'flex w-full flex-col rounded-sm',
-          !(isLoading || isFetchingMore) && 'pb-0 sm:pb-0',
-          BLOCKED_MUTED_TABS.includes(title) ? 'bg-neutral/70' : 'glass-card',
-          customClass
-        )}
+        className={cn('flex w-full flex-col rounded-sm', !(isLoading || isFetchingMore) && 'pb-0 sm:pb-0', customClass)}
       >
-        <div className='sticky top-0 z-10' ref={ref}>
+        <div className={cn('top-0 z-10', isTopEight ? 'xl:sticky' : 'lg:sticky')} ref={ref}>
           <TableHeader
             setActiveTab={setActiveTab}
             search={search}
@@ -171,6 +168,7 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
             canEditTags={canEditTags}
             isBlockedList={isShowingBlocked}
             isBlockedBy={title === 'Blocked/Muted By' && isProfile}
+            isTopEight={isTopEight}
             className={cn('bg-neutral shadow-medium rounded-sm p-4', !isLoading && profiles.length === 0 && 'hidden')}
           />
           {!isLoading && <div ref={loadMoreRef} className='mb-4 h-px w-full' />}

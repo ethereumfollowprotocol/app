@@ -60,7 +60,7 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
           languageMenOpenu ? 'block' : 'hidden'
         } group-hover:block`}
       >
-        <div className='bg-neutral flex max-h-[520px] w-full flex-col gap-2 gap-x-px overflow-scroll rounded-sm shadow-md sm:max-h-[45vh] sm:w-56 lg:grid lg:w-[450px] lg:grid-cols-2'>
+        <div className='bg-neutral shadow-medium flex max-h-[520px] w-full flex-col gap-2 gap-x-px overflow-scroll rounded-sm sm:max-h-[45vh] sm:w-56 lg:grid lg:w-[450px] lg:grid-cols-2'>
           <div
             onClick={closeLanguageMenu}
             className='hover:bg-nav-item flex w-full cursor-pointer items-center justify-between rounded-sm p-4 transition-opacity lg:hidden'

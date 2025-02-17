@@ -121,7 +121,9 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       title: 'following' as ProfileTabType,
       canEditTags: isMyProfile && roles?.isManager,
     },
-  }[activeTab]
+  }
+
+  const activeTableProps = tableProps[activeTab]
 
   return (
     <>
@@ -163,7 +165,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
           className='relative flex w-full flex-col gap-4 overflow-y-auto px-4 sm:pr-0 sm:pl-20 lg:h-screen lg:gap-0'
           ref={containerRef}
         >
-          <div className='mt-20 w-full lg:mt-0'>
+          <div className='mt-20 w-full md:mt-0'>
             <Suspense>
               <UserProfileCard
                 profileList={profileList}
@@ -197,22 +199,16 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
               />
             </Suspense>
           </div>
-          <div className='z-10 -mt-24 flex flex-col-reverse gap-4 px-4 lg:flex-row xl:px-8'>
+          <div className='flex flex-col-reverse gap-4 sm:px-4 md:-mt-28 lg:-mt-24 lg:flex-row xl:px-8'>
             <div className='h-fit w-full'>
               <UserProfilePageTable
                 setActiveTab={(tab) => setActiveTab(tab as ProfileTabType)}
                 ref={tableRef}
-                {...tableProps}
+                {...activeTableProps}
               />
             </div>
-            <div
-              ref={TopEightRef}
-              className='sticky h-fit pb-4'
-              style={{
-                top: '32px',
-              }}
-            >
-              <TopEight user={user} isConnectedUserProfile={isMyProfile} />
+            <div ref={TopEightRef} className='sticky top-0 h-fit pb-4 lg:top-8'>
+              <TopEight user={user} isConnectedUserProfile={isMyProfile} followingListProps={tableProps.following} />
             </div>
           </div>
         </div>
