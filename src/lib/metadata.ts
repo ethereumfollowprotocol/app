@@ -4,7 +4,8 @@ export const metadataBaseUrl = new URL('https://efp.app')
 
 export const metadataTitle = 'Ethereum Follow Protocol'
 export const metadataSiteName = 'Ethereum Follow Protocol'
-export const metadataDescription = "It's about who you know. The social graph for Ethereum."
+export const metadataDescription =
+  'EFP – Ethereum Follow Protocol – The onchain social graph for Ethereum. A composable identity protocol for crypto apps. Built to complement ENS and SIWE.'
 
 export const sharedMetadataIcons: Metadata['icons'] = [
   {
