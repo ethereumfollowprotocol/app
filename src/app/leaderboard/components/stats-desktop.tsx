@@ -1,6 +1,6 @@
 import type { Address } from 'viem'
+import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
-import { usePathname, useRouter } from 'next/navigation'
 
 import { cn } from '#/lib/utilities'
 import { formatNumber } from '#/utils/format/format-number'
@@ -27,9 +27,7 @@ const StatsDesktop: React.FC<StatsDesktopProps> = ({
 }) => {
   const { t } = useTranslation()
   const router = useRouter()
-  const pathname = usePathname()
 
-  const isHome = pathname === '/'
   const statLink = {
     followers: `/${address}?tab=followers`,
     following: `/${address}?tab=following`,
@@ -39,19 +37,14 @@ const StatsDesktop: React.FC<StatsDesktopProps> = ({
   }
 
   return (
-    <div
-      className={`hidden items-center justify-between gap-1 sm:flex ${
-        isHome ? 'sm:w-1/4 md:w-1/3 lg:w-2/3 xl:w-1/4 2xl:w-1/3' : 'sm:w-1/4 md:w-3/5'
-      }`}
-    >
+    <div className='w-fit'>
       {firstStat && (
         <div
           className={cn(
-            'flex w-full flex-col items-center md:w-1/2 lg:w-1/4',
-            firstStat !== 'mutuals' && 'cursor-pointer transition-transform hover:scale-110',
-            isHome ? 'xl:w-full 2xl:w-1/2' : 'xl:hidden'
+            'flex flex-col items-center',
+            firstStat !== 'mutuals' && 'cursor-pointer transition-transform hover:scale-110'
           )}
-          onClick={() => firstStat && router.push(statLink[firstStat])}
+          onClick={() => firstStat !== 'mutuals' && router.push(statLink[firstStat])}
         >
           <p className='text-sm font-bold sm:text-lg'>
             {formatNumber(
@@ -69,7 +62,7 @@ const StatsDesktop: React.FC<StatsDesktopProps> = ({
           </p>
         </div>
       )}
-      <div
+      {/* <div
         className={cn(
           `${
             firstStat === 'mutuals'
@@ -144,7 +137,7 @@ const StatsDesktop: React.FC<StatsDesktopProps> = ({
       >
         <p className='text-sm font-bold sm:text-lg'>{formatNumber(blocked || 0)}</p>
         <p className='text-text/60 w-full text-center text-sm font-bold text-wrap break-words'>{t('blocked')}</p>
-      </div>
+      </div> */}
     </div>
   )
 }

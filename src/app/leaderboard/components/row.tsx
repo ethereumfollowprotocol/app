@@ -2,11 +2,9 @@ import type { Address } from 'viem'
 import { usePathname } from 'next/navigation'
 
 import Name from './name'
-import StatsMobile from './stats-mobile'
 import StatsDesktop from './stats-desktop'
 import FollowButton from '#/components/follow-button'
 import type { LeaderboardFilter } from '#/types/common'
-import useFollowerState from '#/hooks/use-follower-state'
 import { formatNumber } from '#/utils/format/format-number'
 
 interface TableRowProps {
@@ -51,15 +49,15 @@ const TableRow: React.FC<TableRowProps> = ({
         {rank}
       </p>
     ),
-    'top-ten': <p className='xxs:text-3xl mx-auto w-min text-2xl font-bold sm:text-4xl md:text-5xl'>{rank}</p>,
+    'top-ten': <p className='xxs:text-3xl mx-auto w-min text-2xl font-bold sm:text-4xl'>{rank}</p>,
     regular: (
       <p
         className={`text ${
           rank >= 10000
-            ? 'xxs:text-sm text-xs sm:text-lg'
+            ? 'xxs:text-sm text-xs'
             : rank >= 1000
-              ? 'xxs:text-base text-sm sm:text-xl'
-              : 'xxs:text-xl sm:text-2xl'
+              ? 'xxs:text-base text-sm sm:text-lg'
+              : 'xxs:text-lg sm:text-xl'
         } mx-auto w-min font-bold`}
       >
         {formatNumber(rank)}
@@ -68,31 +66,17 @@ const TableRow: React.FC<TableRowProps> = ({
   }[rankedAs]
 
   const pathname = usePathname()
-  const { followerTag } = useFollowerState({ address, showFollowerBadge: true })
-
   const isHome = pathname === '/'
 
   return (
-    <div className='flex flex-col'>
-      <div className='hover:bg-text/5 flex h-[66px] w-full items-center gap-3 rounded-sm p-2 pr-1.5 sm:gap-6 sm:p-4 md:gap-8 xl:py-2 2xl:h-[76px] 2xl:py-4'>
+    <div className='hover:bg-text/5 flex h-[84px] w-full items-center justify-between gap-3 pr-2 pl-3 sm:gap-4 sm:px-4'>
+      <div className='flex w-1/2 items-center gap-3 sm:gap-4'>
         <div className='xxs:min-w-6 xxs:w-6 flex w-4 min-w-4 justify-center text-right tabular-nums sm:w-10'>
           {rankNumber}
         </div>
-        <Name address={address} name={name} avatar={avatar} followerTag={followerTag} />
-        <StatsDesktop
-          address={address}
-          firstStat={firstStat}
-          followers={followers}
-          following={following}
-          mutuals={mutuals}
-          top8={top8}
-          blocked={blocked}
-        />
-        <div className={`w-fit ${isHome ? 'lg:w-[25%] 2xl:w-[20%]' : 'lg:w-[15%] 2xl:w-[10%]'} flex justify-end`}>
-          <FollowButton address={address} />
-        </div>
+        <Name address={address} name={name} avatar={avatar} />
       </div>
-      <StatsMobile
+      <StatsDesktop
         address={address}
         firstStat={firstStat}
         followers={followers}
@@ -101,6 +85,9 @@ const TableRow: React.FC<TableRowProps> = ({
         top8={top8}
         blocked={blocked}
       />
+      <div className={`w-fit ${isHome ? 'lg:w-[25%] 2xl:w-[20%]' : 'lg:w-[15%] 2xl:w-[10%]'} flex justify-end`}>
+        <FollowButton address={address} />
+      </div>
     </div>
   )
 }

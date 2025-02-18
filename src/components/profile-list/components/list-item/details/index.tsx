@@ -86,7 +86,7 @@ const ProfileListItemDetails: React.FC<ProfileListItemDetailsProps> = ({
         >
           <div
             className={cn(
-              'relative flex flex-col tabular-nums sm:flex-row sm:items-center sm:gap-2 md:flex-col md:items-start md:justify-center',
+              'relative flex flex-col tabular-nums sm:flex-row sm:items-center sm:gap-0.5 md:flex-col md:items-start md:justify-center',
               isCart
                 ? 'md:w-52 md:min-w-52'
                 : !isBlockedList && showTags

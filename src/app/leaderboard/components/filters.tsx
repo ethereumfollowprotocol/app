@@ -19,7 +19,7 @@ const Filters: React.FC<FiltersProps> = ({ filter, onSelectFilter }) => {
   const { t } = useTranslation()
 
   return (
-    <div ref={clickAwayRef} className='relative z-40 mx-auto w-full max-w-108 md:w-64'>
+    <div ref={clickAwayRef} className='relative z-40 w-fit'>
       <div
         onClick={() => setIsDropdownOpen((prev) => !prev)}
         className='hover:border-text/80 bg-neutral z-30 flex h-[50px] w-full cursor-pointer flex-wrap items-center justify-between gap-4 rounded-sm px-3 transition-colors'
@@ -41,7 +41,7 @@ const Filters: React.FC<FiltersProps> = ({ filter, onSelectFilter }) => {
       </div>
       <div
         className={cn(
-          'bg-neutral absolute top-1/2 left-0 -z-10 h-fit w-full rounded-sm p-1 pt-6 transition-all',
+          'bg-neutral shadow-medium absolute top-full -left-1 -z-10 h-fit w-44 rounded-sm transition-all',
           isDropdownOpen ? 'flex' : 'pointer-events-none hidden'
         )}
       >
@@ -53,7 +53,7 @@ const Filters: React.FC<FiltersProps> = ({ filter, onSelectFilter }) => {
                 onSelectFilter(item)
                 setIsDropdownOpen(false)
               }}
-              className='hover:bg-text/10 flex w-full cursor-pointer items-center gap-2 rounded-sm p-3'
+              className='hover:bg-text/10 flex w-full cursor-pointer items-center gap-2 rounded-sm p-4'
             >
               <p className='font-bold'>{t(item)}</p>
               <Image

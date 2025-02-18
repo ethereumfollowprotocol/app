@@ -1,20 +1,20 @@
 'use client'
 
-import { Fragment, Suspense } from 'react'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 
-import { LEADERBOARD_CHUNK_SIZE, LEADERBOARD_FETCH_LIMIT_PARAM } from '#/lib/constants/index.ts'
 import TableRow from './row.tsx'
-import Filters from './filters.tsx'
 import LoadingRow from './loading-row.tsx'
-import PageSelector from '../../../components/page-selector.tsx'
 import useLeaderboard from '../hooks/useLeaderboard.ts'
 import type { LeaderboardItem } from '#/types/requests.ts'
 import type { LeaderboardFilter } from '#/types/common.ts'
 import LoadingCell from '#/components/loaders/loading-cell.tsx'
 import { formatNumberLeaderboard } from '#/utils/format/format-number.ts'
-import MagnifyingGlass from 'public/assets/icons/ui/magnifying-glass.svg'
+import { LEADERBOARD_CHUNK_SIZE, LEADERBOARD_FETCH_LIMIT_PARAM } from '#/lib/constants/index.ts'
+import TableHeaders from './table-headers.tsx'
+import Recommendations from '#/components/recommendations.tsx'
+import { cn } from '#/lib/utilities.ts'
+
 const LeaderboardStatNames = ['addresses', 'lists', 'list ops', 'unique users']
 
 const LeaderboardTable = () => {
@@ -27,7 +27,6 @@ const LeaderboardTable = () => {
     setPage,
     setChunk,
     setFilter,
-    timeStamp,
     leaderboard,
     resetSearch,
     loadChunkRef,
@@ -66,132 +65,115 @@ const LeaderboardTable = () => {
   }[filter]
 
   return (
-    <Fragment>
-      <p className='text-3xl font-bold sm:text-4xl'>{t('leaderboard')}</p>
-      <div className='mt-4 mb-4 flex flex-wrap items-center justify-center gap-4 sm:mt-6 sm:mb-6 sm:gap-8 lg:mb-0'>
+    <>
+      <div className='mt-24 flex w-full max-w-[1300px] flex-col items-start gap-4 px-4 sm:mt-12 sm:px-1 xl:mt-24'>
+        <h1 className='text-left text-3xl font-bold sm:text-6xl'>{t('leaderboard')}</h1>
+        <p className='text-left text-lg font-medium'>{t('leaderboard description')}</p>
+      </div>
+      <div className='mt-4 flex w-full flex-wrap items-center justify-between gap-2 px-4 sm:gap-3 sm:px-0 xl:hidden'>
         {LeaderboardStatNames.map((name, i) => (
           <div
             key={`stat ${i}`}
-            className='gradient-border flex h-28 w-[47.5%] flex-col items-center justify-center rounded-sm sm:w-56'
+            className='bg-neutral shadow-medium flex w-[48.5%] flex-col items-start justify-center rounded-sm p-4 pr-1 md:w-[23.5%]'
           >
             {isLeaderboardStatsLoading || !leaderboardStats ? (
               <LoadingCell className='h-8 w-24 rounded-sm' />
             ) : (
-              <p className='text-2xl font-bold md:text-2xl'>
-                {formatNumberLeaderboard(Number(Object.values(leaderboardStats)[i]))}
-              </p>
+              <p className='text-xl font-bold'>{formatNumberLeaderboard(Number(Object.values(leaderboardStats)[i]))}</p>
             )}
-            <p className='text-lg font-bold text-[#888] capitalize dark:text-[#aaa]'>{t(name)}</p>
+            <p className='font-medium text-[#888] capitalize lg:text-lg dark:text-[#aaa]'>{t(name)}</p>
           </div>
         ))}
       </div>
-      <div className='mt-4 flex w-full max-w-[1300px] justify-center gap-1.5 text-sm font-bold text-[#aaaaaa] italic md:justify-end md:text-[#CDCDCD]'>
-        {t('last updated')}
-        <span>{isLeaderboardLoading ? <LoadingCell className='h-5 w-16 rounded-sm' /> : timeStamp}</span>
-      </div>
-      <div className='flex w-full max-w-[1300px] flex-col gap-2'>
-        <div className='flex md:hidden'>
-          <Filters filter={filter} onSelectFilter={onSelectFilter} />
-        </div>
-        <div className='flex justify-between gap-2'>
-          <div className='relative w-full sm:w-[260px] 2xl:w-[300px]'>
-            <div className='group border-grey focus:border-text/80 hover:border-text/80 focus-within:border-text/80 w-full overflow-hidden rounded-sm border-[3px] transition-colors sm:text-sm'>
-              <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center pl-3' aria-hidden='true'>
-                <MagnifyingGlass
-                  className='mr-3 text-xl opacity-30 transition-opacity group-focus-within:opacity-80 group-hover:opacity-80 dark:opacity-60 dark:group-focus-within:opacity-100 dark:group-hover:opacity-100'
-                  aria-hidden='true'
+      <div className='flex w-full max-w-[1300px] justify-center gap-6 xl:mt-4'>
+        <div className='shadow-medium flex w-full flex-col xl:max-w-[800px]'>
+          <div className='sticky top-16 z-10 sm:top-0'>
+            <TableHeaders
+              filter={filter}
+              onSelectFilter={onSelectFilter}
+              page={page}
+              setPage={setPage}
+              currentSearch={currentSearch}
+              handleSearchEvent={handleSearchEvent}
+              setChunk={setChunk}
+              fetchNextLeaderboard={fetchNextLeaderboard}
+              fetchPreviousLeaderboard={fetchPreviousLeaderboard}
+              isFetchingNextLeaderboard={isFetchingNextLeaderboard}
+              isFetchingPreviousLeaderboard={isFetchingPreviousLeaderboard}
+            />
+          </div>
+          <div className='bg-neutral relative flex flex-col rounded-b-sm'>
+            {leaderboard
+              ?.slice(0, chunk * LEADERBOARD_CHUNK_SIZE)
+              .map((entry: LeaderboardItem, index) => (
+                <TableRow
+                  key={entry.address}
+                  address={entry.address}
+                  name={entry.name}
+                  avatar={entry.avatar}
+                  rank={Number(selectedRank(entry))}
+                  followers={Number(entry.followers) || 0}
+                  following={Number(entry.following) || 0}
+                  mutuals={Number(entry.mutuals) || 0}
+                  top8={Number(entry.top8) || 0}
+                  blocked={Number(entry.blocks) || 0}
+                  firstStat={filter}
                 />
-              </div>
-              <input
-                type='text'
-                spellCheck={false}
-                placeholder={t('search placeholder')}
-                value={currentSearch}
-                onChange={handleSearchEvent}
-                className='bg-neutral block h-[44px] w-full border-0 border-transparent pr-10 pl-4 font-medium sm:text-sm'
-              />
-            </div>
-          </div>
-          <div className='flex items-center gap-4'>
-            <div className='hidden md:flex'>
-              <Filters filter={filter} onSelectFilter={onSelectFilter} />
-            </div>
-            <Suspense>
-              <PageSelector
-                page={page}
-                setPage={setPage}
-                hasNextPage={true}
-                scrollUp={true}
-                isLoading={isFetchingNextLeaderboard || isFetchingPreviousLeaderboard}
-                fetchNext={() => {
-                  setChunk(1)
-                  fetchNextLeaderboard()
-                }}
-                fetchPrevious={() => {
-                  setChunk(1)
-                  fetchPreviousLeaderboard()
-                }}
-              />
-            </Suspense>
-          </div>
-        </div>
-        <div className='glass-card border-grey relative mt-1 flex flex-col gap-4 rounded-sm border-[3px] p-1 sm:px-4 sm:py-6 lg:px-8'>
-          {leaderboard
-            ?.slice(0, chunk * LEADERBOARD_CHUNK_SIZE)
-            .map((entry: LeaderboardItem, index) => (
-              <TableRow
-                key={entry.address}
-                address={entry.address}
-                name={entry.name}
-                avatar={entry.avatar}
-                rank={Number(selectedRank(entry))}
-                followers={Number(entry.followers) || 0}
-                following={Number(entry.following) || 0}
-                mutuals={Number(entry.mutuals) || 0}
-                top8={Number(entry.top8) || 0}
-                blocked={Number(entry.blocks) || 0}
-                firstStat={filter}
-              />
+              ))}
+            {new Array(isLoading ? LEADERBOARD_CHUNK_SIZE : 0).fill(1).map((_, i) => (
+              <LoadingRow key={i} />
             ))}
-          {new Array(isLoading ? LEADERBOARD_CHUNK_SIZE : 0).fill(1).map((_, i) => (
-            <LoadingRow key={i} staticStats={false} />
-          ))}
-          {(chunk * LEADERBOARD_CHUNK_SIZE) / LEADERBOARD_FETCH_LIMIT_PARAM < 1 &&
-            !isLoading &&
-            !(isFetchingNextLeaderboard || isFetchingPreviousLeaderboard) && (
-              <div ref={loadChunkRef} className='h-px w-full' />
+            {(chunk * LEADERBOARD_CHUNK_SIZE) / LEADERBOARD_FETCH_LIMIT_PARAM < 1 &&
+              !isLoading &&
+              !(isFetchingNextLeaderboard || isFetchingPreviousLeaderboard) && (
+                <div ref={loadChunkRef} className='h-px w-full' />
+              )}
+            {!isLoading && leaderboard?.length === 0 && (
+              <div className='flex h-40 flex-col items-center justify-center'>
+                <p className='text-lg font-bold'>No results found</p>
+                <p
+                  className='cursor-pointer font-bold text-zinc-400 italic transition-colors hover:text-gray-700'
+                  onClick={() => resetSearch()}
+                >
+                  Clear Search
+                </p>
+              </div>
             )}
-          {!isLoading && leaderboard?.length === 0 && (
-            <div className='flex h-40 flex-col items-center justify-center'>
-              <p className='text-lg font-bold'>No results found</p>
-              <p
-                className='cursor-pointer font-bold text-zinc-400 italic transition-colors hover:text-gray-700'
-                onClick={() => resetSearch()}
-              >
-                Clear Search
-              </p>
-            </div>
-          )}
+          </div>
         </div>
-        <Suspense>
-          <PageSelector
-            page={page}
-            scrollUp={true}
-            setPage={setPage}
-            hasNextPage={true}
-            isLoading={isFetchingNextLeaderboard || isFetchingPreviousLeaderboard}
-            fetchNext={() => {
-              setChunk(1)
-              fetchNextLeaderboard()
-            }}
-            fetchPrevious={() => {
-              setChunk(1)
-              fetchPreviousLeaderboard()
-            }}
+        <div className='hidden w-full max-w-[500px] flex-col gap-4 xl:flex'>
+          <div className='flex w-full flex-wrap items-center justify-between gap-3'>
+            {LeaderboardStatNames.map((name, i) => (
+              <div
+                key={`stat ${i}`}
+                className='bg-neutral shadow-medium flex w-[48.5%] flex-col items-start justify-center rounded-sm p-4'
+              >
+                {isLeaderboardStatsLoading || !leaderboardStats ? (
+                  <LoadingCell className='h-8 w-24 rounded-sm' />
+                ) : (
+                  <p className='text-xl font-bold'>
+                    {formatNumberLeaderboard(Number(Object.values(leaderboardStats)[i]))}
+                  </p>
+                )}
+                <p className='text-lg font-medium text-[#888] capitalize dark:text-[#aaa]'>{t(name)}</p>
+              </div>
+            ))}
+          </div>
+          <Recommendations
+            limit={6}
+            endpoint='discover'
+            header={t('recent')}
+            className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm p-3 py-4 2xl:p-4')}
           />
-        </Suspense>
+          <Recommendations
+            limit={6}
+            endpoint='recommended'
+            header={t('recommended')}
+            className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm p-3 py-4 2xl:p-4')}
+          />
+        </div>
       </div>
-    </Fragment>
+    </>
   )
 }
 

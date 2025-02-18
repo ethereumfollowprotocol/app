@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
 import LeaderboardTable from './components/table.tsx'
-import { Suspense } from 'react'
+import Image from 'next/image'
+import CloudLeft from 'public/assets/art/cloud-left.png'
+import CloudMiddle from 'public/assets/art/cloud-middle.png'
+import CloudRight from 'public/assets/art/cloud-right.png'
 
 export const metadata: Metadata = {
   title: 'Leaderboard | EFP',
@@ -22,10 +25,19 @@ export const metadata: Metadata = {
 
 const Leaderboard = () => {
   return (
-    <main className='mx-auto mt-24 mb-12 flex h-full min-h-full w-full flex-col items-center gap-2 overflow-scroll px-4 text-center sm:mt-28 lg:mt-32'>
-      <Suspense>
-        <LeaderboardTable />
-      </Suspense>
+    <main className='relative flex h-screen w-full flex-col items-center gap-2 overflow-y-scroll px-0 text-center sm:pr-4 sm:pl-24 md:pr-8 md:pl-28 lg:pr-12 lg:pl-36 2xl:pr-4 2xl:pl-24'>
+      <div className='absolute top-0 right-12 -z-10 flex gap-24'>
+        <Image src={CloudLeft} alt='Cloud Left' width={260} height={200} className='-translate-y-16 dark:opacity-40' />
+        <Image
+          src={CloudMiddle}
+          alt='Cloud Middle'
+          width={260}
+          height={200}
+          className='translate-y-24 dark:opacity-40'
+        />
+        <Image src={CloudRight} alt='Cloud Right' width={260} height={200} className='-translate-y-2 dark:opacity-40' />
+      </div>
+      <LeaderboardTable />
     </main>
   )
 }
