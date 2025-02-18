@@ -3,14 +3,13 @@ import { useTranslation } from 'react-i18next'
 
 import Modal from '#/components/modal'
 import TopEightProfile from './top-eight-profile'
-import LoadingCell from '#/components/loaders/loading-cell'
 import { useEditTopEight } from '../hooks/use-edit-top-eight'
 import PrimaryButton from '#/components/buttons/primary-button'
 import type { TopEightProfileType } from '../hooks/use-top-eight'
-import Plus from 'public/assets/icons/ui/plus.svg'
 import MagnifyingGlass from 'public/assets/icons/ui/magnifying-glass.svg'
 import { cn } from '#/lib/utilities'
 import UserProfilePageTable, { type UserProfilePageTableProps } from '#/components/profile-page-table'
+import TopEightLoadingProfile from './top-eight-loading-profile'
 
 interface EditModalProps {
   profiles: TopEightProfileType[]
@@ -28,7 +27,7 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose, followingListP
 
   return (
     <Modal onCancel={onClose} className='items-start md:pt-[12.5vh]'>
-      <div className='flex w-full flex-col items-center gap-6 pt-2 sm:p-2'>
+      <div className='flex w-full max-w-[1280px] flex-col items-center gap-6 pt-2 sm:p-2'>
         <h2 className='text-2xl font-bold'>{t('top eight title')}</h2>
         <div className='flex w-full flex-col-reverse gap-4 xl:flex-row'>
           <div
@@ -73,17 +72,7 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose, followingListP
               <TopEightProfile profile={profile} isEditing={true} key={index} />
             ))}
             {new Array(loadingItems).fill(1).map((_, i) => (
-              <div
-                key={`loading ${i}`}
-                className='border-grey relative flex h-[186px] w-[144px] flex-col items-center gap-2 rounded-sm border-[3px] border-green-500/50 p-4'
-              >
-                <LoadingCell className='h-[50px] w-[50px] rounded-full' />
-                <LoadingCell className='h-7 w-24 rounded-sm' />
-                <LoadingCell className='mt-5 h-9 w-[120px] rounded-sm' />
-                <div className='absolute top-1 right-1 rounded-full bg-green-500/50 p-1 text-white'>
-                  <Plus />
-                </div>
-              </div>
+              <TopEightLoadingProfile key={i} isEditing={true} />
             ))}
             {editedProfiles.length === 0 && <p className='text-text/40 font-semibold italic'>{t('no top eight')}</p>}
             <div className='mt-4 flex w-full items-center justify-between'>

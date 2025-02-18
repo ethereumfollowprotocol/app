@@ -56,18 +56,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const { followState, profileName, isConnectedUserCard } = useProfileCard(profile)
 
   return (
-    <div
-      className={cn(
-        'flex flex-col gap-4 md:hidden',
-        isResponsive ? '3xl:w-86 3xl:min-w-86 w-full xl:w-[324px] xl:min-w-[324px]' : 'xxs:w-92 w-full'
-      )}
-    >
+    <div className={cn('bg-neutral flex flex-col gap-4 rounded-sm', isRecommended ? 'w-96' : 'w-full md:hidden')}>
       {isLoading ? (
-        <LoadingProfileCard
-          isResponsive={isResponsive}
-          hideFollowButton={true}
-          className={isRecommended ? 'bg-neutral' : 'glass-card'}
-        />
+        <LoadingProfileCard isResponsive={isResponsive} hideFollowButton={true} className='bg-neutral' />
       ) : profile?.address ? (
         <ProfileCard
           list={profileList}
@@ -81,7 +72,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           onProfileClick={() => {
             router.push(`/${profile.address}`)
           }}
-          className={isRecommended ? 'bg-neutral' : 'glass-card bg-transparent'}
+          className='bg-neutral'
           options={{
             profileData: profile,
             statsData: stats,

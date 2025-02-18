@@ -24,7 +24,7 @@ const Mobile: React.FC = () => {
           <WalletMenu />
         </div>
       </div>
-      <nav className='bg-neutral shadow-mobile fixed bottom-0 left-0 z-50 flex w-full justify-center p-3 px-4 sm:hidden'>
+      <nav className='bg-neutral shadow-large fixed bottom-0 left-0 z-50 flex w-full justify-center p-3 px-4 sm:hidden'>
         <NavItems />
       </nav>
     </>

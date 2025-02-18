@@ -100,8 +100,8 @@ const TagsDropdown: React.FC<TagsDropdownProps> = ({
             }`}
           >
             <button
-              className={`text-darkGrey w-fit max-w-full truncate rounded-full px-2 py-1 text-sm font-bold hover:opacity-80 md:px-3 md:py-1.5 ${
-                canEditTags && removingTag ? 'bg-deletion' : 'bg-zinc-300'
+              className={`w-fit max-w-full truncate rounded-sm px-2 py-1 text-xs font-bold ${
+                canEditTags && removingTag ? 'bg-deletion' : 'bg-nav-item'
               }`}
               onClick={(e) => {
                 e.stopPropagation()

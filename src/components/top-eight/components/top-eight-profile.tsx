@@ -53,9 +53,7 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
     <div
       className={cn(
         'group bg-neutral shadow-small relative flex flex-col items-center justify-between gap-2 rounded-sm px-0.5 py-4 pb-3',
-        isEditing
-          ? 'top-eight-profile-quarter top-eight-profile-edit cursor-pointer border-[3px] border-transparent'
-          : 'top-eight-profile',
+        isEditing ? 'top-eight-profile-edit cursor-pointer border-[3px] border-transparent' : 'top-eight-profile',
         isAddingToTopEight && 'border-[3px] border-green-500/50',
         isRemovingFromTopEight && 'border-[3px] border-red-400/70 dark:border-red-500/70',
         isEditing && !(isAddingToTopEight || isRemovingFromTopEight) && 'hover:border-nav-item'

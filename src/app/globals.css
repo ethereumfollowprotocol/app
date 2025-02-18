@@ -9,9 +9,10 @@
   --color-dark-grey: #333333;
   --color-addition: #a1f783;
   --color-neutral: #ffffff;
-  --color-text: #000000;
+  --color-text: #333333;
   --color-text-neutral: #666666;
-  --color-nav-item: #f4f4f4;
+  --color-nav-item: #eeeeee;
+  --color-deletion: #ff7c7c;
   --color-shadow: rgba(0, 0, 0, 0.25);
   --font-sans: 'inter', sans-serif;
   --font-size-text-md: 1rem;

@@ -1,14 +1,14 @@
 'use client'
 
-import { useTranslation } from 'react-i18next'
+import { useAccount } from 'wagmi'
 import { usePathname, useRouter } from 'next/navigation'
 import type { Address, GetEnsAvatarReturnType } from 'viem'
 
 import Tags from '../../tags'
 import { cn } from '#/lib/utilities'
-import { Avatar } from '#/components/avatar'
 import { useCart } from '#/hooks/use-cart'
-import useFollowerState from '#/hooks/use-follower-state'
+import { Avatar } from '#/components/avatar'
+import FollowsYou from '#/components/follows-you'
 import LoadingCell from '../../../../loaders/loading-cell'
 import ProfileListItemName from './profile-list-item-name'
 import ProfileListItemCounts from './profile-list-item-counts'
@@ -44,10 +44,9 @@ const ProfileListItemDetails: React.FC<ProfileListItemDetailsProps> = ({
 }) => {
   const router = useRouter()
   const pathname = usePathname()
-  const { t } = useTranslation()
+  const { address: userAddress } = useAccount()
   const { getTagsFromCartByAddress } = useCart()
-  const { followers, followersIsLoading } = useEFPProfile()
-  const { followerTag } = useFollowerState({ address, showFollowerBadge: showFollowsYouBadges })
+  const { followers, followersIsLoading, selectedList } = useEFPProfile()
 
   const isCart = pathname.includes('/cart')
   const tagsFromCart = getTagsFromCartByAddress(address)
@@ -80,14 +79,14 @@ const ProfileListItemDetails: React.FC<ProfileListItemDetailsProps> = ({
           />
         )}
         <div
-          className='flex flex-col gap-[2px] md:flex-row md:gap-3 xl:gap-2 2xl:gap-3'
+          className='flex flex-col gap-1 sm:gap-2 md:flex-row'
           style={{
             width: counts ? '80%' : 'calc(100% - 60px)',
           }}
         >
           <div
             className={cn(
-              'relative flex flex-col items-start justify-center tabular-nums',
+              'relative flex flex-col tabular-nums sm:flex-row sm:items-center sm:gap-2 md:flex-col md:items-start md:justify-center',
               isCart
                 ? 'md:w-52 md:min-w-52'
                 : !isBlockedList && showTags
@@ -104,12 +103,8 @@ const ProfileListItemDetails: React.FC<ProfileListItemDetailsProps> = ({
               isCart={isCart}
               isLoading={isEnsProfileLoading}
             />
-            {showFollowsYouBadges && (
-              <div
-                className={`text-darkGrey w-fit max-w-full rounded-full bg-zinc-300 px-2 py-[3px] text-center text-[10px] font-bold ${followerTag.className}`}
-              >
-                {t(followerTag.text)}
-              </div>
+            {showFollowsYouBadges && userAddress && (
+              <FollowsYou addressOrName={address} connectedAddress={userAddress} list={selectedList} />
             )}
           </div>
           <Tags

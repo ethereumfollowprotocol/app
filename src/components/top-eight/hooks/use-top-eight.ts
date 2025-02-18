@@ -17,7 +17,7 @@ export const useTopEight = (user: string | Address) => {
   const [displayLimit, setDisplayLimit] = useState(2)
 
   useEffect(() => {
-    if (window.innerWidth > 1024) setDisplayLimit(8)
+    if (window.innerWidth > 768) setDisplayLimit(8)
   }, [])
 
   const { address: userAddress } = useAccount()

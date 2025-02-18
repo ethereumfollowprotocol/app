@@ -38,18 +38,18 @@ const Tags: React.FC<TagsProps> = ({ profiles, platform, showTags, canEditTags, 
 
   return (
     <div
-      className={cn('relative flex min-h-8 max-w-full flex-wrap items-center gap-2', hideTags && 'hidden')}
+      className={cn('relative flex max-w-full flex-wrap items-center gap-2', hideTags && 'hidden')}
       ref={clickAwayTagDropwdownRef}
     >
       {canEditTags && (
         <button
-          className='rounded-full bg-zinc-300 p-1.5 hover:scale-110 hover:opacity-80'
+          className='bg-nav-item rounded-sm p-1.5 hover:scale-110 hover:opacity-80'
           onClick={(e) => {
             e.stopPropagation()
             setTagDropdownOpen(!tagDropdownOpen)
           }}
         >
-          <Plus />
+          <Plus className='h-auto w-3' />
         </button>
       )}
       <TagsDropdown

@@ -165,7 +165,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
           className='relative flex w-full flex-col gap-4 overflow-y-auto px-4 sm:pr-0 sm:pl-20 lg:h-screen lg:gap-0'
           ref={containerRef}
         >
-          <div className='mt-20 w-full md:mt-0'>
+          <div className='mt-20 w-full sm:mt-0'>
             <Suspense>
               <UserProfileCard
                 profileList={profileList}
