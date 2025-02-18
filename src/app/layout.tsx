@@ -25,7 +25,14 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <HeadTag />
       <body>
         <ThemeProvider attribute='class' enableSystem={true} themes={THEMES}>
-          <Image src={BackgroundImage} priority={true} alt='background image' fill className='background -z-10' />
+          <Image
+            src={BackgroundImage}
+            priority={true}
+            width={1920}
+            height={1080}
+            alt='background image'
+            className='fixed top-0 left-0 -z-10 h-screen w-screen object-cover opacity-30'
+          />
           <Toaster richColors={true} />
           <Providers>{children}</Providers>
         </ThemeProvider>

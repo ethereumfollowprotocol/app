@@ -78,15 +78,6 @@ body {
   color: var(--text);
 }
 
-.background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  opacity: 0.3;
-  width: 100vw;
-  height: 100vh;
-}
-
 /* Disable zoom in iOS Safari when double tapping an element */
 button {
   touch-action: manipulation;

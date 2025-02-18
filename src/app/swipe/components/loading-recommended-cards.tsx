@@ -22,14 +22,14 @@ const LoadingRecommendedCards = ({
 
   return userAddress ? (
     gone.size === recommendedProfiles.length && !(isFetchingNextPage || isLoading) ? (
-      <div className='halloween:border-[#a36d7d] bg-neutral xxs:max-w-92 flex h-[536px] w-full items-center rounded-sm border-[3px] border-[#FFDBD9] sm:mr-[14px] dark:border-[#a36d7d]'>
+      <div className='bg-neutral mr-[14px] flex h-[536px] w-[364px] items-center rounded-sm'>
         <p className='w-full px-6 text-center text-lg font-semibold'>{t('no more profiles')}</p>
       </div>
     ) : (
       (isLoading || isFetchingNextPage || recommendedProfiles.length === 0) &&
       new Array(3).fill(1).map((_, i) => (
         <div
-          className='xxs:max-w-92 absolute top-0 z-10 h-fit w-full sm:mr-[14px]'
+          className='absolute top-0 z-10 mr-[14px] h-fit w-[364px]'
           key={i}
           style={{
             marginTop: `${30 - i * 10}px`,
@@ -40,7 +40,7 @@ const LoadingRecommendedCards = ({
       ))
     )
   ) : (
-    <div className='absolute top-0 z-10 h-fit w-full sm:mr-[14px] sm:max-w-92'>
+    <div className='absolute top-0 z-10 h-fit w-[364px] sm:mr-[14px]'>
       <Suspense>
         <UserProfileCard isResponsive={false} hideFollowButton={true} isRecommended={true} />
       </Suspense>

@@ -22,7 +22,7 @@ const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
   const { openConnectModal } = useConnectModal()
 
   return (
-    <div className={cn('border-grey rounded-sm border-[3px]', className)}>
+    <div className={cn('relative rounded-sm', className)}>
       {isStatic && (
         <div className='absolute left-0 flex h-full w-full items-center justify-center rounded-[10px]'>
           <button
