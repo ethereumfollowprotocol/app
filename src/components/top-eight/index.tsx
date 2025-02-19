@@ -5,10 +5,10 @@ import { cn } from '#/lib/utilities'
 import EditModal from './components/edit-modal'
 import { useTopEight } from './hooks/use-top-eight'
 import Edit from 'public/assets/icons/ui/edit.svg'
-import TopEightProfile from './components/top-eight-profile'
 import ArrowDown from 'public/assets/icons/ui/arrow-down.svg'
 import type { UserProfilePageTableProps } from '../profile-page-table'
 import TopEightLoadingProfile from './components/top-eight-loading-profile'
+import TopEightProfile from './components/top-eight-profile'
 
 interface TopEightProps {
   user: Address | string
@@ -50,7 +50,7 @@ const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile, follo
           )}
         </div>
         {isTopEightEmpty && (
-          <p className='bg-neutral shadow-medium w-full rounded-sm py-20 text-center text-lg font-medium italic'>
+          <p className='bg-neutral shadow-medium w-full rounded-sm py-[76px] text-center text-lg font-medium italic'>
             {t('no top eight')}
           </p>
         )}

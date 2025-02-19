@@ -42,7 +42,7 @@ const MoreOptions: React.FC<MoreOptionsProps> = ({
 
   return (
     <div className='absolute top-4 right-8 flex gap-2 lg:top-6'>
-      {profileList !== Number(primaryList) && (
+      {profileList && profileList !== Number(primaryList) && (
         <div ref={clickAwayCardTooltip} className='group relative z-50 cursor-help'>
           <p
             onClick={() => setCardTooltipOpen(!cardTooltipOpen)}
@@ -59,7 +59,9 @@ const MoreOptions: React.FC<MoreOptionsProps> = ({
           </div>
         </div>
       )}
-      <p className='bg-nav-item rounded-sm px-2 py-[3px] text-sm font-semibold sm:text-sm'>#{profileList}</p>
+      {profileList && (
+        <p className='bg-nav-item rounded-sm px-2 py-[3px] text-sm font-semibold sm:text-sm'>#{profileList}</p>
+      )}
       <button
         onClick={refetchData}
         className='bg-nav-item rounded-sm p-1 transition-all hover:scale-110 hover:opacity-60'

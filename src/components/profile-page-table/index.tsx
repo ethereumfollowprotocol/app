@@ -148,6 +148,7 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
             selectedTags={selectedTags}
             sort={sort}
             setSort={setSort}
+            isTopEight={isTopEight}
             toggleSelectedTags={toggleSelectedTags}
             isShowingBlocked={isShowingBlocked}
           />
@@ -176,7 +177,13 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
           />
           {!isLoading && <div ref={loadMoreRef} className='mb-4 h-px w-full' />}
           {isFollowingTable && isProfile && (lists?.lists?.length || 0) === 0 && (
-            <Recommendations limit={40} endpoint='recommended' header={t('recommendations')} className='py-2' />
+            <Recommendations
+              limit={40}
+              endpoint='recommended'
+              header={t('recommendations')}
+              className='py-2'
+              isTopEight={isTopEight}
+            />
           )}
         </div>
       </div>

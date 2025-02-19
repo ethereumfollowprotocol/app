@@ -44,7 +44,9 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
   const isTopEightFull = currentTopEightLength >= 8
 
   useEffect(() => {
-    setEditedProfiles([...profiles, ...topEightInCart])
+    if (topEightInCart.length >= 0) {
+      setEditedProfiles([...profiles, ...topEightInCart])
+    }
   }, [topEightInCart])
 
   const getFollowingState = async (address: Address) => {

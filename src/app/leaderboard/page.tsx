@@ -1,10 +1,11 @@
-import type { Metadata } from 'next'
-import LeaderboardTable from './components/table.tsx'
 import Image from 'next/image'
-import CloudLeft from 'public/assets/art/cloud-left.png'
-import CloudMiddle from 'public/assets/art/cloud-middle.png'
-import CloudRight from 'public/assets/art/cloud-right.png'
 import { Suspense } from 'react'
+import type { Metadata } from 'next'
+
+import LeaderboardTable from './components/table.tsx'
+import CloudLeft from 'public/assets/art/cloud-left.png'
+import CloudRight from 'public/assets/art/cloud-right.png'
+import CloudMiddle from 'public/assets/art/cloud-middle.png'
 
 export const metadata: Metadata = {
   title: 'Leaderboard | EFP',

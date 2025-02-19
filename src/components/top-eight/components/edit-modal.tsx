@@ -27,12 +27,15 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose, followingListP
 
   return (
     <Modal onCancel={onClose} className='items-start md:pt-[12.5vh]'>
-      <div className='flex w-full max-w-[1280px] flex-col items-center gap-6 pt-2 sm:p-2'>
+      <div className='flex w-full max-w-[800px] flex-col items-center gap-6 pt-2 sm:p-2 xl:max-w-[1280px]'>
         <h2 className='text-2xl font-bold'>{t('top eight title')}</h2>
         <div className='flex w-full flex-col-reverse gap-4 xl:flex-row'>
           <div
             className='flex w-full flex-col gap-4 xl:overflow-auto xl:px-2'
-            style={{ maxHeight: window.innerWidth > 1280 ? `${120 + maxListHeight * 186}px` : 'fit-content' }}
+            style={{
+              maxHeight: window.innerWidth > 1280 ? `${120 + maxListHeight * 186}px` : 'fit-content',
+              minHeight: '400px',
+            }}
           >
             <div className='flex w-full flex-col items-center gap-4 sm:flex-row'>
               <div className='relative w-full'>
@@ -62,9 +65,12 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose, followingListP
             </div>
             <UserProfilePageTable {...followingListProps} isTopEight={true} />
           </div>
-          <div className='flex min-h-[430px] w-full flex-wrap items-start justify-evenly gap-2 rounded-sm sm:justify-start'>
+          <div className='flex min-h-[400px] w-full flex-wrap gap-2 rounded-sm'>
             <p
-              className={cn('w-full py-2 text-center font-semibold', isTopEightFull ? 'text-red-400' : 'text-text/40')}
+              className={cn(
+                'w-full py-2 text-center text-[15px] font-semibold',
+                isTopEightFull ? 'text-red-400' : 'text-text/40'
+              )}
             >
               {t(isTopEightFull ? 'top eight limit' : 'top eight description')}
             </p>
@@ -74,9 +80,12 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose, followingListP
             {new Array(loadingItems).fill(1).map((_, i) => (
               <TopEightLoadingProfile key={i} isEditing={true} />
             ))}
-            {editedProfiles.length === 0 && <p className='text-text/40 font-semibold italic'>{t('no top eight')}</p>}
+            {editedProfiles.length === 0 && (
+              <p className='text-text/90 bg-nav-item flex h-[280px] w-full items-center justify-center rounded-sm font-semibold italic'>
+                {t('no top eight')}
+              </p>
+            )}
             <div className='mt-4 flex w-full items-center justify-between'>
-              {/* <CancelButton onClick={onClose} /> */}
               <PrimaryButton
                 // disabled={isTopEightFull}
                 onClick={() => {

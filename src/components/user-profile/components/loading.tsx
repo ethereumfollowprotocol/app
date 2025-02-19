@@ -4,7 +4,7 @@ import LoadingCell from '../../loaders/loading-cell'
 const Loading = () => {
   return (
     <div className='relative w-full px-4 pt-12 pb-36 xl:px-8'>
-      <LoadingCell className='absolute top-0 left-0 h-full w-full' />
+      <LoadingCell className='absolute top-0 left-0 -z-10 h-full w-full' />
       <div className='absolute top-6 right-8 flex gap-2'>
         <LoadingCell className='h-7 w-14 rounded-sm' />
         <LoadingCell className='h-7 w-7 rounded-sm' />

@@ -16,9 +16,10 @@ interface RecommendationsProps {
   className?: string
   limit?: number
   endpoint: 'discover' | 'recommended'
+  isTopEight?: boolean
 }
 
-const Recommendations = ({ header, className, limit = 10, endpoint }: RecommendationsProps) => {
+const Recommendations = ({ header, className, limit = 10, endpoint, isTopEight = false }: RecommendationsProps) => {
   const [page, setPage] = useState(1)
   const { selectedList } = useEFPProfile()
   const { address: userAddress } = useAccount()
@@ -107,6 +108,7 @@ const Recommendations = ({ header, className, limit = 10, endpoint }: Recommenda
         }))}
         showFollowsYouBadges={true}
         showTags={false}
+        isTopEight={isTopEight}
       />
       {!(isLoading || isFetchingNextPage || isFetchingPreviousPage) &&
         (displayedProfiles?.length === 0 || !displayedProfiles) && (

@@ -28,6 +28,7 @@ interface TableHeaderProps {
   setSort: (option: FollowSortType) => void
   toggleSelectedTags: (title: ProfileTableTitleType, tag: string) => void
   isShowingBlocked?: boolean
+  isTopEight?: boolean
   setActiveTab?: (tab: ProfileTableTitleType) => void
 }
 
@@ -44,6 +45,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
   sort,
   setSort,
   isShowingBlocked,
+  isTopEight,
   setActiveTab,
 }) => {
   const [showSort, setShowSort] = useState(false)
@@ -66,10 +68,8 @@ const TableHeader: React.FC<TableHeaderProps> = ({
       <div className='flex w-full justify-between'>
         <div className='flex w-full flex-wrap items-center justify-between gap-3 sm:flex-nowrap sm:justify-start'>
           <div className='flex w-full items-center gap-3 sm:w-fit'>
-            {BLOCKED_MUTED_TABS.includes(title) ? (
-              <h2 className='hidden py-2 pl-2 text-lg font-bold text-nowrap capitalize sm:text-xl xl:block'>
-                {t(title)}
-              </h2>
+            {BLOCKED_MUTED_TABS.includes(title) || isTopEight ? (
+              <h2 className='py-2 pl-2 text-lg font-bold text-nowrap capitalize sm:text-xl'>{t(title)}</h2>
             ) : (
               <div className='bg-grey relative flex w-full items-center rounded-sm sm:w-fit'>
                 <div
