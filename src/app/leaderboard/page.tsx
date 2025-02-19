@@ -4,6 +4,7 @@ import Image from 'next/image'
 import CloudLeft from 'public/assets/art/cloud-left.png'
 import CloudMiddle from 'public/assets/art/cloud-middle.png'
 import CloudRight from 'public/assets/art/cloud-right.png'
+import { Suspense } from 'react'
 
 export const metadata: Metadata = {
   title: 'Leaderboard | EFP',
@@ -37,7 +38,9 @@ const Leaderboard = () => {
         />
         <Image src={CloudRight} alt='Cloud Right' width={260} height={200} className='-translate-y-2 dark:opacity-40' />
       </div>
-      <LeaderboardTable />
+      <Suspense>
+        <LeaderboardTable />
+      </Suspense>
     </main>
   )
 }
