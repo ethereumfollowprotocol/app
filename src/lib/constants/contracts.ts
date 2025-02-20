@@ -1,4 +1,4 @@
-import { base, mainnet, optimism } from 'viem/chains'
+import { base, mainnet, optimism, baseSepolia, optimismSepolia, sepolia } from 'viem/chains'
 import { createPublicClient, getContract, http, type Address } from 'viem'
 
 import { efpListRegistryAbi } from '../abi'
@@ -18,10 +18,10 @@ export const coreEfpContracts: {
 }
 
 export const ListRecordContracts: Record<number, Address> = {
-  [base.id]: process.env['NEXT_PUBLIC_EFP_LIST_RECORDS'] as Address,
+//   [base.id]: process.env['NEXT_PUBLIC_EFP_LIST_RECORDS'] as Address,
   [optimism.id]: process.env['NEXT_PUBLIC_EFP_LIST_RECORDS_OP'] as Address,
   [mainnet.id]: process.env['NEXT_PUBLIC_EFP_LIST_RECORDS_MAINNET'] as Address,
-  // [baseSepolia.id]: process.env['NEXT_PUBLIC_EFP_LIST_RECORDS'] as Address,
+  [baseSepolia.id]: process.env['NEXT_PUBLIC_EFP_LIST_RECORDS'] as Address,
   // [optimismSepolia.id]: process.env['NEXT_PUBLIC_EFP_LIST_RECORDS_OP_SEPOLIA'] as Address,
   // [sepolia.id]: process.env['NEXT_PUBLIC_EFP_LIST_RECORDS_SEPOLIA'] as Address
 }
