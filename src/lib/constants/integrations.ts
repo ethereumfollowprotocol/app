@@ -28,6 +28,8 @@ import BanklessAcademy from 'public/assets/partners/banklessacademy.jpeg'
 import ENSResolver from 'public/assets/partners/ensresolver.jpeg'
 import Rotki from 'public/assets/partners/rotki.jpeg'
 import Zapper from 'public/assets/partners/zapper.png'
+import Recordsxyz from 'public/assets/partners/recordsxyz.jpeg'
+
 
 export const INTEGRATIONS = [
   {
@@ -79,6 +81,11 @@ export const INTEGRATIONS = [
     name: 'LikeButton.eth',
     url: 'https://likebutton.eth.limo/',
     logo: LikeButton,
+  },
+  {
+    name: 'Records.xyz',
+    url: 'https://records.xyz',
+    logo: Recordsxyz,
   },
   {
     name: 'Webhash',
