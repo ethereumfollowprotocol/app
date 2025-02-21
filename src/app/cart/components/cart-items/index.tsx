@@ -1,12 +1,12 @@
 import type React from 'react'
 import { useMemo } from 'react'
-import { FiTrash2 } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
 
-import CartItemsList from './cart-items-list'
 import { useCart } from '#/hooks/use-cart'
-import FarcasterIcon from 'public/assets/icons/farcaster.svg'
+import CartItemsList from './cart-items-list'
+import Trash from 'public/assets/icons/ui/trash.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
+import FarcasterIcon from 'public/assets/icons/socials/farcaster.svg?url'
 
 interface CartItemsProps {
   setClearCartModalOpen: (open: boolean) => void
@@ -51,20 +51,20 @@ const CartItems = ({ setClearCartModalOpen, containerRef }: CartItemsProps) => {
 
   return (
     <>
-      <div className='flex justify-between gap-2 flex-row items-center px-2'>
-        <h3 className='font-bold text-left text-xl sm:text-3xl xxs:w-2/3'>{t('cart unc-changes')}</h3>
+      <div className='flex flex-row items-center justify-between gap-2 px-2'>
+        <h3 className='xxs:w-2/3 text-left text-xl font-bold sm:text-3xl'>{t('cart unc-changes')}</h3>
         {totalCartItems > 0 && (
           <button
-            className='flex gap-2 cursor-pointer hover:scale-110 transition-transform items-center hover:opacity-80'
+            className='flex cursor-pointer items-center gap-2 transition-transform hover:scale-110 hover:opacity-80'
             onClick={() => setClearCartModalOpen(true)}
           >
             <p className='font-bold text-nowrap'>{t('clear cart')}</p>
-            <FiTrash2 className='text-xl' />
+            <Trash className='text-xl' />
           </button>
         )}
       </div>
       {totalCartItems === 0 && (
-        <div className='font-bold h-28 xl:h-[86vh] px-4 justify-center flex text-lg items-center italic'>
+        <div className='flex h-28 items-center justify-center px-4 text-lg font-bold italic xl:h-[86vh]'>
           {t('empty cart')}
         </div>
       )}
@@ -73,7 +73,7 @@ const CartItems = ({ setClearCartModalOpen, containerRef }: CartItemsProps) => {
         isLoading={false}
         profiles={profiles}
         socialProfiles={socialProfiles}
-        listClassName='rounded-xl gap-1 2xl:gap-0'
+        listClassName='rounded-sm gap-1 2xl:gap-0'
         createListItem={!hasCreatedEfpList}
       />
     </>

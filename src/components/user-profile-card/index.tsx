@@ -8,7 +8,6 @@ import { ProfileCard } from 'ethereum-identity-kit'
 
 import { cn } from '#/lib/utilities'
 import ConnectButton from '../connect-button'
-import Achievements from './components/achievements'
 import FollowButton from '#/components/follow-button'
 import ThreeDotMenu from './components/three-dot-menu'
 import { useProfileCard } from './hooks/use-profile-card'
@@ -57,18 +56,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const { followState, profileName, isConnectedUserCard } = useProfileCard(profile)
 
   return (
-    <div
-      className={cn(
-        'flex flex-col gap-4',
-        isResponsive ? 'w-full xl:w-[324px] xl:min-w-[324px] 3xl:w-86 3xl:min-w-86' : 'w-full xxs:w-92'
-      )}
-    >
+    <div className={cn('bg-neutral flex flex-col gap-4 rounded-sm', isRecommended ? 'w-[364px]' : 'w-full md:hidden')}>
       {isLoading ? (
-        <LoadingProfileCard
-          isResponsive={isResponsive}
-          hideFollowButton={true}
-          className={isRecommended ? 'bg-neutral' : 'glass-card'}
-        />
+        <LoadingProfileCard isResponsive={isResponsive} hideFollowButton={true} className='bg-neutral' />
       ) : profile?.address ? (
         <ProfileCard
           list={profileList}
@@ -82,7 +72,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           onProfileClick={() => {
             router.push(`/${profile.address}`)
           }}
-          className={isRecommended ? 'bg-neutral' : 'glass-card bg-transparent'}
+          className='bg-neutral'
           options={{
             profileData: profile,
             statsData: stats,
@@ -113,19 +103,19 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
       ) : (
         <div
           className={cn(
-            'flex border-[3px] z-10 flex-col border-grey rounded-xl relative',
+            'border-grey relative z-10 flex flex-col rounded-sm border-[3px]',
             isRecommended ? 'bg-neutral' : 'glass-card'
           )}
         >
           {isRecommended ? (
-            <div className='flex items-center flex-col gap-4 justify-center mx-auto w-3/4 h-[436px]'>
-              <p className='text-xl px-8 font-bold'>{t('connect to see more')}</p>
+            <div className='mx-auto flex h-[436px] w-3/4 flex-col items-center justify-center gap-4'>
+              <p className='px-8 text-xl font-bold'>{t('connect to see more')}</p>
               <ConnectButton isResponsive={false} />
             </div>
           ) : (
             <div
               className={cn(
-                'w-full h-20 text-lg 3xl:text-xl flex items-center justify-center font-bold italic',
+                '3xl:text-xl flex h-20 w-full items-center justify-center text-lg font-bold italic',
                 hideFollowButton ? 'xl:h-[360px]' : 'xl:h-[420px]'
               )}
             >
@@ -134,7 +124,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           )}
         </div>
       )}
-      {displayAchievements && !isRecommended && (
+      {/* {displayAchievements && !isRecommended && (
         <Achievements
           profile={profile}
           list={profileList}
@@ -142,7 +132,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           isResponsive={isResponsive}
           isRecommended={!!isRecommended}
         />
-      )}
+      )} */}
     </div>
   )
 }

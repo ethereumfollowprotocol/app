@@ -57,7 +57,7 @@ const UserPage = async (props: Props) => {
   })
 
   return (
-    <main className='xl:overflow-hidden h-screen w-full'>
+    <main className='h-screen w-full xl:overflow-hidden'>
       <HydrationBoundary state={dehydrate(queryClient)}>
         <UserInfo user={user} />
       </HydrationBoundary>

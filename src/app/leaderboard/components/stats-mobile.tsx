@@ -37,16 +37,16 @@ const StatsMobile: React.FC<StatsMobileProps> = ({
   }
 
   return (
-    <div className={`items-center justify-evenly flex sm:hidden w-full`}>
+    <div className={`flex w-full items-center justify-evenly sm:hidden`}>
       {firstStat && (
         <div
           className={cn(
-            'flex-col items-center flex w-1/4',
-            firstStat !== 'mutuals' && 'cursor-pointer hover:scale-110 transition-transform'
+            'flex w-1/4 flex-col items-center',
+            firstStat !== 'mutuals' && 'cursor-pointer transition-transform hover:scale-110'
           )}
           onClick={() => firstStat && router.push(statLink[firstStat])}
         >
-          <p className='font-bold text-sm sm:text-lg'>
+          <p className='text-sm font-bold sm:text-lg'>
             {formatNumber(
               {
                 followers,
@@ -57,44 +57,44 @@ const StatsMobile: React.FC<StatsMobileProps> = ({
               }[firstStat] || 0
             )}
           </p>
-          <p className='font-bold text-sm capitalize text-text/60 text-wrap text-center w-full break-words'>
+          <p className='text-text/60 w-full text-center text-sm font-bold text-wrap break-words capitalize'>
             {t(firstStat)}
           </p>
         </div>
       )}
-      <div className={cn('flex-col flex items-center w-1/4', firstStat === 'mutuals' ? 'hidden' : 'flex')}>
-        <p className='font-bold text-sm sm:text-lg'>{formatNumber(mutuals || 0)}</p>
-        <p className='font-bold text-sm  text-text/60 text-wrap w-full text-center break-words'>{t('mutuals')}</p>
+      <div className={cn('flex w-1/4 flex-col items-center', firstStat === 'mutuals' ? 'hidden' : 'flex')}>
+        <p className='text-sm font-bold sm:text-lg'>{formatNumber(mutuals || 0)}</p>
+        <p className='text-text/60 w-full text-center text-sm font-bold text-wrap break-words'>{t('mutuals')}</p>
       </div>
       <div
         className={cn(
-          'transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/4',
+          'w-1/4 cursor-pointer flex-col items-center transition-all hover:scale-110',
           firstStat === 'followers' ? 'hidden' : 'flex'
         )}
         onClick={() => router.push(statLink.followers)}
       >
-        <p className='font-bold text-sm sm:text-lg'>{formatNumber(followers || 0)}</p>
-        <p className='font-bold text-sm  text-text/60 text-wrap break-words text-center w-full'>{t('followers')}</p>
+        <p className='text-sm font-bold sm:text-lg'>{formatNumber(followers || 0)}</p>
+        <p className='text-text/60 w-full text-center text-sm font-bold text-wrap break-words'>{t('followers')}</p>
       </div>
       <div
         className={cn(
-          'transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/4',
+          'w-1/4 cursor-pointer flex-col items-center transition-all hover:scale-110',
           firstStat === 'following' ? 'hidden' : 'flex'
         )}
         onClick={() => router.push(statLink.following)}
       >
-        <p className='font-bold text-sm sm:text-lg'>{formatNumber(following || 0)}</p>
-        <p className='font-bold text-sm  text-text/60 text-wrap break-words text-center w-full'>{t('following')}</p>
+        <p className='text-sm font-bold sm:text-lg'>{formatNumber(following || 0)}</p>
+        <p className='text-text/60 w-full text-center text-sm font-bold text-wrap break-words'>{t('following')}</p>
       </div>
       <div
         className={cn(
           firstStat === 'blocked' || firstStat === 'top8' ? 'hidden' : 'flex',
-          'transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/4'
+          'w-1/4 cursor-pointer flex-col items-center transition-all hover:scale-110'
         )}
         onClick={() => router.push(statLink.top8)}
       >
-        <p className='font-bold text-sm sm:text-lg'>{formatNumber(top8 || 0)}</p>
-        <p className='font-bold text-sm  text-text/60 text-wrap break-words  text-center w-full'>{t('top8')}</p>
+        <p className='text-sm font-bold sm:text-lg'>{formatNumber(top8 || 0)}</p>
+        <p className='text-text/60 w-full text-center text-sm font-bold text-wrap break-words'>{t('top8')}</p>
       </div>
     </div>
   )

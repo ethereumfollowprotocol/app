@@ -14,6 +14,7 @@ import { useUserScroll } from '../hooks/use-user-scroll'
 import UserProfileCard from '#/components/user-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import UserProfilePageTable from '#/components/profile-page-table'
+import UserProfile from '#/components/user-profile'
 
 interface UserInfoProps {
   user: string
@@ -72,7 +73,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   const router = useRouter()
   const isMyProfile = useIsEditView()
   const { roles, selectedList } = useEFPProfile()
-  const { tableRef, TopEightRef, containerRef, ProfileCardRef } = useUserScroll()
+  const { tableRef, TopEightRef, containerRef } = useUserScroll()
 
   const titleRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
@@ -120,7 +121,9 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       title: 'following' as ProfileTabType,
       canEditTags: isMyProfile && roles?.isManager,
     },
-  }[activeTab]
+  }
+
+  const activeTableProps = tableProps[activeTab]
 
   return (
     <>
@@ -159,16 +162,10 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       )}
       {!isSaving && (
         <div
-          className='flex relative xl:h-screen flex-col xl:flex-row pt-[108px] sm:pt-[6.75rem] pb-8 xl:pb-0 overflow-y-auto xl:justify-center gap-4 px-4 lg:px-6 xl:px-8 w-full'
+          className='relative flex w-full flex-col gap-4 overflow-y-auto px-4 sm:pr-0 sm:pl-20 lg:h-screen lg:gap-0'
           ref={containerRef}
         >
-          <div
-            ref={ProfileCardRef}
-            className='xl:sticky xl:h-fit xl:pb-4'
-            style={{
-              top: '0px',
-            }}
-          >
+          <div className='mt-20 w-full sm:mt-0'>
             <Suspense>
               <UserProfileCard
                 profileList={profileList}
@@ -185,34 +182,34 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
                 openQrCodeModal={() => setQrCodeModalOpen(true)}
                 openListSettingsModal={() => setListSettingsOpen(true)}
               />
+              <UserProfile
+                isMyProfile={isMyProfile}
+                profileList={profileList}
+                stats={stats}
+                profile={profile}
+                refetchProfile={refetchProfile}
+                isLoading={profileIsLoading}
+                isStatsLoading={statsIsLoading}
+                openBlockModal={() => {
+                  setIsBlockedMutedOpen(true)
+                  router.push(`/${user}?modal=block_mute_list`)
+                }}
+                openQrCodeModal={() => setQrCodeModalOpen(true)}
+                openListSettingsModal={() => setListSettingsOpen(true)}
+              />
             </Suspense>
           </div>
-          <div className='xl:hidden'>
-            <TopEight user={user} isConnectedUserProfile={isMyProfile} />
-          </div>
-          <div
-            ref={titleRef}
-            className='w-full xl:max-w-[800px] xl:sticky relative xl:top-0 h-fit'
-            style={{
-              scrollMarginTop: '100px',
-            }}
-          >
-            <div className='xl:absolute xl:top-0 xl:left-0 w-full h-fit'>
+          <div className='flex flex-col-reverse gap-4 sm:px-4 md:-mt-28 lg:-mt-24 lg:flex-row xl:px-8'>
+            <div className='h-fit w-full'>
               <UserProfilePageTable
                 setActiveTab={(tab) => setActiveTab(tab as ProfileTabType)}
                 ref={tableRef}
-                {...tableProps}
+                {...activeTableProps}
               />
             </div>
-          </div>
-          <div
-            ref={TopEightRef}
-            className='sticky pb-4 h-fit hidden xl:block'
-            style={{
-              top: '0px',
-            }}
-          >
-            <TopEight user={user} isConnectedUserProfile={isMyProfile} />
+            <div ref={TopEightRef} className='sticky top-0 h-fit pb-4 lg:top-8'>
+              <TopEight user={user} isConnectedUserProfile={isMyProfile} followingListProps={tableProps.following} />
+            </div>
           </div>
         </div>
       )}

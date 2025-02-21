@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 const SwipePage = () => {
   return (
-    <main className='w-full pt-[6.75rem] sm:pt-32 mb-4 px-2 text-center'>
+    <main className='mb-4 w-full px-4 pt-20 text-center sm:pt-8 sm:pl-28 lg:pt-32 xl:pl-36'>
       <RecommendedCards />
     </main>
   )
