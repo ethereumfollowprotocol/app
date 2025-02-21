@@ -87,7 +87,7 @@ const useSaveListSettings = ({
   const { data: walletClient } = useWalletClient()
   const { actions, addActions, resetActions, handleNextAction, handleInitiateActions } = useActions()
 
-  const newSlot = useMemo(() => generateListStorageLocationSlot(), [])
+  const newSlot = useMemo(() => generateListStorageLocationSlot(userAddress), [])
   const setListStorageLocationTx = useCallback(async () => {
     if (!newChain) return
 

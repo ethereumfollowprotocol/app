@@ -12,7 +12,7 @@ export function useMintEFP() {
 
   const { data: walletClient } = useWalletClient()
   const { address: accountAddress } = useAccount()
-  const nonce = useMemo(() => generateListStorageLocationSlot(), [])
+  const nonce = useMemo(() => generateListStorageLocationSlot(accountAddress), [])
 
   const mint = async ({
     selectedChainId,
