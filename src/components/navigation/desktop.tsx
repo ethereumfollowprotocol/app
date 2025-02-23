@@ -7,7 +7,7 @@ import WalletMenu from './components/wallet-menu.tsx'
 import CartButton from './components/cart-button.tsx'
 import Integrations from './components/integrations.tsx'
 import PoweredByEIK from './components/powered-by-eik.tsx'
-import Bell from 'public/assets/icons/ui/bell.svg'
+import Notifications from './components/notifications.tsx'
 
 const Desktop = () => {
   return (
@@ -19,9 +19,9 @@ const Desktop = () => {
         <div className='flex flex-col items-center justify-end gap-4'>
           <WalletMenu />
           <Search />
-          <Bell className='h-auto w-9 cursor-pointer transition-transform hover:scale-110' />
+          <Notifications />
           <CartButton />
-          <hr className='border-text-neutral mb-1 w-10 border-[1px]' />
+          <hr className='border-text-neutral mb-1 w-10 rounded-full border-[1px]' />
           <NavItems />
         </div>
       </div>

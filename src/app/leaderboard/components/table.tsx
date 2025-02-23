@@ -160,13 +160,13 @@ const LeaderboardTable = () => {
             ))}
           </div>
           <Recommendations
-            limit={6}
+            limit={10}
             endpoint='discover'
             header={t('recent')}
             className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm p-3 py-4 2xl:p-4')}
           />
           <Recommendations
-            limit={6}
+            limit={10}
             endpoint='recommended'
             header={t('recommended')}
             className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm p-3 py-4 2xl:p-4')}

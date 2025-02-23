@@ -7,6 +7,7 @@ import { truncateAddress } from 'ethereum-identity-kit'
 import ArrowRight from 'public/assets/icons/ui/arrow-right.svg'
 import Image from 'next/image'
 import DefaultHeader from 'public/assets/art/default-header.svg?url'
+import { formatNumber } from '#/utils/format/format-number'
 
 const ProfileSummaryCard = () => {
   const { profile, profileIsLoading, stats, statsIsLoading, lists, selectedList } = useEFPProfile()
@@ -75,7 +76,7 @@ const ProfileSummaryCard = () => {
                     {statsIsLoading ? (
                       <LoadingCell className='h-3 w-5' />
                     ) : (
-                      <p className='text-lg font-bold'>{stats?.following_count}</p>
+                      <p className='text-lg font-bold'>{formatNumber(stats?.following_count || 0)}</p>
                     )}
                     <p className='text-text-neutral'>Following</p>
                   </div>
@@ -83,7 +84,7 @@ const ProfileSummaryCard = () => {
                     {statsIsLoading ? (
                       <LoadingCell className='h-3 w-5' />
                     ) : (
-                      <p className='text-lg font-bold'>{stats?.followers_count}</p>
+                      <p className='text-lg font-bold'>{formatNumber(stats?.followers_count || 0)}</p>
                     )}
                     <p className='text-text-neutral'>Followers</p>
                   </div>

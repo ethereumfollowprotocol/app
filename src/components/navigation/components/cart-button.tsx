@@ -14,6 +14,8 @@ const CartButton = () => {
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
 
+  if (!userAddress) return null
+
   return (
     <Link
       href='/cart'

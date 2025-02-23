@@ -45,7 +45,7 @@ const SwipeButtons = ({
         }
         onClick={onSwipeLeft}
       >
-        <p className='rotate-90 sm:rotate-0'> {t('nope')}</p>
+        <p className='rotate-90 text-sm sm:rotate-0'> {t('nope')}</p>
       </button>
       <button
         className='bg-primary/20 hover:bg-primary/40 absolute top-0 -right-5 z-30 flex h-[450px] w-10 items-center justify-center rounded-sm transition-colors sm:right-auto sm:z-10 sm:ml-[466px] sm:w-24 md:ml-[480px]'
@@ -67,7 +67,7 @@ const SwipeButtons = ({
         onClick={onSwipeBack}
         disabled={didSwipeBack || gone.size === 0}
       >
-        <p className='text-lg font-semibold'>{t('undo')}</p> <ArrowUturnDown className='h-auto w-6' />
+        <p className='text-sm font-semibold'>{t('undo')}</p> <ArrowUturnDown className='h-auto w-4' />
       </button>
     </>
   )

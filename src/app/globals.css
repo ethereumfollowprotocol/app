@@ -6,6 +6,7 @@
   --color-yellow: #fff500;
   --color-pink: #ff79c9;
   --color-primary: #ffe066;
+  --color-primary-selected: #f2cf44;
   --color-dark-grey: #333333;
   --color-addition: #a1f783;
   --color-neutral: #ffffff;
@@ -48,6 +49,7 @@
 .dark {
   --color-neutral: #333333;
   --color-text: #ffffff;
+  --color-primary-selected: #ffe066;
   --color-text-neutral: #cccccc;
   --color-nav-item: #555555;
   --color-shadow: rgba(255, 255, 255, 0.25);

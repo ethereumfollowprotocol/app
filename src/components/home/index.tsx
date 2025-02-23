@@ -57,7 +57,7 @@ const Home = () => {
         >
           <ProfileSummaryCard />
           <Recommendations
-            limit={6}
+            limit={10}
             endpoint='discover'
             header={t('recent')}
             className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm p-3 py-4 2xl:p-4')}

@@ -35,45 +35,53 @@ const WalletMenu = () => {
   useAutoConnect()
 
   return (
-    <div ref={clickAwayWalletRef} className='relative'>
+    <div ref={clickAwayWalletRef} className='group/wallet-menu relative'>
       <button
         type='button'
         onClick={() =>
           userAddress ? setWalletMenuOpen(!walletMenOpenu) : openConnectModal ? openConnectModal() : null
         }
-        className='flex items-center justify-center'
-      >
-        <WalletIcon className='h-auto w-9 text-3xl transition-all hover:scale-110' />
-      </button>
-      <div
         className={cn(
-          walletMenOpenu ? 'flex opacity-100 starting:opacity-0' : 'hidden opacity-0',
-          'shadow-medium absolute top-12 right-0 z-50 max-h-[75vh] w-56 flex-col items-start rounded-sm transition-all sm:-top-2 sm:left-16 sm:h-auto sm:overflow-visible',
-          isSubMenuOpen ? `overflow-x-hidden` : 'overflow-hidden'
+          'flex items-center justify-center rounded-sm p-2 transition-all hover:scale-110',
+          !userAddress && 'bg-primary text-dark-grey'
         )}
-        style={{
-          height: deviceWidth < 640 ? (isSubMenuOpen ? `${112 + (lists?.lists?.length || 0) * 56}px` : 'auto') : 'auto',
-        }}
       >
+        <WalletIcon className='h-auto w-9' />
+      </button>
+      {userAddress && (
         <div
           className={cn(
-            'bg-neutral flex max-h-[75vh] w-full flex-col overflow-x-visible rounded-sm transition-all sm:h-auto',
-            isSubMenuOpen ? '-translate-x-full sm:translate-x-0' : 'translate-x-0'
+            walletMenOpenu
+              ? 'flex opacity-100 starting:opacity-0'
+              : 'hidden opacity-0 group-hover/wallet-menu:flex group-hover/wallet-menu:opacity-100 group-hover/wallet-menu:starting:opacity-0',
+            'absolute top-12 right-0 z-50 max-h-[75vh] w-56 flex-col items-start rounded-sm transition-all sm:-top-2 sm:left-full sm:h-auto sm:overflow-visible sm:pl-7',
+            isSubMenuOpen ? `overflow-x-hidden` : 'overflow-hidden'
           )}
+          style={{
+            height:
+              deviceWidth < 640 ? (isSubMenuOpen ? `${112 + (lists?.lists?.length || 0) * 56}px` : 'auto') : 'auto',
+          }}
         >
-          <ListSelector setWalletMenuOpen={setWalletMenuOpen} setSubMenuOpen={setIsSubMenuOpen} />
-          {userAddress && <EthBalance address={userAddress} chain={listChain || chains[0]} />}
-          <p
-            className='hover:bg-nav-item w-full cursor-pointer rounded-sm p-4 text-right font-bold text-nowrap text-red-500 transition-opacity sm:text-left'
-            onClick={() => {
-              disconnect()
-              setWalletMenuOpen(false)
-            }}
+          <div
+            className={cn(
+              'bg-neutral shadow-medium flex max-h-[75vh] w-full flex-col overflow-x-visible rounded-sm transition-all sm:h-auto',
+              isSubMenuOpen ? '-translate-x-full sm:translate-x-0' : 'translate-x-0'
+            )}
           >
-            {t('disconnect')}
-          </p>
+            <ListSelector setWalletMenuOpen={setWalletMenuOpen} setSubMenuOpen={setIsSubMenuOpen} />
+            {userAddress && <EthBalance address={userAddress} chain={listChain || chains[0]} />}
+            <p
+              className='hover:bg-nav-item w-full cursor-pointer rounded-sm p-4 text-right font-bold text-nowrap text-red-500 transition-opacity sm:text-left'
+              onClick={() => {
+                disconnect()
+                setWalletMenuOpen(false)
+              }}
+            >
+              {t('disconnect')}
+            </p>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }

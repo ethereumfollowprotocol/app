@@ -7,7 +7,7 @@ import { useLatestFollowers } from '../hooks/use-latest-followers'
 const LatestFollowers = () => {
   const { t } = useTranslation()
   const { subPage, isLoading, setSubPage, displayedProfiles, isFetchingNextPage, isFetchingPreviousPage } =
-    useLatestFollowers(10, 6)
+    useLatestFollowers(10, 10)
 
   const isLatestFollowersLoading = isLoading || isFetchingNextPage || isFetchingPreviousPage
 
@@ -28,7 +28,7 @@ const LatestFollowers = () => {
         </Suspense>
       </div>
       <ProfileList
-        loadingRows={6}
+        loadingRows={10}
         showFollowsYouBadges={false}
         profiles={displayedProfiles}
         isLoading={isLatestFollowersLoading}

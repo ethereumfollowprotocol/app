@@ -60,7 +60,12 @@ const MoreOptions: React.FC<MoreOptionsProps> = ({
         </div>
       )}
       {profileList && (
-        <p className='bg-nav-item rounded-sm px-2 py-[3px] text-sm font-semibold sm:text-sm'>#{profileList}</p>
+        <p
+          className='bg-nav-item cursor-pointer rounded-sm px-2 py-[3px] text-sm font-semibold transition-all hover:scale-110 hover:opacity-60 sm:text-sm'
+          onClick={() => openListSettingsModal?.()}
+        >
+          #{profileList}
+        </p>
       )}
       <button
         onClick={refetchData}

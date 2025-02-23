@@ -6,7 +6,7 @@ import NavItems from './components/nav-items'
 import WalletMenu from './components/wallet-menu'
 import Integrations from './components/integrations'
 import Logo from 'public/assets/efp-logo.svg'
-import Bell from 'public/assets/icons/ui/bell.svg'
+import Notifications from './components/notifications'
 
 const Mobile: React.FC = () => {
   return (
@@ -20,7 +20,7 @@ const Mobile: React.FC = () => {
         </div>
         <div className='flex items-center gap-3'>
           <Integrations />
-          <Bell className='h-auto w-9 cursor-pointer transition-transform hover:scale-110' />
+          <Notifications />
           <WalletMenu />
         </div>
       </div>
