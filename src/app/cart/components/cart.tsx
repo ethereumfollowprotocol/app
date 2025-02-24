@@ -67,7 +67,7 @@ const Cart = () => {
             cart.length >= 30 && 'xl:pb-0'
           )}
           onScroll={(e) => {
-            onScrollSidebar(e)
+            onScrollSidebar(e.target as HTMLDivElement)
           }}
         >
           {importModalOpen && <ImportModal onClose={() => setImportModalOpen(false)} platform={selectedPlatform} />}
