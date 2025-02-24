@@ -7,7 +7,7 @@ interface LinksProps {
 }
 
 const Links: React.FC<LinksProps> = ({ profile }) => {
-  if (!profile.ens.records?.url && !(profile.ens.contenthash || profile.ens.records?.contenthash)) return null
+  if (!profile.ens?.records?.url && !(profile.ens?.contenthash || profile.ens?.records?.contenthash)) return null
 
   return (
     <div className='flex w-3/4 items-center justify-start gap-2'>
@@ -16,7 +16,7 @@ const Links: React.FC<LinksProps> = ({ profile }) => {
           href={`https://${profile.ens.records.url.replace('https://', '').replace('http://', '')}`}
           target='_blank'
           rel='noreferrer'
-          className='bg-nav-item mb-1 flex max-w-1/2 items-center gap-1 rounded-sm px-2 py-0.5 text-sm text-blue-600 transition-all hover:scale-110 dark:text-blue-400'
+          className='bg-tertiary mb-1 flex max-w-1/2 items-center gap-1 rounded-sm px-2 py-0.5 text-sm text-blue-600 transition-all hover:scale-110 dark:text-blue-400'
         >
           <p className='halloween:text-blue-400 max-w-[90%] truncate font-semibold'>
             {profile.ens.records?.url.slice(-1) === '/'
@@ -31,10 +31,10 @@ const Links: React.FC<LinksProps> = ({ profile }) => {
           href={`https://${profile.ens.name}.limo`}
           target='_blank'
           rel='noreferrer'
-          className='bg-nav-item mb-1 flex items-center gap-1 rounded-full px-2 py-0.5 pr-0.5 text-sm transition-all hover:scale-110'
+          className='bg-tertiary mb-1 flex items-center gap-1 rounded-sm px-2 py-0.5 pr-0.5 text-sm transition-all hover:scale-110'
         >
           <p className='halloween:text-blue-400 font-semibold'>dweb</p>
-          <DwebIcon className='rounded-full' />
+          <DwebIcon className='rounded-sm' />
         </a>
       )}
     </div>

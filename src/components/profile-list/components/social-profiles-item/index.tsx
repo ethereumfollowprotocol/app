@@ -22,7 +22,7 @@ const SocialProfilesItem: React.FC<SocialProfileListProfile> = ({ platform, prof
   return (
     <div
       key={platform}
-      className='hover:bg-list flex items-center justify-between rounded-sm px-1.5 py-2 sm:w-full sm:px-2 sm:py-6'
+      className='hover:bg-list flex min-h-[55px] items-center justify-between rounded-sm px-1.5 py-2 sm:w-full sm:px-2 sm:py-4'
     >
       <div
         className='flex items-center gap-2 sm:gap-3'

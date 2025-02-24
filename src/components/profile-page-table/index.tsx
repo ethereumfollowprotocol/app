@@ -165,7 +165,7 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
         <div
           className={cn('top-0 z-10 transition-all duration-300', isTopEight ? 'xl:sticky' : 'sticky')}
           ref={ref}
-          style={{ top: isTopEight || !isMobile ? '0px' : displayHeaders ? '83px' : '-80px' }}
+          style={{ top: isTopEight || !isMobile ? '0px' : displayHeaders ? '74px' : '-1px' }}
         >
           <TableHeader
             setActiveTab={setActiveTab}

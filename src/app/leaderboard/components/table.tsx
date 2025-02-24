@@ -127,8 +127,8 @@ const LeaderboardTable = () => {
       <div className='flex w-full max-w-[1300px] justify-center gap-5 xl:mt-4'>
         <div className='flex w-full flex-col xl:max-w-[800px]'>
           <div
-            className='shadow-medium sticky z-10 transition-all duration-500'
-            style={{ top: isMobile ? (displayHeaders ? '80px' : '-64px') : '0px' }}
+            className='shadow-medium sticky z-10 transition-all duration-300'
+            style={{ top: isMobile ? (displayHeaders ? '74px' : '0px') : '0px' }}
           >
             <TableHeaders
               filter={filter}

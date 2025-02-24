@@ -39,9 +39,9 @@ const RecommendedCards = () => {
   const { address: userAddress } = useAccount()
 
   return (
-    <div className='flex w-full flex-col gap-10 lg:flex-row lg:items-center lg:justify-start'>
-      <div className='hidden flex-col items-start gap-6 sm:flex lg:min-w-72 xl:min-w-96'>
-        <h1 className='w-full text-start text-6xl font-semibold'>Swipe!</h1>
+    <div className='flex h-screen w-full flex-col justify-center gap-10 sm:h-auto lg:flex-row lg:items-center lg:justify-center xl:h-screen'>
+      <div className='hidden flex-col items-start gap-6 sm:flex lg:w-72 xl:absolute xl:left-28'>
+        <h1 className='w-full text-start text-6xl font-bold'>Swipe!</h1>
         <p className='w-full text-start'>
           Find new friends onchain. <br /> Swipe right to Follow, swipe left to NOPE.
         </p>
@@ -59,7 +59,7 @@ const RecommendedCards = () => {
               <KeyboardArrowLeft className='h-10 w-10' />
               <div className='-mt-px flex flex-col items-start'>
                 <p className='text-sm'>Left Arrow</p>
-                <p>Swipe Left (Nope)</p>
+                <p>Swipe Left (NOPE)</p>
               </div>
             </div>
             <div className='flex flex-row gap-2'>
@@ -78,7 +78,7 @@ const RecommendedCards = () => {
             </div>
             <div className='flex flex-row items-center gap-2'>
               <MouseLeft className='h-9 w-auto' />
-              <p>Grab and Swipe Left (Nope)</p>
+              <p>Grab and Swipe Left (NOPE)</p>
             </div>
           </div>
         </div>

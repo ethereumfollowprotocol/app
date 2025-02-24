@@ -93,7 +93,7 @@ const Cart = () => {
                 />
               </div>
             </div>
-            <Search size='w-full z-50 px-2 sm:px-4 pt-2' isEditor={true} />
+            <Search size='w-full z-50 px-2 sm:px-4 pt-2' />
             <Recommendations header={t('recommendations')} endpoint='recommended' limit={30} />
           </div>
           <div className={cn('relative top-0 flex h-fit w-full flex-col xl:w-2/3', cart.length >= 30 && 'xl:sticky')}>

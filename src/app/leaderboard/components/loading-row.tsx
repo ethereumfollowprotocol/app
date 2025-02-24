@@ -18,7 +18,7 @@ const LoadingRow = () => {
         <LoadingCell className='h-6 w-10 rounded-sm' />
         <LoadingCell className='h-4 w-20 rounded-sm' />
       </div>
-      <LoadingCell className='h-9 w-[110px] rounded-sm' />
+      <LoadingCell className='h-10 w-[120px] rounded-sm' />
     </div>
   )
 }

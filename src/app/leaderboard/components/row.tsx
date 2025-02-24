@@ -1,5 +1,4 @@
 import type { Address } from 'viem'
-import { usePathname } from 'next/navigation'
 
 import Name from './name'
 import StatsDesktop from './stats-desktop'
@@ -65,9 +64,6 @@ const TableRow: React.FC<TableRowProps> = ({
     ),
   }[rankedAs]
 
-  const pathname = usePathname()
-  const isHome = pathname === '/'
-
   return (
     <div className='hover:bg-text/5 flex h-[84px] w-full items-center justify-between gap-3 pr-2 pl-3 sm:gap-4 sm:px-4'>
       <div className='flex w-1/2 items-center gap-3 sm:gap-4'>
@@ -85,9 +81,7 @@ const TableRow: React.FC<TableRowProps> = ({
         top8={top8}
         blocked={blocked}
       />
-      <div className={`w-fit ${isHome ? 'lg:w-[25%] 2xl:w-[20%]' : 'lg:w-[15%] 2xl:w-[10%]'} flex justify-end`}>
-        <FollowButton address={address} />
-      </div>
+      <FollowButton address={address} />
     </div>
   )
 }

@@ -14,21 +14,25 @@ import Apps from 'public/assets/icons/ui/apps.svg'
 import ArrowRight from 'public/assets/icons/ui/arrow-right.svg'
 import ProfileSummaryCard from './components/profile-summary-card.tsx'
 import BackToTop from '../buttons/back-to-top.tsx'
+import ConnectWalletButton from '../buttons/connect-wallet.tsx'
 
 const Home = () => {
   const { t } = useTranslation()
   const { address: userAddress } = useAccount()
   const { followers, followersIsLoading } = useEFPProfile()
-  const { StickyScrollRef: SidebarRef, onScroll: onScrollSidebar } = useStickyScroll(0)
+  const { StickyScrollRef: SidebarRef, onScroll: onScrollSidebar } = useStickyScroll(0, 16)
   const isFollowersEmpty = !followersIsLoading && followers.length === 0
 
   return (
     <div
       id='home-page'
-      className='flex h-screen w-full flex-col items-center gap-4 overflow-y-scroll px-4 pt-16 sm:pt-8 sm:pr-4 sm:pl-24'
+      className='flex h-screen w-full flex-col items-center gap-4 overflow-y-scroll px-4 sm:pr-4 sm:pl-24'
       onScroll={(e) => onScrollSidebar(e.target as HTMLDivElement)}
     >
-      <div className='mt-10 flex max-w-[1100px] flex-col gap-4 md:mt-12 lg:mt-16'>
+      <div className='fixed top-4 right-4 z-50 hidden h-fit w-fit sm:block'>
+        <ConnectWalletButton />
+      </div>
+      <div className='mt-24 flex max-w-[1100px] flex-col gap-4 md:mt-20 lg:mt-24'>
         <h2 className='xs:text-4xl text-3xl font-bold sm:text-5xl lg:text-6xl'>Your friends, onchain</h2>
         <p className='w-[90%] text-lg sm:mt-3 lg:w-3/4 xl:w-2/3'>
           EFP is an onchain social graph protocol for Ethereum accounts, a primitive of the Ethereum identity stack that
@@ -45,7 +49,7 @@ const Home = () => {
       </div>
       <div className='flex w-full max-w-[1100px] flex-row justify-center gap-5 lg:mt-2'>
         <FeedCard
-          cardSize='w-full lg:max-w-[580px] rounded-sm h-[1000000vh]'
+          cardSize='w-full lg:max-w-[580px] rounded-sm'
           contentSize='h-full w-full rounded-sm'
           title={t('feed')}
           description={t('feed description')}

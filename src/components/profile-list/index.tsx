@@ -47,7 +47,7 @@ const ProfileList: React.FC<ProfileListProps> = ({
   return (
     <div
       className={cn(
-        'flex w-full flex-col gap-2 2xl:gap-3',
+        'flex w-full flex-col gap-2',
         !isEmpty && isShortList && showTags && canEditTags ? 'pb-32' : 'pb-0',
         className
       )}

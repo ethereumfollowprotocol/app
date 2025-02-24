@@ -3,7 +3,6 @@
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
-import TopEight from '#/components/top-eight'
 import QRCodeModal from '#/components/qr-code-modal'
 import type { ProfileTabType } from '#/types/common'
 import { useUserInfo } from '../hooks/use-user-info'
@@ -16,6 +15,7 @@ import { useEFPProfile } from '#/contexts/efp-profile-context'
 import UserProfilePageTable from '#/components/profile-page-table'
 import UserProfile from '#/components/user-profile'
 import BackToTop from '#/components/buttons/back-to-top'
+import TopEightActivity from './top-eight-activity'
 
 interface UserInfoProps {
   user: string
@@ -218,7 +218,11 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
               />
             </div>
             <div ref={TopEightRef} className='top-0 h-fit pb-4 lg:sticky'>
-              <TopEight user={user} isConnectedUserProfile={isMyProfile} followingListProps={tableProps.following} />
+              <TopEightActivity
+                user={user}
+                isConnectedUserProfile={isMyProfile}
+                followingListProps={tableProps.following}
+              />
             </div>
           </div>
         </div>

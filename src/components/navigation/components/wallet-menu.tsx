@@ -15,7 +15,7 @@ import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 const WalletMenu = () => {
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false)
-  const [walletMenOpenu, setWalletMenuOpen] = useState(false)
+  const [walletMenOpen, setWalletMenuOpen] = useState(false)
 
   const clickAwayWalletRef = useClickAway<HTMLDivElement>((_) => {
     setWalletMenuOpen(false)
@@ -36,25 +36,35 @@ const WalletMenu = () => {
 
   return (
     <div ref={clickAwayWalletRef} className='group/wallet-menu relative'>
-      <button
-        type='button'
-        onClick={() =>
-          userAddress ? setWalletMenuOpen(!walletMenOpenu) : openConnectModal ? openConnectModal() : null
-        }
-        className={cn(
-          'flex items-center justify-center rounded-sm p-2 transition-all hover:scale-110',
-          !userAddress && 'bg-primary text-dark-grey'
+      <div className='group/connect-button relative'>
+        <button
+          type='button'
+          onClick={() =>
+            userAddress ? setWalletMenuOpen(!walletMenOpen) : openConnectModal ? openConnectModal() : null
+          }
+          className={cn(
+            'flex items-center justify-center rounded-sm transition-all hover:scale-110',
+            userAddress ? 'group-hover/wallet-menu:text-primary-selected' : 'bg-primary text-dark-grey p-2',
+            walletMenOpen && 'text-primary-selected'
+          )}
+        >
+          <WalletIcon className='h-auto w-9' />
+        </button>
+        {!userAddress && (
+          <div className='absolute top-1 left-[74px] hidden w-fit opacity-0 transition-all transition-discrete group-hover/connect-button:hidden group-hover/connect-button:opacity-100 sm:group-hover/connect-button:block starting:opacity-0'>
+            <p className='bg-neutral shadow-small text-text rounded-sm px-4 py-2 text-lg font-semibold text-nowrap capitalize'>
+              {t('connect wallet')}
+            </p>
+          </div>
         )}
-      >
-        <WalletIcon className='h-auto w-9' />
-      </button>
+      </div>
       {userAddress && (
         <div
           className={cn(
-            walletMenOpenu
+            walletMenOpen
               ? 'flex opacity-100 starting:opacity-0'
               : 'hidden opacity-0 group-hover/wallet-menu:flex group-hover/wallet-menu:opacity-100 group-hover/wallet-menu:starting:opacity-0',
-            'absolute top-12 right-0 z-50 max-h-[75vh] w-56 flex-col items-start rounded-sm transition-all sm:-top-2 sm:left-full sm:h-auto sm:overflow-visible sm:pl-6',
+            'absolute top-12 right-0 z-50 max-h-[75vh] w-56 flex-col items-start rounded-sm transition-all sm:-top-2 sm:left-full sm:h-auto sm:overflow-visible sm:pl-8',
             isSubMenuOpen ? `overflow-x-hidden` : 'overflow-hidden'
           )}
           style={{

@@ -12,6 +12,7 @@
   --color-neutral: #ffffff;
   --color-text: #333333;
   --color-text-neutral: #666666;
+  --color-tertiary: #dddddd;
   --color-nav-item: #eeeeee;
   --color-deletion: #ff7c7c;
   --color-shadow: rgba(0, 0, 0, 0.25);
@@ -52,6 +53,7 @@
   --color-primary-selected: #ffe066;
   --color-text-neutral: #cccccc;
   --color-nav-item: #555555;
+  --color-tertiary: #666666;
   --color-shadow: rgba(255, 255, 255, 0.25);
 }
 

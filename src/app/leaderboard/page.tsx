@@ -7,6 +7,7 @@ import CloudLeft from 'public/assets/art/cloud-left.png'
 import CloudRight from 'public/assets/art/cloud-right.png'
 import CloudMiddle from 'public/assets/art/cloud-middle.png'
 import BackToTop from '#/components/buttons/back-to-top.tsx'
+import ConnectWalletButton from '#/components/buttons/connect-wallet.tsx'
 
 export const metadata: Metadata = {
   title: 'Leaderboard | EFP',
@@ -30,8 +31,11 @@ const Leaderboard = () => {
   return (
     <main
       id='leaderboard-page'
-      className='relative flex h-screen w-full flex-col items-center gap-2 overflow-y-scroll px-0 text-center sm:pr-4 sm:pl-24 md:pr-8 md:pl-28 lg:pr-8 lg:pl-28 2xl:pr-4 2xl:pl-24'
+      className='relative flex h-screen w-full flex-col items-center gap-2 overflow-x-hidden overflow-y-scroll px-0 text-center sm:pr-4 sm:pl-24 md:pr-8 md:pl-28 lg:pr-8 lg:pl-28 2xl:pr-4 2xl:pl-24'
     >
+      <div className='fixed top-4 right-4 z-50 hidden h-fit w-fit sm:block'>
+        <ConnectWalletButton />
+      </div>
       <div className='absolute top-0 right-12 -z-10 flex gap-24'>
         <Image src={CloudLeft} alt='Cloud Left' width={260} height={200} className='-translate-y-16 dark:opacity-40' />
         <Image

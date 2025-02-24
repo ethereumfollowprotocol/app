@@ -16,11 +16,11 @@ const Socials: React.FC<SocialsProps> = ({ profile }) => {
       {profileCardSocials.map((social) => (
         <a
           key={social.name}
-          href={social.url(social.name === 'etherscan' ? profile.address : profile.ens.records?.[social.name] || '')}
+          href={social.url(social.name === 'etherscan' ? profile.address : profile.ens?.records?.[social.name] || '')}
           target='_blank'
           rel='noreferrer'
           className={
-            profile.ens.records?.[social.name] || social.name === 'etherscan'
+            profile.ens?.records?.[social.name] || social.name === 'etherscan'
               ? 'opacity-100 transition-all hover:scale-110 hover:opacity-80'
               : 'pointer-events-none opacity-30'
           }

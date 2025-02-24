@@ -6,6 +6,7 @@ import { cn } from '#/lib/utilities'
 import Check from 'public/assets/icons/ui/check.svg'
 import ArrowLeft from 'public/assets/icons/ui/arrow-left.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
+import { formatNumber } from '#/utils/format/format-number'
 
 interface ListSelectorProps {
   setWalletMenuOpen: (open: boolean) => void
@@ -33,7 +34,7 @@ const ListSelector: React.FC<ListSelectorProps> = ({ setWalletMenuOpen, setSubMe
         className='group-hover:bg-nav-item flex w-full cursor-pointer items-center justify-between p-4 transition-opacity sm:flex-row-reverse'
       >
         <ArrowLeft className='h-4 w-4 sm:rotate-180' />
-        <p className='font-bold'>{selectedList ? `${t('list')} #${selectedList}` : t('mint new list')}</p>
+        <p className='font-bold'>{selectedList ? `${t('list')} #${formatNumber(selectedList)}` : t('mint new list')}</p>
       </div>
       <div
         className={cn(
@@ -62,7 +63,7 @@ const ListSelector: React.FC<ListSelectorProps> = ({ setWalletMenuOpen, setSubMe
             >
               {selectedList === Number(list) && <Check className='absolute top-5 left-2.5 h-4 w-4 text-green-500' />}
               <div className='flex flex-wrap items-end gap-1 sm:flex-nowrap'>
-                <p className='font-bold text-wrap'>{`${t('list')} #${list}`}</p>
+                <p className='font-bold text-wrap'>{`${t('list')} #${formatNumber(Number(list))}`}</p>
                 {lists.primary_list === list && (
                   <p className='mb-0.5 text-sm font-medium text-nowrap text-zinc-400 italic'>- {t('primary')}</p>
                 )}

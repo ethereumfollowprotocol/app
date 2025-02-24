@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next'
 import { cn } from '#/lib/utilities'
 import EditModal from './components/edit-modal'
 import { useTopEight } from './hooks/use-top-eight'
-import Edit from 'public/assets/icons/ui/edit.svg'
 import ArrowDown from 'public/assets/icons/ui/arrow-down.svg'
 import type { UserProfilePageTableProps } from '../profile-page-table'
 import TopEightLoadingProfile from './components/top-eight-loading-profile'
@@ -14,18 +13,18 @@ interface TopEightProps {
   user: Address | string
   isConnectedUserProfile?: boolean
   followingListProps: UserProfilePageTableProps
+  editModalOpen: boolean
+  setEditModalOpen: (open: boolean) => void
 }
 
-const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile, followingListProps }) => {
-  const {
-    topEight,
-    displayLimit,
-    editModalOpen,
-    setDisplayLimit,
-    setEditModalOpen,
-    topEightIsLoading,
-    topEightIsRefetching,
-  } = useTopEight(user)
+const TopEight: React.FC<TopEightProps> = ({
+  user,
+  isConnectedUserProfile,
+  followingListProps,
+  editModalOpen,
+  setEditModalOpen,
+}) => {
+  const { topEight, displayLimit, setDisplayLimit, topEightIsLoading, topEightIsRefetching } = useTopEight(user)
   const { t } = useTranslation()
 
   const isTopEightLoading = topEightIsLoading || topEightIsRefetching
@@ -41,14 +40,6 @@ const TopEight: React.FC<TopEightProps> = ({ user, isConnectedUserProfile, follo
         />
       )}
       <div className='flex w-full flex-col items-center justify-center gap-4 rounded-sm lg:w-80 lg:gap-4 xl:w-[602px]'>
-        <div className='bg-neutral shadow-medium flex w-full items-center justify-between rounded-sm p-4'>
-          <h3 className='text-xl font-bold'>{t('top eight title')}</h3>
-          {isConnectedUserProfile && (
-            <button onClick={() => setEditModalOpen(true)} className='transition-all hover:scale-110'>
-              <Edit className='h-5 w-5' />
-            </button>
-          )}
-        </div>
         {isTopEightEmpty && (
           <p className='bg-neutral shadow-medium w-full rounded-sm py-[76px] text-center text-lg font-medium italic'>
             {t('no top eight')}

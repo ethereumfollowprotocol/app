@@ -11,8 +11,8 @@ import Notifications from './components/notifications.tsx'
 
 const Desktop = () => {
   return (
-    <nav className='bg-neutral shadow-large hidden h-screen w-20 flex-col items-center justify-between py-4 sm:flex'>
-      <div className='flex flex-col items-center justify-between gap-8'>
+    <nav className='bg-neutral shadow-large fixed top-0 left-0 z-50 hidden h-screen w-20 flex-col items-center justify-between py-4 sm:flex'>
+      <div className='flex flex-col items-center justify-between gap-6'>
         <Link href='/' className='select-none' aria-label='Ethereum Follow Protocol'>
           <Logo className='w-8 translate-x-1 transition-transform select-none hover:scale-110' />
         </Link>

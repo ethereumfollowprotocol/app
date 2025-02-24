@@ -14,13 +14,14 @@ import MagnifyingGlass from 'public/assets/icons/ui/magnifying-glass.svg'
 
 export function Search({
   disabled,
+  isNavbar = false,
   size = 'w-full max-w-[350px]',
-  isEditor,
 }: {
   disabled?: boolean
   size?: string
-  isEditor?: boolean
+  isNavbar?: boolean
 }) {
+  const isEditor = false
   const { t } = useTranslation()
 
   const {
@@ -128,7 +129,7 @@ export function Search({
         )}
       </div>
       <div
-        className={`bg-neutral absolute top-full left-0 mt-2 w-full rounded-sm border-[3px] p-3 shadow-md md:p-4 ${
+        className={`bg-neutral shadow-medium absolute top-full left-0 mt-2 w-full rounded-sm border-[3px] p-3 md:p-4 ${
           dropdownMenuOpen ? (isEditor ? 'block' : 'hidden') : 'hidden'
         }`}
       >
@@ -177,10 +178,20 @@ export function Search({
         </div>
       </div>
       <div className={cn(isEditor ? 'hidden' : 'block', 'relative z-50 w-fit')}>
-        <MagnifyingGlass
-          onClick={() => setDialogOpen(!dialogOpen)}
-          className='h-auto w-9 cursor-pointer transition-all hover:scale-110 hover:opacity-65'
-        />
+        <div className='group/search-button relative'>
+          <MagnifyingGlass
+            onClick={() => setDialogOpen(!dialogOpen)}
+            className={cn(
+              'h-auto w-9 cursor-pointer transition-all hover:scale-110 hover:opacity-65',
+              dialogOpen && 'text-primary-selected'
+            )}
+          />
+          <div className='absolute -top-1 left-[66px] hidden w-fit opacity-0 transition-all transition-discrete group-hover/search-button:hidden group-hover/search-button:opacity-100 sm:group-hover/search-button:block starting:opacity-0'>
+            <p className='bg-neutral shadow-small text-text rounded-sm px-4 py-2 text-lg font-semibold text-nowrap capitalize'>
+              {t('search')}
+            </p>
+          </div>
+        </div>
         <div
           ref={clickAwayRef}
           className={cn(
