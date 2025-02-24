@@ -36,7 +36,12 @@ const PageSelector: React.FC<PageSelectorProps> = ({
   const filter = searchParams.get('filter')
 
   const handlePageChange = (newPage: number, skipsToFirst?: boolean) => {
-    if (scrollUp) window.scrollTo({ top: window.innerWidth > 786 ? 200 : 400, behavior: 'instant' })
+    if (scrollUp) {
+      document
+        .getElementById('leaderboard-page')
+        ?.scrollTo({ top: window.innerWidth > 786 ? 200 : 400, behavior: 'instant' })
+      window.scrollTo({ top: window.innerWidth > 786 ? 200 : 400, behavior: 'instant' })
+    }
 
     if (!skipsToFirst && fetchNext && fetchPrevious && !isLoading) {
       if (newPage > page) fetchNext()

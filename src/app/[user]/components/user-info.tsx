@@ -15,6 +15,7 @@ import UserProfileCard from '#/components/user-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import UserProfilePageTable from '#/components/profile-page-table'
 import UserProfile from '#/components/user-profile'
+import BackToTop from '#/components/buttons/back-to-top'
 
 interface UserInfoProps {
   user: string
@@ -125,6 +126,13 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
 
   const activeTableProps = tableProps[activeTab]
 
+  useEffect(() => {
+    const userPage = document.getElementById('user-page')
+    if (userPage && userPage.scrollTop > (window.innerWidth > 1024 ? 300 : 750)) {
+      userPage.scrollTo({ top: window.innerWidth > 1024 ? 300 : 750, behavior: 'instant' })
+    }
+  }, [activeTab, followersTagsFilter, followingTagsFilter, followersSort, followingSort])
+
   return (
     <>
       {qrCodeModalOpen && (
@@ -162,12 +170,14 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       )}
       {!isSaving && (
         <div
-          className='relative flex w-full flex-col gap-4 overflow-y-auto px-4 sm:pr-0 sm:pl-20 lg:h-screen lg:gap-0'
+          id='user-page'
+          className='relative flex h-screen w-full flex-col gap-4 overflow-y-auto px-0 pb-32 sm:pr-0 sm:pb-8 sm:pl-20 lg:gap-0'
           ref={containerRef}
         >
           <div className='mt-20 w-full sm:mt-0'>
             <Suspense>
               <UserProfileCard
+                className='flex w-full md:hidden'
                 profileList={profileList}
                 stats={stats}
                 profile={profile}
@@ -199,7 +209,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
               />
             </Suspense>
           </div>
-          <div className='flex flex-col-reverse gap-4 sm:px-4 md:-mt-28 lg:-mt-24 lg:flex-row xl:px-8'>
+          <div className='flex flex-col-reverse gap-4 px-4 md:-mt-28 lg:-mt-24 lg:flex-row xl:px-8'>
             <div className='h-fit w-full'>
               <UserProfilePageTable
                 setActiveTab={(tab) => setActiveTab(tab as ProfileTabType)}
@@ -207,12 +217,13 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
                 {...activeTableProps}
               />
             </div>
-            <div ref={TopEightRef} className='sticky top-0 h-fit pb-4 lg:top-8'>
+            <div ref={TopEightRef} className='top-0 h-fit pb-4 lg:sticky'>
               <TopEight user={user} isConnectedUserProfile={isMyProfile} followingListProps={tableProps.following} />
             </div>
           </div>
         </div>
       )}
+      <BackToTop />
     </>
   )
 }

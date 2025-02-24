@@ -13,6 +13,7 @@ import ThreeDotMenu from './components/three-dot-menu'
 import { useProfileCard } from './hooks/use-profile-card'
 import LoadingProfileCard from './components/loading-profile-card'
 import type { ProfileDetailsResponse, StatsResponse } from '#/types/requests'
+import Achievements from './components/achievements'
 
 interface UserProfileCardProps {
   profileList?: number | null
@@ -30,6 +31,7 @@ interface UserProfileCardProps {
   refetchStats?: () => void
   openQrCodeModal?: () => void
   displayAchievements?: boolean
+  className?: string
 }
 
 const UserProfileCard: React.FC<UserProfileCardProps> = ({
@@ -48,6 +50,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   openQrCodeModal,
   isStatsLoading,
   displayAchievements = true,
+  className,
 }) => {
   const router = useRouter()
   const { t } = useTranslation()
@@ -56,7 +59,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const { followState, profileName, isConnectedUserCard } = useProfileCard(profile)
 
   return (
-    <div className={cn('bg-neutral flex flex-col gap-4 rounded-sm', isRecommended ? 'w-[364px]' : 'w-full md:hidden')}>
+    <div className={cn('bg-neutral flex w-[364px] flex-col gap-4 rounded-sm', className)}>
       {isLoading ? (
         <LoadingProfileCard isResponsive={isResponsive} hideFollowButton={true} className='bg-neutral' />
       ) : profile?.address ? (
@@ -124,15 +127,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           )}
         </div>
       )}
-      {/* {displayAchievements && !isRecommended && (
-        <Achievements
-          profile={profile}
-          list={profileList}
-          isLoading={!!isLoading}
-          isResponsive={isResponsive}
-          isRecommended={!!isRecommended}
-        />
-      )} */}
+      {displayAchievements && <Achievements profile={profile} list={profileList} isLoading={!!isLoading} />}
     </div>
   )
 }

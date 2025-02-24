@@ -5,7 +5,7 @@ const LoadingRow = () => {
     <div className='flex h-[84px] w-full items-center justify-between gap-4 rounded-sm px-2 sm:px-4'>
       <div className='flex w-1/2 items-center gap-4'>
         <div className='xxs:min-w-6 xxs:w-6 flex w-4 min-w-4 justify-center text-right tabular-nums sm:w-10'>
-          <LoadingCell className='xxs:w-8 h-10 w-4 rounded-sm sm:h-12 sm:w-10' />
+          <LoadingCell className='xxs:w-8 h-8 w-4 rounded-sm sm:w-10' />
         </div>
         <div className='flex w-full items-center gap-2' data-name='name-column'>
           <LoadingCell className='h-[45px] w-[45px] rounded-full md:h-[50px] md:w-[50px]' />

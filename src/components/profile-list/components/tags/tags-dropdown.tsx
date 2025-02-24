@@ -93,12 +93,7 @@ const TagsDropdown: React.FC<TagsDropdownProps> = ({
         const removingTag = hasListOpRemoveTag(address, tag)
 
         return (
-          <div
-            key={tag + i}
-            className={`relative ${open ? 'z-40' : 'z-10'} max-w-full ${
-              canEditTags ? 'transition-all hover:scale-110' : ''
-            }`}
-          >
+          <div key={tag + i} className={`max-w-full ${canEditTags ? 'transition-all hover:scale-110' : ''}`}>
             <button
               className={`w-fit max-w-full truncate rounded-sm px-2 py-1 text-xs font-bold ${
                 canEditTags && removingTag ? 'bg-deletion' : 'bg-nav-item'

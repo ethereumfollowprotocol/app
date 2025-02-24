@@ -37,7 +37,7 @@ const TableHeaders: React.FC<TableHeadersProps> = ({
 
   return (
     <div className='bg-neutral z-50 flex items-center justify-between gap-2 rounded-t-sm px-4 py-2'>
-      <div className='flex items-center gap-2'>
+      <div className='flex items-center gap-4'>
         <Search currentSearch={currentSearch} handleSearchEvent={handleSearchEvent} />
         <Filters filter={filter} onSelectFilter={onSelectFilter} />
       </div>

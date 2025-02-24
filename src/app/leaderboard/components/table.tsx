@@ -14,8 +14,14 @@ import { LEADERBOARD_CHUNK_SIZE, LEADERBOARD_FETCH_LIMIT_PARAM } from '#/lib/con
 import TableHeaders from './table-headers.tsx'
 import Recommendations from '#/components/recommendations.tsx'
 import { cn } from '#/lib/utilities.ts'
+import { useIsClient } from '@uidotdev/usehooks'
+import { useEffect } from 'react'
+import { useState } from 'react'
+import useStickyScroll from '#/components/home/hooks/use-sticky-scroll.ts'
 
 const LeaderboardStatNames = ['addresses', 'lists', 'list ops', 'unique users']
+
+let lastScrollTop = 0
 
 const LeaderboardTable = () => {
   const router = useRouter()
@@ -64,6 +70,39 @@ const LeaderboardTable = () => {
     blocked: (entry: LeaderboardItem) => entry.blocks_rank,
   }[filter]
 
+  const { StickyScrollRef: SidebarRef, onScroll: onScrollLeaderboard } = useStickyScroll(0, 16)
+
+  useEffect(() => {
+    const leaderboardPage = document.getElementById('leaderboard-page')
+
+    if (leaderboardPage) {
+      leaderboardPage.addEventListener('scroll', (e) => onScrollLeaderboard(e.target as HTMLDivElement), {
+        passive: false,
+      })
+    }
+  }, [])
+
+  const isClient = useIsClient()
+  const [displayHeaders, setDisplayHeaders] = useState(false)
+  const isMobile = isClient && window.innerWidth <= 640
+
+  useEffect(() => {
+    const leaderboardPage = document.getElementById('leaderboard-page')
+
+    if (leaderboardPage && isMobile) {
+      leaderboardPage.addEventListener(
+        'scroll',
+        () => {
+          const deltaY = leaderboardPage.scrollTop - lastScrollTop
+          if (deltaY < 0) setDisplayHeaders(true)
+          else setDisplayHeaders(false)
+          lastScrollTop = leaderboardPage.scrollTop
+        },
+        { passive: false }
+      )
+    }
+  }, [isMobile])
+
   return (
     <>
       <div className='mt-24 flex w-full max-w-[1300px] flex-col items-start gap-4 px-4 sm:mt-12 sm:px-1 xl:mt-24'>
@@ -85,9 +124,12 @@ const LeaderboardTable = () => {
           </div>
         ))}
       </div>
-      <div className='flex w-full max-w-[1300px] justify-center gap-6 xl:mt-4'>
-        <div className='shadow-medium flex w-full flex-col xl:max-w-[800px]'>
-          <div className='sticky top-16 z-10 sm:top-0'>
+      <div className='flex w-full max-w-[1300px] justify-center gap-5 xl:mt-4'>
+        <div className='flex w-full flex-col xl:max-w-[800px]'>
+          <div
+            className='shadow-medium sticky z-10 transition-all duration-500'
+            style={{ top: isMobile ? (displayHeaders ? '80px' : '-64px') : '0px' }}
+          >
             <TableHeaders
               filter={filter}
               onSelectFilter={onSelectFilter}
@@ -102,7 +144,7 @@ const LeaderboardTable = () => {
               isFetchingPreviousLeaderboard={isFetchingPreviousLeaderboard}
             />
           </div>
-          <div className='bg-neutral relative flex flex-col rounded-b-sm'>
+          <div className='bg-neutral shadow-medium relative mb-16 flex flex-col rounded-b-sm'>
             {leaderboard
               ?.slice(0, chunk * LEADERBOARD_CHUNK_SIZE)
               .map((entry: LeaderboardItem, index) => (
@@ -141,36 +183,44 @@ const LeaderboardTable = () => {
             )}
           </div>
         </div>
-        <div className='hidden w-full max-w-[500px] flex-col gap-4 xl:flex'>
-          <div className='flex w-full flex-wrap items-center justify-between gap-3'>
-            {LeaderboardStatNames.map((name, i) => (
-              <div
-                key={`stat ${i}`}
-                className='bg-neutral shadow-medium flex w-[48.5%] flex-col items-start justify-center rounded-sm p-4'
-              >
-                {isLeaderboardStatsLoading || !leaderboardStats ? (
-                  <LoadingCell className='h-8 w-24 rounded-sm' />
-                ) : (
-                  <p className='text-xl font-bold'>
-                    {formatNumberLeaderboard(Number(Object.values(leaderboardStats)[i]))}
-                  </p>
-                )}
-                <p className='text-lg font-medium text-[#888] capitalize dark:text-[#aaa]'>{t(name)}</p>
-              </div>
-            ))}
+        <div className='hidden w-full max-w-[500px] flex-col gap-4 xl:block'>
+          <div
+            className='sticky top-0 flex w-full flex-col gap-4'
+            ref={SidebarRef}
+            style={{
+              top: 'calc(100vh - 2000px)',
+            }}
+          >
+            <div className='flex w-full flex-wrap items-center justify-between gap-3'>
+              {LeaderboardStatNames.map((name, i) => (
+                <div
+                  key={`stat ${i}`}
+                  className='bg-neutral shadow-medium flex w-[48.5%] flex-col items-start justify-center rounded-sm p-4'
+                >
+                  {isLeaderboardStatsLoading || !leaderboardStats ? (
+                    <LoadingCell className='h-8 w-24 rounded-sm' />
+                  ) : (
+                    <p className='text-xl font-bold'>
+                      {formatNumberLeaderboard(Number(Object.values(leaderboardStats)[i]))}
+                    </p>
+                  )}
+                  <p className='text-lg font-medium text-[#888] capitalize dark:text-[#aaa]'>{t(name)}</p>
+                </div>
+              ))}
+            </div>
+            <Recommendations
+              limit={10}
+              endpoint='discover'
+              header={t('recent')}
+              className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm p-3 py-4 2xl:p-4')}
+            />
+            <Recommendations
+              limit={10}
+              endpoint='recommended'
+              header={t('recommended')}
+              className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm p-3 py-4 2xl:p-4')}
+            />
           </div>
-          <Recommendations
-            limit={10}
-            endpoint='discover'
-            header={t('recent')}
-            className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm p-3 py-4 2xl:p-4')}
-          />
-          <Recommendations
-            limit={10}
-            endpoint='recommended'
-            header={t('recommended')}
-            className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm p-3 py-4 2xl:p-4')}
-          />
         </div>
       </div>
     </>

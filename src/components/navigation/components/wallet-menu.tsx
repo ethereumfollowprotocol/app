@@ -54,7 +54,7 @@ const WalletMenu = () => {
             walletMenOpenu
               ? 'flex opacity-100 starting:opacity-0'
               : 'hidden opacity-0 group-hover/wallet-menu:flex group-hover/wallet-menu:opacity-100 group-hover/wallet-menu:starting:opacity-0',
-            'absolute top-12 right-0 z-50 max-h-[75vh] w-56 flex-col items-start rounded-sm transition-all sm:-top-2 sm:left-full sm:h-auto sm:overflow-visible sm:pl-7',
+            'absolute top-12 right-0 z-50 max-h-[75vh] w-56 flex-col items-start rounded-sm transition-all sm:-top-2 sm:left-full sm:h-auto sm:overflow-visible sm:pl-6',
             isSubMenuOpen ? `overflow-x-hidden` : 'overflow-hidden'
           )}
           style={{

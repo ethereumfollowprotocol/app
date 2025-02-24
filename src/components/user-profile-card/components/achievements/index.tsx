@@ -19,7 +19,7 @@ const Achievements: React.FC<AchievementsProps> = ({ list, profile, isLoading })
   })
 
   return (
-    <div className='flex max-w-44 flex-wrap justify-end gap-2 lg:max-w-full'>
+    <div className='flex max-w-44 flex-wrap justify-start gap-2 md:justify-end lg:max-w-full'>
       {isBadgesLoading || isLoading ? (
         <>
           <LoadingCell className='h-20 w-20 rounded-full' />

@@ -22,12 +22,11 @@ const Filters: React.FC<FiltersProps> = ({ filter, onSelectFilter }) => {
     <div ref={clickAwayRef} className='relative z-40 w-fit'>
       <div
         onClick={() => setIsDropdownOpen((prev) => !prev)}
-        className='hover:border-text/80 bg-neutral z-30 flex h-[50px] w-full cursor-pointer flex-wrap items-center justify-between gap-4 rounded-sm px-3 transition-colors'
+        className='hover:border-text/80 bg-neutral z-30 flex h-[50px] w-full cursor-pointer flex-wrap items-center justify-between gap-2 rounded-sm transition-colors'
       >
         <div
           key={filter}
-          className={`flex cursor-pointer justify-center gap-1 rounded-full font-bold capitalize transition-all`}
-          onClick={() => onSelectFilter(filter)}
+          className='flex cursor-pointer justify-center gap-1 rounded-full font-bold capitalize transition-all'
         >
           <p className='text-nowrap'>{t(filter)}</p>
           <Image

@@ -2,7 +2,7 @@
 
 import { useTranslation } from 'react-i18next'
 import { useEffect, useState, forwardRef } from 'react'
-import { useIntersectionObserver } from '@uidotdev/usehooks'
+import { useIntersectionObserver, useIsClient } from '@uidotdev/usehooks'
 
 import { cn } from '#/lib/utilities'
 import Recommendations from '../recommendations'
@@ -14,6 +14,7 @@ import { FETCH_LIMIT_PARAM, SECOND } from '#/lib/constants'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { TagCountType, FollowSortType, FollowerResponse, FollowingResponse } from '#/types/requests'
 
+let lastScrollTopUserPage = 0
 export interface UserProfilePageTableProps {
   title: ProfileTableTitleType
   customClass?: string
@@ -68,6 +69,11 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
 
     // Debounce search to prevent unnecessary re-fetches
     useEffect(() => {
+      const userPage = document.getElementById('user-page')
+      if (userPage && userPage.scrollTop > (window.innerWidth > 1024 ? 300 : 750)) {
+        userPage.scrollTo({ top: window.innerWidth > 1024 ? 300 : 750, behavior: 'instant' })
+      }
+
       const searchTimeout = setTimeout(() => setSearchFilter(search), 0.5 * SECOND)
       return () => clearTimeout(searchTimeout)
     }, [search])
@@ -131,11 +137,36 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
       'Blocked/Muted': <span className='text-lg'>{t('none')}</span>,
     }[title]
 
+    const isClient = useIsClient()
+    const [displayHeaders, setDisplayHeaders] = useState(false)
+    const isMobile = isClient && window.innerWidth <= 640
+
+    useEffect(() => {
+      const userPage = document.getElementById('user-page')
+
+      if (userPage && isMobile) {
+        userPage.addEventListener(
+          'scroll',
+          () => {
+            const deltaY = userPage.scrollTop - lastScrollTopUserPage
+            if (deltaY <= 0) setDisplayHeaders(true)
+            else setDisplayHeaders(false)
+            lastScrollTopUserPage = userPage.scrollTop
+          },
+          { passive: false }
+        )
+      }
+    }, [isMobile])
+
     return (
       <div
         className={cn('flex w-full flex-col rounded-sm', !(isLoading || isFetchingMore) && 'pb-0 sm:pb-0', customClass)}
       >
-        <div className={cn('top-0 z-10', isTopEight ? 'xl:sticky' : 'lg:sticky')} ref={ref}>
+        <div
+          className={cn('top-0 z-10 transition-all duration-300', isTopEight ? 'xl:sticky' : 'sticky')}
+          ref={ref}
+          style={{ top: isTopEight || !isMobile ? '0px' : displayHeaders ? '83px' : '-80px' }}
+        >
           <TableHeader
             setActiveTab={setActiveTab}
             search={search}

@@ -13,6 +13,7 @@ import { useEFPProfile } from '#/contexts/efp-profile-context'
 import Apps from 'public/assets/icons/ui/apps.svg'
 import ArrowRight from 'public/assets/icons/ui/arrow-right.svg'
 import ProfileSummaryCard from './components/profile-summary-card.tsx'
+import BackToTop from '../buttons/back-to-top.tsx'
 
 const Home = () => {
   const { t } = useTranslation()
@@ -23,8 +24,9 @@ const Home = () => {
 
   return (
     <div
+      id='home-page'
       className='flex h-screen w-full flex-col items-center gap-4 overflow-y-scroll px-4 pt-16 sm:pt-8 sm:pr-4 sm:pl-24'
-      onScroll={(e) => onScrollSidebar(e)}
+      onScroll={(e) => onScrollSidebar(e.target as HTMLDivElement)}
     >
       <div className='mt-10 flex max-w-[1100px] flex-col gap-4 md:mt-12 lg:mt-16'>
         <h2 className='xs:text-4xl text-3xl font-bold sm:text-5xl lg:text-6xl'>Your friends, onchain</h2>
@@ -65,6 +67,7 @@ const Home = () => {
           {!isFollowersEmpty && userAddress && <LatestFollowers />}
         </div>
       </div>
+      <BackToTop />
     </div>
   )
 }

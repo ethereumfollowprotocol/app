@@ -32,7 +32,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
         open
           ? '-translate-y-mobile-menu flex sm:flex sm:translate-y-0 sm:opacity-100 starting:translate-y-0'
           : 'translate-y-12 sm:hidden sm:translate-y-0 sm:opacity-0',
-        'top-screen fixed left-0 h-fit w-full overflow-hidden transition-all transition-discrete group-hover/hamburger:flex sm:absolute sm:-top-2 sm:left-full sm:z-50 sm:h-fit sm:w-fit sm:overflow-visible sm:pl-8 sm:opacity-0 sm:group-hover/hamburger:opacity-100 sm:starting:opacity-0 sm:starting:group-hover/hamburger:opacity-0'
+        'top-screen fixed left-0 h-fit w-full overflow-hidden transition-all transition-discrete group-hover/hamburger:flex sm:absolute sm:-top-[182px] sm:left-full sm:z-50 sm:h-fit sm:w-fit sm:overflow-visible sm:pl-9 sm:opacity-0 sm:group-hover/hamburger:opacity-100 sm:starting:opacity-0 sm:starting:group-hover/hamburger:opacity-0'
       )}
     >
       <div

@@ -22,9 +22,8 @@ export const useUserScroll = () => {
     if (TopEightRef.current) {
       const topEightHeight = TopEightRef.current.scrollHeight
       const topEightOverflow = window.innerHeight - topEightHeight - 16
-      if (window.innerWidth >= 1024)
-        TopEightRef.current.style.top = `${topEightOverflow >= 0 ? 32 : topEightOverflow}px`
-      else TopEightRef.current.style.top = '32px'
+      if (window.innerWidth >= 1024) TopEightRef.current.style.top = `${topEightOverflow >= 0 ? 0 : topEightOverflow}px`
+      else TopEightRef.current.style.top = '0px'
     }
   }, [])
 

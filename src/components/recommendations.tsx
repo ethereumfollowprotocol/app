@@ -6,7 +6,6 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 
 import { cn } from '#/lib/utilities'
 import ProfileList from '#/components/profile-list'
-import type { DiscoverItemType } from '#/types/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { fetchRecommendations } from '#/api/recommended/fetch-recommendations'
 import PageSelector from '#/components/page-selector'
@@ -98,13 +97,6 @@ const Recommendations = ({ header, className, limit = 10, endpoint, isTopEight =
             name: account.name || undefined,
             avatar: account.avatar || undefined,
           },
-          counts:
-            endpoint === 'discover'
-              ? {
-                  followers: (account as DiscoverItemType).followers,
-                  following: (account as DiscoverItemType).following,
-                }
-              : undefined,
         }))}
         showFollowsYouBadges={true}
         showTags={false}
@@ -114,22 +106,6 @@ const Recommendations = ({ header, className, limit = 10, endpoint, isTopEight =
         (displayedProfiles?.length === 0 || !displayedProfiles) && (
           <div className='mb-14 flex h-28 w-full items-center justify-center text-lg font-bold italic'>No results</div>
         )}
-      {endpoint === 'recommended' && (
-        <div className='px-3 pb-2 sm:px-2'>
-          <Suspense>
-            <PageSelector
-              page={page}
-              setPage={setPage}
-              hasNextPage={hasNextPage && !(isFetchingNextPage || isLoading) && page <= 10}
-              hasSkipToFirst={false}
-              adjustUrl={false}
-              displayPageNumber={false}
-              fetchNext={fetchNextPage}
-              fetchPrevious={fetchPreviousPage}
-            />
-          </Suspense>
-        </div>
-      )}
     </div>
   )
 }
