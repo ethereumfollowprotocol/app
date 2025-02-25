@@ -31,8 +31,20 @@ const TopEightActivity: React.FC<TopEightActivityProps> = ({ user, isConnectedUs
     ),
     activity: (
       <>
-        <Image src={InterfaceLight} alt='Interface' width={120} height={30} className='block h-auto dark:hidden' />
-        <Image src={InterfaceDark} alt='Interface' width={120} height={30} className='hidden h-auto dark:block' />
+        <Image
+          src={InterfaceLight}
+          alt='Interface'
+          width={120}
+          height={30}
+          className='block h-auto lg:hidden xl:block dark:hidden'
+        />
+        <Image
+          src={InterfaceDark}
+          alt='Interface'
+          width={120}
+          height={30}
+          className='hidden h-auto dark:block dark:lg:hidden dark:xl:block'
+        />
       </>
     ),
   }[activeTab]
@@ -56,7 +68,7 @@ const TopEightActivity: React.FC<TopEightActivityProps> = ({ user, isConnectedUs
     ),
     activity: (
       <div className='max-h-[50vh] overflow-y-scroll lg:max-h-fit'>
-        <FeedCard activityAddress={user} cardSize='lg:w-[400px] xl:w-[550px]' />
+        <FeedCard activityAddress={user} cardSize='lg:w-[360px] xl:w-[602px]' />
       </div>
     ),
   }[activeTab]
@@ -64,16 +76,16 @@ const TopEightActivity: React.FC<TopEightActivityProps> = ({ user, isConnectedUs
   return (
     <div className='flex flex-col gap-4'>
       <div className='bg-neutral shadow-medium top-0 z-20 flex w-full items-center justify-between gap-4 rounded-sm p-2 pr-4 lg:sticky'>
-        <div className='bg-grey relative flex w-full items-center rounded-sm sm:w-fit'>
+        <div className='bg-grey relative flex w-full items-center rounded-sm sm:w-64 lg:w-full xl:w-64'>
           <div
             className={cn(
-              'bg-text/10 absolute h-full w-1/2 rounded-sm transition-all duration-200 sm:w-32',
-              activeTab === 'top 8' ? 'left-0' : 'left-1/2 sm:left-32'
+              'bg-text/10 absolute h-full w-1/2 rounded-sm transition-all duration-200',
+              activeTab === 'top 8' ? 'left-0' : 'left-1/2'
             )}
           />
           <p
             className={cn(
-              'text-text z-10 w-1/2 cursor-pointer py-2 text-center text-lg font-bold transition-transform hover:scale-110 sm:w-32',
+              'text-text z-10 w-1/2 cursor-pointer py-2 text-center text-lg font-bold transition-transform hover:scale-110',
               activeTab === 'top 8' ? 'text-text' : 'text-text/60'
             )}
             onClick={() => setActiveTab?.('top 8')}
@@ -82,7 +94,7 @@ const TopEightActivity: React.FC<TopEightActivityProps> = ({ user, isConnectedUs
           </p>
           <p
             className={cn(
-              'text-text z-10 w-1/2 cursor-pointer py-2 text-center text-lg font-bold transition-transform hover:scale-110 sm:w-32',
+              'text-text z-10 w-1/2 cursor-pointer py-2 text-center text-lg font-bold transition-transform hover:scale-110',
               activeTab === 'activity' ? 'text-text' : 'text-text/60'
             )}
             onClick={() => setActiveTab?.('activity')}

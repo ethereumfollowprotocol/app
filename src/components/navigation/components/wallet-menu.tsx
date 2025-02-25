@@ -44,7 +44,7 @@ const WalletMenu = () => {
           }
           className={cn(
             'flex items-center justify-center rounded-sm transition-all hover:scale-110',
-            userAddress ? 'group-hover/wallet-menu:text-primary-selected' : 'bg-primary text-dark-grey p-2',
+            !userAddress && 'bg-primary text-dark-grey p-2',
             walletMenOpen && 'text-primary-selected'
           )}
         >

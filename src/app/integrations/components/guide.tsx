@@ -4,35 +4,41 @@ import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 import { cn } from '#/lib/utilities'
 
-import Book from 'public/assets/icons/ui/book.svg'
-import API from 'public/assets/icons/ui/api.svg'
-import Discord from 'public/assets/icons/socials/discord.svg'
-import Github from 'public/assets/icons/socials/github.svg'
+import Discord from 'public/assets/icons/socials/discord.svg?url'
+import Github from 'public/assets/icons/socials/github-white.svg?url'
+import Image from 'next/image'
+import Examples from './examples'
 
 const RESOURCES = [
   {
+    name: 'Ethereum Identity Kit',
+    content: <p>Ethereum Identity Kit</p>,
+    href: 'https://docs.efp.app/identity-kit/introduction',
+    className: 'bg-primary font-bold text-dark-grey',
+  },
+  {
     name: 'Docs',
-    icon: <Book />,
+    content: <p>Documentation</p>,
     href: 'https://docs.efp.app',
-    className: 'bg-primary/90 text-darkGrey',
+    className: 'bg-neutral',
   },
   {
     name: 'API',
-    icon: <API />,
+    content: <p>API</p>,
     href: 'https://docs.efp.app/api/',
-    className: 'bg-[#FFC7E9] text-darkGrey',
+    className: 'bg-neutral',
   },
   {
     name: 'Discord',
-    icon: <Discord />,
+    content: <Image src={Discord} alt='Discord' width={32} height={32} className='h-auto w-10' />,
     href: 'https://discord.com/invite/ZUyG3mSXFD',
-    className: 'bg-[#7289da] text-white',
+    className: 'bg-[#8C9EFF] text-white px-0',
   },
   {
     name: 'GitHub',
-    icon: <Github />,
+    content: <Image src={Github} alt='GitHub' width={32} height={32} className='h-auto w-7' />,
     href: 'https://github.com/ethereumfollowprotocol',
-    className: 'bg-darkGrey text-white',
+    className: 'bg-dark-grey text-white px-1.5',
   },
 ]
 
@@ -40,25 +46,27 @@ const Guide = () => {
   const { t } = useTranslation()
 
   return (
-    <div className='glass-card border-grey flex h-fit w-full max-w-[700px] flex-col items-center gap-4 rounded-sm border-[3px] px-4 py-8 sm:p-6 md:p-8 lg:p-10 xl:items-start'>
-      <h2 className='xxs:text-4xl text-center text-3xl font-bold xl:text-start'>{t('integrate efp')}</h2>
-      <p className='xxs:text-lg text-text/80 text-center xl:text-start'>{t('integrate efp description')}</p>
-      <div className='mt-4 flex w-full flex-row flex-wrap items-center justify-center gap-4 md:gap-6 xl:justify-start'>
-        {RESOURCES.map((resource) => (
-          <Link
-            key={resource.name}
-            href={resource.href}
-            target='_blank'
-            rel='noopener noreferrer'
-            className={cn(
-              'xxs:w-40 xxs:p-4 xxs:text-3xl text-text/80 flex w-36 flex-row items-center justify-between rounded-sm p-3 text-2xl font-semibold transition-transform hover:scale-105 sm:w-48 md:h-24 md:w-56 md:text-4xl lg:h-28 lg:w-64 lg:p-6 lg:text-5xl',
-              resource.className
-            )}
-          >
-            <p className='xxs:text-2xl text-xl md:text-3xl lg:text-4xl'>{resource.name}</p>
-            {resource.icon}
-          </Link>
-        ))}
+    <div className='mt-24 flex h-fit w-full flex-col items-start gap-12 rounded-sm px-4 sm:mt-12 sm:px-8 lg:mt-24 lg:max-w-[43vw] lg:px-0 xl:max-w-[550px] 2xl:max-w-[700px]'>
+      <div className='flex flex-col gap-6'>
+        <h2 className='text-5xl font-bold xl:text-start'>{t('integrate efp')}</h2>
+        <p className='xxs:text-lg text-text/80 w-full text-start sm:w-[90%]'>{t('integrate efp description')}</p>
+        <div className='flex w-full flex-row flex-wrap items-center justify-start gap-3'>
+          {RESOURCES.map((resource) => (
+            <Link
+              key={resource.name}
+              href={resource.href}
+              className={cn(
+                'shadow-small flex h-10 w-fit items-center justify-center gap-2 rounded-sm px-3 font-semibold transition-transform duration-300 hover:scale-110',
+                resource.className
+              )}
+            >
+              {resource.content}
+            </Link>
+          ))}
+        </div>
+      </div>
+      <div className='hidden w-full lg:block'>
+        <Examples />
       </div>
     </div>
   )

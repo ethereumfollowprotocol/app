@@ -39,7 +39,7 @@ const TopEight: React.FC<TopEightProps> = ({
           followingListProps={followingListProps}
         />
       )}
-      <div className='flex w-full flex-col items-center justify-center gap-4 rounded-sm lg:w-80 lg:gap-4 xl:w-[602px]'>
+      <div className='flex w-full flex-col items-center justify-center gap-4 rounded-sm lg:w-[360px] lg:gap-4 xl:w-[602px]'>
         {isTopEightEmpty && (
           <p className='bg-neutral shadow-medium w-full rounded-sm py-[76px] text-center text-lg font-medium italic'>
             {t('no top eight')}

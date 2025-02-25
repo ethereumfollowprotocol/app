@@ -142,7 +142,7 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
             </div>
           ) : (lists?.lists?.length || 0) > 0 ? (
             <iframe
-              key={`${userAddress} ${resolvedTheme} ${feedKey}`}
+              key={`${userAddress} ${url} ${resolvedTheme} ${feedKey}`}
               title='Feed'
               src={url}
               className='bg-neutral h-full w-full'

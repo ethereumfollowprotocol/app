@@ -75,11 +75,11 @@ export const NAV_ITEMS = [
 ]
 
 export const EXTERNAL_LINKS = [
-  {
-    text: 'about',
-    href: '/about',
-    target: '',
-  },
+  // {
+  //   text: 'about',
+  //   href: '/about',
+  //   target: '',
+  // },
   {
     text: 'docs',
     href: 'https://docs.efp.app/intro',

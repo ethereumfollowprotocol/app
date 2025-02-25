@@ -16,9 +16,17 @@ interface RecommendationsProps {
   limit?: number
   endpoint: 'discover' | 'recommended'
   isTopEight?: boolean
+  showPageSelector?: boolean
 }
 
-const Recommendations = ({ header, className, limit = 10, endpoint, isTopEight = false }: RecommendationsProps) => {
+const Recommendations = ({
+  header,
+  className,
+  limit = 10,
+  endpoint,
+  isTopEight = false,
+  showPageSelector = true,
+}: RecommendationsProps) => {
   const [page, setPage] = useState(1)
   const { selectedList } = useEFPProfile()
   const { address: userAddress } = useAccount()
@@ -73,18 +81,20 @@ const Recommendations = ({ header, className, limit = 10, endpoint, isTopEight =
           >
             {header}
           </h2>
-          <Suspense>
-            <PageSelector
-              page={page}
-              setPage={setPage}
-              hasNextPage={hasNextPage && !(isFetchingNextPage || isLoading) && page <= 10}
-              hasSkipToFirst={false}
-              adjustUrl={false}
-              displayPageNumber={false}
-              fetchNext={fetchNextPage}
-              fetchPrevious={fetchPreviousPage}
-            />
-          </Suspense>
+          {showPageSelector && (
+            <Suspense>
+              <PageSelector
+                page={page}
+                setPage={setPage}
+                hasNextPage={hasNextPage && !(isFetchingNextPage || isLoading) && page <= 10}
+                hasSkipToFirst={false}
+                adjustUrl={false}
+                displayPageNumber={false}
+                fetchNext={fetchNextPage}
+                fetchPrevious={fetchPreviousPage}
+              />
+            </Suspense>
+          )}
         </div>
       </div>
       <ProfileList

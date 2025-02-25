@@ -17,7 +17,7 @@ const ConnectWalletButton = () => {
     <button
       type='button'
       onClick={() => (openConnectModal ? openConnectModal() : null)}
-      className='bg-primary text-dark-grey flex items-center justify-center gap-2 rounded-sm px-4 py-3 transition-all hover:scale-110'
+      className='bg-primary text-dark-grey shadow-medium flex items-center justify-center gap-2 rounded-sm px-4 py-3 transition-all hover:scale-110'
     >
       <WalletIcon className='h-auto w-7' />
       <p className='font-bold'>{t('connect wallet')}</p>
