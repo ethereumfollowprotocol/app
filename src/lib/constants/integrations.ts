@@ -29,6 +29,7 @@ import ENSResolver from 'public/assets/partners/ensresolver.jpeg'
 import Rotki from 'public/assets/partners/rotki.jpeg'
 import Zapper from 'public/assets/partners/zapper.png'
 import Recordsxyz from 'public/assets/partners/recordsxyz.jpeg'
+import Recordsxyz from 'public/assets/partners/agora.jpg'
 
 
 export const INTEGRATIONS = [
@@ -66,6 +67,11 @@ export const INTEGRATIONS = [
     name: 'Rotki',
     url: 'https://rotki.com/',
     logo: Rotki,
+  },
+  {
+    name: 'Agora',
+    url: 'https://www.agora.xyz/',
+    logo: Agora,
   },
   {
     name: 'Blockscout',
