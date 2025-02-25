@@ -29,7 +29,7 @@ import ENSResolver from 'public/assets/partners/ensresolver.jpeg'
 import Rotki from 'public/assets/partners/rotki.jpeg'
 import Zapper from 'public/assets/partners/zapper.png'
 import Recordsxyz from 'public/assets/partners/recordsxyz.jpeg'
-import Recordsxyz from 'public/assets/partners/agora.jpg'
+import Agora from 'public/assets/partners/agora.jpg'
 
 
 export const INTEGRATIONS = [
