@@ -53,7 +53,7 @@ const InitiateActionsCard: React.FC<InitiateActionsCardProps> = ({
         <p className='text-lg'>{t('summary')}</p>
       </div>
       <div className='flex flex-col items-center gap-4'>
-        <p className='text-xl sm:text-2xl font-bold'>{t('actions')}</p>
+        <p className='text-xl font-bold sm:text-2xl'>{t('actions')}</p>
         <div>
           {transformedActions
             .filter((action) => action.chainId)
@@ -67,7 +67,7 @@ const InitiateActionsCard: React.FC<InitiateActionsCardProps> = ({
             ))}
         </div>
       </div>
-      <div className='flex flex-col gap-2 items-center'>
+      <div className='flex flex-col items-center gap-2'>
         <p className='text-center text-lg font-bold'>{t('req transactions')}</p>
         {transformedActions
           .filter((action) => action.chainId)
@@ -79,7 +79,7 @@ const InitiateActionsCard: React.FC<InitiateActionsCardProps> = ({
             />
           ))}
       </div>
-      <div className='flex w-full gap-8 mt-2 justify-between'>
+      <div className='mt-2 flex w-full justify-between gap-8'>
         <CancelButton
           onClick={() => {
             if (actions[0]?.label === 'create list') {
@@ -94,7 +94,7 @@ const InitiateActionsCard: React.FC<InitiateActionsCardProps> = ({
         <PrimaryButton
           label={t(isCorrectChain ? 'initiate' : 'switch chain')}
           onClick={handleInitiateActions}
-          className='text-lg w-auto px-4 min-w-32'
+          className='w-auto min-w-32 px-4 text-lg'
         />
       </div>
     </>

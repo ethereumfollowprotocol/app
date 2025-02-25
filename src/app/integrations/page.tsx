@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 
 import Guide from './components/guide'
 import LiveIntegrations from './components/live-intergrations'
+import BackToTop from '#/components/buttons/back-to-top'
 
 export const metadata: Metadata = {
   title: 'Integrations | EFP',
@@ -23,9 +24,10 @@ export const metadata: Metadata = {
 
 const Integrations = () => {
   return (
-    <main className='flex flex-row pb-28 lg:pb-10 gap-4 px-4 md:px-8 w-full justify-center flex-wrap relative pt-[6.75rem] sm:pt-[7.75rem]'>
+    <main className='relative flex w-full flex-row flex-wrap justify-center gap-4 px-4 pt-[6.75rem] pb-28 sm:pt-[7.75rem] md:px-8 lg:pb-10'>
       <Guide />
       <LiveIntegrations />
+      <BackToTop />
     </main>
   )
 }

@@ -57,7 +57,7 @@ const useUser = (user: string) => {
       user,
       followingSort,
       followingTagsFilter,
-      followingSearch.length > 2 ? followingSearch : undefined,
+      followingSearch.length > 1 ? followingSearch : undefined,
     ],
     queryFn: async ({ pageParam = 0 }) => {
       setIsEndOfFollowing(false)
@@ -101,7 +101,7 @@ const useUser = (user: string) => {
       user,
       followersSort,
       followersTagsFilter,
-      followersSearch.length > 2 ? followersSearch : undefined,
+      followersSearch.length > 1 ? followersSearch : undefined,
     ],
     queryFn: async ({ pageParam = 0 }) => {
       setIsEndOfFollowers(false)

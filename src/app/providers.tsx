@@ -4,9 +4,8 @@ import localforage from 'localforage'
 import { useTheme } from 'next-themes'
 import { useIsClient } from '@uidotdev/usehooks'
 import { WagmiProvider, type State } from 'wagmi'
-import { isServer, QueryClient, type Query } from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { darkTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit'
+import { isServer, QueryClient, type Query } from '@tanstack/react-query'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
 
@@ -73,13 +72,14 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
                 <RecommendedProfilesProvider>
                   <Navigation />
                   {children}
+                  <div id='modal-root' />
                 </RecommendedProfilesProvider>
               </SoundsProvider>
             </ActionsProvider>
           </EFPProfileProvider>
         </RainbowKitProvider>
       </WagmiProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </PersistQueryClientProvider>
   )
 }
