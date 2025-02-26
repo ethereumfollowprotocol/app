@@ -6,10 +6,8 @@ import { useClickAway } from '@uidotdev/usehooks'
 import Modal from '../modal'
 import { cn } from '#/lib/utilities'
 import LoadingCell from '../loaders/loading-cell'
-import CancelButton from '../buttons/cancel-button'
 import type { ChainWithDetails } from '#/lib/wagmi'
 import { ChainIcon } from '#/components/chain-icon'
-import SaveSettings from './components/save-settings'
 import useListSettings from './hooks/use-list-settings'
 import SettingsInput from './components/settings-input'
 import ResetSlotWarning from './components/reset-slot-warning'
@@ -23,6 +21,7 @@ import Manager from 'public/assets/icons/ui/edit.svg'
 import Refresh from 'public/assets/icons/ui/refresh.svg'
 import Location from 'public/assets/icons/ui/location.svg'
 import ArrowDown from 'public/assets/icons/ui/arrow-down.svg'
+import useSaveListSettings from './hooks/use-save-list-settings'
 
 interface ListSettingsProps {
   selectedList: number
@@ -70,34 +69,31 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
     currentManager,
     setIsPrimaryList,
     setChangedValues,
-    isListStateLoading,
     isListSettingsLoading,
     fetchedListRecordsContractAddress,
   } = useListSettings({ profile, list: selectedList })
+
+  const { submitChanges } = useSaveListSettings({
+    slot: fetchedSlot,
+    user,
+    owner,
+    chain,
+    profile,
+    manager,
+    onClose,
+    newChain: chain,
+    listState,
+    selectedList,
+    changedValues,
+    isPrimaryList,
+    listRecordsContractAddress: fetchedListRecordsContractAddress,
+  })
 
   const isOwner = connectedAddress?.toLowerCase() === fetchedOwner?.toLowerCase()
   const isManager = connectedAddress?.toLowerCase() === fetchedManager?.toLowerCase()
   const isUser = connectedAddress?.toLowerCase() === fetchedUser?.toLowerCase()
 
-  return isSaving ? (
-    <SaveSettings
-      selectedList={selectedList}
-      newChain={chain}
-      chain={fetchedChain}
-      changedValues={changedValues}
-      profile={profile}
-      manager={manager}
-      owner={owner}
-      user={user}
-      slot={fetchedSlot}
-      onCancel={() => setIsSaving(false)}
-      onClose={onClose}
-      listRecordsContractAddress={fetchedListRecordsContractAddress}
-      listState={listState}
-      isListStateLoading={isListStateLoading}
-      isPrimaryList={isPrimaryList}
-    />
-  ) : (
+  return (
     <>
       <Modal onCancel={onClose} className='items-start py-[5vh]'>
         <div className='flex w-full max-w-full flex-col gap-5 rounded-sm p-2 pt-6 sm:w-[554px]'>
@@ -236,10 +232,10 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
           {isOwner || isManager || isUser ? (
             isEditingSettings ? (
               <div className='mt-4 flex w-full items-center justify-between'>
-                <CancelButton onClick={() => setIsEditingSettings(false)} />
+                {/* <CancelButton onClick={() => setIsEditingSettings(false)} /> */}
                 <PrimaryButton
                   label={t('save')}
-                  onClick={() => setIsSaving(true)}
+                  onClick={submitChanges}
                   disabled={!Object.values(changedValues).includes(true)}
                 />
               </div>
@@ -267,7 +263,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
               resetSlot: true,
             })
 
-            setIsSaving(true)
+            submitChanges()
           }}
         />
       )}

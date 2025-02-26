@@ -13,7 +13,7 @@ import {
 import type { Address } from 'viem'
 import { useRouter } from 'next/navigation'
 import { useAccount, useChains } from 'wagmi'
-import { fetchProfileDetails, fetchProfileStats } from '@encrypteddegen/identity-kit'
+import { fetchProfileDetails, fetchProfileStats, useTransactions } from '@encrypteddegen/identity-kit'
 
 import type {
   ENSProfile,
@@ -225,6 +225,11 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     () => (isPrimaryList && !isRefetchingProfile ? undefined : selectedList),
     [isPrimaryList, selectedList]
   )
+
+  const { setSelectedList: setSelectedListFromTransactionContext } = useTransactions()
+  useEffect(() => {
+    setSelectedListFromTransactionContext(selectedList ? selectedList.toString() : '0')
+  }, [selectedList])
 
   const {
     data: profile,
