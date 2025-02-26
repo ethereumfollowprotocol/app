@@ -25,12 +25,10 @@ const LiveIntegrations = () => {
 
   return (
     <div className='flex w-full flex-col items-center lg:w-[480px] lg:min-w-[480px] xl:w-[600px] xl:items-end'>
-      <div className='bg-neutral shadow-medium z-20 flex w-full flex-col gap-4 px-2'>
-        <div className='flex h-12 items-center justify-start gap-1.5'>
-          <Apps className='h-7 w-7' />
-          <h1 className='text-xl font-bold'>{t('integrations')}</h1>
-          <p className='text-text-neutral pl-1'>{INTEGRATIONS.length}</p>
-        </div>
+      <div className='bg-neutral shadow-medium z-20 flex h-14 w-full items-center justify-start gap-2 px-3'>
+        <Apps className='h-7 w-7' />
+        <h1 className='text-xl font-bold'>{t('integrations')}</h1>
+        <p className='text-text-neutral pl-1'>{INTEGRATIONS.length}</p>
       </div>
       <div className='flex w-full flex-row flex-wrap items-center justify-start lg:justify-end'>
         {INTEGRATIONS.slice(0, displayIntegrations).map((integration) => (
@@ -47,7 +45,7 @@ const LiveIntegrations = () => {
               width={200}
               className='absolute top-0 left-0 mx-auto h-full w-full'
             />
-            <div className='z-10 flex h-[80px] w-full flex-row items-end justify-between bg-gradient-to-t from-black/75 to-transparent p-3 text-white transition-transform duration-300 group-hover/integration:translate-y-0 lg:translate-y-full xl:p-4'>
+            <div className='z-10 flex h-[100px] w-full flex-row items-end justify-between bg-gradient-to-t from-black/75 to-transparent p-3 text-white transition-transform duration-300 group-hover/integration:translate-y-0 lg:translate-y-full xl:p-4'>
               <p className='tex-base z-10 font-bold xl:max-w-[140px] xl:text-lg'>{integration.name}</p>
               <ExternalLink className='mb-1 h-5! w-auto' />
             </div>

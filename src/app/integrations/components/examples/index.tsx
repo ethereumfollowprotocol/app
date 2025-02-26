@@ -10,7 +10,7 @@ const Examples = () => {
   const { t } = useTranslation()
 
   return (
-    <div className='flex w-full flex-col gap-6 pb-12'>
+    <div className='flex w-full max-w-[650px] flex-col gap-6 pb-12'>
       <h3 className='text-3xl font-bold'>{t('examples')}</h3>
       <CompleteProfile />
       <OnchainActivity />

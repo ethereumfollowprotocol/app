@@ -1,7 +1,12 @@
+'use client'
+
 import React from 'react'
+import { useAccount } from 'wagmi'
 import Recommendations from '#/components/recommendations'
 
 const ConnectOnchain = () => {
+  const { address: userAddress } = useAccount()
+
   return (
     <div className='bg-neutral shadow-medium flex w-full flex-col gap-0 overflow-hidden rounded-sm px-2 pt-6 pb-0 sm:gap-2 sm:px-4'>
       <h4 className='px-2 text-xl font-bold sm:text-2xl'>Help users connect onchain</h4>
@@ -10,7 +15,7 @@ const ConnectOnchain = () => {
       </p>
       <div className='h-[380px] overflow-hidden'>
         <Recommendations
-          endpoint='discover'
+          endpoint={userAddress ? 'recommended' : 'discover'}
           limit={6}
           className='mt-0 p-0 shadow-none sm:px-3'
           showPageSelector={false}

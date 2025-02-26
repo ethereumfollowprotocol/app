@@ -12,6 +12,7 @@ import { EXTERNAL_LINKS } from '#/lib/constants'
 import VolumeSwitcher from '../../volume-switcher'
 import LanguageSelector from '../../language-selector'
 import ThemeSwitcher from '#/components/theme-switcher'
+import { useTheme } from 'next-themes'
 
 interface MenuProps {
   open: boolean
@@ -24,6 +25,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
   const [languageMenOpenu, setLanguageMenuOpen] = useState(false)
 
   const { t } = useTranslation()
+  const { resolvedTheme } = useTheme()
   const isExtraMenuOpen = languageMenOpenu || themeMenuOpen || volumeMenuOpen
 
   return (
@@ -77,7 +79,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
               href={item.href}
               className='text-3xl transition-transform hover:scale-125'
             >
-              <Image src={item.icon} alt={item.text} width={36} height={36} />
+              <Image src={item.icon(resolvedTheme === 'dark')} alt={item.text} width={36} height={36} />
             </a>
           ))}
         </div>

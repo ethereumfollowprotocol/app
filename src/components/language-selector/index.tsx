@@ -7,6 +7,7 @@ import { LANGUAGES } from '#/lib/constants/languages'
 import Check from 'public/assets/icons/ui/check.svg'
 import ArrowLeft from 'public/assets/icons/ui/arrow-left.svg'
 import ArrowRight from 'public/assets/icons/ui/arrow-right.svg'
+import Image from 'next/image'
 
 interface LanguageSelectorProps {
   setExternalLanguageMenuOpen?: Dispatch<SetStateAction<boolean>>
@@ -50,7 +51,15 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
         className='group-hover:bg-nav-item flex w-full items-center justify-between rounded-sm p-4'
       >
         <div className='flex items-center gap-2'>
-          {selectedLanguage && <selectedLanguage.icon className='h-7 w-8 scale-90 rounded-sm' />}
+          {selectedLanguage && (
+            <Image
+              src={selectedLanguage.icon}
+              alt={selectedLanguage.language}
+              width={32}
+              height={32}
+              className='h-7 w-8 scale-90 rounded-sm'
+            />
+          )}
           <p className='w-fit font-bold'>{selectedLanguage?.language}</p>
         </div>
         <ArrowRight className='text-xl' />
@@ -101,7 +110,13 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
                 <Check width={16} className='absolute top-5 left-2 h-5 w-5 text-green-500' />
               )}
               <div className='flex items-center gap-2 pr-3'>
-                <lang.icon className='h-7 w-8 scale-90 rounded-sm' />
+                <Image
+                  src={lang.icon}
+                  alt={lang.language}
+                  width={32}
+                  height={32}
+                  className='h-7 w-8 scale-90 rounded-sm'
+                />
                 <p>{lang.language}</p>
               </div>
             </div>
@@ -125,7 +140,13 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
                 <Check width={16} className='absolute top-[35%] left-2' />
               )}
               <div className='flex items-center gap-2 pr-3'>
-                <lang.icon className='h-7 w-8 scale-90 rounded-sm' />
+                <Image
+                  src={lang.icon}
+                  alt={lang.language}
+                  width={32}
+                  height={32}
+                  className='h-7 w-8 scale-90 rounded-sm'
+                />
                 <p>{lang.language}</p>
               </div>
             </div>

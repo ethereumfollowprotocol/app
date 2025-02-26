@@ -1,29 +1,35 @@
+'use client'
+
 import Image from 'next/image'
 import Twitter from 'public/assets/icons/socials/twitter.svg?url'
 import Github from 'public/assets/icons/socials/github.svg?url'
+import GithubDark from 'public/assets/icons/socials/github-white.svg?url'
 import Discord from 'public/assets/icons/socials/discord.svg?url'
 
 import Pages from './components/pages'
+import { useTheme } from 'next-themes'
 
 export const socials = [
   {
     text: 'X',
     href: 'https://x.com/efp',
-    icon: Twitter,
+    icon: () => Twitter,
   },
   {
     text: 'GitHub',
     href: 'https://github.com/ethereumfollowprotocol',
-    icon: Github,
+    icon: (isDark: boolean) => (isDark ? GithubDark : Github),
   },
   {
     text: 'Discord',
     href: 'https://discord.com/invite/ZUyG3mSXFD',
-    icon: Discord,
+    icon: () => Discord,
   },
 ]
 
 const Footer = () => {
+  const { resolvedTheme } = useTheme()
+
   return (
     <footer className='glass-card z-20 flex w-full items-center justify-center border-t-2 border-t-[#aaaaaa] py-8 md:py-16'>
       <div className='xxs:gap-6 flex h-full w-full items-center justify-center gap-4 sm:gap-28 md:gap-44'>
@@ -48,7 +54,7 @@ const Footer = () => {
                   href={item.href}
                   className='text-4xl transition-transform hover:scale-110'
                 >
-                  <Image src={item.icon} alt={item.text} width={24} height={24} />
+                  <Image src={item.icon(resolvedTheme === 'dark')} alt={item.text} width={24} height={24} />
                 </a>
               ))}
             </div>

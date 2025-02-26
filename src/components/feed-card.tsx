@@ -6,7 +6,7 @@ import { useAccount } from 'wagmi'
 import { zeroAddress } from 'viem'
 import { useTheme } from 'next-themes'
 import { useTranslation } from 'react-i18next'
-import { RefreshIcon } from 'ethereum-identity-kit'
+// import { RefreshIcon } from 'ethereum-identity-kit'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import { cn } from '#/lib/utilities'
@@ -27,8 +27,8 @@ interface FeedCardProps {
 }
 
 const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, description, activityAddress }) => {
-  const [feedKey, setFeedKey] = useState(0)
-  const [activeTab, setActiveTab] = useState<'following' | 'for you'>('following')
+  const [feedKey] = useState(0)
+  const [activeTab, setActiveTab] = useState<'following' | 'recommendations'>('following')
 
   const { t } = useTranslation()
   const { resolvedTheme } = useTheme()
@@ -76,34 +76,34 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
         <div
           className={cn(
             'bg-neutral shadow-medium sticky z-10 flex w-full items-center justify-between rounded-sm p-2 transition-all duration-300 sm:p-3',
-            isMobile ? (displayHeaders ? 'top-[74px]' : '-top-px') : 'top-0'
+            isMobile ? (displayHeaders ? 'top-[74px]' : '-top-0.5') : '-top-0.5'
           )}
         >
           {/* {title && <h2 className='text-xl font-bold sm:text-2xl'>{title}</h2>} */}
-          <div className='bg-grey relative flex w-full items-center rounded-sm sm:w-fit'>
+          <div className='bg-grey relative flex w-full items-center rounded-sm sm:w-80'>
             <div
               className={cn(
-                'bg-text/10 absolute h-full w-32 rounded-sm transition-all duration-200',
-                activeTab === 'following' ? 'left-0' : 'left-1/2 sm:left-32'
+                'bg-text/10 absolute h-full w-1/2 rounded-sm transition-all duration-200',
+                activeTab === 'recommendations' ? 'left-0' : 'left-1/2'
               )}
             />
             <p
               className={cn(
-                'text-text z-10 w-32 cursor-pointer py-2 text-center text-lg font-bold transition-transform hover:scale-110',
+                'text-text z-10 w-1/2 cursor-pointer py-2 text-center text-lg font-bold transition-transform hover:scale-110',
+                activeTab === 'recommendations' ? 'text-text' : 'text-text/60'
+              )}
+              onClick={() => setActiveTab?.('recommendations')}
+            >
+              {t('recommendations')}
+            </p>
+            <p
+              className={cn(
+                'text-text z-10 w-1/2 cursor-pointer py-2 text-center text-lg font-bold transition-transform hover:scale-110',
                 activeTab === 'following' ? 'text-text' : 'text-text/60'
               )}
               onClick={() => setActiveTab?.('following')}
             >
               {t('following')}
-            </p>
-            <p
-              className={cn(
-                'text-text z-10 w-32 cursor-pointer py-2 text-center text-lg font-bold transition-transform hover:scale-110',
-                activeTab === 'for you' ? 'text-text' : 'text-text/60'
-              )}
-              onClick={() => setActiveTab?.('for you')}
-            >
-              {t('for you')}
             </p>
           </div>
           <div className='flex items-center gap-4 sm:gap-5'>
@@ -111,7 +111,7 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
               href='https://www.interface.social/'
               target='_blank'
               rel='noreferrer'
-              className='transition-transform hover:scale-105'
+              className='hidden transition-transform hover:scale-105 sm:block'
             >
               <Image
                 src={InterfaceLight}
@@ -122,9 +122,9 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
               />
               <Image src={InterfaceDark} alt='Interface' width={120} height={30} className='hidden h-auto dark:block' />
             </a>
-            <button onClick={() => setFeedKey((prev) => prev + 1)} className='transition-transform hover:scale-110'>
+            {/* <button onClick={() => setFeedKey((prev) => prev + 1)} className='transition-transform hover:scale-110'>
               <RefreshIcon height={20} width={20} />
-            </button>
+            </button> */}
           </div>
         </div>
       )}

@@ -25,7 +25,7 @@ const TopEightActivity: React.FC<TopEightActivityProps> = ({ user, isConnectedUs
   const isClient = useIsClient()
   const headerRight = {
     'top 8': (
-      <button onClick={() => setEditModalOpen(true)} className='transition-all hover:scale-110'>
+      <button onClick={() => setEditModalOpen(true)} className='mr-2 transition-all hover:scale-110'>
         <Edit className='h-5 w-5' />
       </button>
     ),
@@ -36,14 +36,14 @@ const TopEightActivity: React.FC<TopEightActivityProps> = ({ user, isConnectedUs
           alt='Interface'
           width={120}
           height={30}
-          className='block h-auto lg:hidden xl:block dark:hidden'
+          className='mr-1 hidden h-auto sm:block lg:hidden xl:block dark:hidden'
         />
         <Image
           src={InterfaceDark}
           alt='Interface'
           width={120}
           height={30}
-          className='hidden h-auto dark:block dark:lg:hidden dark:xl:block'
+          className='mr-1 hidden h-auto dark:sm:block dark:lg:hidden dark:xl:block'
         />
       </>
     ),
@@ -75,7 +75,7 @@ const TopEightActivity: React.FC<TopEightActivityProps> = ({ user, isConnectedUs
 
   return (
     <div className='flex flex-col gap-4'>
-      <div className='bg-neutral shadow-medium top-0 z-20 flex w-full items-center justify-between gap-4 rounded-sm p-2 pr-4 lg:sticky'>
+      <div className='bg-neutral shadow-medium -top-0.5 z-20 flex w-full items-center justify-between gap-4 rounded-sm p-2 lg:sticky'>
         <div className='bg-grey relative flex w-full items-center rounded-sm sm:w-64 lg:w-full xl:w-64'>
           <div
             className={cn(

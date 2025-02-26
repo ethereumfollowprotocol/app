@@ -3,7 +3,7 @@ import type { StatsResponse } from '#/types/requests'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import Image from 'next/image'
 import DefaultHeader from 'public/assets/art/default-header.svg?url'
-import { truncateAddress } from '#/lib/utilities'
+import { cn, truncateAddress } from '#/lib/utilities'
 import { Avatar } from '../avatar'
 import Loading from './components/loading'
 import Stats from './components/stats'
@@ -26,11 +26,13 @@ interface UserProfileCardProps {
   isLoading: boolean
   isStatsLoading?: boolean
   stats?: StatsResponse | null
+  role?: string
   openBlockModal?: () => void
   openListSettingsModal?: () => void
   refetchProfile?: () => void
   refetchStats?: () => void
   openQrCodeModal?: () => void
+  className?: string
 }
 
 const UserProfile: React.FC<UserProfileCardProps> = ({
@@ -40,10 +42,12 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
   isLoading,
   isStatsLoading,
   stats,
+  role,
   openBlockModal,
   openQrCodeModal,
   openListSettingsModal,
   refetchProfile,
+  className,
 }) => {
   const { selectedList } = useEFPProfile()
   const { address: userAddress } = useAccount()
@@ -52,7 +56,8 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
     <Loading />
   ) : (
     profile && (
-      <div className='relative hidden w-full px-4 pt-12 pb-36 md:block xl:px-8'>
+      <div className={cn('relative hidden w-full px-4 pt-12 pb-36 md:block xl:px-8', className)}>
+        {role && <p className='absolute top-4 left-8 text-lg font-semibold italic'>{role}</p>}
         <MoreOptions
           address={profile.address}
           primaryList={Number(profile.primary_list)}
@@ -63,7 +68,7 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
           openListSettingsModal={openListSettingsModal}
           refetchData={refetchProfile}
         />
-        <div className='absolute right-8 bottom-30 pb-5'>
+        <div className={cn('absolute right-8 bottom-30 pb-5', role && 'bottom-6')}>
           <Achievements profile={profile} isLoading={isLoading} list={profileList} />
         </div>
         <div className='xs:gap-3 flex w-full items-start gap-2 sm:gap-4'>
@@ -78,7 +83,7 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
                 {profile.ens?.name || truncateAddress(profile.address)}
               </p>
               {isMyProfile ? (
-                <Link href={`https://app.ens.domains/${profile.address}`} target='_blank'>
+                <Link href={`https://app.ens.domains/${profile.ens.name}`} target='_blank'>
                   <button className='flex items-center gap-1 rounded-sm bg-[#0080BC] p-1.5 py-2 font-semibold text-white transition-all hover:scale-110 hover:bg-[#0080BC]/80'>
                     <EnsLogo className='h-auto w-5' />
                     <p>Edit Profile</p>

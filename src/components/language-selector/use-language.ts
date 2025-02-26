@@ -1,8 +1,9 @@
-import { useEffect, useState, type SVGProps } from 'react'
+import { useEffect, useState } from 'react'
 import { track } from '@vercel/analytics/react'
 
 import i18n from '#/app/i18n'
 import { LANGUAGES } from '#/lib/constants/languages'
+import type { StaticImageData } from 'next/image'
 
 const useLanguage = () => {
   const [languageMenOpenu, setLanguageMenuOpen] = useState(false)
@@ -13,7 +14,7 @@ const useLanguage = () => {
   const changeLanguage = (lang: {
     language: string
     key: string
-    icon: React.FC<SVGProps<SVGSVGElement>>
+    icon: StaticImageData
     englishLanguage: string
     special?: boolean | undefined
   }) => {

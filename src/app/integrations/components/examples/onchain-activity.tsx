@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
-import OnchainActivityImageLight from 'public/assets/art/example-activity-light.png'
 import OnchainActivityImageDark from 'public/assets/art/example-activity-dark.png'
+import OnchainActivityImageLight from 'public/assets/art/example-activity-light.png'
 
 const OnchainActivity = () => {
   return (
@@ -10,8 +10,22 @@ const OnchainActivity = () => {
       <p className='px-2 text-sm sm:max-w-[90%] sm:text-base'>
         Start showing your users the activity of their friends right away by pulling who they follow onchain.
       </p>
-      <Image src={OnchainActivityImageLight} alt='Onchain Activity' className='block w-full rounded-sm dark:hidden' />
-      <Image src={OnchainActivityImageDark} alt='Onchain Activity' className='hidden w-full rounded-sm dark:block' />
+      <div className='shadow-medium mt-2 h-[500px] w-full overflow-hidden'>
+        <Image
+          src={OnchainActivityImageDark}
+          width={600}
+          height={900}
+          alt='Onchain Activity'
+          className='hidden w-full rounded-sm dark:block'
+        />
+        <Image
+          src={OnchainActivityImageLight}
+          width={600}
+          height={900}
+          alt='Onchain Activity'
+          className='w-full rounded-sm dark:hidden'
+        />
+      </div>
     </div>
   )
 }
