@@ -38,7 +38,7 @@ const Home = () => {
           EFP is an onchain social graph protocol for Ethereum accounts, a primitive of the Ethereum identity stack that
           complements ENS and Sign in with Ethereum.
         </p>
-        <Link href='https://efp.app/integrations' className='group/link ml-[-3px] flex w-fit items-center gap-2'>
+        <Link href='/integrations' className='group/link ml-[-3px] flex w-fit items-center gap-2'>
           <Apps className='h-auto w-8' />
           <p className='text-lg font-bold italic'>Integrate it into your app</p>
           <ArrowRight className='h-auto w-5 transition-all group-hover/link:translate-x-1.5' />

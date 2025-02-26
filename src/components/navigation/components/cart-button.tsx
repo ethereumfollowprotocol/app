@@ -9,13 +9,18 @@ import { formatNumber } from '#/utils/format/format-number'
 import CartIcon from 'public/assets/icons/ui/cart.svg'
 import { useTranslation } from 'react-i18next'
 import { useTransactions } from '@encrypteddegen/identity-kit'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 const CartButton = () => {
   const { cart } = useCart()
   const { t } = useTranslation()
+  const { roles } = useEFPProfile()
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
-  const { setTxModalOpen, txModalOpen } = useTransactions()
+  const { setTxModalOpen, txModalOpen, nonce, selectedChainId } = useTransactions()
+
+  console.log('efp', roles?.listSlot, roles?.listChainId)
+  console.log('eik', nonce, selectedChainId)
 
   if (!userAddress) return null
 

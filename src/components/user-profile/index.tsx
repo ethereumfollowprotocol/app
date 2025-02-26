@@ -99,7 +99,7 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
                 <FollowsYou connectedAddress={userAddress} addressOrName={profile.address} list={selectedList} />
               )}
             </div>
-            <div className='flex items-center justify-start gap-8 lg:-mt-1'>
+            <div className='flex items-center justify-start gap-8 lg:-mt-1 lg:h-10'>
               <Stats
                 address={profile.address}
                 list={profileList === Number(profile.primary_list) ? undefined : profileList}
@@ -116,7 +116,7 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
                   word.includes('@') ? (
                     <a
                       key={word}
-                      href={`https://ethfollow.xyz/${word.replace('@', '')}`}
+                      href={`https://efp.app/${word.replace('@', '')}`}
                       className='text-blue-500 transition-colors hover:text-blue-600 dark:hover:text-blue-400'
                     >
                       {word}{' '}

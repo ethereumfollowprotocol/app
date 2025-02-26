@@ -28,7 +28,7 @@ interface FeedCardProps {
 
 const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, description, activityAddress }) => {
   const [feedKey] = useState(0)
-  const [activeTab, setActiveTab] = useState<'following' | 'recommendations'>('following')
+  const [activeTab, setActiveTab] = useState<'following' | 'recommendations'>('recommendations')
 
   const { t } = useTranslation()
   const { resolvedTheme } = useTheme()
@@ -70,6 +70,11 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
     if (homePage && homePage.scrollTop > 300) homePage.scrollTo({ top: 300, behavior: 'instant' })
   }, [activeTab])
 
+  useEffect(() => {
+    if (userAddress) setActiveTab('following')
+    else setActiveTab('recommendations')
+  }, [userAddress])
+
   return (
     <div className={cn('relative flex flex-col items-center gap-4 sm:items-end', cardSize)}>
       {!activityAddress && (
@@ -84,9 +89,20 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
             <div
               className={cn(
                 'bg-text/10 absolute h-full w-1/2 rounded-sm transition-all duration-200',
-                activeTab === 'recommendations' ? 'left-0' : 'left-1/2'
+                activeTab === 'following' || !userAddress ? 'left-0' : 'left-1/2'
               )}
             />
+            {userAddress && (
+              <p
+                className={cn(
+                  'text-text z-10 w-1/2 cursor-pointer py-2 text-center text-lg font-bold transition-transform hover:scale-110',
+                  activeTab === 'following' ? 'text-text' : 'text-text/60'
+                )}
+                onClick={() => setActiveTab?.('following')}
+              >
+                {t('following')}
+              </p>
+            )}
             <p
               className={cn(
                 'text-text z-10 w-1/2 cursor-pointer py-2 text-center text-lg font-bold transition-transform hover:scale-110',
@@ -95,15 +111,6 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
               onClick={() => setActiveTab?.('recommendations')}
             >
               {t('recommendations')}
-            </p>
-            <p
-              className={cn(
-                'text-text z-10 w-1/2 cursor-pointer py-2 text-center text-lg font-bold transition-transform hover:scale-110',
-                activeTab === 'following' ? 'text-text' : 'text-text/60'
-              )}
-              onClick={() => setActiveTab?.('following')}
-            >
-              {t('following')}
             </p>
           </div>
           <div className='flex items-center gap-4 sm:gap-5'>

@@ -59,7 +59,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const { followState, profileName, isConnectedUserCard } = useProfileCard(profile)
 
   return (
-    <div className={cn('bg-neutral flex w-[364px] flex-col gap-4 rounded-sm', className)}>
+    <div className={cn('bg-neutral flex w-[364px] flex-col gap-4 rounded-sm pb-3', className)}>
       {isLoading ? (
         <LoadingProfileCard isResponsive={isResponsive} hideFollowButton={true} className='bg-neutral' />
       ) : profile?.address ? (
@@ -127,7 +127,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           )}
         </div>
       )}
-      {displayAchievements && <Achievements profile={profile} list={profileList} isLoading={!!isLoading} />}
+      {!isRecommended && displayAchievements && (
+        <Achievements profile={profile} list={profileList} isLoading={!!isLoading} />
+      )}
     </div>
   )
 }

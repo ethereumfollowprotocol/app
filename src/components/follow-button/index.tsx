@@ -4,6 +4,7 @@ import type { Address } from 'viem'
 import { FollowButton as IdentityFollowButton } from '@encrypteddegen/identity-kit'
 import { useAccount } from 'wagmi'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
+import { FOLLOW_BUTTON_SOUND } from '#/lib/constants/follow-button'
 
 interface FollowButtonProps {
   address: Address
@@ -22,6 +23,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({ address, className = '', is
       connectedAddress={connectedAddress}
       onDisconnectedClick={openConnectModal}
       className={className}
+      sounds={FOLLOW_BUTTON_SOUND}
       {...props}
     />
   )

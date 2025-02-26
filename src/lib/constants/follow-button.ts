@@ -159,53 +159,17 @@ export const FOLLOW_BUTTON_COOL_EMOJI: Record<FollowingState, Record<(typeof THE
   },
 }
 
-export const FOLLOW_BUTTON_SOUND: Record<FollowingState, Record<(typeof THEMES)[number], string | undefined>> = {
-  Follow: {
-    light: '/assets/sound-effects/follow.mp3',
-    dark: '/assets/sound-effects/follow.mp3',
-  },
-  'Pending Following': {
-    light: undefined,
-    dark: undefined,
-  },
-  Following: {
-    light: '/assets/sound-effects/unfollow.mp3',
-    dark: '/assets/sound-effects/unfollow.mp3',
-  },
-  Unfollow: {
-    light: undefined,
-    dark: undefined,
-  },
-  Block: {
-    light: undefined,
-    dark: undefined,
-  },
-  'Pending Block': {
-    light: undefined,
-    dark: undefined,
-  },
-  Blocked: {
-    light: undefined,
-    dark: undefined,
-  },
-  Unblock: {
-    light: undefined,
-    dark: undefined,
-  },
-  Mute: {
-    light: undefined,
-    dark: undefined,
-  },
-  'Pending Mute': {
-    light: undefined,
-    dark: undefined,
-  },
-  Muted: {
-    light: undefined,
-    dark: undefined,
-  },
-  Unmute: {
-    light: undefined,
-    dark: undefined,
-  },
+export const FOLLOW_BUTTON_SOUND: Record<FollowingState, string | undefined> = {
+  Follow: '/assets/sound-effects/follow.mp3',
+  'Pending Following': undefined,
+  Following: '/assets/sound-effects/unfollow.mp3',
+  Unfollow: undefined,
+  Block: undefined,
+  'Pending Block': undefined,
+  Blocked: undefined,
+  Unblock: undefined,
+  Mute: undefined,
+  'Pending Mute': undefined,
+  Muted: undefined,
+  Unmute: undefined,
 }

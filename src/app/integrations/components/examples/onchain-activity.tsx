@@ -2,6 +2,8 @@ import React from 'react'
 import Image from 'next/image'
 import OnchainActivityImageDark from 'public/assets/art/example-activity-dark.png'
 import OnchainActivityImageLight from 'public/assets/art/example-activity-light.png'
+import Link from 'next/link'
+import ExternalLink from 'public/assets/icons/ui/external-link.svg'
 
 const OnchainActivity = () => {
   return (
@@ -10,6 +12,16 @@ const OnchainActivity = () => {
       <p className='px-2 text-sm sm:max-w-[90%] sm:text-base'>
         Start showing your users the activity of their friends right away by pulling who they follow onchain.
       </p>
+      <div className='ml-4 flex flex-col gap-1.5 italic sm:ml-10'>
+        <Link
+          href='https://ethidentitykit.com/docs/api/Users/following'
+          target='_blank'
+          className='flex items-center gap-2 transition-opacity hover:opacity-60'
+        >
+          <p>API: User&apos;s followings</p>
+          <ExternalLink className='h-4 w-auto' />
+        </Link>
+      </div>
       <div className='shadow-medium mt-2 h-[500px] w-full overflow-hidden'>
         <Image
           src={OnchainActivityImageDark}
