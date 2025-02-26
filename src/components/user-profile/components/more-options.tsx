@@ -68,12 +68,14 @@ const MoreOptions: React.FC<MoreOptionsProps> = ({
           #{formatNumber(profileList)}
         </p>
       )}
-      <button
-        onClick={refetchData}
-        className='bg-nav-item shadow-small rounded-sm p-1 transition-all hover:scale-110 hover:opacity-60'
-      >
-        <RefreshIcon height={16} width={16} />
-      </button>
+      {refetchData && (
+        <button
+          onClick={refetchData}
+          className='bg-nav-item shadow-small rounded-sm p-1 transition-all hover:scale-110 hover:opacity-60'
+        >
+          <RefreshIcon height={16} width={16} />
+        </button>
+      )}
       <ThreeDotMenu
         address={address}
         profileList={profileList}

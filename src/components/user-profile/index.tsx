@@ -97,7 +97,12 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
               )}
             </div>
             <div className='flex items-center justify-start gap-8 lg:-mt-1'>
-              <Stats stats={stats} isLoading={isStatsLoading} />
+              <Stats
+                address={profile.address}
+                list={profileList === Number(profile.primary_list) ? undefined : profileList}
+                stats={stats}
+                isLoading={isStatsLoading}
+              />
               <div className='hidden lg:block'>
                 <CommonFollowers address={profile.address} />
               </div>
@@ -106,7 +111,11 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
               {profile.ens?.records?.description ? (
                 profile.ens.records.description.split(' ').map((word) =>
                   word.includes('@') ? (
-                    <a key={word} href={`https://ethfollow.xyz/${word.replace('@', '')}`} className='text-blue-500'>
+                    <a
+                      key={word}
+                      href={`https://ethfollow.xyz/${word.replace('@', '')}`}
+                      className='text-blue-500 transition-colors hover:text-blue-600 dark:hover:text-blue-400'
+                    >
                       {word}{' '}
                     </a>
                   ) : (

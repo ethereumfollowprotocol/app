@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useEffect, useRef, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import QRCodeModal from '#/components/qr-code-modal'
@@ -76,10 +76,8 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   const { roles, selectedList } = useEFPProfile()
   const { tableRef, TopEightRef, containerRef } = useUserScroll()
 
-  const titleRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
-    if (titleRef.current && !!searchParams.get('tab')) {
-      titleRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    if (searchParams.get('tab')) {
       setActiveTab(searchParams.get('tab') as ProfileTabType)
       if (searchParams.get('tags') === 'top8') {
         setFollowersTagsFilter(['top8'])

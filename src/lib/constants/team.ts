@@ -10,7 +10,7 @@ export const TEAM_ADDRESSES = [
 
 export const TEAM_ROLES = [
   'Creator & Team Lead',
-  'UI Designer/Developer',
+  'Frontend Developer, UI Designer',
   'Full Stack Developer',
   'Developer Relations',
   'Technical Advisor',

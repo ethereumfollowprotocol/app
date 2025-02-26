@@ -54,7 +54,6 @@ const Members = () => {
                 profileList={profile?.primary_list ? Number(profile?.primary_list) : undefined}
                 stats={teamStats?.[i]}
                 profile={profile}
-                refetchProfile={() => {}}
                 isLoading={teamIsLoading}
                 isStatsLoading={teamStatsIsLoading}
                 className='hidden pt-14 pb-12 md:flex'
@@ -63,16 +62,22 @@ const Members = () => {
           ))}
           {teamIsLoading &&
             TEAM_ADDRESSES.map((address) => (
-              <div key={address} className='flex flex-col items-center gap-2'>
-                <LoadingCell className='h-7 w-52 rounded-sm' />
+              <div key={address} className='flex w-full flex-col items-center gap-2'>
+                <LoadingCell className='h-7 w-52 rounded-sm md:hidden' />
                 <Suspense>
                   <UserProfileCard
                     isResponsive={false}
                     isLoading={teamIsLoading}
+                    className='md:hidden'
                     // x={records?.['com.twitter'] ?? ''}
                     // github={records?.['com.github'] ?? ''}
                   />
                 </Suspense>
+                <UserProfile
+                  isLoading={foundationIsLoading}
+                  isStatsLoading={foundationStatsIsLoading}
+                  className='hidden w-full pt-14 pb-12 md:flex'
+                />
               </div>
             ))}
         </div>
@@ -105,7 +110,6 @@ const Members = () => {
                   profileList={profile?.primary_list ? Number(profile?.primary_list) : undefined}
                   stats={foundationStats?.[i]}
                   profile={profile}
-                  refetchProfile={() => {}}
                   isLoading={foundationIsLoading}
                   isStatsLoading={foundationStatsIsLoading}
                   className='hidden pt-14 pb-12 md:flex'
@@ -114,16 +118,22 @@ const Members = () => {
             ))}
             {foundationIsLoading &&
               FOUNDATION_ADDRESSES.map((address) => (
-                <div key={address} className='flex flex-col items-center gap-2'>
-                  <LoadingCell className='h-7 w-52 rounded-sm' />
+                <div key={address} className='flex w-full flex-col items-center gap-2'>
+                  <LoadingCell className='h-7 w-52 rounded-sm md:hidden' />
                   <Suspense>
                     <UserProfileCard
                       isResponsive={false}
                       isLoading={foundationIsLoading}
+                      className='md:hidden'
                       // x={records?.['com.twitter'] ?? ''}
                       // github={records?.['com.github'] ?? ''}
                     />
                   </Suspense>
+                  <UserProfile
+                    isLoading={foundationIsLoading}
+                    isStatsLoading={foundationStatsIsLoading}
+                    className='hidden w-full pt-14 pb-12 md:flex'
+                  />
                 </div>
               ))}
           </div>
