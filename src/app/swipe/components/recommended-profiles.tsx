@@ -152,7 +152,7 @@ const RecommendedCards = () => {
                       touchAction: 'none',
                     }}
                   >
-                    <div className='cursor-pointer'>
+                    <div className='shadow-medium w-fit cursor-pointer rounded-sm p-0'>
                       <UserProfileCard
                         profile={recommendedProfiles[i]}
                         isResponsive={false}

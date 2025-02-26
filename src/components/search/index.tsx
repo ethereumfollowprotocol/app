@@ -155,8 +155,7 @@ export function Search({
               <div
                 key={result.name}
                 onClick={() => {
-                  if (isEditor && result.resolvedAddress)
-                    addToCart({ listOp: listOpAddListRecord(result.resolvedAddress.id) })
+                  if (isEditor && result.resolvedAddress) addToCart([listOpAddListRecord(result.resolvedAddress.id)])
                   else
                     router.push(
                       `/${result.resolvedAddress?.id || (result.name[0] === '#' ? result.name.slice(1) : result.name)}${
@@ -246,7 +245,7 @@ export function Search({
                     key={result.name}
                     onClick={() => {
                       if (isEditor && result.resolvedAddress)
-                        addToCart({ listOp: listOpAddListRecord(result.resolvedAddress.id) })
+                        addToCart([listOpAddListRecord(result.resolvedAddress.id)])
                       else
                         router.push(
                           `/${

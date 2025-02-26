@@ -3,6 +3,7 @@ import type { CartItemType } from '#/hooks/use-cart'
 import { DEFAULT_CHAIN } from '#/lib/constants/chains'
 import { LIST_OP_LIMITS } from '#/lib/constants/chains'
 import type { ListOp, TagListOp } from '#/types/list-op'
+import type { ListOpType } from '@encrypteddegen/identity-kit'
 
 export const listOpAddListRecord = (address: Address): ListOp => {
   return {
@@ -45,7 +46,7 @@ export const extractAddressAndTag = (listOp: TagListOp): { address: Address; tag
 }
 
 // Type guard to check if a ListOp is a TagListOp
-export const isTagListOp = (listOp: ListOp): listOp is TagListOp => {
+export const isTagListOp = (listOp: ListOp | ListOpType): listOp is TagListOp => {
   return listOp.opcode === 3 || listOp.opcode === 4
 }
 

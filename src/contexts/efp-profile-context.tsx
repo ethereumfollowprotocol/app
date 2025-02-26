@@ -13,7 +13,7 @@ import {
 import type { Address } from 'viem'
 import { useRouter } from 'next/navigation'
 import { useAccount, useChains } from 'wagmi'
-import { fetchProfileDetails, fetchProfileStats } from 'ethereum-identity-kit'
+import { fetchProfileDetails, fetchProfileStats } from '@encrypteddegen/identity-kit'
 
 import type {
   ENSProfile,

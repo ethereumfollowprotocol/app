@@ -1,5 +1,5 @@
 import { cn } from '#/lib/utilities'
-import { useFollowerState } from 'ethereum-identity-kit'
+import { useFollowerState } from '@encrypteddegen/identity-kit'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Address } from 'viem'

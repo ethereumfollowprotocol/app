@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { useAccount } from 'wagmi'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
@@ -9,27 +8,30 @@ import { useCart } from '#/hooks/use-cart'
 import { formatNumber } from '#/utils/format/format-number'
 import CartIcon from 'public/assets/icons/ui/cart.svg'
 import { useTranslation } from 'react-i18next'
+import { useTransactions } from '@encrypteddegen/identity-kit'
 
 const CartButton = () => {
   const { cart } = useCart()
   const { t } = useTranslation()
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
+  const { setTxModalOpen, txModalOpen } = useTransactions()
 
   if (!userAddress) return null
 
   return (
-    <Link
-      href='/cart'
+    <div
       className='group/cart-button relative z-10'
       onClick={(e) => {
         if (!userAddress && openConnectModal) {
           e.preventDefault()
           openConnectModal()
+        } else {
+          setTxModalOpen(true)
         }
       }}
     >
-      <div className='transition-transform hover:scale-110'>
+      <div className={cn('transition-transform hover:scale-110', txModalOpen && 'text-primary')}>
         <CartIcon className={cn('h-8 w-8 sm:h-9 sm:w-9')} />
         {cart.length === 0 ? null : (
           <span className='absolute -top-1.5 -right-1.5 flex h-6 w-fit min-w-6 items-center justify-center rounded-full bg-green-400 px-1 text-sm font-bold text-black sm:h-5 sm:min-w-5'>
@@ -42,7 +44,7 @@ const CartButton = () => {
           {t('cart')}
         </p>
       </div>
-    </Link>
+    </div>
   )
 }
 

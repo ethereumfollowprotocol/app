@@ -5,16 +5,17 @@ import { isAddress, type Address } from 'viem'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
 import { usePathname, useRouter } from 'next/navigation'
-import { fetchFollowState } from 'ethereum-identity-kit'
+import { fetchFollowState } from '@encrypteddegen/identity-kit'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { SECOND } from '#/lib/constants'
+import { useCart } from '#/hooks/use-cart'
 import { resolveEnsAddress } from '#/utils/ens'
 import { searchENSNames } from '#/api/search-ens-names'
 import { listOpAddListRecord } from '#/utils/list-ops.ts'
 import { formatError } from '#/utils/format/format-error'
-import { useCart, type CartItemType } from '#/hooks/use-cart'
 import { useEFPProfile } from '#/contexts/efp-profile-context.tsx'
+import type { ListOp } from '#/types/list-op'
 
 const useSearch = (isEditor?: boolean) => {
   const [isAddingToCart, setIsAddingToCart] = useState(false)
@@ -146,7 +147,7 @@ const useSearch = (isEditor?: boolean) => {
 
     if (isPendingFollow) return { user, isFollowing: false, inCart: true }
     if (followState === 'follows') return { user, isFollowing: true }
-    if (followState === 'none') return { user, payload: { listOp: listOpAddListRecord(address) } }
+    if (followState === 'none') return { user, payload: listOpAddListRecord(address) }
   }
 
   const onSubmit = async () => {
@@ -172,7 +173,7 @@ const useSearch = (isEditor?: boolean) => {
         const formatAddToCart = await Promise.all(namesToAdd.map(async (name) => await getProfileDetails(name)))
 
         const itemsToAdd = formatAddToCart.filter((item) => !!item?.payload).map((item) => item?.payload)
-        if (itemsToAdd.length > 0) addToCart(itemsToAdd as CartItemType[])
+        if (itemsToAdd.length > 0) addToCart(itemsToAdd as ListOp[])
 
         const namesInCart = formatAddToCart.filter((item) => item?.inCart).map((item) => item?.user)
         const alreadyFollowed = formatAddToCart.filter((item) => item?.isFollowing).map((item) => item?.user)
@@ -188,7 +189,7 @@ const useSearch = (isEditor?: boolean) => {
       }
 
       const erroredName = await getProfileDetails(currentSearch)
-      if (erroredName?.payload) addToCart(erroredName.payload)
+      if (erroredName?.payload) addToCart([erroredName.payload])
       else if (erroredName?.isFollowing) toast.error(`${t('already followed')} ${erroredName.user}`)
       else if (erroredName?.inCart) toast.error(`${t('in cart')} ${erroredName.user}`)
       else if (erroredName) toast.error(`${t('unresolved')} ${erroredName?.user}`)

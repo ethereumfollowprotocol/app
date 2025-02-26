@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { isAddress, isHex } from 'viem'
-import { fetchProfileDetails, fetchProfileStats } from 'ethereum-identity-kit'
+import { fetchProfileDetails, fetchProfileStats } from '@encrypteddegen/identity-kit/utils'
 
 import { MINUTE } from '#/lib/constants'
 import UserInfo from './components/user-info'

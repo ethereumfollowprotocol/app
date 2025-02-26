@@ -68,7 +68,10 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
           openListSettingsModal={openListSettingsModal}
           refetchData={refetchProfile}
         />
-        <div className={cn('absolute right-8 bottom-30 pb-5', role && 'bottom-6')}>
+        <div className={cn('absolute right-8 bottom-30 flex flex-col gap-2 pb-5', role && 'bottom-6')}>
+          {profile.ens?.records?.status && (
+            <p className='bg-tertiary p-2 text-lg italic'>{profile.ens.records.status}</p>
+          )}
           <Achievements profile={profile} isLoading={isLoading} list={profileList} />
         </div>
         <div className='xs:gap-3 flex w-full items-start gap-2 sm:gap-4'>
@@ -84,7 +87,7 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
               </p>
               {isMyProfile ? (
                 <Link href={`https://app.ens.domains/${profile.ens.name}`} target='_blank'>
-                  <button className='flex items-center gap-1 rounded-sm bg-[#0080BC] p-1.5 py-2 font-semibold text-white transition-all hover:scale-110 hover:bg-[#0080BC]/80'>
+                  <button className='flex items-center gap-1 rounded-sm bg-[#0080BC] p-1.5 py-2 font-semibold text-white transition-all hover:scale-110 hover:bg-[#07A9F5]'>
                     <EnsLogo className='h-auto w-5' />
                     <p>Edit Profile</p>
                   </button>

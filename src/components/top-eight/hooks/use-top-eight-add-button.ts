@@ -1,10 +1,10 @@
 import type { Address } from 'viem'
 import { useCart } from '#/hooks/use-cart'
-import { useFollowButton } from '#/components/follow-button/hooks/use-follow-button'
 import { listOpAddListRecord, listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
+import { useFollowButton } from '@encrypteddegen/identity-kit'
 
 export const useTopEightAddButton = (profileAddress: Address, tags: string[]) => {
-  const { buttonState } = useFollowButton({ address: profileAddress })
+  const { buttonState } = useFollowButton({ lookupAddress: profileAddress })
   const { addToCart, removeFromCart, hasListOpAddTag, hasListOpRemoveTag } = useCart()
 
   const isFollowing = buttonState === 'Following'
@@ -15,15 +15,17 @@ export const useTopEightAddButton = (profileAddress: Address, tags: string[]) =>
 
   const handleAdd = () => {
     if (isPendingTopEight || isPendingRemove) {
-      removeFromCart(isPendingTopEight ? listOpAddTag(profileAddress, 'top8') : listOpRemoveTag(profileAddress, 'top8'))
+      removeFromCart([
+        isPendingTopEight ? listOpAddTag(profileAddress, 'top8') : listOpRemoveTag(profileAddress, 'top8'),
+      ])
     } else if (isFollowing || isPendingFollow) {
       if (isInTopEight) {
-        addToCart({ listOp: listOpRemoveTag(profileAddress, 'top8') })
+        addToCart([listOpRemoveTag(profileAddress, 'top8')])
       } else {
-        addToCart({ listOp: listOpAddTag(profileAddress, 'top8') })
+        addToCart([listOpAddTag(profileAddress, 'top8')])
       }
     } else {
-      addToCart([{ listOp: listOpAddListRecord(profileAddress) }, { listOp: listOpAddTag(profileAddress, 'top8') }])
+      addToCart([listOpAddListRecord(profileAddress), listOpAddTag(profileAddress, 'top8')])
     }
   }
 

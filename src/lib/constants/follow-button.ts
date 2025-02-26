@@ -1,10 +1,10 @@
 import type { THEMES } from '.'
 import MainnetRed from 'public/assets/mainnet-red.svg'
-import type { FollowButtonState } from '#/components/follow-button/hooks/use-follow-button'
 import type { SVGProps } from 'react'
+import type { FollowingState } from '@encrypteddegen/identity-kit'
 
 export const FOLLOW_BUTTON_STYLES: Record<
-  FollowButtonState,
+  FollowingState,
   { bg: string; hover?: string; text: string; border: string; imageSrc?: React.ComponentType<SVGProps<SVGSVGElement>> }
 > = {
   Follow: {
@@ -108,10 +108,7 @@ export const FOLLOW_BUTTON_STYLES: Record<
   },
 }
 
-export const FOLLOW_BUTTON_COOL_EMOJI: Record<
-  FollowButtonState,
-  Record<(typeof THEMES)[number], string | undefined>
-> = {
+export const FOLLOW_BUTTON_COOL_EMOJI: Record<FollowingState, Record<(typeof THEMES)[number], string | undefined>> = {
   Follow: {
     light: '/assets/logo.svg',
     dark: '/assets/logo.svg',
@@ -162,7 +159,7 @@ export const FOLLOW_BUTTON_COOL_EMOJI: Record<
   },
 }
 
-export const FOLLOW_BUTTON_SOUND: Record<FollowButtonState, Record<(typeof THEMES)[number], string | undefined>> = {
+export const FOLLOW_BUTTON_SOUND: Record<FollowingState, Record<(typeof THEMES)[number], string | undefined>> = {
   Follow: {
     light: '/assets/sound-effects/follow.mp3',
     dark: '/assets/sound-effects/follow.mp3',

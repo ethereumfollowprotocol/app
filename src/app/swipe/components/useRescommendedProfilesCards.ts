@@ -67,12 +67,12 @@ export const useRecommendedProfilesCards = () => {
       if (canFetchMoreProfiles(index)) fetchNextPage()
       if (xDir === 1) {
         setTimeout(() => {
-          addToCart({
-            listOp: listOpAddListRecord(
+          addToCart([
+            listOpAddListRecord(
               // @ts-expect-error the index comes from the cardsApi which is the same length as recommendedProfiles therefore it is never undefined
               recommendedProfiles[index]?.address
             ),
-          })
+          ])
 
           handleStartAnimationAndSound()
         }, 0.15 * SECOND)
@@ -131,12 +131,12 @@ export const useRecommendedProfilesCards = () => {
         if (canFetchMoreProfiles(i)) fetchNextPage()
 
         setTimeout(() => {
-          addToCart({
-            listOp: listOpAddListRecord(
+          addToCart([
+            listOpAddListRecord(
               // @ts-expect-error the index comes from the cardsApi which is the same length as recommendedProfiles therefore it is never undefined
               recommendedProfiles[i].address
             ),
-          })
+          ])
 
           handleStartAnimationAndSound()
         }, 0.15 * SECOND)
@@ -162,12 +162,12 @@ export const useRecommendedProfilesCards = () => {
       if (i === gone.size) {
         setDidSwipeBack(true)
         setTimeout(() => {
-          removeFromCart(
+          removeFromCart([
             listOpAddListRecord(
               // @ts-expect-error the index comes from the cardsApi which is the same length as recommendedProfiles therefore it is never undefined
               recommendedProfiles[i].address
-            )
-          )
+            ),
+          ])
         }, 0.5 * SECOND)
 
         return to()

@@ -3,7 +3,7 @@ import { useAccount } from 'wagmi'
 import { isAddress, type Address } from 'viem'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useMemo, useState } from 'react'
-import { fetchFollowState } from 'ethereum-identity-kit'
+import { fetchFollowState } from '@encrypteddegen/identity-kit'
 
 import { useCart } from '#/hooks/use-cart'
 import { resolveEnsAddress } from '#/utils/ens'
@@ -23,10 +23,8 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
   const topEightInCart = useMemo(
     () =>
       cart
-        .filter(
-          ({ listOp }) => listOp.opcode === 3 && isTagListOp(listOp) && extractAddressAndTag(listOp).tag === 'top8'
-        )
-        .map(({ listOp }) => ({
+        .filter((listOp) => listOp.opcode === 3 && isTagListOp(listOp) && extractAddressAndTag(listOp).tag === 'top8')
+        .map((listOp) => ({
           address: extractAddressAndTag(listOp as TagListOp).address,
         })),
     [cart]
@@ -36,7 +34,7 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
 
   const currentTopEightLength = useMemo(() => {
     const topEightRemoved = cart.filter(
-      ({ listOp }) => listOp.opcode === 4 && isTagListOp(listOp) && extractAddressAndTag(listOp).tag === 'top8'
+      (listOp) => listOp.opcode === 4 && isTagListOp(listOp) && extractAddressAndTag(listOp).tag === 'top8'
     )
     const removedProfiles = profiles.filter((profile) => hasListOpRemoveRecord(profile.address))
     return editedProfiles.length - topEightRemoved.length - removedProfiles.length
@@ -83,8 +81,8 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
 
     const followState = await getFollowingState(address)
 
-    const addCartItems = [{ listOp: listOpAddTag(address, 'top8') }]
-    if (followState === 'none') addCartItems.push({ listOp: listOpAddListRecord(address) })
+    const addCartItems = [listOpAddTag(address, 'top8')]
+    if (followState === 'none') addCartItems.push(listOpAddListRecord(address))
     addToCart(addCartItems)
   }
 

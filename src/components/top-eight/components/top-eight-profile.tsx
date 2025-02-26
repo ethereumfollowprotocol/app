@@ -43,9 +43,9 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
       const removeItems = [listOpAddTag(profile.address, 'top8')]
       if (followState === 'none') removeItems.push(listOpAddListRecord(profile.address))
       removeFromCart(removeItems)
-    } else if (isRemovingFromTopEight) removeFromCart(listOpRemoveTag(profile.address, 'top8'))
+    } else if (isRemovingFromTopEight) removeFromCart([listOpRemoveTag(profile.address, 'top8')])
     else {
-      addToCart({ listOp: listOpRemoveTag(profile.address, 'top8') })
+      addToCart([listOpRemoveTag(profile.address, 'top8')])
     }
   }
 

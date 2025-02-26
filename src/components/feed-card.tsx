@@ -6,7 +6,7 @@ import { useAccount } from 'wagmi'
 import { zeroAddress } from 'viem'
 import { useTheme } from 'next-themes'
 import { useTranslation } from 'react-i18next'
-// import { RefreshIcon } from 'ethereum-identity-kit'
+// import { RefreshIcon } from '@encrypteddegen/identity-kit
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 import { cn } from '#/lib/utilities'

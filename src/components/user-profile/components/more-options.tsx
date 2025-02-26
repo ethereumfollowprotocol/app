@@ -1,8 +1,10 @@
+'use client'
+
 import type { Address } from 'viem'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
-import { RefreshIcon } from 'ethereum-identity-kit'
+import { Refresh } from '@encrypteddegen/identity-kit'
 import useFollowingState from '#/hooks/use-following-state'
 import ThreeDotMenu from '#/components/user-profile-card/components/three-dot-menu'
 import { formatNumber } from '#/utils/format/format-number'
@@ -73,7 +75,7 @@ const MoreOptions: React.FC<MoreOptionsProps> = ({
           onClick={refetchData}
           className='bg-nav-item shadow-small rounded-sm p-1 transition-all hover:scale-110 hover:opacity-60'
         >
-          <RefreshIcon height={16} width={16} />
+          <Refresh height={16} width={16} />
         </button>
       )}
       <ThreeDotMenu
