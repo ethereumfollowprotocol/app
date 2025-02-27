@@ -228,7 +228,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
 
   const { setSelectedList: setSelectedListFromTransactionContext } = useTransactions()
   useEffect(() => {
-    setSelectedListFromTransactionContext(selectedList ? selectedList.toString() : '0')
+    setSelectedListFromTransactionContext(selectedList ? selectedList.toString() : 'new list')
   }, [selectedList])
 
   const {
