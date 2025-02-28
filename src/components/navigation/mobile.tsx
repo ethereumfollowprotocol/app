@@ -1,13 +1,13 @@
-import React, { useEffect, useRef } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import React, { useEffect, useRef } from 'react'
 
 import { Search } from '../search'
+import Logo from 'public/assets/efp-logo.svg'
 import NavItems from './components/nav-items'
 import WalletMenu from './components/wallet-menu'
 import Integrations from './components/integrations'
-import Logo from 'public/assets/efp-logo.svg'
 import Notifications from './components/notifications'
-import { usePathname } from 'next/navigation'
 
 let navScroll = 0
 let navHomeScroll = 0

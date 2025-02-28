@@ -27,12 +27,15 @@ interface FeedCardProps {
 }
 
 const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, description, activityAddress }) => {
+  const { address: userAddress } = useAccount()
+
   const [feedKey] = useState(0)
-  const [activeTab, setActiveTab] = useState<'following' | 'recommendations'>('recommendations')
+  const [activeTab, setActiveTab] = useState<'following' | 'recommendations'>(
+    userAddress ? 'following' : 'recommendations'
+  )
 
   const { t } = useTranslation()
   const { resolvedTheme } = useTheme()
-  const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
   const { lists, listsIsLoading } = useEFPProfile()
 

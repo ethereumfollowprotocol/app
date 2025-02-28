@@ -14,6 +14,8 @@ import { useProfileCard } from './hooks/use-profile-card'
 import LoadingProfileCard from './components/loading-profile-card'
 import type { ProfileDetailsResponse, StatsResponse } from '#/types/requests'
 import Achievements from './components/achievements'
+import Link from 'next/link'
+import EnsLogo from 'public/assets/icons/socials/ens.svg'
 
 interface UserProfileCardProps {
   profileList?: number | null
@@ -77,6 +79,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           }}
           className='bg-neutral'
           options={{
+            openListSettings: openListSettingsModal,
             profileData: profile,
             statsData: stats,
             refetchStatsData: refetchStats,
@@ -96,7 +99,20 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 openListSettingsModal={openListSettingsModal}
               />
             ),
-            followButton: !(hideFollowButton || isConnectedUserCard) && <FollowButton address={profile.address} />,
+            followButton: !hideFollowButton && (
+              <div className='mt-16'>
+                {isConnectedUserCard ? (
+                  <Link href={`https://app.ens.domains/${profile.ens.name}`} target='_blank'>
+                    <button className='flex items-center gap-1 rounded-sm bg-[#0080BC] p-1.5 py-2 font-semibold text-white transition-all hover:scale-110 hover:bg-[#07A9F5]'>
+                      <EnsLogo className='h-auto w-5' />
+                      <p>Edit Profile</p>
+                    </button>
+                  </Link>
+                ) : (
+                  <FollowButton address={profile.address} />
+                )}
+              </div>
+            ),
           }}
           style={{
             width: '100%',

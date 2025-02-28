@@ -72,7 +72,7 @@ const ListSelector: React.FC<ListSelectorProps> = ({ setWalletMenuOpen, setSubMe
           ))}
           <div
             key={'new list'}
-            className='relative flex gap-2 rounded-sm p-4 pl-8 hover:bg-slate-100'
+            className='hover:bg-nav-item relative flex gap-2 rounded-sm p-4 pl-8'
             onClick={() => {
               localStorage.setItem('selected-list', 'new list')
               setSelectedList(undefined)
@@ -80,7 +80,7 @@ const ListSelector: React.FC<ListSelectorProps> = ({ setWalletMenuOpen, setSubMe
               setWalletMenuOpen(false)
             }}
           >
-            {selectedList === undefined && <Check className='absolute top-[17px] left-2' />}
+            {selectedList === undefined && <Check className='absolute top-5 left-2.5 h-4 w-4 text-green-500' />}
             <p className='font-bold'>{t('mint new list')}</p>
           </div>
         </div>

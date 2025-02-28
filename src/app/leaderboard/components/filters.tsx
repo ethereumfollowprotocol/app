@@ -22,7 +22,7 @@ const Filters: React.FC<FiltersProps> = ({ filter, onSelectFilter }) => {
     <div ref={clickAwayRef} className='relative z-40 w-fit'>
       <div
         onClick={() => setIsDropdownOpen((prev) => !prev)}
-        className='hover:border-text/80 bg-neutral z-30 flex h-[50px] w-full cursor-pointer flex-wrap items-center justify-between gap-2 rounded-sm transition-colors'
+        className='hover:border-text/80 bg-neutral z-30 flex h-[50px] w-full cursor-pointer flex-wrap items-center justify-between gap-2 rounded-sm transition-all hover:scale-110'
       >
         <div
           key={filter}
