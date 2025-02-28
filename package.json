@@ -16,7 +16,7 @@
     "preinstall": "npm_config_yes=true npm exec --no-package-lock=true only-allow@latest bun"
   },
   "dependencies": {
-    "@encrypteddegen/identity-kit": "^0.2.10",
+    "@encrypteddegen/identity-kit": "^0.2.12",
     "@next/third-parties": "15.1.6",
     "@rainbow-me/rainbowkit": "^2.2.1",
     "@react-spring/web": "^9.7.5",
