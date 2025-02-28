@@ -112,6 +112,7 @@ export type LeaderboardItem = {
   top8_rank: string
   blocks_rank: string
   top8?: string
+  header: string | null
   following?: string
   followers: string
   blocks?: string

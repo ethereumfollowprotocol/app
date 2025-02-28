@@ -5,11 +5,13 @@ import StatsDesktop from './stats-desktop'
 import FollowButton from '#/components/follow-button'
 import type { LeaderboardFilter } from '#/types/common'
 import { formatNumber } from '#/utils/format/format-number'
+import Image from 'next/image'
 
 interface TableRowProps {
   address: Address
   name: string | null
   avatar: string | null
+  header: string | null
   rank: number
   following?: number
   followers?: number
@@ -23,6 +25,7 @@ const TableRow: React.FC<TableRowProps> = ({
   address,
   name,
   avatar,
+  header,
   rank,
   following,
   followers,
@@ -65,8 +68,17 @@ const TableRow: React.FC<TableRowProps> = ({
   }[rankedAs]
 
   return (
-    <div className='hover:bg-text/5 flex h-[84px] w-full items-center justify-between gap-3 pr-2 pl-3 sm:gap-4 sm:px-4'>
-      <div className='flex w-1/2 items-center gap-3 sm:gap-4'>
+    <div className='hover:bg-text/5 relative flex h-[84px] w-full items-center justify-between gap-3 pr-2 pl-3 sm:gap-4 sm:px-4'>
+      {header && (
+        <Image
+          src={header}
+          alt='header'
+          width={1000}
+          height={300}
+          className='absolute top-0 left-0 h-full w-full object-cover opacity-20'
+        />
+      )}
+      <div className='z-10 flex w-1/2 items-center gap-3 sm:gap-4'>
         <div className='xxs:min-w-6 xxs:w-6 flex w-4 min-w-4 justify-center text-right tabular-nums sm:w-10'>
           {rankNumber}
         </div>
