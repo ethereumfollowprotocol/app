@@ -58,12 +58,13 @@ const useSaveListSettings = ({
     refetchFollowers,
     refetchFollowerTags,
     refetchFollowingTags,
+    setIsEditingListSettings,
   } = useEFPProfile()
   const { resetCart } = useCart()
   const queryClient = useQueryClient()
   const { address: userAddress } = useAccount()
   const { data: walletClient } = useWalletClient()
-  const { addTransactions, setOnCheckoutFinish, setTxModalOpen } = useTransactions()
+  const { addTransactions, setTxModalOpen, setChangesOpen } = useTransactions()
 
   const newSlot = useMemo(() => generateListStorageLocationSlot(), [])
   const setListStorageLocationTx = useCallback(() => {
@@ -129,8 +130,8 @@ const useSaveListSettings = ({
     const listHex = toHex(selectedList).replace('0x', '')
     addTransactions([
       {
-        title: 'primary list',
-        description: isPrimaryList ? 'true' : 'false',
+        title: 'set primary list',
+        description: isPrimaryList ? `#${selectedList.toString()}` : 'None',
         id: EFPActionIds.SetEFPListSettings,
         address: coreEfpContracts.EFPAccountMetadata,
         abi: efpAccountMetadataAbi,
@@ -295,8 +296,9 @@ const useSaveListSettings = ({
       action()
     }
 
-    setOnCheckoutFinish(onFinish)
+    setIsEditingListSettings(true)
     setTxModalOpen(true)
+    setChangesOpen(false)
     onClose()
   }, [listOpTx, setListStorageLocationTx, setOwnerTx, setManagerTx, setUserTx, changedValues, chain])
 

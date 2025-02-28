@@ -1,26 +1,26 @@
 'use client'
 
+import { useMemo } from 'react'
 import { useAccount } from 'wagmi'
+import { useTranslation } from 'react-i18next'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
+import { EFPActionIds, useTransactions } from '@encrypteddegen/identity-kit'
 
 import { cn } from '#/lib/utilities'
 import { useCart } from '#/hooks/use-cart'
-import { formatNumber } from '#/utils/format/format-number'
 import CartIcon from 'public/assets/icons/ui/cart.svg'
-import { useTranslation } from 'react-i18next'
-import { useTransactions } from '@encrypteddegen/identity-kit'
-import { useEFPProfile } from '#/contexts/efp-profile-context'
+import { formatNumber } from '#/utils/format/format-number'
 
 const CartButton = () => {
   const { cart } = useCart()
   const { t } = useTranslation()
-  const { roles } = useEFPProfile()
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
-  const { setTxModalOpen, txModalOpen, nonce, selectedChainId } = useTransactions()
+  const { setTxModalOpen, txModalOpen, pendingTxs, setChangesOpen } = useTransactions()
 
-  console.log('efp', roles?.listSlot, roles?.listChainId)
-  console.log('eik', nonce, selectedChainId)
+  const changesCount = useMemo(() => {
+    return cart.length + pendingTxs.filter((tx) => tx.id !== EFPActionIds.UpdateEFPList).length
+  }, [cart, pendingTxs])
 
   if (!userAddress) return null
 
@@ -32,15 +32,16 @@ const CartButton = () => {
           e.preventDefault()
           openConnectModal()
         } else {
+          if (cart.length === 0 && pendingTxs.length > 0) setChangesOpen(false)
           setTxModalOpen(true)
         }
       }}
     >
       <div className={cn('transition-transform hover:scale-110', txModalOpen && 'text-primary')}>
         <CartIcon className={cn('h-8 w-8 sm:h-9 sm:w-9')} />
-        {cart.length === 0 ? null : (
+        {changesCount === 0 ? null : (
           <span className='absolute -top-1.5 -right-1.5 flex h-6 w-fit min-w-6 items-center justify-center rounded-full bg-green-400 px-1 text-sm font-bold text-black sm:h-5 sm:min-w-5'>
-            {formatNumber(cart.length)}
+            {formatNumber(changesCount)}
           </span>
         )}
       </div>
