@@ -1,10 +1,9 @@
 'use client'
 
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
-import { zeroAddress } from 'viem'
 import { useTheme } from 'next-themes'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 // import { RefreshIcon } from '@encrypteddegen/identity-kit
 import { useConnectModal } from '@rainbow-me/rainbowkit'
@@ -15,6 +14,7 @@ import { useEFPProfile } from '#/contexts/efp-profile-context'
 import InterfaceLight from 'public/assets/icons/socials/interface.png'
 import InterfaceDark from 'public/assets/icons/socials/interface-dark.png'
 import { useIsClient } from '@uidotdev/usehooks'
+import { RECOMMENDED_FEED_ADDRESS } from '#/lib/constants'
 
 let lastScrollTopHomePage = 0
 
@@ -41,7 +41,7 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
 
   const url = activityAddress
     ? `https://app.interface.social/elements/profile/${activityAddress}/activity`
-    : `https://app.interface.social/elements/profile/${activeTab === 'following' ? userAddress : zeroAddress}/feed?source=efp&theme=${
+    : `https://app.interface.social/elements/profile/${activeTab === 'following' ? userAddress : RECOMMENDED_FEED_ADDRESS}/feed?source=efp&theme=${
         resolvedTheme === 'light' ? 'light' : 'dark'
       }`
 

@@ -135,3 +135,5 @@ export const profileCardSocials = [
     icon: (theme: string) => (DARK_ICON_THEME.includes(theme) ? DiscordIcon : DiscordIcon),
   },
 ] as const
+
+export const RECOMMENDED_FEED_ADDRESS = '0x3c35a0072576694415c0d8c3cF7Ff7695c4f94c3'

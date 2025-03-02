@@ -7,7 +7,7 @@ import WalletMenu from './components/wallet-menu.tsx'
 import CartButton from './components/cart-button.tsx'
 import Integrations from './components/integrations.tsx'
 import PoweredByEIK from './components/powered-by-eik.tsx'
-import Notifications from './components/notifications.tsx'
+import Notifications from './components/notifications'
 
 const Desktop = () => {
   return (
