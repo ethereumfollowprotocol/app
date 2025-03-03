@@ -109,18 +109,18 @@ const LeaderboardTable = () => {
         <h1 className='text-left text-3xl font-bold sm:text-6xl'>{t('leaderboard')}</h1>
         <p className='text-left text-lg font-medium'>{t('leaderboard description')}</p>
       </div>
-      <div className='mt-4 flex w-full flex-wrap items-center justify-between gap-2 px-4 sm:gap-3 sm:px-0 xl:hidden'>
+      <div className='mt-4 flex w-full flex-wrap items-center justify-between gap-2 px-2 sm:gap-3 sm:px-0 xl:hidden'>
         {LeaderboardStatNames.map((name, i) => (
           <div
             key={`stat ${i}`}
-            className='bg-neutral shadow-medium flex w-[48.5%] flex-col items-start justify-center rounded-sm p-4 pr-1 md:w-[23.5%]'
+            className='bg-neutral shadow-medium flex w-[48.5%] flex-col items-start justify-center rounded-sm p-3 pr-1 sm:p-4 md:w-[23.5%]'
           >
             {isLeaderboardStatsLoading || !leaderboardStats ? (
-              <LoadingCell className='h-8 w-24 rounded-sm' />
+              <LoadingCell className='h-full min-h-8 w-24 rounded-sm' />
             ) : (
               <p className='text-xl font-bold'>{formatNumberLeaderboard(Number(Object.values(leaderboardStats)[i]))}</p>
             )}
-            <p className='font-medium text-[#888] capitalize lg:text-lg dark:text-[#aaa]'>{t(name)}</p>
+            <p className='text-left font-medium text-[#888] capitalize lg:text-lg dark:text-[#aaa]'>{t(name)}</p>
           </div>
         ))}
       </div>

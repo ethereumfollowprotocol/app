@@ -90,7 +90,7 @@ const TopEightActivity: React.FC<TopEightActivityProps> = ({ user, isConnectedUs
             )}
             onClick={() => setActiveTab?.('top 8')}
           >
-            {t('top 8')}
+            {t('top8')}
           </p>
           <p
             className={cn(

@@ -26,7 +26,7 @@ const Notifications = () => {
       {!isOpen && (
         <div className='absolute -top-1 left-[66px] hidden w-fit opacity-0 transition-all transition-discrete group-hover/notifications:hidden group-hover/notifications:opacity-100 sm:group-hover/notifications:block starting:opacity-0'>
           <p className='bg-neutral shadow-small text-text rounded-sm px-4 py-2 text-lg font-semibold text-nowrap capitalize'>
-            {t('notifications')}
+            {t('notifications title')}
           </p>
         </div>
       )}

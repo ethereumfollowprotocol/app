@@ -16,6 +16,7 @@ import KeyboardArrowLeft from 'public/assets/icons/ui/keyboard-arrow-left.svg'
 import KeyboardArrowDown from 'public/assets/icons/ui/keyboard-arrow-down.svg'
 import MouseRight from 'public/assets/icons/ui/mouse-right.svg'
 import MouseLeft from 'public/assets/icons/ui/mouse-left.svg'
+import { useTranslation } from 'react-i18next'
 
 const RecommendedCards = () => {
   const {
@@ -34,51 +35,53 @@ const RecommendedCards = () => {
     handleStopAnimationAndSound,
   } = useRecommendedProfilesCards()
 
+  const { t } = useTranslation()
   const isClient = useIsClient()
   const { resolvedTheme } = useTheme()
   const { address: userAddress } = useAccount()
 
   return (
     <div className='flex h-screen w-full flex-col justify-center gap-10 sm:h-auto lg:flex-row lg:items-center lg:justify-center xl:h-screen'>
-      <div className='hidden flex-col items-start gap-6 sm:flex lg:w-72 xl:absolute xl:left-28'>
-        <h1 className='w-full text-start text-6xl font-bold'>Swipe!</h1>
-        <p className='w-full text-start'>
-          Find new friends onchain. <br /> Swipe right to Follow, swipe left to NOPE.
-        </p>
+      <div className='hidden flex-col items-start gap-6 sm:flex lg:w-72 xl:absolute xl:left-28 xl:w-[22.5vw] 2xl:w-96'>
+        <h1 className='w-full text-start text-6xl font-bold'>{t('swipe title')}</h1>
+        <div className='w-full'>
+          <p className='w-full text-start'>{t('swipe description first')}</p>
+          <p className='w-full text-start'>{t('swipe description second')}</p>
+        </div>
         <div className='text-text-neutral flex gap-12 lg:flex-col'>
           <div className='flex flex-col items-start gap-3'>
-            <p className='text-text text-lg font-medium'>Keyboard</p>
+            <p className='text-text text-lg font-medium'>{t('keyboard title')}</p>
             <div className='flex flex-row gap-2'>
               <KeyboardArrowRight className='h-10 w-10' />
               <div className='-mt-px flex flex-col items-start'>
-                <p className='text-sm'>Right Arrow</p>
-                <p>Swipe Right (Follow)</p>
+                <p className='text-sm'>{t('keyboard right key')}</p>
+                <p>{t('keyboard right action')}</p>
               </div>
             </div>
             <div className='flex flex-row gap-2'>
               <KeyboardArrowLeft className='h-10 w-10' />
               <div className='-mt-px flex flex-col items-start'>
-                <p className='text-sm'>Left Arrow</p>
-                <p>Swipe Left (NOPE)</p>
+                <p className='text-sm'>{t('keyboard left key')}</p>
+                <p>{t('keyboard left action')}</p>
               </div>
             </div>
             <div className='flex flex-row gap-2'>
               <KeyboardArrowDown className='h-10 w-10' />
               <div className='-mt-px flex flex-col items-start'>
-                <p className='text-sm'>Arrow Down</p>
-                <p>Undo</p>
+                <p className='text-sm'>{t('keyboard down key')}</p>
+                <p>{t('keyboard down action')}</p>
               </div>
             </div>
           </div>
           <div className='flex flex-col items-start gap-3'>
-            <p className='text-text text-lg font-medium'>Mouse</p>
+            <p className='text-text text-lg font-medium'>{t('mouse title')}</p>
             <div className='flex flex-row items-center gap-2'>
               <MouseRight className='h-9 w-auto' />
-              <p>Grab and Swipe Right (Follow)</p>
+              <p>{t('mouse right action')}</p>
             </div>
             <div className='flex flex-row items-center gap-2'>
               <MouseLeft className='h-9 w-auto' />
-              <p>Grab and Swipe Left (NOPE)</p>
+              <p>{t('mouse left action')}</p>
             </div>
           </div>
         </div>

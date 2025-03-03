@@ -33,14 +33,11 @@ const Home = () => {
         <ConnectWalletButton />
       </div>
       <div className='mt-24 flex max-w-[1100px] flex-col gap-4 md:mt-20 lg:mt-24'>
-        <h2 className='xs:text-4xl text-3xl font-bold sm:text-5xl lg:text-6xl'>Your friends, onchain</h2>
-        <p className='w-[90%] text-lg sm:mt-3 lg:w-3/4 xl:w-2/3'>
-          EFP is an onchain social graph protocol for Ethereum accounts, a primitive of the Ethereum identity stack that
-          complements ENS and Sign in with Ethereum.
-        </p>
+        <h2 className='xs:text-4xl text-3xl font-bold sm:text-5xl lg:text-6xl'>{t('home title')}</h2>
+        <p className='w-[90%] text-lg sm:mt-3 lg:w-3/4 xl:w-2/3'>{t('home description')}</p>
         <Link href='/integrations' className='group/link ml-[-3px] flex w-fit items-center gap-2'>
           <Apps className='h-auto w-8' />
-          <p className='text-lg font-bold italic'>Integrate it into your app</p>
+          <p className='text-lg font-bold italic'>{t('integrate link')}</p>
           <ArrowRight className='h-auto w-5 transition-all group-hover/link:translate-x-1.5' />
         </Link>
       </div>

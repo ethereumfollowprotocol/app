@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useAccount } from 'wagmi'
 import { useTheme } from 'next-themes'
 import { useRouter } from 'next/navigation'
@@ -7,15 +8,13 @@ import { useTranslation } from 'react-i18next'
 import { ProfileCard } from '@encrypteddegen/identity-kit'
 
 import { cn } from '#/lib/utilities'
-import ConnectButton from '../connect-button'
+import Achievements from './components/achievements'
 import FollowButton from '#/components/follow-button'
 import ThreeDotMenu from './components/three-dot-menu'
 import { useProfileCard } from './hooks/use-profile-card'
+import EnsLogo from 'public/assets/icons/socials/ens.svg'
 import LoadingProfileCard from './components/loading-profile-card'
 import type { ProfileDetailsResponse, StatsResponse } from '#/types/requests'
-import Achievements from './components/achievements'
-import Link from 'next/link'
-import EnsLogo from 'public/assets/icons/socials/ens.svg'
 
 interface UserProfileCardProps {
   profileList?: number | null
@@ -120,16 +119,11 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           }}
         />
       ) : (
-        <div
-          className={cn(
-            'border-grey relative z-10 flex flex-col rounded-sm border-[3px]',
-            isRecommended ? 'bg-neutral' : 'glass-card'
-          )}
-        >
+        <div className={cn('relative z-10 flex flex-col rounded-sm', isRecommended ? 'bg-neutral' : 'glass-card')}>
           {isRecommended ? (
             <div className='mx-auto flex h-[436px] w-3/4 flex-col items-center justify-center gap-4'>
               <p className='px-8 text-xl font-bold'>{t('connect to see more')}</p>
-              <ConnectButton isResponsive={false} />
+              {/* <ConnectWalletButton /> */}
             </div>
           ) : (
             <div

@@ -11,7 +11,7 @@ const Examples = () => {
 
   return (
     <div className='flex w-full max-w-[650px] flex-col gap-6 pb-12'>
-      <h3 className='text-3xl font-bold'>{t('examples')}</h3>
+      <h3 className='text-3xl font-bold'>{t('examples title')}</h3>
       <CompleteProfile />
       <OnchainActivity />
       <ConnectOnchain />

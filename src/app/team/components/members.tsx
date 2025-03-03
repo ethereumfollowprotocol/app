@@ -26,11 +26,8 @@ const Members = () => {
   return (
     <>
       <div className='flex flex-col gap-4 pl-4 md:pl-12'>
-        <h1 className='text-5xl font-bold'>{t('team')}</h1>
-        <p className='w-full max-w-[615px] text-lg'>
-          Committed to bringing identity onchain with the Ethereum identity stack, we&apos;re building Ethereum Follow
-          Protocol and Ethereum Identity Kit.
-        </p>
+        <h1 className='text-5xl font-bold'>{t('team title')}</h1>
+        <p className='w-full max-w-[615px] text-lg'>{t('team description')}</p>
       </div>
       <div className='flex w-full flex-col gap-16'>
         <div className='flex w-full flex-col items-start justify-center gap-6 md:gap-0'>
@@ -83,11 +80,8 @@ const Members = () => {
         </div>
         <div className='flex flex-col gap-10'>
           <div className='flex flex-col gap-4 pl-4 md:pl-12'>
-            <h2 className='text-2xl font-bold sm:text-4xl'>Follow Protocol Foundation</h2>
-            <p className='w-full max-w-[615px] sm:text-lg'>
-              Committed to bringing identity onchain with the Ethereum identity stack, we&apos;re building Ethereum
-              Follow Protocol and Ethereum Identity Kit.
-            </p>
+            <h2 className='text-2xl font-bold sm:text-4xl'>{t('foundation title')}</h2>
+            <p className='w-full max-w-[615px] sm:text-lg'>{t('foundation description')}</p>
           </div>
           <div className='flex w-full flex-col items-start justify-center gap-6 align-middle md:gap-0'>
             {foundationProfiles?.map((profile, i) => (
