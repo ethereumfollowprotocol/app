@@ -212,5 +212,14 @@
 
   "swipe": "Swipe!",
   "meh": "Meh",
-  "undo": "Undo"
+  "undo": "Undo",
+
+  "notifications": {
+    "follow": "followed you",
+    "unfollow": "unfollowed you",
+    "block": "blocked you",
+    "unblock": "unblocked you",
+    "mute": "muted you",
+    "unmute": "unmuted you"
+  }
 }

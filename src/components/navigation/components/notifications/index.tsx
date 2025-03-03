@@ -1,12 +1,13 @@
 import React from 'react'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
+import { useClickAway } from '@uidotdev/usehooks'
 
 import { cn } from '#/lib/utilities'
 import Bell from 'public/assets/icons/ui/bell.svg'
 import { useNotifications } from '#/hooks/use-notifications'
+import NotificationItemLoading from './notifcation-item-loading'
 import NotificationItem, { type NotificationItemAction } from './notification-item'
-import { useClickAway } from '@uidotdev/usehooks'
 
 const Notifications = () => {
   const { t } = useTranslation()
@@ -35,7 +36,7 @@ const Notifications = () => {
           isOpen ? 'block opacity-100 starting:opacity-0' : 'hidden opacity-0'
         )}
       >
-        <div className='bg-neutral shadow-medium flex w-[95vw] flex-col gap-2 rounded-sm p-2 sm:w-fit'>
+        <div className='bg-neutral shadow-medium flex max-h-[70vh] w-[95vw] flex-col gap-2 overflow-y-scroll rounded-sm p-2 sm:w-fit'>
           {notifications?.map((item, index) =>
             Object.entries(item.notifications).map(([key, value]) =>
               value ? (
@@ -47,7 +48,7 @@ const Notifications = () => {
               ) : null
             )
           )}
-          {isLoading}
+          {isLoading && new Array(5).fill(null).map((_, index) => <NotificationItemLoading key={index} />)}
         </div>
       </div>
     </div>

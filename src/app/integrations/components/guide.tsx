@@ -1,19 +1,19 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
-import { cn } from '#/lib/utilities'
 
+import Examples from './examples'
+import { cn } from '#/lib/utilities'
 import Discord from 'public/assets/icons/socials/discord.svg?url'
 import Github from 'public/assets/icons/socials/github-white.svg?url'
-import Image from 'next/image'
-import Examples from './examples'
 
 const RESOURCES = [
   {
     name: 'Ethereum Identity Kit',
     content: <p>Ethereum Identity Kit</p>,
-    href: 'https://docs.efp.app/identity-kit/introduction',
+    href: 'https://ethidentitykit.com',
     className: 'bg-primary font-bold text-dark-grey',
   },
   {
@@ -25,7 +25,7 @@ const RESOURCES = [
   {
     name: 'API',
     content: <p>API</p>,
-    href: 'https://docs.efp.app/api/',
+    href: 'https://ethidentitykit.com/docs/api',
     className: 'bg-neutral',
   },
   {
@@ -59,6 +59,7 @@ const Guide = () => {
                 'shadow-small flex h-10 w-fit items-center justify-center gap-2 rounded-sm px-3 font-semibold transition-transform duration-300 hover:scale-110',
                 resource.className
               )}
+              target='_blank'
             >
               {resource.content}
             </Link>

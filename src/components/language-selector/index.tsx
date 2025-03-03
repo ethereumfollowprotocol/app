@@ -57,7 +57,7 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
               alt={selectedLanguage.language}
               width={32}
               height={32}
-              className='h-7 w-8 scale-90 rounded-sm'
+              className='h-auto w-7 scale-90 rounded-sm'
             />
           )}
           <p className='w-fit font-bold'>{selectedLanguage?.language}</p>

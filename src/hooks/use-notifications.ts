@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { useAccount } from 'wagmi'
 import { useQuery } from '@tanstack/react-query'
+import { DAY, HOUR, MINUTE } from '#/lib/constants'
 import { fetchNotifications } from '#/api/profile/fetch-notifications'
-import { DAY, HOUR } from '#/lib/constants'
 
+// Sorting the notifications via certain time frames, so it will perform logical grouping of events (avoids displaying every notification individually)
 const NOTIFICATIONS_TIMESTAMPS = [
   {
     label: 'recent',
@@ -109,6 +110,7 @@ export const useNotifications = () => {
         notificationsCount: notifications?.notifications.length,
       }
     },
+    refetchInterval: MINUTE * 2,
   })
 
   return { notifications: data?.notifications, isLoading, isOpen, setIsOpen }

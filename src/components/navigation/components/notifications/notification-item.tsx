@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 import type { NotificationItemType } from '#/types/requests'
 import { Avatar, FollowIcon, truncateAddress } from '@encrypteddegen/identity-kit'
@@ -46,27 +47,35 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ notifications, acti
   }[action]
 
   return (
-    <div className={cn('flex w-full items-center justify-between gap-1 rounded-sm p-3 sm:w-[520px]', style + '/30')}>
-      <div className='flex items-center gap-2'>
-        <div className={`text-dark-grey flex h-10 w-10 items-center justify-center rounded-full ${style}`}>
+    <div
+      className={cn(
+        'flex h-16 w-full items-center justify-between gap-1 overflow-x-hidden rounded-sm px-3 py-2 sm:w-[520px]',
+        style + '/30'
+      )}
+    >
+      <div className='flex max-w-[90%] items-center gap-2 sm:max-w-full'>
+        <div
+          className={cn(
+            `text-dark-grey flex h-10 w-10 items-center justify-center rounded-full ${style}`,
+            (action === 'follow' || action === 'unfollow') && 'pl-0.5'
+          )}
+        >
           <Icon className='text-dark-grey h-auto w-5' height={24} width={24} />
         </div>
-        <div className='flex w-full max-w-1/2 flex-nowrap items-center gap-1 overflow-hidden sm:max-w-[410px]'>
+        <div className='flex max-w-[82.5%] flex-nowrap items-center gap-1 overflow-hidden sm:max-w-[420px]'>
           {notifications.length === 1 ? (
-            <>
-              <NotificationProfile
-                address={notifications[0].address}
-                name={notifications[0].name}
-                avatar={notifications[0].avatar}
-              />
-            </>
+            <NotificationProfile
+              address={notifications[0].address}
+              name={notifications[0].name}
+              avatar={notifications[0].avatar}
+            />
           ) : (
             <p className='text-sm font-medium text-nowrap'>{notifications.length} people</p>
           )}
           <p className='text-sm font-medium'> {t(`notifications.${action}`)}</p>
           {notifications.length > 1 && (
             <>
-              <div className='flex max-w-1/4 flex-nowrap items-center gap-1 overflow-hidden sm:max-w-[220px]'>
+              <div className='flex max-w-1/4 flex-nowrap items-center gap-1 overflow-hidden sm:max-w-[240px]'>
                 &#40;
                 {notifications.slice(0, 3).map((notification) => (
                   <div className='flex flex-nowrap items-center gap-0' key={notification.address}>
@@ -100,12 +109,15 @@ export const NotificationProfile = ({
   avatar?: string | null
 }) => {
   return (
-    <div className='flex flex-nowrap items-center gap-1'>
+    <Link
+      href={`/${address}`}
+      className='flex flex-nowrap items-center gap-1 transition-all hover:underline hover:opacity-80'
+    >
       <Avatar address={address} name={name} src={avatar} className='h-5 w-5 overflow-hidden rounded-full' />
       <p className='overflow-hidden text-sm text-ellipsis whitespace-nowrap'>
         {name || truncateAddress(address as `0x${string}`)}
       </p>
-    </div>
+    </Link>
   )
 }
 
