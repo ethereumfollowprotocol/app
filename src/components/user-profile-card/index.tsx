@@ -67,14 +67,14 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
         <ProfileCard
           list={profileList}
           onStatClick={({ stat }) => {
-            router.push(`/${profile.address}?tab=${stat}`)
+            router.push(`/${profile.address}?tab=${stat}&ssr=false`)
           }}
           showFollowerState={true}
           darkMode={resolvedTheme === 'dark'}
           addressOrName={profile.address}
           connectedAddress={connectedAddress}
           onProfileClick={() => {
-            router.push(`/${profile.address}`)
+            router.push(`/${profile.address}?ssr=false`)
           }}
           className='bg-neutral'
           options={{

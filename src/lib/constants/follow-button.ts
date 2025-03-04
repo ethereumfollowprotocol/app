@@ -81,7 +81,7 @@ export const FOLLOW_BUTTON_STYLES: Record<
   Mute: {
     bg: 'bg-deletion',
     hover: 'hover:bg-[#CF4C4C]',
-    text: 'text-darkGrey',
+    text: 'text-dark-grey',
     border: 'border-0',
   },
   'Pending Mute': {

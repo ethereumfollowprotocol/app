@@ -1,15 +1,14 @@
-import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 
+import { cn } from '#/lib/utilities'
 import Modal from '#/components/modal'
 import TopEightProfile from './top-eight-profile'
 import { useEditTopEight } from '../hooks/use-edit-top-eight'
 import PrimaryButton from '#/components/buttons/primary-button'
+import TopEightLoadingProfile from './top-eight-loading-profile'
 import type { TopEightProfileType } from '../hooks/use-top-eight'
 import MagnifyingGlass from 'public/assets/icons/ui/magnifying-glass.svg'
-import { cn } from '#/lib/utilities'
 import UserProfilePageTable, { type UserProfilePageTableProps } from '#/components/profile-page-table'
-import TopEightLoadingProfile from './top-eight-loading-profile'
 
 interface EditModalProps {
   profiles: TopEightProfileType[]
@@ -18,10 +17,17 @@ interface EditModalProps {
 }
 
 const EditModal: React.FC<EditModalProps> = ({ profiles, onClose, followingListProps }) => {
-  const router = useRouter()
   const { t } = useTranslation()
-  const { editedProfiles, addProfileSearch, setAddProfileSearch, onSubmit, isTopEightFull, loadingItems } =
-    useEditTopEight(profiles)
+  const {
+    editedProfiles,
+    addProfileSearch,
+    setAddProfileSearch,
+    onSubmit,
+    isTopEightFull,
+    loadingItems,
+    canConfirm,
+    onConfirm,
+  } = useEditTopEight(profiles)
 
   const maxListHeight = Math.ceil(editedProfiles.length / 4)
 
@@ -87,9 +93,9 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose, followingListP
             )}
             <div className='mt-4 flex w-full items-center justify-between'>
               <PrimaryButton
-                // disabled={isTopEightFull}
+                disabled={!canConfirm}
                 onClick={() => {
-                  router.push('/cart')
+                  onConfirm()
                   onClose()
                 }}
                 label={t('confirm')}

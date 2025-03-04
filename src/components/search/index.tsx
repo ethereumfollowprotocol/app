@@ -159,7 +159,9 @@ export function Search({
                   else
                     router.push(
                       `/${result.resolvedAddress?.id || (result.name[0] === '#' ? result.name.slice(1) : result.name)}${
-                        isAddress(result.name) || result.name[0] === '#' ? '' : `?search=${result.name}`
+                        isAddress(result.name) || result.name[0] === '#'
+                          ? '?ssr=false'
+                          : `?search=${result.name}&ssr=false`
                       }`
                     )
 
@@ -250,7 +252,7 @@ export function Search({
                         router.push(
                           `/${
                             result.resolvedAddress?.id || (result.name[0] === '#' ? result.name.slice(1) : result.name)
-                          }${isAddress(result.name) || result.name[0] === '#' ? '' : `?search=${result.name}`}`
+                          }${isAddress(result.name) || result.name[0] === '#' ? '?ssr=false' : `?search=${result.name}&ssr=false`}`
                         )
 
                       resetSearch()

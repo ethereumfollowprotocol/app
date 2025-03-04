@@ -20,7 +20,10 @@ const Notifications = () => {
   return (
     <div className='group/notifications relative z-10' ref={clickAwayRef}>
       <Bell
-        className='h-auto w-9 cursor-pointer transition-transform hover:scale-110'
+        className={cn(
+          'h-auto w-9 cursor-pointer transition-transform hover:scale-110',
+          isOpen && 'text-primary-selected'
+        )}
         onClick={() => setIsOpen(!isOpen)}
       />
       {!isOpen && (

@@ -1,11 +1,11 @@
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
-import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 
 import { cn } from '#/lib/utilities'
 import { formatNumber } from '#/utils/format/format-number'
 import type { ProfileStatsType } from '#/types/common'
+import Link from 'next/link'
 
 interface ProfileListItemCountsProps {
   counts?: ProfileStatsType
@@ -14,7 +14,6 @@ interface ProfileListItemCountsProps {
 }
 
 const ProfileListItemCounts: React.FC<ProfileListItemCountsProps> = ({ counts, isFollowersEmpty, address }) => {
-  const router = useRouter()
   const { t } = useTranslation()
   const { address: userAddress } = useAccount()
 
@@ -29,22 +28,22 @@ const ProfileListItemCounts: React.FC<ProfileListItemCountsProps> = ({ counts, i
         userAddress ? 'xs:flex 3xl:flex hidden lg:hidden' : 'xs:flex hidden'
       )}
     >
-      <div
+      <Link
+        href={`/${address}?tab=following`}
         className={`cursor-pointer flex-col items-center transition-transform hover:scale-110 ${
           userAddress && !isFollowersEmpty ? '3xl:flex lg:hidden' : '2xl:flex'
         } hidden sm:flex`}
-        onClick={() => router.push(`/${address}?tab=following`)}
       >
         <p className='text-lg font-bold'>{formatNumber(counts.following)}</p>
         <p className='text-text/60 text-center text-sm font-bold'>{t('following')}</p>
-      </div>
-      <div
+      </Link>
+      <Link
+        href={`/${address}?tab=followers`}
         className='flex cursor-pointer flex-col items-center transition-transform hover:scale-110'
-        onClick={() => router.push(`/${address}?tab=followers`)}
       >
         <p className='text-lg font-bold'>{formatNumber(counts.followers)}</p>
         <p className='text-text/60 text-center text-sm font-bold'>{t('followers')}</p>
-      </div>
+      </Link>
     </div>
   )
 }

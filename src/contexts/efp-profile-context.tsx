@@ -204,7 +204,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
 
       const newList = Math.max(...lists.lists.map((list) => Number(list)))
 
-      router.push(`/${newList}`)
+      router.push(`/${newList}?ssr=false`)
       localStorage.setItem('selected-list', newList.toString())
       setSelectedList(newList)
 

@@ -5,16 +5,12 @@ import { useAccount } from 'wagmi'
 import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-// import { RefreshIcon } from '@encrypteddegen/identity-kit
-import { useConnectModal } from '@rainbow-me/rainbowkit'
+import { useIsClient } from '@uidotdev/usehooks'
 
 import { cn } from '#/lib/utilities'
-import LoadingSpinner from './loaders/loading-spinner'
-import { useEFPProfile } from '#/contexts/efp-profile-context'
+import { RECOMMENDED_FEED_ADDRESS } from '#/lib/constants'
 import InterfaceLight from 'public/assets/icons/socials/interface.png'
 import InterfaceDark from 'public/assets/icons/socials/interface-dark.png'
-import { useIsClient } from '@uidotdev/usehooks'
-import { RECOMMENDED_FEED_ADDRESS } from '#/lib/constants'
 
 let lastScrollTopHomePage = 0
 
@@ -26,7 +22,7 @@ interface FeedCardProps {
   activityAddress?: string
 }
 
-const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, description, activityAddress }) => {
+const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, activityAddress }) => {
   const { address: userAddress } = useAccount()
 
   const [feedKey] = useState(0)
@@ -36,8 +32,6 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
 
   const { t } = useTranslation()
   const { resolvedTheme } = useTheme()
-  const { openConnectModal } = useConnectModal()
-  const { lists, listsIsLoading } = useEFPProfile()
 
   const url = activityAddress
     ? `https://app.interface.social/elements/profile/${activityAddress}/activity`
@@ -140,36 +134,16 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, descr
       )}
       <div
         className={cn(
-          'bg-neutral shadow-medium flex w-full max-w-[900px] justify-center overflow-hidden rounded-sm',
-          contentSize,
-          !listsIsLoading && (lists?.lists?.length || 0) === 0 ? 'h-[60vh]' : 'h-[100000vh]'
+          'bg-neutral shadow-medium flex h-[100000vh] w-full max-w-[900px] justify-center overflow-hidden rounded-sm',
+          contentSize
         )}
       >
-        {userAddress ? (
-          listsIsLoading ? (
-            <div className='bg-neutral flex h-full w-full items-center justify-center'>
-              <LoadingSpinner />
-            </div>
-          ) : (lists?.lists?.length || 0) > 0 ? (
-            <iframe
-              key={`${userAddress} ${url} ${resolvedTheme} ${feedKey}`}
-              title='Feed'
-              src={url}
-              className='bg-neutral h-full w-full'
-            />
-          ) : (
-            <div className='flex h-full max-h-[60vh] w-full flex-col items-center justify-center text-center font-semibold'>
-              <p className='text-lg font-bold'>{t('following myprofile empty first')}</p>
-              <p className='w-3/4 max-w-96 text-base italic'>{t('following myprofile empty second')}</p>
-            </div>
-          )
-        ) : (
-          <div className='flex h-full w-full items-center justify-center'>
-            <button className='connect-button h-fit w-64 p-3 text-xl font-bold' onClick={() => openConnectModal?.()}>
-              {t('connect')}
-            </button>
-          </div>
-        )}
+        <iframe
+          key={`${userAddress} ${url} ${resolvedTheme} ${feedKey}`}
+          title='Feed'
+          src={url}
+          className='bg-neutral h-[100000vh] w-full'
+        />
       </div>
     </div>
   )

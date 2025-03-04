@@ -201,14 +201,16 @@ const useSearch = (isEditor?: boolean) => {
       !Number.isNaN(Number(currentSearch)) ||
       (currentSearch[0] === '#' && !Number.isNaN(Number(currentSearch.slice(1))))
     ) {
-      router.push(`/${currentSearch[0] === '#' ? currentSearch.slice(1) : currentSearch}`)
+      router.push(`/${currentSearch[0] === '#' ? currentSearch.slice(1) : currentSearch}?ssr=false`)
       resetSearch()
     }
 
     if (isAddress(currentSearch) || currentSearch.includes('.')) {
       const address = isAddress(currentSearch) ? currentSearch : await resolveEnsAddress(currentSearch)
 
-      router.push(`/${address || currentSearch}${isAddress(currentSearch) ? '' : `?search=${currentSearch}`}`)
+      router.push(
+        `/${address || currentSearch}${isAddress(currentSearch) ? '?ssr=false' : `?search=${currentSearch}&ssr=false`}`
+      )
       resetSearch()
     }
   }

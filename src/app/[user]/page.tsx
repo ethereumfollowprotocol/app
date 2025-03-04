@@ -6,9 +6,11 @@ import { MINUTE } from '#/lib/constants'
 import UserInfo from './components/user-info'
 import { truncateAddress } from '#/lib/utilities'
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
+import type { SearchParams } from 'next/dist/server/request/search-params'
 
 interface Props {
   params: Promise<{ user: string }>
+  searchParams: Promise<SearchParams>
 }
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
@@ -39,22 +41,28 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
 const UserPage = async (props: Props) => {
   const { user } = await props.params
+  const searchParams = await props.searchParams
+  const ssr = searchParams.ssr === 'false' ? false : true
+
   const isList = Number.isInteger(Number(user)) && !(isAddress(user) || isHex(user))
   const listNum = isList ? Number(user) : undefined
 
   const queryClient = new QueryClient()
 
-  await queryClient.prefetchQuery({
-    queryKey: ['profile', user, false],
-    queryFn: () => (user ? fetchProfileDetails(user as string, listNum) : null),
-    staleTime: 3 * MINUTE,
-  })
+  // Skip prefetching if ssr is false
+  if (ssr !== false) {
+    await queryClient.prefetchQuery({
+      queryKey: ['profile', user, false],
+      queryFn: () => (user ? fetchProfileDetails(user as string, listNum) : null),
+      staleTime: 3 * MINUTE,
+    })
 
-  await queryClient.prefetchQuery({
-    queryKey: ['stats', user, false],
-    queryFn: () => (user ? fetchProfileStats(user as string, listNum) : null),
-    staleTime: 3 * MINUTE,
-  })
+    await queryClient.prefetchQuery({
+      queryKey: ['stats', user, false],
+      queryFn: () => (user ? fetchProfileStats(user as string, listNum) : null),
+      staleTime: 3 * MINUTE,
+    })
+  }
 
   return (
     <main className='h-screen w-full xl:overflow-hidden'>

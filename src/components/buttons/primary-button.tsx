@@ -17,7 +17,7 @@ const PrimaryButton = forwardRef<HTMLButtonElement, PrimaryButtonProps>(
         className={cn(
           /* Prioritize the provided bg color, or use default bg color */
           !className?.includes('bg') && 'bg-primary',
-          'text-darkGrey text-dark-grey relative h-11 w-full rounded-sm text-lg font-bold transition-all hover:opacity-60 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100',
+          'text-dark-grey relative h-11 w-full rounded-sm text-lg font-bold transition-all hover:opacity-60 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100',
           className
         )}
         {...props}

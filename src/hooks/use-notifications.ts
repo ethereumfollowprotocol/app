@@ -110,7 +110,7 @@ export const useNotifications = () => {
         notificationsCount: notifications?.notifications.length,
       }
     },
-    refetchInterval: MINUTE * 2,
+    refetchInterval: MINUTE * 5,
   })
 
   return { notifications: data?.notifications, isLoading, isOpen, setIsOpen }

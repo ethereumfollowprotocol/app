@@ -25,7 +25,7 @@ const ScrollIndicator = () => {
         opacity: hideIndicator ? 0 : 1,
       }}
     >
-      <ArrowDown className='text-darkGrey text-6xl dark:text-[#aaa]' />
+      <ArrowDown className='text-dark-grey text-6xl dark:text-[#aaa]' />
     </div>
   )
 }

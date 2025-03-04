@@ -68,9 +68,11 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
           openListSettingsModal={openListSettingsModal}
           refetchData={refetchProfile}
         />
-        <div className={cn('absolute right-8 bottom-30 flex flex-col gap-2 pb-5', role && 'bottom-6')}>
+        <div className={cn('absolute right-8 bottom-30 flex flex-col items-end gap-3 pb-5', role && 'bottom-6')}>
           {profile.ens?.records?.status && (
-            <p className='bg-tertiary p-2 text-lg italic'>{profile.ens.records.status}</p>
+            <p className='bg-nav-item shadow-small w-fit rounded-sm px-2 py-1 text-sm font-semibold italic'>
+              &quot;{profile.ens.records.status}&quot;
+            </p>
           )}
           <Achievements profile={profile} isLoading={isLoading} list={profileList} />
         </div>
@@ -113,7 +115,7 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
             <p className='max-w-2/3 lg:max-w-1/2 lg:text-lg'>
               {profile.ens?.records?.description ? (
                 profile.ens.records.description.split(' ').map((word) =>
-                  word.includes('@') ? (
+                  word.includes('@') && word.includes('.') ? (
                     <a
                       key={word}
                       href={`https://efp.app/${word.replace('@', '')}`}

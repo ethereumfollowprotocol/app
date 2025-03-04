@@ -9,6 +9,7 @@ import ProfileList from '#/components/profile-list'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { fetchRecommendations } from '#/api/recommended/fetch-recommendations'
 import PageSelector from '#/components/page-selector'
+import { zeroAddress } from 'viem'
 
 interface RecommendationsProps {
   header?: string
@@ -44,7 +45,7 @@ const Recommendations = ({
     queryFn: async ({ pageParam = 0 }) => {
       const discoverAccounts = await fetchRecommendations(
         endpoint,
-        userAddress,
+        userAddress || zeroAddress,
         selectedList,
         endpoint === 'discover' ? limit + 1 : limit,
         pageParam

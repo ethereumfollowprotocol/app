@@ -21,7 +21,7 @@ const ConnectOnchain = () => {
       <Link
         href='https://ethidentitykit.com/docs/api/Users/following'
         target='_blank'
-        className='flex items-center gap-2 pl-10 transition-opacity hover:underline hover:opacity-60'
+        className='flex items-center gap-2 pl-10 italic transition-opacity hover:underline hover:opacity-60'
       >
         <p>{t('example connect onchain button link')}</p>
         <ExternalLink className='h-4 w-auto' />

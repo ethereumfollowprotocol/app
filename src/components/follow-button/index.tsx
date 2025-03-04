@@ -21,6 +21,8 @@ const FollowButton: React.FC<FollowButtonProps> = ({ address, className = '', is
   const { selectedVolume } = useSounds()
   const { selectedList } = useTransactions()
 
+  if (address.toLowerCase() === connectedAddress?.toLowerCase()) return <div className='h-[39px] w-[110px]' />
+
   return (
     <IdentityFollowButton
       lookupAddress={address}

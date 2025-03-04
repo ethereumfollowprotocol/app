@@ -1,7 +1,7 @@
 'use client'
 
 import { useAccount } from 'wagmi'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import type { Address, GetEnsAvatarReturnType } from 'viem'
 
 import Tags from '../../tags'
@@ -14,6 +14,7 @@ import ProfileListItemName from './profile-list-item-name'
 import ProfileListItemCounts from './profile-list-item-counts'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { ProfileStatsType, TagsDropdownPositionType } from '#/types/common'
+import Link from 'next/link'
 
 interface ProfileListItemDetailsProps {
   address: Address
@@ -42,7 +43,6 @@ const ProfileListItemDetails: React.FC<ProfileListItemDetailsProps> = ({
   isEnsProfileLoading,
   isBlockedList,
 }) => {
-  const router = useRouter()
   const pathname = usePathname()
   const { address: userAddress } = useAccount()
   const { getTagsFromCartByAddress } = useCart()
@@ -71,12 +71,13 @@ const ProfileListItemDetails: React.FC<ProfileListItemDetailsProps> = ({
         {isEnsProfileLoading ? (
           <LoadingCell className='h-[45px] w-[45px] min-w-[45px] rounded-full 2xl:h-[50px] 2xl:w-[50px] 2xl:min-w-[50px]' />
         ) : (
-          <Avatar
-            name={name || address}
-            avatarUrl={avatarUrl}
-            size='h-[45px] w-[45px] 2xl:h-[50px] cursor-pointer 2xl:w-[50px] hover:opacity-80 transition-all hover:scale-110'
-            onClick={() => router.push(`/${address || name}`)}
-          />
+          <Link href={`/${address || name}`}>
+            <Avatar
+              name={name || address}
+              avatarUrl={avatarUrl}
+              size='h-[45px] w-[45px] 2xl:h-[50px] cursor-pointer 2xl:w-[50px] hover:opacity-80 transition-all hover:scale-110'
+            />
+          </Link>
         )}
         <div
           className='flex flex-col gap-1 sm:gap-2 md:flex-row'

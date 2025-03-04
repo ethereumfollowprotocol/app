@@ -65,7 +65,16 @@ const Home = () => {
             header={t('recent')}
             className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm p-3 py-4 2xl:p-4')}
           />
-          {!isFollowersEmpty && userAddress && <LatestFollowers />}
+          {userAddress ? (
+            !isFollowersEmpty && <LatestFollowers />
+          ) : (
+            <Recommendations
+              limit={10}
+              endpoint='recommended'
+              header={t('recommendations')}
+              className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm p-3 py-4 2xl:p-4')}
+            />
+          )}
         </div>
       </div>
       <BackToTop />

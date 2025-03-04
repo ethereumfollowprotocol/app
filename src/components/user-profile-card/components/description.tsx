@@ -14,7 +14,7 @@ const Description: React.FC<DescriptionProps> = ({ profile }) => {
     <p className='text-text/80 w-full text-center text-sm font-medium sm:text-sm'>
       {profile.ens.records?.description ? (
         profile.ens.records.description.split(' ').map((word) =>
-          word.includes('@') ? (
+          word.includes('@') && word.includes('.') ? (
             <Link
               key={word}
               href={`/${word.replace('@', '')}`}

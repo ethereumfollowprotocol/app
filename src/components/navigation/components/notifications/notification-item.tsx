@@ -36,27 +36,22 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ notifications, acti
   }[action]
 
   const style = {
-    follow: 'bg-primary',
-    unfollow: 'bg-[#D4D4D4]',
-    tag: 'bg-[#D4D4D4]',
-    untag: 'bg-[#D4D4D4]',
-    block: 'bg-deletion',
-    unblock: 'bg-primary',
-    mute: 'bg-deletion',
-    unmute: 'bg-primary',
+    follow: 'bg-primary/30',
+    unfollow: 'bg-[#D4D4D4]/30',
+    tag: 'bg-[#D4D4D4]/30',
+    untag: 'bg-[#D4D4D4]/30',
+    block: 'bg-deletion/30',
+    unblock: 'bg-primary/30',
+    mute: 'bg-deletion/30',
+    unmute: 'bg-primary/30',
   }[action]
 
   return (
-    <div
-      className={cn(
-        'flex h-16 w-full items-center justify-between gap-1 overflow-x-hidden rounded-sm px-3 py-2 sm:w-[520px]',
-        style + '/30'
-      )}
-    >
+    <div className={cn('flex h-16 w-full items-center justify-between gap-1 rounded-sm px-3 py-2 sm:w-[520px]', style)}>
       <div className='flex max-w-[90%] items-center gap-2 sm:max-w-full'>
         <div
           className={cn(
-            `text-dark-grey flex h-10 w-10 items-center justify-center rounded-full ${style}`,
+            `text-dark-grey flex h-10 w-10 items-center justify-center rounded-full ${style.replace('/30', '')}`,
             (action === 'follow' || action === 'unfollow') && 'pl-0.5'
           )}
         >

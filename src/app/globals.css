@@ -422,11 +422,11 @@ input {
   left: 3px;
   top: 3px;
   border-radius: 4px;
-  font: 12px/30px Helvetica;
+  font: 12px/29px Helvetica;
   text-transform: uppercase;
   font-weight: bold;
   text-indent: -28px;
-  word-spacing: 35px;
+  word-spacing: 34px;
   color: #fff;
   text-shadow: -1px -1px rgba(0, 0, 0, 0.15);
   white-space: nowrap;

@@ -115,7 +115,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                         setSearch('')
                         setShowSearch(false)
                       }}
-                      className='text-darkGrey -ml-1 h-6 w-auto cursor-pointer rounded-full text-xl opacity-50 transition-all hover:scale-125 hover:opacity-60'
+                      className='text-dark-grey -ml-1 h-6 w-auto cursor-pointer rounded-full text-xl opacity-50 transition-all hover:scale-125 hover:opacity-60'
                     />
                   )}
                 </div>
@@ -188,14 +188,14 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                   className={cn(
                     'flex max-w-[33%] items-center gap-1.5 rounded-sm px-4 py-2 text-sm font-bold transition-transform hover:scale-110',
                     selectedTags?.includes(tag.tag)
-                      ? 'text-darkGrey bg-zinc-100 shadow-inner shadow-black/10'
+                      ? 'text-dark-grey bg-zinc-100 shadow-inner shadow-black/10'
                       : 'bg-zinc-300/80 text-zinc-500'
                   )}
                   name={tag.tag.toLowerCase()}
                   onClick={() => toggleSelectedTags(title, tag.tag)}
                 >
                   <p className='max-w-[95%] truncate'>{BLOCKED_MUTED_TAGS.includes(tag.tag) ? t(tag.tag) : tag.tag}</p>
-                  <p className='text-darkGrey/50'>{formatNumber(tag.count)}</p>
+                  <p className='text-dark-grey/50'>{formatNumber(tag.count)}</p>
                 </button>
               ))}
         </div>

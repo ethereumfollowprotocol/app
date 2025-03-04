@@ -185,7 +185,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
                 showMoreOptions={true}
                 openBlockModal={() => {
                   setIsBlockedMutedOpen(true)
-                  router.push(`/${user}?modal=block_mute_list`)
+                  router.push(`/${user}?modal=block_mute_list&ssr=false`)
                 }}
                 openQrCodeModal={() => setQrCodeModalOpen(true)}
                 openListSettingsModal={() => setListSettingsOpen(true)}
@@ -200,7 +200,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
                 isStatsLoading={statsIsLoading}
                 openBlockModal={() => {
                   setIsBlockedMutedOpen(true)
-                  router.push(`/${user}?modal=block_mute_list`)
+                  router.push(`/${user}?modal=block_mute_list&ssr=false`)
                 }}
                 openQrCodeModal={() => setQrCodeModalOpen(true)}
                 openListSettingsModal={() => setListSettingsOpen(true)}

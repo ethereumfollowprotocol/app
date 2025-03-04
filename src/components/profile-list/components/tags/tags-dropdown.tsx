@@ -73,7 +73,7 @@ const TagsDropdown: React.FC<TagsDropdownProps> = ({
             {recentTags.map((tag, i) => (
               <button
                 key={`${profiles?.[0]?.address} ${tag} ${i}`}
-                className='text-darkGrey truncate rounded-full bg-zinc-300 px-3 py-1.5 text-sm font-bold transition-all hover:scale-110 hover:opacity-80'
+                className='text-dark-grey truncate rounded-full bg-zinc-300 px-3 py-1.5 text-sm font-bold transition-all hover:scale-110 hover:opacity-80'
                 onClick={(e) => {
                   e.stopPropagation()
                   addTag(tag)

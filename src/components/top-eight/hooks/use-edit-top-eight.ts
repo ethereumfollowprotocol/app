@@ -3,7 +3,7 @@ import { useAccount } from 'wagmi'
 import { isAddress, type Address } from 'viem'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useMemo, useState } from 'react'
-import { fetchFollowState } from '@encrypteddegen/identity-kit'
+import { fetchFollowState, useTransactions } from '@encrypteddegen/identity-kit'
 
 import { useCart } from '#/hooks/use-cart'
 import { resolveEnsAddress } from '#/utils/ens'
@@ -12,6 +12,8 @@ import type { TopEightProfileType } from './use-top-eight'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { isTagListOp, listOpAddTag, listOpAddListRecord, extractAddressAndTag } from '#/utils/list-ops'
 
+let prevTopEightInCart: { address: Address }[] = []
+
 export const useEditTopEight = (profiles: TopEightProfileType[]) => {
   const [loadingItems, setLoadingItems] = useState(0)
 
@@ -19,6 +21,7 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
   const { address: userAddress } = useAccount()
   const { roles, selectedList } = useEFPProfile()
 
+  const { setTxModalOpen } = useTransactions()
   const { cart, addToCart, hasListOpRemoveRecord } = useCart()
   const topEightInCart = useMemo(
     () =>
@@ -39,10 +42,14 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
     const removedProfiles = profiles.filter((profile) => hasListOpRemoveRecord(profile.address))
     return editedProfiles.length - topEightRemoved.length - removedProfiles.length
   }, [editedProfiles, cart])
+  const canConfirm = currentTopEightLength <= 8
   const isTopEightFull = currentTopEightLength >= 8
 
   useEffect(() => {
-    setEditedProfiles([...profiles].concat(topEightInCart))
+    if (prevTopEightInCart.length !== topEightInCart.length) {
+      setEditedProfiles([...profiles, ...topEightInCart])
+      prevTopEightInCart = topEightInCart
+    }
   }, [topEightInCart])
 
   const getFollowingState = async (address: Address) => {
@@ -95,8 +102,19 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
     setLoadingItems(0)
   }
 
+  const onConfirm = async () => {
+    if (!canConfirm) return
+    if (!roles?.isManager) return toast.error(t('not manager'))
+
+    if (topEightInCart.length > 0) {
+      setTxModalOpen(true)
+    }
+  }
+
   return {
     onSubmit,
+    onConfirm,
+    canConfirm,
     loadingItems,
     topEightInCart,
     isTopEightFull,

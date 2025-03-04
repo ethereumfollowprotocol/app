@@ -13,7 +13,7 @@ const RestrictButton: React.FC<RestrictButtonProps> = ({ blockCoolMode, onClickO
     <button
       ref={blockCoolMode as Ref<HTMLButtonElement>}
       onClick={() => onClickOption(type)}
-      className='bg-deletion text-darkGrey relative flex h-[40px] w-[120px] cursor-pointer items-center justify-center gap-1.5 rounded-sm px-2 py-1.5 text-sm font-bold transition-all hover:scale-110 hover:bg-[#CF4C4C]'
+      className='bg-deletion text-dark-grey relative flex h-[40px] w-[120px] cursor-pointer items-center justify-center gap-1.5 rounded-sm px-2 py-1.5 text-sm font-bold transition-all hover:scale-110 hover:bg-[#CF4C4C]'
     >
       <MainnetBlack />
       <p

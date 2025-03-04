@@ -103,7 +103,12 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
           {userAddress && <FollowsYou addressOrName={profile.address} connectedAddress={userAddress} />}
         </div>
       </div>
-      <FollowButton address={profile.address} />
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className={cn('absolute left-0 flex w-full justify-center', isEditing ? 'bottom-2' : 'bottom-3')}
+      >
+        <FollowButton address={profile.address} />
+      </div>
     </div>
   )
 }

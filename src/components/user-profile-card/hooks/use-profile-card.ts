@@ -54,14 +54,14 @@ export const useProfileCard = (profile?: ProfileDetailsResponse | null) => {
     if (pathname === '/' || pathname === '/team') {
       if (isConnectedUserCard) {
         return router.push(
-          `/${selectedList === Number(profile.primary_list) ? profile.address : selectedList}?tab=${stat}`
+          `/${selectedList === Number(profile.primary_list) ? profile.address : selectedList}?tab=${stat}&ssr=false`
         )
       }
 
-      return router.push(`/${profile.address}?tab=${stat}`)
+      return router.push(`/${profile.address}?tab=${stat}&ssr=false`)
     }
 
-    router.push(`/${pathname.slice(1)}?tab=${stat}`)
+    router.push(`/${pathname.slice(1)}?tab=${stat}&ssr=false`)
   }
 
   return {
