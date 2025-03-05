@@ -169,7 +169,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       {!isSaving && (
         <div
           id='user-page'
-          className='relative flex h-screen w-full flex-col gap-4 overflow-y-auto px-0 pb-32 sm:pr-0 sm:pb-8 sm:pl-20 lg:gap-0'
+          className='relative flex h-screen w-full flex-col gap-4 overflow-y-auto px-0 pb-32 sm:pr-0 sm:pb-8 sm:pl-[70px] lg:gap-0 2xl:pl-20'
           ref={containerRef}
         >
           <div className='mt-20 w-full sm:mt-0'>
