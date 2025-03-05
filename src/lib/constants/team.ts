@@ -6,6 +6,7 @@ export const TEAM_ADDRESSES = [
   '0x8f5906963Ae276E1631EFA8Ff1a9CaE6499EC5E3',
   '0x71Adb34117c9408E74ed112b327A0ec97CEf8fa1',
   '0xE2Cded674643743ec1316858dFD4FD2116932E63',
+  '0x34ab2a3c4b2ae1c940e5e307f22eb92e47906e28',
 ]
 
 export const TEAM_ROLES = [
@@ -16,6 +17,7 @@ export const TEAM_ROLES = [
   'Technical Advisor',
   'Technical Advisor',
   'Protocol Account',
+  'Project Account',
 ]
 
 export const FOUNDATION_ADDRESSES = [

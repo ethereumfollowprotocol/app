@@ -18,12 +18,14 @@ const Achievements: React.FC<AchievementsProps> = ({ list, profile, isLoading })
     list: list || undefined,
   })
 
+  if (!isBadgesLoading && ownedBadges.length === 0) return null
+
   return (
     <div className='flex w-full flex-wrap justify-start gap-2 px-3 pb-4 md:max-w-44 md:justify-end md:p-0 lg:max-w-full'>
       {isBadgesLoading || isLoading ? (
         <>
-          <LoadingCell className='h-20 w-20 rounded-full' />
-          <LoadingCell className='h-20 w-20 rounded-full' />
+          <LoadingCell className='h-[72px] w-[72px] rounded-full' />
+          <LoadingCell className='h-[72px] w-[72px] rounded-full' />
         </>
       ) : (
         ownedBadges.map((badge) => (
@@ -35,8 +37,8 @@ const Achievements: React.FC<AchievementsProps> = ({ list, profile, isLoading })
             <Image
               src={badge.collection?.event?.image_url || ''}
               alt={badge.collection?.event?.name || ''}
-              width={80}
-              height={80}
+              width={72}
+              height={72}
               className='transition-all hover:scale-110'
             />
           </Link>

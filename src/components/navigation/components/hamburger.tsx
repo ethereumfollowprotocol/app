@@ -9,9 +9,9 @@ const Hamburger = () => {
   const clickAwayRef = useClickAway<HTMLDivElement>(() => setOpen(false))
 
   const lineTransform = [
-    'rotate-45 translate-y-2.5',
-    'translate-x-[100vw] sm:-translate-x-16',
-    'rotate-[-45deg] -translate-y-2.5',
+    'rotate-45 translate-y-2.5 sm:translate-y-0 sm:rotate-0 sm:bg-primary-selected',
+    'translate-x-[100vw] sm:translate-x-0 sm:rotate-0 sm:bg-primary-selected',
+    'rotate-[-45deg] -translate-y-2.5 sm:translate-y-0 sm:rotate-0 sm:bg-primary-selected',
   ]
 
   return (

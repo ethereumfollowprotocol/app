@@ -1,7 +1,8 @@
 @import 'tailwindcss';
 
 @theme {
-  --spacing-summary-name: calc(100% - 3.5rem);
+  --spacing-summary-name: calc(100% - 140px);
+  --spacing-summary-details: calc(100% - 150px);
   --breakpoint-xs: 400px;
   --color-yellow: #fff500;
   --color-pink: #ff79c9;

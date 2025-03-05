@@ -16,7 +16,7 @@ const TopEightAddButton: React.FC<TopEightAddButtonProps> = ({ address, tags }) 
   return (
     <button
       onClick={handleAdd}
-      className='bg-primary text-dark-grey relative flex w-24 items-center justify-center rounded-sm py-2 font-semibold'
+      className='bg-primary text-dark-grey relative flex w-24 items-center justify-center rounded-sm py-2 font-semibold transition-all! hover:scale-110'
     >
       {buttonText}
       {(isPendingTopEight || isPendingRemove) && <EditIndicator />}

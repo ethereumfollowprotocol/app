@@ -11,7 +11,7 @@ const Integrations: React.FC = () => {
   const isSelected = pathname === '/integrations'
 
   return (
-    <Link href='/integrations' className={cn('group/integrations relative', isSelected && 'text-text')}>
+    <Link href='/integrations' className={cn('group/integrations relative', isSelected && 'text-primary-selected')}>
       <div className='flex items-center gap-0.5 transition-all hover:scale-110'>
         <Apps className='h-7 w-7 font-bold' />
         <p className='text-lg font-bold'>{INTEGRATIONS.length}</p>

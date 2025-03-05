@@ -35,7 +35,10 @@ const Home = () => {
       <div className='mt-24 flex max-w-[1100px] flex-col gap-4 md:mt-20 lg:mt-24'>
         <h2 className='xs:text-4xl text-3xl font-bold sm:text-5xl lg:text-6xl'>{t('home title')}</h2>
         <p className='w-[90%] text-lg sm:mt-3 lg:w-3/4 xl:w-2/3'>{t('home description')}</p>
-        <Link href='/integrations' className='group/link ml-[-3px] flex w-fit items-center gap-2'>
+        <Link
+          href='/integrations'
+          className='group/link ml-[-3px] flex w-fit items-center gap-2 transition-opacity hover:opacity-70'
+        >
           <Apps className='h-auto w-8' />
           <p className='text-lg font-bold italic'>{t('integrate link')}</p>
           <ArrowRight className='h-auto w-5 transition-all group-hover/link:translate-x-1.5' />
@@ -63,7 +66,7 @@ const Home = () => {
             limit={10}
             endpoint='discover'
             header={t('recent')}
-            className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm p-3 py-4 2xl:p-4')}
+            className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm py-4')}
           />
           {userAddress ? (
             !isFollowersEmpty && <LatestFollowers />
@@ -72,7 +75,7 @@ const Home = () => {
               limit={10}
               endpoint='recommended'
               header={t('recommendations')}
-              className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm p-3 py-4 2xl:p-4')}
+              className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm py-4')}
             />
           )}
         </div>

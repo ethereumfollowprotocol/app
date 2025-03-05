@@ -30,7 +30,7 @@ const Socials: React.FC<SocialsProps> = ({ profile }) => {
             alt={social.name}
             width={52}
             height={52}
-            className='h-auto w-10 rounded-full'
+            className='h-auto w-8 rounded-full 2xl:w-10'
           />
         </a>
       ))}

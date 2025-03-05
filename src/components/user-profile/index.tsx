@@ -70,23 +70,28 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
         />
         <div className={cn('absolute right-8 bottom-30 flex flex-col items-end gap-3 pb-5', role && 'bottom-6')}>
           {profile.ens?.records?.status && (
-            <p className='bg-nav-item shadow-small w-fit rounded-sm px-2 py-1 text-sm font-semibold italic'>
+            <p className='bg-nav-item shadow-small hidden w-fit rounded-sm px-2 py-1 text-sm font-medium italic lg:block'>
               &quot;{profile.ens.records.status}&quot;
             </p>
           )}
           <Achievements profile={profile} isLoading={isLoading} list={profileList} />
         </div>
         <div className='xs:gap-3 flex w-full items-start gap-2 sm:gap-4'>
-          <Avatar
-            avatarUrl={profile.ens?.avatar}
-            name={profile.ens?.name || profile.address}
-            size='lg:h-[125px] h-[100px] lg:w-[125px] w-[100px] my-0'
-          />
-          <div className='flex w-full flex-col gap-4'>
+          <Link href={profileList === Number(profile.primary_list) ? `/${profile.address}` : `/${profileList}`}>
+            <Avatar
+              avatarUrl={profile.ens?.avatar}
+              name={profile.ens?.name || profile.address}
+              size='2xl:h-[125px] h-[100px] 2xl:w-[125px] w-[100px] my-0'
+            />
+          </Link>
+          <div className='w-summary-details flex flex-col gap-4'>
             <div className='xs:gap-3 flex w-full items-center gap-2 sm:gap-4'>
-              <p className='max-w-summary-name truncate text-4xl leading-12 font-bold lg:text-5xl lg:leading-16'>
+              <Link
+                href={profileList === Number(profile.primary_list) ? `/${profile.address}` : `/${profileList}`}
+                className='max-w-summary-name truncate text-4xl leading-12 font-bold 2xl:text-5xl 2xl:leading-16'
+              >
                 {profile.ens?.name || truncateAddress(profile.address)}
-              </p>
+              </Link>
               {isMyProfile ? (
                 <Link href={`https://app.ens.domains/${profile.ens.name}`} target='_blank'>
                   <button className='flex items-center gap-1 rounded-sm bg-[#0080BC] p-1.5 py-2 font-semibold text-white transition-all hover:scale-110 hover:bg-[#07A9F5]'>
@@ -112,7 +117,12 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
                 <CommonFollowers address={profile.address} />
               </div>
             </div>
-            <p className='max-w-2/3 lg:max-w-1/2 lg:text-lg'>
+            {profile.ens?.records?.status && (
+              <p className='bg-nav-item shadow-small w-fit rounded-sm px-2 py-1 text-sm font-medium italic lg:hidden'>
+                &quot;{profile.ens.records.status}&quot;
+              </p>
+            )}
+            <p className='max-w-2/3 lg:max-w-1/2 2xl:text-lg'>
               {profile.ens?.records?.description ? (
                 profile.ens.records.description.split(' ').map((word) =>
                   word.includes('@') && word.includes('.') ? (

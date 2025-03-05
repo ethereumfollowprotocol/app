@@ -40,11 +40,11 @@ const TagsDropdown: React.FC<TagsDropdownProps> = ({
       {open && (
         <div
           className={cn(
-            'glass-card bg-neutral border-grey absolute left-0 z-[9999] flex w-56 flex-col gap-2 rounded-sm border-[3px] p-2 sm:w-64',
+            'bg-neutral shadow-medium absolute left-0 z-[9999] flex w-56 flex-col gap-2 rounded-sm p-2 sm:w-64',
             position === 'bottom' ? 'top-10' : 'bottom-8'
           )}
         >
-          <div className='flex w-full items-center justify-between gap-1.5 rounded-sm bg-zinc-300 p-1 text-left font-bold dark:bg-zinc-400'>
+          <div className='flex w-full items-center justify-between gap-1.5 rounded-sm text-left font-bold'>
             <input
               ref={tagInputRef}
               placeholder={t('custom tag')}
@@ -57,23 +57,23 @@ const TagsDropdown: React.FC<TagsDropdownProps> = ({
               onKeyDown={(e) => {
                 if (e.key === 'Enter') addCustomTag()
               }}
-              className='bg-neutral/70 w-full rounded-sm p-1 pl-2 lowercase'
+              className='bg-nav-item w-full rounded-sm p-1 pl-2 lowercase'
             />
             <button
-              className='flex items-center justify-center rounded-full bg-white p-1.5 transition-all hover:scale-110 hover:opacity-80 dark:bg-zinc-300'
+              className='bg-nav-item flex items-center justify-center rounded-sm p-2 transition-all hover:scale-110 hover:opacity-80'
               onClick={(e) => {
                 e.stopPropagation()
                 addCustomTag()
               }}
             >
-              <Plus />
+              <Plus className='h-auto w-4' />
             </button>
           </div>
           <div className='flex w-full max-w-full flex-wrap items-center gap-2'>
             {recentTags.map((tag, i) => (
               <button
                 key={`${profiles?.[0]?.address} ${tag} ${i}`}
-                className='text-dark-grey truncate rounded-full bg-zinc-300 px-3 py-1.5 text-sm font-bold transition-all hover:scale-110 hover:opacity-80'
+                className='bg-nav-item truncate rounded-sm px-3 py-1.5 text-sm font-bold transition-all hover:scale-110 hover:opacity-80'
                 onClick={(e) => {
                   e.stopPropagation()
                   addTag(tag)

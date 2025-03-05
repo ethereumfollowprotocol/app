@@ -62,7 +62,7 @@ const ProfileListItemDetails: React.FC<ProfileListItemDetailsProps> = ({
 
   return (
     <div
-      className='flex items-center gap-2 p-0 sm:gap-3'
+      className='z-10 flex items-center gap-2 p-0 sm:gap-3'
       style={{
         width: isBlockedList ? 'calc(100% - 132px)' : 'calc(100% - 120px)',
       }}

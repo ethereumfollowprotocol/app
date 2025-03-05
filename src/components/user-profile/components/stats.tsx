@@ -24,17 +24,17 @@ const Stats = ({ address, list, stats, isLoading }: StatsProps) => {
         {isLoading ? (
           <LoadingCell className='h-7 w-14 rounded-sm' />
         ) : (
-          <p className='text-xl font-bold lg:text-2xl'>{formatNumber(stats?.following_count || 0)}</p>
+          <p className='text-xl font-bold 2xl:text-2xl'>{formatNumber(stats?.following_count || 0)}</p>
         )}
-        <p className='text-text-neutral text-lg lg:text-xl'>Following</p>
+        <p className='text-text-neutral text-lg 2xl:text-xl'>Following</p>
       </Link>
       <Link href={`${url}?tab=followers`} className='flex items-center gap-2 transition-all hover:scale-105'>
         {isLoading ? (
           <LoadingCell className='h-7 w-14 rounded-sm' />
         ) : (
-          <p className='text-xl font-bold lg:text-2xl'>{formatNumber(stats?.followers_count || 0)}</p>
+          <p className='text-xl font-bold 2xl:text-2xl'>{formatNumber(stats?.followers_count || 0)}</p>
         )}
-        <p className='text-text-neutral text-lg lg:text-xl'>Followers</p>
+        <p className='text-text-neutral text-lg 2xl:text-xl'>Followers</p>
       </Link>
     </div>
   )

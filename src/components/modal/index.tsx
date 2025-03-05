@@ -19,7 +19,7 @@ const Modal = ({ onCancel, children, className, disableBackgroundClose }: ModalP
       onClick={() => !disableBackgroundClose && onCancel()}
     >
       <div className='bg-neutral relative w-full rounded-sm p-3 sm:w-fit sm:p-4'>
-        <button onClick={onCancel} className='absolute top-0.5 right-0.5 transition-all hover:scale-110'>
+        <button onClick={onCancel} className='absolute top-2 right-2 transition-all hover:scale-110'>
           <Cross className='h-auto w-7' />
         </button>
         <div className='w-full' onClick={(e) => e.stopPropagation()}>

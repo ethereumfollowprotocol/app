@@ -240,10 +240,7 @@ export type ProfileRoles = {
 
 export type AccountResponseType = {
   address: Address
-  ens: {
-    name: string | null
-    avatar: string | null
-  }
+  ens: ENSProfile
   primary_list: string | null
 }
 

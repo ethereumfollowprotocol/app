@@ -42,7 +42,7 @@ const CommonFollowers: React.FC<CommonFollowersProps> = ({ address }) => {
   }
 
   return (
-    <div className='flex max-w-[344px] items-center justify-center gap-2 lg:max-w-108'>
+    <div className='flex max-w-[344px] items-center justify-start gap-2 lg:max-w-108'>
       <div className='flex'>
         {isLoading ? (
           <>
