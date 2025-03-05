@@ -7,7 +7,6 @@ export function middleware(request: NextRequest) {
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64')
 
   const cspHeader = `
-    default-src 'self' *.ethfollow.xyz;
     worker-src 'self' 'unsafe-inline' *.cloudflareinsights.com cdn.vercel-insights.com vercel.live va.vercel-scripts.com blob:;
     script-src 'self' 'unsafe-eval' 'unsafe-inline' *.cloudflareinsights.com cdn.vercel-insights.com vercel.live va.vercel-scripts.com www.googletagmanager.com;
     media-src 'self';
