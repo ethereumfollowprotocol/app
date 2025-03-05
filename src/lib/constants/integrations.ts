@@ -31,6 +31,7 @@ import Zapper from 'public/assets/partners/zapper.png'
 import Recordsxyz from 'public/assets/partners/recordsxyz.jpeg'
 import Agora from 'public/assets/partners/agora.jpg'
 import Lighthouse from 'public/assets/partners/lighthouse.jpeg'
+import Pobstudio from 'public/assets/partners/pobstudio.jpeg'
 
 
 export const INTEGRATIONS = [
@@ -88,6 +89,11 @@ export const INTEGRATIONS = [
     name: 'Lighthouse',
     url: 'https://lighthouse.cx/',
     logo: Lighthouse,
+  },
+  {
+    name: 'Blockverse',
+    url: 'https://www.pob.studio/',
+    logo: Pobstudio,
   },
   {
     name: 'LikeButton.eth',
