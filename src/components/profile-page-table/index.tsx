@@ -163,7 +163,7 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
         className={cn('flex w-full flex-col rounded-sm', !(isLoading || isFetchingMore) && 'pb-0 sm:pb-0', customClass)}
       >
         <div
-          className={cn('top-0 z-10 transition-all duration-300', isTopEight ? 'xl:sticky' : 'sticky')}
+          className={cn('top-0 z-20 transition-all duration-300', isTopEight ? 'xl:sticky' : 'sticky')}
           ref={ref}
           style={{ top: isTopEight || !isMobile ? '-2px' : displayHeaders ? '74px' : '-2px' }}
         >
