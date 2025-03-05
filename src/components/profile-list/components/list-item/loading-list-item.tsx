@@ -8,7 +8,7 @@ interface LoadingRowProps {
 
 const LoadingRow: React.FC<LoadingRowProps> = ({ showTags }) => {
   return (
-    <div className='pointer-events-none flex items-center justify-between p-1.5 2xl:p-2'>
+    <div className='pointer-events-none flex h-20 items-center justify-between rounded-sm px-5'>
       <div className='flex items-center gap-2 sm:gap-3'>
         <LoadingCell className='h-[45px] w-[45px] rounded-full 2xl:h-[50px] 2xl:w-[50px]' />
         <div className='flex w-3/4 flex-col gap-[2px] sm:w-fit md:flex-row md:gap-3'>

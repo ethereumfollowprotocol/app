@@ -68,7 +68,7 @@ const TableRow: React.FC<TableRowProps> = ({
   }[rankedAs]
 
   return (
-    <div className='hover:bg-text/5 relative flex h-[84px] w-full items-center justify-between gap-3 pr-2 pl-3 sm:gap-4 sm:px-4'>
+    <div className='hover:bg-text/5 relative flex h-20 w-full items-center justify-between gap-3 pr-2 pl-3 sm:gap-4 sm:px-4'>
       {header && (
         <Image
           src={header}

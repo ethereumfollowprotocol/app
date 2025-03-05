@@ -78,7 +78,7 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, activityAddr
         <div
           className={cn(
             'bg-neutral shadow-medium sticky z-10 flex w-full items-center justify-between rounded-sm p-2 transition-all duration-300 sm:p-3',
-            isMobile ? (displayHeaders ? 'top-[74px]' : '-top-0.5') : '-top-0.5'
+            isMobile ? (displayHeaders ? 'top-[74px]' : '-top-[3px]') : '-top-[3px]'
           )}
         >
           {/* {title && <h2 className='text-xl font-bold sm:text-2xl'>{title}</h2>} */}

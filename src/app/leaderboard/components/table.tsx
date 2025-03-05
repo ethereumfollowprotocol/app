@@ -106,7 +106,7 @@ const LeaderboardTable = () => {
   return (
     <>
       <div className='mt-24 flex w-full max-w-[1300px] flex-col items-start gap-4 px-4 sm:mt-12 sm:px-1 xl:mt-24'>
-        <h1 className='text-left text-3xl font-bold sm:text-6xl'>{t('leaderboard')}</h1>
+        <h1 className='text-left text-3xl font-bold sm:text-5xl 2xl:text-6xl'>{t('leaderboard')}</h1>
         <p className='text-left text-lg font-medium'>{t('leaderboard description')}</p>
       </div>
       <div className='mt-4 flex w-full flex-wrap items-center justify-between gap-2 px-2 sm:gap-3 sm:px-0 xl:hidden'>
@@ -124,8 +124,8 @@ const LeaderboardTable = () => {
           </div>
         ))}
       </div>
-      <div className='flex w-full max-w-[1300px] justify-center gap-5 xl:mt-4'>
-        <div className='flex w-full flex-col xl:max-w-[800px]'>
+      <div className='mt-2 flex w-full max-w-[1300px] justify-center gap-5 xl:mt-4'>
+        <div className='flex w-full flex-col lg:gap-4 xl:max-w-[800px]'>
           <div
             className='shadow-medium sticky z-20 transition-all duration-300'
             style={{ top: isMobile ? (displayHeaders ? '74px' : '0px') : '0px' }}
@@ -144,7 +144,7 @@ const LeaderboardTable = () => {
               isFetchingPreviousLeaderboard={isFetchingPreviousLeaderboard}
             />
           </div>
-          <div className='bg-neutral shadow-medium relative mb-16 flex flex-col rounded-b-sm'>
+          <div className='bg-neutral shadow-medium relative mb-16 flex flex-col rounded-sm'>
             {leaderboard
               ?.slice(0, chunk * LEADERBOARD_CHUNK_SIZE)
               .map((entry: LeaderboardItem, index) => (
@@ -213,13 +213,13 @@ const LeaderboardTable = () => {
               limit={10}
               endpoint='discover'
               header={t('recent')}
-              className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm p-3 py-4 2xl:p-4')}
+              className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm')}
             />
             <Recommendations
               limit={10}
               endpoint='recommended'
               header={t('recommendations')}
-              className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm p-3 py-4 2xl:p-4')}
+              className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm')}
             />
           </div>
         </div>

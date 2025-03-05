@@ -18,6 +18,7 @@ import Links from '../user-profile-card/components/links'
 import Achievements from '../user-profile-card/components/achievements'
 import EnsLogo from 'public/assets/icons/socials/ens.svg'
 import Link from 'next/link'
+import { Bio } from '@encrypteddegen/identity-kit'
 
 interface UserProfileCardProps {
   isMyProfile?: boolean
@@ -70,7 +71,7 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
         />
         <div className={cn('absolute right-8 bottom-30 flex flex-col items-end gap-3 pb-5', role && 'bottom-6')}>
           {profile.ens?.records?.status && (
-            <p className='bg-nav-item shadow-small hidden w-fit rounded-sm px-2 py-1 text-sm font-medium italic lg:block'>
+            <p className='bg-nav-item shadow-small hidden w-fit max-w-[364px] rounded-sm px-2 py-1 text-center text-sm font-medium italic lg:block'>
               &quot;{profile.ens.records.status}&quot;
             </p>
           )}
@@ -88,7 +89,7 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
             <div className='xs:gap-3 flex w-full items-center gap-2 sm:gap-4'>
               <Link
                 href={profileList === Number(profile.primary_list) ? `/${profile.address}` : `/${profileList}`}
-                className='max-w-summary-name truncate text-4xl leading-12 font-bold 2xl:text-5xl 2xl:leading-16'
+                className='max-w-summary-name truncate text-4xl leading-12 font-bold transition-all hover:scale-105 2xl:text-5xl 2xl:leading-16'
               >
                 {profile.ens?.name || truncateAddress(profile.address)}
               </Link>
@@ -122,25 +123,9 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
                 &quot;{profile.ens.records.status}&quot;
               </p>
             )}
-            <p className='max-w-2/3 lg:max-w-1/2 2xl:text-lg'>
-              {profile.ens?.records?.description ? (
-                profile.ens.records.description.split(' ').map((word) =>
-                  word.includes('@') && word.includes('.') ? (
-                    <a
-                      key={word}
-                      href={`https://efp.app/${word.replace('@', '')}`}
-                      className='text-blue-500 transition-colors hover:text-blue-600 dark:hover:text-blue-400'
-                    >
-                      {word}{' '}
-                    </a>
-                  ) : (
-                    String(word) + ' '
-                  )
-                )
-              ) : (
-                <i>No bio set</i>
-              )}
-            </p>
+            <div className='max-w-2/3 lg:max-w-1/2 2xl:text-lg'>
+              <Bio description={profile.ens?.records?.description} fontSize={18} maxLines={5} />
+            </div>
             <div className='flex flex-col gap-4 lg:flex-row lg:items-center'>
               <Socials profile={profile} />
               <Links profile={profile} />
@@ -150,7 +135,7 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
             </div>
           </div>
         </div>
-        <div className='bg-neutral absolute top-0 left-0 -z-10 h-full w-full'>
+        <div className='bg-neutral absolute top-0 left-0 -z-10 h-full w-full rounded-none'>
           <Image
             src={profile?.ens?.records?.header || DefaultHeader}
             alt='Profile Summary Card'

@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
 import { isAddress, isHex } from 'viem'
+import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
 import { fetchProfileDetails, fetchProfileStats } from '@encrypteddegen/identity-kit/utils'
 
 import { MINUTE } from '#/lib/constants'
 import UserInfo from './components/user-info'
 import { truncateAddress } from '#/lib/utilities'
-import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
 import type { SearchParams } from 'next/dist/server/request/search-params'
 
 interface Props {

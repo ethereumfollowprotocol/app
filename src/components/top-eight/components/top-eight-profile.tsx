@@ -5,16 +5,18 @@ import { ens_beautify } from '@adraffy/ens-normalize'
 
 import { useCart } from '#/hooks/use-cart'
 import { Avatar } from '#/components/avatar'
+import { isValidEnsName } from '#/utils/ens'
 import { cn, truncateAddress } from '#/lib/utilities'
 import FollowButton from '#/components/follow-button'
 import useFollowerState from '#/hooks/use-follower-state'
 import LoadingCell from '#/components/loaders/loading-cell'
-import { isValidEnsName, resolveEnsProfile } from '#/utils/ens'
 import type { TopEightProfileType } from '../hooks/use-top-eight'
 import { listOpAddListRecord, listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
 import Plus from 'public/assets/icons/ui/plus.svg'
 import Cross from 'public/assets/icons/ui/cross.svg'
 import FollowsYou from '#/components/follows-you'
+import { fetchAccount } from '#/api/fetch-account'
+import Image from 'next/image'
 
 interface TopEightProfileProps {
   profile: TopEightProfileType
@@ -24,11 +26,13 @@ interface TopEightProfileProps {
 const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing }) => {
   const { data: fetchedEnsProfile, isLoading: isEnsProfileLoading } = useQuery({
     queryKey: ['ens metadata', profile.address],
-    queryFn: async () => (profile.ens ? profile.ens : await resolveEnsProfile(profile.address)),
+    queryFn: async () => (profile.ens ? profile.ens : (await fetchAccount(profile.address))?.ens),
   })
 
   const profileName = fetchedEnsProfile?.name
   const profileAvatar = fetchedEnsProfile?.avatar
+  const headerImage = fetchedEnsProfile?.records?.header
+
   const { address: userAddress } = useAccount()
   const { followState } = useFollowerState({ address: profile?.address, showFollowerBadge: true })
   const { addToCart, removeFromCart, hasListOpAddTag, hasListOpRemoveTag, hasListOpRemoveRecord } = useCart()
@@ -60,6 +64,15 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
       )}
       onClick={onClick}
     >
+      {headerImage && (
+        <Image
+          src={headerImage}
+          alt='header'
+          width={600}
+          height={200}
+          className='absolute top-0 left-0 z-0 h-full w-full object-cover opacity-25'
+        />
+      )}
       {isEditing && (
         <div
           className={cn(
@@ -72,7 +85,7 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
           {isAddingToTopEight ? <Plus className='h-3 w-3' /> : <Cross className='h-4 w-4' />}
         </div>
       )}
-      <div className='flex w-full flex-col items-center gap-1'>
+      <div className='z-10 flex w-full flex-col items-center gap-1'>
         {isEnsProfileLoading ? (
           <LoadingCell className='h-[50px] w-[50px] rounded-full' />
         ) : (
@@ -105,7 +118,7 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
       </div>
       <div
         onClick={(e) => e.stopPropagation()}
-        className={cn('absolute left-0 flex w-full justify-center', isEditing ? 'bottom-2' : 'bottom-3')}
+        className={cn('absolute left-0 z-10 flex w-full justify-center', isEditing ? 'bottom-2' : 'bottom-3')}
       >
         <FollowButton address={profile.address} />
       </div>

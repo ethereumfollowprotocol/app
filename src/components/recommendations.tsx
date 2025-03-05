@@ -74,10 +74,10 @@ const Recommendations = ({
   }, [userAddress, selectedList, limit])
 
   return (
-    <div className={cn('bg-neutral shadow-medium flex flex-col gap-4 rounded-sm py-4 2xl:gap-6', className)}>
+    <div className={cn('bg-neutral shadow-medium flex flex-col gap-2 rounded-sm pt-2 2xl:gap-3', className)}>
       <div className='w-full pt-2 sm:px-4'>
         <div className='flex w-full items-center justify-between'>
-          <h2 className={`text-start text-2xl font-bold sm:pl-0 2xl:text-3xl`}>{header}</h2>
+          <h2 className='pl-1 text-start text-2xl font-bold'>{header}</h2>
           {showPageSelector && (
             <Suspense>
               <PageSelector

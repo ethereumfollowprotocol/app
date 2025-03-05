@@ -49,7 +49,7 @@ const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
     const headerImage = fetchedEnsProfile?.records?.header
 
     return (
-      <div className='hover:bg-text/5 relative flex items-center justify-between rounded-sm px-5 transition-all sm:h-20'>
+      <div className='hover:bg-text/5 relative flex h-20 items-center justify-between rounded-sm px-5 transition-all'>
         {headerImage && (
           <Image
             src={headerImage}

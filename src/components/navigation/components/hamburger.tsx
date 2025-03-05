@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
-import { useClickAway } from '@uidotdev/usehooks'
+import { useClickAway, useIsClient } from '@uidotdev/usehooks'
 
 import Menu from './menu'
 import { cn } from '#/lib/utilities'
 
 const Hamburger = () => {
   const [open, setOpen] = useState(false)
+
+  const isClient = useIsClient()
   const clickAwayRef = useClickAway<HTMLDivElement>(() => setOpen(false))
 
   const lineTransform = [
@@ -27,7 +29,7 @@ const Hamburger = () => {
           ></div>
         ))}
       </button>
-      <Menu open={open} setOpen={setOpen} />
+      {isClient && <Menu open={open} setOpen={setOpen} />}
     </div>
   )
 }

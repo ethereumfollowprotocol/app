@@ -1,11 +1,9 @@
 import React from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
 
+import FeedCard from '#/components/feed-card'
 import ExternalLink from 'public/assets/icons/ui/external-link.svg'
-import OnchainActivityImageDark from 'public/assets/art/example-activity-dark.png'
-import OnchainActivityImageLight from 'public/assets/art/example-activity-light.png'
 
 const OnchainActivity = () => {
   const { t } = useTranslation()
@@ -18,27 +16,14 @@ const OnchainActivity = () => {
         <Link
           href='https://ethidentitykit.com/docs/api/Users/following'
           target='_blank'
-          className='flex items-center gap-2 transition-opacity hover:underline hover:opacity-60'
+          className='flex w-fit items-center gap-2 transition-opacity hover:underline hover:opacity-60'
         >
           <p>{t('example activity api link')}</p>
           <ExternalLink className='h-4 w-auto' />
         </Link>
       </div>
-      <div className='shadow-medium mt-2 h-[500px] w-full overflow-hidden'>
-        <Image
-          src={OnchainActivityImageDark}
-          width={600}
-          height={900}
-          alt='Onchain Activity'
-          className='hidden w-full rounded-sm dark:block'
-        />
-        <Image
-          src={OnchainActivityImageLight}
-          width={600}
-          height={900}
-          alt='Onchain Activity'
-          className='w-full rounded-sm dark:hidden'
-        />
+      <div className='h-[500px] w-full overflow-scroll px-2'>
+        <FeedCard />
       </div>
     </div>
   )

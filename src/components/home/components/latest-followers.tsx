@@ -12,9 +12,9 @@ const LatestFollowers = () => {
   const isLatestFollowersLoading = isLoading || isFetchingNextPage || isFetchingPreviousPage
 
   return (
-    <div className='bg-neutral shadow-medium flex w-full flex-col gap-3 rounded-sm py-4 2xl:gap-4'>
+    <div className='bg-neutral shadow-medium flex w-full flex-col gap-3 rounded-sm pt-3'>
       <div className='flex w-full items-center justify-between px-4'>
-        <h2 className='w-full p-2 text-2xl font-bold 2xl:text-3xl'>{t('latest followers')}</h2>
+        <h2 className='w-full pl-1 text-2xl font-bold'>{t('latest followers')}</h2>
         <Suspense>
           <PageSelector
             page={subPage}

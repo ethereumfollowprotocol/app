@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 
-import { cn } from '#/lib/utilities.ts'
 import FeedCard from '#/components/feed-card.tsx'
 import Recommendations from '#/components/recommendations'
 import useStickyScroll from './hooks/use-sticky-scroll.ts'
@@ -58,7 +57,7 @@ const Home = () => {
           ref={SidebarRef}
           className='hidden h-[90vh] w-full max-w-[520px] flex-col gap-4 lg:sticky lg:flex'
           style={{
-            top: 'calc(100vh - 2000px)',
+            top: 'calc(100vh - 2700px)',
           }}
         >
           <ProfileSummaryCard />
@@ -66,18 +65,15 @@ const Home = () => {
             limit={10}
             endpoint='discover'
             header={t('recent')}
-            className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm py-4')}
+            className='bg-neutral shadow-medium h-fit w-full rounded-sm'
           />
-          {userAddress ? (
-            !isFollowersEmpty && <LatestFollowers />
-          ) : (
-            <Recommendations
-              limit={10}
-              endpoint='recommended'
-              header={t('recommendations')}
-              className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm py-4')}
-            />
-          )}
+          {userAddress && !isFollowersEmpty && <LatestFollowers />}
+          <Recommendations
+            limit={10}
+            endpoint='recommended'
+            header={t('recommendations')}
+            className='bg-neutral shadow-medium h-fit w-full rounded-sm'
+          />
         </div>
       </div>
       <BackToTop />

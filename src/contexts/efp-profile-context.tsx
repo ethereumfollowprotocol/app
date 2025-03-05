@@ -308,9 +308,6 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     },
     staleTime: Infinity,
     refetchOnWindowFocus: false,
-    // meta: {
-    //   persist: true,
-    // },
   })
 
   const {
@@ -327,9 +324,6 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       return fetchedStats
     },
     refetchOnWindowFocus: false,
-    // meta: {
-    //   persist: true,
-    // },
   })
 
   const [isEndOfFollowing, setIsEndOfFollowing] = useState(false)
@@ -380,9 +374,6 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.nextPageParam,
-    // meta: {
-    //   persist: true,
-    // },
   })
 
   const [isEndOfFollowers, setIsEndOfFollowers] = useState(false)

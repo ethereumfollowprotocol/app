@@ -19,7 +19,7 @@ const CompleteProfile = () => {
           <Link
             href='https://ethidentitykit.com/docs/components/profile-card'
             target='_blank'
-            className='flex items-center gap-2 transition-opacity hover:underline hover:opacity-60'
+            className='flex w-fit items-center gap-2 transition-opacity hover:underline hover:opacity-60'
           >
             <p>{t('example profile card link')}</p>
             <ExternalLink className='h-4 w-auto' />
@@ -27,7 +27,7 @@ const CompleteProfile = () => {
           <Link
             href='https://ethidentitykit.com/docs/api/Users/stats'
             target='_blank'
-            className='flex items-center gap-2 transition-opacity hover:underline hover:opacity-60'
+            className='flex w-fit items-center gap-2 transition-opacity hover:underline hover:opacity-60'
           >
             <p>{t('example profile count link')}</p>
             <ExternalLink className='h-4 w-auto' />
@@ -35,7 +35,7 @@ const CompleteProfile = () => {
           <Link
             href='https://ethidentitykit.com/docs/api/Users/ens'
             target='_blank'
-            className='flex items-center gap-2 transition-opacity hover:underline hover:opacity-60'
+            className='flex w-fit items-center gap-2 transition-opacity hover:underline hover:opacity-60'
           >
             <p>{t('example profile ens link')}</p>
             <ExternalLink className='h-4 w-auto' />

@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 
 const Integrations = () => {
   return (
-    <main className='relative flex w-full flex-col justify-between gap-12 pb-24 sm:pb-0 sm:pl-20 lg:flex-row lg:gap-0 lg:pl-[10vw] 2xl:mx-auto 2xl:max-w-[1540px] 2xl:justify-center 2xl:gap-16 2xl:pl-12'>
+    <main className='relative flex w-full flex-col justify-between gap-12 pb-24 sm:pb-0 sm:pl-[70px] lg:flex-row lg:gap-0 lg:pl-[10vw] 2xl:mx-auto 2xl:max-w-[1540px] 2xl:justify-center 2xl:gap-16 2xl:pl-12'>
       <Guide />
       <LiveIntegrations />
       <BackToTop />
