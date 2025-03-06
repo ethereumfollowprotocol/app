@@ -115,7 +115,7 @@ export const useNotifications = () => {
 
   const newNotifications = useMemo(() => {
     if (isLoading) return 0
-    8
+
     if (isOpen) {
       localStorage.setItem(`notifications-open-timestamp-${userAddress}`, new Date().getTime().toString())
       return 0
