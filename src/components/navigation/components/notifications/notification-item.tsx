@@ -16,9 +16,10 @@ export type NotificationItemAction = 'follow' | 'unfollow' | 'tag' | 'untag' | '
 interface NotificationItemProps {
   action: NotificationItemAction
   notifications: NotificationItemType[]
+  isNew: boolean
 }
 
-const NotificationItem: React.FC<NotificationItemProps> = ({ notifications, action }) => {
+const NotificationItem: React.FC<NotificationItemProps> = ({ notifications, action, isNew }) => {
   const router = useRouter()
   const { t } = useTranslation()
 
@@ -52,7 +53,12 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ notifications, acti
   const displayedNames = notifications.slice(0, 2)
 
   return (
-    <div className={cn('flex h-16 w-full items-center justify-between gap-1 rounded-sm px-3 py-2 sm:w-[520px]', style)}>
+    <div
+      className={cn(
+        'relative flex h-16 w-full items-center justify-between gap-1 rounded-sm px-3 py-2 sm:w-[520px]',
+        style
+      )}
+    >
       <div className='flex max-w-[90%] items-center gap-2 sm:max-w-full'>
         <div
           className={cn(
@@ -97,6 +103,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ notifications, acti
         </div>
       </div>
       <p className='text-text-neutral text-sm font-semibold'>{formatTimeDiff(timeDiff)}</p>
+      {isNew && <span className='bg-primary absolute -top-1 -right-1 flex h-4 w-4 rounded-full' />}
     </div>
   )
 }

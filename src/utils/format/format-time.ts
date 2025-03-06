@@ -1,6 +1,6 @@
 export const formatTimeDiff = (timeDiff: number) => {
   if (timeDiff < 60) {
-    return `${timeDiff}s`
+    return `${Math.floor(timeDiff)}s`
   } else if (timeDiff < 3600) {
     return `${Math.floor(timeDiff / 60)}m`
   } else if (timeDiff < 86400) {

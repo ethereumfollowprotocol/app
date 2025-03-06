@@ -50,6 +50,7 @@ const Notifications = () => {
               value ? (
                 <NotificationItem
                   key={`${index}-${key}`}
+                  isNew={item.isNew}
                   notifications={value}
                   action={key as NotificationItemAction}
                 />

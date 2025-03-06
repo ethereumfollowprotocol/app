@@ -1,6 +1,6 @@
 import { useAccount } from 'wagmi'
-import { useMemo, useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useEffect, useState } from 'react'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { DAY, HOUR, MINUTE } from '#/lib/constants'
 import { fetchNotifications } from '#/api/profile/fetch-notifications'
 
@@ -65,7 +65,9 @@ const NOTIFICATIONS_TIMESTAMPS = [
 
 export const useNotifications = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [newNotifications, setNewNotifications] = useState(0)
 
+  const queryClient = useQueryClient()
   const { address: userAddress } = useAccount()
   const { data, isLoading } = useQuery({
     queryKey: ['notifications', userAddress],
@@ -76,8 +78,17 @@ export const useNotifications = () => {
         const filteredNotifications = notifications?.notifications.filter(
           (notification) => notification.updated_at <= timestamp.from && notification.updated_at >= timestamp.to
         )
+
+        const storedNotificationsTimestamp = Number(
+          localStorage.getItem(`notifications-open-timestamp-${userAddress}`) || 0
+        )
+
         return {
           ...timestamp,
+          isNew:
+            timestamp.label === 'recent'
+              ? new Date(filteredNotifications?.[0]?.updated_at || 0).getTime() > storedNotificationsTimestamp
+              : new Date(timestamp.to).getTime() > storedNotificationsTimestamp,
           notifications: {
             follow: filteredNotifications?.filter((notification) => notification.action === 'follow'),
             unfollow: filteredNotifications?.filter((notification) => notification.action === 'unfollow'),
@@ -113,35 +124,34 @@ export const useNotifications = () => {
     refetchInterval: MINUTE * 5,
   })
 
-  const newNotifications = useMemo(() => {
-    if (isLoading) return 0
-
-    if (isOpen) {
-      localStorage.setItem(`notifications-open-timestamp-${userAddress}`, new Date().getTime().toString())
-      return 0
+  useEffect(() => {
+    if (data?.notifications) {
+      if (!isOpen) {
+        queryClient.setQueryData(['notifications', userAddress], (data: any) => {
+          return {
+            ...data,
+            notifications: data.notifications.map((notification: any) => ({ ...notification, isNew: false })),
+          }
+        })
+        setNewNotifications(0)
+      } else {
+        localStorage.setItem(`notifications-open-timestamp-${userAddress}`, new Date().getTime().toString())
+        return setNewNotifications(0)
+      }
     }
+  }, [isOpen])
+
+  useEffect(() => {
+    if (isLoading) return setNewNotifications(0)
 
     if (data?.notifications) {
-      const storedNotificationsTimestamp = Number(
-        localStorage.getItem(`notifications-open-timestamp-${userAddress}`) || 0
+      return setNewNotifications(
+        data.notifications
+          .filter((notification) => notification.isNew)
+          .flatMap((notification) => Object.values(notification.notifications).flat()).length
       )
-
-      console.log(isLoading, data, storedNotificationsTimestamp)
-
-      return data.notifications
-        .filter((notification) => {
-          if (notification.label === 'recent') {
-            const objNotifications = Object.values(notification.notifications).flat()
-            return new Date(objNotifications[0]?.updated_at || 0).getTime() > storedNotificationsTimestamp
-          }
-
-          return new Date(notification.to).getTime() > storedNotificationsTimestamp
-        })
-        .flatMap((notification) => Object.values(notification.notifications).flat()).length
     }
-
-    return 0
-  }, [data, isOpen])
+  }, [data])
 
   return { notifications: data?.notifications, isLoading, isOpen, setIsOpen, newNotifications }
 }
