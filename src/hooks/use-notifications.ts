@@ -72,6 +72,8 @@ export const useNotifications = () => {
   const { data, isLoading } = useQuery({
     queryKey: ['notifications', userAddress],
     queryFn: async () => {
+      if (!userAddress) return null
+
       const notifications = await fetchNotifications(userAddress, 'month')
 
       const sortedNotifications = NOTIFICATIONS_TIMESTAMPS.map((timestamp) => {

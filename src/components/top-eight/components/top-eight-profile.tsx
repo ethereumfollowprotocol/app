@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import { useQuery } from '@tanstack/react-query'
 import { ens_beautify } from '@adraffy/ens-normalize'
@@ -18,6 +17,7 @@ import Cross from 'public/assets/icons/ui/cross.svg'
 import FollowsYou from '#/components/follows-you'
 import { fetchAccount } from '#/api/fetch-account'
 import { isLinkValid } from '#/utils/validity'
+import ImageWithFallback from '#/components/image-with-fallback'
 
 interface TopEightProfileProps {
   profile: TopEightProfileType
@@ -66,8 +66,9 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
       onClick={onClick}
     >
       {headerImage && (
-        <Image
+        <ImageWithFallback
           src={headerImage}
+          fallback={undefined}
           alt='header'
           width={600}
           height={200}

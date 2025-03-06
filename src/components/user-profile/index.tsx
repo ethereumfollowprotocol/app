@@ -1,6 +1,5 @@
 import React from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import { Bio } from '@encrypteddegen/identity-kit'
 
@@ -22,6 +21,7 @@ import DefaultHeader from 'public/assets/art/default-header.svg?url'
 import Achievements from '../user-profile-card/components/achievements'
 import CommonFollowers from '../user-profile-card/components/common-followers'
 import { useIsClient } from '@uidotdev/usehooks'
+import ImageWithFallback from '../image-with-fallback'
 
 interface UserProfileCardProps {
   isMyProfile?: boolean
@@ -66,6 +66,16 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
           id='user-profile-content'
           className={cn('relative hidden w-full max-w-[1920px] px-4 pt-12 pb-36 md:block xl:px-8', className)}
         >
+          <div className='bg-neutral 3xl:hidden absolute top-0 left-0 -z-10 h-full w-full rounded-none'>
+            <ImageWithFallback
+              src={isLinkValid(profile?.ens?.records?.header) ? profile?.ens?.records?.header : DefaultHeader}
+              fallback={DefaultHeader}
+              alt='Profile Summary Card'
+              width={1440}
+              height={600}
+              className='h-full w-full object-cover opacity-20'
+            />
+          </div>
           {role && <p className='absolute top-4 left-8 text-lg font-semibold italic'>{role}</p>}
           <MoreOptions
             address={profile.address}
@@ -145,11 +155,12 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
           </div>
         </div>
         <div
-          className='bg-neutral absolute top-0 left-0 -z-10 h-fit w-screen rounded-none'
+          className='bg-neutral 3xl:block absolute top-0 left-0 -z-10 hidden w-screen rounded-none'
           style={{ height: isClient ? document.getElementById('user-profile-content')?.clientHeight : 420 }}
         >
-          <Image
+          <ImageWithFallback
             src={isLinkValid(profile?.ens?.records?.header) ? profile?.ens?.records?.header : DefaultHeader}
+            fallback={DefaultHeader}
             alt='Profile Summary Card'
             width={1440}
             height={600}

@@ -1,5 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
 import type { Address } from 'viem'
 import { useQuery } from '@tanstack/react-query'
 
@@ -8,6 +7,7 @@ import ProfileListItemDetails from './details'
 import { fetchAccount } from '#/api/fetch-account'
 import type { ENSProfile } from '#/types/requests'
 import FollowButton from '#/components/follow-button'
+import ImageWithFallback from '#/components/image-with-fallback'
 import type { ProfileStatsType, TagsDropdownPositionType } from '#/types/common'
 import TopEightAddButton from '#/components/top-eight/components/top-eight-add-button'
 
@@ -51,8 +51,9 @@ const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
     return (
       <div className='hover:bg-text/5 relative flex h-20 items-center justify-between rounded-sm px-5 transition-all'>
         {headerImage && (
-          <Image
+          <ImageWithFallback
             src={headerImage}
+            fallback={undefined}
             alt='header'
             width={600}
             height={200}

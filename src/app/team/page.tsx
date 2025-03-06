@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 
 const TeamPage = () => {
   return (
-    <main className='flex w-full flex-col gap-12 pt-24 pl-0 sm:pt-12 sm:pl-[70px] lg:pt-20 2xl:pl-20'>
+    <main className='flex w-full flex-col gap-12 pt-24 pb-20 pl-0 sm:pt-12 sm:pb-0 sm:pl-[70px] lg:pt-20 2xl:pl-20'>
       <Members />
       <BackToTop />
     </main>
