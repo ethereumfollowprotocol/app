@@ -32,6 +32,8 @@ import Recordsxyz from 'public/assets/partners/recordsxyz.jpeg'
 import Agora from 'public/assets/partners/agora.jpg'
 import Lighthouse from 'public/assets/partners/lighthouse.jpeg'
 import Pobstudio from 'public/assets/partners/pobstudio.jpeg'
+import Dhive from 'public/assets/partners/dhive.jpeg'
+
 
 
 export const INTEGRATIONS = [
@@ -96,14 +98,19 @@ export const INTEGRATIONS = [
     logo: Pobstudio,
   },
   {
-    name: 'LikeButton.eth',
-    url: 'https://likebutton.eth.limo/',
-    logo: LikeButton,
+    name: 'Dhive',
+    url: 'https://dhive.io',
+    logo: Dhive,
   },
   {
     name: 'Records.xyz',
     url: 'https://records.xyz',
     logo: Recordsxyz,
+  },
+  {
+    name: 'LikeButton.eth',
+    url: 'https://likebutton.eth.limo/',
+    logo: LikeButton,
   },
   {
     name: 'Webhash',
