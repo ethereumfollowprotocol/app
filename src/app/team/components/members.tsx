@@ -32,7 +32,7 @@ const Members = () => {
       <div className='flex w-full flex-col gap-16'>
         <div className='flex w-full flex-col items-start justify-center gap-6 md:gap-0'>
           {teamProfiles?.map((profile, i) => (
-            <div key={profile?.address} className='flex w-full flex-col items-center gap-2'>
+            <div key={profile?.address} className='relative flex w-full flex-col items-center gap-2'>
               <p className='text-lg font-bold text-zinc-500 md:hidden dark:text-zinc-200'>{TEAM_ROLES[i]}</p>
               <UserProfileCard
                 isResponsive={false}
@@ -85,7 +85,7 @@ const Members = () => {
           </div>
           <div className='flex w-full flex-col items-start justify-center gap-6 align-middle md:gap-0'>
             {foundationProfiles?.map((profile, i) => (
-              <div key={profile?.address} className='flex w-full flex-col items-center gap-2'>
+              <div key={profile?.address} className='relative flex w-full flex-col items-center gap-2'>
                 <p className='text-lg font-bold text-zinc-500 md:hidden dark:text-zinc-200'>{FOUNDATION_ROLES[i]}</p>
                 <UserProfileCard
                   isResponsive={false}
