@@ -1,6 +1,7 @@
 import type { GetEnsAvatarReturnType } from 'viem'
 
 import { cn } from '#/lib/utilities'
+import { isLinkValid } from '#/utils/validity'
 import ImageWithFallback from './image-with-fallback'
 import { DEFAULT_AVATAR_URL } from '#/lib/constants'
 
@@ -24,7 +25,7 @@ export const Avatar = ({
       height={50}
       width={50}
       onClick={() => onClick?.()}
-      src={avatarUrl || DEFAULT_AVATAR_URL}
+      src={avatarUrl && isLinkValid(avatarUrl) ? avatarUrl : DEFAULT_AVATAR_URL}
       unoptimized={true}
     />
   )

@@ -8,6 +8,7 @@ import ArrowRight from 'public/assets/icons/ui/arrow-right.svg'
 import Image from 'next/image'
 import DefaultHeader from 'public/assets/art/default-header.svg?url'
 import { formatNumber } from '#/utils/format/format-number'
+import { isLinkValid } from '#/utils/validity'
 
 const ProfileSummaryCard = () => {
   const { profile, profileIsLoading, stats, statsIsLoading, lists, selectedList } = useEFPProfile()
@@ -52,7 +53,7 @@ const ProfileSummaryCard = () => {
         profile && (
           <>
             <Image
-              src={profile?.ens?.records?.header || DefaultHeader}
+              src={isLinkValid(profile?.ens?.records?.header) ? profile?.ens?.records?.header : DefaultHeader}
               alt='Profile Summary Card'
               width={400}
               height={400}

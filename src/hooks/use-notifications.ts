@@ -128,7 +128,14 @@ export const useNotifications = () => {
 
       setNewNotifications(
         data?.notifications
-          .filter((notification) => new Date(notification.from).getTime() > storedNotificationsTimestamp)
+          .filter((notification) => {
+            if (notification.label === 'recent') {
+              const objNotifications = Object.values(notification.notifications).flat()
+              return new Date(objNotifications[0]?.updated_at || 0).getTime() > storedNotificationsTimestamp
+            }
+
+            return new Date(notification.to).getTime() > storedNotificationsTimestamp
+          })
           .flatMap((notification) => Object.values(notification.notifications).flat()).length
       )
     }

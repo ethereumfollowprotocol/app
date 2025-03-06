@@ -1,5 +1,4 @@
 import React from 'react'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import type { NotificationItemType } from '#/types/requests'
@@ -68,7 +67,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ notifications, acti
             {displayedProfiles.map((profile, index) => (
               <Avatar
                 key={profile.address}
-                size={`w-8 h-8 rounded-full cursor-pointer hover:scale-125 transition-all ${index === 0 ? 'z-0' : `-ml-[18px] z-${index * 10}`}`}
+                size={`w-8 h-8 rounded-full shadow-sm cursor-pointer hover:scale-125 transition-all ${index === 0 ? 'z-0' : `-ml-[18px] z-${index * 10}`}`}
                 avatarUrl={profile.avatar}
                 name={profile.name || profile.address}
                 onClick={() => router.push(`/${profile.address}?ssr=false`)}
@@ -98,28 +97,6 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ notifications, acti
       </div>
       <p className='text-text-neutral text-sm font-semibold'>{formatTimeDiff(timeDiff)}</p>
     </div>
-  )
-}
-
-export const NotificationProfile = ({
-  address,
-  name,
-  avatar,
-}: {
-  address: string
-  name?: string | null
-  avatar?: string | null
-}) => {
-  return (
-    <Link
-      href={`/${address}`}
-      className='flex flex-nowrap items-center gap-1 transition-all hover:underline hover:opacity-80'
-    >
-      <Avatar name={name || address} avatarUrl={avatar} size='h-5 w-5 overflow-hidden rounded-full' />
-      <p className='overflow-hidden text-sm text-ellipsis whitespace-nowrap'>
-        {name || truncateAddress(address as `0x${string}`)}
-      </p>
-    </Link>
   )
 }
 

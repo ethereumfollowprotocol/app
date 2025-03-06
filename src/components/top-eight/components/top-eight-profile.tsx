@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import { useQuery } from '@tanstack/react-query'
 import { ens_beautify } from '@adraffy/ens-normalize'
@@ -16,7 +17,7 @@ import Plus from 'public/assets/icons/ui/plus.svg'
 import Cross from 'public/assets/icons/ui/cross.svg'
 import FollowsYou from '#/components/follows-you'
 import { fetchAccount } from '#/api/fetch-account'
-import Image from 'next/image'
+import { isLinkValid } from '#/utils/validity'
 
 interface TopEightProfileProps {
   profile: TopEightProfileType
@@ -31,7 +32,7 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
 
   const profileName = fetchedEnsProfile?.name
   const profileAvatar = fetchedEnsProfile?.avatar
-  const headerImage = fetchedEnsProfile?.records?.header
+  const headerImage = isLinkValid(fetchedEnsProfile?.records?.header) ? fetchedEnsProfile?.records?.header : undefined
 
   const { address: userAddress } = useAccount()
   const { followState } = useFollowerState({ address: profile?.address, showFollowerBadge: true })
@@ -56,7 +57,7 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
   return (
     <div
       className={cn(
-        'group bg-neutral shadow-small relative flex flex-col items-center justify-between gap-2 rounded-sm px-0.5 py-4 pb-3',
+        'group bg-neutral shadow-small relative flex flex-col items-center justify-between gap-2 overflow-hidden rounded-sm px-0.5 py-4 pb-3',
         isEditing ? 'top-eight-profile-edit cursor-pointer border-[3px] border-transparent' : 'top-eight-profile',
         isAddingToTopEight && 'border-[3px] border-green-500/50',
         isRemovingFromTopEight && 'border-[3px] border-red-400/70 dark:border-red-500/70',

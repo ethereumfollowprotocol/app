@@ -13,7 +13,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ showTags }) => {
         <LoadingCell className='h-[45px] w-[45px] rounded-full 2xl:h-[50px] 2xl:w-[50px]' />
         <div className='flex w-3/4 flex-col gap-[2px] sm:w-fit md:flex-row md:gap-3'>
           <div className={`relative flex w-fit flex-col items-start justify-center tabular-nums`}>
-            <LoadingCell className={'h-6 w-28 rounded-sm 2xl:h-7 2xl:w-32'} />
+            <LoadingCell className={'h-5 w-28 rounded-sm 2xl:h-6 2xl:w-32'} />
           </div>
           {showTags && (
             <div className='relative flex w-[190px] flex-wrap items-center justify-start gap-2 sm:w-fit xl:w-[110px]'>
@@ -26,7 +26,7 @@ const LoadingRow: React.FC<LoadingRowProps> = ({ showTags }) => {
           )}
         </div>
       </div>
-      <LoadingCell className='h-9 w-[110px] rounded-sm 2xl:h-10 2xl:w-[120px]' />
+      <LoadingCell className='h-[39px] w-[110px] rounded-sm' />
     </div>
   )
 }

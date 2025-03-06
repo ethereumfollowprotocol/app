@@ -34,23 +34,26 @@ const Home = () => {
       <Image
         src={homeBackgroundLight}
         alt='home-bg'
-        width={6000}
-        height={6000}
-        className='fixed -top-[780px] -right-[900px] -z-10 aspect-square h-[2100px] w-[2100px] overflow-visible object-cover sm:-top-[780px] sm:-right-[150vw] md:-right-[110vw] lg:-right-[85vw] xl:-right-[70vw] 2xl:-right-[60vw] dark:hidden'
+        width={2600}
+        height={2600}
+        className='3xl:-right-[1600px] 3xl:h-[2600px] 3xl:w-[2600px] 3xl:-top-[1050px] 3xl:-rotate-6 fixed -top-[760px] -right-[900px] -z-10 aspect-square h-[2100px] w-[2100px] overflow-visible object-cover sm:-right-[150vw] md:-right-[110vw] lg:-right-[85vw] xl:-right-[70vw] dark:hidden'
       />
       <Image
         src={homeBackgroundDark}
         alt='home-bg'
         width={6000}
         height={6000}
-        className='fixed -top-[780px] -right-[900px] -z-10 hidden aspect-square h-[2100px] w-[2100px] overflow-visible object-cover sm:-top-[780px] sm:-right-[150vw] md:-right-[110vw] lg:-right-[85vw] xl:-right-[70vw] 2xl:-right-[60vw] dark:block'
+        className='3xl:-right-[1600px] 3xl:h-[2600px] 3xl:w-[2600px] 3xl:-top-[1050px] 3xl:-rotate-6 fixed -top-[760px] -right-[900px] -z-10 hidden aspect-square h-[2100px] w-[2100px] overflow-visible object-cover sm:-right-[150vw] md:-right-[110vw] lg:-right-[85vw] xl:-right-[70vw] dark:block'
       />
       <div className='fixed top-4 right-4 z-50 hidden h-fit w-fit sm:block'>
         <ConnectWalletButton />
       </div>
       <div className='mt-24 flex max-w-[1100px] flex-col gap-4 md:mt-20 lg:mt-24'>
-        <h2 className='xs:text-4xl text-3xl font-bold sm:text-5xl lg:text-6xl'>{t('home title')}</h2>
-        <p className='w-[90%] text-lg sm:mt-3 lg:w-3/4 xl:w-2/3'>{t('home description')}</p>
+        <h2 className='xs:text-4xl text-3xl font-bold sm:text-5xl 2xl:text-6xl'>{t('home title')}</h2>
+        <p className='w-[90%] text-lg sm:mt-3 lg:w-3/4 xl:w-2/3'>
+          <b>{t('home description efp')}</b>
+          {t('home description')}
+        </p>
         <Link
           href='/integrations'
           className='group/link ml-[-3px] flex w-fit items-center gap-2 transition-opacity hover:opacity-70'

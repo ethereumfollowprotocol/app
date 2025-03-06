@@ -1,15 +1,15 @@
 import React from 'react'
+import Image from 'next/image'
 import type { Address } from 'viem'
 import { useQuery } from '@tanstack/react-query'
 
+import { isLinkValid } from '#/utils/validity'
 import ProfileListItemDetails from './details'
-// import { resolveEnsProfile } from '#/utils/ens'
+import { fetchAccount } from '#/api/fetch-account'
 import type { ENSProfile } from '#/types/requests'
 import FollowButton from '#/components/follow-button'
 import type { ProfileStatsType, TagsDropdownPositionType } from '#/types/common'
 import TopEightAddButton from '#/components/top-eight/components/top-eight-add-button'
-import { fetchAccount } from '#/api/fetch-account'
-import Image from 'next/image'
 
 export interface ProfileListItemProps {
   address: Address
@@ -46,7 +46,7 @@ const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
 
     const profileName = fetchedEnsProfile?.name
     const profileAvatar = fetchedEnsProfile?.avatar
-    const headerImage = fetchedEnsProfile?.records?.header
+    const headerImage = isLinkValid(fetchedEnsProfile?.records?.header) ? fetchedEnsProfile?.records?.header : undefined
 
     return (
       <div className='hover:bg-text/5 relative flex h-20 items-center justify-between rounded-sm px-5 transition-all'>

@@ -48,8 +48,11 @@ const Guide = () => {
   return (
     <div className='mt-24 flex h-fit w-full flex-col items-start gap-12 rounded-sm px-4 sm:mt-12 sm:px-8 lg:mt-24 lg:max-w-[43vw] lg:px-0 xl:max-w-[550px] 2xl:max-w-[700px]'>
       <div className='flex flex-col gap-6'>
-        <h2 className='text-5xl font-bold xl:text-start'>{t('integrate efp')}</h2>
-        <p className='xxs:text-lg text-text/80 w-full text-start sm:w-[90%]'>{t('integrate efp description')}</p>
+        <h2 className='text-4xl font-bold sm:text-5xl xl:text-start'>{t('integrate efp')}</h2>
+        <p className='xxs:text-lg text-text/80 w-full text-start sm:w-[90%]'>
+          <b>{t('home description efp')}</b>
+          {t('integrate efp description')}
+        </p>
         <div className='flex w-full flex-row flex-wrap items-center justify-start gap-3'>
           {RESOURCES.map((resource) => (
             <Link

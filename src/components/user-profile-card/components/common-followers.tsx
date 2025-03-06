@@ -54,7 +54,7 @@ const CommonFollowers: React.FC<CommonFollowersProps> = ({ address }) => {
           displayedAvatars?.map((result, index) => (
             <Avatar
               key={result.address}
-              size={`w-9 h-9 rounded-full ${index === 0 ? 'z-0' : `-ml-[18px] z-${index * 10}`}`}
+              size={`w-9 h-9 rounded-full shadow-sm ${index === 0 ? 'z-0' : `-ml-[18px] z-${index * 10}`}`}
               avatarUrl={result.avatar}
               name={result.name || result.address}
             />

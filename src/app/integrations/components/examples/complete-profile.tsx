@@ -1,14 +1,17 @@
+'use client'
+
 import React from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
+import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
+import { ProfileCard } from '@encrypteddegen/identity-kit'
 
 import ExternalLink from 'public/assets/icons/ui/external-link.svg'
-import CompleteProfileImageLight from 'public/assets/art/example-profile-light.png'
-import CompleteProfileImageDark from 'public/assets/art/example-profile-dark.png'
+import FollowButton from '#/components/follow-button'
 
 const CompleteProfile = () => {
   const { t } = useTranslation()
+  const { address: userAddress } = useAccount()
 
   return (
     <div className='bg-neutral shadow-medium flex w-full flex-col gap-2 rounded-sm pt-6 pr-1'>
@@ -42,8 +45,30 @@ const CompleteProfile = () => {
           </Link>
         </div>
       </div>
-      <Image src={CompleteProfileImageLight} alt='Complete Profile' className='block w-full rounded-sm dark:hidden' />
-      <Image src={CompleteProfileImageDark} alt='Complete Profile' className='hidden w-full rounded-sm dark:block' />
+      <div className='relative mx-auto mt-3 h-[340px] w-full overflow-hidden sm:h-[420px] 2xl:w-[580px]'>
+        <div className='absolute top-0 left-1 z-10 w-full px-2 sm:top-20 sm:left-4 sm:w-[400px]'>
+          <ProfileCard
+            addressOrName='0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+            connectedAddress={userAddress}
+            style={{ width: '100%' }}
+            options={{
+              followButton: <FollowButton address='0xd8da6bf26964af9d7eed9e03e53415d37aa96045' />,
+            }}
+            className='shadow-medium'
+          />
+        </div>
+        <div className='absolute top-0 left-32 hidden w-[400px] sm:block 2xl:left-40'>
+          <ProfileCard
+            addressOrName='0x983110309620d911731ac0932219af06091b6744'
+            connectedAddress={userAddress}
+            style={{ width: '100%' }}
+            options={{
+              followButton: <FollowButton address='0x983110309620d911731ac0932219af06091b6744' />,
+            }}
+            className='shadow-medium'
+          />
+        </div>
+      </div>
     </div>
   )
 }

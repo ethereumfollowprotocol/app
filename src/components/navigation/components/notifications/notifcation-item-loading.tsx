@@ -7,9 +7,9 @@ const NotificationItemLoading = () => {
         <LoadingCell className='h-10 w-10 rounded-full' />
         <div className='flex items-center gap-2'>
           <div className='flex items-center gap-2'>
-            <LoadingCell className='h-7 w-7 rounded-full' />
-            <LoadingCell className='z-10 -ml-[18px] h-7 w-7 rounded-full' />
-            <LoadingCell className='z-20 -ml-[18px] h-7 w-7 rounded-full' />
+            <LoadingCell className='h-7 w-7 rounded-full shadow-sm' />
+            <LoadingCell className='z-10 -ml-[18px] h-7 w-7 rounded-full shadow-sm' />
+            <LoadingCell className='z-20 -ml-[18px] h-7 w-7 rounded-full shadow-sm' />
           </div>
           <LoadingCell className='h-7 w-48 rounded-sm' />
         </div>

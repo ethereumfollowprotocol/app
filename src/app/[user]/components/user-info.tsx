@@ -169,7 +169,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       {!isSaving && (
         <div
           id='user-page'
-          className='relative flex h-screen w-full flex-col gap-4 overflow-y-auto px-0 pb-32 sm:pr-0 sm:pb-8 sm:pl-[70px] lg:gap-0 2xl:pl-20'
+          className='relative mx-auto flex h-screen w-full flex-col items-center gap-4 overflow-y-auto px-0 pb-32 sm:pr-0 sm:pb-8 sm:pl-[70px] lg:gap-0 2xl:pl-20'
           ref={containerRef}
         >
           <div className='mt-20 w-full sm:mt-0'>
@@ -207,7 +207,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
               />
             </Suspense>
           </div>
-          <div className='flex flex-col-reverse gap-4 px-4 md:-mt-28 lg:-mt-24 lg:flex-row xl:px-8'>
+          <div className='flex w-full max-w-[1920px] flex-col-reverse gap-4 px-4 md:-mt-28 lg:-mt-24 lg:flex-row xl:px-8'>
             <div className='h-fit w-full'>
               <UserProfilePageTable
                 setActiveTab={(tab) => setActiveTab(tab as ProfileTabType)}
