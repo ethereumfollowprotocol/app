@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { DAY, HOUR, MINUTE } from '#/lib/constants'
 import { fetchNotifications } from '#/api/profile/fetch-notifications'
-import { useIsClient } from '@uidotdev/usehooks'
 
 // Sorting the notifications via certain time frames, so it will perform logical grouping of events (avoids displaying every notification individually)
 const NOTIFICATIONS_TIMESTAMPS = [
@@ -68,7 +67,6 @@ export const useNotifications = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [newNotifications, setNewNotifications] = useState(0)
 
-  const isClient = useIsClient()
   const { address: userAddress } = useAccount()
   const { data, isLoading } = useQuery({
     queryKey: ['notifications', userAddress],
@@ -117,7 +115,7 @@ export const useNotifications = () => {
   })
 
   useEffect(() => {
-    if (!isClient) return
+    if (isLoading) return
 
     if (isOpen) {
       localStorage.setItem(`notifications-open-timestamp-${userAddress}`, new Date().getTime().toString())
@@ -143,7 +141,7 @@ export const useNotifications = () => {
           .flatMap((notification) => Object.values(notification.notifications).flat()).length
       )
     }
-  }, [data, isOpen, isClient])
+  }, [data, isOpen])
 
   return { notifications: data?.notifications, isLoading, isOpen, setIsOpen, newNotifications }
 }
