@@ -12,7 +12,7 @@ import NotificationItem, { type NotificationItemAction } from './notification-it
 const Notifications = () => {
   const { t } = useTranslation()
   const { address: userAddress } = useAccount()
-  const { notifications, isLoading, isOpen, setIsOpen } = useNotifications()
+  const { notifications, isLoading, isOpen, setIsOpen, newNotifications } = useNotifications()
   const clickAwayRef = useClickAway<HTMLDivElement>(() => setIsOpen(false))
 
   if (!userAddress) return null
@@ -26,6 +26,11 @@ const Notifications = () => {
         )}
         onClick={() => setIsOpen(!isOpen)}
       />
+      {newNotifications === 0 ? null : (
+        <span className='bg-primary text-dark-grey absolute -top-2 -right-1.5 flex h-6 w-fit min-w-6 items-center justify-center rounded-full px-1 text-sm font-bold'>
+          {newNotifications}
+        </span>
+      )}
       {!isOpen && (
         <div className='absolute -top-1 left-[66px] hidden w-fit opacity-0 transition-all transition-discrete group-hover/notifications:hidden group-hover/notifications:opacity-100 sm:group-hover/notifications:block starting:opacity-0'>
           <p className='bg-neutral shadow-small text-text rounded-sm px-4 py-2 text-lg font-semibold text-nowrap capitalize'>
@@ -39,7 +44,7 @@ const Notifications = () => {
           isOpen ? 'block opacity-100 starting:opacity-0' : 'hidden opacity-0'
         )}
       >
-        <div className='bg-neutral shadow-medium flex max-h-[70vh] w-[95vw] flex-col gap-2 overflow-y-scroll rounded-sm p-2 sm:w-fit'>
+        <div className='bg-neutral shadow-medium flex max-h-[70vh] w-[96vw] flex-col gap-2 overflow-y-scroll rounded-sm p-2 sm:w-fit'>
           {notifications?.map((item, index) =>
             Object.entries(item.notifications).map(([key, value]) =>
               value ? (

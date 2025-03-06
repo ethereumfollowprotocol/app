@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import { useAccount } from 'wagmi'
+import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { DAY, HOUR, MINUTE } from '#/lib/constants'
 import { fetchNotifications } from '#/api/profile/fetch-notifications'
@@ -65,6 +65,7 @@ const NOTIFICATIONS_TIMESTAMPS = [
 
 export const useNotifications = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [newNotifications, setNewNotifications] = useState(0)
 
   const { address: userAddress } = useAccount()
   const { data, isLoading } = useQuery({
@@ -113,5 +114,25 @@ export const useNotifications = () => {
     refetchInterval: MINUTE * 5,
   })
 
-  return { notifications: data?.notifications, isLoading, isOpen, setIsOpen }
+  useEffect(() => {
+    if (isOpen) {
+      localStorage.setItem(`notifications-open-timestamp-${userAddress}`, new Date().getTime().toString())
+      setNewNotifications(0)
+      return
+    }
+
+    if (data?.notifications) {
+      const storedNotificationsTimestamp = Number(
+        localStorage.getItem(`notifications-open-timestamp-${userAddress}`) || 0
+      )
+
+      setNewNotifications(
+        data?.notifications
+          .filter((notification) => new Date(notification.from).getTime() > storedNotificationsTimestamp)
+          .flatMap((notification) => Object.values(notification.notifications).flat()).length
+      )
+    }
+  }, [data, isOpen])
+
+  return { notifications: data?.notifications, isLoading, isOpen, setIsOpen, newNotifications }
 }

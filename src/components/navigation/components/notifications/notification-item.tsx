@@ -1,10 +1,12 @@
 import React from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import type { NotificationItemType } from '#/types/requests'
-import { Avatar, FollowIcon, truncateAddress } from '@encrypteddegen/identity-kit'
+import { FollowIcon, truncateAddress } from '@encrypteddegen/identity-kit'
 
 import { cn } from '#/lib/utilities'
+import { Avatar } from '#/components/avatar'
 import Tag from 'public/assets/icons/ui/tag.svg'
 import Block from 'public/assets/icons/ui/cross.svg'
 import Mute from 'public/assets/icons/ui/volume-mute.svg'
@@ -18,6 +20,7 @@ interface NotificationItemProps {
 }
 
 const NotificationItem: React.FC<NotificationItemProps> = ({ notifications, action }) => {
+  const router = useRouter()
   const { t } = useTranslation()
 
   if (!notifications[0]) return null
@@ -37,56 +40,60 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ notifications, acti
 
   const style = {
     follow: 'bg-primary/30',
-    unfollow: 'bg-[#D4D4D4]/30',
-    tag: 'bg-[#D4D4D4]/30',
-    untag: 'bg-[#D4D4D4]/30',
+    unfollow: 'bg-zinc-300/30',
+    tag: 'bg-zinc-300/30',
+    untag: 'bg-zinc-300/30',
     block: 'bg-deletion/30',
     unblock: 'bg-primary/30',
     mute: 'bg-deletion/30',
     unmute: 'bg-primary/30',
   }[action]
 
+  const displayedProfiles = notifications.slice(0, 3)
+
   return (
     <div className={cn('flex h-16 w-full items-center justify-between gap-1 rounded-sm px-3 py-2 sm:w-[520px]', style)}>
       <div className='flex max-w-[90%] items-center gap-2 sm:max-w-full'>
         <div
           className={cn(
-            `text-dark-grey flex h-10 w-10 items-center justify-center rounded-full ${style.replace('/30', '')}`,
-            (action === 'follow' || action === 'unfollow') && 'pl-0.5'
+            'flex h-10 w-10 items-center justify-center rounded-full',
+            (action === 'follow' || action === 'unfollow') && 'pl-0.5',
+            style.replace('/30', '')
           )}
         >
           <Icon className='text-dark-grey h-auto w-5' height={24} width={24} />
         </div>
-        <div className='flex max-w-[82.5%] flex-nowrap items-center gap-1 overflow-hidden sm:max-w-[420px]'>
-          {notifications.length === 1 ? (
-            <NotificationProfile
-              address={notifications[0].address}
-              name={notifications[0].name}
-              avatar={notifications[0].avatar}
-            />
-          ) : (
-            <p className='text-sm font-medium text-nowrap'>{notifications.length} people</p>
-          )}
-          <p className='text-sm font-medium'> {t(`notifications.${action}`)}</p>
-          {notifications.length > 1 && (
-            <>
-              <div className='flex max-w-1/4 flex-nowrap items-center gap-1 overflow-hidden sm:max-w-[240px]'>
-                &#40;
-                {notifications.slice(0, 3).map((notification) => (
-                  <div className='flex flex-nowrap items-center gap-0' key={notification.address}>
-                    <NotificationProfile
-                      address={notification.address}
-                      name={notification.name}
-                      avatar={notification.avatar}
-                    />
-                    <p>,</p>
-                  </div>
-                ))}
-                &#41;
-              </div>
-              <p>...</p>
-            </>
-          )}
+        <div className='flex w-[85%] items-center justify-start gap-2 sm:w-[410px]'>
+          <div className='flex'>
+            {displayedProfiles.map((profile, index) => (
+              <Avatar
+                key={profile.address}
+                size={`w-8 h-8 rounded-full cursor-pointer hover:scale-125 transition-all ${index === 0 ? 'z-0' : `-ml-[18px] z-${index * 10}`}`}
+                avatarUrl={profile.avatar}
+                name={profile.name || profile.address}
+                onClick={() => router.push(`/${profile.address}?ssr=false`)}
+              />
+            ))}
+          </div>
+          <p
+            className='text-text-neutral notification-item-text overflow-hidden text-left text-xs font-medium break-keep sm:text-sm'
+            style={{ width: 'calc(100% - 50px)' }}
+          >
+            {displayedProfiles?.map((profile, index) => (
+              <span key={profile.address}>
+                <span
+                  onClick={() => router.push(`/${profile.address}?ssr=false`)}
+                  className='cursor-pointer transition-all hover:underline hover:opacity-80'
+                >
+                  {`${profile.name || truncateAddress(profile.address)}`}
+                </span>
+                {`${notifications.length === 2 ? (index === 0 ? ' and ' : ' ') : notifications.length === 1 ? ' ' : ', '}`}
+              </span>
+            ))}
+            {notifications.length > 2 &&
+              `${t('and')} ${notifications.length - 2} ${notifications.length - 2 > 1 ? t('others') : t('other')} `}
+            {t(`notifications.${action}`)}
+          </p>
         </div>
       </div>
       <p className='text-text-neutral text-sm font-semibold'>{formatTimeDiff(timeDiff)}</p>
@@ -108,7 +115,7 @@ export const NotificationProfile = ({
       href={`/${address}`}
       className='flex flex-nowrap items-center gap-1 transition-all hover:underline hover:opacity-80'
     >
-      <Avatar address={address} name={name} src={avatar} className='h-5 w-5 overflow-hidden rounded-full' />
+      <Avatar name={name || address} avatarUrl={avatar} size='h-5 w-5 overflow-hidden rounded-full' />
       <p className='overflow-hidden text-sm text-ellipsis whitespace-nowrap'>
         {name || truncateAddress(address as `0x${string}`)}
       </p>

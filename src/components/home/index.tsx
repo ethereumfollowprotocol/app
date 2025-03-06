@@ -14,6 +14,9 @@ import ArrowRight from 'public/assets/icons/ui/arrow-right.svg'
 import ProfileSummaryCard from './components/profile-summary-card.tsx'
 import BackToTop from '../buttons/back-to-top.tsx'
 import ConnectWalletButton from '../buttons/connect-wallet.tsx'
+import Image from 'next/image'
+import homeBackgroundLight from 'public/assets/art/home-background-light.png'
+import homeBackgroundDark from 'public/assets/art/home-background-dark.png'
 
 const Home = () => {
   const { t } = useTranslation()
@@ -28,6 +31,20 @@ const Home = () => {
       className='flex h-screen w-full flex-col items-center gap-4 overflow-y-scroll px-4 sm:pr-4 sm:pl-24'
       onScroll={(e) => onScrollSidebar(e.target as HTMLDivElement)}
     >
+      <Image
+        src={homeBackgroundLight}
+        alt='home-bg'
+        width={6000}
+        height={6000}
+        className='fixed -top-[780px] -right-[900px] -z-10 aspect-square h-[2100px] w-[2100px] overflow-visible object-cover sm:-top-[780px] sm:-right-[150vw] md:-right-[110vw] lg:-right-[85vw] xl:-right-[70vw] 2xl:-right-[60vw] dark:hidden'
+      />
+      <Image
+        src={homeBackgroundDark}
+        alt='home-bg'
+        width={6000}
+        height={6000}
+        className='fixed -top-[780px] -right-[900px] -z-10 hidden aspect-square h-[2100px] w-[2100px] overflow-visible object-cover sm:-top-[780px] sm:-right-[150vw] md:-right-[110vw] lg:-right-[85vw] xl:-right-[70vw] 2xl:-right-[60vw] dark:block'
+      />
       <div className='fixed top-4 right-4 z-50 hidden h-fit w-fit sm:block'>
         <ConnectWalletButton />
       </div>

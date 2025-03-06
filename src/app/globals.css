@@ -320,36 +320,6 @@ input {
 }
 
 /* Loaders */
-.loader {
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  margin: 0;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  border: 8px solid #0000;
-  border-right-color: #ffa50097;
-  position: relative;
-  margin-left: -20px;
-  margin-top: -20px;
-  animation: spin 1s infinite linear;
-}
-
-.loader:before,
-.loader:after {
-  content: '';
-  position: absolute;
-  inset: -8px;
-  border-radius: 50%;
-  border: inherit;
-  animation: inherit;
-  animation-duration: 2s;
-}
-
-.loader:after {
-  animation-duration: 4s;
-}
-
 .gray-loader {
   width: 24px;
   aspect-ratio: 1;
@@ -392,6 +362,15 @@ input {
   .profile-page-table-tags {
     max-height: none;
   }
+}
+
+.notification-item-text {
+  line-clamp: 3;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Primary list toggle */
@@ -834,4 +813,8 @@ input {
 /* Ethereum identity Kit */
 .cart-changes-list-header-button:hover {
   scale: 1.1;
+}
+
+.profile-bio-text {
+  font-weight: 400;
 }

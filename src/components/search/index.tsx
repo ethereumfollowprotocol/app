@@ -8,7 +8,6 @@ import useSearch from './hooks/useSearch.ts'
 import { cn, truncateAddress } from '#/lib/utilities.ts'
 import GraySpinner from '../loaders/gray-spinner.tsx'
 import PrimaryButton from '../buttons/primary-button.tsx'
-import LoadingSpinner from '../loaders/loading-spinner.tsx'
 import { listOpAddListRecord } from '#/utils/list-ops.ts'
 import MagnifyingGlass from 'public/assets/icons/ui/magnifying-glass.svg'
 
@@ -142,8 +141,8 @@ export function Search({
           }}
         >
           {isLoading && (
-            <div className='h-40 w-full'>
-              <LoadingSpinner />
+            <div className='flex h-40 w-full items-center justify-center'>
+              <GraySpinner size={40} />
             </div>
           )}
           {!isLoading && searchResult.length === 0 ? (
@@ -233,12 +232,12 @@ export function Search({
               }}
             >
               {isLoading && (
-                <div className='h-40 w-full'>
-                  <LoadingSpinner />
+                <div className='flex h-40 w-full items-center justify-center'>
+                  <GraySpinner size={40} />
                 </div>
               )}
               {!isLoading && searchResult.length === 0 ? (
-                <div className='flex h-16 w-full items-center justify-center pb-4 font-bold text-zinc-400 italic'>
+                <div className='flex h-16 w-full items-center justify-center font-bold text-zinc-400 italic'>
                   {t('search no results')}
                 </div>
               ) : (
