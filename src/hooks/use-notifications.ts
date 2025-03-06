@@ -1,5 +1,5 @@
 import { useAccount } from 'wagmi'
-import { useEffect, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { DAY, HOUR, MINUTE } from '#/lib/constants'
 import { fetchNotifications } from '#/api/profile/fetch-notifications'
@@ -65,7 +65,6 @@ const NOTIFICATIONS_TIMESTAMPS = [
 
 export const useNotifications = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const [newNotifications, setNewNotifications] = useState(0)
 
   const { address: userAddress } = useAccount()
   const { data, isLoading } = useQuery({
@@ -114,13 +113,12 @@ export const useNotifications = () => {
     refetchInterval: MINUTE * 5,
   })
 
-  useEffect(() => {
-    if (isLoading) return
-
+  const newNotifications = useMemo(() => {
+    if (isLoading) return 0
+    8
     if (isOpen) {
       localStorage.setItem(`notifications-open-timestamp-${userAddress}`, new Date().getTime().toString())
-      setNewNotifications(0)
-      return
+      return 0
     }
 
     if (data?.notifications) {
@@ -128,19 +126,21 @@ export const useNotifications = () => {
         localStorage.getItem(`notifications-open-timestamp-${userAddress}`) || 0
       )
 
-      setNewNotifications(
-        data?.notifications
-          .filter((notification) => {
-            if (notification.label === 'recent') {
-              const objNotifications = Object.values(notification.notifications).flat()
-              return new Date(objNotifications[0]?.updated_at || 0).getTime() > storedNotificationsTimestamp
-            }
+      console.log(isLoading, data, storedNotificationsTimestamp)
 
-            return new Date(notification.to).getTime() > storedNotificationsTimestamp
-          })
-          .flatMap((notification) => Object.values(notification.notifications).flat()).length
-      )
+      return data.notifications
+        .filter((notification) => {
+          if (notification.label === 'recent') {
+            const objNotifications = Object.values(notification.notifications).flat()
+            return new Date(objNotifications[0]?.updated_at || 0).getTime() > storedNotificationsTimestamp
+          }
+
+          return new Date(notification.to).getTime() > storedNotificationsTimestamp
+        })
+        .flatMap((notification) => Object.values(notification.notifications).flat()).length
     }
+
+    return 0
   }, [data, isOpen])
 
   return { notifications: data?.notifications, isLoading, isOpen, setIsOpen, newNotifications }
