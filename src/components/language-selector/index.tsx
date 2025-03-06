@@ -57,7 +57,7 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
               alt={selectedLanguage.language}
               width={32}
               height={32}
-              className='h-auto w-7 scale-90 rounded-sm'
+              className='h-auto w-7 rounded-sm'
             />
           )}
           <p className='w-fit font-bold'>{selectedLanguage?.language}</p>
@@ -110,13 +110,7 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
                 <Check width={16} className='absolute top-5 left-2 h-5 w-5 text-green-500' />
               )}
               <div className='flex items-center gap-2 pr-3'>
-                <Image
-                  src={lang.icon}
-                  alt={lang.language}
-                  width={32}
-                  height={32}
-                  className='h-7 w-8 scale-90 rounded-sm'
-                />
+                <Image src={lang.icon} alt={lang.language} width={32} height={32} className='h-auto w-7 rounded-sm' />
                 <p>{lang.language}</p>
               </div>
             </div>
@@ -140,13 +134,7 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
                 <Check width={16} className='absolute top-[35%] left-2' />
               )}
               <div className='flex items-center gap-2 pr-3'>
-                <Image
-                  src={lang.icon}
-                  alt={lang.language}
-                  width={32}
-                  height={32}
-                  className='h-7 w-8 scale-90 rounded-sm'
-                />
+                <Image src={lang.icon} alt={lang.language} width={32} height={32} className='h-auto w-7 rounded-sm' />
                 <p>{lang.language}</p>
               </div>
             </div>

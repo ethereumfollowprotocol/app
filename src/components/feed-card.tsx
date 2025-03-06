@@ -138,12 +138,14 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, activityAddr
           contentSize
         )}
       >
-        <iframe
-          key={`${userAddress} ${url} ${resolvedTheme} ${feedKey}`}
-          title='Feed'
-          src={url}
-          className='bg-neutral h-[100000vh] w-full'
-        />
+        {isClient && (
+          <iframe
+            key={`${userAddress} ${url} ${resolvedTheme} ${feedKey}`}
+            title='Feed'
+            src={url}
+            className='bg-neutral h-[100000vh] w-full'
+          />
+        )}
       </div>
     </div>
   )

@@ -26,7 +26,7 @@ const Notifications = () => {
         )}
         onClick={() => setIsOpen(!isOpen)}
       />
-      {newNotifications === 0 ? null : (
+      {newNotifications > 0 && (
         <span className='bg-primary text-dark-grey absolute -top-2 -right-1.5 flex h-6 w-fit min-w-6 items-center justify-center rounded-full px-1 text-sm font-bold'>
           {newNotifications}
         </span>

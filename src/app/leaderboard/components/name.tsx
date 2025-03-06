@@ -29,7 +29,7 @@ const Name: React.FC<NameProps> = ({ address, name, avatar }) => {
       </Link>
       <div className='flex flex-col items-start justify-center text-left' style={{ maxWidth: 'calc(100% - 55px)' }}>
         <Link href={`/${address}`} prefetch={true} className='w-full'>
-          <p className='xxs:text-lg max-w-full truncate text-base font-bold transition-all hover:scale-110 hover:opacity-60'>
+          <p className='xxs:text-lg max-w-full truncate text-base font-bold transition-all hover:scale-110 hover:opacity-60 2xl:text-lg'>
             {name && isValidEnsName(name) ? ens_beautify(name) : truncateAddress(address)}
           </p>
         </Link>

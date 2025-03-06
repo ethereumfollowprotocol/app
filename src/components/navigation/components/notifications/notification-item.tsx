@@ -48,7 +48,8 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ notifications, acti
     unmute: 'bg-primary/30',
   }[action]
 
-  const displayedProfiles = notifications.slice(0, 3)
+  const displayedAvatars = notifications.slice(0, 3)
+  const displayedNames = notifications.slice(0, 2)
 
   return (
     <div className={cn('flex h-16 w-full items-center justify-between gap-1 rounded-sm px-3 py-2 sm:w-[520px]', style)}>
@@ -64,7 +65,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ notifications, acti
         </div>
         <div className='flex w-[85%] items-center justify-start gap-2 sm:w-[410px]'>
           <div className='flex'>
-            {displayedProfiles.map((profile, index) => (
+            {displayedAvatars.map((profile, index) => (
               <Avatar
                 key={profile.address}
                 size={`w-8 h-8 rounded-full shadow-sm cursor-pointer hover:scale-125 transition-all ${index === 0 ? 'z-0' : `-ml-[18px] z-${index * 10}`}`}
@@ -76,9 +77,9 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ notifications, acti
           </div>
           <p
             className='text-text-neutral notification-item-text overflow-hidden text-left text-xs font-medium break-keep sm:text-sm'
-            style={{ width: 'calc(100% - 50px)' }}
+            style={{ width: 'calc(100% - 70px)' }}
           >
-            {displayedProfiles?.map((profile, index) => (
+            {displayedNames?.map((profile, index) => (
               <span key={profile.address}>
                 <span
                   onClick={() => router.push(`/${profile.address}?ssr=false`)}

@@ -249,6 +249,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         refetchState(fetchFreshLists, setFetchFreshLists, refetchLists)
         refetchState(fetchFreshProfile, setFetchFreshProfile, refetchProfile)
         queryClient.refetchQueries({ queryKey: ['profile'] })
+        queryClient.refetchQueries({ queryKey: ['lists'] })
 
         refetchRoles()
         refetchFollowers()
