@@ -34,6 +34,7 @@ import Lighthouse from 'public/assets/partners/lighthouse.jpeg'
 import Pobstudio from 'public/assets/partners/pobstudio.jpeg'
 import Dhive from 'public/assets/partners/dhive.jpeg'
 import Phi from 'public/assets/partners/phi.png'
+import EFPFinder from 'public/assets/partners/efpfinder.jpeg'
 
 
 
@@ -207,6 +208,11 @@ export const INTEGRATIONS = [
     name: 'ENS Resolver',
     url: 'https://adraffy.github.io/ens-normalize.js/test/resolver.html',
     logo: ENSResolver,
+  },
+  {
+    name: 'EFP Finder',
+    url: 'https://efp.jaxoo.xyz/',
+    logo: EFPFinder,
   },
 ] as {
   name: string
