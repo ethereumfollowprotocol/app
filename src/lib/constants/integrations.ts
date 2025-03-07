@@ -34,7 +34,7 @@ import Lighthouse from 'public/assets/partners/lighthouse.jpeg'
 import Pobstudio from 'public/assets/partners/pobstudio.jpeg'
 import Dhive from 'public/assets/partners/dhive.jpeg'
 import Phi from 'public/assets/partners/phi.png'
-import Phi from 'public/assets/partners/efp-finder.png'
+import Phi from 'public/assets/partners/efpfinder.png'
 
 
 
@@ -212,7 +212,7 @@ export const INTEGRATIONS = [
   {
     name: 'EFP Finder',
     url: 'https://efp.jaxoo.xyz/',
-    logo: efp-finder,
+    logo: efpfinder,
   },
 ] as {
   name: string
