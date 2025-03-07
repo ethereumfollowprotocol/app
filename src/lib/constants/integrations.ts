@@ -33,6 +33,7 @@ import Agora from 'public/assets/partners/agora.png'
 import Lighthouse from 'public/assets/partners/lighthouse.jpeg'
 import Pobstudio from 'public/assets/partners/pobstudio.jpeg'
 import Dhive from 'public/assets/partners/dhive.jpeg'
+import Phi from 'public/assets/partners/phi.png'
 
 export const INTEGRATIONS = [
   {
@@ -79,6 +80,11 @@ export const INTEGRATIONS = [
     name: 'Blockscout',
     url: 'https://www.blockscout.com/',
     logo: Blockscout,
+  },
+  {
+    name: 'Phi',
+    url: 'https://phi.box/',
+    logo: Phi,
   },
   {
     name: 'Vibes',
