@@ -73,7 +73,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'api.ethfollow.xyz',
+        hostname: 'data.ethfollow.xyz',
         port: '',
         pathname: '/*',
       },
