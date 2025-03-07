@@ -30,6 +30,9 @@ import Rotki from 'public/assets/partners/rotki.png'
 import Zapper from 'public/assets/partners/zapper.png'
 import Recordsxyz from 'public/assets/partners/recordsxyz.png'
 import Agora from 'public/assets/partners/agora.png'
+import Lighthouse from 'public/assets/partners/lighthouse.jpeg'
+import Pobstudio from 'public/assets/partners/pobstudio.jpeg'
+import Dhive from 'public/assets/partners/dhive.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -58,6 +61,11 @@ export const INTEGRATIONS = [
     logo: Yodl,
   },
   {
+    name: 'Agora',
+    url: 'https://www.agora.xyz/',
+    logo: Agora,
+  },
+  {
     name: 'Zapper',
     url: 'https://zapper.xyz/',
     logo: Zapper,
@@ -66,11 +74,6 @@ export const INTEGRATIONS = [
     name: 'Rotki',
     url: 'https://rotki.com/',
     logo: Rotki,
-  },
-  {
-    name: 'Agora',
-    url: 'https://www.agora.xyz/',
-    logo: Agora,
   },
   {
     name: 'Blockscout',
@@ -83,14 +86,29 @@ export const INTEGRATIONS = [
     logo: VibesScapes,
   },
   {
-    name: 'LikeButton.eth',
-    url: 'https://likebutton.eth.limo/',
-    logo: LikeButton,
+    name: 'Lighthouse',
+    url: 'https://lighthouse.cx/',
+    logo: Lighthouse,
+  },
+  {
+    name: 'Blockverse',
+    url: 'https://www.pob.studio/',
+    logo: Pobstudio,
+  },
+  {
+    name: 'Dhive',
+    url: 'https://dhive.io',
+    logo: Dhive,
   },
   {
     name: 'Records.xyz',
     url: 'https://records.xyz',
     logo: Recordsxyz,
+  },
+  {
+    name: 'LikeButton.eth',
+    url: 'https://likebutton.eth.limo/',
+    logo: LikeButton,
   },
   {
     name: 'Webhash',
