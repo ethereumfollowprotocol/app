@@ -170,7 +170,7 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
     </div>
   ) : (
     <div className={'bg-neutral/60 hidden h-96 w-full flex-col items-center justify-center pb-20 md:flex'}>
-      <p className='text-2xl font-bold'>{t('profile error')}</p>
+      <p className='text-2xl font-bold italic'>{t('profile error')}</p>
     </div>
   )
 }

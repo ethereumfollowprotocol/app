@@ -248,19 +248,14 @@ export type DiscoverItemType = {
   address: Address
   name: string | null
   avatar: string | null
+  header: string | null
   followers: number
   following: number
 }
 
-export type RecommendedItemType = {
-  address: Address
-  name: string | null
-  avatar: string | null
-}
-
 export type DiscoverResponseType = {
   latestFollows: DiscoverItemType[]
-  recommended: RecommendedItemType[]
+  recommended: DiscoverItemType[]
 }
 
 export type RecommendedProfilesResponseType = {

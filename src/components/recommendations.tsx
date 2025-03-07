@@ -1,15 +1,15 @@
 'use client'
 
 import { useAccount } from 'wagmi'
-import { Suspense, useEffect, useMemo, useState } from 'react'
+import { zeroAddress } from 'viem'
 import { useInfiniteQuery } from '@tanstack/react-query'
+import { Suspense, useEffect, useMemo, useState } from 'react'
 
 import { cn } from '#/lib/utilities'
 import ProfileList from '#/components/profile-list'
+import PageSelector from '#/components/page-selector'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { fetchRecommendations } from '#/api/recommended/fetch-recommendations'
-import PageSelector from '#/components/page-selector'
-import { zeroAddress } from 'viem'
 
 interface RecommendationsProps {
   header?: string
@@ -103,6 +103,11 @@ const Recommendations = ({
           ens: {
             name: account.name || undefined,
             avatar: account.avatar || undefined,
+            records: account.header
+              ? {
+                  header: account.header,
+                }
+              : undefined,
           },
         }))}
         showFollowsYouBadges={true}

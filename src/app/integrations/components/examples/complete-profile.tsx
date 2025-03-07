@@ -3,13 +3,16 @@
 import React from 'react'
 import Link from 'next/link'
 import { useAccount } from 'wagmi'
+import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { ProfileCard } from '@encrypteddegen/identity-kit'
 
-import ExternalLink from 'public/assets/icons/ui/external-link.svg'
 import FollowButton from '#/components/follow-button'
+import ExternalLink from 'public/assets/icons/ui/external-link.svg'
+import ThreeDotMenu from '#/components/user-profile-card/components/three-dot-menu'
 
 const CompleteProfile = () => {
+  const router = useRouter()
   const { t } = useTranslation()
   const { address: userAddress } = useAccount()
 
@@ -45,14 +48,25 @@ const CompleteProfile = () => {
           </Link>
         </div>
       </div>
-      <div className='relative mx-auto mt-3 h-[340px] w-full overflow-hidden sm:h-[420px] 2xl:w-[580px]'>
+      <div className='relative mx-auto mt-3 h-[340px] w-full overflow-hidden sm:h-[500px] 2xl:w-[580px]'>
         <div className='absolute top-0 left-1 z-10 w-full px-2 sm:top-20 sm:left-4 sm:w-[400px]'>
           <ProfileCard
             addressOrName='0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
             connectedAddress={userAddress}
-            style={{ width: '100%' }}
+            style={{ width: '100%', paddingBottom: '12px' }}
             options={{
               followButton: <FollowButton address='0xd8da6bf26964af9d7eed9e03e53415d37aa96045' />,
+              openListSettings: () => {
+                router.push('/0xd8da6bf26964af9d7eed9e03e53415d37aa96045?ssr=false&modal=list_settings')
+              },
+              nameMenu: (
+                <ThreeDotMenu
+                  address='0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+                  isConnectedUserCard={false}
+                  showMoreOptions={true}
+                  followState={'none'}
+                />
+              ),
             }}
             className='shadow-medium'
           />
@@ -61,9 +75,23 @@ const CompleteProfile = () => {
           <ProfileCard
             addressOrName='0x983110309620d911731ac0932219af06091b6744'
             connectedAddress={userAddress}
-            style={{ width: '100%' }}
+            style={{ width: '100%', paddingBottom: '12px' }}
+            onProfileClick={() => {
+              router.push('/0x983110309620d911731ac0932219af06091b6744?ssr=false')
+            }}
             options={{
               followButton: <FollowButton address='0x983110309620d911731ac0932219af06091b6744' />,
+              openListSettings: () => {
+                router.push('/0x983110309620d911731ac0932219af06091b6744?ssr=false&modal=list_settings')
+              },
+              nameMenu: (
+                <ThreeDotMenu
+                  address='0x983110309620d911731ac0932219af06091b6744'
+                  isConnectedUserCard={false}
+                  showMoreOptions={true}
+                  followState={'none'}
+                />
+              ),
             }}
             className='shadow-medium'
           />
