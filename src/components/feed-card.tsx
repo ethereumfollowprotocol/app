@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { useAccount } from 'wagmi'
+import type { Address } from 'viem'
 import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -19,7 +20,7 @@ interface FeedCardProps {
   contentSize?: string
   title?: string
   description?: string
-  activityAddress?: string
+  activityAddress?: Address
 }
 
 const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, activityAddress }) => {

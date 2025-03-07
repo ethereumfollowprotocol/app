@@ -126,12 +126,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
               {/* <ConnectWalletButton /> */}
             </div>
           ) : (
-            <div
-              className={cn(
-                '3xl:text-xl flex h-20 w-full items-center justify-center text-lg font-bold italic',
-                hideFollowButton ? 'xl:h-[360px]' : 'xl:h-[420px]'
-              )}
-            >
+            <div className='3xl:text-xl flex h-[360px] w-full items-center justify-center text-lg font-bold italic'>
               {t('profile error')}
             </div>
           )}

@@ -26,7 +26,7 @@ export const useThreeDotMenu = ({ address, followState }: { address: Address; fo
   const isPendingMute = hasListOpAddTag(address, 'mute')
   const isPendingUnmute = hasListOpRemoveTag(address, 'mute')
 
-  const isInTopEight = topEight.find((item) => item.address?.toLowerCase() === address.toLowerCase())
+  const isInTopEight = topEight.find((item) => item.address?.toLowerCase() === address?.toLowerCase())
   const isAddingToTopEight = hasListOpAddTag(address, 'top8')
   const isRemovingFromTopEight = hasListOpRemoveTag(address, 'top8')
 

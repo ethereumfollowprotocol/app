@@ -10,6 +10,9 @@ import InterfaceLight from 'public/assets/icons/socials/interface.png'
 import InterfaceDark from 'public/assets/icons/socials/interface-dark.png'
 import FeedCard from '#/components/feed-card'
 import { useIsClient } from '@uidotdev/usehooks'
+import { useQuery } from '@tanstack/react-query'
+import { isAddress } from 'viem'
+import { fetchAccount } from '#/api/fetch-account'
 
 interface TopEightActivityProps {
   user: string
@@ -56,6 +59,15 @@ const TopEightActivity: React.FC<TopEightActivityProps> = ({ user, isConnectedUs
     if (userPage && userPage.scrollTop > 300) userPage.scrollTo({ top: 300, behavior: 'smooth' })
   }, [activeTab])
 
+  const { data: account } = useQuery({
+    queryKey: ['activity-account', user],
+    queryFn: async () => {
+      if (isAddress(user)) return user
+      const account = await fetchAccount(user)
+      return account?.address || null
+    },
+  })
+
   const content = {
     'top 8': (
       <TopEight
@@ -67,8 +79,14 @@ const TopEightActivity: React.FC<TopEightActivityProps> = ({ user, isConnectedUs
       />
     ),
     activity: (
-      <div className='max-h-[50vh] overflow-y-scroll lg:max-h-fit'>
-        <FeedCard activityAddress={user} cardSize='lg:w-[360px] xl:w-[602px]' />
+      <div className='shadow-medium max-h-[50vh] overflow-y-scroll lg:max-h-fit'>
+        {account ? (
+          <FeedCard activityAddress={account} cardSize='lg:w-[360px] xl:w-[602px]' />
+        ) : (
+          <p className='bg-neutral rounded-sm py-8 text-center text-xl font-semibold italic lg:w-[360px] xl:w-[602px]'>
+            {t('no activity')}
+          </p>
+        )}
       </div>
     ),
   }[activeTab]
