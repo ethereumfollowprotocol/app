@@ -1,19 +1,19 @@
-import Image from 'next/image'
 import { useState } from 'react'
-import { FiSearch } from 'react-icons/fi'
-import { IoClose } from 'react-icons/io5'
 import { useTranslation } from 'react-i18next'
-import { IoIosArrowDown } from 'react-icons/io'
 import { useClickAway } from '@uidotdev/usehooks'
 
 import { cn } from '#/lib/utilities'
 import { formatNumber } from '#/utils/format/format-number'
 import LoadingCell from '#/components/loaders/loading-cell'
 import type { ProfileTableTitleType } from '#/types/common'
-import GreenCheck from 'public/assets/icons/check-green.svg'
 import type { FollowSortType, TagCountType } from '#/types/requests'
 import { QUERY_BLOCK_TAGS } from '#/components/blocked-muted/hooks/use-blocked-muted'
 import { BLOCKED_MUTED_TABS, BLOCKED_MUTED_TAGS, SORT_OPTIONS } from '#/lib/constants'
+import Tag from 'public/assets/icons/ui/tag.svg'
+import Check from 'public/assets/icons/ui/check.svg'
+import Cross from 'public/assets/icons/ui/cross.svg'
+import ArrowDown from 'public/assets/icons/ui/arrow-down.svg'
+import MagnifyingGlass from 'public/assets/icons/ui/magnifying-glass.svg'
 
 interface TableHeaderProps {
   title: ProfileTableTitleType
@@ -28,6 +28,7 @@ interface TableHeaderProps {
   setSort: (option: FollowSortType) => void
   toggleSelectedTags: (title: ProfileTableTitleType, tag: string) => void
   isShowingBlocked?: boolean
+  isTopEight?: boolean
   setActiveTab?: (tab: ProfileTableTitleType) => void
 }
 
@@ -44,6 +45,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
   sort,
   setSort,
   isShowingBlocked,
+  isTopEight,
   setActiveTab,
 }) => {
   const [showSort, setShowSort] = useState(false)
@@ -62,23 +64,23 @@ const TableHeader: React.FC<TableHeaderProps> = ({
   const tagsEmpty = !tagsLoading && (!displayedTags || displayedTags.length === 0)
 
   return (
-    <div className='flex flex-col gap-4 px-4 z-40 sm:px-2 w-full'>
-      <div className='flex justify-between w-full'>
-        <div className='flex gap-3 flex-wrap justify-between sm:justify-start sm:flex-nowrap items-center w-full'>
-          <div className='flex gap-3 w-full sm:w-fit items-center'>
-            {BLOCKED_MUTED_TABS.includes(title) ? (
-              <h2 className='capitalize text-lg sm:text-3xl hidden xl:block font-bold text-nowrap'>{t(title)}</h2>
+    <div className='bg-neutral shadow-medium z-40 flex w-full flex-col gap-4 rounded-sm p-4 py-2 pl-2'>
+      <div className='flex w-full justify-between'>
+        <div className='flex w-full flex-wrap items-center justify-between gap-3 sm:flex-nowrap sm:justify-start'>
+          <div className='flex w-full items-center gap-3 sm:w-fit'>
+            {BLOCKED_MUTED_TABS.includes(title) || isTopEight ? (
+              <h2 className='py-2 pl-2 text-lg font-bold text-nowrap capitalize sm:text-xl'>{t(title)}</h2>
             ) : (
-              <div className='flex items-center bg-grey w-full sm:w-fit relative rounded-xl'>
+              <div className='bg-grey relative flex w-full items-center rounded-sm sm:w-fit'>
                 <div
                   className={cn(
-                    'w-1/2 sm:w-32 h-full absolute transition-all duration-200 border-[3px] border-grey bg-neutral rounded-xl',
+                    'bg-text/10 absolute h-full w-1/2 rounded-sm transition-all duration-200 sm:w-32',
                     title === 'following' ? 'left-0' : 'left-1/2 sm:left-32'
                   )}
                 />
                 <p
                   className={cn(
-                    'w-1/2 sm:w-32 font-bold py-2 text-lg text-center text-text z-10 cursor-pointer hover:scale-110 transition-transform',
+                    'text-text z-10 w-1/2 cursor-pointer py-2 text-center text-lg font-bold transition-transform hover:scale-110 sm:w-32',
                     title === 'following' ? 'text-text' : 'text-text/60'
                   )}
                   onClick={() => setActiveTab?.('following')}
@@ -87,7 +89,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 </p>
                 <p
                   className={cn(
-                    'w-1/2 sm:w-32 font-bold py-2 text-lg text-center text-text z-10 cursor-pointer hover:scale-110 transition-transform',
+                    'text-text z-10 w-1/2 cursor-pointer py-2 text-center text-lg font-bold transition-transform hover:scale-110 sm:w-32',
                     title === 'followers' ? 'text-text' : 'text-text/60'
                   )}
                   onClick={() => setActiveTab?.('followers')}
@@ -97,31 +99,27 @@ const TableHeader: React.FC<TableHeaderProps> = ({
               </div>
             )}
           </div>
-          {!BLOCKED_MUTED_TABS.includes(title) && (
-            <div ref={clickAwaySearchRef} className='relative flex gap-1 sm:gap-3 z-50'>
-              <div
-                className={cn(
-                  'cursor-pointer max-w-40 flex items-center h-6 transition-all gap-2 hover:opacity-75',
-                  search ? 'hover:scale-[1.15]' : 'hover:scale-125'
-                )}
-                onClick={() => setShowSearch(!showSearch)}
-              >
-                <FiSearch className='opacity-50 text-2xl hover:opacity-100 transition-opacity' />
-                <p className='font-medium text-sm truncate hidden sm:block md:hidden lg:block xl:hidden 2xl:block'>
-                  {search}
-                </p>
-              </div>
-              {search && (
-                <IoClose
-                  onClick={() => {
-                    setSearch('')
-                    setShowSearch(false)
-                  }}
-                  className='opacity-50 text-xl hover:opacity-60 hover:scale-125 p-0.5 mt-0.5 text-darkGrey bg-zinc-300 cursor-pointer rounded-full transition-all'
-                />
-              )}
-              {showSearch && (
-                <div className='absolute glass-card flex items-center border-[3px] bg-neutral border-grey -top-4 gap-1 left-0 xl:-left-10 w-64 h-fit rounded-xl shadow-md'>
+          <div className='item-center z-10 flex w-full justify-between gap-4 sm:justify-end'>
+            {!BLOCKED_MUTED_TABS.includes(title) && (
+              <div ref={clickAwaySearchRef} className='relative z-50 flex gap-1 sm:gap-3'>
+                <div
+                  className='flex h-6 max-w-40 cursor-pointer items-center gap-2'
+                  onClick={() => setShowSearch(!showSearch)}
+                >
+                  <MagnifyingGlass className='h-7 w-auto transition-transform hover:scale-110' />
+                  {search && !showSearch && <p className='text-sm font-medium'>{search}</p>}
+                  {search && !showSearch && (
+                    <Cross
+                      onClick={(e: React.MouseEvent<SVGElement>) => {
+                        e.stopPropagation()
+                        setSearch('')
+                        setShowSearch(false)
+                      }}
+                      className='text-dark-grey -ml-1 h-6 w-auto cursor-pointer rounded-full text-xl opacity-50 transition-all hover:scale-125 hover:opacity-60'
+                    />
+                  )}
+                </div>
+                {showSearch && (
                   <input
                     type='text'
                     spellCheck={false}
@@ -138,73 +136,66 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                       }
                     }}
                     value={search}
-                    className='font-medium py-3 block w-full rounded-lg border-0 border-transparent pl-3 pr-10 sm:text-sm bg-neutral/50'
+                    className='bg-nav-item absolute -top-1 left-[110%] z-50 block w-52 rounded-sm border-0 border-transparent py-1.5 pr-10 pl-3 text-sm font-medium sm:-top-2 sm:right-[110%] sm:py-2.5'
                   />
-                  <div
-                    className='pointer-events-none absolute inset-y-0 right-0 flex items-center pl-3'
-                    aria-hidden='true'
-                  >
-                    <FiSearch className='mr-3 text-xl dark:text-white/90 text-zinc-400' aria-hidden='true' />
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-          <div className='flex sm:w-full justify-end gap-4'>
-            <div
-              onClick={() => setShowTags(!showTags)}
-              className='cursor-pointer flex items-center hover:scale-110 transition-transform gap-1'
-            >
-              <p className='text-sm font-bold'>{t('tags')}</p>
-              <IoIosArrowDown className={`transition-transform ${showTags ? 'rotate-180' : ''}`} />
-            </div>
-            <div
-              ref={clickAwaySortRef}
-              onClick={() => setShowSort(!showSort)}
-              className='cursor-pointer flex relative items-center gap-1'
-            >
-              <div className='flex gap-1 hover:scale-110 items-center transition-transform'>
-                <p className='text-sm capitalize font-bold'>{t(sort)}</p>
-                <IoIosArrowDown className={`transition-transform ${showSort ? 'rotate-180' : ''}`} />
+                )}
               </div>
-              {showSort && (
-                <div className='bg-neutral glass-card p-1 gap-1 z-50 shadow-md border-[3px] rounded-md border-grey absolute top-[120%] flex flex-col items-center -right-2'>
-                  {SORT_OPTIONS.map((option) => (
-                    <div
-                      className='font-bold capitalize w-full text-nowrap relative rounded-md hover:bg-navItem transition-colors p-3 pl-8'
-                      key={option}
-                      onClick={() => setSort(option)}
-                    >
-                      {sort === option && (
-                        <Image src={GreenCheck} alt='List selected' width={16} className='absolute left-2 top-[17px]' />
-                      )}
-                      <p>{t(option)}</p>
-                    </div>
-                  ))}
+            )}
+            <div className='flex items-center gap-3 sm:gap-4'>
+              <div
+                onClick={() => setShowTags(!showTags)}
+                className='flex cursor-pointer items-center gap-0.5 transition-transform hover:scale-110 sm:gap-1'
+              >
+                <Tag className='h-auto w-6' />
+                <ArrowDown className={`h-auto w-4 transition-transform ${showTags ? 'rotate-180' : ''}`} />
+              </div>
+              <div
+                ref={clickAwaySortRef}
+                onClick={() => setShowSort(!showSort)}
+                className='relative flex cursor-pointer items-center gap-1'
+              >
+                <div className='flex items-center gap-1 transition-transform hover:scale-110'>
+                  <p className='font-semibold capitalize'>{t(sort)}</p>
+                  <ArrowDown className={`h-auto w-4 transition-transform ${showSort ? 'rotate-180' : ''}`} />
                 </div>
-              )}
+                {showSort && (
+                  <div className='bg-neutral shadow-small absolute top-[120%] -right-2 z-50 flex flex-col items-center gap-1 rounded-sm p-1'>
+                    {SORT_OPTIONS.map((option) => (
+                      <div
+                        className='hover:bg-nav-item relative w-full rounded-sm p-3 pl-8 font-bold text-nowrap capitalize transition-colors'
+                        key={option}
+                        onClick={() => setSort(option)}
+                      >
+                        {sort === option && <Check className='absolute top-[17px] left-2 h-auto w-4' />}
+                        <p>{t(option)}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
       </div>
-      {showTags && tagsEmpty && <p className='text-center w-full font-bold text-text/40 italic'>{t('no tags')}</p>}
+      {showTags && tagsEmpty && <p className='text-text/40 w-full text-center font-bold italic'>{t('no tags')}</p>}
       {showTags && (
-        <div className='flex flex-wrap w-full gap-2'>
+        <div className='flex w-full flex-wrap gap-2'>
           {tagsLoading
-            ? new Array(4).fill(1).map((_, i) => <LoadingCell key={i} className='w-20 h-7 md:h-9 rounded-full' />)
+            ? new Array(4).fill(1).map((_, i) => <LoadingCell key={i} className='h-7 w-20 rounded-sm md:h-9' />)
             : displayedTags?.map((tag, i) => (
                 <button
                   key={tag.tag + i}
-                  className={`text-sm flex gap-1.5 px-4 py-2 font-bold items-center max-w-[33%] hover:scale-110 transition-transform ${
+                  className={cn(
+                    'flex max-w-[33%] items-center gap-1.5 rounded-sm px-4 py-2 text-sm font-bold transition-transform hover:scale-110',
                     selectedTags?.includes(tag.tag)
-                      ? 'text-darkGrey bg-zinc-100 shadow-inner shadow-black/10'
-                      : 'text-zinc-500 bg-zinc-300/80'
-                  } rounded-full`}
+                      ? 'text-dark-grey bg-zinc-100 shadow-inner shadow-black/10'
+                      : 'bg-zinc-300/80 text-zinc-500'
+                  )}
                   name={tag.tag.toLowerCase()}
                   onClick={() => toggleSelectedTags(title, tag.tag)}
                 >
                   <p className='max-w-[95%] truncate'>{BLOCKED_MUTED_TAGS.includes(tag.tag) ? t(tag.tag) : tag.tag}</p>
-                  <p className='text-darkGrey/50'>{formatNumber(tag.count)}</p>
+                  <p className='text-dark-grey/50'>{formatNumber(tag.count)}</p>
                 </button>
               ))}
         </div>

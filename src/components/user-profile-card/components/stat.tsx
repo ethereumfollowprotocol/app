@@ -12,13 +12,13 @@ interface StatProps {
 
 const Stat: React.FC<StatProps> = ({ onClick, isLoading, value, label }) => {
   return (
-    <div className='cursor-pointer hover:scale-110 transition-all' onClick={onClick}>
+    <div className='cursor-pointer transition-all hover:scale-110' onClick={onClick}>
       {isLoading ? (
-        <LoadingCell className='w-12 h-6 mb-1 rounded-lg mx-auto' />
+        <LoadingCell className='mx-auto mb-1 h-6 w-12 rounded-sm' />
       ) : (
-        <div className='text-[21px] 3xl:text-2xl text-center font-bold'>{value ? formatNumber(value) : '-'}</div>
+        <div className='3xl:text-2xl text-center text-[21px] font-bold'>{value ? formatNumber(value) : '-'}</div>
       )}
-      <div className='text-[16px] 3xl:text-lg font-bold text-text/40'>{label}</div>
+      <div className='3xl:text-lg text-text/40 text-[16px] font-bold'>{label}</div>
     </div>
   )
 }

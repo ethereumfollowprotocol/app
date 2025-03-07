@@ -1,10 +1,10 @@
 import type { Address } from 'viem'
-import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 
 import { cn } from '#/lib/utilities'
 import type { LeaderboardFilter } from '#/types/common'
 import { formatNumber } from '#/utils/format/format-number'
+import Link from 'next/link'
 
 interface StatsMobileProps {
   address: Address
@@ -26,7 +26,6 @@ const StatsMobile: React.FC<StatsMobileProps> = ({
   blocked,
 }) => {
   const { t } = useTranslation()
-  const router = useRouter()
 
   const statLink = {
     followers: `/${address}?tab=followers`,
@@ -37,16 +36,16 @@ const StatsMobile: React.FC<StatsMobileProps> = ({
   }
 
   return (
-    <div className={`items-center justify-evenly flex sm:hidden w-full`}>
+    <div className={`flex w-full items-center justify-evenly sm:hidden`}>
       {firstStat && (
-        <div
+        <Link
+          href={statLink[firstStat]}
           className={cn(
-            'flex-col items-center flex w-1/4',
-            firstStat !== 'mutuals' && 'cursor-pointer hover:scale-110 transition-transform'
+            'flex w-1/4 flex-col items-center',
+            firstStat !== 'mutuals' && 'cursor-pointer transition-transform hover:scale-110'
           )}
-          onClick={() => firstStat && router.push(statLink[firstStat])}
         >
-          <p className='font-bold text-sm sm:text-lg'>
+          <p className='text-sm font-bold sm:text-lg'>
             {formatNumber(
               {
                 followers,
@@ -57,45 +56,45 @@ const StatsMobile: React.FC<StatsMobileProps> = ({
               }[firstStat] || 0
             )}
           </p>
-          <p className='font-bold text-sm capitalize text-text/60 text-wrap text-center w-full break-words'>
+          <p className='text-text/60 w-full text-center text-sm font-bold text-wrap break-words capitalize'>
             {t(firstStat)}
           </p>
-        </div>
+        </Link>
       )}
-      <div className={cn('flex-col flex items-center w-1/4', firstStat === 'mutuals' ? 'hidden' : 'flex')}>
-        <p className='font-bold text-sm sm:text-lg'>{formatNumber(mutuals || 0)}</p>
-        <p className='font-bold text-sm  text-text/60 text-wrap w-full text-center break-words'>{t('mutuals')}</p>
+      <div className={cn('flex w-1/4 flex-col items-center', firstStat === 'mutuals' ? 'hidden' : 'flex')}>
+        <p className='text-sm font-bold sm:text-lg'>{formatNumber(mutuals || 0)}</p>
+        <p className='text-text/60 w-full text-center text-sm font-bold text-wrap break-words'>{t('mutuals')}</p>
       </div>
-      <div
+      <Link
+        href={statLink.followers}
         className={cn(
-          'transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/4',
+          'w-1/4 cursor-pointer flex-col items-center transition-all hover:scale-110',
           firstStat === 'followers' ? 'hidden' : 'flex'
         )}
-        onClick={() => router.push(statLink.followers)}
       >
-        <p className='font-bold text-sm sm:text-lg'>{formatNumber(followers || 0)}</p>
-        <p className='font-bold text-sm  text-text/60 text-wrap break-words text-center w-full'>{t('followers')}</p>
-      </div>
-      <div
+        <p className='text-sm font-bold sm:text-lg'>{formatNumber(followers || 0)}</p>
+        <p className='text-text/60 w-full text-center text-sm font-bold text-wrap break-words'>{t('followers')}</p>
+      </Link>
+      <Link
+        href={statLink.following}
         className={cn(
-          'transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/4',
+          'w-1/4 cursor-pointer flex-col items-center transition-all hover:scale-110',
           firstStat === 'following' ? 'hidden' : 'flex'
         )}
-        onClick={() => router.push(statLink.following)}
       >
-        <p className='font-bold text-sm sm:text-lg'>{formatNumber(following || 0)}</p>
-        <p className='font-bold text-sm  text-text/60 text-wrap break-words text-center w-full'>{t('following')}</p>
-      </div>
-      <div
+        <p className='text-sm font-bold sm:text-lg'>{formatNumber(following || 0)}</p>
+        <p className='text-text/60 w-full text-center text-sm font-bold text-wrap break-words'>{t('following')}</p>
+      </Link>
+      <Link
+        href={statLink.top8}
         className={cn(
           firstStat === 'blocked' || firstStat === 'top8' ? 'hidden' : 'flex',
-          'transition-all hover:scale-110 cursor-pointer flex-col items-center w-1/4'
+          'w-1/4 cursor-pointer flex-col items-center transition-all hover:scale-110'
         )}
-        onClick={() => router.push(statLink.top8)}
       >
-        <p className='font-bold text-sm sm:text-lg'>{formatNumber(top8 || 0)}</p>
-        <p className='font-bold text-sm  text-text/60 text-wrap break-words  text-center w-full'>{t('top8')}</p>
-      </div>
+        <p className='text-sm font-bold sm:text-lg'>{formatNumber(top8 || 0)}</p>
+        <p className='text-text/60 w-full text-center text-sm font-bold text-wrap break-words'>{t('top8')}</p>
+      </Link>
     </div>
   )
 }

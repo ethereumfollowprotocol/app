@@ -30,7 +30,7 @@ export const fetchProfileFollowing = async ({
 
     const followingEndpoint = allResults
       ? 'allFollowing'
-      : search && search?.length >= 3
+      : search && search?.length >= 2
         ? 'searchFollowing'
         : 'following'
 

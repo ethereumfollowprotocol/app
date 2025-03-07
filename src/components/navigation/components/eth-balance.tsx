@@ -4,11 +4,11 @@ import Link from 'next/link'
 import { useBalance } from 'wagmi'
 import { formatEther } from 'viem'
 import type { Address, Chain } from 'viem'
-import { FiExternalLink } from 'react-icons/fi'
 import { base, mainnet, optimism } from 'viem/chains'
 
 import type { ChainWithDetails } from '#/lib/wagmi'
 import { ChainIcon } from '#/components/chain-icon'
+import ExternalLink from 'public/assets/icons/ui/external-link.svg'
 
 interface EthBalanceProps {
   address: Address
@@ -35,7 +35,7 @@ const EthBalance: React.FC<EthBalanceProps> = ({ address, chain }) => {
 
   return (
     <>
-      <div className='flex justify-between items-center w-full group-hover:bg-navItem p-3 rounded-md transition-opacity'>
+      <div className='group-hover:bg-nav-item flex w-full items-center justify-between rounded-sm p-4 transition-opacity sm:flex-row-reverse'>
         <ChainIcon chain={chain as ChainWithDetails} className='h-6 w-6' />
         {balance?.value
           ? Number(formatEther(balance.value)).toLocaleString(navigator.language, {
@@ -48,9 +48,9 @@ const EthBalance: React.FC<EthBalanceProps> = ({ address, chain }) => {
       <Link
         href={bridges[chain.id as keyof typeof bridges]}
         target='_blank'
-        className='capitalize flex justify-between items-center transition-colors p-3 w-full rounded-md hover:bg-navItem text-text font-bold'
+        className='hover:bg-nav-item text-text flex w-full items-center justify-between rounded-sm p-4 font-bold capitalize transition-colors sm:flex-row-reverse'
       >
-        <FiExternalLink className='text-2xl' />
+        <ExternalLink className='h-6 w-6' />
         <p className='text-end'>{`${currencies[chain.id as keyof typeof currencies]} ${t('bridge')}`}</p>
       </Link>
     </>

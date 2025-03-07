@@ -26,7 +26,7 @@ const LoadingCell: React.FC<LoadingCellProps> = ({
         animationFillMode: 'forwards',
         ...style,
       }}
-      className={cn('bg-repeat-x', className, isStatic ? 'animate-none ' : 'animate-loading ')}
+      className={cn('bg-repeat-x', className, isStatic ? 'animate-none' : 'animate-loading')}
     />
   )
 }

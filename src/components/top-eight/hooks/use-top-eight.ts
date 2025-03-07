@@ -13,11 +13,10 @@ export type TopEightProfileType = {
 }
 
 export const useTopEight = (user: string | Address) => {
-  const [editModalOpen, setEditModalOpen] = useState(false)
   const [displayLimit, setDisplayLimit] = useState(2)
 
   useEffect(() => {
-    if (window.innerWidth > 1024) setDisplayLimit(8)
+    if (window.innerWidth > 768) setDisplayLimit(8)
   }, [])
 
   const { address: userAddress } = useAccount()
@@ -71,9 +70,7 @@ export const useTopEight = (user: string | Address) => {
   return {
     topEight,
     displayLimit,
-    editModalOpen,
     setDisplayLimit,
-    setEditModalOpen,
     topEightIsLoading: isLoading,
     topEightIsRefetching: isRefetching,
   }

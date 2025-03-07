@@ -11,20 +11,20 @@ const ProfileStats: React.FC<ProfileStatsProps> = ({ stats }) => {
   return (
     <div className='flex w-full items-center justify-between'>
       <div>
-        <div className='text-xl text-center sm:text-2xl font-bold'>
+        <div className='text-center text-xl font-bold sm:text-2xl'>
           {stats === undefined ? '-' : stats.following_count}
         </div>
-        <div className='sm:text-lg font-bold text-zinc-500'>{t('following')}</div>
+        <div className='font-bold text-zinc-500 sm:text-lg'>{t('following')}</div>
       </div>
       <div>
-        <div className='text-xl text-center sm:text-2xl font-bold'>
+        <div className='text-center text-xl font-bold sm:text-2xl'>
           {stats === undefined ? '-' : stats.followers_count}
         </div>
-        <div className='sm:text-lg text-zinc-500 font-bold'>{t('followers')}</div>
+        <div className='font-bold text-zinc-500 sm:text-lg'>{t('followers')}</div>
       </div>
       <div>
-        <div className='text-xl text-center sm:text-2xl font-bold'># -</div>
-        <div className='sm:text-lg font-bold text-zinc-500'>{t('leaderboard')}</div>
+        <div className='text-center text-xl font-bold sm:text-2xl'># -</div>
+        <div className='font-bold text-zinc-500 sm:text-lg'>{t('leaderboard')}</div>
       </div>
     </div>
   )
