@@ -35,6 +35,7 @@ import Pobstudio from 'public/assets/partners/pobstudio.jpeg'
 import Dhive from 'public/assets/partners/dhive.jpeg'
 import Phi from 'public/assets/partners/phi.png'
 import EFPFinder from 'public/assets/partners/efpfinder.jpeg'
+import ENSTools from 'public/assets/partners/enstools.jpg'
 
 
 
@@ -138,6 +139,11 @@ export const INTEGRATIONS = [
     name: 'eth.cd',
     url: 'https://eth.cd',
     logo: EthDotCd,
+  },
+  {
+    name: 'ENS Tools',
+    url: 'https://ens.tools',
+    logo: ENSTools,
   },
   {
     name: 'EFP Bot',
