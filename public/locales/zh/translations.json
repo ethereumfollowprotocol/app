@@ -19,6 +19,10 @@
   "sponsors": "获得以下机构资助：",
   "support": "支持",
 
+  "integrate description": "如果您将 EFP 集成到您的应用程序中，请联系我们，我们会将您添加到此列表中，在 Twitter 上为您宣传，并向您发送特别的 EFP 集成 POAP！",
+  "integrate efp": "集成 EFP",
+  "integrate efp description": "EFP 是一个面向以太坊账户的链上社交图谱协议，是以太坊身份技术栈的基础组件，旨在补充 ENS 和以太坊登录功能。",
+
   "profile": "我的个人资料",
   "profile error": "用户不存在",
   "connect to see more": "连接你的钱包开刷！",
@@ -168,7 +172,7 @@
   "dark": "黑暗",
   "halloween": "万圣节",
   "sfx & music": "SFX & 音乐",
-  "sfx only": "仅 SFX",
+  "sfx": "SFX",
   "no sound": "静音",
   "disconnect": "断开连接",
   "connect": "连接钱包",
