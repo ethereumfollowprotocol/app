@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { track } from '@vercel/analytics/react'
-import type { StaticImageData } from 'next/image'
 
 import i18n from '#/app/i18n'
 import { LANGUAGES } from '#/lib/constants/languages'
+import type { StaticImageData } from 'next/image'
 
 const useLanguage = () => {
   const [languageMenOpenu, setLanguageMenuOpen] = useState(false)

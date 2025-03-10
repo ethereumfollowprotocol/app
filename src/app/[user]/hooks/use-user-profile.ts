@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { isAddress } from 'viem'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
-import { fetchProfileDetails, fetchProfileStats } from 'ethereum-identity-kit'
+import { fetchProfileDetails, fetchProfileStats } from '@encrypteddegen/identity-kit'
 
 import { FETCH_LIMIT_PARAM, MINUTE } from '#/lib/constants'
 import type { ProfileTableTitleType } from '#/types/common'
@@ -57,7 +57,7 @@ const useUser = (user: string) => {
       user,
       followingSort,
       followingTagsFilter,
-      followingSearch.length > 2 ? followingSearch : undefined,
+      followingSearch.length > 1 ? followingSearch : undefined,
     ],
     queryFn: async ({ pageParam = 0 }) => {
       setIsEndOfFollowing(false)
@@ -101,7 +101,7 @@ const useUser = (user: string) => {
       user,
       followersSort,
       followersTagsFilter,
-      followersSearch.length > 2 ? followersSearch : undefined,
+      followersSearch.length > 1 ? followersSearch : undefined,
     ],
     queryFn: async ({ pageParam = 0 }) => {
       setIsEndOfFollowers(false)

@@ -16,21 +16,21 @@ const Socials: React.FC<SocialsProps> = ({ profile }) => {
       {profileCardSocials.map((social) => (
         <a
           key={social.name}
-          href={social.url(social.name === 'etherscan' ? profile.address : profile.ens.records?.[social.name] || '')}
+          href={social.url(social.name === 'etherscan' ? profile.address : profile.ens?.records?.[social.name] || '')}
           target='_blank'
           rel='noreferrer'
           className={
-            profile.ens.records?.[social.name] || social.name === 'etherscan'
-              ? 'opacity-100 hover:opacity-80 hover:scale-110 transition-all'
-              : 'opacity-20 pointer-events-none'
+            profile.ens?.records?.[social.name] || social.name === 'etherscan'
+              ? 'opacity-100 transition-all hover:scale-110 hover:opacity-80'
+              : 'pointer-events-none opacity-30'
           }
         >
           <Image
             src={social.icon(resolvedTheme || '')}
             alt={social.name}
-            width={36}
-            height={36}
-            className='rounded-full w-8 h-8 3xl:w-9 3xl:h-9'
+            width={52}
+            height={52}
+            className='h-auto w-8 rounded-full 2xl:w-10'
           />
         </a>
       ))}

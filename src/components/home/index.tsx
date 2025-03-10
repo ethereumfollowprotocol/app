@@ -1,134 +1,102 @@
 'use client'
 
+import Link from 'next/link'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 
-import { cn } from '#/lib/utilities.ts'
-import { useRouter } from 'next/navigation'
 import FeedCard from '#/components/feed-card.tsx'
-import { refetchState } from '#/utils/reset-queries.ts'
 import Recommendations from '#/components/recommendations'
 import useStickyScroll from './hooks/use-sticky-scroll.ts'
 import LatestFollowers from './components/latest-followers'
-import UserProfileCard from '#/components/user-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import LeaderboardSummary from './components/leaderboard-summary.tsx'
+import Apps from 'public/assets/icons/ui/apps.svg'
+import ArrowRight from 'public/assets/icons/ui/arrow-right.svg'
+import ProfileSummaryCard from './components/profile-summary-card.tsx'
+import BackToTop from '../buttons/back-to-top.tsx'
+import ConnectWalletButton from '../buttons/connect-wallet.tsx'
+import Image from 'next/image'
+import homeBackgroundLight from 'public/assets/art/home-background-light.png'
+import homeBackgroundDark from 'public/assets/art/home-background-dark.png'
 
 const Home = () => {
-  const {
-    stats,
-    lists,
-    profile,
-    followers,
-    selectedList,
-    statsIsLoading,
-    listsIsLoading,
-    refetchProfile,
-    profileIsLoading,
-    fetchFreshProfile,
-    followersIsLoading,
-    setFetchFreshProfile,
-    setFetchFreshStats,
-    refetchStats,
-    fetchFreshStats,
-  } = useEFPProfile()
-  const router = useRouter()
   const { t } = useTranslation()
   const { address: userAddress } = useAccount()
-
+  const { followers, followersIsLoading } = useEFPProfile()
+  const { StickyScrollRef: SidebarRef, onScroll: onScrollSidebar } = useStickyScroll(0, 16)
   const isFollowersEmpty = !followersIsLoading && followers.length === 0
-
-  const { StickyScrollRef: SidebarRef, onScroll: onScrollSidebar } = useStickyScroll(60)
-  const { StickyScrollRef: ProfileCardRef, onScroll: onScrollProfileCard } = useStickyScroll(60)
 
   return (
     <div
-      className='pt-[108px] relative md:pt-[6.75rem] w-full h-screen px-4 overflow-y-scroll lg:px-6 xl:px-8 flex items-start lg:justify-center lg:gap-4 xl:justify-center justify-center flex-wrap xl:flex-nowrap gap-y-4'
-      onScroll={(e) => {
-        onScrollSidebar(e)
-        onScrollProfileCard(e)
-      }}
+      id='home-page'
+      className='flex h-screen w-full flex-col items-center gap-4 overflow-y-scroll px-4 sm:pr-4 sm:pl-24'
+      onScroll={(e) => onScrollSidebar(e.target as HTMLDivElement)}
     >
-      {userAddress && (
-        <div className='xl:sticky w-full xl:w-fit ' ref={ProfileCardRef}>
-          <UserProfileCard
-            profileList={selectedList || Number(profile?.primary_list)}
-            hideFollowButton={true}
-            stats={stats}
-            profile={profile}
-            isStatsLoading={statsIsLoading}
-            isLoading={profileIsLoading}
-            refetchProfile={() => {
-              refetchState(fetchFreshProfile, setFetchFreshProfile, refetchProfile)
-              refetchState(fetchFreshStats, setFetchFreshStats, refetchStats)
-            }}
-            showMoreOptions={true}
-            openBlockModal={() => {
-              if (profile)
-                router.push(
-                  `/${selectedList && selectedList !== Number(profile.primary_list) ? selectedList : profile.address}?modal=block_mute_list`
-                )
-            }}
-            openListSettingsModal={() => {
-              if (profile)
-                router.push(
-                  `/${selectedList && selectedList !== Number(profile.primary_list) ? selectedList : profile.address}?modal=list_settings`
-                )
-            }}
-            openQrCodeModal={() => {
-              if (profile)
-                router.push(
-                  `/${selectedList && selectedList !== Number(profile.primary_list) ? selectedList : profile.address}?modal=qr_code`
-                )
-            }}
-          />
-        </div>
-      )}
-      <div className='flex flex-col gap-4 h-auto w-full lg:hidden xl:sticky'>
-        <Recommendations
-          limit={10}
-          endpoint='discover'
-          header={t('recent')}
-          className={cn('h-fit w-full py-4 sm:p-4 glass-card border-[3px] border-grey rounded-2xl')}
-        />
-        {!isFollowersEmpty && userAddress && <LatestFollowers />}
+      <Image
+        src={homeBackgroundLight}
+        alt='home-bg'
+        width={2600}
+        height={2600}
+        className='3xl:-right-[1600px] 3xl:h-[2600px] 3xl:w-[2600px] 3xl:-top-[1050px] 3xl:-rotate-6 fixed -top-[760px] -right-[900px] -z-10 aspect-square h-[2100px] w-[2100px] overflow-visible object-cover sm:-right-[150vw] md:-right-[110vw] lg:-right-[85vw] xl:-right-[70vw] dark:hidden'
+      />
+      <Image
+        src={homeBackgroundDark}
+        alt='home-bg'
+        width={6000}
+        height={6000}
+        className='3xl:-right-[1600px] 3xl:h-[2600px] 3xl:w-[2600px] 3xl:-top-[1050px] 3xl:-rotate-6 fixed -top-[760px] -right-[900px] -z-10 hidden aspect-square h-[2100px] w-[2100px] overflow-visible object-cover sm:-right-[150vw] md:-right-[110vw] lg:-right-[85vw] xl:-right-[70vw] dark:block'
+      />
+      <div className='fixed top-4 right-4 z-50 hidden h-fit w-fit sm:block'>
+        <ConnectWalletButton />
       </div>
-      {userAddress ? (
+      <div className='mt-24 flex max-w-[1100px] flex-col gap-4 md:mt-20 lg:mt-24'>
+        <h2 className='xs:text-4xl text-3xl font-bold sm:text-5xl 2xl:text-6xl'>{t('home title')}</h2>
+        <p className='w-[90%] text-lg sm:mt-3 lg:w-3/4 xl:w-2/3'>
+          <b>{t('home description efp')}</b>
+          {t('home description')}
+        </p>
+        <Link
+          href='/integrations'
+          className='group/link ml-[-3px] flex w-fit items-center gap-2 transition-opacity hover:opacity-70'
+        >
+          <Apps className='h-auto w-8' />
+          <p className='text-lg font-bold italic'>{t('integrate link')}</p>
+          <ArrowRight className='h-auto w-5 transition-all group-hover/link:translate-x-1.5' />
+        </Link>
+      </div>
+      <div className='mt-2 w-full lg:hidden'>
+        <ProfileSummaryCard />
+      </div>
+      <div className='flex w-full max-w-[1100px] flex-row justify-center gap-5 lg:mt-2'>
         <FeedCard
-          cardSize={cn(
-            'w-full xl:min-w-[430px] lg:w-[49%] px-0 pt-4 xs:p-4 xl:p-[18px] 2xl:p-6 rounded-2xl',
-            (lists?.lists?.length || 0) === 0 && !listsIsLoading
-              ? 'h-[50vh] md:h-[640px] xl:w-2/5 2xl:w-[550px] '
-              : 'h-[1000000vh] xl:w-[45%] 2xl:w-[650px]'
-          )}
-          contentSize='h-full w-full rounded-2xl'
+          cardSize='w-full lg:max-w-[580px] rounded-sm'
+          contentSize='h-full w-full rounded-sm'
           title={t('feed')}
           description={t('feed description')}
         />
-      ) : (
-        <LeaderboardSummary />
-      )}
-      <div
-        ref={SidebarRef}
-        className={cn(
-          'hidden flex-col gap-4 h-[85vh] lg:flex xl:sticky',
-          userAddress
-            ? ' w-full lg:w-[49.2%] xl:w-[40%] 2xl:min-w-[450px] 2xl:w-2/5 2xl:max-w-[900px]'
-            : 'w-full xl:w-1/2 xl:max-w-[900px] h-[638px]'
-        )}
-        style={{
-          top: userAddress ? 'calc(100vh - 108px - 2000px)' : '0',
-        }}
-      >
-        <Recommendations
-          limit={11}
-          endpoint='discover'
-          header={t('recent')}
-          className={cn('h-fit w-full py-4 p-3 2xl:p-4 glass-card border-[3px] border-grey rounded-2xl')}
-        />
-        {!isFollowersEmpty && userAddress && <LatestFollowers />}
+        <div
+          ref={SidebarRef}
+          className='hidden h-[90vh] w-full max-w-[520px] flex-col gap-4 lg:sticky lg:flex'
+          style={{
+            top: 'calc(100vh - 2700px)',
+          }}
+        >
+          <ProfileSummaryCard />
+          <Recommendations
+            limit={10}
+            endpoint='discover'
+            header={t('recent')}
+            className='bg-neutral shadow-medium h-fit w-full rounded-sm'
+          />
+          {userAddress && !isFollowersEmpty && <LatestFollowers />}
+          <Recommendations
+            limit={10}
+            endpoint='recommended'
+            header={t('recommendations')}
+            className='bg-neutral shadow-medium h-fit w-full rounded-sm'
+          />
+        </div>
       </div>
-      {/* <ScrollIndicator /> */}
+      <BackToTop />
     </div>
   )
 }
