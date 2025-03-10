@@ -51,17 +51,20 @@ const CompleteProfile = () => {
       <div className='relative mx-auto mt-3 h-[340px] w-full overflow-hidden sm:h-[500px] 2xl:w-[580px]'>
         <div className='absolute top-0 left-1 z-10 w-full px-2 sm:top-20 sm:left-4 sm:w-[400px]'>
           <ProfileCard
-            addressOrName='0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+            addressOrName='0xd63c2582b071f41090e89d975f738e87e7b8da50'
             connectedAddress={userAddress}
             style={{ width: '100%', paddingBottom: '12px' }}
+            onProfileClick={() => {
+              router.push('/0xd63c2582b071f41090e89d975f738e87e7b8da50?ssr=false')
+            }}
             options={{
-              followButton: <FollowButton address='0xd8da6bf26964af9d7eed9e03e53415d37aa96045' />,
+              followButton: <FollowButton address='0xd63c2582b071f41090e89d975f738e87e7b8da50' />,
               openListSettings: () => {
-                router.push('/0xd8da6bf26964af9d7eed9e03e53415d37aa96045?ssr=false&modal=list_settings')
+                router.push('/0xd63c2582b071f41090e89d975f738e87e7b8da50?ssr=false&modal=list_settings')
               },
               nameMenu: (
                 <ThreeDotMenu
-                  address='0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+                  address='0xd63c2582b071f41090e89d975f738e87e7b8da50'
                   isConnectedUserCard={false}
                   showMoreOptions={true}
                   followState={'none'}
@@ -73,20 +76,20 @@ const CompleteProfile = () => {
         </div>
         <div className='absolute top-0 left-32 hidden w-[400px] sm:block 2xl:left-40'>
           <ProfileCard
-            addressOrName='0x983110309620d911731ac0932219af06091b6744'
+            addressOrName='0x05977b2fb9b7ab3f3733b34350044a01a388579c'
             connectedAddress={userAddress}
             style={{ width: '100%', paddingBottom: '12px' }}
             onProfileClick={() => {
-              router.push('/0x983110309620d911731ac0932219af06091b6744?ssr=false')
+              router.push('/0x05977b2fb9b7ab3f3733b34350044a01a388579c?ssr=false')
             }}
             options={{
-              followButton: <FollowButton address='0x983110309620d911731ac0932219af06091b6744' />,
+              followButton: <FollowButton address='0x05977b2fb9b7ab3f3733b34350044a01a388579c' />,
               openListSettings: () => {
-                router.push('/0x983110309620d911731ac0932219af06091b6744?ssr=false&modal=list_settings')
+                router.push('/0x05977b2fb9b7ab3f3733b34350044a01a388579c?ssr=false&modal=list_settings')
               },
               nameMenu: (
                 <ThreeDotMenu
-                  address='0x983110309620d911731ac0932219af06091b6744'
+                  address='0x05977b2fb9b7ab3f3733b34350044a01a388579c'
                   isConnectedUserCard={false}
                   showMoreOptions={true}
                   followState={'none'}
