@@ -7,6 +7,7 @@ import { MINUTE } from '#/lib/constants'
 import UserInfo from './components/user-info'
 import { truncateAddress } from '#/lib/utilities'
 import type { SearchParams } from 'next/dist/server/request/search-params'
+import { fetchAccount } from '#/api/fetch-account'
 
 interface Props {
   params: Promise<{ user: string }>
@@ -16,9 +17,15 @@ interface Props {
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params
   const user = isAddress(params.user) ? params.user : params.user
+
+  const searchParams = await props.searchParams
+  const ssr = searchParams.ssr === 'false' ? false : true
+
   const truncatedUser = isAddress(params.user) ? (truncateAddress(params.user) as string) : params.user
   const isList = Number.isInteger(Number(user)) && !(isAddress(user) || isHex(user))
-  const displayUser = isList ? `List #${user}` : truncatedUser
+
+  const ensName = ssr ? (user ? (await fetchAccount(user))?.ens.name : null) : null
+  const displayUser = isList ? `List #${user}` : (ensName ?? truncatedUser)
 
   return {
     title: `${displayUser} | EFP`,

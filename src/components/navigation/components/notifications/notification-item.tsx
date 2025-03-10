@@ -59,7 +59,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ notifications, acti
         style
       )}
     >
-      <div className='flex max-w-[90%] items-center gap-2 sm:max-w-full'>
+      <div className='flex w-[90%] items-center gap-2 sm:max-w-full'>
         <div
           className={cn(
             'flex h-10 w-10 items-center justify-center rounded-full',

@@ -1,6 +1,7 @@
 'use client'
 
 import { useAccount } from 'wagmi'
+import { usePathname } from 'next/navigation'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useContext, createContext, useState, useEffect, useMemo } from 'react'
 
@@ -28,8 +29,9 @@ const RecommendedProfilesContext = createContext<RecommendedProfilesContextType 
 export const RecommendedProfilesProvider: React.FC<Props> = ({ children }) => {
   const [gone] = useState(() => new Set()) // The set flags all the cards that are flicked out
 
-  const { listToFetch } = useEFPProfile()
+  const pathname = usePathname()
   const { address: userAddress } = useAccount()
+  const { listToFetch, allFollowingAddresses } = useEFPProfile()
 
   useEffect(() => {
     gone.clear()
@@ -55,6 +57,7 @@ export const RecommendedProfilesProvider: React.FC<Props> = ({ children }) => {
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     refetchOnReconnect: false,
+    enabled: pathname === '/swipe' && !!allFollowingAddresses,
   })
 
   const recommendedProfiles =

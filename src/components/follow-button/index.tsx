@@ -3,7 +3,11 @@
 import type { Address } from 'viem'
 import { useAccount } from 'wagmi'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
-import { FollowButton as IdentityFollowButton, useTransactions } from '@encrypteddegen/identity-kit'
+import {
+  FollowButton as IdentityFollowButton,
+  useTransactions,
+  type InitialFollowingState,
+} from '@encrypteddegen/identity-kit'
 
 import { useSounds } from '#/contexts/sounds-context'
 import { FOLLOW_BUTTON_SOUND } from '#/lib/constants/follow-button'
@@ -13,9 +17,16 @@ interface FollowButtonProps {
   className?: string
   isBlockedBy?: boolean
   disabled?: boolean
+  initialState?: InitialFollowingState
 }
 
-const FollowButton: React.FC<FollowButtonProps> = ({ address, className = '', isBlockedBy, ...props }) => {
+const FollowButton: React.FC<FollowButtonProps> = ({
+  address,
+  className = '',
+  isBlockedBy,
+  initialState,
+  ...props
+}) => {
   const { openConnectModal } = useConnectModal()
   const { address: connectedAddress } = useAccount()
   const { selectedVolume } = useSounds()
@@ -30,6 +41,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({ address, className = '', is
       onDisconnectedClick={openConnectModal}
       className={className}
       selectedList={selectedList}
+      initialState={initialState}
       sounds={selectedVolume === 'no sounds' ? undefined : FOLLOW_BUTTON_SOUND}
       {...props}
     />

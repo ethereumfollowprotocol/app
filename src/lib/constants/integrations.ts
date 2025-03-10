@@ -35,7 +35,7 @@ import Pobstudio from 'public/assets/partners/pobstudio.jpeg'
 import Dhive from 'public/assets/partners/dhive.jpeg'
 import Phi from 'public/assets/partners/phi.png'
 import EFPFinder from 'public/assets/partners/efpfinder.jpeg'
-import ENSTools from 'public/assets/partners/enstools.jpg'
+import ENSTools from 'public/assets/partners/enstools.jpeg'
 
 export const INTEGRATIONS = [
   {

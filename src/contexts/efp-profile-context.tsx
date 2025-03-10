@@ -424,6 +424,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     // meta: {
     //      persist: true,
     //    },
+    enabled: !!fetchedFollowing,
   })
 
   const followers = fetchedFollowers
@@ -466,6 +467,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       const fetchedTags = await fetchFollowerTags(userAddress, listToFetch)
       return fetchedTags
     },
+    enabled: !!fetchedFollowing,
     // meta: {
     //      persist: true,
     //    },
@@ -571,6 +573,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     // meta: {
     //      persist: true,
     //    },
+    enabled: !!fetchedFollowing,
   })
 
   return (

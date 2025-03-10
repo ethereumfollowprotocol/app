@@ -113,6 +113,7 @@ const Recommendations = ({
         showFollowsYouBadges={true}
         showTags={false}
         isTopEight={isTopEight}
+        initialFollowState={endpoint === 'recommended' ? 'Follow' : undefined}
       />
       {!(isLoading || isFetchingNextPage || isFetchingPreviousPage) &&
         (displayedProfiles?.length === 0 || !displayedProfiles) && (

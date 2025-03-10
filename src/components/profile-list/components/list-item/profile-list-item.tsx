@@ -1,6 +1,7 @@
 import React from 'react'
 import type { Address } from 'viem'
 import { useQuery } from '@tanstack/react-query'
+import type { InitialFollowingState } from '@encrypteddegen/identity-kit'
 
 import { isLinkValid } from '#/utils/validity'
 import ProfileListItemDetails from './details'
@@ -23,6 +24,7 @@ export interface ProfileListItemProps {
   isBlockedBy?: boolean
   isTopEight?: boolean
   tagsDropdownPosition?: TagsDropdownPositionType
+  initialFollowState?: InitialFollowingState
 }
 
 const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
@@ -38,6 +40,7 @@ const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
     isBlockedBy,
     isTopEight,
     tagsDropdownPosition,
+    initialFollowState,
   }) => {
     const { data: fetchedEnsProfile, isLoading: isEnsProfileLoading } = useQuery({
       queryKey: ['ens metadata', address],
@@ -79,7 +82,7 @@ const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
           {isTopEight ? (
             <TopEightAddButton address={address} tags={tags} />
           ) : (
-            <FollowButton isBlockedBy={isBlockedBy} address={address} />
+            <FollowButton isBlockedBy={isBlockedBy} address={address} initialState={initialFollowState} />
           )}
         </div>
       </div>

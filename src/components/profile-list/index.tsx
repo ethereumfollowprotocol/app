@@ -5,6 +5,7 @@ import type { ENSProfile } from '#/types/requests'
 import type { ProfileStatsType } from '#/types/common'
 import LoadingRow from './components/list-item/loading-list-item'
 import ProfileListItem from './components/list-item/profile-list-item'
+import type { InitialFollowingState } from '@encrypteddegen/identity-kit'
 
 export interface ProfileListProfile {
   address: Address
@@ -25,6 +26,7 @@ interface ProfileListProps {
   isBlockedList?: boolean // If the list is displaying blocked and blocked by profiles
   isBlockedBy?: boolean // Used to handle the "Block Back" on FollowButton
   isTopEight?: boolean
+  initialFollowState?: InitialFollowingState
 }
 
 const ProfileList: React.FC<ProfileListProps> = ({
@@ -39,6 +41,7 @@ const ProfileList: React.FC<ProfileListProps> = ({
   isBlockedList,
   isBlockedBy,
   isTopEight,
+  initialFollowState,
 }) => {
   const displayLoadingRows = isLoadingMore || isLoading
   const isShortList = (profiles?.length || 0) <= 3
@@ -65,6 +68,7 @@ const ProfileList: React.FC<ProfileListProps> = ({
           isBlockedList={isBlockedList}
           isBlockedBy={isBlockedBy}
           isTopEight={isTopEight}
+          initialFollowState={initialFollowState}
           tagsDropdownPosition={
             (index === profiles.length - 1 || index === profiles.length - 2) && index >= 2 ? 'top' : 'bottom'
           }

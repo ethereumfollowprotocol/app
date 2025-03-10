@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { DAY, HOUR, MINUTE } from '#/lib/constants'
 import { fetchNotifications } from '#/api/profile/fetch-notifications'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 // Sorting the notifications via certain time frames, so it will perform logical grouping of events (avoids displaying every notification individually)
 const NOTIFICATIONS_TIMESTAMPS = [
@@ -67,6 +68,7 @@ export const useNotifications = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [newNotifications, setNewNotifications] = useState(0)
 
+  const { profile } = useEFPProfile()
   const queryClient = useQueryClient()
   const { address: userAddress } = useAccount()
   const { data, isLoading } = useQuery({
@@ -124,6 +126,7 @@ export const useNotifications = () => {
       }
     },
     refetchInterval: MINUTE * 5,
+    enabled: !!profile?.address,
   })
 
   useEffect(() => {
