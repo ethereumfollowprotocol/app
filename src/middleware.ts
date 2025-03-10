@@ -8,7 +8,7 @@ export function middleware(request: NextRequest) {
 
   const cspHeader = `
     worker-src 'self' *.cloudflareinsights.com cdn.vercel-insights.com vercel.live va.vercel-scripts.com blob:;
-    script-src 'self' *.cloudflareinsights.com cdn.vercel-insights.com vercel.live va.vercel-scripts.com www.googletagmanager.com;
+    script-src 'self' 'unsafe-inline' *.cloudflareinsights.com cdn.vercel-insights.com vercel.live va.vercel-scripts.com www.googletagmanager.com;
     media-src 'self';
     connect-src * *.blockscout.com.;
     object-src 'none';
