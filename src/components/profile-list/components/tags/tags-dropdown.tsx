@@ -40,8 +40,8 @@ const TagsDropdown: React.FC<TagsDropdownProps> = ({
       {open && (
         <div
           className={cn(
-            'bg-neutral shadow-medium absolute left-0 z-[9999] flex w-56 flex-col gap-2 rounded-sm p-2 sm:w-64',
-            position === 'bottom' ? 'top-10' : 'bottom-8'
+            'bg-neutral shadow-medium absolute left-0 z-50 flex w-56 flex-col gap-2 rounded-sm p-2 sm:w-64',
+            position === 'bottom' ? 'top-8' : 'bottom-8'
           )}
         >
           <div className='flex w-full items-center justify-between gap-1.5 rounded-sm text-left font-bold'>
@@ -73,7 +73,7 @@ const TagsDropdown: React.FC<TagsDropdownProps> = ({
             {recentTags.map((tag, i) => (
               <button
                 key={`${profiles?.[0]?.address} ${tag} ${i}`}
-                className='bg-nav-item truncate rounded-sm px-3 py-1.5 text-sm font-bold transition-all hover:scale-110 hover:opacity-80'
+                className='bg-nav-item truncate rounded-sm px-2.5 py-1 text-sm font-bold transition-all hover:scale-110 hover:opacity-80'
                 onClick={(e) => {
                   e.stopPropagation()
                   addTag(tag)
@@ -93,9 +93,9 @@ const TagsDropdown: React.FC<TagsDropdownProps> = ({
         const removingTag = hasListOpRemoveTag(address, tag)
 
         return (
-          <div key={tag + i} className={`max-w-full ${canEditTags ? 'transition-all hover:scale-110' : ''}`}>
+          <div key={tag + i} className={cn('relative max-w-full', canEditTags && 'transition-all hover:scale-110')}>
             <button
-              className={`w-fit max-w-full truncate rounded-sm px-2 py-1 text-xs font-bold ${
+              className={`w-fit max-w-full truncate rounded-sm px-2 py-1 text-xs font-bold transition-colors ${
                 canEditTags && removingTag ? 'bg-deletion' : 'bg-nav-item'
               }`}
               onClick={(e) => {
@@ -106,7 +106,7 @@ const TagsDropdown: React.FC<TagsDropdownProps> = ({
               {tag}
             </button>
             {(removingTag || addingTag) && canEditTags && (
-              <div className='absolute -top-1 -right-1 h-4 w-4 rounded-full bg-green-400' />
+              <div className='absolute -top-1.5 -right-1.5 h-4 w-4 rounded-full bg-green-400' />
             )}
           </div>
         )

@@ -40,7 +40,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ notifications, acti
 
   const style = {
     follow: 'bg-primary/30',
-    unfollow: 'bg-zinc-300/30',
+    unfollow: 'bg-deletion/30',
     tag: 'bg-zinc-300/30',
     untag: 'bg-zinc-300/30',
     block: 'bg-deletion/30',

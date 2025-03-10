@@ -19,18 +19,14 @@ const Notifications = () => {
 
   return (
     <div className='group/notifications relative z-10' ref={clickAwayRef}>
-      <Bell
-        className={cn(
-          'h-auto w-9 cursor-pointer transition-transform hover:scale-110',
-          isOpen && 'text-primary-selected'
+      <div className='relative transition-transform hover:scale-110' onClick={() => setIsOpen(!isOpen)}>
+        <Bell className={cn('h-auto w-9 cursor-pointer', isOpen && 'text-primary-selected')} />
+        {newNotifications > 0 && (
+          <span className='bg-primary text-dark-grey absolute -top-1.5 -right-1.5 flex h-5 w-fit min-w-5 items-center justify-center rounded-full px-1 text-sm font-bold'>
+            {newNotifications}
+          </span>
         )}
-        onClick={() => setIsOpen(!isOpen)}
-      />
-      {newNotifications > 0 && (
-        <span className='bg-primary text-dark-grey absolute -top-2 -right-1.5 flex h-6 w-fit min-w-6 items-center justify-center rounded-full px-1 text-sm font-bold'>
-          {newNotifications}
-        </span>
-      )}
+      </div>
       {!isOpen && (
         <div className='absolute -top-1 left-[66px] hidden w-fit opacity-0 transition-all transition-discrete group-hover/notifications:hidden group-hover/notifications:opacity-100 sm:group-hover/notifications:block starting:opacity-0'>
           <p className='bg-neutral shadow-small text-text rounded-sm px-4 py-2 text-lg font-semibold text-nowrap capitalize'>

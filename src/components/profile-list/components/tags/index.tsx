@@ -38,7 +38,7 @@ const Tags: React.FC<TagsProps> = ({ profiles, platform, showTags, canEditTags, 
 
   return (
     <div
-      className={cn('relative flex max-w-full flex-wrap items-center gap-2', hideTags && 'hidden')}
+      className={cn('relative flex h-fit max-w-full flex-wrap items-center gap-2', hideTags && 'hidden')}
       ref={clickAwayTagDropwdownRef}
     >
       {canEditTags && (

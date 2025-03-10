@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useAccount } from 'wagmi'
 import { usePathname } from 'next/navigation'
 import type { Address, GetEnsAvatarReturnType } from 'viem'
@@ -14,7 +15,6 @@ import ProfileListItemName from './profile-list-item-name'
 import ProfileListItemCounts from './profile-list-item-counts'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { ProfileStatsType, TagsDropdownPositionType } from '#/types/common'
-import Link from 'next/link'
 
 interface ProfileListItemDetailsProps {
   address: Address
@@ -62,7 +62,7 @@ const ProfileListItemDetails: React.FC<ProfileListItemDetailsProps> = ({
 
   return (
     <div
-      className='z-10 flex items-center gap-2 p-0 sm:gap-3'
+      className='relative flex items-center gap-2 p-0 sm:gap-3'
       style={{
         width: isBlockedList ? 'calc(100% - 132px)' : 'calc(100% - 120px)',
       }}
@@ -75,12 +75,12 @@ const ProfileListItemDetails: React.FC<ProfileListItemDetailsProps> = ({
             <Avatar
               name={name || address}
               avatarUrl={avatarUrl}
-              size='h-[45px] w-[45px] 2xl:h-[50px] cursor-pointer 2xl:w-[50px] hover:opacity-80 transition-all hover:scale-110'
+              size='h-[45px] w-[45px] z-10 2xl:h-[50px] cursor-pointer 2xl:w-[50px] hover:opacity-80 transition-all hover:scale-110'
             />
           </Link>
         )}
         <div
-          className='flex flex-col gap-1 sm:gap-2 md:flex-row'
+          className='flex flex-col gap-1 sm:gap-2 md:flex-row md:items-center'
           style={{
             width: counts ? '80%' : 'calc(100% - 60px)',
           }}

@@ -211,14 +211,14 @@ const LeaderboardTable = () => {
             </div>
             <Recommendations
               limit={10}
-              endpoint='discover'
-              header={t('recent')}
+              endpoint='recommended'
+              header={t('recommendations')}
               className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm')}
             />
             <Recommendations
               limit={10}
-              endpoint='recommended'
-              header={t('recommendations')}
+              endpoint='discover'
+              header={t('recent')}
               className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm')}
             />
           </div>
