@@ -3,7 +3,7 @@ import { useAccount } from 'wagmi'
 import { isAddress, type Address } from 'viem'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useMemo, useState } from 'react'
-import { fetchFollowState } from 'ethereum-identity-kit'
+import { fetchFollowState, useTransactions } from 'ethereum-identity-kit'
 
 import { useCart } from '#/hooks/use-cart'
 import { resolveEnsAddress } from '#/utils/ens'
@@ -12,6 +12,8 @@ import type { TopEightProfileType } from './use-top-eight'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { isTagListOp, listOpAddTag, listOpAddListRecord, extractAddressAndTag } from '#/utils/list-ops'
 
+let prevTopEightInCart: { address: Address }[] = []
+
 export const useEditTopEight = (profiles: TopEightProfileType[]) => {
   const [loadingItems, setLoadingItems] = useState(0)
 
@@ -19,14 +21,13 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
   const { address: userAddress } = useAccount()
   const { roles, selectedList } = useEFPProfile()
 
+  const { setTxModalOpen } = useTransactions()
   const { cart, addToCart, hasListOpRemoveRecord } = useCart()
   const topEightInCart = useMemo(
     () =>
       cart
-        .filter(
-          ({ listOp }) => listOp.opcode === 3 && isTagListOp(listOp) && extractAddressAndTag(listOp).tag === 'top8'
-        )
-        .map(({ listOp }) => ({
+        .filter((listOp) => listOp.opcode === 3 && isTagListOp(listOp) && extractAddressAndTag(listOp).tag === 'top8')
+        .map((listOp) => ({
           address: extractAddressAndTag(listOp as TagListOp).address,
         })),
     [cart]
@@ -36,16 +37,19 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
 
   const currentTopEightLength = useMemo(() => {
     const topEightRemoved = cart.filter(
-      ({ listOp }) => listOp.opcode === 4 && isTagListOp(listOp) && extractAddressAndTag(listOp).tag === 'top8'
+      (listOp) => listOp.opcode === 4 && isTagListOp(listOp) && extractAddressAndTag(listOp).tag === 'top8'
     )
     const removedProfiles = profiles.filter((profile) => hasListOpRemoveRecord(profile.address))
     return editedProfiles.length - topEightRemoved.length - removedProfiles.length
   }, [editedProfiles, cart])
+  const canConfirm = currentTopEightLength <= 8
   const isTopEightFull = currentTopEightLength >= 8
-  console.log(currentTopEightLength)
 
   useEffect(() => {
-    setEditedProfiles([...profiles, ...topEightInCart])
+    if (prevTopEightInCart.length !== topEightInCart.length) {
+      setEditedProfiles([...profiles, ...topEightInCart])
+      prevTopEightInCart = topEightInCart
+    }
   }, [topEightInCart])
 
   const getFollowingState = async (address: Address) => {
@@ -82,8 +86,8 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
 
     const followState = await getFollowingState(address)
 
-    const addCartItems = [{ listOp: listOpAddTag(address, 'top8') }]
-    if (followState === 'none') addCartItems.push({ listOp: listOpAddListRecord(address) })
+    const addCartItems = [listOpAddTag(address, 'top8')]
+    if (followState === 'none') addCartItems.push(listOpAddListRecord(address))
     addToCart(addCartItems)
   }
 
@@ -98,8 +102,19 @@ export const useEditTopEight = (profiles: TopEightProfileType[]) => {
     setLoadingItems(0)
   }
 
+  const onConfirm = async () => {
+    if (!canConfirm) return
+    if (!roles?.isManager) return toast.error(t('not manager'))
+
+    if (topEightInCart.length > 0) {
+      setTxModalOpen(true)
+    }
+  }
+
   return {
     onSubmit,
+    onConfirm,
+    canConfirm,
     loadingItems,
     topEightInCart,
     isTopEightFull,

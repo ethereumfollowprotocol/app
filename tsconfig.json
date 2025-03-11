@@ -42,6 +42,6 @@
     ]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.jsx", ".next/types/**/*.ts", "svgr.d.ts"],
-  "files": ["environment.d.ts", "next.config.mjs", "env.ts"],
+  "files": ["environment.d.ts", "next.config.mjs", "env.ts", "svgr.d.ts"],
   "exclude": ["node_modules", "./src/lib/generated", "_"]
 }

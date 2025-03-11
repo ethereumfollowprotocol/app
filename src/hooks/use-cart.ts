@@ -2,12 +2,16 @@
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
 import { useCallback } from 'react'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  EFPActionIds,
+  formatListOpsTransaction,
+  getListOpsFromTransaction,
+  useTransactions,
+  type ListOpType,
+} from 'ethereum-identity-kit'
 
-import { DAY } from '#/lib/constants'
 import type { ListOp } from '#/types/list-op'
 import type { ImportPlatformType } from '#/types/common'
-import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { extractAddressAndTag, isTagListOp, listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
 
 export type CartItemType = {
@@ -16,68 +20,56 @@ export type CartItemType = {
 }
 
 export function useCart() {
-  const queryClient = useQueryClient()
-
   const { address } = useAccount()
-  const { listToFetch } = useEFPProfile()
 
-  const { data: cart = [] } = useQuery<CartItemType[]>({
-    queryKey: ['cart', address, listToFetch],
-    staleTime: Infinity,
-    gcTime: 1 * DAY,
-    meta: {
-      persist: true,
-    },
-  })
+  const { pendingTxs, addListOpsTransaction, nonce, selectedChainId, removeListOpsTransaction, setPendingTxs } =
+    useTransactions()
 
-  const setCartState = (newState: CartItemType[]) => {
-    queryClient.setQueryData(['cart', address, listToFetch], newState)
+  const cart = pendingTxs
+    .filter((tx) => tx.id === EFPActionIds.UpdateEFPList)
+    .flatMap((tx) => getListOpsFromTransaction(tx))
+
+  const addToCart = (payload: ListOpType[] | ListOp[]) => {
+    if (!nonce || !selectedChainId || !address) return
+
+    const tx = formatListOpsTransaction({
+      listOps: payload,
+      chainId: selectedChainId,
+      nonce: nonce,
+      connectedAddress: address,
+    })
+
+    addListOpsTransaction(tx)
   }
 
-  const setCart = (payload: CartItemType[]) => {
-    setCartState(payload)
-  }
-
-  const addToCart = (payload: CartItemType[] | CartItemType) => {
-    const newItems = Array.isArray(payload)
-      ? payload.filter(
-          (item) => !cart.some((cartItem) => cartItem.listOp.data.toLowerCase() === item.listOp.data.toLowerCase())
-        )
-      : [payload]
-    setCartState([...cart, ...newItems])
-  }
-
-  const removeFromCart = (payload: ListOp | ListOp[]) => {
-    const filteredCart = Array.isArray(payload)
-      ? cart.filter((item) => !payload.some((op) => op.data.toLowerCase() === item.listOp.data.toLowerCase()))
-      : cart.filter((item) => item.listOp.data.toLowerCase() !== payload.data.toLowerCase())
-    setCartState(filteredCart)
+  const removeFromCart = (payload: ListOpType[] | ListOp[]) => {
+    removeListOpsTransaction(payload.map((op) => op.data))
   }
 
   const resetCart = () => {
-    setCartState([])
+    setPendingTxs(pendingTxs.filter((tx) => tx.id !== EFPActionIds.UpdateEFPList))
   }
 
   const hasListOpAddRecord = (address: string) => {
-    return cart.some((item) => item.listOp.opcode === 1 && item.listOp.data.toLowerCase() === address.toLowerCase())
+    return cart.some((item) => item.opcode === 1 && item.data.toLowerCase() === address.toLowerCase())
   }
 
   const hasListOpRemoveRecord = (address: string) => {
-    return cart.some((item) => item.listOp.opcode === 2 && item.listOp.data.toLowerCase() === address.toLowerCase())
+    return cart.some((item) => item.opcode === 2 && item.data.toLowerCase() === address.toLowerCase())
   }
 
   const hasListOpAddTag = (address: Address, tag: string) => {
-    return cart.some((item) => item.listOp.opcode === 3 && item.listOp.data === listOpAddTag(address, tag).data)
+    return cart.some((item) => item.opcode === 3 && item.data === listOpAddTag(address, tag).data)
   }
 
   const hasListOpRemoveTag = (address: Address, tag: string) => {
-    return cart.some((item) => item.listOp.opcode === 4 && item.listOp.data === listOpRemoveTag(address, tag).data)
+    return cart.some((item) => item.opcode === 4 && item.data === listOpRemoveTag(address, tag).data)
   }
 
   // Retrieves all tags associated with a specific address from the cart items.
   const getTagsFromCartByAddress = useCallback(
     (address: Address): string[] => {
-      return cart.reduce((tags, { listOp }) => {
+      return cart.reduce((tags, listOp) => {
         if (isTagListOp(listOp)) {
           const { address: opAddress, tag } = extractAddressAndTag(listOp)
           if (opAddress.toLowerCase() === address.toLowerCase()) {
@@ -91,20 +83,14 @@ export function useCart() {
   )
 
   // Retrieves all unique addresses involved in the cart items.
-  const getAddressesFromCart = useCallback(
-    (platform?: ImportPlatformType): Address[] => {
-      const addresses = cart
-        .filter((item) => item.import === platform)
-        .map(({ listOp }) => listOp.data.slice(0, 42).toLowerCase() as Address)
+  const getAddressesFromCart = useCallback((): Address[] => {
+    const addresses = cart.map((item) => item.data.slice(0, 42).toLowerCase() as Address)
 
-      return [...new Set(addresses)]
-    },
-    [cart]
-  )
+    return [...new Set(addresses)]
+  }, [cart])
 
   return {
     cart,
-    setCart,
     addToCart,
     removeFromCart,
     resetCart,

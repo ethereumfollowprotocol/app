@@ -19,6 +19,9 @@ export async function GET(req: NextRequest) {
       ? truncateAddress(user)
       : user
   const fetchedAvatar = response.ens?.avatar
+  const fetchedHeader = response.ens?.records?.header
+
+  console.log(fetchedHeader)
 
   return new ImageResponse(
     (
@@ -32,30 +35,42 @@ export async function GET(req: NextRequest) {
           alignItems: 'center',
           justifyContent: 'center',
           flexDirection: 'row',
-          backgroundImage: 'linear-gradient(to bottom, #fffcc0, #ffddf1)',
+          backgroundImage: 'linear-gradient(to bottom-right, #f1f3fe, #dff2fb, #ecfffd)',
           textAlign: 'center',
           fontWeight: 700,
         }}
       >
         <div
-          className='glass-card'
           style={{
             display: isList && response.primary_list !== user ? 'none' : 'flex',
-            minWidth: 274,
-            maxWidth: 340,
+            width: 320,
+            position: 'relative',
             flexDirection: 'column',
             alignItems: 'center',
-            border: '2px solid #FFDBD9',
-            borderRadius: 16,
+            borderRadius: 4,
             padding: 32,
-            background: 'linear-gradient(to right bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.6))',
+            background: 'white',
+            boxShadow: '2px 2px 7px 0px rgba(0, 0, 0, 0.1)',
           }}
         >
+          <img
+            alt='header'
+            width='320'
+            height='110'
+            src={fetchedHeader}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              borderRadius: 4,
+              margin: 0,
+            }}
+          />
           <img
             alt='avatar'
             width='100'
             height='100'
-            src={`${fetchedAvatar || 'https://efp.app/assets/gradient-circle.svg'}`}
+            src={`${fetchedAvatar || 'https://efp.app/assets/art/default-avatar.svg'}`}
             style={{
               borderRadius: 50,
               margin: 0,

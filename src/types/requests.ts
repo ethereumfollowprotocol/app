@@ -112,6 +112,7 @@ export type LeaderboardItem = {
   top8_rank: string
   blocks_rank: string
   top8?: string
+  header: string | null
   following?: string
   followers: string
   blocks?: string
@@ -239,10 +240,7 @@ export type ProfileRoles = {
 
 export type AccountResponseType = {
   address: Address
-  ens: {
-    name: string | null
-    avatar: string | null
-  }
+  ens: ENSProfile
   primary_list: string | null
 }
 
@@ -250,19 +248,14 @@ export type DiscoverItemType = {
   address: Address
   name: string | null
   avatar: string | null
+  header: string | null
   followers: number
   following: number
 }
 
-export type RecommendedItemType = {
-  address: Address
-  name: string | null
-  avatar: string | null
-}
-
 export type DiscoverResponseType = {
   latestFollows: DiscoverItemType[]
-  recommended: RecommendedItemType[]
+  recommended: DiscoverItemType[]
 }
 
 export type RecommendedProfilesResponseType = {
@@ -296,4 +289,29 @@ export type AirstackFollowingsResponse = {
       pageInfo: { nextCursor: string; hasPrevPage: boolean; hasNextPage: boolean }
     }
   }
+}
+
+export type NotificationItemType = {
+  address: Address
+  name: string | null
+  avatar: string | null
+  token_id: number
+  action: string
+  opcode: number
+  op: Address
+  tag: string
+  updated_at: string
+}
+
+export type NotificationsResponse = {
+  summary: {
+    interval: string
+    opcode: string
+    total: number
+    total_follows: number
+    total_unfollows: number
+    total_tags: number
+    total_untags: number
+  }
+  notifications: NotificationItemType[]
 }

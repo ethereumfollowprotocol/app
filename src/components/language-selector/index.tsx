@@ -1,12 +1,13 @@
-import Image from 'next/image'
-import { FiArrowLeft } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useState, type Dispatch, type SetStateAction } from 'react'
 
 import useLanguage from './use-language'
 import { LANGUAGES } from '#/lib/constants/languages'
-import GreenCheck from 'public/assets/icons/check-green.svg'
+import Check from 'public/assets/icons/ui/check.svg'
+import ArrowLeft from 'public/assets/icons/ui/arrow-left.svg'
+import ArrowRight from 'public/assets/icons/ui/arrow-right.svg'
+import Image from 'next/image'
 
 interface LanguageSelectorProps {
   setExternalLanguageMenuOpen?: Dispatch<SetStateAction<boolean>>
@@ -41,40 +42,48 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
   )
 
   return (
-    <div ref={clickAwayLanguageRef} className='w-full cursor-pointer group relative'>
+    <div ref={clickAwayLanguageRef} className='group relative w-full cursor-pointer'>
       <div
         onClick={() => {
           setLanguageMenuOpen(!languageMenOpenu)
           setExternalLanguageMenuOpen?.(!languageMenOpenu)
         }}
-        className='flex justify-between p-3 rounded-md group-hover:bg-navItem items-center w-full'
+        className='group-hover:bg-nav-item flex w-full items-center justify-between rounded-sm p-4'
       >
-        <FiArrowLeft className='text-xl' />
-        <div className='flex justify-end gap-2'>
-          <Image src={selectedLanguage?.icon || ''} alt='Language icon' width={26} className='rounded-md' />
-          <p className='font-bold w-fit'>{selectedLanguage?.language}</p>
+        <div className='flex items-center gap-2'>
+          {selectedLanguage && (
+            <Image
+              src={selectedLanguage.icon}
+              alt={selectedLanguage.language}
+              width={32}
+              height={32}
+              className='h-auto w-7 rounded-sm'
+            />
+          )}
+          <p className='w-fit font-bold'>{selectedLanguage?.language}</p>
         </div>
+        <ArrowRight className='text-xl' />
       </div>
       <div
-        className={`-right-[251px] -top-[56px] lg:-top-[6px] absolute lg:right-[95%] z-50 ${
-          languageMenOpenu ? 'block' : 'hidden top-0'
-        } group-hover:block lg:pr-6`}
+        className={`absolute -top-[56px] left-full z-50 w-full transition-all transition-discrete sm:top-0 sm:w-fit sm:pl-2 sm:transition-normal ${
+          languageMenOpenu ? 'block' : 'hidden'
+        } group-hover:block`}
       >
-        <div className='flex overflow-scroll flex-col lg:grid lg:max-h-[75vh] max-h-[85vh] h-full xl:grid-cols-2 gap-2 gap-x-px w-[246px] xl:w-[450px] bg-neutral border-[3px] border-grey p-1 rounded-lg shadow-md'>
+        <div className='bg-neutral shadow-medium flex max-h-[520px] w-full flex-col gap-2 gap-x-px overflow-scroll rounded-sm sm:max-h-[45vh] sm:w-56 lg:grid lg:w-[450px] lg:grid-cols-2'>
           <div
             onClick={closeLanguageMenu}
-            className='flex lg:hidden justify-between items-center w-full hover:bg-navItem p-3 rounded-md transition-opacity cursor-pointer'
+            className='hover:bg-nav-item flex w-full cursor-pointer items-center justify-between rounded-sm p-4 transition-opacity lg:hidden'
           >
-            <FiArrowLeft className='text-xl font-bold' />
-            <p className=' font-bold'>Back</p>
+            <ArrowLeft className='text-xl font-bold' />
+            <p className='font-bold'>Back</p>
           </div>
-          <div className='xl:col-span-2 p-3 flex flex-col gap-3 items-center'>
+          <div className='flex flex-col items-center gap-4 p-4 lg:col-span-2'>
             <input
               type='text'
               placeholder='Search'
               value={languageMenuSearch}
               onChange={(e) => setLanguageMenuSearch(e.target.value)}
-              className='w-full px-4 py-2 border-[3px] border-grey transition-colors rounded-md bg-grey/30 focus:border-text/80'
+              className='bg-text-neutral/30 w-full rounded-sm px-4 py-2 transition-colors'
             />
             {LANGUAGES.filter((lang) =>
               languageMenuSearch
@@ -82,14 +91,14 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
                   lang.englishLanguage.toLowerCase().includes(languageMenuSearch.toLowerCase())
                 : true
             ).length === 0 && (
-              <div className='p-3'>
+              <div className='p-4'>
                 <p className='font-bold'>{t('search no results')}</p>
               </div>
             )}
           </div>
           {regularLanguages.map((lang) => (
             <div
-              className='py-3 pl-8 relative flex items-center font-bold rounded-md hover:bg-navItem transition-colors'
+              className='hover:bg-nav-item relative flex items-center rounded-sm py-4 pl-8 font-bold transition-colors'
               key={lang.language}
               onClick={() => {
                 changeLanguage(lang)
@@ -98,22 +107,22 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
               }}
             >
               {selectedLanguage && selectedLanguage.key === lang.key && (
-                <Image src={GreenCheck} alt='List selected' width={16} className='absolute left-2 top-[35%]' />
+                <Check width={16} className='absolute top-5 left-2 h-5 w-5 text-green-500' />
               )}
-              <div className='flex gap-2 pr-3'>
-                <Image src={lang.icon} alt='Language icon' width={26} className='rounded-md' />
+              <div className='flex items-center gap-2 pr-3'>
+                <Image src={lang.icon} alt={lang.language} width={32} height={32} className='h-auto w-7 rounded-sm' />
                 <p>{lang.language}</p>
               </div>
             </div>
           ))}
           {specialLanguages.length > 0 && regularLanguages.length > 0 && (
-            <div className='xl:col-span-2 px-3 py-1 xl:py-3 flex flex-col gap-3 items-center'>
-              <hr className='border-[1px] rounded-full border-zinc-300 dark:border-zinc-500 w-full' />
+            <div className='flex flex-col items-center gap-4 p-4 lg:col-span-2'>
+              <hr className='border-text-neutral/50 w-full rounded-full border-[1px]' />
             </div>
           )}
           {specialLanguages.map((lang) => (
             <div
-              className='py-3 pl-8 relative flex items-center font-bold rounded-md hover:bg-navItem transition-colors'
+              className='hover:bg-nav-item relative flex items-center rounded-sm py-4 pl-8 font-bold transition-colors'
               key={lang.language}
               onClick={() => {
                 changeLanguage(lang)
@@ -122,15 +131,15 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
               }}
             >
               {selectedLanguage && selectedLanguage.key === lang.key && (
-                <Image src={GreenCheck} alt='List selected' width={16} className='absolute left-2 top-[35%]' />
+                <Check width={16} className='absolute top-[35%] left-2' />
               )}
-              <div className='flex gap-2 pr-3'>
-                <Image src={lang.icon} alt='Language icon' width={26} className='rounded-md' />
+              <div className='flex items-center gap-2 pr-3'>
+                <Image src={lang.icon} alt={lang.language} width={32} height={32} className='h-auto w-7 rounded-sm' />
                 <p>{lang.language}</p>
               </div>
             </div>
           ))}
-          <div className='h-4 lg:h-0 pb-6 lg:pb-0 w-full' />
+          <div className='h-4 w-full pb-6 lg:h-0 lg:pb-0' />
         </div>
       </div>
     </div>

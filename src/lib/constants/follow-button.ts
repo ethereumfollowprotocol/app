@@ -1,10 +1,11 @@
 import type { THEMES } from '.'
 import MainnetRed from 'public/assets/mainnet-red.svg'
-import type { FollowButtonState } from '#/components/follow-button/hooks/use-follow-button'
+import type { SVGProps } from 'react'
+import type { FollowingState } from 'ethereum-identity-kit'
 
 export const FOLLOW_BUTTON_STYLES: Record<
-  FollowButtonState,
-  { bg: string; hover?: string; text: string; border: string; imageSrc?: string }
+  FollowingState,
+  { bg: string; hover?: string; text: string; border: string; imageSrc?: React.ComponentType<SVGProps<SVGSVGElement>> }
 > = {
   Follow: {
     bg: 'btn-grad',
@@ -80,7 +81,7 @@ export const FOLLOW_BUTTON_STYLES: Record<
   Mute: {
     bg: 'bg-deletion',
     hover: 'hover:bg-[#CF4C4C]',
-    text: 'text-darkGrey',
+    text: 'text-dark-grey',
     border: 'border-0',
   },
   'Pending Mute': {
@@ -107,149 +108,68 @@ export const FOLLOW_BUTTON_STYLES: Record<
   },
 }
 
-export const FOLLOW_BUTTON_COOL_EMOJI: Record<
-  FollowButtonState,
-  Record<(typeof THEMES)[number], string | undefined>
-> = {
+export const FOLLOW_BUTTON_COOL_EMOJI: Record<FollowingState, Record<(typeof THEMES)[number], string | undefined>> = {
   Follow: {
     light: '/assets/logo.svg',
     dark: '/assets/logo.svg',
-    halloween: '/assets/icons/halloween-emoji.svg',
   },
   'Pending Following': {
     light: undefined,
     dark: undefined,
-    halloween: undefined,
   },
   Following: {
-    light: '/assets/icons/unfollow-emoji.svg',
-    dark: '/assets/icons/unfollow-emoji.svg',
-    halloween: '/assets/icons/unfollow-halloween-emoji.png',
+    light: '/assets/icons/emojis/unfollow-emoji.svg',
+    dark: '/assets/icons/emojis/unfollow-emoji.svg',
   },
   Unfollow: {
     light: undefined,
     dark: undefined,
-    halloween: undefined,
   },
-  // Subscribe: "",
-  // Subscribed: "",
-  // Unsubscribe: "",
   Block: {
-    light: '/assets/icons/block-emoji.svg',
-    dark: '/assets/icons/block-emoji.svg',
-    halloween: '/assets/icons/spider-web-emoji.svg',
+    light: '/assets/icons/emojis/block-emoji.svg',
+    dark: '/assets/icons/emojis/block-emoji.svg',
   },
   'Pending Block': {
     light: undefined,
     dark: undefined,
-    halloween: undefined,
   },
   Blocked: {
     light: undefined,
     dark: undefined,
-    halloween: undefined,
   },
   Unblock: {
     light: undefined,
     dark: undefined,
-    halloween: undefined,
   },
   'Pending Mute': {
     light: undefined,
     dark: undefined,
-    halloween: undefined,
   },
   Mute: {
-    light: '/assets/icons/mute-emoji.svg',
-    dark: '/assets/icons/mute-emoji.svg',
-    halloween: '/assets/icons/ghost-emoji.svg',
+    light: '/assets/icons/emojis/mute-emoji.svg',
+    dark: '/assets/icons/emojis/mute-emoji.svg',
   },
   Muted: {
     light: undefined,
     dark: undefined,
-    halloween: undefined,
   },
   Unmute: {
     light: undefined,
     dark: undefined,
-    halloween: undefined,
   },
 }
 
-export const FOLLOW_BUTTON_SOUND: Record<FollowButtonState, Record<(typeof THEMES)[number], string | undefined>> = {
-  Follow: {
-    light: '/assets/sound-effects/follow.mp3',
-    dark: '/assets/sound-effects/follow.mp3',
-    halloween: '/assets/sound-effects/follow-halloween.mp3',
-  },
-  'Pending Following': {
-    light: undefined,
-    dark: undefined,
-    halloween: undefined,
-  },
-  Following: {
-    light: '/assets/sound-effects/unfollow.mp3',
-    dark: '/assets/sound-effects/unfollow.mp3',
-    halloween: '/assets/sound-effects/unfollow-halloween.mp3',
-  },
-  Unfollow: {
-    light: undefined,
-    dark: undefined,
-    halloween: undefined,
-  },
-  // Subscribe: {
-  //   light: undefined,
-  //   dark: undefined,
-  //   halloween: undefined
-  // },
-  // Subscribed: {
-  //   light: undefined,
-  //   dark: undefined,
-  //   halloween: undefined
-  // },
-  // Unsubscribe: {
-  //   light: undefined,
-  //   dark: undefined,
-  //   halloween: undefined
-  // },
-  Block: {
-    light: undefined,
-    dark: undefined,
-    halloween: undefined,
-  },
-  'Pending Block': {
-    light: undefined,
-    dark: undefined,
-    halloween: undefined,
-  },
-  Blocked: {
-    light: undefined,
-    dark: undefined,
-    halloween: undefined,
-  },
-  Unblock: {
-    light: undefined,
-    dark: undefined,
-    halloween: undefined,
-  },
-  Mute: {
-    light: undefined,
-    dark: undefined,
-    halloween: undefined,
-  },
-  'Pending Mute': {
-    light: undefined,
-    dark: undefined,
-    halloween: undefined,
-  },
-  Muted: {
-    light: undefined,
-    dark: undefined,
-    halloween: undefined,
-  },
-  Unmute: {
-    light: undefined,
-    dark: undefined,
-    halloween: undefined,
-  },
+export const FOLLOW_BUTTON_SOUND: Record<FollowingState, string | undefined> = {
+  Follow: '/assets/sound-effects/follow.mp3',
+  'Pending Following': undefined,
+  Following: '/assets/sound-effects/unfollow.mp3',
+  Unfollow: undefined,
+  Block: undefined,
+  'Pending Block': undefined,
+  Blocked: undefined,
+  Unblock: undefined,
+  Mute: undefined,
+  'Pending Mute': undefined,
+  Muted: undefined,
+  Unmute: undefined,
 }

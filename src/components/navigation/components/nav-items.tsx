@@ -1,43 +1,43 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
 import { useAccount } from 'wagmi'
 import { usePathname } from 'next/navigation'
-import { useClickAway } from '@uidotdev/usehooks'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
-import Menu from './menu'
-import { cn } from '#/lib/utilities'
-import { EXTERNAL_LINKS, NAV_ITEMS } from '#/lib/constants'
+import { NAV_ITEMS } from '#/lib/constants'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
+import { Avatar } from '#/components/avatar'
+import { cn, truncateAddress } from '#/lib/utilities'
+import Hamburger from './hamburger'
+import CartButton from './cart-button'
 
 const NavItems = () => {
   const pathname = usePathname()
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
-  const { selectedList, lists } = useEFPProfile()
-
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const clickAwayRef = useClickAway<HTMLDivElement>((_) => {
-    setMobileMenuOpen(false)
-  })
+  const { selectedList, lists, profile } = useEFPProfile()
 
   const itemUrl =
     selectedList === Number(lists?.primary_list) && pathname !== `/${selectedList}`
       ? userAddress?.toLowerCase()
       : (selectedList?.toString() ?? userAddress?.toLowerCase())
-  const itemIndex = EXTERNAL_LINKS.find((link) => link.href === pathname)
-    ? 4
-    : NAV_ITEMS.findIndex((item) => item.href(itemUrl) === pathname)
+
+  const profileAvatar = profile?.ens.avatar
+  const profileName = profile?.ens.name
 
   return (
-    <div ref={clickAwayRef} className='relative'>
-      <div className='z-40 bg-neutral/80 backdrop-blur-xl flex flex-row items-center pr-0.5 h-[54px] border-[3px] border-grey hover:border-text transition-all rounded-full'>
-        {NAV_ITEMS.map((item) => (
+    <div className='flex w-full items-center justify-between sm:flex-col sm:justify-start sm:gap-3'>
+      {NAV_ITEMS.map((item) => {
+        if (item.hiddenOnDisconnected && !userAddress) return null
+
+        return (
           <Link
             key={item.name}
-            className='z-10 px-0.5 group/nav-item'
+            className={cn(
+              'group/nav-item relative z-10 rounded-sm p-1.5 transition-all',
+              pathname === item.href(itemUrl) && 'bg-primary/30 text-primary-selected'
+            )}
             href={item.href(itemUrl)}
             prefetch={true}
             onClick={(e) => {
@@ -45,39 +45,34 @@ const NavItems = () => {
                 e.preventDefault()
                 openConnectModal()
               }
-
-              setMobileMenuOpen(false)
             }}
           >
-            <item.icon
-              className={cn(
-                'px-2 w-11 h-11 font-bold text-[28px] z-50 group-hover/nav-item:scale-110 transition-all cursor-pointer',
-                item.href(itemUrl) === pathname
-                  ? 'text-black bg-followButton rounded-full'
-                  : 'text-text-neutral group-hover/nav-item:text-text'
-              )}
-            />
+            {item.name === 'profile' && userAddress ? (
+              <Avatar
+                avatarUrl={profileAvatar}
+                name={profileName || (truncateAddress(userAddress) as string)}
+                size={cn(
+                  'sm:w-9 w-8 sm:h-9 h-8 hover:scale-110 transition-transform',
+                  pathname === item.href(itemUrl) && 'border-2 border-primary'
+                )}
+              />
+            ) : (
+              <item.icon className='z-50 h-auto w-8 cursor-pointer transition-all group-hover/nav-item:scale-110 sm:w-9' />
+            )}
+            <div className='absolute top-0 left-full hidden pl-6 opacity-0 transition-all transition-discrete group-hover/nav-item:hidden group-hover/nav-item:opacity-100 sm:group-hover/nav-item:block starting:opacity-0'>
+              <p className='bg-neutral shadow-small text-text rounded-sm px-4 py-2 text-lg font-semibold capitalize'>
+                {item.name}
+              </p>
+            </div>
           </Link>
-        ))}
-        <div
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className={cn(
-            'flex hover:scale-110 h-11 w-11 cursor-pointer group/hamburger relative transition-all items-center justify-center gap-[5px] flex-col',
-            itemIndex === 4 ? 'bg-followButton rounded-full' : ''
-          )}
-        >
-          {new Array(3).fill(0).map((_, index) => (
-            <div
-              key={index}
-              className={cn(
-                'w-6 h-1 rounded-full transition-all bg-text',
-                itemIndex === 4 ? 'bg-black' : 'bg-text-neutral group-hover/hamburger:bg-text'
-              )}
-            ></div>
-          ))}
+        )
+      })}
+      {userAddress && (
+        <div className='sm:hidden'>
+          <CartButton />
         </div>
-      </div>
-      {mobileMenuOpen && <Menu open={mobileMenuOpen} setOpen={setMobileMenuOpen} />}
+      )}
+      <Hamburger />
     </div>
   )
 }

@@ -15,17 +15,24 @@ import Providers from './providers.tsx'
 import { Production } from './production.tsx'
 import { sharedMetadata } from '#/lib/metadata.ts'
 import { THEMES } from '../lib/constants/index.ts'
-import BackgroundImage from 'public/assets/art/waves-background.svg'
+import BackgroundImage from 'public/assets/art/background.png'
 
 export const metadata: Metadata = sharedMetadata
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <html lang='en' suppressHydrationWarning={true} className='dark'>
+    <html lang='en' suppressHydrationWarning={true}>
       <HeadTag />
       <body>
-        <ThemeProvider attribute='class' defaultTheme='system' enableSystem={true} themes={THEMES}>
-          <Image src={BackgroundImage} priority={true} alt='background waves' className='background -z-10' />
+        <ThemeProvider attribute='class' enableSystem={true} themes={THEMES}>
+          <Image
+            src={BackgroundImage}
+            priority={true}
+            width={1920}
+            height={1080}
+            alt='background image'
+            className='fixed top-0 left-0 -z-10 h-screen w-screen object-cover opacity-30'
+          />
           <Toaster richColors={true} />
           <Providers>{children}</Providers>
         </ThemeProvider>
@@ -63,10 +70,6 @@ const HeadTag = () => {
         href='https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap'
         rel='stylesheet'
       />
-
-      {/* Preload crucial assets */}
-      <link rel='preload' href='/assets/logo.svg' as='image' />
-      <link rel='preload' href='/assets/icons/unfollow-emoji.svg' as='image' />
     </head>
   )
 }

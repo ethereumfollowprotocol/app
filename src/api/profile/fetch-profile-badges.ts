@@ -15,7 +15,7 @@ export const fetchProfileBadges = async (addressOrName: string, list?: number | 
     })
 
     const data = (await response.json()).poaps as ProfileBadgesResponse[]
-    return data
+    return data || []
   } catch (err: unknown) {
     return []
   }

@@ -1,11 +1,11 @@
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
-import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 
 import { cn } from '#/lib/utilities'
 import { formatNumber } from '#/utils/format/format-number'
 import type { ProfileStatsType } from '#/types/common'
+import Link from 'next/link'
 
 interface ProfileListItemCountsProps {
   counts?: ProfileStatsType
@@ -14,7 +14,6 @@ interface ProfileListItemCountsProps {
 }
 
 const ProfileListItemCounts: React.FC<ProfileListItemCountsProps> = ({ counts, isFollowersEmpty, address }) => {
-  const router = useRouter()
   const { t } = useTranslation()
   const { address: userAddress } = useAccount()
 
@@ -25,26 +24,26 @@ const ProfileListItemCounts: React.FC<ProfileListItemCountsProps> = ({ counts, i
   return (
     <div
       className={cn(
-        'items-center max-w-1/3 justify-end pr-6 sm:gap-8 gap-6 md:gap-16 lg:gap-16 xl:gap-10',
-        userAddress ? 'hidden xs:flex lg:hidden 3xl:flex' : 'hidden xs:flex'
+        'max-w-1/3 items-center justify-end gap-6 pr-6 sm:gap-8 md:gap-16 lg:gap-16 xl:gap-10',
+        userAddress ? 'xs:flex 3xl:flex hidden lg:hidden' : 'xs:flex hidden'
       )}
     >
-      <div
-        className={`flex-col items-center hover:scale-110 cursor-pointer transition-transform ${
-          userAddress && !isFollowersEmpty ? 'lg:hidden 3xl:flex' : '2xl:flex'
+      <Link
+        href={`/${address}?tab=following`}
+        className={`cursor-pointer flex-col items-center transition-transform hover:scale-110 ${
+          userAddress && !isFollowersEmpty ? '3xl:flex lg:hidden' : '2xl:flex'
         } hidden sm:flex`}
-        onClick={() => router.push(`/${address}?tab=following`)}
       >
-        <p className='font-bold text-lg'>{formatNumber(counts.following)}</p>
-        <p className='font-bold text-sm text-center text-text/60'>{t('following')}</p>
-      </div>
-      <div
-        className='flex flex-col items-center hover:scale-110 cursor-pointer transition-transform'
-        onClick={() => router.push(`/${address}?tab=followers`)}
+        <p className='text-lg font-bold'>{formatNumber(counts.following)}</p>
+        <p className='text-text/60 text-center text-sm font-bold'>{t('following')}</p>
+      </Link>
+      <Link
+        href={`/${address}?tab=followers`}
+        className='flex cursor-pointer flex-col items-center transition-transform hover:scale-110'
       >
-        <p className='font-bold text-lg'>{formatNumber(counts.followers)}</p>
-        <p className='font-bold text-sm text-center text-text/60'>{t('followers')}</p>
-      </div>
+        <p className='text-lg font-bold'>{formatNumber(counts.followers)}</p>
+        <p className='text-text/60 text-center text-sm font-bold'>{t('followers')}</p>
+      </Link>
     </div>
   )
 }

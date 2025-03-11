@@ -1,19 +1,23 @@
 import Link from 'next/link'
-import { HiPlus } from 'react-icons/hi'
-import { IoClose } from 'react-icons/io5'
-import { useTranslation } from 'react-i18next'
+import { useAccount } from 'wagmi'
 import { useQuery } from '@tanstack/react-query'
 import { ens_beautify } from '@adraffy/ens-normalize'
 
-import { Avatar } from '#/components/avatar'
 import { useCart } from '#/hooks/use-cart'
+import { Avatar } from '#/components/avatar'
+import { isValidEnsName } from '#/utils/ens'
 import { cn, truncateAddress } from '#/lib/utilities'
 import FollowButton from '#/components/follow-button'
 import useFollowerState from '#/hooks/use-follower-state'
 import LoadingCell from '#/components/loaders/loading-cell'
-import { isValidEnsName, resolveEnsProfile } from '#/utils/ens'
 import type { TopEightProfileType } from '../hooks/use-top-eight'
 import { listOpAddListRecord, listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
+import Plus from 'public/assets/icons/ui/plus.svg'
+import Cross from 'public/assets/icons/ui/cross.svg'
+import FollowsYou from '#/components/follows-you'
+import { fetchAccount } from '#/api/fetch-account'
+import { isLinkValid } from '#/utils/validity'
+import ImageWithFallback from '#/components/image-with-fallback'
 
 interface TopEightProfileProps {
   profile: TopEightProfileType
@@ -23,15 +27,16 @@ interface TopEightProfileProps {
 const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing }) => {
   const { data: fetchedEnsProfile, isLoading: isEnsProfileLoading } = useQuery({
     queryKey: ['ens metadata', profile.address],
-    queryFn: async () => (profile.ens ? profile.ens : await resolveEnsProfile(profile.address)),
+    queryFn: async () => (profile.ens ? profile.ens : (await fetchAccount(profile.address))?.ens),
   })
 
   const profileName = fetchedEnsProfile?.name
   const profileAvatar = fetchedEnsProfile?.avatar
-  const { followerTag, followState } = useFollowerState({ address: profile?.address, showFollowerBadge: true })
+  const headerImage = isLinkValid(fetchedEnsProfile?.records?.header) ? fetchedEnsProfile?.records?.header : undefined
 
+  const { address: userAddress } = useAccount()
+  const { followState } = useFollowerState({ address: profile?.address, showFollowerBadge: true })
   const { addToCart, removeFromCart, hasListOpAddTag, hasListOpRemoveTag, hasListOpRemoveRecord } = useCart()
-  const { t } = useTranslation()
   const isAddingToTopEight = isEditing && hasListOpAddTag(profile.address, 'top8')
   const isRemovingFromTopEight =
     isEditing && (hasListOpRemoveTag(profile.address, 'top8') || hasListOpRemoveRecord(profile.address))
@@ -43,37 +48,46 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
       const removeItems = [listOpAddTag(profile.address, 'top8')]
       if (followState === 'none') removeItems.push(listOpAddListRecord(profile.address))
       removeFromCart(removeItems)
-    } else if (isRemovingFromTopEight) removeFromCart(listOpRemoveTag(profile.address, 'top8'))
+    } else if (isRemovingFromTopEight) removeFromCart([listOpRemoveTag(profile.address, 'top8')])
     else {
-      addToCart({ listOp: listOpRemoveTag(profile.address, 'top8') })
+      addToCart([listOpRemoveTag(profile.address, 'top8')])
     }
   }
 
   return (
     <div
       className={cn(
-        'flex relative flex-col group w-[129px] 2xl:w-36 justify-between px-0.5 py-4 rounded-2xl items-center gap-2 hover:border-[#A2A2A277]',
-        isEditing
-          ? 'cursor-pointer border-[3px] border-transparent w-[144px] h-[186px]'
-          : 'w-[129px] 2xl:w-36 hover:bg-text/5 h-[180px]',
+        'group bg-neutral shadow-small relative flex flex-col items-center justify-between gap-2 overflow-hidden rounded-sm px-0.5 py-4 pb-3',
+        isEditing ? 'top-eight-profile-edit cursor-pointer border-[3px] border-transparent' : 'top-eight-profile',
         isAddingToTopEight && 'border-[3px] border-green-500/50',
-        isRemovingFromTopEight && 'border-[3px] dark:border-red-500/70 border-red-400/70'
+        isRemovingFromTopEight && 'border-[3px] border-red-400/70 dark:border-red-500/70',
+        isEditing && !(isAddingToTopEight || isRemovingFromTopEight) && 'hover:border-nav-item'
       )}
       onClick={onClick}
     >
+      {headerImage && (
+        <ImageWithFallback
+          src={headerImage}
+          fallback={undefined}
+          alt='header'
+          width={600}
+          height={200}
+          className='absolute top-0 left-0 z-0 h-full w-full object-cover opacity-25'
+        />
+      )}
       {isEditing && (
         <div
           className={cn(
-            'absolute top-1 right-1 p-1 rounded-full text-white',
+            'absolute top-1 right-1 flex h-5 w-5 items-center justify-center rounded-sm text-white',
             isAddingToTopEight && 'bg-green-500/50',
             isRemovingFromTopEight && 'bg-red-400/70',
-            !(isAddingToTopEight || isRemovingFromTopEight) && 'bg-[#A2A2A277] group-hover:block hidden '
+            !(isAddingToTopEight || isRemovingFromTopEight) && 'hidden bg-[#A2A2A277] group-hover:flex'
           )}
         >
-          {isAddingToTopEight ? <HiPlus /> : <IoClose />}
+          {isAddingToTopEight ? <Plus className='h-3 w-3' /> : <Cross className='h-4 w-4' />}
         </div>
       )}
-      <div className='flex flex-col w-full items-center gap-1'>
+      <div className='z-10 flex w-full flex-col items-center gap-1'>
         {isEnsProfileLoading ? (
           <LoadingCell className='h-[50px] w-[50px] rounded-full' />
         ) : (
@@ -85,32 +99,31 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
             />
           </Link>
         )}
-        {isEnsProfileLoading ? (
-          <LoadingCell className='h-7 w-24 rounded-lg' />
-        ) : (
-          <Link
-            href={`/${profile.address}`}
-            className={cn(
-              'text-lg font-bold max-w-full truncate',
-              isEditing ? 'pointer-events-none' : 'hover:scale-110 hover:opacity-75 transition-all'
-            )}
-          >
-            {profileName && isValidEnsName(profileName) ? ens_beautify(profileName) : truncateAddress(profile.address)}
-          </Link>
-        )}
-      </div>
-      {followerTag && (
-        <div
-          className={cn(
-            'rounded-full absolute font-bold text-[10px] flex bottom-[62px] items-center justify-center bg-zinc-300 h-5 min-w-20 w-fit px-1',
-            followerTag.className,
-            'text-darkGrey'
+        <div className='flex h-13 w-full flex-col items-center justify-center gap-1.5'>
+          {isEnsProfileLoading ? (
+            <LoadingCell className='h-7 w-24 rounded-sm' />
+          ) : (
+            <Link
+              href={`/${profile.address}`}
+              className={cn(
+                'max-w-full truncate text-lg font-bold',
+                isEditing ? 'pointer-events-none' : 'transition-all hover:scale-110 hover:opacity-75'
+              )}
+            >
+              {profileName && isValidEnsName(profileName)
+                ? ens_beautify(profileName)
+                : truncateAddress(profile.address)}
+            </Link>
           )}
-        >
-          {t(followerTag.text)}
+          {userAddress && <FollowsYou addressOrName={profile.address} connectedAddress={userAddress} />}
         </div>
-      )}
-      <FollowButton address={profile.address} />
+      </div>
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className={cn('absolute left-0 z-10 flex w-full justify-center', isEditing ? 'bottom-2' : 'bottom-3')}
+      >
+        <FollowButton address={profile.address} />
+      </div>
     </div>
   )
 }

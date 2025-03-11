@@ -28,7 +28,7 @@ export const fetchProfileFollowers = async ({
 
     const followersEndpoint = allResults
       ? 'allFollowers'
-      : search && search?.length >= 3
+      : search && search?.length >= 2
         ? 'searchFollowers'
         : 'followers'
 

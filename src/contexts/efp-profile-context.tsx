@@ -9,11 +9,12 @@ import {
   type QueryObserverResult,
   type FetchNextPageOptions,
   type InfiniteQueryObserverResult,
+  useQueryClient,
 } from '@tanstack/react-query'
 import type { Address } from 'viem'
 import { useRouter } from 'next/navigation'
 import { useAccount, useChains } from 'wagmi'
-import { fetchProfileDetails, fetchProfileStats } from 'ethereum-identity-kit'
+import { fetchProfileDetails, fetchProfileStats, useTransactions } from 'ethereum-identity-kit'
 
 import type {
   ENSProfile,
@@ -37,6 +38,9 @@ import { fetchProfileAllFollowings } from '#/api/following/fetch-profile-all-fol
 import { fetchFollowerTags, nullFollowerTags } from '#/api/followers/fetch-follower-tags'
 import { fetchFollowingTags, nullFollowingTags } from '#/api/following/fetch-following-tags'
 import { BLOCKED_MUTED_TAGS, DEFAULT_TAGS_TO_ADD, FETCH_LIMIT_PARAM } from '#/lib/constants'
+import { triggerCustomEvent } from '#/utils/trigger-custom-event'
+import { resetFollowingRelatedQueries } from '#/utils/reset-queries'
+import { refetchState } from '#/utils/reset-queries'
 
 // Define the type for the profile context
 type EFPProfileContextType = {
@@ -137,6 +141,8 @@ type EFPProfileContextType = {
   setIsRefetchingProfile: (state: boolean) => void
   setIsRefetchingFollowing: (state: boolean) => void
   setSetNewListAsSelected: (state: boolean) => void
+  isEditingListSettings: boolean
+  setIsEditingListSettings: (state: boolean) => void
 }
 
 type Props = {
@@ -174,6 +180,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     data: lists,
     isLoading: listsIsLoading,
     refetch: refetchLists,
+    isRefetching: listsIsRefetching,
   } = useQuery({
     queryKey: ['lists', userAddress, fetchFreshLists],
     queryFn: async () => {
@@ -197,7 +204,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
 
       const newList = Math.max(...lists.lists.map((list) => Number(list)))
 
-      router.push(`/${newList}`)
+      router.push(`/${newList}?ssr=false`)
       localStorage.setItem('selected-list', newList.toString())
       setSelectedList(newList)
 
@@ -226,6 +233,63 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     [isPrimaryList, selectedList]
   )
 
+  const queryClient = useQueryClient()
+  const { setSelectedList: setSelectedListFromTransactionContext, isCheckoutFinished } = useTransactions()
+  const [isEditingListSettings, setIsEditingListSettings] = useState(false)
+
+  useEffect(() => {
+    setSelectedListFromTransactionContext(selectedList ? selectedList.toString() : 'new list')
+  }, [selectedList])
+
+  useEffect(() => {
+    if (isCheckoutFinished) {
+      if (isEditingListSettings) {
+        setIsRefetchingProfile(true)
+
+        refetchState(fetchFreshLists, setFetchFreshLists, refetchLists)
+        refetchState(fetchFreshProfile, setFetchFreshProfile, refetchProfile)
+        queryClient.refetchQueries({ queryKey: ['profile'] })
+        queryClient.refetchQueries({ queryKey: ['lists'] })
+
+        refetchRoles()
+        refetchFollowers()
+        refetchFollowerTags()
+        setIsEditingListSettings(false)
+      }
+
+      // Track event for mobile or desktop (not essential)
+      triggerCustomEvent(selectedList === undefined ? 'Mint' : 'Checkout')
+
+      refetchState(fetchFreshStats, setFetchFreshStats, refetchStats)
+      setIsRefetchingFollowing(true)
+      resetFollowingRelatedQueries(queryClient)
+
+      if (selectedList === undefined) {
+        queryClient.invalidateQueries({ queryKey: ['profile', userAddress, undefined] })
+
+        setIsRefetchingProfile(true)
+        setSetNewListAsSelected(true)
+
+        refetchState(fetchFreshLists, setFetchFreshLists, refetchLists)
+        refetchState(fetchFreshProfile, setFetchFreshProfile, refetchProfile)
+
+        return
+      }
+
+      // Clear up following pages to start fetching new ones from the beginning
+      queryClient.setQueryData(
+        ['following', userAddress, selectedList],
+        (prev: { pages: FollowingResponse[][]; pageParams: number[] }) => ({
+          pages: prev?.pages?.slice(0, 1),
+          pageParams: prev?.pageParams?.slice(0, 1),
+        })
+      )
+
+      refetchFollowing()
+      refetchFollowingTags()
+    }
+  }, [isCheckoutFinished])
+
   const {
     data: profile,
     isLoading: profileIsLoading,
@@ -245,9 +309,6 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     },
     staleTime: Infinity,
     refetchOnWindowFocus: false,
-    // meta: {
-    //   persist: true,
-    // },
   })
 
   const {
@@ -264,9 +325,6 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       return fetchedStats
     },
     refetchOnWindowFocus: false,
-    // meta: {
-    //   persist: true,
-    // },
   })
 
   const [isEndOfFollowing, setIsEndOfFollowing] = useState(false)
@@ -285,7 +343,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       listToFetch,
       followingSort,
       followingTagsFilter,
-      followingSearch.length > 2 ? followingSearch : undefined,
+      followingSearch.length > 1 ? followingSearch : undefined,
       fetchFreshStats,
     ],
     queryFn: async ({ pageParam = 0 }) => {
@@ -317,9 +375,6 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.nextPageParam,
-    // meta: {
-    //   persist: true,
-    // },
   })
 
   const [isEndOfFollowers, setIsEndOfFollowers] = useState(false)
@@ -338,7 +393,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       listToFetch,
       followersSort,
       followersTagsFilter,
-      followersSearch.length > 2 ? followersSearch : undefined,
+      followersSearch.length > 1 ? followersSearch : undefined,
     ],
     queryFn: async ({ pageParam = 0 }) => {
       setIsEndOfFollowers(false)
@@ -369,6 +424,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     // meta: {
     //      persist: true,
     //    },
+    enabled: !!fetchedFollowing,
   })
 
   const followers = fetchedFollowers
@@ -411,6 +467,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
       const fetchedTags = await fetchFollowerTags(userAddress, listToFetch)
       return fetchedTags
     },
+    enabled: !!fetchedFollowing,
     // meta: {
     //      persist: true,
     //    },
@@ -516,6 +573,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     // meta: {
     //      persist: true,
     //    },
+    enabled: !!fetchedFollowing,
   })
 
   return (
@@ -541,10 +599,16 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         listsIsLoading,
         followerTagsLoading: followerTagsLoading || isRefetchingFollowerTagsQuery,
         followingTagsLoading: followingTagsLoading || isRefetchingFollowingTagsQuery,
-        profileIsLoading: listsIsLoading || isRefetchingProfile || profileIsLoading || isRefetchingProfileQuery,
-        statsIsLoading: listsIsLoading || statsIsLoading || isRefetchingStatsQuery,
-        followingIsLoading: isRefetchingFollowing || listsIsLoading || followingIsLoading || isRefetchingFollowingQuery,
-        followersIsLoading: listsIsLoading || followersIsLoading || isRefetchingFollowersQuery,
+        profileIsLoading:
+          listsIsLoading || listsIsRefetching || isRefetchingProfile || profileIsLoading || isRefetchingProfileQuery,
+        statsIsLoading: listsIsLoading || listsIsRefetching || statsIsLoading || isRefetchingStatsQuery,
+        followingIsLoading:
+          isRefetchingFollowing ||
+          listsIsLoading ||
+          listsIsRefetching ||
+          followingIsLoading ||
+          isRefetchingFollowingQuery,
+        followersIsLoading: listsIsLoading || listsIsRefetching || followersIsLoading || isRefetchingFollowersQuery,
         isFetchingMoreFollowers: !isEndOfFollowers && isFetchingMoreFollowers,
         isFetchingMoreFollowing: !isEndOfFollowing && isFetchingMoreFollowing,
         isEndOfFollowers,
@@ -585,6 +649,8 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         setIsRefetchingProfile,
         setIsRefetchingFollowing,
         setSetNewListAsSelected,
+        isEditingListSettings,
+        setIsEditingListSettings,
       }}
     >
       {children}

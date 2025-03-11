@@ -5,6 +5,7 @@ import type { ENSProfile } from '#/types/requests'
 import type { ProfileStatsType } from '#/types/common'
 import LoadingRow from './components/list-item/loading-list-item'
 import ProfileListItem from './components/list-item/profile-list-item'
+import type { InitialFollowingState } from 'ethereum-identity-kit'
 
 export interface ProfileListProfile {
   address: Address
@@ -24,6 +25,8 @@ interface ProfileListProps {
   canEditTags?: boolean
   isBlockedList?: boolean // If the list is displaying blocked and blocked by profiles
   isBlockedBy?: boolean // Used to handle the "Block Back" on FollowButton
+  isTopEight?: boolean
+  initialFollowState?: InitialFollowingState
 }
 
 const ProfileList: React.FC<ProfileListProps> = ({
@@ -37,6 +40,8 @@ const ProfileList: React.FC<ProfileListProps> = ({
   canEditTags,
   isBlockedList,
   isBlockedBy,
+  isTopEight,
+  initialFollowState,
 }) => {
   const displayLoadingRows = isLoadingMore || isLoading
   const isShortList = (profiles?.length || 0) <= 3
@@ -45,7 +50,7 @@ const ProfileList: React.FC<ProfileListProps> = ({
   return (
     <div
       className={cn(
-        'flex flex-col w-full gap-2 2xl:gap-3',
+        'flex w-full flex-col gap-0',
         !isEmpty && isShortList && showTags && canEditTags ? 'pb-32' : 'pb-0',
         className
       )}
@@ -62,6 +67,8 @@ const ProfileList: React.FC<ProfileListProps> = ({
           canEditTags={canEditTags}
           isBlockedList={isBlockedList}
           isBlockedBy={isBlockedBy}
+          isTopEight={isTopEight}
+          initialFollowState={initialFollowState}
           tagsDropdownPosition={
             (index === profiles.length - 1 || index === profiles.length - 2) && index >= 2 ? 'top' : 'bottom'
           }

@@ -21,7 +21,7 @@ export const trans = (r: number, s: number) =>
   `perspective(1500px) rotateX(0deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`
 
 export const useRecommendedProfilesCards = () => {
-  const { actionsSoundsMuted } = useSounds()
+  const { selectedVolume } = useSounds()
   const { gone, recommendedProfiles, isLoading, isFetchingNextPage, fetchNextPage } = useRecommendedProfiles()
   const { cart, addToCart, removeFromCart, getAddressesFromCart } = useCart()
 
@@ -32,7 +32,7 @@ export const useRecommendedProfilesCards = () => {
   const soundRef = useRef<HTMLAudioElement>(null)
   const animatedRef = useRef<HTMLDivElement>(null)
   const handleStartAnimationAndSound = () => {
-    if (soundRef.current && !actionsSoundsMuted) {
+    if (soundRef.current && selectedVolume !== 'no sounds') {
       soundRef.current.volume = 0.3
       soundRef.current?.play()
     }
@@ -40,7 +40,6 @@ export const useRecommendedProfilesCards = () => {
   }
   const handleStopAnimationAndSound = () => {
     animatedRef.current?.classList.remove('falling-element')
-    // if (soundRef.current && !actionsSoundsMuted) soundRef.current.pause()
   }
 
   const [didSwipeBack, setDidSwipeBack] = useState(false)
@@ -68,12 +67,12 @@ export const useRecommendedProfilesCards = () => {
       if (canFetchMoreProfiles(index)) fetchNextPage()
       if (xDir === 1) {
         setTimeout(() => {
-          addToCart({
-            listOp: listOpAddListRecord(
+          addToCart([
+            listOpAddListRecord(
               // @ts-expect-error the index comes from the cardsApi which is the same length as recommendedProfiles therefore it is never undefined
               recommendedProfiles[index]?.address
             ),
-          })
+          ])
 
           handleStartAnimationAndSound()
         }, 0.15 * SECOND)
@@ -132,12 +131,12 @@ export const useRecommendedProfilesCards = () => {
         if (canFetchMoreProfiles(i)) fetchNextPage()
 
         setTimeout(() => {
-          addToCart({
-            listOp: listOpAddListRecord(
+          addToCart([
+            listOpAddListRecord(
               // @ts-expect-error the index comes from the cardsApi which is the same length as recommendedProfiles therefore it is never undefined
               recommendedProfiles[i].address
             ),
-          })
+          ])
 
           handleStartAnimationAndSound()
         }, 0.15 * SECOND)
@@ -163,12 +162,12 @@ export const useRecommendedProfilesCards = () => {
       if (i === gone.size) {
         setDidSwipeBack(true)
         setTimeout(() => {
-          removeFromCart(
+          removeFromCart([
             listOpAddListRecord(
               // @ts-expect-error the index comes from the cardsApi which is the same length as recommendedProfiles therefore it is never undefined
               recommendedProfiles[i].address
-            )
-          )
+            ),
+          ])
         }, 0.5 * SECOND)
 
         return to()

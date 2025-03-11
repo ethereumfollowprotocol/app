@@ -1,20 +1,17 @@
 'use client'
 
-import localforage from 'localforage'
 import { useTheme } from 'next-themes'
 import { useIsClient } from '@uidotdev/usehooks'
 import { WagmiProvider, type State } from 'wagmi'
-import { isServer, QueryClient, type Query } from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { TransactionProvider } from 'ethereum-identity-kit'
 import { darkTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit'
-import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
-import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import wagmiConfig from '#/lib/wagmi'
 import { DAY, MINUTE } from '#/lib/constants'
 import Navigation from '#/components/navigation'
 import { SoundsProvider } from '#/contexts/sounds-context'
-import { ActionsProvider } from '#/contexts/actions-context'
+import TransactionModal from '#/components/transaction-modal'
 import { EFPProfileProvider } from '#/contexts/efp-profile-context'
 import { RecommendedProfilesProvider } from '#/contexts/recommended-profiles-context'
 
@@ -25,62 +22,38 @@ type ProviderProps = {
 
 const darkThemes = ['dark', 'halloween']
 
-const makeQueryClient = () =>
-  new QueryClient({
-    defaultOptions: {
-      queries: { gcTime: 1 * DAY, staleTime: 5 * MINUTE },
-    },
-  })
-
-let browserQueryClient: QueryClient | undefined = undefined
-
-function getQueryClient() {
-  if (isServer) {
-    return makeQueryClient()
-  } else {
-    if (!browserQueryClient) browserQueryClient = makeQueryClient()
-    return browserQueryClient
-  }
-}
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: { gcTime: 1 * DAY, staleTime: 5 * MINUTE },
+  },
+})
 
 const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
-  const queryClient = getQueryClient()
-  const asyncStoragePersistor = createAsyncStoragePersister({
-    storage: localforage,
-  })
-
   const isClient = useIsClient()
   const { resolvedTheme } = useTheme()
 
   return (
-    <PersistQueryClientProvider
-      client={queryClient}
-      persistOptions={{
-        persister: asyncStoragePersistor,
-        dehydrateOptions: {
-          shouldDehydrateQuery: (query: Query) => query.state.status === 'success' && !!query.meta?.persist,
-        },
-      }}
-    >
+    <QueryClientProvider client={queryClient}>
       <WagmiProvider config={wagmiConfig} initialState={initialState}>
         <RainbowKitProvider
           coolMode={false}
           theme={isClient && darkThemes.includes(resolvedTheme || 'dark') ? darkTheme() : undefined}
         >
-          <EFPProfileProvider>
-            <ActionsProvider>
+          <TransactionProvider batchTransactions={true}>
+            <EFPProfileProvider>
               <SoundsProvider>
                 <RecommendedProfilesProvider>
                   <Navigation />
                   {children}
+                  <TransactionModal />
+                  <div id='modal-root' />
                 </RecommendedProfilesProvider>
               </SoundsProvider>
-            </ActionsProvider>
-          </EFPProfileProvider>
+            </EFPProfileProvider>
+          </TransactionProvider>
         </RainbowKitProvider>
       </WagmiProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </PersistQueryClientProvider>
+    </QueryClientProvider>
   )
 }
 
