@@ -34,7 +34,6 @@ const Recommendations = ({
 
   const {
     isLoading,
-    hasNextPage,
     fetchNextPage,
     fetchPreviousPage,
     isFetchingNextPage,
@@ -73,6 +72,8 @@ const Recommendations = ({
     setPage(1)
   }, [userAddress, selectedList, limit])
 
+  const hasNextPage = displayedProfiles?.length === limit
+
   return (
     <div className={cn('bg-neutral shadow-medium flex flex-col gap-2 rounded-sm pt-2 2xl:gap-3', className)}>
       <div className='w-full pt-2 sm:px-4'>
@@ -95,7 +96,7 @@ const Recommendations = ({
         </div>
       </div>
       <ProfileList
-        isLoading={isLoading || isFetchingNextPage || isFetchingPreviousPage}
+        isLoading={(isLoading || isFetchingNextPage || isFetchingPreviousPage) && !displayedProfiles}
         loadingRows={limit}
         profiles={displayedProfiles?.slice(0, limit).map((account) => ({
           address: account.address,

@@ -12,6 +12,7 @@ import { cn } from '#/lib/utilities'
 import { RECOMMENDED_FEED_ADDRESS } from '#/lib/constants'
 import InterfaceLight from 'public/assets/icons/socials/interface.png'
 import InterfaceDark from 'public/assets/icons/socials/interface-dark.png'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 let lastScrollTopHomePage = 0
 
@@ -25,8 +26,8 @@ interface FeedCardProps {
 
 const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, activityAddress }) => {
   const { address: userAddress } = useAccount()
+  const { lists } = useEFPProfile()
 
-  const [feedKey] = useState(0)
   const [activeTab, setActiveTab] = useState<'following' | 'recommendations'>(
     userAddress ? 'following' : 'recommendations'
   )
@@ -69,9 +70,9 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, activityAddr
   }, [activeTab])
 
   useEffect(() => {
-    if (userAddress) setActiveTab('following')
+    if (userAddress && !!lists?.lists?.length) setActiveTab('following')
     else setActiveTab('recommendations')
-  }, [userAddress])
+  }, [userAddress, lists])
 
   return (
     <div className={cn('relative flex flex-col items-center gap-4 sm:items-end', cardSize)}>
@@ -139,14 +140,12 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, activityAddr
           contentSize
         )}
       >
-        {isClient && (
-          <iframe
-            key={`${userAddress} ${url} ${resolvedTheme} ${feedKey}`}
-            title='Feed'
-            src={url}
-            className='bg-neutral h-[100000vh] w-full'
-          />
-        )}
+        <iframe
+          key={`${userAddress} ${url} ${resolvedTheme}`}
+          title='Feed'
+          src={url}
+          className='bg-neutral h-[100000vh] w-full'
+        />
       </div>
     </div>
   )

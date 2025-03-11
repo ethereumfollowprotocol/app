@@ -3,6 +3,7 @@
 import { useTheme } from 'next-themes'
 import { useIsClient } from '@uidotdev/usehooks'
 import { WagmiProvider, type State } from 'wagmi'
+import { TransactionProvider } from '@encrypteddegen/identity-kit'
 import { darkTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
@@ -10,9 +11,9 @@ import wagmiConfig from '#/lib/wagmi'
 import { DAY, MINUTE } from '#/lib/constants'
 import Navigation from '#/components/navigation'
 import { SoundsProvider } from '#/contexts/sounds-context'
+import TransactionModal from '#/components/transaction-modal'
 import { EFPProfileProvider } from '#/contexts/efp-profile-context'
 import { RecommendedProfilesProvider } from '#/contexts/recommended-profiles-context'
-import { TransactionModal, TransactionProvider } from '@encrypteddegen/identity-kit'
 
 type ProviderProps = {
   children: React.ReactNode
@@ -52,7 +53,6 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
           </TransactionProvider>
         </RainbowKitProvider>
       </WagmiProvider>
-      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </QueryClientProvider>
   )
 }

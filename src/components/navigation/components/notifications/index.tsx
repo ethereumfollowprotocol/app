@@ -49,11 +49,17 @@ const Notifications = () => {
                   isNew={item.isNew}
                   notifications={value}
                   action={key as NotificationItemAction}
+                  onClose={() => setIsOpen(false)}
                 />
               ) : null
             )
           )}
           {isLoading && new Array(5).fill(null).map((_, index) => <NotificationItemLoading key={index} />)}
+          {!isLoading && notifications?.flatMap((item) => Object.values(item.notifications).flat()).length === 0 && (
+            <div className='flex h-44 w-full items-center justify-center sm:w-[520px]'>
+              <p className='text-text-neutral'>No notifications</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

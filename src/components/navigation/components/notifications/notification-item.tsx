@@ -17,9 +17,10 @@ interface NotificationItemProps {
   action: NotificationItemAction
   notifications: NotificationItemType[]
   isNew: boolean
+  onClose: () => void
 }
 
-const NotificationItem: React.FC<NotificationItemProps> = ({ notifications, action, isNew }) => {
+const NotificationItem: React.FC<NotificationItemProps> = ({ notifications, action, isNew, onClose }) => {
   const router = useRouter()
   const { t } = useTranslation()
 
@@ -77,7 +78,10 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ notifications, acti
                 size={`w-8 h-8 rounded-full shadow-sm cursor-pointer hover:scale-125 transition-all ${index === 0 ? 'z-0' : `-ml-[18px] z-${index * 10}`}`}
                 avatarUrl={profile.avatar}
                 name={profile.name || profile.address}
-                onClick={() => router.push(`/${profile.address}?ssr=false`)}
+                onClick={() => {
+                  router.push(`/${profile.address}?ssr=false`)
+                  onClose()
+                }}
               />
             ))}
           </div>
@@ -88,7 +92,10 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ notifications, acti
             {displayedNames?.map((profile, index) => (
               <span key={profile.address}>
                 <span
-                  onClick={() => router.push(`/${profile.address}?ssr=false`)}
+                  onClick={() => {
+                    router.push(`/${profile.address}?ssr=false`)
+                    onClose()
+                  }}
                   className='cursor-pointer transition-all hover:underline hover:opacity-80'
                 >
                   {`${profile.name || truncateAddress(profile.address)}`}
