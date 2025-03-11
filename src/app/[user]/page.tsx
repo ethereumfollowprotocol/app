@@ -24,8 +24,8 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const truncatedUser = isAddress(params.user) ? (truncateAddress(params.user) as string) : params.user
   const isList = Number.isInteger(Number(user)) && !(isAddress(user) || isHex(user))
 
-  const ensName = ssr ? (user ? (await fetchAccount(user))?.ens.name : null) : null
-  const displayUser = isList ? `List #${user}` : (ensName ?? truncatedUser)
+  const ensName = ssr ? (user ? (await fetchAccount(user, isList ? Number(user) : undefined))?.ens?.name : null) : null
+  const displayUser = ensName ?? (isList ? `List #${user}` : truncatedUser)
 
   return {
     title: `${displayUser} | EFP`,
