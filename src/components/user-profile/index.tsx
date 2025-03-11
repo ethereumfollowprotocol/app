@@ -1,7 +1,10 @@
 import React from 'react'
+import { t } from 'i18next'
 import Link from 'next/link'
 import { useAccount } from 'wagmi'
 import { Bio } from 'ethereum-identity-kit'
+import { useIsClient } from '@uidotdev/usehooks'
+import { ens_beautify } from '@adraffy/ens-normalize'
 
 import { Avatar } from '../avatar'
 import Stats from './components/stats'
@@ -12,6 +15,7 @@ import { isLinkValid } from '#/utils/validity'
 import MoreOptions from './components/more-options'
 import type { StatsResponse } from '#/types/requests'
 import { cn, truncateAddress } from '#/lib/utilities'
+import ImageWithFallback from '../image-with-fallback'
 import EnsLogo from 'public/assets/icons/socials/ens.svg'
 import Links from '../user-profile-card/components/links'
 import Socials from '../user-profile-card/components/socials'
@@ -20,9 +24,6 @@ import type { ProfileDetailsResponse } from '#/types/requests'
 import DefaultHeader from 'public/assets/art/default-header.svg?url'
 import Achievements from '../user-profile-card/components/achievements'
 import CommonFollowers from '../user-profile-card/components/common-followers'
-import { useIsClient } from '@uidotdev/usehooks'
-import ImageWithFallback from '../image-with-fallback'
-import { t } from 'i18next'
 
 interface UserProfileCardProps {
   isMyProfile?: boolean
@@ -109,7 +110,7 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
                 href={profileList === Number(profile.primary_list) ? `/${profile.address}` : `/${profileList}`}
                 className='max-w-summary-name truncate text-4xl leading-12 font-bold transition-all hover:scale-105 2xl:text-5xl 2xl:leading-16'
               >
-                {profile.ens?.name || truncateAddress(profile.address)}
+                {profile.ens?.name ? ens_beautify(profile.ens?.name) : truncateAddress(profile.address)}
               </Link>
               {isMyProfile ? (
                 <Link href={`https://app.ens.domains/${profile.ens.name}`} target='_blank'>
