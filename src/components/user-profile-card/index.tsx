@@ -5,7 +5,7 @@ import { useAccount } from 'wagmi'
 import { useTheme } from 'next-themes'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
-import { ProfileCard } from '@encrypteddegen/identity-kit'
+import { ProfileCard } from 'ethereum-identity-kit'
 
 import { cn } from '#/lib/utilities'
 import Achievements from './components/achievements'

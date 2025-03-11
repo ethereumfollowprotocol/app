@@ -5,7 +5,7 @@ import { isAddress, type Address } from 'viem'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
 import { usePathname, useRouter } from 'next/navigation'
-import { fetchFollowState } from '@encrypteddegen/identity-kit'
+import { fetchFollowState } from 'ethereum-identity-kit'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { SECOND } from '#/lib/constants'

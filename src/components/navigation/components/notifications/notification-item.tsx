@@ -2,7 +2,7 @@ import React from 'react'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import type { NotificationItemType } from '#/types/requests'
-import { FollowIcon, truncateAddress } from '@encrypteddegen/identity-kit'
+import { FollowIcon, truncateAddress } from 'ethereum-identity-kit'
 
 import { cn } from '#/lib/utilities'
 import { Avatar } from '#/components/avatar'

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { isAddress, isHex } from 'viem'
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
-import { fetchProfileDetails, fetchProfileStats } from '@encrypteddegen/identity-kit/utils'
+import { fetchProfileDetails, fetchProfileStats } from 'ethereum-identity-kit/utils'
 
 import { MINUTE } from '#/lib/constants'
 import UserInfo from './components/user-info'

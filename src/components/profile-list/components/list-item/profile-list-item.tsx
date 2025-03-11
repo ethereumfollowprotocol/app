@@ -1,7 +1,7 @@
 import React from 'react'
 import type { Address } from 'viem'
 import { useQuery } from '@tanstack/react-query'
-import type { InitialFollowingState } from '@encrypteddegen/identity-kit'
+import type { InitialFollowingState } from 'ethereum-identity-kit'
 
 import { isLinkValid } from '#/utils/validity'
 import ProfileListItemDetails from './details'

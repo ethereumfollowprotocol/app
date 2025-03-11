@@ -8,7 +8,7 @@ import {
   getListOpsFromTransaction,
   useTransactions,
   type ListOpType,
-} from '@encrypteddegen/identity-kit'
+} from 'ethereum-identity-kit'
 
 import type { ListOp } from '#/types/list-op'
 import type { ImportPlatformType } from '#/types/common'

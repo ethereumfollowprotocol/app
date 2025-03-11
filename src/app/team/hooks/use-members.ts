@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { fetchProfileDetails, fetchProfileStats } from '@encrypteddegen/identity-kit'
+import { fetchProfileDetails, fetchProfileStats } from 'ethereum-identity-kit'
 import { TEAM_ADDRESSES, FOUNDATION_ADDRESSES } from '#/lib/constants/team'
 
 export const useMembers = () => {

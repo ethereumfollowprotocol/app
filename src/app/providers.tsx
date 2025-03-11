@@ -3,7 +3,7 @@
 import { useTheme } from 'next-themes'
 import { useIsClient } from '@uidotdev/usehooks'
 import { WagmiProvider, type State } from 'wagmi'
-import { TransactionProvider } from '@encrypteddegen/identity-kit'
+import { TransactionProvider } from 'ethereum-identity-kit'
 import { darkTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 

@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useAccount } from 'wagmi'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
-import { ProfileCard } from '@encrypteddegen/identity-kit'
+import { ProfileCard } from 'ethereum-identity-kit'
 
 import FollowButton from '#/components/follow-button'
 import ExternalLink from 'public/assets/icons/ui/external-link.svg'

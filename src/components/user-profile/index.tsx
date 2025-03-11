@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { useAccount } from 'wagmi'
-import { Bio } from '@encrypteddegen/identity-kit'
+import { Bio } from 'ethereum-identity-kit'
 
 import { Avatar } from '../avatar'
 import Stats from './components/stats'
