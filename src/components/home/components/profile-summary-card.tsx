@@ -1,14 +1,16 @@
 import React from 'react'
-import { useEFPProfile } from '#/contexts/efp-profile-context'
-import { Avatar } from '#/components/avatar'
-import LoadingCell from '#/components/loaders/loading-cell'
 import Link from 'next/link'
-import { truncateAddress } from 'ethereum-identity-kit'
-import ArrowRight from 'public/assets/icons/ui/arrow-right.svg'
 import Image from 'next/image'
-import DefaultHeader from 'public/assets/art/default-header.svg?url'
-import { formatNumber } from '#/utils/format/format-number'
+import { ens_beautify } from '@adraffy/ens-normalize'
+import { truncateAddress } from 'ethereum-identity-kit'
+
+import { Avatar } from '#/components/avatar'
 import { isLinkValid } from '#/utils/validity'
+import { formatNumber } from '#/utils/format/format-number'
+import LoadingCell from '#/components/loaders/loading-cell'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
+import ArrowRight from 'public/assets/icons/ui/arrow-right.svg'
+import DefaultHeader from 'public/assets/art/default-header.svg?url'
 
 const ProfileSummaryCard = () => {
   const { profile, profileIsLoading, stats, statsIsLoading, lists, selectedList } = useEFPProfile()
@@ -68,7 +70,7 @@ const ProfileSummaryCard = () => {
               <div className='flex w-full flex-col gap-1 sm:gap-1.5'>
                 <div className='xs:gap-3 flex w-full items-center gap-2 sm:gap-4'>
                   <p className='max-w-summary-name truncate text-xl font-bold sm:text-2xl'>
-                    {profile.ens?.name || truncateAddress(profile.address)}
+                    {profile.ens?.name ? ens_beautify(profile.ens?.name) : truncateAddress(profile.address)}
                   </p>
                   <ArrowRight className='h-auto w-5 transition-all group-hover:translate-x-1.5' />
                 </div>
