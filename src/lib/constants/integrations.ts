@@ -37,6 +37,7 @@ import Phi from 'public/assets/partners/phi.jpeg'
 import EFPFinder from 'public/assets/partners/efpfinder.jpeg'
 import ENSTools from 'public/assets/partners/enstools.jpeg'
 import CuriaLab from 'public/assets/partners/curialab.jpeg'
+import ENStateSearch from 'public/assets/partners/enstatesearch.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -219,6 +220,11 @@ export const INTEGRATIONS = [
     url: 'https://efp.jaxoo.xyz/',
     logo: EFPFinder,
   },
+  {
+    name: 'ENState Search',
+    url: 'https://search.enstate.rs/',
+    logo: ENStateSearch,
+  }
   {
     name: 'CuriaLab',
     url: 'https://www.curialab.xyz/',
