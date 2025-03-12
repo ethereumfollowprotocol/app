@@ -224,7 +224,7 @@ export const INTEGRATIONS = [
     name: 'ENState Search',
     url: 'https://search.enstate.rs/',
     logo: ENStateSearch,
-  }
+  },
   {
     name: 'CuriaLab',
     url: 'https://www.curialab.xyz/',
