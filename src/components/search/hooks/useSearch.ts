@@ -10,20 +10,20 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { SECOND } from '#/lib/constants'
 import { useCart } from '#/hooks/use-cart'
+import type { ListOp } from '#/types/list-op'
 import { resolveEnsAddress } from '#/utils/ens'
 import { searchENSNames } from '#/api/search-ens-names'
 import { listOpAddListRecord } from '#/utils/list-ops.ts'
 import { formatError } from '#/utils/format/format-error'
 import { useEFPProfile } from '#/contexts/efp-profile-context.tsx'
-import type { ListOp } from '#/types/list-op'
 
 const useSearch = (isEditor?: boolean) => {
   const [isAddingToCart, setIsAddingToCart] = useState(false)
   const [dropdownMenuOpen, setDropdownMenuOpen] = useState(false)
   const [dialogOpen, setDialogOpen] = useState<undefined | boolean>(undefined)
 
-  const [currentSearch, setCurrentSearch] = useState('')
   const [search, setSearch] = useState('')
+  const [currentSearch, setCurrentSearch] = useState('')
 
   const router = useRouter()
   const pathname = usePathname()

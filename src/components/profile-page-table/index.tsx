@@ -201,7 +201,7 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
             isBlockedList={isShowingBlocked}
             isBlockedBy={title === 'Blocked/Muted By' && isProfile}
             isTopEight={isTopEight}
-            initialFollowState={title === 'following' ? 'Following' : undefined}
+            initialFollowState={title === 'following' && canEditTags ? 'Following' : undefined}
             className={cn('bg-neutral shadow-medium rounded-sm', !isLoading && profiles.length === 0 && 'hidden')}
           />
           {!isLoading && <div ref={loadMoreRef} className='mb-4 h-px w-full' />}

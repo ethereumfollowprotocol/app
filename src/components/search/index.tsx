@@ -3,6 +3,7 @@
 import { isAddress } from 'viem'
 import type { RefObject } from 'react'
 import { useTranslation } from 'react-i18next'
+import { ens_beautify } from '@adraffy/ens-normalize'
 
 import useSearch from './hooks/useSearch.ts'
 import { cn, truncateAddress } from '#/lib/utilities.ts'
@@ -168,7 +169,7 @@ export function Search({
                 }}
                 className='text-md flex max-w-full cursor-pointer items-center gap-1 truncate transition-all hover:scale-105 hover:opacity-75'
               >
-                <p>{result.name}</p>
+                <p>{ens_beautify(result.name)}</p>
                 {result.resolvedAddress?.id && (
                   <p className='text-text/50 text-sm'>- {truncateAddress(result.resolvedAddress?.id)}</p>
                 )}
@@ -258,7 +259,7 @@ export function Search({
                     }}
                     className='text-md flex max-w-full cursor-pointer items-center gap-1 truncate transition-opacity hover:opacity-75'
                   >
-                    <p>{result.name}</p>
+                    <p>{ens_beautify(result.name)}</p>
                     {result.resolvedAddress?.id && (
                       <p className='text-sm text-zinc-400'>- {truncateAddress(result.resolvedAddress?.id)}</p>
                     )}
