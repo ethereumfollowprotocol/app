@@ -33,7 +33,7 @@ import Agora from 'public/assets/partners/agora.png'
 import Lighthouse from 'public/assets/partners/lighthouse.jpeg'
 import Pobstudio from 'public/assets/partners/pobstudio.jpeg'
 import Dhive from 'public/assets/partners/dhive.jpeg'
-import Phi from 'public/assets/partners/phi.png'
+import Phi from 'public/assets/partners/phi.jpeg'
 import EFPFinder from 'public/assets/partners/efpfinder.jpeg'
 import ENSTools from 'public/assets/partners/enstools.jpeg'
 
