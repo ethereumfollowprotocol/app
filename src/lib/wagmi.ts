@@ -126,7 +126,7 @@ const config = createConfig({
       http(`https://smart-cosmological-telescope.quiknode.pro/${process.env.NEXT_PUBLIC_QUICKNODE_ID}`, {
         batch: true,
       }),
-      http(`https://mainnet.infura.io/v3/`, {
+      http('https://eth.llamarpc.com', {
         batch: true,
       }),
     ]),
