@@ -36,6 +36,7 @@ import Dhive from 'public/assets/partners/dhive.jpeg'
 import Phi from 'public/assets/partners/phi.jpeg'
 import EFPFinder from 'public/assets/partners/efpfinder.jpeg'
 import ENSTools from 'public/assets/partners/enstools.jpeg'
+import CuriaLab from 'public/assets/partners/curialab.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -217,6 +218,11 @@ export const INTEGRATIONS = [
     name: 'EFP Finder',
     url: 'https://efp.jaxoo.xyz/',
     logo: EFPFinder,
+  },
+  {
+    name: 'CuriaLab',
+    url: 'https://www.curialab.xyz/',
+    logo: CuriaLab,
   },
 ] as {
   name: string
