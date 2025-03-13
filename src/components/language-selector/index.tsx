@@ -131,7 +131,7 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
               }}
             >
               {selectedLanguage && selectedLanguage.key === lang.key && (
-                <Check width={16} className='absolute top-[35%] left-2' />
+                <Check width={16} className='absolute top-5 left-2 h-5 w-5 text-green-500' />
               )}
               <div className='flex items-center gap-2 pr-3'>
                 <Image src={lang.icon} alt={lang.language} width={32} height={32} className='h-auto w-7 rounded-sm' />

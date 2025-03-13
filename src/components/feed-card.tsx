@@ -10,9 +10,9 @@ import { useIsClient } from '@uidotdev/usehooks'
 
 import { cn } from '#/lib/utilities'
 import { RECOMMENDED_FEED_ADDRESS } from '#/lib/constants'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
 import InterfaceLight from 'public/assets/icons/socials/interface.png'
 import InterfaceDark from 'public/assets/icons/socials/interface-dark.png'
-import { useEFPProfile } from '#/contexts/efp-profile-context'
 
 let lastScrollTopHomePage = 0
 
@@ -26,7 +26,7 @@ interface FeedCardProps {
 
 const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, activityAddress }) => {
   const { address: userAddress } = useAccount()
-  const { lists } = useEFPProfile()
+  const { lists, listsIsLoading } = useEFPProfile()
 
   const [activeTab, setActiveTab] = useState<'following' | 'recommendations'>(
     userAddress ? 'following' : 'recommendations'
@@ -70,9 +70,9 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, activityAddr
   }, [activeTab])
 
   useEffect(() => {
-    if (userAddress && !!lists?.lists?.length) setActiveTab('following')
-    else setActiveTab('recommendations')
-  }, [userAddress, lists])
+    if (userAddress) setActiveTab('following')
+    if (!listsIsLoading && !lists?.lists?.length) setActiveTab('recommendations')
+  }, [userAddress, lists, listsIsLoading])
 
   return (
     <div className={cn('relative flex flex-col items-center gap-4 sm:items-end', cardSize)}>
