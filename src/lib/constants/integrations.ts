@@ -38,6 +38,7 @@ import EFPFinder from 'public/assets/partners/efpfinder.jpeg'
 import ENSTools from 'public/assets/partners/enstools.jpeg'
 import CuriaLab from 'public/assets/partners/curialab.jpeg'
 import ENStateSearch from 'public/assets/partners/enstatesearch.jpeg'
+import Tally from 'public/assets/partners/tally.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -56,9 +57,9 @@ export const INTEGRATIONS = [
     logo: POAP,
   },
   {
-    name: 'Vision',
-    url: 'https://vision.io/',
-    logo: EnsVision,
+    name: 'Tally',
+    url: 'https://tally.xyz/',
+    logo: Tally,
   },
   {
     name: 'Yodl',
@@ -69,6 +70,11 @@ export const INTEGRATIONS = [
     name: 'Agora',
     url: 'https://www.agora.xyz/',
     logo: Agora,
+  },
+  {
+    name: 'Vision',
+    url: 'https://vision.io/',
+    logo: EnsVision,
   },
   {
     name: 'Zapper',
