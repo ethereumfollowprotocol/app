@@ -117,6 +117,11 @@ export const INTEGRATIONS = [
     logo: Dhive,
   },
   {
+    name: 'Web3 Bio',
+    url: 'https://web3.bio/',
+    logo: WebThreeBio,
+  },
+  {
     name: 'Records.xyz',
     url: 'https://records.xyz',
     logo: Recordsxyz,
@@ -175,11 +180,6 @@ export const INTEGRATIONS = [
     name: 'ENSBook',
     url: 'https://ensbook.xyz/',
     logo: ENSBook,
-  },
-  {
-    name: 'Web3 Bio',
-    url: 'https://web3.bio/',
-    logo: WebThreeBio,
   },
   {
     name: 'Roc Box',
