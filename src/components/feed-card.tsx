@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next'
 import { useIsClient } from '@uidotdev/usehooks'
 
 import { cn } from '#/lib/utilities'
+import LoadingCell from './loaders/loading-cell'
 import { RECOMMENDED_FEED_ADDRESS } from '#/lib/constants'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import InterfaceLight from 'public/assets/icons/socials/interface.png'
@@ -69,10 +70,19 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, activityAddr
     if (homePage && homePage.scrollTop > 300) homePage.scrollTo({ top: 300, behavior: 'instant' })
   }, [activeTab])
 
+  const [isLoading, setIsLoading] = useState(!activityAddress)
+
   useEffect(() => {
-    if (userAddress) setActiveTab('following')
-    if (!listsIsLoading && !lists?.lists?.length) setActiveTab('recommendations')
-  }, [userAddress, lists, listsIsLoading])
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 2000)
+  }, [])
+
+  const isFeedLoading = !activityAddress && (listsIsLoading || isLoading)
+
+  useEffect(() => {
+    if (!isFeedLoading && lists?.lists?.length) setActiveTab('following')
+  }, [userAddress, lists, isFeedLoading])
 
   return (
     <div className={cn('relative flex flex-col items-center gap-4 sm:items-end', cardSize)}>
@@ -84,14 +94,16 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, activityAddr
           )}
         >
           {/* {title && <h2 className='text-xl font-bold sm:text-2xl'>{title}</h2>} */}
-          <div className='bg-grey relative flex w-full items-center rounded-sm sm:w-80'>
+          {isFeedLoading ?
+            <LoadingCell className='h-10 w-full sm:w-80' />
+          : <div className='bg-grey relative flex w-full items-center rounded-sm sm:w-80'>
             <div
               className={cn(
                 'bg-text/10 absolute h-full w-1/2 rounded-sm transition-all duration-200',
-                activeTab === 'following' || !userAddress ? 'left-0' : 'left-1/2'
+                activeTab === 'following' || !lists?.lists?.length ? 'left-0' : 'left-1/2'
               )}
             />
-            {userAddress && (
+            {lists?.lists?.length && (
               <p
                 className={cn(
                   'text-text z-10 w-1/2 cursor-pointer py-2 text-center text-lg font-bold transition-transform hover:scale-110',
@@ -111,7 +123,7 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, activityAddr
             >
               {t('recommendations')}
             </p>
-          </div>
+          </div>}
           <div className='flex items-center gap-4 sm:gap-5'>
             <a
               href='https://www.interface.social/'
@@ -140,12 +152,14 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, activityAddr
           contentSize
         )}
       >
-        <iframe
+        {isFeedLoading ?
+          <LoadingCell className='h-[100000vh] w-full' />
+        : <iframe
           key={`${userAddress} ${url} ${resolvedTheme}`}
           title='Feed'
           src={url}
           className='bg-neutral h-[100000vh] w-full'
-        />
+        />}
       </div>
     </div>
   )

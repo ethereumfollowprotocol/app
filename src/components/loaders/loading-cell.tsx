@@ -23,7 +23,6 @@ const LoadingCell: React.FC<LoadingCellProps> = ({
       style={{
         background: gradient,
         backgroundSize: '400%',
-        animationFillMode: 'forwards',
         ...style,
       }}
       className={cn('bg-repeat-x', className, isStatic ? 'animate-none' : 'animate-loading')}

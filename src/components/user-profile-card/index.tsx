@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { useAccount } from 'wagmi'
-import { useTheme } from 'next-themes'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { ProfileCard } from 'ethereum-identity-kit'
@@ -55,14 +54,13 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
 }) => {
   const router = useRouter()
   const { t } = useTranslation()
-  const { resolvedTheme } = useTheme()
   const { address: connectedAddress } = useAccount()
   const { followState, profileName, isConnectedUserCard } = useProfileCard(profile)
 
   return (
     <div className={cn('bg-neutral flex w-[364px] flex-col gap-4 rounded-sm pb-3', className)}>
       {isLoading ? (
-        <LoadingProfileCard isResponsive={isResponsive} hideFollowButton={true} className='bg-neutral' />
+        <LoadingProfileCard hideFollowButton={true} className='bg-neutral' />
       ) : profile?.address ? (
         <ProfileCard
           list={profileList}
@@ -70,7 +68,6 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
             router.push(`/${profile.address}?tab=${stat}&ssr=false`)
           }}
           showFollowerState={true}
-          darkMode={resolvedTheme === 'dark'}
           addressOrName={profile.address}
           connectedAddress={connectedAddress}
           onProfileClick={() => {
