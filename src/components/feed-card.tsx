@@ -30,7 +30,7 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, activityAddr
   const { lists, listsIsLoading } = useEFPProfile()
 
   const [activeTab, setActiveTab] = useState<'following' | 'recommendations'>(
-    userAddress ? 'following' : 'recommendations'
+    'following'
   )
 
   const { t } = useTranslation()
@@ -81,7 +81,10 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, activityAddr
   const isFeedLoading = !activityAddress && (listsIsLoading || isLoading)
 
   useEffect(() => {
-    if (!isFeedLoading && lists?.lists?.length) setActiveTab('following')
+    if (isFeedLoading) return
+
+    if (lists?.lists?.length) setActiveTab('following')
+    else setActiveTab('recommendations')
   }, [userAddress, lists, isFeedLoading])
 
   return (
