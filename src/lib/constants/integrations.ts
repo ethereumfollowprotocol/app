@@ -39,6 +39,7 @@ import ENSTools from 'public/assets/partners/enstools.jpeg'
 import CuriaLab from 'public/assets/partners/curialab.jpeg'
 import ENStateSearch from 'public/assets/partners/enstatesearch.jpeg'
 import Tally from 'public/assets/partners/tally.jpeg'
+import EFPower from 'public/assets/partners/efpower.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -225,6 +226,11 @@ export const INTEGRATIONS = [
     name: 'EFP Finder',
     url: 'https://efp.jaxoo.xyz/',
     logo: EFPFinder,
+  },
+  {
+    name: 'EFPower',
+    url: 'https://www.efpower.fun/',
+    logo: EFPower,
   },
   {
     name: 'ENState Search',
