@@ -1,10 +1,7 @@
+import type { ListOpType } from 'ethereum-identity-kit'
 import type { Address } from 'viem'
 
-export type ListOp = {
-  version: number
-  opcode: number
-  data: `0x${string}`
-}
+export type ListOp = ListOpType
 
 // Specific type for tag operations
 export type TagListOp = ListOp & {

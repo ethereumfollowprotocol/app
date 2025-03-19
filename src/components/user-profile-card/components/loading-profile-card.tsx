@@ -10,11 +10,7 @@ interface LoadingProfileCardProps {
   className?: string
 }
 
-const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
-  hideFollowButton,
-  isStatic,
-  className,
-}) => {
+const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({ hideFollowButton, isStatic, className }) => {
   const { t } = useTranslation()
 
   return (

@@ -624,7 +624,6 @@ input {
   animation: loading 5s linear infinite forwards;
 }
 
-
 @keyframes loading {
   0% {
     background-position: 200% 0;

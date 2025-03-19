@@ -27,14 +27,14 @@ const Socials: React.FC<SocialsProps> = ({ profile }) => {
             alt={social.name}
             width={52}
             height={52}
-            className='h-auto w-8 rounded-full 2xl:w-10 block dark:hidden'
+            className='block h-auto w-8 rounded-full 2xl:w-10 dark:hidden'
           />
           <Image
             src={social.icon('dark')}
             alt={social.name}
             width={52}
             height={52}
-            className='h-auto w-8 rounded-full 2xl:w-10 hidden dark:block'
+            className='hidden h-auto w-8 rounded-full 2xl:w-10 dark:block'
           />
         </a>
       ))}

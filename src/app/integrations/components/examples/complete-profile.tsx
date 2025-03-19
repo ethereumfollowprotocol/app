@@ -48,8 +48,8 @@ const CompleteProfile = () => {
           </Link>
         </div>
       </div>
-      <div className='relative mx-auto mt-3 h-auto w-full overflow-hidden sm:h-[500px] 2xl:w-[580px] pl-1 sm:pl-0 pb-2 sm:pb-0'>
-        <div className='sm:absolute z-10 w-full mx-auto px-2 sm:top-20 sm:left-4 sm:w-[400px]'>
+      <div className='relative mx-auto mt-3 h-auto w-full overflow-hidden pb-2 pl-1 sm:h-[500px] sm:pb-0 sm:pl-0 2xl:w-[580px]'>
+        <div className='z-10 mx-auto w-full px-2 sm:absolute sm:top-20 sm:left-4 sm:w-[400px]'>
           <ProfileCard
             addressOrName='0xd63c2582b071f41090e89d975f738e87e7b8da50'
             connectedAddress={userAddress}
@@ -74,7 +74,7 @@ const CompleteProfile = () => {
             className='shadow-medium'
           />
         </div>
-        <div className='relative sm:absolute top-0 left-32 hidden w-[400px] sm:block 2xl:left-40'>
+        <div className='relative top-0 left-32 hidden w-[400px] sm:absolute sm:block 2xl:left-40'>
           <ProfileCard
             addressOrName='0x05977b2fb9b7ab3f3733b34350044a01a388579c'
             connectedAddress={userAddress}
