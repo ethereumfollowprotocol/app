@@ -1,7 +1,6 @@
 import type { Address } from 'viem'
 import { useTranslation } from 'react-i18next'
 
-import { cn } from '#/lib/utilities'
 import { formatNumber } from '#/utils/format/format-number'
 import type { LeaderboardFilter } from '#/types/common'
 import Link from 'next/link'
@@ -36,14 +35,11 @@ const StatsDesktop: React.FC<StatsDesktopProps> = ({
   }
 
   return (
-    <div className='w-fit'>
+    <div className='z-10 w-fit'>
       {firstStat && (
         <Link
           href={statLink[firstStat]}
-          className={cn(
-            'flex flex-col items-center',
-            firstStat !== 'mutuals' && 'cursor-pointer transition-transform hover:scale-110'
-          )}
+          className='flex cursor-pointer flex-col items-center transition-transform hover:scale-110'
         >
           <p className='text-sm font-bold sm:text-lg'>
             {formatNumber(
