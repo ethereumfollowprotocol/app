@@ -29,9 +29,7 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, activityAddr
   const { address: userAddress } = useAccount()
   const { lists, listsIsLoading } = useEFPProfile()
 
-  const [activeTab, setActiveTab] = useState<'following' | 'recommendations'>(
-    'following'
-  )
+  const [activeTab, setActiveTab] = useState<'following' | 'recommendations'>('following')
 
   const { t } = useTranslation()
   const { resolvedTheme } = useTheme()
@@ -97,36 +95,38 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, activityAddr
           )}
         >
           {/* {title && <h2 className='text-xl font-bold sm:text-2xl'>{title}</h2>} */}
-          {isFeedLoading ?
+          {isFeedLoading ? (
             <LoadingCell className='h-10 w-full sm:w-80' />
-          : <div className='bg-grey relative flex w-full items-center rounded-sm sm:w-80'>
-            <div
-              className={cn(
-                'bg-text/10 absolute h-full w-1/2 rounded-sm transition-all duration-200',
-                activeTab === 'following' || !lists?.lists?.length ? 'left-0' : 'left-1/2'
+          ) : (
+            <div className='bg-grey relative flex w-full items-center rounded-sm sm:w-80'>
+              <div
+                className={cn(
+                  'bg-text/10 absolute h-full w-1/2 rounded-sm transition-all duration-200',
+                  activeTab === 'following' || !lists?.lists?.length ? 'left-0' : 'left-1/2'
+                )}
+              />
+              {!!lists?.lists?.length && (
+                <p
+                  className={cn(
+                    'text-text z-10 w-1/2 cursor-pointer py-2 text-center text-lg font-bold transition-transform hover:scale-110',
+                    activeTab === 'following' ? 'text-text' : 'text-text/60'
+                  )}
+                  onClick={() => setActiveTab?.('following')}
+                >
+                  {t('following')}
+                </p>
               )}
-            />
-            {lists?.lists?.length && (
               <p
                 className={cn(
                   'text-text z-10 w-1/2 cursor-pointer py-2 text-center text-lg font-bold transition-transform hover:scale-110',
-                  activeTab === 'following' ? 'text-text' : 'text-text/60'
+                  activeTab === 'recommendations' ? 'text-text' : 'text-text/60'
                 )}
-                onClick={() => setActiveTab?.('following')}
+                onClick={() => setActiveTab?.('recommendations')}
               >
-                {t('following')}
+                {t('recommendations')}
               </p>
-            )}
-            <p
-              className={cn(
-                'text-text z-10 w-1/2 cursor-pointer py-2 text-center text-lg font-bold transition-transform hover:scale-110',
-                activeTab === 'recommendations' ? 'text-text' : 'text-text/60'
-              )}
-              onClick={() => setActiveTab?.('recommendations')}
-            >
-              {t('recommendations')}
-            </p>
-          </div>}
+            </div>
+          )}
           <div className='flex items-center gap-4 sm:gap-5'>
             <a
               href='https://www.interface.social/'
@@ -155,14 +155,16 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, activityAddr
           contentSize
         )}
       >
-        {isFeedLoading ?
+        {isFeedLoading ? (
           <LoadingCell className='h-[100000vh] w-full' />
-        : <iframe
-          key={`${userAddress} ${url} ${resolvedTheme}`}
-          title='Feed'
-          src={url}
-          className='bg-neutral h-[100000vh] w-full'
-        />}
+        ) : (
+          <iframe
+            key={`${userAddress} ${url} ${resolvedTheme}`}
+            title='Feed'
+            src={url}
+            className='bg-neutral h-[100000vh] w-full'
+          />
+        )}
       </div>
     </div>
   )
