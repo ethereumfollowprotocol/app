@@ -2,13 +2,7 @@
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
 import { useCallback } from 'react'
-import {
-  EFPActionIds,
-  formatListOpsTransaction,
-  getListOpsFromTransaction,
-  useTransactions,
-  type ListOpType,
-} from 'ethereum-identity-kit'
+import { EFPActionIds, getListOpsFromTransaction, useTransactions, type ListOpType } from 'ethereum-identity-kit'
 
 import type { ListOp } from '#/types/list-op'
 import type { ImportPlatformType } from '#/types/common'
@@ -32,14 +26,7 @@ export function useCart() {
   const addToCart = (payload: ListOpType[] | ListOp[]) => {
     if (!nonce || !selectedChainId || !address) return
 
-    const tx = formatListOpsTransaction({
-      listOps: payload,
-      chainId: selectedChainId,
-      nonce: nonce,
-      connectedAddress: address,
-    })
-
-    addListOpsTransaction(tx)
+    addListOpsTransaction(payload as ListOpType[])
   }
 
   const removeFromCart = (payload: ListOpType[] | ListOp[]) => {
