@@ -159,14 +159,14 @@ export const INTEGRATIONS = [
     logo: ENSTools,
   },
   {
-    name: 'ENS Tools',
-    url: 'https://ens.tools',
-    logo: ENSTools,
-  },
-  {
     name: 'NameGraph',
     url: 'https://www.namegraph.dev',
     logo: NameGraph,
+  },
+  {
+    name: 'EFP Bot',
+    url: 'https://x.com/efpbots',
+    logo: EFPBot,
   },
   {
     name: 'EFP Updates',
