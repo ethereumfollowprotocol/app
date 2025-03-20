@@ -40,6 +40,7 @@ import CuriaLab from 'public/assets/partners/curialab.jpeg'
 import ENStateSearch from 'public/assets/partners/enstatesearch.jpeg'
 import Tally from 'public/assets/partners/tally.jpeg'
 import EFPower from 'public/assets/partners/efpower.jpeg'
+import NameGraph from 'public/assets/partners/namegraph.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -156,6 +157,11 @@ export const INTEGRATIONS = [
     name: 'ENS Tools',
     url: 'https://ens.tools',
     logo: ENSTools,
+  },
+  {
+    name: 'NameGraph',
+    url: 'https://www.namegraph.dev',
+    logo: NameGraph,
   },
   {
     name: 'EFP Bot',
