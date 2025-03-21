@@ -97,7 +97,7 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
           <Achievements profile={profile} isLoading={isLoading} list={profileList} />
         </div>
         <div className='xs:gap-3 flex w-full items-start gap-2 sm:gap-4'>
-          <Link href={profileList === Number(profile.primary_list) ? `/${profile.address}` : `/${profileList}`}>
+          <Link href={`/${profile.address}`}>
             <Avatar
               avatarUrl={profile.ens?.avatar}
               name={profile.ens?.name || profile.address}
@@ -107,7 +107,7 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
           <div className='w-summary-details flex flex-col gap-4'>
             <div className='xs:gap-3 flex w-full items-center gap-2 sm:gap-4'>
               <Link
-                href={profileList === Number(profile.primary_list) ? `/${profile.address}` : `/${profileList}`}
+                href={`/${profile.address}`}
                 className='max-w-summary-name truncate text-4xl leading-12 font-bold transition-all hover:scale-105 2xl:text-5xl 2xl:leading-16'
               >
                 {profile.ens?.name ? ens_beautify(profile.ens?.name) : truncateAddress(profile.address)}

@@ -5,35 +5,16 @@ import LoadingCell from '../../loaders/loading-cell'
 import { profileCardSocials } from '#/lib/constants'
 
 interface LoadingProfileCardProps {
-  isResponsive?: boolean
   hideFollowButton?: boolean
   isStatic?: boolean
   className?: string
 }
 
-const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({
-  isResponsive,
-  hideFollowButton,
-  isStatic,
-  className,
-}) => {
+const LoadingProfileCard: React.FC<LoadingProfileCardProps> = ({ hideFollowButton, isStatic, className }) => {
   const { t } = useTranslation()
-  // const { openConnectModal } = useConnectModal()
 
   return (
     <div className={cn('relative overflow-hidden rounded-sm', className)}>
-      {/* {isStatic && (
-        <div className='absolute left-0 flex h-full w-full items-center justify-center rounded-[10px]'>
-          <button
-            className='connect-button w-60 cursor-pointer rounded-full border-[3px] p-4 text-xl font-bold shadow-lg'
-            onClick={() => {
-              if (openConnectModal) openConnectModal()
-            }}
-          >
-            {t('connect wallet')}
-          </button>
-        </div>
-      )} */}
       <div className='pointer-events-none absolute top-2 left-0 z-10 flex w-full justify-between px-4 font-bold text-zinc-500'>
         <LoadingCell isStatic={isStatic} className='mt-1 h-6 w-10 rounded-sm' />
         <LoadingCell isStatic={isStatic} className='mt-1 h-6 w-10 rounded-sm' />

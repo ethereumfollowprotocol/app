@@ -38,6 +38,10 @@ import EFPFinder from 'public/assets/partners/efpfinder.jpeg'
 import ENSTools from 'public/assets/partners/enstools.jpeg'
 import CuriaLab from 'public/assets/partners/curialab.jpeg'
 import ENStateSearch from 'public/assets/partners/enstatesearch.jpeg'
+import Tally from 'public/assets/partners/tally.jpeg'
+import EFPower from 'public/assets/partners/efpower.jpeg'
+import NameGraph from 'public/assets/partners/namegraph.jpeg'
+import Aragon from 'public/assets/partners/aragon.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -56,9 +60,19 @@ export const INTEGRATIONS = [
     logo: POAP,
   },
   {
-    name: 'Vision',
-    url: 'https://vision.io/',
-    logo: EnsVision,
+    name: 'Tally',
+    url: 'https://tally.xyz/',
+    logo: Tally,
+  },
+  {
+    name: 'Agora',
+    url: 'https://www.agora.xyz/',
+    logo: Agora,
+  },
+  {
+    name: 'Aragon',
+    url: 'https://www.aragon.org',
+    logo: Aragon,
   },
   {
     name: 'Yodl',
@@ -66,9 +80,9 @@ export const INTEGRATIONS = [
     logo: Yodl,
   },
   {
-    name: 'Agora',
-    url: 'https://www.agora.xyz/',
-    logo: Agora,
+    name: 'Vision',
+    url: 'https://vision.io/',
+    logo: EnsVision,
   },
   {
     name: 'Zapper',
@@ -111,6 +125,11 @@ export const INTEGRATIONS = [
     logo: Dhive,
   },
   {
+    name: 'Web3 Bio',
+    url: 'https://web3.bio/',
+    logo: WebThreeBio,
+  },
+  {
     name: 'Records.xyz',
     url: 'https://records.xyz',
     logo: Recordsxyz,
@@ -146,6 +165,11 @@ export const INTEGRATIONS = [
     logo: ENSTools,
   },
   {
+    name: 'NameGraph',
+    url: 'https://www.namegraph.dev',
+    logo: NameGraph,
+  },
+  {
     name: 'EFP Bot',
     url: 'https://x.com/efpbots',
     logo: EFPBot,
@@ -169,11 +193,6 @@ export const INTEGRATIONS = [
     name: 'ENSBook',
     url: 'https://ensbook.xyz/',
     logo: ENSBook,
-  },
-  {
-    name: 'Web3 Bio',
-    url: 'https://web3.bio/',
-    logo: WebThreeBio,
   },
   {
     name: 'Roc Box',
@@ -219,6 +238,11 @@ export const INTEGRATIONS = [
     name: 'EFP Finder',
     url: 'https://efp.jaxoo.xyz/',
     logo: EFPFinder,
+  },
+  {
+    name: 'EFPower',
+    url: 'https://www.efpower.fun/',
+    logo: EFPower,
   },
   {
     name: 'ENState Search',

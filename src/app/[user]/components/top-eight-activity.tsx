@@ -28,7 +28,10 @@ const TopEightActivity: React.FC<TopEightActivityProps> = ({ user, isConnectedUs
   const isClient = useIsClient()
   const headerRight = {
     'top 8': (
-      <button onClick={() => setEditModalOpen(true)} className='mr-2 transition-all hover:scale-110'>
+      <button
+        onClick={() => setEditModalOpen(true)}
+        className={cn('mr-2 transition-all hover:scale-110', isConnectedUserProfile ? 'block' : 'hidden')}
+      >
         <Edit className='h-5 w-5' />
       </button>
     ),

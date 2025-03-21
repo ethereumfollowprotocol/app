@@ -1,4 +1,6 @@
+import { useAccount } from 'wagmi'
 import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
 
@@ -7,6 +9,7 @@ import Check from 'public/assets/icons/ui/check.svg'
 import ArrowLeft from 'public/assets/icons/ui/arrow-left.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { formatNumber } from '#/utils/format/format-number'
+import { useIsEditView } from '#/hooks/use-is-edit-view'
 
 interface ListSelectorProps {
   setWalletMenuOpen: (open: boolean) => void
@@ -22,10 +25,23 @@ const ListSelector: React.FC<ListSelectorProps> = ({ setWalletMenuOpen, setSubMe
     setSubMenuOpen(state)
   }
 
+  const router = useRouter()
   const { t } = useTranslation()
+  const isProfile = useIsEditView()
+  const { address: userAddress } = useAccount()
   const { selectedList, lists, setSelectedList } = useEFPProfile()
 
   if (!lists?.lists || lists.lists.length === 0) return null
+
+  const onListClick = (list: string) => {
+    localStorage.setItem('selected-list', list)
+    setSelectedList(list === 'new list' ? undefined : Number(list))
+    setMenuOpen(false)
+    setWalletMenuOpen(false)
+    if (isProfile) {
+      router.push(`/${list === lists.primary_list ? userAddress : list}?ssr=false`)
+    }
+  }
 
   return (
     <div ref={clickAwayListRef} className='group relative w-full cursor-pointer'>
@@ -54,12 +70,7 @@ const ListSelector: React.FC<ListSelectorProps> = ({ setWalletMenuOpen, setSubMe
             <div
               className='hover:bg-nav-item relative flex w-full items-center gap-1 rounded-sm p-4 pl-8'
               key={list}
-              onClick={() => {
-                localStorage.setItem('selected-list', list)
-                setSelectedList(Number(list))
-                setMenuOpen(false)
-                setWalletMenuOpen(false)
-              }}
+              onClick={() => onListClick(list)}
             >
               {selectedList === Number(list) && <Check className='absolute top-5 left-2.5 h-4 w-4 text-green-500' />}
               <div className='flex flex-wrap items-end gap-1 sm:flex-nowrap'>
@@ -73,12 +84,7 @@ const ListSelector: React.FC<ListSelectorProps> = ({ setWalletMenuOpen, setSubMe
           <div
             key={'new list'}
             className='hover:bg-nav-item relative flex gap-2 rounded-sm p-4 pl-8'
-            onClick={() => {
-              localStorage.setItem('selected-list', 'new list')
-              setSelectedList(undefined)
-              setMenuOpen(false)
-              setWalletMenuOpen(false)
-            }}
+            onClick={() => onListClick('new list')}
           >
             {selectedList === undefined && <Check className='absolute top-5 left-2.5 h-4 w-4 text-green-500' />}
             <p className='font-bold'>{t('mint new list')}</p>

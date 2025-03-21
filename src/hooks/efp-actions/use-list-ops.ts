@@ -24,7 +24,7 @@ export const useListOps = () => {
     // format list operations
     const operations = items.map((item) => {
       const types = ['uint8', 'uint8', 'uint8', 'uint8', 'bytes']
-      const data: (string | number)[] = [item.listOp.version, item.listOp.opcode, 1, 1, item.listOp.data]
+      const data: (string | number)[] = [item.listOp.version || 1, item.listOp.opcode, 1, 1, item.listOp.data]
 
       return encodePacked(types, data)
     })
