@@ -40,6 +40,8 @@ import CuriaLab from 'public/assets/partners/curialab.jpeg'
 import ENStateSearch from 'public/assets/partners/enstatesearch.jpeg'
 import Tally from 'public/assets/partners/tally.jpeg'
 import EFPower from 'public/assets/partners/efpower.jpeg'
+import NameGraph from 'public/assets/partners/namegraph.jpeg'
+import Aragon from 'public/assets/partners/aragon.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -63,14 +65,19 @@ export const INTEGRATIONS = [
     logo: Tally,
   },
   {
-    name: 'Yodl',
-    url: 'https://yodl.me/',
-    logo: Yodl,
-  },
-  {
     name: 'Agora',
     url: 'https://www.agora.xyz/',
     logo: Agora,
+  },
+  {
+    name: 'Aragon',
+    url: 'https://www.aragon.org',
+    logo: Aragon,
+  },
+  {
+    name: 'Yodl',
+    url: 'https://yodl.me/',
+    logo: Yodl,
   },
   {
     name: 'Vision',
@@ -156,6 +163,11 @@ export const INTEGRATIONS = [
     name: 'ENS Tools',
     url: 'https://ens.tools',
     logo: ENSTools,
+  },
+  {
+    name: 'NameGraph',
+    url: 'https://www.namegraph.dev',
+    logo: NameGraph,
   },
   {
     name: 'EFP Bot',
