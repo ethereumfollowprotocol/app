@@ -17,8 +17,7 @@ export const useCoolMode = (imageUrl: string, disabled?: boolean, isLoading?: bo
   const resolvedImageUrl = imageUrl
 
   useEffect(() => {
-    if (ref.current && !isLoading && resolvedImageUrl)
-      return makeElementCool(ref.current, resolvedImageUrl, !!disabled)
+    if (ref.current && !isLoading && resolvedImageUrl) return makeElementCool(ref.current, resolvedImageUrl, !!disabled)
   }, [resolvedImageUrl, isLoading, disabled])
 
   return ref
@@ -45,7 +44,7 @@ const getContainer = () => {
       'right:0',
       'bottom:0',
       'pointer-events:none',
-      'z-index:2147483647'
+      'z-index:2147483647',
     ].join(';')
   )
 
@@ -88,7 +87,7 @@ function makeElementCool(element: HTMLElement, imageUrl: string, disabled: boole
         'will-change:transform',
         `top:${top}px`,
         `left:${left}px`,
-        `transform:rotate(${spinVal}deg)`
+        `transform:rotate(${spinVal}deg)`,
       ].join(';')
     )
 
@@ -103,7 +102,7 @@ function makeElementCool(element: HTMLElement, imageUrl: string, disabled: boole
       speedUp,
       spinSpeed,
       spinVal,
-      top
+      top,
     })
   }
 
@@ -115,7 +114,7 @@ function makeElementCool(element: HTMLElement, imageUrl: string, disabled: boole
       p.spinVal = p.spinVal + p.spinSpeed
 
       if (p.top >= Math.max(window.innerHeight, document.body.clientHeight) + p.size) {
-        particles = particles.filter(o => o !== p)
+        particles = particles.filter((o) => o !== p)
         p.element.remove()
       }
 
@@ -126,7 +125,7 @@ function makeElementCool(element: HTMLElement, imageUrl: string, disabled: boole
           'will-change:transform',
           `top:${p.top}px`,
           `left:${p.left}px`,
-          `transform:rotate(${p.spinVal}deg)`
+          `transform:rotate(${p.spinVal}deg)`,
         ].join(';')
       )
     }
@@ -143,10 +142,7 @@ function makeElementCool(element: HTMLElement, imageUrl: string, disabled: boole
 
   loop()
 
-  const isTouchInteraction =
-    'ontouchstart' in window ||
-    // @ts-expect-error
-    navigator.msMaxTouchPoints
+  const isTouchInteraction = 'ontouchstart' in window || navigator.maxTouchPoints
 
   const tap = isTouchInteraction ? 'touchstart' : 'mousedown'
   const tapEnd = isTouchInteraction ? 'touchend' : 'mouseup'
@@ -173,18 +169,18 @@ function makeElementCool(element: HTMLElement, imageUrl: string, disabled: boole
     autoAddParticle = false
   }
 
-  element.addEventListener(move, updateMousePosition, { passive: true })
-  element.addEventListener(tap, tapHandler, { passive: true })
-  element.addEventListener(tapEnd, disableAutoAddParticle, { passive: true })
+  const controller = new AbortController()
+
+  element.addEventListener(move, updateMousePosition, { passive: true, signal: controller.signal })
+  element.addEventListener(tap, tapHandler, { passive: true, signal: controller.signal })
+  element.addEventListener(tapEnd, disableAutoAddParticle, { passive: true, signal: controller.signal })
   element.addEventListener('mouseleave', disableAutoAddParticle, {
-    passive: true
+    passive: true,
+    signal: controller.signal,
   })
 
   return () => {
-    element.removeEventListener(move, updateMousePosition)
-    element.removeEventListener(tap, tapHandler)
-    element.removeEventListener(tapEnd, disableAutoAddParticle)
-    element.removeEventListener('mouseleave', disableAutoAddParticle)
+    controller.abort()
 
     // Cancel animation loop once animations are done
     const interval = setInterval(() => {

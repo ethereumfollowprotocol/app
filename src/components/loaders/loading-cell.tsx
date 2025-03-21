@@ -16,17 +16,16 @@ const LoadingCell: React.FC<LoadingCellProps> = ({
   className,
   gradient = DEFAULT_LOADING_GRADIENT,
   isStatic,
-  style
+  style,
 }) => {
   return (
     <div
       style={{
         background: gradient,
         backgroundSize: '400%',
-        animationFillMode: 'forwards',
-        ...style
+        ...style,
       }}
-      className={cn('bg-repeat-x', className, isStatic ? 'animate-none ' : 'animate-loading ')}
+      className={cn('bg-repeat-x', className, isStatic ? 'animate-none' : 'animate-loading')}
     />
   )
 }

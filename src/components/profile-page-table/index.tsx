@@ -2,24 +2,20 @@
 
 import { useTranslation } from 'react-i18next'
 import { useEffect, useState, forwardRef } from 'react'
-import { useIntersectionObserver } from '@uidotdev/usehooks'
+import { useIntersectionObserver, useIsClient } from '@uidotdev/usehooks'
 
-import type {
-  TagCountType,
-  FollowSortType,
-  FollowerResponse,
-  FollowingResponse
-} from '#/types/requests'
 import { cn } from '#/lib/utilities'
 import Recommendations from '../recommendations'
 import ProfileList from '#/components/profile-list'
 import TableHeader from './components/table-headers'
 import { useIsEditView } from '#/hooks/use-is-edit-view'
 import type { ProfileTableTitleType } from '#/types/common'
+import { FETCH_LIMIT_PARAM, SECOND } from '#/lib/constants'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import { BLOCKED_MUTED_TABS, FETCH_LIMIT_PARAM, SECOND } from '#/lib/constants'
+import type { TagCountType, FollowSortType, FollowerResponse, FollowingResponse } from '#/types/requests'
 
-interface UserProfilePageTableProps {
+let lastScrollTopUserPage = 0
+export interface UserProfilePageTableProps {
   title: ProfileTableTitleType
   customClass?: string
   isLoading: boolean
@@ -36,6 +32,7 @@ interface UserProfilePageTableProps {
   toggleSelectedTags: (title: ProfileTableTitleType, tag: string) => void
   showTagsByDefault?: boolean
   isShowingBlocked?: boolean
+  isTopEight?: boolean
   setSelectedTags: (tags: string[]) => void
   setSearchFilter: (search: string) => void
   setActiveTab?: (tab: ProfileTableTitleType) => void
@@ -60,9 +57,10 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
       setSort,
       showTagsByDefault,
       isShowingBlocked,
+      isTopEight,
       setSelectedTags,
       setSearchFilter,
-      setActiveTab
+      setActiveTab,
     },
     ref
   ) => {
@@ -71,6 +69,11 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
 
     // Debounce search to prevent unnecessary re-fetches
     useEffect(() => {
+      const userPage = document.getElementById('user-page')
+      if (userPage && userPage.scrollTop > (window.innerWidth > 1024 ? 300 : 750)) {
+        userPage.scrollTo({ top: window.innerWidth > 1024 ? 300 : 750, behavior: 'instant' })
+      }
+
       const searchTimeout = setTimeout(() => setSearchFilter(search), 0.5 * SECOND)
       return () => clearTimeout(searchTimeout)
     }, [search])
@@ -94,9 +97,9 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
     const showFollowsYouBadges = !isProfile || isFollowingTable
 
     const profiles =
-      results?.map(res => ({
+      results?.map((res) => ({
         tags: res.tags,
-        address: res.address
+        address: res.address,
       })) || []
 
     const [loadMoreRef, entry] = useIntersectionObserver()
@@ -111,71 +114,82 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
     const noResults = {
       following:
         search.length > 2 ? (
-          <div className='justify-center h-full flex items-center font-bold'>{t('none')}</div>
+          <div className='flex h-full items-center justify-center font-bold'>{t('none')}</div>
         ) : (
-          <div className='text-center h-full font-bold'>
-            <div className='flex flex-col justify-center h-full gap-4 items-center'>
+          <div className='h-full text-center font-bold'>
+            <div className='flex h-full flex-col items-center justify-center gap-4'>
               <p className='text-xl italic'>
                 {t(isProfile ? 'following myprofile empty first' : 'following empty first')}
               </p>
-              {isProfile && (
-                <p className='text-base italic w-3/4 max-w-96'>
-                  {t('following myprofile empty second')}
-                </p>
-              )}
+              {isProfile && <p className='w-3/4 max-w-96 text-base italic'>{t('following myprofile empty second')}</p>}
             </div>
           </div>
         ),
       followers:
         search.length > 2 ? (
-          <div className='justify-center h-full flex items-center font-bold'>{t('none')}</div>
+          <div className='flex h-full items-center justify-center font-bold'>{t('none')}</div>
         ) : (
-          <p className='text-xl italic flex h-full justify-center items-center min-h-12'>
+          <p className='flex h-full min-h-12 items-center justify-center text-xl italic'>
             {t(isProfile ? 'followers myprofile empty' : 'followers empty')}
           </p>
         ),
       'Blocked/Muted By': <span className='text-lg'>{t('none')}</span>,
-      'Blocked/Muted': <span className='text-lg'>{t('none')}</span>
+      'Blocked/Muted': <span className='text-lg'>{t('none')}</span>,
     }[title]
+
+    const isClient = useIsClient()
+    const [displayHeaders, setDisplayHeaders] = useState(false)
+    const isMobile = isClient && window.innerWidth <= 640
+
+    useEffect(() => {
+      const userPage = document.getElementById('user-page')
+
+      if (userPage && isMobile) {
+        userPage.addEventListener(
+          'scroll',
+          () => {
+            const deltaY = userPage.scrollTop - lastScrollTopUserPage
+            if (deltaY <= 0) setDisplayHeaders(true)
+            else setDisplayHeaders(false)
+            lastScrollTopUserPage = userPage.scrollTop
+          },
+          { passive: false }
+        )
+      }
+    }, [isMobile])
 
     return (
       <div
-        className={cn(
-          'flex flex-col w-full gap-4 py-4 px-0 sm:px-4 border-[3px] rounded-2xl border-grey',
-          !(isLoading || isFetchingMore) && 'pb-0 sm:pb-0',
-          BLOCKED_MUTED_TABS.includes(title) ? 'bg-neutral/70' : 'glass-card',
-          customClass
-        )}
+        className={cn('flex w-full flex-col rounded-sm', !(isLoading || isFetchingMore) && 'pb-0 sm:pb-0', customClass)}
       >
-        <TableHeader
-          setActiveTab={setActiveTab}
-          search={search}
-          setSearch={setSearch}
-          showTags={showTags}
-          setShowTags={(option: boolean) => setShowTags(option)}
-          title={title}
-          allTags={allTags}
-          tagsLoading={tagsLoading}
-          selectedTags={selectedTags}
-          sort={sort}
-          setSort={setSort}
-          toggleSelectedTags={toggleSelectedTags}
-          isShowingBlocked={isShowingBlocked}
-        />
-        {profilesEmpty && (
-          <div className='text-center font-bold h-[152px] py-4 content-center px-2'>
-            {noResults}
-          </div>
-        )}
         <div
+          className={cn('top-0 z-20 transition-all duration-300', isTopEight ? 'xl:sticky' : 'sticky')}
           ref={ref}
-          className={cn(
-            'flex flex-col px-3 sm:px-0',
-            !BLOCKED_MUTED_TABS.includes(title) && 'xl:overflow-y-scroll',
-            !(BLOCKED_MUTED_TABS.includes(title) || profilesEmpty) &&
-              (showTags ? 'profile-page-table-tags' : 'profile-page-table')
-          )}
+          style={{ top: isTopEight || !isMobile ? '-2px' : displayHeaders ? '74px' : '-2px' }}
         >
+          <TableHeader
+            setActiveTab={setActiveTab}
+            search={search}
+            setSearch={setSearch}
+            showTags={showTags}
+            setShowTags={(option: boolean) => setShowTags(option)}
+            title={title}
+            allTags={allTags}
+            tagsLoading={tagsLoading}
+            selectedTags={selectedTags}
+            sort={sort}
+            setSort={setSort}
+            isTopEight={isTopEight}
+            toggleSelectedTags={toggleSelectedTags}
+            isShowingBlocked={isShowingBlocked}
+          />
+        </div>
+        <div className={cn('flex flex-col pt-4')}>
+          {profilesEmpty && (
+            <div className='bg-neutral shadow-medium content-center rounded-sm p-8 text-center font-bold'>
+              {noResults}
+            </div>
+          )}
           <ProfileList
             isLoading={isLoading}
             isLoadingMore={isFetchingMore}
@@ -186,14 +200,18 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
             canEditTags={canEditTags}
             isBlockedList={isShowingBlocked}
             isBlockedBy={title === 'Blocked/Muted By' && isProfile}
+            isTopEight={isTopEight}
+            initialFollowState={title === 'following' && canEditTags ? 'Following' : undefined}
+            className={cn('bg-neutral shadow-medium rounded-sm', !isLoading && profiles.length === 0 && 'hidden')}
           />
-          <div ref={loadMoreRef} className='h-px w-full mb-4' />
+          {!isLoading && <div ref={loadMoreRef} className='mb-4 h-px w-full' />}
           {isFollowingTable && isProfile && (lists?.lists?.length || 0) === 0 && (
             <Recommendations
               limit={40}
               endpoint='recommended'
               header={t('recommendations')}
               className='py-2'
+              isTopEight={isTopEight}
             />
           )}
         </div>
@@ -201,5 +219,7 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
     )
   }
 )
+
+UserProfilePageTable.displayName = 'UserProfilePageTable'
 
 export default UserProfilePageTable

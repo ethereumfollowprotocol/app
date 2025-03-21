@@ -1,14 +1,15 @@
 import { useRef } from 'react'
 
-const useStickyScroll = (bottomOffset = 0) => {
+const useStickyScroll = (bottomOffset = 0, topOffset = 0) => {
   const StickyScrollRef = useRef<HTMLDivElement>(null)
 
   let scrollTopSidebar = 0
-  const onScroll = (e: React.UIEvent<HTMLDivElement>) => {
+  const onScroll = (eventElement: HTMLDivElement) => {
     const stickyScroll = StickyScrollRef.current
     if (!stickyScroll) return
 
-    if (window.innerWidth < 1280) {
+    // Disable sticky scroll on tablet/mobile
+    if (window.innerWidth < 1024) {
       stickyScroll.style.top = '0px'
       return
     }
@@ -17,31 +18,32 @@ const useStickyScroll = (bottomOffset = 0) => {
     const stickyScrollTop = stickyScroll.getBoundingClientRect().top || 0
     const viewportHeight = window.innerHeight
 
-    if (stickyScrollHeight + 108 < viewportHeight) {
-      stickyScroll.style.top = '0px'
+    // Disable sticky scroll if element is smaller than viewport
+    if (stickyScrollHeight < viewportHeight) {
+      stickyScroll.style.top = `${topOffset}px`
       return
     }
 
-    if (scrollTopSidebar > e.currentTarget.scrollTop) {
-      if (stickyScrollTop >= 70) stickyScroll.style.top = '0px'
+    // Scroll up
+    if (scrollTopSidebar > eventElement.scrollTop) {
+      if (stickyScrollTop >= 0) stickyScroll.style.top = `${topOffset}px`
       else
         stickyScroll.style.top = `${
-          Number(stickyScroll.style.top.replace('px', '')) +
-          (scrollTopSidebar - e.currentTarget.scrollTop)
+          Number(stickyScroll.style.top.replace('px', '')) + (scrollTopSidebar - eventElement.scrollTop)
         }px`
     }
 
-    if (scrollTopSidebar < e.currentTarget.scrollTop) {
+    // Scroll down
+    if (scrollTopSidebar < eventElement.scrollTop) {
       if (stickyScrollTop < viewportHeight - stickyScrollHeight + 120)
         stickyScroll.style.top = `${viewportHeight - bottomOffset - stickyScrollHeight}px`
       else
         stickyScroll.style.top = `${
-          Number(stickyScroll.style.top.replace('px', '')) -
-          (e.currentTarget.scrollTop - scrollTopSidebar)
+          Number(stickyScroll.style.top.replace('px', '')) - (eventElement.scrollTop - scrollTopSidebar)
         }px`
     }
 
-    scrollTopSidebar = e.currentTarget.scrollTop
+    scrollTopSidebar = eventElement.scrollTop
   }
 
   return { StickyScrollRef, onScroll }

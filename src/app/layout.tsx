@@ -6,44 +6,35 @@ import '@rainbow-me/rainbowkit/styles.css'
 import Image from 'next/image'
 import { Toaster } from 'sonner'
 import type { Metadata } from 'next'
-import { headers } from 'next/headers'
 import { ThemeProvider } from 'next-themes'
-import { cookieToInitialState } from 'wagmi'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { GoogleAnalytics } from '@next/third-parties/google'
 
 import Providers from './providers.tsx'
-import wagmiConfig from '../lib/wagmi.ts'
 import { Production } from './production.tsx'
 import { sharedMetadata } from '#/lib/metadata.ts'
 import { THEMES } from '../lib/constants/index.ts'
-import BackgroundImage from 'public/assets/art/waves-background.svg'
-import HalloweenBackground from 'public/assets/art/halloween-background.jpeg'
+import BackgroundImage from 'public/assets/art/background.png'
 
 export const metadata: Metadata = sharedMetadata
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
-  const initialState = cookieToInitialState(wagmiConfig, headers().get('cookie'))
-
   return (
-    <html lang='en' suppressHydrationWarning={true} className='dark'>
+    <html lang='en' suppressHydrationWarning={true}>
       <HeadTag />
       <body>
-        <ThemeProvider attribute='class' defaultTheme='system' enableSystem={true} themes={THEMES}>
+        <ThemeProvider attribute='class' enableSystem={true} themes={THEMES}>
           <Image
             src={BackgroundImage}
-            alt='background waves'
-            className='background -z-10 halloween:hidden'
-          />
-          <Image
-            src={HalloweenBackground}
-            alt='halloween background'
-            className='hidden fixed top-0 -z-10 left-0 h-screen opacity-50 w-screen halloween:block object-cover'
+            priority={true}
+            width={1920}
+            height={1080}
+            alt='background image'
+            className='fixed top-0 left-0 -z-10 h-screen w-screen object-cover opacity-30'
           />
           <Toaster richColors={true} />
-          <Providers initialState={initialState}>{children}</Providers>
-          {/* <VercelToolbar /> */}
+          <Providers>{children}</Providers>
         </ThemeProvider>
         <Production>
           <Analytics />
@@ -79,16 +70,6 @@ const HeadTag = () => {
         href='https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap'
         rel='stylesheet'
       />
-
-      {/* Preload crucial assets */}
-      <link rel='preload' href='/assets/art/waves-background.svg' as='image' />
-      <link rel='preload' href='/assets/logo.svg' as='image' />
-      <link rel='preload' href='/assets/icons/block-emoji.svg' as='image' />
-      <link rel='preload' href='/assets/icons/mute-emoji.svg' as='image' />
-      <link rel='preload' href='/assets/icons/unfollow-emoji.svg' as='image' />
-      <link rel='preload' href='/assets/icons/halloween-emoji.svg' as='image' />
-      <link rel='preload' href='/assets/icons/ghost-emoji.png' as='image' />
-      <link rel='preload' href='/assets/icons/spider-web-emoji.png' as='image' />
     </head>
   )
 }

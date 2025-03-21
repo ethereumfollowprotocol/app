@@ -4,11 +4,10 @@ export const useUserScroll = () => {
   const tableRef = useRef<HTMLDivElement>(null)
   const TopEightRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const ProfileCardRef = useRef<HTMLDivElement>(null)
 
   const handleWheel = useCallback((event: WheelEvent) => {
     if (tableRef.current) {
-      if (window.innerWidth >= 1280) event.preventDefault()
+      if (window.innerWidth >= 1024) event.preventDefault()
       // Adjust the scroll position of the div
       tableRef.current.scrollTop += event.deltaY
       tableRef.current.scrollLeft += event.deltaX
@@ -22,18 +21,9 @@ export const useUserScroll = () => {
 
     if (TopEightRef.current) {
       const topEightHeight = TopEightRef.current.scrollHeight
-      const topEightOverflow = window.innerHeight - topEightHeight - 100
-      if (window.innerWidth >= 1280)
-        TopEightRef.current.style.top = `${topEightOverflow >= 0 ? 0 : topEightOverflow}px`
+      const topEightOverflow = window.innerHeight - topEightHeight - 16
+      if (window.innerWidth >= 1024) TopEightRef.current.style.top = `${topEightOverflow >= 0 ? 0 : topEightOverflow}px`
       else TopEightRef.current.style.top = '0px'
-    }
-
-    if (ProfileCardRef.current) {
-      const profileCardHeight = ProfileCardRef.current.scrollHeight + 65
-      const profileCardOverflow = window.innerHeight - profileCardHeight - 100
-      if (window.innerWidth >= 1280)
-        ProfileCardRef.current.style.top = `${profileCardOverflow >= 0 ? 0 : profileCardOverflow}px`
-      else ProfileCardRef.current.style.top = '0px'
     }
   }, [])
 
@@ -47,5 +37,5 @@ export const useUserScroll = () => {
     }
   }, [handleWheel])
 
-  return { tableRef, TopEightRef, containerRef, ProfileCardRef }
+  return { tableRef, TopEightRef, containerRef }
 }

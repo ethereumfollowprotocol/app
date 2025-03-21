@@ -1,9 +1,9 @@
-import {
-  MdKeyboardArrowLeft,
-  MdKeyboardArrowRight,
-  MdKeyboardDoubleArrowLeft
-} from 'react-icons/md'
+'use client'
+
 import { useRouter, useSearchParams } from 'next/navigation'
+import DoubleArrowLeft from 'public/assets/icons/ui/double-arrow-left.svg'
+import ArrowLeft from 'public/assets/icons/ui/short-arrow-left.svg'
+import ArrowRight from 'public/assets/icons/ui/short-arrow-right.svg'
 
 interface PageSelectorProps {
   page: number
@@ -28,7 +28,7 @@ const PageSelector: React.FC<PageSelectorProps> = ({
   adjustUrl = true,
   displayPageNumber = true,
   isLoading,
-  scrollUp
+  scrollUp,
 }) => {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -36,7 +36,12 @@ const PageSelector: React.FC<PageSelectorProps> = ({
   const filter = searchParams.get('filter')
 
   const handlePageChange = (newPage: number, skipsToFirst?: boolean) => {
-    if (scrollUp) window.scrollTo({ top: window.innerWidth > 786 ? 200 : 400, behavior: 'instant' })
+    if (scrollUp) {
+      document
+        .getElementById('leaderboard-page')
+        ?.scrollTo({ top: window.innerWidth > 786 ? 200 : 400, behavior: 'instant' })
+      window.scrollTo({ top: window.innerWidth > 786 ? 200 : 400, behavior: 'instant' })
+    }
 
     if (!skipsToFirst && fetchNext && fetchPrevious && !isLoading) {
       if (newPage > page) fetchNext()
@@ -49,7 +54,7 @@ const PageSelector: React.FC<PageSelectorProps> = ({
       if (search) params.set('search', search)
       params.set('page', newPage.toString())
       router.push(`/leaderboard?${params.toString()}`, {
-        scroll: false
+        scroll: false,
       })
     }
 
@@ -57,27 +62,27 @@ const PageSelector: React.FC<PageSelectorProps> = ({
   }
 
   return (
-    <div className='flex gap-2 items-center justify-end px-1'>
+    <div className='flex items-center justify-end gap-2 px-1'>
       {hasSkipToFirst && (
         <button
           onClick={() => handlePageChange(1)}
           disabled={page === 1}
           aria-label='skip to first page'
-          className='glass-card flex items-center hover:scale-110 disabled:hover:scale-100 justify-center font-bold group h-9 w-9 border-[3px] hover:border-text border-text/40 transition-all rounded-[10px] disabled:border-text/10'
+          className='group hover:border-text border-text/40 disabled:border-text/10 flex h-9 w-9 items-center justify-center rounded-sm border-[3px] font-bold transition-all hover:scale-110 disabled:hover:scale-100'
         >
-          <MdKeyboardDoubleArrowLeft className='w-6 h-6 group-hover:opacity-100 opacity-40 dark:opacity-80 group-disabled:opacity-20 transition-opacity' />
+          <DoubleArrowLeft className='h-6 w-6 opacity-40 transition-opacity group-hover:opacity-100 group-disabled:opacity-20 dark:opacity-80' />
         </button>
       )}
       <button
         onClick={() => handlePageChange(page - 1)}
         disabled={page === 1}
         aria-label='previous page'
-        className='glass-card flex items-center hover:scale-110 disabled:hover:scale-100 justify-center font-bold group hover:border-text h-9 w-9 border-[3px] border-text/40 transition-all rounded-[10px] disabled:border-text/10'
+        className='group hover:border-text border-text/40 disabled:border-text/10 flex h-9 w-9 items-center justify-center rounded-sm border-[3px] font-bold transition-all hover:scale-110 disabled:hover:scale-100'
       >
-        <MdKeyboardArrowLeft className='w-6 h-6 group-hover:opacity-100 opacity-40 dark:opacity-80 group-disabled:opacity-20 transition-opacity' />
+        <ArrowLeft className='h-6 w-6 opacity-40 transition-opacity group-hover:opacity-100 group-disabled:opacity-20 dark:opacity-80' />
       </button>
       {displayPageNumber && (
-        <p className='glass-card flex items-center disabled:hover:scale-100 justify-center font-bold group  h-9 w-9 border-[3px] border-text transition-all rounded-[10px]'>
+        <p className='glass-card group border-text flex h-9 w-9 items-center justify-center rounded-sm border-[3px] font-bold transition-all disabled:hover:scale-100'>
           {page}
         </p>
       )}
@@ -85,9 +90,9 @@ const PageSelector: React.FC<PageSelectorProps> = ({
         onClick={() => handlePageChange(page + 1)}
         disabled={!hasNextPage}
         aria-label='next page'
-        className='glass-card flex items-center hover:scale-110 disabled:hover:scale-100 justify-center font-bold group hover:border-text h-9 w-9 border-[3px] border-text/40 transition-all rounded-[10px] disabled:border-text/10'
+        className='glass-card group hover:border-text border-text/40 disabled:border-text/10 flex h-9 w-9 items-center justify-center rounded-sm border-[3px] font-bold transition-all hover:scale-110 disabled:hover:scale-100'
       >
-        <MdKeyboardArrowRight className='w-6 h-6 group-hover:opacity-100 opacity-40 dark:opacity-80 group-disabled:opacity-20 transition-opacity' />
+        <ArrowRight className='h-6 w-6 opacity-40 transition-opacity group-hover:opacity-100 group-disabled:opacity-20 dark:opacity-80' />
       </button>
     </div>
   )

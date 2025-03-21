@@ -3,17 +3,20 @@
 import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import { useTheme } from 'next-themes'
-import { useTranslation } from 'react-i18next'
 import { useIsClient } from '@uidotdev/usehooks'
-import { HiArrowUturnDown } from 'react-icons/hi2'
 import { animated, to as interpolate } from '@react-spring/web'
 
-import Logo from 'public/assets/logo.svg'
-import SwipeButtons from './swipeButtons'
+import SwipeButtons from './swipe-buttons'
+import Logo from 'public/assets/logo.svg?url'
 import UserProfileCard from '#/components/user-profile-card'
 import LoadingRecommendedCards from './loading-recommended-cards'
-import HalloweenEmoji from 'public/assets/icons/halloween-emoji.svg'
 import { trans, useRecommendedProfilesCards } from './useRescommendedProfilesCards'
+import KeyboardArrowRight from 'public/assets/icons/ui/keyboard-arrow-right.svg'
+import KeyboardArrowLeft from 'public/assets/icons/ui/keyboard-arrow-left.svg'
+import KeyboardArrowDown from 'public/assets/icons/ui/keyboard-arrow-down.svg'
+import MouseRight from 'public/assets/icons/ui/mouse-right.svg'
+import MouseLeft from 'public/assets/icons/ui/mouse-left.svg'
+import { useTranslation } from 'react-i18next'
 
 const RecommendedCards = () => {
   const {
@@ -29,16 +32,60 @@ const RecommendedCards = () => {
     bindDragToCards,
     isFetchingNextPage,
     recommendedProfiles,
-    handleStopAnimationAndSound
+    handleStopAnimationAndSound,
   } = useRecommendedProfilesCards()
 
-  const isClient = useIsClient()
   const { t } = useTranslation()
+  const isClient = useIsClient()
   const { resolvedTheme } = useTheme()
   const { address: userAddress } = useAccount()
 
   return (
-    <div className='flex w-full items-center justify-start flex-col'>
+    <div className='flex h-screen w-full flex-col justify-center gap-10 sm:h-auto lg:flex-row lg:items-center lg:justify-center xl:h-screen'>
+      <div className='hidden flex-col items-start gap-6 sm:flex lg:w-72 xl:absolute xl:left-28 xl:w-[22.5vw] 2xl:w-96'>
+        <h1 className='w-full text-start text-6xl font-bold'>{t('swipe title')}</h1>
+        <div className='w-full'>
+          <p className='w-full text-start'>{t('swipe description first')}</p>
+          <p className='w-full text-start'>{t('swipe description second')}</p>
+        </div>
+        <div className='text-text-neutral flex gap-12 lg:flex-col'>
+          <div className='flex flex-col items-start gap-3'>
+            <p className='text-text text-lg font-medium'>{t('keyboard title')}</p>
+            <div className='flex flex-row gap-2'>
+              <KeyboardArrowRight className='h-10 w-10' />
+              <div className='-mt-px flex flex-col items-start'>
+                <p className='text-sm'>{t('keyboard right key')}</p>
+                <p>{t('keyboard right action')}</p>
+              </div>
+            </div>
+            <div className='flex flex-row gap-2'>
+              <KeyboardArrowLeft className='h-10 w-10' />
+              <div className='-mt-px flex flex-col items-start'>
+                <p className='text-sm'>{t('keyboard left key')}</p>
+                <p>{t('keyboard left action')}</p>
+              </div>
+            </div>
+            <div className='flex flex-row gap-2'>
+              <KeyboardArrowDown className='h-10 w-10' />
+              <div className='-mt-px flex flex-col items-start'>
+                <p className='text-sm'>{t('keyboard down key')}</p>
+                <p>{t('keyboard down action')}</p>
+              </div>
+            </div>
+          </div>
+          <div className='flex flex-col items-start gap-3'>
+            <p className='text-text text-lg font-medium'>{t('mouse title')}</p>
+            <div className='flex flex-row items-center gap-2'>
+              <MouseRight className='h-9 w-auto' />
+              <p>{t('mouse right action')}</p>
+            </div>
+            <div className='flex flex-row items-center gap-2'>
+              <MouseLeft className='h-9 w-auto' />
+              <p>{t('mouse left action')}</p>
+            </div>
+          </div>
+        </div>
+      </div>
       {isClient && (
         <audio
           ref={soundRef}
@@ -53,34 +100,34 @@ const RecommendedCards = () => {
       )}
       <div
         ref={animatedRef}
-        className='pointer-events-none h-screen w-screen fixed -right-[101vw] top-0 z-50 delay-150'
-        onAnimationEnd={e => {
+        className='pointer-events-none fixed top-0 -right-[101vw] z-50 h-screen w-screen delay-150'
+        onAnimationEnd={(e) => {
           e.stopPropagation()
           handleStopAnimationAndSound()
         }}
       >
-        {new Array(10).fill(1).map(index => {
-          const randomLeft = Math.random() * 80
-          const randomTop = 10 + Math.random() * 30
-          const icon = resolvedTheme === 'halloween' ? HalloweenEmoji : Logo
+        {isClient &&
+          new Array(10).fill(1).map((index) => {
+            const randomLeft = Math.random() * 80
+            const randomTop = 10 + Math.random() * 30
 
-          return (
-            <Image
-              key={`icons-${index}-${randomLeft}-${randomTop}`}
-              src={icon}
-              style={{
-                top: `${randomTop}%`,
-                left: `${randomLeft}%`
-              }}
-              className='animate-spin absolute repeat-infinite'
-              alt='follow icon'
-              width={32}
-              height={32}
-            />
-          )
-        })}
+            return (
+              <Image
+                key={`icons-${index}-${randomLeft}-${randomTop}`}
+                src={Logo}
+                style={{
+                  top: `${randomTop}%`,
+                  left: `${randomLeft}%`,
+                }}
+                className='repeat-infinite absolute animate-spin'
+                alt='follow icon'
+                width={32}
+                height={32}
+              />
+            )
+          })}
       </div>
-      <div className='flex flex-col w-full items-center justify-start h-fit min-h-[500px] sm:min-h-[680px] relative'>
+      <div className='justify-start] relative flex h-fit min-h-[500px] w-full flex-col items-center'>
         <LoadingRecommendedCards
           userAddress={userAddress}
           isLoading={isLoading}
@@ -94,19 +141,21 @@ const RecommendedCards = () => {
               if (gone.has(i + 3)) return null
 
               return (
+                // @ts-expect-error animated.div is a valid component
                 <animated.div
-                  className='h-fit w-full max-w-92 absolute top-0 will-change-transform z-20 sm:mr-[14px]'
+                  className='absolute top-0 z-20 h-fit w-full max-w-92 will-change-transform sm:mr-[14px]'
                   key={`${recommendedProfiles[i]?.address}-${i}`}
                   style={{ x, y }}
                 >
+                  {/* @ts-expect-error animated.div is a valid component */}
                   <animated.div
                     {...bindDragToCards(i)}
                     style={{
                       transform: interpolate([rot, scale], trans),
-                      touchAction: 'none'
+                      touchAction: 'none',
                     }}
                   >
-                    <div className='cursor-pointer'>
+                    <div className='shadow-medium w-fit cursor-pointer rounded-sm p-0'>
                       <UserProfileCard
                         profile={recommendedProfiles[i]}
                         isResponsive={false}
@@ -129,15 +178,10 @@ const RecommendedCards = () => {
           gone={gone}
           onSwipeLeft={onSwipeLeft}
           onSwipeRight={onSwipeRight}
+          onSwipeBack={onSwipeBack}
+          didSwipeBack={didSwipeBack}
         />
       </div>
-      <button
-        className='cursor-pointer z-40 rounded-full fixed bottom-4 sm:bottom-10 lg:bottom-20 bg-text/20 flex flex-row-reverse items-center gap-2 hover:bg-text/40 transition-all hover:scale-110 px-3 py-2 text-xl disabled:hidden'
-        onClick={onSwipeBack}
-        disabled={didSwipeBack || gone.size === 0}
-      >
-        <p className='font-semibold text-lg'>{t('undo')}</p> <HiArrowUturnDown />
-      </button>
     </div>
   )
 }

@@ -1,12 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 
+import { useCart } from '#/hooks/use-cart'
 import type { ProfileListProfile } from '..'
-import { yieldToMain } from '#/utils/yield-to-main'
-import { useCart } from '#/contexts/cart-context'
 import type { ImportPlatformType } from '#/types/common'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
-import { extractAddressAndTag, isTagListOp } from '#/utils/list-ops'
 
 export const useTagsDropdown = (
   profiles: ProfileListProfile[],
@@ -19,19 +17,20 @@ export const useTagsDropdown = (
 
   const { recentTags, addRecentTag } = useEFPProfile()
   const {
-    cartItems,
-    setCartItems,
+    addToCart,
+    removeFromCart,
     getTagsFromCartByAddress,
     hasListOpAddTag,
     hasListOpRemoveTag,
-    hasListOpRemoveRecord
+    hasListOpRemoveRecord,
   } = useCart()
 
+  // Take the first address for checking cart states for all social profiles
   const address = profiles?.[0]?.address
   const tags = profiles.flatMap(({ tags }) => tags)
   const tagsFromCart = address ? getTagsFromCartByAddress(address) : []
   // const addressListOpsInCart = address
-  //   ? cartItems.filter(
+  //   ? cart.filter(
   //       item => item.listOp.data.slice(0, 42).toLowerCase() === address.toLowerCase()
   //     )
   //   : []
@@ -39,75 +38,36 @@ export const useTagsDropdown = (
   const initialDisplayedTags = () => {
     return [
       ...new Set(
-        [...tags, ...(canEditTags ? tagsFromCart : [])].filter(tag =>
+        [...tags, ...(canEditTags ? tagsFromCart : [])].filter((tag) =>
           isBlockedList ? ['block', 'mute'].includes(tag) : true
         )
-      )
+      ),
     ]
   }
   const [displayedTags, setDisplayedTags] = useState<string[]>(initialDisplayedTags())
 
-  // useEffect(() => {
-  //   if (addressListOpsInCart.length > 0) {
-  //     setDisplayedTags(initialDisplayedTags())
-  //   }
-  // }, [addressListOpsInCart])
-
   const addTag = async (tag: string) => {
-    if (!canEditTags) return
+    if (!canEditTags || !address) return
 
     if (!displayedTags.includes(tag)) {
       addRecentTag(tag)
-      setDisplayedTags(prevTags => [...prevTags, tag])
-      await yieldToMain()
+      setDisplayedTags((prevTags) => [...prevTags, tag])
 
-      const newCartItems = profiles.map(({ address }) => ({
-        listOp: listOpAddTag(address, tag),
-        import: platform
-      }))
-
-      setCartItems([...cartItems, ...newCartItems])
+      addToCart([listOpAddTag(address, tag)])
     }
   }
 
   const removeTag = async (tag: string) => {
     if (!address || !canEditTags) return null
 
-    const addresses = profiles.map(({ address }) => address.toLowerCase())
-
-    if (hasListOpAddTag({ address, tag })) {
-      setDisplayedTags(prevTags => prevTags.filter(prevTag => prevTag !== tag))
-
-      await yieldToMain()
-
-      return setCartItems(oldCartItems =>
-        oldCartItems.filter(
-          item =>
-            !(isTagListOp(item.listOp)
-              ? addresses.includes(extractAddressAndTag(item.listOp).address.toLowerCase()) &&
-                extractAddressAndTag(item.listOp).tag === tag
-              : false)
-        )
-      )
+    if (hasListOpAddTag(address, tag)) {
+      setDisplayedTags((prevTags) => prevTags.filter((prevTag) => prevTag !== tag))
+      return removeFromCart([listOpAddTag(address, tag)])
     }
 
-    if (hasListOpRemoveTag({ address, tag }))
-      return setCartItems(oldCartItems =>
-        oldCartItems.filter(
-          item =>
-            !(isTagListOp(item.listOp)
-              ? addresses.includes(extractAddressAndTag(item.listOp).address.toLowerCase()) &&
-                extractAddressAndTag(item.listOp).tag === tag
-              : false)
-        )
-      )
+    if (hasListOpRemoveTag(address, tag)) return removeFromCart([listOpRemoveTag(address, tag)])
 
-    const newCartItems = profiles.map(({ address }) => ({
-      listOp: listOpRemoveTag(address, tag),
-      import: platform
-    }))
-
-    setCartItems([...cartItems, ...newCartItems])
+    addToCart([listOpRemoveTag(address, tag)])
   }
 
   const addCustomTag = () => {
@@ -118,17 +78,13 @@ export const useTagsDropdown = (
   }
 
   const isBeingRemoved = address ? hasListOpRemoveRecord(address) : false
-  const isBeingRestricted =
-    address &&
-    (hasListOpAddTag({ address, tag: 'block' }) || hasListOpAddTag({ address, tag: 'mute' }))
-  const isBeingUnrestricted =
-    address &&
-    (hasListOpRemoveTag({ address, tag: 'block' }) || hasListOpRemoveTag({ address, tag: 'mute' }))
+  const isBeingRestricted = address && (hasListOpAddTag(address, 'block') || hasListOpAddTag(address, 'mute'))
+  const isBeingUnrestricted = address && (hasListOpRemoveTag(address, 'block') || hasListOpRemoveTag(address, 'mute'))
 
   useEffect(() => {
     if (!isBeingRemoved || isBeingUnrestricted) return setDisplayedTags(initialDisplayedTags())
 
-    tagsFromCart.forEach(tag => {
+    tagsFromCart.forEach((tag) => {
       removeTag(tag)
     })
   }, [isBeingRemoved, isBeingRestricted, isBeingUnrestricted])
@@ -141,6 +97,6 @@ export const useTagsDropdown = (
     removeTag,
     addTag,
     displayedTags,
-    recentTags
+    recentTags,
   }
 }

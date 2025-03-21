@@ -1,6 +1,7 @@
 'use client'
 
 import { useAccount } from 'wagmi'
+import { usePathname } from 'next/navigation'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useContext, createContext, useState, useEffect, useMemo } from 'react'
 
@@ -23,15 +24,14 @@ type Props = {
   children: React.ReactNode
 }
 
-const RecommendedProfilesContext = createContext<RecommendedProfilesContextType | undefined>(
-  undefined
-)
+const RecommendedProfilesContext = createContext<RecommendedProfilesContextType | undefined>(undefined)
 
 export const RecommendedProfilesProvider: React.FC<Props> = ({ children }) => {
   const [gone] = useState(() => new Set()) // The set flags all the cards that are flicked out
 
-  const { listToFetch } = useEFPProfile()
+  const pathname = usePathname()
   const { address: userAddress } = useAccount()
+  const { listToFetch, allFollowingAddresses } = useEFPProfile()
 
   useEffect(() => {
     gone.clear()
@@ -44,24 +44,20 @@ export const RecommendedProfilesProvider: React.FC<Props> = ({ children }) => {
     isLoading,
     isFetchingNextPage,
     hasNextPage,
-    fetchNextPage
+    fetchNextPage,
   } = useInfiniteQuery({
     queryKey: ['recommended profiles', userAddress, listToFetch, randomNumber],
     queryFn: ({ pageParam = 0 }) => {
       if (!userAddress) return { recommended: [], nextPageParam: 0 }
 
-      return fetchRecommendedProfiles(
-        userAddress,
-        listToFetch,
-        RECOMMENDED_PROFILES_LIMIT,
-        pageParam
-      )
+      return fetchRecommendedProfiles(userAddress, listToFetch, RECOMMENDED_PROFILES_LIMIT, pageParam)
     },
-    getNextPageParam: lastPage => lastPage?.nextPageParam,
+    getNextPageParam: (lastPage) => lastPage?.nextPageParam,
     initialPageParam: 0,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
-    refetchOnReconnect: false
+    refetchOnReconnect: false,
+    enabled: pathname === '/swipe' && !!allFollowingAddresses,
   })
 
   const recommendedProfiles =
@@ -78,7 +74,7 @@ export const RecommendedProfilesProvider: React.FC<Props> = ({ children }) => {
         hasNextPage,
         fetchNextPage,
         isFetchingNextPage,
-        recommendedProfiles
+        recommendedProfiles,
       }}
     >
       {children}

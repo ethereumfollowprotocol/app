@@ -26,7 +26,7 @@
   "edit settings": "Beállítások szerkesztése",
   "edit profile": "Profil szerkesztése",
 
-  "top eight title": "🔥 A Top 8-am 🔥",
+  "top eight title": " A Top 8-am ",
   "no top eight": "Itt még nincs semmi beállítva... 😳",
   "top eight limit": "A Top 8-ad betelt! Új személy hozzáadásához először el kell távolítanod valakit. 😈",
   "top eight description": "Add hozzá a barátaidat a Top 8-hoz! Később mindig hozzáadhatsz vagy eltávolíthatsz embereket.",
@@ -35,8 +35,8 @@
   "no bio": "Nincs beírt bemutatkozás",
   "copied": "Másolva",
 
-  "add to top eight": "Hozzáadás a 🔥A Top 8-amhoz🔥",
-  "remove from top eight": "Eltávolítás a 🔥A Top 8-amról🔥",
+  "add to top eight": "Hozzáadás a A Top 8-amhoz",
+  "remove from top eight": "Eltávolítás a A Top 8-amról",
   "copy address": "Cím másolása",
   "copy ens": "ENS másolása",
   "copy profile": "Profil link másolása",

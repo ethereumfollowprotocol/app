@@ -1,65 +1,76 @@
 'use client'
 
 import Link from 'next/link'
-import { AiOutlineApi } from 'react-icons/ai'
+import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
-import { BsBook, BsDiscord, BsGithub } from 'react-icons/bs'
+
+import Examples from './examples'
 import { cn } from '#/lib/utilities'
+import Discord from 'public/assets/icons/socials/discord.svg?url'
+import Github from 'public/assets/icons/socials/github-white.svg?url'
 
 const RESOURCES = [
   {
+    name: 'Ethereum Identity Kit',
+    content: <p>Ethereum Identity Kit</p>,
+    href: 'https://ethidentitykit.com',
+    className: 'bg-primary font-bold text-dark-grey',
+  },
+  {
     name: 'Docs',
-    icon: <BsBook />,
-    href: 'https://docs.ethfollow.xyz',
-    className: 'bg-followButton/90 text-darkGrey'
+    content: <p>Documentation</p>,
+    href: 'https://docs.efp.app',
+    className: 'bg-neutral',
   },
   {
     name: 'API',
-    icon: <AiOutlineApi />,
-    href: 'https://docs.ethfollow.xyz/api/',
-    className: 'bg-[#FFC7E9] text-darkGrey'
+    content: <p>API</p>,
+    href: 'https://ethidentitykit.com/docs/api',
+    className: 'bg-neutral',
   },
   {
     name: 'Discord',
-    icon: <BsDiscord />,
+    content: <Image src={Discord} alt='Discord' width={32} height={32} className='h-auto w-10' />,
     href: 'https://discord.com/invite/ZUyG3mSXFD',
-    className: 'bg-[#7289da] text-white'
+    className: 'bg-[#8C9EFF] text-white px-0',
   },
   {
     name: 'GitHub',
-    icon: <BsGithub />,
+    content: <Image src={Github} alt='GitHub' width={32} height={32} className='h-auto w-7' />,
     href: 'https://github.com/ethereumfollowprotocol',
-    className: 'bg-darkGrey text-white'
-  }
+    className: 'bg-dark-grey text-white px-1.5',
+  },
 ]
 
 const Guide = () => {
   const { t } = useTranslation()
 
   return (
-    <div className='glass-card flex flex-col px-4 py-8 sm:p-6 md:p-8 lg:p-10 items-center xl:items-start rounded-xl border-[3px] w-full max-w-[700px] h-fit gap-4 border-grey'>
-      <h2 className='text-3xl xxs:text-4xl font-bold text-center xl:text-start'>
-        {t('integrate efp')}
-      </h2>
-      <p className='xxs:text-lg text-text/80 text-center xl:text-start'>
-        {t('integrate efp description')}
-      </p>
-      <div className='flex flex-row flex-wrap justify-center items-center w-full xl:justify-start mt-4 gap-4 md:gap-6'>
-        {RESOURCES.map(resource => (
-          <Link
-            key={resource.name}
-            href={resource.href}
-            target='_blank'
-            rel='noopener noreferrer'
-            className={cn(
-              'flex flex-row w-36 xxs:w-40 sm:w-48 md:w-56 lg:w-64 rounded-xl hover:scale-105 font-semibold transition-transform p-3 xxs:p-4 lg:p-6 text-2xl xxs:text-3xl md:text-4xl lg:text-5xl md:h-24 lg:h-28 justify-between items-center text-text-neutral text-text/80',
-              resource.className
-            )}
-          >
-            <p className='text-xl xxs:text-2xl md:text-3xl lg:text-4xl'>{resource.name}</p>
-            {resource.icon}
-          </Link>
-        ))}
+    <div className='mt-24 flex h-fit w-full flex-col items-start gap-12 rounded-sm px-4 sm:mt-12 sm:px-8 lg:mt-24 lg:max-w-[43vw] lg:px-0 xl:max-w-[550px] 2xl:max-w-[700px]'>
+      <div className='flex flex-col gap-6'>
+        <h2 className='text-4xl font-bold sm:text-5xl xl:text-start'>{t('integrate efp')}</h2>
+        <p className='xxs:text-lg text-text/80 w-full text-start sm:w-[90%]'>
+          <b>{t('home description efp')}</b>
+          {t('integrate efp description')}
+        </p>
+        <div className='flex w-full flex-row flex-wrap items-center justify-start gap-3'>
+          {RESOURCES.map((resource) => (
+            <Link
+              key={resource.name}
+              href={resource.href}
+              className={cn(
+                'shadow-small flex h-10 w-fit items-center justify-center gap-2 rounded-sm px-3 font-semibold transition-transform duration-300 hover:scale-110',
+                resource.className
+              )}
+              target='_blank'
+            >
+              {resource.content}
+            </Link>
+          ))}
+        </div>
+      </div>
+      <div className='hidden w-full lg:block'>
+        <Examples />
       </div>
     </div>
   )

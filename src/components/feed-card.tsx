@@ -2,110 +2,168 @@
 
 import Image from 'next/image'
 import { useAccount } from 'wagmi'
+import type { Address } from 'viem'
 import { useTheme } from 'next-themes'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useConnectModal } from '@rainbow-me/rainbowkit'
+import { useIsClient } from '@uidotdev/usehooks'
 
 import { cn } from '#/lib/utilities'
-import LoadingSpinner from './loaders/loading-spinner'
-import InterfaceLight from 'public/assets/icons/interface.png'
+import LoadingCell from './loaders/loading-cell'
+import { RECOMMENDED_FEED_ADDRESS } from '#/lib/constants'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
+import InterfaceLight from 'public/assets/icons/socials/interface.png'
+import InterfaceDark from 'public/assets/icons/socials/interface-dark.png'
+
+let lastScrollTopHomePage = 0
 
 interface FeedCardProps {
   cardSize?: string
   contentSize?: string
   title?: string
   description?: string
+  activityAddress?: Address
 }
 
-const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, title, description }) => {
-  const { t } = useTranslation()
-  const { resolvedTheme } = useTheme()
+const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, activityAddress }) => {
   const { address: userAddress } = useAccount()
-  const { openConnectModal } = useConnectModal()
   const { lists, listsIsLoading } = useEFPProfile()
 
-  const url = `https://app.interface.social/elements/profile/${userAddress}/feed?source=efp&theme=${
-    resolvedTheme === 'light' ? 'light' : 'dark'
-  }`
+  const [activeTab, setActiveTab] = useState<'following' | 'recommendations'>('following')
+
+  const { t } = useTranslation()
+  const { resolvedTheme } = useTheme()
+
+  const url = activityAddress
+    ? `https://app.interface.social/elements/profile/${activityAddress}/activity`
+    : `https://app.interface.social/elements/profile/${activeTab === 'following' ? userAddress : RECOMMENDED_FEED_ADDRESS}/feed?source=efp&theme=${
+        resolvedTheme === 'light' ? 'light' : 'dark'
+      }`
+
+  const isClient = useIsClient()
+  const [displayHeaders, setDisplayHeaders] = useState(false)
+  const isMobile = isClient && window.innerWidth <= 640
+
+  useEffect(() => {
+    const homePage = document.getElementById('home-page')
+
+    if (homePage && isMobile) {
+      homePage.addEventListener(
+        'scroll',
+        () => {
+          const deltaY = homePage.scrollTop - lastScrollTopHomePage
+          if (deltaY <= 0) setDisplayHeaders(true)
+          else setDisplayHeaders(false)
+          lastScrollTopHomePage = homePage.scrollTop
+        },
+        { passive: false }
+      )
+    }
+  }, [isMobile])
+
+  useEffect(() => {
+    if (!isClient) return
+
+    const homePage = document.getElementById('home-page')
+    if (homePage && homePage.scrollTop > 300) homePage.scrollTo({ top: 300, behavior: 'instant' })
+  }, [activeTab])
+
+  const [isLoading, setIsLoading] = useState(!activityAddress)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 2000)
+  }, [])
+
+  const isFeedLoading = !activityAddress && (listsIsLoading || isLoading)
+
+  useEffect(() => {
+    if (isFeedLoading) return
+
+    if (lists?.lists?.length) setActiveTab('following')
+    else setActiveTab('recommendations')
+  }, [userAddress, lists, isFeedLoading])
 
   return (
-    <div
-      className={cn(
-        'flex glass-card border-grey border-[3px] items-center sm:items-end flex-col gap-1',
-        cardSize
-      )}
-      style={{
-        backdropFilter: 'blur(1rem)'
-      }}
-    >
-      <div
-        className={cn(
-          'w-full flex items-start px-4 xs:px-0 xs:items-center',
-          title ? 'justify-between' : 'justify-end'
-        )}
-      >
-        {title && (
-          // <Link href={'/feed'} className='hover:scale-110 transition-transform'>
-          <h2 className='text-2xl 2xl:text-3xl font-bold'>{title}</h2>
-          // </Link>
-        )}
-        <a
-          href='https://www.interface.social/'
-          target='_blank'
-          rel='noreferrer'
-          className='hover:scale-110 transition-transform'
+    <div className={cn('relative flex flex-col items-center gap-4 sm:items-end', cardSize)}>
+      {!activityAddress && (
+        <div
+          className={cn(
+            'bg-neutral shadow-medium sticky z-10 flex w-full items-center justify-between rounded-sm p-2 transition-all duration-300 sm:p-3',
+            isMobile ? (displayHeaders ? 'top-[74px]' : '-top-[3px]') : '-top-[3px]'
+          )}
         >
-          <Image
-            src={InterfaceLight}
-            alt='Interface'
-            width={150}
-            height={35}
-            className='w-36 h-9'
-          />
-        </a>
-      </div>
-      {description && (
-        <p className='w-full px-4 xs:px-0 text-sm mt-3 text-center xs:text-start font-semibold text-text/80'>
-          {description}
-        </p>
-      )}
-      <div
-        className={cn(
-          'w-full max-w-[900px] mt-4 flex justify-center overflow-hidden',
-          contentSize,
-          !listsIsLoading && (lists?.lists?.length || 0) === 0 ? 'h-[60vh]' : 'h-[100000vh]'
-        )}
-      >
-        {userAddress ? (
-          listsIsLoading ? (
-            <div className='h-full w-full flex items-center justify-center bg-neutral'>
-              <LoadingSpinner />
-            </div>
-          ) : (lists?.lists?.length || 0) > 0 ? (
-            <iframe
-              key={`${userAddress} ${resolvedTheme}`}
-              title='Feed'
-              src={url}
-              className='w-full h-full bg-neutral'
-            />
+          {/* {title && <h2 className='text-xl font-bold sm:text-2xl'>{title}</h2>} */}
+          {isFeedLoading ? (
+            <LoadingCell className='h-10 w-full sm:w-80' />
           ) : (
-            <div className='w-full h-full max-h-[60vh] flex items-center font-semibold flex-col justify-center text-center'>
-              <p className='text-lg font-bold'>{t('following myprofile empty first')}</p>
-              <p className='text-base italic w-3/4 max-w-96'>
-                {t('following myprofile empty second')}
+            <div className='bg-grey relative flex w-full items-center rounded-sm sm:w-80'>
+              <div
+                className={cn(
+                  'bg-text/10 absolute h-full w-1/2 rounded-sm transition-all duration-200',
+                  activeTab === 'following' || !lists?.lists?.length ? 'left-0' : 'left-1/2'
+                )}
+              />
+              {!!lists?.lists?.length && (
+                <p
+                  className={cn(
+                    'text-text z-10 w-1/2 cursor-pointer py-2 text-center text-lg font-bold transition-transform hover:scale-110',
+                    activeTab === 'following' ? 'text-text' : 'text-text/60'
+                  )}
+                  onClick={() => setActiveTab?.('following')}
+                >
+                  {t('following')}
+                </p>
+              )}
+              <p
+                className={cn(
+                  'text-text z-10 w-1/2 cursor-pointer py-2 text-center text-lg font-bold transition-transform hover:scale-110',
+                  activeTab === 'recommendations' ? 'text-text' : 'text-text/60'
+                )}
+                onClick={() => setActiveTab?.('recommendations')}
+              >
+                {t('recommendations')}
               </p>
             </div>
-          )
-        ) : (
-          <div className='h-full w-full flex items-center justify-center'>
-            <button
-              className='connect-button text-xl font-bold w-64 h-fit p-3'
-              onClick={() => openConnectModal?.()}
+          )}
+          <div className='flex items-center gap-4 sm:gap-5'>
+            <a
+              href='https://www.interface.social/'
+              target='_blank'
+              rel='noreferrer'
+              className='hidden transition-transform hover:scale-105 sm:block'
             >
-              {t('connect')}
-            </button>
+              <Image
+                src={InterfaceLight}
+                alt='Interface'
+                width={120}
+                height={30}
+                className='block h-auto dark:hidden'
+              />
+              <Image src={InterfaceDark} alt='Interface' width={120} height={30} className='hidden h-auto dark:block' />
+            </a>
+            {/* <button onClick={() => setFeedKey((prev) => prev + 1)} className='transition-transform hover:scale-110'>
+              <RefreshIcon height={20} width={20} />
+            </button> */}
           </div>
+        </div>
+      )}
+      <div
+        className={cn(
+          'bg-neutral shadow-medium flex h-[100000vh] w-full max-w-[900px] justify-center overflow-hidden rounded-sm',
+          contentSize
+        )}
+      >
+        {isFeedLoading ? (
+          <LoadingCell className='h-[100000vh] w-full' />
+        ) : (
+          <iframe
+            key={`${userAddress} ${url} ${resolvedTheme}`}
+            title='Feed'
+            src={url}
+            className='bg-neutral h-[100000vh] w-full'
+          />
         )}
       </div>
     </div>

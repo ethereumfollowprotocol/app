@@ -1,257 +1,87 @@
 'use client'
-import Image from 'next/image'
 
-import { SlWallet } from 'react-icons/sl'
-import { useEffect, useState } from 'react'
-import { FiArrowLeft } from 'react-icons/fi'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { IoIosArrowDown } from 'react-icons/io'
-import { useQuery } from '@tanstack/react-query'
-import { useClickAway } from '@uidotdev/usehooks'
+import { useClickAway, useIsClient } from '@uidotdev/usehooks'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
-import { useAccount, useDisconnect, useWalletClient, useChains } from 'wagmi'
+import { useAccount, useDisconnect, useChains } from 'wagmi'
 
+import { cn } from '#/lib/utilities'
 import EthBalance from './eth-balance'
-import { Avatar } from '#/components/avatar'
-import { resolveEnsProfile } from '#/utils/ens'
-import { cn, truncateAddress } from '#/lib/utilities'
-import { useAutoConnect } from '#/hooks/useAutoConnect'
-import LoadingCell from '#/components/loaders/loading-cell'
-import GreenCheck from 'public/assets/icons/check-green.svg'
+import ListSelector from './list-selector'
+import { useAutoConnect } from '#/hooks/use-auto-connect'
+import WalletIcon from 'public/assets/icons/ui/wallet.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 
-const nullEnsProfile = {
-  name: null,
-  avatar: null
-}
+const WalletMenu = () => {
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false)
+  const [walletMenOpen, setWalletMenuOpen] = useState(false)
 
-interface WalletMenuProps {
-  isResponsive?: boolean
-}
-
-const WalletMenu: React.FC<WalletMenuProps> = ({ isResponsive = true }) => {
-  const [listMenuOpen, setListMenuOpen] = useState(false)
-  const [walletMenOpenu, setWalletMenuOpen] = useState(false)
-
-  const clickAwayWalletRef = useClickAway<HTMLDivElement>(_ => {
+  const clickAwayWalletRef = useClickAway<HTMLDivElement>((_) => {
     setWalletMenuOpen(false)
-    setListMenuOpen(false)
-  })
-
-  const clickAwayListRef = useClickAway<HTMLDivElement>(_ => {
-    setListMenuOpen(false)
   })
 
   const chains = useChains()
+  const isClient = useIsClient()
   const { t } = useTranslation()
   const { disconnect } = useDisconnect()
+  const { roles, lists } = useEFPProfile()
+  const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
-  const { address: userAddress, isConnected, connector } = useAccount()
-  const { selectedList, lists, setSelectedList, roles } = useEFPProfile()
-  const { isLoading: isLoadingWalletClient, data: walletClient } = useWalletClient()
 
-  const listChain = chains.find(chain => chain.id === roles?.listChainId)
-
-  useEffect(() => {
-    if (
-      isConnected &&
-      userAddress !== undefined &&
-      connector !== undefined &&
-      !isLoadingWalletClient &&
-      !walletClient
-    ) {
-      disconnect()
-    }
-  }, [connector, walletClient, isLoadingWalletClient])
-
-  const { data: ensProfile, isLoading: ensProfileIsLoading } = useQuery({
-    queryKey: ['ens-data', userAddress],
-    queryFn: async () => {
-      if (!userAddress) return nullEnsProfile
-
-      const data = await resolveEnsProfile(userAddress)
-      return data
-    }
-  })
-
-  // const { ownedBadges, isLoading: isBadgesLoading } = useAchievements({
-  //   address: userAddress,
-  //   list: selectedList
-  // })
-  // const hasEarlyPoap = ownedBadges.find(badge => EARLY_POAP_EVENT_IDS.includes(badge.eventId))
-  // const canMintEarlyPoap = !(isBadgesLoading || ensProfileIsLoading) && typeof lists?.primary_list === 'string' && (userAddress && !!ensProfile?.name && !hasEarlyPoap)
-
-  // const { data: poap, isLoading: poapLoading } = useQuery({
-  //   queryKey: ['poap-link', canMintEarlyPoap, ensProfile, ownedBadges],
-  //   queryFn: async () => (canMintEarlyPoap ? await fetchPoapLink(userAddress) : null)
-  // })
+  const listChain = chains.find((chain) => chain.id === roles?.listChainId)
+  const deviceWidth = isClient ? window.innerWidth : 1080
 
   useAutoConnect()
 
   return (
-    <div ref={clickAwayWalletRef} className='relative'>
-      <button
-        type='button'
-        className={cn(
-          'z-50 px-1 pl-[3px] transition-all border-[3px] gap-[5px] hover:scale-105 cursor-pointer flex justify-between items-center h-[54px] glass-card rounded-full',
-          walletMenOpenu ? 'connect-button-open ' : 'connect-button',
-          isResponsive ? 'w-fit sm:w-48 md:w-56' : 'w-56'
-        )}
-        onClick={() =>
-          userAddress
-            ? setWalletMenuOpen(!walletMenOpenu)
-            : openConnectModal
-              ? openConnectModal()
-              : null
-        }
-      >
-        {userAddress ? (
-          <>
-            <div className='flex items-center max-w-[87%] h-fit gap-[8px]'>
-              {ensProfileIsLoading ? (
-                <LoadingCell className='w-[43px] h-[43px] rounded-full' />
-              ) : (
-                <Avatar
-                  avatarUrl={ensProfile?.avatar}
-                  name={ensProfile?.name || userAddress}
-                  size='w-[43px] h-[43px]'
-                />
-              )}
-              <p className='font-bold hidden sm:block truncate text-lg'>
-                {ensProfile?.name || truncateAddress(userAddress)}
-              </p>
-            </div>
-            <IoIosArrowDown
-              className={`${walletMenOpenu ? 'rotate-180' : ''} text-2xl transition-transform mr-1`}
-            />
-          </>
-        ) : (
-          <div className=' sm:w-60 h-full flex items-center justify-center rounded-full'>
-            <p className={cn('font-bold text-lg px-1', isResponsive ? 'hidden sm:block' : 'block')}>
-              {t('connect')}
+    <div ref={clickAwayWalletRef} className='group/wallet-menu relative'>
+      <div className='group/connect-button relative'>
+        <button
+          type='button'
+          onClick={() =>
+            userAddress ? setWalletMenuOpen(!walletMenOpen) : openConnectModal ? openConnectModal() : null
+          }
+          className={cn(
+            'flex items-center justify-center rounded-sm transition-all hover:scale-110',
+            !userAddress && 'bg-primary text-dark-grey p-2',
+            walletMenOpen && 'text-primary-selected'
+          )}
+        >
+          <WalletIcon className='h-auto w-9' />
+        </button>
+        {!userAddress && (
+          <div className='absolute top-1 left-[74px] hidden w-fit opacity-0 transition-all transition-discrete group-hover/connect-button:hidden group-hover/connect-button:opacity-100 sm:group-hover/connect-button:block starting:opacity-0'>
+            <p className='bg-neutral shadow-small text-text rounded-sm px-4 py-2 text-lg font-semibold text-nowrap capitalize'>
+              {t('connect wallet')}
             </p>
-            <SlWallet
-              className={cn(
-                'text-3xl w-[42px] -translate-y-px',
-                isResponsive ? 'block sm:hidden' : 'hidden'
-              )}
-            />
           </div>
         )}
-      </button>
-      {walletMenOpenu && (
+      </div>
+      {userAddress && (
         <div
           className={cn(
-            'flex w-56 overflow-x-hidden sm:overflow-visible z-50 h-fit shadow-md border-[3px] rounded-lg bg-neutral border-grey absolute top-[120%] flex-col items-end right-0'
+            walletMenOpen
+              ? 'flex opacity-100 starting:opacity-0'
+              : 'hidden opacity-0 group-hover/wallet-menu:flex group-hover/wallet-menu:opacity-100 group-hover/wallet-menu:starting:opacity-0',
+            'shadow-medium absolute top-12 right-0 z-50 max-h-[75vh] w-56 flex-col items-start rounded-sm transition-all sm:-top-2 sm:left-full sm:h-auto sm:overflow-visible sm:pl-8 sm:shadow-none',
+            isSubMenuOpen ? `overflow-x-hidden` : 'overflow-hidden'
           )}
+          style={{
+            height:
+              deviceWidth < 640 ? (isSubMenuOpen ? `${112 + (lists?.lists?.length || 0) * 56}px` : 'auto') : 'auto',
+          }}
         >
           <div
             className={cn(
-              'flex flex-col w-full transition-all overflow-x-visible max-h-[75vh] sm:h-auto',
-              listMenuOpen ? '-translate-x-[221px] sm:translate-x-0 sm:p-1' : 'p-1'
+              'bg-neutral shadow-medium flex max-h-[75vh] w-full flex-col overflow-x-visible rounded-sm transition-all sm:h-auto',
+              isSubMenuOpen ? '-translate-x-full sm:translate-x-0' : 'translate-x-0'
             )}
-            style={{
-              height: listMenuOpen ? `${(lists?.lists?.length || 0) * 56 + 111}px` : 'auto'
-            }}
           >
-            {lists?.lists && lists.lists.length > 0 && (
-              <div ref={clickAwayListRef} className='w-full cursor-pointer group relative'>
-                <div
-                  onClick={() => setListMenuOpen(!listMenuOpen)}
-                  className='flex justify-between items-center w-full group-hover:bg-navItem p-3 rounded-md transition-opacity cursor-pointer'
-                >
-                  <FiArrowLeft className='text-xl' />
-                  <p className=' font-bold'>
-                    {selectedList ? `${t('list')} #${selectedList}` : t('mint new list')}
-                  </p>
-                </div>
-                <div
-                  className={cn(
-                    'absolute -right-[224px]  -top-[3px] h-full sm:pr-5 sm:right-[97.2%] group-hover:block w-[224px] sm:w-fit block z-50 sm:-top-[6px]',
-                    lists?.lists && lists?.lists?.length > 0
-                      ? listMenuOpen
-                        ? 'block'
-                        : 'hidden'
-                      : 'hidden group-hover:hidden'
-                  )}
-                >
-                  <div className='flex flex-col gap-2 w-full min-w-[224px] sm:max-h-[80vh] overflow-auto border-[3px] rounded-lg bg-transparent sm:bg-neutral border-grey p-1 shadow-md'>
-                    <div
-                      onClick={() => setListMenuOpen(false)}
-                      className='flex sm:hidden justify-between items-center w-full group:bg-slate-100 dark:hover:bg-zinc-400/20 p-3 rounded-md transition-opacity cursor-pointer'
-                    >
-                      <FiArrowLeft className='text-xl' />
-                      <p className='font-bold'>Back</p>
-                    </div>
-                    {lists?.lists?.map(list => (
-                      <div
-                        className='flex items-center relative p-3 pl-8 w-full gap-1 rounded-md hover:bg-navItem'
-                        key={list}
-                        onClick={() => {
-                          localStorage.setItem('selected-list', list)
-                          setSelectedList(Number(list))
-                          setListMenuOpen(false)
-                          setWalletMenuOpen(false)
-                        }}
-                      >
-                        {selectedList === Number(list) && (
-                          <Image
-                            src={GreenCheck}
-                            alt='List selected'
-                            width={16}
-                            className='absolute left-2 top-[17px]'
-                          />
-                        )}
-                        <div className='flex flex-wrap sm:flex-nowrap items-end gap-1'>
-                          <p className='font-bold text-wrap'>{`${t('list')} #${list}`}</p>
-                          {lists.primary_list === list && (
-                            <p className='mb-0.5 text-sm italic text-nowrap font-medium text-zinc-400'>
-                              - {t('primary')}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                    <div
-                      key={'new list'}
-                      className='flex gap-2 p-3 pl-8 relative hover:bg-navItem rounded-md'
-                      onClick={() => {
-                        localStorage.setItem('selected-list', 'new list')
-                        setSelectedList(undefined)
-                        setListMenuOpen(false)
-                        setWalletMenuOpen(false)
-                      }}
-                    >
-                      {selectedList === undefined && (
-                        <Image
-                          src={GreenCheck}
-                          alt='List selected'
-                          width={16}
-                          className='absolute left-2 top-[17px]'
-                        />
-                      )}
-                      <p className=' font-bold'>{t('mint new list')}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-            {/* {!poapLoading && poap && (
-              <Link
-                href={poap}
-                target='_blank'
-                className='capitalize flex justify-between items-center transition-colors p-3 w-full rounded-md hover:bg-navItem text-text font-bold'
-            >
-                <FiExternalLink className='text-2xl' />
-                <div className='flex gap-2 items-center'>
-                  <p className='text-end'>{`${t('get poap')}`}</p>
-                  <Image src={EarlyUserPoap2025} alt='Early user Poap' width={30} height={30} />
-                </div>
-              </Link>
-            )} */}
+            <ListSelector setWalletMenuOpen={setWalletMenuOpen} setSubMenuOpen={setIsSubMenuOpen} />
             {userAddress && <EthBalance address={userAddress} chain={listChain || chains[0]} />}
             <p
-              className='text-red-500 p-3 text-right font-bold w-full text-nowrap rounded-md hover:bg-navItem transition-opacity cursor-pointer'
+              className='hover:bg-nav-item w-full cursor-pointer rounded-sm p-4 text-right font-bold text-nowrap text-red-500 transition-opacity sm:text-left'
               onClick={() => {
                 disconnect()
                 setWalletMenuOpen(false)

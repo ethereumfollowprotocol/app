@@ -1,48 +1,33 @@
 import Link from 'next/link'
-import Image from 'next/image'
 
 import { Search } from '../search'
-import Logo from 'public/assets/logo.svg'
+import Logo from 'public/assets/efp-logo.svg'
 import NavItems from './components/nav-items.tsx'
-import FullLogo from 'public/assets/logo-full.svg'
 import WalletMenu from './components/wallet-menu.tsx'
 import CartButton from './components/cart-button.tsx'
 import Integrations from './components/integrations.tsx'
-import FullLogoDark from 'public/assets/logo-full-dark.svg'
+import PoweredByEIK from './components/powered-by-eik.tsx'
+import Notifications from './components/notifications'
 
-const Desktop: React.FC = () => {
+const Desktop = () => {
   return (
-    <nav className='my-auto flex w-full flex-row items-center justify-between'>
-      <div className='flex w-fit lg:w-2/5 2xl:w-1/3 justify-start items-center gap-4 md:gap-6 xl:gap-6'>
-        <Link href='/' className='select-none' aria-label='Ethereum Follow Protocol Logo link'>
-          <Image
-            src={FullLogo}
-            priority={true}
-            className='hidden light:sm:block sm:max-w-[120px] select-none hover:scale-110 transition-transform'
-            alt={'Ethereum Follow Protocol Logo'}
-          />
-          <Image
-            src={FullLogoDark}
-            priority={true}
-            className='hidden dark:sm:block sm:max-w-[120px] select-none hover:scale-110 transition-transform'
-            alt={'Ethereum Follow Protocol Logo'}
-          />
-          <Image
-            src={Logo}
-            priority={true}
-            className='w-[56px] halloween:hidden sm:hidden select-none hover:scale-110 transition-transform'
-            alt='Ethereum Follow Protocol Logo'
-          />
+    <nav className='bg-neutral shadow-large fixed top-0 left-0 z-50 hidden h-screen w-[70px] flex-col items-center justify-between py-4 sm:flex 2xl:w-20'>
+      <div className='flex flex-col items-center justify-between gap-6'>
+        <Link href='/' className='select-none' aria-label='Ethereum Follow Protocol'>
+          <Logo className='w-8 translate-x-1 transition-transform select-none hover:scale-110' />
         </Link>
-        <Search size='w-fit max-w-[200px] lg:max-w-5/6 xl:w-3/5 2xl:w-full xxs:max-w-[350px]' />
+        <div className='flex flex-col items-center justify-end gap-4'>
+          <WalletMenu />
+          <Search />
+          <Notifications />
+          <CartButton />
+          <hr className='border-text-neutral mb-1 w-10 rounded-full border-[1px]' />
+          <NavItems />
+        </div>
       </div>
-      <div className='items-center gap-1.5 hidden absolute left-1/2 -translate-x-36 xl:-translate-x-[152px] lg:flex'>
-        <NavItems />
-        <CartButton />
-      </div>
-      <div className='flex gap-4 xl:gap-5 justify-end items-center'>
+      <div className='flex flex-col items-center justify-end gap-4'>
         <Integrations />
-        <WalletMenu />
+        <PoweredByEIK />
       </div>
     </nav>
   )

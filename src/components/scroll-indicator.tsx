@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { IoArrowDownOutline } from 'react-icons/io5'
+import ArrowDown from 'public/assets/icons/ui/arrow-down.svg'
 
 const ScrollIndicator = () => {
   const [hideIndicator, setHideIndicator] = useState(false)
@@ -20,12 +20,12 @@ const ScrollIndicator = () => {
 
   return (
     <div
-      className='scroll-indicator xl:block hidden transition-opacity'
+      className='scroll-indicator hidden transition-opacity xl:block'
       style={{
-        opacity: hideIndicator ? 0 : 1
+        opacity: hideIndicator ? 0 : 1,
       }}
     >
-      <IoArrowDownOutline className='text-6xl text-darkGrey dark:text-[#aaa]' />
+      <ArrowDown className='text-dark-grey text-6xl dark:text-[#aaa]' />
     </div>
   )
 }

@@ -1,64 +1,56 @@
 'use client'
 
-import Link from 'next/link'
-import Image from 'next/image'
+import { useMemo } from 'react'
 import { useAccount } from 'wagmi'
-import { usePathname } from 'next/navigation'
-import { IoCartSharp } from 'react-icons/io5'
+import { useTranslation } from 'react-i18next'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
+import { EFPActionIds, useTransactions } from 'ethereum-identity-kit'
 
 import { cn } from '#/lib/utilities'
-import { useCart } from '#/contexts/cart-context'
+import { useCart } from '#/hooks/use-cart'
+import CartIcon from 'public/assets/icons/ui/cart.svg'
 import { formatNumber } from '#/utils/format/format-number'
-import HalloweenCart from 'public/assets/icons/halloween-cart.png'
 
 const CartButton = () => {
-  const pathname = usePathname()
-  const { totalCartItems } = useCart()
+  const { cart } = useCart()
+  const { t } = useTranslation()
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
+  const { setTxModalOpen, txModalOpen, pendingTxs, setChangesOpen } = useTransactions()
+
+  const changesCount = useMemo(() => {
+    return cart.length + pendingTxs.filter((tx) => tx.id !== EFPActionIds.UpdateEFPList).length
+  }, [cart, pendingTxs])
+
+  if (!userAddress) return null
 
   return (
-    <Link
-      href='/cart'
-      onClick={e => {
+    <div
+      className='group/cart-button relative z-10'
+      onClick={(e) => {
         if (!userAddress && openConnectModal) {
           e.preventDefault()
           openConnectModal()
+        } else {
+          if (cart.length === 0 && pendingTxs.length > 0) setChangesOpen(false)
+          setTxModalOpen(true)
         }
       }}
     >
-      <div
-        className={cn(
-          'border-[3px] bg-neutral/80 group z-50 h-[54px] justify-center items-center w-[54px] transition-all backdrop-blur-xl cursor-pointer hover:scale-110 relative flex rounded-full border-grey hover:border-text'
-        )}
-      >
-        <div
-          className={cn(
-            'w-[44px] absolute top-[2px] h-[44px] bg-followButton rounded-full',
-            pathname === '/cart' ? 'opacity-100' : 'opacity-0'
-          )}
-        />
-        <IoCartSharp
-          className={cn(
-            'text-[28px] -translate-x-px transition-all',
-            pathname === '/cart' ? 'text-black' : 'text-text-neutral group-hover:text-text'
-          )}
-        />
-        <Image
-          src={HalloweenCart}
-          alt='cart'
-          width={32}
-          height={32}
-          className='halloween:block hidden'
-        />
-        {totalCartItems === 0 ? null : (
-          <span className='absolute -right-3 sm:-right-3 -top-3 sm:-top-3 flex h-6 sm:h-7 w-fit min-w-6 sm:min-w-7 items-center px-1 justify-center rounded-full bg-green-400 text-sm font-bold text-black'>
-            {formatNumber(totalCartItems)}
+      <div className={cn('cursor-point transition-transform hover:scale-110', txModalOpen && 'text-primary')}>
+        <CartIcon className={cn('h-[34px] w-[34px] -translate-x-px')} />
+        {changesCount === 0 ? null : (
+          <span className='absolute -top-1.5 -right-1.5 flex h-6 w-fit min-w-6 items-center justify-center rounded-full bg-green-400 px-1 text-sm font-bold text-black sm:h-5 sm:min-w-5'>
+            {formatNumber(changesCount)}
           </span>
         )}
       </div>
-    </Link>
+      <div className='absolute top-1 left-[66px] hidden w-fit opacity-0 transition-all transition-discrete group-hover/cart-button:hidden group-hover/cart-button:opacity-100 sm:group-hover/cart-button:block starting:opacity-0'>
+        <p className='bg-neutral shadow-small text-text rounded-sm px-4 py-2 text-lg font-semibold text-nowrap capitalize'>
+          {t('cart')}
+        </p>
+      </div>
+    </div>
   )
 }
 

@@ -5,7 +5,7 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { fetchLatestFollowers } from '#/api/followers/fetch-latest-followers'
 
-export const useLatestFollowers = () => {
+export const useLatestFollowers = (pageLimit = 5, pageItemsLimit = 5) => {
   const [page, setPage] = useState(1)
   const [subPage, setSubPage] = useState(1)
 
@@ -19,7 +19,7 @@ export const useLatestFollowers = () => {
     fetchPreviousPage,
     isFetchingNextPage,
     isFetchingPreviousPage,
-    data: profilesToRecommend
+    data: profilesToRecommend,
   } = useInfiniteQuery({
     queryKey: ['latest followers', userAddress, listToFetch],
     queryFn: async ({ pageParam = 0 }) => {
@@ -28,28 +28,28 @@ export const useLatestFollowers = () => {
       const latestFollowers = await fetchLatestFollowers({
         addressOrName: userAddress,
         list: listToFetch,
-        limit: 55,
-        pageParam
+        limit: pageLimit * pageItemsLimit,
+        pageParam,
       })
 
       return {
         results: latestFollowers.followers,
         nextPageParam: pageParam + 1,
-        previousPageParam: pageParam > 0 ? pageParam - 1 : 0
+        previousPageParam: pageParam > 0 ? pageParam - 1 : 0,
       }
     },
     refetchInterval: 60000,
     staleTime: 60000,
     initialPageParam: page - 1,
-    getNextPageParam: lastPage => lastPage.nextPageParam,
-    getPreviousPageParam: lastPage => lastPage.previousPageParam
+    getNextPageParam: (lastPage) => lastPage.nextPageParam,
+    getPreviousPageParam: (lastPage) => lastPage.previousPageParam,
   })
 
   const displayedProfiles = useMemo(() => {
     const pageIndex = profilesToRecommend?.pageParams.indexOf(page - 1) || 0
     return profilesToRecommend?.pages[pageIndex]?.results.slice(
-      (subPage - 1 - (page - 1) * 5) * 11,
-      (subPage - (page - 1) * 5) * 11
+      (subPage - 1 - (page - 1) * pageLimit) * pageItemsLimit,
+      (subPage - (page - 1) * pageLimit) * pageItemsLimit
     )
   }, [profilesToRecommend, page, subPage])
 
@@ -64,6 +64,6 @@ export const useLatestFollowers = () => {
     fetchNextPage,
     fetchPreviousPage,
     isFetchingNextPage,
-    isFetchingPreviousPage
+    isFetchingPreviousPage,
   }
 }

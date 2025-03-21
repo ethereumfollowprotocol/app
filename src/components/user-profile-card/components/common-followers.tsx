@@ -1,5 +1,6 @@
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
+import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
 
@@ -13,6 +14,7 @@ interface CommonFollowersProps {
 }
 
 const CommonFollowers: React.FC<CommonFollowersProps> = ({ address }) => {
+  const router = useRouter()
   const { t } = useTranslation()
   const { address: userAddress } = useAccount()
 
@@ -23,7 +25,7 @@ const CommonFollowers: React.FC<CommonFollowersProps> = ({ address }) => {
 
       const response = await fetchCommonFollowers(userAddress, address)
       return response
-    }
+    },
   })
 
   if (!userAddress || (data?.results?.length || 0) === 0) return null
@@ -42,43 +44,47 @@ const CommonFollowers: React.FC<CommonFollowersProps> = ({ address }) => {
   }
 
   return (
-    <div className='w-full max-w-108 mx-auto flex items-center justify-center gap-2 p-4 pt-0'>
+    <div className='flex w-[344px] items-center justify-start gap-2 lg:w-108'>
       <div className='flex'>
         {isLoading ? (
           <>
-            <LoadingCell className='w-9 h-9 rounded-full z-0 ' />
-            <LoadingCell className='w-9 h-9 rounded-full z-10 -ml-[18px]' />
-            <LoadingCell className='w-9 h-9 rounded-full z-20 -ml-[18px]' />
+            <LoadingCell className='z-0 h-9 w-9 rounded-full' />
+            <LoadingCell className='z-10 -ml-[18px] h-9 w-9 rounded-full' />
+            <LoadingCell className='z-20 -ml-[18px] h-9 w-9 rounded-full' />
           </>
         ) : (
           displayedAvatars?.map((result, index) => (
             <Avatar
               key={result.address}
-              size={`w-9 h-9 rounded-full ${index === 0 ? 'z-0' : `-ml-[18px] z-${index * 10}`}`}
+              size={`w-9 h-9 rounded-full hover:scale-110 cursor-pointer transition-all shadow-sm ${index === 0 ? 'z-0' : `-ml-[18px] z-${index * 10}`}`}
               avatarUrl={result.avatar}
               name={result.name || result.address}
+              onClick={() => {
+                router.push(`/${result.address}?ssr=false`)
+              }}
             />
           ))
         )}
       </div>
       {isLoading ? (
-        <LoadingCell className='h-10 rounded-xl' style={{ width: 'calc(100% - 80px)' }} />
+        <LoadingCell className='h-10 rounded-sm' style={{ width: 'calc(100% - 80px)' }} />
       ) : (
         <p
-          className='text-left font-medium text-text/40 text-sm overflow-hidden'
-          style={{ maxWidth: 'calc(100% - 84px)' }}
+          className='text-text-neutral notification-item-text w-full overflow-hidden text-left text-xs font-medium break-keep sm:text-sm'
+          style={{ width: 'calc(100% - 80px)' }}
         >
-          {displayedNames
-            ?.map(
-              (profile, index) =>
-                `${profile.name || truncateAddress(profile.address)}${
-                  resultLength > 2 && index === 1 ? ',' : ''
-                }`
-            )
-            .join(', ')}{' '}
-          {`${resultLength > 2 ? `${t('and')} ${resultLength - 2}` : ''} ${commonFollowersText(
-            resultLength
-          )}`}
+          {displayedNames?.map((profile, index) => (
+            <span key={profile.address}>
+              <span
+                onClick={() => router.push(`/${profile.address}?ssr=false`)}
+                className='cursor-pointer transition-all hover:underline hover:opacity-80'
+              >
+                {`${profile.name || truncateAddress(profile.address)}`}
+              </span>
+              {`${resultLength === 2 ? (index === 0 ? ' and ' : ' ') : resultLength === 1 ? ' ' : ', '}`}
+            </span>
+          ))}
+          {`${resultLength > 2 ? `${t('and')} ${resultLength - 2}` : ''} ${commonFollowersText(resultLength)}`}{' '}
         </p>
       )}
     </div>

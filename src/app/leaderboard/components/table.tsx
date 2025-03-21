@@ -1,22 +1,27 @@
 'use client'
 
-import { Fragment } from 'react'
-import { FiSearch } from 'react-icons/fi'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 
-import { LEADERBOARD_CHUNK_SIZE, LEADERBOARD_FETCH_LIMIT_PARAM } from '#/lib/constants/index.ts'
 import TableRow from './row.tsx'
-import Filters from './filters.tsx'
 import LoadingRow from './loading-row.tsx'
-import PageSelector from '../../../components/page-selector.tsx'
 import useLeaderboard from '../hooks/useLeaderboard.ts'
 import type { LeaderboardItem } from '#/types/requests.ts'
 import type { LeaderboardFilter } from '#/types/common.ts'
 import LoadingCell from '#/components/loaders/loading-cell.tsx'
 import { formatNumberLeaderboard } from '#/utils/format/format-number.ts'
+import { LEADERBOARD_CHUNK_SIZE, LEADERBOARD_FETCH_LIMIT_PARAM } from '#/lib/constants/index.ts'
+import TableHeaders from './table-headers.tsx'
+import Recommendations from '#/components/recommendations.tsx'
+import { cn } from '#/lib/utilities.ts'
+import { useIsClient } from '@uidotdev/usehooks'
+import { useEffect } from 'react'
+import { useState } from 'react'
+import useStickyScroll from '#/components/home/hooks/use-sticky-scroll.ts'
 
 const LeaderboardStatNames = ['addresses', 'lists', 'list ops', 'unique users']
+
+let lastScrollTop = 0
 
 const LeaderboardTable = () => {
   const router = useRouter()
@@ -28,7 +33,6 @@ const LeaderboardTable = () => {
     setPage,
     setChunk,
     setFilter,
-    timeStamp,
     leaderboard,
     resetSearch,
     loadChunkRef,
@@ -40,7 +44,7 @@ const LeaderboardTable = () => {
     fetchPreviousLeaderboard,
     isLeaderboardStatsLoading,
     isFetchingNextLeaderboard,
-    isFetchingPreviousLeaderboard
+    isFetchingPreviousLeaderboard,
   } = useLeaderboard()
   const { t } = useTranslation()
 
@@ -52,149 +56,175 @@ const LeaderboardTable = () => {
     params.set('filter', newFilter)
     if (search) params.set('query', search)
     router.push(`/leaderboard?${params.toString()}`, {
-      scroll: false
+      scroll: false,
     })
   }
 
-  const isLoading =
-    isLeaderboardLoading || isFetchingNextLeaderboard || isFetchingPreviousLeaderboard
+  const isLoading = isLeaderboardLoading || isFetchingNextLeaderboard || isFetchingPreviousLeaderboard
 
   const selectedRank = {
     followers: (entry: LeaderboardItem) => entry.followers_rank,
     following: (entry: LeaderboardItem) => entry.following_rank,
     mutuals: (entry: LeaderboardItem) => entry.mutuals_rank,
     top8: (entry: LeaderboardItem) => entry.top8_rank,
-    blocked: (entry: LeaderboardItem) => entry.blocks_rank
+    blocked: (entry: LeaderboardItem) => entry.blocks_rank,
   }[filter]
 
+  const { StickyScrollRef: SidebarRef, onScroll: onScrollLeaderboard } = useStickyScroll(0, 16)
+
+  useEffect(() => {
+    const leaderboardPage = document.getElementById('leaderboard-page')
+
+    if (leaderboardPage) {
+      leaderboardPage.addEventListener('scroll', (e) => onScrollLeaderboard(e.target as HTMLDivElement), {
+        passive: false,
+      })
+    }
+  }, [])
+
+  const isClient = useIsClient()
+  const [displayHeaders, setDisplayHeaders] = useState(false)
+  const isMobile = isClient && window.innerWidth <= 640
+
+  useEffect(() => {
+    const leaderboardPage = document.getElementById('leaderboard-page')
+
+    if (leaderboardPage && isMobile) {
+      leaderboardPage.addEventListener(
+        'scroll',
+        () => {
+          const deltaY = leaderboardPage.scrollTop - lastScrollTop
+          if (deltaY < 0) setDisplayHeaders(true)
+          else setDisplayHeaders(false)
+          lastScrollTop = leaderboardPage.scrollTop
+        },
+        { passive: false }
+      )
+    }
+  }, [isMobile])
+
   return (
-    <Fragment>
-      <p className='text-3xl sm:text-4xl font-bold'>{t('leaderboard')}</p>
-      <div className='mt-4 sm:mt-6 mb-4 sm:mb-6 lg:mb-0 flex items-center justify-center flex-wrap gap-4 sm:gap-8'>
+    <>
+      <div className='mt-24 flex w-full max-w-[1300px] flex-col items-start gap-4 px-4 sm:mt-12 sm:px-1 xl:mt-24'>
+        <h1 className='text-left text-3xl font-bold sm:text-5xl 2xl:text-6xl'>{t('leaderboard')}</h1>
+        <p className='text-left text-lg font-medium'>{t('leaderboard description')}</p>
+      </div>
+      <div className='mt-4 flex w-full flex-wrap items-center justify-between gap-2 px-2 sm:gap-3 sm:px-0 xl:hidden'>
         {LeaderboardStatNames.map((name, i) => (
           <div
             key={`stat ${i}`}
-            className='gradient-border flex flex-col rounded-2xl items-center justify-center h-28 w-[47.5%] sm:w-56'
+            className='bg-neutral shadow-medium flex w-[48.5%] flex-col items-start justify-center rounded-sm p-3 pr-1 sm:p-4 md:w-[23.5%]'
           >
             {isLeaderboardStatsLoading || !leaderboardStats ? (
-              <LoadingCell className='h-8 w-24 rounded-lg' />
+              <LoadingCell className='h-full min-h-8 w-24 rounded-sm' />
             ) : (
-              <p className='font-bold text-2xl md:text-2xl'>
-                {formatNumberLeaderboard(Number(Object.values(leaderboardStats)[i]))}
-              </p>
+              <p className='text-xl font-bold'>{formatNumberLeaderboard(Number(Object.values(leaderboardStats)[i]))}</p>
             )}
-            <p className='font-bold capitalize text-lg text-[#888] dark:text-[#aaa]'>{t(name)}</p>
+            <p className='text-left font-medium text-[#888] capitalize lg:text-lg dark:text-[#aaa]'>{t(name)}</p>
           </div>
         ))}
       </div>
-      <div className='flex w-full gap-1.5 justify-center md:justify-end max-w-[1300px] text-sm mt-4 font-bold text-[#aaaaaa] md:text-[#CDCDCD] italic'>
-        {t('last updated')}
-        <span>
-          {isLeaderboardLoading ? <LoadingCell className='h-5 w-16 rounded-md' /> : timeStamp}
-        </span>
-      </div>
-      <div className='flex flex-col gap-2 w-full max-w-[1300px]'>
-        <div className='flex md:hidden'>
-          <Filters filter={filter} onSelectFilter={onSelectFilter} />
-        </div>
-        <div className='flex justify-between gap-2'>
-          <div className='relative w-full sm:w-[260px] 2xl:w-[300px]'>
-            <div className='rounded-xl w-full group overflow-hidden border-[3px] border-grey sm:text-sm focus:border-text/80 hover:border-text/80 focus-within:border-text/80 transition-colors'>
-              <div
-                className='pointer-events-none absolute inset-y-0 right-0 flex items-center pl-3'
-                aria-hidden='true'
-              >
-                <FiSearch
-                  className='mr-3 text-xl opacity-30 dark:opacity-60 group-hover:opacity-80 dark:group-hover:opacity-100 group-focus-within:opacity-80 dark:group-focus-within:opacity-100 transition-opacity'
-                  aria-hidden='true'
-                />
-              </div>
-              <input
-                type='text'
-                spellCheck={false}
-                placeholder={t('search placeholder')}
-                value={currentSearch}
-                onChange={handleSearchEvent}
-                className='h-[44px] block w-full border-0 font-medium border-transparent pl-4 pr-10 sm:text-sm bg-neutral'
-              />
-            </div>
-          </div>
-          <div className='flex items-center gap-4'>
-            <div className='hidden md:flex'>
-              <Filters filter={filter} onSelectFilter={onSelectFilter} />
-            </div>
-            <PageSelector
+      <div className='mt-2 flex w-full max-w-[1300px] justify-center gap-5 xl:mt-4'>
+        <div className='flex w-full flex-col lg:gap-4 xl:max-w-[800px]'>
+          <div
+            className='shadow-medium sticky z-20 transition-all duration-300'
+            style={{ top: isMobile ? (displayHeaders ? '74px' : '0px') : '0px' }}
+          >
+            <TableHeaders
+              filter={filter}
+              onSelectFilter={onSelectFilter}
               page={page}
               setPage={setPage}
-              hasNextPage={true}
-              scrollUp={true}
-              isLoading={isFetchingNextLeaderboard || isFetchingPreviousLeaderboard}
-              fetchNext={() => {
-                setChunk(1)
-                fetchNextLeaderboard()
-              }}
-              fetchPrevious={() => {
-                setChunk(1)
-                fetchPreviousLeaderboard()
-              }}
+              currentSearch={currentSearch}
+              handleSearchEvent={handleSearchEvent}
+              setChunk={setChunk}
+              fetchNextLeaderboard={fetchNextLeaderboard}
+              fetchPreviousLeaderboard={fetchPreviousLeaderboard}
+              isFetchingNextLeaderboard={isFetchingNextLeaderboard}
+              isFetchingPreviousLeaderboard={isFetchingPreviousLeaderboard}
+            />
+          </div>
+          <div className='bg-neutral shadow-medium relative mb-16 flex flex-col rounded-sm'>
+            {leaderboard
+              ?.slice(0, chunk * LEADERBOARD_CHUNK_SIZE)
+              .map((entry: LeaderboardItem, index) => (
+                <TableRow
+                  key={entry.address}
+                  address={entry.address}
+                  name={entry.name}
+                  avatar={entry.avatar}
+                  header={entry.header}
+                  rank={Number(selectedRank(entry))}
+                  followers={Number(entry.followers) || 0}
+                  following={Number(entry.following) || 0}
+                  mutuals={Number(entry.mutuals) || 0}
+                  top8={Number(entry.top8) || 0}
+                  blocked={Number(entry.blocks) || 0}
+                  firstStat={filter}
+                />
+              ))}
+            {new Array(isLoading ? LEADERBOARD_CHUNK_SIZE : 0).fill(1).map((_, i) => (
+              <LoadingRow key={i} />
+            ))}
+            {(chunk * LEADERBOARD_CHUNK_SIZE) / LEADERBOARD_FETCH_LIMIT_PARAM < 1 &&
+              !isLoading &&
+              !(isFetchingNextLeaderboard || isFetchingPreviousLeaderboard) && (
+                <div ref={loadChunkRef} className='h-px w-full' />
+              )}
+            {!isLoading && leaderboard?.length === 0 && (
+              <div className='flex h-40 flex-col items-center justify-center'>
+                <p className='text-lg font-bold'>No results found</p>
+                <p
+                  className='cursor-pointer font-bold text-zinc-400 italic transition-colors hover:text-gray-700'
+                  onClick={() => resetSearch()}
+                >
+                  Clear Search
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+        <div className='hidden w-full max-w-[500px] flex-col gap-4 xl:block'>
+          <div
+            className='sticky top-0 flex w-full flex-col gap-4'
+            ref={SidebarRef}
+            style={{
+              top: 'calc(100vh - 2000px)',
+            }}
+          >
+            <div className='flex w-full flex-wrap items-center justify-between gap-3'>
+              {LeaderboardStatNames.map((name, i) => (
+                <div
+                  key={`stat ${i}`}
+                  className='bg-neutral shadow-medium flex w-[48.5%] flex-col items-start justify-center rounded-sm p-4'
+                >
+                  {isLeaderboardStatsLoading || !leaderboardStats ? (
+                    <LoadingCell className='h-8 w-24 rounded-sm' />
+                  ) : (
+                    <p className='text-xl font-bold'>
+                      {formatNumberLeaderboard(Number(Object.values(leaderboardStats)[i]))}
+                    </p>
+                  )}
+                  <p className='text-lg font-medium text-[#888] capitalize dark:text-[#aaa]'>{t(name)}</p>
+                </div>
+              ))}
+            </div>
+            <Recommendations
+              limit={10}
+              endpoint='recommended'
+              header={t('recommendations')}
+              className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm')}
+            />
+            <Recommendations
+              limit={10}
+              endpoint='discover'
+              header={t('recent')}
+              className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm')}
             />
           </div>
         </div>
-        <div className='glass-card border-grey mt-1 border-[3px] rounded-xl flex flex-col gap-4 p-1 sm:px-4 sm:py-6 lg:px-8 relative'>
-          {leaderboard
-            ?.slice(0, chunk * LEADERBOARD_CHUNK_SIZE)
-            .map((entry: LeaderboardItem, index) => (
-              <TableRow
-                key={entry.address}
-                address={entry.address}
-                name={entry.name}
-                avatar={entry.avatar}
-                rank={Number(selectedRank(entry))}
-                followers={Number(entry.followers) || 0}
-                following={Number(entry.following) || 0}
-                mutuals={Number(entry.mutuals) || 0}
-                top8={Number(entry.top8) || 0}
-                blocked={Number(entry.blocks) || 0}
-                firstStat={filter}
-              />
-            ))}
-          {new Array(isLoading ? LEADERBOARD_CHUNK_SIZE : 0).fill(1).map((_, i) => (
-            <LoadingRow key={i} staticStats={false} />
-          ))}
-          {(chunk * LEADERBOARD_CHUNK_SIZE) / LEADERBOARD_FETCH_LIMIT_PARAM < 1 &&
-            !isLoading &&
-            !(isFetchingNextLeaderboard || isFetchingPreviousLeaderboard) && (
-              <div ref={loadChunkRef} className='h-px w-full' />
-            )}
-          {!isLoading && leaderboard?.length === 0 && (
-            <div className='flex justify-center flex-col items-center h-40'>
-              <p className='text-lg font-bold'>No results found</p>
-              <p
-                className='transition-colors italic hover:text-gray-700 text-zinc-400 cursor-pointer font-bold'
-                onClick={() => resetSearch()}
-              >
-                Clear Search
-              </p>
-            </div>
-          )}
-        </div>
-        <PageSelector
-          page={page}
-          scrollUp={true}
-          setPage={setPage}
-          hasNextPage={true}
-          isLoading={isFetchingNextLeaderboard || isFetchingPreviousLeaderboard}
-          fetchNext={() => {
-            setChunk(1)
-            fetchNextLeaderboard()
-          }}
-          fetchPrevious={() => {
-            setChunk(1)
-            fetchPreviousLeaderboard()
-          }}
-        />
       </div>
-    </Fragment>
+    </>
   )
 }
 

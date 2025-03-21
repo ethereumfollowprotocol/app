@@ -1,24 +1,16 @@
+import { toast } from 'sonner'
 import { useState } from 'react'
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 
-import {
-  listOpAddTag,
-  listOpRemoveTag,
-  listOpAddListRecord,
-  listOpRemoveListRecord
-} from '#/utils/list-ops'
-import { useCart } from '#/contexts/cart-context'
+import { useCart } from '#/hooks/use-cart'
 import type { FollowState } from '#/types/common'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import { toast } from 'sonner'
+import { listOpAddTag, listOpRemoveTag, listOpAddListRecord, listOpRemoveListRecord } from '#/utils/list-ops'
 
-export const useThreeDotMenu = ({
-  address,
-  followState
-}: { address: Address; followState: FollowState }) => {
+export const useThreeDotMenu = ({ address, followState }: { address: Address; followState: FollowState }) => {
   const [threeDotMenuOpen, setThreeDotMenuOpen] = useState(false)
   const threeDotMenuRef = useClickAway<HTMLDivElement>(() => {
     setThreeDotMenuOpen(false)
@@ -27,16 +19,16 @@ export const useThreeDotMenu = ({
   const { topEight, roles } = useEFPProfile()
   const { openConnectModal } = useConnectModal()
   const { address: connectedAddress } = useAccount()
-  const { addCartItem, removeCartItem, hasListOpAddTag, hasListOpRemoveTag } = useCart()
+  const { addToCart, removeFromCart, hasListOpAddTag, hasListOpRemoveTag } = useCart()
 
-  const isPendingBlock = hasListOpAddTag({ address, tag: 'block' })
-  const isPendingUnblock = hasListOpRemoveTag({ address, tag: 'block' })
-  const isPendingMute = hasListOpAddTag({ address, tag: 'mute' })
-  const isPendingUnmute = hasListOpRemoveTag({ address, tag: 'mute' })
+  const isPendingBlock = hasListOpAddTag(address, 'block')
+  const isPendingUnblock = hasListOpRemoveTag(address, 'block')
+  const isPendingMute = hasListOpAddTag(address, 'mute')
+  const isPendingUnmute = hasListOpRemoveTag(address, 'mute')
 
-  const isInTopEight = topEight.find(item => item.address?.toLowerCase() === address.toLowerCase())
-  const isAddingToTopEight = hasListOpAddTag({ address, tag: 'top8' })
-  const isRemovingFromTopEight = hasListOpRemoveTag({ address, tag: 'top8' })
+  const isInTopEight = topEight.find((item) => item.address?.toLowerCase() === address?.toLowerCase())
+  const isAddingToTopEight = hasListOpAddTag(address, 'top8')
+  const isRemovingFromTopEight = hasListOpRemoveTag(address, 'top8')
 
   const onClickOption = (buttonText: 'block' | 'mute') => {
     if (!connectedAddress && openConnectModal) {
@@ -53,89 +45,75 @@ export const useThreeDotMenu = ({
 
     if (buttonText === 'block') {
       if (isPendingBlock || isPendingUnblock) {
+        const removeItems = [
+          followState === 'blocks' ? listOpRemoveTag(address, 'block') : listOpAddTag(address, 'block'),
+        ]
         if (isPendingBlock) {
-          if (followState === 'none') removeCartItem(listOpAddListRecord(address))
-          if (followState === 'mutes') removeCartItem(listOpRemoveTag(address, 'mute'))
+          if (followState === 'none') removeItems.push(listOpAddListRecord(address))
+          if (followState === 'mutes') removeItems.push(listOpRemoveTag(address, 'mute'))
         }
 
         if (isPendingUnblock) {
-          if (followState === 'blocks') removeCartItem(listOpRemoveListRecord(address))
-          if (isPendingMute && followState === 'blocks')
-            removeCartItem(listOpAddTag(address, 'mute'))
+          if (followState === 'blocks') removeItems.push(listOpRemoveListRecord(address))
+          if (isPendingMute && followState === 'blocks') removeItems.push(listOpAddTag(address, 'mute'))
         }
-        return removeCartItem(
-          followState === 'blocks'
-            ? listOpRemoveTag(address, 'block')
-            : listOpAddTag(address, 'block')
-        )
+
+        return removeFromCart(removeItems)
       }
 
+      const addItems = [followState === 'blocks' ? listOpRemoveTag(address, 'block') : listOpAddTag(address, 'block')]
       if (followState === 'mutes') {
-        addCartItem({
-          listOp: listOpRemoveTag(address, 'mute')
-        })
-        if (isPendingUnmute) removeCartItem(listOpRemoveListRecord(address))
+        addItems.push(listOpRemoveTag(address, 'mute'))
+        if (isPendingUnmute) removeFromCart([listOpRemoveListRecord(address)])
       }
-      if (isPendingMute) removeCartItem(listOpAddTag(address, 'mute'))
-      if (followState === 'none') addCartItem({ listOp: listOpAddListRecord(address) })
-      if (followState === 'blocks') addCartItem({ listOp: listOpRemoveListRecord(address) })
+      if (isPendingMute) removeFromCart([listOpAddTag(address, 'mute')])
+      if (followState === 'none') addItems.push(listOpAddListRecord(address))
+      if (followState === 'blocks') addItems.push(listOpRemoveListRecord(address))
 
-      addCartItem({
-        listOp:
-          followState === 'blocks'
-            ? listOpRemoveTag(address, 'block')
-            : listOpAddTag(address, 'block')
-      })
+      addToCart(addItems)
     }
 
     if (buttonText === 'mute') {
       if (isPendingMute || isPendingUnmute) {
+        const removeItems = [followState === 'mutes' ? listOpRemoveTag(address, 'mute') : listOpAddTag(address, 'mute')]
         if (isPendingMute) {
-          if (followState === 'none') removeCartItem(listOpAddListRecord(address))
-          if (isPendingUnblock) removeCartItem(listOpRemoveTag(address, 'block'))
+          if (followState === 'none') removeItems.push(listOpAddListRecord(address))
+          if (isPendingUnblock) removeItems.push(listOpRemoveTag(address, 'block'))
         }
 
         if (isPendingUnmute) {
-          removeCartItem(listOpRemoveListRecord(address))
-          if (followState === 'blocks') removeCartItem(listOpRemoveListRecord(address))
-          if (isPendingBlock && followState === 'mutes')
-            removeCartItem(listOpAddTag(address, 'block'))
+          removeItems.push(listOpRemoveListRecord(address))
+          if (followState === 'blocks') removeItems.push(listOpRemoveListRecord(address))
+          if (isPendingBlock && followState === 'mutes') removeItems.push(listOpAddTag(address, 'block'))
         }
 
-        return removeCartItem(
-          followState === 'mutes' ? listOpRemoveTag(address, 'mute') : listOpAddTag(address, 'mute')
-        )
+        return removeFromCart(removeItems)
       }
 
+      const addItems = [followState === 'mutes' ? listOpRemoveTag(address, 'mute') : listOpAddTag(address, 'mute')]
       if (followState === 'blocks') {
-        addCartItem({
-          listOp: listOpRemoveTag(address, 'block')
-        })
-        if (isPendingUnblock) removeCartItem(listOpRemoveListRecord(address))
+        addItems.push(listOpRemoveTag(address, 'block'))
+        if (isPendingUnblock) removeFromCart([listOpRemoveListRecord(address)])
       }
-      if (isPendingBlock) removeCartItem(listOpAddTag(address, 'block'))
-      if (followState === 'none') addCartItem({ listOp: listOpAddListRecord(address) })
-      if (followState === 'mutes') addCartItem({ listOp: listOpRemoveListRecord(address) })
-      addCartItem({
-        listOp:
-          followState === 'mutes' ? listOpRemoveTag(address, 'mute') : listOpAddTag(address, 'mute')
-      })
+      if (isPendingBlock) removeFromCart([listOpAddTag(address, 'block')])
+      if (followState === 'none') addItems.push(listOpAddListRecord(address))
+      if (followState === 'mutes') addItems.push(listOpRemoveListRecord(address))
+
+      addToCart(addItems)
     }
   }
 
   const toggleTopEight = () => {
     setThreeDotMenuOpen(false)
 
-    if (isAddingToTopEight) return removeCartItem(listOpAddTag(address, 'top8'))
-    if (isRemovingFromTopEight) return removeCartItem(listOpRemoveTag(address, 'top8'))
+    if (isAddingToTopEight) return removeFromCart([listOpAddTag(address, 'top8')])
+    if (isRemovingFromTopEight) return removeFromCart([listOpRemoveTag(address, 'top8')])
 
-    if (isInTopEight)
-      return addCartItem({
-        listOp: listOpRemoveTag(address, 'top8')
-      })
+    if (isInTopEight) return addToCart([listOpRemoveTag(address, 'top8')])
 
-    if (followState === 'none') addCartItem({ listOp: listOpAddListRecord(address) })
-    addCartItem({ listOp: listOpAddTag(address, 'top8') })
+    const addItems = [listOpAddTag(address, 'top8')]
+    if (followState === 'none') addItems.push(listOpAddListRecord(address))
+    addToCart(addItems)
   }
 
   return {
@@ -148,6 +126,6 @@ export const useThreeDotMenu = ({
     isPendingMute,
     isInTopEight,
     isAddingToTopEight,
-    isRemovingFromTopEight
+    isRemovingFromTopEight,
   }
 }

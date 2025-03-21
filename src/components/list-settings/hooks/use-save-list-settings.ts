@@ -1,22 +1,18 @@
-import { useTranslation } from 'react-i18next'
 import { useAccount, useWalletClient } from 'wagmi'
 import { useQueryClient } from '@tanstack/react-query'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useMemo } from 'react'
 import { toHex, isAddress, type Chain, encodePacked, type Address } from 'viem'
 
-import { Step } from '#/components/checkout/types'
+import { useCart } from '#/hooks/use-cart'
 import { DEFAULT_CHAIN } from '#/lib/constants/chains'
-import { useListOps } from '#/hooks/efp-actions/use-list-ops'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import { useCart, type CartItem } from '#/contexts/cart-context'
 import { generateListStorageLocationSlot } from '#/utils/generate-slot'
-import { INITIAL_COMPLETE_TRANSACTIONS } from '#/lib/constants/list-settings'
 import type { FollowingResponse, ProfileDetailsResponse } from '#/types/requests'
 import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts'
-import { refetchState, resetFollowingRelatedQueries } from '#/utils/reset-queries'
+import { resetFollowingRelatedQueries } from '#/utils/reset-queries'
 import { listOpAddTag, listOpAddListRecord, splitListOps } from '#/utils/list-ops'
-import { EFPActionType, useActions, type Action } from '#/contexts/actions-context'
 import { efpAccountMetadataAbi, efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
+import { EFPActionIds, formatListOpsTransaction, useTransactions, type ListOpType } from 'ethereum-identity-kit'
 
 type SaveListSettingsParams = {
   selectedList: number
@@ -37,7 +33,6 @@ type SaveListSettingsParams = {
     resetSlot: boolean
   }
   onClose: () => void
-  onCancel: () => void
   listState?: FollowingResponse[]
   isPrimaryList: boolean
 }
@@ -53,43 +48,26 @@ const useSaveListSettings = ({
   listRecordsContractAddress,
   changedValues,
   onClose,
-  onCancel,
   listState,
-  isPrimaryList
+  isPrimaryList,
 }: SaveListSettingsParams) => {
-  const [changedValuesState] = useState(changedValues)
-  const [currentStep, setCurrentStep] = useState(Step.InitiateTransactions)
-  const [completeTransactions, setCompleteTransactions] = useState(INITIAL_COMPLETE_TRANSACTIONS)
-
   const {
-    refetchLists,
     refetchRoles,
-    refetchStats,
     refetchProfile,
-    fetchFreshStats,
-    fetchFreshLists,
     refetchFollowing,
     refetchFollowers,
-    fetchFreshProfile,
-    setFetchFreshLists,
-    setFetchFreshStats,
     refetchFollowerTags,
-    setFetchFreshProfile,
     refetchFollowingTags,
-    setIsRefetchingProfile,
-    setIsRefetchingFollowing
+    setIsEditingListSettings,
   } = useEFPProfile()
-  const { t } = useTranslation()
   const { resetCart } = useCart()
   const queryClient = useQueryClient()
   const { address: userAddress } = useAccount()
-  const { getListOpsTransaction } = useListOps()
   const { data: walletClient } = useWalletClient()
-  const { actions, addActions, resetActions, handleNextAction, handleInitiateActions } =
-    useActions()
+  const { addTransactions, setTxModalOpen, setChangesOpen } = useTransactions()
 
   const newSlot = useMemo(() => generateListStorageLocationSlot(), [])
-  const setListStorageLocationTx = useCallback(async () => {
+  const setListStorageLocationTx = useCallback(() => {
     if (!newChain) return
 
     const listRecordsContractAddress = newChain
@@ -101,329 +79,152 @@ const useSaveListSettings = ({
       [1, 1, BigInt(newChain.id), listRecordsContractAddress, newSlot]
     )
 
-    const hash = await walletClient?.writeContract({
-      address: coreEfpContracts.EFPListRegistry,
-      abi: efpListRegistryAbi,
-      functionName: 'setListStorageLocation',
-      args: [BigInt(selectedList), data]
-    })
-
-    if (hash) {
-      setCompleteTransactions(prev => ({
-        ...prev,
-        chain: true
-      }))
-    }
-
-    // return transaction hash to enable following transaction status in transaction details component
-    return hash
+    addTransactions([
+      {
+        title: 'list storage location',
+        description: newChain.name,
+        id: EFPActionIds.SetEFPListSettings,
+        address: coreEfpContracts.EFPListRegistry,
+        abi: efpListRegistryAbi,
+        functionName: 'setListStorageLocation',
+        chainId: DEFAULT_CHAIN.id,
+        args: [BigInt(selectedList), data],
+      },
+    ])
   }, [walletClient, newChain])
 
   const listOpTx = useCallback(
-    async (items: CartItem[]) => {
-      const listRecordsContract = newChain
-        ? (ListRecordContracts[newChain?.id] as Address)
-        : coreEfpContracts.EFPListRecords
-
-      const hash = await getListOpsTransaction({
-        items,
+    (items: ListOpType[], address: Address) => {
+      const transaction = formatListOpsTransaction({
+        listOps: items,
         nonce: newSlot,
-        listRecordsContract
+        chainId: newChain?.id,
+        connectedAddress: address,
       })
 
-      // return transaction hash to enable following transaction status in transaction details component
-      return hash
+      return transaction
     },
     [walletClient, selectedList]
   )
 
-  const setOwnerTx = useCallback(async () => {
+  const setOwnerTx = useCallback(() => {
     if (!(isAddress(owner || '') && userAddress)) return
 
-    const hash = await walletClient?.writeContract({
-      address: coreEfpContracts.EFPListRegistry,
-      abi: efpListRegistryAbi,
-      functionName: 'transferFrom',
-      args: [userAddress, owner as Address, BigInt(selectedList)]
-    })
-
-    if (hash) {
-      setCompleteTransactions(prev => ({
-        ...prev,
-        owner: true
-      }))
-    }
-
-    // return transaction hash to enable following transaction status in transaction details component
-    return hash
+    addTransactions([
+      {
+        title: 'owner',
+        description: owner,
+        id: EFPActionIds.SetEFPListSettings,
+        address: coreEfpContracts.EFPListRegistry,
+        abi: efpListRegistryAbi,
+        functionName: 'transferFrom',
+        chainId: DEFAULT_CHAIN.id,
+        args: [userAddress, owner as Address, BigInt(selectedList)],
+      },
+    ])
   }, [owner, walletClient])
 
-  const setPrimaryListTx = useCallback(async () => {
+  const setPrimaryListTx = useCallback(() => {
     if (!userAddress) return
 
     const listHex = toHex(selectedList).replace('0x', '')
-    const hash = await walletClient?.writeContract({
-      address: coreEfpContracts.EFPAccountMetadata,
-      abi: efpAccountMetadataAbi,
-      functionName: 'setValueForAddress',
-      args: [userAddress, 'primary-list', isPrimaryList ? `0x${listHex.padStart(64, '0')}` : '0x']
-    })
-
-    if (hash) {
-      setCompleteTransactions(prev => ({
-        ...prev,
-        setPrimary: true
-      }))
-    }
-
-    // return transaction hash to enable following transaction status in transaction details component
-    return hash
+    addTransactions([
+      {
+        title: 'set primary list',
+        description: isPrimaryList ? `#${selectedList.toString()}` : 'None',
+        id: EFPActionIds.SetEFPListSettings,
+        address: coreEfpContracts.EFPAccountMetadata,
+        abi: efpAccountMetadataAbi,
+        functionName: 'setValueForAddress',
+        chainId: DEFAULT_CHAIN.id,
+        args: [userAddress, 'primary-list', isPrimaryList ? `0x${listHex.padStart(64, '0')}` : '0x'],
+      },
+    ])
   }, [selectedList, isPrimaryList, walletClient])
 
-  const resetSlotTx = useCallback(async () => {
+  const resetSlotTx = useCallback(() => {
     if (!(userAddress && chain)) return
 
-    const hash = await walletClient?.writeContract({
-      address: ListRecordContracts[chain?.id] as Address,
-      abi: efpListRecordsAbi,
-      functionName: 'setMetadataValuesAndApplyListOps',
-      // @ts-ignore - diff data type handled
-      args: [newSlot, [{ key: 'user', value: userAddress }], []]
-    })
-
-    if (hash) {
-      setCompleteTransactions(prev => ({
-        ...prev,
-        resetSlot: true
-      }))
-    }
-
-    // return transaction hash to enable following transaction status in transaction details component
-    return hash
+    addTransactions([
+      {
+        title: 'reset slot',
+        id: EFPActionIds.SetEFPListSettings,
+        address: ListRecordContracts[chain?.id] as Address,
+        abi: efpListRecordsAbi,
+        functionName: 'setMetadataValuesAndApplyListOps',
+        chainId: chain.id,
+        args: [newSlot, [{ key: 'user', value: userAddress }], []],
+      },
+    ])
   }, [selectedList, isPrimaryList, walletClient])
 
-  const claimNewSlotTx = useCallback(async () => {
+  const claimNewSlotTx = useCallback(() => {
     if (!(userAddress && chain)) return
 
-    const hash = await walletClient?.writeContract({
-      address: coreEfpContracts.EFPListRegistry,
-      abi: efpListRegistryAbi,
-      functionName: 'setListStorageLocation',
-      args: [
-        BigInt(selectedList),
-        encodePacked(
-          ['uint8', 'uint8', 'uint256', 'address', 'uint'],
-          [1, 1, BigInt(chain.id), ListRecordContracts[chain?.id] as Address, newSlot]
-        )
-      ]
-    })
-
-    if (hash) {
-      setCompleteTransactions(prev => ({
-        ...prev,
-        claimSlot: true
-      }))
-    }
-
-    // return transaction hash to enable following transaction status in transaction details component
-    return hash
+    addTransactions([
+      {
+        title: 'claim new slot',
+        id: EFPActionIds.SetEFPListSettings,
+        address: coreEfpContracts.EFPListRegistry,
+        abi: efpListRegistryAbi,
+        functionName: 'setListStorageLocation',
+        chainId: DEFAULT_CHAIN.id,
+        args: [
+          BigInt(selectedList),
+          encodePacked(
+            ['uint8', 'uint8', 'uint256', 'address', 'uint'],
+            [1, 1, BigInt(chain.id), ListRecordContracts[chain?.id] as Address, newSlot]
+          ),
+        ],
+      },
+    ])
   }, [])
 
-  const setManagerTx = useCallback(async () => {
+  const setManagerTx = useCallback(() => {
     if (!(listRecordsContractAddress && slot && isAddress(manager || ''))) return
 
-    const hash = await walletClient?.writeContract({
-      address: listRecordsContractAddress,
-      abi: efpListRecordsAbi,
-      functionName: 'setListManager',
-      args: [slot, manager as Address]
-    })
-
-    if (hash) {
-      setCompleteTransactions(prev => ({
-        ...prev,
-        manager: true
-      }))
-    }
-
-    // return transaction hash to enable following transaction status in transaction details component
-    return hash
+    addTransactions([
+      {
+        title: 'manager',
+        description: manager,
+        id: EFPActionIds.SetEFPListSettings,
+        address: listRecordsContractAddress,
+        abi: efpListRecordsAbi,
+        functionName: 'setListManager',
+        chainId: chain?.id,
+        args: [slot, manager as Address],
+      },
+    ])
   }, [slot, listRecordsContractAddress, manager, walletClient])
 
-  const setUserTx = useCallback(async () => {
+  const setUserTx = useCallback(() => {
     if (!(listRecordsContractAddress && slot && isAddress(user || ''))) return
 
-    const hash = await walletClient?.writeContract({
-      address: listRecordsContractAddress,
-      abi: efpListRecordsAbi,
-      functionName: 'setListUser',
-      args: [slot, user as Address]
-    })
-
-    if (hash) {
-      setCompleteTransactions(prev => ({
-        ...prev,
-        user: true
-      }))
-    }
-
-    // return transaction hash to enable following transaction status in transaction details component
-    return hash
+    addTransactions([
+      {
+        title: 'user',
+        description: user,
+        id: EFPActionIds.SetEFPListSettings,
+        address: listRecordsContractAddress,
+        abi: efpListRecordsAbi,
+        functionName: 'setListUser',
+        chainId: chain?.id,
+        args: [slot, user as Address],
+      },
+    ])
   }, [slot, listRecordsContractAddress, user, walletClient])
 
-  const setActions = useCallback(() => {
-    if (!chain) return
-
-    // Prepare and set actions when selectedChain is updated and not null
-    const resetSlotAction: Action = {
-      id: EFPActionType.ResetSlot, // Unique identifier for the action
-      type: EFPActionType.ResetSlot,
-      label: t('reset slot'),
-      chainId: chain.id,
-      execute: resetSlotTx,
-      isPendingConfirmation: false
-    }
-    const claimNewSlotAction: Action = {
-      id: EFPActionType.SetEFPListStorageLocation, // Unique identifier for the action
-      type: EFPActionType.SetEFPListStorageLocation,
-      label: t('claim slot'),
-      chainId: DEFAULT_CHAIN.id,
-      execute: claimNewSlotTx,
-      isPendingConfirmation: false
-    }
-    const setListStorageLocation: Action = {
-      id: EFPActionType.SetEFPListStorageLocation, // Unique identifier for the action
-      type: EFPActionType.SetEFPListStorageLocation,
-      label: t('set location'),
-      chainId: DEFAULT_CHAIN.id,
-      execute: setListStorageLocationTx,
-      isPendingConfirmation: false
-    }
-    const setListOwner: Action = {
-      id: EFPActionType.SetEFPListOwner, // Unique identifier for the action
-      type: EFPActionType.SetEFPListOwner,
-      label: t('set owner'),
-      chainId: DEFAULT_CHAIN.id,
-      execute: setOwnerTx,
-      isPendingConfirmation: false
-    }
-    const setListManager: Action = {
-      id: EFPActionType.SetEFPListManager, // Unique identifier for the action
-      type: EFPActionType.SetEFPListManager,
-      label: t('set manager'),
-      chainId: chain.id,
-      execute: setManagerTx,
-      isPendingConfirmation: false
-    }
-    const setListUser: Action = {
-      id: EFPActionType.SetEFPListUser, // Unique identifier for the action
-      type: EFPActionType.SetEFPListUser,
-      label: t('set user'),
-      chainId: chain.id,
-      execute: setUserTx,
-      isPendingConfirmation: false
-    }
-    const setPrimaryList: Action = {
-      id: EFPActionType.SetPrimaryList, // Unique identifier for the action
-      type: EFPActionType.SetPrimaryList,
-      label: t('set primary'),
-      chainId: DEFAULT_CHAIN.id,
-      execute: setPrimaryListTx,
-      isPendingConfirmation: false
-    }
-
-    const executableActions = [
-      {
-        action: resetSlotAction,
-        condition: !completeTransactions.resetSlot && changedValuesState.resetSlot
-      },
-      {
-        action: claimNewSlotAction,
-        condition: !completeTransactions.claimSlot && changedValuesState.resetSlot
-      },
-      {
-        action: setListUser,
-        condition: !completeTransactions.user && changedValuesState.user
-      },
-      {
-        action: setListManager,
-        condition: !completeTransactions.manager && changedValuesState.manager
-      },
-      {
-        action: setPrimaryList,
-        condition: !completeTransactions.setPrimary && changedValuesState.setPrimary
-      },
-      {
-        action: setListStorageLocation,
-        condition:
-          !completeTransactions.chain && changedValuesState.chain && newChain && !listState?.length
-      },
-      {
-        action: setListOwner,
-        condition: !completeTransactions.owner && changedValuesState.owner
-      }
-    ]
-    const actionsToExecute: Action[] = executableActions
-      .filter(action => action.condition)
-      .map(action => action.action)
-
-    if (changedValuesState.chain && newChain) {
-      if (listState) {
-        const listOps = listState.flatMap(item => {
-          const operations: CartItem[] = []
-          operations.push({ listOp: listOpAddListRecord(item.address) })
-          if (item.tags.length > 0)
-            item.tags.map(tag => {
-              operations.push({ listOp: listOpAddTag(item.address, tag) })
-            })
-          return operations
-        })
-
-        const splitCartItems = splitListOps(listOps, newChain.id)
-        const cartItemActions: Action[] = splitCartItems.map((listOps, i) => ({
-          id: `${EFPActionType.UpdateEFPList} ${i}`, // Unique identifier for the action
-          type: EFPActionType.UpdateEFPList,
-          label: `Transfer List State ${i + 1}/${splitCartItems.length}`,
-          chainId: newChain.id,
-          execute: async () => await listOpTx(listOps),
-          isPendingConfirmation: false
-        }))
-
-        if (completeTransactions.chain) actionsToExecute.push(...cartItemActions)
-        else actionsToExecute.push(...[setListStorageLocation, ...cartItemActions])
-      }
-    }
-
-    addActions(actionsToExecute)
-  }, [
-    listOpTx,
-    setListStorageLocationTx,
-    setOwnerTx,
-    setManagerTx,
-    setUserTx,
-    changedValuesState,
-    chain
-  ])
-
-  useEffect(() => {
-    setActions()
-  }, [setActions])
-
-  const onInitiateActions = () =>
-    handleInitiateActions(() => setCurrentStep(Step.TransactionStatus))
-  const onNextAction = () => handleNextAction(() => setCurrentStep(Step.InitiateTransactions))
-
   const onFinish = useCallback(() => {
-    setIsRefetchingProfile(true)
-    setIsRefetchingFollowing(true)
-    refetchState(fetchFreshLists, setFetchFreshLists, refetchLists)
+    // setIsRefetchingProfile(true)
+    // setIsRefetchingFollowing(true)
+    // refetchState(fetchFreshLists, setFetchFreshLists, refetchLists)
 
-    if (changedValuesState.manager) resetCart()
+    if (changedValues.manager) resetCart()
     if (changedValues.user || changedValues.setPrimary || changedValues.resetSlot) {
       localStorage.setItem('selected-list', selectedList.toString())
 
-      refetchState(fetchFreshProfile, setFetchFreshProfile, refetchProfile)
-      refetchState(fetchFreshStats, setFetchFreshStats, refetchStats)
+      // refetchState(fetchFreshProfile, setFetchFreshProfile, refetchProfile)
+      // refetchState(fetchFreshStats, setFetchFreshStats, refetchStats)
     }
     if (changedValues.resetSlot) resetFollowingRelatedQueries(queryClient)
 
@@ -433,19 +234,77 @@ const useSaveListSettings = ({
     refetchFollowers()
     refetchFollowerTags()
     refetchFollowingTags()
+  }, [changedValues])
 
-    resetActions()
-    onCancel()
+  const submitChanges = useCallback(() => {
+    if (!chain) return
+
+    const executableActions = [
+      {
+        action: resetSlotTx,
+        condition: changedValues.resetSlot,
+      },
+      {
+        action: claimNewSlotTx,
+        condition: changedValues.resetSlot,
+      },
+      {
+        action: setUserTx,
+        condition: changedValues.user,
+      },
+      {
+        action: setManagerTx,
+        condition: changedValues.manager,
+      },
+      {
+        action: setPrimaryListTx,
+        condition: changedValues.setPrimary,
+      },
+      {
+        action: setListStorageLocationTx,
+        condition: changedValues.chain && newChain && !listState?.length,
+      },
+      {
+        action: setOwnerTx,
+        condition: changedValues.owner,
+      },
+    ]
+
+    const actionsToExecute = executableActions.filter((action) => action.condition).map((action) => action.action)
+
+    if (changedValues.chain && newChain && userAddress) {
+      if (listState) {
+        const listOps = listState.flatMap((item) => {
+          const operations = []
+          operations.push(listOpAddListRecord(item.address))
+          if (item.tags.length > 0)
+            item.tags.map((tag) => {
+              operations.push(listOpAddTag(item.address, tag))
+            })
+          return operations
+        })
+
+        const splitCartItems = splitListOps(listOps, newChain.id)
+
+        for (const listOps of splitCartItems) {
+          listOpTx(listOps, userAddress)
+        }
+      }
+    }
+
+    for (const action of actionsToExecute) {
+      action()
+    }
+
+    setIsEditingListSettings(true)
+    setTxModalOpen(true)
+    setChangesOpen(false)
     onClose()
-  }, [changedValuesState])
+  }, [listOpTx, setListStorageLocationTx, setOwnerTx, setManagerTx, setUserTx, changedValues, chain])
 
   return {
-    actions,
     onFinish,
-    currentStep,
-    setCurrentStep,
-    onNextAction,
-    onInitiateActions
+    submitChanges,
   }
 }
 

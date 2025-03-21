@@ -1,12 +1,11 @@
-import Image from 'next/image'
 import { useState } from 'react'
 import { useClickAway } from '@uidotdev/usehooks'
 
 import { cn } from '#/lib/utilities'
 import TagsDropdown from './tags-dropdown'
 import type { ProfileListProfile } from '../..'
-import { useCart } from '#/contexts/cart-context'
-import Plus from 'public/assets/icons/plus-squared.svg'
+import { useCart } from '#/hooks/use-cart'
+import Plus from 'public/assets/icons/ui/plus-squared.svg'
 import type { ImportPlatformType, TagsDropdownPositionType } from '#/types/common'
 
 interface TagsProps {
@@ -18,14 +17,7 @@ interface TagsProps {
   dropdownPosition?: TagsDropdownPositionType
 }
 
-const Tags: React.FC<TagsProps> = ({
-  profiles,
-  platform,
-  showTags,
-  canEditTags,
-  isBlockedList,
-  dropdownPosition
-}) => {
+const Tags: React.FC<TagsProps> = ({ profiles, platform, showTags, canEditTags, isBlockedList, dropdownPosition }) => {
   const [tagDropdownOpen, setTagDropdownOpen] = useState(false)
   const clickAwayTagDropwdownRef = useClickAway<HTMLDivElement>(() => {
     setTagDropdownOpen(false)
@@ -37,32 +29,27 @@ const Tags: React.FC<TagsProps> = ({
   // Hide tags if the profile is being removed or restricted/unrestricted
   const isBeingRemoved = address ? hasListOpRemoveRecord(address) : false
   const isBeingUnrestricted = address
-    ? hasListOpRemoveTag({ address, tag: 'block' }) || hasListOpRemoveTag({ address, tag: 'mute' })
+    ? hasListOpRemoveTag(address, 'block') || hasListOpRemoveTag(address, 'mute')
     : false
-  const isBeingRestricted = address
-    ? hasListOpAddTag({ address, tag: 'block' }) || hasListOpAddTag({ address, tag: 'mute' })
-    : false
+  const isBeingRestricted = address ? hasListOpAddTag(address, 'block') || hasListOpAddTag(address, 'mute') : false
   const isRestriction = isBeingUnrestricted || isBeingRestricted
 
   const hideTags = !showTags || (canEditTags && (isBeingRemoved || isRestriction))
 
   return (
     <div
-      className={cn(
-        'relative min-h-8 flex max-w-full flex-wrap gap-2 items-center',
-        hideTags && 'hidden'
-      )}
+      className={cn('relative flex h-fit max-w-full flex-wrap items-center gap-2', hideTags && 'hidden')}
       ref={clickAwayTagDropwdownRef}
     >
       {canEditTags && (
         <button
-          className='p-1.5 rounded-full hover:opacity-80 hover:scale-110 bg-zinc-300'
-          onClick={e => {
+          className='bg-nav-item rounded-sm p-1.5 hover:scale-110 hover:opacity-80'
+          onClick={(e) => {
             e.stopPropagation()
             setTagDropdownOpen(!tagDropdownOpen)
           }}
         >
-          <Image src={Plus} alt='Add Tag' width={12} />
+          <Plus className='h-auto w-3' />
         </button>
       )}
       <TagsDropdown
@@ -75,8 +62,8 @@ const Tags: React.FC<TagsProps> = ({
       />
       {canEditTags && tagDropdownOpen && (
         <div
-          className='fixed z-30 top-0 left-0 w-full h-full bg-transparent'
-          onClick={e => {
+          className='fixed top-0 left-0 z-30 h-full w-full bg-transparent'
+          onClick={(e) => {
             e.stopPropagation()
             setTagDropdownOpen(false)
           }}

@@ -1,176 +1,259 @@
 import type { StaticImageData } from 'next/image'
 
-import PWN from 'public/assets/partners/pwn.jpeg'
-import POAP from 'public/assets/partners/poap.jpeg'
-import Namefi from 'public/assets/partners/namefi.jpeg'
+import PWN from 'public/assets/partners/pwn.png'
+import POAP from 'public/assets/partners/poap.png'
+import Namefi from 'public/assets/partners/namefi.png'
 import EFPBot from 'public/assets/partners/efpbot.jpeg'
-import Rocbox from 'public/assets/partners/rocbox.jpeg'
-import Payflow from 'public/assets/partners/payflow.jpeg'
-import WebHash from 'public/assets/partners/webhash.jpeg'
-import ENSBook from 'public/assets/partners/ensbook.jpeg'
-import EthDotCd from 'public/assets/partners/ethdotcd.jpeg'
-import Interface from 'public/assets/partners/interface.jpeg'
-import EnsVision from 'public/assets/partners/ensvision.jpeg'
-import WebThreeBio from 'public/assets/partners/web3bio.jpeg'
-import JustaName from 'public/assets/partners/justaname.jpeg'
+import Rocbox from 'public/assets/partners/rocbox.png'
+import Payflow from 'public/assets/partners/payflow.png'
+import WebHash from 'public/assets/partners/webhash.png'
+import ENSBook from 'public/assets/partners/ensbook.png'
+import EthDotCd from 'public/assets/partners/ethdotcd.png'
+import Interface from 'public/assets/partners/interface.png'
+import EnsVision from 'public/assets/partners/ensvision.png'
+import WebThreeBio from 'public/assets/partners/web3bio.png'
+import JustaName from 'public/assets/partners/justaname.png'
 import EFPUpdates from 'public/assets/partners/efpupdates.jpeg'
-import Blockscout from 'public/assets/partners/blockscout.jpeg'
-import LikeButton from 'public/assets/partners/likebutton.jpeg'
-import HarvestArt from 'public/assets/partners/harvestart.jpeg'
-import VibesScapes from 'public/assets/partners/vibesscapes.jpeg'
-import EngagementVision from 'public/assets/partners/engagementvision.jpeg'
-import DevconCollabPortal from 'public/assets/partners/devconcollabportal.jpeg'
-import DevconPassport from 'public/assets/partners/devconpassport.jpeg'
-import ETHTools from 'public/assets/partners/ethtools.jpeg'
-import Yodl from 'public/assets/partners/yodl.jpeg'
-import Snapshot from 'public/assets/partners/snapshot.jpeg'
-import BanklessAcademy from 'public/assets/partners/banklessacademy.jpeg'
-import ENSResolver from 'public/assets/partners/ensresolver.jpeg'
-import Rotki from 'public/assets/partners/rotki.jpeg'
+import Blockscout from 'public/assets/partners/blockscout.png'
+import LikeButton from 'public/assets/partners/likebutton.png'
+import HarvestArt from 'public/assets/partners/harvestart.png'
+import VibesScapes from 'public/assets/partners/vibesscapes.png'
+import EngagementVision from 'public/assets/partners/engagementvision.png'
+import DevconCollabPortal from 'public/assets/partners/devconcollabportal.png'
+import DevconPassport from 'public/assets/partners/devconpassport.png'
+import ETHTools from 'public/assets/partners/ethtools.png'
+import Yodl from 'public/assets/partners/yodl.png'
+import Snapshot from 'public/assets/partners/snapshot.png'
+import BanklessAcademy from 'public/assets/partners/banklessacademy.png'
+import ENSResolver from 'public/assets/partners/ensresolver.png'
+import Rotki from 'public/assets/partners/rotki.png'
 import Zapper from 'public/assets/partners/zapper.png'
-
+import Recordsxyz from 'public/assets/partners/recordsxyz.png'
+import Agora from 'public/assets/partners/agora.png'
+import Lighthouse from 'public/assets/partners/lighthouse.jpeg'
+import Pobstudio from 'public/assets/partners/pobstudio.jpeg'
+import Dhive from 'public/assets/partners/dhive.jpeg'
+import Phi from 'public/assets/partners/phi.jpeg'
+import EFPFinder from 'public/assets/partners/efpfinder.jpeg'
+import ENSTools from 'public/assets/partners/enstools.jpeg'
+import CuriaLab from 'public/assets/partners/curialab.jpeg'
+import ENStateSearch from 'public/assets/partners/enstatesearch.jpeg'
+import Tally from 'public/assets/partners/tally.jpeg'
+import EFPower from 'public/assets/partners/efpower.jpeg'
+import NameGraph from 'public/assets/partners/namegraph.jpeg'
+import Aragon from 'public/assets/partners/aragon.jpeg'
 
 export const INTEGRATIONS = [
   {
     name: 'Interface',
     url: 'https://interface.social',
-    logo: Interface
+    logo: Interface,
   },
   {
     name: 'Snapshot',
     url: 'https://snapshot.box/',
-    logo: Snapshot
+    logo: Snapshot,
   },
   {
     name: 'POAP',
     url: 'https://poap.xyz',
-    logo: POAP
+    logo: POAP,
   },
   {
-    name: 'Vision',
-    url: 'https://vision.io/',
-    logo: EnsVision
+    name: 'Tally',
+    url: 'https://tally.xyz/',
+    logo: Tally,
+  },
+  {
+    name: 'Agora',
+    url: 'https://www.agora.xyz/',
+    logo: Agora,
+  },
+  {
+    name: 'Aragon',
+    url: 'https://www.aragon.org',
+    logo: Aragon,
   },
   {
     name: 'Yodl',
     url: 'https://yodl.me/',
-    logo: Yodl
+    logo: Yodl,
+  },
+  {
+    name: 'Vision',
+    url: 'https://vision.io/',
+    logo: EnsVision,
   },
   {
     name: 'Zapper',
     url: 'https://zapper.xyz/',
-    logo: Zapper
+    logo: Zapper,
   },
   {
     name: 'Rotki',
     url: 'https://rotki.com/',
-    logo: Rotki
+    logo: Rotki,
   },
   {
     name: 'Blockscout',
     url: 'https://www.blockscout.com/',
-    logo: Blockscout
+    logo: Blockscout,
+  },
+  {
+    name: 'Phi',
+    url: 'https://phi.box/',
+    logo: Phi,
   },
   {
     name: 'Vibes',
     url: 'https://vibes.scapes.xyz/',
-    logo: VibesScapes
+    logo: VibesScapes,
   },
   {
-    name: 'LikeButton.eth',
-    url: 'https://likebutton.eth.limo/',
-    logo: LikeButton
+    name: 'Lighthouse',
+    url: 'https://lighthouse.cx/',
+    logo: Lighthouse,
   },
   {
-    name: 'Webhash',
-    url: 'https://webhash.com',
-    logo: WebHash
+    name: 'Blockverse',
+    url: 'https://www.pob.studio/',
+    logo: Pobstudio,
   },
   {
-    name: 'Bankless Academy',
-    url: 'https://app.banklessacademy.com/',
-    logo: BanklessAcademy
-  },
-  {
-    name: 'Payflow',
-    url: 'https://payflow.me',
-    logo: Payflow
-  },
-  {
-    name: 'eth.cd',
-    url: 'https://eth.cd',
-    logo: EthDotCd
-  },
-  {
-    name: 'EFP Bot',
-    url: 'https://x.com/efpbots',
-    logo: EFPBot
-  },
-  {
-    name: 'EFP Updates',
-    url: 'https://x.com/efp_updates',
-    logo: EFPUpdates
-  },
-  {
-    name: 'PWN',
-    url: 'https://pwn.xyz/',
-    logo: PWN
-  },
-  {
-    name: 'Namefi',
-    url: 'https://www.namefi.io/',
-    logo: Namefi
-  },
-  {
-    name: 'ENSBook',
-    url: 'https://ensbook.xyz/',
-    logo: ENSBook
+    name: 'Dhive',
+    url: 'https://dhive.io',
+    logo: Dhive,
   },
   {
     name: 'Web3 Bio',
     url: 'https://web3.bio/',
-    logo: WebThreeBio
+    logo: WebThreeBio,
+  },
+  {
+    name: 'Records.xyz',
+    url: 'https://records.xyz',
+    logo: Recordsxyz,
+  },
+  {
+    name: 'LikeButton.eth',
+    url: 'https://likebutton.eth.limo/',
+    logo: LikeButton,
+  },
+  {
+    name: 'Webhash',
+    url: 'https://webhash.com',
+    logo: WebHash,
+  },
+  {
+    name: 'Bankless Academy',
+    url: 'https://app.banklessacademy.com/',
+    logo: BanklessAcademy,
+  },
+  {
+    name: 'Payflow',
+    url: 'https://payflow.me',
+    logo: Payflow,
+  },
+  {
+    name: 'eth.cd',
+    url: 'https://eth.cd',
+    logo: EthDotCd,
+  },
+  {
+    name: 'ENS Tools',
+    url: 'https://ens.tools',
+    logo: ENSTools,
+  },
+  {
+    name: 'NameGraph',
+    url: 'https://www.namegraph.dev',
+    logo: NameGraph,
+  },
+  {
+    name: 'EFP Bot',
+    url: 'https://x.com/efpbots',
+    logo: EFPBot,
+  },
+  {
+    name: 'EFP Updates',
+    url: 'https://x.com/efp_updates',
+    logo: EFPUpdates,
+  },
+  {
+    name: 'PWN',
+    url: 'https://pwn.xyz/',
+    logo: PWN,
+  },
+  {
+    name: 'Namefi',
+    url: 'https://www.namefi.io/',
+    logo: Namefi,
+  },
+  {
+    name: 'ENSBook',
+    url: 'https://ensbook.xyz/',
+    logo: ENSBook,
   },
   {
     name: 'Roc Box',
     url: 'https://roc.box/',
-    logo: Rocbox
+    logo: Rocbox,
   },
   {
     name: 'Harvest.art',
     url: 'https://harvest.art/',
-    logo: HarvestArt
+    logo: HarvestArt,
   },
   {
     name: 'Engagement Vision',
     url: 'https://engagement.vision/',
-    logo: EngagementVision
+    logo: EngagementVision,
   },
   {
     name: 'JustaName',
     url: 'https://www.justaname.id/',
-    logo: JustaName
+    logo: JustaName,
   },
   {
     name: 'Devcon VI Collab Portal',
     url: 'https://devcon.fileverse.io/devcon7/portal',
-    logo: DevconCollabPortal
+    logo: DevconCollabPortal,
   },
   {
     name: 'Devcon VI Passport',
     url: 'https://app.devcon.org/',
-    logo: DevconPassport
+    logo: DevconPassport,
   },
   {
     name: 'ETH Tools',
     url: 'https://ethtools.com/',
-    logo: ETHTools
+    logo: ETHTools,
   },
   {
     name: 'ENS Resolver',
     url: 'https://adraffy.github.io/ens-normalize.js/test/resolver.html',
-    logo: ENSResolver
-  }
+    logo: ENSResolver,
+  },
+  {
+    name: 'EFP Finder',
+    url: 'https://efp.jaxoo.xyz/',
+    logo: EFPFinder,
+  },
+  {
+    name: 'EFPower',
+    url: 'https://www.efpower.fun/',
+    logo: EFPower,
+  },
+  {
+    name: 'ENState Search',
+    url: 'https://search.enstate.rs/',
+    logo: ENStateSearch,
+  },
+  {
+    name: 'CuriaLab',
+    url: 'https://www.curialab.xyz/',
+    logo: CuriaLab,
+  },
 ] as {
   name: string
   url: string

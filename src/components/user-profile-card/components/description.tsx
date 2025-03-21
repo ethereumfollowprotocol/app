@@ -11,14 +11,14 @@ const Description: React.FC<DescriptionProps> = ({ profile }) => {
   const { t } = useTranslation()
 
   return (
-    <p className='text-text/80 w-full font-medium text-sm sm:text-sm text-center'>
+    <p className='text-text/80 w-full text-center text-sm font-medium sm:text-sm'>
       {profile.ens.records?.description ? (
-        profile.ens.records.description.split(' ').map(word =>
-          word.includes('@') ? (
+        profile.ens.records.description.split(' ').map((word) =>
+          word.includes('@') && word.includes('.') ? (
             <Link
               key={word}
               href={`/${word.replace('@', '')}`}
-              className='dark:text-blue-400 dark:hover:text-blue-300 halloween:text-blue-400 halloween:hover:text-blue-300 text-blue-600 hover:text-blue-500'
+              className='halloween:text-blue-400 halloween:hover:text-blue-300 text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300'
             >
               {word}{' '}
             </Link>

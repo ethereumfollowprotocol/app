@@ -1,17 +1,17 @@
 'use client'
 
+import Link from 'next/link'
 import { useAccount } from 'wagmi'
-import { useTheme } from 'next-themes'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { ProfileCard } from 'ethereum-identity-kit'
 
 import { cn } from '#/lib/utilities'
-import ConnectButton from '../connect-button'
 import Achievements from './components/achievements'
 import FollowButton from '#/components/follow-button'
 import ThreeDotMenu from './components/three-dot-menu'
 import { useProfileCard } from './hooks/use-profile-card'
+import EnsLogo from 'public/assets/icons/socials/ens.svg'
 import LoadingProfileCard from './components/loading-profile-card'
 import type { ProfileDetailsResponse, StatsResponse } from '#/types/requests'
 
@@ -28,8 +28,10 @@ interface UserProfileCardProps {
   openListSettingsModal?: () => void
   isRecommended?: boolean
   refetchProfile?: () => void
+  refetchStats?: () => void
   openQrCodeModal?: () => void
   displayAchievements?: boolean
+  className?: string
 }
 
 const UserProfileCard: React.FC<UserProfileCardProps> = ({
@@ -44,48 +46,39 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   openListSettingsModal,
   isRecommended,
   refetchProfile,
+  refetchStats,
   openQrCodeModal,
   isStatsLoading,
-  displayAchievements = true
+  displayAchievements = true,
+  className,
 }) => {
   const router = useRouter()
   const { t } = useTranslation()
-  const { resolvedTheme } = useTheme()
   const { address: connectedAddress } = useAccount()
   const { followState, profileName, isConnectedUserCard } = useProfileCard(profile)
 
   return (
-    <div
-      className={cn(
-        'flex flex-col gap-4',
-        isResponsive
-          ? 'w-full xl:w-[324px] xl:min-w-[324px] 3xl:w-86 3xl:min-w-86'
-          : 'w-full xxs:w-92'
-      )}
-    >
+    <div className={cn('bg-neutral flex w-[364px] flex-col gap-4 rounded-sm pb-3', className)}>
       {isLoading ? (
-        <LoadingProfileCard
-          isResponsive={isResponsive}
-          hideFollowButton={true}
-          className={isRecommended ? 'bg-neutral' : 'glass-card'}
-        />
+        <LoadingProfileCard hideFollowButton={true} className='bg-neutral' />
       ) : profile?.address ? (
         <ProfileCard
           list={profileList}
           onStatClick={({ stat }) => {
-            router.push(`/${profile.address}?tab=${stat}`)
+            router.push(`/${profile.address}?tab=${stat}&ssr=false`)
           }}
           showFollowerState={true}
-          darkMode={resolvedTheme === 'dark'}
           addressOrName={profile.address}
           connectedAddress={connectedAddress}
           onProfileClick={() => {
-            router.push(`/${profile.address}`)
+            router.push(`/${profile.address}?ssr=false`)
           }}
-          className={isRecommended ? 'bg-neutral' : 'glass-card bg-transparent'}
+          className='bg-neutral'
           options={{
+            openListSettings: openListSettingsModal,
             profileData: profile,
             statsData: stats,
+            refetchStatsData: refetchStats,
             refetchProfileData: refetchProfile,
             prefetchedStatsLoading: isStatsLoading,
             nameMenu: (
@@ -102,47 +95,42 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 openListSettingsModal={openListSettingsModal}
               />
             ),
-            followButton: !(hideFollowButton || isConnectedUserCard) && (
-              <FollowButton address={profile.address} />
-            )
+            followButton: !hideFollowButton && (
+              <div className='mt-16'>
+                {isConnectedUserCard ? (
+                  <Link href={`https://app.ens.domains/${profile.ens.name}`} target='_blank'>
+                    <button className='flex items-center gap-1 rounded-sm bg-[#0080BC] p-1.5 py-2 font-semibold text-white transition-all hover:scale-110 hover:bg-[#07A9F5]'>
+                      <EnsLogo className='h-auto w-5' />
+                      <p>Edit Profile</p>
+                    </button>
+                  </Link>
+                ) : (
+                  <FollowButton address={profile.address} />
+                )}
+              </div>
+            ),
           }}
           style={{
             width: '100%',
-            zIndex: 10
+            zIndex: 10,
           }}
         />
       ) : (
-        <div
-          className={cn(
-            'flex border-[3px] z-10 flex-col border-grey rounded-xl relative',
-            isRecommended ? 'bg-neutral' : 'glass-card'
-          )}
-        >
+        <div className={cn('relative z-10 flex flex-col rounded-sm', isRecommended ? 'bg-neutral' : 'glass-card')}>
           {isRecommended ? (
-            <div className='flex items-center flex-col gap-4 justify-center mx-auto w-3/4 h-[436px]'>
-              <p className='text-xl px-8 font-bold'>{t('connect to see more')}</p>
-              <ConnectButton isResponsive={false} />
+            <div className='mx-auto flex h-[436px] w-3/4 flex-col items-center justify-center gap-4'>
+              <p className='px-8 text-xl font-bold'>{t('connect to see more')}</p>
+              {/* <ConnectWalletButton /> */}
             </div>
           ) : (
-            <div
-              className={cn(
-                'w-full h-20 text-lg 3xl:text-xl flex items-center justify-center font-bold italic',
-                hideFollowButton ? 'xl:h-[360px]' : 'xl:h-[420px]'
-              )}
-            >
+            <div className='3xl:text-xl flex h-[360px] w-full items-center justify-center text-lg font-bold italic'>
               {t('profile error')}
             </div>
           )}
         </div>
       )}
-      {displayAchievements && !isRecommended && (
-        <Achievements
-          profile={profile}
-          list={profileList}
-          isLoading={!!isLoading}
-          isResponsive={isResponsive}
-          isRecommended={!!isRecommended}
-        />
+      {!isRecommended && displayAchievements && (
+        <Achievements profile={profile} list={profileList} isLoading={!!isLoading} />
       )}
     </div>
   )

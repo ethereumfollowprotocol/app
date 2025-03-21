@@ -9,13 +9,13 @@ export const usePoapModal = (userAddress?: Address) => {
 
   const { data: link, isLoading: poapLoading } = useQuery({
     queryKey: ['poap-link', userAddress, claimPoapModalOpen],
-    queryFn: async () => (claimPoapModalOpen && userAddress ? await fetchPoapLink(userAddress) : '')
+    queryFn: async () => (claimPoapModalOpen && userAddress ? await fetchPoapLink(userAddress) : ''),
   })
 
   return {
     poapLink: link,
     poapLoading,
     claimPoapModalOpen,
-    setClaimPoapModalOpen
+    setClaimPoapModalOpen,
   }
 }

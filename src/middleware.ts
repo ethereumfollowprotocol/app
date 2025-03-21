@@ -7,8 +7,8 @@ export function middleware(request: NextRequest) {
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64')
 
   const cspHeader = `
-    worker-src 'self' 'unsafe-inline' *.cloudflareinsights.com cdn.vercel-insights.com vercel.live va.vercel-scripts.com blob:;
-    script-src 'self' 'unsafe-eval' 'unsafe-inline' *.cloudflareinsights.com cdn.vercel-insights.com vercel.live va.vercel-scripts.com www.googletagmanager.com;
+    worker-src 'self' *.cloudflareinsights.com cdn.vercel-insights.com vercel.live va.vercel-scripts.com blob:;
+    script-src 'self' 'unsafe-inline' *.cloudflareinsights.com cdn.vercel-insights.com vercel.live va.vercel-scripts.com www.googletagmanager.com;
     media-src 'self';
     connect-src * *.blockscout.com.;
     object-src 'none';
@@ -27,8 +27,8 @@ export function middleware(request: NextRequest) {
 
   const response = NextResponse.next({
     request: {
-      headers: requestHeaders
-    }
+      headers: requestHeaders,
+    },
   })
   response.headers.set('Content-Security-Policy', contentSecurityPolicyHeaderValue)
 
@@ -48,8 +48,8 @@ export const config = {
       source: '/((?!api|_next/static|_next/image|favicon.ico).*)',
       missing: [
         { type: 'header', key: 'next-router-prefetch' },
-        { type: 'header', key: 'purpose', value: 'prefetch' }
-      ]
-    }
-  ]
+        { type: 'header', key: 'purpose', value: 'prefetch' },
+      ],
+    },
+  ],
 }

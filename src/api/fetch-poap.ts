@@ -5,8 +5,8 @@ export const fetchPoapLink = async (userAddress: Address) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${userAddress}/poap`, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     })
 
     const data = await res.json()

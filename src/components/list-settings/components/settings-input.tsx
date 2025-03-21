@@ -7,9 +7,11 @@ import { cn } from '#/lib/utilities'
 import { Avatar } from '#/components/avatar'
 import { resolveEnsProfile } from '#/utils/ens'
 import LoadingCell, { LIGHT_LOADING_GRADIENT } from '#/components/loaders/loading-cell'
+import type React from 'react'
 
 interface SettingsInputProps {
   option: string
+  Icon: React.FC<React.SVGProps<SVGSVGElement>>
   value: string
   resolvedAddress?: string
   disableValue: string
@@ -22,6 +24,7 @@ interface SettingsInputProps {
 
 const SettingsInput: React.FC<SettingsInputProps> = ({
   option,
+  Icon,
   resolvedAddress,
   value,
   disableValue,
@@ -29,7 +32,7 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
   setValue,
   isEditingSettings,
   isLoading,
-  isSettingsLoading
+  isSettingsLoading,
 }) => {
   const { t } = useTranslation()
   const { address: connectedAddress } = useAccount()
@@ -41,46 +44,46 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
         ? await resolveEnsProfile((isAddress(value) ? value : resolvedAddress) as Address)
         : {
             name: null,
-            avatar: null
-          }
+            avatar: null,
+          },
   })
 
   return (
     <div className='flex flex-col gap-1'>
-      <p className='font-bold text-lg'>{option}</p>
+      <div className='text-text/80 flex items-center gap-2 pl-3'>
+        <p className='font-semibold'>{option}</p>
+        {Icon && <Icon className='h-auto w-5' />}
+      </div>
       {isSettingsLoading ? (
-        <div className='p-3 font-medium truncate rounded-lg w-full bg-neutral/70 disabled:text-zinc-400 disabled:cursor-not-allowed'>
-          <LoadingCell className='w-full h-7 rounded-md' />
+        <div className='bg-neutral/70 w-full truncate rounded-sm p-3 font-medium disabled:cursor-not-allowed disabled:text-zinc-400'>
+          <LoadingCell className='h-7 w-full rounded-sm' />
         </div>
       ) : (
         <input
           value={value}
           placeholder={placeholder}
-          onChange={e => {
+          onChange={(e) => {
             const input = e.target.value
             if (input.includes(' ')) return
             setValue(input)
           }}
-          disabled={
-            !isEditingSettings || connectedAddress?.toLowerCase() !== disableValue?.toLowerCase()
-          }
-          className='p-3 font-medium truncate rounded-lg w-full bg-neutral/70 disabled:text-zinc-400 disabled:cursor-not-allowed'
+          disabled={!isEditingSettings || connectedAddress?.toLowerCase() !== disableValue?.toLowerCase()}
+          className='bg-nav-item w-full truncate rounded-sm p-3 font-medium disabled:cursor-not-allowed disabled:opacity-50'
         />
       )}
       {(isSettingsLoading || value.includes('.') || resolvedProfile?.name) && (
         <div
           className={cn(
-            'font-medium flex items-center gap-2 h-10 text-sm',
-            (value.includes('.') && resolvedAddress && resolvedAddress?.length > 0) ||
-              resolvedProfile?.name
+            'flex h-10 items-center gap-2 pl-3 text-sm font-medium',
+            (value.includes('.') && resolvedAddress && resolvedAddress?.length > 0) || resolvedProfile?.name
               ? 'text-text/80'
               : 'text-red-400'
           )}
         >
           {isSettingsLoading || isLoading || isNameLoading ? (
             <>
-              <LoadingCell className='w-8 h-8 rounded-full' />
-              <LoadingCell className='w-full h-5 rounded-md' gradient={LIGHT_LOADING_GRADIENT} />
+              <LoadingCell className='h-8 w-8 rounded-full' />
+              <LoadingCell className='h-5 w-full rounded-sm' gradient={LIGHT_LOADING_GRADIENT} />
             </>
           ) : (
             <>
@@ -89,7 +92,7 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
                 size='h-8 w-8 rounded-full'
                 avatarUrl={resolvedProfile?.avatar}
               />
-              <p className='font-bold truncate'>
+              <p className='truncate font-bold'>
                 {value.includes('.')
                   ? resolvedAddress && resolvedAddress?.length > 0
                     ? resolvedAddress

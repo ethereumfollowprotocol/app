@@ -11,21 +11,21 @@ const sitemap = (): MetadataRoute.Sitemap => {
   const allIndexibleRoutes = fs
     .readdirSync(appDirectoryPath, {
       recursive: true,
-      withFileTypes: true
+      withFileTypes: true,
     })
     .filter(
-      file =>
+      (file) =>
         validRoutes.includes(file.name) &&
         // exclude api routes and dynamic pages
         file.path.matchAll(/[\[\]\(\)]|\/api\//g).next().done
     )
-    .map(file => file.path.replace(appDirectoryPath, '').replaceAll(/[\\\/]/g, ''))
+    .map((file) => file.path.replace(appDirectoryPath, '').replaceAll(/[\\\/]/g, ''))
 
-  return allIndexibleRoutes.map(route => ({
+  return allIndexibleRoutes.map((route) => ({
     url: `${SITE_URL}/${route}`,
     lastModified: new Date(),
     changeFrequency: 'daily',
-    priority: 0.7
+    priority: route === '' ? 1 : 0.7,
   }))
 }
 

@@ -1,14 +1,15 @@
 'use client'
 
-import { useTranslation } from 'react-i18next'
-import { usePathname, useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { useAccount } from 'wagmi'
+import { usePathname } from 'next/navigation'
 import type { Address, GetEnsAvatarReturnType } from 'viem'
 
 import Tags from '../../tags'
 import { cn } from '#/lib/utilities'
+import { useCart } from '#/hooks/use-cart'
 import { Avatar } from '#/components/avatar'
-import { useCart } from '#/contexts/cart-context'
-import useFollowerState from '#/hooks/use-follower-state'
+import FollowsYou from '#/components/follows-you'
 import LoadingCell from '../../../../loaders/loading-cell'
 import ProfileListItemName from './profile-list-item-name'
 import ProfileListItemCounts from './profile-list-item-counts'
@@ -40,14 +41,12 @@ const ProfileListItemDetails: React.FC<ProfileListItemDetailsProps> = ({
   canEditTags,
   tagsDropdownPosition,
   isEnsProfileLoading,
-  isBlockedList
+  isBlockedList,
 }) => {
-  const router = useRouter()
   const pathname = usePathname()
-  const { t } = useTranslation()
+  const { address: userAddress } = useAccount()
   const { getTagsFromCartByAddress } = useCart()
-  const { followers, followersIsLoading } = useEFPProfile()
-  const { followerTag } = useFollowerState({ address, showFollowerBadge: showFollowsYouBadges })
+  const { followers, followersIsLoading, selectedList } = useEFPProfile()
 
   const isCart = pathname.includes('/cart')
   const tagsFromCart = getTagsFromCartByAddress(address)
@@ -55,45 +54,46 @@ const ProfileListItemDetails: React.FC<ProfileListItemDetailsProps> = ({
 
   const displayedTags = [
     ...new Set(
-      [...tags, ...(canEditTags ? tagsFromCart : [])].filter(tag =>
+      [...tags, ...(canEditTags ? tagsFromCart : [])].filter((tag) =>
         isBlockedList ? ['block', 'mute'].includes(tag) : true
       )
-    )
+    ),
   ]
 
   return (
     <div
-      className='flex gap-2 sm:gap-3 items-center p-0'
+      className='relative flex items-center gap-2 p-0 sm:gap-3'
       style={{
-        width: isBlockedList ? 'calc(100% - 132px)' : 'calc(100% - 120px)'
+        width: isBlockedList ? 'calc(100% - 132px)' : 'calc(100% - 120px)',
       }}
     >
-      <div className={cn('flex gap-2 sm:gap-3 items-center p-0', counts ? 'w-2/3' : 'w-full')}>
+      <div className={cn('flex items-center gap-2 p-0 sm:gap-3', counts ? 'w-2/3' : 'w-full')}>
         {isEnsProfileLoading ? (
-          <LoadingCell className='h-[45px] w-[45px] min-w-[45px] 2xl:h-[50px] 2xl:w-[50px] 2xl:min-w-[50px] rounded-full' />
+          <LoadingCell className='h-[45px] w-[45px] min-w-[45px] rounded-full 2xl:h-[50px] 2xl:w-[50px] 2xl:min-w-[50px]' />
         ) : (
-          <Avatar
-            name={name || address}
-            avatarUrl={avatarUrl}
-            size='h-[45px] w-[45px] 2xl:h-[50px] cursor-pointer 2xl:w-[50px] hover:opacity-80 transition-all hover:scale-110'
-            onClick={() => router.push(`/${address || name}`)}
-          />
+          <Link href={`/${address || name}`}>
+            <Avatar
+              name={name || address}
+              avatarUrl={avatarUrl}
+              size='h-[45px] w-[45px] z-10 2xl:h-[50px] cursor-pointer 2xl:w-[50px] hover:opacity-80 transition-all hover:scale-110'
+            />
+          </Link>
         )}
         <div
-          className='flex flex-col md:flex-row md:gap-3 xl:gap-2 2xl:gap-3 gap-[2px]'
+          className='flex flex-col gap-1 sm:gap-2 md:flex-row md:items-center'
           style={{
-            width: counts ? '80%' : 'calc(100% - 60px)'
+            width: counts ? '80%' : 'calc(100% - 60px)',
           }}
         >
           <div
             className={cn(
-              'flex flex-col justify-center items-start tabular-nums relative',
+              'relative flex flex-col tabular-nums sm:flex-row sm:items-center sm:gap-0.5 md:flex-col md:items-start md:justify-center',
               isCart
                 ? 'md:w-52 md:min-w-52'
                 : !isBlockedList && showTags
                   ? displayedTags.length > 0
                     ? 'xl:max-w-[55%] 2xl:max-w-[60%]'
-                    : 'max-w-[70%] 3xs:max-w-[70%] xxs:max-w-[90%]'
+                    : '3xs:max-w-[70%] xxs:max-w-[90%] max-w-[70%]'
                   : 'max-w-full'
             )}
           >
@@ -104,12 +104,8 @@ const ProfileListItemDetails: React.FC<ProfileListItemDetailsProps> = ({
               isCart={isCart}
               isLoading={isEnsProfileLoading}
             />
-            {showFollowsYouBadges && (
-              <div
-                className={`rounded-full font-bold text-[10px] text-darkGrey bg-zinc-300 py-[3px] text-center px-2 w-fit max-w-full ${followerTag.className}`}
-              >
-                {t(followerTag.text)}
-              </div>
+            {showFollowsYouBadges && userAddress && (
+              <FollowsYou addressOrName={address} connectedAddress={userAddress} list={selectedList} />
             )}
           </div>
           <Tags
@@ -121,11 +117,7 @@ const ProfileListItemDetails: React.FC<ProfileListItemDetailsProps> = ({
           />
         </div>
       </div>
-      <ProfileListItemCounts
-        counts={counts}
-        isFollowersEmpty={isFollowersEmpty}
-        address={address}
-      />
+      <ProfileListItemCounts counts={counts} isFollowersEmpty={isFollowersEmpty} address={address} />
     </div>
   )
 }

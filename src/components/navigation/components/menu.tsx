@@ -1,15 +1,18 @@
 'use client'
 
+import clsx from 'clsx'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
 import { useState, type Dispatch, type SetStateAction } from 'react'
 
 import { cn } from '#/lib/utilities'
 import { socials } from '#/components/footer'
 import { EXTERNAL_LINKS } from '#/lib/constants'
+import VolumeSwitcher from '../../volume-switcher'
 import LanguageSelector from '../../language-selector'
-import VolumeSwitcher, { volumeOptions } from '../../volume-switcher'
-import ThemeSwitcher, { themesWithIcons } from '#/components/theme-switcher'
+import ThemeSwitcher from '#/components/theme-switcher'
+import { useTheme } from 'next-themes'
 
 interface MenuProps {
   open: boolean
@@ -22,28 +25,23 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
   const [languageMenOpenu, setLanguageMenuOpen] = useState(false)
 
   const { t } = useTranslation()
-
-  if (!open) return null
+  const { resolvedTheme } = useTheme()
+  const isExtraMenuOpen = languageMenOpenu || themeMenuOpen || volumeMenuOpen
 
   return (
-    <div className='bg-neutral w-[244px] h-fit nav-menu -z-20 overflow-x-hidden lg:overflow-visible shadow-md border-[3px] transition-all rounded-xl lg:rounded-md border-grey pb-6 lg:pb-0 lg:pt-8 absolute bottom-6 lg:top-5 flex flex-col items-end right-0'>
+    <div
+      className={clsx(
+        open
+          ? '-translate-y-mobile-menu flex sm:flex sm:translate-y-0 sm:opacity-100 starting:translate-y-0'
+          : 'translate-y-12 sm:hidden sm:translate-y-0 sm:opacity-0',
+        'top-screen shadow-menu fixed left-0 h-fit w-full overflow-hidden transition-all transition-discrete group-hover/hamburger:flex sm:absolute sm:-top-[182px] sm:left-full sm:z-50 sm:h-fit sm:w-fit sm:overflow-visible sm:pl-9 sm:opacity-0 sm:shadow-none sm:group-hover/hamburger:opacity-100 sm:starting:opacity-0 sm:starting:group-hover/hamburger:opacity-0'
+      )}
+    >
       <div
         className={cn(
-          'flex flex-col w-full transition-all overflow-x-visible max-h-[80vh] lg:h-auto p-1',
-          languageMenOpenu || themeMenuOpen || volumeMenuOpen
-            ? '-translate-x-[244px] lg:translate-x-0'
-            : ''
+          isExtraMenuOpen && '-translate-x-full sm:translate-x-0',
+          'bg-neutral sm:shadow-medium flex h-fit w-full flex-col overflow-x-visible rounded-sm transition-all sm:h-auto sm:max-h-[80vh] sm:w-60'
         )}
-        style={{
-          height: languageMenOpenu
-            ? // ? `${(LANGUAGES.length || 0) * 56 + 111}px`
-              'auto'
-            : themeMenuOpen
-              ? `${(themesWithIcons.length || 0) * 56 + 56}px`
-              : volumeMenuOpen
-                ? `${(volumeOptions.length || 0) * 56 + 56}px`
-                : 'auto'
-        }}
       >
         <ThemeSwitcher
           setExternalThemeMenuOpen={setThemeMenuOpen}
@@ -53,10 +51,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
             setOpen(false)
           }}
         />
-        <LanguageSelector
-          setExternalLanguageMenuOpen={setLanguageMenuOpen}
-          setParentOpen={setOpen}
-        />
+        <LanguageSelector setExternalLanguageMenuOpen={setLanguageMenuOpen} setParentOpen={setOpen} />
         <VolumeSwitcher
           setExternalVolumeMenuOpen={setVolumeMenuOpen}
           closeMenu={() => {
@@ -64,27 +59,27 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
             setVolumeMenuOpen(false)
           }}
         />
-        {EXTERNAL_LINKS.map(link => (
+        {EXTERNAL_LINKS.map((link) => (
           <Link
             key={link.href}
             href={link.href}
             target={link.target}
             onClick={() => setOpen(false)}
-            className='capitalize block transition-colors p-3 w-full rounded-md hover:bg-navItem text-text font-bold'
+            className='hover:bg-nav-item text-text block w-full rounded-sm p-4 font-bold capitalize transition-colors'
           >
-            <p className='text-end'>{t(link.text)}</p>
+            <p>{t(link.text)}</p>
           </Link>
         ))}
-        <div className='flex items-center w-full justify-between p-3'>
-          {socials.map(item => (
+        <div className='flex w-full items-center justify-between p-4'>
+          {socials.map((item) => (
             <a
               target='_blank'
               rel='noreferrer'
               key={item.text}
               href={item.href}
-              className='hover:scale-125 text-3xl transition-transform'
+              className='text-3xl transition-transform hover:scale-125'
             >
-              {item.icon}
+              <Image src={item.icon(resolvedTheme === 'dark')} alt={item.text} width={36} height={36} />
             </a>
           ))}
         </div>

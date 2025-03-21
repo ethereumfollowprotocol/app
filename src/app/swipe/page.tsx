@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import RecommendedCards from './components/recommended-profiles'
+import ConnectWalletButton from '#/components/buttons/connect-wallet'
 
 export const metadata: Metadata = {
   title: 'Swipe | EFP',
@@ -7,21 +8,24 @@ export const metadata: Metadata = {
     title: 'Swipe | EFP',
     siteName: 'Swipe - Ethereum Follow Protocol',
     description: 'Discover the team behind Ethereum Follow Protocol',
-    url: 'https://ethfollow.xyz/swipe',
+    url: 'https://efp.app/swipe',
     images: [
       {
-        url: 'https://ethfollow.xyz/assets/banners/swipe.png'
-      }
-    ]
+        url: 'https://efp.app/assets/banners/swipe.png',
+      },
+    ],
   },
   twitter: {
-    images: 'https://ethfollow.xyz/assets/banners/swipe.png'
-  }
+    images: 'https://efp.app/assets/banners/swipe.png',
+  },
 }
 
 const SwipePage = () => {
   return (
-    <main className='w-full pt-[6.75rem] sm:pt-32 mb-4 px-2 text-center'>
+    <main className='mb-4 w-full px-4 pt-0 text-center sm:pt-8 sm:pl-28 lg:pt-32 xl:pt-0 xl:pl-36'>
+      <div className='fixed top-4 right-4 z-50 hidden sm:block'>
+        <ConnectWalletButton />
+      </div>
       <RecommendedCards />
     </main>
   )

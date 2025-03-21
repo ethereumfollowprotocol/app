@@ -8,7 +8,7 @@ interface PrimaryButtonProps {
   disabled?: boolean
 }
 
-export const PrimaryButton = forwardRef<HTMLButtonElement, PrimaryButtonProps>(
+const PrimaryButton = forwardRef<HTMLButtonElement, PrimaryButtonProps>(
   ({ className, label, onClick, ...props }, ref) => {
     return (
       <button
@@ -16,8 +16,8 @@ export const PrimaryButton = forwardRef<HTMLButtonElement, PrimaryButtonProps>(
         onClick={onClick}
         className={cn(
           /* Prioritize the provided bg color, or use default bg color */
-          !className?.includes('bg') && 'bg-gradient-to-b from-[#FFDE60] to-[#FFA997]',
-          'text-darkGrey relative rounded-full h-14 text-lg font-bold transition-all w-32 hover:scale-110 disabled:hover:scale-100 hover:opacity-90 disabled:cursor-not-allowed disabled:after:absolute disabled:after:w-full disabled:after:h-full disabled:after:top-0 disabled:after:left-0 disabled:after:bg-zinc-400/50 disabled:after:rounded-full disabled:hover:opacity-100',
+          !className?.includes('bg') && 'bg-primary',
+          'text-dark-grey relative h-11 w-full rounded-sm text-lg font-bold transition-all hover:opacity-60 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100',
           className
         )}
         {...props}
@@ -27,3 +27,7 @@ export const PrimaryButton = forwardRef<HTMLButtonElement, PrimaryButtonProps>(
     )
   }
 )
+
+PrimaryButton.displayName = 'PrimaryButton'
+
+export default PrimaryButton
