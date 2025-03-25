@@ -42,6 +42,8 @@ import Tally from 'public/assets/partners/tally.jpeg'
 import EFPower from 'public/assets/partners/efpower.jpeg'
 import NameGraph from 'public/assets/partners/namegraph.jpeg'
 import Aragon from 'public/assets/partners/aragon.jpeg'
+import Superfluid from 'public/assets/partners/superfluid.jpeg'
+import ETHSF from 'public/assets/partners/ethsf.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -73,6 +75,11 @@ export const INTEGRATIONS = [
     name: 'Aragon',
     url: 'https://www.aragon.org',
     logo: Aragon,
+  },
+  {
+    name: 'Superfluid',
+    url: 'https://superfluid.org/',
+    logo: Superfluid,
   },
   {
     name: 'Yodl',
@@ -223,6 +230,11 @@ export const INTEGRATIONS = [
     name: 'Devcon VI Passport',
     url: 'https://app.devcon.org/',
     logo: DevconPassport,
+  },
+  {
+    name: 'Ethereum San Francisco',
+    url: 'https://www.ethereumsf.org/',
+    logo: ETHSF,
   },
   {
     name: 'ETH Tools',
