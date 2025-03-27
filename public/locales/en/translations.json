@@ -5,7 +5,7 @@
   "home": "Home",
   "home title": "Your friends, onchain",
   "home description efp": "Ethereum Follow Protocol (EFP)",
-  "home description": " is an onchain social graph protocol for Ethereum accounts, a primitive of the Ethereum identity stack that complements ENS and Sign in with Ethereum.",
+  "home description": " is an onchain social graph protocol for Ethereum accounts that complements ENS.",
   "integrate link": "Integrate it into your app",
   "recent": "Recent Activity",
   "no followers": "No followers",
