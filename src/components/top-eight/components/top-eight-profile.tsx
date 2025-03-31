@@ -25,10 +25,13 @@ interface TopEightProfileProps {
 }
 
 const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing }) => {
-  const { data: fetchedEnsProfile, isLoading: isEnsProfileLoading } = useQuery({
-    queryKey: ['account-ens', profile.address],
-    queryFn: async () => (profile.ens ? profile.ens : (await fetchAccount(profile.address))?.ens),
+  const { data: fetchedAccount, isLoading } = useQuery({
+    queryKey: ['account', profile.address],
+    queryFn: async () => await fetchAccount(profile.address),
   })
+
+  const isEnsProfileLoading = profile.ens ? false : isLoading
+  const fetchedEnsProfile = profile.ens ?? fetchedAccount?.ens
 
   const profileName = fetchedEnsProfile?.name
   const profileAvatar = fetchedEnsProfile?.avatar

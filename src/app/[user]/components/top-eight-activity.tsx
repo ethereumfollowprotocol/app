@@ -63,13 +63,11 @@ const TopEightActivity: React.FC<TopEightActivityProps> = ({ user, isConnectedUs
   }, [activeTab])
 
   const { data: account } = useQuery({
-    queryKey: ['account-address', user],
-    queryFn: async () => {
-      if (isAddress(user)) return user
-      const account = await fetchAccount(user)
-      return account?.address || null
-    },
+    queryKey: ['account', user],
+    queryFn: async () => await fetchAccount(user),
   })
+
+  const accountAddress = isAddress(user) ? user : account?.address || null
 
   const content = {
     'top 8': (
@@ -83,8 +81,8 @@ const TopEightActivity: React.FC<TopEightActivityProps> = ({ user, isConnectedUs
     ),
     activity: (
       <div className='shadow-medium max-h-[50vh] overflow-y-scroll lg:max-h-fit'>
-        {account ? (
-          <FeedCard activityAddress={account} cardSize='lg:w-[360px] xl:w-[602px]' />
+        {accountAddress ? (
+          <FeedCard activityAddress={accountAddress} cardSize='lg:w-[360px] xl:w-[602px]' />
         ) : (
           <p className='bg-neutral rounded-sm py-8 text-center text-xl font-semibold italic lg:w-[360px] xl:w-[602px]'>
             {t('no activity')}

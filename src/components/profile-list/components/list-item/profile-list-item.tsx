@@ -42,10 +42,13 @@ const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
     tagsDropdownPosition,
     initialFollowState,
   }) => {
-    const { data: fetchedEnsProfile, isLoading: isEnsProfileLoading } = useQuery({
-      queryKey: ['account-ens', address],
-      queryFn: async () => (ensProfile ? ensProfile : (await fetchAccount(address))?.ens),
+    const { data: fetchedAccount, isLoading } = useQuery({
+      queryKey: ['account', address],
+      queryFn: async () => await fetchAccount(address),
     })
+
+    const isEnsProfileLoading = ensProfile ? false : isLoading
+    const fetchedEnsProfile = ensProfile ?? fetchedAccount?.ens
 
     const profileName = fetchedEnsProfile?.name
     const profileAvatar = fetchedEnsProfile?.avatar
