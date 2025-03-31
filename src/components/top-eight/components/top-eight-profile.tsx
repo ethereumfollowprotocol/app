@@ -7,17 +7,17 @@ import { ens_beautify } from '@adraffy/ens-normalize'
 import { useCart } from '#/hooks/use-cart'
 import { Avatar } from '#/components/avatar'
 import { isValidEnsName } from '#/utils/ens'
+import { isLinkValid } from '#/utils/validity'
+import FollowsYou from '#/components/follows-you'
+import Plus from 'public/assets/icons/ui/plus.svg'
+import { fetchAccount } from '#/api/fetch-account'
+import Cross from 'public/assets/icons/ui/cross.svg'
 import { cn, truncateAddress } from '#/lib/utilities'
 import FollowButton from '#/components/follow-button'
 import useFollowerState from '#/hooks/use-follower-state'
 import LoadingCell from '#/components/loaders/loading-cell'
 import type { TopEightProfileType } from '../hooks/use-top-eight'
 import { listOpAddListRecord, listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
-import Plus from 'public/assets/icons/ui/plus.svg'
-import Cross from 'public/assets/icons/ui/cross.svg'
-import FollowsYou from '#/components/follows-you'
-import { fetchAccount } from '#/api/fetch-account'
-import { isLinkValid } from '#/utils/validity'
 
 interface TopEightProfileProps {
   profile: TopEightProfileType
@@ -26,7 +26,7 @@ interface TopEightProfileProps {
 
 const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing }) => {
   const { data: fetchedEnsProfile, isLoading: isEnsProfileLoading } = useQuery({
-    queryKey: ['account', profile.address],
+    queryKey: ['account-ens', profile.address],
     queryFn: async () => (profile.ens ? profile.ens : (await fetchAccount(profile.address))?.ens),
   })
 
