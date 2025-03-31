@@ -63,7 +63,7 @@ const TopEightActivity: React.FC<TopEightActivityProps> = ({ user, isConnectedUs
   }, [activeTab])
 
   const { data: account } = useQuery({
-    queryKey: ['activity-account', user],
+    queryKey: ['account', user],
     queryFn: async () => {
       if (isAddress(user)) return user
       const account = await fetchAccount(user)
