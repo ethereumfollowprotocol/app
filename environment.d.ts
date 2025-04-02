@@ -20,6 +20,8 @@ interface EnvironmentVariables {
   readonly NEXT_PUBLIC_ANVIL_ACCOUNT_PRIVATE_KEY: `0x${string}`
   readonly NEXT_PUBLIC_SITE_URL: string
   readonly ANALYZE: 'true' | 'false'
+  readonly NEXT_PUBLIC_THIRDWEB_CLIENT_ID: string
+  readonly NEXT_PUBLIC_NEXT_PUBLIC_UNICORN_FACTORY_ADDRESS: string
   /* automatically added by Vercel */
   readonly VERCEL_URL?: string
   readonly NEXT_PUBLIC_VERCEL_URL?: string
