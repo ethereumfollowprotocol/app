@@ -5,13 +5,21 @@ if (!storedTheme || storedTheme === 'system') {
 
   if (userMedia.matches) {
     document.documentElement.classList.add('dark')
+  } else {
+    document.documentElement.classList.remove('dark')
   }
-}
-
-if (storedTheme === 'dark') {
+} else if (storedTheme === 'dark') {
   document.documentElement.classList.add('dark')
-}
-
-if (storedTheme === 'light') {
+} else if (storedTheme === 'light') {
   document.documentElement.classList.remove('dark')
 }
+
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+  if (storedTheme === 'system') {
+    if (e.matches) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  }
+})
