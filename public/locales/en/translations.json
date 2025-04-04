@@ -245,7 +245,7 @@
     "unblock": "unblocked you",
     "mute": "muted you",
     "unmute": "unmuted you",
-    "tag": "tagged you",
-    "untag": "untagged you"
+    "tag": "tagged you with",
+    "untag": "removed the tag"
   }
 }

@@ -50,8 +50,19 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ notifications, acti
     unmute: 'bg-primary/30',
   }[action]
 
-  const displayedAvatars = notifications.slice(0, 3)
-  const displayedNames = notifications.slice(0, 2)
+  // groups the notifications by address
+  const groupedNotifications = Object.values(
+    notifications.reduce(
+      (acc, notification) => {
+        acc[notification.address] = [...(acc[notification.address] || [notification])]
+        return acc
+      },
+      {} as Record<string, NotificationItemType[]>
+    )
+  ).flat()
+
+  const displayedAvatars = groupedNotifications.slice(0, 3)
+  const displayedNames = groupedNotifications.slice(0, 2)
 
   return (
     <div
@@ -74,7 +85,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ notifications, acti
           <div className='flex'>
             {displayedAvatars.map((profile, index) => (
               <Avatar
-                key={profile.address}
+                key={`avatar-${profile.address}-${index}`}
                 size={`w-8 h-8 rounded-full shadow-sm cursor-pointer hover:scale-125 transition-all ${index === 0 ? 'z-0' : `-ml-[18px] z-${index * 10}`}`}
                 avatarUrl={profile.avatar}
                 name={profile.name || profile.address}
@@ -90,7 +101,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ notifications, acti
             style={{ width: 'calc(100% - 70px)' }}
           >
             {displayedNames?.map((profile, index) => (
-              <span key={profile.address}>
+              <span key={`name-${profile.address}-${index}`}>
                 <span
                   onClick={() => {
                     router.push(`/${profile.address}?ssr=false`)
@@ -100,12 +111,15 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ notifications, acti
                 >
                   {`${profile.name || truncateAddress(profile.address)}`}
                 </span>
-                {`${notifications.length === 2 ? (index === 0 ? ' and ' : ' ') : notifications.length === 1 ? ' ' : ', '}`}
+                {`${groupedNotifications.length === 2 ? (index === 0 ? ' and ' : ' ') : groupedNotifications.length === 1 ? ' ' : ', '}`}
               </span>
             ))}
-            {notifications.length > 2 &&
-              `${t('and')} ${notifications.length - 2} ${notifications.length - 2 > 1 ? t('others') : t('other')} `}
+            {groupedNotifications.length > 2 &&
+              `${t('and')} ${groupedNotifications.length - 2} ${groupedNotifications.length - 2 > 1 ? t('others') : t('other')} `}
             {t(`notifications.${action}`)}
+            {(action === 'tag' || action === 'untag') && (
+              <span className='text-text-neutral'>{` ${groupedNotifications[0]?.tag}`}</span>
+            )}
           </p>
         </div>
       </div>

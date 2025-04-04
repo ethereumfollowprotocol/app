@@ -407,17 +407,6 @@ input {
   left: 33px;
 }
 
-/* Ethereum Identity Kit - extensions */
-.profile-stats-item {
-  gap: 0px !important;
-  transition: transform 0.2s ease;
-}
-
-.profile-stats-item:hover {
-  cursor: pointer;
-  transform: scale(1.1);
-}
-
 /* Leaderboard top three */
 .first-place,
 .second-place,
@@ -807,4 +796,8 @@ input {
 .profile-bio-text {
   font-weight: 400;
   color: var(--color-text-neutral);
+}
+
+.common-followers-container {
+  padding-top: 0px;
 }
