@@ -84,6 +84,14 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     }
   }, [searchParams])
 
+  useEffect(() => {
+    if (stats) {
+      if (stats.following_count === 0 && stats.followers_count > 0) {
+        setActiveTab('followers')
+      }
+    }
+  }, [stats])
+
   const tableProps = {
     followers: {
       isLoading: followersIsLoading,
