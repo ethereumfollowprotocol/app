@@ -38,7 +38,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
   const ensData = await getAccount()
   const ensName = ensData?.ens.name
-  const displayUser = ensName ?? (isList ? `List #${user}` : truncatedUser)
+  const displayUser = ensName && ensName.length > 0 ? ensName : isList ? `List #${user}` : truncatedUser
 
   return {
     title: `${displayUser} | EFP`,
