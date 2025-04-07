@@ -58,9 +58,9 @@ const HeadTag = () => {
       <meta name='apple-mobile-web-app-status-bar-style' content='default' />
       <meta name='apple-mobile-web-app-title' content='EFP' />
       <meta name='mobile-web-app-capable' content='yes' />
-      <meta name='theme-color' content='#FFE066' />
+      {/* <meta name='theme-color' content='#FFE066' />
       <meta name='apple-mobile-web-app-status-bar-style' content='#FFE066' />
-      <meta name='msapplication-TileColor' content='#FFE066' />
+      <meta name='msapplication-TileColor' content='#FFE066' /> */}
       <meta name='author' content='Ethereum Follow Protocol Team' />
 
       {/* Preload fonts */}
