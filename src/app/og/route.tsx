@@ -9,9 +9,27 @@ export async function GET(req: NextRequest) {
   const user = req.url.split('user=')[1] || ''
   const isList = !(isAddress(user) || user.includes('.') || Number.isNaN(Number(user)) || isHex(user))
 
-  const response = (await fetch(
-    `${process.env.NEXT_PUBLIC_EFP_API_URL}/${isList ? 'lists' : 'users'}/${user}/account`
-  ).then((res) => res.json())) as AccountResponseType
+  const getResponse = async () => {
+    try {
+      return (await fetch(`${process.env.NEXT_PUBLIC_EFP_API_URL}/${isList ? 'lists' : 'users'}/${user}/account`).then(
+        (res) => res.json()
+      )) as AccountResponseType
+    } catch (error) {
+      return {
+        primary_list: null,
+        address: user,
+        ens: {
+          name: user,
+          avatar: 'https://efp.app/assets/art/default-avatar.svg',
+          records: {
+            header: 'https://efp.app/assets/art/default-header.svg',
+          },
+        },
+      }
+    }
+  }
+
+  const response = await getResponse()
 
   const fetchedUser = response.address
     ? response.ens.name || truncateAddress(response.address)
@@ -20,8 +38,6 @@ export async function GET(req: NextRequest) {
       : user
   const fetchedAvatar = response.ens?.avatar
   const fetchedHeader = response.ens?.records?.header
-
-  console.log(fetchedHeader)
 
   return new ImageResponse(
     (

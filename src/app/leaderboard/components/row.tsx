@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import type { Address } from 'viem'
 
 import Name from './name'
@@ -6,6 +5,8 @@ import StatsDesktop from './stats-desktop'
 import FollowButton from '#/components/follow-button'
 import type { LeaderboardFilter } from '#/types/common'
 import { formatNumber } from '#/utils/format/format-number'
+import ImageWithFallback from '#/components/image-with-fallback'
+import { DEFAULT_FALLBACK_HEADER, isLinkValid } from 'ethereum-identity-kit'
 
 interface TableRowProps {
   address: Address
@@ -69,9 +70,10 @@ const TableRow: React.FC<TableRowProps> = ({
 
   return (
     <div className='hover:bg-text/5 relative flex h-20 w-full items-center justify-between gap-3 pr-2 pl-3 sm:gap-4 sm:px-4'>
-      {header && (
-        <Image
+      {header && isLinkValid(header) && (
+        <ImageWithFallback
           src={header}
+          fallback={DEFAULT_FALLBACK_HEADER}
           alt='header'
           width={1000}
           height={300}
