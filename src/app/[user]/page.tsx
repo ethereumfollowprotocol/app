@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
 import { isAddress, isHex } from 'viem'
+import type { SearchParams } from 'next/dist/server/request/search-params'
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
 import { fetchProfileDetails, fetchProfileStats } from 'ethereum-identity-kit/utils'
 
 import { MINUTE } from '#/lib/constants'
 import UserInfo from './components/user-info'
 import { truncateAddress } from '#/lib/utilities'
-import type { SearchParams } from 'next/dist/server/request/search-params'
 import { fetchAccount } from '#/api/fetch-account'
 
 interface Props {
@@ -36,7 +36,8 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     }
   }
 
-  const ensName = await getAccount()
+  const ensData = await getAccount()
+  const ensName = ensData?.ens.name
   const displayUser = ensName ?? (isList ? `List #${user}` : truncatedUser)
 
   return {

@@ -59,7 +59,12 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ notifications, acti
       },
       {} as Record<string, NotificationItemType[]>
     )
-  ).flat()
+  )
+    .flat()
+    .sort((a, b) =>
+      // sort by avatar                                         // sort by name
+      a.avatar && b.avatar ? 1 : a.avatar ? -1 : b.avatar ? 1 : a.name && b.name ? 1 : a.name ? -1 : b.name ? 1 : -1
+    )
 
   const displayedAvatars = groupedNotifications.slice(0, 3)
   const displayedNames = groupedNotifications.slice(0, 2)
