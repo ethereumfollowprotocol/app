@@ -96,7 +96,7 @@ const nextConfig = {
       ],
     },
     {
-      source: '/sw.js',
+      source: '/scripts/sw.js',
       headers: [
         {
           key: 'Content-Type',
