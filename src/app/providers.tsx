@@ -12,9 +12,9 @@ import { DAY, MINUTE } from '#/lib/constants'
 import Navigation from '#/components/navigation'
 import { SoundsProvider } from '#/contexts/sounds-context'
 import TransactionModal from '#/components/transaction-modal'
+import PushNotificationSetup from '#/app/push-notification-setup'
 import { EFPProfileProvider } from '#/contexts/efp-profile-context'
 import { RecommendedProfilesProvider } from '#/contexts/recommended-profiles-context'
-import PushNotificationSetup from '#/components/push-notification-setup'
 
 type ProviderProps = {
   children: React.ReactNode

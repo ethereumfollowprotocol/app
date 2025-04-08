@@ -2,7 +2,11 @@
 
 import webpush, { type PushSubscription } from 'web-push'
 
-webpush.setVapidDetails('https://efp.app', process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!, process.env.VAPID_PRIVATE_KEY!)
+webpush.setVapidDetails(
+  'https://app-git-push-notifications-efp.vercel.app/',
+  process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
+  process.env.VAPID_PRIVATE_KEY!
+)
 
 let subscription: PushSubscription | null = null
 

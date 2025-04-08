@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { sendNotification, subscribeUser, unsubscribeUser } from '../../actions'
+import { sendNotification, subscribeUser, unsubscribeUser } from './actions'
 import type { PushSubscription as SerializablePushSubscription } from 'web-push'
 
 function urlBase64ToUint8Array(base64String: string) {
