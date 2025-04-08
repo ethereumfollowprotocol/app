@@ -5,8 +5,9 @@ import '@rainbow-me/rainbowkit/styles.css'
 
 import Image from 'next/image'
 import { Toaster } from 'sonner'
-import type { Metadata, Viewport } from 'next'
+import { Inter } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
+import type { Metadata, Viewport } from 'next'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { GoogleAnalytics } from '@next/third-parties/google'
@@ -26,11 +27,19 @@ export const viewport: Viewport = {
   userScalable: false,
 }
 
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  preload: true,
+  fallback: ['system-ui', 'sans-serif'],
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+})
+
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang='en' suppressHydrationWarning={true}>
       <HeadTag />
-      <body>
+      <body className={inter.className}>
         <ThemeProvider attribute='class' enableSystem={true} themes={THEMES}>
           <Image
             src={BackgroundImage}
@@ -57,7 +66,6 @@ const HeadTag = () => {
   return (
     <head>
       <meta charSet='utf-8' />
-      {/* <link rel='manifest' href='/site.webmanifest' crossOrigin='use-credentials' /> */}
       <meta name='mobile-web-app-capable' content='yes' />
 
       {/* Preload fonts */}

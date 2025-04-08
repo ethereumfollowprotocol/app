@@ -12,6 +12,14 @@ export const sharedMetadataIcons: Metadata['icons'] = [
     rel: 'icon',
     url: 'https://efp.app/assets/favicon.ico',
   },
+  {
+    rel: 'apple-touch-icon',
+    url: 'https://efp.app/assets/apple-touch-icon.png',
+  },
+  {
+    rel: 'android-chrome',
+    url: 'https://efp.app/assets/android-chrome-384x384.png',
+  },
 ]
 
 export const sharedMetadataOpenGraph: Metadata['openGraph'] = {
@@ -64,7 +72,7 @@ export const sharedMetadata: Metadata = {
   },
   appleWebApp: {
     capable: true,
-    statusBarStyle: 'default',
     title: metadataTitle,
+    startupImage: 'https://efp.app/assets/apple-touch-icon.png',
   },
 }

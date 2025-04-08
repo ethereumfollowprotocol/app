@@ -67,9 +67,8 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     },
     appleWebApp: {
       capable: true,
-      statusBarStyle: 'black-translucent',
       title: displayUser,
-      startupImage: avatarResponse?.status === 200 ? ensAvatar : '/assets/favicon.ico', // replace with /assets/art/default-avatar.svg for a default avatar
+      startupImage: avatarResponse?.status === 200 ? ensAvatar : '/assets/apple-touch-icon.png', // replace with /assets/art/default-avatar.svg for a default avatar
     },
   }
 }
