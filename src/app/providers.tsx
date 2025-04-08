@@ -14,6 +14,7 @@ import { SoundsProvider } from '#/contexts/sounds-context'
 import TransactionModal from '#/components/transaction-modal'
 import { EFPProfileProvider } from '#/contexts/efp-profile-context'
 import { RecommendedProfilesProvider } from '#/contexts/recommended-profiles-context'
+import PushNotificationSetup from '#/components/push-notification-setup'
 
 type ProviderProps = {
   children: React.ReactNode
@@ -46,6 +47,7 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
                   <Navigation />
                   {children}
                   <TransactionModal />
+                  <PushNotificationSetup />
                   <div id='modal-root' />
                 </RecommendedProfilesProvider>
               </SoundsProvider>
