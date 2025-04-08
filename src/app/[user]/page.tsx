@@ -62,6 +62,12 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     icons: {
       icon: avatarResponse?.status === 200 ? ensAvatar : '/assets/favicon.ico', // replace with /assets/art/default-avatar.svg for a default avatar
     },
+    appleWebApp: {
+      capable: true,
+      statusBarStyle: 'default',
+      title: displayUser,
+      // startupImage: avatarResponse?.status === 200 ? ensAvatar : '/assets/favicon.ico', // replace with /assets/art/default-avatar.svg for a default avatar
+    },
   }
 }
 
