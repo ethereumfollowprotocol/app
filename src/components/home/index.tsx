@@ -48,7 +48,7 @@ const Home = () => {
       <div className='fixed top-4 right-4 z-50 hidden h-fit w-fit sm:block'>
         <ConnectWalletButton />
       </div>
-      <div className='mt-24 flex max-w-[1100px] flex-col gap-4 md:mt-20 lg:mt-24'>
+      <div className='mt-24 flex w-full max-w-[1100px] flex-col gap-4 md:mt-20 lg:mt-24'>
         <h2 className='xs:text-4xl text-3xl font-bold sm:text-5xl 2xl:text-6xl'>{t('home title')}</h2>
         <p className='w-[90%] text-lg sm:mt-3 lg:w-3/4 xl:w-2/3'>
           <b>{t('home description efp')}</b>

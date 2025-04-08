@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import Image from 'next/image'
+import { isAddress } from 'viem'
 import { useTranslation } from 'react-i18next'
+import { useIsClient } from '@uidotdev/usehooks'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import React, { useEffect, useState } from 'react'
 
 import { cn } from '#/lib/utilities'
 import TopEight from '#/components/top-eight'
-import type { UserProfilePageTableProps } from '#/components/profile-page-table'
+import FeedCard from '#/components/feed-card'
+import { fetchAccount } from '#/api/fetch-account'
 import Edit from 'public/assets/icons/ui/edit.svg'
-import Image from 'next/image'
 import InterfaceLight from 'public/assets/icons/socials/interface.png'
 import InterfaceDark from 'public/assets/icons/socials/interface-dark.png'
-import FeedCard from '#/components/feed-card'
-import { useIsClient } from '@uidotdev/usehooks'
-import { useQuery } from '@tanstack/react-query'
-import { isAddress } from 'viem'
-import { fetchAccount } from '#/api/fetch-account'
+import type { UserProfilePageTableProps } from '#/components/profile-page-table'
+import type { TopEightProfileType } from '#/components/top-eight/hooks/use-top-eight'
 
 interface TopEightActivityProps {
   user: string
@@ -63,13 +64,20 @@ const TopEightActivity: React.FC<TopEightActivityProps> = ({ user, isConnectedUs
   }, [activeTab])
 
   const { data: account } = useQuery({
-    queryKey: ['activity-account', user],
-    queryFn: async () => {
-      if (isAddress(user)) return user
-      const account = await fetchAccount(user)
-      return account?.address || null
-    },
+    queryKey: ['account', user],
+    queryFn: async () => await fetchAccount(user),
   })
+
+  const accountAddress = isAddress(user) ? user : account?.address || null
+
+  const queryClient = useQueryClient()
+  const topEightQueryData = queryClient.getQueryData<TopEightProfileType[]>(['top8', user])
+
+  useEffect(() => {
+    if (topEightQueryData && topEightQueryData.length === 0) {
+      setActiveTab('activity')
+    }
+  }, [topEightQueryData])
 
   const content = {
     'top 8': (
@@ -83,8 +91,8 @@ const TopEightActivity: React.FC<TopEightActivityProps> = ({ user, isConnectedUs
     ),
     activity: (
       <div className='shadow-medium max-h-[50vh] overflow-y-scroll lg:max-h-fit'>
-        {account ? (
-          <FeedCard activityAddress={account} cardSize='lg:w-[360px] xl:w-[602px]' />
+        {accountAddress ? (
+          <FeedCard activityAddress={accountAddress} cardSize='lg:w-[360px] xl:w-[602px]' />
         ) : (
           <p className='bg-neutral rounded-sm py-8 text-center text-xl font-semibold italic lg:w-[360px] xl:w-[602px]'>
             {t('no activity')}

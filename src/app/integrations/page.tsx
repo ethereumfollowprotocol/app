@@ -6,7 +6,7 @@ import BackToTop from '#/components/buttons/back-to-top'
 import Examples from './components/examples'
 
 export const metadata: Metadata = {
-  title: 'Integrations | EFP',
+  title: 'Integrations',
   openGraph: {
     title: 'Integrations | EFP',
     siteName: 'Integrations - Ethereum Follow Protocol',

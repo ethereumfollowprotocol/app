@@ -40,7 +40,6 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   isLoading,
   profileList,
   hideFollowButton,
-  isResponsive = true,
   showMoreOptions,
   openBlockModal,
   openListSettingsModal,
@@ -77,10 +76,11 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           options={{
             openListSettings: openListSettingsModal,
             profileData: profile,
-            statsData: stats,
+            statsData: stats ?? undefined,
             refetchStatsData: refetchStats,
             refetchProfileData: refetchProfile,
             prefetchedStatsLoading: isStatsLoading,
+            prefetchedProfileLoading: isLoading,
             nameMenu: (
               <ThreeDotMenu
                 address={profile.address}

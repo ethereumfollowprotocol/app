@@ -129,6 +129,7 @@ export const useNotifications = () => {
     enabled: !!profile?.address,
   })
 
+  // Update the notifications to be not new when the user opens the notifications modal
   useEffect(() => {
     if (data?.notifications) {
       if (!isOpen) {
@@ -146,6 +147,7 @@ export const useNotifications = () => {
     }
   }, [isOpen])
 
+  // Update the new notifications count when the notifications are fetched
   useEffect(() => {
     if (isLoading) return setNewNotifications(0)
 

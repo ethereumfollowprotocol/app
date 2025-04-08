@@ -96,9 +96,9 @@ export const EXTERNAL_LINKS = [
     target: '_blank',
   },
   {
-    text: 'team',
-    href: '/team',
-    target: '',
+    text: 'Ethereum Identity Foundation',
+    href: 'https://ethid.org',
+    target: '_blank',
   },
 ]
 

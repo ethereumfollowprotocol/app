@@ -12,6 +12,14 @@ export const sharedMetadataIcons: Metadata['icons'] = [
     rel: 'icon',
     url: 'https://efp.app/assets/favicon.ico',
   },
+  {
+    rel: 'apple-touch-icon',
+    url: 'https://efp.app/assets/apple-touch-icon.png',
+  },
+  {
+    rel: 'android-chrome',
+    url: 'https://efp.app/assets/android-chrome-384x384.png',
+  },
 ]
 
 export const sharedMetadataOpenGraph: Metadata['openGraph'] = {
@@ -32,15 +40,19 @@ export const sharedMetadataTwitter: Metadata['twitter'] = {
 }
 
 export const sharedMetadata: Metadata = {
-  title: metadataTitle,
+  // metadataBase: metadataBaseUrl,
+  title: {
+    default: metadataTitle,
+    template: '%s | EFP',
+  },
   description: metadataDescription,
   applicationName: metadataSiteName,
   keywords: ['efp', 'ethereum follow protocol', 'follow', 'protocol', 'social graph', 'ethereum'],
   icons: sharedMetadataIcons,
   openGraph: sharedMetadataOpenGraph,
   authors: {
-    name: 'Ethereum Follow Protocol',
-    url: 'https://efp.app',
+    name: 'Ethereum Identity Kit',
+    url: 'https://ethid.org',
   },
   robots: {
     index: true,
@@ -49,6 +61,18 @@ export const sharedMetadata: Metadata = {
     nosnippet: false,
     noimageindex: false,
     notranslate: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
-  metadataBase: metadataBaseUrl,
+  appleWebApp: {
+    capable: true,
+    title: metadataTitle,
+    startupImage: 'https://efp.app/assets/apple-touch-icon.png',
+  },
 }

@@ -10,7 +10,6 @@ import ListSettings from '#/components/list-settings'
 import BlockedMuted from '#/components/blocked-muted'
 import { useIsEditView } from '#/hooks/use-is-edit-view'
 import { useUserScroll } from '../hooks/use-user-scroll'
-import UserProfileCard from '#/components/user-profile-card'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import UserProfilePageTable from '#/components/profile-page-table'
 import UserProfile from '#/components/user-profile'
@@ -84,6 +83,14 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       }
     }
   }, [searchParams])
+
+  useEffect(() => {
+    if (stats) {
+      if (stats.following_count === 0 && stats.followers_count > 0) {
+        setActiveTab('followers')
+      }
+    }
+  }, [stats])
 
   const tableProps = {
     followers: {
@@ -174,23 +181,8 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
         >
           <div className='z-20 mt-20 w-full sm:mt-0 md:z-auto'>
             <Suspense>
-              <UserProfileCard
-                className='z-50 flex w-full md:hidden'
-                profileList={profileList}
-                stats={stats}
-                profile={profile}
-                refetchProfile={refetchProfile}
-                isLoading={profileIsLoading}
-                isStatsLoading={statsIsLoading}
-                showMoreOptions={true}
-                openBlockModal={() => {
-                  setIsBlockedMutedOpen(true)
-                  router.push(`/${user}?modal=block_mute_list&ssr=false`)
-                }}
-                openQrCodeModal={() => setQrCodeModalOpen(true)}
-                openListSettingsModal={() => setListSettingsOpen(true)}
-              />
               <UserProfile
+                addressOrName={user}
                 isMyProfile={isMyProfile}
                 profileList={profileList}
                 stats={stats}
