@@ -31,7 +31,7 @@ export default function PushNotificationSetup() {
 
   async function registerServiceWorker() {
     const registration = await navigator.serviceWorker.register('/scripts/sw.js', {
-      scope: '/scripts',
+      scope: '/scripts/',
       updateViaCache: 'none',
     })
     const sub = await registration.pushManager.getSubscription()
