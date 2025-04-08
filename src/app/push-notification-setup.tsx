@@ -39,6 +39,7 @@ export default function PushNotificationSetup() {
   }
 
   async function subscribeToPush() {
+    console.log('subscribeToPush', process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!)
     const registration = await navigator.serviceWorker.ready
     const sub = await registration.pushManager.subscribe({
       userVisibleOnly: true,
@@ -46,6 +47,7 @@ export default function PushNotificationSetup() {
     })
     setSubscription(sub)
     const serializedSub = JSON.parse(JSON.stringify(sub)) as SerializablePushSubscription
+    console.log('serializedSub', serializedSub)
     await subscribeUser(serializedSub)
   }
 
@@ -67,7 +69,7 @@ export default function PushNotificationSetup() {
   }
 
   return (
-    <div className='bg-dark-grey fixed right-0 bottom-0 flex flex-col gap-4 p-4'>
+    <div className='bg-dark-grey fixed right-0 bottom-20 z-[99999] flex flex-col gap-4 p-4'>
       <h3>Push Notifications</h3>
       {subscription ? (
         <>
