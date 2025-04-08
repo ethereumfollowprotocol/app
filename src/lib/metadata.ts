@@ -32,7 +32,10 @@ export const sharedMetadataTwitter: Metadata['twitter'] = {
 }
 
 export const sharedMetadata: Metadata = {
-  title: metadataTitle,
+  title: {
+    default: metadataTitle,
+    template: '%s | EFP',
+  },
   description: metadataDescription,
   applicationName: metadataSiteName,
   keywords: ['efp', 'ethereum follow protocol', 'follow', 'protocol', 'social graph', 'ethereum'],
@@ -49,6 +52,22 @@ export const sharedMetadata: Metadata = {
     nosnippet: false,
     noimageindex: false,
     notranslate: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
   metadataBase: metadataBaseUrl,
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: metadataTitle,
+  },
+  verification: {
+    google: 'G-4YT2CMF6F2',
+  },
 }

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { isAddress, isHex } from 'viem'
 import type { SearchParams } from 'next/dist/server/request/search-params'
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
-import { fetchProfileDetails, fetchProfileStats } from 'ethereum-identity-kit/utils'
+import { fetchProfileDetails, fetchProfileStats, isLinkValid } from 'ethereum-identity-kit/utils'
 
 import { MINUTE } from '#/lib/constants'
 import UserInfo from './components/user-info'
@@ -38,10 +38,13 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
   const ensData = await getAccount()
   const ensName = ensData?.ens.name
+  const ensAvatar = ensData?.ens.avatar
   const displayUser = ensName && ensName.length > 0 ? ensName : isList ? `List #${user}` : truncatedUser
 
+  const avatarResponse = ensAvatar && isLinkValid(ensAvatar) ? await fetch(ensAvatar) : null
+
   return {
-    title: `${displayUser} | EFP`,
+    title: `${displayUser}`,
     openGraph: {
       title: `${displayUser} | EFP`,
       siteName: `${displayUser} - EFP profile`,
@@ -55,6 +58,9 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     },
     twitter: {
       images: `https://efp.app/og?user=${user}`,
+    },
+    icons: {
+      icon: avatarResponse?.status === 200 ? ensAvatar : '/assets/favicon.ico', // replace with /assets/art/default-avatar.svg for a default avatar
     },
   }
 }

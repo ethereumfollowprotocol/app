@@ -5,7 +5,7 @@ import '@rainbow-me/rainbowkit/styles.css'
 
 import Image from 'next/image'
 import { Toaster } from 'sonner'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { ThemeProvider } from 'next-themes'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -18,6 +18,13 @@ import { THEMES } from '../lib/constants/index.ts'
 import BackgroundImage from 'public/assets/art/background.png'
 
 export const metadata: Metadata = sharedMetadata
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+}
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -50,17 +57,9 @@ const HeadTag = () => {
   return (
     <head>
       <meta charSet='utf-8' />
-      <meta name='viewport' content='width=device-width, initial-scale=1' />
       <link rel='manifest' href='/site.webmanifest' crossOrigin='use-credentials' />
-      <link rel='icon' href='/assets/favicon.ico' sizes='any' />
 
-      <meta name='apple-mobile-web-app-capable' content='yes' />
-      <meta name='apple-mobile-web-app-status-bar-style' content='default' />
-      <meta name='apple-mobile-web-app-title' content='EFP' />
       <meta name='mobile-web-app-capable' content='yes' />
-      {/* <meta name='theme-color' content='#FFE066' />
-      <meta name='apple-mobile-web-app-status-bar-style' content='#FFE066' />
-      <meta name='msapplication-TileColor' content='#FFE066' /> */}
       <meta name='author' content='Ethereum Follow Protocol Team' />
 
       {/* Preload fonts */}

@@ -1,14 +1,17 @@
 {
   "name": "Ethereum Follow Protocol",
   "short_name": "EFP",
-  "theme_color": "#FFDBD9",
-  "background_color": "#ffffff",
   "start_url": "/",
   "display": "standalone",
   "icons": [
     {
       "src": "/assets/android-chrome-192x192.png",
       "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/android-chrome-384x384.png",
+      "sizes": "384x384",
       "type": "image/png"
     },
     {

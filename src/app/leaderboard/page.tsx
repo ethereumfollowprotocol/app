@@ -10,7 +10,7 @@ import BackToTop from '#/components/buttons/back-to-top.tsx'
 import ConnectWalletButton from '#/components/buttons/connect-wallet.tsx'
 
 export const metadata: Metadata = {
-  title: 'Leaderboard | EFP',
+  title: 'Leaderboard',
   openGraph: {
     title: 'Leaderboard | EFP',
     siteName: 'Leaderboard - Ethereum Follow Protocol',
