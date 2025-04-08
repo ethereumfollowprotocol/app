@@ -9,6 +9,11 @@ export const EnvironmentVariableSchema = v.object({
   EFP_API_URL: v.string('EFP_API_URL must be a string', [v.url()]),
   NEXT_PUBLIC_EFP_API_URL: v.string('NEXT_PUBLIC_EFP_API_URL must be a string', [v.url()]),
   NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID: v.string('NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID must be a string'),
+  NEXT_PUBLIC_ENS_SUBGRAPH_API_KEY: v.string('NEXT_PUBLIC_ENS_SUBGRAPH_API_KEY must be a string'),
+  NEXT_PUBLIC_EFP_ACCOUNT_METADATA: v.string('NEXT_PUBLIC_EFP_ACCOUNT_METADATA must be a string'),
+  NEXT_PUBLIC_EFP_LIST_REGISTRY: v.string('NEXT_PUBLIC_EFP_LIST_REGISTRY must be a string'),
+  NEXT_PUBLIC_EFP_LIST_RECORDS: v.string('NEXT_PUBLIC_EFP_LIST_RECORDS must be a string'),
+  NEXT_PUBLIC_EFP_LIST_MINTER: v.string('NEXT_PUBLIC_EFP_LIST_MINTER must be a string'),
 })
 
 export type EnvironmentVariable = v.Input<typeof EnvironmentVariableSchema>

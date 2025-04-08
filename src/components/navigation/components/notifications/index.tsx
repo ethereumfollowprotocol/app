@@ -8,6 +8,7 @@ import Bell from 'public/assets/icons/ui/bell.svg'
 import { useNotifications } from '#/hooks/use-notifications'
 import NotificationItemLoading from './notifcation-item-loading'
 import NotificationItem, { type NotificationItemAction } from './notification-item'
+import type { NotificationItemType } from '#/types/requests'
 
 const Notifications = () => {
   const { t } = useTranslation()
@@ -42,8 +43,34 @@ const Notifications = () => {
       >
         <div className='bg-neutral shadow-medium flex max-h-[70vh] w-[96vw] flex-col gap-2 overflow-y-scroll rounded-sm p-2 sm:w-fit'>
           {notifications?.map((item, index) =>
-            Object.entries(item.notifications).map(([key, value]) =>
-              value ? (
+            Object.entries(item.notifications).map(([key, value]) => {
+              if (!value) return null
+
+              // separate the notifications by tag (each unique tag is a new notification item)
+              if (key === 'tag' || key === 'untag') {
+                // group the notifications by tag
+                const notificationsToDisplay = Object.values(
+                  value.reduce(
+                    (acc, notification) => {
+                      acc[notification.tag] = [...(acc[notification.tag] || []), notification]
+                      return acc
+                    },
+                    {} as Record<string, NotificationItemType[]>
+                  )
+                )
+
+                return notificationsToDisplay.map((notification, i) => (
+                  <NotificationItem
+                    key={`${index}-${i}-${key}`}
+                    isNew={item.isNew}
+                    notifications={notification}
+                    action={key as NotificationItemAction}
+                    onClose={() => setIsOpen(false)}
+                  />
+                ))
+              }
+
+              return (
                 <NotificationItem
                   key={`${index}-${key}`}
                   isNew={item.isNew}
@@ -51,8 +78,8 @@ const Notifications = () => {
                   action={key as NotificationItemAction}
                   onClose={() => setIsOpen(false)}
                 />
-              ) : null
-            )
+              )
+            })
           )}
           {isLoading && new Array(5).fill(null).map((_, index) => <NotificationItemLoading key={index} />)}
           {!isLoading && notifications?.flatMap((item) => Object.values(item.notifications).flat()).length === 0 && (

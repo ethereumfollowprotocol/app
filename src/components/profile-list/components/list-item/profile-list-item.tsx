@@ -2,9 +2,8 @@ import React from 'react'
 import Image from 'next/image'
 import type { Address } from 'viem'
 import { useQuery } from '@tanstack/react-query'
-import type { InitialFollowingState } from 'ethereum-identity-kit'
+import { type InitialFollowingState, isLinkValid } from 'ethereum-identity-kit'
 
-import { isLinkValid } from '#/utils/validity'
 import ProfileListItemDetails from './details'
 import { fetchAccount } from '#/api/fetch-account'
 import type { ENSProfile } from '#/types/requests'
@@ -42,10 +41,13 @@ const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
     tagsDropdownPosition,
     initialFollowState,
   }) => {
-    const { data: fetchedEnsProfile, isLoading: isEnsProfileLoading } = useQuery({
-      queryKey: ['ens metadata', address],
-      queryFn: async () => (ensProfile ? ensProfile : (await fetchAccount(address))?.ens),
+    const { data: fetchedAccount, isLoading } = useQuery({
+      queryKey: ['account', address],
+      queryFn: async () => await fetchAccount(address),
     })
+
+    const isEnsProfileLoading = ensProfile ? false : isLoading
+    const fetchedEnsProfile = ensProfile ?? fetchedAccount?.ens
 
     const profileName = fetchedEnsProfile?.name
     const profileAvatar = fetchedEnsProfile?.avatar

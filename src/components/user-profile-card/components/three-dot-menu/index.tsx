@@ -66,7 +66,7 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
   return (
     <div className={showMoreOptions ? 'block' : 'hidden'} ref={threeDotMenuRef}>
       <div
-        className='bg-nav-item shadow-small flex cursor-pointer items-center gap-[3px] rounded-sm px-[5px] py-[11px] transition-all hover:scale-110'
+        className='bg-nav-item shadow-small flex h-7 w-7 cursor-pointer items-center justify-center gap-[3px] rounded-sm transition-all hover:scale-110'
         onClick={() => setThreeDotMenuOpen(!threeDotMenuOpen)}
       >
         <div className='bg-text h-1 w-1 rounded-full'></div>

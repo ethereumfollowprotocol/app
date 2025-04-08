@@ -3,7 +3,7 @@ import RecommendedCards from './components/recommended-profiles'
 import ConnectWalletButton from '#/components/buttons/connect-wallet'
 
 export const metadata: Metadata = {
-  title: 'Swipe | EFP',
+  title: 'Swipe',
   openGraph: {
     title: 'Swipe | EFP',
     siteName: 'Swipe - Ethereum Follow Protocol',
