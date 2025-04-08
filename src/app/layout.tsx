@@ -57,10 +57,8 @@ const HeadTag = () => {
   return (
     <head>
       <meta charSet='utf-8' />
-      <link rel='manifest' href='/site.webmanifest' crossOrigin='use-credentials' />
-
+      {/* <link rel='manifest' href='/site.webmanifest' crossOrigin='use-credentials' /> */}
       <meta name='mobile-web-app-capable' content='yes' />
-      <meta name='author' content='Ethereum Follow Protocol Team' />
 
       {/* Preload fonts */}
       <link rel='preconnect' href='https://fonts.googleapis.com' />

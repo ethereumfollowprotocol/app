@@ -32,6 +32,7 @@ export const sharedMetadataTwitter: Metadata['twitter'] = {
 }
 
 export const sharedMetadata: Metadata = {
+  // metadataBase: metadataBaseUrl,
   title: {
     default: metadataTitle,
     template: '%s | EFP',
@@ -42,8 +43,8 @@ export const sharedMetadata: Metadata = {
   icons: sharedMetadataIcons,
   openGraph: sharedMetadataOpenGraph,
   authors: {
-    name: 'Ethereum Follow Protocol',
-    url: 'https://efp.app',
+    name: 'Ethereum Identity Kit',
+    url: 'https://ethid.org',
   },
   robots: {
     index: true,
@@ -61,13 +62,9 @@ export const sharedMetadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  metadataBase: metadataBaseUrl,
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
     title: metadataTitle,
-  },
-  verification: {
-    google: 'G-4YT2CMF6F2',
   },
 }
