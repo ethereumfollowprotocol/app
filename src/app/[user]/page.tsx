@@ -43,30 +43,34 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
   const avatarResponse = ensAvatar && isLinkValid(ensAvatar) ? await fetch(ensAvatar) : null
 
+  const pageUrl = `https://efp.app/${user}`
+  const ogImageUrl = `https://efp.app/og?user=${user}`
+
   return {
+    metadataBase: new URL(pageUrl),
     title: `${displayUser}`,
     openGraph: {
       title: `${displayUser} | EFP`,
       siteName: `${displayUser} - EFP profile`,
       description: `${displayUser} - EFP profile`,
-      url: `https://efp.app/${user}`,
-      images: [
-        {
-          url: `https://efp.app/og?user=${user}`,
-        },
-      ],
+      url: pageUrl,
+      images: [{ url: ogImageUrl }],
     },
     twitter: {
-      images: `https://efp.app/og?user=${user}`,
+      card: 'summary_large_image',
+      title: `${displayUser} | EFP`,
+      description: `${displayUser} - EFP profile`,
+      images: ogImageUrl,
     },
     icons: {
       icon: avatarResponse?.status === 200 ? ensAvatar : '/assets/favicon.ico', // replace with /assets/art/default-avatar.svg for a default avatar
     },
+
     appleWebApp: {
       capable: true,
       statusBarStyle: 'default',
       title: displayUser,
-      // startupImage: avatarResponse?.status === 200 ? ensAvatar : '/assets/favicon.ico', // replace with /assets/art/default-avatar.svg for a default avatar
+      startupImage: avatarResponse?.status === 200 ? ensAvatar : '/assets/favicon.ico', // replace with /assets/art/default-avatar.svg for a default avatar
     },
   }
 }
