@@ -27,13 +27,14 @@ export async function sendNotification(message: string) {
 
   try {
     await webpush.sendNotification(
-      subscription as PushSubscription,
+      subscription,
       JSON.stringify({
         title: 'Test Notification',
         body: message,
-        icon: '/assets/logo.png',
+        icon: '/assets/android-chrome-192x192.png',
       })
     )
+
     return { success: true }
   } catch (error) {
     console.error('Error sending push notification:', error)
