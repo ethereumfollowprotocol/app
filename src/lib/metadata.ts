@@ -73,6 +73,7 @@ export const sharedMetadata: Metadata = {
   appleWebApp: {
     capable: true,
     title: metadataTitle,
+    statusBarStyle: 'black-translucent',
     startupImage: 'https://efp.app/assets/apple-touch-icon.png',
   },
 }

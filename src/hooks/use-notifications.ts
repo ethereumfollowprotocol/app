@@ -125,7 +125,7 @@ export const useNotifications = () => {
         notificationsCount: notifications?.notifications.length,
       }
     },
-    refetchInterval: MINUTE * 5,
+    refetchInterval: MINUTE * 1,
     enabled: !!profile?.address,
   })
 

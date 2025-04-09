@@ -10,7 +10,7 @@ export function middleware(request: NextRequest) {
     worker-src 'self' *.cloudflareinsights.com cdn.vercel-insights.com vercel.live va.vercel-scripts.com blob:;
     script-src 'self' 'unsafe-inline' *.cloudflareinsights.com cdn.vercel-insights.com vercel.live va.vercel-scripts.com www.googletagmanager.com;
     media-src 'self';
-    connect-src * *.blockscout.com.;
+    connect-src 'self' https://app-git-push-notifications-efp.vercel.app/ * *.blockscout.com.;
     object-src 'none';
     base-uri 'none';
     form-action 'self';
