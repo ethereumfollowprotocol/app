@@ -30,6 +30,16 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          source: '/sw.js',
+          destination: '/sw.js',
+        },
+      ],
+    }
+  },
   redirects: async () => [
     {
       source: '/(twitter|x)',
