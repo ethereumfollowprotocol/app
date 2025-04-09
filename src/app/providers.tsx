@@ -12,7 +12,6 @@ import { DAY, MINUTE } from '#/lib/constants'
 import Navigation from '#/components/navigation'
 import { SoundsProvider } from '#/contexts/sounds-context'
 import TransactionModal from '#/components/transaction-modal'
-import PushNotificationSetup from '#/app/push-notification-setup'
 import { EFPProfileProvider } from '#/contexts/efp-profile-context'
 import { RecommendedProfilesProvider } from '#/contexts/recommended-profiles-context'
 
@@ -47,7 +46,6 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
                   <Navigation />
                   {children}
                   <TransactionModal />
-                  <PushNotificationSetup />
                   <div id='modal-root' />
                 </RecommendedProfilesProvider>
               </SoundsProvider>
