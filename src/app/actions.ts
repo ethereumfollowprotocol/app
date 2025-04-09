@@ -2,13 +2,39 @@
 
 import { cookies } from 'next/headers'
 import webpush, { type PushSubscription as SerializablePushSubscription } from 'web-push'
+import Redis from 'ioredis'
+
+// Create Redis client
+let redis: Redis | undefined
+
+// Initialize Redis client
+function getRedisClient() {
+  if (redis) return redis
+
+  const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379'
+
+  redis = new Redis(redisUrl, {
+    connectTimeout: 10000, // 10 seconds
+    maxRetriesPerRequest: 3,
+    retryStrategy: (times) => {
+      // Exponential backoff
+      return Math.min(times * 50, 2000) // Max 2 seconds
+    },
+  })
+
+  redis.on('error', (err) => {
+    console.error('Redis connection error:', err)
+  })
+
+  return redis
+}
 
 // Key for storing subscription IDs in cookies
 const SUBSCRIPTION_COOKIE = 'push_subscription_id'
-
-// FIXME: In-memory storage is still used here, but we're adding cookie persistence
-// In a production app, replace this with a database or KV store
-const subscriptions = new Map<string, SerializablePushSubscription>()
+// Prefix for subscription keys in Redis
+const SUBSCRIPTION_PREFIX = 'push:subscription:'
+// Key for the set of all subscriptions
+const ALL_SUBSCRIPTIONS_KEY = 'push:all_subscriptions'
 
 // Ensure VAPID keys are configured in your environment variables
 if (!process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY || !process.env.VAPID_PRIVATE_KEY) {
@@ -16,11 +42,7 @@ if (!process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY || !process.env.VAPID_PRIVATE_KEY)
   console.log('You can generate keys using: npx web-push generate-vapid-keys')
 } else {
   try {
-    webpush.setVapidDetails(
-      'https://efp.app', // <<<--- REPLACE THIS WITH YOUR EMAIL
-      process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
-      process.env.VAPID_PRIVATE_KEY
-    )
+    webpush.setVapidDetails('https://efp.app', process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY, process.env.VAPID_PRIVATE_KEY)
     console.log('VAPID details set successfully.')
   } catch (error) {
     console.error('Error setting VAPID details:', error)
@@ -36,19 +58,18 @@ export async function subscribeUser(sub: SerializablePushSubscription) {
   try {
     // Generate a unique ID for this subscription
     const subscriptionId = crypto.randomUUID()
+    const redis = getRedisClient()
 
     console.log('Saving subscription:', sub.endpoint, 'with ID:', subscriptionId)
 
-    // Store the subscription with its ID as the key
-    subscriptions.set(subscriptionId, sub)
-    // Note: In production, store this in a database or KV store instead
-    // await db.pushSubscriptions.upsert({
-    //   where: { id: subscriptionId },
-    //   update: { endpoint: sub.endpoint, keys: sub.keys },
-    //   create: { id: subscriptionId, endpoint: sub.endpoint, keys: sub.keys }
-    // })
+    // Store the subscription with its ID as the key in Redis
+    // We need to stringify the object since Redis expects strings
+    await redis.set(`${SUBSCRIPTION_PREFIX}${subscriptionId}`, JSON.stringify(sub))
 
-    // Store the ID in a cookie - using cookies() correctly
+    // Add to a set of all subscriptions for easier retrieval
+    await redis.sadd(ALL_SUBSCRIPTIONS_KEY, subscriptionId)
+
+    // Store the ID in a cookie
     const cookieStore = await cookies()
     cookieStore.set(SUBSCRIPTION_COOKIE, subscriptionId, {
       httpOnly: true,
@@ -75,20 +96,22 @@ export async function getSubscriptionForCurrentUser() {
     }
 
     console.log('Found subscription ID in cookie:', subscriptionId)
+    const redis = getRedisClient()
 
-    // Retrieve subscription by ID
-    const subscription = subscriptions.get(subscriptionId)
-    // In production, retrieve from database:
-    // const subscription = await db.pushSubscriptions.findUnique({ where: { id: subscriptionId } })
+    // Retrieve subscription by ID from Redis
+    const subscriptionJson = await redis.get(`${SUBSCRIPTION_PREFIX}${subscriptionId}`)
 
-    if (!subscription) {
+    if (!subscriptionJson) {
       console.log('Subscription not found for ID:', subscriptionId)
       // Clean up cookie since subscription doesn't exist
       cookieStore.delete(SUBSCRIPTION_COOKIE)
+      // Remove from the set of all subscriptions
+      await redis.srem(ALL_SUBSCRIPTIONS_KEY, subscriptionId)
       return null
     }
 
-    return subscription
+    // Parse the JSON string back into an object
+    return JSON.parse(subscriptionJson) as SerializablePushSubscription
   } catch (error) {
     console.error('Error getting subscription for current user:', error)
     return null
@@ -106,16 +129,17 @@ export async function unsubscribeUser() {
     }
 
     console.log('Unsubscribing ID:', subscriptionId)
+    const redis = getRedisClient()
 
-    // Delete the subscription
-    const deleted = subscriptions.delete(subscriptionId)
-    // In production:
-    // await db.pushSubscriptions.delete({ where: { id: subscriptionId } })
+    // Delete the subscription from Redis
+    await redis.del(`${SUBSCRIPTION_PREFIX}${subscriptionId}`)
+    // Remove from the set of all subscriptions
+    await redis.srem(ALL_SUBSCRIPTIONS_KEY, subscriptionId)
 
     // Remove the cookie
     cookieStore.delete(SUBSCRIPTION_COOKIE)
 
-    return { success: true, deleted }
+    return { success: true }
   } catch (error) {
     console.error('Error unsubscribing:', error)
     return { success: false, error: String(error) }
@@ -153,6 +177,74 @@ export async function sendNotification(message: string, userAvatar?: string | nu
     return { success: false, message: 'No subscriptions found' }
   } catch (error) {
     console.error('Failed to send notification:', error)
+    return { success: false, error: String(error) }
+  }
+}
+
+// Add function to send notification to all subscribers
+export async function sendNotificationToAll(message: string, userAvatar?: string | null) {
+  try {
+    const redis = getRedisClient()
+
+    // Get all subscription IDs from the set
+    const subscriptionIds = await redis.smembers(ALL_SUBSCRIPTIONS_KEY)
+
+    if (!subscriptionIds || subscriptionIds.length === 0) {
+      return { success: false, message: 'No subscriptions found' }
+    }
+
+    console.log(`Preparing to send notifications to ${subscriptionIds.length} subscribers`)
+
+    const results = await Promise.allSettled(
+      subscriptionIds.map(async (id) => {
+        // Get subscription from Redis
+        const subscriptionJson = await redis.get(`${SUBSCRIPTION_PREFIX}${id}`)
+
+        if (!subscriptionJson) {
+          // Remove invalid ID from the set
+          await redis.srem(ALL_SUBSCRIPTIONS_KEY, id)
+          return { id, status: 'error', message: 'Subscription not found' }
+        }
+
+        // Parse the subscription JSON
+        const subscription = JSON.parse(subscriptionJson) as SerializablePushSubscription
+
+        try {
+          await webpush.sendNotification(
+            subscription,
+            JSON.stringify({
+              title: 'Ethereum Follow Protocol',
+              body: message,
+              icon: userAvatar ? userAvatar : '/assets/android-chrome-192x192.png',
+              badge: userAvatar ? '/assets/android-chrome-192x192.png' : undefined,
+            })
+          )
+          return { id, status: 'success' }
+        } catch (error: any) {
+          // Handle expired or invalid subscriptions
+          if (error.statusCode === 410 || error.statusCode === 404) {
+            // Remove expired subscription
+            await redis.del(`${SUBSCRIPTION_PREFIX}${id}`)
+            await redis.srem(ALL_SUBSCRIPTIONS_KEY, id)
+            return { id, status: 'expired', message: 'Subscription expired' }
+          }
+          return { id, status: 'error', message: error.message || 'Unknown error' }
+        }
+      })
+    )
+
+    const successful = results.filter((r) => r.status === 'fulfilled' && r.value.status === 'success').length
+    const failed = results.filter((r) => r.status === 'fulfilled' && r.value.status === 'error').length
+    const expired = results.filter((r) => r.status === 'fulfilled' && r.value.status === 'expired').length
+
+    console.log(`Notification sending complete - Success: ${successful}, Failed: ${failed}, Expired: ${expired}`)
+
+    return {
+      success: successful > 0,
+      stats: { successful, failed, expired, total: subscriptionIds.length },
+    }
+  } catch (error) {
+    console.error('Error in bulk notification sending:', error)
     return { success: false, error: String(error) }
   }
 }
