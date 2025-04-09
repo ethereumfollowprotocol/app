@@ -34,8 +34,8 @@ const nextConfig = {
     return {
       beforeFiles: [
         {
-          source: '/sw.js',
-          destination: '/sw.js',
+          source: '/service-worker.js',
+          destination: '/scripts/service-worker.js',
         },
       ],
     }
@@ -106,7 +106,7 @@ const nextConfig = {
       ],
     },
     {
-      source: '/sw.js',
+      source: '/service-worker.js',
       headers: [
         {
           key: 'Content-Type',
