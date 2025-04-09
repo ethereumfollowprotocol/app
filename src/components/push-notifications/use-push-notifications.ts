@@ -20,6 +20,7 @@ function urlBase64ToUint8Array(base64String: string) {
   }
   return outputArray
 }
+
 export const usePushNotifications = () => {
   const [isSupported, setIsSupported] = useState(false)
   const [subscription, setSubscription] = useState<PushSubscription | null>(null)
@@ -65,12 +66,12 @@ export const usePushNotifications = () => {
             return
           }
 
-          // If no browser subscription, check our server/cookie
-          console.log('No browser subscription, checking server...')
+          // If no browser subscription, check redis cache
+          console.log('No browser subscription, checking redis cache...')
           const serverSub = await getSubscriptionForCurrentUser()
 
           if (serverSub) {
-            console.log('Found subscription on server but not in browser - user will need to resubscribe')
+            console.log('Found subscription on server but not in browser - re-subscribing user')
 
             // automatically re-subscribe the user
             await subscribeToPush()
