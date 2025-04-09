@@ -17,5 +17,5 @@ self.addEventListener('push', function (event) {
 self.addEventListener('notificationclick', function (event) {
   console.log('Notification click received.')
   event.notification.close()
-  event.waitUntil(clients.openWindow('https://app-git-push-notifications-efp.vercel.app/'))
+  event.waitUntil(clients.openWindow('https://efp.app'))
 })
