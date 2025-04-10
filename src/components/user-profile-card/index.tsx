@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { useAccount } from 'wagmi'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { ProfileCard } from 'ethereum-identity-kit'
