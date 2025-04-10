@@ -55,7 +55,6 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const router = useRouter()
   const { t } = useTranslation()
   const { selectedList } = useEFPProfile()
-  const { address: connectedAddress } = useAccount()
   const { followState, profileName, isConnectedUserCard } = useProfileCard(profile)
 
   return (
@@ -70,9 +69,8 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           }}
           showFollowerState={true}
           addressOrName={profile.address}
-          connectedAddress={connectedAddress}
-          onProfileClick={() => {
-            router.push(`/${profile.address}?ssr=false`)
+          onProfileClick={(addressOrName) => {
+            router.push(`/${addressOrName}?ssr=false`)
           }}
           selectedList={selectedList}
           className='bg-neutral'
