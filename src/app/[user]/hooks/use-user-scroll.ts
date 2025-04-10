@@ -1,10 +1,13 @@
+import { useIsClient } from '@uidotdev/usehooks'
 import { useCallback, useEffect, useRef } from 'react'
 
 export const useUserScroll = () => {
   const tableRef = useRef<HTMLDivElement>(null)
   const TopEightRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const commonFollowersModalEl = document.querySelector('.common-followers-modal-container')
+
+  const isClient = useIsClient()
+  const commonFollowersModalEl = isClient ? document?.querySelector('.common-followers-modal-container') : null
 
   const handleWheel = useCallback(
     (event: WheelEvent) => {

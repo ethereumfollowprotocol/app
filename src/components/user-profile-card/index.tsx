@@ -12,6 +12,7 @@ import FollowButton from '#/components/follow-button'
 import ThreeDotMenu from './components/three-dot-menu'
 import { useProfileCard } from './hooks/use-profile-card'
 import EnsLogo from 'public/assets/icons/socials/ens.svg'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
 import LoadingProfileCard from './components/loading-profile-card'
 import type { ProfileDetailsResponse, StatsResponse } from '#/types/requests'
 
@@ -53,6 +54,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
 }) => {
   const router = useRouter()
   const { t } = useTranslation()
+  const { selectedList } = useEFPProfile()
   const { address: connectedAddress } = useAccount()
   const { followState, profileName, isConnectedUserCard } = useProfileCard(profile)
 
@@ -72,6 +74,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           onProfileClick={() => {
             router.push(`/${profile.address}?ssr=false`)
           }}
+          selectedList={selectedList}
           className='bg-neutral'
           options={{
             openListSettings: openListSettingsModal,
