@@ -1,11 +1,12 @@
 import { useAccount } from 'wagmi'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
 import { fetchAccount } from 'ethereum-identity-kit'
 import type { PushSubscription as SerializablePushSubscription } from 'web-push'
 
 import { truncateAddress } from '#/lib/utilities'
-import { useNotifications } from '#/hooks/use-notifications'
+import type { NotificationItemType } from '#/types/requests'
 import { getSubscriptionForCurrentUser, sendNotification, subscribeUser, unsubscribeUser } from '#/app/actions'
 
 function urlBase64ToUint8Array(base64String: string) {
@@ -27,6 +28,7 @@ export const usePushNotifications = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [registrationInstance, setRegistrationInstance] = useState<ServiceWorkerRegistration | null>(null)
 
+  const { t } = useTranslation()
   const { address: connectedAddress } = useAccount()
   const { data: account } = useQuery({
     queryKey: ['account', connectedAddress],
@@ -176,14 +178,51 @@ export const usePushNotifications = () => {
     }
   }
 
-  const { newNotifications } = useNotifications()
-
+  let webSocket: WebSocket | null = null
   useEffect(() => {
-    if (newNotifications > 0 && subscription) {
-      const user = account?.ens?.name || truncateAddress(account?.address)
-      sendPushNotification(`${newNotifications} new updates ${user ? `for ${user}` : ''}`)
+    if (!account?.address) return
+
+    // Close any existing websocket connection before opening a new one
+    if (webSocket) {
+      webSocket.close()
+      webSocket = null
     }
-  }, [newNotifications])
+
+    // Open a new websocket connection
+    const ws = new WebSocket(`ws://efp-events.up.railway.app/?address=${account?.address}`)
+    webSocket = ws
+
+    ws.onopen = () => {
+      console.log('Connected to notifications service')
+    }
+
+    // Handle incoming messages from the websocket
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data) as NotificationItemType
+
+      const restrictAction = Object.entries({
+        blocked: data.action === 'tag' && data.tag === 'blocked',
+        unblocked: data.action === 'tag' && data.tag === 'unblocked',
+        muted: data.action === 'tag' && data.tag === 'muted',
+        unmuted: data.action === 'tag' && data.tag === 'unmuted',
+      })
+        .filter(([_, value]) => !!value)
+        .map(([key]) => key)[0]
+
+      const action = restrictAction || data.action
+
+      const message = `${data.name ? data.name : truncateAddress(data.address)} ${t(`notifications.${action}`)} ${action === 'tag' || action === 'untag' ? `"${data.tag}"` : ''}`
+      sendPushNotification(message)
+    }
+
+    ws.onclose = () => {
+      console.log('Notifications service connection closed')
+    }
+
+    return () => {
+      ws.close()
+    }
+  }, [account?.address])
 
   return {
     isSupported,

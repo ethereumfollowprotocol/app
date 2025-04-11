@@ -47,7 +47,6 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const ogImageUrl = `https://efp.app/og?user=${user}`
 
   return {
-    metadataBase: new URL(pageUrl),
     title: `${displayUser}`,
     openGraph: {
       title: `${displayUser} | EFP`,

@@ -3,7 +3,7 @@ import type { MetadataRoute } from 'next'
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'Ethereum Follow Protocol',
-    short_name: 'EFP',
+    short_name: 'Ethereum Follow Protocol',
     description:
       'EFP – Ethereum Follow Protocol – The onchain social graph for Ethereum. A composable identity protocol for crypto apps. Built to complement ENS and SIWE.',
     start_url: '/',

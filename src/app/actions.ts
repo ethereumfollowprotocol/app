@@ -74,7 +74,7 @@ export async function subscribeUser(sub: SerializablePushSubscription) {
     cookieStore.set(SUBSCRIPTION_COOKIE, subscriptionId, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      maxAge: 60 * 60 * 24 * 30, // 30 days
+      maxAge: Infinity, // Never expire so user doesn't stop receiving notifications (until they unsubscribe)
       path: '/',
     })
 
@@ -213,7 +213,6 @@ export async function sendNotificationToAll(message: string, userAvatar?: string
           await webpush.sendNotification(
             subscription,
             JSON.stringify({
-              title: 'Ethereum Follow Protocol',
               body: message,
               icon: userAvatar ? userAvatar : '/assets/android-chrome-192x192.png',
               badge: userAvatar ? '/assets/android-chrome-192x192.png' : undefined,
