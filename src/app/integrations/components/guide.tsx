@@ -30,13 +30,13 @@ const RESOURCES = [
   },
   {
     name: 'Discord',
-    content: <Image src={Discord} alt='Discord' width={32} height={32} className='h-auto w-10' />,
+    content: <Image src={Discord} alt='Discord' width={40} height={40} />,
     href: 'https://discord.com/invite/ZUyG3mSXFD',
     className: 'bg-[#8C9EFF] text-white px-0',
   },
   {
     name: 'GitHub',
-    content: <Image src={Github} alt='GitHub' width={32} height={32} className='h-auto w-7' />,
+    content: <Image src={Github} alt='GitHub' width={28} height={28} />,
     href: 'https://github.com/ethereumfollowprotocol',
     className: 'bg-dark-grey text-white px-1.5',
   },
