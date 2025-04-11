@@ -201,10 +201,10 @@ export const usePushNotifications = () => {
       const data = JSON.parse(event.data) as NotificationItemType
 
       const restrictAction = Object.entries({
-        blocked: data.action === 'tag' && data.tag === 'blocked',
-        unblocked: data.action === 'tag' && data.tag === 'unblocked',
-        muted: data.action === 'tag' && data.tag === 'muted',
-        unmuted: data.action === 'tag' && data.tag === 'unmuted',
+        blocked: data.action === 'tag' && data.tag === 'block',
+        unblocked: data.action === 'untag' && data.tag === 'block',
+        muted: data.action === 'tag' && data.tag === 'mute',
+        unmuted: data.action === 'untag' && data.tag === 'mute',
       })
         .filter(([_, value]) => !!value)
         .map(([key]) => key)[0]
