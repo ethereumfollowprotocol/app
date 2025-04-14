@@ -2,6 +2,7 @@ import { useAccount } from 'wagmi'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
+import { useIsClient } from '@uidotdev/usehooks'
 import { fetchAccount } from 'ethereum-identity-kit'
 import type { PushSubscription as SerializablePushSubscription } from 'web-push'
 
@@ -22,12 +23,15 @@ function urlBase64ToUint8Array(base64String: string) {
   return outputArray
 }
 
+let webSocket: WebSocket | null = null
+
 export const usePushNotifications = () => {
   const [isSupported, setIsSupported] = useState(false)
   const [subscription, setSubscription] = useState<PushSubscription | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [registrationInstance, setRegistrationInstance] = useState<ServiceWorkerRegistration | null>(null)
 
+  const isClient = useIsClient()
   const { t } = useTranslation()
   const { address: connectedAddress } = useAccount()
   const { data: account } = useQuery({
@@ -178,15 +182,16 @@ export const usePushNotifications = () => {
     }
   }
 
-  let webSocket: WebSocket | null = null
   useEffect(() => {
-    if (!account?.address) return
-
     // Close any existing websocket connection before opening a new one
     if (webSocket) {
       webSocket.close()
       webSocket = null
     }
+
+    // The websocket connection can only be open on a client side and
+    // there must be a connected account subscribed to push notifications
+    if (!account?.address || !isClient || !subscription) return
 
     // Open a new websocket connection
     const ws = new WebSocket(`ws://efp-events.up.railway.app/?address=${account?.address}`)
@@ -222,7 +227,7 @@ export const usePushNotifications = () => {
     return () => {
       ws.close()
     }
-  }, [account?.address])
+  }, [account?.address, isClient, subscription])
 
   return {
     isSupported,
