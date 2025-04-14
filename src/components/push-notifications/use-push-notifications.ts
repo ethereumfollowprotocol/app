@@ -58,7 +58,7 @@ export const usePushNotifications = () => {
             updateViaCache: 'none',
           })
 
-          console.log('Service worker registered:', registration)
+          console.log('Service worker registered')
           setRegistrationInstance(registration)
 
           // First check the browser for subscription
@@ -73,7 +73,6 @@ export const usePushNotifications = () => {
           }
 
           // If no browser subscription, check redis cache
-          console.log('No browser subscription, checking redis cache...')
           const serverSub = await getSubscriptionForCurrentUser()
 
           if (serverSub) {
@@ -82,7 +81,7 @@ export const usePushNotifications = () => {
             // automatically re-subscribe the user
             await subscribeToPush()
           } else {
-            console.log('No subscription found on server either')
+            console.log('No subscription found')
           }
 
           setIsLoading(false)
@@ -103,7 +102,7 @@ export const usePushNotifications = () => {
   async function subscribeToPush() {
     try {
       setIsLoading(true)
-      console.log('Starting subscription process...')
+      console.log('Subscribing user to push notifications...')
 
       if (!registrationInstance) {
         console.log('No service worker registration found, attempting to get it')
@@ -111,22 +110,15 @@ export const usePushNotifications = () => {
         setRegistrationInstance(registration)
       }
 
-      console.log('Using VAPID key:', process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY)
-
       const registration = registrationInstance || (await navigator.serviceWorker.ready)
-      console.log('Requesting push subscription with registration:', registration)
 
       const sub = await registration.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: urlBase64ToUint8Array(process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!),
       })
 
-      console.log('Browser push subscription created:', sub)
-
       // Convert to format for sending to server
       const serializedSub = JSON.parse(JSON.stringify(sub)) as SerializablePushSubscription
-      console.log('Serialized subscription to send to server:', serializedSub)
-
       // Store on server with cookie reference
       const result = await subscribeUser(serializedSub)
 
@@ -155,8 +147,8 @@ export const usePushNotifications = () => {
       }
 
       // Then remove from server (uses cookie to find subscription)
-      const result = await unsubscribeUser()
-      console.log('Server unsubscribe result:', result)
+      await unsubscribeUser()
+      console.log('Unsubscribed from server')
 
       setSubscription(null)
     } catch (error) {
