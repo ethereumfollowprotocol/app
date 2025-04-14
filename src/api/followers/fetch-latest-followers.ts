@@ -21,8 +21,8 @@ export const fetchLatestFollowers = async ({ addressOrName, list, limit, pagePar
       },
     })
 
-    const data = (await response.json()).followers as LatestFollowersResponse[]
-    const transformedData = data.map((follower) => ({
+    const data = (await response.json()) as { followers: LatestFollowersResponse[] }
+    const transformedData = data.followers.map((follower) => ({
       ...follower,
       tags: [],
     })) as ProfileListProfile[]

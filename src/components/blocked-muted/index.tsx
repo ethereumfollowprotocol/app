@@ -125,7 +125,7 @@ const BlockedMuted: React.FC<BlockedMutedProps> = ({ user, list, isManager, onCl
   }[activeTab]
 
   return (
-    <div className='fixed top-0 left-0 z-50 flex h-full w-full justify-center overflow-scroll bg-black/50'>
+    <div className='fixed top-0 left-0 z-[1000] flex h-full w-full justify-center overflow-scroll bg-black/50'>
       <div
         ref={blockedMutedRef}
         className='relative mt-[85px] mb-24 flex h-fit w-full gap-6 rounded-sm px-4 md:mt-24 md:px-6 lg:mt-28 xl:w-fit 2xl:gap-8'
