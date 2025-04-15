@@ -1,7 +1,7 @@
 import { useAccount } from 'wagmi'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useIsClient } from '@uidotdev/usehooks'
 import { fetchAccount } from 'ethereum-identity-kit'
 import type { PushSubscription as SerializablePushSubscription } from 'web-push'
@@ -33,6 +33,7 @@ export const usePushNotifications = () => {
 
   const isClient = useIsClient()
   const { t } = useTranslation()
+  const queryClient = useQueryClient()
   const { address: connectedAddress } = useAccount()
   const { data: account } = useQuery({
     queryKey: ['account', connectedAddress],
@@ -196,6 +197,9 @@ export const usePushNotifications = () => {
     // Handle incoming messages from the websocket
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data) as NotificationItemType
+
+      // manually refetch notifications to update the new notifications count
+      queryClient.refetchQueries({ queryKey: ['notifications', connectedAddress] })
 
       const restrictAction = Object.entries({
         blocked: data.action === 'tag' && data.tag === 'block',

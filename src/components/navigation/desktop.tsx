@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { useWindowSize } from '@uidotdev/usehooks'
 
 import { Search } from '../search'
 import Logo from 'public/assets/efp-logo.svg'
@@ -10,6 +11,9 @@ import Integrations from './components/integrations.tsx'
 import PoweredByEIK from './components/powered-by-eik.tsx'
 
 const Desktop = () => {
+  const { width } = useWindowSize()
+  if (width && width < 640) return null
+
   return (
     <nav className='bg-neutral shadow-large fixed top-0 left-0 z-50 hidden h-screen w-[70px] flex-col items-center justify-between py-4 sm:flex 2xl:w-20'>
       <div className='flex flex-col items-center justify-between gap-6'>

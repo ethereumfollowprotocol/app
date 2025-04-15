@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import SetupStandalone from './setup-standalone'
 import SetupBrowser from './setup-browser'
+import EnableNotifications from './enable-notifications'
 
 interface PushNotificationSetupModalProps {
   subscribeToPush: () => Promise<void>
@@ -33,9 +33,9 @@ const PushNotificationSetupModal: React.FC<PushNotificationSetupModalProps> = ({
 
   if (!isFirstTimeUser) return null
 
-  if (isStandalone) {
+  if (isStandalone || !isMobile) {
     return (
-      <SetupStandalone
+      <EnableNotifications
         isSupported={isSupported}
         subscribeToPush={subscribeToPush}
         sendPushNotification={sendPushNotification}
