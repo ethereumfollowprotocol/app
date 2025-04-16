@@ -13,11 +13,11 @@ import ArrowLeft from 'public/assets/icons/ui/arrow-left.svg'
 
 const subscriptionOptions = {
   subscribed: {
-    label: 'Subscribed',
+    label: 'On',
     icon: Bell,
   },
   unsubscribed: {
-    label: 'Unsubscribed',
+    label: 'Off',
     icon: BellSlash,
   },
 }
@@ -56,7 +56,7 @@ const PushNotifications: React.FC<PushNotificationsProps> = ({ open, setOpen }) 
           ) : (
             <div className='flex items-center justify-end gap-2'>
               {activeOption.icon && <activeOption.icon className='h-6 w-6' />}
-              <p className='font-bold capitalize'>{activeOption.label}</p>
+              <p className='font-bold capitalize'>Push Notifications</p>
             </div>
           )}
           <ArrowRight />
@@ -82,7 +82,7 @@ const PushNotifications: React.FC<PushNotificationsProps> = ({ open, setOpen }) 
                 className='hover:bg-nav-item relative flex w-full items-center gap-2 rounded-sm p-4 pl-8'
                 key={item.label}
                 onClick={() => {
-                  if (item.label === 'Subscribed') {
+                  if (item.label === 'On') {
                     subscribeToPush().then(() => {
                       sendPushNotification(`You are now subscribed to push notifications`)
                     })

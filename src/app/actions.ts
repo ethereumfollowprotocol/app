@@ -152,8 +152,8 @@ export async function sendNotification(message: string, userAvatar?: string | nu
           JSON.stringify({
             title: 'Ethereum Follow Protocol',
             body: message,
-            icon: userAvatar ? userAvatar : 'public/assets/android-chrome-192x192.png',
-            badge: userAvatar ? 'public/assets/android-chrome-192x192.png' : undefined,
+            icon: userAvatar ? userAvatar : 'https://efp.app/assets/logo.png',
+            badge: userAvatar ? 'https://efp.app/assets/logo.png' : undefined,
           })
         )
         return { success: true }
