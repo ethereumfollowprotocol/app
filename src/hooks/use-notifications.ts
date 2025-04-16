@@ -71,7 +71,7 @@ export const useNotifications = () => {
   const { profile } = useEFPProfile()
   const queryClient = useQueryClient()
   const { address: userAddress } = useAccount()
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch, isRefetching } = useQuery({
     queryKey: ['notifications', userAddress],
     queryFn: async () => {
       if (!userAddress) return null
@@ -125,7 +125,7 @@ export const useNotifications = () => {
         notificationsCount: notifications?.notifications.length,
       }
     },
-    refetchInterval: MINUTE * 5,
+    refetchInterval: MINUTE * 1,
     enabled: !!profile?.address,
   })
 
@@ -160,5 +160,12 @@ export const useNotifications = () => {
     }
   }, [data])
 
-  return { notifications: data?.notifications, isLoading, isOpen, setIsOpen, newNotifications }
+  return {
+    notifications: data?.notifications,
+    isLoading: isLoading || isRefetching,
+    isOpen,
+    setIsOpen,
+    newNotifications,
+    refetch,
+  }
 }
