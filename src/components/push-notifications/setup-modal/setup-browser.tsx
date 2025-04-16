@@ -4,10 +4,10 @@ import PrimaryButton from '#/components/buttons/primary-button'
 import Image from 'next/image'
 import IosShareIcon from 'public/assets/icons/ui/ios-share.svg'
 import IosAddIcon from 'public/assets/icons/ui/ios-add.svg'
-import ShareSafari from 'public/assets/art/share-safari.jpg'
-import addToHomeScreen from 'public/assets/art/add-to-home-screen.jpg'
-import installApp from 'public/assets/art/install-app.jpg'
-import InstallConfirmation from 'public/assets/art/install-confirmation.jpg'
+import ShareSafari from 'public/assets/art/share-safari.png'
+import addToHomeScreen from 'public/assets/art/add-to-home-screen.png'
+import installApp from 'public/assets/art/install-app.png'
+import InstallConfirmation from 'public/assets/art/install-confirmation.png'
 
 interface SetupBrowserProps {
   isIOS: boolean
