@@ -14,6 +14,7 @@ import { SoundsProvider } from '#/contexts/sounds-context'
 import TransactionModal from '#/components/transaction-modal'
 import { EFPProfileProvider } from '#/contexts/efp-profile-context'
 import { RecommendedProfilesProvider } from '#/contexts/recommended-profiles-context'
+import { ThirdwebProvider } from 'thirdweb/react'
 
 type ProviderProps = {
   children: React.ReactNode
@@ -39,18 +40,20 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
           coolMode={false}
           theme={isClient && darkThemes.includes(resolvedTheme || 'dark') ? darkTheme() : undefined}
         >
-          <TransactionProvider batchTransactions={true}>
-            <EFPProfileProvider>
-              <SoundsProvider>
-                <RecommendedProfilesProvider>
-                  <Navigation />
-                  {children}
-                  <TransactionModal />
-                  <div id='modal-root' />
-                </RecommendedProfilesProvider>
-              </SoundsProvider>
-            </EFPProfileProvider>
-          </TransactionProvider>
+          <ThirdwebProvider>
+            <TransactionProvider batchTransactions={true}>
+              <EFPProfileProvider>
+                <SoundsProvider>
+                  <RecommendedProfilesProvider>
+                    <Navigation />
+                    {children}
+                    <TransactionModal />
+                    <div id='modal-root' />
+                  </RecommendedProfilesProvider>
+                </SoundsProvider>
+              </EFPProfileProvider>
+            </TransactionProvider>
+          </ThirdwebProvider>
         </RainbowKitProvider>
       </WagmiProvider>
     </QueryClientProvider>
