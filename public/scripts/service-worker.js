@@ -4,6 +4,7 @@ self.addEventListener('push', function (event) {
     const options = {
       body: data.body,
       icon: data.icon || '/assets/logo.png',
+      badge: data.badge,
       vibrate: [100, 50, 100],
       data: {
         dateOfArrival: Date.now(),
@@ -15,7 +16,6 @@ self.addEventListener('push', function (event) {
 })
 
 self.addEventListener('notificationclick', function (event) {
-  console.log('Notification click received.', event.notification)
   event.notification.close()
   event.waitUntil(clients.openWindow('https://efp.app'))
 })
