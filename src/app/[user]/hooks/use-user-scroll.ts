@@ -12,6 +12,7 @@ export const useUserScroll = () => {
   const handleWheel = useCallback(
     (event: WheelEvent) => {
       if (commonFollowersModalEl) return
+
       if (tableRef.current) {
         // Adjust the scroll position of the div
         tableRef.current.scrollTop += event.deltaY
@@ -37,7 +38,7 @@ export const useUserScroll = () => {
 
   useEffect(() => {
     // Attach the wheel event listener to the window
-    containerRef.current?.addEventListener('wheel', handleWheel, { passive: false })
+    containerRef.current?.addEventListener('wheel', handleWheel)
 
     // Cleanup function to remove the event listener
     return () => {
@@ -45,5 +46,5 @@ export const useUserScroll = () => {
     }
   }, [handleWheel])
 
-  return { tableRef, TopEightRef, containerRef }
+  return { tableRef, TopEightRef, containerRef, commonFollowersModalEl }
 }
