@@ -1,7 +1,7 @@
 import { useState } from 'react'
+import { cn } from '#/lib/utilities'
 import Modal from '#/components/modal'
 import PrimaryButton from '#/components/buttons/primary-button'
-import { cn } from '#/lib/utilities'
 
 interface EnableNotificationsProps {
   subscribeToPush: () => Promise<void>

@@ -1,12 +1,12 @@
+import Image from 'next/image'
 import { useState } from 'react'
 import Modal from '#/components/modal'
 import PrimaryButton from '#/components/buttons/primary-button'
-import Image from 'next/image'
-import IosShareIcon from 'public/assets/icons/ui/ios-share.svg'
 import IosAddIcon from 'public/assets/icons/ui/ios-add.svg'
+import IosShareIcon from 'public/assets/icons/ui/ios-share.svg'
+import installApp from 'public/assets/art/install-app.png'
 import ShareSafari from 'public/assets/art/share-safari.png'
 import addToHomeScreen from 'public/assets/art/add-to-home-screen.png'
-import installApp from 'public/assets/art/install-app.png'
 import InstallConfirmation from 'public/assets/art/install-confirmation.png'
 
 interface SetupBrowserProps {

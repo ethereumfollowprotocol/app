@@ -72,7 +72,7 @@ export async function subscribeUser(sub: SerializablePushSubscription) {
     cookieStore.set(SUBSCRIPTION_COOKIE, subscriptionId, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      maxAge: Infinity, // Never expire so user doesn't stop receiving notifications (until they unsubscribe)
+      maxAge: 60 * 60 * 24 * 30, // 30 days
       path: '/',
     })
 

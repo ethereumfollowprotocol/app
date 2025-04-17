@@ -12,7 +12,9 @@ import PoweredByEIK from './components/powered-by-eik.tsx'
 
 const Desktop = () => {
   const { width } = useWindowSize()
-  if (width && width < 640) return null
+  const isMobile = width && width < 640
+
+  if (isMobile) return null
 
   return (
     <nav className='bg-neutral shadow-large fixed top-0 left-0 z-50 hidden h-screen w-[70px] flex-col items-center justify-between py-4 sm:flex 2xl:w-20'>

@@ -1,14 +1,12 @@
 import { useAccount } from 'wagmi'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { useIsClient } from '@uidotdev/usehooks'
-import { fetchAccount } from 'ethereum-identity-kit'
+import { useQuery } from '@tanstack/react-query'
+import { fetchAccount, useIsClient } from 'ethereum-identity-kit'
 import type { PushSubscription as SerializablePushSubscription } from 'web-push'
-
+import { getSubscriptionForCurrentUser, sendNotification, subscribeUser, unsubscribeUser } from '#/app/actions'
 import { truncateAddress } from '#/lib/utilities'
 import type { NotificationItemType } from '#/types/requests'
-import { getSubscriptionForCurrentUser, sendNotification, subscribeUser, unsubscribeUser } from '#/app/actions'
+import { useTranslation } from 'react-i18next'
 
 function urlBase64ToUint8Array(base64String: string) {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4)
@@ -32,8 +30,7 @@ export const usePushNotifications = () => {
   const [registrationInstance, setRegistrationInstance] = useState<ServiceWorkerRegistration | null>(null)
 
   const isClient = useIsClient()
-  const { t } = useTranslation()
-  const queryClient = useQueryClient()
+  const { t } = useTranslation('notifications')
   const { address: connectedAddress } = useAccount()
   const { data: account } = useQuery({
     queryKey: ['account', connectedAddress],
@@ -199,7 +196,7 @@ export const usePushNotifications = () => {
       const data = JSON.parse(event.data) as NotificationItemType
 
       // manually refetch notifications to update the new notifications count
-      queryClient.refetchQueries({ queryKey: ['notifications', connectedAddress] })
+      // queryClient.refetchQueries({ queryKey: ['notifications', connectedAddress] })
 
       const restrictAction = Object.entries({
         blocked: data.action === 'tag' && data.tag === 'block',
@@ -212,7 +209,7 @@ export const usePushNotifications = () => {
 
       const action = restrictAction || data.action
 
-      const message = `${data.name ? data.name : truncateAddress(data.address)} ${t(`notifications.${action}`)} ${action === 'tag' || action === 'untag' ? `"${data.tag}"` : ''}`
+      const message = `${data.name ? data.name : truncateAddress(data.address)} ${t(action)} ${action === 'tag' || action === 'untag' ? `"${data.tag}"` : ''}`
       sendPushNotification(message)
     }
 
@@ -223,7 +220,7 @@ export const usePushNotifications = () => {
     return () => {
       ws.close()
     }
-  }, [account?.address, isClient, subscription])
+  }, [account?.address])
 
   return {
     isSupported,

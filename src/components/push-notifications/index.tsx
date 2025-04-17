@@ -9,7 +9,7 @@ import Check from 'public/assets/icons/ui/check.svg'
 import BellSlash from 'public/assets/icons/ui/bell-slash.svg'
 import ArrowRight from 'public/assets/icons/ui/arrow-right.svg'
 import ArrowLeft from 'public/assets/icons/ui/arrow-left.svg'
-// import PushNotificationSetupModal from './setup-modal'
+import PushNotificationSetupModal from './setup-modal'
 
 const subscriptionOptions = {
   subscribed: {
@@ -36,13 +36,13 @@ const PushNotifications: React.FC<PushNotificationsProps> = ({ open, setOpen }) 
 
   return (
     <>
-      {/* <PushNotificationSetupModal
+      <PushNotificationSetupModal
         subscribeToPush={subscribeToPush}
         sendPushNotification={sendPushNotification}
         isSupported={isSupported}
         isLoading={isLoading}
         subscription={subscription}
-      /> */}
+      />
       <div
         ref={clickAwayPushNotificationsRef}
         className={cn('group relative h-full w-full cursor-pointer', !isSupported && 'hidden')}

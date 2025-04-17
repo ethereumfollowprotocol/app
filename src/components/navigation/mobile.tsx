@@ -98,7 +98,9 @@ const Mobile: React.FC = () => {
   }, [navRef, pathname])
 
   const { width } = useWindowSize()
-  if (width && width > 640) return null
+  const isMobile = width && width < 640
+
+  if (!isMobile) return null
 
   return (
     <>
