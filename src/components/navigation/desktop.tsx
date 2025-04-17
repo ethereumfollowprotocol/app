@@ -1,14 +1,14 @@
 import Link from 'next/link'
+import { useWindowSize } from '@uidotdev/usehooks'
 
 import { Search } from '../search'
 import Logo from 'public/assets/efp-logo.svg'
 import NavItems from './components/nav-items.tsx'
 import WalletMenu from './components/wallet-menu.tsx'
 import CartButton from './components/cart-button.tsx'
+import Notifications from './components/notifications'
 import Integrations from './components/integrations.tsx'
 import PoweredByEIK from './components/powered-by-eik.tsx'
-import Notifications from './components/notifications'
-import { useWindowSize } from '@uidotdev/usehooks'
 
 const Desktop = () => {
   const { width } = useWindowSize()

@@ -37,8 +37,8 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   }
 
   const ensData = await getAccount()
-  const ensName = ensData?.ens.name
-  const ensAvatar = ensData?.ens.avatar
+  const ensName = ensData?.ens?.name
+  const ensAvatar = ensData?.ens?.avatar
   const displayUser = ensName && ensName.length > 0 ? ensName : isList ? `List #${user}` : truncatedUser
 
   const avatarResponse = ensAvatar && isLinkValid(ensAvatar) ? await fetch(ensAvatar) : null
@@ -47,7 +47,6 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const ogImageUrl = `https://efp.app/og?user=${user}`
 
   return {
-    metadataBase: new URL(pageUrl),
     title: `${displayUser}`,
     openGraph: {
       title: `${displayUser} | EFP`,

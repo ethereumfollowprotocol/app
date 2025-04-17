@@ -56,8 +56,8 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
       connectedAddress={userAddress}
       list={profileList}
       selectedList={selectedList?.toString()}
-      onProfileClick={() => {
-        router.push(`/${addressOrName}`)
+      onProfileClick={(addressOrName) => {
+        router.push(`/${addressOrName}?ssr=false`)
       }}
       onStatClick={({ addressOrName, stat }) => {
         router.push(`/${addressOrName}?tab=${stat}`)

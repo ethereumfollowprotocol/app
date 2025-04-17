@@ -22,7 +22,12 @@ const subscriptionOptions = {
   },
 }
 
-const PushNotifications = ({ open, setOpen }: { open: boolean; setOpen: (open: boolean) => void }) => {
+interface PushNotificationsProps {
+  open: boolean
+  setOpen: (open: boolean) => void
+}
+
+const PushNotifications: React.FC<PushNotificationsProps> = ({ open, setOpen }) => {
   const clickAwayPushNotificationsRef = useClickAway<HTMLDivElement>(() => setOpen(false))
   const { isSupported, isLoading, subscription, subscribeToPush, unsubscribeFromPush, sendPushNotification } =
     usePushNotifications()

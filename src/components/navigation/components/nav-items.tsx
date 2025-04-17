@@ -19,7 +19,7 @@ const NavItems = () => {
   const pathname = usePathname()
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
-  const { selectedList, lists } = useEFPProfile()
+  const { selectedList, listToFetch, lists } = useEFPProfile()
 
   const itemUrl =
     selectedList === Number(lists?.primary_list) && pathname !== `/${selectedList}`
@@ -27,10 +27,10 @@ const NavItems = () => {
       : (selectedList?.toString() ?? userAddress?.toLowerCase())
 
   const { data: account, isLoading: isLoadingAccount } = useQuery({
-    queryKey: ['account', userAddress, selectedList],
+    queryKey: ['account', userAddress, listToFetch],
     queryFn: async () => {
       if (!userAddress) return null
-      return await fetchAccount(userAddress, selectedList)
+      return await fetchAccount(userAddress, listToFetch)
     },
   })
   const profileAvatar = account?.ens.avatar

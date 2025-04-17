@@ -60,8 +60,6 @@ export async function subscribeUser(sub: SerializablePushSubscription) {
     const subscriptionId = crypto.randomUUID()
     const redis = getRedisClient()
 
-    console.log('Saving subscription:', sub.endpoint, 'with ID:', subscriptionId)
-
     // Store the subscription with its ID as the key in Redis
     // We need to stringify the object since Redis expects strings
     await redis.set(`${SUBSCRIPTION_PREFIX}${subscriptionId}`, JSON.stringify(sub))
@@ -95,9 +93,7 @@ export async function getSubscriptionForCurrentUser() {
       return null
     }
 
-    console.log('Found subscription ID in cookie:', subscriptionId)
     const redis = getRedisClient()
-
     // Retrieve subscription by ID from Redis
     const subscriptionJson = await redis.get(`${SUBSCRIPTION_PREFIX}${subscriptionId}`)
 
@@ -128,9 +124,7 @@ export async function unsubscribeUser() {
       return { success: false, error: 'No subscription found' }
     }
 
-    console.log('Unsubscribing ID:', subscriptionId)
     const redis = getRedisClient()
-
     // Delete the subscription from Redis
     await redis.del(`${SUBSCRIPTION_PREFIX}${subscriptionId}`)
     // Remove from the set of all subscriptions
@@ -158,8 +152,7 @@ export async function sendNotification(message: string, userAvatar?: string | nu
           JSON.stringify({
             title: 'Ethereum Follow Protocol',
             body: message,
-            icon: userAvatar ? userAvatar : 'public/assets/android-chrome-192x192.png',
-            badge: userAvatar ? 'public/assets/android-chrome-192x192.png' : undefined,
+            icon: userAvatar ? userAvatar : 'https://efp.app/assets/logo.png',
           })
         )
         return { success: true }
@@ -213,7 +206,6 @@ export async function sendNotificationToAll(message: string, userAvatar?: string
           await webpush.sendNotification(
             subscription,
             JSON.stringify({
-              title: 'Ethereum Follow Protocol',
               body: message,
               icon: userAvatar ? userAvatar : '/assets/android-chrome-192x192.png',
               badge: userAvatar ? '/assets/android-chrome-192x192.png' : undefined,

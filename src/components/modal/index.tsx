@@ -14,7 +14,7 @@ const Modal = ({ onCancel, children, className, disableBackgroundClose, closeBut
   return createPortal(
     <div
       className={cn(
-        'fixed top-0 left-0 z-50 flex h-screen w-screen justify-center overflow-scroll bg-black/40 px-2 py-12 sm:px-4',
+        'fixed top-0 left-0 z-[100] flex h-screen w-screen justify-center overflow-scroll bg-black/40 px-2 py-12 sm:px-4',
         className ?? 'items-center'
       )}
       onClick={() => !disableBackgroundClose && onCancel()}

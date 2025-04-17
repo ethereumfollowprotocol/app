@@ -3,6 +3,7 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useTheme } from 'next-themes'
 import { useTranslation } from 'react-i18next'
 import { useState, type Dispatch, type SetStateAction } from 'react'
 
@@ -12,7 +13,6 @@ import { EXTERNAL_LINKS } from '#/lib/constants'
 import VolumeSwitcher from '../../volume-switcher'
 import LanguageSelector from '../../language-selector'
 import ThemeSwitcher from '#/components/theme-switcher'
-import { useTheme } from 'next-themes'
 import PushNotifications from '#/components/push-notifications'
 
 interface MenuProps {
