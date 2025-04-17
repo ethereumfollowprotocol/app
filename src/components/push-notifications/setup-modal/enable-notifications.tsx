@@ -35,7 +35,7 @@ const EnableNotifications: React.FC<EnableNotificationsProps> = ({
           This app supports push notifications. <br /> Do you want to enable them?
         </p>
         <div className='mt-2 flex gap-2'>
-          <button className='bg-tertiary hover:bg-nav-item w-1/2 rounded-sm font-bold' onClick={onClose}>
+          <button className='bg-tertiary hover:bg-nav-item w-1/2 rounded-sm p-2 font-bold' onClick={onClose}>
             No thanks
           </button>
           <PrimaryButton
