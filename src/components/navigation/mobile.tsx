@@ -8,6 +8,7 @@ import NavItems from './components/nav-items'
 import WalletMenu from './components/wallet-menu'
 import Integrations from './components/integrations'
 import Notifications from './components/notifications'
+import { useWindowSize } from '@uidotdev/usehooks'
 
 let navScroll = 0
 let navHomeScroll = 0
@@ -95,6 +96,11 @@ const Mobile: React.FC = () => {
 
     return () => abortController.abort()
   }, [navRef, pathname])
+
+  const { width } = useWindowSize()
+  const isMobile = width && width < 640
+
+  if (!isMobile) return null
 
   return (
     <>
