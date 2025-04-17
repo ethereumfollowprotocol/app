@@ -6,6 +6,7 @@ import type { PushSubscription as SerializablePushSubscription } from 'web-push'
 import { getSubscriptionForCurrentUser, sendNotification, subscribeUser, unsubscribeUser } from '#/app/actions'
 import { truncateAddress } from '#/lib/utilities'
 import type { NotificationItemType } from '#/types/requests'
+import { useTranslation } from 'react-i18next'
 
 function urlBase64ToUint8Array(base64String: string) {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4)
@@ -29,6 +30,7 @@ export const usePushNotifications = () => {
   const [registrationInstance, setRegistrationInstance] = useState<ServiceWorkerRegistration | null>(null)
 
   const isClient = useIsClient()
+  const { t } = useTranslation('notifications')
   const { address: connectedAddress } = useAccount()
   const { data: account } = useQuery({
     queryKey: ['account', connectedAddress],
@@ -215,7 +217,7 @@ export const usePushNotifications = () => {
 
       const action = restrictAction || data.action
 
-      const message = `${data.name ? data.name : truncateAddress(data.address)} ${`notifications.${action}`} ${action === 'tag' || action === 'untag' ? `"${data.tag}"` : ''}`
+      const message = `${data.name ? data.name : truncateAddress(data.address)} ${t(action)} ${action === 'tag' || action === 'untag' ? `"${data.tag}"` : ''}`
       sendPushNotification(message)
     }
 
