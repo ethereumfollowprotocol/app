@@ -18,7 +18,7 @@ export const sharedMetadataIcons: Metadata['icons'] = [
   },
   {
     rel: 'android-chrome',
-    url: 'https://efp.app/assets/android-chrome-384x384.png',
+    url: 'https://efp.app/assets/android-chrome-192x192.png',
   },
 ]
 
