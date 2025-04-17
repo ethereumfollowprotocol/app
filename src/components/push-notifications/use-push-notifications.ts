@@ -223,7 +223,7 @@ export const usePushNotifications = () => {
     return () => {
       ws.close()
     }
-  }, [account?.address, subscription])
+  }, [account?.address])
 
   return {
     isSupported,
