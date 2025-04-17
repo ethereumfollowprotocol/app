@@ -83,9 +83,13 @@ const PushNotifications: React.FC<PushNotificationsProps> = ({ open, setOpen }) 
                 key={item.label}
                 onClick={() => {
                   if (item.label === 'On') {
-                    subscribeToPush().then(() => {
+                    if (subscription) {
+                      subscribeToPush().then(() => {
+                        sendPushNotification(`You are now subscribed to push notifications`)
+                      })
+                    } else {
                       sendPushNotification(`You are now subscribed to push notifications`)
-                    })
+                    }
                   } else {
                     unsubscribeFromPush()
                   }
