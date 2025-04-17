@@ -3,9 +3,6 @@ import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { fetchAccount } from 'ethereum-identity-kit'
 import type { PushSubscription as SerializablePushSubscription } from 'web-push'
-
-import { truncateAddress } from '#/lib/utilities'
-import { useNotifications } from '#/hooks/use-notifications'
 import { getSubscriptionForCurrentUser, sendNotification, subscribeUser, unsubscribeUser } from '#/app/actions'
 
 function urlBase64ToUint8Array(base64String: string) {
@@ -174,15 +171,6 @@ export const usePushNotifications = () => {
       console.error('Error sending notification:', error)
     }
   }
-
-  const { newNotifications } = useNotifications()
-
-  useEffect(() => {
-    if (newNotifications > 0 && subscription) {
-      const user = account?.ens?.name || truncateAddress(account?.address)
-      sendPushNotification(`${newNotifications} new updates ${user ? `for ${user}` : ''}`)
-    }
-  }, [newNotifications])
 
   return {
     isSupported,
