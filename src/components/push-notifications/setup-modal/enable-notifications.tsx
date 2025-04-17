@@ -35,13 +35,13 @@ const EnableNotifications: React.FC<EnableNotificationsProps> = ({
           This app supports push notifications. <br /> Do you want to enable them?
         </p>
         <div className='mt-2 flex gap-2'>
-          <button className='bg-tertiary hover:bg-nav-item min-w-1/2 rounded-sm p-2' onClick={onClose}>
+          <button className='bg-tertiary hover:bg-nav-item w-1/2 rounded-sm p-2 font-bold' onClick={onClose}>
             No thanks
           </button>
           <PrimaryButton
             label={isLoading ? 'Enabling...' : 'Yes, enable'}
             disabled={isLoading}
-            className={cn(isLoading && 'italic')}
+            className={cn('w-1/2', isLoading && 'italic')}
             onClick={async () => {
               await subscribeToPush()
               sendPushNotification(`You are now subscribed to push notifications`)
