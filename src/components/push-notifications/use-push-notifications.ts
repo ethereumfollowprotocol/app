@@ -1,9 +1,11 @@
 import { useAccount } from 'wagmi'
 import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { fetchAccount } from 'ethereum-identity-kit'
+import { fetchAccount, useIsClient } from 'ethereum-identity-kit'
 import type { PushSubscription as SerializablePushSubscription } from 'web-push'
 import { getSubscriptionForCurrentUser, sendNotification, subscribeUser, unsubscribeUser } from '#/app/actions'
+import { truncateAddress } from '#/lib/utilities'
+import type { NotificationItemType } from '#/types/requests'
 
 function urlBase64ToUint8Array(base64String: string) {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4)
@@ -17,12 +19,16 @@ function urlBase64ToUint8Array(base64String: string) {
   }
   return outputArray
 }
+
+let webSocket: WebSocket | null = null
+
 export const usePushNotifications = () => {
   const [isSupported, setIsSupported] = useState(false)
   const [subscription, setSubscription] = useState<PushSubscription | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [registrationInstance, setRegistrationInstance] = useState<ServiceWorkerRegistration | null>(null)
 
+  const isClient = useIsClient()
   const { address: connectedAddress } = useAccount()
   const { data: account } = useQuery({
     queryKey: ['account', connectedAddress],
@@ -171,6 +177,56 @@ export const usePushNotifications = () => {
       console.error('Error sending notification:', error)
     }
   }
+
+  useEffect(() => {
+    // Close any existing websocket connection before opening a new one
+    if (webSocket) {
+      webSocket.close()
+      webSocket = null
+    }
+
+    // The websocket connection can only be open on a client side and
+    // there must be a connected account subscribed to push notifications
+    if (!account?.address || !isClient || !subscription) return
+
+    // Open a new websocket connection
+    const ws = new WebSocket(`ws://efp-events.up.railway.app/?address=${account?.address}`)
+    webSocket = ws
+
+    ws.onopen = () => {
+      console.log('Connected to notifications service')
+    }
+
+    // Handle incoming messages from the websocket
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data) as NotificationItemType
+
+      // manually refetch notifications to update the new notifications count
+      // queryClient.refetchQueries({ queryKey: ['notifications', connectedAddress] })
+
+      const restrictAction = Object.entries({
+        blocked: data.action === 'tag' && data.tag === 'block',
+        unblocked: data.action === 'untag' && data.tag === 'block',
+        muted: data.action === 'tag' && data.tag === 'mute',
+        unmuted: data.action === 'untag' && data.tag === 'mute',
+      })
+        .filter(([_, value]) => !!value)
+        .map(([key]) => key)[0]
+
+      const action = restrictAction || data.action
+
+      const message = `${data.name ? data.name : truncateAddress(data.address)} ${`notifications.${action}`} ${action === 'tag' || action === 'untag' ? `"${data.tag}"` : ''}`
+      sendPushNotification(message)
+    }
+
+    ws.onclose = () => {
+      console.log('Notifications service connection closed')
+    }
+
+    return () => {
+      ws.close()
+    }
+  }, [account?.address])
 
   return {
     isSupported,
