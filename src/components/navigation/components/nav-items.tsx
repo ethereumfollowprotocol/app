@@ -11,20 +11,30 @@ import { Avatar } from '#/components/avatar'
 import { cn, truncateAddress } from '#/lib/utilities'
 import Hamburger from './hamburger'
 import CartButton from './cart-button'
+import { useQuery } from '@tanstack/react-query'
+import { fetchAccount } from 'ethereum-identity-kit'
+import LoadingCell from '#/components/loaders/loading-cell'
 
 const NavItems = () => {
   const pathname = usePathname()
   const { address: userAddress } = useAccount()
   const { openConnectModal } = useConnectModal()
-  const { selectedList, lists, profile } = useEFPProfile()
+  const { selectedList, listToFetch, lists } = useEFPProfile()
 
   const itemUrl =
     selectedList === Number(lists?.primary_list) && pathname !== `/${selectedList}`
       ? userAddress?.toLowerCase()
       : (selectedList?.toString() ?? userAddress?.toLowerCase())
 
-  const profileAvatar = profile?.ens.avatar
-  const profileName = profile?.ens.name
+  const { data: account, isLoading: isLoadingAccount } = useQuery({
+    queryKey: ['account', userAddress, listToFetch],
+    queryFn: async () => {
+      if (!userAddress) return null
+      return await fetchAccount(userAddress, listToFetch)
+    },
+  })
+  const profileAvatar = account?.ens.avatar
+  const profileName = account?.ens.name
 
   return (
     <div className='flex w-full items-center justify-between sm:flex-col sm:justify-start sm:gap-3'>
@@ -48,14 +58,18 @@ const NavItems = () => {
             }}
           >
             {item.name === 'profile' && userAddress ? (
-              <Avatar
-                avatarUrl={profileAvatar}
-                name={profileName || (truncateAddress(userAddress) as string)}
-                size={cn(
-                  'sm:w-9 w-8 sm:h-9 h-8 hover:scale-110 transition-transform',
-                  pathname === item.href(itemUrl) && 'border-2 border-primary'
-                )}
-              />
+              isLoadingAccount ? (
+                <LoadingCell className='h-8 w-8 rounded-full sm:h-9 sm:w-9' />
+              ) : (
+                <Avatar
+                  avatarUrl={profileAvatar}
+                  name={profileName || (truncateAddress(userAddress) as string)}
+                  size={cn(
+                    'sm:w-9 w-8 sm:h-9 h-8 hover:scale-110 transition-transform',
+                    pathname === item.href(itemUrl) && 'border-2 border-primary'
+                  )}
+                />
+              )
             ) : (
               <item.icon className='z-50 h-auto w-8 cursor-pointer transition-all group-hover/nav-item:scale-110 sm:w-9' />
             )}

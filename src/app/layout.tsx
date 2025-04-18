@@ -38,7 +38,6 @@ const inter = Inter({
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang='en' suppressHydrationWarning={true}>
-      <HeadTag />
       <body className={inter.className}>
         <ThemeProvider attribute='class' enableSystem={true} themes={THEMES}>
           <Image
@@ -59,15 +58,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       </body>
       <GoogleAnalytics gaId='G-4YT2CMF6F2' />
     </html>
-  )
-}
-
-const HeadTag = () => {
-  return (
-    <head>
-      <meta charSet='utf-8' />
-      <meta name='mobile-web-app-capable' content='yes' />
-    </head>
   )
 }
 

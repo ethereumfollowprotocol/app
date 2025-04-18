@@ -47,7 +47,6 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const ogImageUrl = `https://efp.app/og?user=${user}`
 
   return {
-    metadataBase: new URL(pageUrl),
     title: `${displayUser}`,
     openGraph: {
       title: `${displayUser} | EFP`,
@@ -65,6 +64,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     icons: {
       icon: avatarResponse?.status === 200 ? ensAvatar : '/assets/favicon.ico', // replace with /assets/art/default-avatar.svg for a default avatar
     },
+
     appleWebApp: {
       capable: true,
       title: displayUser,
