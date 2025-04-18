@@ -156,10 +156,10 @@ export const usePushNotifications = () => {
     }
   }
 
-  async function sendPushNotification(message: string) {
+  async function sendPushNotification(title: string, message: string) {
     try {
       console.log('Sending notification...')
-      const result = await sendNotification(message, account?.ens?.avatar)
+      const result = await sendNotification(title, message, account?.ens?.avatar)
 
       if (result.success) {
         console.log('Notification sent successfully')
@@ -184,41 +184,46 @@ export const usePushNotifications = () => {
     if (!account?.address || !isClient || !subscription) return
 
     // Open a new websocket connection
-    const ws = new WebSocket(`ws://efp-events.up.railway.app/?address=${account?.address}`)
-    webSocket = ws
+    try {
+      const ws = new WebSocket(`wss://efp-events.up.railway.app/?address=${account?.address}`)
+      webSocket = ws
 
-    ws.onopen = () => {
-      console.log('Connected to notifications service')
-    }
+      ws.onopen = () => {
+        console.log('Connected to notifications service')
+      }
 
-    // Handle incoming messages from the websocket
-    ws.onmessage = (event) => {
-      const data = JSON.parse(event.data) as NotificationItemType
+      // Handle incoming messages from the websocket
+      ws.onmessage = (event) => {
+        const data = JSON.parse(event.data) as NotificationItemType
 
-      // manually refetch notifications to update the new notifications count
-      // queryClient.refetchQueries({ queryKey: ['notifications', connectedAddress] })
+        // manually refetch notifications to update the new notifications count
+        // queryClient.refetchQueries({ queryKey: ['notifications', connectedAddress] })
 
-      const restrictAction = Object.entries({
-        blocked: data.action === 'tag' && data.tag === 'block',
-        unblocked: data.action === 'untag' && data.tag === 'block',
-        muted: data.action === 'tag' && data.tag === 'mute',
-        unmuted: data.action === 'untag' && data.tag === 'mute',
-      })
-        .filter(([_, value]) => !!value)
-        .map(([key]) => key)[0]
+        const restrictAction = Object.entries({
+          blocked: data.action === 'tag' && data.tag === 'block',
+          unblocked: data.action === 'untag' && data.tag === 'block',
+          muted: data.action === 'tag' && data.tag === 'mute',
+          unmuted: data.action === 'untag' && data.tag === 'mute',
+        })
+          .filter(([_, value]) => !!value)
+          .map(([key]) => key)[0]
 
-      const action = restrictAction || data.action
+        const action = restrictAction || data.action
 
-      const message = `${data.name ? data.name : truncateAddress(data.address)} ${t(action)} ${action === 'tag' || action === 'untag' ? `"${data.tag}"` : ''}`
-      sendPushNotification(message)
-    }
+        const title = 'New Activity'
+        const message = `${data.name ? data.name : truncateAddress(data.address)} ${t(action)} ${action === 'tag' || action === 'untag' ? `"${data.tag}"` : ''}`
+        sendPushNotification(title, message)
+      }
 
-    ws.onclose = () => {
-      console.log('Notifications service connection closed')
-    }
+      ws.onclose = () => {
+        console.log('Notifications service connection closed')
+      }
 
-    return () => {
-      ws.close()
+      return () => {
+        ws.close()
+      }
+    } catch (error) {
+      console.error('Error opening websocket connection:', error)
     }
   }, [account?.address])
 

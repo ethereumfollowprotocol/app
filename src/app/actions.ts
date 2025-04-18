@@ -140,7 +140,7 @@ export async function unsubscribeUser() {
   }
 }
 
-export async function sendNotification(message: string, userAvatar?: string | null) {
+export async function sendNotification(title: string, message: string, userAvatar?: string | null) {
   try {
     // First try to get the current user's subscription
     const currentUserSub = await getSubscriptionForCurrentUser()
@@ -150,7 +150,7 @@ export async function sendNotification(message: string, userAvatar?: string | nu
         await webpush.sendNotification(
           currentUserSub,
           JSON.stringify({
-            title: 'Ethereum Follow Protocol',
+            title: title,
             body: message,
             icon: userAvatar ? userAvatar : 'https://efp.app/assets/logo.png',
           })
