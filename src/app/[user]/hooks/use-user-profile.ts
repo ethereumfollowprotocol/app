@@ -21,7 +21,7 @@ const useUser = (user: string) => {
   const [followingSort, setFollowingSort] = useState<FollowSortType>('follower count')
   const [followersSort, setFollowersSort] = useState<FollowSortType>('follower count')
 
-  const userIsList = !(isAddress(user) || user.includes('.') || Number.isNaN(Number(user)))
+  const userIsList = !(isAddress(user) || String(user).includes('.') || Number.isNaN(Number(user)))
   const listNum = userIsList ? Number(user) : undefined
 
   const isValidUser =
