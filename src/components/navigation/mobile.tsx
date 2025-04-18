@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { useEffect, useRef } from 'react'
@@ -17,7 +18,6 @@ let navLeaderboardScroll = 0
 
 const Mobile: React.FC = () => {
   const pathname = usePathname()
-
   const navRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -99,12 +99,20 @@ const Mobile: React.FC = () => {
 
   const { width } = useWindowSize()
   const isMobile = width && width < 640
+  const isIOSStandalone =
+    typeof window !== 'undefined' &&
+    isMobile &&
+    /iPad|iPhone/.test(navigator.userAgent) &&
+    window.matchMedia('(display-mode: standalone)').matches
 
   if (!isMobile) return null
 
   return (
     <>
-      <div ref={navRef} className='fixed top-0 left-0 z-50 flex h-[76px] w-screen justify-between px-4 sm:hidden'>
+      <div
+        ref={navRef}
+        className='background-blur fixed top-0 left-0 z-50 flex h-[76px] w-screen justify-between px-4 sm:hidden'
+      >
         <div className='flex items-center gap-3'>
           <Link href='/' className='select-none' aria-label='Ethereum Follow Protocol'>
             <Logo className='w-7 translate-x-1 transition-transform select-none hover:scale-110 sm:w-8' />
@@ -117,7 +125,12 @@ const Mobile: React.FC = () => {
           <WalletMenu />
         </div>
       </div>
-      <nav className='bg-neutral shadow-large fixed bottom-0 left-0 z-50 flex w-full justify-center p-3 px-4 sm:hidden'>
+      <nav
+        className={clsx(
+          'bg-neutral shadow-large fixed bottom-0 left-0 z-50 flex w-full justify-center p-3 px-4 sm:hidden',
+          isIOSStandalone && 'pb-8'
+        )}
+      >
         <NavItems />
       </nav>
     </>
