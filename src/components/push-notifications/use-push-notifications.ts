@@ -30,7 +30,7 @@ export const usePushNotifications = () => {
   const [registrationInstance, setRegistrationInstance] = useState<ServiceWorkerRegistration | null>(null)
 
   const isClient = useIsClient()
-  const { t } = useTranslation('notifications')
+  const { t } = useTranslation()
   const { address: connectedAddress } = useAccount()
   const { data: account } = useQuery({
     queryKey: ['account', connectedAddress],
@@ -173,6 +173,8 @@ export const usePushNotifications = () => {
   }
 
   useEffect(() => {
+    if (!account?.address) return
+
     // Close any existing websocket connection before opening a new one
     if (webSocket) {
       webSocket.close()
@@ -181,7 +183,7 @@ export const usePushNotifications = () => {
 
     // The websocket connection can only be open on a client side and
     // there must be a connected account subscribed to push notifications
-    if (!account?.address || !isClient || !subscription) return
+    if (!isClient || !subscription) return
 
     // Open a new websocket connection
     try {
@@ -200,10 +202,10 @@ export const usePushNotifications = () => {
         // queryClient.refetchQueries({ queryKey: ['notifications', connectedAddress] })
 
         const restrictAction = Object.entries({
-          blocked: data.action === 'tag' && data.tag === 'block',
-          unblocked: data.action === 'untag' && data.tag === 'block',
-          muted: data.action === 'tag' && data.tag === 'mute',
-          unmuted: data.action === 'untag' && data.tag === 'mute',
+          blocke: data.action === 'tag' && data.tag === 'block',
+          unblock: data.action === 'untag' && data.tag === 'block',
+          mute: data.action === 'tag' && data.tag === 'mute',
+          unmute: data.action === 'untag' && data.tag === 'mute',
         })
           .filter(([_, value]) => !!value)
           .map(([key]) => key)[0]
@@ -211,16 +213,12 @@ export const usePushNotifications = () => {
         const action = restrictAction || data.action
 
         const title = 'New Activity'
-        const message = `${data.name ? data.name : truncateAddress(data.address)} ${t(action)} ${action === 'tag' || action === 'untag' ? `"${data.tag}"` : ''}`
+        const message = `${data.name ? data.name : truncateAddress(data.address)} ${t(`notifications.${action}`)} ${action === 'tag' || action === 'untag' ? `"${data.tag}"` : ''}`
         sendPushNotification(title, message)
       }
 
       ws.onclose = () => {
         console.log('Notifications service connection closed')
-      }
-
-      return () => {
-        ws.close()
       }
     } catch (error) {
       console.error('Error opening websocket connection:', error)

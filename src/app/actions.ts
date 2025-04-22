@@ -155,6 +155,7 @@ export async function sendNotification(title: string, message: string, userAvata
             icon: userAvatar ? userAvatar : 'https://efp.app/assets/logo.png',
           })
         )
+
         return { success: true }
       } catch (error: any) {
         // Handle expired subscription
@@ -170,73 +171,6 @@ export async function sendNotification(title: string, message: string, userAvata
     return { success: false, message: 'No subscriptions found' }
   } catch (error) {
     console.error('Failed to send notification:', error)
-    return { success: false, error: String(error) }
-  }
-}
-
-// Add function to send notification to all subscribers
-export async function sendNotificationToAll(message: string, userAvatar?: string | null) {
-  try {
-    const redis = getRedisClient()
-
-    // Get all subscription IDs from the set
-    const subscriptionIds = await redis.smembers(ALL_SUBSCRIPTIONS_KEY)
-
-    if (!subscriptionIds || subscriptionIds.length === 0) {
-      return { success: false, message: 'No subscriptions found' }
-    }
-
-    console.log(`Preparing to send notifications to ${subscriptionIds.length} subscribers`)
-
-    const results = await Promise.allSettled(
-      subscriptionIds.map(async (id) => {
-        // Get subscription from Redis
-        const subscriptionJson = await redis.get(`${SUBSCRIPTION_PREFIX}${id}`)
-
-        if (!subscriptionJson) {
-          // Remove invalid ID from the set
-          await redis.srem(ALL_SUBSCRIPTIONS_KEY, id)
-          return { id, status: 'error', message: 'Subscription not found' }
-        }
-
-        // Parse the subscription JSON
-        const subscription = JSON.parse(subscriptionJson) as SerializablePushSubscription
-
-        try {
-          await webpush.sendNotification(
-            subscription,
-            JSON.stringify({
-              body: message,
-              icon: userAvatar ? userAvatar : '/assets/android-chrome-192x192.png',
-              badge: userAvatar ? '/assets/android-chrome-192x192.png' : undefined,
-            })
-          )
-          return { id, status: 'success' }
-        } catch (error: any) {
-          // Handle expired or invalid subscriptions
-          if (error.statusCode === 410 || error.statusCode === 404) {
-            // Remove expired subscription
-            await redis.del(`${SUBSCRIPTION_PREFIX}${id}`)
-            await redis.srem(ALL_SUBSCRIPTIONS_KEY, id)
-            return { id, status: 'expired', message: 'Subscription expired' }
-          }
-          return { id, status: 'error', message: error.message || 'Unknown error' }
-        }
-      })
-    )
-
-    const successful = results.filter((r) => r.status === 'fulfilled' && r.value.status === 'success').length
-    const failed = results.filter((r) => r.status === 'fulfilled' && r.value.status === 'error').length
-    const expired = results.filter((r) => r.status === 'fulfilled' && r.value.status === 'expired').length
-
-    console.log(`Notification sending complete - Success: ${successful}, Failed: ${failed}, Expired: ${expired}`)
-
-    return {
-      success: successful > 0,
-      stats: { successful, failed, expired, total: subscriptionIds.length },
-    }
-  } catch (error) {
-    console.error('Error in bulk notification sending:', error)
     return { success: false, error: String(error) }
   }
 }
