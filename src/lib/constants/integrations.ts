@@ -44,6 +44,7 @@ import NameGraph from 'public/assets/partners/namegraph.jpeg'
 import Aragon from 'public/assets/partners/aragon.jpeg'
 import Superfluid from 'public/assets/partners/superfluid.jpeg'
 import ETHSF from 'public/assets/partners/ethsf.jpeg'
+import ENSvolution from 'public/assets/partners/ensvolution.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -265,6 +266,11 @@ export const INTEGRATIONS = [
     name: 'CuriaLab',
     url: 'https://www.curialab.xyz/',
     logo: CuriaLab,
+  },
+  {
+    name: 'ENSvolution',
+    url: 'https://www.ensvolution.xyz/',
+    logo: ENSvolution,
   },
 ] as {
   name: string
