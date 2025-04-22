@@ -32,7 +32,7 @@ interface EnvironmentVariables {
   readonly NEXT_PUBLIC_OPTIMISM_SEPOLIA_LIMIT: string
   readonly NEXT_PUBLIC_BASE_SEPOLIA_LIMIT: string
   readonly NEXT_PUBLIC_THIRDWEB_CLIENT_ID: string
-  readonly NEXT_PUBLIC_NEXT_PUBLIC_UNICORN_FACTORY_ADDRESS: string
+  readonly NEXT_PUBLIC_UNICORN_FACTORY_ADDRESS: string
   /* automatically added by Vercel */
   readonly VERCEL_URL?: string
   readonly NEXT_PUBLIC_VERCEL_URL?: string
