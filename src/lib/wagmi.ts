@@ -17,7 +17,7 @@ import { APP_DESCRIPTION, APP_NAME, APP_URL } from '#/lib/constants'
 
 const thirdwebClientId = process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID || '4e8c81182c3709ee441e30d776223354'
 const unicornFactoryAddress =
-  process.env.NEXT_PUBLIC_NEXT_PUBLIC_UNICORN_FACTORY_ADDRESS || '0xD771615c873ba5a2149D5312448cE01D677Ee48A'
+  process.env.NEXT_PUBLIC_UNICORN_FACTORY_ADDRESS || '0xD771615c873ba5a2149D5312448cE01D677Ee48A'
 
 // Create Thirdweb Client
 const client = createThirdwebClient({
