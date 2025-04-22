@@ -3,6 +3,7 @@
 import { Suspense, useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
+import { cn } from '#/lib/utilities'
 import QRCodeModal from '#/components/qr-code-modal'
 import type { ProfileTabType } from '#/types/common'
 import { useUserInfo } from '../hooks/use-user-info'
@@ -73,7 +74,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   const router = useRouter()
   const isMyProfile = useIsEditView()
   const { roles, selectedList } = useEFPProfile()
-  const { tableRef, TopEightRef, containerRef } = useUserScroll()
+  const { tableRef, TopEightRef, containerRef, isCommonFollowersModalOpen } = useUserScroll()
 
   useEffect(() => {
     if (searchParams.get('tab')) {
@@ -176,7 +177,10 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       {!isSaving && (
         <div
           id='user-page'
-          className='relative mx-auto flex h-screen w-full flex-col items-center gap-4 overflow-y-auto px-0 pb-32 sm:pr-0 sm:pb-8 sm:pl-[70px] lg:gap-0 2xl:pl-20'
+          className={cn(
+            'relative mx-auto flex h-screen w-full flex-col items-center gap-4 overflow-y-auto px-0 pb-32 sm:pr-0 sm:pb-8 sm:pl-[70px] lg:gap-0 2xl:pl-20',
+            isCommonFollowersModalOpen && 'overflow-hidden'
+          )}
           ref={containerRef}
         >
           <div className='z-20 mt-20 w-full sm:mt-0 md:z-auto'>

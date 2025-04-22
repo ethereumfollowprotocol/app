@@ -7,34 +7,32 @@ export const useUserScroll = () => {
   const containerRef = useRef<HTMLDivElement>(null)
 
   const isClient = useIsClient()
-  const commonFollowersModalEl = isClient ? document?.querySelector('.common-followers-modal-container') : null
+  const isCommonFollowersModalOpen = isClient ? !!document?.querySelector('.common-followers-modal-container') : false
 
-  const handleWheel = useCallback(
-    (event: WheelEvent) => {
-      if (commonFollowersModalEl) return
+  const handleWheel = useCallback((event: WheelEvent) => {
+    const commonFollowersModalEl = document?.querySelector('.common-followers-modal-container')
 
-      if (tableRef.current) {
-        // Adjust the scroll position of the div
-        tableRef.current.scrollTop += event.deltaY
-        tableRef.current.scrollLeft += event.deltaX
-      }
+    if (commonFollowersModalEl) return
 
-      if (containerRef.current) {
-        // Adjust the scroll position of the div
-        containerRef.current.scrollTop += event.deltaY
-        containerRef.current.scrollLeft += event.deltaX
-      }
+    if (tableRef.current) {
+      // Adjust the scroll position of the div
+      tableRef.current.scrollTop += event.deltaY
+      tableRef.current.scrollLeft += event.deltaX
+    }
 
-      if (TopEightRef.current) {
-        const topEightHeight = TopEightRef.current.scrollHeight
-        const topEightOverflow = window.innerHeight - topEightHeight - 16
-        if (window.innerWidth >= 1024)
-          TopEightRef.current.style.top = `${topEightOverflow >= 0 ? 0 : topEightOverflow}px`
-        else TopEightRef.current.style.top = '0px'
-      }
-    },
-    [commonFollowersModalEl]
-  )
+    if (containerRef.current) {
+      // Adjust the scroll position of the div
+      containerRef.current.scrollTop += event.deltaY
+      containerRef.current.scrollLeft += event.deltaX
+    }
+
+    if (TopEightRef.current) {
+      const topEightHeight = TopEightRef.current.scrollHeight
+      const topEightOverflow = window.innerHeight - topEightHeight - 16
+      if (window.innerWidth >= 1024) TopEightRef.current.style.top = `${topEightOverflow >= 0 ? 0 : topEightOverflow}px`
+      else TopEightRef.current.style.top = '0px'
+    }
+  }, [])
 
   useEffect(() => {
     // Attach the wheel event listener to the window
@@ -46,5 +44,5 @@ export const useUserScroll = () => {
     }
   }, [handleWheel])
 
-  return { tableRef, TopEightRef, containerRef, commonFollowersModalEl }
+  return { tableRef, TopEightRef, containerRef, isCommonFollowersModalOpen }
 }
