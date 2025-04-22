@@ -25,7 +25,7 @@ const useUser = (user: string) => {
   const listNum = userIsList ? Number(user) : undefined
 
   const isValidUser =
-    isAddress(user) || (userIsList && listNum && listNum > 0 && listNum < 1000000000) || user.includes('.')
+    (userIsList && listNum && listNum > 0 && listNum < 1000000000) || user.includes('.') || isAddress(user)
 
   const {
     data: profile,
