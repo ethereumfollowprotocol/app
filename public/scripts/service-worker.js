@@ -109,7 +109,7 @@ function connectWebSocket(accountData) {
         untag: `removed the tag ${messageData.tag}`,
       }
 
-      const notificationBody = `${messageData.name || truncateAddress(messageData.address)} ${actions[messageAction]}.`
+      const notificationBody = `${messageData.name || `${messageData.address.slice(0, 6)}...${messageData.address.slice(-4)}`} ${actions[messageAction]}.`
 
       const notificationOptions = {
         body: notificationBody,
