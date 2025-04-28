@@ -1,7 +1,8 @@
 import React from 'react'
 import { useAccount } from 'wagmi'
+import { useRouter } from 'next/navigation'
 import { useWindowSize } from '@uidotdev/usehooks'
-import { UserProfile as UserProfileComponent } from 'ethereum-identity-kit'
+import { FullWidthProfile } from 'ethereum-identity-kit'
 
 import FollowButton from '../follow-button'
 import type { StatsResponse } from '#/types/requests'
@@ -9,7 +10,6 @@ import useFollowingState from '#/hooks/use-following-state'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import ThreeDotMenu from '../user-profile-card/components/three-dot-menu'
-import { useRouter } from 'next/navigation'
 
 interface UserProfileCardProps {
   addressOrName: string
@@ -51,21 +51,21 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
   const { followingState } = useFollowingState({ address: profile?.address })
 
   return (
-    <UserProfileComponent
+    <FullWidthProfile
       addressOrName={addressOrName}
       connectedAddress={userAddress}
       list={profileList}
       selectedList={selectedList?.toString()}
-      onProfileClick={(addressOrName) => {
+      onProfileClick={(addressOrName: string) => {
         router.push(`/${addressOrName}?ssr=false`)
       }}
-      onStatClick={({ addressOrName, stat }) => {
+      onStatClick={({ addressOrName, stat }: { addressOrName: string; stat: string }) => {
         router.push(`/${addressOrName}?tab=${stat}`)
       }}
       role={role}
       className={className}
       style={{
-        paddingBottom: width && width > 768 ? '110px' : '20px',
+        paddingBottom: width && width < 768 ? '20px' : '110px',
       }}
       options={{
         profileData: profile ?? undefined,

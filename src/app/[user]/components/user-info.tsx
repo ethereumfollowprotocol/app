@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import { cn } from '#/lib/utilities'
@@ -184,24 +184,22 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
           ref={containerRef}
         >
           <div className='z-20 mt-20 w-full sm:mt-0 md:z-auto'>
-            <Suspense>
-              <UserProfile
-                addressOrName={user}
-                isMyProfile={isMyProfile}
-                profileList={profileList}
-                stats={stats}
-                profile={profile}
-                refetchProfile={refetchProfile}
-                isLoading={profileIsLoading}
-                isStatsLoading={statsIsLoading}
-                openBlockModal={() => {
-                  setIsBlockedMutedOpen(true)
-                  router.push(`/${user}?modal=block_mute_list&ssr=false`)
-                }}
-                openQrCodeModal={() => setQrCodeModalOpen(true)}
-                openListSettingsModal={() => setListSettingsOpen(true)}
-              />
-            </Suspense>
+            <UserProfile
+              addressOrName={user}
+              isMyProfile={isMyProfile}
+              profileList={profileList}
+              stats={stats}
+              profile={profile}
+              refetchProfile={refetchProfile}
+              isLoading={profileIsLoading}
+              isStatsLoading={statsIsLoading}
+              openBlockModal={() => {
+                setIsBlockedMutedOpen(true)
+                router.push(`/${user}?modal=block_mute_list&ssr=false`)
+              }}
+              openQrCodeModal={() => setQrCodeModalOpen(true)}
+              openListSettingsModal={() => setListSettingsOpen(true)}
+            />
           </div>
           <div className='flex w-full max-w-[1920px] flex-col-reverse gap-4 px-4 md:-mt-28 lg:-mt-24 lg:flex-row xl:px-8'>
             <div className='z-10 h-fit w-full'>
