@@ -1,6 +1,6 @@
-import type { Address } from 'viem'
 import { normalize } from 'viem/ens'
 import { ENS_SUBGRAPH_URL } from '#/lib/constants'
+import type { SearchENSNameResults } from '#/types/requests'
 
 const searchQuery = /*GraphQL*/ `
   query SearchQuery($search: String) {
@@ -31,9 +31,7 @@ export const searchENSNames = async ({ search }: { search: string }) => {
 
   if (!response.ok) return []
 
-  const json = (await response.json()) as {
-    data: { domains: { name: string; resolvedAddress: { id: Address } | null }[] }
-  }
+  const json = (await response.json()) as { data: SearchENSNameResults }
 
   return json.data.domains.filter((domain) => !!domain.resolvedAddress).sort((a, b) => a.name.length - b.name.length)
 }
