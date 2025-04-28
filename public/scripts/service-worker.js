@@ -1,246 +1,105 @@
-let socket = null
-let currentWsUrl = null
-let lastKnownAccount = null
-let reconnectInterval = 5000
-const maxReconnectInterval = 60000
-let reconnectTimeoutId = null
+console.log('Service Worker loading. Standard Push API Mode.')
 
-async function fetchAddressFromApi() {
-  console.log('Attempting to fetch account data')
-  try {
-    const response = await fetch('/api/address', {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-      },
-      credentials: 'include',
-    })
+// --- Service Worker Event Listeners ---
 
-    if (response.ok) {
-      const data = await response.json()
-      console.log('Successfully fetched account data:', data)
-      return data
-    } else if (response.status === 404) {
-      console.log('No account data found via API for this user.')
-      return null
-    } else {
-      console.error(`Failed to fetch account data: ${response.status} ${response.statusText}`)
-      return null
-    }
-  } catch (error) {
-    console.error('Network error fetching account data:', error)
-    return null
-  }
-}
-
-function disconnectWebSocket() {
-  if (reconnectTimeoutId) {
-    clearTimeout(reconnectTimeoutId)
-    reconnectTimeoutId = null
-  }
-
-  if (socket) {
-    console.log('Manually disconnecting existing WebSocket.')
-    socket.onclose = null
-    socket.close()
-    socket = null
-    currentWsUrl = null
-  }
-}
-
-function connectWebSocket(accountData) {
-  if (!accountData || !accountData.address) {
-    console.error('Cannot connect WebSocket without a valid account data object including an address.')
-    return
-  }
-
-  const newWsUrl = `wss://efp-events.up.railway.app/?address=${encodeURIComponent(accountData.address)}`
-
-  if (socket && socket.readyState === WebSocket.OPEN && currentWsUrl === newWsUrl) {
-    console.log(`Already connected to WebSocket: ${newWsUrl}`)
-    return
-  }
-
-  if (socket) {
-    console.log('Disconnecting previous WebSocket connection before starting new one.')
-    disconnectWebSocket()
-  }
-
-  console.log(`Attempting to connect WebSocket: ${newWsUrl}`)
-  currentWsUrl = newWsUrl
-  lastKnownAccount = accountData
-
-  socket = new WebSocket(currentWsUrl)
-
-  socket.onopen = () => {
-    console.log('WebSocket connection established:', currentWsUrl)
-    reconnectInterval = 5000
-    if (reconnectTimeoutId) {
-      clearTimeout(reconnectTimeoutId)
-      reconnectTimeoutId = null
-    }
-  }
-
-  socket.onmessage = (event) => {
-    try {
-      const messageData = JSON.parse(event.data)
-      const notificationTitle = 'New EFP Update'
-
-      const getMessageAction = () => {
-        if (messageData.action === 'tag') {
-          if (messageData.tag === 'block') return 'block'
-          if (messageData.tag === 'mute') return 'mute'
-        } else if (messageData.action === 'untag') {
-          if (messageData.tag === 'block') return 'unblock'
-          if (messageData.tag === 'mute') return 'unmute'
-        }
-
-        return messageData.action
-      }
-      const messageAction = getMessageAction()
-      const actions = {
-        follow: 'followed you',
-        unfollow: 'unfollowed you',
-        block: 'blocked you',
-        unblock: 'unblocked you',
-        mute: 'muted you',
-        unmute: 'unmuted you',
-        tag: `tagged you with ${messageData.tag}`,
-        untag: `removed the tag ${messageData.tag}`,
-      }
-
-      const notificationBody = `${messageData.name || `${messageData.address.slice(0, 6)}...${messageData.address.slice(-4)}`} ${actions[messageAction]}.`
-
-      const notificationOptions = {
-        body: notificationBody,
-        badge: lastKnownAccount.avatar,
-        data: { ...(messageData.data || {}), address: messageData.address },
-        tag: `address-${messageData.address}-${Date.now()}`,
-      }
-
-      self.registration.showNotification(notificationTitle, notificationOptions)
-    } catch (e) {
-      console.error('Failed to handle WebSocket message:', e)
-      self.registration.showNotification('Update Received', {
-        body: `Check the app for details regarding ${lastKnownAccount.address}.`,
-      })
-    }
-  }
-
-  socket.onerror = (error) => {
-    console.error('WebSocket error:', error)
-  }
-
-  socket.onclose = (event) => {
-    console.log(
-      `WebSocket closed. Code: ${event.code}. Reconnecting to ${currentWsUrl} in ${reconnectInterval / 1000}s...`
-    )
-    socket = null
-
-    if (lastKnownAccount) {
-      console.log(`Attempting reconnect using last known account data:`, lastKnownAccount)
-      if (reconnectTimeoutId) clearTimeout(reconnectTimeoutId)
-
-      reconnectTimeoutId = setTimeout(() => connectWebSocket(lastKnownAccount), reconnectInterval)
-      reconnectInterval = Math.min(reconnectInterval * 2, maxReconnectInterval)
-    } else {
-      console.log('No in-memory account data for reconnect, attempting to fetch from API...')
-      if (reconnectTimeoutId) clearTimeout(reconnectTimeoutId)
-
-      reconnectTimeoutId = setTimeout(() => {
-        fetchAddressFromApi().then((fetchedAccountData) => {
-          if (fetchedAccountData) {
-            connectWebSocket(fetchedAccountData)
-          } else {
-            console.log('API fetch failed during reconnect attempt, stopping reconnect cycle.')
-            reconnectInterval = 5000
-          }
-        })
-      }, reconnectInterval)
-
-      reconnectInterval = Math.min(reconnectInterval * 2, maxReconnectInterval)
-    }
-  }
-}
-
-self.addEventListener('install', () => {
+self.addEventListener('install', (event) => {
   console.log('Service Worker installing.')
+  // Use skipWaiting to activate the new SW immediately
+  event.waitUntil(self.skipWaiting())
 })
 
 self.addEventListener('activate', (event) => {
   console.log('Service Worker activating.')
-  event.waitUntil(
-    clients
-      .claim()
-      .then(() => {
-        console.log('Attempting to fetch initial account data from API on activation.')
-        return fetchAddressFromApi()
-      })
-      .then((fetchedAccountData) => {
-        if (fetchedAccountData) {
-          connectWebSocket(fetchedAccountData)
-        } else {
-          console.log('No account data fetched on activation. Waiting for client message.')
-        }
-      })
-      .catch((err) => {
-        console.error('Error during activation fetch/connect:', err)
-      })
-  )
+  // Use clients.claim() to take control of existing clients
+  event.waitUntil(clients.claim())
+  // NO WebSocket connection needed on activation
 })
 
-self.addEventListener('message', (event) => {
-  console.log('Service Worker received message:', event.data.payload)
-
-  if (event.data && event.data.type === 'CONNECT_WEBSOCKET' && !!event.data.payload?.accountData.address) {
-    const accountData = event.data.payload.accountData
-    console.log(`Received instruction via message to connect WebSocket for account:`, accountData)
-
-    connectWebSocket(accountData)
-  } else if (event.data && event.data.type === 'DISCONNECT_WEBSOCKET') {
-    console.log('Received instruction via message to disconnect WebSocket.')
-    disconnectWebSocket()
-    lastKnownAccount = null
-  }
-})
-
+// Listener for the standard 'push' event
 self.addEventListener('push', (event) => {
-  if (event.data) {
-    const data = event.data.json()
-    const options = {
-      body: data.body,
-      icon: '/assets/icons/icon-192x192.png',
-      badge: data.badge,
-      vibrate: [100, 50, 100],
-      data: {
-        dateOfArrival: Date.now(),
-        primaryKey: '2',
-      },
-    }
+  console.log('[Service Worker] Push Received.')
 
-    event.waitUntil(self.registration.showNotification(data.title, options))
+  // Define default structure matching PushPayload (actions.ts) but with defaults
+  let payload = {
+    title: 'EFP Update',
+    body: 'You have a new update.',
+    badge: '/assets/logo.png', // Default badge/icon
+    icon: '/assets/icons/icon-192x192.png', // Default icon if badge fails or not used
+    data: { address: null, url: 'https://efp.app/' }, // Default data
   }
+
+  try {
+    if (event.data) {
+      const parsedData = event.data.json()
+      // Merge received data, ensuring data object exists
+      payload = {
+        ...payload,
+        ...parsedData,
+        data: {
+          ...payload.data, // Keep default URL unless overridden
+          ...(parsedData.data || {}), // Merge data object
+        },
+        // Use badge from payload if present, otherwise keep default
+        badge: parsedData.badge || payload.badge,
+        icon: parsedData.icon || payload.icon, // Allow overriding icon too
+      }
+      console.log('[Service Worker] Push payload parsed:', payload)
+    } else {
+      console.log('[Service Worker] Push event received but no data payload.')
+    }
+  } catch (e) {
+    console.error('[Service Worker] Error parsing push data:', e)
+    payload.body = event.data ? event.data.text() : 'Error processing notification data.'
+  }
+
+  // Use parsed or default values to show notification
+  const title = payload.title
+  const options = {
+    body: payload.body,
+    icon: payload.icon, // Standard icon field
+    badge: payload.badge, // Badge field (often for monochrome icons)
+    data: payload.data, // Pass data to notificationclick event
+    tag: `efp-update-${payload.data?.address || Date.now()}`, // Tag based on address if available
+  }
+
+  const notificationPromise = self.registration.showNotification(title, options)
+  event.waitUntil(notificationPromise)
 })
 
+// Handle notification clicks
 self.addEventListener('notificationclick', (event) => {
-  console.log('Notification clicked:', event.notification)
+  console.log('[Service Worker] Notification click Received.', event.notification)
   event.notification.close()
 
+  // Construct URL based on address in notification data
   const notificationData = event.notification.data || {}
-  const addr = notificationData.address || (lastKnownAccount ? lastKnownAccount.address : null)
-  const urlToOpen = addr ? `https://efp.app/${addr}` : 'https://efp.app/'
+  const targetAddress = notificationData.address // Get address from push payload data
+  // Use data.url if provided, otherwise construct from address, fallback to base URL
+  const urlToOpen = notificationData.url || (targetAddress ? `https://efp.app/${targetAddress}` : 'https://efp.app/')
+
+  console.log(`[Service Worker] Handling click, opening: ${urlToOpen}`)
 
   event.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
       for (const client of clientList) {
-        if (client.url.includes(urlToOpen) && 'focus' in client) {
+        // Attempt to focus existing window/tab if URL matches
+        if (client.url === urlToOpen && 'focus' in client) {
+          console.log('[Service Worker] Focusing existing client.')
           return client.focus()
         }
       }
-
+      // Otherwise, open a new window
       if (clients.openWindow) {
+        console.log('[Service Worker] Opening new window.')
         return clients.openWindow(urlToOpen)
       }
     })
   )
+})
+
+// Optional: Handle subscription changes
+self.addEventListener('pushsubscriptionchange', (event) => {
+  console.log('[Service Worker] Push subscription changed. Re-subscription might be needed.')
+  // TODO: Implement logic to re-subscribe and update the backend automatically
+  // Example: event.waitUntil( self.registration.pushManager.subscribe(options).then(...) );
 })
