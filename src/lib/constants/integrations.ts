@@ -45,6 +45,7 @@ import Aragon from 'public/assets/partners/aragon.jpeg'
 import Superfluid from 'public/assets/partners/superfluid.jpeg'
 import ETHSF from 'public/assets/partners/ethsf.jpeg'
 import ENSvolution from 'public/assets/partners/ensvolution.jpeg'
+import IpeCity from 'public/assets/partners/ipecity.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -196,6 +197,11 @@ export const INTEGRATIONS = [
     name: 'Namefi',
     url: 'https://www.namefi.io/',
     logo: Namefi,
+  },
+  {
+    name: 'Ipê City',
+    url: 'https://www.ipe.city/',
+    logo: IpeCity,
   },
   {
     name: 'ENSBook',
