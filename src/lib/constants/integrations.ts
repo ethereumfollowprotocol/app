@@ -46,6 +46,7 @@ import Superfluid from 'public/assets/partners/superfluid.jpeg'
 import ETHSF from 'public/assets/partners/ethsf.jpeg'
 import ENSvolution from 'public/assets/partners/ensvolution.jpeg'
 import IpeCity from 'public/assets/partners/ipecity.jpeg'
+import CryptoPunksEthLimo from 'public/assets/partners/cryptopunks-eth-limo.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -277,6 +278,11 @@ export const INTEGRATIONS = [
     name: 'ENSvolution',
     url: 'https://www.ensvolution.xyz/',
     logo: ENSvolution,
+  },
+  {
+    name: 'CryptoPunks.eth.limo',
+    url: 'https://cryptopunks.eth.limo/',
+    logo: CryptoPunksEthLimo,
   },
 ] as {
   name: string
