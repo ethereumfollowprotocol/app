@@ -20,11 +20,11 @@ export const useUserScroll = () => {
       tableRef.current.scrollLeft += event.deltaX
     }
 
-    if (containerRef.current) {
-      // Adjust the scroll position of the div
-      containerRef.current.scrollTop += event.deltaY
-      containerRef.current.scrollLeft += event.deltaX
-    }
+    // if (containerRef.current) {
+    //   // Adjust the scroll position of the div
+    //   containerRef.current.scrollTop += event.deltaY
+    //   containerRef.current.scrollLeft += event.deltaX
+    // }
 
     if (TopEightRef.current) {
       const topEightHeight = TopEightRef.current.scrollHeight
