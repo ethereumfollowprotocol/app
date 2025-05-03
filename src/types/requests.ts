@@ -1,4 +1,4 @@
-import type { Address, GetEnsAddressReturnType } from 'viem'
+import type { Address } from 'viem'
 import type { LeaderboardFilter } from './common'
 import type { StaticImageData } from 'next/image'
 
@@ -318,7 +318,7 @@ export type NotificationsResponse = {
 
 export type SearchENSNameDomain = {
   name: string
-  resolvedAddress: { id: Address | (() => Promise<'' | GetEnsAddressReturnType>) } | null
+  resolvedAddress: { id: Address | string } | null
 }
 
 export type SearchENSNameResults = {
