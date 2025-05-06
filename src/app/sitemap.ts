@@ -31,7 +31,6 @@ const getAccounts = async (): Promise<Account[]> => {
 }
 
 const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
-  const lastModified = new Date()
   const appDirectoryPath = fs.realpathSync(`${process.cwd()}/src/app`)
 
   const staticRoutes = fs
@@ -49,7 +48,7 @@ const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
 
   const transformedStaticRoutes = staticRoutes.map((route) => ({
     url: `${SITE_URL}/${route}`,
-    lastModified,
+    lastModified: new Date(),
     changeFrequency: 'daily' as const,
     priority: route === '' ? 1 : 0.6,
   }))
@@ -57,10 +56,10 @@ const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
   const accounts = await getAccounts()
   const accountRoutes = accounts.map((account) => ({
     url: `${SITE_URL}/${account.address}`,
-    lastModified,
+    lastModified: new Date(),
     changeFrequency: 'daily' as const,
     priority: 0.5,
-    images: [account.avatar, account.header].filter(Boolean) as string[],
+    // images: [account.avatar, account.header].filter(Boolean) as string[],
   }))
 
   const allRoutes = [...transformedStaticRoutes, ...accountRoutes]
