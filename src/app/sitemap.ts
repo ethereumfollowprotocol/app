@@ -14,13 +14,10 @@ type Account = {
 const getAccounts = async (): Promise<Account[]> => {
   try {
     const file = fs.readFileSync(`${process.cwd()}/src/data/accounts.csv`, 'utf8')
-    const accounts = file
-      .replaceAll('"', '')
-      .split('\n')
-      .map((account) => account.split(','))
+    const accounts = file.split('\n').map((account) => account.split(','))
 
     const formattedAccounts = accounts.map((account) => ({
-      address: account[0],
+      address: account[0]?.replaceAll('"', ''),
       name: account[1] === 'NULL' ? null : account[1],
       avatar: account[2] === 'NULL' ? null : account[2],
       header: account[3] === 'NULL' ? null : account[3],
