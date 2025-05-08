@@ -241,7 +241,7 @@ export const INTEGRATIONS = [
   },
   {
     name: 'Ethereum San Francisco',
-    url: 'https://www.ethereumsf.org/',
+    url: 'https://ethsf.fileverse.io/ethsf/portal',
     logo: ETHSF,
   },
   {
