@@ -1,12 +1,16 @@
 export const fetchProfileQRCode = async (addressOrName: string) => {
+  const url = `${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/qr`
+
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${addressOrName}/qr`, {
-      cache: 'default',
+    const response = await fetch(url).catch((err) => {
+      console.error(err)
+      return null
     })
 
-    const data = await response.text()
+    const data = response ? await response.text() : null
     return data
   } catch (err: unknown) {
+    console.error(err)
     return null
   }
 }
