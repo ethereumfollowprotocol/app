@@ -47,6 +47,7 @@ import ETHSF from 'public/assets/partners/ethsf.jpeg'
 import ENSvolution from 'public/assets/partners/ensvolution.jpeg'
 import IpeCity from 'public/assets/partners/ipecity.jpeg'
 import CryptoPunksEthLimo from 'public/assets/partners/cryptopunks-eth-limo.jpeg'
+import GeoCities from 'public/assets/partners/geocities.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -283,6 +284,11 @@ export const INTEGRATIONS = [
     name: 'CryptoPunks.eth.limo',
     url: 'https://cryptopunks.eth.limo/',
     logo: CryptoPunksEthLimo,
+  },
+  {
+    name: 'GeoCities',
+    url: 'https://geocities.eth.link',
+    logo: GeoCities,
   },
 ] as {
   name: string
