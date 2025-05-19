@@ -96,9 +96,9 @@ export const INTEGRATIONS = [
     logo: EnsVision,
   },
   {
-    name: 'Zapper',
-    url: 'https://zapper.xyz/',
-    logo: Zapper,
+    name: 'Ipê City',
+    url: 'https://www.ipe.city/',
+    logo: IpeCity,
   },
   {
     name: 'Rotki',
@@ -116,14 +116,14 @@ export const INTEGRATIONS = [
     logo: Phi,
   },
   {
-    name: 'Vibes',
-    url: 'https://vibes.scapes.xyz/',
-    logo: VibesScapes,
-  },
-  {
     name: 'Lighthouse',
     url: 'https://lighthouse.cx/',
     logo: Lighthouse,
+  },
+  {
+    name: 'Zapper',
+    url: 'https://zapper.xyz/',
+    logo: Zapper,
   },
   {
     name: 'Blockverse',
@@ -199,11 +199,6 @@ export const INTEGRATIONS = [
     name: 'Namefi',
     url: 'https://www.namefi.io/',
     logo: Namefi,
-  },
-  {
-    name: 'Ipê City',
-    url: 'https://www.ipe.city/',
-    logo: IpeCity,
   },
   {
     name: 'ENSBook',
@@ -289,6 +284,11 @@ export const INTEGRATIONS = [
     name: 'GeoCities',
     url: 'https://geocities.eth.link',
     logo: GeoCities,
+  },
+  {
+    name: 'Vibes',
+    url: 'https://vibes.scapes.xyz/',
+    logo: VibesScapes,
   },
 ] as {
   name: string
