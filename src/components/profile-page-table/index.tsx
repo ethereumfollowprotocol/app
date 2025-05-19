@@ -90,8 +90,8 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
     }, [showTags])
 
     const { t } = useTranslation()
-    const { lists } = useEFPProfile()
     const isProfile = useIsEditView()
+    const { lists, selectedList } = useEFPProfile()
 
     const isFollowingTable = title === 'following'
     const showFollowsYouBadges = !isProfile || isFollowingTable
@@ -201,7 +201,8 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
             isBlockedList={isShowingBlocked}
             isBlockedBy={title === 'Blocked/Muted By' && isProfile}
             isTopEight={isTopEight}
-            initialFollowState={title === 'following' && canEditTags ? 'Following' : undefined}
+            // if the displayed table is user's followings, automatically set the initial follow state to "Following"
+            initialFollowState={title === 'following' && canEditTags && !!selectedList ? 'Following' : undefined}
             className={cn('bg-neutral shadow-medium rounded-sm', !isLoading && profiles.length === 0 && 'hidden')}
           />
           {!isLoading && <div ref={loadMoreRef} className='mb-4 h-px w-full' />}
