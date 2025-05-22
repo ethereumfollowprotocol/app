@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { useAccount } from 'wagmi'
+import { useRouter } from 'next/navigation'
 import { useWindowSize } from '@uidotdev/usehooks'
 import { Notifications } from 'ethereum-identity-kit'
 
@@ -12,6 +13,7 @@ import Integrations from './components/integrations.tsx'
 import PoweredByEIK from './components/powered-by-eik.tsx'
 
 const Desktop = () => {
+  const router = useRouter()
   const { width } = useWindowSize()
   const isMobile = width && width < 640
   const { address: userAddress } = useAccount()
@@ -27,7 +29,12 @@ const Desktop = () => {
         <div className='flex flex-col items-center justify-end gap-4'>
           <WalletMenu />
           <Search />
-          <Notifications addressOrName={userAddress ?? ''} position='right' align='bottom' />
+          <Notifications
+            addressOrName={userAddress ?? ''}
+            position='right'
+            align='bottom'
+            onProfileClick={(address) => router.push(`/${address}?ssr=false`)}
+          />
           <CartButton />
           <hr className='border-text-neutral mb-1 w-10 rounded-full border-[1px]' />
           <NavItems />

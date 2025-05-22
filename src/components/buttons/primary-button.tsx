@@ -4,7 +4,7 @@ import { forwardRef, type MouseEventHandler } from 'react'
 interface PrimaryButtonProps {
   className?: string
   label: string
-  onClick: MouseEventHandler
+  onClick?: MouseEventHandler
   disabled?: boolean
 }
 
