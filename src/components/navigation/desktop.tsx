@@ -1,18 +1,20 @@
 import Link from 'next/link'
+import { useAccount } from 'wagmi'
 import { useWindowSize } from '@uidotdev/usehooks'
+import { Notifications } from 'ethereum-identity-kit'
 
 import { Search } from '../search'
 import Logo from 'public/assets/efp-logo.svg'
 import NavItems from './components/nav-items.tsx'
 import WalletMenu from './components/wallet-menu.tsx'
 import CartButton from './components/cart-button.tsx'
-import Notifications from './components/notifications'
 import Integrations from './components/integrations.tsx'
 import PoweredByEIK from './components/powered-by-eik.tsx'
 
 const Desktop = () => {
   const { width } = useWindowSize()
   const isMobile = width && width < 640
+  const { address: userAddress } = useAccount()
 
   if (isMobile) return null
 
@@ -25,7 +27,7 @@ const Desktop = () => {
         <div className='flex flex-col items-center justify-end gap-4'>
           <WalletMenu />
           <Search />
-          <Notifications />
+          <Notifications addressOrName={userAddress ?? ''} position='right' align='bottom' />
           <CartButton />
           <hr className='border-text-neutral mb-1 w-10 rounded-full border-[1px]' />
           <NavItems />
