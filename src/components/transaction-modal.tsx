@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
-import { useTransactions, TransactionModal as TransactionModalComponent } from 'ethereum-identity-kit'
+import { useTransactions, TransactionModal as TransactionModalComponent } from '@encrypteddegen/identity-kit'
 
 const TransactionModal = () => {
   const router = useRouter()

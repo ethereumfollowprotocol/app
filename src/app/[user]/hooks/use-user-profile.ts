@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { isAddress } from 'viem'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
-import { fetchProfileDetails, fetchProfileStats } from 'ethereum-identity-kit'
+import { fetchProfileDetails, fetchProfileStats } from '@encrypteddegen/identity-kit'
 
 import { FETCH_LIMIT_PARAM, MINUTE } from '#/lib/constants'
 import type { ProfileTableTitleType } from '#/types/common'

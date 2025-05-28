@@ -1,4 +1,4 @@
-import type { ListOpType } from 'ethereum-identity-kit'
+import type { ListOpType } from '@encrypteddegen/identity-kit'
 import type { Address } from 'viem'
 
 export type ListOp = ListOpType

@@ -2,7 +2,7 @@ import { fromHex, toHex, type Address } from 'viem'
 import { DEFAULT_CHAIN } from '#/lib/constants/chains'
 import { LIST_OP_LIMITS } from '#/lib/constants/chains'
 import type { ListOp, TagListOp } from '#/types/list-op'
-import type { ListOpType } from 'ethereum-identity-kit'
+import type { ListOpType } from '@encrypteddegen/identity-kit'
 
 export const listOpAddListRecord = (address: Address): ListOp => {
   return {

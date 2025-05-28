@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { useAccount } from 'wagmi'
 import { useRouter } from 'next/navigation'
 import { useWindowSize } from '@uidotdev/usehooks'
-import { Notifications } from 'ethereum-identity-kit'
+import { Notifications } from '@encrypteddegen/identity-kit'
 
 import { Search } from '../search'
 import Logo from 'public/assets/efp-logo.svg'

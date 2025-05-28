@@ -1,7 +1,8 @@
 import { useIsClient } from '@uidotdev/usehooks'
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 export const useUserScroll = () => {
+  const [tableHeight, setTableHeight] = useState(0)
   const tableRef = useRef<HTMLDivElement>(null)
   const TopEightRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -18,6 +19,7 @@ export const useUserScroll = () => {
       // Adjust the scroll position of the div
       tableRef.current.scrollTop += event.deltaY
       tableRef.current.scrollLeft += event.deltaX
+      setTableHeight(tableRef.current.scrollHeight)
     }
 
     // if (containerRef.current) {
@@ -44,5 +46,5 @@ export const useUserScroll = () => {
     }
   }, [handleWheel])
 
-  return { tableRef, TopEightRef, containerRef, isCommonFollowersModalOpen }
+  return { tableRef, TopEightRef, containerRef, isCommonFollowersModalOpen, tableHeight }
 }
