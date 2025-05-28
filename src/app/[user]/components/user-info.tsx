@@ -67,7 +67,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   const { address: connectedAddress } = useAccount()
   const isMyProfile = useIsEditView()
   const { roles, selectedList } = useEFPProfile()
-  const { tableRef, TopEightRef, containerRef, isCommonFollowersModalOpen, tableHeight } = useUserScroll()
+  const { tableRef, TopEightRef, containerRef, isCommonFollowersModalOpen } = useUserScroll()
 
   useEffect(() => {
     if (searchParams.get('tab')) {
@@ -174,12 +174,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
             />
           </div>
           <div className='flex w-full max-w-[1920px] flex-col-reverse gap-4 px-4 md:-mt-28 lg:-mt-24 lg:flex-row xl:px-8'>
-            <div
-              className='z-10 h-fit w-full md:sticky'
-              style={{
-                top: `calc(90vh + ${-tableHeight}px)`,
-              }}
-            >
+            <div className='z-10 h-fit w-full'>
               <FollowersAndFollowing
                 ref={tableRef}
                 user={user}
