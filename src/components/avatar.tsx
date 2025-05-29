@@ -1,5 +1,5 @@
 import type { GetEnsAvatarReturnType } from 'viem'
-import { isLinkValid } from '@encrypteddegen/identity-kit'
+import { isLinkValid } from 'ethereum-identity-kit'
 
 import { cn } from '#/lib/utilities'
 import ImageWithFallback from './image-with-fallback'

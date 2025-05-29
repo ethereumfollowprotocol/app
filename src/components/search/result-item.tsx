@@ -4,7 +4,7 @@ import { ens_beautify } from '@adraffy/ens-normalize'
 
 import { truncateAddress } from '#/lib/utilities'
 import type { SearchENSNameDomain } from '#/types/requests'
-import { isAddress } from '@encrypteddegen/identity-kit'
+import { isAddress } from 'ethereum-identity-kit'
 
 export interface ResultItemProps {
   result: SearchENSNameDomain

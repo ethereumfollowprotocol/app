@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ens_beautify } from '@adraffy/ens-normalize'
-import { truncateAddress, isLinkValid } from '@encrypteddegen/identity-kit'
+import { truncateAddress, isLinkValid } from 'ethereum-identity-kit'
 
 import { Avatar } from '#/components/avatar'
 import { formatNumber } from '#/utils/format/format-number'

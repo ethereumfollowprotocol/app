@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useAccount } from 'wagmi'
 import React, { useEffect, useRef } from 'react'
 import { useWindowSize } from '@uidotdev/usehooks'
-import { Notifications } from '@encrypteddegen/identity-kit'
+import { Notifications } from 'ethereum-identity-kit'
 import { usePathname, useRouter } from 'next/navigation'
 
 import { Search } from '../search'

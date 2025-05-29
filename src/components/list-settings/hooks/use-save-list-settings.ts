@@ -12,7 +12,7 @@ import { coreEfpContracts, ListRecordContracts } from '#/lib/constants/contracts
 import { resetFollowingRelatedQueries } from '#/utils/reset-queries'
 import { listOpAddTag, listOpAddListRecord, splitListOps } from '#/utils/list-ops'
 import { efpAccountMetadataAbi, efpListRecordsAbi, efpListRegistryAbi } from '#/lib/abi'
-import { EFPActionIds, formatListOpsTransaction, useTransactions, type ListOpType } from '@encrypteddegen/identity-kit'
+import { EFPActionIds, formatListOpsTransaction, useTransactions, type ListOpType } from 'ethereum-identity-kit'
 
 type SaveListSettingsParams = {
   selectedList: number

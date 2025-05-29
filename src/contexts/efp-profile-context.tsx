@@ -14,7 +14,7 @@ import {
 import type { Address } from 'viem'
 import { useRouter } from 'next/navigation'
 import { useAccount, useChains } from 'wagmi'
-import { fetchProfileDetails, fetchProfileStats, useTransactions } from '@encrypteddegen/identity-kit'
+import { fetchProfileDetails, fetchProfileStats, useTransactions } from 'ethereum-identity-kit'
 
 import type {
   ENSProfile,

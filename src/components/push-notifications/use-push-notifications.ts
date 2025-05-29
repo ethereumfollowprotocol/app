@@ -1,7 +1,7 @@
 import { useAccount } from 'wagmi'
 import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { fetchAccount } from '@encrypteddegen/identity-kit'
+import { fetchAccount } from 'ethereum-identity-kit'
 import type { PushSubscription as SerializablePushSubscription } from 'web-push'
 import {
   getSubscriptionForCurrentUser,

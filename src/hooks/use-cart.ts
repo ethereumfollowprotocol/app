@@ -2,7 +2,7 @@
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
 import { useCallback } from 'react'
-import { EFPActionIds, getListOpsFromTransaction, useTransactions, type ListOpType } from '@encrypteddegen/identity-kit'
+import { EFPActionIds, getListOpsFromTransaction, useTransactions, type ListOpType } from 'ethereum-identity-kit'
 
 import type { ListOp } from '#/types/list-op'
 import type { ImportPlatformType } from '#/types/common'

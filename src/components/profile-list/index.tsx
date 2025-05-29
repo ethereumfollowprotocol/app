@@ -5,7 +5,7 @@ import type { ENSProfile } from '#/types/requests'
 import type { ProfileStatsType } from '#/types/common'
 import LoadingRow from './components/list-item/loading-list-item'
 import ProfileListItem from './components/list-item/profile-list-item'
-import type { InitialFollowingState } from '@encrypteddegen/identity-kit'
+import type { InitialFollowingState } from 'ethereum-identity-kit'
 
 export interface ProfileListProfile {
   address: Address

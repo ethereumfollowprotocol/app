@@ -6,7 +6,7 @@ import FollowButton from '#/components/follow-button'
 import type { LeaderboardFilter } from '#/types/common'
 import { formatNumber } from '#/utils/format/format-number'
 import ImageWithFallback from '#/components/image-with-fallback'
-import { DEFAULT_FALLBACK_HEADER, isLinkValid } from '@encrypteddegen/identity-kit'
+import { DEFAULT_FALLBACK_HEADER, isLinkValid } from 'ethereum-identity-kit'
 
 interface TableRowProps {
   address: Address

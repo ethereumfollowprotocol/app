@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { isAddress, isHex } from 'viem'
 import type { SearchParams } from 'next/dist/server/request/search-params'
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
-import { fetchProfileDetails, fetchProfileStats, isLinkValid } from '@encrypteddegen/identity-kit/utils'
+import { fetchProfileDetails, fetchProfileStats, isLinkValid } from 'ethereum-identity-kit/utils'
 
 import { MINUTE } from '#/lib/constants'
 import UserInfo from './components/user-info'

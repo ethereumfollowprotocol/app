@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import { useQuery } from '@tanstack/react-query'
-import { isLinkValid } from '@encrypteddegen/identity-kit'
+import { isLinkValid } from 'ethereum-identity-kit'
 import { ens_beautify } from '@adraffy/ens-normalize'
 
 import { useCart } from '#/hooks/use-cart'

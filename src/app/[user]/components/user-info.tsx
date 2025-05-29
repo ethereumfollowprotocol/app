@@ -3,7 +3,7 @@
 import { useAccount } from 'wagmi'
 import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { FollowersAndFollowing } from '@encrypteddegen/identity-kit'
+import { FollowersAndFollowing } from 'ethereum-identity-kit'
 
 import { cn } from '#/lib/utilities'
 import QRCodeModal from '#/components/qr-code-modal'
@@ -182,6 +182,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
                 canEditTags={isMyProfile && roles?.isManager}
                 isConnectedUserProfile={isMyProfile}
                 showHeaderImage={true}
+                showRecommendations={true}
                 connectedAddress={connectedAddress}
                 selectedList={selectedList?.toString()}
                 onProfileClick={(address) => {
