@@ -48,6 +48,7 @@ import ENSvolution from 'public/assets/partners/ensvolution.jpeg'
 import IpeCity from 'public/assets/partners/ipecity.jpeg'
 import CryptoPunksEthLimo from 'public/assets/partners/cryptopunks-eth-limo.jpeg'
 import GeoCities from 'public/assets/partners/geocities.jpeg'
+import CodeSwarmAI from 'public/assets/partners/codeswarmai.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -289,6 +290,11 @@ export const INTEGRATIONS = [
     name: 'Vibes',
     url: 'https://vibes.scapes.xyz/',
     logo: VibesScapes,
+  },
+  {
+    name: 'CodeSwarm.ai',
+    url: 'https://codeswarm.ai/',
+    logo: CodeSwarmAI,
   },
 ] as {
   name: string
