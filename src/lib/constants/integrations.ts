@@ -49,6 +49,7 @@ import IpeCity from 'public/assets/partners/ipecity.jpeg'
 import CryptoPunksEthLimo from 'public/assets/partners/cryptopunks-eth-limo.jpeg'
 import GeoCities from 'public/assets/partners/geocities.jpeg'
 import CodeSwarmAI from 'public/assets/partners/codeswarmai.jpeg'
+import Namespace from 'public/assets/partners/namespace.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -100,6 +101,11 @@ export const INTEGRATIONS = [
     name: 'Ipê City',
     url: 'https://www.ipe.city/',
     logo: IpeCity,
+  },
+  {
+    name: 'Namespace',
+    url: 'https://namespace.ninja/',
+    logo: Namespace,
   },
   {
     name: 'Rotki',
