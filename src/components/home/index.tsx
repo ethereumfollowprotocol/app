@@ -91,7 +91,7 @@ const Home = () => {
           <Recommendations
             limit={10}
             endpoint='recommended'
-            header={t('recommendations')}
+            header={t('recommended.title')}
             className='bg-neutral shadow-medium h-fit w-full rounded-sm'
           />
         </div>

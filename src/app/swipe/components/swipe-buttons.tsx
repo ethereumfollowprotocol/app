@@ -59,7 +59,7 @@ const SwipeButtons = ({
       >
         <div className='flex -rotate-90 flex-row items-center sm:rotate-0'>
           <MainnetBlack width={24} height={24} />
-          <p className='text-sm font-semibold'>Follow</p>
+          <p className='text-sm font-semibold'>{t('follow')}</p>
         </div>
       </button>
       <button

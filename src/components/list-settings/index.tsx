@@ -116,7 +116,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
                   setIsResetSlotWarningOpen(true)
                 }}
               >
-                <p>{t('reset slot')}</p>
+                <p>{t('listSettings.resetList')}</p>
                 <Refresh className='h-auto w-4' />
               </button>
             )}
@@ -147,7 +147,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
           )}
           <div className='flex w-full flex-col gap-2'>
             <div className='flex items-center gap-2 pl-3'>
-              <p className='font-bold'>{t('location')}</p>
+              <p className='font-bold'>{t('listSettings.listStorageLocation')}</p>
               <Location className='h-auto w-4' />
             </div>
             <div className='relative w-full' ref={chainDropdownRef}>
@@ -194,11 +194,11 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
             </div>
           </div>
           <SettingsInput
-            option={t('owner')}
+            option={t('listSettings.owner')}
             Icon={Owner}
             value={currentOwner}
             resolvedAddress={owner}
-            placeholder={fetchedOwner || 'Address or ENS name'}
+            placeholder={fetchedOwner}
             disableValue={fetchedOwner}
             setValue={setCurrentOwner}
             isEditingSettings={isEditingSettings}
@@ -206,11 +206,11 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
             isSettingsLoading={isListSettingsLoading}
           />
           <SettingsInput
-            option={t('manager')}
+            option={t('listSettings.manager')}
             Icon={Manager}
             value={currentManager}
             resolvedAddress={manager}
-            placeholder={fetchedManager || 'Address or ENS name'}
+            placeholder={fetchedManager}
             disableValue={fetchedManager}
             setValue={setCurrentManager}
             isEditingSettings={isEditingSettings}
@@ -218,11 +218,11 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
             isSettingsLoading={isListSettingsLoading}
           />
           <SettingsInput
-            option={t('user')}
+            option={t('listSettings.user')}
             Icon={User}
             value={currentUser}
             resolvedAddress={user}
-            placeholder={fetchedUser || 'Address or ENS name'}
+            placeholder={fetchedUser}
             disableValue={fetchedManager}
             setValue={setCurrentUser}
             isEditingSettings={isEditingSettings}
