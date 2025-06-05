@@ -15,7 +15,7 @@ interface SettingsInputProps {
   value: string
   resolvedAddress?: string
   disableValue: string
-  placeholder: string
+  placeholder?: string
   isEditingSettings: boolean
   setValue: (value: string) => void
   isLoading?: boolean
@@ -61,7 +61,7 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
       ) : (
         <input
           value={value}
-          placeholder={placeholder}
+          placeholder={placeholder || t('search placeholder')}
           onChange={(e) => {
             const input = e.target.value
             if (input.includes(' ')) return

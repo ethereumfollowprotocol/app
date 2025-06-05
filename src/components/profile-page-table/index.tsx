@@ -210,7 +210,7 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
             <Recommendations
               limit={40}
               endpoint='recommended'
-              header={t('recommendations')}
+              header={t('recommended.title')}
               className='py-2'
               isTopEight={isTopEight}
             />

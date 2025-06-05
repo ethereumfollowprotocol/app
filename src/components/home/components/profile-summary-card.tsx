@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useTranslation } from 'react-i18next'
 import { ens_beautify } from '@adraffy/ens-normalize'
 import { truncateAddress, isLinkValid } from 'ethereum-identity-kit'
 
@@ -12,6 +13,7 @@ import ArrowRight from 'public/assets/icons/ui/arrow-right.svg'
 import DefaultHeader from 'public/assets/art/default-header.svg?url'
 
 const ProfileSummaryCard = () => {
+  const { t } = useTranslation()
   const { profile, profileIsLoading, stats, statsIsLoading, lists, selectedList } = useEFPProfile()
 
   if (!profile && !profileIsLoading) return null
@@ -80,7 +82,7 @@ const ProfileSummaryCard = () => {
                     ) : (
                       <p className='text-lg font-bold'>{formatNumber(stats?.following_count || 0)}</p>
                     )}
-                    <p className='text-text-neutral'>Following</p>
+                    <p className='text-text-neutral'>{t('following')}</p>
                   </div>
                   <div className='flex items-center gap-2'>
                     {statsIsLoading ? (
@@ -88,7 +90,7 @@ const ProfileSummaryCard = () => {
                     ) : (
                       <p className='text-lg font-bold'>{formatNumber(stats?.followers_count || 0)}</p>
                     )}
-                    <p className='text-text-neutral'>Followers</p>
+                    <p className='text-text-neutral'>{t('followers')}</p>
                   </div>
                 </div>
               </div>
