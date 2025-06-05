@@ -50,6 +50,7 @@ import CryptoPunksEthLimo from 'public/assets/partners/cryptopunks-eth-limo.jpeg
 import GeoCities from 'public/assets/partners/geocities.jpeg'
 import CodeSwarmAI from 'public/assets/partners/codeswarmai.jpeg'
 import Namespace from 'public/assets/partners/namespace.jpeg'
+import Dappcon from 'public/assets/partners/dappcon.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -136,6 +137,11 @@ export const INTEGRATIONS = [
     name: 'Blockverse',
     url: 'https://www.pob.studio/',
     logo: Pobstudio,
+  },
+  {
+    name: 'Dappcon',
+    url: 'https://vibes.dappcon.io/',
+    logo: Dappcon,
   },
   {
     name: 'Dhive',
