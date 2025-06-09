@@ -24,7 +24,7 @@ export const listOpAddTag = (address: Address, tag: string): ListOp => {
   return {
     version: 1,
     opcode: 3,
-    data: `${address}${toHex(tag).slice(2)}`,
+    data: `${address}${toHex(tag).slice(2)}` as `0x${string}`,
   }
 }
 
@@ -32,7 +32,7 @@ export const listOpRemoveTag = (address: Address, tag: string): ListOp => {
   return {
     version: 1,
     opcode: 4,
-    data: `${address}${toHex(tag).slice(2)}`,
+    data: `${address}${toHex(tag).slice(2)}` as `0x${string}`,
   }
 }
 

@@ -315,3 +315,12 @@ export type NotificationsResponse = {
   }
   notifications: NotificationItemType[]
 }
+
+export type SearchENSNameDomain = {
+  name: string
+  resolvedAddress: { id: Address | string } | null
+}
+
+export type SearchENSNameResults = {
+  domains: SearchENSNameDomain[]
+}

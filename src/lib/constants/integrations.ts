@@ -44,6 +44,9 @@ import NameGraph from 'public/assets/partners/namegraph.jpeg'
 import Aragon from 'public/assets/partners/aragon.jpeg'
 import Superfluid from 'public/assets/partners/superfluid.jpeg'
 import ETHSF from 'public/assets/partners/ethsf.jpeg'
+import ENSvolution from 'public/assets/partners/ensvolution.jpeg'
+import IpeCity from 'public/assets/partners/ipecity.jpeg'
+import CryptoPunksEthLimo from 'public/assets/partners/cryptopunks-eth-limo.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -197,6 +200,11 @@ export const INTEGRATIONS = [
     logo: Namefi,
   },
   {
+    name: 'Ipê City',
+    url: 'https://www.ipe.city/',
+    logo: IpeCity,
+  },
+  {
     name: 'ENSBook',
     url: 'https://ensbook.xyz/',
     logo: ENSBook,
@@ -233,7 +241,7 @@ export const INTEGRATIONS = [
   },
   {
     name: 'Ethereum San Francisco',
-    url: 'https://www.ethereumsf.org/',
+    url: 'https://ethsf.fileverse.io/ethsf/portal',
     logo: ETHSF,
   },
   {
@@ -265,6 +273,16 @@ export const INTEGRATIONS = [
     name: 'CuriaLab',
     url: 'https://www.curialab.xyz/',
     logo: CuriaLab,
+  },
+  {
+    name: 'ENSvolution',
+    url: 'https://www.ensvolution.xyz/',
+    logo: ENSvolution,
+  },
+  {
+    name: 'CryptoPunks.eth.limo',
+    url: 'https://cryptopunks.eth.limo/',
+    logo: CryptoPunksEthLimo,
   },
 ] as {
   name: string

@@ -1,12 +1,15 @@
 import { useAccount } from 'wagmi'
 import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { fetchAccount, useIsClient } from 'ethereum-identity-kit'
+import { fetchAccount } from 'ethereum-identity-kit'
 import type { PushSubscription as SerializablePushSubscription } from 'web-push'
-import { getSubscriptionForCurrentUser, sendNotification, subscribeUser, unsubscribeUser } from '#/app/actions'
-import { truncateAddress } from '#/lib/utilities'
-import type { NotificationItemType } from '#/types/requests'
-import { useTranslation } from 'react-i18next'
+import {
+  getSubscriptionForCurrentUser,
+  sendNotification,
+  storeAddressForSubscription,
+  subscribeUser,
+  unsubscribeUser,
+} from '#/app/actions'
 
 function urlBase64ToUint8Array(base64String: string) {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4)
@@ -21,16 +24,12 @@ function urlBase64ToUint8Array(base64String: string) {
   return outputArray
 }
 
-let webSocket: WebSocket | null = null
-
 export const usePushNotifications = () => {
   const [isSupported, setIsSupported] = useState(false)
   const [subscription, setSubscription] = useState<PushSubscription | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [registrationInstance, setRegistrationInstance] = useState<ServiceWorkerRegistration | null>(null)
 
-  const isClient = useIsClient()
-  const { t } = useTranslation('notifications')
   const { address: connectedAddress } = useAccount()
   const { data: account } = useQuery({
     queryKey: ['account', connectedAddress],
@@ -41,6 +40,37 @@ export const usePushNotifications = () => {
       return account
     },
   })
+
+  const connectWebSocket = (accountData: { address: string; name?: string | null; avatar?: string | null }) => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.ready
+        .then((registration) => {
+          if (registration.active) {
+            console.log(`Sending account data to Service Worker:`, accountData)
+            registration.active.postMessage({
+              type: 'CONNECT_WEBSOCKET',
+              payload: { accountData },
+            })
+          }
+        })
+        .catch((error) => console.error('SW ready Error:', error))
+    }
+  }
+
+  const disconnectWebSocket = () => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.ready
+        .then((registration) => {
+          if (registration.active) {
+            console.log(`Disconnecting websocket`)
+            registration.active.postMessage({
+              type: 'DISCONNECT_WEBSOCKET',
+            })
+          }
+        })
+        .catch((error) => console.error('SW disconnect Error:', error))
+    }
+  }
 
   useEffect(() => {
     async function checkExistingSubscription() {
@@ -121,6 +151,15 @@ export const usePushNotifications = () => {
       const result = await subscribeUser(serializedSub)
 
       if (result.success) {
+        if (account?.address) {
+          const accountData = {
+            address: account.address,
+            name: account.ens?.name,
+            avatar: account.ens?.avatar,
+          }
+          connectWebSocket(accountData)
+        }
+
         setSubscription(sub)
         console.log('Successfully subscribed to push notifications')
       } else {
@@ -148,6 +187,9 @@ export const usePushNotifications = () => {
       await unsubscribeUser()
       console.log('Unsubscribed from server')
 
+      // Close websocket connection
+      disconnectWebSocket()
+
       setSubscription(null)
     } catch (error) {
       console.error('Error unsubscribing:', error)
@@ -173,59 +215,48 @@ export const usePushNotifications = () => {
   }
 
   useEffect(() => {
-    // Close any existing websocket connection before opening a new one
-    if (webSocket) {
-      webSocket.close()
-      webSocket = null
+    if (!registrationInstance) {
+      return disconnectWebSocket()
     }
 
-    // The websocket connection can only be open on a client side and
-    // there must be a connected account subscribed to push notifications
-    if (!account?.address || !isClient || !subscription) return
+    const address = account?.address
+    if (!address) {
+      disconnectWebSocket()
+      return
+    }
 
-    // Open a new websocket connection
-    try {
-      const ws = new WebSocket(`wss://efp-events.up.railway.app/?address=${account?.address}`)
-      webSocket = ws
+    const accountData = {
+      address: address,
+      name: account?.ens?.name,
+      avatar: account?.ens?.avatar,
+    }
 
-      ws.onopen = () => {
-        console.log('Connected to notifications service')
-      }
-
-      // Handle incoming messages from the websocket
-      ws.onmessage = (event) => {
-        const data = JSON.parse(event.data) as NotificationItemType
-
-        // manually refetch notifications to update the new notifications count
-        // queryClient.refetchQueries({ queryKey: ['notifications', connectedAddress] })
-
-        const restrictAction = Object.entries({
-          blocked: data.action === 'tag' && data.tag === 'block',
-          unblocked: data.action === 'untag' && data.tag === 'block',
-          muted: data.action === 'tag' && data.tag === 'mute',
-          unmuted: data.action === 'untag' && data.tag === 'mute',
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.ready
+        .then((registration) => {
+          if (registration.active) {
+            console.log(`Sending account data to Service Worker:`, accountData)
+            registration.active.postMessage({
+              type: 'CONNECT_WEBSOCKET',
+              payload: { accountData: accountData },
+            })
+          }
         })
-          .filter(([_, value]) => !!value)
-          .map(([key]) => key)[0]
-
-        const action = restrictAction || data.action
-
-        const title = 'New Activity'
-        const message = `${data.name ? data.name : truncateAddress(data.address)} ${t(action)} ${action === 'tag' || action === 'untag' ? `"${data.tag}"` : ''}`
-        sendPushNotification(title, message)
-      }
-
-      ws.onclose = () => {
-        console.log('Notifications service connection closed')
-      }
-
-      return () => {
-        ws.close()
-      }
-    } catch (error) {
-      console.error('Error opening websocket connection:', error)
+        .catch((error) => console.error('SW ready Error:', error))
     }
-  }, [account?.address])
+
+    const storeAddress = async () => {
+      console.log(`Calling server action to store account data:`, accountData)
+      const result = await storeAddressForSubscription(accountData)
+      if (result.success) {
+        console.log('Account data successfully stored via server action.')
+      } else {
+        console.error('Failed to store account data via server action:', result.error)
+      }
+    }
+
+    storeAddress()
+  }, [account?.address, registrationInstance])
 
   return {
     isSupported,

@@ -13,7 +13,6 @@ import { EXTERNAL_LINKS } from '#/lib/constants'
 import VolumeSwitcher from '../../volume-switcher'
 import LanguageSelector from '../../language-selector'
 import ThemeSwitcher from '#/components/theme-switcher'
-import PushNotifications from '#/components/push-notifications'
 
 interface MenuProps {
   open: boolean
@@ -24,11 +23,11 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
   const [themeMenuOpen, setThemeMenuOpen] = useState(false)
   const [volumeMenuOpen, setVolumeMenuOpen] = useState(false)
   const [languageMenOpenu, setLanguageMenuOpen] = useState(false)
-  const [pushNotificationsMenuOpen, setPushNotificationsMenuOpen] = useState(false)
+  // const [pushNotificationsMenuOpen, setPushNotificationsMenuOpen] = useState(false)
 
   const { t } = useTranslation()
   const { resolvedTheme } = useTheme()
-  const isExtraMenuOpen = languageMenOpenu || themeMenuOpen || volumeMenuOpen || pushNotificationsMenuOpen
+  const isExtraMenuOpen = languageMenOpenu || themeMenuOpen || volumeMenuOpen
 
   return (
     <div
@@ -54,7 +53,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
           }}
         />
         <LanguageSelector setExternalLanguageMenuOpen={setLanguageMenuOpen} setParentOpen={setOpen} />
-        <PushNotifications open={pushNotificationsMenuOpen} setOpen={setPushNotificationsMenuOpen} />
+        {/* <PushNotifications open={pushNotificationsMenuOpen} setOpen={setPushNotificationsMenuOpen} /> */}
         <VolumeSwitcher
           setExternalVolumeMenuOpen={setVolumeMenuOpen}
           closeMenu={() => {

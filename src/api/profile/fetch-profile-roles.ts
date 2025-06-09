@@ -16,7 +16,18 @@ export const fetchProfileRoles = async ({
   userAddress: Address
   chains: UseChainsReturnType<Config>
 }) => {
-  const listStorageLocation = await listRegistryContract.read.getListStorageLocation([BigInt(list)])
+  const listStorageLocation = await listRegistryContract.read.getListStorageLocation?.([BigInt(list)])
+
+  if (!listStorageLocation) {
+    return {
+      isOwner: false,
+      isManager: false,
+      isUser: false,
+      listChainId: DEFAULT_CHAIN.id,
+      listRecordsContract: coreEfpContracts.EFPListRecords,
+      listSlot: BigInt(0),
+    }
+  }
 
   const listStorageLocationChainId = fromHex(`0x${listStorageLocation.slice(64, 70)}`, 'number')
   const listStorageLocationChain = chains.find((item) => item.id === listStorageLocationChainId)
@@ -36,9 +47,9 @@ export const fetchProfileRoles = async ({
     }),
   })
 
-  const listOwner = await listRegistryContract.read.ownerOf([BigInt(list)])
-  const listManager = await listRecordsContract.read.getListManager([slot])
-  const listUser = await listRecordsContract.read.getListUser([slot])
+  const listOwner = await listRegistryContract.read.ownerOf?.([BigInt(list)])
+  const listManager = await listRecordsContract.read.getListManager?.([slot])
+  const listUser = await listRecordsContract.read.getListUser?.([slot])
 
   return {
     isOwner: listOwner?.toLowerCase() === userAddress?.toLowerCase(),
