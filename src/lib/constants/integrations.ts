@@ -52,6 +52,7 @@ import CodeSwarmAI from 'public/assets/partners/codeswarmai.jpeg'
 import Namespace from 'public/assets/partners/namespace.jpeg'
 import Dappcon from 'public/assets/partners/dappcon.jpeg'
 import DIDHub from 'public/assets/partners/didhub.jpeg'
+import Philand from 'public/assets/partners/philand.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -123,6 +124,11 @@ export const INTEGRATIONS = [
     name: 'Phi',
     url: 'https://phi.box/',
     logo: Phi,
+  },
+  {
+    name: 'Philand',
+    url: 'https://philand.xyz/',
+    logo: Philand,
   },
   {
     name: 'Lighthouse',
