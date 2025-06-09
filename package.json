@@ -13,7 +13,8 @@
     "format": "prettier --write .",
     "start": "next start",
     "typecheck": "tsc --project tsconfig.json --noEmit",
-    "preinstall": "npm_config_yes=true npm exec --no-package-lock=true only-allow@latest bun"
+    "preinstall": "npm_config_yes=true npm exec --no-package-lock=true only-allow@latest bun",
+    "check": "bun lint && bun format && bun typecheck && bun run build"
   },
   "dependencies": {
     "@next/third-parties": "15.1.6",

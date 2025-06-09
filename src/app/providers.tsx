@@ -42,22 +42,22 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
       <QueryClientProvider client={queryClient}>
         <WagmiProvider config={wagmiConfig} initialState={initialState}>
           <RainbowKitProvider coolMode={false} theme={rainbowKitTheme}>
-          <ThirdwebProvider>
-            <TranslationProvider translations={translations}>
-              <TransactionProvider batchTransactions={true}>
-                <EFPProfileProvider>
-                  <SoundsProvider>
-                    <RecommendedProfilesProvider>
-                      <Navigation />
-                      {children}
-                      <TransactionModal />
-                      <div id='modal-root' />
-                    </RecommendedProfilesProvider>
-                  </SoundsProvider>
-                </EFPProfileProvider>
-              </TransactionProvider>
-            </TranslationProvider>
-          </ThirdwebProvider>
+            <ThirdwebProvider>
+              <TranslationProvider translations={translations}>
+                <TransactionProvider batchTransactions={true}>
+                  <EFPProfileProvider>
+                    <SoundsProvider>
+                      <RecommendedProfilesProvider>
+                        <Navigation />
+                        {children}
+                        <TransactionModal />
+                        <div id='modal-root' />
+                      </RecommendedProfilesProvider>
+                    </SoundsProvider>
+                  </EFPProfileProvider>
+                </TransactionProvider>
+              </TranslationProvider>
+            </ThirdwebProvider>
           </RainbowKitProvider>
         </WagmiProvider>
       </QueryClientProvider>

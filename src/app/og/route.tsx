@@ -7,7 +7,7 @@ import type { AccountResponseType } from '#/types/requests'
 
 export async function GET(req: NextRequest) {
   const user = req.url.split('user=')[1] || ''
-  const isList = !(isAddress(user) || user.includes('.') || Number.isNaN(Number(user)) || isHex(user))
+  const isList = !(user.includes('.') || isAddress(user) || Number.isNaN(Number(user)) || isHex(user))
 
   const getResponse = async () => {
     try {
