@@ -51,6 +51,7 @@ import GeoCities from 'public/assets/partners/geocities.jpeg'
 import CodeSwarmAI from 'public/assets/partners/codeswarmai.jpeg'
 import Namespace from 'public/assets/partners/namespace.jpeg'
 import Dappcon from 'public/assets/partners/dappcon.jpeg'
+import DIDHub from 'public/assets/partners/didhub.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -187,6 +188,11 @@ export const INTEGRATIONS = [
     name: 'ENS Tools',
     url: 'https://ens.tools',
     logo: ENSTools,
+  },
+  {
+    name: 'DIDHub',
+    url: 'https://beta.didhub.com/',
+    logo: DIDHub,
   },
   {
     name: 'NameGraph',
