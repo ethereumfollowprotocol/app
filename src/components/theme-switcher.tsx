@@ -83,7 +83,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
             className='hover:bg-nav-item flex w-full cursor-pointer items-center justify-between rounded-sm p-4 transition-opacity sm:hidden'
           >
             <ArrowLeft className='text-xl' />
-            <p className='font-bold'>Back</p>
+            <p className='font-bold'>{t('back')}</p>
           </div>
           {themesWithIcons.map((theme) => (
             <div

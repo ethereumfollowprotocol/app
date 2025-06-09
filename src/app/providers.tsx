@@ -1,20 +1,21 @@
 'use client'
 
+import { useMemo } from 'react'
 import { useTheme } from 'next-themes'
-import { useIsClient } from '@uidotdev/usehooks'
+import { ThirdwebProvider } from 'thirdweb/react'
 import { WagmiProvider, type State } from 'wagmi'
-import { TransactionProvider } from 'ethereum-identity-kit'
 import { darkTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { TransactionProvider, TranslationProvider } from 'ethereum-identity-kit'
 
 import wagmiConfig from '#/lib/wagmi'
 import { DAY, MINUTE } from '#/lib/constants'
 import Navigation from '#/components/navigation'
 import { SoundsProvider } from '#/contexts/sounds-context'
+import { translations } from '#/lib/constants/translations'
 import TransactionModal from '#/components/transaction-modal'
 import { EFPProfileProvider } from '#/contexts/efp-profile-context'
 import { RecommendedProfilesProvider } from '#/contexts/recommended-profiles-context'
-import { ThirdwebProvider } from 'thirdweb/react'
 
 type ProviderProps = {
   children: React.ReactNode
@@ -30,34 +31,41 @@ const queryClient = new QueryClient({
 })
 
 const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
-  const isClient = useIsClient()
   const { resolvedTheme } = useTheme()
 
-  return (
-    <QueryClientProvider client={queryClient}>
-      <WagmiProvider config={wagmiConfig} initialState={initialState}>
-        <RainbowKitProvider
-          coolMode={false}
-          theme={isClient && darkThemes.includes(resolvedTheme || 'dark') ? darkTheme() : undefined}
-        >
+  const rainbowKitTheme = useMemo(() => {
+    return darkThemes.includes(resolvedTheme || 'dark') ? darkTheme() : undefined
+  }, [resolvedTheme])
+
+  const providers = useMemo(
+    () => (
+      <QueryClientProvider client={queryClient}>
+        <WagmiProvider config={wagmiConfig} initialState={initialState}>
+          <RainbowKitProvider coolMode={false} theme={rainbowKitTheme}>
           <ThirdwebProvider>
-            <TransactionProvider batchTransactions={true}>
-              <EFPProfileProvider>
-                <SoundsProvider>
-                  <RecommendedProfilesProvider>
-                    <Navigation />
-                    {children}
-                    <TransactionModal />
-                    <div id='modal-root' />
-                  </RecommendedProfilesProvider>
-                </SoundsProvider>
-              </EFPProfileProvider>
-            </TransactionProvider>
+            <TranslationProvider translations={translations}>
+              <TransactionProvider batchTransactions={true}>
+                <EFPProfileProvider>
+                  <SoundsProvider>
+                    <RecommendedProfilesProvider>
+                      <Navigation />
+                      {children}
+                      <TransactionModal />
+                      <div id='modal-root' />
+                    </RecommendedProfilesProvider>
+                  </SoundsProvider>
+                </EFPProfileProvider>
+              </TransactionProvider>
+            </TranslationProvider>
           </ThirdwebProvider>
-        </RainbowKitProvider>
-      </WagmiProvider>
-    </QueryClientProvider>
+          </RainbowKitProvider>
+        </WagmiProvider>
+      </QueryClientProvider>
+    ),
+    [rainbowKitTheme, initialState, children]
   )
+
+  return providers
 }
 
 export default Providers

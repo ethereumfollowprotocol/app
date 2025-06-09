@@ -38,8 +38,10 @@ const ListSelector: React.FC<ListSelectorProps> = ({ setWalletMenuOpen, setSubMe
     setSelectedList(list === 'new list' ? undefined : Number(list))
     setMenuOpen(false)
     setWalletMenuOpen(false)
-    if (isProfile) {
-      router.push(`/${list === lists.primary_list ? userAddress : list}?ssr=false`)
+
+    if (isProfile && list) {
+      // switch to the address page if primary list or new list is selected
+      router.push(`/${list === lists.primary_list || list === 'new list' ? userAddress : list}?ssr=false`)
     }
   }
 

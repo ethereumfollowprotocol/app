@@ -801,3 +801,18 @@ input {
 .common-followers-container {
   padding-top: 0px;
 }
+
+.notifications-tooltip[data-position='right'] {
+  top: -4px;
+  left: 60px;
+}
+
+.notifications-dropdown[data-position='right'] {
+  left: 60px;
+}
+
+@media (max-width: 640px) {
+  .notifications-dropdown[data-align='left'] {
+    right: -52px;
+  }
+}

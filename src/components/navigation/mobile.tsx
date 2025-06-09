@@ -1,15 +1,16 @@
 import clsx from 'clsx'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { useAccount } from 'wagmi'
 import React, { useEffect, useRef } from 'react'
+import { useWindowSize } from '@uidotdev/usehooks'
+import { Notifications } from 'ethereum-identity-kit'
+import { usePathname, useRouter } from 'next/navigation'
 
 import { Search } from '../search'
 import Logo from 'public/assets/efp-logo.svg'
 import NavItems from './components/nav-items'
 import WalletMenu from './components/wallet-menu'
 import Integrations from './components/integrations'
-import Notifications from './components/notifications'
-import { useWindowSize } from '@uidotdev/usehooks'
 
 let navScroll = 0
 let navHomeScroll = 0
@@ -17,7 +18,9 @@ let navUserScroll = 0
 let navLeaderboardScroll = 0
 
 const Mobile: React.FC = () => {
+  const router = useRouter()
   const pathname = usePathname()
+  const { address: userAddress } = useAccount()
   const navRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -121,7 +124,12 @@ const Mobile: React.FC = () => {
         </div>
         <div className='flex items-center gap-3'>
           <Integrations />
-          <Notifications />
+          <Notifications
+            addressOrName={userAddress ?? ''}
+            position='bottom'
+            align='left'
+            onProfileClick={(address) => router.push(`/${address}?ssr=false`)}
+          />
           <WalletMenu />
         </div>
       </div>

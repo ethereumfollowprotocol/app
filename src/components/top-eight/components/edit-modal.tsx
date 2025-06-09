@@ -67,7 +67,7 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose, followingListP
                   <MagnifyingGlass />
                 </div>
               </div>
-              <PrimaryButton onClick={onSubmit} label={t('add')} className='h-12 w-full sm:w-32' />
+              <PrimaryButton onClick={onSubmit} label={t('manualAdd.add')} className='h-12 w-full sm:w-32' />
             </div>
             <UserProfilePageTable {...followingListProps} isTopEight={true} />
           </div>

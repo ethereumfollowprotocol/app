@@ -47,6 +47,12 @@ import ETHSF from 'public/assets/partners/ethsf.jpeg'
 import ENSvolution from 'public/assets/partners/ensvolution.jpeg'
 import IpeCity from 'public/assets/partners/ipecity.jpeg'
 import CryptoPunksEthLimo from 'public/assets/partners/cryptopunks-eth-limo.jpeg'
+import GeoCities from 'public/assets/partners/geocities.jpeg'
+import CodeSwarmAI from 'public/assets/partners/codeswarmai.jpeg'
+import Namespace from 'public/assets/partners/namespace.jpeg'
+import Dappcon from 'public/assets/partners/dappcon.jpeg'
+import DIDHub from 'public/assets/partners/didhub.jpeg'
+import Philand from 'public/assets/partners/philand.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -95,9 +101,14 @@ export const INTEGRATIONS = [
     logo: EnsVision,
   },
   {
-    name: 'Zapper',
-    url: 'https://zapper.xyz/',
-    logo: Zapper,
+    name: 'Ipê City',
+    url: 'https://www.ipe.city/',
+    logo: IpeCity,
+  },
+  {
+    name: 'Namespace',
+    url: 'https://namespace.ninja/',
+    logo: Namespace,
   },
   {
     name: 'Rotki',
@@ -115,9 +126,9 @@ export const INTEGRATIONS = [
     logo: Phi,
   },
   {
-    name: 'Vibes',
-    url: 'https://vibes.scapes.xyz/',
-    logo: VibesScapes,
+    name: 'Philand',
+    url: 'https://philand.xyz/',
+    logo: Philand,
   },
   {
     name: 'Lighthouse',
@@ -125,9 +136,19 @@ export const INTEGRATIONS = [
     logo: Lighthouse,
   },
   {
+    name: 'Zapper',
+    url: 'https://zapper.xyz/',
+    logo: Zapper,
+  },
+  {
     name: 'Blockverse',
     url: 'https://www.pob.studio/',
     logo: Pobstudio,
+  },
+  {
+    name: 'Dappcon',
+    url: 'https://vibes.dappcon.io/',
+    logo: Dappcon,
   },
   {
     name: 'Dhive',
@@ -175,6 +196,11 @@ export const INTEGRATIONS = [
     logo: ENSTools,
   },
   {
+    name: 'DIDHub',
+    url: 'https://beta.didhub.com/',
+    logo: DIDHub,
+  },
+  {
     name: 'NameGraph',
     url: 'https://www.namegraph.dev',
     logo: NameGraph,
@@ -198,11 +224,6 @@ export const INTEGRATIONS = [
     name: 'Namefi',
     url: 'https://www.namefi.io/',
     logo: Namefi,
-  },
-  {
-    name: 'Ipê City',
-    url: 'https://www.ipe.city/',
-    logo: IpeCity,
   },
   {
     name: 'ENSBook',
@@ -283,6 +304,21 @@ export const INTEGRATIONS = [
     name: 'CryptoPunks.eth.limo',
     url: 'https://cryptopunks.eth.limo/',
     logo: CryptoPunksEthLimo,
+  },
+  {
+    name: 'GeoCities',
+    url: 'https://geocities.eth.link',
+    logo: GeoCities,
+  },
+  {
+    name: 'Vibes',
+    url: 'https://vibes.scapes.xyz/',
+    logo: VibesScapes,
+  },
+  {
+    name: 'CodeSwarm.ai',
+    url: 'https://codeswarm.ai/',
+    logo: CodeSwarmAI,
   },
 ] as {
   name: string

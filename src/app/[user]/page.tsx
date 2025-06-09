@@ -40,6 +40,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const ensName = ensData?.ens?.name
   const ensAvatar = ensData?.ens?.avatar
   const displayUser = ensName && ensName.length > 0 ? ensName : isList ? `List #${user}` : truncatedUser
+  const description = ensData?.ens?.records?.description
 
   const avatarResponse = ensAvatar && isLinkValid(ensAvatar) ? await fetch(ensAvatar) : null
 
@@ -48,27 +49,27 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
   return {
     title: `${displayUser}`,
+    description,
     openGraph: {
-      title: `${displayUser} | EFP`,
-      siteName: `${displayUser} - EFP profile`,
-      description: `${displayUser} - EFP profile`,
+      title: `${displayUser}`,
+      siteName: `${displayUser}`,
+      description,
       url: pageUrl,
       images: [{ url: ogImageUrl }],
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${displayUser} | EFP`,
-      description: `${displayUser} - EFP profile`,
+      title: `${displayUser}`,
+      description,
       images: ogImageUrl,
     },
     icons: {
-      icon: avatarResponse?.status === 200 ? ensAvatar : '/assets/favicon.ico', // replace with /assets/art/default-avatar.svg for a default avatar
+      icon: avatarResponse?.status === 200 ? ensAvatar : '/assets/favicon.ico',
     },
-
     appleWebApp: {
       capable: true,
       title: displayUser,
-      startupImage: avatarResponse?.status === 200 ? ensAvatar : '/assets/apple-touch-icon.png', // replace with /assets/art/default-avatar.svg for a default avatar
+      startupImage: avatarResponse?.status === 200 ? ensAvatar : '/assets/apple-touch-icon.png',
     },
   }
 }
