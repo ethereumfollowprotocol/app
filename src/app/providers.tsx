@@ -2,10 +2,11 @@
 
 import { useMemo } from 'react'
 import { useTheme } from 'next-themes'
+import { ThirdwebProvider } from 'thirdweb/react'
 import { WagmiProvider, type State } from 'wagmi'
-import { TransactionProvider, TranslationProvider } from 'ethereum-identity-kit'
 import { darkTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { TransactionProvider, TranslationProvider } from 'ethereum-identity-kit'
 
 import wagmiConfig from '#/lib/wagmi'
 import { DAY, MINUTE } from '#/lib/constants'
@@ -41,20 +42,22 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
       <QueryClientProvider client={queryClient}>
         <WagmiProvider config={wagmiConfig} initialState={initialState}>
           <RainbowKitProvider coolMode={false} theme={rainbowKitTheme}>
-            <TranslationProvider translations={translations}>
-              <TransactionProvider batchTransactions={true}>
-                <EFPProfileProvider>
-                  <SoundsProvider>
-                    <RecommendedProfilesProvider>
-                      <Navigation />
-                      {children}
-                      <TransactionModal />
-                      <div id='modal-root' />
-                    </RecommendedProfilesProvider>
-                  </SoundsProvider>
-                </EFPProfileProvider>
-              </TransactionProvider>
-            </TranslationProvider>
+            <ThirdwebProvider>
+              <TranslationProvider translations={translations}>
+                <TransactionProvider batchTransactions={true}>
+                  <EFPProfileProvider>
+                    <SoundsProvider>
+                      <RecommendedProfilesProvider>
+                        <Navigation />
+                        {children}
+                        <TransactionModal />
+                        <div id='modal-root' />
+                      </RecommendedProfilesProvider>
+                    </SoundsProvider>
+                  </EFPProfileProvider>
+                </TransactionProvider>
+              </TranslationProvider>
+            </ThirdwebProvider>
           </RainbowKitProvider>
         </WagmiProvider>
       </QueryClientProvider>

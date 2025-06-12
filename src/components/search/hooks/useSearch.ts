@@ -1,4 +1,4 @@
-import { isAddress, isHex, type Address } from 'viem'
+import { isAddress, isHex } from 'viem'
 import { useQuery } from '@tanstack/react-query'
 import { useClickAway } from '@uidotdev/usehooks'
 import { useEffect, useRef, useState } from 'react'
@@ -40,26 +40,6 @@ const useSearch = () => {
           {
             name: search,
             resolvedAddress: { id: search },
-          },
-        ]
-      }
-
-      if (Number.isInteger(Number(search[0] === '#' ? search.slice(1) : search))) {
-        return [
-          {
-            name: `#${search[0] === '#' ? search.slice(1) : search}`,
-            resolvedAddress: { id: search.slice(1) },
-          },
-        ]
-      }
-
-      if (search.includes('.')) {
-        const resolvedAddress = await resolveEnsAddress(search)
-
-        return [
-          {
-            name: search,
-            resolvedAddress: { id: resolvedAddress as Address },
           },
         ]
       }
@@ -106,7 +86,7 @@ const useSearch = () => {
       resetSearch()
     }
 
-    if (isAddress(currentSearch) || currentSearch.includes('.')) {
+    if (currentSearch.includes('.') || isAddress(currentSearch)) {
       const address = isAddress(currentSearch) ? currentSearch : await resolveEnsAddress(currentSearch)
 
       router.push(
