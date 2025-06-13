@@ -53,6 +53,7 @@ import Namespace from 'public/assets/partners/namespace.jpeg'
 import Dappcon from 'public/assets/partners/dappcon.jpeg'
 import DIDHub from 'public/assets/partners/didhub.jpeg'
 import Philand from 'public/assets/partners/philand.jpeg'
+import V1CryptoPunks from 'public/assets/partners/v1cryptopunks.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -304,6 +305,11 @@ export const INTEGRATIONS = [
     name: 'CryptoPunks.eth.limo',
     url: 'https://cryptopunks.eth.limo/',
     logo: CryptoPunksEthLimo,
+  },
+  {
+    name: 'V1 CryptoPunks',
+    url: 'https://v1cryptopunks.com/',
+    logo: V1CryptoPunks,
   },
   {
     name: 'GeoCities',
