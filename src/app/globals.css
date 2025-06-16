@@ -816,3 +816,15 @@ input {
     right: -52px;
   }
 }
+
+.profile-list-row {
+  transition: all 0.2s;
+}
+
+.profile-list-row:hover {
+  background-color: #f4f4f4;
+}
+
+.dark .profile-list-row:hover {
+  background-color: #444444;
+}
