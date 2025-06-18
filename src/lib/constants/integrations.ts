@@ -54,6 +54,7 @@ import Dappcon from 'public/assets/partners/dappcon.jpeg'
 import DIDHub from 'public/assets/partners/didhub.jpeg'
 import Philand from 'public/assets/partners/philand.jpeg'
 import V1CryptoPunks from 'public/assets/partners/v1cryptopunks.jpeg'
+import PrepunkVerify from 'public/assets/partners/prepunkverify.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -300,6 +301,11 @@ export const INTEGRATIONS = [
     name: 'ENSvolution',
     url: 'https://www.ensvolution.xyz/',
     logo: ENSvolution,
+  },
+  {
+    name: 'Prepunk Verify',
+    url: 'https://verify.prepunk.club/',
+    logo: PrepunkVerify,
   },
   {
     name: 'CryptoPunks.eth.limo',
