@@ -318,7 +318,7 @@ input {
   );
   border: 1px solid var(--glass-border-medium);
   box-shadow: var(--glass-shadow-dark), var(--glass-inner-shadow-dark);
-  border-radius: 20px;
+  border-radius: 4px;
   position: relative;
   isolation: isolate;
 }
@@ -427,6 +427,20 @@ input {
   isolation: isolate;
 }
 
+.liquid-glass-dropdown-static {
+  backdrop-filter: blur(var(--glass-blur-primary)) saturate(180%);
+  background: linear-gradient(
+    145deg,
+    var(--glass-tint-readable) 0%,
+    var(--glass-tint-medium) 30%,
+    var(--glass-tint-dark) 100%
+  );
+  border: 1px solid var(--glass-border-medium);
+  box-shadow: var(--glass-shadow-dark), var(--glass-inner-shadow);
+  position: relative;
+  isolation: isolate;
+}
+
 .glass-dropdown-container {
   backdrop-filter: blur(var(--glass-blur-primary)) saturate(180%);
   background: linear-gradient(
@@ -447,6 +461,46 @@ input {
     background: var(--color-neutral);
     box-shadow: var(--shadow-medium);
   }
+}
+
+/* Mobile Dropdown Sliding Animation */
+.mobile-dropdown-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translateX(var(--translate-mobile-menu));
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100vw;
+  height: 100vh;
+  z-index: 60;
+}
+
+.mobile-dropdown-container.open {
+  transform: translateX(0);
+}
+
+.mobile-dropdown-slide {
+  backdrop-filter: blur(var(--glass-blur-primary)) saturate(180%);
+  background: linear-gradient(
+    145deg,
+    var(--glass-tint-readable) 0%,
+    var(--glass-tint-medium) 30%,
+    var(--glass-tint-dark) 100%
+  );
+  border: 1px solid var(--glass-border-medium);
+  box-shadow: var(--glass-shadow-dark), var(--glass-inner-shadow);
+  border-radius: 0;
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+/* Desktop hover bridge for smooth transitions */
+.dropdown-hover-bridge {
+  position: absolute;
+  pointer-events: none;
 }
 
 .glass-hover-item {
@@ -571,8 +625,8 @@ input {
   );
   border: 1px solid var(--glass-border-light);
   box-shadow: var(--glass-shadow-light), var(--glass-inner-shadow);
-  border-radius: 12px;
   isolation: isolate;
+  contain: layout style;
 }
 
 .glass-pseudo-dropdown::before {
@@ -585,6 +639,9 @@ input {
   backdrop-filter: blur(var(--glass-blur-secondary)) saturate(180%);
   z-index: -1;
   border-radius: inherit;
+  transform: scale(1.1);
+  transform-origin: center;
+  will-change: backdrop-filter;
 }
 
 .glass-pseudo-item {
@@ -645,19 +702,23 @@ input {
   0%,
   100% {
     backdrop-filter: blur(var(--glass-blur-liquid)) saturate(180%);
-    border-radius: 16px;
+    border-radius: 4px;
     transform: translateY(0) scale(1);
   }
   33% {
     backdrop-filter: blur(var(--glass-blur-primary)) saturate(200%);
-    border-radius: 20px;
+    border-radius: 4px;
     transform: translateY(-1px) scale(1.01);
   }
   66% {
     backdrop-filter: blur(var(--glass-blur-secondary)) saturate(160%);
-    border-radius: 12px;
+    border-radius: 4px;
     transform: translateY(-2px) scale(0.99);
   }
+}
+
+.disable-blur {
+  backdrop-filter: none !important;
 }
 
 /* Enhanced Liquid Glass Variants for Different Contexts */

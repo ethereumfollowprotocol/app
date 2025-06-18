@@ -74,7 +74,7 @@ const WalletMenu = () => {
         >
           <div
             className={cn(
-              'liquid-glass-dropdown flex max-h-[75vh] w-full flex-col overflow-x-visible transition-all sm:h-auto',
+              'liquid-glass-dropdown-static flex max-h-[75vh] w-full flex-col overflow-x-visible transition-all sm:h-auto',
               isSubMenuOpen ? '-translate-x-full sm:translate-x-0' : 'translate-x-0'
             )}
           >

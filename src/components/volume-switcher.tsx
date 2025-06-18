@@ -56,7 +56,18 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = ({ closeMenu, setExternalV
   const selectedVolumeOption = volumeOptions.find(({ label }) => label === selectedVolume)
 
   return (
-    <div ref={clickAwayVolumeRef} className='group relative w-full cursor-pointer'>
+    <div
+      ref={clickAwayVolumeRef}
+      onMouseEnter={() => {
+        setVolumeMenuOpen(true)
+        setExternalVolumeMenuOpen?.(true)
+      }}
+      onMouseLeave={() => {
+        setVolumeMenuOpen(false)
+        setExternalVolumeMenuOpen?.(false)
+      }}
+      className='group relative w-full cursor-pointer'
+    >
       <div
         onClick={() => {
           setVolumeMenuOpen(!volumeMenuOpen)
@@ -79,7 +90,7 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = ({ closeMenu, setExternalV
           volumeMenuOpen ? 'block' : 'hidden'
         )}
       >
-        <div className='glass-pseudo-dropdown flex h-screen max-h-[80vh] w-full flex-col gap-2 rounded-sm sm:h-auto sm:w-56'>
+        <div className='liquid-glass-dropdown-static flex h-screen max-h-[80vh] w-full flex-col gap-2 rounded-sm backdrop-blur-2xl! sm:h-auto sm:w-56'>
           <div
             onClick={() => {
               setVolumeMenuOpen(false)

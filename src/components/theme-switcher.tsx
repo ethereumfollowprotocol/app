@@ -54,7 +54,18 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
   const selectedThemeIcon = isClient ? themesWithIcons.find(({ theme }) => theme === selectedTheme) : { icon: Computer }
 
   return (
-    <div ref={clickAwayThemeRef} className='group relative h-full w-full cursor-pointer'>
+    <div
+      ref={clickAwayThemeRef}
+      onMouseEnter={() => {
+        setThemeMenuOpen(true)
+        setExternalThemeMenuOpen?.(true)
+      }}
+      onMouseLeave={() => {
+        setThemeMenuOpen(false)
+        setExternalThemeMenuOpen?.(false)
+      }}
+      className='group relative h-full w-full cursor-pointer'
+    >
       <div
         onClick={() => {
           setThemeMenuOpen(!themeMenuOpen)
@@ -74,7 +85,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
           themeMenuOpen ? 'block' : 'hidden'
         )}
       >
-        <div className='glass-pseudo-dropdown flex h-screen max-h-[80vh] w-full flex-col gap-2 rounded-sm sm:h-auto sm:max-h-[50vh] sm:w-56'>
+        <div className='liquid-glass-dropdown-static flex h-screen max-h-[80vh] w-full flex-col gap-2 rounded-sm sm:h-auto sm:max-h-[50vh] sm:w-56'>
           <div
             onClick={() => {
               setThemeMenuOpen(false)
