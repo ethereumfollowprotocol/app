@@ -64,7 +64,7 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = ({ closeMenu, setExternalV
         }}
         className={cn(
           'flex cursor-pointer items-center justify-between rounded-sm transition-opacity',
-          'group-hover:bg-nav-item w-full p-4'
+          'glass-pseudo-item w-full p-4'
         )}
       >
         <div className='flex items-center justify-end gap-2'>
@@ -79,20 +79,20 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = ({ closeMenu, setExternalV
           volumeMenuOpen ? 'block' : 'hidden'
         )}
       >
-        <div className='bg-neutral shadow-medium flex h-screen max-h-[80vh] w-full flex-col gap-2 rounded-sm sm:h-auto sm:w-56'>
+        <div className='glass-pseudo-dropdown flex h-screen max-h-[80vh] w-full flex-col gap-2 rounded-sm sm:h-auto sm:w-56'>
           <div
             onClick={() => {
               setVolumeMenuOpen(false)
               setExternalVolumeMenuOpen?.(false)
             }}
-            className='hover:bg-nav-item flex w-full cursor-pointer items-center justify-between rounded-sm p-4 transition-opacity lg:hidden'
+            className='glass-pseudo-item flex w-full cursor-pointer items-center justify-between rounded-sm p-4 transition-opacity lg:hidden'
           >
             <ArrowLeft className='text-xl' />
             <p className='font-bold'>{t('back')}</p>
           </div>
           {volumeOptions.map((option) => (
             <div
-              className='hover:bg-nav-item relative flex w-full items-center gap-2 rounded-sm p-4 pl-8'
+              className='glass-pseudo-item relative flex w-full items-center gap-2 rounded-sm p-4 pl-8'
               key={option.label}
               onClick={() => {
                 setSelectedVolume(option.label)

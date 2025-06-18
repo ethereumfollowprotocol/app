@@ -37,16 +37,16 @@ const CartButton = () => {
         }
       }}
     >
-      <div className={cn('cursor-point transition-transform hover:scale-110', txModalOpen && 'text-primary')}>
+      <div className={cn('cursor-pointer transition-transform hover:scale-110', txModalOpen && 'text-primary')}>
         <CartIcon className={cn('h-[34px] w-[34px] -translate-x-px')} />
         {changesCount === 0 ? null : (
-          <span className='absolute -top-1.5 -right-1.5 flex h-6 w-fit min-w-6 items-center justify-center rounded-full bg-green-400 px-1 text-sm font-bold text-black sm:h-5 sm:min-w-5'>
+          <span className='liquid-glass-success absolute -top-1.5 -right-1.5 flex h-6 w-fit min-w-6 items-center justify-center rounded-full px-1 text-sm font-bold text-black sm:h-5 sm:min-w-5'>
             {formatNumber(changesCount)}
           </span>
         )}
       </div>
       <div className='absolute top-1 left-[66px] hidden w-fit opacity-0 transition-all transition-discrete group-hover/cart-button:hidden group-hover/cart-button:opacity-100 sm:group-hover/cart-button:block starting:opacity-0'>
-        <p className='bg-neutral shadow-small text-text rounded-sm px-4 py-2 text-lg font-semibold text-nowrap capitalize'>
+        <p className='liquid-glass-tooltip text-text px-4 py-2 text-lg font-semibold text-nowrap capitalize'>
           {t('cart.title')}
         </p>
       </div>

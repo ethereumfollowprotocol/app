@@ -114,7 +114,7 @@ const Mobile: React.FC = () => {
     <>
       <div
         ref={navRef}
-        className='background-blur fixed top-0 left-0 z-50 flex h-[76px] w-screen justify-between px-4 sm:hidden'
+        className='glass-pseudo-nav fixed top-0 left-0 z-50 flex h-[76px] w-screen justify-between px-4 sm:hidden'
       >
         <div className='flex items-center gap-3'>
           <Link href='/' className='select-none' aria-label='Ethereum Follow Protocol'>
@@ -135,7 +135,7 @@ const Mobile: React.FC = () => {
       </div>
       <nav
         className={clsx(
-          'bg-neutral shadow-large fixed bottom-0 left-0 z-50 flex w-full justify-center p-3 px-4 sm:hidden',
+          'glass-pseudo-nav fixed bottom-0 left-0 z-50 flex w-full justify-center p-3 px-4 sm:hidden',
           isIOSStandalone && 'pb-8'
         )}
       >

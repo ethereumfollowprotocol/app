@@ -19,9 +19,7 @@ const Integrations: React.FC = () => {
         <p className='text-lg font-bold'>{INTEGRATIONS.length}</p>
       </div>
       <div className='absolute -top-2 left-full hidden pl-6 opacity-0 transition-all transition-discrete group-hover/integrations:hidden group-hover/integrations:opacity-100 sm:group-hover/integrations:block starting:opacity-0'>
-        <p className='bg-neutral shadow-small text-text rounded-sm px-4 py-2 text-lg font-semibold capitalize'>
-          {t('integrations')}
-        </p>
+        <p className='liquid-glass-tooltip text-text px-4 py-2 text-lg font-semibold capitalize'>{t('integrations')}</p>
       </div>
     </Link>
   )

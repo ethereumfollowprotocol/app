@@ -54,7 +54,7 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
           setLanguageMenuOpen(!languageMenOpenu)
           setExternalLanguageMenuOpen?.(!languageMenOpenu)
         }}
-        className='group-hover:bg-nav-item flex w-full items-center justify-between rounded-sm p-4'
+        className='glass-pseudo-item flex w-full items-center justify-between rounded-sm p-4'
       >
         <div className='flex items-center gap-2'>
           {selectedLanguage && (
@@ -75,10 +75,10 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
           languageMenOpenu ? 'block' : 'hidden'
         } group-hover:block`}
       >
-        <div className='bg-neutral shadow-medium flex max-h-[520px] w-full flex-col gap-2 gap-x-px overflow-scroll rounded-sm sm:max-h-[45vh] sm:w-56 lg:grid lg:w-[450px] lg:grid-cols-2'>
+        <div className='glass-pseudo-dropdown flex max-h-[520px] w-full flex-col gap-2 gap-x-px overflow-scroll rounded-sm sm:max-h-[45vh] sm:w-56 lg:grid lg:w-[450px] lg:grid-cols-2'>
           <div
             onClick={closeLanguageMenu}
-            className='hover:bg-nav-item flex w-full cursor-pointer items-center justify-between rounded-sm p-4 transition-opacity lg:hidden'
+            className='glass-pseudo-item flex w-full cursor-pointer items-center justify-between rounded-sm p-4 transition-opacity lg:hidden'
           >
             <ArrowLeft className='text-xl font-bold' />
             <p className='font-bold'>{t('back')}</p>
@@ -104,7 +104,7 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
           </div>
           {regularLanguages.map((lang) => (
             <div
-              className='hover:bg-nav-item relative flex items-center rounded-sm py-4 pl-8 font-bold transition-colors'
+              className='glass-pseudo-item relative flex items-center rounded-sm py-4 pl-8 font-bold transition-colors'
               key={lang.language}
               onClick={() => {
                 changeLanguage(lang)
@@ -128,7 +128,7 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
           )}
           {specialLanguages.map((lang) => (
             <div
-              className='hover:bg-nav-item relative flex items-center rounded-sm py-4 pl-8 font-bold transition-colors'
+              className='glass-pseudo-item relative flex items-center rounded-sm py-4 pl-8 font-bold transition-colors'
               key={lang.language}
               onClick={() => {
                 changeLanguage(lang)

@@ -41,7 +41,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
       <div
         className={cn(
           isExtraMenuOpen && '-translate-x-full sm:translate-x-0',
-          'bg-neutral sm:shadow-medium flex h-fit w-full flex-col overflow-x-visible rounded-sm transition-all sm:h-auto sm:max-h-[80vh] sm:w-60'
+          'liquid-glass-modal flex h-fit w-full flex-col overflow-x-visible transition-all sm:h-auto sm:max-h-[80vh] sm:w-60'
         )}
       >
         <ThemeSwitcher
@@ -67,7 +67,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
             href={link.href}
             target={link.target}
             onClick={() => setOpen(false)}
-            className='hover:bg-nav-item text-text block w-full rounded-sm p-4 font-bold capitalize transition-colors'
+            className='hover:bg-nav-item text-text block w-full rounded-sm p-4 font-bold capitalize transition-all'
           >
             <p>{t(link.text)}</p>
           </Link>
