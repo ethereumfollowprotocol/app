@@ -48,7 +48,18 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
   )
 
   return (
-    <div ref={clickAwayLanguageRef} className='group relative w-full cursor-pointer'>
+    <div
+      ref={clickAwayLanguageRef}
+      onMouseEnter={() => {
+        setLanguageMenuOpen(true)
+        setExternalLanguageMenuOpen?.(true)
+      }}
+      onMouseLeave={() => {
+        setLanguageMenuOpen(false)
+        setExternalLanguageMenuOpen?.(false)
+      }}
+      className='group relative w-full cursor-pointer'
+    >
       <div
         onClick={() => {
           setLanguageMenuOpen(!languageMenOpenu)
@@ -75,7 +86,7 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
           languageMenOpenu ? 'block' : 'hidden'
         } group-hover:block`}
       >
-        <div className='glass-pseudo-dropdown flex max-h-[520px] w-full flex-col gap-2 gap-x-px overflow-scroll rounded-sm sm:max-h-[45vh] sm:w-56 lg:grid lg:w-[450px] lg:grid-cols-2'>
+        <div className='liquid-glass-dropdown flex max-h-[520px] w-full flex-col gap-2 gap-x-px overflow-scroll rounded-sm sm:max-h-[45vh] sm:w-56 lg:grid lg:w-[450px] lg:grid-cols-2'>
           <div
             onClick={closeLanguageMenu}
             className='glass-pseudo-item flex w-full cursor-pointer items-center justify-between rounded-sm p-4 transition-opacity lg:hidden'

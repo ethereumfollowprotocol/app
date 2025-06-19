@@ -66,11 +66,6 @@
   --glass-noise-frequency: 0.02;
   --glass-noise-scale: 50;
   --glass-distortion-scale: 77;
-
-  /* Enhanced Animations */
-  --animation-glass-float: glass-float 6s ease-in-out infinite;
-  --animation-glass-pulse: glass-pulse 4s ease-in-out infinite;
-  --animation-liquid-morph: liquid-morph 8s ease-in-out infinite;
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -328,7 +323,6 @@ input {
   background: var(--glass-tint-readable);
   border: 1px solid var(--glass-border-medium);
   box-shadow: var(--glass-shadow-light), var(--glass-inner-shadow);
-  border-radius: 12px;
   position: relative;
 }
 
@@ -374,7 +368,6 @@ input {
   );
   border: 1px solid var(--glass-border-light);
   box-shadow: var(--glass-shadow-light), var(--glass-inner-shadow);
-  border-radius: 12px;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   isolation: isolate;
@@ -421,8 +414,6 @@ input {
   );
   border: 1px solid var(--glass-border-medium);
   box-shadow: var(--glass-shadow-dark), var(--glass-inner-shadow);
-  border-radius: 16px;
-  animation: var(--animation-liquid-morph);
   position: relative;
   isolation: isolate;
 }
@@ -473,10 +464,15 @@ input {
   width: 100vw;
   height: 100vh;
   z-index: 60;
-}
-
-.mobile-dropdown-container.open {
-  transform: translateX(0);
+  backdrop-filter: blur(var(--glass-blur-primary)) saturate(180%);
+  background: linear-gradient(
+    145deg,
+    var(--glass-tint-readable) 0%,
+    var(--glass-tint-medium) 30%,
+    var(--glass-tint-dark) 100%
+  );
+  border: 1px solid var(--glass-border-medium);
+  box-shadow: var(--glass-shadow-dark), var(--glass-inner-shadow);
 }
 
 .mobile-dropdown-slide {
@@ -671,50 +667,6 @@ input {
   backdrop-filter: blur(var(--glass-blur-subtle)) saturate(140%);
   z-index: -1;
   border-radius: inherit;
-}
-
-/* Enhanced Liquid Animation Effects */
-@keyframes glass-float {
-  0%,
-  100% {
-    transform: translateY(0);
-    box-shadow: var(--glass-shadow-light);
-  }
-  50% {
-    transform: translateY(-3px);
-    box-shadow: var(--glass-shadow-dark);
-  }
-}
-
-@keyframes glass-pulse {
-  0%,
-  100% {
-    backdrop-filter: blur(var(--glass-blur-primary)) saturate(180%);
-    border-color: var(--glass-border-light);
-  }
-  50% {
-    backdrop-filter: blur(var(--glass-blur-secondary)) saturate(200%);
-    border-color: var(--glass-border-medium);
-  }
-}
-
-@keyframes liquid-morph {
-  0%,
-  100% {
-    backdrop-filter: blur(var(--glass-blur-liquid)) saturate(180%);
-    border-radius: 4px;
-    transform: translateY(0) scale(1);
-  }
-  33% {
-    backdrop-filter: blur(var(--glass-blur-primary)) saturate(200%);
-    border-radius: 4px;
-    transform: translateY(-1px) scale(1.01);
-  }
-  66% {
-    backdrop-filter: blur(var(--glass-blur-secondary)) saturate(160%);
-    border-radius: 4px;
-    transform: translateY(-2px) scale(0.99);
-  }
 }
 
 .disable-blur {

@@ -75,13 +75,13 @@ const WalletMenu = () => {
           <div
             className={cn(
               'liquid-glass-dropdown-static flex max-h-[75vh] w-full flex-col overflow-x-visible transition-all sm:h-auto',
-              isSubMenuOpen ? '-translate-x-full sm:translate-x-0' : 'translate-x-0'
+              isSubMenuOpen ? 'disable-blur -translate-x-full sm:translate-x-0' : 'translate-x-0'
             )}
           >
             <ListSelector setWalletMenuOpen={setWalletMenuOpen} setSubMenuOpen={setIsSubMenuOpen} />
             {userAddress && <EthBalance address={userAddress} chain={listChain || chains[0]} />}
             <p
-              className='hover:bg-nav-item w-full cursor-pointer rounded-sm p-4 text-right font-bold text-nowrap text-red-500 transition-all sm:text-left'
+              className='glass-pseudo-item hover:bg-nav-item w-full cursor-pointer rounded-sm p-4 text-right font-bold text-nowrap text-red-500 transition-all sm:text-left'
               onClick={() => {
                 disconnect()
                 setWalletMenuOpen(false)

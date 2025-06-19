@@ -46,7 +46,18 @@ const ListSelector: React.FC<ListSelectorProps> = ({ setWalletMenuOpen, setSubMe
   }
 
   return (
-    <div ref={clickAwayListRef} className='group relative w-full cursor-pointer'>
+    <div
+      ref={clickAwayListRef}
+      onMouseEnter={() => {
+        setMenuOpen(true)
+        setSubMenuOpen(true)
+      }}
+      onMouseLeave={() => {
+        setMenuOpen(false)
+        setSubMenuOpen(false)
+      }}
+      className='group relative w-full cursor-pointer'
+    >
       <div
         onClick={() => setMenuOpen(!open)}
         className='glass-pseudo-item flex w-full cursor-pointer items-center justify-between rounded-sm p-4 transition-all sm:flex-row-reverse'
@@ -60,7 +71,7 @@ const ListSelector: React.FC<ListSelectorProps> = ({ setWalletMenuOpen, setSubMe
           lists?.lists && lists?.lists?.length > 0 ? (open ? 'sm:block' : 'sm:hidden') : 'hidden group-hover:hidden'
         )}
       >
-        <div className='glass-pseudo-dropdown flex w-full min-w-56 flex-col gap-2 overflow-auto sm:max-h-[80vh]'>
+        <div className='liquid-glass-dropdown flex w-full min-w-56 flex-col gap-2 overflow-auto sm:max-h-[80vh]'>
           <div
             onClick={() => setMenuOpen(false)}
             className='glass-pseudo-item flex w-full cursor-pointer items-center justify-between rounded-sm p-4 transition-all sm:hidden'

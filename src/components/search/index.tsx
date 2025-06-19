@@ -58,7 +58,7 @@ export function Search({ disabled }: { disabled?: boolean }) {
           <input
             name='search'
             ref={searchBarRef as RefObject<HTMLInputElement>}
-            className='liquid-glass-readable placeholder:text-opacity-70 focus:liquid-glass-intense block h-12 w-full px-4 font-medium transition-all duration-300 sm:h-[54px] sm:text-sm'
+            className='liquid-glass-readable placeholder:text-opacity-70 focus:liquid-glass-intense block h-12 w-full rounded-sm px-4 font-medium transition-all duration-300 sm:h-[54px] sm:text-sm'
             spellCheck={false}
             placeholder={t('search placeholder')}
             disabled={disabled}
@@ -77,7 +77,7 @@ export function Search({ disabled }: { disabled?: boolean }) {
             }}
             autoComplete='off'
           />
-          <div className={`liquid-glass-dropdown mt-2 w-full p-3 ${dropdownMenuOpen ? 'block' : 'hidden'}`}>
+          <div className={`liquid-glass-dropdown mt-2 w-full rounded-sm p-3 ${dropdownMenuOpen ? 'block' : 'hidden'}`}>
             <div
               className='mx-auto block w-full min-w-full py-0 text-lg'
               ref={clickAwayRef}

@@ -45,7 +45,7 @@ const CartButton = () => {
           </span>
         )}
       </div>
-      <div className='absolute top-1 left-[66px] hidden w-fit opacity-0 transition-all transition-discrete group-hover/cart-button:hidden group-hover/cart-button:opacity-100 sm:group-hover/cart-button:block starting:opacity-0'>
+      <div className='absolute -top-1 left-[66px] hidden w-fit opacity-0 transition-all transition-discrete group-hover/cart-button:hidden group-hover/cart-button:opacity-100 sm:group-hover/cart-button:block starting:opacity-0'>
         <p className='liquid-glass-tooltip text-text px-4 py-2 text-lg font-semibold text-nowrap capitalize'>
           {t('cart.title')}
         </p>
