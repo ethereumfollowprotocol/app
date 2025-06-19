@@ -10,6 +10,7 @@ import ArrowLeft from 'public/assets/icons/ui/arrow-left.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { formatNumber } from '#/utils/format/format-number'
 import { useIsEditView } from '#/hooks/use-is-edit-view'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 
 interface ListSelectorProps {
   setWalletMenuOpen: (open: boolean) => void
@@ -30,6 +31,7 @@ const ListSelector: React.FC<ListSelectorProps> = ({ setWalletMenuOpen, setSubMe
   const isProfile = useIsEditView()
   const { address: userAddress } = useAccount()
   const { selectedList, lists, setSelectedList } = useEFPProfile()
+  const { getDropdownClass, getItemClass } = useGlassTheme()
 
   if (!lists?.lists || lists.lists.length === 0) return null
 
@@ -60,7 +62,7 @@ const ListSelector: React.FC<ListSelectorProps> = ({ setWalletMenuOpen, setSubMe
     >
       <div
         onClick={() => setMenuOpen(!open)}
-        className='glass-pseudo-item flex w-full cursor-pointer items-center justify-between rounded-sm p-4 transition-all sm:flex-row-reverse'
+        className={`${getItemClass()} flex w-full cursor-pointer items-center justify-between rounded-sm p-4 transition-all sm:flex-row-reverse`}
       >
         <ArrowLeft className='h-4 w-4 sm:rotate-180' />
         <p className='font-bold'>{selectedList ? `${t('list')} #${formatNumber(selectedList)}` : t('mint new list')}</p>
@@ -71,17 +73,17 @@ const ListSelector: React.FC<ListSelectorProps> = ({ setWalletMenuOpen, setSubMe
           lists?.lists && lists?.lists?.length > 0 ? (open ? 'sm:block' : 'sm:hidden') : 'hidden group-hover:hidden'
         )}
       >
-        <div className='liquid-glass-dropdown flex w-full min-w-56 flex-col gap-2 overflow-auto sm:max-h-[80vh]'>
+        <div className={`${getDropdownClass()} flex w-full min-w-56 flex-col gap-2 overflow-auto sm:max-h-[80vh]`}>
           <div
             onClick={() => setMenuOpen(false)}
-            className='glass-pseudo-item flex w-full cursor-pointer items-center justify-between rounded-sm p-4 transition-all sm:hidden'
+            className={`${getItemClass()} flex w-full cursor-pointer items-center justify-between rounded-sm p-4 transition-all sm:hidden`}
           >
             <ArrowLeft className='h-6 w-6' />
             <p className='font-bold'>Back</p>
           </div>
           {lists?.lists?.map((list) => (
             <div
-              className='glass-pseudo-item relative flex w-full items-center gap-1 rounded-sm p-4 pl-8 transition-all'
+              className={`${getItemClass()} relative flex w-full items-center gap-1 rounded-sm p-4 pl-8 transition-all`}
               key={list}
               onClick={() => onListClick(list)}
             >
@@ -96,7 +98,7 @@ const ListSelector: React.FC<ListSelectorProps> = ({ setWalletMenuOpen, setSubMe
           ))}
           <div
             key={'new list'}
-            className='glass-pseudo-item relative flex gap-2 rounded-sm p-4 pl-8 transition-all'
+            className={`${getItemClass()} relative flex gap-2 rounded-sm p-4 pl-8 transition-all`}
             onClick={() => onListClick('new list')}
           >
             {selectedList === undefined && <Check className='absolute top-5 left-2.5 h-4 w-4 text-green-500' />}

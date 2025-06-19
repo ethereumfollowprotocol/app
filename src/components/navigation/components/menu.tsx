@@ -13,6 +13,7 @@ import { EXTERNAL_LINKS } from '#/lib/constants'
 import VolumeSwitcher from '../../volume-switcher'
 import LanguageSelector from '../../language-selector'
 import ThemeSwitcher from '#/components/theme-switcher'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 
 interface MenuProps {
   open: boolean
@@ -27,6 +28,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
 
   const { t } = useTranslation()
   const { resolvedTheme } = useTheme()
+  const { getDropdownClass, getItemClass } = useGlassTheme()
   const isExtraMenuOpen = languageMenOpenu || themeMenuOpen || volumeMenuOpen
 
   return (
@@ -41,7 +43,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
       <div
         className={cn(
           isExtraMenuOpen && 'disable-blur -translate-x-[99.5%] sm:translate-x-0',
-          'liquid-glass-modal flex h-fit w-full flex-col overflow-x-visible transition-all sm:h-auto sm:max-h-[80vh] sm:w-60'
+          `${getDropdownClass()} bg-neutral flex h-fit w-full flex-col overflow-x-visible transition-all sm:h-auto sm:max-h-[80vh] sm:w-60`
         )}
       >
         <ThemeSwitcher
@@ -67,7 +69,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
             href={link.href}
             target={link.target}
             onClick={() => setOpen(false)}
-            className='glass-pseudo-item hover:bg-nav-item text-text block w-full rounded-sm p-4 font-bold capitalize transition-all'
+            className={`${getItemClass()} hover:bg-nav-item text-text block w-full rounded-sm p-4 font-bold capitalize transition-all`}
           >
             <p>{t(link.text)}</p>
           </Link>

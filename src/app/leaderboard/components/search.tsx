@@ -3,6 +3,7 @@ import MagnifyingGlass from 'public/assets/icons/ui/magnifying-glass.svg'
 import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
 import { cn } from '#/lib/utilities'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 
 interface SearchProps {
   currentSearch: string
@@ -11,6 +12,7 @@ interface SearchProps {
 
 const Search: React.FC<SearchProps> = ({ currentSearch, handleSearchEvent }) => {
   const [searchOpen, setSearchOpen] = useState(false)
+  const { getGlassClass } = useGlassTheme()
 
   const clickAwayRef = useClickAway<HTMLDivElement>(() => setSearchOpen(false))
   const { t } = useTranslation()
@@ -40,7 +42,10 @@ const Search: React.FC<SearchProps> = ({ currentSearch, handleSearchEvent }) => 
             placeholder={t('search placeholder')}
             value={currentSearch}
             onChange={handleSearchEvent}
-            className='bg-nav-item block h-10 w-full border-0 pr-10 pl-4 font-medium sm:text-sm md:h-12'
+            className={cn(
+              getGlassClass('liquid-glass-button', 'bg-nav-item'),
+              'block h-10 w-full border-0 pr-10 pl-4 font-medium sm:text-sm md:h-12'
+            )}
           />
         </div>
       </div>

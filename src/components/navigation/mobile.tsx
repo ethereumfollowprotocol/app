@@ -8,6 +8,7 @@ import { usePathname, useRouter } from 'next/navigation'
 
 import { Search } from '../search'
 import Logo from 'public/assets/efp-logo.svg'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 import NavItems from './components/nav-items'
 import WalletMenu from './components/wallet-menu'
 import Integrations from './components/integrations'
@@ -21,6 +22,7 @@ const Mobile: React.FC = () => {
   const router = useRouter()
   const pathname = usePathname()
   const { address: userAddress } = useAccount()
+  const { getMobileNavClass } = useGlassTheme()
   const navRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -114,7 +116,7 @@ const Mobile: React.FC = () => {
     <>
       <div
         ref={navRef}
-        className='glass-pseudo-mobile-nav fixed top-0 left-0 z-50 flex h-[76px] w-screen justify-between px-4 sm:hidden'
+        className={`${getMobileNavClass()} fixed top-0 left-0 z-50 flex h-[76px] w-screen justify-between px-4 sm:hidden`}
       >
         <div className='flex items-center gap-3'>
           <Link href='/' className='select-none' aria-label='Ethereum Follow Protocol'>
@@ -135,7 +137,7 @@ const Mobile: React.FC = () => {
       </div>
       <nav
         className={clsx(
-          'glass-pseudo-mobile-nav bottom-nav fixed bottom-0 left-0 z-50 flex w-full justify-center p-3 px-4 sm:hidden',
+          `${getMobileNavClass()} bottom-nav fixed bottom-0 left-0 z-50 flex w-full justify-center p-3 px-4 sm:hidden`,
           isIOSStandalone && 'pb-8'
         )}
       >

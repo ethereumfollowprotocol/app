@@ -8,6 +8,7 @@ import { Suspense, useEffect, useMemo, useState } from 'react'
 import { cn } from '#/lib/utilities'
 import ProfileList from '#/components/profile-list'
 import PageSelector from '#/components/page-selector'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { fetchRecommendations } from '#/api/recommended/fetch-recommendations'
 
@@ -18,6 +19,7 @@ interface RecommendationsProps {
   endpoint: 'discover' | 'recommended'
   isTopEight?: boolean
   showPageSelector?: boolean
+  disableGlass?: boolean
 }
 
 const Recommendations = ({
@@ -27,10 +29,12 @@ const Recommendations = ({
   endpoint,
   isTopEight = false,
   showPageSelector = true,
+  disableGlass = false,
 }: RecommendationsProps) => {
   const [page, setPage] = useState(1)
   const { selectedList } = useEFPProfile()
   const { address: userAddress } = useAccount()
+  const { getGlassClass } = useGlassTheme()
 
   const {
     isLoading,
@@ -75,7 +79,13 @@ const Recommendations = ({
   const hasNextPage = displayedProfiles?.length === limit
 
   return (
-    <div className={cn('bg-neutral shadow-medium flex flex-col gap-2 rounded-sm pt-2 2xl:gap-3', className)}>
+    <div
+      className={cn(
+        disableGlass ? '' : getGlassClass('liquid-glass-card', 'bg-neutral shadow-medium'),
+        'flex h-full flex-col gap-2 rounded-sm pt-2 2xl:gap-3',
+        className
+      )}
+    >
       <div className='w-full pt-2 sm:px-4'>
         <div className='flex w-full items-center justify-between'>
           <h2 className='pl-1 text-start text-2xl font-bold'>{header}</h2>

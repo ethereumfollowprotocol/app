@@ -3,16 +3,24 @@ import { useTranslation } from 'react-i18next'
 import ProfileList from '#/components/profile-list'
 import PageSelector from '#/components/page-selector'
 import { useLatestFollowers } from '../hooks/use-latest-followers'
+import { cn } from '#/lib/utilities'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 
 const LatestFollowers = () => {
   const { t } = useTranslation()
+  const { getGlassClass } = useGlassTheme()
   const { subPage, isLoading, setSubPage, displayedProfiles, isFetchingNextPage, isFetchingPreviousPage } =
     useLatestFollowers(10, 10)
 
   const isLatestFollowersLoading = isLoading || isFetchingNextPage || isFetchingPreviousPage
 
   return (
-    <div className='bg-neutral shadow-medium flex w-full flex-col gap-3 rounded-sm pt-4'>
+    <div
+      className={cn(
+        getGlassClass('liquid-glass-card', 'bg-neutral shadow-medium'),
+        'flex w-full flex-col gap-3 rounded-sm pt-4'
+      )}
+    >
       <div className='flex w-full items-center justify-between px-4'>
         <h2 className='w-full pl-1 text-2xl font-bold'>{t('latest followers')}</h2>
         <Suspense>

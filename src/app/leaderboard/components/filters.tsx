@@ -7,6 +7,7 @@ import { cn } from '#/lib/utilities'
 import type { LeaderboardFilter } from '#/types/common'
 import { leaderboardFiltersEmojies, leaderboardFilters } from '#/lib/constants'
 import ArrowDown from 'public/assets/icons/ui/arrow-down.svg'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 interface FiltersProps {
   filter: LeaderboardFilter
   onSelectFilter: (filter: LeaderboardFilter) => void
@@ -15,6 +16,7 @@ interface FiltersProps {
 const Filters: React.FC<FiltersProps> = ({ filter, onSelectFilter }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const clickAwayRef = useClickAway<HTMLDivElement>(() => setIsDropdownOpen(false))
+  const { getGlassClass } = useGlassTheme()
 
   const { t } = useTranslation()
 
@@ -22,7 +24,11 @@ const Filters: React.FC<FiltersProps> = ({ filter, onSelectFilter }) => {
     <div ref={clickAwayRef} className='relative z-40 w-fit'>
       <div
         onClick={() => setIsDropdownOpen((prev) => !prev)}
-        className='hover:border-text/80 bg-neutral z-30 flex h-[50px] w-full cursor-pointer flex-wrap items-center justify-between gap-2 rounded-sm transition-all hover:scale-110'
+        className={cn(
+          getGlassClass('liquid-glass-button px-2', 'hover:border-text/80 bg-neutral'),
+          'z-30 flex h-12 w-full cursor-pointer flex-wrap items-center justify-between gap-2 rounded-sm transition-all hover:scale-110',
+          isDropdownOpen && 'disable-blur'
+        )}
       >
         <div
           key={filter}
@@ -40,7 +46,8 @@ const Filters: React.FC<FiltersProps> = ({ filter, onSelectFilter }) => {
       </div>
       <div
         className={cn(
-          'bg-neutral shadow-medium absolute top-full -left-1 -z-10 h-fit w-44 rounded-sm transition-all',
+          getGlassClass('liquid-glass-dropdown', 'bg-neutral shadow-medium'),
+          'absolute! top-full -left-1 -z-10 h-fit w-44 rounded-sm transition-all',
           isDropdownOpen ? 'flex' : 'pointer-events-none hidden'
         )}
       >
@@ -52,7 +59,10 @@ const Filters: React.FC<FiltersProps> = ({ filter, onSelectFilter }) => {
                 onSelectFilter(item)
                 setIsDropdownOpen(false)
               }}
-              className='hover:bg-text/10 flex w-full cursor-pointer items-center gap-2 rounded-sm p-4'
+              className={cn(
+                getGlassClass('glass-hover-item', 'hover:bg-text/10'),
+                'flex w-full cursor-pointer items-center gap-2 rounded-sm p-4'
+              )}
             >
               <p className='font-bold'>{t(item)}</p>
               <Image

@@ -5,6 +5,8 @@ import Search from './search'
 import PageSelector from '#/components/page-selector'
 import type { LeaderboardFilter } from '#/types/common'
 import { useIsClient } from '@uidotdev/usehooks'
+import { cn } from '#/lib/utilities'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 
 interface TableHeadersProps {
   filter: LeaderboardFilter
@@ -34,9 +36,15 @@ const TableHeaders: React.FC<TableHeadersProps> = ({
   fetchPreviousLeaderboard,
 }) => {
   const isClient = useIsClient()
+  const { getGlassClass } = useGlassTheme()
 
   return (
-    <div className='bg-neutral z-50 flex items-center justify-between gap-2 rounded-sm px-4 py-2 pr-2 lg:pl-2'>
+    <div
+      className={cn(
+        getGlassClass('liquid-glass-card', 'bg-neutral'),
+        'z-50 flex items-center justify-between gap-2 rounded-sm px-4 py-2 pr-2 lg:pl-2'
+      )}
+    >
       <div className='flex items-center gap-4'>
         <Search currentSearch={currentSearch} handleSearchEvent={handleSearchEvent} />
         <Filters filter={filter} onSelectFilter={onSelectFilter} />

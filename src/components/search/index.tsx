@@ -8,9 +8,11 @@ import ResultItem from './result-item.tsx'
 import useSearch from './hooks/useSearch.ts'
 import GraySpinner from '../loaders/gray-spinner.tsx'
 import MagnifyingGlass from 'public/assets/icons/ui/magnifying-glass.svg'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 
 export function Search({ disabled }: { disabled?: boolean }) {
   const { t } = useTranslation()
+  const { getTooltipClass } = useGlassTheme()
 
   const {
     search,
@@ -43,7 +45,7 @@ export function Search({ disabled }: { disabled?: boolean }) {
             )}
           />
           <div className='absolute -top-1 left-[66px] hidden w-fit opacity-0 transition-all transition-discrete group-hover/search-button:hidden group-hover/search-button:opacity-100 sm:group-hover/search-button:block starting:opacity-0'>
-            <p className='liquid-glass-tooltip text-text px-4 py-2 text-lg font-semibold text-nowrap capitalize'>
+            <p className={`${getTooltipClass()} text-text px-4 py-2 text-lg font-semibold text-nowrap capitalize`}>
               {t('search')}
             </p>
           </div>

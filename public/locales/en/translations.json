@@ -201,6 +201,8 @@
   "system": "System",
   "light": "Light",
   "dark": "Dark",
+  "glass-light": "Glass Light",
+  "glass-dark": "Glass Dark",
   "halloween": "Halloween",
   "sfx & music": "SFX & Music",
   "sfx": "SFX",
