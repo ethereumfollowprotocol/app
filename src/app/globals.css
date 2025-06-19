@@ -713,6 +713,34 @@ input {
     inset 0 1px 2px rgba(255, 124, 124, 0.1);
 }
 
+/* Mobile Navigation with Pseudo-Element Blur */
+.glass-pseudo-mobile-nav {
+  position: fixed;
+  background: linear-gradient(180deg, var(--glass-tint-readable) 0%, var(--glass-tint-medium) 100%);
+  border-bottom: 1px solid var(--glass-border-light);
+  box-shadow: var(--glass-shadow-light), var(--glass-inner-shadow);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  isolation: isolate;
+}
+
+.glass-pseudo-mobile-nav::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backdrop-filter: blur(var(--glass-blur-secondary)) saturate(160%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Bottom navigation specific adjustments */
+.glass-pseudo-mobile-nav.bottom-nav {
+  border-bottom: none;
+  border-top: 1px solid var(--glass-border-light);
+}
+
 .title {
   text-wrap: balance;
 }
