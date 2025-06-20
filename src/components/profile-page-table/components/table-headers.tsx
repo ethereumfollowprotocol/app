@@ -9,6 +9,7 @@ import type { ProfileTableTitleType } from '#/types/common'
 import type { FollowSortType, TagCountType } from '#/types/requests'
 import { QUERY_BLOCK_TAGS } from '#/components/blocked-muted/hooks/use-blocked-muted'
 import { BLOCKED_MUTED_TABS, BLOCKED_MUTED_TAGS, SORT_OPTIONS } from '#/lib/constants'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 import Tag from 'public/assets/icons/ui/tag.svg'
 import Check from 'public/assets/icons/ui/check.svg'
 import Cross from 'public/assets/icons/ui/cross.svg'
@@ -59,12 +60,16 @@ const TableHeader: React.FC<TableHeaderProps> = ({
   })
 
   const { t } = useTranslation()
+  const { getGlassClass } = useGlassTheme()
 
   const displayedTags = allTags?.filter((tag) => (isShowingBlocked ? true : !QUERY_BLOCK_TAGS.includes(tag.tag)))
   const tagsEmpty = !tagsLoading && (!displayedTags || displayedTags.length === 0)
 
   return (
-    <div className='bg-neutral shadow-medium z-40 flex w-full flex-col gap-4 rounded-sm p-4 py-2 pl-2'>
+    <div className={cn(
+      getGlassClass('liquid-glass-card', 'bg-neutral shadow-medium'),
+      'z-40 flex w-full flex-col gap-4 rounded-sm p-4 py-2 pl-2'
+    )}>
       <div className='flex w-full justify-between'>
         <div className='flex w-full flex-wrap items-center justify-between gap-3 sm:flex-nowrap sm:justify-start'>
           <div className='flex w-full items-center gap-3 sm:w-fit'>
@@ -159,7 +164,10 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                   <ArrowDown className={`h-auto w-4 transition-transform ${showSort ? 'rotate-180' : ''}`} />
                 </div>
                 {showSort && (
-                  <div className='bg-neutral shadow-small absolute top-[120%] -right-2 z-50 flex flex-col items-center gap-1 rounded-sm p-1'>
+                  <div className={cn(
+                    getGlassClass('liquid-glass-dropdown', 'bg-neutral shadow-small'),
+                    'absolute top-full right-0 mt-1 z-50 flex flex-col items-center gap-1 rounded-sm p-1'
+                  )}>
                     {SORT_OPTIONS.map((option) => (
                       <div
                         className='hover:bg-nav-item relative w-full rounded-sm p-3 pl-8 font-bold text-nowrap capitalize transition-colors'
@@ -188,7 +196,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                   className={cn(
                     'flex max-w-[33%] items-center gap-1.5 rounded-sm px-4 py-2 text-sm font-bold transition-transform hover:scale-110',
                     selectedTags?.includes(tag.tag)
-                      ? 'text-dark-grey bg-zinc-100 shadow-inner shadow-black/10'
+                      ? 'bg-primary text-dark-grey shadow-inner shadow-black/10'
                       : 'bg-zinc-300/80 text-zinc-500'
                   )}
                   name={tag.tag.toLowerCase()}

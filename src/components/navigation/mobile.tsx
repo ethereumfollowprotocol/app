@@ -22,7 +22,7 @@ const Mobile: React.FC = () => {
   const router = useRouter()
   const pathname = usePathname()
   const { address: userAddress } = useAccount()
-  const { getMobileNavClass } = useGlassTheme()
+  const { getMobileNavClass, getGlassClass } = useGlassTheme()
   const navRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -100,7 +100,7 @@ const Mobile: React.FC = () => {
     }
 
     return () => abortController.abort()
-  }, [navRef, pathname])
+  }, [navRef, pathname, userAddress])
 
   const { width } = useWindowSize()
   const isMobile = width && width < 640
@@ -116,7 +116,10 @@ const Mobile: React.FC = () => {
     <>
       <div
         ref={navRef}
-        className={`${getMobileNavClass()} fixed top-0 left-0 z-50 flex h-[76px] w-screen justify-between px-4 sm:hidden`}
+        className={clsx(
+          getGlassClass('glass-pseudo-nav', 'background-blur'),
+          'fixed top-0 left-0 z-50 flex h-[76px] w-screen justify-between px-4 sm:hidden'
+        )}
       >
         <div className='flex items-center gap-3'>
           <Link href='/' className='select-none' aria-label='Ethereum Follow Protocol'>

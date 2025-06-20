@@ -47,7 +47,7 @@ const Filters: React.FC<FiltersProps> = ({ filter, onSelectFilter }) => {
       <div
         className={cn(
           getGlassClass('liquid-glass-dropdown', 'bg-neutral shadow-medium'),
-          'absolute! top-full -left-1 -z-10 h-fit w-44 rounded-sm transition-all',
+          'absolute top-full left-0 mt-1 z-50 h-fit w-44 rounded-sm transition-all',
           isDropdownOpen ? 'flex' : 'pointer-events-none hidden'
         )}
       >
