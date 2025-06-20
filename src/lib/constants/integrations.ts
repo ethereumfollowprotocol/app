@@ -55,6 +55,7 @@ import DIDHub from 'public/assets/partners/didhub.jpeg'
 import Philand from 'public/assets/partners/philand.jpeg'
 import V1CryptoPunks from 'public/assets/partners/v1cryptopunks.jpeg'
 import PrepunkVerify from 'public/assets/partners/prepunkverify.jpeg'
+import MetaPoll from 'public/assets/partners/metapoll.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -201,6 +202,11 @@ export const INTEGRATIONS = [
     name: 'DIDHub',
     url: 'https://beta.didhub.com/',
     logo: DIDHub,
+  },
+  {
+    name: 'MetaPoll',
+    url: 'https://metapoll.xyz/',
+    logo: MetaPoll,
   },
   {
     name: 'NameGraph',
