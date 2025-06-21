@@ -135,7 +135,7 @@ export const INTEGRATIONS = [
     logo: Philand,
   },
   {
-    name: 'CommonGround',
+    name: 'Common Ground',
     url: 'https://app.cg',
     logo: CommonGround,
   },
