@@ -18,6 +18,7 @@ import { useIsClient } from '@uidotdev/usehooks'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import useStickyScroll from '#/components/home/hooks/use-sticky-scroll.ts'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 
 const LeaderboardStatNames = ['addresses', 'lists', 'list ops', 'unique users']
 
@@ -25,6 +26,7 @@ let lastScrollTop = 0
 
 const LeaderboardTable = () => {
   const router = useRouter()
+  const { getGlassClass } = useGlassTheme()
   const {
     page,
     chunk,
@@ -113,7 +115,10 @@ const LeaderboardTable = () => {
         {LeaderboardStatNames.map((name, i) => (
           <div
             key={`stat ${i}`}
-            className='bg-neutral shadow-medium flex w-[48.5%] flex-col items-start justify-center rounded-sm p-3 pr-1 sm:p-4 md:w-[23.5%]'
+            className={cn(
+              getGlassClass('liquid-glass-card', 'bg-neutral shadow-medium'),
+              'flex w-[48.5%] flex-col items-start justify-center rounded-sm p-3 pr-1 sm:p-4 md:w-[23.5%]'
+            )}
           >
             {isLeaderboardStatsLoading || !leaderboardStats ? (
               <LoadingCell className='h-full min-h-8 w-24 rounded-sm' />
@@ -144,7 +149,12 @@ const LeaderboardTable = () => {
               isFetchingPreviousLeaderboard={isFetchingPreviousLeaderboard}
             />
           </div>
-          <div className='bg-neutral shadow-medium relative mb-16 flex flex-col rounded-sm'>
+          <div
+            className={cn(
+              getGlassClass('liquid-glass-card', 'bg-neutral shadow-medium'),
+              'relative mb-16 flex flex-col rounded-sm'
+            )}
+          >
             {leaderboard
               ?.slice(0, chunk * LEADERBOARD_CHUNK_SIZE)
               .map((entry: LeaderboardItem, index) => (
@@ -196,7 +206,10 @@ const LeaderboardTable = () => {
               {LeaderboardStatNames.map((name, i) => (
                 <div
                   key={`stat ${i}`}
-                  className='bg-neutral shadow-medium flex w-[48.5%] flex-col items-start justify-center rounded-sm p-4'
+                  className={cn(
+                    getGlassClass('liquid-glass-card', 'bg-neutral shadow-medium'),
+                    'flex w-[48.5%] flex-col items-start justify-center rounded-sm p-4'
+                  )}
                 >
                   {isLeaderboardStatsLoading || !leaderboardStats ? (
                     <LoadingCell className='h-8 w-24 rounded-sm' />
@@ -213,13 +226,13 @@ const LeaderboardTable = () => {
               limit={10}
               endpoint='recommended'
               header={t('recommended.title')}
-              className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm')}
+              className={cn('h-fit w-full rounded-sm')}
             />
             <Recommendations
               limit={10}
               endpoint='discover'
               header={t('recent')}
-              className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm')}
+              className={cn('h-fit w-full rounded-sm')}
             />
           </div>
         </div>

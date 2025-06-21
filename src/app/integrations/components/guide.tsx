@@ -8,6 +8,7 @@ import Examples from './examples'
 import { cn } from '#/lib/utilities'
 import Discord from 'public/assets/icons/socials/discord.svg?url'
 import Github from 'public/assets/icons/socials/github-white.svg?url'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 
 const RESOURCES = [
   {
@@ -15,35 +16,41 @@ const RESOURCES = [
     content: <p>Ethereum Identity Kit</p>,
     href: 'https://ethidentitykit.com',
     className: 'bg-primary font-bold text-dark-grey',
+    glassClass: 'liquid-glass-primary',
   },
   {
     name: 'Docs',
     content: <p>Documentation</p>,
     href: 'https://docs.efp.app',
     className: 'bg-neutral',
+    glassClass: 'liquid-glass-button',
   },
   {
     name: 'API',
     content: <p>API</p>,
     href: 'https://ethidentitykit.com/docs/api',
     className: 'bg-neutral',
+    glassClass: 'liquid-glass-button',
   },
   {
     name: 'Discord',
     content: <Image src={Discord} alt='Discord' width={40} height={40} />,
     href: 'https://discord.com/invite/ZUyG3mSXFD',
     className: 'bg-[#8C9EFF] text-white px-0',
+    glassClass: 'liquid-glass-button',
   },
   {
     name: 'GitHub',
     content: <Image src={Github} alt='GitHub' width={28} height={28} />,
     href: 'https://github.com/ethereumfollowprotocol',
     className: 'bg-dark-grey text-white px-1.5',
+    glassClass: '',
   },
 ]
 
 const Guide = () => {
   const { t } = useTranslation()
+  const { getGlassClass } = useGlassTheme()
 
   return (
     <div className='mt-24 flex h-fit w-full flex-col items-start gap-12 rounded-sm px-4 sm:mt-12 sm:px-8 lg:mt-24 lg:max-w-[43vw] lg:px-0 xl:max-w-[550px] 2xl:max-w-[700px]'>
@@ -59,7 +66,8 @@ const Guide = () => {
               key={resource.name}
               href={resource.href}
               className={cn(
-                'shadow-small flex h-10 w-fit items-center justify-center gap-2 rounded-sm px-3 font-semibold transition-transform duration-300 hover:scale-110',
+                getGlassClass(resource.glassClass, 'shadow-small'),
+                'flex h-10 w-fit items-center justify-center gap-2 rounded-sm px-3 font-semibold transition-transform duration-300 hover:scale-110',
                 resource.className
               )}
               target='_blank'

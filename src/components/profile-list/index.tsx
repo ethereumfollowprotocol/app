@@ -74,7 +74,8 @@ const ProfileList: React.FC<ProfileListProps> = ({
           }
         />
       ))}
-      {displayLoadingRows && new Array(loadingRows).fill(1).map((_, i) => <LoadingRow key={i} showTags={showTags} />)}
+      {displayLoadingRows &&
+        new Array(loadingRows).fill(1).map((_, i) => <LoadingRow key={`loading-row-${i}`} showTags={showTags} />)}
     </div>
   )
 }

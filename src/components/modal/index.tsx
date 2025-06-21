@@ -2,6 +2,7 @@ import { cn } from '#/lib/utilities'
 import Cross from 'public/assets/icons/ui/cross.svg'
 import type { ReactNode } from 'react'
 import { createPortal } from 'react-dom'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 interface ModalProps {
   onCancel: () => void
   children: React.ReactNode
@@ -11,6 +12,8 @@ interface ModalProps {
 }
 
 const Modal = ({ onCancel, children, className, disableBackgroundClose, closeButtonClassName }: ModalProps) => {
+  const { getGlassClass } = useGlassTheme()
+
   return createPortal(
     <div
       className={cn(
@@ -19,7 +22,9 @@ const Modal = ({ onCancel, children, className, disableBackgroundClose, closeBut
       )}
       onClick={() => !disableBackgroundClose && onCancel()}
     >
-      <div className='bg-neutral relative w-full rounded-sm p-3 sm:w-fit sm:p-4'>
+      <div
+        className={`${getGlassClass('liquid-glass-modal', 'bg-neutral')} relative w-full rounded-sm p-3 sm:w-fit sm:p-4`}
+      >
         <button
           onClick={onCancel}
           className={cn('absolute top-2 right-2 transition-all hover:scale-110', closeButtonClassName)}

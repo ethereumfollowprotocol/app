@@ -10,6 +10,7 @@ import Achievements from './components/achievements'
 import FollowButton from '#/components/follow-button'
 import ThreeDotMenu from './components/three-dot-menu'
 import { useProfileCard } from './hooks/use-profile-card'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 import EnsLogo from 'public/assets/icons/socials/ens.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import LoadingProfileCard from './components/loading-profile-card'
@@ -55,9 +56,10 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   const { t } = useTranslation()
   const { selectedList } = useEFPProfile()
   const { followState, profileName, isConnectedUserCard } = useProfileCard(profile)
+  const { getGlassClass } = useGlassTheme()
 
   return (
-    <div className={cn('bg-neutral flex w-[364px] flex-col gap-4 rounded-sm pb-3', className)}>
+    <div className={cn('flex w-[364px] flex-col gap-4 rounded-sm', className)}>
       {isLoading ? (
         <LoadingProfileCard hideFollowButton={true} className='bg-neutral' />
       ) : profile?.address ? (
@@ -72,7 +74,6 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
             router.push(`/${addressOrName}?ssr=false`)
           }}
           selectedList={selectedList}
-          className='bg-neutral'
           options={{
             openListSettings: openListSettingsModal,
             profileData: profile,
@@ -116,7 +117,14 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           }}
         />
       ) : (
-        <div className={cn('relative z-10 flex flex-col rounded-sm', isRecommended ? 'bg-neutral' : 'glass-card')}>
+        <div
+          className={cn(
+            'relative z-10 flex flex-col rounded-sm',
+            isRecommended
+              ? getGlassClass('liquid-glass-card', 'bg-neutral')
+              : getGlassClass('liquid-glass-card', 'glass-card')
+          )}
+        >
           {isRecommended ? (
             <div className='mx-auto flex h-[436px] w-3/4 flex-col items-center justify-center gap-4'>
               <p className='px-8 text-xl font-bold'>{t('connect to see more')}</p>

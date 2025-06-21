@@ -10,6 +10,7 @@ import { useIsClient } from '@uidotdev/usehooks'
 
 import { cn } from '#/lib/utilities'
 import LoadingCell from './loaders/loading-cell'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 import { RECOMMENDED_FEED_ADDRESS } from '#/lib/constants'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import InterfaceLight from 'public/assets/icons/socials/interface.png'
@@ -33,6 +34,7 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, activityAddr
 
   const { t } = useTranslation()
   const { resolvedTheme } = useTheme()
+  const { getGlassClass } = useGlassTheme()
 
   const url = activityAddress
     ? `https://app.interface.social/elements/profile/${activityAddress}/activity`
@@ -90,7 +92,8 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, activityAddr
       {!activityAddress && (
         <div
           className={cn(
-            'bg-neutral shadow-medium sticky z-10 flex w-full items-center justify-between rounded-sm p-2 transition-all duration-300 sm:p-3',
+            getGlassClass('liquid-glass-card', 'bg-neutral shadow-medium'),
+            'sticky z-10 flex w-full items-center justify-between rounded-sm p-2 transition-all duration-300 sm:p-3',
             isMobile ? (displayHeaders ? 'top-[74px]' : '-top-[3px]') : '-top-[3px]'
           )}
         >
@@ -151,7 +154,8 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, activityAddr
       )}
       <div
         className={cn(
-          'bg-neutral shadow-medium flex h-[100000vh] w-full max-w-[900px] justify-center overflow-hidden rounded-sm',
+          getGlassClass('liquid-glass-card', 'bg-neutral shadow-medium'),
+          'flex h-[100000vh] w-full max-w-[900px] justify-center overflow-hidden rounded-sm',
           contentSize
         )}
       >
