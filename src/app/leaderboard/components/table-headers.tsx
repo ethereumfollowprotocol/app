@@ -41,7 +41,7 @@ const TableHeaders: React.FC<TableHeadersProps> = ({
   return (
     <div
       className={cn(
-        getGlassClass('liquid-glass-card', 'bg-neutral'),
+        getGlassClass('glass-pseudo-modal', 'bg-neutral'),
         'z-50 flex items-center justify-between gap-2 rounded-sm px-4 py-2 pr-2 lg:pl-2'
       )}
     >

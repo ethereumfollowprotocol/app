@@ -58,9 +58,9 @@
   --glass-tint-readable: rgba(255, 255, 255, 0.3);
 
   /* Enhanced Borders */
-  --glass-border-light: rgba(255, 255, 255, 0.3);
-  --glass-border-medium: rgba(255, 255, 255, 0.4);
-  --glass-border-dark: rgba(255, 255, 255, 0.15);
+  --glass-border-light: rgba(0, 0, 0, 0.02);
+  --glass-border-medium: rgba(0, 0, 0, 0.005);
+  --glass-border-dark: rgba(0, 0, 0, 0.02);
 
   /* Liquid Glass Noise Properties */
   --glass-noise-opacity: 0.04;
@@ -76,9 +76,9 @@
   /* Inherits default light theme colors (already defined in @theme) */
 
   /* Light mode specific glass tinting - all white */
-  --glass-tint-light: rgba(255, 255, 255, 0.18);
-  --glass-tint-medium: rgba(255, 255, 255, 0.25);
-  --glass-tint-dark: rgba(255, 255, 255, 0.15);
+  --glass-tint-light: rgba(255, 255, 255, 0.1);
+  --glass-tint-medium: rgba(255, 255, 255, 0.05);
+  --glass-tint-dark: rgba(0, 0, 0, 0.05);
   --glass-tint-readable: rgba(255, 255, 255, 0.3);
 }
 
@@ -116,9 +116,9 @@
   --color-shadow: rgba(255, 255, 255, 0.25);
 
   /* Dark mode liquid glass overrides */
-  --glass-tint-light: rgba(255, 255, 255, 0.08);
-  --glass-tint-medium: rgba(255, 255, 255, 0.12);
-  --glass-tint-dark: rgba(0, 0, 0, 0.15);
+  --glass-tint-light: rgba(255, 255, 255, 0.02);
+  --glass-tint-medium: rgba(255, 255, 255, 0.06);
+  --glass-tint-dark: rgba(0, 0, 0, 0.05);
   --glass-tint-readable: rgba(255, 255, 255, 0.15);
   --glass-border-light: rgba(255, 255, 255, 0.2);
   --glass-border-medium: rgba(255, 255, 255, 0.25);
@@ -364,6 +364,32 @@ input {
   isolation: isolate;
 }
 
+.glass-pseudo-modal {
+  position: relative;
+  isolation: isolate;
+  background: linear-gradient(
+    135deg,
+    var(--glass-tint-readable) 0%,
+    var(--glass-tint-medium) 50%,
+    var(--glass-tint-dark) 100%
+  );
+  border: 1px solid var(--glass-border-medium);
+  box-shadow: var(--glass-shadow-dark), var(--glass-inner-shadow-dark);
+  border-radius: 4px;
+}
+
+.glass-pseudo-modal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backdrop-filter: blur(var(--glass-blur-intense)) saturate(200%);
+  z-index: -1;
+  border-radius: inherit;
+}
+
 .liquid-glass-readable {
   backdrop-filter: blur(var(--glass-blur-subtle)) saturate(140%);
   background: var(--glass-tint-readable);
@@ -386,20 +412,6 @@ input {
     inset 0 -1px 0 var(--glass-tint-dark);
   border-radius: 16px;
   isolation: isolate;
-}
-
-/* Enhanced Liquid Glass Interactive Effects */
-.liquid-glass-card:hover {
-  background: linear-gradient(
-    135deg,
-    var(--glass-tint-readable) 0%,
-    var(--glass-tint-medium) 50%,
-    var(--glass-tint-dark) 100%
-  );
-  border-color: var(--glass-border-medium);
-  transform: translateY(-2px);
-  box-shadow: var(--glass-shadow-dark), var(--glass-inner-shadow);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .liquid-glass-button {
@@ -436,13 +448,12 @@ input {
     var(--glass-tint-medium) 50%,
     var(--glass-tint-dark) 100%
   );
-  transform: translateY(-1px) scale(1.02);
+  transform: scale(1.05);
   box-shadow: var(--glass-shadow-dark), var(--glass-inner-shadow);
   border-color: var(--glass-border-medium);
 }
 
 .liquid-glass-button:active {
-  transform: translateY(0) scale(0.98);
   box-shadow: var(--glass-shadow-light), var(--glass-inner-shadow-dark);
 }
 
@@ -552,7 +563,6 @@ input {
   );
   backdrop-filter: blur(var(--glass-blur-subtle)) saturate(140%);
   box-shadow: var(--glass-shadow-light), var(--glass-inner-shadow);
-  transform: translateY(-1px);
 }
 
 /* Fallback for glass hover item */
@@ -627,6 +637,14 @@ input {
 .glass-light .glass-pseudo-nav,
 .glass-dark .glass-pseudo-nav {
   position: fixed;
+  isolation: isolate;
+}
+
+.glass-light .glass-pseudo-nav::before,
+.glass-dark .glass-pseudo-nav::before {
+  content: '';
+  position: absolute;
+  inset: 0;
   backdrop-filter: blur(var(--glass-blur-navigation)) saturate(180%);
   background: linear-gradient(
     135deg,
@@ -637,11 +655,11 @@ input {
   );
   border-right: 1px solid var(--glass-border-light);
   box-shadow: var(--glass-shadow-medium), var(--glass-inner-shadow);
-  isolation: isolate;
+  z-index: -1;
+  pointer-events: none;
 }
 
 .glass-pseudo-dropdown {
-  position: relative;
   background: linear-gradient(
     135deg,
     var(--glass-tint-medium) 0%,
@@ -651,7 +669,6 @@ input {
   border: 1px solid var(--glass-border-light);
   box-shadow: var(--glass-shadow-light), var(--glass-inner-shadow);
   isolation: isolate;
-  contain: layout style;
 }
 
 .glass-pseudo-dropdown::before {
@@ -664,7 +681,6 @@ input {
   backdrop-filter: blur(var(--glass-blur-secondary)) saturate(180%);
   z-index: -1;
   border-radius: inherit;
-  transform: scale(1.1);
   transform-origin: center;
   will-change: backdrop-filter;
 }
@@ -673,57 +689,22 @@ input {
 .glass-dark .glass-pseudo-item {
   position: relative;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: inherit;
 }
 
 .glass-light .glass-pseudo-item:hover,
 .glass-dark .glass-pseudo-item:hover {
+  backdrop-filter: blur(var(--glass-blur-secondary)) saturate(160%);
   background: linear-gradient(
     135deg,
     var(--glass-tint-light) 0%,
     var(--glass-tint-medium) 50%,
     var(--glass-tint-dark) 100%
   );
-  transform: translateY(-1px);
   box-shadow: var(--glass-shadow-light), var(--glass-inner-shadow);
-}
-
-.glass-pseudo-item:hover::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  backdrop-filter: blur(var(--glass-blur-subtle)) saturate(140%);
-  z-index: -1;
-  border-radius: inherit;
 }
 
 .disable-blur {
   backdrop-filter: none !important;
-}
-
-/* Enhanced Liquid Glass Variants for Different Contexts */
-.glass-light .liquid-glass-primary,
-.glass-dark .liquid-glass-primary {
-  backdrop-filter: blur(var(--glass-blur-secondary)) saturate(180%);
-  background: linear-gradient(
-    135deg,
-    rgba(255, 224, 102, 0.4) 0%,
-    rgba(255, 210, 110, 0.25) 30%,
-    rgba(255, 255, 255, 0.15) 50%,
-    rgba(255, 210, 110, 0.25) 70%,
-    rgba(255, 224, 102, 0.4) 100%
-  );
-  border: 1px solid rgba(255, 224, 102, 0.4);
-  box-shadow:
-    0 8px 32px rgba(255, 224, 102, 0.15),
-    inset 0 1px 2px rgba(255, 255, 255, 0.3),
-    inset 0 -1px 1px rgba(255, 224, 102, 0.2);
-  position: relative;
-  isolation: isolate;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glass-light .liquid-glass-primary::before,
@@ -741,50 +722,6 @@ input {
   border-radius: inherit;
 }
 
-.glass-light .liquid-glass-primary:hover,
-.glass-dark .liquid-glass-primary:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 224, 102, 0.5) 0%,
-    rgba(255, 210, 110, 0.35) 30%,
-    rgba(255, 255, 255, 0.2) 50%,
-    rgba(255, 210, 110, 0.35) 70%,
-    rgba(255, 224, 102, 0.5) 100%
-  );
-  border-color: rgba(255, 224, 102, 0.6);
-  box-shadow:
-    0 12px 40px rgba(255, 224, 102, 0.25),
-    inset 0 1px 2px rgba(255, 255, 255, 0.4),
-    inset 0 -1px 1px rgba(255, 224, 102, 0.3);
-  transform: translateY(-1px);
-}
-
-.liquid-glass-success {
-  background: linear-gradient(
-    135deg,
-    rgba(161, 247, 131, 0.15) 0%,
-    rgba(161, 247, 131, 0.1) 50%,
-    rgba(161, 247, 131, 0.08) 100%
-  );
-  border-color: rgba(161, 247, 131, 0.4);
-  box-shadow:
-    var(--glass-shadow-light),
-    inset 0 1px 2px rgba(161, 247, 131, 0.1);
-}
-
-.liquid-glass-error {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 124, 124, 0.15) 0%,
-    rgba(255, 124, 124, 0.1) 50%,
-    rgba(255, 124, 124, 0.08) 100%
-  );
-  border-color: rgba(255, 124, 124, 0.4);
-  box-shadow:
-    var(--glass-shadow-light),
-    inset 0 1px 2px rgba(255, 124, 124, 0.1);
-}
-
 /* Tooltip fallback styles for non-glass themes */
 :not(.glass-light):not(.glass-dark) .tooltip-fallback {
   background: var(--color-neutral);
@@ -798,36 +735,25 @@ input {
 :not(.glass-light):not(.glass-dark) .glass-fallback-nav {
   position: fixed;
   background: var(--color-neutral);
-  border-right: 1px solid var(--color-tertiary);
   box-shadow: var(--shadow-medium);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  isolation: isolate;
 }
 
 :not(.glass-light):not(.glass-dark) .glass-fallback-dropdown {
   position: relative;
   background: var(--color-neutral);
-  border: 1px solid var(--color-tertiary);
   box-shadow: var(--shadow-medium);
-  isolation: isolate;
+  border-radius: 4px;
 }
 
 :not(.glass-light):not(.glass-dark) .glass-fallback-item {
   position: relative;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: inherit;
+  border-radius: 4px;
 }
 
 :not(.glass-light):not(.glass-dark) .glass-fallback-item:hover {
   background: var(--color-nav-item);
-}
-
-:not(.glass-light):not(.glass-dark) .glass-fallback-primary {
-  background: var(--color-primary);
-  color: var(--color-dark-grey);
-  border: 1px solid var(--color-primary-selected);
-  box-shadow: var(--shadow-small);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .title {
@@ -911,20 +837,6 @@ input {
   border: 3px solid transparent;
   transition: all 200ms ease-in-out;
 }
-
-/* @starting-style {
-  .nav-menu {
-    transform: translateY(100%);
-  }
-}
-
-@media (max-width: 1024px) {
-  @starting-style {
-    .nav-menu {
-      transform: translateY(-100%);
-    }
-  }
-} */
 
 .loading-ellipsis:after {
   overflow: hidden;
@@ -1505,13 +1417,8 @@ input {
 /* Modal-like Container Components */
 .glass-light .cart-container,
 .glass-dark .cart-container {
-  backdrop-filter: blur(var(--glass-blur-intense)) saturate(200%);
-  background: linear-gradient(
-    135deg,
-    var(--glass-tint-readable) 0%,
-    var(--glass-tint-medium) 50%,
-    var(--glass-tint-dark) 100%
-  );
+  backdrop-filter: blur(var(--glass-blur-intense)) saturate(180%);
+  background: linear-gradient(135deg, var(--glass-tint-readable) 0%, var(--glass-tint-medium) 100%);
   border: 1px solid var(--glass-border-medium);
   box-shadow: var(--glass-shadow-dark), var(--glass-inner-shadow-dark);
   border-radius: 4px;
@@ -1590,94 +1497,17 @@ input {
     var(--glass-tint-medium) 50%,
     var(--glass-tint-dark) 100%
   );
-  transform: translateY(-1px) scale(1.02);
-  box-shadow: var(--glass-shadow-dark), var(--glass-inner-shadow);
+  transform: scale(1.05);
   border-color: var(--glass-border-medium);
-}
-
-/* Yellow Glass Primary Buttons (Transaction Initiate & Confirm) */
-.glass-light .transaction-modal-initiate-button,
-.glass-dark .transaction-modal-initiate-button,
-.glass-light .transaction-modal-confirm-button,
-.glass-dark .transaction-modal-confirm-button {
-  backdrop-filter: blur(var(--glass-blur-secondary)) saturate(180%);
-  background: linear-gradient(
-    135deg,
-    rgba(255, 224, 102, 0.6) 0%,
-    rgba(255, 210, 110, 0.4) 30%,
-    rgba(255, 255, 255, 0.2) 50%,
-    rgba(255, 210, 110, 0.4) 70%,
-    rgba(255, 224, 102, 0.6) 100%
-  );
-  border: 1px solid rgba(255, 224, 102, 0.7);
-  box-shadow:
-    0 8px 32px rgba(255, 224, 102, 0.3),
-    inset 0 1px 2px rgba(255, 255, 255, 0.4);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  isolation: isolate;
-}
-
-.glass-light .transaction-modal-initiate-button:hover,
-.glass-dark .transaction-modal-initiate-button:hover,
-.glass-light .transaction-modal-confirm-button:hover,
-.glass-dark .transaction-modal-confirm-button:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 224, 102, 0.7) 0%,
-    rgba(255, 210, 110, 0.5) 30%,
-    rgba(255, 255, 255, 0.3) 50%,
-    rgba(255, 210, 110, 0.5) 70%,
-    rgba(255, 224, 102, 0.7) 100%
-  );
-  transform: translateY(-1px) scale(1.02);
-  box-shadow:
-    0 12px 40px rgba(255, 224, 102, 0.4),
-    inset 0 1px 2px rgba(255, 255, 255, 0.5);
-  border-color: rgba(255, 224, 102, 0.9);
-}
-
-/* Green Glass Success Button (Transaction Done) */
-.glass-light .transaction-modal-initiate-button-done,
-.glass-dark .transaction-modal-initiate-button-done {
-  backdrop-filter: blur(var(--glass-blur-secondary)) saturate(180%);
-  background: linear-gradient(
-    135deg,
-    rgba(73, 222, 128, 0.6) 0%,
-    rgba(73, 222, 128, 0.4) 30%,
-    rgba(255, 255, 255, 0.2) 50%,
-    rgba(73, 222, 128, 0.4) 70%,
-    rgba(73, 222, 128, 0.6) 100%
-  );
-  border: 1px solid rgba(73, 222, 128, 0.7);
-  box-shadow:
-    0 8px 32px rgba(73, 222, 128, 0.3),
-    inset 0 1px 2px rgba(255, 255, 255, 0.4);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  isolation: isolate;
-}
-
-.glass-light .transaction-modal-initiate-button-done:hover,
-.glass-dark .transaction-modal-initiate-button-done:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(73, 222, 128, 0.7) 0%,
-    rgba(73, 222, 128, 0.5) 30%,
-    rgba(255, 255, 255, 0.3) 50%,
-    rgba(73, 222, 128, 0.5) 70%,
-    rgba(73, 222, 128, 0.7) 100%
-  );
-  transform: translateY(-1px) scale(1.02);
-  box-shadow:
-    0 12px 40px rgba(73, 222, 128, 0.4),
-    inset 0 1px 2px rgba(255, 255, 255, 0.5);
-  border-color: rgba(73, 222, 128, 0.9);
 }
 
 /* Other Interactive Button Components */
 .glass-light .tag-button,
 .glass-dark .tag-button,
 .glass-light .more-options-refresh-button,
-.glass-dark .more-options-refresh-button {
+.glass-dark .more-options-refresh-button,
+.glass-light .header-refresh,
+.glass-dark .header-refresh {
   backdrop-filter: blur(var(--glass-blur-secondary)) saturate(180%);
   background: linear-gradient(
     135deg,
@@ -1694,15 +1524,16 @@ input {
 .glass-light .tag-button:hover,
 .glass-dark .tag-button:hover,
 .glass-light .more-options-refresh-button:hover,
-.glass-dark .more-options-refresh-button:hover {
+.glass-dark .more-options-refresh-button:hover,
+.glass-light .header-refresh:hover,
+.glass-dark .header-refresh:hover {
   background: linear-gradient(
     135deg,
     var(--glass-tint-readable) 0%,
     var(--glass-tint-medium) 50%,
     var(--glass-tint-dark) 100%
   );
-  transform: translateY(-1px) scale(1.02);
-  box-shadow: var(--glass-shadow-dark), var(--glass-inner-shadow);
+  transform: scale(1.05);
   border-color: var(--glass-border-medium);
 }
 
@@ -1710,9 +1541,7 @@ input {
 .glass-light .cart-modal-buttons-container,
 .glass-dark .cart-modal-buttons-container,
 .glass-light .transaction-modal-actions-container,
-.glass-dark .transaction-modal-actions-container,
-.glass-light .sort-container,
-.glass-dark .sort-container {
+.glass-dark .transaction-modal-actions-container {
   backdrop-filter: blur(var(--glass-blur-subtle)) saturate(140%);
   background: var(--glass-tint-readable);
   border: 1px solid var(--glass-border-medium);
@@ -1721,7 +1550,27 @@ input {
 
 /* Data Display Components */
 .glass-light .table-header,
-.glass-dark .table-header,
+.glass-dark .table-header {
+  position: relative;
+  isolation: isolate;
+  background: var(--glass-tint-readable);
+  border: 1px solid var(--glass-border-medium);
+  box-shadow: var(--glass-shadow-light), var(--glass-inner-shadow);
+}
+
+.glass-light .table-header::before,
+.glass-dark .table-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backdrop-filter: blur(var(--glass-blur-subtle)) saturate(140%);
+  z-index: -1;
+  border-radius: inherit;
+}
+
 .glass-light .transaction-details,
 .glass-dark .transaction-details {
   backdrop-filter: blur(var(--glass-blur-subtle)) saturate(140%);
@@ -1752,19 +1601,24 @@ input {
 .glass-light .transaction-item,
 .glass-dark .transaction-item,
 .glass-light .more-options-list-number,
-.glass-dark .more-options-list-number {
+.glass-dark .more-options-list-number,
+.glass-light .header-left-list-number,
+.glass-dark .header-left-list-number {
   backdrop-filter: blur(var(--glass-blur-subtle)) saturate(140%);
   background: var(--glass-tint-light);
   border: 1px solid var(--glass-border-light);
   box-shadow: var(--glass-shadow-light), var(--glass-inner-shadow);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: inherit;
 }
 
-.glass-light .transaction-item:hover,
-.glass-dark .transaction-item:hover,
+.more-options-list-number {
+  padding: 2px 6px;
+}
+
 .glass-light .more-options-list-number:hover,
-.glass-dark .more-options-list-number:hover {
+.glass-dark .more-options-list-number:hover,
+.glass-light .header-left-list-number:hover,
+.glass-dark .header-left-list-number:hover {
   background: linear-gradient(
     135deg,
     var(--glass-tint-medium) 0%,
@@ -1772,8 +1626,6 @@ input {
     var(--glass-tint-dark) 100%
   );
   backdrop-filter: blur(var(--glass-blur-secondary)) saturate(160%);
-  box-shadow: var(--glass-shadow-dark), var(--glass-inner-shadow);
-  transform: translateY(-1px);
   border-color: var(--glass-border-medium);
 }
 
@@ -1799,10 +1651,6 @@ input {
 /* Sort Option Components */
 .glass-light .sort-option,
 .glass-dark .sort-option {
-  backdrop-filter: blur(var(--glass-blur-subtle)) saturate(140%);
-  background: var(--glass-tint-light);
-  border: 1px solid var(--glass-border-light);
-  box-shadow: var(--glass-shadow-light), var(--glass-inner-shadow);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -1814,7 +1662,7 @@ input {
     var(--glass-tint-readable) 50%,
     var(--glass-tint-dark) 100%
   );
-  backdrop-filter: blur(var(--glass-blur-secondary)) saturate(160%);
+  backdrop-filter: blur(var(--glass-blur-primary)) saturate(160%);
   box-shadow: var(--glass-shadow-dark), var(--glass-inner-shadow);
   border-color: var(--glass-border-medium);
 }
@@ -1842,17 +1690,33 @@ input {
 
 .glass-light .manual-add-input:focus,
 .glass-dark .manual-add-input:focus {
-  background: linear-gradient(
-    135deg,
-    var(--glass-tint-readable) 0%,
-    var(--glass-tint-medium) 100%
-  );
+  background: linear-gradient(135deg, var(--glass-tint-readable) 0%, var(--glass-tint-medium) 100%);
   border-color: var(--glass-border-light);
   box-shadow: var(--glass-shadow-dark), var(--glass-inner-shadow);
 }
 
-.glass-light .manual-add-button,
-.glass-dark .manual-add-button {
+/* Manual Add Input Placeholder Colors */
+.glass-light .manual-add-input::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.glass-dark .manual-add-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Cart Modal Info Container - Dark Tinted */
+.glass-light .cart-modal-buttons-container-top-info,
+.glass-dark .cart-modal-buttons-container-top-info {
+  backdrop-filter: blur(var(--glass-blur-secondary)) saturate(160%);
+  background: linear-gradient(135deg, var(--glass-tint-dark) 0%, rgba(0, 0, 0, 0.25) 50%, var(--glass-tint-dark) 100%);
+  border: 1px solid var(--glass-border-medium);
+  box-shadow: var(--glass-shadow-dark), var(--glass-inner-shadow-dark);
+}
+
+/* Tab Indicator - Aggressive targeting for EIK tab indicators */
+.glass-light .tab-indicator,
+.glass-dark .tab-indicator {
+  opacity: 1;
   backdrop-filter: blur(var(--glass-blur-secondary)) saturate(180%);
   background: linear-gradient(
     135deg,
@@ -1866,29 +1730,6 @@ input {
   isolation: isolate;
 }
 
-.glass-light .manual-add-button:hover,
-.glass-dark .manual-add-button:hover {
-  background: linear-gradient(
-    135deg,
-    var(--glass-tint-readable) 0%,
-    var(--glass-tint-medium) 50%,
-    var(--glass-tint-dark) 100%
-  );
-  transform: translateY(-1px) scale(1.02);
-  box-shadow: var(--glass-shadow-dark), var(--glass-inner-shadow);
-  border-color: var(--glass-border-medium);
-}
-
-/* Cart Modal Info Container - Dark Tinted */
-.glass-light .cart-modal-buttons-container-top-info,
-.glass-dark .cart-modal-buttons-container-top-info {
-  backdrop-filter: blur(var(--glass-blur-secondary)) saturate(160%);
-  background: linear-gradient(
-    135deg,
-    var(--glass-tint-dark) 0%,
-    rgba(0, 0, 0, 0.25) 50%,
-    var(--glass-tint-dark) 100%
-  );
-  border: 1px solid var(--glass-border-medium);
-  box-shadow: var(--glass-shadow-dark), var(--glass-inner-shadow-dark);
+.check-icon {
+  top: 15px;
 }

@@ -43,7 +43,7 @@ const Search: React.FC<SearchProps> = ({ currentSearch, handleSearchEvent }) => 
             value={currentSearch}
             onChange={handleSearchEvent}
             className={cn(
-              getGlassClass('liquid-glass-button', 'bg-nav-item'),
+              getGlassClass('liquid-glass-card', 'bg-nav-item'),
               'block h-10 w-full border-0 pr-10 pl-4 font-medium sm:text-sm md:h-12'
             )}
           />

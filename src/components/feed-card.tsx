@@ -104,7 +104,8 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, activityAddr
             <div className='bg-grey relative flex w-full items-center rounded-sm sm:w-80'>
               <div
                 className={cn(
-                  'bg-text/10 absolute h-full w-1/2 rounded-sm transition-all duration-200',
+                  getGlassClass('liquid-glass-card', 'bg-text/10'),
+                  'absolute h-full w-1/2 rounded-sm transition-all duration-200',
                   activeTab === 'following' || !lists?.lists?.length ? 'left-0' : 'left-1/2'
                 )}
               />

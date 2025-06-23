@@ -14,6 +14,7 @@ import VolumeSwitcher from '../../volume-switcher'
 import LanguageSelector from '../../language-selector'
 import ThemeSwitcher from '#/components/theme-switcher'
 import { useGlassTheme } from '#/hooks/use-glass-theme'
+import { useChromeDisableBlur } from '#/hooks/use-chrome-disable-blur'
 
 interface MenuProps {
   open: boolean
@@ -29,6 +30,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
   const { t } = useTranslation()
   const { resolvedTheme } = useTheme()
   const { getDropdownClass, getItemClass } = useGlassTheme()
+  const chromeDisableBlur = useChromeDisableBlur()
   const isExtraMenuOpen = languageMenOpenu || themeMenuOpen || volumeMenuOpen
 
   return (
@@ -42,7 +44,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
     >
       <div
         className={cn(
-          isExtraMenuOpen && 'disable-blur -translate-x-[99.5%] sm:translate-x-0',
+          isExtraMenuOpen && `${chromeDisableBlur} -translate-x-[99.5%] sm:translate-x-0`,
           `${getDropdownClass()} bg-neutral flex h-fit w-full flex-col overflow-x-visible transition-all sm:h-auto sm:max-h-[80vh] sm:w-60`
         )}
       >

@@ -13,6 +13,7 @@ import { useAutoConnect } from '#/hooks/use-auto-connect'
 import WalletIcon from 'public/assets/icons/ui/wallet.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import { useGlassTheme } from '#/hooks/use-glass-theme'
+import { useChromeDisableBlur } from '#/hooks/use-chrome-disable-blur'
 
 const WalletMenu = () => {
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false)
@@ -33,6 +34,7 @@ const WalletMenu = () => {
   const listChain = chains.find((chain) => chain.id === roles?.listChainId)
   const deviceWidth = isClient ? window.innerWidth : 1080
   const { getDropdownClass, getItemClass, getPrimaryClass, getTooltipClass } = useGlassTheme()
+  const chromeDisableBlur = useChromeDisableBlur()
 
   useAutoConnect()
 
@@ -77,7 +79,7 @@ const WalletMenu = () => {
           <div
             className={cn(
               `${getDropdownClass()} flex max-h-[75vh] w-full flex-col overflow-x-visible transition-all sm:h-auto`,
-              isSubMenuOpen ? 'disable-blur -translate-x-full sm:translate-x-0' : 'translate-x-0'
+              isSubMenuOpen ? `${chromeDisableBlur} -translate-x-full sm:translate-x-0` : 'translate-x-0'
             )}
           >
             <ListSelector setWalletMenuOpen={setWalletMenuOpen} setSubMenuOpen={setIsSubMenuOpen} />

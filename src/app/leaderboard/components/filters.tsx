@@ -24,11 +24,7 @@ const Filters: React.FC<FiltersProps> = ({ filter, onSelectFilter }) => {
     <div ref={clickAwayRef} className='relative z-40 w-fit'>
       <div
         onClick={() => setIsDropdownOpen((prev) => !prev)}
-        className={cn(
-          getGlassClass('liquid-glass-button px-2', 'hover:border-text/80 bg-neutral'),
-          'z-30 flex h-12 w-full cursor-pointer flex-wrap items-center justify-between gap-2 rounded-sm transition-all hover:scale-110',
-          isDropdownOpen && 'disable-blur'
-        )}
+        className='hover:border-text/80 z-30 flex h-12 w-full cursor-pointer flex-wrap items-center justify-between gap-2 rounded-sm transition-all hover:scale-110'
       >
         <div
           key={filter}
@@ -47,7 +43,7 @@ const Filters: React.FC<FiltersProps> = ({ filter, onSelectFilter }) => {
       <div
         className={cn(
           getGlassClass('liquid-glass-dropdown', 'bg-neutral shadow-medium'),
-          'absolute top-full left-0 mt-1 z-50 h-fit w-44 rounded-sm transition-all',
+          'absolute top-full -left-4 z-50 mt-1 h-fit w-44 rounded-sm transition-all',
           isDropdownOpen ? 'flex' : 'pointer-events-none hidden'
         )}
       >

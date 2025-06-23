@@ -66,10 +66,12 @@ const TableHeader: React.FC<TableHeaderProps> = ({
   const tagsEmpty = !tagsLoading && (!displayedTags || displayedTags.length === 0)
 
   return (
-    <div className={cn(
-      getGlassClass('liquid-glass-card', 'bg-neutral shadow-medium'),
-      'z-40 flex w-full flex-col gap-4 rounded-sm p-4 py-2 pl-2'
-    )}>
+    <div
+      className={cn(
+        getGlassClass('glass-pseudo-modal', 'bg-neutral shadow-medium'),
+        'z-40 flex w-full flex-col gap-4 rounded-sm p-4 py-2 pl-2'
+      )}
+    >
       <div className='flex w-full justify-between'>
         <div className='flex w-full flex-wrap items-center justify-between gap-3 sm:flex-nowrap sm:justify-start'>
           <div className='flex w-full items-center gap-3 sm:w-fit'>
@@ -164,10 +166,12 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                   <ArrowDown className={`h-auto w-4 transition-transform ${showSort ? 'rotate-180' : ''}`} />
                 </div>
                 {showSort && (
-                  <div className={cn(
-                    getGlassClass('liquid-glass-dropdown', 'bg-neutral shadow-small'),
-                    'absolute top-full right-0 mt-1 z-50 flex flex-col items-center gap-1 rounded-sm p-1'
-                  )}>
+                  <div
+                    className={cn(
+                      getGlassClass('liquid-glass-dropdown', 'bg-neutral shadow-small'),
+                      'absolute top-full right-0 z-50 mt-1 flex flex-col items-center gap-1 rounded-sm p-1'
+                    )}
+                  >
                     {SORT_OPTIONS.map((option) => (
                       <div
                         className='hover:bg-nav-item relative w-full rounded-sm p-3 pl-8 font-bold text-nowrap capitalize transition-colors'
@@ -196,14 +200,14 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                   className={cn(
                     'flex max-w-[33%] items-center gap-1.5 rounded-sm px-4 py-2 text-sm font-bold transition-transform hover:scale-110',
                     selectedTags?.includes(tag.tag)
-                      ? 'bg-primary text-dark-grey shadow-inner shadow-black/10'
-                      : 'bg-zinc-300/80 text-zinc-500'
+                      ? 'text-text bg-neutral shadow-inner shadow-black/10'
+                      : 'bg-neutral/50 text-text/70'
                   )}
                   name={tag.tag.toLowerCase()}
                   onClick={() => toggleSelectedTags(title, tag.tag)}
                 >
                   <p className='max-w-[95%] truncate'>{BLOCKED_MUTED_TAGS.includes(tag.tag) ? t(tag.tag) : tag.tag}</p>
-                  <p className='text-dark-grey/50'>{formatNumber(tag.count)}</p>
+                  <p className='text-text/50'>{formatNumber(tag.count)}</p>
                 </button>
               ))}
         </div>

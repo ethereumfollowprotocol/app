@@ -23,7 +23,10 @@ const Modal = ({ onCancel, children, className, disableBackgroundClose, closeBut
       onClick={() => !disableBackgroundClose && onCancel()}
     >
       <div
-        className={`${getGlassClass('liquid-glass-modal', 'bg-neutral')} relative w-full rounded-sm p-3 sm:w-fit sm:p-4`}
+        className={cn(
+          getGlassClass('glass-pseudo-modal', 'bg-neutral'),
+          'relative w-full rounded-sm p-3 sm:w-fit sm:p-4'
+        )}
       >
         <button
           onClick={onCancel}

@@ -1,16 +1,19 @@
 import React from 'react'
 import { cn } from '#/lib/utilities'
 import LoadingCell from '#/components/loaders/loading-cell'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 
 interface TopEightLoadingProfileProps {
   isEditing?: boolean
 }
 
 const TopEightLoadingProfile: React.FC<TopEightLoadingProfileProps> = ({ isEditing }) => {
+  const { getGlassClass } = useGlassTheme()
   return (
     <div
       className={cn(
-        'bg-neutral shadow-small flex w-28 flex-col items-center gap-4 px-0 py-4 lg:w-[128px] xl:w-36',
+        getGlassClass('liquid-glass-card', 'bg-neutral shadow-small'),
+        'flex w-28 flex-col items-center gap-4 px-0 py-4 lg:w-[128px] xl:w-36',
         isEditing ? 'top-eight-profile-edit' : 'top-eight-profile'
       )}
     >

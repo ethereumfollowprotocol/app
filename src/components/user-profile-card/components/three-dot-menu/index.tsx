@@ -11,6 +11,7 @@ import { useThreeDotMenu } from '../../hooks/use-three-dot-menu'
 import RestrictButton from './components/restrict-button'
 import OpenModalButton from './components/open-modal-button'
 import { FOLLOW_BUTTON_COOL_EMOJI } from '#/lib/constants/follow-button'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 import QrCode from 'public/assets/icons/ui/qr-code.svg'
 import Settings from 'public/assets/icons/ui/settings.svg'
 
@@ -54,6 +55,7 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
 
   const { t } = useTranslation()
   const { resolvedTheme } = useTheme()
+  const { getGlassClass } = useGlassTheme()
 
   const blockCoolEmoji =
     FOLLOW_BUTTON_COOL_EMOJI[followState === 'blocks' || isPendingBlock ? 'Unblock' : 'Block'][resolvedTheme || 'light']
@@ -66,7 +68,10 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
   return (
     <div className={showMoreOptions ? 'block' : 'hidden'} ref={threeDotMenuRef}>
       <div
-        className='bg-nav-item shadow-small flex h-7 w-7 cursor-pointer items-center justify-center gap-[3px] rounded-sm transition-all hover:scale-110'
+        className={cn(
+          getGlassClass('liquid-glass-button', 'bg-nav-item shadow-small'),
+          'flex h-7 w-7 cursor-pointer items-center justify-center gap-[3px] rounded-sm transition-all hover:scale-110'
+        )}
         onClick={() => setThreeDotMenuOpen(!threeDotMenuOpen)}
       >
         <div className='bg-text h-1 w-1 rounded-full'></div>
@@ -76,7 +81,8 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
       <div
         className={cn(
           threeDotMenuOpen && showMoreOptions ? 'flex' : 'hidden',
-          'bg-neutral shadow-medium absolute top-9 right-0 z-50 w-fit flex-col items-center gap-2 rounded-sm'
+          getGlassClass('glass-pseudo-dropdown', 'bg-neutral shadow-medium'),
+          'absolute top-9 right-0 z-50 w-fit flex-col items-center gap-2 rounded-sm'
         )}
       >
         {!isConnectedUserCard && (
@@ -98,7 +104,10 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
         {!isConnectedUserCard && (
           <button
             onClick={toggleTopEight}
-            className='hover:bg-text/5 relative flex w-full cursor-pointer items-center justify-center gap-1 rounded-sm p-4 text-xs font-bold text-nowrap transition-colors'
+            className={cn(
+              getGlassClass('glass-hover-item', 'hover:bg-text/5'),
+              'relative flex w-full cursor-pointer items-center justify-center gap-1 rounded-sm p-4 text-xs font-bold text-nowrap transition-colors'
+            )}
           >
             {t(
               (isInTopEight || isAddingToTopEight) && !isRemovingFromTopEight

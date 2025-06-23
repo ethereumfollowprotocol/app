@@ -40,11 +40,11 @@ const Mobile: React.FC = () => {
       if (prevScroll - scroll > 0) {
         navRef.current?.style.setProperty('transition', 'all 0.21s linear')
         navRef.current?.style.setProperty('top', '0px')
-        if (scroll < 16) navRef.current?.classList.remove('bg-neutral')
+        if (scroll < 16) navRef.current?.classList.remove(getGlassClass('glass-pseudo-nav', 'bg-neutral'))
       } else {
         if (scroll > 84) {
+          navRef.current?.classList.add(getGlassClass('glass-pseudo-nav', 'bg-neutral'))
           navRef.current?.style.setProperty('top', '-84px')
-          navRef.current?.classList.add('bg-neutral')
         } else {
           navRef.current?.style.setProperty('transition', 'none')
           navRef.current?.style.setProperty('top', `-${scroll}px`)

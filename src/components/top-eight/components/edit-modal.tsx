@@ -9,6 +9,7 @@ import TopEightLoadingProfile from './top-eight-loading-profile'
 import type { TopEightProfileType } from '../hooks/use-top-eight'
 import MagnifyingGlass from 'public/assets/icons/ui/magnifying-glass.svg'
 import UserProfilePageTable, { type UserProfilePageTableProps } from '#/components/profile-page-table'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 
 interface EditModalProps {
   profiles: TopEightProfileType[]
@@ -18,6 +19,7 @@ interface EditModalProps {
 
 const EditModal: React.FC<EditModalProps> = ({ profiles, onClose, followingListProps }) => {
   const { t } = useTranslation()
+  const { getGlassClass } = useGlassTheme()
   const {
     editedProfiles,
     addProfileSearch,
@@ -61,9 +63,17 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose, followingListP
                   }}
                   placeholder={t('search placeholder')}
                   onChange={(e) => setAddProfileSearch(e.target.value.trim().toLowerCase())}
-                  className='bg-nav-item block h-12 w-full truncate rounded-sm pr-12 pl-4 font-medium sm:text-sm'
+                  className={cn(
+                    getGlassClass('liquid-glass-card', 'bg-nav-item'),
+                    'block h-12 w-full truncate rounded-sm pr-12 pl-4 font-medium sm:text-sm'
+                  )}
                 />
-                <div className='bg-grey absolute top-2 right-2 flex h-8 w-8 items-center justify-center rounded-sm'>
+                <div
+                  className={cn(
+                    getGlassClass('liquid-glass-subtle', 'bg-grey'),
+                    'absolute top-2 right-2 flex h-8 w-8 items-center justify-center rounded-sm'
+                  )}
+                >
                   <MagnifyingGlass />
                 </div>
               </div>
@@ -87,7 +97,12 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose, followingListP
               <TopEightLoadingProfile key={i} isEditing={true} />
             ))}
             {editedProfiles.length === 0 && (
-              <p className='text-text/90 bg-nav-item flex h-[280px] w-full items-center justify-center rounded-sm font-semibold italic'>
+              <p
+                className={cn(
+                  getGlassClass('liquid-glass-card', 'bg-nav-item'),
+                  'text-text/90 flex h-[280px] w-full items-center justify-center rounded-sm font-semibold italic'
+                )}
+              >
                 {t('no top eight')}
               </p>
             )}
