@@ -15,7 +15,6 @@ import type { ProfileDetailsResponse } from '#/types/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import PrimaryButton from '#/components/buttons/primary-button'
 import { useGlassTheme } from '#/hooks/use-glass-theme'
-import { useChromeDisableBlur } from '#/hooks/use-chrome-disable-blur'
 import List from 'public/assets/icons/ui/list.svg'
 import Owner from 'public/assets/icons/ui/key.svg'
 import User from 'public/assets/icons/ui/person.svg'
@@ -45,7 +44,6 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
   const { address: connectedAddress } = useAccount()
   const { t } = useTranslation()
   const { getGlassClass } = useGlassTheme()
-  const chromeDisableBlur = useChromeDisableBlur()
 
   const {
     user,
@@ -158,7 +156,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
               <button
                 className={cn(
                   getGlassClass('liquid-glass-card', 'bg-nav-item hover:bg-text/5'),
-                  chainDropdownOpen && chromeDisableBlur,
+                  chainDropdownOpen && 'disable-blur',
                   'flex h-[42px] w-full items-center justify-between gap-0.5 rounded-sm p-1 px-2 disabled:cursor-not-allowed disabled:opacity-75 sm:h-12 sm:px-3'
                 )}
                 onClick={() => setChainDropdownOpen(!chainDropdownOpen)}
