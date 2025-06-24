@@ -42,7 +42,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
     >
       <div
         className={cn(
-          isExtraMenuOpen && `disable-blur -translate-x-[99.5%] sm:translate-x-0`,
+          isExtraMenuOpen && `disable-blur -translate-x-full sm:translate-x-0`,
           `${getDropdownClass()} bg-neutral flex h-fit w-full flex-col overflow-x-visible transition-all sm:h-auto sm:max-h-[80vh] sm:w-60`
         )}
       >

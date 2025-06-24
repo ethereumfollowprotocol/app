@@ -84,7 +84,7 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
         <ArrowRight className='text-xl' />
       </div>
       <div
-        className={`absolute -top-[56px] left-full z-50 w-full transition-all transition-discrete sm:top-0 sm:w-fit sm:pl-2 sm:transition-normal ${
+        className={`absolute -top-[57px] left-full z-50 w-full transition-all transition-discrete sm:top-0 sm:w-fit sm:pl-2 sm:transition-normal ${
           languageMenOpenu ? 'block' : 'hidden'
         } group-hover:block`}
       >
