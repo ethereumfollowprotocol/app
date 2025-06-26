@@ -57,6 +57,7 @@ import V1CryptoPunks from 'public/assets/partners/v1cryptopunks.jpeg'
 import PrepunkVerify from 'public/assets/partners/prepunkverify.jpeg'
 import MetaPoll from 'public/assets/partners/metapoll.jpeg'
 import CommonGround from 'public/assets/partners/commonground.jpeg'
+import Enscribe from 'public/assets/partners/enscribe.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -168,6 +169,11 @@ export const INTEGRATIONS = [
     name: 'Web3 Bio',
     url: 'https://web3.bio/',
     logo: WebThreeBio,
+  },
+  {
+    name: 'Enscribe',
+    url: 'https://www.enscribe.xyz/',
+    logo: Enscribe,
   },
   {
     name: 'Records.xyz',
