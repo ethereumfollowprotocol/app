@@ -3,9 +3,11 @@
 import React, { useEffect, useState } from 'react'
 import ArrowUp from 'public/assets/icons/ui/arrow-up.svg'
 import { cn } from '#/lib/utilities'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 
 const BackToTop = () => {
   const [isVisible, setIsVisible] = useState(false)
+  const { getGlassClass } = useGlassTheme()
 
   useEffect(() => {
     const abortController = new AbortController()
@@ -69,7 +71,10 @@ const BackToTop = () => {
     >
       <button
         onClick={handleBackToTop}
-        className='liquid-glass-button flex w-fit items-center gap-2 rounded-md p-3 text-sm font-semibold sm:px-5 sm:py-4'
+        className={cn(
+          'flex w-fit items-center gap-2 rounded-md p-3 text-sm font-semibold sm:px-5 sm:py-4',
+          getGlassClass('liquid-glass-button', 'bg-neutral')
+        )}
       >
         <p className='hidden sm:block'>Back to top</p>
         <ArrowUp className='h-auto w-5' />
