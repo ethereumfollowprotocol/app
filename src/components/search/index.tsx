@@ -8,9 +8,11 @@ import ResultItem from './result-item.tsx'
 import useSearch from './hooks/useSearch.ts'
 import GraySpinner from '../loaders/gray-spinner.tsx'
 import MagnifyingGlass from 'public/assets/icons/ui/magnifying-glass.svg'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 
 export function Search({ disabled }: { disabled?: boolean }) {
   const { t } = useTranslation()
+  const { getTooltipClass } = useGlassTheme()
 
   const {
     search,
@@ -43,7 +45,7 @@ export function Search({ disabled }: { disabled?: boolean }) {
             )}
           />
           <div className='absolute -top-1 left-[66px] hidden w-fit opacity-0 transition-all transition-discrete group-hover/search-button:hidden group-hover/search-button:opacity-100 sm:group-hover/search-button:block starting:opacity-0'>
-            <p className='bg-neutral shadow-small text-text rounded-sm px-4 py-2 text-lg font-semibold text-nowrap capitalize'>
+            <p className={`${getTooltipClass()} text-text px-4 py-2 text-lg font-semibold text-nowrap capitalize`}>
               {t('search')}
             </p>
           </div>
@@ -58,7 +60,7 @@ export function Search({ disabled }: { disabled?: boolean }) {
           <input
             name='search'
             ref={searchBarRef as RefObject<HTMLInputElement>}
-            className='bg-neutral block h-12 w-full rounded-sm px-4 font-medium shadow-md sm:h-[54px] sm:text-sm'
+            className='liquid-glass-readable placeholder:text-opacity-70 focus:liquid-glass-intense block h-12 w-full rounded-sm px-4 font-medium transition-all duration-300 sm:h-[54px] sm:text-sm'
             spellCheck={false}
             placeholder={t('search placeholder')}
             disabled={disabled}
@@ -77,7 +79,7 @@ export function Search({ disabled }: { disabled?: boolean }) {
             }}
             autoComplete='off'
           />
-          <div className={`bg-neutral mt-2 w-full rounded-sm p-3 shadow-md ${dropdownMenuOpen ? 'block' : 'hidden'}`}>
+          <div className={`liquid-glass-dropdown mt-2 w-full rounded-sm p-3 ${dropdownMenuOpen ? 'block' : 'hidden'}`}>
             <div
               className='mx-auto block w-full min-w-full py-0 text-lg'
               ref={clickAwayRef}

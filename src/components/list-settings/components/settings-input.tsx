@@ -7,6 +7,7 @@ import { cn } from '#/lib/utilities'
 import { Avatar } from '#/components/avatar'
 import { resolveEnsProfile } from '#/utils/ens'
 import LoadingCell, { LIGHT_LOADING_GRADIENT } from '#/components/loaders/loading-cell'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 import type React from 'react'
 
 interface SettingsInputProps {
@@ -36,6 +37,7 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
 }) => {
   const { t } = useTranslation()
   const { address: connectedAddress } = useAccount()
+  const { getGlassClass } = useGlassTheme()
 
   const { data: resolvedProfile, isLoading: isNameLoading } = useQuery({
     queryKey: ['ens metadata', isAddress(value) ? value : resolvedAddress],
@@ -68,7 +70,10 @@ const SettingsInput: React.FC<SettingsInputProps> = ({
             setValue(input)
           }}
           disabled={!isEditingSettings || connectedAddress?.toLowerCase() !== disableValue?.toLowerCase()}
-          className='bg-nav-item w-full truncate rounded-sm p-3 font-medium disabled:cursor-not-allowed disabled:opacity-50'
+          className={cn(
+            getGlassClass('liquid-glass-card', 'bg-nav-item'),
+            'w-full truncate rounded-sm p-3 font-medium disabled:cursor-not-allowed disabled:opacity-50'
+          )}
         />
       )}
       {(isSettingsLoading || value.includes('.') || resolvedProfile?.name) && (

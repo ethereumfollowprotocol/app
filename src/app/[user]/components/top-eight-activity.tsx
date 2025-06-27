@@ -14,6 +14,7 @@ import InterfaceLight from 'public/assets/icons/socials/interface.png'
 import InterfaceDark from 'public/assets/icons/socials/interface-dark.png'
 import type { UserProfilePageTableProps } from '#/components/profile-page-table'
 import type { TopEightProfileType } from '#/components/top-eight/hooks/use-top-eight'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 
 interface TopEightActivityProps {
   user: string
@@ -27,6 +28,7 @@ const TopEightActivity: React.FC<TopEightActivityProps> = ({ user, isConnectedUs
 
   const { t } = useTranslation()
   const isClient = useIsClient()
+  const { getGlassClass } = useGlassTheme()
   const headerRight = {
     'top 8': (
       <button
@@ -94,7 +96,12 @@ const TopEightActivity: React.FC<TopEightActivityProps> = ({ user, isConnectedUs
         {accountAddress ? (
           <FeedCard activityAddress={accountAddress} cardSize='lg:w-[360px] xl:w-[602px]' />
         ) : (
-          <p className='bg-neutral rounded-sm py-8 text-center text-xl font-semibold italic lg:w-[360px] xl:w-[602px]'>
+          <p
+            className={cn(
+              getGlassClass('liquid-glass-card', 'bg-neutral'),
+              'rounded-sm py-8 text-center text-xl font-semibold italic lg:w-[360px] xl:w-[602px]'
+            )}
+          >
             {t('no activity')}
           </p>
         )}
@@ -104,11 +111,22 @@ const TopEightActivity: React.FC<TopEightActivityProps> = ({ user, isConnectedUs
 
   return (
     <div className='flex flex-col gap-4'>
-      <div className='bg-neutral shadow-medium -top-0.5 z-20 flex w-full items-center justify-between gap-4 rounded-sm p-2 lg:sticky'>
-        <div className='bg-grey relative flex w-full items-center rounded-sm sm:w-64 lg:w-full xl:w-64'>
+      <div
+        className={cn(
+          getGlassClass('liquid-glass-card', 'bg-neutral shadow-medium'),
+          '-top-0.5 z-20 flex w-full items-center justify-between gap-4 rounded-sm p-2 lg:sticky'
+        )}
+      >
+        <div
+          className={cn(
+            getGlassClass('liquid-glass-subtle', 'bg-grey'),
+            'relative flex w-full items-center rounded-sm sm:w-64 lg:w-full xl:w-64'
+          )}
+        >
           <div
             className={cn(
-              'bg-text/10 absolute h-full w-1/2 rounded-sm transition-all duration-200',
+              'absolute h-full w-1/2 rounded-sm transition-all duration-200',
+              getGlassClass('liquid-glass-button', 'bg-text/10'),
               activeTab === 'top 8' ? 'left-0' : 'left-1/2'
             )}
           />

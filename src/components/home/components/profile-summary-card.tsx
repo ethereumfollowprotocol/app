@@ -8,6 +8,7 @@ import { truncateAddress, isLinkValid } from 'ethereum-identity-kit'
 import { Avatar } from '#/components/avatar'
 import { formatNumber } from '#/utils/format/format-number'
 import LoadingCell from '#/components/loaders/loading-cell'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import ArrowRight from 'public/assets/icons/ui/arrow-right.svg'
 import DefaultHeader from 'public/assets/art/default-header.svg?url'
@@ -15,6 +16,7 @@ import DefaultHeader from 'public/assets/art/default-header.svg?url'
 const ProfileSummaryCard = () => {
   const { t } = useTranslation()
   const { profile, profileIsLoading, stats, statsIsLoading, lists, selectedList } = useEFPProfile()
+  const { getGlassClass } = useGlassTheme()
 
   if (!profile && !profileIsLoading) return null
 
@@ -26,7 +28,7 @@ const ProfileSummaryCard = () => {
   return (
     <Link
       href={`/${profileUrl}`}
-      className='bg-neutral shadow-medium relative flex w-full flex-col items-center gap-4 rounded-sm p-3 sm:p-4'
+      className={`${getGlassClass('liquid-glass-card', 'bg-neutral shadow-medium')} relative flex w-full flex-col items-center gap-4 rounded-sm p-3 sm:p-4`}
     >
       {profileIsLoading ? (
         <>

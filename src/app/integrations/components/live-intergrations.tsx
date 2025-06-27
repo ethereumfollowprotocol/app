@@ -9,12 +9,15 @@ import ExternalLink from 'public/assets/icons/ui/external-link.svg'
 import { useState, useEffect } from 'react'
 import { useIsClient } from '@uidotdev/usehooks'
 import ArrowDown from 'public/assets/icons/ui/arrow-down.svg'
+import { cn } from '#/lib/utilities'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 
 const LiveIntegrations = () => {
   const [displayIntegrations, setDisplayIntegrations] = useState(INTEGRATIONS.length)
 
   const isClient = useIsClient()
   const { t } = useTranslation()
+  const { getGlassClass } = useGlassTheme()
 
   useEffect(() => {
     if (isClient) {
@@ -25,7 +28,12 @@ const LiveIntegrations = () => {
 
   return (
     <div className='flex w-full flex-col items-center lg:w-[480px] lg:min-w-[480px] xl:w-[600px] xl:items-end'>
-      <div className='bg-neutral shadow-medium z-20 flex h-14 w-full items-center justify-start gap-2 px-3'>
+      <div
+        className={cn(
+          getGlassClass('liquid-glass-card', 'bg-neutral shadow-medium'),
+          'z-20 flex h-14 w-full items-center justify-start gap-2 px-3'
+        )}
+      >
         <Apps className='h-7 w-7' />
         <h1 className='text-xl font-bold'>{t('integrations')}</h1>
         <p className='text-text-neutral pl-1'>{INTEGRATIONS.length}</p>
@@ -34,7 +42,10 @@ const LiveIntegrations = () => {
         {INTEGRATIONS.slice(0, displayIntegrations).map((integration) => (
           <Link
             key={integration.name}
-            className='bg-neutral group/integration relative flex aspect-square w-1/3 items-end overflow-hidden transition-transform md:w-1/4 lg:w-1/3'
+            className={cn(
+              getGlassClass('liquid-glass-card', 'bg-neutral'),
+              'group/integration relative flex aspect-square w-1/3 items-end overflow-hidden transition-transform md:w-1/4 lg:w-1/3'
+            )}
             target='_blank'
             rel='noopener noreferrer'
             href={integration.url}
@@ -55,7 +66,10 @@ const LiveIntegrations = () => {
       {displayIntegrations < INTEGRATIONS.length && (
         <div
           onClick={() => setDisplayIntegrations(displayIntegrations * 2)}
-          className='bg-neutral shadow-medium flex w-full cursor-pointer flex-row items-center justify-center gap-2 p-3'
+          className={cn(
+            getGlassClass('liquid-glass-button', 'bg-neutral shadow-medium'),
+            'flex w-full cursor-pointer flex-row items-center justify-center gap-2 p-3'
+          )}
         >
           <p className='text-sm font-semibold'>Show more</p>
           <ArrowDown className='h-4 w-4' />

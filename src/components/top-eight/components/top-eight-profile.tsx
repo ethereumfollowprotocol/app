@@ -18,6 +18,7 @@ import useFollowerState from '#/hooks/use-follower-state'
 import LoadingCell from '#/components/loaders/loading-cell'
 import type { TopEightProfileType } from '../hooks/use-top-eight'
 import { listOpAddListRecord, listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 
 interface TopEightProfileProps {
   profile: TopEightProfileType
@@ -25,6 +26,7 @@ interface TopEightProfileProps {
 }
 
 const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing }) => {
+  const { getGlassClass } = useGlassTheme()
   const { data: fetchedAccount, isLoading } = useQuery({
     queryKey: ['account', profile.address],
     queryFn: async () => await fetchAccount(profile.address),
@@ -60,10 +62,11 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
   return (
     <div
       className={cn(
-        'group bg-neutral shadow-small relative flex flex-col items-center justify-between gap-2 overflow-hidden rounded-sm px-0.5 py-4 pb-3',
+        'group relative flex flex-col items-center justify-between gap-2 overflow-hidden rounded-sm px-0.5 py-4 pb-3',
+        getGlassClass('liquid-glass-card', 'bg-neutral shadow-small'),
         isEditing ? 'top-eight-profile-edit cursor-pointer border-[3px] border-transparent' : 'top-eight-profile',
-        isAddingToTopEight && 'border-[3px] border-green-500/50',
-        isRemovingFromTopEight && 'border-[3px] border-red-400/70 dark:border-red-500/70',
+        isAddingToTopEight && 'border-[3px]! border-green-500/50!',
+        isRemovingFromTopEight && 'border-[3px]! border-red-400/70! dark:border-red-500/70!',
         isEditing && !(isAddingToTopEight || isRemovingFromTopEight) && 'hover:border-nav-item'
       )}
       onClick={onClick}
@@ -84,9 +87,10 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
         <div
           className={cn(
             'absolute top-1 right-1 flex h-5 w-5 items-center justify-center rounded-sm text-white',
-            isAddingToTopEight && 'bg-green-500/50',
-            isRemovingFromTopEight && 'bg-red-400/70',
-            !(isAddingToTopEight || isRemovingFromTopEight) && 'hidden bg-[#A2A2A277] group-hover:flex'
+            isAddingToTopEight && getGlassClass('liquid-glass-addition', 'bg-green-500/50'),
+            isRemovingFromTopEight && getGlassClass('liquid-glass-deletion', 'bg-red-400/70'),
+            !(isAddingToTopEight || isRemovingFromTopEight) &&
+              cn('hidden group-hover:flex', getGlassClass('liquid-glass-subtle', 'bg-[#A2A2A277]'))
           )}
         >
           {isAddingToTopEight ? <Plus className='h-3 w-3' /> : <Cross className='h-4 w-4' />}

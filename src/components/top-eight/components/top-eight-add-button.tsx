@@ -10,13 +10,12 @@ interface TopEightAddButtonProps {
 
 const TopEightAddButton: React.FC<TopEightAddButtonProps> = ({ address, tags }) => {
   const { isPendingTopEight, isPendingRemove, isInTopEight, handleAdd } = useTopEightAddButton(address, tags)
-
   const buttonText = isInTopEight || isPendingTopEight ? 'Remove' : 'Add'
 
   return (
     <button
       onClick={handleAdd}
-      className='bg-primary text-dark-grey relative flex w-24 items-center justify-center rounded-sm py-2 font-semibold transition-all! hover:scale-110'
+      className='text-dark-grey bg-primary relative flex w-24 items-center justify-center rounded-sm py-2 font-semibold transition-all! hover:scale-110'
     >
       {buttonText}
       {(isPendingTopEight || isPendingRemove) && <EditIndicator />}

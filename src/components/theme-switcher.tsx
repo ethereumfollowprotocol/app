@@ -7,6 +7,7 @@ import { useClickAway, useIsClient } from '@uidotdev/usehooks'
 
 import i18n from '#/app/i18n'
 import { cn } from '#/lib/utilities'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 import Check from 'public/assets/icons/ui/check.svg'
 import Computer from 'public/assets/icons/ui/computer.svg'
 import LightMode from 'public/assets/icons/ui/light-mode.svg'
@@ -30,9 +31,19 @@ export const themesWithIcons = [
     icon: DarkMode,
     language: undefined,
   },
+  {
+    theme: 'glass-light',
+    icon: LightMode,
+    language: undefined,
+  },
+  {
+    theme: 'glass-dark',
+    icon: DarkMode,
+    language: undefined,
+  },
 ]
 
-const themes = ['system', 'light', 'dark'] as const
+const themes = ['system', 'light', 'dark', 'glass-light', 'glass-dark'] as const
 type ThemeType = (typeof themes)[number]
 
 interface ThemeSwitcherProps {
@@ -51,16 +62,28 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
   const isClient = useIsClient()
   const { t } = useTranslation()
   const { setTheme, theme: selectedTheme } = useTheme()
+  const { getDropdownClass, getItemClass } = useGlassTheme()
   const selectedThemeIcon = isClient ? themesWithIcons.find(({ theme }) => theme === selectedTheme) : { icon: Computer }
 
   return (
-    <div ref={clickAwayThemeRef} className='group relative h-full w-full cursor-pointer'>
+    <div
+      ref={clickAwayThemeRef}
+      onMouseEnter={() => {
+        setThemeMenuOpen(true)
+        setExternalThemeMenuOpen?.(true)
+      }}
+      onMouseLeave={() => {
+        setThemeMenuOpen(false)
+        setExternalThemeMenuOpen?.(false)
+      }}
+      className='group relative h-full w-full cursor-pointer'
+    >
       <div
         onClick={() => {
           setThemeMenuOpen(!themeMenuOpen)
           setExternalThemeMenuOpen?.(!themeMenuOpen)
         }}
-        className='group-hover:bg-nav-item flex w-full cursor-pointer items-center justify-between rounded-sm p-4 transition-opacity'
+        className={`${getItemClass()} flex w-full cursor-pointer items-center justify-between rounded-sm p-4 transition-opacity`}
       >
         <div className='flex items-center justify-end gap-2'>
           {selectedThemeIcon && <selectedThemeIcon.icon className='h-6 w-6' />}
@@ -74,20 +97,22 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ closeMenu, setExternalThe
           themeMenuOpen ? 'block' : 'hidden'
         )}
       >
-        <div className='bg-neutral shadow-medium flex h-screen max-h-[80vh] w-full flex-col gap-2 rounded-sm sm:h-auto sm:max-h-[50vh] sm:w-56'>
+        <div
+          className={`${getDropdownClass()} flex h-screen max-h-[80vh] w-full flex-col gap-2 rounded-sm sm:h-auto sm:max-h-[50vh] sm:w-56`}
+        >
           <div
             onClick={() => {
               setThemeMenuOpen(false)
               setExternalThemeMenuOpen?.(false)
             }}
-            className='hover:bg-nav-item flex w-full cursor-pointer items-center justify-between rounded-sm p-4 transition-opacity sm:hidden'
+            className={`${getItemClass()} flex w-full cursor-pointer items-center justify-between rounded-sm p-4 transition-opacity sm:hidden`}
           >
             <ArrowLeft className='text-xl' />
             <p className='font-bold'>{t('back')}</p>
           </div>
           {themesWithIcons.map((theme) => (
             <div
-              className='hover:bg-nav-item relative flex w-full items-center gap-2 rounded-sm p-4 pl-8'
+              className={`${getItemClass()} relative flex w-full items-center gap-2 rounded-sm p-4 pl-8`}
               key={theme.theme}
               onClick={() => {
                 setTheme(theme.theme as ThemeType)

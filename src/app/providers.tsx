@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useMemo, useEffect } from 'react'
 import { useTheme } from 'next-themes'
 import { ThirdwebProvider } from 'thirdweb/react'
 import { WagmiProvider, type State } from 'wagmi'
@@ -16,13 +16,14 @@ import { translations } from '#/lib/constants/translations'
 import TransactionModal from '#/components/transaction-modal'
 import { EFPProfileProvider } from '#/contexts/efp-profile-context'
 import { RecommendedProfilesProvider } from '#/contexts/recommended-profiles-context'
+import { useIsClient } from '@uidotdev/usehooks'
 
 type ProviderProps = {
   children: React.ReactNode
   initialState?: State
 }
 
-const darkThemes = ['dark', 'halloween']
+const darkThemes = ['dark', 'glass-dark', 'halloween']
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -32,6 +33,22 @@ const queryClient = new QueryClient({
 
 const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
   const { resolvedTheme } = useTheme()
+  const isClient = useIsClient()
+
+  // Apply both glass and base theme classes for library compatibility
+  useEffect(() => {
+    if (!isClient) return
+
+    const body = document.querySelector('body')
+    if (resolvedTheme === 'glass-dark' || resolvedTheme === 'dark') {
+      // Apply both glass-dark and dark classes
+      body?.classList.add('dark')
+    } else if (resolvedTheme === 'glass-light' || resolvedTheme === 'light') {
+      // Remove dark class for glass-light
+      body?.classList.remove('dark')
+    }
+    // For standard 'dark' and 'light' themes, next-themes handles this automatically
+  }, [resolvedTheme, isClient])
 
   const rainbowKitTheme = useMemo(() => {
     return darkThemes.includes(resolvedTheme || 'dark') ? darkTheme() : undefined

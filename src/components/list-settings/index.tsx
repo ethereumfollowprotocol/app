@@ -14,6 +14,7 @@ import ResetSlotWarning from './components/reset-slot-warning'
 import type { ProfileDetailsResponse } from '#/types/requests'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import PrimaryButton from '#/components/buttons/primary-button'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 import List from 'public/assets/icons/ui/list.svg'
 import Owner from 'public/assets/icons/ui/key.svg'
 import User from 'public/assets/icons/ui/person.svg'
@@ -42,6 +43,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
   const { roles } = useEFPProfile()
   const { address: connectedAddress } = useAccount()
   const { t } = useTranslation()
+  const { getGlassClass } = useGlassTheme()
 
   const {
     user,
@@ -152,7 +154,11 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
             </div>
             <div className='relative w-full' ref={chainDropdownRef}>
               <button
-                className='bg-nav-item hover:bg-text/5 flex h-[42px] w-full items-center justify-between gap-0.5 rounded-sm p-1 px-2 disabled:cursor-not-allowed disabled:opacity-75 sm:h-12 sm:px-3'
+                className={cn(
+                  getGlassClass('liquid-glass-card', 'bg-nav-item hover:bg-text/5'),
+                  chainDropdownOpen && 'disable-blur',
+                  'flex h-[42px] w-full items-center justify-between gap-0.5 rounded-sm p-1 px-2 disabled:cursor-not-allowed disabled:opacity-75 sm:h-12 sm:px-3'
+                )}
                 onClick={() => setChainDropdownOpen(!chainDropdownOpen)}
                 disabled={!isEditingSettings || connectedAddress?.toLowerCase() !== fetchedOwner?.toLowerCase()}
               >
@@ -171,7 +177,12 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
                 )}
               </button>
               {chainDropdownOpen && (
-                <div className='bg-nav-item shadow-small absolute top-12 z-10 flex w-full flex-col rounded-sm sm:top-14'>
+                <div
+                  className={cn(
+                    getGlassClass('glass-pseudo-dropdown', 'bg-nav-item shadow-small'),
+                    'absolute top-12 z-10 flex w-full flex-col rounded-sm sm:top-14'
+                  )}
+                >
                   {chains.map((item) => (
                     <div
                       key={item.id}
@@ -183,7 +194,10 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
                           chain: fetchedChain?.id !== item.id,
                         })
                       }}
-                      className='hover:bg-text/5 flex w-full cursor-pointer items-center gap-3 rounded-sm p-3'
+                      className={cn(
+                        getGlassClass('glass-hover-item', 'hover:bg-text/5'),
+                        'flex w-full cursor-pointer items-center gap-3 rounded-sm p-3'
+                      )}
                     >
                       <ChainIcon chain={item as ChainWithDetails} className={'h-6 w-6 sm:h-7 sm:w-7'} />
                       <p className='truncate font-bold sm:text-lg'>{item?.name}</p>
@@ -242,7 +256,10 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
             ) : (
               <button
                 onClick={() => setIsEditingSettings(true)}
-                className='bg-nav-item hover:bg-text/10 w-full rounded-sm px-6 py-3 text-lg font-bold transition-all'
+                className={cn(
+                  getGlassClass('liquid-glass-button', 'bg-nav-item hover:bg-text/10'),
+                  'w-full rounded-sm px-6 py-3 text-lg font-bold transition-all'
+                )}
               >
                 {t('edit settings')}
               </button>

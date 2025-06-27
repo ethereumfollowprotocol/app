@@ -13,6 +13,7 @@ import type { ProfileTableTitleType } from '#/types/common'
 import { FETCH_LIMIT_PARAM, SECOND } from '#/lib/constants'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { TagCountType, FollowSortType, FollowerResponse, FollowingResponse } from '#/types/requests'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 
 let lastScrollTopUserPage = 0
 export interface UserProfilePageTableProps {
@@ -91,6 +92,7 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
 
     const { t } = useTranslation()
     const isProfile = useIsEditView()
+    const { getGlassClass } = useGlassTheme()
     const { lists, selectedList } = useEFPProfile()
 
     const isFollowingTable = title === 'following'
@@ -186,7 +188,12 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
         </div>
         <div className={cn('flex flex-col pt-4')}>
           {profilesEmpty && (
-            <div className='bg-neutral shadow-medium content-center rounded-sm p-8 text-center font-bold'>
+            <div
+              className={cn(
+                getGlassClass('liquid-glass-card', 'bg-neutral shadow-medium'),
+                'content-center rounded-sm p-8 text-center font-bold'
+              )}
+            >
               {noResults}
             </div>
           )}
@@ -203,7 +210,11 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
             isTopEight={isTopEight}
             // if the displayed table is user's followings, automatically set the initial follow state to "Following"
             initialFollowState={title === 'following' && canEditTags && !!selectedList ? 'Following' : undefined}
-            className={cn('bg-neutral shadow-medium rounded-sm', !isLoading && profiles.length === 0 && 'hidden')}
+            className={cn(
+              getGlassClass('liquid-glass-card', 'bg-neutral shadow-medium'),
+              'rounded-sm',
+              !isLoading && profiles.length === 0 && 'hidden'
+            )}
           />
           {!isLoading && <div ref={loadMoreRef} className='mb-4 h-px w-full' />}
           {isFollowingTable && isProfile && (lists?.lists?.length || 0) === 0 && (

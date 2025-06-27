@@ -9,6 +9,7 @@ import ArrowLeft from 'public/assets/icons/ui/arrow-left.svg'
 import ArrowRight from 'public/assets/icons/ui/arrow-right.svg'
 import Image from 'next/image'
 import { useTranslation as useIdentityKitTranslation } from 'ethereum-identity-kit'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 
 interface LanguageSelectorProps {
   setExternalLanguageMenuOpen?: Dispatch<SetStateAction<boolean>>
@@ -20,6 +21,7 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
 
   const { t } = useTranslation()
   const { changeLanguage, languageMenOpenu, selectedLanguage, setLanguageMenuOpen } = useLanguage()
+  const { getDropdownClass, getItemClass } = useGlassTheme()
 
   const { setLanguage } = useIdentityKitTranslation()
   useEffect(() => {
@@ -48,13 +50,24 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
   )
 
   return (
-    <div ref={clickAwayLanguageRef} className='group relative w-full cursor-pointer'>
+    <div
+      ref={clickAwayLanguageRef}
+      onMouseEnter={() => {
+        setLanguageMenuOpen(true)
+        setExternalLanguageMenuOpen?.(true)
+      }}
+      onMouseLeave={() => {
+        setLanguageMenuOpen(false)
+        setExternalLanguageMenuOpen?.(false)
+      }}
+      className='group relative w-full cursor-pointer'
+    >
       <div
         onClick={() => {
           setLanguageMenuOpen(!languageMenOpenu)
           setExternalLanguageMenuOpen?.(!languageMenOpenu)
         }}
-        className='group-hover:bg-nav-item flex w-full items-center justify-between rounded-sm p-4'
+        className={`${getItemClass()} flex w-full items-center justify-between rounded-sm p-4`}
       >
         <div className='flex items-center gap-2'>
           {selectedLanguage && (
@@ -71,14 +84,16 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
         <ArrowRight className='text-xl' />
       </div>
       <div
-        className={`absolute -top-[56px] left-full z-50 w-full transition-all transition-discrete sm:top-0 sm:w-fit sm:pl-2 sm:transition-normal ${
+        className={`absolute -top-[57px] left-full z-50 w-full transition-all transition-discrete sm:top-0 sm:w-fit sm:pl-2 sm:transition-normal ${
           languageMenOpenu ? 'block' : 'hidden'
         } group-hover:block`}
       >
-        <div className='bg-neutral shadow-medium flex max-h-[520px] w-full flex-col gap-2 gap-x-px overflow-scroll rounded-sm sm:max-h-[45vh] sm:w-56 lg:grid lg:w-[450px] lg:grid-cols-2'>
+        <div
+          className={`${getDropdownClass()} flex max-h-[520px] w-full flex-col gap-2 gap-x-px overflow-scroll rounded-sm sm:max-h-[45vh] sm:w-56 lg:grid lg:w-[450px] lg:grid-cols-2`}
+        >
           <div
             onClick={closeLanguageMenu}
-            className='hover:bg-nav-item flex w-full cursor-pointer items-center justify-between rounded-sm p-4 transition-opacity lg:hidden'
+            className={`${getItemClass()} flex w-full cursor-pointer items-center justify-between rounded-sm p-4 transition-opacity lg:hidden`}
           >
             <ArrowLeft className='text-xl font-bold' />
             <p className='font-bold'>{t('back')}</p>
@@ -104,7 +119,7 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
           </div>
           {regularLanguages.map((lang) => (
             <div
-              className='hover:bg-nav-item relative flex items-center rounded-sm py-4 pl-8 font-bold transition-colors'
+              className={`${getItemClass()} relative flex items-center rounded-sm py-4 pl-8 font-bold transition-colors`}
               key={lang.language}
               onClick={() => {
                 changeLanguage(lang)
@@ -128,7 +143,7 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
           )}
           {specialLanguages.map((lang) => (
             <div
-              className='hover:bg-nav-item relative flex items-center rounded-sm py-4 pl-8 font-bold transition-colors'
+              className={`${getItemClass()} relative flex items-center rounded-sm py-4 pl-8 font-bold transition-colors`}
               key={lang.language}
               onClick={() => {
                 changeLanguage(lang)
