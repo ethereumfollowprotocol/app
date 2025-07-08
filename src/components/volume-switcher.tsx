@@ -9,6 +9,7 @@ import VolumeUp from 'public/assets/icons/ui/volume-up.svg'
 import ArrowLeft from 'public/assets/icons/ui/arrow-left.svg'
 import VolumeMute from 'public/assets/icons/ui/volume-mute.svg'
 import ArrowRight from 'public/assets/icons/ui/arrow-right.svg'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 
 type VolumeOption = {
   label: VolumeType
@@ -53,10 +54,22 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = ({ closeMenu, setExternalV
   })
 
   const { t } = useTranslation()
+  const { getDropdownClass, getItemClass } = useGlassTheme()
   const selectedVolumeOption = volumeOptions.find(({ label }) => label === selectedVolume)
 
   return (
-    <div ref={clickAwayVolumeRef} className='group relative w-full cursor-pointer'>
+    <div
+      ref={clickAwayVolumeRef}
+      onMouseEnter={() => {
+        setVolumeMenuOpen(true)
+        setExternalVolumeMenuOpen?.(true)
+      }}
+      onMouseLeave={() => {
+        setVolumeMenuOpen(false)
+        setExternalVolumeMenuOpen?.(false)
+      }}
+      className='group relative w-full cursor-pointer'
+    >
       <div
         onClick={() => {
           setVolumeMenuOpen(!volumeMenuOpen)
@@ -64,7 +77,7 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = ({ closeMenu, setExternalV
         }}
         className={cn(
           'flex cursor-pointer items-center justify-between rounded-sm transition-opacity',
-          'group-hover:bg-nav-item w-full p-4'
+          `${getItemClass()} w-full p-4`
         )}
       >
         <div className='flex items-center justify-end gap-2'>
@@ -75,24 +88,26 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = ({ closeMenu, setExternalV
       </div>
       <div
         className={cn(
-          'absolute -top-[113px] -right-full z-50 block w-full transition-all transition-discrete group-hover:block sm:top-0 sm:left-full sm:w-fit sm:pl-2 sm:transition-normal',
+          'absolute -top-[117px] -right-full z-50 block w-full transition-all transition-discrete group-hover:block sm:top-0 sm:left-full sm:w-fit sm:pl-2 sm:transition-normal',
           volumeMenuOpen ? 'block' : 'hidden'
         )}
       >
-        <div className='bg-neutral shadow-medium flex h-screen max-h-[80vh] w-full flex-col gap-2 rounded-sm sm:h-auto sm:w-56'>
+        <div
+          className={`${getDropdownClass()} flex h-screen max-h-[80vh] w-full flex-col gap-2 rounded-sm backdrop-blur-2xl! sm:h-auto sm:w-56`}
+        >
           <div
             onClick={() => {
               setVolumeMenuOpen(false)
               setExternalVolumeMenuOpen?.(false)
             }}
-            className='hover:bg-nav-item flex w-full cursor-pointer items-center justify-between rounded-sm p-4 transition-opacity lg:hidden'
+            className={`${getItemClass()} flex w-full cursor-pointer items-center justify-between rounded-sm p-4 transition-opacity lg:hidden`}
           >
             <ArrowLeft className='text-xl' />
             <p className='font-bold'>{t('back')}</p>
           </div>
           {volumeOptions.map((option) => (
             <div
-              className='hover:bg-nav-item relative flex w-full items-center gap-2 rounded-sm p-4 pl-8'
+              className={`${getItemClass()} relative flex w-full items-center gap-2 rounded-sm p-4 pl-8`}
               key={option.label}
               onClick={() => {
                 setSelectedVolume(option.label)

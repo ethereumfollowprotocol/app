@@ -8,6 +8,7 @@ import { usePathname, useRouter } from 'next/navigation'
 
 import { Search } from '../search'
 import Logo from 'public/assets/efp-logo.svg'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 import NavItems from './components/nav-items'
 import WalletMenu from './components/wallet-menu'
 import Integrations from './components/integrations'
@@ -21,6 +22,7 @@ const Mobile: React.FC = () => {
   const router = useRouter()
   const pathname = usePathname()
   const { address: userAddress } = useAccount()
+  const { getMobileNavClass, getGlassClass } = useGlassTheme()
   const navRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -38,11 +40,11 @@ const Mobile: React.FC = () => {
       if (prevScroll - scroll > 0) {
         navRef.current?.style.setProperty('transition', 'all 0.21s linear')
         navRef.current?.style.setProperty('top', '0px')
-        if (scroll < 16) navRef.current?.classList.remove('bg-neutral')
+        if (scroll < 16) navRef.current?.classList.remove(getGlassClass('glass-pseudo-nav', 'bg-neutral'))
       } else {
         if (scroll > 84) {
+          navRef.current?.classList.add(getGlassClass('glass-pseudo-nav', 'bg-neutral'))
           navRef.current?.style.setProperty('top', '-84px')
-          navRef.current?.classList.add('bg-neutral')
         } else {
           navRef.current?.style.setProperty('transition', 'none')
           navRef.current?.style.setProperty('top', `-${scroll}px`)
@@ -98,7 +100,7 @@ const Mobile: React.FC = () => {
     }
 
     return () => abortController.abort()
-  }, [navRef, pathname])
+  }, [navRef, pathname, userAddress])
 
   const { width } = useWindowSize()
   const isMobile = width && width < 640
@@ -114,7 +116,10 @@ const Mobile: React.FC = () => {
     <>
       <div
         ref={navRef}
-        className='background-blur fixed top-0 left-0 z-50 flex h-[76px] w-screen justify-between px-4 sm:hidden'
+        className={clsx(
+          getGlassClass('glass-pseudo-nav', 'background-blur'),
+          'fixed top-0 left-0 z-50 flex h-[76px] w-screen justify-between px-4 sm:hidden'
+        )}
       >
         <div className='flex items-center gap-3'>
           <Link href='/' className='select-none' aria-label='Ethereum Follow Protocol'>
@@ -135,7 +140,7 @@ const Mobile: React.FC = () => {
       </div>
       <nav
         className={clsx(
-          'bg-neutral shadow-large fixed bottom-0 left-0 z-50 flex w-full justify-center p-3 px-4 sm:hidden',
+          `${getMobileNavClass()} bottom-nav fixed bottom-0 left-0 z-50 flex w-full justify-center p-3 px-4 sm:hidden`,
           isIOSStandalone && 'pb-8'
         )}
       >

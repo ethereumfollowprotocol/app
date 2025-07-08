@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { cn } from '#/lib/utilities'
 import EditModal from './components/edit-modal'
 import { useTopEight } from './hooks/use-top-eight'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 import ArrowDown from 'public/assets/icons/ui/arrow-down.svg'
 import type { UserProfilePageTableProps } from '../profile-page-table'
 import TopEightLoadingProfile from './components/top-eight-loading-profile'
@@ -26,6 +27,7 @@ const TopEight: React.FC<TopEightProps> = ({
 }) => {
   const { topEight, displayLimit, setDisplayLimit, topEightIsLoading, topEightIsRefetching } = useTopEight(user)
   const { t } = useTranslation()
+  const { getGlassClass } = useGlassTheme()
 
   const isTopEightLoading = topEightIsLoading || topEightIsRefetching
   const isTopEightEmpty = topEight.length === 0 && !isTopEightLoading
@@ -41,7 +43,9 @@ const TopEight: React.FC<TopEightProps> = ({
       )}
       <div className='flex w-full flex-col items-center justify-center gap-4 rounded-sm lg:w-[360px] lg:gap-4 xl:w-[602px]'>
         {isTopEightEmpty && (
-          <p className='bg-neutral shadow-medium w-full rounded-sm py-[76px] text-center text-lg font-medium italic'>
+          <p
+            className={`${getGlassClass('liquid-glass-card', 'bg-neutral shadow-medium')} w-full rounded-sm py-[76px] text-center text-lg font-medium italic`}
+          >
             {t('no top eight')}
           </p>
         )}
@@ -54,7 +58,7 @@ const TopEight: React.FC<TopEightProps> = ({
         </div>
         {topEight.length > displayLimit && (
           <div
-            className='bg-neutral hover:bg-nav-item shadow-medium flex w-full cursor-pointer items-center justify-center gap-2 rounded-sm p-2 text-2xl font-semibold transition-colors lg:hidden'
+            className={`${getGlassClass('liquid-glass-button', 'bg-neutral shadow-medium')} hover:bg-nav-item flex w-full cursor-pointer items-center justify-center gap-2 rounded-sm p-2 text-2xl font-semibold transition-colors lg:hidden`}
             onClick={() => setDisplayLimit(displayLimit >= 8 ? 2 : 8)}
           >
             <ArrowDown className={cn('h-auto w-6 transition-transform', displayLimit >= 8 && 'rotate-180')} />

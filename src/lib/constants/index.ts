@@ -105,7 +105,7 @@ export const EXTERNAL_LINKS = [
 export const leaderboardFilters = ['mutuals', 'followers', 'following', 'top8', 'blocked'] as const
 export const leaderboardFiltersEmojies = [HuggingEmoji, StarEyesEmoji, EyesEmoji, FireEmoji, PirateFlagEmoji] as const
 
-export const THEMES = ['light', 'dark']
+export const THEMES = ['light', 'dark', 'glass-light', 'glass-dark']
 const DARK_ICON_THEME = ['dark']
 
 export const profileCardSocials = [

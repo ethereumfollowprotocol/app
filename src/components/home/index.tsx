@@ -81,18 +81,13 @@ const Home = () => {
           }}
         >
           <ProfileSummaryCard />
-          <Recommendations
-            limit={10}
-            endpoint='discover'
-            header={t('recent')}
-            className='bg-neutral shadow-medium h-fit w-full rounded-sm'
-          />
+          <Recommendations limit={10} endpoint='discover' header={t('recent')} className='h-fit w-full rounded-sm' />
           {userAddress && !isFollowersEmpty && <LatestFollowers />}
           <Recommendations
             limit={10}
             endpoint='recommended'
             header={t('recommended.title')}
-            className='bg-neutral shadow-medium h-fit w-full rounded-sm'
+            className='h-fit w-full rounded-sm'
           />
         </div>
       </div>

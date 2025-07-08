@@ -13,6 +13,7 @@ import { EXTERNAL_LINKS } from '#/lib/constants'
 import VolumeSwitcher from '../../volume-switcher'
 import LanguageSelector from '../../language-selector'
 import ThemeSwitcher from '#/components/theme-switcher'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 
 interface MenuProps {
   open: boolean
@@ -27,6 +28,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
 
   const { t } = useTranslation()
   const { resolvedTheme } = useTheme()
+  const { getDropdownClass, getItemClass } = useGlassTheme()
   const isExtraMenuOpen = languageMenOpenu || themeMenuOpen || volumeMenuOpen
 
   return (
@@ -35,13 +37,13 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
         open
           ? '-translate-y-mobile-menu flex sm:flex sm:translate-y-0 sm:opacity-100 starting:translate-y-0'
           : 'translate-y-12 sm:hidden sm:translate-y-0 sm:opacity-0',
-        'top-screen shadow-menu fixed left-0 -z-20 h-fit w-full overflow-hidden transition-all transition-discrete group-hover/hamburger:flex sm:absolute sm:-top-[182px] sm:left-full sm:z-50 sm:h-fit sm:w-fit sm:overflow-visible sm:pl-9 sm:opacity-0 sm:shadow-none sm:group-hover/hamburger:opacity-100 sm:starting:opacity-0 sm:starting:group-hover/hamburger:opacity-0'
+        'top-screen shadow-menu fixed left-0 -z-20 h-fit w-full overflow-hidden p-0 transition-all transition-discrete group-hover/hamburger:flex sm:absolute sm:-top-[182px] sm:left-full sm:z-50 sm:h-fit sm:w-fit sm:overflow-visible sm:pl-9 sm:opacity-0 sm:shadow-none sm:group-hover/hamburger:opacity-100 sm:starting:opacity-0 sm:starting:group-hover/hamburger:opacity-0'
       )}
     >
       <div
         className={cn(
-          isExtraMenuOpen && '-translate-x-full sm:translate-x-0',
-          'bg-neutral sm:shadow-medium flex h-fit w-full flex-col overflow-x-visible rounded-sm transition-all sm:h-auto sm:max-h-[80vh] sm:w-60'
+          isExtraMenuOpen && `disable-blur -translate-x-full sm:translate-x-0`,
+          `${getDropdownClass()} bg-neutral flex h-fit w-full flex-col overflow-x-visible transition-all sm:h-auto sm:max-h-[80vh] sm:w-60`
         )}
       >
         <ThemeSwitcher
@@ -67,7 +69,7 @@ const Menu: React.FC<MenuProps> = ({ open, setOpen }) => {
             href={link.href}
             target={link.target}
             onClick={() => setOpen(false)}
-            className='hover:bg-nav-item text-text block w-full rounded-sm p-4 font-bold capitalize transition-colors'
+            className={`${getItemClass()} hover:bg-nav-item text-text block w-full rounded-sm p-4 font-bold capitalize transition-all`}
           >
             <p>{t(link.text)}</p>
           </Link>

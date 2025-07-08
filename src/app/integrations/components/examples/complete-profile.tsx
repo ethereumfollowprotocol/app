@@ -10,14 +10,22 @@ import { ProfileCard } from 'ethereum-identity-kit'
 import FollowButton from '#/components/follow-button'
 import ExternalLink from 'public/assets/icons/ui/external-link.svg'
 import ThreeDotMenu from '#/components/user-profile-card/components/three-dot-menu'
+import { cn } from '#/lib/utilities'
+import { useGlassTheme } from '#/hooks/use-glass-theme'
 
 const CompleteProfile = () => {
   const router = useRouter()
   const { t } = useTranslation()
   const { address: userAddress } = useAccount()
+  const { getGlassClass } = useGlassTheme()
 
   return (
-    <div className='bg-neutral shadow-medium flex w-full flex-col gap-2 rounded-sm pt-6 pr-1'>
+    <div
+      className={cn(
+        getGlassClass('liquid-glass-card', 'bg-neutral shadow-medium'),
+        'flex w-full flex-col gap-2 rounded-sm pt-6 pr-1'
+      )}
+    >
       <h4 className='px-4 text-xl font-bold sm:px-6 sm:text-2xl'>{t('example profile title')}</h4>
       <div className='flex w-full flex-col gap-2 px-4 text-sm sm:w-[90%] sm:px-6 sm:text-base'>
         <p>{t('example profile description')}</p>
