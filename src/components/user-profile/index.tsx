@@ -67,6 +67,7 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
       style={{
         paddingBottom: width && width < 768 ? '20px' : '110px',
       }}
+      showFollowerState={true}
       options={{
         profileData: profile ?? undefined,
         statsData: stats ?? undefined,
