@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { isAddress, isHex } from 'viem'
 import type { SearchParams } from 'next/dist/server/request/search-params'
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
 import { fetchProfileDetails, fetchProfileStats, isLinkValid } from 'ethereum-identity-kit/utils'
@@ -8,6 +7,7 @@ import { MINUTE } from '#/lib/constants'
 import UserInfo from './components/user-info'
 import { truncateAddress } from '#/lib/utilities'
 import { fetchAccount } from '#/api/fetch-account'
+import { isAddress, isHex } from '#/utils/viem'
 
 interface Props {
   params: Promise<{ user: string }>
