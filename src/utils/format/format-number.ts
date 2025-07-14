@@ -1,13 +1,13 @@
-import { safeNavigator } from '../browser-safe'
-
 export const formatNumber = (number: number) => {
-  const formattedNumber = new Intl.NumberFormat(safeNavigator.language).format(number)
+  const locale = typeof navigator !== 'undefined' ? navigator.language : 'en-US'
+  const formattedNumber = new Intl.NumberFormat(locale).format(number)
 
   return formattedNumber
 }
 
 export const formatNumberLeaderboard = (number: number) => {
-  const formatter = new Intl.NumberFormat(safeNavigator.language, {
+  const locale = typeof navigator !== 'undefined' ? navigator.language : 'en-US'
+  const formatter = new Intl.NumberFormat(locale, {
     maximumFractionDigits: 1,
   })
 
