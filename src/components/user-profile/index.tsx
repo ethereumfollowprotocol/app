@@ -67,6 +67,7 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
       style={{
         paddingBottom: width && width < 768 ? '20px' : '110px',
       }}
+      showFollowButton={profile?.address ? true : false}
       showFollowerState={true}
       options={{
         profileData: profile ?? undefined,
@@ -89,7 +90,7 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
         ) : null,
         openListSettings: openListSettingsModal,
         refetchProfileData: refetchProfile,
-        followButton: profile?.address ? <FollowButton address={profile?.address} /> : null,
+        followButton: <FollowButton address={profile?.address} />,
       }}
     />
   )

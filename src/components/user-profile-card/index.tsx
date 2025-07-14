@@ -67,6 +67,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
             router.push(`/${profile.address}?tab=${stat}&ssr=false`)
           }}
           showFollowerState={true}
+          showFollowButton={!hideFollowButton}
           addressOrName={profile.address}
           onProfileClick={(addressOrName) => {
             router.push(`/${addressOrName}?ssr=false`)
@@ -95,7 +96,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 openListSettingsModal={openListSettingsModal}
               />
             ),
-            followButton: !hideFollowButton && (
+            followButton: (
               <div className='mt-16'>
                 {isConnectedUserCard ? (
                   <Link href={`https://app.ens.domains/${profile.ens.name}`} target='_blank'>
