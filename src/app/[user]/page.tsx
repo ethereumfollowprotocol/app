@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
 import type { SearchParams } from 'next/dist/server/request/search-params'
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
-import { fetchProfileDetails, fetchProfileStats, isLinkValid } from 'ethereum-identity-kit/utils'
+import { fetchProfileDetails, fetchProfileStats } from 'ethereum-identity-kit/utils'
 
 import { MINUTE } from '#/lib/constants'
-import UserInfo from './components/user-info'
 import { truncateAddress } from '#/lib/utilities'
 import { fetchAccount } from '#/api/fetch-account'
 import { isAddress, isHex } from '#/utils/viem'
+import UserInfoClient from './components/user-info-client'
 
 interface Props {
   params: Promise<{ user: string }>
@@ -42,7 +42,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const displayUser = ensName && ensName.length > 0 ? ensName : isList ? `List #${user}` : truncatedUser
   const description = ensData?.ens?.records?.description
 
-  const avatarResponse = ensAvatar && isLinkValid(ensAvatar) ? await fetch(ensAvatar) : null
+  const avatarResponse = ensAvatar ? await fetch(ensAvatar).catch(() => null) : null
 
   const pageUrl = `https://efp.app/${user}`
   const ogImageUrl = `https://efp.app/og?user=${user}`
@@ -99,10 +99,15 @@ const UserPage = async (props: Props) => {
     })
   }
 
+  // Return minimal loading state for SSR when ssr flag is false
+  if (typeof window === 'undefined' && ssr === false) {
+    return <main className='h-screen w-full xl:overflow-hidden flex items-center justify-center'>Loading...</main>
+  }
+
   return (
     <main className='h-screen w-full xl:overflow-hidden'>
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <UserInfo user={user} />
+        <UserInfoClient user={user} />
       </HydrationBoundary>
     </main>
   )
