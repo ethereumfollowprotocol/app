@@ -68,6 +68,7 @@
   "set as primary": "プライマリリストとして設定する",
   "resolved": "解決済み：",
   "no resolution": "解決できません",
+  "reset slot": "スロットをリセット",
 
   "editor title": "エディター",
   "cart.noItems": "カートが空です。フォローしてから戻ってきてオンチェーンで確認してください。",

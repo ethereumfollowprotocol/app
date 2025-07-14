@@ -67,6 +67,7 @@
   "set as primary": "Ro'yxatni Asosiy Ro'yxat sifatida belgilash",
   "resolved": "Hal qilindi:",
   "no resolution": "Hal qilinmaydi",
+  "reset slot": "Reset Slot",
 
   "editor title": "Tahrirchi",
   "cart.noItems": "Sizning savatingiz bo'sh. Odamlarni kuzating, keyin bu yerga qayting va onchain tasdiqlang.",

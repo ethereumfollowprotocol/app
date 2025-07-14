@@ -25,13 +25,11 @@ import useSaveListSettings from './hooks/use-save-list-settings'
 
 interface ListSettingsProps {
   selectedList: number
-  isSaving: boolean
   profile: ProfileDetailsResponse
   onClose: () => void
-  setIsSaving: (state: boolean) => void
 }
 
-const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onClose, setIsSaving, profile }) => {
+const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, onClose, profile }) => {
   const [isResetSlotWarningOpen, setIsResetSlotWarningOpen] = useState(false)
   const [isEditingSettings, setIsEditingSettings] = useState(false)
   const [chainDropdownOpen, setChainDropdownOpen] = useState(false)
@@ -108,12 +106,11 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
                 className={cn(
                   'hover text-text flex items-center gap-2 rounded-sm bg-red-400 p-2.5 font-semibold transition-all',
                   isEditingSettings
-                    ? 'cursor-pointer hover:scale-110 hover:bg-red-400'
+                    ? 'cursor-pointer hover:bg-red-400 hover:opacity-80'
                     : 'cursor-not-allowed opacity-60'
                 )}
                 onClick={() => {
-                  if (!isEditingSettings) return
-                  setIsResetSlotWarningOpen(true)
+                  if (isEditingSettings) setIsResetSlotWarningOpen(true)
                 }}
               >
                 <p>{t('listSettings.resetList')}</p>
@@ -152,7 +149,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
             </div>
             <div className='relative w-full' ref={chainDropdownRef}>
               <button
-                className='bg-nav-item hover:bg-text/5 flex h-[42px] w-full items-center justify-between gap-0.5 rounded-sm p-1 px-2 disabled:cursor-not-allowed disabled:opacity-75 sm:h-12 sm:px-3'
+                className='bg-nav-item hover:bg-nav-item/80 flex h-[42px] w-full items-center justify-between gap-0.5 rounded-sm p-1 px-2 disabled:cursor-not-allowed disabled:opacity-75 sm:h-12 sm:px-3'
                 onClick={() => setChainDropdownOpen(!chainDropdownOpen)}
                 disabled={!isEditingSettings || connectedAddress?.toLowerCase() !== fetchedOwner?.toLowerCase()}
               >
@@ -183,7 +180,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
                           chain: fetchedChain?.id !== item.id,
                         })
                       }}
-                      className='hover:bg-text/5 flex w-full cursor-pointer items-center gap-3 rounded-sm p-3'
+                      className='hover:bg-neutral/20 flex w-full cursor-pointer items-center gap-3 rounded-sm p-3'
                     >
                       <ChainIcon chain={item as ChainWithDetails} className={'h-6 w-6 sm:h-7 sm:w-7'} />
                       <p className='truncate font-bold sm:text-lg'>{item?.name}</p>
@@ -235,7 +232,7 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
                 {/* <CancelButton onClick={() => setIsEditingSettings(false)} /> */}
                 <PrimaryButton
                   label={t('save')}
-                  onClick={submitChanges}
+                  onClick={() => submitChanges()}
                   disabled={!Object.values(changedValues).includes(true)}
                 />
               </div>
@@ -254,16 +251,17 @@ const ListSettings: React.FC<ListSettingsProps> = ({ selectedList, isSaving, onC
         <ResetSlotWarning
           closeModal={() => setIsResetSlotWarningOpen(false)}
           onSubmit={() => {
-            setChangedValues({
+            const updatedValues = {
               chain: false,
               owner: false,
               manager: false,
               user: false,
               setPrimary: false,
               resetSlot: true,
-            })
+            }
 
-            submitChanges()
+            setChangedValues(updatedValues)
+            submitChanges(updatedValues)
           }}
         />
       )}

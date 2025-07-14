@@ -70,6 +70,7 @@
   "listSettings.resetList": "Nuke List",
   "claim slot": "Claim List",
   "reset slot message": "U sure u wanna reset? It’ll clear the list n set roles back to ur wallet. No takebacks! ",
+  "reset slot": "Reset Slot",
   "editor title": "Editor",
   "cart.noItems": "Ur cart’s empty. Roll wit some peeps n come back to confirm it onchain.",
   "manualAdd.add": "Add",

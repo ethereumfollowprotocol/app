@@ -208,6 +208,7 @@
   "listSettings.resetList": "Ponastavi seznam",
   "claim slot": "Pridobi seznam",
   "reset slot message": "Si prepričan da želiš ponastaviti svoj seznam? To bo počistilo tvoj seznam in nastavilo vse vloge nazaj na tvoj naslov denarnice. Tega dejanja ni mogoče razveljaviti.",
+  "reset slot": "Reset Slot",
 
   "swipe title": "Brskaj!",
   "swipe description first": "Najdi nove prijatelje onchain.",

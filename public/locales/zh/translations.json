@@ -75,6 +75,7 @@
   "listSettings.resetList": "重置列表",
   "claim slot": "认领列表",
   "reset slot message": "您确定要重置列表吗？这将清除您的列表并将所有角色重新设置为您的钱包地址。此操作无法撤消。",
+  "reset slot": "重置插槽",
 
   "swipe title": "开始滑动！",
   "swipe description first": "在链上寻找新朋友。",

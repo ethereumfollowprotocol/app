@@ -79,6 +79,7 @@
   "listSettings.resetList": "리스트 초기화",
   "claim slot": "리스트 클레임",
   "reset slot message": "정말로 리스트를 초기화하시겠습니까? 이 작업은 리스트를 비우고 모든 역할을 귀하의 지갑 주소로 재설정합니다. 이 작업은 되돌릴 수 없습니다.",
+  "reset slot": "슬롯 재설정",
 
   "editor title": "편집기",
   "cart.noItems": "장바구니가 비었습니다. 사람들을 팔로우한 후 여기로 돌아와 온체인에서 확인하세요.",

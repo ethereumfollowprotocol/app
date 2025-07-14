@@ -67,6 +67,7 @@
   "set as primary": "Set ship as Me Favorite Ship",
   "resolved": "Resolved:",
   "no resolution": "Be lost at sea",
+  "reset slot": "Reset Slot",
 
   "editor title": "Impressment",
   "cart.noItems": "Yer chest is empty. Recruit mateys then return here to confirm it onchain.",

@@ -70,6 +70,7 @@
   "listSettings.resetList": "重置名單",
   "claim slot": "領取名單",
   "reset slot message": "你確定要重置名單嗎？這將清除你的名單並將所有角色重置為你的錢包地址。此操作無法撤回。",
+  "reset slot": "Reset Slot",
   "editor title": "編輯器",
   "cart.noItems": "你的購物車是空的。請先追蹤人員，然後回來在鏈上確認。",
   "manualAdd.add": "添加",

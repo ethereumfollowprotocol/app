@@ -75,6 +75,7 @@
   "listSettings.resetList": "Reset List",
   "claim slot": "Claim List",
   "reset slot message": "Are you sure you want to reset the List? This will clear your list and set all the roles back to your wallet address. This action cannot be undone.",
+  "reset slot": "Reset Slot",
 
   "swipe title": "Swipe!",
   "swipe description first": "Find new friends onchain.",

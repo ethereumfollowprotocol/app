@@ -1,6 +1,6 @@
-import { useAccount, useWalletClient } from 'wagmi'
-import { useQueryClient } from '@tanstack/react-query'
+import { useAccount } from 'wagmi'
 import { useCallback, useMemo } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 import { toHex, isAddress, type Chain, encodePacked, type Address } from 'viem'
 
 import { useCart } from '#/hooks/use-cart'
@@ -63,7 +63,6 @@ const useSaveListSettings = ({
   const { resetCart } = useCart()
   const queryClient = useQueryClient()
   const { address: userAddress } = useAccount()
-  const { data: walletClient } = useWalletClient()
   const { addTransactions, setTxModalOpen, setChangesOpen } = useTransactions()
 
   const newSlot = useMemo(() => generateListStorageLocationSlot(), [])
@@ -91,7 +90,7 @@ const useSaveListSettings = ({
         args: [BigInt(selectedList), data],
       },
     ])
-  }, [walletClient, newChain])
+  }, [newChain, newSlot, selectedList])
 
   const listOpTx = useCallback(
     (items: ListOpType[], address: Address) => {
@@ -104,7 +103,7 @@ const useSaveListSettings = ({
 
       return transaction
     },
-    [walletClient, selectedList]
+    [newChain, newSlot]
   )
 
   const setOwnerTx = useCallback(() => {
@@ -122,7 +121,7 @@ const useSaveListSettings = ({
         args: [userAddress, owner as Address, BigInt(selectedList)],
       },
     ])
-  }, [owner, walletClient])
+  }, [owner, userAddress])
 
   const setPrimaryListTx = useCallback(() => {
     if (!userAddress) return
@@ -140,9 +139,10 @@ const useSaveListSettings = ({
         args: [userAddress, 'primary-list', isPrimaryList ? `0x${listHex.padStart(64, '0')}` : '0x'],
       },
     ])
-  }, [selectedList, isPrimaryList, walletClient])
+  }, [selectedList, isPrimaryList, selectedList])
 
   const resetSlotTx = useCallback(() => {
+    console.log('claimNewSlotTx', userAddress, chain)
     if (!(userAddress && chain)) return
 
     addTransactions([
@@ -156,7 +156,7 @@ const useSaveListSettings = ({
         args: [newSlot, [{ key: 'user', value: userAddress }], []],
       },
     ])
-  }, [selectedList, isPrimaryList, walletClient])
+  }, [selectedList, isPrimaryList, chain])
 
   const claimNewSlotTx = useCallback(() => {
     if (!(userAddress && chain)) return
@@ -178,7 +178,7 @@ const useSaveListSettings = ({
         ],
       },
     ])
-  }, [])
+  }, [userAddress, chain, newSlot])
 
   const setManagerTx = useCallback(() => {
     if (!(listRecordsContractAddress && slot && isAddress(manager || ''))) return
@@ -195,7 +195,7 @@ const useSaveListSettings = ({
         args: [slot, manager as Address],
       },
     ])
-  }, [slot, listRecordsContractAddress, manager, walletClient])
+  }, [slot, listRecordsContractAddress, manager])
 
   const setUserTx = useCallback(() => {
     if (!(listRecordsContractAddress && slot && isAddress(user || ''))) return
@@ -212,7 +212,7 @@ const useSaveListSettings = ({
         args: [slot, user as Address],
       },
     ])
-  }, [slot, listRecordsContractAddress, user, walletClient])
+  }, [slot, listRecordsContractAddress, user])
 
   const onFinish = useCallback(() => {
     // setIsRefetchingProfile(true)
@@ -236,71 +236,76 @@ const useSaveListSettings = ({
     refetchFollowingTags()
   }, [changedValues])
 
-  const submitChanges = useCallback(() => {
-    if (!chain) return
+  const submitChanges = useCallback(
+    (overrideChangedValues?: typeof changedValues) => {
+      const effectiveChangedValues = overrideChangedValues || changedValues
+      if (!chain) return
 
-    const executableActions = [
-      {
-        action: resetSlotTx,
-        condition: changedValues.resetSlot,
-      },
-      {
-        action: claimNewSlotTx,
-        condition: changedValues.resetSlot,
-      },
-      {
-        action: setUserTx,
-        condition: changedValues.user,
-      },
-      {
-        action: setManagerTx,
-        condition: changedValues.manager,
-      },
-      {
-        action: setPrimaryListTx,
-        condition: changedValues.setPrimary,
-      },
-      {
-        action: setListStorageLocationTx,
-        condition: changedValues.chain && newChain && !listState?.length,
-      },
-      {
-        action: setOwnerTx,
-        condition: changedValues.owner,
-      },
-    ]
+      const executableActions = [
+        {
+          action: resetSlotTx,
+          condition: effectiveChangedValues.resetSlot,
+        },
+        {
+          action: claimNewSlotTx,
+          condition: effectiveChangedValues.resetSlot,
+        },
+        {
+          action: setUserTx,
+          condition: effectiveChangedValues.user,
+        },
+        {
+          action: setManagerTx,
+          condition: effectiveChangedValues.manager,
+        },
+        {
+          action: setPrimaryListTx,
+          condition: effectiveChangedValues.setPrimary,
+        },
+        {
+          action: setListStorageLocationTx,
+          condition: effectiveChangedValues.chain && newChain && !!listState?.length,
+        },
+        {
+          action: setOwnerTx,
+          condition: effectiveChangedValues.owner,
+        },
+      ]
 
-    const actionsToExecute = executableActions.filter((action) => action.condition).map((action) => action.action)
+      console.log('executableActions', executableActions)
+      const actionsToExecute = executableActions.filter((action) => action.condition).map((action) => action.action)
 
-    if (changedValues.chain && newChain && userAddress) {
-      if (listState) {
-        const listOps = listState.flatMap((item) => {
-          const operations = []
-          operations.push(listOpAddListRecord(item.address))
-          if (item.tags.length > 0)
-            item.tags.map((tag) => {
-              operations.push(listOpAddTag(item.address, tag))
-            })
-          return operations
-        })
+      if (effectiveChangedValues.chain && newChain && userAddress) {
+        if (listState) {
+          const listOps = listState.flatMap((item) => {
+            const operations = []
+            operations.push(listOpAddListRecord(item.address))
+            if (item.tags.length > 0)
+              item.tags.map((tag) => {
+                operations.push(listOpAddTag(item.address, tag))
+              })
+            return operations
+          })
 
-        const splitCartItems = splitListOps(listOps, newChain.id)
+          const splitCartItems = splitListOps(listOps, newChain.id)
 
-        for (const listOps of splitCartItems) {
-          listOpTx(listOps, userAddress)
+          for (const listOps of splitCartItems) {
+            listOpTx(listOps, userAddress)
+          }
         }
       }
-    }
 
-    for (const action of actionsToExecute) {
-      action()
-    }
+      for (const action of actionsToExecute) {
+        action()
+      }
 
-    setIsEditingListSettings(true)
-    setTxModalOpen(true)
-    setChangesOpen(false)
-    onClose()
-  }, [listOpTx, setListStorageLocationTx, setOwnerTx, setManagerTx, setUserTx, changedValues, chain])
+      setIsEditingListSettings(true)
+      setTxModalOpen(true)
+      setChangesOpen(false)
+      onClose()
+    },
+    [listOpTx, setListStorageLocationTx, setOwnerTx, setManagerTx, setUserTx, changedValues, chain]
+  )
 
   return {
     onFinish,
