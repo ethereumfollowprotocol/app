@@ -21,7 +21,7 @@ env:
 
 jobs:
   checks:
-    timeout-minutes: 3
+    timeout-minutes: 4
     runs-on: ['ubuntu-latest']
     steps:
       - name: 🔑 Checkout
