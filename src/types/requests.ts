@@ -278,19 +278,6 @@ export type AirstackProfileResponse = {
   }
 }
 
-export type AirstackFollowings = {
-  followingAddress: { addresses: Address[]; primaryDomain: { name: string } }
-}
-
-export type AirstackFollowingsResponse = {
-  data: {
-    SocialFollowings: {
-      Following: AirstackFollowings[]
-      pageInfo: { nextCursor: string; hasPrevPage: boolean; hasNextPage: boolean }
-    }
-  }
-}
-
 export type NotificationItemType = {
   address: Address
   name: string | null

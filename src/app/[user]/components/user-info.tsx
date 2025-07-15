@@ -1,11 +1,11 @@
 'use client'
 
-import { useAccount } from 'wagmi'
 import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { FollowersAndFollowing } from 'ethereum-identity-kit'
 
 import { cn } from '#/lib/utilities'
+import TopEightActivity from './top-eight-activity'
+import UserProfile from '#/components/user-profile'
 import QRCodeModal from '#/components/qr-code-modal'
 import type { ProfileTabType } from '#/types/common'
 import { useUserInfo } from '../hooks/use-user-info'
@@ -13,10 +13,9 @@ import ListSettings from '#/components/list-settings'
 import BlockedMuted from '#/components/blocked-muted'
 import { useIsEditView } from '#/hooks/use-is-edit-view'
 import { useUserScroll } from '../hooks/use-user-scroll'
-import { useEFPProfile } from '#/contexts/efp-profile-context'
-import UserProfile from '#/components/user-profile'
 import BackToTop from '#/components/buttons/back-to-top'
-import TopEightActivity from './top-eight-activity'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
+import UserProfilePageTable from '#/components/profile-page-table'
 
 interface UserInfoProps {
   user: string
@@ -39,10 +38,12 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     qrCode,
     profile,
     listNum,
+    followers,
     following,
     toggleTag,
     userIsList,
     profileList,
+    followerTags,
     followersSort,
     followingSort,
     followingTags,
@@ -51,19 +52,25 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     qrCodeIsLoading,
     profileIsLoading,
     isEndOfFollowing,
+    isEndOfFollowers,
     setFollowingSort,
+    setFollowersSort,
+    setFollowersSearch,
     setFollowingSearch,
+    followersIsLoading,
     followingIsLoading,
+    fetchMoreFollowers,
     fetchMoreFollowing,
     followingTagsFilter,
     followersTagsFilter,
+    followerTagsLoading,
     followingTagsLoading,
+    isFetchingMoreFollowers,
     isFetchingMoreFollowing,
     setFollowersTagsFilter,
     setFollowingTagsFilter,
   } = useUserInfo(user)
   const router = useRouter()
-  const { address: connectedAddress } = useAccount()
   const isMyProfile = useIsEditView()
   const { roles, selectedList } = useEFPProfile()
   const { tableRef, TopEightRef, containerRef, isCommonFollowersModalOpen } = useUserScroll()
@@ -85,23 +92,44 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     }
   }, [stats])
 
-  const followingTableprops = {
-    isLoading: followingIsLoading,
-    results: following,
-    allTags: followingTags?.tagCounts,
-    tagsLoading: followingTagsLoading,
-    selectedTags: followingTagsFilter,
-    toggleSelectedTags: toggleTag,
-    setSelectedTags: setFollowingTagsFilter,
-    sort: followingSort,
-    setSort: setFollowingSort,
-    isEndOfResults: isEndOfFollowing,
-    setSearchFilter: setFollowingSearch,
-    isFetchingMore: isFetchingMoreFollowing,
-    fetchMore: () => fetchMoreFollowing(),
-    title: 'following' as ProfileTabType,
-    canEditTags: isMyProfile && roles?.isManager,
+  const tableProps = {
+    followers: {
+      isLoading: followersIsLoading,
+      results: followers,
+      allTags: followerTags?.tagCounts,
+      tagsLoading: followerTagsLoading,
+      selectedTags: followersTagsFilter,
+      toggleSelectedTags: toggleTag,
+      setSelectedTags: setFollowersTagsFilter,
+      sort: followersSort,
+      setSort: setFollowersSort,
+      isEndOfResults: isEndOfFollowers,
+      setSearchFilter: setFollowersSearch,
+      isFetchingMore: isFetchingMoreFollowers,
+      fetchMore: () => fetchMoreFollowers(),
+      title: 'followers' as ProfileTabType,
+      canEditTags: false,
+    },
+    following: {
+      isLoading: followingIsLoading,
+      results: following,
+      allTags: followingTags?.tagCounts,
+      tagsLoading: followingTagsLoading,
+      selectedTags: followingTagsFilter,
+      toggleSelectedTags: toggleTag,
+      setSelectedTags: setFollowingTagsFilter,
+      sort: followingSort,
+      setSort: setFollowingSort,
+      isEndOfResults: isEndOfFollowing,
+      setSearchFilter: setFollowingSearch,
+      isFetchingMore: isFetchingMoreFollowing,
+      fetchMore: () => fetchMoreFollowing(),
+      title: 'following' as ProfileTabType,
+      canEditTags: isMyProfile && roles?.isManager,
+    },
   }
+
+  const activeTableProps = tableProps[activeTab]
 
   useEffect(() => {
     const userPage = document.getElementById('user-page')
@@ -171,28 +199,17 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
         </div>
         <div className='flex w-full max-w-[1920px] flex-col-reverse gap-4 px-4 md:-mt-28 lg:-mt-24 lg:flex-row xl:px-8'>
           <div className='z-10 h-fit w-full'>
-            <FollowersAndFollowing
+            <UserProfilePageTable
               ref={tableRef}
-              user={user}
-              defaultTab={activeTab}
-              canEditTags={isMyProfile && roles?.isManager}
-              isConnectedUserProfile={isMyProfile}
-              showHeaderImage={true}
-              showRecommendations={true}
-              connectedAddress={connectedAddress}
-              selectedList={selectedList?.toString()}
-              onProfileClick={(address) => {
-                router.push(`/${address}?ssr=false`)
-              }}
-              rowHeight={80}
-              preventDefaultScroll={true}
+              setActiveTab={(tab) => setActiveTab(tab as ProfileTabType)}
+              {...activeTableProps}
             />
           </div>
           <div ref={TopEightRef} className='top-0 z-10 h-fit pb-4 lg:sticky'>
             <TopEightActivity
               user={user}
               isConnectedUserProfile={isMyProfile}
-              followingListProps={followingTableprops}
+              followingListProps={tableProps.following}
             />
           </div>
         </div>
