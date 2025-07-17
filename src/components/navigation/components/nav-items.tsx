@@ -39,7 +39,12 @@ const NavItems = () => {
   const profileName = account?.ens.name
 
   return (
-    <div className='flex w-full items-center justify-between sm:flex-col sm:justify-start sm:gap-3'>
+    <div
+      className={cn(
+        'flex w-full items-center sm:flex-col sm:justify-start sm:gap-3',
+        userAddress ? 'justify-between' : 'justify-evenly'
+      )}
+    >
       {NAV_ITEMS.map((item) => {
         if (item.hiddenOnDisconnected && !userAddress) return null
 
