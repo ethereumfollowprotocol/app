@@ -41,6 +41,7 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
   openQrCodeModal,
   openListSettingsModal,
   refetchProfile,
+  refetchStats,
   className,
 }) => {
   const router = useRouter()
@@ -62,18 +63,26 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
       onStatClick={({ addressOrName, stat }: { addressOrName: string; stat: string }) => {
         router.push(`/${addressOrName}?tab=${stat}`)
       }}
-      role={role}
       className={className}
       style={{
         paddingBottom: width && width < 768 ? '20px' : '110px',
       }}
       showFollowButton={profile?.address ? true : false}
       showFollowerState={true}
-      options={{
-        profileData: profile ?? undefined,
-        statsData: stats ?? undefined,
-        prefetchedProfileLoading: isLoading,
-        prefetchedStatsLoading: isStatsLoading,
+      extraOptions={{
+        role: role,
+        prefetched: {
+          profile: {
+            data: profile ?? undefined,
+            isLoading: !!isLoading,
+            refetch: refetchProfile ?? (() => {}),
+          },
+          stats: {
+            data: stats ?? undefined,
+            isLoading: !!isStatsLoading,
+            refetch: refetchStats ?? (() => {}),
+          },
+        },
         nameMenu: profile?.address ? (
           <ThreeDotMenu
             address={profile.address}
@@ -89,8 +98,7 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
           />
         ) : null,
         openListSettings: openListSettingsModal,
-        refetchProfileData: refetchProfile,
-        followButton: <FollowButton address={profile?.address} />,
+        customFollowButton: <FollowButton address={profile?.address} />,
       }}
     />
   )

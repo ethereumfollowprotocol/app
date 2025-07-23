@@ -57,8 +57,8 @@ const CompleteProfile = () => {
             onProfileClick={() => {
               router.push('/0xd63c2582b071f41090e89d975f738e87e7b8da50?ssr=false')
             }}
-            options={{
-              followButton: <FollowButton address='0xd63c2582b071f41090e89d975f738e87e7b8da50' />,
+            extraOptions={{
+              customFollowButton: <FollowButton address='0xd63c2582b071f41090e89d975f738e87e7b8da50' />,
               openListSettings: () => {
                 router.push('/0xd63c2582b071f41090e89d975f738e87e7b8da50?ssr=false&modal=list_settings')
               },
@@ -82,8 +82,8 @@ const CompleteProfile = () => {
             onProfileClick={() => {
               router.push('/0x05977b2fb9b7ab3f3733b34350044a01a388579c?ssr=false')
             }}
-            options={{
-              followButton: <FollowButton address='0x05977b2fb9b7ab3f3733b34350044a01a388579c' />,
+            extraOptions={{
+              customFollowButton: <FollowButton address='0x05977b2fb9b7ab3f3733b34350044a01a388579c' />,
               openListSettings: () => {
                 router.push('/0x05977b2fb9b7ab3f3733b34350044a01a388579c?ssr=false&modal=list_settings')
               },

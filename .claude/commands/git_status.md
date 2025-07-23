@@ -14,4 +14,5 @@ Read the `Files` and run the `Commands` and summarize the current state of the g
 - Current branch: !`git branch --show-current`
 
 ## Files
+
 @README.md

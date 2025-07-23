@@ -74,14 +74,20 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           }}
           selectedList={selectedList}
           className='bg-neutral'
-          options={{
+          extraOptions={{
             openListSettings: openListSettingsModal,
-            profileData: profile,
-            statsData: stats ?? undefined,
-            refetchStatsData: refetchStats,
-            refetchProfileData: refetchProfile,
-            prefetchedStatsLoading: isStatsLoading,
-            prefetchedProfileLoading: isLoading,
+            prefetched: {
+              profile: {
+                data: profile ?? undefined,
+                isLoading: !!isLoading,
+                refetch: refetchProfile ?? (() => {}),
+              },
+              stats: {
+                data: stats ?? undefined,
+                isLoading: !!isStatsLoading,
+                refetch: refetchStats ?? (() => {}),
+              },
+            },
             nameMenu: (
               <ThreeDotMenu
                 address={profile.address}
@@ -96,7 +102,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 openListSettingsModal={openListSettingsModal}
               />
             ),
-            followButton: (
+            customFollowButton: (
               <div className='mt-16'>
                 {isConnectedUserCard ? (
                   <Link href={`https://app.ens.domains/${profile.ens.name}`} target='_blank'>

@@ -12,7 +12,7 @@ interface FollowsYouProps {
 
 const FollowsYou: React.FC<FollowsYouProps> = ({ addressOrName, connectedAddress, list }) => {
   const { t } = useTranslation()
-  const { followerTag } = useFollowerState({ addressOrName: addressOrName, connectedAddress, list })
+  const { followerTag } = useFollowerState({ lookupAddressOrName: addressOrName, connectedAddress, list })
 
   return (
     <div
