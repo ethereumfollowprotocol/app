@@ -58,6 +58,7 @@ import PrepunkVerify from 'public/assets/partners/prepunkverify.jpeg'
 import MetaPoll from 'public/assets/partners/metapoll.jpeg'
 import CommonGround from 'public/assets/partners/commonground.jpeg'
 import Enscribe from 'public/assets/partners/enscribe.jpeg'
+import SmithBox from 'public/assets/partners/smithbox.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -349,6 +350,11 @@ export const INTEGRATIONS = [
     name: 'CodeSwarm.ai',
     url: 'https://codeswarm.ai/',
     logo: CodeSwarmAI,
+  },
+  {
+    name: 'Smith.box',
+    url: 'https://smith.box',
+    logo: SmithBox,
   },
 ] as {
   name: string
