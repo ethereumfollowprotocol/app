@@ -59,6 +59,7 @@ import MetaPoll from 'public/assets/partners/metapoll.jpeg'
 import CommonGround from 'public/assets/partners/commonground.jpeg'
 import Enscribe from 'public/assets/partners/enscribe.jpeg'
 import SmithBox from 'public/assets/partners/smithbox.jpeg'
+import CreatorScore from 'public/assets/partners/creatorscore.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -105,6 +106,11 @@ export const INTEGRATIONS = [
     name: 'Vision',
     url: 'https://vision.io/',
     logo: EnsVision,
+  },
+  {
+    name: 'Talent Protocol, Creator Score',
+    url: 'https://www.creatorscore.app/',
+    logo: CreatorScore,
   },
   {
     name: 'Ipê City',
@@ -338,7 +344,7 @@ export const INTEGRATIONS = [
   },
   {
     name: 'GeoCities',
-    url: 'https://geocities.eth.link',
+    url: 'https://geocities.eth.link/',
     logo: GeoCities,
   },
   {
@@ -353,7 +359,7 @@ export const INTEGRATIONS = [
   },
   {
     name: 'Smith.box',
-    url: 'https://smith.box',
+    url: 'https://smith.box/',
     logo: SmithBox,
   },
 ] as {
