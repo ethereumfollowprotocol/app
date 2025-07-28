@@ -108,7 +108,7 @@ export const INTEGRATIONS = [
     logo: EnsVision,
   },
   {
-    name: 'Talent Protocol, Creator Score',
+    name: 'Creator Score',
     url: 'https://www.creatorscore.app/',
     logo: CreatorScore,
   },
