@@ -40,16 +40,21 @@ jobs:
 
     - name: Extract Instruction from Comment
       id: extract-instruction
+      env:
+        ISSUE_COMMENT_BODY: ${{ github.event.comment.body }}
+        PR_REVIEW_COMMENT_BODY: ${{ github.event.comment.body }}
+        PR_REVIEW_BODY: ${{ github.event.review.body }}
+        ISSUE_BODY: ${{ github.event.issue.body }}
       run: |
         # Get the comment body based on event type
         if [ "${{ github.event_name }}" = "issue_comment" ]; then
-          COMMENT_BODY="${{ github.event.comment.body }}"
+          COMMENT_BODY="$ISSUE_COMMENT_BODY"
         elif [ "${{ github.event_name }}" = "pull_request_review_comment" ]; then
-          COMMENT_BODY="${{ github.event.comment.body }}"
+          COMMENT_BODY="$PR_REVIEW_COMMENT_BODY"
         elif [ "${{ github.event_name }}" = "pull_request_review" ]; then
-          COMMENT_BODY="${{ github.event.review.body }}"
+          COMMENT_BODY="$PR_REVIEW_BODY"
         elif [ "${{ github.event_name }}" = "issues" ]; then
-          COMMENT_BODY="${{ github.event.issue.body }}"
+          COMMENT_BODY="$ISSUE_BODY"
         else
           COMMENT_BODY=""
         fi
