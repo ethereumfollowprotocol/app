@@ -24,6 +24,7 @@ import SerbiaFlag from 'public/assets/icons/flags/serbia.svg?url'
 import RussiaFlag from 'public/assets/icons/flags/russia.svg?url'
 import MexicoFlag from 'public/assets/icons/flags/mexico.svg?url'
 import PirateFlag from 'public/assets/icons/flags/pirate.svg?url'
+import PirateFlagSvg from 'public/assets/icons/flags/pirate-flag.svg?url'
 import HungaryFlag from 'public/assets/icons/flags/hungary.svg?url'
 import FinlandFlag from 'public/assets/icons/flags/finland.svg?url'
 import RomaniaFlag from 'public/assets/icons/flags/romania.svg?url'
@@ -215,6 +216,13 @@ export const LANGUAGES: {
     key: 'millennial',
     icon: MillennialFlag,
     englishLanguage: 'Millennial',
+    special: true,
+  },
+  {
+    language: 'tlhIngan Hol',
+    key: 'tlh',
+    icon: PirateFlagSvg,
+    englishLanguage: 'Klingon',
     special: true,
   },
   // {
