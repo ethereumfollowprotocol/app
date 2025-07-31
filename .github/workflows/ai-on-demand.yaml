@@ -19,7 +19,7 @@ jobs:
         (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@efp-dev-ops')) ||
         (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@efp-dev-ops')) ||
         (github.event_name == 'issues' && contains(github.event.issue.body, '@efp-dev-ops'))
-      ) && contains(fromJSON(vars.ALLOWED_USER_LIST), github.actor) 
+      ) && contains(fromJSON(vars.AI_ALLOWED_USER_LIST), github.actor) 
     runs-on: ubuntu-latest
     permissions:
       contents: read
