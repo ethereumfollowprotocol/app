@@ -69,7 +69,7 @@ const BackToTop = () => {
     >
       <button
         onClick={handleBackToTop}
-        className='bg-neutral hover:bg-nav-item shadow-medium flex w-fit items-center gap-2 rounded-sm p-3 text-sm font-semibold transition-all sm:px-5 sm:py-4'
+        className='bg-neutral hover:bg-nav-item dark:bg-blue-600 dark:hover:bg-blue-700 shadow-medium flex w-fit items-center gap-2 rounded-sm p-3 text-sm font-semibold transition-all sm:px-5 sm:py-4'
       >
         <p className='hidden sm:block'>Back to top</p>
         <ArrowUp className='h-auto w-5' />
