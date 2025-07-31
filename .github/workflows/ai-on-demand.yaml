@@ -1,5 +1,4 @@
 name: AI On-Demand Assistant
-description: "Provides AI assistance when @efp-dev-ops is mentioned by authorized users"
 on:
   issue_comment:
     types: [created]
@@ -25,20 +24,20 @@ jobs:
       contents: read
       issues: write
       pull-requests: write
-    
+
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
       with:
         fetch-depth: 1
-    
+
     - name: Generate Custom App Token
       id: generate-token
       uses: actions/create-github-app-token@v1
       with:
         app-id: ${{ secrets.AI_APP_ID }}
         private-key: ${{ secrets.AI_PRIVATE_KEY }}
-    
+
     - name: Extract Instruction from Comment
       id: extract-instruction
       run: |
@@ -54,23 +53,23 @@ jobs:
         else
           COMMENT_BODY=""
         fi
-        
+
         # Remove the @mention and get the instruction
         INSTRUCTION=$(echo "$COMMENT_BODY" | sed 's/@efp-dev-ops[[:space:]]*//' | sed 's/^[[:space:]]*//')
-        
+
         # Add input validation
         if [ ${#INSTRUCTION} -gt 4000 ]; then
           echo "Instruction too long, truncating..."
           INSTRUCTION=$(echo "$INSTRUCTION" | head -c 4000)
         fi
-        
+
         # Set as output for next step
         echo "instruction<<EOF" >> $GITHUB_OUTPUT
         echo "$INSTRUCTION" >> $GITHUB_OUTPUT
         echo "EOF" >> $GITHUB_OUTPUT
-        
+
         echo "Extracted instruction: $INSTRUCTION"
-    
+
     - name: AI Response
       uses: anthropics/claude-code-action@v0
       continue-on-error: true
@@ -80,9 +79,9 @@ jobs:
         github_token: ${{ steps.generate-token.outputs.token }}
         direct_prompt: |
           You are an AI assistant for our development team. A team member has requested help with the following:
-          
+
           **User Request:** ${{ steps.extract-instruction.outputs.instruction }}
-          
+
           Please provide a helpful, accurate response. If the request involves code analysis, focus on the current repository context. If it's a general question, provide clear and actionable guidance.
-          
+
           Keep your response concise but thorough, and format it nicely for GitHub comments.
