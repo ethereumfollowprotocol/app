@@ -60,6 +60,7 @@ import CommonGround from 'public/assets/partners/commonground.jpeg'
 import Enscribe from 'public/assets/partners/enscribe.jpeg'
 import SmithBox from 'public/assets/partners/smithbox.jpeg'
 import CreatorScore from 'public/assets/partners/creatorscore.jpeg'
+import EthStars from 'public/assets/partners/ethstars.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -346,6 +347,11 @@ export const INTEGRATIONS = [
     name: 'GeoCities',
     url: 'https://geocities.eth.link/',
     logo: GeoCities,
+  },
+  {
+    name: 'EthStars',
+    url: 'https://ethstars.info/',
+    logo: EthStars,
   },
   {
     name: 'Vibes',
