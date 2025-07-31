@@ -1,0 +1,87 @@
+name: AI On-Demand Assistant
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  pull_request_review:
+    types: [submitted]
+  issues:
+    types: [opened]
+
+jobs:
+  ai-response:
+    # Only run if the app is mentioned and it's not the app itself commenting
+    if: |
+      (
+        (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@efp-dev-ops')) ||
+        (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@efp-dev-ops')) ||
+        (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@efp-dev-ops')) ||
+        (github.event_name == 'issues' && contains(github.event.issue.body, '@efp-dev-ops'))
+      ) && contains(fromJSON(vars.AI_ALLOWED_USER_LIST), github.actor) 
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 1
+
+    - name: Generate Custom App Token
+      id: generate-token
+      uses: actions/create-github-app-token@v1
+      with:
+        app-id: ${{ secrets.AI_APP_ID }}
+        private-key: ${{ secrets.AI_PRIVATE_KEY }}
+
+    - name: Extract Instruction from Comment
+      id: extract-instruction
+      run: |
+        # Get the comment body based on event type
+        if [ "${{ github.event_name }}" = "issue_comment" ]; then
+          COMMENT_BODY="${{ github.event.comment.body }}"
+        elif [ "${{ github.event_name }}" = "pull_request_review_comment" ]; then
+          COMMENT_BODY="${{ github.event.comment.body }}"
+        elif [ "${{ github.event_name }}" = "pull_request_review" ]; then
+          COMMENT_BODY="${{ github.event.review.body }}"
+        elif [ "${{ github.event_name }}" = "issues" ]; then
+          COMMENT_BODY="${{ github.event.issue.body }}"
+        else
+          COMMENT_BODY=""
+        fi
+
+        # Remove the @mention and get the instruction
+        INSTRUCTION=$(echo "$COMMENT_BODY" | sed 's/@efp-dev-ops[[:space:]]*//' | sed 's/^[[:space:]]*//')
+
+        # Add input validation
+        if [ ${#INSTRUCTION} -gt 4000 ]; then
+          echo "Instruction too long, truncating..."
+          INSTRUCTION=$(echo "$INSTRUCTION" | head -c 4000)
+        fi
+
+        # Set as output for next step
+        echo "instruction<<EOF" >> $GITHUB_OUTPUT
+        echo "$INSTRUCTION" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+
+        echo "Extracted instruction: $INSTRUCTION"
+
+    - name: AI Response
+      uses: anthropics/claude-code-action@v0
+      continue-on-error: true
+      timeout-minutes: 10
+      with:
+        claude_code_oauth_token: ${{ secrets.AI_CLAUDE_CODE_OAUTH_TOKEN }}
+        github_token: ${{ steps.generate-token.outputs.token }}
+        direct_prompt: |
+          You are an AI assistant for our development team. A team member has requested help with the following:
+
+          **User Request:** ${{ steps.extract-instruction.outputs.instruction }}
+
+          Please provide a helpful, accurate response. If the request involves code analysis, focus on the current repository context. If it's a general question, provide clear and actionable guidance.
+
+          Keep your response concise but thorough, and format it nicely for GitHub comments.
