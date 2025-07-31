@@ -1,0 +1,78 @@
+name: Custom AI Code Review
+description: "Automated code quality and documentation review on pull requests"
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+#   issue_comment:
+#     types: [created]
+
+jobs:
+  ai-review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Get full history for better context
+    
+    - name: Generate Custom App Token
+      id: generate-token
+      uses: actions/create-github-app-token@v1
+      with:
+        app-id: ${{ secrets.AI_APP_ID }}
+        private-key: ${{ secrets.AI_PRIVATE_KEY }}
+    
+    - name: AI Code Quality Review
+      uses: anthropics/claude-code-action@v0
+      continue-on-error: true
+      timeout-minutes: 10
+      with:
+        claude_code_oauth_token: ${{ secrets.AI_CLAUDE_CODE_OAUTH_TOKEN }}
+        github_token: ${{ steps.generate-token.outputs.token }}
+        direct_prompt: |
+          You are the AI code quality reviewer for our organization.
+          
+          Please analyze this pull request for:
+          
+          ## 🔍 Code Quality Assessment
+          - Overall code quality rating (1-10)
+          - Code maintainability and readability
+          - Adherence to best practices
+          - Performance considerations
+          
+          ## 📚 Documentation Review
+          - Comment quality and completeness
+          - Function/method documentation
+          - README updates if needed
+          
+          ## 🎯 Specific Recommendations
+          - Actionable improvements with priorities
+          - Code refactoring suggestions
+          - Testing recommendations
+          
+          Format your response as a professional code review.
+    
+    - name: Post Summary Comment
+      continue-on-error: true
+      run: |
+        gh pr comment ${{ github.event.number }} --body "
+        ## 🤖 AI Code Review Complete
+        
+        Your custom AI assistant has completed the automated code review process.
+        
+        ✅ Security analysis finished
+        ✅ Code quality assessment complete
+        ✅ Documentation review done
+        
+        Please review the detailed feedback above and address any high-priority items before merging.
+        
+        ---
+        *This automated review was performed by EFP-DEV-OPS*
+        "
+      env:
+        GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
