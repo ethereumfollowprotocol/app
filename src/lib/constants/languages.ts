@@ -174,8 +174,8 @@ export const LANGUAGES: {
   { language: 'اردو', key: 'ur', icon: PakistanFlag, englishLanguage: 'Urdu' },
   { language: 'ଓଡିଆ', key: 'or', icon: IndiaFlag, englishLanguage: 'Odia' },
   { language: '廣東話', key: 'yue', icon: ChinaFlag, englishLanguage: 'Cantonese' },
-  { language: 'tlhIngan Hol', key: 'tlh', icon: KlingonFlag, englishLanguage: 'Klingon' },
   // ----------- special languages -----------
+  { language: 'tlhIngan Hol', key: 'tlh', icon: KlingonFlag, englishLanguage: 'Klingon', special: true },
   { language: 'Pirate', key: 'pirate', icon: PirateFlag, englishLanguage: 'Pirate', special: true },
   {
     language: 'Corporate',
