@@ -65,6 +65,7 @@ import SaudiArabiaFlag from 'public/assets/icons/flags/saudi-arabia.svg?url'
 import VaticanCityFlag from 'public/assets/icons/flags/vatican-city.svg?url'
 import CzechRepublicFlag from 'public/assets/icons/flags/czech-republic.svg?url'
 import KlingonFlag from 'public/assets/icons/flags/klingon.svg?url'
+import ElvishFlag from 'public/assets/icons/flags/elvish.svg?url'
 import type { StaticImageData } from 'next/image'
 // import HalloweenFlag from 'public/assets/icons/flags/halloween.svg'
 
@@ -176,6 +177,7 @@ export const LANGUAGES: {
   { language: '廣東話', key: 'yue', icon: ChinaFlag, englishLanguage: 'Cantonese' },
   // ----------- special languages -----------
   { language: 'tlhIngan Hol', key: 'tlh', icon: KlingonFlag, englishLanguage: 'Klingon', special: true },
+  { language: 'Sindarin', key: 'elvish', icon: ElvishFlag, englishLanguage: 'Elvish', special: true },
   { language: 'Pirate', key: 'pirate', icon: PirateFlag, englishLanguage: 'Pirate', special: true },
   {
     language: 'Corporate',

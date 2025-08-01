@@ -13,6 +13,7 @@ import cy from '../../../public/locales/cy/translations.json'
 import de from '../../../public/locales/de/translations.json'
 import ee from '../../../public/locales/ee/translations.json'
 import el from '../../../public/locales/el/translations.json'
+import elvish from '../../../public/locales/elvish/translations.json'
 import en from '../../../public/locales/en/translations.json'
 import ermahgersh from '../../../public/locales/ermahgersh/translations.json'
 import es from '../../../public/locales/es/translations.json'
@@ -107,6 +108,7 @@ export const translations = {
   de,
   ee,
   el,
+  elvish,
   en,
   ermahgersh,
   es,
