@@ -1,0 +1,48 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="elvishGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a237e;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#283593;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1b5e20;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="leafGradient" cx="50%" cy="50%">
+      <stop offset="0%" style="stop-color:#66bb6a;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#2e7d32;stop-opacity:0.7" />
+    </radialGradient>
+    <linearGradient id="silverGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#e8eaf6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#c5cae9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9fa8da;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Flag background -->
+  <rect width="32" height="32" fill="url(#elvishGradient)" rx="2"/>
+  
+  <!-- Elvish leaf motif -->
+  <path d="M8 16 Q12 8 16 16 Q20 8 24 16 Q20 24 16 16 Q12 24 8 16 Z" 
+        fill="url(#leafGradient)" 
+        opacity="0.6"/>
+  
+  <!-- Central star/light -->
+  <circle cx="16" cy="16" r="3" fill="url(#silverGradient)" opacity="0.8"/>
+  <path d="M16 10 L17.5 14 L22 14 L18.5 17 L20 22 L16 19 L12 22 L13.5 17 L10 14 L14.5 14 Z" 
+        fill="url(#silverGradient)" 
+        opacity="0.6"/>
+  
+  <!-- Elvish script-inspired curves -->
+  <path d="M4 8 Q8 6 12 8 Q16 10 20 8 Q24 6 28 8" 
+        stroke="url(#silverGradient)" 
+        stroke-width="0.5" 
+        fill="none" 
+        opacity="0.5"/>
+  <path d="M4 24 Q8 26 12 24 Q16 22 20 24 Q24 26 28 24" 
+        stroke="url(#silverGradient)" 
+        stroke-width="0.5" 
+        fill="none" 
+        opacity="0.5"/>
+  
+  <!-- Border -->
+  <rect width="32" height="32" fill="none" stroke="url(#silverGradient)" stroke-width="0.5" rx="2" opacity="0.3"/>
+</svg>
