@@ -76,6 +76,7 @@ import te from '../../../public/locales/te/translations.json'
 import th from '../../../public/locales/th/translations.json'
 import tiv from '../../../public/locales/tiv/translations.json'
 import tl from '../../../public/locales/tl/translations.json'
+import tlh from '../../../public/locales/tlh/translations.json'
 import tr from '../../../public/locales/tr/translations.json'
 import tw from '../../../public/locales/tw/translations.json'
 import ug from '../../../public/locales/ug/translations.json'
@@ -169,6 +170,7 @@ export const translations = {
   th,
   tiv,
   tl,
+  tlh,
   tr,
   tw,
   ug,
