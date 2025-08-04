@@ -202,40 +202,6 @@ input {
   }
 }
 
-.top-eight-profile-edit {
-  width: calc(25% - 6px);
-  height: 182px;
-}
-
-@media screen and (max-width: 640px) {
-  .top-eight-profile-edit {
-    width: calc(50% - 4px);
-  }
-}
-
-.top-eight-profile {
-  width: calc(50% - 4px);
-  height: 182px;
-}
-
-@media (min-width: 768px) {
-  .top-eight-profile {
-    width: calc(25% - 6px);
-  }
-}
-
-@media (min-width: 1024px) {
-  .top-eight-profile {
-    width: calc(50% - 4px);
-  }
-}
-
-@media (min-width: 1280px) {
-  .top-eight-profile {
-    width: calc(25% - 6px);
-  }
-}
-
 .btn-grad {
   background: linear-gradient(to right, #ffe066 0%, #ffe066 30%, #fff981 75%, #ffafde 100%);
   text-align: center;
