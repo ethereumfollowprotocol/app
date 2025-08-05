@@ -60,8 +60,8 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
   return (
     <div
       className={cn(
-        'group bg-neutral shadow-small relative flex flex-col items-center justify-between gap-2 overflow-hidden rounded-sm px-0.5 py-4 pb-3',
-        isEditing ? 'top-eight-profile-edit cursor-pointer border-[3px] border-transparent' : 'top-eight-profile',
+        'group bg-neutral shadow-small relative flex min-h-[182px] w-full flex-col items-center justify-between gap-2 overflow-hidden rounded-sm px-0.5 py-4 pb-3',
+        isEditing && 'cursor-pointer border-[3px] border-transparent',
         isAddingToTopEight && 'border-[3px] border-green-500/50',
         isRemovingFromTopEight && 'border-[3px] border-red-400/70 dark:border-red-500/70',
         isEditing && !(isAddingToTopEight || isRemovingFromTopEight) && 'hover:border-nav-item'
@@ -92,7 +92,7 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
           {isAddingToTopEight ? <Plus className='h-3 w-3' /> : <Cross className='h-4 w-4' />}
         </div>
       )}
-      <div className='z-10 flex w-full flex-col items-center gap-1'>
+      <div className='z-10 flex w-full flex-1 flex-col items-center gap-1'>
         {isEnsProfileLoading ? (
           <LoadingCell className='h-[50px] w-[50px] rounded-full' />
         ) : (
@@ -104,14 +104,14 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
             />
           </Link>
         )}
-        <div className='flex h-13 w-full flex-col items-center justify-center gap-1.5'>
+        <div className='flex w-full flex-col items-center justify-start gap-0.5 px-1'>
           {isEnsProfileLoading ? (
             <LoadingCell className='h-7 w-24 rounded-sm' />
           ) : (
             <Link
               href={`/${profile.address}`}
               className={cn(
-                'max-w-full truncate text-lg font-bold',
+                'max-w-full truncate text-center text-lg leading-tight font-bold',
                 isEditing ? 'pointer-events-none' : 'transition-all hover:scale-110 hover:opacity-75'
               )}
             >
@@ -120,13 +120,14 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
                 : truncateAddress(profile.address)}
             </Link>
           )}
-          {userAddress && <FollowsYou addressOrName={profile.address} connectedAddress={userAddress} />}
+          {userAddress && (
+            <div className='mt-1'>
+              <FollowsYou addressOrName={profile.address} connectedAddress={userAddress} />
+            </div>
+          )}
         </div>
       </div>
-      <div
-        onClick={(e) => e.stopPropagation()}
-        className={cn('absolute left-0 z-10 flex w-full justify-center', isEditing ? 'bottom-2' : 'bottom-3')}
-      >
+      <div onClick={(e) => e.stopPropagation()} className={cn('z-10 flex w-full justify-center')}>
         <FollowButton address={profile.address} />
       </div>
     </div>

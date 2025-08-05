@@ -45,7 +45,8 @@ const TopEight: React.FC<TopEightProps> = ({
             {t('no top eight')}
           </p>
         )}
-        <div className='flex w-full flex-wrap items-start justify-start gap-2 transition-none'>
+        {/* Updated grid layout with responsive breakpoints */}
+        <div className='grid w-full grid-cols-2 gap-2 transition-none sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4'>
           {!isTopEightLoading &&
             topEight.slice(0, displayLimit).map((profile, index) => <TopEightProfile profile={profile} key={index} />)}
           {new Array(isTopEightLoading ? displayLimit : 0).fill(0).map((_, index) => (
