@@ -60,7 +60,7 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
   return (
     <div
       className={cn(
-        'group bg-neutral shadow-small relative flex min-h-[180px] w-full flex-col items-center justify-between gap-2 overflow-hidden rounded-sm px-0.5 py-4 pb-3',
+        'group bg-neutral shadow-small relative flex min-h-[182px] w-full flex-col items-center justify-between gap-2 overflow-hidden rounded-sm px-0.5 py-4 pb-3',
         isEditing && 'cursor-pointer border-[3px] border-transparent',
         isAddingToTopEight && 'border-[3px] border-green-500/50',
         isRemovingFromTopEight && 'border-[3px] border-red-400/70 dark:border-red-500/70',
@@ -104,8 +104,7 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
             />
           </Link>
         )}
-        {/* Updated text container with better spacing and min-height for consistent layout */}
-        <div className='flex min-h-[52px] w-full flex-col items-center justify-start gap-1 px-1'>
+        <div className='flex w-full flex-col items-center justify-start gap-0.5 px-1'>
           {isEnsProfileLoading ? (
             <LoadingCell className='h-7 w-24 rounded-sm' />
           ) : (
@@ -121,7 +120,6 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
                 : truncateAddress(profile.address)}
             </Link>
           )}
-          {/* Fixed spacing for follows you tag */}
           {userAddress && (
             <div className='mt-1'>
               <FollowsYou addressOrName={profile.address} connectedAddress={userAddress} />
@@ -129,10 +127,7 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
           )}
         </div>
       </div>
-      <div
-        onClick={(e) => e.stopPropagation()}
-        className={cn('absolute left-0 z-10 flex w-full justify-center', isEditing ? 'bottom-2' : 'bottom-3')}
-      >
+      <div onClick={(e) => e.stopPropagation()} className={cn('z-10 flex w-full justify-center')}>
         <FollowButton address={profile.address} />
       </div>
     </div>
