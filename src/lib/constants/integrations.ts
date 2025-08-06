@@ -62,6 +62,7 @@ import SmithBox from 'public/assets/partners/smithbox.jpeg'
 import CreatorScore from 'public/assets/partners/creatorscore.jpeg'
 import EthStars from 'public/assets/partners/ethstars.jpeg'
 import Paper from 'public/assets/partners/paper.jpeg'
+import Ethbox from 'public/assets/partners/ethbox.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -183,6 +184,11 @@ export const INTEGRATIONS = [
     name: 'Web3 Bio',
     url: 'https://web3.bio/',
     logo: WebThreeBio,
+  },
+  {
+    name: 'Eth.box',
+    url: 'https://eth.box/',
+    logo: Ethbox,
   },
   {
     name: 'Enscribe',
