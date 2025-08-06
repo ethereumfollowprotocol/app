@@ -61,6 +61,7 @@ import Enscribe from 'public/assets/partners/enscribe.jpeg'
 import SmithBox from 'public/assets/partners/smithbox.jpeg'
 import CreatorScore from 'public/assets/partners/creatorscore.jpeg'
 import EthStars from 'public/assets/partners/ethstars.jpeg'
+import Paper from 'public/assets/partners/paper.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -157,6 +158,11 @@ export const INTEGRATIONS = [
     name: 'Zapper',
     url: 'https://zapper.xyz/',
     logo: Zapper,
+  },
+  {
+    name: 'Paper',
+    url: 'https://paper.ink/',
+    logo: Paper,
   },
   {
     name: 'Blockverse',
