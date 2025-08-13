@@ -63,6 +63,7 @@ import CreatorScore from 'public/assets/partners/creatorscore.jpeg'
 import EthStars from 'public/assets/partners/ethstars.jpeg'
 import Paper from 'public/assets/partners/paper.jpeg'
 import Ethbox from 'public/assets/partners/ethbox.jpeg'
+import CuriaNetwork from 'public/assets/partners/curianetwork.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -289,6 +290,11 @@ export const INTEGRATIONS = [
     name: 'JustaName',
     url: 'https://www.justaname.id/',
     logo: JustaName,
+  },
+  {
+    name: 'Curia Network',
+    url: 'https://curia.network/',
+    logo: CuriaNetwork,
   },
   {
     name: 'Devcon VI Collab Portal',
