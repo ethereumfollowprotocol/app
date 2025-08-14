@@ -292,11 +292,6 @@ export const INTEGRATIONS = [
     logo: JustaName,
   },
   {
-    name: 'Curia Network',
-    url: 'https://curia.network/',
-    logo: CuriaNetwork,
-  },
-  {
     name: 'Devcon VI Collab Portal',
     url: 'https://devcon.fileverse.io/devcon7/portal',
     logo: DevconCollabPortal,
@@ -350,6 +345,11 @@ export const INTEGRATIONS = [
     name: 'Prepunk Verify',
     url: 'https://verify.prepunk.club/',
     logo: PrepunkVerify,
+  },
+  {
+    name: 'Curia.Network',
+    url: 'https://curia.network/',
+    logo: CuriaNetwork,
   },
   {
     name: 'CryptoPunks.eth.limo',
