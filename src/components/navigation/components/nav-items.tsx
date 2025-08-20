@@ -35,8 +35,8 @@ const NavItems = () => {
       return await fetchAccount(userAddress, listToFetch)
     },
   })
-  const profileAvatar = account?.ens.avatar
-  const profileName = account?.ens.name
+  const profileAvatar = account?.ens?.avatar
+  const profileName = account?.ens?.name
 
   return (
     <div
