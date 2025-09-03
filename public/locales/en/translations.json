@@ -263,7 +263,7 @@
   "noData": "No data available",
   "retry": "Retry",
   "transaction.claimPOAPTitle": "Claim your POAP",
-  "transaction.claimPOAPDescription": "Congratulations! You&apos;ve earned a POAP for being an early user of EFP.",
+  "transaction.claimPOAPDescription": "Congratulations! You've earned a POAP for being an early user of EFP.",
   "transaction.claimPOAP": "Claim POAP",
   "transaction.noThanks": "No thanks",
   "modal.cancelTransactions.title": "Cancel All Transactions",
