@@ -18,7 +18,7 @@ jobs:
         (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@efp-dev-ops')) ||
         (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@efp-dev-ops')) ||
         (github.event_name == 'issues' && contains(github.event.issue.body, '@efp-dev-ops'))
-      ) && contains(fromJSON(vars.AI_ALLOWED_USER_LIST), github.actor) 
+      ) && contains(fromJSON(vars.AI_ALLOWED_USER_LIST), github.actor)
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -26,67 +26,67 @@ jobs:
       pull-requests: write
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 1
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
-    - name: Generate Custom App Token
-      id: generate-token
-      uses: actions/create-github-app-token@v1
-      with:
-        app-id: ${{ secrets.AI_APP_ID }}
-        private-key: ${{ secrets.AI_PRIVATE_KEY }}
+      - name: Generate Custom App Token
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.AI_APP_ID }}
+          private-key: ${{ secrets.AI_PRIVATE_KEY }}
 
-    - name: Extract Instruction from Comment
-      id: extract-instruction
-      env:
-        ISSUE_COMMENT_BODY: ${{ github.event.comment.body }}
-        PR_REVIEW_COMMENT_BODY: ${{ github.event.comment.body }}
-        PR_REVIEW_BODY: ${{ github.event.review.body }}
-        ISSUE_BODY: ${{ github.event.issue.body }}
-      run: |
-        # Get the comment body based on event type
-        if [ "${{ github.event_name }}" = "issue_comment" ]; then
-          COMMENT_BODY="$ISSUE_COMMENT_BODY"
-        elif [ "${{ github.event_name }}" = "pull_request_review_comment" ]; then
-          COMMENT_BODY="$PR_REVIEW_COMMENT_BODY"
-        elif [ "${{ github.event_name }}" = "pull_request_review" ]; then
-          COMMENT_BODY="$PR_REVIEW_BODY"
-        elif [ "${{ github.event_name }}" = "issues" ]; then
-          COMMENT_BODY="$ISSUE_BODY"
-        else
-          COMMENT_BODY=""
-        fi
+      - name: Extract Instruction from Comment
+        id: extract-instruction
+        env:
+          ISSUE_COMMENT_BODY: ${{ github.event.comment.body }}
+          PR_REVIEW_COMMENT_BODY: ${{ github.event.comment.body }}
+          PR_REVIEW_BODY: ${{ github.event.review.body }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          # Get the comment body based on event type
+          if [ "${{ github.event_name }}" = "issue_comment" ]; then
+            COMMENT_BODY="$ISSUE_COMMENT_BODY"
+          elif [ "${{ github.event_name }}" = "pull_request_review_comment" ]; then
+            COMMENT_BODY="$PR_REVIEW_COMMENT_BODY"
+          elif [ "${{ github.event_name }}" = "pull_request_review" ]; then
+            COMMENT_BODY="$PR_REVIEW_BODY"
+          elif [ "${{ github.event_name }}" = "issues" ]; then
+            COMMENT_BODY="$ISSUE_BODY"
+          else
+            COMMENT_BODY=""
+          fi
 
-        # Remove the @mention and get the instruction
-        INSTRUCTION=$(echo "$COMMENT_BODY" | sed 's/@efp-dev-ops[[:space:]]*//' | sed 's/^[[:space:]]*//')
+          # Remove the @mention and get the instruction
+          INSTRUCTION=$(echo "$COMMENT_BODY" | sed 's/@efp-dev-ops[[:space:]]*//' | sed 's/^[[:space:]]*//')
 
-        # Add input validation
-        if [ ${#INSTRUCTION} -gt 4000 ]; then
-          echo "Instruction too long, truncating..."
-          INSTRUCTION=$(echo "$INSTRUCTION" | head -c 4000)
-        fi
+          # Add input validation
+          if [ ${#INSTRUCTION} -gt 4000 ]; then
+            echo "Instruction too long, truncating..."
+            INSTRUCTION=$(echo "$INSTRUCTION" | head -c 4000)
+          fi
 
-        # Set as output for next step
-        echo "instruction<<EOF" >> $GITHUB_OUTPUT
-        echo "$INSTRUCTION" >> $GITHUB_OUTPUT
-        echo "EOF" >> $GITHUB_OUTPUT
+          # Set as output for next step
+          echo "instruction<<EOF" >> $GITHUB_OUTPUT
+          echo "$INSTRUCTION" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
-        echo "Extracted instruction: $INSTRUCTION"
+          echo "Extracted instruction: $INSTRUCTION"
 
-    - name: AI Response
-      uses: 0xthrpw/claude-code-action@v0.0.1
-      continue-on-error: true
-      timeout-minutes: 10
-      with:
-        claude_code_oauth_token: ${{ secrets.AI_CLAUDE_CODE_OAUTH_TOKEN }}
-        github_token: ${{ steps.generate-token.outputs.token }}
-        direct_prompt: |
-          You are an AI assistant for our development team. A team member has requested help with the following:
+      - name: AI Response
+        uses: 0xthrpw/claude-code-action@v0.0.1
+        continue-on-error: true
+        timeout-minutes: 10
+        with:
+          claude_code_oauth_token: ${{ secrets.AI_CLAUDE_CODE_OAUTH_TOKEN }}
+          github_token: ${{ steps.generate-token.outputs.token }}
+          direct_prompt: |
+            You are an AI assistant for our development team. A team member has requested help with the following:
 
-          **User Request:** ${{ steps.extract-instruction.outputs.instruction }}
+            **User Request:** ${{ steps.extract-instruction.outputs.instruction }}
 
-          Please provide a helpful, accurate response. If the request involves code analysis, focus on the current repository context. If it's a general question, provide clear and actionable guidance.
+            Please provide a helpful, accurate response. If the request involves code analysis, focus on the current repository context. If it's a general question, provide clear and actionable guidance.
 
-          Keep your response concise but thorough, and format it nicely for GitHub comments.
+            Keep your response concise but thorough, and format it nicely for GitHub comments.

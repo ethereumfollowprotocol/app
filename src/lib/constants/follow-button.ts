@@ -56,6 +56,12 @@ export const FOLLOW_BUTTON_STYLES: Record<
     text: 'text-zinc-800',
     border: 'border-0',
   },
+  'Block Back': {
+    bg: 'bg-deletion',
+    hover: 'hover:bg-[#CF4C4C]',
+    text: 'text-zinc-800',
+    border: 'border-0',
+  },
   'Pending Block': {
     bg: 'bg-white',
     hover: 'hover:bg-[#FFC6C6]',
@@ -82,6 +88,12 @@ export const FOLLOW_BUTTON_STYLES: Record<
     bg: 'bg-deletion',
     hover: 'hover:bg-[#CF4C4C]',
     text: 'text-dark-grey',
+    border: 'border-0',
+  },
+  'Mute Back': {
+    bg: 'bg-deletion',
+    hover: 'hover:bg-[#CF4C4C]',
+    text: 'text-zinc-800',
     border: 'border-0',
   },
   'Pending Mute': {
@@ -157,6 +169,16 @@ export const FOLLOW_BUTTON_COOL_EMOJI: Record<FollowingState, Record<(typeof THE
     light: undefined,
     dark: undefined,
   },
+  'Mute Back': {
+    bg: 'bg-deletion',
+    hover: 'hover:bg-[#CF4C4C]',
+    text: 'text-zinc-800',
+    border: 'border-0',
+  },
+  'Block Back': {
+    light: '/assets/icons/emojis/block-emoji.svg',
+    dark: '/assets/icons/emojis/block-emoji.svg',
+  },
 }
 
 export const FOLLOW_BUTTON_SOUND: Record<FollowingState, string | undefined> = {
@@ -172,4 +194,6 @@ export const FOLLOW_BUTTON_SOUND: Record<FollowingState, string | undefined> = {
   'Pending Mute': undefined,
   Muted: undefined,
   Unmute: undefined,
+  'Mute Back': undefined,
+  'Block Back': undefined,
 }

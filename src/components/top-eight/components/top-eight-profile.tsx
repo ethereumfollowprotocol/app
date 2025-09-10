@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import { useQuery } from '@tanstack/react-query'
-import { isLinkValid } from 'ethereum-identity-kit'
+import { isLinkValid, ProfileTooltip, type Address } from 'ethereum-identity-kit'
 import { ens_beautify } from '@adraffy/ens-normalize'
 
 import { useCart } from '#/hooks/use-cart'
@@ -18,13 +18,18 @@ import useFollowerState from '#/hooks/use-follower-state'
 import LoadingCell from '#/components/loaders/loading-cell'
 import type { TopEightProfileType } from '../hooks/use-top-eight'
 import { listOpAddListRecord, listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
+import { useRouter } from 'next/navigation'
+import { useWindowSize } from '@uidotdev/usehooks'
 
 interface TopEightProfileProps {
   profile: TopEightProfileType
   isEditing?: boolean
+  index: number
+  showTooltip?: boolean
 }
 
-const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing }) => {
+const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing, index, showTooltip = true }) => {
   const { data: fetchedAccount, isLoading } = useQuery({
     queryKey: ['account', profile.address],
     queryFn: async () => await fetchAccount(profile.address),
@@ -37,6 +42,8 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
   const profileAvatar = fetchedEnsProfile?.avatar
   const headerImage = isLinkValid(fetchedEnsProfile?.records?.header) ? fetchedEnsProfile?.records?.header : undefined
 
+  const router = useRouter()
+  const { selectedList } = useEFPProfile()
   const { address: userAddress } = useAccount()
   const { followState } = useFollowerState({ address: profile?.address, showFollowerBadge: true })
   const { addToCart, removeFromCart, hasListOpAddTag, hasListOpRemoveTag, hasListOpRemoveRecord } = useCart()
@@ -56,6 +63,101 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing })
       addToCart([listOpRemoveTag(profile.address, 'top8')])
     }
   }
+
+  const { width } = useWindowSize()
+
+  if (showTooltip)
+    return (
+      <ProfileTooltip
+        addressOrName={profile.address}
+        showDelay={1000}
+        connectedAddress={userAddress}
+        selectedList={selectedList}
+        showFollowerState={false}
+        showFollowButton={false}
+        horizontalPlacement={width && width > 1024 ? 'right' : index % 4 >= 2 ? 'right' : 'left'}
+        onStatClick={({ addressOrName, stat }) => {
+          router.push(`/${addressOrName}?tab=${stat}&ssr=false`)
+        }}
+        onProfileClick={(addressOrName: Address | string) => {
+          router.push(`/${addressOrName}?ssr=false`)
+        }}
+      >
+        <div
+          className={cn(
+            'group bg-neutral shadow-small relative flex min-h-[182px] w-full flex-col items-center justify-between gap-2 overflow-hidden rounded-sm px-0.5 py-4 pb-3',
+            isEditing && 'cursor-pointer border-[3px] border-transparent',
+            isAddingToTopEight && 'border-[3px] border-green-500/50',
+            isRemovingFromTopEight && 'border-[3px] border-red-400/70 dark:border-red-500/70',
+            isEditing && !(isAddingToTopEight || isRemovingFromTopEight) && 'hover:border-nav-item'
+          )}
+          onClick={onClick}
+        >
+          {headerImage && (
+            <Image
+              src={headerImage}
+              onError={(e) => {
+                e.currentTarget.style.display = 'none'
+              }}
+              alt='header'
+              width={600}
+              height={200}
+              className='absolute top-0 left-0 z-0 h-full w-full object-cover opacity-25'
+            />
+          )}
+          {isEditing && (
+            <div
+              className={cn(
+                'absolute top-1 right-1 flex h-5 w-5 items-center justify-center rounded-sm text-white',
+                isAddingToTopEight && 'bg-green-500/50',
+                isRemovingFromTopEight && 'bg-red-400/70',
+                !(isAddingToTopEight || isRemovingFromTopEight) && 'hidden bg-[#A2A2A277] group-hover:flex'
+              )}
+            >
+              {isAddingToTopEight ? <Plus className='h-3 w-3' /> : <Cross className='h-4 w-4' />}
+            </div>
+          )}
+          <div className='z-10 flex w-full flex-1 flex-col items-center gap-1'>
+            {isEnsProfileLoading ? (
+              <LoadingCell className='h-[50px] w-[50px] rounded-full' />
+            ) : (
+              <Link href={`/${profile.address}`} className={cn(isEditing && 'pointer-events-none')}>
+                <Avatar
+                  name={profileName || profile.address}
+                  size={cn('h-[50px] w-[50px]', !isEditing && 'hover:scale-110 hover:opacity-75 transition-all')}
+                  avatarUrl={profileAvatar}
+                />
+              </Link>
+            )}
+            <div className='flex w-full flex-col items-center justify-start gap-0.5 px-1'>
+              {isEnsProfileLoading ? (
+                <LoadingCell className='h-7 w-24 rounded-sm' />
+              ) : (
+                <Link
+                  href={`/${profile.address}`}
+                  className={cn(
+                    'max-w-full truncate text-center text-lg leading-tight font-bold',
+                    isEditing ? 'pointer-events-none' : 'transition-all hover:scale-110 hover:opacity-75'
+                  )}
+                >
+                  {profileName && isValidEnsName(profileName)
+                    ? ens_beautify(profileName)
+                    : truncateAddress(profile.address)}
+                </Link>
+              )}
+              {userAddress && (
+                <div className='mt-1'>
+                  <FollowsYou addressOrName={profile.address} connectedAddress={userAddress} />
+                </div>
+              )}
+            </div>
+          </div>
+          <div onClick={(e) => e.stopPropagation()} className={cn('z-10 flex w-full justify-center')}>
+            <FollowButton address={profile.address} />
+          </div>
+        </div>
+      </ProfileTooltip>
+    )
 
   return (
     <div
