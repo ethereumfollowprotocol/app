@@ -75,7 +75,7 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing, i
         selectedList={selectedList}
         showFollowerState={false}
         showFollowButton={false}
-        horizontalPlacement={width && width > 1024 ? 'right' : index % 4 >= 2 ? 'right' : 'left'}
+        horizontalPlacement={width && width > 1024 && width < 1280 ? 'right' : index % 4 >= 2 ? 'right' : 'left'}
         onStatClick={({ addressOrName, stat }) => {
           router.push(`/${addressOrName}?tab=${stat}&ssr=false`)
         }}
