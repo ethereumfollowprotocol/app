@@ -1,3 +1,5 @@
+'use client'
+
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
 import { useRouter } from 'next/navigation'

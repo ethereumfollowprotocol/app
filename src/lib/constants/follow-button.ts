@@ -170,10 +170,8 @@ export const FOLLOW_BUTTON_COOL_EMOJI: Record<FollowingState, Record<(typeof THE
     dark: undefined,
   },
   'Mute Back': {
-    bg: 'bg-deletion',
-    hover: 'hover:bg-[#CF4C4C]',
-    text: 'text-zinc-800',
-    border: 'border-0',
+    light: '/assets/icons/emojis/mute-emoji.svg',
+    dark: '/assets/icons/emojis/mute-emoji.svg',
   },
   'Block Back': {
     light: '/assets/icons/emojis/block-emoji.svg',

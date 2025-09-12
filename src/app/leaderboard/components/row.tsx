@@ -1,15 +1,17 @@
+'use client'
+
+import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
+import { DEFAULT_FALLBACK_HEADER, isLinkValid } from 'ethereum-identity-kit'
 
 import Name from './name'
 import StatsDesktop from './stats-desktop'
 import FollowButton from '#/components/follow-button'
 import type { LeaderboardFilter } from '#/types/common'
 import { formatNumber } from '#/utils/format/format-number'
-import ImageWithFallback from '#/components/image-with-fallback'
-import { DEFAULT_FALLBACK_HEADER, isLinkValid, ProfileTooltip } from 'ethereum-identity-kit'
-import { useRouter } from 'next/navigation'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import { useAccount } from 'wagmi'
+import ImageWithFallback from '#/components/image-with-fallback'
+import ProfileTooltipWrapper from '#/components/profile-tooltip-wrapper'
 
 interface TableRowProps {
   address: Address
@@ -39,7 +41,7 @@ const TableRow: React.FC<TableRowProps> = ({
   firstStat,
 }) => {
   const rankedAs = rank === 0 ? 'no-rank' : rank <= 3 ? 'top-three' : rank <= 10 ? 'top-ten' : 'regular'
-  const router = useRouter()
+
   const { selectedList } = useEFPProfile()
   const { address: userAddress } = useAccount()
 
@@ -75,24 +77,7 @@ const TableRow: React.FC<TableRowProps> = ({
   }[rankedAs]
 
   return (
-    <ProfileTooltip
-      addressOrName={address}
-      showDelay={1000}
-      connectedAddress={userAddress}
-      selectedList={selectedList}
-      showFollowerState={false}
-      showFollowButton={false}
-      showBio={true}
-      showSocials={true}
-      showStatus={true}
-      horizontalOffset={12}
-      onStatClick={({ addressOrName, stat }) => {
-        router.push(`/${addressOrName}?tab=${stat}&ssr=false`)
-      }}
-      onProfileClick={(addressOrName: Address | string) => {
-        router.push(`/${addressOrName}?ssr=false`)
-      }}
-    >
+    <ProfileTooltipWrapper addressOrName={address} connectedAddress={userAddress} selectedList={selectedList}>
       <div className='hover:bg-text/5 relative flex h-20 w-full items-center justify-between gap-3 pr-2 pl-3 sm:gap-4 sm:px-4'>
         {header && isLinkValid(header) && (
           <ImageWithFallback
@@ -121,7 +106,7 @@ const TableRow: React.FC<TableRowProps> = ({
         />
         <FollowButton address={address} />
       </div>
-    </ProfileTooltip>
+    </ProfileTooltipWrapper>
   )
 }
 

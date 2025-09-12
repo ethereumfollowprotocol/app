@@ -1,10 +1,11 @@
+'use client'
+
 import React from 'react'
 import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
-import { useRouter } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
-import { type InitialFollowingState, isLinkValid, ProfileTooltip } from 'ethereum-identity-kit'
+import { type InitialFollowingState, isLinkValid } from 'ethereum-identity-kit'
 
 import ProfileListItemDetails from './details'
 import { fetchAccount } from '#/api/fetch-account'
@@ -13,6 +14,7 @@ import FollowButton from '#/components/follow-button'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import type { ProfileStatsType, TagsDropdownPositionType } from '#/types/common'
 import TopEightAddButton from '#/components/top-eight/components/top-eight-add-button'
+import ProfileTooltipWrapper from '#/components/profile-tooltip-wrapper'
 
 export interface ProfileListItemProps {
   address: Address
@@ -48,7 +50,6 @@ const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
       queryKey: ['account', address],
       queryFn: async () => await fetchAccount(address),
     })
-    const router = useRouter()
     const { address: connectedAddress } = useAccount()
     const { selectedList } = useEFPProfile()
 
@@ -60,24 +61,7 @@ const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
     const headerImage = isLinkValid(fetchedEnsProfile?.records?.header) ? fetchedEnsProfile?.records?.header : undefined
 
     return (
-      <ProfileTooltip
-        addressOrName={address}
-        showDelay={1000}
-        connectedAddress={connectedAddress}
-        selectedList={selectedList}
-        showFollowerState={showFollowsYouBadges}
-        showFollowButton={false}
-        showBio={true}
-        showSocials={true}
-        showStatus={true}
-        horizontalOffset={12}
-        onStatClick={({ addressOrName, stat }) => {
-          router.push(`/${addressOrName}?tab=${stat}&ssr=false`)
-        }}
-        onProfileClick={(addressOrName: Address | string) => {
-          router.push(`/${addressOrName}?ssr=false`)
-        }}
-      >
+      <ProfileTooltipWrapper addressOrName={address} connectedAddress={connectedAddress} selectedList={selectedList}>
         <div className='hover:bg-text/5 relative'>
           {headerImage && (
             <Image
@@ -114,7 +98,7 @@ const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
             )}
           </div>
         </div>
-      </ProfileTooltip>
+      </ProfileTooltipWrapper>
     )
   }
 )

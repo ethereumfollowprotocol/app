@@ -1,8 +1,11 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import { useQuery } from '@tanstack/react-query'
-import { isLinkValid, ProfileTooltip, type Address } from 'ethereum-identity-kit'
+import { useWindowSize } from '@uidotdev/usehooks'
+import { isLinkValid } from 'ethereum-identity-kit'
 import { ens_beautify } from '@adraffy/ens-normalize'
 
 import { useCart } from '#/hooks/use-cart'
@@ -16,11 +19,10 @@ import { cn, truncateAddress } from '#/lib/utilities'
 import FollowButton from '#/components/follow-button'
 import useFollowerState from '#/hooks/use-follower-state'
 import LoadingCell from '#/components/loaders/loading-cell'
-import type { TopEightProfileType } from '../hooks/use-top-eight'
-import { listOpAddListRecord, listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
-import { useRouter } from 'next/navigation'
-import { useWindowSize } from '@uidotdev/usehooks'
+import type { TopEightProfileType } from '../hooks/use-top-eight'
+import ProfileTooltipWrapper from '#/components/profile-tooltip-wrapper'
+import { listOpAddListRecord, listOpAddTag, listOpRemoveTag } from '#/utils/list-ops'
 
 interface TopEightProfileProps {
   profile: TopEightProfileType
@@ -42,7 +44,6 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing, i
   const profileAvatar = fetchedEnsProfile?.avatar
   const headerImage = isLinkValid(fetchedEnsProfile?.records?.header) ? fetchedEnsProfile?.records?.header : undefined
 
-  const router = useRouter()
   const { selectedList } = useEFPProfile()
   const { address: userAddress } = useAccount()
   const { followState } = useFollowerState({ address: profile?.address, showFollowerBadge: true })
@@ -68,23 +69,11 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing, i
 
   if (showTooltip)
     return (
-      <ProfileTooltip
+      <ProfileTooltipWrapper
         addressOrName={profile.address}
-        showDelay={1000}
         connectedAddress={userAddress}
         selectedList={selectedList}
-        showFollowerState={false}
-        showFollowButton={false}
-        showBio={true}
-        showSocials={true}
-        showStatus={true}
         horizontalPlacement={width && width > 1024 && width < 1280 ? 'right' : index % 4 >= 2 ? 'right' : 'left'}
-        onStatClick={({ addressOrName, stat }) => {
-          router.push(`/${addressOrName}?tab=${stat}&ssr=false`)
-        }}
-        onProfileClick={(addressOrName: Address | string) => {
-          router.push(`/${addressOrName}?ssr=false`)
-        }}
       >
         <div
           className={cn(
@@ -159,7 +148,7 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing, i
             <FollowButton address={profile.address} />
           </div>
         </div>
-      </ProfileTooltip>
+      </ProfileTooltipWrapper>
     )
 
   return (
