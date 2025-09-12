@@ -7,7 +7,6 @@ import { formatNumber } from '#/utils/format/format-number'
 import LoadingCell from '#/components/loaders/loading-cell'
 import type { ProfileTableTitleType } from '#/types/common'
 import type { FollowSortType, TagCountType } from '#/types/requests'
-import { QUERY_BLOCK_TAGS } from '#/components/blocked-muted/hooks/use-blocked-muted'
 import { BLOCKED_MUTED_TABS, BLOCKED_MUTED_TAGS, SORT_OPTIONS } from '#/lib/constants'
 import Tag from 'public/assets/icons/ui/tag.svg'
 import Check from 'public/assets/icons/ui/check.svg'
@@ -60,7 +59,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
 
   const { t } = useTranslation()
 
-  const displayedTags = allTags?.filter((tag) => (isShowingBlocked ? true : !QUERY_BLOCK_TAGS.includes(tag.tag)))
+  const displayedTags = allTags?.filter((tag) => (isShowingBlocked ? true : !BLOCKED_MUTED_TAGS.includes(tag.tag)))
   const tagsEmpty = !tagsLoading && (!displayedTags || displayedTags.length === 0)
 
   return (

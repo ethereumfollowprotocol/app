@@ -80,16 +80,20 @@ const EditModal: React.FC<EditModalProps> = ({ profiles, onClose, followingListP
             >
               {t(isTopEightFull ? 'top eight limit' : 'top eight description')}
             </p>
-            {editedProfiles.map((profile, index) => (
-              <TopEightProfile profile={profile} isEditing={true} key={index} />
-            ))}
-            {new Array(loadingItems).fill(1).map((_, i) => (
-              <TopEightLoadingProfile key={i} isEditing={true} />
-            ))}
-            {editedProfiles.length === 0 && (
+
+            {editedProfiles.length === 0 ? (
               <p className='text-text/90 bg-nav-item flex h-[280px] w-full items-center justify-center rounded-sm font-semibold italic'>
                 {t('no top eight')}
               </p>
+            ) : (
+              <div className='grid w-full grid-cols-2 gap-2 transition-none sm:grid-cols-4'>
+                {editedProfiles.map((profile, index) => (
+                  <TopEightProfile profile={profile} isEditing={true} key={index} index={index} showTooltip={false} />
+                ))}
+                {new Array(loadingItems).fill(1).map((_, i) => (
+                  <TopEightLoadingProfile key={i} isEditing={true} />
+                ))}
+              </div>
             )}
             <div className='mt-4 flex w-full items-center justify-between'>
               <PrimaryButton
