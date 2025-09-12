@@ -794,3 +794,36 @@ input {
 .user-profile-status-desktop {
   z-index: 10;
 }
+
+.cart-tags-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  gap: 4px;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  overflow: visible;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.cart-tags-tag {
+  border: none;
+  cursor: pointer;
+  padding: 0 8px !important;
+  border: none !important;
+  margin: 0;
+  position: relative;
+  display: block !important;
+  height: 24px;
+  font-size: 13px;
+  font-weight: 600;
+  max-width: 100%;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap;
+  color: #333;
+  border-radius: 4px !important;
+  background-color: #cdcdcd;
+  transition: background-color 0.2s ease-in-out;
+}

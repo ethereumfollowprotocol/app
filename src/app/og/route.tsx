@@ -4,6 +4,9 @@ import type { NextRequest } from 'next/server'
 
 import { truncateAddress } from '#/lib/utilities'
 import type { AccountResponseType } from '#/types/requests'
+import { readFile } from 'node:fs/promises'
+import { join } from 'node:path'
+import { ens_beautify } from '@adraffy/ens-normalize'
 
 export async function GET(req: NextRequest) {
   const user = req.url.split('user=')[1] || ''
@@ -35,9 +38,11 @@ export async function GET(req: NextRequest) {
     ? response.ens.name || truncateAddress(response.address)
     : isAddress(user)
       ? truncateAddress(user)
-      : user
+      : ens_beautify(user)
   const fetchedAvatar = response.ens?.avatar
   const fetchedHeader = response.ens?.records?.header
+
+  const interSemiBold = await readFile(join(process.cwd(), '/public/fonts/Inter/Inter-SemiBold.ttf'))
 
   return new ImageResponse(
     (
@@ -54,6 +59,7 @@ export async function GET(req: NextRequest) {
           backgroundImage: 'linear-gradient(to bottom-right, #f1f3fe, #dff2fb, #ecfffd)',
           textAlign: 'center',
           fontWeight: 700,
+          fontFamily: 'Inter',
         }}
       >
         <div
@@ -95,7 +101,6 @@ export async function GET(req: NextRequest) {
           <p
             style={{
               maxWidth: 310,
-              textShadow: '1px 0 1px #333333',
               textOverflow: 'ellipsis',
               overflow: 'hidden',
               whiteSpace: 'nowrap',
@@ -157,7 +162,6 @@ export async function GET(req: NextRequest) {
             textOverflow: 'ellipsis',
             overflow: 'hidden',
             whiteSpace: 'nowrap',
-            textShadow: '1px 0 1px #333333',
           }}
         >
           List #{user}
@@ -195,6 +199,14 @@ export async function GET(req: NextRequest) {
     {
       width: 800,
       height: 418,
+      fonts: [
+        {
+          name: 'Inter',
+          data: interSemiBold,
+          style: 'normal',
+          weight: 400,
+        },
+      ],
     }
   )
 }
