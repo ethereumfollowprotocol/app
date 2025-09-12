@@ -82,6 +82,9 @@ const TableRow: React.FC<TableRowProps> = ({
       selectedList={selectedList}
       showFollowerState={false}
       showFollowButton={false}
+      showBio={true}
+      showSocials={true}
+      showStatus={true}
       horizontalOffset={12}
       onStatClick={({ addressOrName, stat }) => {
         router.push(`/${addressOrName}?tab=${stat}&ssr=false`)

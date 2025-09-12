@@ -67,6 +67,9 @@ const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
         selectedList={selectedList}
         showFollowerState={showFollowsYouBadges}
         showFollowButton={false}
+        showBio={true}
+        showSocials={true}
+        showStatus={true}
         horizontalOffset={12}
         onStatClick={({ addressOrName, stat }) => {
           router.push(`/${addressOrName}?tab=${stat}&ssr=false`)
