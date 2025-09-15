@@ -26,10 +26,10 @@ jobs:
       pull-requests: write
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v5
-      with:
-        fetch-depth: 1
+      - name: Checkout Code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
 
       - name: Generate Custom App Token
         id: generate-token

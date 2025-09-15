@@ -14,10 +14,10 @@ jobs:
       issues: write
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v5
-      with:
-        fetch-depth: 0  # Get full history for better context
+      - name: Checkout Code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # Get full history for better context
 
       - name: Generate Custom App Token
         id: generate-token
