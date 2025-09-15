@@ -72,7 +72,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   } = useUserInfo(user)
   const router = useRouter()
   const isMyProfile = useIsEditView()
-  const { roles, selectedList } = useEFPProfile()
+  const { roles } = useEFPProfile()
   const { tableRef, TopEightRef, containerRef, isCommonFollowersModalOpen } = useUserScroll()
 
   useEffect(() => {
@@ -152,13 +152,11 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       )}
       {isBlockedMutedOpen && (
         <BlockedMuted
-          user={user}
-          list={userIsList ? listNum : undefined}
+          user={userIsList && listNum ? listNum.toString() : user}
           onClose={() => {
             setIsBlockedMutedOpen(false)
             router.push(`/${user}`)
           }}
-          isManager={profileList === selectedList && roles?.isManager}
         />
       )}
       {listSettingsOpen && profile && profileList && (
@@ -198,14 +196,14 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
           />
         </div>
         <div className='flex w-full max-w-[1920px] flex-col-reverse gap-4 px-4 md:-mt-28 lg:-mt-24 lg:flex-row xl:px-8'>
-          <div className='z-10 h-fit w-full'>
+          <div className='z-10 h-fit w-full hover:z-20'>
             <UserProfilePageTable
               ref={tableRef}
               setActiveTab={(tab) => setActiveTab(tab as ProfileTabType)}
               {...activeTableProps}
             />
           </div>
-          <div ref={TopEightRef} className='top-0 z-10 h-fit pb-4 lg:sticky'>
+          <div ref={TopEightRef} className='top-0 z-10 h-fit pb-4 hover:z-20 lg:sticky'>
             <TopEightActivity
               user={user}
               isConnectedUserProfile={isMyProfile}

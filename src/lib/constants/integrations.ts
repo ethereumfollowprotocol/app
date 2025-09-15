@@ -64,6 +64,7 @@ import EthStars from 'public/assets/partners/ethstars.jpeg'
 import Paper from 'public/assets/partners/paper.jpeg'
 import Ethbox from 'public/assets/partners/ethbox.jpeg'
 import CuriaNetwork from 'public/assets/partners/curianetwork.jpeg'
+import DelinkClick from 'public/assets/partners/delinkclick.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -385,6 +386,11 @@ export const INTEGRATIONS = [
     name: 'Smith.box',
     url: 'https://smith.box/',
     logo: SmithBox,
+  },
+  {
+    name: 'Delink.click',
+    url: 'https://delink.click/',
+    logo: DelinkClick,
   },
 ] as {
   name: string

@@ -48,7 +48,9 @@ const TopEight: React.FC<TopEightProps> = ({
         {/* Updated grid layout with responsive breakpoints */}
         <div className='grid w-full grid-cols-2 gap-2 transition-none sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4'>
           {!isTopEightLoading &&
-            topEight.slice(0, displayLimit).map((profile, index) => <TopEightProfile profile={profile} key={index} />)}
+            topEight
+              .slice(0, displayLimit)
+              .map((profile, index) => <TopEightProfile profile={profile} key={index} index={index} />)}
           {new Array(isTopEightLoading ? displayLimit : 0).fill(0).map((_, index) => (
             <TopEightLoadingProfile key={index} />
           ))}

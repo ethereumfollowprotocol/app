@@ -45,7 +45,7 @@ const SwipeButtons = ({
         }
         onClick={onSwipeLeft}
       >
-        <p className='rotate-90 text-sm sm:rotate-0'> {t('nope')}</p>
+        <p className='rotate-90 text-[14px] sm:rotate-0'> {t('nope')}</p>
       </button>
       <button
         className='bg-primary/20 hover:bg-primary/40 absolute top-0 -right-5 z-30 flex h-[450px] w-10 items-center justify-center rounded-sm transition-colors sm:right-auto sm:z-10 sm:ml-[466px] sm:w-24 md:ml-[480px]'
@@ -59,7 +59,7 @@ const SwipeButtons = ({
       >
         <div className='flex -rotate-90 flex-row items-center sm:rotate-0'>
           <MainnetBlack width={24} height={24} />
-          <p className='text-sm font-semibold'>{t('follow')}</p>
+          <p className='text-[14px] font-semibold'>{t('follow')}</p>
         </div>
       </button>
       <button
