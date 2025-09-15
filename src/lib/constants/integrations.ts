@@ -63,6 +63,8 @@ import CreatorScore from 'public/assets/partners/creatorscore.jpeg'
 import EthStars from 'public/assets/partners/ethstars.jpeg'
 import Paper from 'public/assets/partners/paper.jpeg'
 import Ethbox from 'public/assets/partners/ethbox.jpeg'
+import CuriaNetwork from 'public/assets/partners/curianetwork.jpeg'
+import DelinkClick from 'public/assets/partners/delinkclick.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -346,6 +348,11 @@ export const INTEGRATIONS = [
     logo: PrepunkVerify,
   },
   {
+    name: 'Curia.Network',
+    url: 'https://curia.network/',
+    logo: CuriaNetwork,
+  },
+  {
     name: 'CryptoPunks.eth.limo',
     url: 'https://cryptopunks.eth.limo/',
     logo: CryptoPunksEthLimo,
@@ -379,6 +386,11 @@ export const INTEGRATIONS = [
     name: 'Smith.box',
     url: 'https://smith.box/',
     logo: SmithBox,
+  },
+  {
+    name: 'Delink.click',
+    url: 'https://delink.click/',
+    logo: DelinkClick,
   },
 ] as {
   name: string

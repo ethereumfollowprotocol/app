@@ -776,3 +776,21 @@ input {
 .dark .profile-list-row:hover {
   background-color: #444444;
 }
+
+.profile-tooltip-content {
+  z-index: 1000;
+}
+
+.dark .tooltip-card,
+.dark-tooltip-card {
+  color: var(--ethereum-identity-kit-text-primary-dark);
+  background-color: var(--ethereum-identity-kit-background-dark);
+}
+
+.user-profile-status-container {
+  z-index: 10;
+}
+
+.user-profile-status-desktop {
+  z-index: 10;
+}

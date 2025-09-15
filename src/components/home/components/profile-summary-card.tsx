@@ -53,7 +53,7 @@ const ProfileSummaryCard = () => {
           </div>
         </>
       ) : (
-        profile && (
+        profile?.address && (
           <>
             <Image
               src={isLinkValid(profile?.ens?.records?.header) ? profile?.ens?.records?.header : DefaultHeader}
