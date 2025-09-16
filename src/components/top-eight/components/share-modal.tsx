@@ -33,7 +33,7 @@ const ShareModal: React.FC<ShareModalProps> = ({
   const [isCopying, setIsCopying] = useState(false)
   const { t } = useTranslation()
 
-  const imageUrl = `https://app-git-share-top-eight-efp.vercel.app/api/top-eight?user=${userAddress}`
+  const imageUrl = `http://localhost:3443/api/top-eight?user=${userAddress}`
   const profileUrl = `https://efp.app/${userAddress}`
   const shareText = `Check out my Top 8 on Ethereum Follow Protocol!`
 
@@ -89,7 +89,7 @@ const ShareModal: React.FC<ShareModalProps> = ({
   const shareOnTelegram = async () => {
     // Open Telegram with the image URL and text
     const telegramText = `${shareText}\n\n${profileUrl}\n\n${imageUrl}`
-    const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(imageUrl)}&text=${encodeURIComponent(telegramText)}`
+    const telegramUrl = `https://t.me/share/url?text=${encodeURIComponent(telegramText)}`
     window.open(telegramUrl, '_blank')
   }
 

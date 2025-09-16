@@ -55,7 +55,8 @@ export async function GET(req: NextRequest) {
 
   try {
     const { searchParams } = new URL(req.url)
-    const user = searchParams.get('user')
+    const user = searchParams.get('user') as string
+    const userIsList = !(isAddress(user) || Number.isNaN(Number(user)))
 
     if (!user) {
       return new Response('user parameter is required', { status: 400 })
@@ -68,8 +69,10 @@ export async function GET(req: NextRequest) {
 
     try {
       const [userAccountData, fetchedTopEight] = await Promise.all([
-        fetchAccount(user),
-        fetch(`${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${user}/following?include=ens&offset=0&limit=8&tags=top8`),
+        fetchAccount(user, userIsList ? user : undefined),
+        fetch(
+          `${process.env.NEXT_PUBLIC_EFP_API_URL}/${userIsList ? 'lists' : 'users'}/${user}/following?include=ens&limit=8&tags=top8`
+        ),
       ])
 
       // Process user account data
@@ -108,7 +111,7 @@ export async function GET(req: NextRequest) {
     // Pre-process all profile data
     const processedProfiles = processProfileData(profiles)
 
-    return new ImageResponse(
+    const response = new ImageResponse(
       (
         <div
           style={{
@@ -263,6 +266,13 @@ export async function GET(req: NextRequest) {
         ],
       }
     )
+
+    // Add caching headers to improve performance
+    response.headers.set('Cache-Control', 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400')
+    response.headers.set('CDN-Cache-Control', 'max-age=3600')
+    response.headers.set('Vercel-CDN-Cache-Control', 'max-age=3600')
+
+    return response
   } catch (error) {
     console.error('Error in /api/top-eight:', error)
     return new Response(
@@ -323,7 +333,6 @@ function ProfileCard({
           justifyContent: 'center',
           height: '100%',
           position: 'relative',
-          zIndex: '10',
           gap: 15,
         }}
       >

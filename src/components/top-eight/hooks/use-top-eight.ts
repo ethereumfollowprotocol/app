@@ -44,14 +44,19 @@ export const useTopEight = (user: string | Address) => {
       if (isConnectedUser) return topEightProfile || []
       if (!isValidUser) return []
 
-      const fetchedFollowing = await fetchProfileFollowing({
-        addressOrName: user,
-        list: userIsList ? user : undefined,
-        limit: 100,
-        pageParam: 0,
-        tags: ['top8'],
-        sort: 'latest first',
-      })
+      const [fetchedFollowing, _] = await Promise.all([
+        fetchProfileFollowing({
+          addressOrName: user,
+          list: userIsList ? user : undefined,
+          limit: 100,
+          pageParam: 0,
+          tags: ['top8'],
+          sort: 'latest first',
+        }), // fetch for quicker share image generation
+        fetch(
+          `${process.env.NEXT_PUBLIC_EFP_API_URL}/${userIsList ? 'lists' : 'users'}/${user}/following?include=ens&limit=8&tags=top8`
+        ),
+      ])
 
       return fetchedFollowing.following
     },
