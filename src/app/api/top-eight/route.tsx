@@ -225,10 +225,10 @@ export async function GET(req: NextRequest) {
       }
     )
 
-    // // Add caching headers to improve performance
-    // response.headers.set('Cache-Control', 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400')
-    // response.headers.set('CDN-Cache-Control', 'max-age=')
-    // response.headers.set('Vercel-CDN-Cache-Control', 'max-age=3600')
+    // Add caching headers to improve performance
+    response.headers.set('Cache-Control', 'public, max-age=100000, s-maxage=100000, stale-while-revalidate=86400')
+    response.headers.set('CDN-Cache-Control', 'max-age=100000')
+    response.headers.set('Vercel-CDN-Cache-Control', 'max-age=100000')
 
     return response
   } catch (error) {
@@ -248,8 +248,8 @@ export async function GET(req: NextRequest) {
 
 function ProfileCard({ profile }: { profile: TopEightProfileType }) {
   const name = profile?.ens?.name
-  const avatar = isLinkValid(profile?.ens?.avatar) ? profile?.ens?.avatar : undefined
-  const header = isLinkValid(profile?.ens?.records?.header) ? profile?.ens?.records?.header : undefined
+  // const avatar = isLinkValid(profile?.ens?.avatar) ? profile?.ens?.avatar : undefined
+  // const header = isLinkValid(profile?.ens?.records?.header) ? profile?.ens?.records?.header : undefined
   const displayName = name ? ens_beautify(name) : truncateAddress(profile.address)
 
   return (
@@ -267,7 +267,7 @@ function ProfileCard({ profile }: { profile: TopEightProfileType }) {
       }}
     >
       {/* Header Image */}
-      {header ? (
+      {/* {header ? (
         <img
           src={header}
           alt='header'
@@ -294,7 +294,17 @@ function ProfileCard({ profile }: { profile: TopEightProfileType }) {
             background: '#F6F9FB',
           }}
         />
-      )}
+      )} */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          background: '#F6F9FB',
+        }}
+      />
 
       {/* Content */}
       <div
@@ -309,7 +319,7 @@ function ProfileCard({ profile }: { profile: TopEightProfileType }) {
         }}
       >
         {/* Avatar */}
-        {avatar ? (
+        {/* {avatar ? (
           <img
             src={avatar}
             alt='avatar'
@@ -331,7 +341,15 @@ function ProfileCard({ profile }: { profile: TopEightProfileType }) {
               background: 'linear-gradient(135deg, #FFE067 0%, #D3EAF4 100%)',
             }}
           />
-        )}
+        )} */}
+        <div
+          style={{
+            width: 100,
+            height: 100,
+            borderRadius: 50,
+            background: 'linear-gradient(135deg, #FFE067 0%, #D3EAF4 100%)',
+          }}
+        />
 
         {/* Name */}
         <div
