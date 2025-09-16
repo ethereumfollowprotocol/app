@@ -29,24 +29,20 @@ const ShareModal: React.FC<ShareModalProps> = ({
   generateImageUrl,
 }) => {
   const [imageBlob, setImageBlob] = useState<Blob | null>(null)
-  const [imageUrl, setImageUrl] = useState<string | null>(null)
-  const [directImageUrl, setDirectImageUrl] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [isCopying, setIsCopying] = useState(false)
   const { t } = useTranslation()
 
+  const imageUrl = `https://app-git-share-top-eight-efp.vercel.app/api/top-eight?user=${userAddress}`
   const profileUrl = `https://efp.app/${userAddress}`
   const shareText = `Check out my Top 8 on Ethereum Follow Protocol!`
 
   useEffect(() => {
     if (isOpen) {
       setIsLoading(true)
-      Promise.all([generateImage(), generateImageUrl()])
-        .then(([blob, directUrl]) => {
+      Promise.all([generateImage()])
+        .then(([blob]) => {
           setImageBlob(blob)
-          const url = URL.createObjectURL(blob)
-          setImageUrl(url)
-          setDirectImageUrl(directUrl)
           setIsLoading(false)
         })
         .catch((error) => {
@@ -55,13 +51,7 @@ const ShareModal: React.FC<ShareModalProps> = ({
           setIsLoading(false)
         })
     }
-
-    return () => {
-      if (imageUrl) {
-        URL.revokeObjectURL(imageUrl)
-      }
-    }
-  }, [isOpen, generateImage, generateImageUrl, t])
+  }, [isOpen, generateImage, t])
 
   const copyImageToClipboard = async () => {
     if (!imageBlob) return
@@ -90,27 +80,21 @@ const ShareModal: React.FC<ShareModalProps> = ({
   }
 
   const shareOnTwitter = async () => {
-    if (!directImageUrl) return
-
     // Open Twitter with the text and image URL
-    const tweetText = `${shareText}\n\n${directImageUrl}\n\n${profileUrl}`
+    const tweetText = `${shareText}\n\n${profileUrl}\n\n${imageUrl}`
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`
     window.open(twitterUrl, '_blank')
   }
 
   const shareOnTelegram = async () => {
-    if (!directImageUrl) return
-
     // Open Telegram with the image URL and text
-    const telegramText = `${shareText}\n\n${directImageUrl}\n\n${profileUrl}`
-    const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(directImageUrl)}&text=${encodeURIComponent(telegramText)}`
+    const telegramText = `${shareText}\n\n${profileUrl}\n\n${imageUrl}`
+    const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(imageUrl)}&text=${encodeURIComponent(telegramText)}`
     window.open(telegramUrl, '_blank')
   }
 
   const copyForDiscord = async () => {
-    if (!directImageUrl) return
-
-    const discordText = `${shareText}\n\n${directImageUrl}\n\n${profileUrl}`
+    const discordText = `${shareText}\n\n${imageUrl}\n\n${profileUrl}`
     try {
       await navigator.clipboard.writeText(discordText)
       toast.success(t('Text with image link copied to clipboard'))
@@ -161,11 +145,11 @@ const ShareModal: React.FC<ShareModalProps> = ({
           {/* Share on X/Twitter */}
           <button
             onClick={shareOnTwitter}
-            disabled={!directImageUrl}
+            disabled={isLoading}
             className={cn(
               'flex flex-col items-center gap-2 rounded-lg p-4 transition-all',
               'bg-neutral hover:bg-text/5 hover:border-text/10 border-2 border-transparent',
-              !directImageUrl && 'cursor-not-allowed opacity-50'
+              isLoading && 'cursor-not-allowed opacity-50'
             )}
           >
             <Image src={Twitter} alt='Twitter' width={36} height={36} />
@@ -175,11 +159,11 @@ const ShareModal: React.FC<ShareModalProps> = ({
           {/* Share on Telegram */}
           <button
             onClick={shareOnTelegram}
-            disabled={!directImageUrl}
+            disabled={isLoading}
             className={cn(
               'flex flex-col items-center gap-2 rounded-lg p-4 transition-all',
               'bg-neutral hover:bg-text/5 hover:border-text/10 border-2 border-transparent',
-              !directImageUrl && 'cursor-not-allowed opacity-50'
+              isLoading && 'cursor-not-allowed opacity-50'
             )}
           >
             <Image src={Telegram} alt='Telegram' width={36} height={36} />
@@ -189,11 +173,11 @@ const ShareModal: React.FC<ShareModalProps> = ({
           {/* Copy for Discord */}
           <button
             onClick={copyForDiscord}
-            disabled={!directImageUrl}
+            disabled={isLoading}
             className={cn(
               'flex flex-col items-center gap-2 rounded-lg p-4 transition-all',
               'bg-neutral hover:bg-text/5 hover:border-text/10 border-2 border-transparent',
-              !directImageUrl && 'cursor-not-allowed opacity-50'
+              isLoading && 'cursor-not-allowed opacity-50'
             )}
           >
             <Image src={Discord} alt='Discord' width={36} height={36} />

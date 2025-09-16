@@ -10,9 +10,48 @@ import { fetchAccount } from '#/api/fetch-account'
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
+// Cache fonts globally to avoid re-reading on each request
+let cachedFonts: { interSemiBold: Buffer; interBold: Buffer } | null = null
+
+async function getFonts() {
+  if (!cachedFonts) {
+    const [interSemiBold, interBold] = await Promise.all([
+      readFile(join(process.cwd(), '/public/fonts/Inter/Inter-SemiBold.ttf')),
+      readFile(join(process.cwd(), '/public/fonts/Inter/Inter-Black.ttf')),
+    ])
+    cachedFonts = { interSemiBold, interBold }
+  }
+  return cachedFonts
+}
+
+// Default images as data URLs for instant loading
+const DEFAULT_AVATAR = 'https://efp.app/assets/art/default-avatar.svg'
+const DEFAULT_HEADER = 'https://efp.app/assets/art/default-header.svg'
+
+// Process profile data in parallel for better performance
+function processProfileData(profiles: TopEightProfileType[]) {
+  return profiles.map((profile) => {
+    const name = profile?.ens?.name
+    const displayName = name ? ens_beautify(name) : truncateAddress(profile.address) || profile.address
+
+    // Use ENS avatar/header only if they are valid URLs, otherwise use data URL defaults
+    const avatar = profile?.ens?.avatar && isLinkValid(profile?.ens?.avatar) ? profile.ens.avatar : DEFAULT_AVATAR
+    const header =
+      profile?.ens?.records?.header && isLinkValid(profile?.ens?.records?.header)
+        ? profile.ens.records.header
+        : DEFAULT_HEADER
+
+    return {
+      avatar,
+      header,
+      displayName,
+      address: profile.address as string,
+    }
+  })
+}
+
 export async function GET(req: NextRequest) {
-  const interSemiBold = await readFile(join(process.cwd(), '/public/fonts/Inter/Inter-SemiBold.ttf'))
-  const interBold = await readFile(join(process.cwd(), '/public/fonts/Inter/Inter-Black.ttf'))
+  const { interSemiBold, interBold } = await getFonts()
 
   try {
     const { searchParams } = new URL(req.url)
@@ -65,6 +104,9 @@ export async function GET(req: NextRequest) {
     if (profiles.length === 0) {
       return new Response('No Top 8 profiles found for this user', { status: 404 })
     }
+
+    // Pre-process all profile data
+    const processedProfiles = processProfileData(profiles)
 
     return new ImageResponse(
       (
@@ -170,7 +212,7 @@ export async function GET(req: NextRequest) {
                 gap: 16,
               }}
             >
-              {profiles.slice(0, 4).map((profile, index) => (
+              {processedProfiles.slice(0, 4).map((profile, index) => (
                 <ProfileCard key={index} profile={profile} />
               ))}
             </div>
@@ -182,7 +224,7 @@ export async function GET(req: NextRequest) {
                 gap: 16,
               }}
             >
-              {profiles.slice(4, 8).map((profile, index) => (
+              {processedProfiles.slice(4, 8).map((profile, index) => (
                 <ProfileCard key={index + 4} profile={profile} />
               ))}
             </div>
@@ -236,16 +278,11 @@ export async function GET(req: NextRequest) {
   }
 }
 
-function ProfileCard({ profile }: { profile: TopEightProfileType }) {
-  const name = profile?.ens?.name
-  const avatar = isLinkValid(profile?.ens?.avatar)
-    ? profile?.ens?.avatar
-    : 'https://efp.app/assets/art/default-avatar.svg'
-  const header = isLinkValid(profile?.ens?.records?.header)
-    ? profile?.ens?.records?.header
-    : 'https://efp.app/assets/art/default-header.svg'
-  const displayName = name ? ens_beautify(name) : truncateAddress(profile.address)
-
+function ProfileCard({
+  profile,
+}: {
+  profile: { avatar: string; header: string; displayName: string; address: string }
+}) {
   return (
     <div
       style={{
@@ -261,26 +298,21 @@ function ProfileCard({ profile }: { profile: TopEightProfileType }) {
       }}
     >
       {/* Header Image */}
-      {header && (
-        <img
-          src={header}
-          alt='header'
-          height={280}
-          width={260}
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            opacity: 0.2,
-          }}
-          onError={(event) => {
-            event.currentTarget.src = 'https://efp.app/assets/art/default-header.svg'
-          }}
-        />
-      )}
+      <img
+        src={profile.header}
+        alt='header'
+        height={280}
+        width={260}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          opacity: 0.2,
+        }}
+      />
 
       {/* Content */}
       <div
@@ -291,13 +323,13 @@ function ProfileCard({ profile }: { profile: TopEightProfileType }) {
           justifyContent: 'center',
           height: '100%',
           position: 'relative',
-          zIndex: 10,
+          zIndex: '10',
           gap: 15,
         }}
       >
         {/* Avatar */}
         <img
-          src={avatar}
+          src={profile.avatar}
           alt='avatar'
           height={100}
           width={100}
@@ -306,9 +338,6 @@ function ProfileCard({ profile }: { profile: TopEightProfileType }) {
             height: 100,
             borderRadius: 50,
             boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
-          }}
-          onError={(event) => {
-            event.currentTarget.src = 'https://efp.app/assets/art/default-avatar.svg'
           }}
         />
 
@@ -337,7 +366,7 @@ function ProfileCard({ profile }: { profile: TopEightProfileType }) {
               fontFamily: 'sans-serif, serif',
             }}
           >
-            {displayName}
+            {profile.displayName}
           </p>
         </div>
 

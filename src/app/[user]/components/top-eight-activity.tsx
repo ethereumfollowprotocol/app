@@ -26,6 +26,7 @@ const TopEightActivity: React.FC<TopEightActivityProps> = ({ user, isConnectedUs
   const [activeTab, setActiveTab] = useState<'top 8' | 'activity'>('top 8')
   const [editModalOpen, setEditModalOpen] = useState(false)
   const [shareModalOpen, setShareModalOpen] = useState(false)
+  const [isTopEightEmpty, setIsTopEightEmpty] = useState(false)
 
   const { t } = useTranslation()
   const isClient = useIsClient()
@@ -64,10 +65,12 @@ const TopEightActivity: React.FC<TopEightActivityProps> = ({ user, isConnectedUs
 
   const headerRight = {
     'top 8': (
-      <div className='flex items-center gap-2'>
-        <button onClick={onShareTopEight} className='mr-1 transition-all hover:scale-110' title='Share Top 8'>
-          <Share className='h-6 w-6' />
-        </button>
+      <div className='mr-1 flex items-center gap-3'>
+        {!isTopEightEmpty && (
+          <button onClick={onShareTopEight} className='transition-all hover:scale-110' title='Share Top 8'>
+            <Share className='h-6 w-6' />
+          </button>
+        )}
         <button
           onClick={() => setEditModalOpen(true)}
           className={cn('transition-all hover:scale-110', isConnectedUserProfile ? 'block' : 'hidden')}
@@ -103,11 +106,11 @@ const TopEightActivity: React.FC<TopEightActivityProps> = ({ user, isConnectedUs
     if (userPage && userPage.scrollTop > 300) userPage.scrollTo({ top: 300, behavior: 'smooth' })
   }, [activeTab, isClient])
 
-  // useEffect(() => {
-  //   if (topEightQueryData && topEightQueryData.length === 0) {
-  //     setActiveTab('activity')
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (isTopEightEmpty) {
+      setActiveTab('activity')
+    }
+  }, [isTopEightEmpty])
 
   const content = {
     'top 8': (
@@ -117,6 +120,7 @@ const TopEightActivity: React.FC<TopEightActivityProps> = ({ user, isConnectedUs
         followingListProps={followingListProps}
         editModalOpen={editModalOpen}
         setEditModalOpen={setEditModalOpen}
+        setIsTopEightEmpty={setIsTopEightEmpty}
       />
     ),
     activity: (
@@ -168,14 +172,16 @@ const TopEightActivity: React.FC<TopEightActivityProps> = ({ user, isConnectedUs
       </div>
 
       {/* Share Modal */}
-      <ShareModal
-        isOpen={shareModalOpen}
-        onClose={() => setShareModalOpen(false)}
-        userName={account?.ens?.name || (isAddress(user) ? truncateAddress(user) : user) || 'Unknown'}
-        userAddress={user}
-        generateImage={generateTop8Image}
-        generateImageUrl={generateTop8ImageUrl}
-      />
+      {!isTopEightEmpty && (
+        <ShareModal
+          isOpen={shareModalOpen}
+          onClose={() => setShareModalOpen(false)}
+          userName={account?.ens?.name || (isAddress(user) ? truncateAddress(user) : user) || 'Unknown'}
+          userAddress={user}
+          generateImage={generateTop8Image}
+          generateImageUrl={generateTop8ImageUrl}
+        />
+      )}
     </>
   )
 }
