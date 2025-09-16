@@ -17,7 +17,7 @@ interface ShareModalProps {
   userName: string
   userAddress: string
   generateImage: () => Promise<Blob>
-  generateImageUrl: () => Promise<string>
+  generateImageUrl: () => string
 }
 
 const ShareModal: React.FC<ShareModalProps> = ({

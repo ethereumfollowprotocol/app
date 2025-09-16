@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { isAddress } from 'viem'
 import { useTranslation } from 'react-i18next'
 import { useIsClient } from '@uidotdev/usehooks'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import React, { useEffect, useState } from 'react'
 
 import { cn, truncateAddress } from '#/lib/utilities'
@@ -15,7 +15,6 @@ import InterfaceLight from 'public/assets/icons/socials/interface.png'
 import InterfaceDark from 'public/assets/icons/socials/interface-dark.png'
 import ShareModal from '#/components/top-eight/components/share-modal'
 import type { UserProfilePageTableProps } from '#/components/profile-page-table'
-import type { TopEightProfileType } from '#/components/top-eight/hooks/use-top-eight'
 
 interface TopEightActivityProps {
   user: string
@@ -38,25 +37,8 @@ const TopEightActivity: React.FC<TopEightActivityProps> = ({ user, isConnectedUs
 
   const accountAddress = isAddress(user) ? user : account?.address || null
 
-  const queryClient = useQueryClient()
-
   const generateTop8Image = async (): Promise<Blob> => {
-    const topEightQueryData = queryClient.getQueryData<TopEightProfileType[]>(['top8', user])
-    console.log('topEightQueryData', topEightQueryData)
-    if (!topEightQueryData || topEightQueryData.length === 0) {
-      throw new Error('No Top 8 data available')
-    }
-
-    // Prepare the top 8 profiles data - only pass addresses
-    const profileAddresses = topEightQueryData.slice(0, 8).map((profile) => profile.address)
-
-    // Build URL with parameters - only pass user address and profile addresses
-    const params = new URLSearchParams()
-    params.append('user', user)
-    params.append('profiles', profileAddresses.join(','))
-
-    // Generate the image
-    const response = await fetch(`/api/top-eight?${params}`, {
+    const response = await fetch(`/api/top-eight?user=${user}`, {
       method: 'GET',
     })
 
@@ -69,19 +51,9 @@ const TopEightActivity: React.FC<TopEightActivityProps> = ({ user, isConnectedUs
     return await response.blob()
   }
 
-  const generateTop8ImageUrl = async (): Promise<string> => {
-    const topEightQueryData = queryClient.getQueryData<TopEightProfileType[]>(['top8', user])
-    if (!topEightQueryData || topEightQueryData.length === 0) {
-      throw new Error('No Top 8 data available')
-    }
-
-    // Prepare the top 8 profiles data - only pass addresses
-    const profileAddresses = topEightQueryData.slice(0, 8).map((profile) => profile.address)
-
-    // Build URL with parameters - only pass user address and profile addresses
+  const generateTop8ImageUrl = (): string => {
     const params = new URLSearchParams()
     params.append('user', user)
-    params.append('profiles', profileAddresses.join(','))
 
     return `${window.location.origin}/api/top-eight?${params}`
   }

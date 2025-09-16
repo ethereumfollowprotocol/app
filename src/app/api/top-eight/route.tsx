@@ -17,21 +17,23 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url)
     const user = searchParams.get('user')
-    const profilesParam = searchParams.get('profiles')
 
     if (!user) {
       return new Response('user parameter is required', { status: 400 })
     }
 
-    if (!profilesParam) {
-      return new Response('profiles parameter is required', { status: 400 })
-    }
-
-    // Fetch user account data
+    // Fetch user account data and profiles data in parallel
     let userName: string = 'Unknown'
     let userAvatar: string | undefined
+    let profiles: TopEightProfileType[] = []
+
     try {
-      const userAccountData = await fetchAccount(user)
+      const [userAccountData, fetchedTopEight] = await Promise.all([
+        fetchAccount(user),
+        fetch(`${process.env.NEXT_PUBLIC_EFP_API_URL}/users/${user}/following?include=ens&offset=0&limit=8&tags=top8`),
+      ])
+
+      // Process user account data
       if (userAccountData?.ens?.name) {
         userName = userAccountData.ens.name
       } else if (isAddress(user)) {
@@ -40,43 +42,29 @@ export async function GET(req: NextRequest) {
         userName = user
       }
       userAvatar = userAccountData?.ens?.avatar
+
+      // Process profiles data
+      if (fetchedTopEight.ok) {
+        const topEightData = (await fetchedTopEight.json()) as { following?: TopEightProfileType[] }
+        profiles = topEightData.following || []
+      }
     } catch (error) {
-      console.error(`Failed to fetch user account data for ${user}:`, error)
+      console.error(`Failed to fetch data for ${user}:`, error)
+
+      // Fallback for user data
       if (isAddress(user)) {
         userName = truncateAddress(user) || user
       } else {
         userName = user
       }
       userAvatar = undefined
+      profiles = []
     }
 
-    // Parse comma-separated addresses
-    const profileAddresses = profilesParam.split(',').filter((addr) => addr.trim().length > 0)
-
-    if (profileAddresses.length === 0) {
-      return new Response('No profile addresses provided', { status: 400 })
+    // Ensure we have profiles to display
+    if (profiles.length === 0) {
+      return new Response('No Top 8 profiles found for this user', { status: 404 })
     }
-
-    // Fetch account data for each address
-    const profiles: TopEightProfileType[] = await Promise.all(
-      profileAddresses.map(async (address) => {
-        try {
-          const accountData = await fetchAccount(address.trim())
-          const profile: TopEightProfileType = {
-            address: address.trim() as `0x${string}`,
-          }
-          if (accountData?.ens) {
-            profile.ens = accountData.ens
-          }
-          return profile
-        } catch (error) {
-          console.error(`Failed to fetch ENS for ${address}:`, error)
-          return {
-            address: address.trim() as `0x${string}`,
-          }
-        }
-      })
-    )
 
     return new ImageResponse(
       (
