@@ -17,6 +17,9 @@ export const useTopEight = (user: string | Address) => {
 
   useEffect(() => {
     if (window.innerWidth > 768) setDisplayLimit(8)
+
+    fetch(`https://app-git-share-top-eight-efp.vercel.app/api/top-eight?user=${user}`)
+    // fetch(`http://localhost:3443/api/top-eight?user=${user}`)
   }, [])
 
   const { address: userAddress } = useAccount()
@@ -52,7 +55,6 @@ export const useTopEight = (user: string | Address) => {
         tags: ['top8'],
         sort: 'latest first',
       })
-      fetch(`http://localhost:3443/api/top-eight?user=${user}`)
 
       return fetchedFollowing.following
     },

@@ -15,6 +15,8 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
   <meta charset="utf-8">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Inter', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
@@ -139,18 +141,6 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
       white-space: nowrap;
       padding: 0 10px;
     }
-    .follow-btn {
-      background: #FFE067;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 32px;
-      font-size: 16px;
-      font-weight: 600;
-      color: #333333;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
     .footer {
       display: flex;
       align-items: center;
@@ -169,14 +159,6 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
     .image-timeout {
       max-width: 100%;
       max-height: 100%;
-    }
-    /* Apple emoji image styling */
-    img.emoji {
-      height: 1em !important;
-      width: 1em !important;
-      margin: 0 .05em 0 .1em !important;
-      vertical-align: -0.1em !important;
-      display: inline !important;
     }
   </style>
 </head>
@@ -223,20 +205,6 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
                   : `<div class="profile-avatar-fallback"></div>`
               }
               <p class="profile-name">${displayName}</p>
-              <div class="follow-btn">
-                <svg width="13" height="20" viewBox="0 0 15 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M0 9.21289L5.35156 0.306641L10.6641 9.21289L5.35156 12.4551L0 9.21289Z" fill="currentColor" />
-                  <path
-                    d="M5.35156 13.4316L0 10.1895L5.35156 17.7285L10.6641 10.1895L5.35156 13.4316Z"
-                    fill="currentColor"
-                  />
-                  <path
-                    d="M12.1875 14.291H10.6641V16.5566H8.55469V17.9629H10.6641V20.3066H12.1875V17.9629H14.2578V16.5566H12.1875V14.291Z"
-                    fill="currentColor"
-                  />
-                </svg>
-                <p>Follow</p>
-              </div>
             </div>
           </div>
         `
@@ -266,20 +234,6 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
                       : `<div class="profile-avatar-fallback"></div>`
                   }
                 <p class="profile-name">${displayName}</p>
-              <div class="follow-btn">
-                <svg width="13" height="20" viewBox="0 0 15 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M0 9.21289L5.35156 0.306641L10.6641 9.21289L5.35156 12.4551L0 9.21289Z" fill="currentColor" />
-                  <path
-                    d="M5.35156 13.4316L0 10.1895L5.35156 17.7285L10.6641 10.1895L5.35156 13.4316Z"
-                    fill="currentColor"
-                  />
-                  <path
-                    d="M12.1875 14.291H10.6641V16.5566H8.55469V17.9629H10.6641V20.3066H12.1875V17.9629H14.2578V16.5566H12.1875V14.291Z"
-                    fill="currentColor"
-                  />
-                </svg>
-                <p>Follow</p>
-              </div>
             </div>
           </div>
         `
@@ -400,15 +354,10 @@ export async function GET(req: NextRequest) {
     if (isVercel) {
       const chromium = (await import('@sparticuz/chromium')).default
       puppeteer = await import('puppeteer-core')
-      
+
       // Add font rendering arguments for better emoji support
-      const customArgs = [
-        ...chromium.args,
-        '--disable-web-security',
-        '--no-sandbox',
-        '--font-render-hinting=none'
-      ];
-      
+      const customArgs = [...chromium.args, '--disable-web-security', '--no-sandbox', '--font-render-hinting=none']
+
       launchOptions = {
         ...launchOptions,
         args: customArgs,
@@ -432,9 +381,6 @@ export async function GET(req: NextRequest) {
 
     // Wait an additional 1 second for image timeouts to trigger
     await new Promise((resolve) => setTimeout(resolve, 1000))
-
-    // Remove the emoji conversion code since it's causing errors
-    // The font stack should handle emoji rendering
 
     // Take screenshot
     const screenshot = await page.screenshot({
