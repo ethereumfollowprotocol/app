@@ -33,7 +33,8 @@ const ShareModal: React.FC<ShareModalProps> = ({
   const [isCopying, setIsCopying] = useState(false)
   const { t } = useTranslation()
 
-  const imageUrl = `https://app-git-share-top-eight-efp.vercel.app/api/top-eight?user=${userAddress}`
+  // const imageUrl = `https://app-git-share-top-eight-efp.vercel.app/api/top-eight?user=${userAddress}`
+  const imageUrl = `http://localhost:3443/api/top-eight?user=${userAddress}`
   const profileUrl = `https://efp.app/${userAddress}`
   const shareText = `Check out my Top 8 on Ethereum Follow Protocol!`
 

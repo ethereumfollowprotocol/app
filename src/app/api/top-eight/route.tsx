@@ -1,6 +1,5 @@
 import type { NextRequest } from 'next/server'
 import { isAddress } from 'viem'
-import puppeteer from 'puppeteer'
 
 import { truncateAddress } from '#/lib/utilities'
 import { ens_beautify } from '@adraffy/ens-normalize'
@@ -141,6 +140,9 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
     .follow-btn {
       background: #FFE067;
       border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
       padding: 10px 32px;
       font-size: 16px;
       font-weight: 600;
@@ -175,7 +177,18 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
       <h1 class="title">${userName}'s <span class="title-bold">Top 8</span></h1>
     </div>
     <div class="brand">
-      <div class="brand-icon">EFP</div>
+      <svg width="36" height="32" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="512" height="512" rx="40" fill="url(#paint0_linear_965_4162)"/>
+        <path d="M167.68 258.56L255.36 112.64L342.4 258.56L255.36 311.68L167.68 258.56Z" fill="#333333"/>
+        <path d="M255.36 327.68L167.68 274.56L255.36 398.08L342.4 274.56L255.36 327.68Z" fill="#333333"/>
+        <path d="M367.36 341.76H342.4V378.88H307.84V401.92H342.4V440.32H367.36V401.92H401.28V378.88H367.36V341.76Z" fill="#333333"/>
+        <defs>
+        <linearGradient id="paint0_linear_965_4162" x1="256" y1="256" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#FFE067"/>
+        <stop offset="1" stop-color="#FFF7D9"/>
+        </linearGradient>
+        </defs>
+      </svg>
       <span class="brand-text">Ethereum Follow Protocol</span>
     </div>
   </div>
@@ -200,8 +213,20 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
                   : `<div class="profile-avatar-fallback"></div>`
               }
               <p class="profile-name">${displayName}</p>
-              <div class="follow-btn">Follow</div>
-            </div>
+              <div class="follow-btn">
+                <svg width="13" height="20" viewBox="0 0 15 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0 9.21289L5.35156 0.306641L10.6641 9.21289L5.35156 12.4551L0 9.21289Z" fill="currentColor" />
+                  <path
+                    d="M5.35156 13.4316L0 10.1895L5.35156 17.7285L10.6641 10.1895L5.35156 13.4316Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M12.1875 14.291H10.6641V16.5566H8.55469V17.9629H10.6641V20.3066H12.1875V17.9629H14.2578V16.5566H12.1875V14.291Z"
+                    fill="currentColor"
+                  />
+                </svg>
+                <p>Follow</p>
+              </div>            </div>
           </div>
         `
         })
@@ -230,7 +255,20 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
                       : `<div class="profile-avatar-fallback"></div>`
                   }
                 <p class="profile-name">${displayName}</p>
-              <div class="follow-btn">Follow</div>
+              <div class="follow-btn">
+                <svg width="13" height="20" viewBox="0 0 15 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0 9.21289L5.35156 0.306641L10.6641 9.21289L5.35156 12.4551L0 9.21289Z" fill="currentColor" />
+                  <path
+                    d="M5.35156 13.4316L0 10.1895L5.35156 17.7285L10.6641 10.1895L5.35156 13.4316Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M12.1875 14.291H10.6641V16.5566H8.55469V17.9629H10.6641V20.3066H12.1875V17.9629H14.2578V16.5566H12.1875V14.291Z"
+                    fill="currentColor"
+                  />
+                </svg>
+                <p>Follow</p>
+              </div>
             </div>
           </div>
         `
@@ -342,11 +380,27 @@ export async function GET(req: NextRequest) {
     const html = generateHTML(userName, userAvatar, profiles)
 
     // Launch Puppeteer browser
-    const browser = await puppeteer.launch({
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
-    })
+    let browser
 
+    const isVercel = !!process.env.VERCEL_ENV
+    let puppeteer: any,
+      launchOptions: any = {
+        headless: true,
+      }
+
+    if (isVercel) {
+      const chromium = (await import('@sparticuz/chromium')).default
+      puppeteer = await import('puppeteer-core')
+      launchOptions = {
+        ...launchOptions,
+        args: chromium.args,
+        executablePath: await chromium.executablePath(),
+      }
+    } else {
+      puppeteer = await import('puppeteer')
+    }
+
+    browser = await puppeteer.launch(launchOptions)
     const page = await browser.newPage()
 
     // Set viewport to match our image dimensions
