@@ -15,10 +15,9 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
   <meta charset="utf-8">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: 'Inter', 'Noto Color Emoji', sans-serif;
+      font-family: 'Inter', sans-serif;
       width: 1200px;
       height: 900px;
       background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -46,7 +45,7 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
     }
     .title {
       font-size: 48px;
-      font-family: 'Inter', 'Noto Color Emoji', sans-serif;
+      font-family: 'Inter', sans-serif;
       color: #333333;
       font-weight: 400;
     }
@@ -131,7 +130,7 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
     .profile-name {
       font-size: 28px;
       font-weight: 400;
-      font-family: 'Inter', 'Noto Color Emoji', sans-serif;
+      font-family: 'Inter', sans-serif;
       color: #333333;
       text-align: center;
       max-width: 240px;
@@ -170,6 +169,14 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
     .image-timeout {
       max-width: 100%;
       max-height: 100%;
+    }
+    /* Emoji image styling */
+    .emoji-img {
+      display: inline-block;
+      width: 1.2em;
+      height: 1.2em;
+      vertical-align: -0.2em;
+      margin: 0 0.1em;
     }
   </style>
 </head>
@@ -288,6 +295,7 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
     <span class="footer-brand">efp.app</span>
   </div>
 
+  <script src="https://unpkg.com/emoji-js@3.8.0/lib/emoji.js"></script>
   <script>
     // Set timeout for all avatars
     document.querySelectorAll('.avatar-timeout').forEach(img => {
@@ -317,6 +325,20 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
         clearTimeout(timeout);
         img.style.display = 'none';
       };
+    });
+
+    // Convert emojis to Apple emoji images
+    const emoji = new EmojiConvertor();
+    emoji.img_set = 'apple';
+    emoji.img_sets.apple.path = 'https://cdn.jsdelivr.net/npm/emoji-datasource-apple@15.0.1/img/apple/64/';
+    emoji.img_sets.apple.sheet = null;
+    emoji.supports_css = false;
+    emoji.use_sheet = false;
+    emoji.img_suffix = '.png';
+    
+    // Convert emojis in profile names
+    document.querySelectorAll('.profile-name, .title').forEach(element => {
+      element.innerHTML = emoji.replace_unified(element.innerHTML);
     });
   </script>
 </body>
@@ -415,6 +437,14 @@ export async function GET(req: NextRequest) {
 
     // Wait an additional 1 second for image timeouts to trigger
     await new Promise((resolve) => setTimeout(resolve, 1000))
+
+    // Wait for emoji conversion to complete
+    await page.evaluate(() => {
+      return new Promise(resolve => {
+        // Give time for emoji images to load
+        setTimeout(resolve, 500);
+      });
+    });
 
     // Take screenshot
     const screenshot = await page.screenshot({

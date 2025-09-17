@@ -53,9 +53,7 @@ export const useTopEight = (user: string | Address) => {
           tags: ['top8'],
           sort: 'latest first',
         }), // fetch for quicker share image generation
-        fetch(
-          `${process.env.NEXT_PUBLIC_EFP_API_URL}/${userIsList ? 'lists' : 'users'}/${user}/following?include=ens&limit=8&tags=top8`
-        ),
+        fetch(`https://app-git-share-top-eight-efp.vercel.app/api/top-eight?user=${user}`),
       ])
 
       return fetchedFollowing.following
