@@ -15,9 +15,10 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
   <meta charset="utf-8">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', 'Noto Color Emoji', sans-serif;
       width: 1200px;
       height: 900px;
       background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -45,6 +46,7 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
     }
     .title {
       font-size: 48px;
+      font-family: 'Inter', 'Noto Color Emoji', sans-serif;
       color: #333333;
       font-weight: 400;
     }
@@ -129,6 +131,7 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
     .profile-name {
       font-size: 28px;
       font-weight: 400;
+      font-family: 'Inter', 'Noto Color Emoji', sans-serif;
       color: #333333;
       text-align: center;
       max-width: 240px;

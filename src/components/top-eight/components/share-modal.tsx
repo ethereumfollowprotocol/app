@@ -90,7 +90,7 @@ const ShareModal: React.FC<ShareModalProps> = ({
   const shareOnTelegram = async () => {
     // Open Telegram with the image URL and text
     const telegramText = `${shareText}\n\n${profileUrl}\n\n${imageUrl}`
-    const telegramUrl = `https://t.me/share/url?text=${encodeURIComponent(telegramText)}`
+    const telegramUrl = `https://t.me/share/url=${encodeURIComponent(profileUrl)}?text=${encodeURIComponent(telegramText)}`
     window.open(telegramUrl, '_blank')
   }
 
