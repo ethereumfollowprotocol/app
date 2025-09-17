@@ -112,7 +112,7 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
       height: 100%;
       position: relative;
       z-index: 10;
-      gap: 15px;
+      gap: 18px;
     }
     .profile-avatar {
       width: 100px;
@@ -138,18 +138,6 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
       text-overflow: ellipsis;
       white-space: nowrap;
       padding: 0 10px;
-    }
-    .follow-btn {
-      background: #FFE067;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 32px;
-      font-size: 16px;
-      font-weight: 600;
-      color: #333333;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     .footer {
       display: flex;
@@ -223,20 +211,7 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
                   : `<div class="profile-avatar-fallback"></div>`
               }
               <p class="profile-name">${displayName}</p>
-              <div class="follow-btn">
-                <svg width="13" height="20" viewBox="0 0 15 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M0 9.21289L5.35156 0.306641L10.6641 9.21289L5.35156 12.4551L0 9.21289Z" fill="currentColor" />
-                  <path
-                    d="M5.35156 13.4316L0 10.1895L5.35156 17.7285L10.6641 10.1895L5.35156 13.4316Z"
-                    fill="currentColor"
-                  />
-                  <path
-                    d="M12.1875 14.291H10.6641V16.5566H8.55469V17.9629H10.6641V20.3066H12.1875V17.9629H14.2578V16.5566H12.1875V14.291Z"
-                    fill="currentColor"
-                  />
-                </svg>
-                <p>Follow</p>
-              </div>            </div>
+           </div>
           </div>
         `
         })
@@ -265,20 +240,6 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
                       : `<div class="profile-avatar-fallback"></div>`
                   }
                 <p class="profile-name">${displayName}</p>
-              <div class="follow-btn">
-                <svg width="13" height="20" viewBox="0 0 15 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M0 9.21289L5.35156 0.306641L10.6641 9.21289L5.35156 12.4551L0 9.21289Z" fill="currentColor" />
-                  <path
-                    d="M5.35156 13.4316L0 10.1895L5.35156 17.7285L10.6641 10.1895L5.35156 13.4316Z"
-                    fill="currentColor"
-                  />
-                  <path
-                    d="M12.1875 14.291H10.6641V16.5566H8.55469V17.9629H10.6641V20.3066H12.1875V17.9629H14.2578V16.5566H12.1875V14.291Z"
-                    fill="currentColor"
-                  />
-                </svg>
-                <p>Follow</p>
-              </div>
             </div>
           </div>
         `
@@ -308,7 +269,7 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
       img.onload = () => clearTimeout(timeout);
       img.onerror = () => {
         clearTimeout(timeout);
-        img.style.display = 'none';
+        img.style.background = 'linear-gradient(135deg, #FFE067 0%, #D3EAF4 100%)';
       };
     });
 
@@ -323,7 +284,7 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
       img.onload = () => clearTimeout(timeout);
       img.onerror = () => {
         clearTimeout(timeout);
-        img.style.display = 'none';
+        img.style.background = '#EFF9FD';
       };
     });
 
@@ -335,7 +296,7 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
     emoji.supports_css = false;
     emoji.use_sheet = false;
     emoji.img_suffix = '.png';
-    
+
     // Convert emojis in profile names
     document.querySelectorAll('.profile-name, .title').forEach(element => {
       element.innerHTML = emoji.replace_unified(element.innerHTML);
@@ -440,11 +401,11 @@ export async function GET(req: NextRequest) {
 
     // Wait for emoji conversion to complete
     await page.evaluate(() => {
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         // Give time for emoji images to load
-        setTimeout(resolve, 500);
-      });
-    });
+        setTimeout(resolve, 500)
+      })
+    })
 
     // Take screenshot
     const screenshot = await page.screenshot({
