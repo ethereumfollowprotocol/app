@@ -16,10 +16,6 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
   <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
-  @font-face {
-    font-family: 'AppleColorEmoji';
-    src: url('/fonts/AppleColorEmoji/AppleColorEmoji.ttf');
-  }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
