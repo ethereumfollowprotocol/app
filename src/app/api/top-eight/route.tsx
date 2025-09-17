@@ -380,8 +380,6 @@ export async function GET(req: NextRequest) {
     const html = generateHTML(userName, userAvatar, profiles)
 
     // Launch Puppeteer browser
-    let browser
-
     const isVercel = !!process.env.VERCEL_ENV
     let puppeteer: any,
       launchOptions: any = {
@@ -400,7 +398,7 @@ export async function GET(req: NextRequest) {
       puppeteer = await import('puppeteer')
     }
 
-    browser = await puppeteer.launch(launchOptions)
+    const browser = await puppeteer.launch(launchOptions)
     const page = await browser.newPage()
 
     // Set viewport to match our image dimensions
