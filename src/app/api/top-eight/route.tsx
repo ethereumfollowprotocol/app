@@ -14,12 +14,16 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
 <head>
   <meta charset="utf-8">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
+  @font-face {
+    font-family: 'AppleColorEmoji';
+    src: url('/fonts/AppleColorEmoji/AppleColorEmoji.ttf');
+  }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: 'Inter', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+      font-family: 'Inter', 'AppleColorEmoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
       width: 1200px;
       height: 900px;
       background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
