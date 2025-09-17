@@ -7,10 +7,12 @@ import { ens_beautify } from '@adraffy/ens-normalize'
 import type { TopEightProfileType } from '#/components/top-eight/hooks/use-top-eight'
 import { isLinkValid } from 'ethereum-identity-kit/utils'
 import { fetchAccount } from '#/api/fetch-account'
+import { readFile } from 'fs/promises'
+import { join } from 'path'
 
 export async function GET(req: NextRequest) {
-  // const interSemiBold = await readFile(join(process.cwd(), '/public/fonts/Inter/Inter-SemiBold.ttf'))
-  // const interBold = await readFile(join(process.cwd(), '/public/fonts/Inter/Inter-Black.ttf'))
+  const interSemiBold = await readFile(join(process.cwd(), '/public/fonts/Inter/Inter-SemiBold.ttf'))
+  const interBold = await readFile(join(process.cwd(), '/public/fonts/Inter/Inter-Black.ttf'))
 
   try {
     const { searchParams } = new URL(req.url)
@@ -208,20 +210,20 @@ export async function GET(req: NextRequest) {
       {
         width: 1200,
         height: 900,
-        // fonts: [
-        //   {
-        //     name: 'Inter',
-        //     data: interSemiBold,
-        //     style: 'normal',
-        //     weight: 400,
-        //   },
-        //   {
-        //     name: 'Inter',
-        //     data: interBold,
-        //     style: 'normal',
-        //     weight: 700,
-        //   },
-        // ],
+        fonts: [
+          {
+            name: 'Inter',
+            data: interSemiBold,
+            style: 'normal',
+            weight: 400,
+          },
+          {
+            name: 'Inter',
+            data: interBold,
+            style: 'normal',
+            weight: 700,
+          },
+        ],
       }
     )
 
@@ -248,8 +250,8 @@ export async function GET(req: NextRequest) {
 
 function ProfileCard({ profile }: { profile: TopEightProfileType }) {
   const name = profile?.ens?.name
-  // const avatar = isLinkValid(profile?.ens?.avatar) ? profile?.ens?.avatar : undefined
-  // const header = isLinkValid(profile?.ens?.records?.header) ? profile?.ens?.records?.header : undefined
+  const avatar = isLinkValid(profile?.ens?.avatar) ? profile?.ens?.avatar : undefined
+  const header = isLinkValid(profile?.ens?.records?.header) ? profile?.ens?.records?.header : undefined
   const displayName = name ? ens_beautify(name) : truncateAddress(profile.address)
 
   return (
@@ -267,7 +269,7 @@ function ProfileCard({ profile }: { profile: TopEightProfileType }) {
       }}
     >
       {/* Header Image */}
-      {/* {header ? (
+      {header ? (
         <img
           src={header}
           alt='header'
@@ -294,17 +296,7 @@ function ProfileCard({ profile }: { profile: TopEightProfileType }) {
             background: '#F6F9FB',
           }}
         />
-      )} */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          background: '#F6F9FB',
-        }}
-      />
+      )}
 
       {/* Content */}
       <div
@@ -319,12 +311,27 @@ function ProfileCard({ profile }: { profile: TopEightProfileType }) {
         }}
       >
         {/* Avatar */}
-        {/* {avatar ? (
+        {avatar ? (
           <img
             src={avatar}
             alt='avatar'
             height={100}
             width={100}
+            onLoad={(e) => {
+              setTimeout(() => {
+                if (e.currentTarget.loading) {
+                  const element = document.createElement('div')
+                  element.style.width = '100px'
+                  element.style.height = '100px'
+                  element.style.borderRadius = '50px'
+                  element.style.background = 'linear-gradient(135deg, #FFE067 0%, #D3EAF4 100%)'
+                  element.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)'
+                  e.currentTarget.parentElement?.appendChild(element)
+
+                  e.currentTarget.remove()
+                }
+              }, 1000)
+            }}
             style={{
               width: 100,
               height: 100,
@@ -341,15 +348,15 @@ function ProfileCard({ profile }: { profile: TopEightProfileType }) {
               background: 'linear-gradient(135deg, #FFE067 0%, #D3EAF4 100%)',
             }}
           />
-        )} */}
-        <div
+        )}
+        {/* <div
           style={{
             width: 100,
             height: 100,
             borderRadius: 50,
             background: 'linear-gradient(135deg, #FFE067 0%, #D3EAF4 100%)',
           }}
-        />
+        /> */}
 
         {/* Name */}
         <div
