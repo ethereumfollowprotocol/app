@@ -44,17 +44,15 @@ export const useTopEight = (user: string | Address) => {
       if (isConnectedUser) return topEightProfile || []
       if (!isValidUser) return []
 
-      const [fetchedFollowing, _] = await Promise.all([
-        fetchProfileFollowing({
-          addressOrName: user,
-          list: userIsList ? user : undefined,
-          limit: 100,
-          pageParam: 0,
-          tags: ['top8'],
-          sort: 'latest first',
-        }), // fetch for quicker share image generation
-        fetch(`https://app-git-share-top-eight-efp.vercel.app/api/top-eight?user=${user}`),
-      ])
+      const fetchedFollowing = await fetchProfileFollowing({
+        addressOrName: user,
+        list: userIsList ? user : undefined,
+        limit: 100,
+        pageParam: 0,
+        tags: ['top8'],
+        sort: 'latest first',
+      })
+      fetch(`http://localhost:3443/api/top-eight?user=${user}`)
 
       return fetchedFollowing.following
     },

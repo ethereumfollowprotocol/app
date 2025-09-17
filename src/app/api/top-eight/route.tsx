@@ -17,7 +17,7 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
       width: 1200px;
       height: 900px;
       background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -45,7 +45,7 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
     }
     .title {
       font-size: 48px;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
       color: #333333;
       font-weight: 400;
     }
@@ -130,7 +130,7 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
     .profile-name {
       font-size: 28px;
       font-weight: 400;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
       color: #333333;
       text-align: center;
       max-width: 240px;
@@ -138,6 +138,18 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
       text-overflow: ellipsis;
       white-space: nowrap;
       padding: 0 10px;
+    }
+    .follow-btn {
+      background: #FFE067;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 32px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #333333;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     .footer {
       display: flex;
@@ -158,13 +170,13 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
       max-width: 100%;
       max-height: 100%;
     }
-    /* Emoji image styling */
-    .emoji-img {
-      display: inline-block;
-      width: 1.2em;
-      height: 1.2em;
-      vertical-align: -0.2em;
-      margin: 0 0.1em;
+    /* Apple emoji image styling */
+    img.emoji {
+      height: 1em !important;
+      width: 1em !important;
+      margin: 0 .05em 0 .1em !important;
+      vertical-align: -0.1em !important;
+      display: inline !important;
     }
   </style>
 </head>
@@ -211,7 +223,21 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
                   : `<div class="profile-avatar-fallback"></div>`
               }
               <p class="profile-name">${displayName}</p>
-           </div>
+              <div class="follow-btn">
+                <svg width="13" height="20" viewBox="0 0 15 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0 9.21289L5.35156 0.306641L10.6641 9.21289L5.35156 12.4551L0 9.21289Z" fill="currentColor" />
+                  <path
+                    d="M5.35156 13.4316L0 10.1895L5.35156 17.7285L10.6641 10.1895L5.35156 13.4316Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M12.1875 14.291H10.6641V16.5566H8.55469V17.9629H10.6641V20.3066H12.1875V17.9629H14.2578V16.5566H12.1875V14.291Z"
+                    fill="currentColor"
+                  />
+                </svg>
+                <p>Follow</p>
+              </div>
+            </div>
           </div>
         `
         })
@@ -240,6 +266,20 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
                       : `<div class="profile-avatar-fallback"></div>`
                   }
                 <p class="profile-name">${displayName}</p>
+              <div class="follow-btn">
+                <svg width="13" height="20" viewBox="0 0 15 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0 9.21289L5.35156 0.306641L10.6641 9.21289L5.35156 12.4551L0 9.21289Z" fill="currentColor" />
+                  <path
+                    d="M5.35156 13.4316L0 10.1895L5.35156 17.7285L10.6641 10.1895L5.35156 13.4316Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M12.1875 14.291H10.6641V16.5566H8.55469V17.9629H10.6641V20.3066H12.1875V17.9629H14.2578V16.5566H12.1875V14.291Z"
+                    fill="currentColor"
+                  />
+                </svg>
+                <p>Follow</p>
+              </div>
             </div>
           </div>
         `
@@ -256,7 +296,6 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
     <span class="footer-brand">efp.app</span>
   </div>
 
-  <script src="https://unpkg.com/emoji-js@3.8.0/lib/emoji.js"></script>
   <script>
     // Set timeout for all avatars
     document.querySelectorAll('.avatar-timeout').forEach(img => {
@@ -286,20 +325,6 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
         clearTimeout(timeout);
         img.style.background = '#EFF9FD';
       };
-    });
-
-    // Convert emojis to Apple emoji images
-    const emoji = new EmojiConvertor();
-    emoji.img_set = 'apple';
-    emoji.img_sets.apple.path = 'https://cdn.jsdelivr.net/npm/emoji-datasource-apple@15.0.1/img/apple/64/';
-    emoji.img_sets.apple.sheet = null;
-    emoji.supports_css = false;
-    emoji.use_sheet = false;
-    emoji.img_suffix = '.png';
-
-    // Convert emojis in profile names
-    document.querySelectorAll('.profile-name, .title').forEach(element => {
-      element.innerHTML = emoji.replace_unified(element.innerHTML);
     });
   </script>
 </body>
@@ -375,9 +400,18 @@ export async function GET(req: NextRequest) {
     if (isVercel) {
       const chromium = (await import('@sparticuz/chromium')).default
       puppeteer = await import('puppeteer-core')
+      
+      // Add font rendering arguments for better emoji support
+      const customArgs = [
+        ...chromium.args,
+        '--disable-web-security',
+        '--no-sandbox',
+        '--font-render-hinting=none'
+      ];
+      
       launchOptions = {
         ...launchOptions,
-        args: chromium.args,
+        args: customArgs,
         executablePath: await chromium.executablePath(),
       }
     } else {
@@ -399,13 +433,8 @@ export async function GET(req: NextRequest) {
     // Wait an additional 1 second for image timeouts to trigger
     await new Promise((resolve) => setTimeout(resolve, 1000))
 
-    // Wait for emoji conversion to complete
-    await page.evaluate(() => {
-      return new Promise((resolve) => {
-        // Give time for emoji images to load
-        setTimeout(resolve, 500)
-      })
-    })
+    // Remove the emoji conversion code since it's causing errors
+    // The font stack should handle emoji rendering
 
     // Take screenshot
     const screenshot = await page.screenshot({
