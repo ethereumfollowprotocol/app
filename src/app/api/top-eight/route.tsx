@@ -51,7 +51,7 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
     }
     .title {
       font-size: 48px;
-      font-family: 'Inter', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+      font-family: 'Inter', 'AppleColorEmoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
       color: #333333;
       font-weight: 400;
     }
@@ -136,7 +136,7 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
     .profile-name {
       font-size: 28px;
       font-weight: 400;
-      font-family: 'Inter', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+      font-family: 'Inter', 'AppleColorEmoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
       color: #333333;
       text-align: center;
       max-width: 240px;
