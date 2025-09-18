@@ -6,6 +6,80 @@ import { ens_beautify } from '@adraffy/ens-normalize'
 import type { TopEightProfileType } from '#/components/top-eight/hooks/use-top-eight'
 import { isLinkValid } from 'ethereum-identity-kit/utils'
 import { fetchAccount } from '#/api/fetch-account'
+import type { SearchParams } from 'next/dist/server/request/search-params'
+import type { Metadata } from 'next'
+import { isHex } from '#/utils/viem'
+
+interface Props {
+  params: Promise<{ user: string }>
+  searchParams: Promise<SearchParams>
+}
+
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.searchParams
+  const user = params.user
+    ? isAddress(params.user as string)
+      ? (params.user as string)
+      : (params.user as string)
+    : (params.user as string)
+
+  const searchParams = await props.searchParams
+  const ssr = searchParams.ssr === 'false' ? false : true
+
+  const truncatedUser = isAddress(params.user as string)
+    ? (truncateAddress(params.user as string) as string)
+    : (params.user as string)
+  const isList = Number.isInteger(Number(user)) && !(isAddress(user) || isHex(user))
+
+  const getAccount = async () => {
+    try {
+      if (ssr) {
+        return await fetchAccount(user, isList ? Number(user) : undefined)
+      }
+
+      return null
+    } catch (error) {
+      return null
+    }
+  }
+
+  const ensData = await getAccount()
+  const ensName = ensData?.ens?.name
+  const ensAvatar = ensData?.ens?.avatar
+  const displayUser = ensName && ensName.length > 0 ? ensName : isList ? `List #${user}` : truncatedUser
+  const description = ensData?.ens?.records?.description
+
+  const avatarResponse = ensAvatar && isLinkValid(ensAvatar) ? await fetch(ensAvatar) : null
+
+  const pageUrl = `https://efp.app/${user}`
+  const ogImageUrl = `https://efp.app/api/top-eight?user=${user}`
+
+  return {
+    title: `${displayUser}`,
+    description,
+    openGraph: {
+      title: `${displayUser}`,
+      siteName: `${displayUser}`,
+      description,
+      url: pageUrl,
+      images: [{ url: ogImageUrl }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${displayUser}`,
+      description,
+      images: ogImageUrl,
+    },
+    icons: {
+      icon: avatarResponse?.status === 200 ? ensAvatar : '/assets/favicon.ico',
+    },
+    appleWebApp: {
+      capable: true,
+      title: displayUser,
+      startupImage: avatarResponse?.status === 200 ? ensAvatar : '/assets/apple-touch-icon.png',
+    },
+  }
+}
 
 function generateHTML(userName: string, userAvatar: string | undefined, profiles: TopEightProfileType[]) {
   return `
