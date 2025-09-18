@@ -8,8 +8,7 @@ import { cn } from '#/lib/utilities'
 import GraySpinner from '#/components/loaders/gray-spinner'
 import Copy from 'public/assets/icons/ui/copy.svg'
 import Twitter from 'public/assets/icons/socials/twitter.svg?url'
-import Telegram from 'public/assets/icons/socials/telegram.svg?url'
-import Discord from 'public/assets/icons/socials/discord.svg?url'
+import Farcaster from 'public/assets/icons/socials/farcaster.svg?url'
 
 interface ShareModalProps {
   isOpen: boolean
@@ -35,7 +34,7 @@ const ShareModal: React.FC<ShareModalProps> = ({
 
   const imageUrl = `https://app-git-share-top-eight-efp.vercel.app/api/top-eight?user=${userAddress}`
   // const imageUrl = `http://localhost:3443/api/top-eight?user=${userAddress}`
-  const profileUrl = `https://efp.app/${userAddress}`
+  const profileUrl = `https://efp.app/${userAddress}?topEight=true`
   const shareText = `Check out my Top 8 on Ethereum Follow Protocol!`
 
   useEffect(() => {
@@ -82,27 +81,16 @@ const ShareModal: React.FC<ShareModalProps> = ({
 
   const shareOnTwitter = async () => {
     // Open Twitter with the text and image URL
-    const tweetText = `${shareText}\n\n${profileUrl}\n\n${imageUrl}`
+    const tweetText = `${shareText}\n\n${profileUrl}`
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`
     window.open(twitterUrl, '_blank')
   }
 
-  const shareOnTelegram = async () => {
-    // Open Telegram with the image URL and text
-    const telegramText = `${shareText}\n\n${profileUrl}\n\n${imageUrl}`
-    const telegramUrl = `https://t.me/share/url=${encodeURIComponent(profileUrl)}?text=${encodeURIComponent(telegramText)}`
-    window.open(telegramUrl, '_blank')
-  }
-
-  const copyForDiscord = async () => {
-    const discordText = `${shareText}\n\n${imageUrl}\n\n${profileUrl}`
-    try {
-      await navigator.clipboard.writeText(discordText)
-      toast.success(t('Text with image link copied to clipboard'))
-    } catch (error) {
-      console.error('Failed to copy text:', error)
-      toast.error(t('Failed to copy'))
-    }
+  const shareOnFarcaster = async () => {
+    // Open Twitter with the text and image URL
+    const tweetText = `${shareText}\n\n${profileUrl}`
+    const farcasterUrl = `https://farcaster.xyz/post?text=${encodeURIComponent(tweetText)}`
+    window.open(farcasterUrl, '_blank')
   }
 
   if (!isOpen) return null
@@ -157,9 +145,9 @@ const ShareModal: React.FC<ShareModalProps> = ({
             <span className='font-medium'>X</span>
           </button>
 
-          {/* Share on Telegram */}
+          {/* Share on Farcaster */}
           <button
-            onClick={shareOnTelegram}
+            onClick={shareOnFarcaster}
             disabled={isLoading}
             className={cn(
               'flex flex-col items-center gap-2 rounded-lg p-4 transition-all',
@@ -167,12 +155,12 @@ const ShareModal: React.FC<ShareModalProps> = ({
               isLoading && 'cursor-not-allowed opacity-50'
             )}
           >
-            <Image src={Telegram} alt='Telegram' width={36} height={36} />
+            <Image src={Farcaster} alt='Farcaster' width={36} height={36} />
             <span className='font-medium'>Telegram</span>
           </button>
 
           {/* Copy for Discord */}
-          <button
+          {/* <button
             onClick={copyForDiscord}
             disabled={isLoading}
             className={cn(
@@ -183,7 +171,7 @@ const ShareModal: React.FC<ShareModalProps> = ({
           >
             <Image src={Discord} alt='Discord' width={36} height={36} />
             <span className='font-medium'>Discord</span>
-          </button>
+          </button> */}
         </div>
 
         <p className='text-text/60 max-w-md text-center text-sm'>
