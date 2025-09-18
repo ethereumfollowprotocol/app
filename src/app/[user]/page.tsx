@@ -61,7 +61,17 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       images: [{ url: ogImageUrl }],
     },
     twitter: {
+      card: 'summary_large_image',
+      site: '@ethereumfollow',
+      creator: '@ethereumfollow',
+      title: `${displayUser}`,
       description,
+      images: [
+        {
+          url: ogImageUrl,
+          alt: `${displayUser} - Ethereum Follow Protocol`,
+        },
+      ],
     },
     icons: {
       icon: avatarResponse?.status === 200 ? ensAvatar : '/assets/favicon.ico',
