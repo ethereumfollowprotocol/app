@@ -8,7 +8,6 @@ import { cn } from '#/lib/utilities'
 import GraySpinner from '#/components/loaders/gray-spinner'
 import Copy from 'public/assets/icons/ui/copy.svg'
 import Twitter from 'public/assets/icons/socials/twitter.svg?url'
-import Farcaster from 'public/assets/icons/socials/farcaster.svg?url'
 
 interface ShareModalProps {
   isOpen: boolean
@@ -84,13 +83,6 @@ const ShareModal: React.FC<ShareModalProps> = ({
     const tweetText = `${shareText}\n\n${profileUrl}`
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`
     window.open(twitterUrl, '_blank')
-  }
-
-  const shareOnFarcaster = async () => {
-    // Open Twitter with the text and image URL
-    const tweetText = `${shareText}\n\n${profileUrl}`
-    const farcasterUrl = `https://farcaster.xyz/post?text=${encodeURIComponent(tweetText)}`
-    window.open(farcasterUrl, '_blank')
   }
 
   if (!isOpen) return null
