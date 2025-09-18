@@ -116,7 +116,7 @@ const ShareModal: React.FC<ShareModalProps> = ({
         </div>
 
         {/* Share Options */}
-        <div className='grid w-full max-w-lg grid-cols-2 gap-3 sm:grid-cols-4'>
+        <div className='grid w-full max-w-lg grid-cols-2 items-center justify-center gap-3'>
           {/* Copy Image */}
           <button
             onClick={copyImageToClipboard}
@@ -146,7 +146,7 @@ const ShareModal: React.FC<ShareModalProps> = ({
           </button>
 
           {/* Share on Farcaster */}
-          <button
+          {/* <button
             onClick={shareOnFarcaster}
             disabled={isLoading}
             className={cn(
@@ -156,8 +156,8 @@ const ShareModal: React.FC<ShareModalProps> = ({
             )}
           >
             <Image src={Farcaster} alt='Farcaster' width={36} height={36} />
-            <span className='font-medium'>Telegram</span>
-          </button>
+            <span className='font-medium'>Farcaster</span>
+          </button> */}
 
           {/* Copy for Discord */}
           {/* <button
