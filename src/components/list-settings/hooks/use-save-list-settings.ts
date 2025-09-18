@@ -149,7 +149,7 @@ const useSaveListSettings = ({
       {
         title: 'reset slot',
         id: EFPActionIds.SetEFPListSettings,
-        address: ListRecordContracts[chain?.id] as Address,
+        address: ListRecordContracts[chain.id] as Address,
         abi: efpListRecordsAbi,
         functionName: 'setMetadataValuesAndApplyListOps',
         chainId: chain.id,
