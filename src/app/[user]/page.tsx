@@ -64,12 +64,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       card: 'summary_large_image',
       title: `${displayUser}`,
       description,
-      images: [
-        {
-          url: ogImageUrl,
-          alt: `${displayUser} - Ethereum Follow Protocol`,
-        },
-      ],
+      images: [ogImageUrl],
     },
     icons: {
       icon: avatarResponse?.status === 200 ? ensAvatar : '/assets/favicon.ico',
