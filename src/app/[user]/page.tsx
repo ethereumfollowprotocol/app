@@ -20,6 +20,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
   const searchParams = await props.searchParams
   const ssr = searchParams.ssr === 'false' ? false : true
+  const topEight = searchParams.topEight === 'true' ? true : false
 
   const truncatedUser = isAddress(params.user) ? (truncateAddress(params.user) as string) : params.user
   const isList = Number.isInteger(Number(user)) && !(isAddress(user) || isHex(user))
@@ -45,7 +46,9 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const avatarResponse = ensAvatar && isLinkValid(ensAvatar) ? await fetch(ensAvatar) : null
 
   const pageUrl = `https://efp.app/${user}`
-  const ogImageUrl = `https://efp.app/og?user=${user}`
+  const ogImageUrl = topEight
+    ? `https://app-git-share-top-eight-efp.vercel.app/api/top-eight?user=${user}`
+    : `https://efp.app/og?user=${user}`
 
   return {
     title: `${displayUser}`,
