@@ -62,8 +62,6 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
-      site: '@ethereumfollow',
-      creator: '@ethereumfollow',
       title: `${displayUser}`,
       description,
       images: [
