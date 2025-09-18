@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
 import { useQuery } from '@tanstack/react-query'
-import { fetchFollowState } from 'ethereum-identity-kit'
+import { fetchFollowState } from '@encrypteddegen/eik-testnet'
 
 import type { FollowState } from '#/types/common'
 import { useEFPProfile } from '#/contexts/efp-profile-context'

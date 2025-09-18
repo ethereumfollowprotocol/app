@@ -7,7 +7,7 @@ import {
   FollowButton as IdentityFollowButton,
   useTransactions,
   type InitialFollowingState,
-} from 'ethereum-identity-kit'
+} from '@encrypteddegen/eik-testnet'
 
 import { useSounds } from '#/contexts/sounds-context'
 import { FOLLOW_BUTTON_SOUND } from '#/lib/constants/follow-button'

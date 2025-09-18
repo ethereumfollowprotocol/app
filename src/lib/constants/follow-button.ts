@@ -1,7 +1,7 @@
 import type { THEMES } from '.'
 import MainnetRed from 'public/assets/mainnet-red.svg'
 import type { SVGProps } from 'react'
-import type { FollowingState } from 'ethereum-identity-kit'
+import type { FollowingState } from '@encrypteddegen/eik-testnet'
 
 export const FOLLOW_BUTTON_STYLES: Record<
   FollowingState,

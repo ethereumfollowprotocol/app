@@ -8,7 +8,7 @@ import Check from 'public/assets/icons/ui/check.svg'
 import ArrowLeft from 'public/assets/icons/ui/arrow-left.svg'
 import ArrowRight from 'public/assets/icons/ui/arrow-right.svg'
 import Image from 'next/image'
-import { useTranslation as useIdentityKitTranslation } from 'ethereum-identity-kit'
+import { useTranslation as useIdentityKitTranslation } from '@encrypteddegen/eik-testnet'
 
 interface LanguageSelectorProps {
   setExternalLanguageMenuOpen?: Dispatch<SetStateAction<boolean>>

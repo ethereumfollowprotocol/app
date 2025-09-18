@@ -21,7 +21,7 @@ export const ListRecordContracts: Record<number, Address> = {
   [base.id]: process.env['NEXT_PUBLIC_EFP_LIST_RECORDS'] as Address,
   [optimism.id]: process.env['NEXT_PUBLIC_EFP_LIST_RECORDS_OP'] as Address,
   [mainnet.id]: process.env['NEXT_PUBLIC_EFP_LIST_RECORDS_MAINNET'] as Address,
-  [baseSepolia.id]: process.env['NEXT_PUBLIC_EFP_LIST_RECORDS'] as Address,
+  [baseSepolia.id]: process.env['NEXT_PUBLIC_EFP_LIST_RECORDS_BASE_SEPOLIA'] as Address,
   [optimismSepolia.id]: process.env['NEXT_PUBLIC_EFP_LIST_RECORDS_OP_SEPOLIA'] as Address,
   [sepolia.id]: process.env['NEXT_PUBLIC_EFP_LIST_RECORDS_SEPOLIA'] as Address,
 }

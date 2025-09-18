@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
-import { ProfileCard } from 'ethereum-identity-kit'
+import { ProfileCard } from '@encrypteddegen/eik-testnet'
 
 import { cn } from '#/lib/utilities'
 import Achievements from './components/achievements'

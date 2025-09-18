@@ -2,7 +2,7 @@ import React from 'react'
 import { useAccount } from 'wagmi'
 import { useRouter } from 'next/navigation'
 import { useWindowSize } from '@uidotdev/usehooks'
-import { FullWidthProfile } from 'ethereum-identity-kit'
+import { FullWidthProfile } from '@encrypteddegen/eik-testnet'
 
 import FollowButton from '../follow-button'
 import type { StatsResponse } from '#/types/requests'

@@ -12,7 +12,7 @@ import { cn, truncateAddress } from '#/lib/utilities'
 import Hamburger from './hamburger'
 import CartButton from './cart-button'
 import { useQuery } from '@tanstack/react-query'
-import { fetchAccount } from 'ethereum-identity-kit'
+import { fetchAccount } from '@encrypteddegen/eik-testnet'
 import LoadingCell from '#/components/loaders/loading-cell'
 import { useTranslation } from 'react-i18next'
 

@@ -1,6 +1,6 @@
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
-import { useFollowButton } from 'ethereum-identity-kit'
+import { useFollowButton } from '@encrypteddegen/eik-testnet'
 
 import { useCart } from '#/hooks/use-cart'
 import { listOpAddListRecord, listOpAddTag, listOpRemoveListRecord, listOpRemoveTag } from '#/utils/list-ops'

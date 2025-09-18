@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useIsClient } from 'ethereum-identity-kit'
+import { useIsClient } from '@encrypteddegen/eik-testnet'
 import SetupBrowser from './setup-browser'
 import EnableNotifications from './enable-notifications'
 

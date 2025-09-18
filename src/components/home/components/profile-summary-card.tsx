@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
 import { ens_beautify } from '@adraffy/ens-normalize'
-import { truncateAddress, isLinkValid } from 'ethereum-identity-kit'
+import { truncateAddress, isLinkValid } from '@encrypteddegen/eik-testnet'
 
 import { Avatar } from '#/components/avatar'
 import { formatNumber } from '#/utils/format/format-number'

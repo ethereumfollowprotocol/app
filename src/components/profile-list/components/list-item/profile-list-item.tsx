@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
 import { useQuery } from '@tanstack/react-query'
-import { type InitialFollowingState, isLinkValid } from 'ethereum-identity-kit'
+import { type InitialFollowingState, isLinkValid } from '@encrypteddegen/eik-testnet'
 
 import ProfileListItemDetails from './details'
 import { fetchAccount } from '#/api/fetch-account'

@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useRouter } from 'next/navigation'
-import { ProfileTooltip, type Address, type ProfileListType } from 'ethereum-identity-kit'
+import { ProfileTooltip, type Address, type ProfileListType } from '@encrypteddegen/eik-testnet'
 
 interface ProfileTooltipWrapperProps {
   addressOrName: string
