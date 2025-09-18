@@ -61,10 +61,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       images: [{ url: ogImageUrl }],
     },
     twitter: {
-      card: 'summary_large_image',
-      title: `${displayUser}`,
       description,
-      images: ogImageUrl,
     },
     icons: {
       icon: avatarResponse?.status === 200 ? ensAvatar : '/assets/favicon.ico',
