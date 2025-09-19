@@ -272,5 +272,22 @@
   "goBack": "Go Back",
   "profile.showMore": "Show more",
   "profile.showLess": "Show less",
-  "backToTop": "Back to top"
+  "backToTop": "Back to top",
+  "Share Your Top 8": "Share Your Top 8",
+  "Copy": "Copy",
+  "Image copied to clipboard": "Image copied to clipboard",
+  "Image downloaded": "Image downloaded",
+  "Message copied for Discord": "Message copied for Discord",
+  "Failed to load image": "Failed to load image",
+  "Failed to generate image": "Failed to generate image",
+  "Failed to copy message": "Failed to copy message",
+  "Share your Top 8 with friends on social media or copy the image to use anywhere": "Share your Top 8 with friends on social media or copy the image to use anywhere",
+  "Image copied! Paste it in your tweet": "Image copied! Paste it in your tweet",
+  "Please download and attach the image to your tweet": "Please download and attach the image to your tweet",
+  "Image copied! Paste it in Telegram": "Image copied! Paste it in Telegram",
+  "Please download and attach the image to your message": "Please download and attach the image to your message",
+  "Image copied! Paste it first, then paste the message": "Image copied! Paste it first, then paste the message",
+  "Image copied! Add this message: ": "Image copied! Add this message: ",
+  "Message copied! Please download and attach the image": "Message copied! Please download and attach the image",
+  "Failed to copy": "Failed to copy"
 }

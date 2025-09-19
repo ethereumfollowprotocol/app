@@ -1,5 +1,6 @@
 import type { Address } from 'viem'
 import { useTranslation } from 'react-i18next'
+import { useEffect } from 'react'
 
 import { cn } from '#/lib/utilities'
 import EditModal from './components/edit-modal'
@@ -15,6 +16,7 @@ interface TopEightProps {
   followingListProps: UserProfilePageTableProps
   editModalOpen: boolean
   setEditModalOpen: (open: boolean) => void
+  setIsTopEightEmpty: (empty: boolean) => void
 }
 
 const TopEight: React.FC<TopEightProps> = ({
@@ -23,12 +25,17 @@ const TopEight: React.FC<TopEightProps> = ({
   followingListProps,
   editModalOpen,
   setEditModalOpen,
+  setIsTopEightEmpty,
 }) => {
   const { topEight, displayLimit, setDisplayLimit, topEightIsLoading, topEightIsRefetching } = useTopEight(user)
   const { t } = useTranslation()
 
   const isTopEightLoading = topEightIsLoading || topEightIsRefetching
   const isTopEightEmpty = topEight.length === 0 && !isTopEightLoading
+
+  useEffect(() => {
+    setIsTopEightEmpty(isTopEightEmpty)
+  }, [isTopEightEmpty])
 
   return (
     <>

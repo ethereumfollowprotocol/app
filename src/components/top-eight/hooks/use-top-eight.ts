@@ -17,6 +17,9 @@ export const useTopEight = (user: string | Address) => {
 
   useEffect(() => {
     if (window.innerWidth > 768) setDisplayLimit(8)
+
+    // prefetch top8 image in the background (gets cached for a little bit more than a day)
+    fetch(`https://efp.app/api/top-eight?user=${user}`)
   }, [])
 
   const { address: userAddress } = useAccount()
