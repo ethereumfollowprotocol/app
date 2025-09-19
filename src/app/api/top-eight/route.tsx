@@ -14,14 +14,17 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
 <head>
   <meta charset="utf-8">
   <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       font-family: 'Inter', 'AppleColorEmoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
       width: 1200px;
-      height: 760px;
+      height: 700px;
+      scale: 0.95;
+      padding-bottom: 36px;
       background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
       display: flex;
       flex-direction: column;
@@ -32,13 +35,13 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-bottom: 40px;
+      margin-bottom: 20px;
     }
     .user-info {
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 20px;
+      margin-bottom: 12px;
     }
     .user-avatar {
       width: 70px;
@@ -79,7 +82,7 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
       flex-direction: column;
       gap: 20px;
       width: 1020px;
-      height: 540px;
+      height: 500px;
     }
     .profiles-row {
       display: flex;
@@ -91,7 +94,7 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
       display: flex;
       flex-direction: column;
       width: 240px;
-      height: 260px;
+      height: 240px;
       background: #f8f9fa;
       border-radius: 12px;
       overflow: hidden;
@@ -133,15 +136,14 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
     }
     .profile-name {
       font-size: 28px;
-      font-weight: 400;
+      font-weight: 500;
       font-family: 'Inter', 'AppleColorEmoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
       color: #333333;
       text-align: center;
-      max-width: 240px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      max-width: 230px;
+      text-wrap: wrap;
       padding: 0 10px;
+      word-break: break-word;
     }
     .footer {
       display: flex;
@@ -368,12 +370,12 @@ export async function GET(req: NextRequest) {
     const page = await browser.newPage()
 
     // Set viewport to match our image dimensions
-    await page.setViewport({ width: 1200, height: 760, deviceScaleFactor: 1 })
+    await page.setViewport({ width: 1200, height: 650, deviceScaleFactor: 1 })
 
     // Set content and wait for network to be idle (with timeout)
     await page.setContent(html, {
       waitUntil: ['domcontentloaded', 'networkidle2'],
-      timeout: 5000, // 5 second timeout for entire page load
+      timeout: 6000, // 6 second timeout for entire page load
     })
 
     // Wait an additional 1 second for image timeouts to trigger
@@ -383,7 +385,7 @@ export async function GET(req: NextRequest) {
     const screenshot = await page.screenshot({
       type: 'png',
       fullPage: false,
-      clip: { x: 0, y: 0, width: 1200, height: 760 },
+      clip: { x: 0, y: 0, width: 1200, height: 650 },
     })
 
     await browser.close()
