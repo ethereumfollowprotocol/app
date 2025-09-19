@@ -21,7 +21,7 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
     body {
       font-family: 'Inter', 'AppleColorEmoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
       width: 1200px;
-      height: 900px;
+      height: 760px;
       background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
       display: flex;
       flex-direction: column;
@@ -78,19 +78,20 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
       display: flex;
       flex-direction: column;
       gap: 20px;
-      width: 1100px;
-      height: 580px;
+      width: 1020px;
+      height: 540px;
     }
     .profiles-row {
       display: flex;
       gap: 16px;
-      justify-content: center;
+      width: 100%;
+      justify-content: start;
     }
     .profile-card {
       display: flex;
       flex-direction: column;
-      width: 260px;
-      height: 280px;
+      width: 240px;
+      height: 260px;
       background: #f8f9fa;
       border-radius: 12px;
       overflow: hidden;
@@ -121,6 +122,7 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
       height: 100px;
       border-radius: 50px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      object-fit: cover;
     }
     .profile-avatar-fallback {
       width: 100px;
@@ -245,11 +247,6 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
     }
   </div>
 
-  <div class="footer">
-    <span class="footer-text">Share your Top 8 at</span>
-    <span class="footer-brand">efp.app</span>
-  </div>
-
   <script>
     // Set timeout for all avatars
     document.querySelectorAll('.avatar-timeout').forEach(img => {
@@ -371,7 +368,7 @@ export async function GET(req: NextRequest) {
     const page = await browser.newPage()
 
     // Set viewport to match our image dimensions
-    await page.setViewport({ width: 1200, height: 900, deviceScaleFactor: 1 })
+    await page.setViewport({ width: 1200, height: 760, deviceScaleFactor: 1 })
 
     // Set content and wait for network to be idle (with timeout)
     await page.setContent(html, {
@@ -386,7 +383,7 @@ export async function GET(req: NextRequest) {
     const screenshot = await page.screenshot({
       type: 'png',
       fullPage: false,
-      clip: { x: 0, y: 0, width: 1200, height: 900 },
+      clip: { x: 0, y: 0, width: 1200, height: 760 },
     })
 
     await browser.close()

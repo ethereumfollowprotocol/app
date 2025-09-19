@@ -73,6 +73,7 @@ const TopEightProfile: React.FC<TopEightProfileProps> = ({ profile, isEditing, i
         addressOrName={profile.address}
         connectedAddress={userAddress}
         selectedList={selectedList}
+        horizontalOffset={0}
         horizontalPlacement={width && width > 1024 && width < 1280 ? 'right' : index % 4 >= 2 ? 'right' : 'left'}
       >
         <div

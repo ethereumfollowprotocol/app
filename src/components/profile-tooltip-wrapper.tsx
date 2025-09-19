@@ -9,6 +9,7 @@ interface ProfileTooltipWrapperProps {
   connectedAddress: Address
   selectedList: ProfileListType
   horizontalPlacement?: 'left' | 'right'
+  horizontalOffset?: number
   children: React.ReactElement
 }
 
@@ -17,6 +18,7 @@ const ProfileTooltipWrapper: React.FC<ProfileTooltipWrapperProps> = ({
   connectedAddress,
   selectedList,
   horizontalPlacement,
+  horizontalOffset = 12,
   children,
 }) => {
   const router = useRouter()
@@ -32,7 +34,7 @@ const ProfileTooltipWrapper: React.FC<ProfileTooltipWrapperProps> = ({
       showSocials={true}
       showStatus={true}
       showDelay={1000}
-      horizontalOffset={12}
+      horizontalOffset={horizontalOffset}
       horizontalPlacement={horizontalPlacement}
       onStatClick={({ addressOrName, stat }) => {
         router.push(`/${addressOrName}?tab=${stat}&ssr=false`)
