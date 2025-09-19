@@ -65,6 +65,7 @@ import Paper from 'public/assets/partners/paper.jpeg'
 import Ethbox from 'public/assets/partners/ethbox.jpeg'
 import CuriaNetwork from 'public/assets/partners/curianetwork.jpeg'
 import DelinkClick from 'public/assets/partners/delinkclick.jpeg'
+import TalentProtocol from 'public/assets/partners/talentprotocol.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -116,6 +117,11 @@ export const INTEGRATIONS = [
     name: 'Creator Score',
     url: 'https://www.creatorscore.app/',
     logo: CreatorScore,
+  },
+  {
+    name: 'Talent Protocol',
+    url: 'https://talentprotocol.com/',
+    logo: TalentProtocol,
   },
   {
     name: 'Ipê City',
