@@ -18,8 +18,8 @@ export const useTopEight = (user: string | Address) => {
   useEffect(() => {
     if (window.innerWidth > 768) setDisplayLimit(8)
 
-    fetch(`https://app-git-share-top-eight-efp.vercel.app/api/top-eight?user=${user}`)
-    // fetch(`http://localhost:3443/api/top-eight?user=${user}`)
+    // prefetch top8 image in the background (gets cached for a little bit more than a day)
+    fetch(`https://efp.app/api/top-eight?user=${user}`)
   }, [])
 
   const { address: userAddress } = useAccount()

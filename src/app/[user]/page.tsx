@@ -46,9 +46,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const avatarResponse = ensAvatar && isLinkValid(ensAvatar) ? await fetch(ensAvatar) : null
 
   const pageUrl = `https://efp.app/${user}`
-  const ogImageUrl = topEight
-    ? `https://app-git-share-top-eight-efp.vercel.app/api/top-eight?user=${user}`
-    : `https://efp.app/og?user=${user}`
+  const ogImageUrl = topEight ? `https://efp.app/api/top-eight?user=${user}` : `https://efp.app/og?user=${user}`
 
   return {
     title: `${displayUser}`,
