@@ -14,7 +14,7 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
 <head>
   <meta charset="utf-8">
   <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -136,7 +136,7 @@ function generateHTML(userName: string, userAvatar: string | undefined, profiles
     }
     .profile-name {
       font-size: 28px;
-      font-weight: 400;
+      font-weight: 500;
       font-family: 'Inter', 'AppleColorEmoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
       color: #333333;
       text-align: center;

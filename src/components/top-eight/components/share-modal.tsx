@@ -93,7 +93,7 @@ const ShareModal: React.FC<ShareModalProps> = ({
         <h2 className='text-2xl font-bold'>{t('Share Your Top 8')}</h2>
 
         {/* Image Preview */}
-        <div className='bg-grey relative aspect-[3/2] w-full max-w-lg overflow-hidden rounded-lg'>
+        <div className='bg-grey relative aspect-[5/3] w-full max-w-lg overflow-hidden rounded-lg'>
           {isLoading ? (
             <div className='absolute inset-0 flex items-center justify-center'>
               <GraySpinner size={48} />
