@@ -58,7 +58,7 @@ import PrepunkVerify from 'public/assets/partners/prepunkverify.jpeg'
 import MetaPoll from 'public/assets/partners/metapoll.jpeg'
 import CommonGround from 'public/assets/partners/commonground.jpeg'
 import Enscribe from 'public/assets/partners/enscribe.jpeg'
-import SmithBox from 'public/assets/partners/smithbox.jpeg'
+import VanityBox from 'public/assets/partners/vanitybox.jpeg'
 import CreatorScore from 'public/assets/partners/creatorscore.jpeg'
 import EthStars from 'public/assets/partners/ethstars.jpeg'
 import Paper from 'public/assets/partners/paper.jpeg'
@@ -389,9 +389,9 @@ export const INTEGRATIONS = [
     logo: CodeSwarmAI,
   },
   {
-    name: 'Smith.box',
-    url: 'https://smith.box/',
-    logo: SmithBox,
+    name: 'Vanity.box',
+    url: 'https://vanity.box/',
+    logo: VanityBox,
   },
   {
     name: 'Delink.click',
