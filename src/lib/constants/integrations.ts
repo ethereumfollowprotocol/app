@@ -66,6 +66,7 @@ import Ethbox from 'public/assets/partners/ethbox.jpeg'
 import CuriaNetwork from 'public/assets/partners/curianetwork.jpeg'
 import DelinkClick from 'public/assets/partners/delinkclick.jpeg'
 import TalentProtocol from 'public/assets/partners/talentprotocol.jpeg'
+import Pixotchi from 'public/assets/partners/pixotchi.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -397,6 +398,11 @@ export const INTEGRATIONS = [
     name: 'Delink.click',
     url: 'https://delink.click/',
     logo: DelinkClick,
+  },
+  {
+    name: 'Pixotchi',
+    url: 'https://mini.pixotchi.tech/',
+    logo: Pixotchi,
   },
 ] as {
   name: string
