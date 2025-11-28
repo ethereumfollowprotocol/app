@@ -406,7 +406,7 @@ export const INTEGRATIONS = [
     logo: Pixotchi,
   },
   {
-    name: 'UnblockedProfile',
+    name: 'Unblocked Profile',
     url: 'https://unblockedprofile.eth.limo/',
     logo: Unblockedprofile,
   },
