@@ -67,6 +67,7 @@ import CuriaNetwork from 'public/assets/partners/curianetwork.jpeg'
 import DelinkClick from 'public/assets/partners/delinkclick.jpeg'
 import TalentProtocol from 'public/assets/partners/talentprotocol.jpeg'
 import Pixotchi from 'public/assets/partners/pixotchi.jpeg'
+import Unblockedprofile from 'public/assets/partners/unblockedprofile.jpeg'
 
 export const INTEGRATIONS = [
   {
@@ -403,6 +404,11 @@ export const INTEGRATIONS = [
     name: 'Pixotchi',
     url: 'https://mini.pixotchi.tech/',
     logo: Pixotchi,
+  },
+  {
+    name: 'UnblockedProfile',
+    url: 'https://unblockedprofile.eth.limo/',
+    logo: Unblockedprofile,
   },
 ] as {
   name: string
