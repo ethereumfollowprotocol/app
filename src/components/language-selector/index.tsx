@@ -123,7 +123,7 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
           ))}
           {specialLanguages.length > 0 && regularLanguages.length > 0 && (
             <div className='flex flex-col items-center gap-4 p-4 lg:col-span-2'>
-              <hr className='border-text-neutral/50 w-full rounded-full border-[1px]' />
+              <hr className='border-text-neutral/50 w-full rounded-full border' />
             </div>
           )}
           {specialLanguages.map((lang) => (

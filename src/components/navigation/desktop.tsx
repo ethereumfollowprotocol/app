@@ -36,7 +36,7 @@ const Desktop = () => {
             onProfileClick={(address) => router.push(`/${address}?ssr=false`)}
           />
           <CartButton />
-          <hr className='border-text-neutral mb-1 w-10 rounded-full border-[1px]' />
+          <hr className='border-text-neutral mb-1 w-10 rounded-full border' />
           <NavItems />
         </div>
       </div>

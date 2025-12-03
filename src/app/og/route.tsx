@@ -4,8 +4,6 @@ import type { NextRequest } from 'next/server'
 
 import { truncateAddress } from '#/lib/utilities'
 import type { AccountResponseType } from '#/types/requests'
-import { readFile } from 'node:fs/promises'
-import { join } from 'node:path'
 import { ens_beautify } from '@adraffy/ens-normalize'
 
 export async function GET(req: NextRequest) {
@@ -42,7 +40,7 @@ export async function GET(req: NextRequest) {
   const fetchedAvatar = response.ens?.avatar
   const fetchedHeader = response.ens?.records?.header
 
-  const interSemiBold = await readFile(join(process.cwd(), '/public/fonts/Inter/Inter-SemiBold.ttf'))
+  // const interSemiBold = await readFile(join(process.cwd(), '/public/fonts/Inter/Inter-SemiBold.ttf'))
 
   return new ImageResponse(
     (
@@ -199,14 +197,6 @@ export async function GET(req: NextRequest) {
     {
       width: 800,
       height: 418,
-      fonts: [
-        {
-          name: 'Inter',
-          data: interSemiBold,
-          style: 'normal',
-          weight: 400,
-        },
-      ],
     }
   )
 }
