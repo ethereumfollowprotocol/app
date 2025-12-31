@@ -119,6 +119,16 @@ export const INTEGRATIONS = [
     logo: Superfluid,
   },
   {
+    name: 'Scaffold ETH',
+    url: 'https://github.com/ethereumidentitykit/scaffold-efp-ext',
+    logo: ScaffoldEth,
+  },
+  {
+    name: 'Swiss Knife Apps',
+    url: 'https://apps.swiss-knife.xyz/',
+    logo: SwissKnife,
+  },
+  {
     name: 'Yodl',
     url: 'https://yodl.me/',
     logo: Yodl,
@@ -432,16 +442,6 @@ export const INTEGRATIONS = [
     name: 'Onchain ID',
     url: 'https://onchain-id.id/',
     logo: OnchainID,
-  },
-  {
-    name: 'Scaffold ETH',
-    url: 'https://github.com/ethereumidentitykit/scaffold-efp-ext',
-    logo: ScaffoldEth,
-  },
-  {
-    name: 'Swiss Knife Apps',
-    url: 'https://apps.swiss-knife.xyz/',
-    logo: SwissKnife,
   },
   {
     name: 'Pastens',
