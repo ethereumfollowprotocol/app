@@ -69,7 +69,13 @@ import DelinkClick from 'public/assets/partners/delinkclick.jpeg'
 import TalentProtocol from 'public/assets/partners/talentprotocol.jpeg'
 import Pixotchi from 'public/assets/partners/pixotchi.jpeg'
 import Unblockedprofile from 'public/assets/partners/unblockedprofile.jpeg'
-import GrailsLive from 'public/assets/partners/grailslive.png'
+import GrailsParty from 'public/assets/partners/grailsparty.png'
+import OnchainID from 'public/assets/partners/onchainid.png'
+import ScaffoldEth from 'public/assets/partners/scaffoldeth.png'
+import SwissKnife from 'public/assets/partners/swissknifeapps.png'
+import Pastens from 'public/assets/partners/pastens.png'
+import Fusion from 'public/assets/partners/fusion.png'
+import ForeverLibrary from 'public/assets/partners/foreverlibrary.png'
 
 export const INTEGRATIONS = [
   {
@@ -418,9 +424,39 @@ export const INTEGRATIONS = [
     logo: Unblockedprofile,
   },
   {
-    name: 'GrailsLive',
+    name: 'Grails Party',
     url: 'https://grails.live',
-    logo: GrailsLive,
+    logo: GrailsParty,
+  },
+  {
+    name: 'Onchain ID',
+    url: 'https://onchain-id.id/',
+    logo: OnchainID,
+  },
+  {
+    name: 'Scaffold ETH',
+    url: 'https://github.com/ethereumidentitykit/scaffold-efp-ext',
+    logo: ScaffoldEth,
+  },
+  {
+    name: 'Swiss Knife Apps',
+    url: 'https://apps.swiss-knife.xyz/',
+    logo: SwissKnife,
+  },
+  {
+    name: 'Pastens',
+    url: 'https://www.pastens.com/',
+    logo: Pastens,
+  },
+  {
+    name: 'Fusion ENS',
+    url: 'https://www.fusionens.com/',
+    logo: Fusion,
+  },
+  {
+    name: 'Forever Library',
+    url: 'https://www.foreverlibrary.xyz',
+    logo: ForeverLibrary,
   },
 ] as {
   name: string
