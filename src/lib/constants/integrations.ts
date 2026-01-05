@@ -10,6 +10,7 @@ import WebHash from 'public/assets/partners/webhash.png'
 import ENSBook from 'public/assets/partners/ensbook.png'
 import EthDotCd from 'public/assets/partners/ethdotcd.png'
 import Interface from 'public/assets/partners/interface.png'
+import Grails from 'public/assets/partners/grails.png'
 import EnsVision from 'public/assets/partners/ensvision.png'
 import WebThreeBio from 'public/assets/partners/web3bio.png'
 import JustaName from 'public/assets/partners/justaname.png'
@@ -68,6 +69,13 @@ import DelinkClick from 'public/assets/partners/delinkclick.jpeg'
 import TalentProtocol from 'public/assets/partners/talentprotocol.jpeg'
 import Pixotchi from 'public/assets/partners/pixotchi.jpeg'
 import Unblockedprofile from 'public/assets/partners/unblockedprofile.jpeg'
+import GrailsParty from 'public/assets/partners/grailsparty.png'
+import OnchainID from 'public/assets/partners/onchainid.png'
+import ScaffoldEth from 'public/assets/partners/scaffoldeth.png'
+import SwissKnife from 'public/assets/partners/swissknifeapps.png'
+import Pastens from 'public/assets/partners/pastens.png'
+import Fusion from 'public/assets/partners/fusion.png'
+import ForeverLibrary from 'public/assets/partners/foreverlibrary.png'
 
 export const INTEGRATIONS = [
   {
@@ -101,9 +109,24 @@ export const INTEGRATIONS = [
     logo: Aragon,
   },
   {
+    name: 'Grails',
+    url: 'https://grails.app/',
+    logo: Grails,
+  },
+  {
     name: 'Superfluid',
     url: 'https://superfluid.org/',
     logo: Superfluid,
+  },
+  {
+    name: 'Scaffold ETH',
+    url: 'https://github.com/ethereumidentitykit/scaffold-efp-ext',
+    logo: ScaffoldEth,
+  },
+  {
+    name: 'Swiss Knife Apps',
+    url: 'https://apps.swiss-knife.xyz/',
+    logo: SwissKnife,
   },
   {
     name: 'Yodl',
@@ -409,6 +432,31 @@ export const INTEGRATIONS = [
     name: 'Unblocked Profile',
     url: 'https://unblockedprofile.eth.limo/',
     logo: Unblockedprofile,
+  },
+  {
+    name: 'Grails Party',
+    url: 'https://grails.live',
+    logo: GrailsParty,
+  },
+  {
+    name: 'Onchain ID',
+    url: 'https://onchain-id.id/',
+    logo: OnchainID,
+  },
+  {
+    name: 'Pastens',
+    url: 'https://www.pastens.com/',
+    logo: Pastens,
+  },
+  {
+    name: 'Fusion ENS',
+    url: 'https://www.fusionens.com/',
+    logo: Fusion,
+  },
+  {
+    name: 'Forever Library',
+    url: 'https://www.foreverlibrary.xyz',
+    logo: ForeverLibrary,
   },
 ] as {
   name: string
