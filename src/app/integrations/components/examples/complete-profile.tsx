@@ -74,7 +74,7 @@ const CompleteProfile = () => {
             className='shadow-medium'
           />
         </div>
-        <div className='relative top-0 left-32 hidden w-[400px] sm:absolute sm:block 2xl:left-40'>
+        <div className='relative top-0 left-32 z-0 hidden w-[400px] sm:absolute sm:block 2xl:left-40'>
           <ProfileCard
             addressOrName='0x05977b2fb9b7ab3f3733b34350044a01a388579c'
             connectedAddress={userAddress}
