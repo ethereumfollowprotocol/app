@@ -37,7 +37,7 @@
     "@vercel/kv": "^3.0.0",
     "caniuse-lite": "^1.0.30001687",
     "clsx": "^2.1.0",
-    "ethereum-identity-kit": "^0.2.63",
+    "ethereum-identity-kit": "^0.2.66",
     "i18next": "^23.11.5",
     "i18next-browser-languagedetector": "^8.0.0",
     "i18next-http-backend": "^2.5.2",
