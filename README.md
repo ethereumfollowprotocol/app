@@ -1,3 +1,6 @@
+# README (Canonical)
+This README is the canonical source. The version in /docs is a synchronized mirror.
+
 > [!NOTE]
 > The project is under active development.
 
