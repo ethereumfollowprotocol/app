@@ -1,3 +1,7 @@
+# Build Documentation Workflow
+# Validates documentation files on changes to docs/ directory
+# Checks for broken links and ensures all required documentation exists
+
 name: Build Documentation
 
 on:
@@ -16,22 +20,27 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     
+    # Minimal permissions - only needs to read repository content
     permissions:
       contents: read
     
     steps:
+      # Step 1: Checkout repository code
       - name: 🔑 Checkout
         uses: actions/checkout@v4
       
+      # Step 2: Setup Node.js for markdown tools
       - name: 📦 Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
       
+      # Step 3: Install markdown link checker tool
       - name: 📥 Install markdown-link-check
         run: npm install -g markdown-link-check
       
+      # Step 4: Check all markdown files for broken links
       - name: 🔗 Check Markdown Links
         run: |
           # Create config file for markdown-link-check
@@ -60,6 +69,7 @@ jobs:
             fi
           done
       
+      # Step 5: Validate that all required documentation files exist
       - name: 📝 Validate Documentation Structure
         run: |
           required_files=(
@@ -89,6 +99,7 @@ jobs:
           
           echo "✅ All required documentation files are present"
       
+      # Step 6: Display documentation statistics
       - name: 📊 Documentation Statistics
         run: |
           echo "📊 Documentation Statistics:"
@@ -98,6 +109,7 @@ jobs:
           echo "Files by size:"
           find docs -name '*.md' -exec wc -l {} + | sort -rn | head -10
       
+      # Step 7: Success message
       - name: ✅ Documentation Build Complete
         if: success()
         run: echo "Documentation validation passed successfully!"

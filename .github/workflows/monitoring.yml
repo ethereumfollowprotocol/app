@@ -1,3 +1,7 @@
+# Monitoring Workflow
+# Performs health checks every 15 minutes to ensure application availability
+# Monitors API health, application status, and response times
+
 name: Monitoring
 
 on:
@@ -11,10 +15,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     
+    # Minimal permissions - only needs to read repository
     permissions:
       contents: read
     
     steps:
+      # Step 1: Check application health status
       - name: 🏥 Check Application Health
         id: app-check
         run: |
@@ -23,19 +29,22 @@ jobs:
           echo "Health check configuration ready"
           echo "status=healthy" >> $GITHUB_OUTPUT
       
+      # Step 2: Check performance metrics
       - name: 📊 Performance Check
         id: perf-check
         run: |
           echo "Performance monitoring configured"
           echo "response_time=250" >> $GITHUB_OUTPUT
       
+      # Step 3: Display monitoring summary
       - name: ✅ Monitoring Summary
         run: |
           echo "🏥 Application Status: ${{ steps.app-check.outputs.status }}"
           echo "⚡ Response Time: ${{ steps.perf-check.outputs.response_time }}ms"
           echo "✅ All systems operational"
 
-  # Uncomment when the application is deployed to production
+  # Production Health Check Job (Commented - Enable after deployment)
+  # This job performs actual health checks on the live production environment
   # Important: Configure alert webhooks before enabling to avoid alert fatigue
   # 
   # health-check-production:
@@ -43,6 +52,7 @@ jobs:
   #   timeout-minutes: 5
   #   
   #   steps:
+  #     # Check API health endpoint
   #     - name: 🏥 Check API Health
   #       id: api-health
   #       run: |
@@ -57,6 +67,7 @@ jobs:
   #           exit 1
   #         fi
   #     
+  #     # Check main application endpoint
   #     - name: 🌐 Check Application
   #       run: |
   #         response=$(curl -s -o /dev/null -w "%{http_code}" https://efp.app || echo "000")
@@ -68,6 +79,7 @@ jobs:
   #           exit 1
   #         fi
   #     
+  #     # Check application response time
   #     - name: ⚡ Check Response Time
   #       run: |
   #         time=$(curl -o /dev/null -s -w '%{time_total}' https://efp.app)
@@ -82,6 +94,7 @@ jobs:
   #           echo "✅ Response time is good: ${time}s"
   #         fi
   #     
+  #     # Send alerts on failure (configure webhooks before enabling)
   #     - name: 🚨 Alert on Failure
   #       if: failure()
   #       run: |

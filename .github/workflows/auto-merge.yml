@@ -1,3 +1,7 @@
+# Auto Merge Workflow
+# Automatically merges pull requests that meet all requirements
+# Only runs for PRs with 'auto-merge' label or from dependabot
+
 name: Auto Merge
 
 on:
@@ -11,19 +15,23 @@ on:
 jobs:
   auto-merge:
     runs-on: ubuntu-latest
+    
     # Only run for PRs with 'auto-merge' label or from dependabot
     if: |
       github.event.pull_request.user.login == 'dependabot[bot]' ||
       contains(github.event.pull_request.labels.*.name, 'auto-merge')
     
+    # Permissions required for merging PRs
     permissions:
-      contents: write
-      pull-requests: write
+      contents: write         # Write to merge commits
+      pull-requests: write    # Update PR status
     
     steps:
+      # Step 1: Checkout repository code
       - name: 🔑 Checkout
         uses: actions/checkout@v4
       
+      # Step 2: Display auto-merge configuration
       - name: 🤖 Auto Merge Configuration
         run: |
           echo "Auto-merge workflow triggered"
@@ -36,6 +44,7 @@ jobs:
           echo "- No merge conflicts"
           echo "- Branch is up to date with base"
       
+      # Step 3: Check conditions and attempt to merge
       - name: ✅ Enable Auto-Merge
         uses: actions/github-script@v7
         with:
@@ -43,12 +52,13 @@ jobs:
           script: |
             const pr = context.payload.pull_request;
             
+            // Verify this is a pull request event
             if (!pr) {
               console.log('Not a pull request event');
               return;
             }
             
-            // Check if PR is from dependabot or has auto-merge label
+            // Check if PR qualifies for auto-merge
             const shouldAutoMerge = 
               pr.user.login === 'dependabot[bot]' ||
               pr.labels.some(label => label.name === 'auto-merge');
@@ -60,7 +70,7 @@ jobs:
             
             console.log('PR qualifies for auto-merge');
             
-            // Check if all required checks have passed
+            // Verify all required checks have passed
             const { data: checks } = await github.rest.checks.listForRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -76,7 +86,7 @@ jobs:
               return;
             }
             
-            // Check if PR is approved
+            // Verify PR has been approved (skip for dependabot)
             const { data: reviews } = await github.rest.pulls.listReviews({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -92,6 +102,7 @@ jobs:
             
             console.log('All conditions met, attempting to merge...');
             
+            // Attempt to merge the PR
             try {
               await github.rest.pulls.merge({
                 owner: context.repo.owner,

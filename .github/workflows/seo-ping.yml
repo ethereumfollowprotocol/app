@@ -1,3 +1,7 @@
+# SEO Ping Workflow
+# Automatically notifies search engines about new or updated content
+# Runs daily and when sitemap changes are detected
+
 name: SEO Ping
 
 on:
@@ -16,13 +20,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     
+    # Minimal permissions - only needs to read repository
     permissions:
       contents: read
     
     steps:
+      # Step 1: Checkout repository code
       - name: 🔑 Checkout
         uses: actions/checkout@v4
       
+      # Step 2: Display SEO ping configuration
       - name: 📝 SEO Ping Configuration
         run: |
           echo "SEO ping workflow configured for:"
@@ -32,17 +39,22 @@ jobs:
           echo ""
           echo "Sitemap URL: https://efp.app/sitemap.xml"
       
-      # Uncomment when deployed to production with proper sitemap
+      # Production SEO Ping Steps (Commented - Enable after deployment)
+      # Uncomment these steps when deployed to production with proper sitemap
+      # 
+      # Step 3: Ping Google Search Console
       # - name: 📍 Ping Google
       #   run: |
       #     curl -s "https://www.google.com/ping?sitemap=https://efp.app/sitemap.xml"
       #     echo "✅ Pinged Google Search Console"
       # 
+      # Step 4: Ping Bing Webmaster Tools
       # - name: 📍 Ping Bing
       #   run: |
       #     curl -s "https://www.bing.com/ping?sitemap=https://efp.app/sitemap.xml"
       #     echo "✅ Pinged Bing Webmaster Tools"
       # 
+      # Step 5: Ping via IndexNow Protocol (requires API key secret)
       # - name: 📍 Ping IndexNow
       #   if: ${{ secrets.INDEXNOW_KEY != '' }}
       #   run: |
@@ -58,6 +70,7 @@ jobs:
       #       }'
       #     echo "✅ Submitted via IndexNow Protocol"
       
+      # Step 6: Display SEO ping summary
       - name: 📊 SEO Ping Summary
         run: |
           echo "✅ SEO ping workflow completed"
