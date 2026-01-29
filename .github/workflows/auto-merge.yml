@@ -16,6 +16,10 @@ jobs:
       github.event.pull_request.user.login == 'dependabot[bot]' ||
       contains(github.event.pull_request.labels.*.name, 'auto-merge')
     
+    permissions:
+      contents: write
+      pull-requests: write
+    
     steps:
       - name: 🔑 Checkout
         uses: actions/checkout@v4

@@ -19,6 +19,9 @@ jobs:
     timeout-minutes: 20
     environment: production
     
+    permissions:
+      contents: read
+    
     steps:
       - name: 🔑 Checkout
         uses: actions/checkout@v4
