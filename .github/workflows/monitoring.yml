@@ -33,6 +33,8 @@ jobs:
           echo "✅ All systems operational"
 
   # Uncomment when the application is deployed to production
+  # Important: Configure alert webhooks before enabling to avoid alert fatigue
+  # 
   # health-check-production:
   #   runs-on: ubuntu-latest
   #   timeout-minutes: 5
@@ -72,7 +74,13 @@ jobs:
   #         
   #         if (( $(echo "$time > $threshold" | bc -l) )); then
   #           echo "⚠️ Response time ${time}s exceeds threshold ${threshold}s"
-  #           # Don't fail, just warn
+  #           # Log warning but don't fail to avoid alert fatigue
   #         else
   #           echo "✅ Response time is good: ${time}s"
   #         fi
+  #     
+  #     - name: 🚨 Alert on Failure
+  #       if: failure()
+  #       run: |
+  #         echo "Health check failed - configure Slack/Discord webhook to send alerts"
+  #         # Webhook notification will be added when deployed to production

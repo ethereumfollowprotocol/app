@@ -55,7 +55,38 @@ jobs:
             }
             
             console.log('PR qualifies for auto-merge');
-            console.log('Enabling auto-merge with squash strategy...');
+            
+            // Check if all required checks have passed
+            const { data: checks } = await github.rest.checks.listForRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: pr.head.sha
+            });
+            
+            const allChecksPassed = checks.check_runs.every(check => 
+              check.conclusion === 'success' || check.status === 'completed'
+            );
+            
+            if (!allChecksPassed) {
+              console.log('Not all checks have passed yet, waiting...');
+              return;
+            }
+            
+            // Check if PR is approved
+            const { data: reviews } = await github.rest.pulls.listReviews({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number
+            });
+            
+            const isApproved = reviews.some(review => review.state === 'APPROVED');
+            
+            if (!isApproved && pr.user.login !== 'dependabot[bot]') {
+              console.log('PR not approved yet, waiting for review...');
+              return;
+            }
+            
+            console.log('All conditions met, attempting to merge...');
             
             try {
               await github.rest.pulls.merge({
@@ -66,6 +97,6 @@ jobs:
               });
               console.log('✅ PR merged successfully');
             } catch (error) {
-              console.log('Auto-merge conditions not met yet');
-              console.log('Waiting for all checks to pass...');
+              console.log('Could not merge PR:', error.message);
+              console.log('This may be due to merge conflicts or other restrictions');
             }

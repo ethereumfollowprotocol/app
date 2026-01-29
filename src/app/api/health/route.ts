@@ -11,6 +11,11 @@ export async function GET() {
 
   try {
     // Basic health checks
+    const apiCheck = checkAPIHealth()
+    const memoryCheck = checkMemoryHealth()
+    
+    const responseTime = Date.now() - startTime
+
     const checks = {
       timestamp: new Date().toISOString(),
       uptime: process.uptime(),
@@ -18,10 +23,10 @@ export async function GET() {
       version: process.env.VERCEL_GIT_COMMIT_SHA?.substring(0, 7) || 'dev',
       environment: process.env.NODE_ENV || 'development',
       checks: {
-        api: checkAPIHealth(),
-        memory: checkMemoryHealth(),
+        api: apiCheck,
+        memory: memoryCheck,
       },
-      responseTime: Date.now() - startTime,
+      responseTime,
     }
 
     const allHealthy = Object.values(checks.checks).every(check => check.healthy)
@@ -51,13 +56,16 @@ export async function GET() {
 
 /**
  * Check API health
+ * TODO: Replace with actual API health verification once external APIs are integrated
+ * This is a placeholder that will be updated to check actual API endpoints
  */
 function checkAPIHealth() {
   try {
-    // Basic API availability check
+    // Basic availability check - will be replaced with actual API calls
+    // when external integrations (Alchemy, Helius, etc.) are implemented
     return {
       healthy: true,
-      latency: Math.floor(Math.random() * 10) + 1, // Mock latency
+      note: 'Placeholder - will verify external API connections when integrated',
     }
   } catch (error) {
     return {

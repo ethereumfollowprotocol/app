@@ -34,9 +34,9 @@ jobs:
       - name: 🔒 Run Security Audit
         run: |
           echo "Running security audit..."
-          # Bun doesn't have audit yet, but we can check for vulnerabilities
-          echo "✅ No critical vulnerabilities found"
-        continue-on-error: true
+          # Note: Bun doesn't have built-in audit yet
+          # This will be enhanced when external security tools are integrated
+          echo "✅ Security audit placeholder - will be enhanced with actual vulnerability scanning"
       
       - name: 🔍 Initialize CodeQL
         uses: github/codeql-action/init@v3
