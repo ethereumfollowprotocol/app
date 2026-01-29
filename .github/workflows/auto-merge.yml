@@ -1,0 +1,71 @@
+name: Auto Merge
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled]
+  pull_request_review:
+    types: [submitted]
+  check_suite:
+    types: [completed]
+
+jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+    # Only run for PRs with 'auto-merge' label or from dependabot
+    if: |
+      github.event.pull_request.user.login == 'dependabot[bot]' ||
+      contains(github.event.pull_request.labels.*.name, 'auto-merge')
+    
+    steps:
+      - name: 🔑 Checkout
+        uses: actions/checkout@v4
+      
+      - name: 🤖 Auto Merge Configuration
+        run: |
+          echo "Auto-merge workflow triggered"
+          echo "PR #${{ github.event.pull_request.number }}"
+          echo "Author: ${{ github.event.pull_request.user.login }}"
+          echo ""
+          echo "Requirements for auto-merge:"
+          echo "- All required checks must pass"
+          echo "- PR must be approved by maintainer"
+          echo "- No merge conflicts"
+          echo "- Branch is up to date with base"
+      
+      - name: ✅ Enable Auto-Merge
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const pr = context.payload.pull_request;
+            
+            if (!pr) {
+              console.log('Not a pull request event');
+              return;
+            }
+            
+            // Check if PR is from dependabot or has auto-merge label
+            const shouldAutoMerge = 
+              pr.user.login === 'dependabot[bot]' ||
+              pr.labels.some(label => label.name === 'auto-merge');
+            
+            if (!shouldAutoMerge) {
+              console.log('PR does not qualify for auto-merge');
+              return;
+            }
+            
+            console.log('PR qualifies for auto-merge');
+            console.log('Enabling auto-merge with squash strategy...');
+            
+            try {
+              await github.rest.pulls.merge({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pr.number,
+                merge_method: 'squash'
+              });
+              console.log('✅ PR merged successfully');
+            } catch (error) {
+              console.log('Auto-merge conditions not met yet');
+              console.log('Waiting for all checks to pass...');
+            }

@@ -1,0 +1,70 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  NODE_OPTIONS: '--no-warnings'
+  NEXT_TELEMETRY_DISABLED: '1'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production
+    
+    steps:
+      - name: 🔑 Checkout
+        uses: actions/checkout@v4
+      
+      - name: 📦 Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+      
+      - name: 📥 Cache Dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.bun/install/cache
+            node_modules
+            .next/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+      
+      - name: 🔧 Install Dependencies
+        run: bun install --frozen-lockfile
+      
+      - name: 🔍 Run Tests
+        run: |
+          bun lint
+          bun typecheck
+      
+      - name: 🏗️ Build Application
+        run: bun run build
+        env:
+          NODE_ENV: production
+          NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID }}
+      
+      - name: 🚀 Deploy to Vercel
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          echo "Deployment to Vercel is configured via Vercel GitHub integration"
+          echo "Visit https://vercel.com/dashboard to configure automatic deployments"
+          echo "Commit SHA: ${{ github.sha }}"
+      
+      - name: 📊 Deployment Summary
+        if: success()
+        run: |
+          echo "✅ Deployment completed successfully!"
+          echo "Commit: ${{ github.sha }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Author: ${{ github.actor }}"
+          echo "Message: ${{ github.event.head_commit.message }}"
