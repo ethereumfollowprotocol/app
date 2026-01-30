@@ -18,14 +18,14 @@ const ResetSlotWarning: React.FC<ResetSlotWarningProps> = ({ closeModal, onSubmi
           <h2 className='text-2xl font-bold'>{t('reset slot')}</h2>
         </div>
         <p className='px-4 text-lg font-medium'>{t('reset slot message')}</p>
-        <div className='flex justify-between pt-1'>
-          <CancelButton onClick={closeModal} />
+        <div className='pt- flex justify-between gap-2'>
+          <CancelButton onClick={closeModal} className='w-1/2' />
           <button
             onClick={() => {
               onSubmit()
               closeModal()
             }}
-            className='rounded-full bg-red-500 px-6 py-2 text-lg font-bold text-white transition-all hover:scale-110 hover:opacity-75'
+            className='w-1/2 rounded-sm bg-red-500 px-6 py-2 text-lg font-bold text-nowrap text-white transition-all hover:scale-105 hover:opacity-75'
           >
             {t('reset slot')}
           </button>

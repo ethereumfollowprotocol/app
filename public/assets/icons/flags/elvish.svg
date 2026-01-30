@@ -1,0 +1,48 @@
+<svg width="96" height="96" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="elvishGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a237e;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#283593;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1b5e20;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="leafGradient" cx="50%" cy="50%">
+      <stop offset="0%" style="stop-color:#66bb6a;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#2e7d32;stop-opacity:0.7" />
+    </radialGradient>
+    <linearGradient id="silverGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#e8eaf6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#c5cae9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9fa8da;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Rectangular flag background positioned like other flags -->
+  <rect x="3" y="12" width="90" height="72" fill="url(#elvishGradient)" rx="12"/>
+  
+  <!-- Elvish leaf motif -->
+  <path d="M24 48 Q36 24 48 48 Q60 24 72 48 Q60 72 48 48 Q36 72 24 48 Z" 
+        fill="url(#leafGradient)" 
+        opacity="0.6"/>
+  
+  <!-- Central star/light -->
+  <circle cx="48" cy="48" r="9" fill="url(#silverGradient)" opacity="0.8"/>
+  <path d="M48 30 L52.5 42 L66 42 L55.5 51 L60 66 L48 57 L36 66 L40.5 51 L30 42 L43.5 42 Z" 
+        fill="url(#silverGradient)" 
+        opacity="0.6"/>
+  
+  <!-- Elvish script-inspired curves -->
+  <path d="M12 24 Q24 18 36 24 Q48 30 60 24 Q72 18 84 24" 
+        stroke="url(#silverGradient)" 
+        stroke-width="1.5" 
+        fill="none" 
+        opacity="0.5"/>
+  <path d="M12 72 Q24 78 36 72 Q48 66 60 72 Q72 78 84 72" 
+        stroke="url(#silverGradient)" 
+        stroke-width="1.5" 
+        fill="none" 
+        opacity="0.5"/>
+  
+  <!-- Border for the flag rectangle -->
+  <rect x="3" y="12" width="90" height="72" fill="none" stroke="url(#silverGradient)" stroke-width="1" rx="12" opacity="0.3"/>
+</svg>

@@ -3,7 +3,7 @@ import Members from './components/members'
 import BackToTop from '#/components/buttons/back-to-top'
 
 export const metadata: Metadata = {
-  title: 'Team | EFP',
+  title: 'Team',
   openGraph: {
     title: 'Team | EFP',
     siteName: 'Team - Ethereum Follow Protocol',

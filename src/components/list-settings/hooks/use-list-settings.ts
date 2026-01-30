@@ -193,8 +193,8 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
   const [fetchedListRecordsContractAddress, setFetchedListRecordsContractAddress] = useState<Address>()
 
   const fetchListData = async () => {
-    const listStorageLocation = await listRegistryContract.read.getListStorageLocation([BigInt(list)])
-    const listOwner = await listRegistryContract.read.ownerOf([BigInt(list)])
+    const listStorageLocation = await listRegistryContract.read.getListStorageLocation?.([BigInt(list)])
+    const listOwner = await listRegistryContract.read.ownerOf?.([BigInt(list)])
 
     const slot = BigInt(`0x${listStorageLocation.slice(-64)}`)
     const listStorageLocationChainId = fromHex(`0x${listStorageLocation.slice(64, 70)}`, 'number')
@@ -212,8 +212,8 @@ const useListSettings = ({ profile, list }: { profile: ProfileDetailsResponse; l
       }),
     })
 
-    const listManager = await listRecordsContract.read.getListManager([slot])
-    const listUser = await listRecordsContract.read.getListUser([slot])
+    const listManager = await listRecordsContract.read.getListManager?.([slot])
+    const listUser = await listRecordsContract.read.getListUser?.([slot])
 
     setFetchedSlot(slot)
     setFetchedListRecordsContractAddress(listRecordsContractAddress)

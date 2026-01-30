@@ -46,9 +46,9 @@ export const fetchProfileFollowing = async ({
       },
     })
 
-    const data = (await response.json()).following as FollowingResponse[]
+    const data = (await response.json()) as { following: FollowingResponse[] }
     return {
-      following: data ?? [],
+      following: data.following ?? [],
       nextPageParam: pageParam + 1,
     }
   } catch (err: unknown) {

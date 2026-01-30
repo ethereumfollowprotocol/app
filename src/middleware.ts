@@ -2,15 +2,15 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
-  if (process.env.NODE_ENV === 'development') return NextResponse.next()
+  // if (process.env.NODE_ENV === 'development') return NextResponse.next()
 
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64')
 
   const cspHeader = `
     worker-src 'self' *.cloudflareinsights.com cdn.vercel-insights.com vercel.live va.vercel-scripts.com blob:;
-    script-src 'self' 'unsafe-inline' *.cloudflareinsights.com cdn.vercel-insights.com vercel.live va.vercel-scripts.com www.googletagmanager.com;
+    script-src 'self' *.cloudflareinsights.com cdn.vercel-insights.com vercel.live va.vercel-scripts.com www.googletagmanager.com 'unsafe-inline' 'unsafe-eval';
     media-src 'self';
-    connect-src * *.blockscout.com.;
+    connect-src 'self' * *.blockscout.com. wss://efp-events.up.railway.app/;
     object-src 'none';
     base-uri 'none';
     form-action 'self';
@@ -23,7 +23,7 @@ export function middleware(request: NextRequest) {
 
   const requestHeaders = new Headers(request.headers)
   requestHeaders.set('x-nonce', nonce)
-  requestHeaders.set('Content-Security-Policy', contentSecurityPolicyHeaderValue)
+  // requestHeaders.set('Content-Security-Policy', contentSecurityPolicyHeaderValue)
 
   const response = NextResponse.next({
     request: {

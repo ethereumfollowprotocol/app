@@ -46,7 +46,7 @@ const LiveIntegrations = () => {
               className='absolute top-0 left-0 mx-auto h-full w-full transition-all duration-300 group-hover/integration:scale-110'
             />
             <div className='z-10 flex h-[100px] w-full flex-row items-end justify-between bg-gradient-to-t from-black/75 to-transparent p-3 text-white transition-transform duration-300 group-hover/integration:translate-y-0 lg:translate-y-full xl:p-4'>
-              <p className='tex-base z-10 font-bold xl:max-w-[140px] xl:text-lg'>{integration.name}</p>
+              <p className='tex-base z-10 font-bold break-words xl:max-w-[140px] xl:text-lg'>{integration.name}</p>
               <ExternalLink className='mb-1 h-5! w-auto' />
             </div>
           </Link>

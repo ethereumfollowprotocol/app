@@ -1,13 +1,12 @@
 'use client'
 
+import { Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { TEAM_ROLES, TEAM_ADDRESSES, FOUNDATION_ROLES, FOUNDATION_ADDRESSES } from '#/lib/constants/team'
 import { useMembers } from '../hooks/use-members'
-import LoadingCell from '#/components/loaders/loading-cell'
-import UserProfileCard from '#/components/user-profile-card'
-import { Suspense } from 'react'
 import UserProfile from '#/components/user-profile'
+import LoadingCell from '#/components/loaders/loading-cell'
+import { TEAM_ROLES, TEAM_ADDRESSES, FOUNDATION_ROLES, FOUNDATION_ADDRESSES } from '#/lib/constants/team'
 
 const Members = () => {
   const {
@@ -34,46 +33,32 @@ const Members = () => {
           {teamProfiles?.map((profile, i) => (
             <div key={profile?.address} className='relative flex w-full flex-col items-center gap-2'>
               <p className='text-lg font-bold text-zinc-500 md:hidden dark:text-zinc-200'>{TEAM_ROLES[i]}</p>
-              <UserProfileCard
-                isResponsive={false}
-                profile={profile}
-                stats={teamStats?.[i]}
-                isStatsLoading={teamStatsIsLoading}
-                profileList={profile?.primary_list ? Number(profile?.primary_list) : undefined}
-                showMoreOptions={true}
-                className='md:hidden'
-                // x={records?.['com.twitter'] ?? ''}
-                // github={records?.['com.github'] ?? ''}
-              />
-              <UserProfile
-                isMyProfile={false}
-                role={TEAM_ROLES[i]}
-                profileList={profile?.primary_list ? Number(profile?.primary_list) : undefined}
-                stats={teamStats?.[i]}
-                profile={profile}
-                isLoading={teamIsLoading}
-                isStatsLoading={teamStatsIsLoading}
-                className='hidden pt-14 pb-12 md:flex'
-              />
+              <Suspense>
+                {profile?.address && (
+                  <UserProfile
+                    addressOrName={profile?.address}
+                    isMyProfile={false}
+                    role={TEAM_ROLES[i]}
+                    profileList={profile?.primary_list ? Number(profile?.primary_list) : undefined}
+                    stats={teamStats?.[i]}
+                    profile={profile}
+                    isLoading={teamIsLoading}
+                    isStatsLoading={teamStatsIsLoading}
+                    className='hidden pt-14 pb-12'
+                  />
+                )}
+              </Suspense>
             </div>
           ))}
           {teamIsLoading &&
             TEAM_ADDRESSES.map((address) => (
               <div key={address} className='flex w-full flex-col items-center gap-2'>
                 <LoadingCell className='h-7 w-52 rounded-sm md:hidden' />
-                <Suspense>
-                  <UserProfileCard
-                    isResponsive={false}
-                    isLoading={teamIsLoading}
-                    className='md:hidden'
-                    // x={records?.['com.twitter'] ?? ''}
-                    // github={records?.['com.github'] ?? ''}
-                  />
-                </Suspense>
                 <UserProfile
+                  addressOrName={address}
                   isLoading={foundationIsLoading}
                   isStatsLoading={foundationStatsIsLoading}
-                  className='hidden w-full pt-14 pb-12 md:flex'
+                  className='hidden w-full pt-14 pb-12'
                 />
               </div>
             ))}
@@ -87,46 +72,32 @@ const Members = () => {
             {foundationProfiles?.map((profile, i) => (
               <div key={profile?.address} className='relative flex w-full flex-col items-center gap-2'>
                 <p className='text-lg font-bold text-zinc-500 md:hidden dark:text-zinc-200'>{FOUNDATION_ROLES[i]}</p>
-                <UserProfileCard
-                  isResponsive={false}
-                  profile={profile}
-                  stats={foundationStats?.[i]}
-                  isStatsLoading={foundationStatsIsLoading}
-                  profileList={profile?.primary_list ? Number(profile?.primary_list) : undefined}
-                  showMoreOptions={true}
-                  className='md:hidden'
-                  // x={records?.['com.twitter'] ?? ''}
-                  // github={records?.['com.github'] ?? ''}
-                />
-                <UserProfile
-                  isMyProfile={false}
-                  role={FOUNDATION_ROLES[i]}
-                  profileList={profile?.primary_list ? Number(profile?.primary_list) : undefined}
-                  stats={foundationStats?.[i]}
-                  profile={profile}
-                  isLoading={foundationIsLoading}
-                  isStatsLoading={foundationStatsIsLoading}
-                  className='hidden pt-14 pb-12 md:flex'
-                />
+                <Suspense>
+                  {profile?.address && (
+                    <UserProfile
+                      addressOrName={profile?.address}
+                      isMyProfile={false}
+                      role={FOUNDATION_ROLES[i]}
+                      profileList={profile?.primary_list ? Number(profile?.primary_list) : undefined}
+                      stats={foundationStats?.[i]}
+                      profile={profile}
+                      isLoading={foundationIsLoading}
+                      isStatsLoading={foundationStatsIsLoading}
+                      className='hidden pt-14 pb-12'
+                    />
+                  )}
+                </Suspense>
               </div>
             ))}
             {foundationIsLoading &&
               FOUNDATION_ADDRESSES.map((address) => (
                 <div key={address} className='flex w-full flex-col items-center gap-2'>
                   <LoadingCell className='h-7 w-52 rounded-sm md:hidden' />
-                  <Suspense>
-                    <UserProfileCard
-                      isResponsive={false}
-                      isLoading={foundationIsLoading}
-                      className='md:hidden'
-                      // x={records?.['com.twitter'] ?? ''}
-                      // github={records?.['com.github'] ?? ''}
-                    />
-                  </Suspense>
                   <UserProfile
+                    addressOrName={address}
                     isLoading={foundationIsLoading}
                     isStatsLoading={foundationStatsIsLoading}
-                    className='hidden w-full pt-14 pb-12 md:flex'
+                    className='hidden w-full pt-14 pb-12'
                   />
                 </div>
               ))}

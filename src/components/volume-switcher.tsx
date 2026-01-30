@@ -69,13 +69,13 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = ({ closeMenu, setExternalV
       >
         <div className='flex items-center justify-end gap-2'>
           {selectedVolumeOption && <selectedVolumeOption.icon className='h-6 w-6' />}
-          <p className='font-bold capitalize'>{t(selectedVolume || 'system')}</p>
+          <p className='font-bold capitalize'>{t(selectedVolume)}</p>
         </div>
         <ArrowRight />
       </div>
       <div
         className={cn(
-          'absolute -top-[116px] -right-full z-50 block w-full transition-all transition-discrete group-hover:block sm:top-0 sm:left-full sm:w-fit sm:pl-2 sm:transition-normal',
+          'absolute -top-[113px] -right-full z-50 block w-full transition-all transition-discrete group-hover:block sm:top-0 sm:left-full sm:w-fit sm:pl-2 sm:transition-normal',
           volumeMenuOpen ? 'block' : 'hidden'
         )}
       >
@@ -88,7 +88,7 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = ({ closeMenu, setExternalV
             className='hover:bg-nav-item flex w-full cursor-pointer items-center justify-between rounded-sm p-4 transition-opacity lg:hidden'
           >
             <ArrowLeft className='text-xl' />
-            <p className='font-bold'>Back</p>
+            <p className='font-bold'>{t('back')}</p>
           </div>
           {volumeOptions.map((option) => (
             <div

@@ -67,12 +67,7 @@ export const useRecommendedProfilesCards = () => {
       if (canFetchMoreProfiles(index)) fetchNextPage()
       if (xDir === 1) {
         setTimeout(() => {
-          addToCart([
-            listOpAddListRecord(
-              // @ts-expect-error the index comes from the cardsApi which is the same length as recommendedProfiles therefore it is never undefined
-              recommendedProfiles[index]?.address
-            ),
-          ])
+          addToCart([listOpAddListRecord(recommendedProfiles[index]?.address)])
 
           handleStartAnimationAndSound()
         }, 0.15 * SECOND)

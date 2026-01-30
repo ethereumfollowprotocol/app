@@ -10,6 +10,7 @@ import WebHash from 'public/assets/partners/webhash.png'
 import ENSBook from 'public/assets/partners/ensbook.png'
 import EthDotCd from 'public/assets/partners/ethdotcd.png'
 import Interface from 'public/assets/partners/interface.png'
+import Grails from 'public/assets/partners/grails.png'
 import EnsVision from 'public/assets/partners/ensvision.png'
 import WebThreeBio from 'public/assets/partners/web3bio.png'
 import JustaName from 'public/assets/partners/justaname.png'
@@ -44,6 +45,37 @@ import NameGraph from 'public/assets/partners/namegraph.jpeg'
 import Aragon from 'public/assets/partners/aragon.jpeg'
 import Superfluid from 'public/assets/partners/superfluid.jpeg'
 import ETHSF from 'public/assets/partners/ethsf.jpeg'
+import ENSvolution from 'public/assets/partners/ensvolution.jpeg'
+import IpeCity from 'public/assets/partners/ipecity.jpeg'
+import CryptoPunksEthLimo from 'public/assets/partners/cryptopunks-eth-limo.jpeg'
+import GeoCities from 'public/assets/partners/geocities.jpeg'
+import CodeSwarmAI from 'public/assets/partners/codeswarmai.jpeg'
+import Namespace from 'public/assets/partners/namespace.jpeg'
+import Dappcon from 'public/assets/partners/dappcon.jpeg'
+import DIDHub from 'public/assets/partners/didhub.jpeg'
+import Philand from 'public/assets/partners/philand.jpeg'
+import V1CryptoPunks from 'public/assets/partners/v1cryptopunks.jpeg'
+import PrepunkVerify from 'public/assets/partners/prepunkverify.jpeg'
+import MetaPoll from 'public/assets/partners/metapoll.jpeg'
+import CommonGround from 'public/assets/partners/commonground.jpeg'
+import Enscribe from 'public/assets/partners/enscribe.jpeg'
+import VanityBox from 'public/assets/partners/vanitybox.png'
+import CreatorScore from 'public/assets/partners/creatorscore.jpeg'
+import EthStars from 'public/assets/partners/ethstars.jpeg'
+import Paper from 'public/assets/partners/paper.jpeg'
+import Ethbox from 'public/assets/partners/ethbox.jpeg'
+import CuriaNetwork from 'public/assets/partners/curianetwork.jpeg'
+import DelinkClick from 'public/assets/partners/delinkclick.jpeg'
+import TalentProtocol from 'public/assets/partners/talentprotocol.jpeg'
+import Pixotchi from 'public/assets/partners/pixotchi.jpeg'
+import Unblockedprofile from 'public/assets/partners/unblockedprofile.jpeg'
+import GrailsParty from 'public/assets/partners/grailsparty.png'
+import OnchainID from 'public/assets/partners/onchainid.png'
+import ScaffoldEth from 'public/assets/partners/scaffoldeth.png'
+import SwissKnife from 'public/assets/partners/swissknifeapps.png'
+import Pastens from 'public/assets/partners/pastens.png'
+import Fusion from 'public/assets/partners/fusion.png'
+import ForeverLibrary from 'public/assets/partners/foreverlibrary.png'
 
 export const INTEGRATIONS = [
   {
@@ -77,9 +109,24 @@ export const INTEGRATIONS = [
     logo: Aragon,
   },
   {
+    name: 'Grails',
+    url: 'https://grails.app/',
+    logo: Grails,
+  },
+  {
     name: 'Superfluid',
     url: 'https://superfluid.org/',
     logo: Superfluid,
+  },
+  {
+    name: 'Scaffold ETH',
+    url: 'https://github.com/ethereumidentitykit/scaffold-efp-ext',
+    logo: ScaffoldEth,
+  },
+  {
+    name: 'Swiss Knife Apps',
+    url: 'https://apps.swiss-knife.xyz/',
+    logo: SwissKnife,
   },
   {
     name: 'Yodl',
@@ -92,9 +139,24 @@ export const INTEGRATIONS = [
     logo: EnsVision,
   },
   {
-    name: 'Zapper',
-    url: 'https://zapper.xyz/',
-    logo: Zapper,
+    name: 'Creator Score',
+    url: 'https://www.creatorscore.app/',
+    logo: CreatorScore,
+  },
+  {
+    name: 'Talent Protocol',
+    url: 'https://talentprotocol.com/',
+    logo: TalentProtocol,
+  },
+  {
+    name: 'Ipê City',
+    url: 'https://www.ipe.city/',
+    logo: IpeCity,
+  },
+  {
+    name: 'Namespace',
+    url: 'https://namespace.ninja/',
+    logo: Namespace,
   },
   {
     name: 'Rotki',
@@ -112,9 +174,14 @@ export const INTEGRATIONS = [
     logo: Phi,
   },
   {
-    name: 'Vibes',
-    url: 'https://vibes.scapes.xyz/',
-    logo: VibesScapes,
+    name: 'Philand',
+    url: 'https://philand.xyz/',
+    logo: Philand,
+  },
+  {
+    name: 'Common Ground',
+    url: 'https://app.cg',
+    logo: CommonGround,
   },
   {
     name: 'Lighthouse',
@@ -122,9 +189,24 @@ export const INTEGRATIONS = [
     logo: Lighthouse,
   },
   {
+    name: 'Zapper',
+    url: 'https://zapper.xyz/',
+    logo: Zapper,
+  },
+  {
+    name: 'Paper',
+    url: 'https://paper.ink/',
+    logo: Paper,
+  },
+  {
     name: 'Blockverse',
     url: 'https://www.pob.studio/',
     logo: Pobstudio,
+  },
+  {
+    name: 'Dappcon',
+    url: 'https://vibes.dappcon.io/',
+    logo: Dappcon,
   },
   {
     name: 'Dhive',
@@ -135,6 +217,16 @@ export const INTEGRATIONS = [
     name: 'Web3 Bio',
     url: 'https://web3.bio/',
     logo: WebThreeBio,
+  },
+  {
+    name: 'Eth.box',
+    url: 'https://eth.box/',
+    logo: Ethbox,
+  },
+  {
+    name: 'Enscribe',
+    url: 'https://www.enscribe.xyz/',
+    logo: Enscribe,
   },
   {
     name: 'Records.xyz',
@@ -170,6 +262,16 @@ export const INTEGRATIONS = [
     name: 'ENS Tools',
     url: 'https://ens.tools',
     logo: ENSTools,
+  },
+  {
+    name: 'DIDHub',
+    url: 'https://beta.didhub.com/',
+    logo: DIDHub,
+  },
+  {
+    name: 'MetaPoll',
+    url: 'https://metapoll.xyz/',
+    logo: MetaPoll,
   },
   {
     name: 'NameGraph',
@@ -233,7 +335,7 @@ export const INTEGRATIONS = [
   },
   {
     name: 'Ethereum San Francisco',
-    url: 'https://www.ethereumsf.org/',
+    url: 'https://ethsf.fileverse.io/ethsf/portal',
     logo: ETHSF,
   },
   {
@@ -265,6 +367,96 @@ export const INTEGRATIONS = [
     name: 'CuriaLab',
     url: 'https://www.curialab.xyz/',
     logo: CuriaLab,
+  },
+  {
+    name: 'ENSvolution',
+    url: 'https://www.ensvolution.xyz/',
+    logo: ENSvolution,
+  },
+  {
+    name: 'Prepunk Verify',
+    url: 'https://verify.prepunk.club/',
+    logo: PrepunkVerify,
+  },
+  {
+    name: 'Curia.Network',
+    url: 'https://curia.network/',
+    logo: CuriaNetwork,
+  },
+  {
+    name: 'CryptoPunks.eth.limo',
+    url: 'https://cryptopunks.eth.limo/',
+    logo: CryptoPunksEthLimo,
+  },
+  {
+    name: 'V1 CryptoPunks',
+    url: 'https://v1cryptopunks.com/',
+    logo: V1CryptoPunks,
+  },
+  {
+    name: 'GeoCities',
+    url: 'https://geocities.eth.link/',
+    logo: GeoCities,
+  },
+  {
+    name: 'EthStars',
+    url: 'https://ethstars.info/',
+    logo: EthStars,
+  },
+  {
+    name: 'Vibes',
+    url: 'https://vibes.scapes.xyz/',
+    logo: VibesScapes,
+  },
+  {
+    name: 'CodeSwarm.ai',
+    url: 'https://codeswarm.ai/',
+    logo: CodeSwarmAI,
+  },
+  {
+    name: 'Vanity.box',
+    url: 'https://vanity.box/',
+    logo: VanityBox,
+  },
+  {
+    name: 'Delink.click',
+    url: 'https://delink.click/',
+    logo: DelinkClick,
+  },
+  {
+    name: 'Pixotchi',
+    url: 'https://mini.pixotchi.tech/',
+    logo: Pixotchi,
+  },
+  {
+    name: 'Unblocked Profile',
+    url: 'https://unblockedprofile.eth.limo/',
+    logo: Unblockedprofile,
+  },
+  {
+    name: 'Grails Party',
+    url: 'https://grails.live',
+    logo: GrailsParty,
+  },
+  {
+    name: 'Onchain ID',
+    url: 'https://onchain-id.id/',
+    logo: OnchainID,
+  },
+  {
+    name: 'Pastens',
+    url: 'https://www.pastens.com/',
+    logo: Pastens,
+  },
+  {
+    name: 'Fusion ENS',
+    url: 'https://www.fusionens.com/',
+    logo: Fusion,
+  },
+  {
+    name: 'Forever Library',
+    url: 'https://www.foreverlibrary.xyz',
+    logo: ForeverLibrary,
   },
 ] as {
   name: string

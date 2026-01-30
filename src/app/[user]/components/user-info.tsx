@@ -1,8 +1,11 @@
 'use client'
 
-import { Suspense, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
+import { cn } from '#/lib/utilities'
+import TopEightActivity from './top-eight-activity'
+import UserProfile from '#/components/user-profile'
 import QRCodeModal from '#/components/qr-code-modal'
 import type { ProfileTabType } from '#/types/common'
 import { useUserInfo } from '../hooks/use-user-info'
@@ -10,12 +13,9 @@ import ListSettings from '#/components/list-settings'
 import BlockedMuted from '#/components/blocked-muted'
 import { useIsEditView } from '#/hooks/use-is-edit-view'
 import { useUserScroll } from '../hooks/use-user-scroll'
-import UserProfileCard from '#/components/user-profile-card'
+import BackToTop from '#/components/buttons/back-to-top'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import UserProfilePageTable from '#/components/profile-page-table'
-import UserProfile from '#/components/user-profile'
-import BackToTop from '#/components/buttons/back-to-top'
-import TopEightActivity from './top-eight-activity'
 
 interface UserInfoProps {
   user: string
@@ -28,7 +28,6 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   const initialListSettingsOpen = searchParams.get('modal') === 'list_settings'
   const defaultParam = (searchParams.get('tab') as ProfileTabType) ?? 'following'
 
-  const [isSaving, setIsSaving] = useState(false)
   const [listSettingsOpen, setListSettingsOpen] = useState(initialListSettingsOpen)
   const [qrCodeModalOpen, setQrCodeModalOpen] = useState(initialQrCodeModalOpen)
   const [isBlockedMutedOpen, setIsBlockedMutedOpen] = useState(initialBlockedOpen)
@@ -73,8 +72,8 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   } = useUserInfo(user)
   const router = useRouter()
   const isMyProfile = useIsEditView()
-  const { roles, selectedList } = useEFPProfile()
-  const { tableRef, TopEightRef, containerRef } = useUserScroll()
+  const { roles } = useEFPProfile()
+  const { tableRef, TopEightRef, containerRef, isCommonFollowersModalOpen } = useUserScroll()
 
   useEffect(() => {
     if (searchParams.get('tab')) {
@@ -84,6 +83,14 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       }
     }
   }, [searchParams])
+
+  useEffect(() => {
+    if (stats) {
+      if (stats.following_count === 0 && stats.followers_count > 0) {
+        setActiveTab('followers')
+      }
+    }
+  }, [stats])
 
   const tableProps = {
     followers: {
@@ -145,86 +152,66 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       )}
       {isBlockedMutedOpen && (
         <BlockedMuted
-          user={user}
-          list={userIsList ? listNum : undefined}
+          user={userIsList && listNum ? listNum.toString() : user}
           onClose={() => {
             setIsBlockedMutedOpen(false)
             router.push(`/${user}`)
           }}
-          isManager={profileList === selectedList && roles?.isManager}
         />
       )}
       {listSettingsOpen && profile && profileList && (
         <ListSettings
           selectedList={profileList}
-          isSaving={isSaving}
           profile={profile}
-          setIsSaving={setIsSaving}
           onClose={() => {
             setListSettingsOpen(false)
             router.push(`/${user}`)
           }}
         />
       )}
-      {!isSaving && (
-        <div
-          id='user-page'
-          className='relative mx-auto flex h-screen w-full flex-col items-center gap-4 overflow-y-auto px-0 pb-32 sm:pr-0 sm:pb-8 sm:pl-[70px] lg:gap-0 2xl:pl-20'
-          ref={containerRef}
-        >
-          <div className='z-20 mt-20 w-full sm:mt-0 md:z-auto'>
-            <Suspense>
-              <UserProfileCard
-                className='z-50 flex w-full md:hidden'
-                profileList={profileList}
-                stats={stats}
-                profile={profile}
-                refetchProfile={refetchProfile}
-                isLoading={profileIsLoading}
-                isStatsLoading={statsIsLoading}
-                showMoreOptions={true}
-                openBlockModal={() => {
-                  setIsBlockedMutedOpen(true)
-                  router.push(`/${user}?modal=block_mute_list&ssr=false`)
-                }}
-                openQrCodeModal={() => setQrCodeModalOpen(true)}
-                openListSettingsModal={() => setListSettingsOpen(true)}
-              />
-              <UserProfile
-                isMyProfile={isMyProfile}
-                profileList={profileList}
-                stats={stats}
-                profile={profile}
-                refetchProfile={refetchProfile}
-                isLoading={profileIsLoading}
-                isStatsLoading={statsIsLoading}
-                openBlockModal={() => {
-                  setIsBlockedMutedOpen(true)
-                  router.push(`/${user}?modal=block_mute_list&ssr=false`)
-                }}
-                openQrCodeModal={() => setQrCodeModalOpen(true)}
-                openListSettingsModal={() => setListSettingsOpen(true)}
-              />
-            </Suspense>
+      <div
+        id='user-page'
+        className={cn(
+          'relative mx-auto flex h-screen w-full flex-col items-center gap-4 overflow-y-auto px-0 pb-32 sm:pr-0 sm:pb-8 sm:pl-[70px] lg:gap-0 2xl:pl-20',
+          isCommonFollowersModalOpen && 'overflow-hidden'
+        )}
+        ref={containerRef}
+      >
+        <div className='z-20 mt-20 w-full sm:mt-0 md:z-auto'>
+          <UserProfile
+            addressOrName={user}
+            isMyProfile={isMyProfile}
+            profileList={profileList}
+            stats={stats}
+            profile={profile}
+            refetchProfile={refetchProfile}
+            isLoading={profileIsLoading}
+            isStatsLoading={statsIsLoading}
+            openBlockModal={() => {
+              setIsBlockedMutedOpen(true)
+              router.push(`/${user}?modal=block_mute_list&ssr=false`)
+            }}
+            openQrCodeModal={() => setQrCodeModalOpen(true)}
+            openListSettingsModal={() => setListSettingsOpen(true)}
+          />
+        </div>
+        <div className='flex w-full max-w-[1920px] flex-col-reverse gap-4 px-4 md:-mt-28 lg:-mt-24 lg:flex-row xl:px-8'>
+          <div className='z-10 h-fit w-full hover:z-20'>
+            <UserProfilePageTable
+              ref={tableRef}
+              setActiveTab={(tab) => setActiveTab(tab as ProfileTabType)}
+              {...activeTableProps}
+            />
           </div>
-          <div className='flex w-full max-w-[1920px] flex-col-reverse gap-4 px-4 md:-mt-28 lg:-mt-24 lg:flex-row xl:px-8'>
-            <div className='z-10 h-fit w-full'>
-              <UserProfilePageTable
-                setActiveTab={(tab) => setActiveTab(tab as ProfileTabType)}
-                ref={tableRef}
-                {...activeTableProps}
-              />
-            </div>
-            <div ref={TopEightRef} className='top-0 z-10 h-fit pb-4 lg:sticky'>
-              <TopEightActivity
-                user={user}
-                isConnectedUserProfile={isMyProfile}
-                followingListProps={tableProps.following}
-              />
-            </div>
+          <div ref={TopEightRef} className='top-0 z-10 h-fit pb-4 hover:z-20 lg:sticky'>
+            <TopEightActivity
+              user={user}
+              isConnectedUserProfile={isMyProfile}
+              followingListProps={tableProps.following}
+            />
           </div>
         </div>
-      )}
+      </div>
       <BackToTop />
     </>
   )

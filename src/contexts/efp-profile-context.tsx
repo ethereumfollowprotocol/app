@@ -27,9 +27,12 @@ import type {
   FollowingTagsResponse,
   ProfileDetailsResponse,
 } from '#/types/requests'
+import { refetchState } from '#/utils/reset-queries'
 import { DEFAULT_CHAIN } from '#/lib/constants/chains'
 import type { ProfileTableTitleType } from '#/types/common'
 import { coreEfpContracts } from '#/lib/constants/contracts'
+import { triggerCustomEvent } from '#/utils/trigger-custom-event'
+import { resetFollowingRelatedQueries } from '#/utils/reset-queries'
 import { fetchProfileRoles } from '#/api/profile/fetch-profile-roles'
 import { fetchProfileLists } from '#/api/profile/fetch-profile-lists'
 import { fetchProfileFollowers } from '#/api/followers/fetch-profile-followers'
@@ -38,9 +41,6 @@ import { fetchProfileAllFollowings } from '#/api/following/fetch-profile-all-fol
 import { fetchFollowerTags, nullFollowerTags } from '#/api/followers/fetch-follower-tags'
 import { fetchFollowingTags, nullFollowingTags } from '#/api/following/fetch-following-tags'
 import { BLOCKED_MUTED_TAGS, DEFAULT_TAGS_TO_ADD, FETCH_LIMIT_PARAM } from '#/lib/constants'
-import { triggerCustomEvent } from '#/utils/trigger-custom-event'
-import { resetFollowingRelatedQueries } from '#/utils/reset-queries'
-import { refetchState } from '#/utils/reset-queries'
 
 // Define the type for the profile context
 type EFPProfileContextType = {
@@ -234,7 +234,11 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   )
 
   const queryClient = useQueryClient()
-  const { setSelectedList: setSelectedListFromTransactionContext, isCheckoutFinished } = useTransactions()
+  const {
+    setSelectedList: setSelectedListFromTransactionContext,
+    isCheckoutFinished,
+    resetTransactions,
+  } = useTransactions()
   const [isEditingListSettings, setIsEditingListSettings] = useState(false)
 
   useEffect(() => {
@@ -273,6 +277,7 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
         refetchState(fetchFreshLists, setFetchFreshLists, refetchLists)
         refetchState(fetchFreshProfile, setFetchFreshProfile, refetchProfile)
 
+        resetTransactions()
         return
       }
 

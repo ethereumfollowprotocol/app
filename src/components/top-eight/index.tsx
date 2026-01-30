@@ -1,5 +1,6 @@
 import type { Address } from 'viem'
 import { useTranslation } from 'react-i18next'
+import { useEffect } from 'react'
 
 import { cn } from '#/lib/utilities'
 import EditModal from './components/edit-modal'
@@ -15,6 +16,7 @@ interface TopEightProps {
   followingListProps: UserProfilePageTableProps
   editModalOpen: boolean
   setEditModalOpen: (open: boolean) => void
+  setIsTopEightEmpty: (empty: boolean) => void
 }
 
 const TopEight: React.FC<TopEightProps> = ({
@@ -23,12 +25,17 @@ const TopEight: React.FC<TopEightProps> = ({
   followingListProps,
   editModalOpen,
   setEditModalOpen,
+  setIsTopEightEmpty,
 }) => {
   const { topEight, displayLimit, setDisplayLimit, topEightIsLoading, topEightIsRefetching } = useTopEight(user)
   const { t } = useTranslation()
 
   const isTopEightLoading = topEightIsLoading || topEightIsRefetching
   const isTopEightEmpty = topEight.length === 0 && !isTopEightLoading
+
+  useEffect(() => {
+    setIsTopEightEmpty(isTopEightEmpty)
+  }, [isTopEightEmpty])
 
   return (
     <>
@@ -45,9 +52,12 @@ const TopEight: React.FC<TopEightProps> = ({
             {t('no top eight')}
           </p>
         )}
-        <div className='flex w-full flex-wrap items-start justify-start gap-2 transition-none'>
+        {/* Updated grid layout with responsive breakpoints */}
+        <div className='grid w-full grid-cols-2 gap-2 transition-none sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4'>
           {!isTopEightLoading &&
-            topEight.slice(0, displayLimit).map((profile, index) => <TopEightProfile profile={profile} key={index} />)}
+            topEight
+              .slice(0, displayLimit)
+              .map((profile, index) => <TopEightProfile profile={profile} key={index} index={index} />)}
           {new Array(isTopEightLoading ? displayLimit : 0).fill(0).map((_, index) => (
             <TopEightLoadingProfile key={index} />
           ))}

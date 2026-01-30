@@ -11,9 +11,9 @@ import WalesFlag from 'public/assets/icons/flags/wales.svg?url'
 import KoreaFlag from 'public/assets/icons/flags/korea.svg?url'
 import IsraelFlag from 'public/assets/icons/flags/israel.svg?url'
 import TurkeyFlag from 'public/assets/icons/flags/turkey.svg?url'
-import FranceFLag from 'public/assets/icons/flags/france.svg?url'
+import FranceFlag from 'public/assets/icons/flags/france.svg?url'
 import GreeceFlag from 'public/assets/icons/flags/greece.svg?url'
-import BrazilFLag from 'public/assets/icons/flags/brazil.svg?url'
+import BrazilFlag from 'public/assets/icons/flags/brazil.svg?url'
 import BosniaFlag from 'public/assets/icons/flags/bosnia.svg?url'
 import PolandFlag from 'public/assets/icons/flags/poland.svg?url'
 import LatviaFlag from 'public/assets/icons/flags/latvia.svg?url'
@@ -33,7 +33,7 @@ import CroatiaFlag from 'public/assets/icons/flags/croatia.svg?url'
 import NigeriaFlag from 'public/assets/icons/flags/nigeria.svg?url'
 import UkraineFlag from 'public/assets/icons/flags/ukraine.svg?url'
 import VietnamFlag from 'public/assets/icons/flags/vietnam.svg?url'
-import GermanyFLag from 'public/assets/icons/flags/germany.svg?url'
+import GermanyFlag from 'public/assets/icons/flags/germany.svg?url'
 import EnglandFlag from 'public/assets/icons/flags/england.svg?url'
 import EstoniaFlag from 'public/assets/icons/flags/estonia.svg?url'
 import IrelandFlag from 'public/assets/icons/flags/ireland.svg?url'
@@ -64,6 +64,8 @@ import SouthAfricaFlag from 'public/assets/icons/flags/south-africa.svg?url'
 import SaudiArabiaFlag from 'public/assets/icons/flags/saudi-arabia.svg?url'
 import VaticanCityFlag from 'public/assets/icons/flags/vatican-city.svg?url'
 import CzechRepublicFlag from 'public/assets/icons/flags/czech-republic.svg?url'
+import KlingonFlag from 'public/assets/icons/flags/klingon.svg?url'
+import ElvishFlag from 'public/assets/icons/flags/elvish.svg?url'
 import type { StaticImageData } from 'next/image'
 // import HalloweenFlag from 'public/assets/icons/flags/halloween.svg'
 
@@ -78,7 +80,7 @@ export const LANGUAGES: {
   { language: 'English', key: 'en', icon: USAFlag, englishLanguage: 'English' },
   { language: 'Slovenščina', key: 'sl', icon: SloveniaFlag, englishLanguage: 'Slovenian' },
   { language: '简体中文', key: 'zh', icon: ChinaFlag, englishLanguage: 'Chinese' },
-  { language: 'Français', key: 'fr', icon: FranceFLag, englishLanguage: 'French' },
+  { language: 'Français', key: 'fr', icon: FranceFlag, englishLanguage: 'French' },
   { language: 'Español', key: 'es', icon: SpainFlag, englishLanguage: 'Spanish' },
   {
     language: 'Español (MX)',
@@ -88,13 +90,13 @@ export const LANGUAGES: {
   },
   { language: '日本語', key: 'ja', icon: JapanFlag, englishLanguage: 'Japanese' },
   { language: '한국어', key: 'ko', icon: KoreaFlag, englishLanguage: 'Korean' },
-  { language: 'Deutsch', key: 'de', icon: GermanyFLag, englishLanguage: 'German' },
+  { language: 'Deutsch', key: 'de', icon: GermanyFlag, englishLanguage: 'German' },
   { language: 'हिन्दी', key: 'hi', icon: IndiaFlag, englishLanguage: 'Hindi' },
   { language: 'Português', key: 'pt', icon: PortugalFlag, englishLanguage: 'Portuguese' },
   {
     language: 'Português (BR)',
     key: 'pt-BR',
-    icon: BrazilFLag,
+    icon: BrazilFlag,
     englishLanguage: 'Portuguese (Brazilian)',
   },
   {
@@ -174,6 +176,8 @@ export const LANGUAGES: {
   { language: 'ଓଡିଆ', key: 'or', icon: IndiaFlag, englishLanguage: 'Odia' },
   { language: '廣東話', key: 'yue', icon: ChinaFlag, englishLanguage: 'Cantonese' },
   // ----------- special languages -----------
+  { language: 'tlhIngan Hol', key: 'tlh', icon: KlingonFlag, englishLanguage: 'Klingon', special: true },
+  { language: 'Sindarin', key: 'elvish', icon: ElvishFlag, englishLanguage: 'Elvish', special: true },
   { language: 'Pirate', key: 'pirate', icon: PirateFlag, englishLanguage: 'Pirate', special: true },
   {
     language: 'Corporate',

@@ -123,7 +123,7 @@ const FeedCard: React.FC<FeedCardProps> = ({ cardSize, contentSize, activityAddr
                 )}
                 onClick={() => setActiveTab?.('recommendations')}
               >
-                {t('recommendations')}
+                {t('recommended.title')}
               </p>
             </div>
           )}

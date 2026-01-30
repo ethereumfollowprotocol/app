@@ -1,6 +1,6 @@
-import type { Address } from 'viem'
 import { normalize } from 'viem/ens'
 import { ENS_SUBGRAPH_URL } from '#/lib/constants'
+import type { SearchENSNameResults } from '#/types/requests'
 
 const searchQuery = /*GraphQL*/ `
   query SearchQuery($search: String) {
@@ -16,24 +16,27 @@ const searchQuery = /*GraphQL*/ `
 `
 
 export const searchENSNames = async ({ search }: { search: string }) => {
-  const sanitizedSearch = normalize(search.trim())
-  if (search.length === 0) return []
+  try {
+    const sanitizedSearch = normalize(search.trim())
+    if (search.length === 0) return []
 
-  const response = await fetch(ENS_SUBGRAPH_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      query: searchQuery,
-      variables: { search: sanitizedSearch },
-      operationName: 'SearchQuery',
-    }),
-  })
+    const response = await fetch(ENS_SUBGRAPH_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        query: searchQuery,
+        variables: { search: sanitizedSearch },
+        operationName: 'SearchQuery',
+      }),
+    })
 
-  if (!response.ok) return []
+    if (!response.ok) return []
 
-  const json = (await response.json()) as {
-    data: { domains: { name: string; resolvedAddress: { id: Address } | null }[] }
+    const json = (await response.json()) as { data: SearchENSNameResults }
+
+    // Filter out domains that don't have a resolved address and sort by name length
+    return json.data.domains.filter((domain) => !!domain.resolvedAddress).sort((a, b) => a.name.length - b.name.length)
+  } catch (error) {
+    return []
   }
-
-  return json.data.domains.filter((domain) => !!domain.resolvedAddress).sort((a, b) => a.name.length - b.name.length)
 }

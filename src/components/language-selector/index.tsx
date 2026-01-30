@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
-import { useState, type Dispatch, type SetStateAction } from 'react'
+import { useEffect, useState, type Dispatch, type SetStateAction } from 'react'
 
 import useLanguage from './use-language'
 import { LANGUAGES } from '#/lib/constants/languages'
@@ -8,6 +8,7 @@ import Check from 'public/assets/icons/ui/check.svg'
 import ArrowLeft from 'public/assets/icons/ui/arrow-left.svg'
 import ArrowRight from 'public/assets/icons/ui/arrow-right.svg'
 import Image from 'next/image'
+import { useTranslation as useIdentityKitTranslation } from 'ethereum-identity-kit'
 
 interface LanguageSelectorProps {
   setExternalLanguageMenuOpen?: Dispatch<SetStateAction<boolean>>
@@ -19,6 +20,11 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
 
   const { t } = useTranslation()
   const { changeLanguage, languageMenOpenu, selectedLanguage, setLanguageMenuOpen } = useLanguage()
+
+  const { setLanguage } = useIdentityKitTranslation()
+  useEffect(() => {
+    setLanguage(selectedLanguage?.key || 'en')
+  }, [selectedLanguage, setLanguage])
 
   const closeLanguageMenu = () => {
     setLanguageMenuOpen(false)
@@ -75,12 +81,12 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
             className='hover:bg-nav-item flex w-full cursor-pointer items-center justify-between rounded-sm p-4 transition-opacity lg:hidden'
           >
             <ArrowLeft className='text-xl font-bold' />
-            <p className='font-bold'>Back</p>
+            <p className='font-bold'>{t('back')}</p>
           </div>
           <div className='flex flex-col items-center gap-4 p-4 lg:col-span-2'>
             <input
               type='text'
-              placeholder='Search'
+              placeholder={t('search')}
               value={languageMenuSearch}
               onChange={(e) => setLanguageMenuSearch(e.target.value)}
               className='bg-text-neutral/30 w-full rounded-sm px-4 py-2 transition-colors'
@@ -117,7 +123,7 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
           ))}
           {specialLanguages.length > 0 && regularLanguages.length > 0 && (
             <div className='flex flex-col items-center gap-4 p-4 lg:col-span-2'>
-              <hr className='border-text-neutral/50 w-full rounded-full border-[1px]' />
+              <hr className='border-text-neutral/50 w-full rounded-full border' />
             </div>
           )}
           {specialLanguages.map((lang) => (

@@ -4,24 +4,43 @@ import type { NextRequest } from 'next/server'
 
 import { truncateAddress } from '#/lib/utilities'
 import type { AccountResponseType } from '#/types/requests'
+import { ens_beautify } from '@adraffy/ens-normalize'
 
 export async function GET(req: NextRequest) {
   const user = req.url.split('user=')[1] || ''
-  const isList = !(isAddress(user) || user.includes('.') || Number.isNaN(Number(user)) || isHex(user))
+  const isList = !(user.includes('.') || isAddress(user) || Number.isNaN(Number(user)) || isHex(user))
 
-  const response = (await fetch(
-    `${process.env.NEXT_PUBLIC_EFP_API_URL}/${isList ? 'lists' : 'users'}/${user}/account`
-  ).then((res) => res.json())) as AccountResponseType
+  const getResponse = async () => {
+    try {
+      return (await fetch(`${process.env.NEXT_PUBLIC_EFP_API_URL}/${isList ? 'lists' : 'users'}/${user}/account`).then(
+        (res) => res.json()
+      )) as AccountResponseType
+    } catch (error) {
+      return {
+        primary_list: null,
+        address: user,
+        ens: {
+          name: user,
+          avatar: 'https://efp.app/assets/art/default-avatar.svg',
+          records: {
+            header: 'https://efp.app/assets/art/default-header.svg',
+          },
+        },
+      }
+    }
+  }
+
+  const response = await getResponse()
 
   const fetchedUser = response.address
     ? response.ens.name || truncateAddress(response.address)
     : isAddress(user)
       ? truncateAddress(user)
-      : user
+      : ens_beautify(user)
   const fetchedAvatar = response.ens?.avatar
   const fetchedHeader = response.ens?.records?.header
 
-  console.log(fetchedHeader)
+  // const interSemiBold = await readFile(join(process.cwd(), '/public/fonts/Inter/Inter-SemiBold.ttf'))
 
   return new ImageResponse(
     (
@@ -38,6 +57,7 @@ export async function GET(req: NextRequest) {
           backgroundImage: 'linear-gradient(to bottom-right, #f1f3fe, #dff2fb, #ecfffd)',
           textAlign: 'center',
           fontWeight: 700,
+          fontFamily: 'Inter',
         }}
       >
         <div
@@ -79,7 +99,6 @@ export async function GET(req: NextRequest) {
           <p
             style={{
               maxWidth: 310,
-              textShadow: '1px 0 1px #333333',
               textOverflow: 'ellipsis',
               overflow: 'hidden',
               whiteSpace: 'nowrap',
@@ -141,7 +160,6 @@ export async function GET(req: NextRequest) {
             textOverflow: 'ellipsis',
             overflow: 'hidden',
             whiteSpace: 'nowrap',
-            textShadow: '1px 0 1px #333333',
           }}
         >
           List #{user}

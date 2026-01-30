@@ -20,7 +20,7 @@ const Navigation = () => {
   }, [isClient])
 
   return (
-    <header className='z-50'>
+    <header className='z-[9999]!'>
       <Desktop />
       <Mobile />
     </header>

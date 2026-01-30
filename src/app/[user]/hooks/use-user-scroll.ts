@@ -1,3 +1,4 @@
+import { useIsClient } from '@uidotdev/usehooks'
 import { useCallback, useEffect, useRef } from 'react'
 
 export const useUserScroll = () => {
@@ -5,19 +6,25 @@ export const useUserScroll = () => {
   const TopEightRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
+  const isClient = useIsClient()
+  const isCommonFollowersModalOpen = isClient ? !!document?.querySelector('.common-followers-modal-container') : false
+
   const handleWheel = useCallback((event: WheelEvent) => {
+    const commonFollowersModalEl = document?.querySelector('.common-followers-modal-container')
+
+    if (commonFollowersModalEl) return
+
     if (tableRef.current) {
-      if (window.innerWidth >= 1024) event.preventDefault()
       // Adjust the scroll position of the div
       tableRef.current.scrollTop += event.deltaY
       tableRef.current.scrollLeft += event.deltaX
     }
 
-    if (containerRef.current) {
-      // Adjust the scroll position of the div
-      containerRef.current.scrollTop += event.deltaY
-      containerRef.current.scrollLeft += event.deltaX
-    }
+    // if (containerRef.current) {
+    //   // Adjust the scroll position of the div
+    //   containerRef.current.scrollTop += event.deltaY
+    //   containerRef.current.scrollLeft += event.deltaX
+    // }
 
     if (TopEightRef.current) {
       const topEightHeight = TopEightRef.current.scrollHeight
@@ -29,7 +36,7 @@ export const useUserScroll = () => {
 
   useEffect(() => {
     // Attach the wheel event listener to the window
-    containerRef.current?.addEventListener('wheel', handleWheel, { passive: false })
+    containerRef.current?.addEventListener('wheel', handleWheel)
 
     // Cleanup function to remove the event listener
     return () => {
@@ -37,5 +44,5 @@ export const useUserScroll = () => {
     }
   }, [handleWheel])
 
-  return { tableRef, TopEightRef, containerRef }
+  return { tableRef, TopEightRef, containerRef, isCommonFollowersModalOpen }
 }

@@ -1,11 +1,11 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useTranslation } from 'react-i18next'
 import { ens_beautify } from '@adraffy/ens-normalize'
-import { truncateAddress } from 'ethereum-identity-kit'
+import { truncateAddress, isLinkValid } from 'ethereum-identity-kit'
 
 import { Avatar } from '#/components/avatar'
-import { isLinkValid } from '#/utils/validity'
 import { formatNumber } from '#/utils/format/format-number'
 import LoadingCell from '#/components/loaders/loading-cell'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
@@ -13,6 +13,7 @@ import ArrowRight from 'public/assets/icons/ui/arrow-right.svg'
 import DefaultHeader from 'public/assets/art/default-header.svg?url'
 
 const ProfileSummaryCard = () => {
+  const { t } = useTranslation()
   const { profile, profileIsLoading, stats, statsIsLoading, lists, selectedList } = useEFPProfile()
 
   if (!profile && !profileIsLoading) return null
@@ -52,7 +53,7 @@ const ProfileSummaryCard = () => {
           </div>
         </>
       ) : (
-        profile && (
+        profile?.address && (
           <>
             <Image
               src={isLinkValid(profile?.ens?.records?.header) ? profile?.ens?.records?.header : DefaultHeader}
@@ -81,7 +82,7 @@ const ProfileSummaryCard = () => {
                     ) : (
                       <p className='text-lg font-bold'>{formatNumber(stats?.following_count || 0)}</p>
                     )}
-                    <p className='text-text-neutral'>Following</p>
+                    <p className='text-text-neutral'>{t('following')}</p>
                   </div>
                   <div className='flex items-center gap-2'>
                     {statsIsLoading ? (
@@ -89,7 +90,7 @@ const ProfileSummaryCard = () => {
                     ) : (
                       <p className='text-lg font-bold'>{formatNumber(stats?.followers_count || 0)}</p>
                     )}
-                    <p className='text-text-neutral'>Followers</p>
+                    <p className='text-text-neutral'>{t('followers')}</p>
                   </div>
                 </div>
               </div>

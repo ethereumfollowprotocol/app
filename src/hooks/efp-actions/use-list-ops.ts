@@ -35,7 +35,6 @@ export const useListOps = () => {
       address: listRecordsContract,
       abi: efpListRecordsAbi,
       functionName: selectedList ? 'applyListOps' : 'setMetadataValuesAndApplyListOps',
-      // @ts-expect-error diff data type handled
       args: selectedList ? [nonce, operations] : [nonce, [{ key: 'user', value: userAddress }], operations],
     })
 

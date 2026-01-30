@@ -145,24 +145,22 @@ const LeaderboardTable = () => {
             />
           </div>
           <div className='bg-neutral shadow-medium relative mb-16 flex flex-col rounded-sm'>
-            {leaderboard
-              ?.slice(0, chunk * LEADERBOARD_CHUNK_SIZE)
-              .map((entry: LeaderboardItem, index) => (
-                <TableRow
-                  key={entry.address}
-                  address={entry.address}
-                  name={entry.name}
-                  avatar={entry.avatar}
-                  header={entry.header}
-                  rank={Number(selectedRank(entry))}
-                  followers={Number(entry.followers) || 0}
-                  following={Number(entry.following) || 0}
-                  mutuals={Number(entry.mutuals) || 0}
-                  top8={Number(entry.top8) || 0}
-                  blocked={Number(entry.blocks) || 0}
-                  firstStat={filter}
-                />
-              ))}
+            {leaderboard?.slice(0, chunk * LEADERBOARD_CHUNK_SIZE).map((entry: LeaderboardItem, index) => (
+              <TableRow
+                key={entry.address}
+                address={entry.address}
+                name={entry.name}
+                avatar={entry.avatar}
+                header={entry.header}
+                rank={Number(selectedRank(entry))}
+                followers={Number(entry.followers) || 0}
+                following={Number(entry.following) || 0}
+                mutuals={Number(entry.mutuals) || 0}
+                top8={Number(entry.top8) || 0}
+                blocked={Number(entry.blocks) || 0}
+                firstStat={filter}
+              />
+            ))}
             {new Array(isLoading ? LEADERBOARD_CHUNK_SIZE : 0).fill(1).map((_, i) => (
               <LoadingRow key={i} />
             ))}
@@ -212,7 +210,7 @@ const LeaderboardTable = () => {
             <Recommendations
               limit={10}
               endpoint='recommended'
-              header={t('recommendations')}
+              header={t('recommended.title')}
               className={cn('bg-neutral shadow-medium h-fit w-full rounded-sm')}
             />
             <Recommendations

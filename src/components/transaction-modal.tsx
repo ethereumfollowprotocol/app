@@ -8,6 +8,7 @@ const TransactionModal = () => {
 
   return (
     <TransactionModalComponent
+      showPoapClaim={false}
       onCartProfileClick={(address) => {
         router.push(`/${address}?ssr=false`)
         setTxModalOpen(false)

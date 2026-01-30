@@ -1,5 +1,6 @@
 import React, { type Ref, type RefObject } from 'react'
 import MainnetBlack from 'public/assets/mainnet-black.svg'
+import { useTranslation } from 'react-i18next'
 
 interface RestrictButtonProps {
   blockCoolMode: RefObject<HTMLButtonElement | HTMLDivElement | null>
@@ -9,6 +10,8 @@ interface RestrictButtonProps {
 }
 
 const RestrictButton: React.FC<RestrictButtonProps> = ({ blockCoolMode, onClickOption, text, type }) => {
+  const { t } = useTranslation()
+
   return (
     <button
       ref={blockCoolMode as Ref<HTMLButtonElement>}
@@ -22,7 +25,7 @@ const RestrictButton: React.FC<RestrictButtonProps> = ({ blockCoolMode, onClickO
           lineHeight: '0.95rem',
         }}
       >
-        {text}
+        {t(text.toLowerCase())}
       </p>
     </button>
   )

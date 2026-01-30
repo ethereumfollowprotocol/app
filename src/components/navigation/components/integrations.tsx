@@ -5,8 +5,10 @@ import { usePathname } from 'next/navigation'
 import { cn } from '#/lib/utilities'
 import Apps from 'public/assets/icons/ui/apps.svg'
 import { INTEGRATIONS } from '#/lib/constants/integrations'
+import { useTranslation } from 'react-i18next'
 
 const Integrations: React.FC = () => {
+  const { t } = useTranslation()
   const pathname = usePathname()
   const isSelected = pathname === '/integrations'
 
@@ -18,7 +20,7 @@ const Integrations: React.FC = () => {
       </div>
       <div className='absolute -top-2 left-full hidden pl-6 opacity-0 transition-all transition-discrete group-hover/integrations:hidden group-hover/integrations:opacity-100 sm:group-hover/integrations:block starting:opacity-0'>
         <p className='bg-neutral shadow-small text-text rounded-sm px-4 py-2 text-lg font-semibold capitalize'>
-          Integrations
+          {t('integrations')}
         </p>
       </div>
     </Link>

@@ -7,19 +7,23 @@ interface ModalProps {
   children: React.ReactNode
   className?: string
   disableBackgroundClose?: boolean
+  closeButtonClassName?: string
 }
 
-const Modal = ({ onCancel, children, className, disableBackgroundClose }: ModalProps) => {
+const Modal = ({ onCancel, children, className, disableBackgroundClose, closeButtonClassName }: ModalProps) => {
   return createPortal(
     <div
       className={cn(
-        'fixed top-0 left-0 z-50 flex h-screen w-screen justify-center overflow-scroll bg-black/40 px-2 py-12 sm:px-4',
+        'fixed top-0 left-0 z-[100] flex h-screen w-screen justify-center overflow-scroll bg-black/40 px-2 py-12 sm:px-4',
         className ?? 'items-center'
       )}
       onClick={() => !disableBackgroundClose && onCancel()}
     >
       <div className='bg-neutral relative w-full rounded-sm p-3 sm:w-fit sm:p-4'>
-        <button onClick={onCancel} className='absolute top-2 right-2 transition-all hover:scale-110'>
+        <button
+          onClick={onCancel}
+          className={cn('absolute top-2 right-2 transition-all hover:scale-110', closeButtonClassName)}
+        >
           <Cross className='h-auto w-7' />
         </button>
         <div className='w-full' onClick={(e) => e.stopPropagation()}>

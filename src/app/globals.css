@@ -202,40 +202,6 @@ input {
   }
 }
 
-.top-eight-profile-edit {
-  width: calc(25% - 6px);
-  height: 182px;
-}
-
-@media screen and (max-width: 640px) {
-  .top-eight-profile-edit {
-    width: calc(50% - 4px);
-  }
-}
-
-.top-eight-profile {
-  width: calc(50% - 4px);
-  height: 182px;
-}
-
-@media (min-width: 768px) {
-  .top-eight-profile {
-    width: calc(25% - 6px);
-  }
-}
-
-@media (min-width: 1024px) {
-  .top-eight-profile {
-    width: calc(50% - 4px);
-  }
-}
-
-@media (min-width: 1280px) {
-  .top-eight-profile {
-    width: calc(25% - 6px);
-  }
-}
-
 .btn-grad {
   background: linear-gradient(to right, #ffe066 0%, #ffe066 30%, #fff981 75%, #ffafde 100%);
   text-align: center;
@@ -407,17 +373,6 @@ input {
   left: 33px;
 }
 
-/* Ethereum Identity Kit - extensions */
-.profile-stats-item {
-  gap: 0px !important;
-  transition: transform 0.2s ease;
-}
-
-.profile-stats-item:hover {
-  cursor: pointer;
-  transform: scale(1.1);
-}
-
 /* Leaderboard top three */
 .first-place,
 .second-place,
@@ -431,14 +386,8 @@ input {
 
 .first-place {
   color: transparent;
-  background-image: linear-gradient(
-      to right,
-      transparent 0%,
-      transparent 46%,
-      white 50%,
-      transparent 54%,
-      transparent 100%
-    ),
+  background-image:
+    linear-gradient(to right, transparent 0%, transparent 46%, white 50%, transparent 54%, transparent 100%),
     linear-gradient(
       90deg,
       #d8c078,
@@ -493,14 +442,8 @@ input {
 
 .second-place {
   color: transparent;
-  background-image: linear-gradient(
-      to right,
-      transparent 0%,
-      transparent 46%,
-      white 50%,
-      transparent 54%,
-      transparent 100%
-    ),
+  background-image:
+    linear-gradient(to right, transparent 0%, transparent 46%, white 50%, transparent 54%, transparent 100%),
     linear-gradient(
       270deg,
       #8c8c8c 1.3%,
@@ -546,14 +489,8 @@ input {
 
 .third-place {
   color: transparent;
-  background-image: linear-gradient(
-      to right,
-      transparent 0%,
-      transparent 46%,
-      white 50%,
-      transparent 54%,
-      transparent 100%
-    ),
+  background-image:
+    linear-gradient(to right, transparent 0%, transparent 46%, white 50%, transparent 54%, transparent 100%),
     linear-gradient(
       90deg,
       #c78c48,
@@ -807,4 +744,86 @@ input {
 .profile-bio-text {
   font-weight: 400;
   color: var(--color-text-neutral);
+}
+
+.common-followers-container {
+  padding-top: 0px;
+}
+
+.notifications-tooltip[data-position='right'] {
+  top: -4px;
+  left: 60px;
+}
+
+.notifications-dropdown[data-position='right'] {
+  left: 60px;
+}
+
+@media (max-width: 640px) {
+  .notifications-dropdown[data-align='left'] {
+    right: -52px;
+  }
+}
+
+.profile-list-row {
+  transition: all 0.2s;
+}
+
+.profile-list-row:hover {
+  background-color: #f4f4f4;
+}
+
+.dark .profile-list-row:hover {
+  background-color: #444444;
+}
+
+.profile-tooltip-content {
+  z-index: 1000;
+}
+
+/* .dark .tooltip-card,
+.dark-tooltip-card {
+  color: var(--ethereum-identity-kit-text-primary-dark);
+  background-color: var(--ethereum-identity-kit-background-dark);
+} */
+
+.user-profile-status-container {
+  z-index: 10;
+}
+
+.user-profile-status-desktop {
+  z-index: 10;
+}
+
+.cart-tags-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  gap: 4px;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  overflow: visible;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.cart-tags-tag {
+  border: none;
+  cursor: pointer;
+  padding: 0 8px !important;
+  border: none !important;
+  margin: 0;
+  position: relative;
+  display: block !important;
+  height: 24px;
+  font-size: 13px;
+  font-weight: 600;
+  max-width: 100%;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap;
+  color: #333;
+  border-radius: 4px !important;
+  background-color: #cdcdcd;
+  transition: background-color 0.2s ease-in-out;
 }

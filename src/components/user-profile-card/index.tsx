@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { useAccount } from 'wagmi'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { ProfileCard } from 'ethereum-identity-kit'
@@ -12,6 +11,7 @@ import FollowButton from '#/components/follow-button'
 import ThreeDotMenu from './components/three-dot-menu'
 import { useProfileCard } from './hooks/use-profile-card'
 import EnsLogo from 'public/assets/icons/socials/ens.svg'
+import { useEFPProfile } from '#/contexts/efp-profile-context'
 import LoadingProfileCard from './components/loading-profile-card'
 import type { ProfileDetailsResponse, StatsResponse } from '#/types/requests'
 
@@ -40,7 +40,6 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   isLoading,
   profileList,
   hideFollowButton,
-  isResponsive = true,
   showMoreOptions,
   openBlockModal,
   openListSettingsModal,
@@ -54,7 +53,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
 }) => {
   const router = useRouter()
   const { t } = useTranslation()
-  const { address: connectedAddress } = useAccount()
+  const { selectedList } = useEFPProfile()
   const { followState, profileName, isConnectedUserCard } = useProfileCard(profile)
 
   return (
@@ -68,19 +67,27 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
             router.push(`/${profile.address}?tab=${stat}&ssr=false`)
           }}
           showFollowerState={true}
+          showFollowButton={!hideFollowButton}
           addressOrName={profile.address}
-          connectedAddress={connectedAddress}
-          onProfileClick={() => {
-            router.push(`/${profile.address}?ssr=false`)
+          onProfileClick={(addressOrName) => {
+            router.push(`/${addressOrName}?ssr=false`)
           }}
+          selectedList={selectedList}
           className='bg-neutral'
-          options={{
+          extraOptions={{
             openListSettings: openListSettingsModal,
-            profileData: profile,
-            statsData: stats,
-            refetchStatsData: refetchStats,
-            refetchProfileData: refetchProfile,
-            prefetchedStatsLoading: isStatsLoading,
+            prefetched: {
+              profile: {
+                data: profile ?? undefined,
+                isLoading: !!isLoading,
+                refetch: refetchProfile ?? (() => {}),
+              },
+              stats: {
+                data: stats ?? undefined,
+                isLoading: !!isStatsLoading,
+                refetch: refetchStats ?? (() => {}),
+              },
+            },
             nameMenu: (
               <ThreeDotMenu
                 address={profile.address}
@@ -95,7 +102,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
                 openListSettingsModal={openListSettingsModal}
               />
             ),
-            followButton: !hideFollowButton && (
+            customFollowButton: (
               <div className='mt-16'>
                 {isConnectedUserCard ? (
                   <Link href={`https://app.ens.domains/${profile.ens.name}`} target='_blank'>

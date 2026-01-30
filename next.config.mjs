@@ -28,60 +28,17 @@ const nextConfig = {
     fetches: { fullUrl: true },
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'ipfs.io',
-        port: '',
-        pathname: '/*',
-      },
-      {
-        protocol: 'https',
-        hostname: 'imgur.com',
-        port: '',
-        pathname: '/*',
-      },
-      {
-        protocol: 'https',
-        hostname: 'i.imgur.com',
-        port: '',
-        pathname: '/*',
-      },
-      {
-        protocol: 'https',
-        hostname: 'euc.li',
-        port: '',
-        pathname: '/*',
-      },
-      {
-        protocol: 'https',
-        hostname: 'gateway.pinata.cloud',
-        port: '',
-        pathname: '/*',
-      },
-      {
-        protocol: 'https',
-        hostname: 'rainbow.mypinata.cloud',
-        port: '',
-        pathname: '/*',
-      },
-      {
-        protocol: 'https',
-        hostname: 'pbs.twimg.com',
-        port: '',
-        pathname: '/*',
-      },
-      {
-        protocol: 'https',
-        hostname: 'data.ethfollow.xyz',
-        port: '',
-        pathname: '/*',
-      },
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-    ],
+    unoptimized: true,
+  },
+  async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          source: '/service-worker.js',
+          destination: '/scripts/service-worker.js',
+        },
+      ],
+    }
   },
   redirects: async () => [
     {
@@ -148,6 +105,23 @@ const nextConfig = {
         },
       ],
     },
+    // {
+    //   source: '/service-worker.js',
+    //   headers: [
+    //     {
+    //       key: 'Content-Type',
+    //       value: 'application/javascript; charset=utf-8',
+    //     },
+    //     {
+    //       key: 'Cache-Control',
+    //       value: 'no-cache, no-store, must-revalidate',
+    //     },
+    //     // {
+    //     //   key: 'Content-Security-Policy',
+    //     //   value: "default-src 'self'; script-src 'self'; connect-src 'self' * wss://efp-events.up.railway.app",
+    //     // },
+    //   ],
+    // },
   ],
   webpack(config) {
     // @ts-expect-error rule type is not typed
