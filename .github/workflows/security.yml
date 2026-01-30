@@ -57,6 +57,8 @@ jobs:
       # Step 6: Build the application for analysis
       - name: 🏗️ Autobuild
         uses: github/codeql-action/autobuild@v3
+        env:
+          NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID }}
       
       # Step 7: Perform CodeQL security analysis
       - name: 🔍 Perform CodeQL Analysis
