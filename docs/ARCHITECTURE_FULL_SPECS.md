@@ -330,16 +330,12 @@ Docs build
 
 AI review (advisory but preferred green)
 
-Release Flow
-Code
-PR → all checks green → merge → deploy
+### Release Flow
+PR → all checks green → merge → deploy.
 Hotfixes must still pass type + lint.
 
-11. Future Extensions
-/docs/specs/data-models.md
-
-/docs/api/*.md
-
-/docs/workflows/release-process.md
-
-/docs/integrations/*.md
+## 11. Future Extensions
+- `/docs/specs/data-models.md`
+- `/docs/api/*.md`
+- `/docs/workflows/release-process.md`
+- `/docs/integrations/*.md`
