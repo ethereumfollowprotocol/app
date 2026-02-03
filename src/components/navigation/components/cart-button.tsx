@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
-import { EFPActionIds, useTransactions } from 'ethereum-identity-kit'
+import { EFPActionIds, useTransactions } from '@encrypteddegen/identity-kit'
 
 import { cn } from '#/lib/utilities'
 import { useCart } from '#/hooks/use-cart'

@@ -2,7 +2,7 @@
 
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
-import { DEFAULT_FALLBACK_HEADER, isLinkValid } from 'ethereum-identity-kit'
+import { DEFAULT_FALLBACK_HEADER, isLinkValid } from '@encrypteddegen/identity-kit'
 
 import Name from './name'
 import StatsDesktop from './stats-desktop'

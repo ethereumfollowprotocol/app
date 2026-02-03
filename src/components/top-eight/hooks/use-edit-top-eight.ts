@@ -3,7 +3,7 @@ import { useAccount } from 'wagmi'
 import { isAddress, type Address } from 'viem'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useMemo, useState } from 'react'
-import { fetchFollowState, useTransactions } from 'ethereum-identity-kit'
+import { fetchFollowState, useTransactions } from '@encrypteddegen/identity-kit'
 
 import { useCart } from '#/hooks/use-cart'
 import { resolveEnsAddress } from '#/utils/ens'
