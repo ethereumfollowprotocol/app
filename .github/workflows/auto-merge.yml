@@ -78,7 +78,7 @@ jobs:
             });
             
             const allChecksPassed = checks.check_runs.every(check => 
-              check.conclusion === 'success' || check.status === 'completed'
+              check.conclusion === 'success'
             );
             
             if (!allChecksPassed) {
