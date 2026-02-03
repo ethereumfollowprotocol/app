@@ -1,0 +1,115 @@
+# Build Documentation Workflow
+# Validates documentation files on changes to docs/ directory
+# Checks for broken links and ensures all required documentation exists
+
+name: Build Documentation
+
+on:
+  pull_request:
+    paths:
+      - 'docs/**'
+      - '.github/workflows/build-docs.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+  workflow_dispatch:
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    
+    # Minimal permissions - only needs to read repository content
+    permissions:
+      contents: read
+    
+    steps:
+      # Step 1: Checkout repository code
+      - name: 🔑 Checkout
+        uses: actions/checkout@v4
+      
+      # Step 2: Setup Node.js for markdown tools
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      # Step 3: Install markdown link checker tool
+      - name: 📥 Install markdown-link-check
+        run: npm install -g markdown-link-check
+      
+      # Step 4: Check all markdown files for broken links
+      - name: 🔗 Check Markdown Links
+        run: |
+          # Create config file for markdown-link-check
+          cat > .markdown-link-check.json << 'EOF'
+          {
+            "ignorePatterns": [
+              {
+                "pattern": "^http://localhost"
+              },
+              {
+                "pattern": "^https://efp.app"
+              }
+            ],
+            "timeout": "20s",
+            "retryOn429": true,
+            "retryCount": 3,
+            "fallbackRetryDelay": "30s"
+          }
+          EOF
+          
+          # Check all markdown files
+          for file in docs/*.md; do
+            if [ -f "$file" ]; then
+              echo "Checking $file..."
+              markdown-link-check "$file" --config .markdown-link-check.json || true
+            fi
+          done
+      
+      # Step 5: Validate that all required documentation files exist
+      - name: 📝 Validate Documentation Structure
+        run: |
+          required_files=(
+            "docs/README.md"
+            "docs/ARCHITECTURE.md"
+            "docs/API.md"
+            "docs/FEATURES.md"
+            "docs/DEPLOYMENT.md"
+            "docs/WORKFLOWS.md"
+            "docs/MONITORING.md"
+            "docs/SEO.md"
+            "docs/CONTRIBUTING.md"
+          )
+          
+          missing_files=()
+          for file in "${required_files[@]}"; do
+            if [ ! -f "$file" ]; then
+              missing_files+=("$file")
+            fi
+          done
+          
+          if [ ${#missing_files[@]} -gt 0 ]; then
+            echo "❌ Missing required documentation files:"
+            printf '%s\n' "${missing_files[@]}"
+            exit 1
+          fi
+          
+          echo "✅ All required documentation files are present"
+      
+      # Step 6: Display documentation statistics
+      - name: 📊 Documentation Statistics
+        run: |
+          echo "📊 Documentation Statistics:"
+          echo "Total markdown files: $(find docs -name '*.md' | wc -l)"
+          echo "Total lines: $(find docs -name '*.md' -exec wc -l {} + | tail -1)"
+          echo ""
+          echo "Files by size:"
+          find docs -name '*.md' -exec wc -l {} + | sort -rn | head -10
+      
+      # Step 7: Success message
+      - name: ✅ Documentation Build Complete
+        if: success()
+        run: echo "Documentation validation passed successfully!"

@@ -1,0 +1,84 @@
+# SEO Ping Workflow
+# Automatically notifies search engines about new or updated content
+# Runs daily and when sitemap changes are detected
+
+name: SEO Ping
+
+on:
+  schedule:
+    # Run daily at midnight UTC
+    - cron: '0 0 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'public/sitemap.xml'
+      - 'src/app/sitemap.ts'
+  workflow_dispatch:
+
+jobs:
+  seo-ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    
+    # Minimal permissions - only needs to read repository
+    permissions:
+      contents: read
+    
+    steps:
+      # Step 1: Checkout repository code
+      - name: 🔑 Checkout
+        uses: actions/checkout@v4
+      
+      # Step 2: Display SEO ping configuration
+      - name: 📝 SEO Ping Configuration
+        run: |
+          echo "SEO ping workflow configured for:"
+          echo "- Google Search Console"
+          echo "- Bing Webmaster Tools"
+          echo "- IndexNow Protocol"
+          echo ""
+          echo "Sitemap URL: https://efp.app/sitemap.xml"
+      
+      # Production SEO Ping Steps (Commented - Enable after deployment)
+      # Uncomment these steps when deployed to production with proper sitemap
+      # 
+      # Step 3: Ping Google Search Console
+      # - name: 📍 Ping Google
+      #   run: |
+      #     curl -s "https://www.google.com/ping?sitemap=https://efp.app/sitemap.xml"
+      #     echo "✅ Pinged Google Search Console"
+      # 
+      # Step 4: Ping Bing Webmaster Tools
+      # - name: 📍 Ping Bing
+      #   run: |
+      #     curl -s "https://www.bing.com/ping?sitemap=https://efp.app/sitemap.xml"
+      #     echo "✅ Pinged Bing Webmaster Tools"
+      # 
+      # Step 5: Ping via IndexNow Protocol (requires API key secret)
+      # - name: 📍 Ping IndexNow
+      #   if: ${{ secrets.INDEXNOW_KEY != '' }}
+      #   run: |
+      #     curl -s -X POST "https://api.indexnow.org/indexnow" \
+      #       -H "Content-Type: application/json" \
+      #       -d '{
+      #         "host": "efp.app",
+      #         "key": "${{ secrets.INDEXNOW_KEY }}",
+      #         "keyLocation": "https://efp.app/${{ secrets.INDEXNOW_KEY }}.txt",
+      #         "urlList": [
+      #           "https://efp.app/sitemap.xml"
+      #         ]
+      #       }'
+      #     echo "✅ Submitted via IndexNow Protocol"
+      
+      # Step 6: Display SEO ping summary
+      - name: 📊 SEO Ping Summary
+        run: |
+          echo "✅ SEO ping workflow completed"
+          echo "Timestamp: $(date -u +"%Y-%m-%d %H:%M:%S UTC")"
+          echo ""
+          echo "Next steps:"
+          echo "1. Deploy application to production"
+          echo "2. Verify sitemap.xml is accessible"
+          echo "3. Add INDEXNOW_KEY secret to repository"
+          echo "4. Uncomment production ping steps"
+          echo "5. Monitor search console for indexing status"

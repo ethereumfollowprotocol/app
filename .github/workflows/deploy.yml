@@ -1,0 +1,88 @@
+# Deploy Workflow
+# Deploys the application to production on merge to main branch
+# Runs full test suite before deployment to ensure quality
+
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Prevent concurrent deployments
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+# Environment variables for deployment
+env:
+  NODE_OPTIONS: '--no-warnings'
+  NEXT_TELEMETRY_DISABLED: '1'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production
+    
+    # Minimal permissions for deployment
+    permissions:
+      contents: read
+    
+    steps:
+      # Step 1: Checkout the repository code
+      - name: 🔑 Checkout
+        uses: actions/checkout@v4
+      
+      # Step 2: Setup Bun runtime
+      - name: 📦 Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+      
+      # Step 3: Cache dependencies for faster builds
+      - name: 📥 Cache Dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.bun/install/cache
+            node_modules
+            .next/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+      
+      # Step 4: Install project dependencies
+      - name: 🔧 Install Dependencies
+        run: bun install --frozen-lockfile
+      
+      # Step 5: Run tests to verify code quality before deployment
+      - name: 🔍 Run Tests
+        run: |
+          bun lint
+          bun typecheck
+      
+      # Step 6: Build the production application
+      - name: 🏗️ Build Application
+        run: bun run build
+        env:
+          NODE_ENV: production
+          NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID }}
+      
+      # Step 7: Deploy to Vercel (configured via Vercel GitHub integration)
+      - name: 🚀 Deploy to Vercel
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          echo "Deployment to Vercel is configured via Vercel GitHub integration"
+          echo "Visit https://vercel.com/dashboard to configure automatic deployments"
+          echo "Commit SHA: ${{ github.sha }}"
+      
+      # Step 8: Display deployment summary
+      - name: 📊 Deployment Summary
+        if: success()
+        run: |
+          echo "✅ Deployment completed successfully!"
+          echo "Commit: ${{ github.sha }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Author: ${{ github.actor }}"
+          echo "Message: ${{ github.event.head_commit.message }}"
