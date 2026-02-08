@@ -1,5 +1,4 @@
 import { normalize } from 'viem/ens'
-import { ENS_SUBGRAPH_URL } from '#/lib/constants'
 import type { SearchENSNameResults } from '#/types/requests'
 
 const searchQuery = /*GraphQL*/ `
@@ -20,7 +19,7 @@ export const searchENSNames = async ({ search }: { search: string }) => {
     const sanitizedSearch = normalize(search.trim())
     if (search.length === 0) return []
 
-    const response = await fetch(ENS_SUBGRAPH_URL, {
+    const response = await fetch('https://grails-api.ethid.org/api/v1/subgraph', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
