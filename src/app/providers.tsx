@@ -6,7 +6,7 @@ import { ThirdwebProvider } from 'thirdweb/react'
 import { WagmiProvider, type State } from 'wagmi'
 import { darkTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { TransactionProvider, TranslationProvider } from 'ethereum-identity-kit'
+import { TransactionProvider, TranslationProvider } from '@encrypteddegen/identity-kit'
 
 import wagmiConfig from '#/lib/wagmi'
 import { DAY, MINUTE } from '#/lib/constants'

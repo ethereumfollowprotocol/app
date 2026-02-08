@@ -783,8 +783,8 @@ input {
 
 /* .dark .tooltip-card,
 .dark-tooltip-card {
-  color: var(--ethereum-identity-kit-text-primary-dark);
-  background-color: var(--ethereum-identity-kit-background-dark);
+  color: var(--@encrypteddegen/identity-kit-text-primary-dark);
+  background-color: var(--@encrypteddegen/identity-kit-background-dark);
 } */
 
 .user-profile-status-container {

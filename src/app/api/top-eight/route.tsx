@@ -4,7 +4,7 @@ import { isAddress } from 'viem'
 import { truncateAddress } from '#/lib/utilities'
 import { ens_beautify } from '@adraffy/ens-normalize'
 import type { TopEightProfileType } from '#/components/top-eight/hooks/use-top-eight'
-import { isLinkValid } from 'ethereum-identity-kit/utils'
+import { isLinkValid } from '@encrypteddegen/identity-kit/utils'
 import { fetchAccount } from '#/api/fetch-account'
 
 function generateHTML(userName: string, userAvatar: string | undefined, profiles: TopEightProfileType[]) {

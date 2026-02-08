@@ -8,7 +8,7 @@ import { useClickAway } from '@uidotdev/usehooks'
 import { useIsEditView } from '#/hooks/use-is-edit-view'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import Cross from 'public/assets/icons/ui/cross.svg'
-import { FollowersAndFollowing } from 'ethereum-identity-kit'
+import { FollowersAndFollowing } from '@encrypteddegen/identity-kit'
 
 interface BlockedMutedProps {
   user: string
