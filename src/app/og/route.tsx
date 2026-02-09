@@ -33,7 +33,7 @@ export async function GET(req: NextRequest) {
   const response = await getResponse()
 
   const fetchedUser = response.address
-    ? response.ens.name || truncateAddress(response.address)
+    ? response.ens?.name || truncateAddress(response.address)
     : isAddress(user)
       ? truncateAddress(user)
       : ens_beautify(user)

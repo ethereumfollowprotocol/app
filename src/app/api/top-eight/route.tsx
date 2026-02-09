@@ -309,7 +309,7 @@ export async function GET(req: NextRequest) {
 
       // Process user account data
       if (userAccountData?.ens?.name) {
-        userName = userAccountData.ens.name
+        userName = userAccountData.ens?.name
       } else if (isAddress(user)) {
         userName = truncateAddress(user) || user
       } else {

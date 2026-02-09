@@ -105,7 +105,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
             customFollowButton: (
               <div className='mt-16'>
                 {isConnectedUserCard ? (
-                  <Link href={`https://app.ens.domains/${profile.ens.name}`} target='_blank'>
+                  <Link href={`https://app.ens.domains/${profile.ens?.name}`} target='_blank'>
                     <button className='flex items-center gap-1 rounded-sm bg-[#0080BC] p-1.5 py-2 font-semibold text-white transition-all hover:scale-110 hover:bg-[#07A9F5]'>
                       <EnsLogo className='h-auto w-5' />
                       <p>Edit Profile</p>
