@@ -76,6 +76,7 @@ import SwissKnife from 'public/assets/partners/swissknifeapps.png'
 import Pastens from 'public/assets/partners/pastens.png'
 import Fusion from 'public/assets/partners/fusion.png'
 import ForeverLibrary from 'public/assets/partners/foreverlibrary.png'
+import Web3Identity from 'public/assets/partners/web3identity.jpg'
 
 export const INTEGRATIONS = [
   {
@@ -457,6 +458,11 @@ export const INTEGRATIONS = [
     name: 'Forever Library',
     url: 'https://www.foreverlibrary.xyz',
     logo: ForeverLibrary,
+  },
+  {
+    name: 'Web3 Identity',
+    url: 'https://web3identity.com/',
+    logo: Web3Identity,
   },
 ] as {
   name: string
