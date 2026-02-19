@@ -19,7 +19,7 @@ export const searchENSNames = async ({ search }: { search: string }) => {
     const sanitizedSearch = normalize(search.trim())
     if (search.length === 0) return []
 
-    const response = await fetch('https://grails-api.ethid.org/api/v1/subgraph', {
+    const response = await fetch('https://api.grails.app/api/v1/subgraph', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
