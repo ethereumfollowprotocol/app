@@ -28,7 +28,9 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const getAccount = async () => {
     try {
       if (ssr) {
-        return await fetchAccount(user, isList ? Number(user) : undefined)
+        const response = await fetchAccount(user, isList ? Number(user) : undefined)
+        if(!response?.address) return null
+        return response
       }
 
       return null

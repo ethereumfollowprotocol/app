@@ -17,6 +17,7 @@
     "check": "bun lint && bun format && bun typecheck && bun run build"
   },
   "dependencies": {
+    "@encrypteddegen/identity-kit": "^0.2.71",
     "@next/third-parties": "15.1.6",
     "@rainbow-me/rainbowkit": "^2.2.4",
     "@react-spring/web": "^9.7.5",
@@ -37,7 +38,6 @@
     "@vercel/kv": "^3.0.0",
     "caniuse-lite": "^1.0.30001687",
     "clsx": "^2.1.0",
-    "@encrypteddegen/identity-kit": "^0.2.69",
     "i18next": "^23.11.5",
     "i18next-browser-languagedetector": "^8.0.0",
     "i18next-http-backend": "^2.5.2",

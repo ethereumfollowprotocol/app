@@ -78,7 +78,7 @@ const useUser = (user: string) => {
         search: followingSearch,
       })
 
-      if (fetchedFollowing.following.length === 0) setIsEndOfFollowing(true)
+      if (fetchedFollowing.following?.length === 0) setIsEndOfFollowing(true)
 
       return fetchedFollowing
     },
@@ -122,7 +122,7 @@ const useUser = (user: string) => {
         search: followersSearch,
       })
 
-      if (fetchedFollowers.followers.length === 0) setIsEndOfFollowers(true)
+      if (fetchedFollowers.followers?.length === 0) setIsEndOfFollowers(true)
 
       return fetchedFollowers
     },
