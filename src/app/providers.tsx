@@ -44,7 +44,7 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
           <RainbowKitProvider coolMode={false} theme={rainbowKitTheme}>
             <ThirdwebProvider>
               <TranslationProvider translations={translations}>
-                <TransactionProvider batchTransactions={true}>
+                <TransactionProvider batchTransactions={true} disableAutoListSelection={true}>
                   <EFPProfileProvider>
                     <SoundsProvider>
                       <RecommendedProfilesProvider>

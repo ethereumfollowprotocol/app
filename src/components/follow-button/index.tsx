@@ -4,7 +4,7 @@ import type { Address } from 'viem'
 import { useAccount } from 'wagmi'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import {
-  FollowButton as IdentityFollowButton,
+  FollowButton as EIKFollowButton,
   useTransactions,
   type InitialFollowingState,
 } from 'ethereum-identity-kit'
@@ -35,7 +35,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
   if (address.toLowerCase() === connectedAddress?.toLowerCase()) return <div className='h-[39px] w-[110px]' />
 
   return (
-    <IdentityFollowButton
+    <EIKFollowButton
       lookupAddress={address}
       connectedAddress={connectedAddress}
       onDisconnectedClick={openConnectModal}

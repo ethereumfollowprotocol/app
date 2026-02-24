@@ -196,6 +196,12 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
     },
   })
 
+  const {
+    setSelectedList: setSelectedListFromTransactionContext,
+    isCheckoutFinished,
+    resetTransactions,
+  } = useTransactions()
+
   useEffect(() => {
     if (!lists?.lists) return setSelectedList(undefined)
 
@@ -213,7 +219,11 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
 
     const persistedList = localStorage.getItem('selected-list')
     if (persistedList && lists.lists.includes(persistedList)) return setSelectedList(Number(persistedList))
-    if (persistedList === 'new list') return setSelectedList(undefined)
+    if (persistedList === 'new list') {
+      setSelectedList(undefined)
+      setSelectedListFromTransactionContext('new list')
+      return
+    }
 
     if (lists?.primary_list) {
       localStorage.setItem('selected-list', lists.primary_list)
@@ -234,11 +244,6 @@ export const EFPProfileProvider: React.FC<Props> = ({ children }) => {
   )
 
   const queryClient = useQueryClient()
-  const {
-    setSelectedList: setSelectedListFromTransactionContext,
-    isCheckoutFinished,
-    resetTransactions,
-  } = useTransactions()
   const [isEditingListSettings, setIsEditingListSettings] = useState(false)
 
   useEffect(() => {
