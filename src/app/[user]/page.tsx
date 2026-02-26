@@ -42,7 +42,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const ensData = await getAccount()
   const ensName = ensData?.ens?.name
   const ensAvatar = ensData?.ens?.avatar
-  const displayUser = ensName && ensName.length > 0 ? ensName : isList ? `List #${user}` : truncatedUser
+  const displayUser = ensName && ensName?.length > 0 ? ensName : isList ? `List #${user}` : truncatedUser
   const description = ensData?.ens?.records?.description
 
   const avatarResponse = ensAvatar && isLinkValid(ensAvatar) ? await fetch(ensAvatar) : null

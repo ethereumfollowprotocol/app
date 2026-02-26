@@ -19,7 +19,7 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
   const [languageMenuSearch, setLanguageMenuSearch] = useState('')
 
   const { t } = useTranslation()
-  const { changeLanguage, languageMenOpenu, selectedLanguage, setLanguageMenuOpen } = useLanguage()
+  const { changeLanguage, languageMenOpen, selectedLanguage, setLanguageMenuOpen } = useLanguage()
 
   const { setLanguage } = useIdentityKitTranslation()
   useEffect(() => {
@@ -51,8 +51,8 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
     <div ref={clickAwayLanguageRef} className='group relative w-full cursor-pointer'>
       <div
         onClick={() => {
-          setLanguageMenuOpen(!languageMenOpenu)
-          setExternalLanguageMenuOpen?.(!languageMenOpenu)
+          setLanguageMenuOpen(!languageMenOpen)
+          setExternalLanguageMenuOpen?.(!languageMenOpen)
         }}
         className='group-hover:bg-nav-item flex w-full items-center justify-between rounded-sm p-4'
       >
@@ -72,7 +72,7 @@ const LanguageSelector = ({ setExternalLanguageMenuOpen, setParentOpen }: Langua
       </div>
       <div
         className={`absolute -top-[56px] left-full z-50 w-full transition-all transition-discrete sm:top-0 sm:w-fit sm:pl-2 sm:transition-normal ${
-          languageMenOpenu ? 'block' : 'hidden'
+          languageMenOpen ? 'block' : 'hidden'
         } group-hover:block`}
       >
         <div className='bg-neutral shadow-medium flex max-h-[520px] w-full flex-col gap-2 gap-x-px overflow-scroll rounded-sm sm:max-h-[45vh] sm:w-56 lg:grid lg:w-[450px] lg:grid-cols-2'>

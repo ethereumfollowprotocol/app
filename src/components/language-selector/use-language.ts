@@ -6,7 +6,7 @@ import { LANGUAGES } from '#/lib/constants/languages'
 import type { StaticImageData } from 'next/image'
 
 const useLanguage = () => {
-  const [languageMenOpenu, setLanguageMenuOpen] = useState(false)
+  const [languageMenOpen, setLanguageMenuOpen] = useState(false)
   const [selectedLanguage, setSelectedLanguage] = useState(
     LANGUAGES[LANGUAGES.map((lang) => lang.key).indexOf(i18n.language || 'en')]
   )
@@ -30,7 +30,7 @@ const useLanguage = () => {
 
   return {
     changeLanguage,
-    languageMenOpenu,
+    languageMenOpen,
     selectedLanguage,
     setLanguageMenuOpen,
     setSelectedLanguage,
