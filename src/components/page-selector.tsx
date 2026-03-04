@@ -43,9 +43,9 @@ const PageSelector: React.FC<PageSelectorProps> = ({
       window.scrollTo({ top: window.innerWidth > 786 ? 200 : 400, behavior: 'instant' })
     }
 
-    if (!skipsToFirst && fetchNext && fetchPrevious && !isLoading) {
-      if (newPage > page) fetchNext()
-      else fetchPrevious()
+    if (!skipsToFirst && !isLoading) {
+      if (newPage > page && fetchNext) fetchNext()
+      else if (fetchPrevious) fetchPrevious()
     }
 
     if (adjustUrl) {

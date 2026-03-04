@@ -35,7 +35,6 @@ const Recommendations = ({
   const {
     isLoading,
     fetchNextPage,
-    fetchPreviousPage,
     isFetchingNextPage,
     isFetchingPreviousPage,
     data: profilesToRecommend,
@@ -72,7 +71,18 @@ const Recommendations = ({
     setPage(1)
   }, [userAddress, selectedList, limit])
 
-  const hasNextPage = displayedProfiles?.length === limit
+  const onFetchNextPage = () => {
+    if (
+      profilesToRecommend?.pages.length &&
+      (profilesToRecommend?.pages.length >= 10 || profilesToRecommend?.pages.length - 1 >= page)
+    )
+      return
+
+    fetchNextPage()
+    setPage(page + 1)
+  }
+
+  const hasNextPage = useMemo(() => displayedProfiles?.length === limit && page < 10, [displayedProfiles, page])
 
   return (
     <div className={cn('bg-neutral shadow-medium flex flex-col gap-2 rounded-sm pt-2 2xl:gap-3', className)}>
@@ -88,8 +98,7 @@ const Recommendations = ({
                 hasSkipToFirst={false}
                 adjustUrl={false}
                 displayPageNumber={false}
-                fetchNext={fetchNextPage}
-                fetchPrevious={fetchPreviousPage}
+                fetchNext={onFetchNextPage}
               />
             </Suspense>
           )}
