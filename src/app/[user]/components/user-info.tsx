@@ -94,6 +94,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
 
   const tableProps = {
     followers: {
+      user,
       isLoading: followersIsLoading,
       results: followers,
       allTags: followerTags?.tagCounts,
@@ -111,6 +112,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       canEditTags: false,
     },
     following: {
+      user,
       isLoading: followingIsLoading,
       results: following,
       allTags: followingTags?.tagCounts,

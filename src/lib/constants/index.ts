@@ -27,9 +27,9 @@ export const ENS_SUBGRAPH_URL = `https://gateway-arbitrum.network.thegraph.com/a
 export const DEFAULT_AVATAR_URL = '/assets/art/default-avatar.svg'
 
 export const FETCH_LIMIT_PARAM = 12
-export const LEADERBOARD_CHUNK_SIZE = 20
+export const LEADERBOARD_CHUNK_SIZE = 25
 export const RECOMMENDED_PROFILES_LIMIT = 10
-export const LEADERBOARD_FETCH_LIMIT_PARAM = 60
+export const LEADERBOARD_FETCH_LIMIT_PARAM = 50
 
 export const SECOND = 1_000
 export const MINUTE = 60 * SECOND

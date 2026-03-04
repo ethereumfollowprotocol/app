@@ -2,7 +2,7 @@
 
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
-import { DEFAULT_FALLBACK_HEADER, isLinkValid } from 'ethereum-identity-kit'
+import { DEFAULT_FALLBACK_HEADER, isLinkValid, type ForceFollowingState } from 'ethereum-identity-kit'
 
 import Name from './name'
 import StatsDesktop from './stats-desktop'
@@ -25,6 +25,7 @@ interface TableRowProps {
   top8?: number
   blocked?: number
   firstStat?: LeaderboardFilter
+  followState?: ForceFollowingState
 }
 
 const TableRow: React.FC<TableRowProps> = ({
@@ -39,6 +40,7 @@ const TableRow: React.FC<TableRowProps> = ({
   top8,
   blocked,
   firstStat,
+  followState,
 }) => {
   const rankedAs = rank === 0 ? 'no-rank' : rank <= 3 ? 'top-three' : rank <= 10 ? 'top-ten' : 'regular'
 
@@ -104,7 +106,7 @@ const TableRow: React.FC<TableRowProps> = ({
           top8={top8}
           blocked={blocked}
         />
-        <FollowButton address={address} />
+        <FollowButton address={address} forceState={followState} />
       </div>
     </ProfileTooltipWrapper>
   )

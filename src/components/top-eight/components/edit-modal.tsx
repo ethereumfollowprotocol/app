@@ -11,12 +11,13 @@ import MagnifyingGlass from 'public/assets/icons/ui/magnifying-glass.svg'
 import UserProfilePageTable, { type UserProfilePageTableProps } from '#/components/profile-page-table'
 
 interface EditModalProps {
+  user: string
   profiles: TopEightProfileType[]
   onClose: () => void
   followingListProps: UserProfilePageTableProps
 }
 
-const EditModal: React.FC<EditModalProps> = ({ profiles, onClose, followingListProps }) => {
+const EditModal: React.FC<EditModalProps> = ({ user, profiles, onClose, followingListProps }) => {
   const { t } = useTranslation()
   const {
     editedProfiles,

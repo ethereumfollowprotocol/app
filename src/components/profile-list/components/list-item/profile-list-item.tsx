@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
 import { useQuery } from '@tanstack/react-query'
-import { type InitialFollowingState, isLinkValid } from 'ethereum-identity-kit'
+import { type ForceFollowingState, type InitialFollowingState, isLinkValid } from 'ethereum-identity-kit'
 
 import ProfileListItemDetails from './details'
 import { fetchAccount } from '#/api/fetch-account'
@@ -29,6 +29,7 @@ export interface ProfileListItemProps {
   isTopEight?: boolean
   tagsDropdownPosition?: TagsDropdownPositionType
   initialFollowState?: InitialFollowingState
+  followState?: ForceFollowingState
 }
 
 const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
@@ -45,6 +46,7 @@ const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
     isTopEight,
     tagsDropdownPosition,
     initialFollowState,
+    followState,
   }) => {
     const { data: fetchedAccount, isLoading } = useQuery({
       queryKey: ['account', address],
@@ -94,7 +96,12 @@ const ProfileListItem: React.FC<ProfileListItemProps> = React.memo(
             {isTopEight ? (
               <TopEightAddButton address={address} tags={tags} />
             ) : (
-              <FollowButton isBlockedBy={isBlockedBy} address={address} initialState={initialFollowState} />
+              <FollowButton
+                isBlockedBy={isBlockedBy}
+                address={address}
+                initialState={initialFollowState}
+                forceState={followState}
+              />
             )}
           </div>
         </div>

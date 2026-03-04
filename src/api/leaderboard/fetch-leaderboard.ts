@@ -32,7 +32,7 @@ export const fetchleaderboard = async ({
     return {
       results: data ?? [],
       nextPageParam: pageParam + 1,
-      prevPageParam: pageParam > 0 ? pageParam - 1 : 0,
+      prevPageParam: Math.max(pageParam - 1, 0),
     }
   } catch (err: unknown) {
     return {
@@ -41,7 +41,7 @@ export const fetchleaderboard = async ({
         results: [],
       },
       nextPageParam: pageParam + 1,
-      prevPageParam: pageParam > 0 ? pageParam - 1 : 0,
+      prevPageParam: Math.max(pageParam - 1, 0),
     }
   }
 }

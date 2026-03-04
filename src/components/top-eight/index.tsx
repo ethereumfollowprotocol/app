@@ -41,6 +41,7 @@ const TopEight: React.FC<TopEightProps> = ({
     <>
       {isConnectedUserProfile && editModalOpen && (
         <EditModal
+          user={user}
           profiles={topEight || []}
           onClose={() => setEditModalOpen(false)}
           followingListProps={followingListProps}

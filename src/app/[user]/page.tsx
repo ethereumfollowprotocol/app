@@ -29,7 +29,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     try {
       if (ssr) {
         const response = await fetchAccount(user, isList ? Number(user) : undefined)
-        if(!response?.address) return null
+        if (!response?.address) return null
         return response
       }
 

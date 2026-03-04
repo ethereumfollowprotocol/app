@@ -1,5 +1,4 @@
 import React, { Suspense } from 'react'
-
 import Filters from './filters'
 import Search from './search'
 import PageSelector from '#/components/page-selector'
@@ -15,7 +14,6 @@ interface TableHeadersProps {
   isFetchingPreviousLeaderboard: boolean
   currentSearch: string
   handleSearchEvent: (e: React.ChangeEvent<HTMLInputElement>) => void
-  setChunk: (chunk: number) => void
   fetchNextLeaderboard: () => void
   fetchPreviousLeaderboard: () => void
 }
@@ -29,7 +27,6 @@ const TableHeaders: React.FC<TableHeadersProps> = ({
   isFetchingPreviousLeaderboard,
   currentSearch,
   handleSearchEvent,
-  setChunk,
   fetchNextLeaderboard,
   fetchPreviousLeaderboard,
 }) => {
@@ -51,11 +48,9 @@ const TableHeaders: React.FC<TableHeadersProps> = ({
           hasSkipToFirst={isClient ? window.innerWidth > 768 : true}
           isLoading={isFetchingNextLeaderboard || isFetchingPreviousLeaderboard}
           fetchNext={() => {
-            setChunk(1)
             fetchNextLeaderboard()
           }}
           fetchPrevious={() => {
-            setChunk(1)
             fetchPreviousLeaderboard()
           }}
         />

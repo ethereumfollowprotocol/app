@@ -96,6 +96,7 @@ const Recommendations = ({
         </div>
       </div>
       <ProfileList
+        type='recommendations'
         isLoading={(isLoading || isFetchingNextPage || isFetchingPreviousPage) && !displayedProfiles}
         loadingRows={limit}
         profiles={displayedProfiles?.slice(0, limit).map((account) => ({

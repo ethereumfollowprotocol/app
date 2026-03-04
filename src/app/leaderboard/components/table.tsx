@@ -10,7 +10,7 @@ import type { LeaderboardItem } from '#/types/requests.ts'
 import type { LeaderboardFilter } from '#/types/common.ts'
 import LoadingCell from '#/components/loaders/loading-cell.tsx'
 import { formatNumberLeaderboard } from '#/utils/format/format-number.ts'
-import { LEADERBOARD_CHUNK_SIZE, LEADERBOARD_FETCH_LIMIT_PARAM } from '#/lib/constants/index.ts'
+import { LEADERBOARD_CHUNK_SIZE } from '#/lib/constants/index.ts'
 import TableHeaders from './table-headers.tsx'
 import Recommendations from '#/components/recommendations.tsx'
 import { cn } from '#/lib/utilities.ts'
@@ -27,15 +27,12 @@ const LeaderboardTable = () => {
   const router = useRouter()
   const {
     page,
-    chunk,
     filter,
     search,
     setPage,
-    setChunk,
     setFilter,
     leaderboard,
     resetSearch,
-    loadChunkRef,
     currentSearch,
     leaderboardStats,
     handleSearchEvent,
@@ -137,7 +134,6 @@ const LeaderboardTable = () => {
               setPage={setPage}
               currentSearch={currentSearch}
               handleSearchEvent={handleSearchEvent}
-              setChunk={setChunk}
               fetchNextLeaderboard={fetchNextLeaderboard}
               fetchPreviousLeaderboard={fetchPreviousLeaderboard}
               isFetchingNextLeaderboard={isFetchingNextLeaderboard}
@@ -145,7 +141,7 @@ const LeaderboardTable = () => {
             />
           </div>
           <div className='bg-neutral shadow-medium relative mb-16 flex flex-col rounded-sm'>
-            {leaderboard?.slice(0, chunk * LEADERBOARD_CHUNK_SIZE).map((entry: LeaderboardItem, index) => (
+            {leaderboard?.map((entry, index) => (
               <TableRow
                 key={entry.address}
                 address={entry.address}
@@ -159,16 +155,12 @@ const LeaderboardTable = () => {
                 top8={Number(entry.top8) || 0}
                 blocked={Number(entry.blocks) || 0}
                 firstStat={filter}
+                followState={entry.followState}
               />
             ))}
             {new Array(isLoading ? LEADERBOARD_CHUNK_SIZE : 0).fill(1).map((_, i) => (
               <LoadingRow key={i} />
             ))}
-            {(chunk * LEADERBOARD_CHUNK_SIZE) / LEADERBOARD_FETCH_LIMIT_PARAM < 1 &&
-              !isLoading &&
-              !(isFetchingNextLeaderboard || isFetchingPreviousLeaderboard) && (
-                <div ref={loadChunkRef} className='h-px w-full' />
-              )}
             {!isLoading && leaderboard?.length === 0 && (
               <div className='flex h-40 flex-col items-center justify-center'>
                 <p className='text-lg font-bold'>No results found</p>

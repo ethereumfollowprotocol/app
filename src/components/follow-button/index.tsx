@@ -6,6 +6,7 @@ import { useConnectModal } from '@rainbow-me/rainbowkit'
 import {
   FollowButton as EIKFollowButton,
   useTransactions,
+  type ForceFollowingState,
   type InitialFollowingState,
 } from 'ethereum-identity-kit'
 
@@ -18,6 +19,7 @@ interface FollowButtonProps {
   isBlockedBy?: boolean
   disabled?: boolean
   initialState?: InitialFollowingState
+  forceState?: ForceFollowingState
 }
 
 const FollowButton: React.FC<FollowButtonProps> = ({
@@ -25,6 +27,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
   className = '',
   isBlockedBy,
   initialState,
+  forceState,
   ...props
 }) => {
   const { openConnectModal } = useConnectModal()
@@ -42,6 +45,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
       className={className}
       selectedList={selectedList}
       initialState={initialState}
+      forceState={forceState}
       sounds={selectedVolume === 'no sounds' ? undefined : FOLLOW_BUTTON_SOUND}
       {...props}
     />

@@ -28,6 +28,7 @@ const LatestFollowers = () => {
         </Suspense>
       </div>
       <ProfileList
+        type='latest-followers'
         loadingRows={10}
         showFollowsYouBadges={false}
         profiles={displayedProfiles}

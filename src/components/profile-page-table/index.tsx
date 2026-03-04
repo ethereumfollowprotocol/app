@@ -16,6 +16,7 @@ import type { TagCountType, FollowSortType, FollowerResponse, FollowingResponse 
 
 let lastScrollTopUserPage = 0
 export interface UserProfilePageTableProps {
+  user: string
   title: ProfileTableTitleType
   customClass?: string
   isLoading: boolean
@@ -41,6 +42,7 @@ export interface UserProfilePageTableProps {
 const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProps>(
   (
     {
+      user,
       title,
       customClass,
       isLoading,
@@ -191,6 +193,7 @@ const UserProfilePageTable = forwardRef<HTMLDivElement, UserProfilePageTableProp
             </div>
           )}
           <ProfileList
+            type={`${user}-${title}`}
             isLoading={isLoading}
             isLoadingMore={isFetchingMore}
             loadingRows={FETCH_LIMIT_PARAM}

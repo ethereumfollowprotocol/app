@@ -1,6 +1,5 @@
 'use client'
 
-import { useIntersectionObserver } from '@uidotdev/usehooks'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query'
@@ -9,7 +8,9 @@ import type { LeaderboardFilter } from '#/types/common'
 import type { LeaderboardItem } from '#/types/requests'
 import { fetchleaderboard } from '#/api/leaderboard/fetch-leaderboard'
 import { fetchLeaderboardStats } from '#/api/leaderboard/fetch-leaderboard-stats'
-import { LEADERBOARD_CHUNK_SIZE, LEADERBOARD_FETCH_LIMIT_PARAM, SECOND } from '#/lib/constants'
+import { LEADERBOARD_FETCH_LIMIT_PARAM, SECOND } from '#/lib/constants'
+import { useBatchButtonStateQuery } from '#/hooks/use-button-state-batch-query'
+import type { FollowStateResponse } from 'ethereum-identity-kit'
 
 const useLeaderboard = () => {
   const router = useRouter()
@@ -22,16 +23,6 @@ const useLeaderboard = () => {
 
   const initialPageParam = Number(searchParams.get('page'))
   const [page, setPage] = useState(initialPageParam || 1)
-
-  const [chunk, setChunk] = useState(1)
-  const [loadChunkRef, entry] = useIntersectionObserver({
-    rootMargin: '200px 0px 0px 0px',
-  })
-
-  useEffect(() => {
-    if (entry?.isIntersecting && (chunk * LEADERBOARD_CHUNK_SIZE) / LEADERBOARD_FETCH_LIMIT_PARAM < 1)
-      setChunk((prev) => prev + 1)
-  }, [entry])
 
   const initialSearch = searchParams.get('query')
   const [currentSearch, setCurrentSearch] = useState(initialSearch ?? '')
@@ -143,21 +134,50 @@ const useLeaderboard = () => {
 
   const leaderboard = useMemo(() => {
     const pageIndex = results?.pageParams.indexOf(page - 1) || 0
-    return results?.pages[pageIndex]?.results.results as LeaderboardItem[]
+    return {
+      pageIndex,
+      results: results?.pages[pageIndex]?.results.results as LeaderboardItem[],
+    }
   }, [results, page])
+
+  const allLeaderboard = useMemo(() => {
+    return results?.pages.flatMap((page) => page.results.results) || []
+  }, [results])
+
+  const { followStatesMap, isFollowStatesLoading, isFetchingNextFollowStatesPage, isRefetchingFollowStates } =
+    useBatchButtonStateQuery<LeaderboardItem>({
+      profiles: allLeaderboard,
+      splitSize: LEADERBOARD_FETCH_LIMIT_PARAM,
+      queryKey: ['followStates', 'leaderboard', filter, search && search?.length > 2 ? search : ''],
+      useFirstPageKey: false,
+      currentPageIndex: leaderboard?.pageIndex,
+    })
+
+  const leaderboardPageWithFollowStates = useMemo(() => {
+    return leaderboard?.results?.map((leaderboard) => {
+      const followState = followStatesMap.get(leaderboard.address.toLowerCase()) as FollowStateResponse
+
+      return {
+        ...leaderboard,
+        followState: {
+          state: followState,
+          isLoading: followState
+            ? isRefetchingFollowStates
+            : isFollowStatesLoading || isFetchingNextFollowStatesPage || isRefetchingFollowStates,
+        },
+      }
+    })
+  }, [followStatesMap, leaderboard])
 
   return {
     page,
-    chunk,
     search,
     filter,
     setPage,
-    setChunk,
     setFilter,
     timeStamp,
-    leaderboard,
+    leaderboard: leaderboardPageWithFollowStates,
     resetSearch,
-    loadChunkRef,
     currentSearch,
     leaderboardStats,
     handleSearchEvent,

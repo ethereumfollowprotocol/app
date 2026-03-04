@@ -19,7 +19,11 @@ export const useTopEight = (user: string | Address) => {
     if (window.innerWidth > 768) setDisplayLimit(8)
 
     // prefetch top8 image in the background (gets cached for a little bit more than a day)
-    fetch(`https://efp.app/api/top-eight?user=${user}`)
+    try {
+      fetch(`https://efp.app/api/top-eight?user=${user}`)
+    } catch (error) {
+      console.log('Error prefetching top8 image', error)
+    }
   }, [])
 
   const { address: userAddress } = useAccount()
