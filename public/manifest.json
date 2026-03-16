@@ -1,0 +1,5 @@
+{
+  "name": "Ethereum Follow Protocol",
+  "description": "A native Ethereum protocol for following and tagging Ethereum accounts.",
+  "iconPath": "assets/logo.svg"
+}

@@ -18,6 +18,8 @@
   },
   "dependencies": {
     "@next/third-parties": "15.1.6",
+    "@safe-global/safe-apps-provider": "^0.18.5",
+    "@safe-global/safe-apps-sdk": "^9.1.0",
     "@rainbow-me/rainbowkit": "^2.2.4",
     "@react-spring/web": "^9.7.5",
     "@sentry/nextjs": "^8.55.0",

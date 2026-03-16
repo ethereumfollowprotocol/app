@@ -9,6 +9,7 @@ import {
 } from '@rainbow-me/rainbowkit/wallets'
 import { mainnet, optimism, base } from 'wagmi/chains'
 import { type Chain, connectorsForWallets } from '@rainbow-me/rainbowkit'
+import { safe } from 'wagmi/connectors'
 import { http, fallback, createStorage, cookieStorage, createConfig } from 'wagmi'
 import { createThirdwebClient, defineChain as thirdwebDefineChain } from 'thirdweb'
 import { inAppWalletConnector } from '@thirdweb-dev/wagmi-adapter'
@@ -133,7 +134,7 @@ export const chains: [ChainWithDetails, ...ChainWithDetails[]] = [
   },
 ]
 
-const combinedConnectors = [unicornConnector, ...connectors]
+const combinedConnectors = [unicornConnector, ...connectors, safe()]
 
 const config = createConfig({
   ssr: true,
