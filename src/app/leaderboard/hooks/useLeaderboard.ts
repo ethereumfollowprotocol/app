@@ -163,7 +163,7 @@ const useLeaderboard = () => {
           state: followState,
           isLoading: followState
             ? isRefetchingFollowStates
-            : isFollowStatesLoading || isFetchingNextFollowStatesPage || isRefetchingFollowStates,
+            : isFollowStatesLoading || isFetchingNextFollowStatesPage,
         },
       }
     })
