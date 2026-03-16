@@ -110,7 +110,7 @@ export const useBatchButtonStateQuery = <T extends { address: string }>({
   const profilesWithFollowStates = useMemo(() => {
     return profiles.map((profile, index) => {
       const followState = followStatesMap.get(profile.address.toLowerCase()) as FollowStateResponse
-      const isLoading = followState ? isRefetchingFollowStates : true
+      const isLoading = followState ? isRefetchingFollowStates : (isFollowStatesLoading || isFetchingNextFollowStatesPage)
 
       return {
         ...profile,
