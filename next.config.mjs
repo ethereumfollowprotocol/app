@@ -76,10 +76,6 @@ const nextConfig = {
           value: 'on',
         },
         {
-          key: 'X-Frame-Options',
-          value: 'SAMEORIGIN',
-        },
-        {
           key: 'X-Content-Type-Options',
           value: 'nosniff',
         },
@@ -102,6 +98,23 @@ const nextConfig = {
         {
           key: 'Strict-Transport-Security',
           value: 'max-age=63072000; includeSubDomains; preload',
+        },
+      ],
+    },
+    {
+      source: '/manifest.json',
+      headers: [
+        {
+          key: 'Access-Control-Allow-Origin',
+          value: '*',
+        },
+        {
+          key: 'Access-Control-Allow-Methods',
+          value: 'GET',
+        },
+        {
+          key: 'Access-Control-Allow-Headers',
+          value: 'X-Requested-With, content-type, Authorization',
         },
       ],
     },
