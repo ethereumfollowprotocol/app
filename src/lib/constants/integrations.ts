@@ -77,6 +77,7 @@ import Pastens from 'public/assets/partners/pastens.png'
 import Fusion from 'public/assets/partners/fusion.png'
 import ForeverLibrary from 'public/assets/partners/foreverlibrary.png'
 import Web3Identity from 'public/assets/partners/web3identity.jpg'
+import EnsView from 'public/assets/partners/ensview.jpg'
 
 export const INTEGRATIONS = [
   {
@@ -463,6 +464,11 @@ export const INTEGRATIONS = [
     name: 'Web3 Identity',
     url: 'https://web3identity.com/',
     logo: Web3Identity,
+  },
+  {
+    name: 'ENSView',
+    url: 'https://ensview.xyz',
+    logo: EnsView,
   },
 ] as {
   name: string
