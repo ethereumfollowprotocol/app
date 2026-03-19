@@ -78,8 +78,14 @@ import Fusion from 'public/assets/partners/fusion.png'
 import ForeverLibrary from 'public/assets/partners/foreverlibrary.png'
 import Web3Identity from 'public/assets/partners/web3identity.jpg'
 import EnsView from 'public/assets/partners/ensview.jpg'
+import Status from 'public/assets/partners/status.png'
 
 export const INTEGRATIONS = [
+  {
+    name: 'Status',
+    url: 'https://status.app/',
+    logo: Status,
+  },
   {
     name: 'Interface',
     url: 'https://interface.social',
