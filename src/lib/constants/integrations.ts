@@ -478,7 +478,7 @@ export const INTEGRATIONS = [
     logo: EnsView,
   },
   {
-    name: 'DMpay',
+    name: 'dmpay',
     url: 'https://app.dmpay.me/',
     logo: DMPay,
   },
