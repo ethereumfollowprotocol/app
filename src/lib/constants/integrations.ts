@@ -79,6 +79,7 @@ import ForeverLibrary from 'public/assets/partners/foreverlibrary.png'
 import Web3Identity from 'public/assets/partners/web3identity.jpg'
 import EnsView from 'public/assets/partners/ensview.jpg'
 import Status from 'public/assets/partners/status.png'
+import DMPay from 'public/assets/partners/dmpay.jpg'
 
 export const INTEGRATIONS = [
   {
@@ -475,6 +476,11 @@ export const INTEGRATIONS = [
     name: 'ENSView',
     url: 'https://ensview.xyz',
     logo: EnsView,
+  },
+  {
+    name: 'DMpay',
+    url: 'https://app.dmpay.me/',
+    logo: DMPay,
   },
 ] as {
   name: string
