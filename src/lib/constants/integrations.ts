@@ -184,7 +184,7 @@ export const INTEGRATIONS = [
   },
   {
     name: 'Philand',
-    url: 'https://philand.xyz/',
+    url: 'https://land.phi.box/',
     logo: Philand,
   },
   {
