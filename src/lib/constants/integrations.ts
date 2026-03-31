@@ -491,7 +491,7 @@ export const INTEGRATIONS = [
   },
   {
     name: 'Cash Game Host',
-    url: 'https://cash-game-organizer-app.vercel.app/',
+    url: 'https://cashgamehost.com/',
     logo: CashGameHost,
   },
 ] as {
