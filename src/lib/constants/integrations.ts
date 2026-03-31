@@ -80,6 +80,8 @@ import Web3Identity from 'public/assets/partners/web3identity.jpg'
 import EnsView from 'public/assets/partners/ensview.jpg'
 import Status from 'public/assets/partners/status.png'
 import DMPay from 'public/assets/partners/dmpay.jpg'
+import WalletChan from 'public/assets/partners/walletchan.jpg'
+import CashGameHost from 'public/assets/partners/cashgamehost.jpg'
 
 export const INTEGRATIONS = [
   {
@@ -141,6 +143,11 @@ export const INTEGRATIONS = [
     name: 'Yodl',
     url: 'https://yodl.me/',
     logo: Yodl,
+  },
+  {
+    name: 'Walletchan',
+    url: 'https://walletchan.com/',
+    logo: WalletChan,
   },
   {
     name: 'Vision',
@@ -481,6 +488,11 @@ export const INTEGRATIONS = [
     name: 'dmpay',
     url: 'https://app.dmpay.me/',
     logo: DMPay,
+  },
+  {
+    name: 'Cash Game Host',
+    url: 'https://cash-game-organizer-app.vercel.app/',
+    logo: CashGameHost,
   },
 ] as {
   name: string
