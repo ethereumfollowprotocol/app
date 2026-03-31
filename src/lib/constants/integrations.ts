@@ -145,7 +145,7 @@ export const INTEGRATIONS = [
     logo: Yodl,
   },
   {
-    name: 'Walletchan',
+    name: 'WalletChan',
     url: 'https://walletchan.com/',
     logo: WalletChan,
   },
