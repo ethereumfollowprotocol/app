@@ -82,6 +82,7 @@ import Status from 'public/assets/partners/status.png'
 import DMPay from 'public/assets/partners/dmpay.jpg'
 import WalletChan from 'public/assets/partners/walletchan.jpg'
 import CashGameHost from 'public/assets/partners/cashgamehost.jpg'
+import Scry from 'public/assets/partners/scry.png'
 
 export const INTEGRATIONS = [
   {
@@ -493,6 +494,11 @@ export const INTEGRATIONS = [
     name: 'Cash Game Host',
     url: 'https://cashgamehost.com/',
     logo: CashGameHost,
+  },
+  {
+    name: 'Thurin Scry',
+    url: 'https://scry.thurin.id/',
+    logo: Scry,
   },
 ] as {
   name: string
