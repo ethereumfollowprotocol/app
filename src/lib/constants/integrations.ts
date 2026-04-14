@@ -83,8 +83,14 @@ import DMPay from 'public/assets/partners/dmpay.jpg'
 import WalletChan from 'public/assets/partners/walletchan.jpg'
 import CashGameHost from 'public/assets/partners/cashgamehost.jpg'
 import Scry from 'public/assets/partners/scry.png'
+import Etherscan from 'public/assets/partners/etherscan.jpg'
 
 export const INTEGRATIONS = [
+  {
+    name: 'Etherscan',
+    url: 'https://etherscan.io/',
+    logo: Etherscan,
+  },
   {
     name: 'Status',
     url: 'https://status.app/',
