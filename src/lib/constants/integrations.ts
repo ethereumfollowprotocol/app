@@ -85,6 +85,7 @@ import CashGameHost from 'public/assets/partners/cashgamehost.jpg'
 import Scry from 'public/assets/partners/scry.png'
 import Etherscan from 'public/assets/partners/etherscan.jpg'
 import EVMNow from 'public/assets/partners/evmnow.jpg'
+import DominiosCripto from 'public/assets/partners/dominioscripto.jpg'
 
 export const INTEGRATIONS = [
   {
@@ -511,6 +512,11 @@ export const INTEGRATIONS = [
     name: 'Thurin Scry',
     url: 'https://scry.thurin.id/',
     logo: Scry,
+  },
+  {
+    name: 'DominiosCripto',
+    url: 'https://dominioscripto.com',
+    logo: DominiosCripto,
   },
 ] as {
   name: string
