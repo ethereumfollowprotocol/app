@@ -84,6 +84,7 @@ import WalletChan from 'public/assets/partners/walletchan.jpg'
 import CashGameHost from 'public/assets/partners/cashgamehost.jpg'
 import Scry from 'public/assets/partners/scry.png'
 import Etherscan from 'public/assets/partners/etherscan.jpg'
+import EVMNow from 'public/assets/partners/evmnow.jpg'
 
 export const INTEGRATIONS = [
   {
@@ -105,6 +106,11 @@ export const INTEGRATIONS = [
     name: 'Snapshot',
     url: 'https://snapshot.box/',
     logo: Snapshot,
+  },
+  {
+    name: 'EVM Now',
+    url: 'https://evm.now/',
+    logo: EVMNow,
   },
   {
     name: 'POAP',
