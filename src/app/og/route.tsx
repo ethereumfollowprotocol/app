@@ -6,6 +6,9 @@ import { truncateAddress } from '#/lib/utilities'
 import type { AccountResponseType } from '#/types/requests'
 import { ens_beautify } from '@adraffy/ens-normalize'
 
+const defaultAvatar = 'https://efp.app/assets/art/default-avatar.svg'
+const defaultHeader = 'https://efp.app/assets/art/default-header.svg'
+
 export async function GET(req: NextRequest) {
   const user = req.url.split('user=')[1] || ''
   const isList = !(user.includes('.') || isAddress(user) || Number.isNaN(Number(user)) || isHex(user))
@@ -21,9 +24,9 @@ export async function GET(req: NextRequest) {
         address: user,
         ens: {
           name: user,
-          avatar: 'https://efp.app/assets/art/default-avatar.svg',
+          avatar: defaultAvatar,
           records: {
-            header: 'https://efp.app/assets/art/default-header.svg',
+            header: defaultHeader,
           },
         },
       }
@@ -77,7 +80,7 @@ export async function GET(req: NextRequest) {
             alt='header'
             width='320'
             height='110'
-            src={fetchedHeader}
+            src={fetchedHeader || defaultHeader}
             style={{
               position: 'absolute',
               top: 0,
@@ -90,7 +93,7 @@ export async function GET(req: NextRequest) {
             alt='avatar'
             width='100'
             height='100'
-            src={`${fetchedAvatar || 'https://efp.app/assets/art/default-avatar.svg'}`}
+            src={fetchedAvatar || defaultAvatar}
             style={{
               borderRadius: 50,
               margin: 0,
