@@ -38,31 +38,46 @@ const unicornConnector = inAppWalletConnector({
 
 coinbaseWallet.preference = 'all'
 
+const walletConnectProjectId = (
+  process.env.WALLET_CONNECT_PROJECT_ID ||
+  process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID ||
+  ''
+).trim()
+
+if (process.env.NODE_ENV === 'development' && !walletConnectProjectId) {
+  console.warn(
+    'NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID is not set. WalletConnect, Rainbow, and MetaMask QR/deep-link wallet options are disabled.'
+  )
+}
+
+const walletGroups = [
+  {
+    groupName: 'Recommended',
+    wallets: [coinbaseWallet, injectedWallet],
+  },
+  ...(walletConnectProjectId
+    ? [
+        {
+          groupName: 'Popular',
+          wallets: [rainbowWallet, metaMaskWallet, walletConnectWallet],
+        },
+      ]
+    : []),
+  {
+    groupName: 'Other',
+    wallets: [rabbyWallet, safeWallet],
+  },
+]
+
 // Define the connectors for the app
 // Purposely using only these for now because of a localStorage error with the Coinbase Wallet connector
-const connectors = connectorsForWallets(
-  [
-    {
-      groupName: 'Recommended',
-      wallets: [coinbaseWallet, injectedWallet],
-    },
-    {
-      groupName: 'Popular',
-      wallets: [rainbowWallet, metaMaskWallet, walletConnectWallet],
-    },
-    {
-      groupName: 'Other',
-      wallets: [rabbyWallet, safeWallet],
-    },
-  ],
-  {
-    appName: APP_NAME,
-    projectId: process.env.WALLET_CONNECT_PROJECT_ID || process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
-    appDescription: APP_DESCRIPTION,
-    appUrl: APP_URL,
-    appIcon: 'https://efp.app/logo.png',
-  }
-)
+const connectors = connectorsForWallets(walletGroups, {
+  appName: APP_NAME,
+  projectId: walletConnectProjectId,
+  appDescription: APP_DESCRIPTION,
+  appUrl: APP_URL,
+  appIcon: 'https://efp.app/logo.png',
+})
 
 export type ChainWithDetails = Chain & {
   iconBackground?: string
