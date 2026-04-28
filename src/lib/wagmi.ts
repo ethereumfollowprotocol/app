@@ -38,11 +38,7 @@ const unicornConnector = inAppWalletConnector({
 
 coinbaseWallet.preference = 'all'
 
-const walletConnectProjectId = (
-  process.env.WALLET_CONNECT_PROJECT_ID ||
-  process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID ||
-  ''
-).trim()
+const walletConnectProjectId = (process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || '').trim()
 
 if (process.env.NODE_ENV === 'development' && !walletConnectProjectId) {
   console.warn(
