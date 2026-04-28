@@ -60,6 +60,11 @@ bun install
 cp .env.example .env
 ```
 
+`NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID` is required for WalletConnect-backed wallet options, including
+WalletConnect QR/deep links and Rainbow/MetaMask mobile QR flows. Create a project ID in
+[Reown Cloud](https://cloud.reown.com/) (formerly WalletConnect Cloud) and add it to `.env` when you need those wallet
+options locally. The app can boot without it, but those options will be disabled.
+
 Now you should be able to run the following without getting any errors:
 
 ```bash
