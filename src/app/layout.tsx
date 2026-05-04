@@ -17,6 +17,7 @@ import { Production } from './production.tsx'
 import { sharedMetadata } from '#/lib/metadata.ts'
 import { THEMES } from '../lib/constants/index.ts'
 import BackgroundImage from 'public/assets/art/background.png'
+import SuspendedPostHogPageView from '#/components/posthog/posthog-pageview.tsx'
 
 export const metadata: Metadata = sharedMetadata
 
@@ -55,6 +56,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           <Analytics />
           <SpeedInsights />
         </Production>
+        <SuspendedPostHogPageView />
       </body>
       <GoogleAnalytics gaId='G-4YT2CMF6F2' />
     </html>
