@@ -6,6 +6,7 @@ import { ens_beautify } from '@adraffy/ens-normalize'
 import type { TopEightProfileType } from '#/components/top-eight/hooks/use-top-eight'
 import { isLinkValid } from 'ethereum-identity-kit/utils'
 import { fetchAccount } from '#/api/fetch-account'
+import { createPostHogServerClient } from '#/lib/posthog-server'
 
 function generateHTML(userName: string, userAvatar: string | undefined, profiles: TopEightProfileType[]) {
   return `
@@ -389,6 +390,21 @@ export async function GET(req: NextRequest) {
     })
 
     await browser.close()
+
+    const posthog = createPostHogServerClient()
+    if (posthog) {
+      posthog.capture({
+        distinctId: user.toLowerCase(),
+        event: 'top_eight_image_generated',
+        properties: {
+          target: user,
+          is_list: userIsList,
+          profile_count: profiles.length,
+          $process_person_profile: false,
+        },
+      })
+      await posthog.shutdown()
+    }
 
     const response = new Response(screenshot, {
       headers: {
