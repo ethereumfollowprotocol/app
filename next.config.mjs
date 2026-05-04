@@ -16,6 +16,8 @@ console.info(`\nBuilding with app version: ${APP_VERSION}\n`)
 const nextConfig = {
   cleanDistDir: true,
   trailingSlash: false,
+  // PostHog ingestion endpoints depend on trailing slashes; do not redirect them.
+  skipTrailingSlashRedirect: true,
   reactStrictMode: true,
   poweredByHeader: false,
   generateBuildId: async () => APP_VERSION,
@@ -36,6 +38,18 @@ const nextConfig = {
         {
           source: '/service-worker.js',
           destination: '/scripts/service-worker.js',
+        },
+        {
+          source: '/ingest/static/:path*',
+          destination: 'https://us-assets.i.posthog.com/static/:path*',
+        },
+        {
+          source: '/ingest/array/:path*',
+          destination: 'https://us-assets.i.posthog.com/array/:path*',
+        },
+        {
+          source: '/ingest/:path*',
+          destination: 'https://us.i.posthog.com/:path*',
         },
       ],
     }
