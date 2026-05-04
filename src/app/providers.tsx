@@ -15,6 +15,7 @@ import { SoundsProvider } from '#/contexts/sounds-context'
 import { translations } from '#/lib/constants/translations'
 import TransactionModal from '#/components/transaction-modal'
 import { EFPProfileProvider } from '#/contexts/efp-profile-context'
+import PostHogIdentify from '#/components/posthog/posthog-identify'
 import { RecommendedProfilesProvider } from '#/contexts/recommended-profiles-context'
 
 type ProviderProps = {
@@ -59,6 +60,7 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
               </TranslationProvider>
             </ThirdwebProvider>
           </RainbowKitProvider>
+          <PostHogIdentify />
         </WagmiProvider>
       </QueryClientProvider>
     ),
