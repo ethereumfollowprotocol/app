@@ -79,20 +79,9 @@ const useSearch = () => {
   }
 
   const onSubmit = async () => {
-    if (
-      !Number.isNaN(Number(currentSearch)) ||
-      (currentSearch[0] === '#' && !Number.isNaN(Number(currentSearch.slice(1))))
-    ) {
-      track('search_submitted', {
-        search_type: 'list_id',
-        term: currentSearch,
-        result_count: searchResult?.length ?? 0,
-      })
-      router.push(`/${currentSearch[0] === '#' ? currentSearch.slice(1) : currentSearch}?ssr=false`)
-      resetSearch()
-    }
+    const isEnsOrAddress = currentSearch.includes('.') || isAddress(currentSearch)
 
-    if (currentSearch.includes('.') || isAddress(currentSearch)) {
+    if (isEnsOrAddress) {
       const address = isAddress(currentSearch) ? currentSearch : await resolveEnsAddress(currentSearch)
 
       track('search_submitted', {
@@ -103,6 +92,21 @@ const useSearch = () => {
       router.push(
         `/${address || currentSearch}${isAddress(currentSearch) ? '?ssr=false' : `?search=${currentSearch}&ssr=false`}`
       )
+      resetSearch()
+      return
+    }
+
+    const numericInput = currentSearch as string
+    if (
+      !Number.isNaN(Number(numericInput)) ||
+      (numericInput[0] === '#' && !Number.isNaN(Number(numericInput.slice(1))))
+    ) {
+      track('search_submitted', {
+        search_type: 'list_id',
+        term: numericInput,
+        result_count: searchResult?.length ?? 0,
+      })
+      router.push(`/${numericInput[0] === '#' ? numericInput.slice(1) : numericInput}?ssr=false`)
       resetSearch()
     }
   }
