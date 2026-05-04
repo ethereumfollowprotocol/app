@@ -6,25 +6,37 @@ import { useEffect, useRef } from 'react'
 
 export default function PostHogIdentify() {
   const { address, isConnected, connector } = useAccount()
-  const lastIdentified = useRef<string | undefined>(undefined)
+  const lastAddress = useRef<string | undefined>(undefined)
+  const lastConnector = useRef<string | undefined>(undefined)
 
   useEffect(() => {
     if (!posthog.__loaded) return
 
     if (isConnected && address) {
       const distinctId = address.toLowerCase()
-      if (lastIdentified.current === distinctId) return
-      posthog.identify(distinctId, {
-        wallet_address: distinctId,
-        wallet_connector: connector?.name,
-      })
-      lastIdentified.current = distinctId
+      const connectorName = connector?.name
+
+      if (lastAddress.current !== distinctId) {
+        posthog.identify(distinctId, {
+          wallet_address: distinctId,
+          wallet_connector: connectorName,
+        })
+        lastAddress.current = distinctId
+        lastConnector.current = connectorName
+        return
+      }
+
+      if (lastConnector.current !== connectorName) {
+        posthog.setPersonProperties({ wallet_connector: connectorName })
+        lastConnector.current = connectorName
+      }
       return
     }
 
-    if (lastIdentified.current) {
+    if (lastAddress.current) {
       posthog.reset()
-      lastIdentified.current = undefined
+      lastAddress.current = undefined
+      lastConnector.current = undefined
     }
   }, [address, isConnected, connector?.name])
 
