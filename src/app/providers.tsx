@@ -1,7 +1,9 @@
 'use client'
 
+import posthog from 'posthog-js'
 import { useMemo } from 'react'
 import { useTheme } from 'next-themes'
+import { PostHogProvider } from 'posthog-js/react'
 import { ThirdwebProvider } from 'thirdweb/react'
 import { WagmiProvider, type State } from 'wagmi'
 import { darkTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit'
@@ -42,31 +44,33 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
 
   const providers = useMemo(
     () => (
-      <QueryClientProvider client={queryClient}>
-        <WagmiProvider config={wagmiConfig} initialState={initialState}>
-          <RainbowKitProvider coolMode={false} theme={rainbowKitTheme}>
-            <ThirdwebProvider>
-              <TranslationProvider translations={translations}>
-                <TransactionProvider batchTransactions={true} disableAutoListSelection={true}>
-                  <EFPProfileProvider>
-                    <PostHogProfileProperties />
-                    <PostHogCartTracker />
-                    <SoundsProvider>
-                      <RecommendedProfilesProvider>
-                        <Navigation />
-                        {children}
-                        <TransactionModal />
-                        <div id='modal-root' />
-                      </RecommendedProfilesProvider>
-                    </SoundsProvider>
-                  </EFPProfileProvider>
-                </TransactionProvider>
-              </TranslationProvider>
-            </ThirdwebProvider>
-          </RainbowKitProvider>
-          <PostHogIdentify />
-        </WagmiProvider>
-      </QueryClientProvider>
+      <PostHogProvider client={posthog}>
+        <QueryClientProvider client={queryClient}>
+          <WagmiProvider config={wagmiConfig} initialState={initialState}>
+            <RainbowKitProvider coolMode={false} theme={rainbowKitTheme}>
+              <ThirdwebProvider>
+                <TranslationProvider translations={translations}>
+                  <TransactionProvider batchTransactions={true} disableAutoListSelection={true}>
+                    <EFPProfileProvider>
+                      <PostHogProfileProperties />
+                      <PostHogCartTracker />
+                      <SoundsProvider>
+                        <RecommendedProfilesProvider>
+                          <Navigation />
+                          {children}
+                          <TransactionModal />
+                          <div id='modal-root' />
+                        </RecommendedProfilesProvider>
+                      </SoundsProvider>
+                    </EFPProfileProvider>
+                  </TransactionProvider>
+                </TranslationProvider>
+              </ThirdwebProvider>
+            </RainbowKitProvider>
+            <PostHogIdentify />
+          </WagmiProvider>
+        </QueryClientProvider>
+      </PostHogProvider>
     ),
     [rainbowKitTheme, initialState, children]
   )
