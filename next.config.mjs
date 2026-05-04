@@ -5,6 +5,7 @@
 
 import childProcess from 'node:child_process'
 import { withSentryConfig } from '@sentry/nextjs'
+import { withPostHogConfig } from '@posthog/nextjs-config'
 
 const APP_VERSION =
   process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA ||
@@ -169,4 +170,20 @@ const nextConfigWithSentry = withSentryConfig(nextConfig, {
   // silent: process.env['NODE_ENV'] !== 'development'
 })
 
-export default nextConfigWithSentry
+const POSTHOG_PERSONAL_API_KEY = process.env.POSTHOG_PERSONAL_API_KEY
+const POSTHOG_PROJECT_ID = process.env.POSTHOG_PROJECT_ID
+
+const finalConfig =
+  POSTHOG_PERSONAL_API_KEY && POSTHOG_PROJECT_ID
+    ? withPostHogConfig(nextConfigWithSentry, {
+        personalApiKey: POSTHOG_PERSONAL_API_KEY,
+        envId: POSTHOG_PROJECT_ID,
+        host: 'https://us.posthog.com',
+        sourcemaps: {
+          enabled: true,
+          deleteAfterUpload: true,
+        },
+      })
+    : nextConfigWithSentry
+
+export default finalConfig
