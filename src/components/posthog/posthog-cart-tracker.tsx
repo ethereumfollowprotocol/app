@@ -41,6 +41,7 @@ export default function PostHogCartTracker() {
   useEffect(() => {
     if (isCheckoutFinished && !wasFinished.current && lastNonEmpty.current) {
       track('cart_submitted', { ...lastNonEmpty.current })
+      lastNonEmpty.current = null
     }
     wasFinished.current = isCheckoutFinished
   }, [isCheckoutFinished])
