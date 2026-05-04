@@ -393,17 +393,21 @@ export async function GET(req: NextRequest) {
 
     const posthog = createPostHogServerClient()
     if (posthog) {
-      posthog.capture({
-        distinctId: user.toLowerCase(),
-        event: 'top_eight_image_generated',
-        properties: {
-          target: user,
-          is_list: userIsList,
-          profile_count: profiles.length,
-          $process_person_profile: false,
-        },
-      })
-      await posthog.shutdown()
+      try {
+        posthog.capture({
+          distinctId: user.toLowerCase(),
+          event: 'top_eight_image_generated',
+          properties: {
+            target: user,
+            is_list: userIsList,
+            profile_count: profiles.length,
+            $process_person_profile: false,
+          },
+        })
+        await posthog.shutdown(2000)
+      } catch (analyticsError) {
+        console.error('Failed to capture top_eight_image_generated:', analyticsError)
+      }
     }
 
     const response = new Response(screenshot, {
