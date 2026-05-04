@@ -42,9 +42,9 @@ interface EnvironmentVariables {
   readonly SENTRY_AUTH_TOKEN: string
   readonly SENTRY_DISABLED: 'true' | 'false'
   readonly NEXT_PUBLIC_REPORT_WEB_VITALS: 'true' | 'false'
-  /* PostHog */
-  readonly NEXT_PUBLIC_POSTHOG_KEY: string
-  readonly NEXT_PUBLIC_POSTHOG_HOST: string
+  /* PostHog — both optional; init bails out unless both are set */
+  readonly NEXT_PUBLIC_POSTHOG_KEY?: string
+  readonly NEXT_PUBLIC_POSTHOG_HOST?: string
 }
 
 declare namespace NodeJS {
