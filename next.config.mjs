@@ -16,8 +16,6 @@ console.info(`\nBuilding with app version: ${APP_VERSION}\n`)
 const nextConfig = {
   cleanDistDir: true,
   trailingSlash: false,
-  // PostHog ingestion endpoints depend on trailing slashes; do not redirect them.
-  skipTrailingSlashRedirect: true,
   reactStrictMode: true,
   poweredByHeader: false,
   generateBuildId: async () => APP_VERSION,
@@ -38,10 +36,6 @@ const nextConfig = {
         {
           source: '/service-worker.js',
           destination: '/scripts/service-worker.js',
-        },
-        {
-          source: '/ingest/:path*',
-          destination: 'https://hedge.ethid.org/:path*',
         },
       ],
     }
