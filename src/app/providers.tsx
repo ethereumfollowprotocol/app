@@ -16,6 +16,7 @@ import { translations } from '#/lib/constants/translations'
 import TransactionModal from '#/components/transaction-modal'
 import { EFPProfileProvider } from '#/contexts/efp-profile-context'
 import PostHogIdentify from '#/components/posthog/posthog-identify'
+import PostHogCartTracker from '#/components/posthog/posthog-cart-tracker'
 import PostHogProfileProperties from '#/components/posthog/posthog-profile-properties'
 import { RecommendedProfilesProvider } from '#/contexts/recommended-profiles-context'
 
@@ -49,6 +50,7 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
                 <TransactionProvider batchTransactions={true} disableAutoListSelection={true}>
                   <EFPProfileProvider>
                     <PostHogProfileProperties />
+                    <PostHogCartTracker />
                     <SoundsProvider>
                       <RecommendedProfilesProvider>
                         <Navigation />
