@@ -14,8 +14,8 @@ export const EnvironmentVariableSchema = v.object({
   NEXT_PUBLIC_EFP_LIST_REGISTRY: v.string('NEXT_PUBLIC_EFP_LIST_REGISTRY must be a string'),
   NEXT_PUBLIC_EFP_LIST_RECORDS: v.string('NEXT_PUBLIC_EFP_LIST_RECORDS must be a string'),
   NEXT_PUBLIC_EFP_LIST_MINTER: v.string('NEXT_PUBLIC_EFP_LIST_MINTER must be a string'),
-  NEXT_PUBLIC_POSTHOG_KEY: v.string('NEXT_PUBLIC_POSTHOG_KEY must be a string'),
-  NEXT_PUBLIC_POSTHOG_HOST: v.string('NEXT_PUBLIC_POSTHOG_HOST must be a string'),
+  NEXT_PUBLIC_POSTHOG_KEY: v.optional(v.string('NEXT_PUBLIC_POSTHOG_KEY must be a string')),
+  NEXT_PUBLIC_POSTHOG_HOST: v.optional(v.string('NEXT_PUBLIC_POSTHOG_HOST must be a string')),
 })
 
 export type EnvironmentVariable = v.Input<typeof EnvironmentVariableSchema>
