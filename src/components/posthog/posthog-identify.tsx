@@ -17,6 +17,7 @@ export default function PostHogIdentify() {
       const connectorName = connector?.name
 
       if (lastAddress.current !== distinctId) {
+        if (lastAddress.current) posthog.reset()
         posthog.identify(distinctId, {
           wallet_address: distinctId,
           wallet_connector: connectorName,
