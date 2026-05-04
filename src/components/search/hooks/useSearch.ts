@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 
 import { SECOND } from '#/lib/constants'
+import { track } from '#/lib/analytics'
 import { resolveEnsAddress } from '#/utils/ens'
 import { searchENSNames } from '#/api/search-ens-names'
 
@@ -82,6 +83,11 @@ const useSearch = () => {
       !Number.isNaN(Number(currentSearch)) ||
       (currentSearch[0] === '#' && !Number.isNaN(Number(currentSearch.slice(1))))
     ) {
+      track('search_submitted', {
+        search_type: 'list_id',
+        term: currentSearch,
+        result_count: searchResult?.length ?? 0,
+      })
       router.push(`/${currentSearch[0] === '#' ? currentSearch.slice(1) : currentSearch}?ssr=false`)
       resetSearch()
     }
@@ -89,6 +95,11 @@ const useSearch = () => {
     if (currentSearch.includes('.') || isAddress(currentSearch)) {
       const address = isAddress(currentSearch) ? currentSearch : await resolveEnsAddress(currentSearch)
 
+      track('search_submitted', {
+        search_type: isAddress(currentSearch) ? 'address' : 'ens',
+        term: currentSearch,
+        result_count: searchResult?.length ?? 0,
+      })
       router.push(
         `/${address || currentSearch}${isAddress(currentSearch) ? '?ssr=false' : `?search=${currentSearch}&ssr=false`}`
       )

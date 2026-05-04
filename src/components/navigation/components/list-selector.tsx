@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { useClickAway } from '@uidotdev/usehooks'
 
 import { cn } from '#/lib/utilities'
+import { track } from '#/lib/analytics'
 import Check from 'public/assets/icons/ui/check.svg'
 import ArrowLeft from 'public/assets/icons/ui/arrow-left.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
@@ -34,6 +35,12 @@ const ListSelector: React.FC<ListSelectorProps> = ({ setWalletMenuOpen, setSubMe
   if (!lists?.lists || lists.lists.length === 0) return null
 
   const onListClick = (list: string) => {
+    track('list_switched', {
+      from_list: selectedList ?? null,
+      to_list: list === 'new list' ? null : Number(list),
+      is_new_list: list === 'new list',
+    })
+
     localStorage.setItem('selected-list', list)
     setSelectedList(list === 'new list' ? undefined : Number(list))
     setMenuOpen(false)

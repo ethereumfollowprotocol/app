@@ -3,6 +3,7 @@ import { useSprings } from '@react-spring/web'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { useCart } from '#/hooks/use-cart'
+import { track } from '#/lib/analytics'
 import { useSounds } from '#/contexts/sounds-context'
 import { listOpAddListRecord } from '#/utils/list-ops'
 import { RECOMMENDED_PROFILES_LIMIT, SECOND } from '#/lib/constants'
@@ -64,6 +65,12 @@ export const useRecommendedProfilesCards = () => {
       setDidSwipeBack(false)
       gone.add(index)
 
+      track('swipe_action', {
+        direction: xDir === 1 ? 'right' : 'left',
+        target_address: recommendedProfiles[index]?.address,
+        deck_index: index,
+      })
+
       if (canFetchMoreProfiles(index)) fetchNextPage()
       if (xDir === 1) {
         setTimeout(() => {
@@ -98,6 +105,12 @@ export const useRecommendedProfilesCards = () => {
     const lastCardX = Math.ceil(Math.abs(cards[gone.size - 1]?.x.get() || 0))
     if (gone.size > 0 && lastCardX < 250) return
 
+    track('swipe_action', {
+      direction: 'left',
+      target_address: recommendedProfiles[gone.size]?.address,
+      deck_index: gone.size,
+    })
+
     cardsApi.start((i) => {
       if (i === gone.size) {
         if (canFetchMoreProfiles(i)) fetchNextPage()
@@ -120,6 +133,12 @@ export const useRecommendedProfilesCards = () => {
 
     const lastCardX = Math.ceil(Math.abs(cards[gone.size - 1]?.x.get() || 0))
     if (gone.size > 0 && lastCardX < 250) return
+
+    track('swipe_action', {
+      direction: 'right',
+      target_address: recommendedProfiles[gone.size]?.address,
+      deck_index: gone.size,
+    })
 
     cardsApi.start((i) => {
       if (i === gone.size) {
