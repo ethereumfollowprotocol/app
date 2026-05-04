@@ -16,6 +16,7 @@ import { translations } from '#/lib/constants/translations'
 import TransactionModal from '#/components/transaction-modal'
 import { EFPProfileProvider } from '#/contexts/efp-profile-context'
 import PostHogIdentify from '#/components/posthog/posthog-identify'
+import PostHogProfileProperties from '#/components/posthog/posthog-profile-properties'
 import { RecommendedProfilesProvider } from '#/contexts/recommended-profiles-context'
 
 type ProviderProps = {
@@ -47,6 +48,7 @@ const Providers: React.FC<ProviderProps> = ({ children, initialState }) => {
               <TranslationProvider translations={translations}>
                 <TransactionProvider batchTransactions={true} disableAutoListSelection={true}>
                   <EFPProfileProvider>
+                    <PostHogProfileProperties />
                     <SoundsProvider>
                       <RecommendedProfilesProvider>
                         <Navigation />
