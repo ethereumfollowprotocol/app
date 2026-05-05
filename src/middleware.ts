@@ -7,8 +7,8 @@ export function middleware(request: NextRequest) {
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64')
 
   const cspHeader = `
-    worker-src 'self' *.cloudflareinsights.com cdn.vercel-insights.com vercel.live va.vercel-scripts.com blob:;
-    script-src 'self' *.cloudflareinsights.com cdn.vercel-insights.com vercel.live va.vercel-scripts.com www.googletagmanager.com 'unsafe-inline' 'unsafe-eval';
+    worker-src 'self' *.cloudflareinsights.com cdn.vercel-insights.com vercel.live va.vercel-scripts.com hedge.ethid.org blob:;
+    script-src 'self' *.cloudflareinsights.com cdn.vercel-insights.com vercel.live va.vercel-scripts.com www.googletagmanager.com hedge.ethid.org 'unsafe-inline' 'unsafe-eval';
     media-src 'self';
     connect-src 'self' * *.blockscout.com. wss://efp-events.up.railway.app/;
     object-src 'none';
