@@ -177,7 +177,7 @@ const finalConfig =
   POSTHOG_PERSONAL_API_KEY && POSTHOG_PROJECT_ID
     ? withPostHogConfig(nextConfigWithSentry, {
         personalApiKey: POSTHOG_PERSONAL_API_KEY,
-        envId: POSTHOG_PROJECT_ID,
+        projectId: POSTHOG_PROJECT_ID,
         host: 'https://us.posthog.com',
         sourcemaps: {
           enabled: true,

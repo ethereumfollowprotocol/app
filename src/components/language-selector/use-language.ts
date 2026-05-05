@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import { track as vercelTrack } from '@vercel/analytics/react'
 
 import i18n from '#/app/i18n'
 import { track } from '#/lib/analytics'
@@ -29,7 +28,6 @@ const useLanguage = () => {
     setSelectedLanguage(LANGUAGES[LANGUAGES.map((lang) => lang.key).indexOf(i18n.language || 'en')])
 
     const englishName = LANGUAGES.find((lang) => lang.key === i18n.language)?.englishLanguage
-    vercelTrack(`Changed language to ${englishName}`)
 
     if (previousLanguage.current && previousLanguage.current !== i18n.language) {
       track('language_changed', {
