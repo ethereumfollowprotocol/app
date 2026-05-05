@@ -34,7 +34,11 @@ export default function PostHogCartTracker() {
 
   const lastNonEmpty = useRef<CartBreakdown | null>(null)
   useEffect(() => {
-    if (cart.length > 0) lastNonEmpty.current = breakdown
+    if (cart.length > 0) {
+      lastNonEmpty.current = breakdown
+    } else {
+      lastNonEmpty.current = null
+    }
   }, [cart.length, breakdown])
 
   const wasFinished = useRef(false)
