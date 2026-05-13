@@ -1,0 +1,5 @@
+# Minimum release of packages installed
+# has to be greater than 7 days
+[install]
+minimumReleaseAge = 604800
+minimumReleaseAgeExcludes = ["@types/bun", "typescript"]
