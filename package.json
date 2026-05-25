@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@next/third-parties": "15.1.6",
+    "@noble/hashes": "1.8.0",
     "@rainbow-me/rainbowkit": "^2.2.4",
     "@react-spring/web": "^9.7.5",
     "@safe-global/safe-apps-provider": "^0.18.5",
