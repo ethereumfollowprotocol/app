@@ -102,6 +102,9 @@
     "typescript-eslint": "^8.31.0",
     "utf-8-validate": "^6.0.5"
   },
+  "overrides": {
+    "qr": "0.5.5"
+  },
   "browser": {
     "crypto": false,
     "stream": false
