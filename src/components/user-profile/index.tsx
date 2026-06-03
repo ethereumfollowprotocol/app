@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, type Dispatch, type SetStateAction } from 'react'
 import { useAccount } from 'wagmi'
 import { useRouter } from 'next/navigation'
 import { useWindowSize } from '@uidotdev/usehooks'
@@ -29,6 +29,7 @@ interface UserProfileCardProps {
   refetchStats?: () => void
   openQrCodeModal?: () => void
   className?: string
+  setFetchFreshProfile?: Dispatch<SetStateAction<boolean>>
 }
 
 const UserProfile: React.FC<UserProfileCardProps> = ({
@@ -46,6 +47,7 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
   refetchProfile,
   refetchStats,
   className,
+  setFetchFreshProfile,
 }) => {
   const router = useRouter()
   const { width } = useWindowSize()
@@ -108,7 +110,13 @@ const UserProfile: React.FC<UserProfileCardProps> = ({
           customFollowButton: isMyProfile ? undefined : <FollowButton address={profile?.address} />,
         }}
       />
-      {ensRecordsOpen && <ENSRecordsModal name={ensRecordsName} onClose={() => setEnsRecordsOpen(false)} />}
+      {ensRecordsOpen && (
+        <ENSRecordsModal
+          name={ensRecordsName}
+          onClose={() => setEnsRecordsOpen(false)}
+          setFetchFreshProfile={setFetchFreshProfile}
+        />
+      )}
     </>
   )
 }

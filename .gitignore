@@ -76,3 +76,6 @@ public/*.js
 package-lock.json
 yarn.lock
 pnpm-lock.yaml
+
+# local EIK test script
+/scripts/eik-local.sh

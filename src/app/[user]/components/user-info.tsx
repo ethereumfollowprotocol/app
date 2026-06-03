@@ -65,6 +65,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     followersTagsFilter,
     followerTagsLoading,
     followingTagsLoading,
+    setFetchFreshProfile,
     isFetchingMoreFollowers,
     isFetchingMoreFollowing,
     setFollowersTagsFilter,
@@ -195,6 +196,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
             }}
             openQrCodeModal={() => setQrCodeModalOpen(true)}
             openListSettingsModal={() => setListSettingsOpen(true)}
+            setFetchFreshProfile={setFetchFreshProfile}
           />
         </div>
         <div className='flex w-full max-w-[1920px] flex-col-reverse gap-4 px-4 md:-mt-28 lg:-mt-24 lg:flex-row xl:px-8'>
