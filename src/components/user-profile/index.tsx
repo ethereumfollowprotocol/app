@@ -29,7 +29,7 @@ interface UserProfileCardProps {
   refetchStats?: () => void
   openQrCodeModal?: () => void
   className?: string
-  setFetchFreshProfile?: Dispatch<SetStateAction<boolean>>
+  setFetchFreshProfile?: Dispatch<SetStateAction<boolean>> | ((state: boolean) => void)
 }
 
 const UserProfile: React.FC<UserProfileCardProps> = ({

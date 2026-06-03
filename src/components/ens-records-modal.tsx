@@ -12,12 +12,12 @@ import { useQueryClient } from '@tanstack/react-query'
 interface ENSRecordsModalProps {
   name?: string | null
   onClose: () => void
-  setFetchFreshProfile?: Dispatch<SetStateAction<boolean>>
+  setFetchFreshProfile?: Dispatch<SetStateAction<boolean>> | ((state: boolean) => void)
 }
 
 const dataURLToBytes = (dataUrl: string): Uint8Array => {
   const base64 = dataUrl.split(',')[1]
-  const binary = atob(base64)
+  const binary = atob(base64 || '')
   const bytes = new Uint8Array(binary.length)
 
   for (let i = 0; i < binary.length; i++) {
@@ -113,7 +113,7 @@ const ENSRecordsModal: React.FC<ENSRecordsModalProps> = ({ name, onClose, setFet
 
     await new Promise((resolve) => setTimeout(resolve, 1000)) // wait for image to be uploaded to euc.li
 
-    const result = await response.json()
+    const result = (await response.json()) as { url?: string }
     const finalUrl = result.url || `https://euc.li/${encodeURIComponent(name)}${type === 'header' ? '/h' : ''}`
 
     forceRefetchImage(finalUrl)
