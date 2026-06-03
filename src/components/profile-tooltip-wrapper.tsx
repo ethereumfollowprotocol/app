@@ -43,7 +43,7 @@ const ProfileTooltipWrapper: React.FC<ProfileTooltipWrapperProps> = ({
         router.push(`/${addressOrName}?ssr=false`)
       }}
     >
-      {children as React.ReactElement}
+      {children}
     </ProfileTooltip>
   )
 }

@@ -141,13 +141,11 @@ const RecommendedCards = () => {
               if (gone.has(i + 3)) return null
 
               return (
-                // @ts-expect-error animated.div is a valid component
                 <animated.div
                   className='absolute top-0 z-20 h-fit w-full max-w-92 will-change-transform sm:mr-[14px]'
                   key={`${recommendedProfiles[i]?.address}-${i}`}
                   style={{ x, y }}
                 >
-                  {/* @ts-expect-error animated.div is a valid component */}
                   <animated.div
                     {...bindDragToCards(i)}
                     style={{

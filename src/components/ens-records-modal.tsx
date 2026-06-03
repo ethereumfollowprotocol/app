@@ -122,8 +122,14 @@ const ENSRecordsModal: React.FC<ENSRecordsModalProps> = ({ name, onClose, setFet
   }
 
   const onSuccess = () => {
-    queryClient.refetchQueries({ queryKey: ['profile', name, true] })
-    setFetchFreshProfile?.(true)
+    setTimeout(() => {
+      // @ts-expect-error - both types support function calls with a state argument
+      setFetchFreshProfile?.((state) => {
+        if (state) queryClient.refetchQueries({ queryKey: ['profile', connectedAddress] })
+        return true
+      })
+      onClose()
+    }, 1500)
   }
 
   const modalRoot = typeof document === 'undefined' ? null : document.getElementById('modal-root')
