@@ -1,16 +1,17 @@
 'use client'
 
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { useAccount } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 import { ProfileCard } from 'ethereum-identity-kit'
 
 import { cn } from '#/lib/utilities'
 import Achievements from './components/achievements'
 import FollowButton from '#/components/follow-button'
+import ENSRecordsModal from '#/components/ens-records-modal'
 import ThreeDotMenu from './components/three-dot-menu'
 import { useProfileCard } from './hooks/use-profile-card'
-import EnsLogo from 'public/assets/icons/socials/ens.svg'
 import { useEFPProfile } from '#/contexts/efp-profile-context'
 import LoadingProfileCard from './components/loading-profile-card'
 import type { ProfileDetailsResponse, StatsResponse } from '#/types/requests'
@@ -53,75 +54,74 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
 }) => {
   const router = useRouter()
   const { t } = useTranslation()
+  const { address: connectedAddress } = useAccount()
   const { selectedList } = useEFPProfile()
+  const [ensRecordsOpen, setEnsRecordsOpen] = useState(false)
   const { followState, profileName, isConnectedUserCard } = useProfileCard(profile)
+  const ensRecordsName = profile?.ens?.name ?? profileName
 
   return (
     <div className={cn('bg-neutral flex w-[364px] flex-col gap-4 rounded-sm pb-3', className)}>
       {isLoading ? (
         <LoadingProfileCard hideFollowButton={true} className='bg-neutral' />
       ) : profile?.address ? (
-        <ProfileCard
-          list={profileList}
-          onStatClick={({ stat }) => {
-            router.push(`/${profile.address}?tab=${stat}&ssr=false`)
-          }}
-          showFollowerState={true}
-          showFollowButton={!hideFollowButton}
-          addressOrName={profile.address}
-          onProfileClick={(addressOrName) => {
-            router.push(`/${addressOrName}?ssr=false`)
-          }}
-          selectedList={selectedList}
-          className='bg-neutral'
-          extraOptions={{
-            openListSettings: openListSettingsModal,
-            prefetched: {
-              profile: {
-                data: profile ?? undefined,
-                isLoading: !!isLoading,
-                refetch: refetchProfile ?? (() => {}),
+        <>
+          <ProfileCard
+            list={profileList}
+            connectedAddress={connectedAddress}
+            onStatClick={({ stat }) => {
+              router.push(`/${profile.address}?tab=${stat}&ssr=false`)
+            }}
+            showFollowerState={true}
+            showFollowButton={!hideFollowButton}
+            addressOrName={profile.address}
+            onProfileClick={(addressOrName) => {
+              router.push(`/${addressOrName}?ssr=false`)
+            }}
+            selectedList={selectedList}
+            className='bg-neutral'
+            extraOptions={{
+              openListSettings: openListSettingsModal,
+              onEditProfileClick: () => setEnsRecordsOpen(true),
+              prefetched: {
+                profile: {
+                  data: profile ?? undefined,
+                  isLoading: !!isLoading,
+                  refetch: refetchProfile ?? (() => {}),
+                },
+                stats: {
+                  data: stats ?? undefined,
+                  isLoading: !!isStatsLoading,
+                  refetch: refetchStats ?? (() => {}),
+                },
               },
-              stats: {
-                data: stats ?? undefined,
-                isLoading: !!isStatsLoading,
-                refetch: refetchStats ?? (() => {}),
-              },
-            },
-            nameMenu: (
-              <ThreeDotMenu
-                address={profile.address}
-                profileList={profileList}
-                primaryList={Number(profile.primary_list)}
-                profileName={profileName}
-                showMoreOptions={!!showMoreOptions}
-                isConnectedUserCard={isConnectedUserCard}
-                followState={followState}
-                openBlockModal={openBlockModal}
-                openQrCodeModal={openQrCodeModal}
-                openListSettingsModal={openListSettingsModal}
-              />
-            ),
-            customFollowButton: (
-              <div className='mt-16'>
-                {isConnectedUserCard ? (
-                  <Link href={`https://app.ens.domains/${profile.ens?.name}`} target='_blank'>
-                    <button className='flex items-center gap-1 rounded-sm bg-[#0080BC] p-1.5 py-2 font-semibold text-white transition-all hover:scale-110 hover:bg-[#07A9F5]'>
-                      <EnsLogo className='h-auto w-5' />
-                      <p>Edit Profile</p>
-                    </button>
-                  </Link>
-                ) : (
+              nameMenu: (
+                <ThreeDotMenu
+                  address={profile.address}
+                  profileList={profileList}
+                  primaryList={Number(profile.primary_list)}
+                  profileName={profileName}
+                  showMoreOptions={!!showMoreOptions}
+                  isConnectedUserCard={isConnectedUserCard}
+                  followState={followState}
+                  openBlockModal={openBlockModal}
+                  openQrCodeModal={openQrCodeModal}
+                  openListSettingsModal={openListSettingsModal}
+                />
+              ),
+              customFollowButton: isConnectedUserCard ? undefined : (
+                <div className='mt-16'>
                   <FollowButton address={profile.address} />
-                )}
-              </div>
-            ),
-          }}
-          style={{
-            width: '100%',
-            zIndex: 10,
-          }}
-        />
+                </div>
+              ),
+            }}
+            style={{
+              width: '100%',
+              zIndex: 10,
+            }}
+          />
+          {ensRecordsOpen && <ENSRecordsModal name={ensRecordsName} onClose={() => setEnsRecordsOpen(false)} />}
+        </>
       ) : (
         <div className={cn('relative z-10 flex flex-col rounded-sm', isRecommended ? 'bg-neutral' : 'glass-card')}>
           {isRecommended ? (
