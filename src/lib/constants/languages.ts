@@ -80,6 +80,7 @@ export const LANGUAGES: {
   { language: 'English', key: 'en', icon: USAFlag, englishLanguage: 'English' },
   { language: 'Slovenščina', key: 'sl', icon: SloveniaFlag, englishLanguage: 'Slovenian' },
   { language: '简体中文', key: 'zh', icon: ChinaFlag, englishLanguage: 'Chinese' },
+  { language: '简体中文 (CN)', key: 'zh-CN', icon: ChinaFlag, englishLanguage: 'Chinese Simplified' },
   { language: 'Français', key: 'fr', icon: FranceFlag, englishLanguage: 'French' },
   { language: 'Español', key: 'es', icon: SpainFlag, englishLanguage: 'Spanish' },
   {
@@ -231,3 +232,4 @@ export const LANGUAGES: {
 ]
 
 export const languageKeys = LANGUAGES.map((language) => language.key)
+
