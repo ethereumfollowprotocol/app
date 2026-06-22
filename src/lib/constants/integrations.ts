@@ -86,6 +86,9 @@ import Scry from 'public/assets/partners/scry.png'
 import Etherscan from 'public/assets/partners/etherscan.jpg'
 import EVMNow from 'public/assets/partners/evmnow.jpg'
 import DominiosCripto from 'public/assets/partners/dominioscripto.jpg'
+import ENSNode from 'public/assets/partners/ensnode.jpg'
+import ThurinIdentityKit from 'public/assets/partners/thurinidentitykit.jpg'
+import DMPayIPFS from 'public/assets/partners/dmpayipfs.jpg'
 
 export const INTEGRATIONS = [
   {
@@ -142,6 +145,11 @@ export const INTEGRATIONS = [
     name: 'Superfluid',
     url: 'https://superfluid.org/',
     logo: Superfluid,
+  },
+  {
+    name: 'ENSNode',
+    url: 'https://ensnode.io/',
+    logo: ENSNode,
   },
   {
     name: 'Scaffold ETH',
@@ -514,9 +522,19 @@ export const INTEGRATIONS = [
     logo: Scry,
   },
   {
+    name: 'Thurin Identity Kit SDK',
+    url: 'https://docs.thurin.id/#/sdk?id=identity-kit',
+    logo: ThurinIdentityKit,
+  },
+  {
     name: 'DominiosCripto',
     url: 'https://dominioscripto.com',
     logo: DominiosCripto,
+  },
+  {
+    name: 'DMPay IPFS',
+    url: 'https://dmpay.eth.link/',
+    logo: DMPayIPFS,
   },
 ] as {
   name: string
