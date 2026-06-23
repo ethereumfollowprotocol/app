@@ -9,6 +9,9 @@ import { truncateAddress } from '#/lib/utilities'
 import { fetchAccount } from '#/api/fetch-account'
 import { isAddress, isHex } from '#/utils/viem'
 
+// Cache the SSR output for 1 hour
+export const revalidate = 3600
+
 interface Props {
   params: Promise<{ user: string }>
   searchParams: Promise<SearchParams>
