@@ -4,6 +4,7 @@
  */
 
 import childProcess from 'node:child_process'
+import path from 'node:path'
 import { withSentryConfig } from '@sentry/nextjs'
 import { withPostHogConfig } from '@posthog/nextjs-config'
 
@@ -138,6 +139,22 @@ const nextConfig = {
     // },
   ],
   webpack(config) {
+    // When developing against a locally-linked (symlinked) `ethereum-identity-kit`
+    // (see `scripts/eik-local.sh`), the kit's own dev `node_modules` are present,
+    // so webpack would resolve a SECOND copy of these singletons from the kit's
+    // tree → broken wagmi/react-query context and "Invalid hook call". Force them
+    // to THIS app's copies. No-op for normal builds.
+    // NOTE: deliberately NOT aliasing `react`/`react-dom` — Next manages those for
+    // the App Router (separate server/RSC vs client builds) and its global alias
+    // already dedupes them for the linked kit; overriding them breaks RSC.
+    if (process.env.LINK_EIK === 'true') {
+      const dedupe = ['@tanstack/react-query', 'wagmi', 'viem']
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        ...Object.fromEntries(dedupe.map((pkg) => [pkg, path.resolve(process.cwd(), 'node_modules', pkg)])),
+      }
+    }
+
     // @ts-expect-error rule type is not typed
     const fileLoaderRule = config.module.rules.find((rule) => rule.test?.test?.('.svg'))
 
