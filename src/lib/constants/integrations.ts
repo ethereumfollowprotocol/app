@@ -85,6 +85,7 @@ import CashGameHost from 'public/assets/partners/cashgamehost.jpg'
 import Scry from 'public/assets/partners/scry.png'
 import Etherscan from 'public/assets/partners/etherscan.jpg'
 import EVMNow from 'public/assets/partners/evmnow.jpg'
+import Anticapture from 'public/assets/partners/anticapture.jpg'
 import DominiosCripto from 'public/assets/partners/dominioscripto.jpg'
 import ENSNode from 'public/assets/partners/ensnode.jpg'
 import ThurinIdentityKit from 'public/assets/partners/thurinidentitykit.jpg'
@@ -115,6 +116,11 @@ export const INTEGRATIONS = [
     name: 'EVM Now',
     url: 'https://evm.now/',
     logo: EVMNow,
+  },
+  {
+    name: 'Anticapture',
+    url: 'https://app.anticapture.com/',
+    logo: Anticapture,
   },
   {
     name: 'POAP',
